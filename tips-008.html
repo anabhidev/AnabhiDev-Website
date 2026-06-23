@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JavaScript Tips — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --teal:#0891B2;
+  --purple:#7C3AED;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,7vw,48px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── BAR CHART DARK ── */
+.bar-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.bar-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.bar-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.bar-rows{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:160px;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.bar-val{font-size:11px;font-weight:700;min-width:80px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-teal{background:linear-gradient(90deg,#0891B2,#22D3EE);}
+.fill-purple{background:linear-gradient(90deg,#7C3AED,#A78BFA);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-teal{color:#22D3EE;}
+.val-purple{color:#A78BFA;}
+.bar-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── CODE BLOCK ── */
+.code-block{
+  background:#0F172A;border-radius:12px;padding:16px;
+  margin-top:10px;overflow-x:auto;
+}
+.code-block pre{
+  font-family:'Courier New',monospace;font-size:12px;
+  color:#E2E8F0;line-height:1.7;margin:0;white-space:pre;
+}
+.code-label{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:8px;
+}
+.code-comment{color:#64748B;}
+.code-keyword{color:#93C5FD;}
+.code-string{color:#86EFAC;}
+.code-function{color:#FDE68A;}
+
+/* ── CONCEPT CARDS ── */
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.concept-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:border-color .2s;position:relative;overflow:hidden;
+}
+.concept-card:hover{border-color:var(--blue);}
+.concept-card.core{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.concept-card.core::before{content:'DASAR';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.concept-icon{font-size:26px;margin-bottom:8px;}
+.concept-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.concept-desc{font-size:11px;color:var(--gray);line-height:1.5;margin-bottom:10px;}
+.concept-tag{
+  display:inline-block;padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .concept-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .hero{padding:80px 20px 48px;}
+  .code-block pre{font-size:11px;}
+}
+@media (max-width:380px){
+  .concept-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#dasar" onclick="setActive(this)">Dasar</a>
+      <a class="nav-link" href="#praktek" onclick="setActive(this)">Praktek</a>
+      <a class="nav-link" href="#tips" onclick="setActive(this)">Tips</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">JavaScript,<br><span>Bahasa Ajaib di Balik Web</span></h1>
+    <p class="hero-sub">Panduan newbie dari nol — kenalan dengan JavaScript, pahami konsep dasarnya, dan langsung coba manipulasi halaman web, fetch data, hingga automation ringan di browser.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">⚡ JavaScript</span>
+      <span class="hero-tag">🌐 Web Browser</span>
+      <span class="hero-tag">💻 Vibes Coding</span>
+      <span class="hero-tag">🔰 Newbie Friendly</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — APA ITU JAVASCRIPT -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Apa itu JavaScript?</div>
+    <h2 class="section-title">Bahasa yang Menghidupkan Web</h2>
+    <p class="section-desc">Kalau HTML adalah kerangka rumah dan CSS adalah catnya, maka JavaScript adalah listriknya — yang bikin semua tombol, animasi, dan interaksi di website bisa jalan. Setiap website modern yang kamu pakai hari ini menggunakan JavaScript di baliknya.</p>
+
+    <div class="bar-visual">
+      <div class="bar-label">Peran Bahasa di Web — Tingkat Interaktivitas</div>
+      <div class="bar-rows">
+        <div class="bar-row">
+          <span class="bar-name">📄 HTML saja</span>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:20%"></div></div>
+          <span class="bar-val val-red">Statis, kaku</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🎨 HTML + CSS</span>
+          <div class="bar-track"><div class="bar-fill fill-yellow" style="width:45%"></div></div>
+          <span class="bar-val val-yellow">Cantik tapi diam</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">⚡ + JavaScript</span>
+          <div class="bar-track"><div class="bar-fill fill-green" style="width:85%"></div></div>
+          <span class="bar-val val-green">Hidup & interaktif</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🤖 + JavaScript + AI</span>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:97%"></div></div>
+          <span class="bar-val val-blue">Powerful banget!</span>
+        </div>
+      </div>
+      <div class="bar-note">* JavaScript berjalan langsung di browser — tidak perlu install apapun untuk mulai belajar!</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Kenapa JavaScript untuk Vibes Coder?</div>
+      <div class="highlight-box-text">
+        JavaScript adalah satu-satunya bahasa yang bisa jalan langsung di browser — <strong>tanpa install apapun</strong>. Buka browser, tekan F12, ketik kode di Console, langsung jalan. Tidak ada bahasa lain yang semudah ini untuk dicoba. Plus, JavaScript adalah bahasa yang sama dipakai Google Apps Script — jadi kalau sudah belajar GAS, kamu sudah punya dasar JavaScript!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — KONSEP DASAR -->
+  <div class="section" id="dasar">
+    <div class="section-label"><div class="section-label-line"></div>Konsep Dasar</div>
+    <h2 class="section-title">6 Konsep yang Wajib Dikenal</h2>
+    <p class="section-desc">Tidak perlu hafal semua JavaScript — cukup pahami 6 konsep ini dulu. Sisanya akan mengikuti dengan sendirinya saat kamu sering praktek.</p>
+
+    <div class="concept-grid">
+      <div class="concept-card core">
+        <div class="concept-icon">📦</div>
+        <div class="concept-name">Variabel</div>
+        <div class="concept-desc">Tempat menyimpan data. Pakai <code style="background:#EEF2FF;padding:1px 5px;border-radius:4px;font-size:10px;color:var(--blue);">let</code> atau <code style="background:#EEF2FF;padding:1px 5px;border-radius:4px;font-size:10px;color:var(--blue);">const</code> untuk deklarasi variabel.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-keyword">let</span> nama = <span class="code-string">"Anabhi"</span>;
+<span class="code-keyword">const</span> tahun = <span class="code-keyword">2026</span>;</pre>
+        </div>
+        <span class="concept-tag">📌 Paling Dasar</span>
+      </div>
+      <div class="concept-card core">
+        <div class="concept-icon">🔀</div>
+        <div class="concept-name">Kondisi (if/else)</div>
+        <div class="concept-desc">"Kalau ini, lakukan itu. Kalau tidak, lakukan yang lain." Logika dasar semua program.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-keyword">if</span> (nilai >= <span class="code-keyword">70</span>) {
+  <span class="code-function">console</span>.log(<span class="code-string">"Lulus!"</span>);
+} <span class="code-keyword">else</span> {
+  <span class="code-function">console</span>.log(<span class="code-string">"Coba lagi"</span>);
+}</pre>
+        </div>
+        <span class="concept-tag">🔀 Logika</span>
+      </div>
+      <div class="concept-card core">
+        <div class="concept-icon">🔄</div>
+        <div class="concept-name">Fungsi</div>
+        <div class="concept-desc">Kumpulan kode yang diberi nama — bisa dipanggil kapan saja. Tulis sekali, pakai berkali-kali.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-keyword">function</span> <span class="code-function">sapa</span>(nama) {
+  <span class="code-keyword">return</span> <span class="code-string">`Halo, ${nama}!`</span>;
+}
+<span class="code-function">sapa</span>(<span class="code-string">"Wibawa"</span>);</pre>
+        </div>
+        <span class="concept-tag">♻️ Reusable</span>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🎯</div>
+        <div class="concept-name">DOM Manipulation</div>
+        <div class="concept-desc">Ubah isi, warna, atau tampilan elemen HTML langsung dari JavaScript — tanpa reload halaman.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-comment">// Ambil elemen & ubah isinya</span>
+<span class="code-keyword">const</span> judul = document
+  .<span class="code-function">getElementById</span>(<span class="code-string">"judul"</span>);
+judul.textContent = <span class="code-string">"Halo!"</span>;</pre>
+        </div>
+        <span class="concept-tag">🌐 Web Magic</span>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">👂</div>
+        <div class="concept-name">Event Listener</div>
+        <div class="concept-desc">"Dengarkan" aksi user — klik tombol, isi form, scroll halaman — lalu jalankan kode sebagai respons.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-keyword">const</span> tombol = document
+  .<span class="code-function">getElementById</span>(<span class="code-string">"btn"</span>);
+tombol.<span class="code-function">addEventListener</span>(
+  <span class="code-string">"click"</span>, () => {
+    <span class="code-function">alert</span>(<span class="code-string">"Diklik!"</span>);
+  }
+);</pre>
+        </div>
+        <span class="concept-tag">🖱️ Interaktif</span>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🌐</div>
+        <div class="concept-name">Fetch API</div>
+        <div class="concept-desc">Ambil data dari internet (API) tanpa reload halaman. Dasar dari semua aplikasi web modern.</div>
+        <div class="code-block" style="margin-top:8px;">
+          <pre><span class="code-function">fetch</span>(<span class="code-string">"https://api.contoh.com"</span>)
+  .<span class="code-function">then</span>(res => res.<span class="code-function">json</span>())
+  .<span class="code-function">then</span>(data => {
+    <span class="code-function">console</span>.log(data);
+  });</pre>
+        </div>
+        <span class="concept-tag">📡 Data dari Web</span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🚀 Coba Sekarang — Tanpa Install Apapun!</div>
+      <div class="highlight-box-text">
+        Buka browser kamu → tekan <strong>F12</strong> (atau klik kanan → Inspect) → klik tab <strong>Console</strong> → ketik <code style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:4px;font-size:13px;">console.log("Halo JavaScript!")</code> → tekan Enter. JavaScript kamu langsung jalan! Console adalah playground JavaScript gratis yang selalu tersedia di browser.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — PRAKTEK NYATA -->
+  <div class="section" id="praktek">
+    <div class="section-label"><div class="section-label-line"></div>Praktek Nyata</div>
+    <h2 class="section-title">Script JavaScript yang Langsung Berguna</h2>
+    <p class="section-desc">Ini bukan contoh akademis — semua script ini bisa langsung kamu jalankan di browser Console atau tambahkan ke project web kamu.</p>
+
+    <!-- Script 1 -->
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span style="font-size:22px;">⏰</span>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:var(--navy);">Auto Scroll ke Bawah</div>
+          <div style="font-size:11px;color:var(--gray);">Jalankan di Console browser — scroll otomatis ke bawah halaman</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-label">Console Browser — Auto Scroll</div>
+        <pre><span class="code-comment">// Scroll pelan ke bawah halaman</span>
+<span class="code-keyword">let</span> pos = <span class="code-keyword">0</span>;
+<span class="code-keyword">const</span> timer = <span class="code-function">setInterval</span>(() => {
+  <span class="code-function">window</span>.<span class="code-function">scrollBy</span>(<span class="code-keyword">0</span>, <span class="code-keyword">3</span>);
+  pos += <span class="code-keyword">3</span>;
+  <span class="code-keyword">if</span> (pos >= document.body.scrollHeight) {
+    <span class="code-function">clearInterval</span>(timer);
+  }
+}, <span class="code-keyword">20</span>);</pre>
+      </div>
+    </div>
+
+    <!-- Script 2 -->
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span style="font-size:22px;">📋</span>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:var(--navy);">Copy Teks ke Clipboard</div>
+          <div style="font-size:11px;color:var(--gray);">Tambahkan tombol "Copy" ke project web kamu</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-label">script.js — Tombol copy teks</div>
+        <pre><span class="code-keyword">function</span> <span class="code-function">copyTeks</span>(teks) {
+  navigator.clipboard.<span class="code-function">writeText</span>(teks)
+    .<span class="code-function">then</span>(() => {
+      <span class="code-function">alert</span>(<span class="code-string">"Berhasil dicopy! ✅"</span>);
+    });
+}
+
+<span class="code-comment">// Panggil saat tombol diklik</span>
+<span class="code-comment">// copyTeks("teks yang mau dicopy");</span></pre>
+      </div>
+    </div>
+
+    <!-- Script 3 -->
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span style="font-size:22px;">🌐</span>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:var(--navy);">Fetch Data dari API Publik</div>
+          <div style="font-size:11px;color:var(--gray);">Ambil data cuaca atau info lain dari internet</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-label">script.js — Fetch data dari API</div>
+        <pre><span class="code-comment">// Ambil data dari API publik (gratis)</span>
+<span class="code-function">fetch</span>(<span class="code-string">"https://wttr.in/Jakarta?format=3"</span>)
+  .<span class="code-function">then</span>(response => response.<span class="code-function">text</span>())
+  .<span class="code-function">then</span>(data => {
+    <span class="code-function">console</span>.log(<span class="code-string">"Cuaca Jakarta:"</span>, data);
+    <span class="code-comment">// Tampilkan di halaman</span>
+    document.<span class="code-function">getElementById</span>(<span class="code-string">"cuaca"</span>)
+      .textContent = data;
+  })
+  .<span class="code-function">catch</span>(error => {
+    <span class="code-function">console</span>.log(<span class="code-string">"Error:"</span>, error);
+  });</pre>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🤖 Prompt Template untuk AI</div>
+      <div class="highlight-box-text">
+        Minta ke Claude atau ChatGPT: <strong>"Buatkan script JavaScript untuk [kebutuhan]. Saya newbie, pakai sintaks yang simpel, tambahkan komentar di setiap baris, dan jelaskan cara menggunakannya."</strong> Hasilnya bisa langsung dicopy ke file .js atau Console browser!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — TIPS & DO/DONT -->
+  <div class="section" id="tips">
+    <div class="section-label"><div class="section-label-line"></div>Tips & Best Practices</div>
+    <h2 class="section-title">Kebiasaan Baik JavaScript dari Awal</h2>
+    <p class="section-desc">JavaScript punya banyak cara untuk melakukan hal yang sama — ini panduan agar kamu tidak tersesat di awal.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Pakai Console browser (F12) untuk eksperimen cepat</li>
+          <li>Gunakan console.log() untuk debug — lihat nilai variabel</li>
+          <li>Pakai const untuk nilai yang tidak berubah, let untuk yang berubah</li>
+          <li>Beri nama variabel dan fungsi yang deskriptif</li>
+          <li>Test di satu browser dulu (Chrome) sebelum yang lain</li>
+          <li>Tanya AI kalau ada error — paste error message-nya sekalian</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Pakai var — sudah outdated, pakai let atau const</li>
+          <li>Abaikan error di Console — selalu baca pesan errornya</li>
+          <li>Tulis semua kode dalam satu fungsi panjang — pecah jadi fungsi kecil</li>
+          <li>Copy kode tanpa paham fungsinya — minta AI jelaskan dulu</li>
+          <li>Langsung deploy ke production tanpa test — test di local dulu</li>
+          <li>Simpan data sensitif di JavaScript frontend — bisa dilihat semua orang!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Console Browser adalah Teman Terbaik</div>
+        <div class="tip-body">Tekan F12 di browser → tab Console → ini playground JavaScript gratis kamu. Coba kode baru di sini dulu sebelum masuk ke file project. Semua error JavaScript juga muncul di sini — biasakan buka Console saat develop web.</div>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-label">Console — Tips debugging</div>
+          <pre><span class="code-comment">// Cek nilai variabel</span>
+<span class="code-function">console</span>.log(<span class="code-string">"nilai:"</span>, variabel);
+
+<span class="code-comment">// Tampilkan sebagai tabel</span>
+<span class="code-function">console</span>.table(arrayData);
+
+<span class="code-comment">// Ukur waktu eksekusi</span>
+<span class="code-function">console</span>.time(<span class="code-string">"proses"</span>);
+<span class="code-comment">// ... kode kamu ...</span>
+<span class="code-function">console</span>.timeEnd(<span class="code-string">"proses"</span>);</pre>
+        </div>
+        <span class="tip-tag">🔍 Debugging</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">GAS dan JavaScript Itu Saudara</div>
+        <div class="tip-body">Google Apps Script berbasis JavaScript — jadi kalau kamu sudah pakai GAS (Tips-004), kamu sudah kenal JavaScript! Konsep variabel, fungsi, if/else, dan loop semuanya sama. Yang berbeda hanya library built-in-nya — GAS punya SpreadsheetApp, DriveApp, dll. sedangkan JavaScript browser punya document, window, fetch, dll.</div>
+        <span class="tip-tag">🔗 Koneksi GAS</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Pakai Arrow Function untuk Kode Lebih Ringkas</div>
+        <div class="tip-body">Arrow function adalah cara penulisan fungsi yang lebih pendek di JavaScript modern. Banyak tutorial dan kode AI menggunakan ini — penting untuk dikenal meski tidak harus dihafalkan.</div>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-label">Fungsi biasa vs Arrow function</div>
+          <pre><span class="code-comment">// Fungsi biasa</span>
+<span class="code-keyword">function</span> <span class="code-function">tambah</span>(a, b) {
+  <span class="code-keyword">return</span> a + b;
+}
+
+<span class="code-comment">// Arrow function — lebih ringkas</span>
+<span class="code-keyword">const</span> <span class="code-function">tambah</span> = (a, b) => a + b;
+
+<span class="code-comment">// Keduanya menghasilkan hal yang sama</span></pre>
+        </div>
+        <span class="tip-tag">✨ Modern JS</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">JavaScript + HTML = Bisa Bikin Web Interaktif</div>
+        <div class="tip-body">Kombinasi HTML + CSS + JavaScript adalah trio yang bikin semua website modern bekerja. Kalau kamu sudah bisa bikin halaman HTML statis, tambahkan JavaScript untuk bikin tombol yang berfungsi, form yang validasi input, atau konten yang berubah tanpa reload. Mulai dari yang kecil — tambahkan satu event listener ke tombol yang sudah ada di project kamu!</div>
+        <span class="tip-tag">🌐 Web Dev</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu terjun ke JavaScript, ada beberapa hal yang perlu diketahui.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini fokus pada <strong>JavaScript dasar untuk pemula</strong> — sengaja disederhanakan agar mudah dipahami. JavaScript adalah bahasa yang sangat luas — ada Node.js untuk backend, React/Vue untuk framework frontend, dan masih banyak lagi yang tidak dibahas di sini.<br><br>
+        <strong>Jangan simpan data sensitif</strong> (API key, password, token) di file JavaScript frontend — semua kode JavaScript di browser bisa dilihat oleh siapapun lewat View Source atau DevTools. Untuk keamanan, simpan data sensitif di backend/server.<br><br>
+        Snippet kode yang ditampilkan menggunakan <strong>JavaScript modern (ES6+)</strong> — pastikan browser kamu up to date. Untuk referensi JavaScript yang lengkap dan akurat, kunjungi <strong>developer.mozilla.org (MDN Web Docs)</strong> — sumber terpercaya untuk semua hal JavaScript.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Coba Langsung</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🌐 F12 → Console</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Debug dengan</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🔍 console.log()</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Referensi Terbaik</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📚 MDN Web Docs</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Stuck? Tanya</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🤖 Claude / ChatGPT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-008</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· JavaScript · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · JavaScript Tips</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('dasar',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Dasar
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('praktek',this)">
+      <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>Praktek
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('tips',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Tips
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+const sections = ['intro','dasar','praktek','tips','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+window.addEventListener('load', function() {
+  document.querySelectorAll('.bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>

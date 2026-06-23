@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anabhi Dev — Less Doing, More Living.</title>
+
+<!-- SEO -->
+<meta name="description" content="Anabhi Dev — Automation, Apps & AI tools built by one person who believes technology should make life simpler, not complicated. Less Doing, More Living.">
+<meta name="keywords" content="Anabhi Dev, automation, apps, AI, Less Doing More Living, Bali, Google Apps Script, Telegram automation, Mikrotik monitoring, network dashboard, parenting app, kids quiz, nutrition tracker, life tracking, HoL, History of Life, JejakNutrisi, QuizDaily, WeatherAlert, BaliCalBot, SpinGather, PostCraft, IT dashboard, Office365, ClickUp, productivity tools, personal developer, indie developer, build in public, app automation Indonesia, tools otomasi, World Cup 2026, LMS, NutriBot, HR Document Tracker, SOP Dashboard, AdminFlow, Domain IP Check, Employee Schedule, Studio Gambar, knowledge base, Claude AI tips, ChatGPT tips, Gemini tips, Google Apps Script tutorial, Git GitHub tips, VS Code tips, Python automation, JavaScript no-code, Notion tips, dev workflow, vibes coding, AI tools Indonesia">
+<meta name="author" content="Anabhi Dev">
+<meta name="robots" content="index, follow">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4S207NQSE7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4S207NQSE7');
+</script>
+
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:title" content="Anabhi Dev — Less Doing, More Living.">
+<meta property="og:description" content="Automation · Apps · AI. Built by one person who believes technology should make life simpler, not complicated.">
+<meta property="og:url" content="https://anabhidev.netlify.app/">
+<meta property="og:image" content="https://anabhidev.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Anabhi Dev">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anabhi Dev — Less Doing, More Living.">
+<meta name="twitter:description" content="Automation · Apps · AI. Built by one person who believes technology should make life simpler, not complicated.">
+<meta name="twitter:image" content="https://anabhidev.netlify.app/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --navy:      #0B1829;
+  --navy-mid:  #111F33;
+  --navy-card: #162336;
+  --blue:      #3B9EE8;
+  --blue-lt:   #6AB8F0;
+  --silver:    #B8C8D8;
+  --white:     #FFFFFF;
+  --w90: rgba(255,255,255,0.90);
+  --w60: rgba(255,255,255,0.60);
+  --w30: rgba(255,255,255,0.30);
+  --w12: rgba(255,255,255,0.12);
+  --w07: rgba(255,255,255,0.07);
+  --max: 1320px;
+  --gutter: 80px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy); color:var(--white);
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:300;
+  height:110px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 var(--gutter);
+  background:rgba(9,16,28,0.97);
+  backdrop-filter:saturate(180%) blur(24px);
+  -webkit-backdrop-filter:saturate(180%) blur(24px);
+  border-bottom:1.5px solid rgba(59,158,232,0.25);
+  transition:background .4s;
+}
+nav.scrolled { background:rgba(9,16,28,0.97); }
+
+.nav-logo img { height:80px; display:block; }
+
+.nav-links {
+  display:flex; gap:6px; list-style:none;
+  position:absolute; left:50%; transform:translateX(-50%);
+}
+.nav-links a {
+  font-family:'Sora',sans-serif;
+  font-size:15px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--w60); text-decoration:none;
+  padding:10px 16px; border-radius:50px;
+  transition:all .2s; white-space:nowrap;
+}
+.nav-links a:hover { color:var(--white); background:var(--w07); }
+.nav-links a.active { color:var(--white); background:var(--w12); }
+
+.nav-cta {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:700;
+  color:var(--white); background:var(--blue);
+  padding:13px 30px; border-radius:50px; text-decoration:none; white-space:nowrap;
+  transition:background .2s, transform .2s;
+  letter-spacing:.04em;
+}
+.nav-cta:hover { background:var(--blue-lt); transform:translateY(-1px); }
+
+/* Hamburger */
+.hamburger {
+  display:none; flex-direction:column; gap:5px;
+  cursor:pointer; padding:4px; background:none; border:none;
+}
+.hamburger span {
+  display:block; width:22px; height:1.5px;
+  background:var(--white); border-radius:2px; transition:all .3s;
+}
+.hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(4.5px,4.5px); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(4.5px,-4.5px); }
+
+/* Mobile dropdown */
+.mobile-menu {
+  display:none; position:fixed; top:110px; left:0; right:0;
+  background:rgba(9,16,28,0.98); backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:0.5px solid var(--w12);
+  padding:12px 24px 24px; flex-direction:column; gap:0; z-index:299;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:500;
+  color:var(--w60); text-decoration:none;
+  padding:14px 0; border-bottom:0.5px solid var(--w07); transition:color .2s;
+}
+.mobile-menu a:last-child { border-bottom:none; }
+.mobile-menu a:hover { color:var(--white); }
+.mob-cta {
+  margin-top:12px !important; text-align:center;
+  background:var(--blue) !important; border-radius:50px;
+  padding:14px !important; color:var(--white) !important;
+  font-weight:600 !important; border-bottom:none !important;
+}
+
+/* ═══════════════════════════════════════
+   HERO  — Full HD optimised
+═══════════════════════════════════════ */
+#hero {
+  min-height:100svh;
+  padding:140px var(--gutter) 80px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:40px;
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 70% at 65% 35%, #1a2030 0%, #0D0D0D 65%);
+}
+#hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 8% 88%, rgba(59,158,232,.07) 0%, transparent 42%),
+    radial-gradient(circle at 92% 8%,  rgba(59,158,232,.05) 0%, transparent 38%);
+}
+.grid-lines {
+  position:absolute; right:0; top:0; bottom:0; width:50%;
+  background-image:
+    linear-gradient(rgba(59,158,232,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,158,232,.04) 1px,transparent 1px);
+  background-size:40px 40px; pointer-events:none;
+}
+
+.hero-text { position:relative; z-index:2; padding-left:0; }
+
+.eyebrow {
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:'Sora',sans-serif;
+  font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--blue); margin-bottom:24px;
+}
+.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--blue); }
+
+h1.hero-h1 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(40px,4.5vw,76px);
+  font-weight:800; line-height:1.05;
+  color:var(--white); letter-spacing:-.028em; margin-bottom:12px;
+}
+h1.hero-h1 em { font-style:normal; color:var(--blue); }
+
+.hero-sub {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(16px,1.6vw,24px); font-weight:300;
+  color:var(--silver); letter-spacing:-.01em; margin-bottom:24px;
+}
+
+.hero-desc {
+  font-size:16px; line-height:1.85; color:var(--w60);
+  max-width:520px; margin-bottom:36px;
+  padding-left:18px; border-left:2px solid var(--blue);
+}
+
+.stats { display:flex; gap:36px; margin-bottom:36px; flex-wrap:wrap; }
+.stat-n {
+  font-family:'Sora',sans-serif;
+  font-size:32px; font-weight:800; color:var(--white); line-height:1;
+}
+.stat-n sup { font-size:16px; color:var(--blue); }
+.stat-l { font-size:11px; color:var(--w60); text-transform:uppercase; letter-spacing:.07em; margin-top:5px; }
+
+.btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-p {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:600;
+  color:var(--navy); background:var(--blue);
+  padding:14px 30px; border-radius:50px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px;
+  box-shadow:0 10px 32px rgba(59,158,232,.38); transition:all .25s;
+}
+.btn-p:hover { background:var(--blue-lt); transform:translateY(-2px); box-shadow:0 14px 40px rgba(59,158,232,.48); }
+.btn-g {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:500;
+  color:var(--w90); background:var(--w07); border:1px solid var(--w12);
+  padding:14px 30px; border-radius:50px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px;
+  backdrop-filter:blur(8px); transition:all .25s;
+}
+.btn-g:hover { background:var(--w12); transform:translateY(-2px); }
+
+/* Hero photo */
+.hero-visual {
+  position:relative; z-index:2;
+  display:flex; justify-content:flex-end; align-items:center;
+  align-self:center;
+}
+.photo-wrap {
+  position:relative;
+  /* height set by JS to match .hero-text height */
+  aspect-ratio:5/6;
+  margin-right:20px;
+  flex-shrink:0;
+}
+.photo-wrap::after {
+  content:''; position:absolute; bottom:0; left:8%; right:8%; height:38%;
+  background:radial-gradient(ellipse,rgba(59,158,232,.22) 0%,transparent 70%); z-index:0;
+}
+.photo-wrap img.founder {
+  width:100%; height:100%; display:block;
+  object-fit:contain;
+  object-position:bottom center;
+  border-radius:24px 24px 0 0;
+  position:relative; z-index:1;
+  filter:drop-shadow(0 20px 60px rgba(0,0,0,.55));
+}
+.badge {
+  position:absolute; bottom:36px; left:-18px; z-index:3;
+  background:rgba(11,24,41,.90); border:1px solid rgba(59,158,232,.30);
+  backdrop-filter:blur(16px); border-radius:16px; padding:16px 20px;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);
+  animation:floatY 4s ease-in-out infinite;
+}
+.badge-icon {
+  width:42px; height:42px; background:linear-gradient(135deg,var(--blue),#1A6AB0);
+  border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.badge-n { font-family:'Sora',sans-serif; font-size:20px; font-weight:800; color:var(--white); line-height:1; }
+.badge-l { font-size:11px; color:var(--w60); letter-spacing:.04em; margin-top:2px; }
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.scroll-hint {
+  position:absolute; bottom:32px; left:var(--gutter); z-index:2;
+  display:flex; align-items:center; gap:12px;
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--w30);
+}
+.scroll-hint::before {
+  content:''; display:block; width:1px; height:44px;
+  background:linear-gradient(to bottom,var(--blue),transparent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ═══════════════════════════════════════
+   SHARED LAYOUT HELPERS
+═══════════════════════════════════════ */
+.wrap { max-width:var(--max); margin:0 auto; }
+
+.lbl {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:14px;
+}
+.lbl::before { content:''; display:block; width:20px; height:1px; background:var(--blue); }
+.lbl.center { justify-content:center; }
+
+.sec-h2 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(30px,3.2vw,52px); font-weight:800; line-height:1.08;
+  letter-spacing:-.022em; margin-bottom:20px;
+}
+.sec-h2.dark { color:var(--navy); }
+.sec-h2.light { color:var(--white); }
+.sec-h2 em { font-style:normal; color:var(--blue); }
+
+.section-fade {
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.section-visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Typing cursor */
+.typing-cursor {
+  display:inline-block;
+  color:var(--blue);
+  animation:blink .7s step-end infinite;
+  font-weight:300;
+  margin-left:2px;
+}
+@keyframes blink { 50% { opacity:0; } }
+
+/* Scroll progress bar */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:3px; z-index:999;
+  background:linear-gradient(90deg, var(--blue), #60c6ff);
+  width:0%; transition:width .1s linear;
+  border-radius:0 2px 2px 0;
+}
+
+/* Card glow hover */
+.ac:hover {
+  box-shadow:0 0 0 1.5px rgba(59,158,232,.4), 0 24px 60px rgba(59,158,232,.15);
+  border-color:rgba(59,158,232,.4);
+  transform:translateY(-4px);
+}
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+#about {
+  padding:120px var(--gutter);
+  background:var(--white); position:relative; overflow:hidden;
+}
+#about::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),var(--navy));
+}
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+
+.bp { font-size:16px; line-height:1.85; color:#4A5568; margin-bottom:14px; }
+.quote-block {
+  margin-top:28px; padding:24px 28px;
+  background:var(--navy); border-radius:16px; border-left:3px solid var(--blue);
+}
+.quote-block p {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:500;
+  font-style:italic; color:var(--w90); line-height:1.75;
+}
+
+.cards-col { display:flex; flex-direction:column; gap:16px; }
+.ic {
+  background:var(--navy); border-radius:18px; padding:24px 28px;
+  border:1px solid rgba(59,158,232,.14);
+  display:flex; gap:18px; align-items:flex-start;
+  transition:transform .25s, box-shadow .25s;
+}
+.ic:hover { transform:translateY(-4px); box-shadow:0 20px 52px rgba(0,0,0,.28); }
+.ic-icon {
+  width:46px; height:46px; flex-shrink:0;
+  background:linear-gradient(135deg,rgba(59,158,232,.18),rgba(59,158,232,.04));
+  border-radius:12px; border:1px solid rgba(59,158,232,.2);
+  display:flex; align-items:center; justify-content:center; font-size:21px;
+}
+.ic-title { font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:var(--white); margin-bottom:5px; }
+.ic-desc { font-size:13px; line-height:1.65; color:var(--w60); }
+.ic-desc strong { color:var(--blue); font-weight:500; }
+
+/* ═══════════════════════════════════════
+   APPS PORTFOLIO
+═══════════════════════════════════════ */
+#apps {
+  padding:120px var(--gutter);
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#apps::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 45% at 50% 0%,rgba(59,158,232,.07) 0%,transparent 60%);
+}
+
+#knowledge {
+  padding:120px var(--gutter);
+  background:#fff; position:relative; overflow:hidden;
+}
+#knowledge .sec-head p { color:#4A5568; }
+#knowledge .lbl { color:var(--blue); }
+
+.sec-head { text-align:center; max-width:640px; margin:0 auto 72px; }
+.sec-head p { font-size:16px; line-height:1.75; color:var(--w60); }
+
+.apps-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.ac {
+  background:var(--navy-card); border:1px solid rgba(184,200,216,.10);
+  border-radius:24px; padding:30px;
+  position:relative; overflow:hidden; transition:all .3s; cursor:pointer;
+  display:flex; flex-direction:column;
+}
+.ac::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  opacity:0; transition:opacity .3s;
+}
+.ac:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.45); border-color:rgba(59,158,232,.32); }
+.ac:hover::before { opacity:1; }
+.ac-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+.ac-icon {
+  width:56px; height:56px;
+  background:linear-gradient(135deg,rgba(59,158,232,.22),rgba(59,158,232,.05));
+  border-radius:15px; border:1px solid rgba(59,158,232,.2);
+  display:flex; align-items:center; justify-content:center; font-size:26px;
+}
+.ac-tag {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--blue); background:rgba(59,158,232,.10);
+  border:1px solid rgba(59,158,232,.2); padding:5px 13px; border-radius:50px;
+}
+.ac-name { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; color:var(--white); margin-bottom:9px; }
+.ac-desc { font-size:13px; line-height:1.7; color:var(--w60); flex:1; margin-bottom:0; }
+.ac-status { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--silver); margin-top:22px; }
+.dot { width:6px; height:6px; border-radius:50%; }
+.dot.live { background:#4ADE80; box-shadow:0 0 8px rgba(74,222,128,.65); }
+.dot.wip  { background:var(--blue); box-shadow:0 0 8px rgba(59,158,232,.65); }
+
+/* Knowledge Base light cards */
+.ac.ac-light { background:#fff; border:1.5px solid #E2E8F0; }
+.ac.ac-light .ac-name { color:#0B1829; }
+.ac.ac-light .ac-desc { color:#4A5568; }
+.ac.ac-light .ac-status { color:#4A5568; }
+.ac.ac-light .ac-tag { background:#EEF2FF; color:#3B7BF5; border-color:#C7D7FD; }
+.ac.ac-light .ac-icon { background:linear-gradient(135deg,rgba(59,158,232,.15),rgba(59,158,232,.03)); border-color:rgba(59,158,232,.2); }
+.ac.ac-light:hover { box-shadow:0 24px 60px rgba(0,0,0,.12); border-color:rgba(59,158,232,.4); }
+.read-link {
+  font-family:'Sora',sans-serif; font-size:12px; font-weight:600;
+  color:var(--blue); text-decoration:none;
+  display:inline-flex; align-items:center; gap:4px;
+  height:20px;
+}
+
+/* ═══════════════════════════════════════
+   FEATURES / WHY US
+═══════════════════════════════════════ */
+#features {
+  padding:120px var(--gutter);
+  background:#F4F7FB; position:relative;
+}
+#features::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),var(--navy));
+}
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.fc {
+  padding:38px 30px; background:var(--white);
+  border-radius:24px; border:1px solid rgba(13,27,46,.07); transition:all .3s;
+}
+.fc:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(13,27,46,.12); }
+.fc-icon {
+  width:58px; height:58px; background:var(--navy); border-radius:17px;
+  display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:22px;
+}
+.fc-title { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+.fc-desc { font-size:14px; line-height:1.8; color:#4A5568; }
+
+/* ═══════════════════════════════════════
+   CTA
+═══════════════════════════════════════ */
+#cta {
+  padding:120px var(--gutter);
+  background:var(--navy); text-align:center; position:relative; overflow:hidden;
+}
+#cta::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 55% 75% at 50% 50%,rgba(59,158,232,.12) 0%,transparent 72%);
+}
+.cta-inner { max-width:680px; margin:0 auto; position:relative; z-index:1; }
+.cta-h2 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(36px,5vw,64px); font-weight:800; line-height:1.08;
+  letter-spacing:-.025em; color:var(--white); margin-bottom:18px;
+}
+.cta-h2 em { font-style:normal; color:var(--blue); }
+.cta-p { font-size:17px; line-height:1.8; color:var(--w60); margin-bottom:44px; }
+.cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background:#060E1A;
+  padding:72px var(--gutter) 40px;
+  border-top:1px solid var(--w12);
+}
+.foot-grid {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:56px; margin-bottom:56px;
+}
+.foot-brand { display:flex; flex-direction:column; align-items:flex-start; }
+.foot-brand img { height:80px; margin-bottom:12px; display:block; margin-left:20px; }
+.foot-tag {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:300;
+  font-style:italic; color:var(--w60); margin-bottom:24px;
+  padding-left:4px;
+}
+.socials { display:flex; gap:10px; }
+.soc {
+  width:38px; height:38px; background:var(--w07); border:1px solid var(--w12);
+  border-radius:10px; display:flex; align-items:center; justify-content:center;
+  color:var(--w60); text-decoration:none; font-size:16px; transition:all .2s;
+}
+.soc:hover { background:var(--blue); border-color:var(--blue); color:var(--white); }
+.foot-col h4 {
+  font-family:'Sora',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--w60); margin-bottom:18px;
+}
+.foot-col ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+.foot-col ul a { font-size:13px; color:var(--w60); text-decoration:none; transition:color .2s; }
+.foot-col ul a:hover { color:var(--white); }
+.ct-row { display:flex; align-items:center; gap:9px; font-size:13px; color:var(--w60); margin-bottom:12px; }
+.foot-bot {
+  padding-top:32px; border-top:1px solid var(--w07);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.copy { font-size:12px; color:var(--w60); }
+.copy em { font-style:normal; color:var(--blue); }
+.foot-badge { font-family:'Sora',sans-serif; font-size:11px; font-weight:600; letter-spacing:.08em; color:var(--w30); text-transform:uppercase; }
+
+/* ═══════════════════════════════════════
+   SCROLL ANIMATION
+═══════════════════════════════════════ */
+.fade-up {
+  opacity:0;
+  transform:translateY(48px);
+  transition:opacity .65s cubic-bezier(0.22,1,0.36,1), transform .65s cubic-bezier(0.22,1,0.36,1);
+}
+.fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ≥ 1280px  = Full HD desktop  ← default styles above
+   1024–1279 = small laptop / large tablet landscape
+   768–1023  = tablet portrait / Poco Pad-style
+   < 768px   = mobile
+═══════════════════════════════════════ */
+
+/* Small laptop / landscape tablet (1024–1279px) */
+@media (max-width:1279px) and (min-width:1024px) {
+  :root { --gutter:52px; }
+  #hero { grid-template-columns:1fr 400px; gap:24px; }
+  h1.hero-h1 { font-size:clamp(36px,3.8vw,54px); }
+  .hero-text { padding-left:20px; }
+  .hero-desc { font-size:15px; }
+  .photo-wrap { max-width:360px; margin-right:0; }
+  .apps-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
+  .feat-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
+  .foot-grid { gap:40px; }
+}
+
+/* Tablet portrait / Poco Pad (768–1023px) */
+@media (max-width:1023px) and (min-width:768px) {
+  :root { --gutter:40px; }
+  nav { padding:0 32px; }
+  .nav-links { gap:2px; }
+  .nav-links a { font-size:12px; padding:7px 13px; }
+  .nav-cta { padding:9px 20px; font-size:12px; }
+
+  #hero {
+    grid-template-columns:1fr 1fr;
+    padding:90px 40px 64px;
+    gap:24px; align-items:center;
+  }
+  h1.hero-h1 { font-size:clamp(28px,3.6vw,44px); }
+  .hero-text { padding-left:0; }
+  .hero-desc { font-size:14px; max-width:100%; }
+  .stats { gap:24px; }
+  .stat-n { font-size:26px; }
+  .photo-wrap { max-width:100%; margin-right:0; }
+  .badge { left:-10px; bottom:24px; }
+
+  #about { padding:88px 40px; }
+  .about-grid { grid-template-columns:1fr 1fr; gap:48px; }
+  .bp { font-size:14px; }
+
+  #apps { padding:88px 40px; }
+  .apps-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+
+  #knowledge { padding:88px 40px; }
+
+  #features { padding:88px 40px; }
+  .feat-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+
+  #cta { padding:88px 40px; }
+  footer { padding:60px 40px 32px; }
+  .foot-grid { grid-template-columns:1fr 1fr; gap:36px; }
+  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
+}
+
+/* Poco Pad hi-res — same as tablet but more room (min-width trick via dpr) */
+@media (min-width:1600px) {
+  :root { --gutter:100px; --max:1440px; }
+  h1.hero-h1 { font-size:80px; }
+  .hero-desc { font-size:17px; }
+  .sec-h2 { font-size:56px; }
+  .apps-grid { grid-template-columns:repeat(3,1fr); gap:28px; }
+}
+
+/* Mobile (< 768px) */
+@media (max-width:767px) {
+  :root { --gutter:20px; }
+  .nav-links, .nav-cta { display:none; }
+  .hamburger { display:flex; }
+
+  #hero {
+    grid-template-columns:1fr;
+    padding:110px 0 0;
+    text-align:center;
+    gap:0;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+  .hero-text {
+    padding:24px 20px 28px;
+    order:1;
+  }
+  .eyebrow { justify-content:center; }
+  .hero-desc {
+    margin:0 auto 28px; border-left:none;
+    border-top:2px solid var(--blue); padding:14px 0 0; max-width:360px;
+  }
+  .stats { justify-content:center; gap:24px; }
+  .btns { justify-content:center; }
+
+  .hero-visual {
+    order:2;
+    justify-content:center;
+    width:100%;
+    flex:1;
+    padding:0 16px 20px;
+  }
+  .photo-wrap {
+    width:100%;
+    max-width:100%;
+    margin-right:0;
+    aspect-ratio:5/6;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(59,158,232,.15);
+  }
+  .photo-wrap img.founder {
+    border-radius:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:top center;
+  }
+  .badge { left:12px; bottom:18px; padding:11px 15px; }
+  .badge-n { font-size:16px; }
+  .scroll-hint, .grid-lines { display:none; }
+
+  #about { padding:72px 20px; }
+  .about-grid { grid-template-columns:1fr; gap:36px; }
+
+  #apps { padding:72px 20px; }
+  .apps-grid { grid-template-columns:1fr; }
+
+  #knowledge { padding:72px 20px; }
+
+  #features { padding:72px 20px; }
+  .feat-grid { grid-template-columns:1fr; }
+
+  #cta { padding:72px 20px; }
+  footer { padding:52px 20px 28px; }
+  .foot-grid { grid-template-columns:1fr 1fr; gap:32px; }
+  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
+}
+
+@media (max-width:480px) {
+  h1.hero-h1 { font-size:32px; }
+  .foot-grid { grid-template-columns:1fr; }
+}
+}
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <div class="nav-logo"><img src="https://anabhidev.netlify.app/logo.png" alt="Anabhi Dev"></div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#knowledge">Learn</a></li>
+    <li><a href="#features">Why Us</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Get in Touch</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero"      onclick="closeMenu()">Home</a>
+  <a href="#about"     onclick="closeMenu()">About</a>
+  <a href="#apps"      onclick="closeMenu()">Apps</a>
+  <a href="#knowledge" onclick="closeMenu()">Learn</a>
+  <a href="#features"  onclick="closeMenu()">Why Us</a>
+  <a href="#cta"       onclick="closeMenu()" class="mob-cta">Get in Touch</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="grid-lines"></div>
+
+  <div class="hero-text fade-up">
+    <div class="eyebrow">Automation · Apps · AI</div>
+    <h1 class="hero-h1">Between work<br>and sleep,<br><em><span id="typing-target"></span><span class="typing-cursor">|</span></em></h1>
+    <p class="hero-sub">Less Doing. More Living.</p>
+    <p class="hero-desc">
+      Over the past months, I've been quietly building apps and automation tools under one roof: <strong>Anabhi Dev.</strong> Not a big tech company — just one person who believes technology should make life simpler, not more complicated.
+    </p>
+    <div class="stats">
+      <div><div class="stat-n" id="stat-apps">0<sup>+</sup></div><div class="stat-l">Apps Built</div></div>
+      <div><div class="stat-n" id="stat-ai">0<sup>%</sup></div><div class="stat-l">AI Assisted</div></div>
+      <div><div class="stat-n" id="stat-builder">0</div><div class="stat-l">Builder</div></div>
+    </div>
+    <div class="btns">
+      <a href="#apps" class="btn-p">Explore Apps →</a>
+      <a href="#about" class="btn-g">About Me</a>
+    </div>
+  </div>
+
+  <div class="hero-visual fade-up" style="transition-delay:.15s">
+    <div class="photo-wrap">
+      <img src="https://anabhidev.netlify.app/founder-anabhi-dev.png" alt="Anabhi Dev Founder" class="founder">
+      <div class="badge">
+        <div class="badge-icon">⚡</div>
+        <div><div class="badge-n">33 Apps</div><div class="badge-l">and counting</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="fade-up">
+      <div class="lbl">About Anabhi Dev</div>
+      <h2 class="sec-h2 dark">What is<br><em>Anabhi Dev?</em></h2>
+      <p class="bp">Anabhi Dev is a personal platform built to house all the small but powerful apps and automation tools I create — tools that solve real problems at work and in everyday life.</p>
+      <p class="bp">From employee schedules to daily reports, from HR tools to personal life automation — the goal is always the same: <strong>Build smart. Automate the rest. Enjoy life.</strong></p>
+      <div class="quote-block">
+        <p>"Technology is not just about doing more. It's about creating systems that give you back time to live better."</p>
+      </div>
+    </div>
+    <div class="cards-col fade-up" style="transition-delay:.12s">
+      <div class="ic">
+        <div class="ic-icon">🤖</div>
+        <div>
+          <div class="ic-title">All Built with AI</div>
+          <div class="ic-desc">Every app is crafted with <strong>AI assistance</strong>, making complex automation accessible and fast to deploy.</div>
+        </div>
+      </div>
+      <div class="ic">
+        <div class="ic-icon">⚙️</div>
+        <div>
+          <div class="ic-title">Real Problems, Real Solutions</div>
+          <div class="ic-desc">From <strong>weather alerts via Telegram</strong> to HR dashboards — built for actual daily use cases.</div>
+        </div>
+      </div>
+      <div class="ic">
+        <div class="ic-icon">🚀</div>
+        <div>
+          <div class="ic-title">Growing Portfolio</div>
+          <div class="ic-desc">23 apps and counting — <strong>new tools added regularly</strong> to solve more of life's repetitive tasks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ APPS ══ -->
+<section id="apps">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">Portfolio</div>
+      <h2 class="sec-h2 light">Apps I've <em>Built</em></h2>
+      <p>A growing collection of automation tools and small apps — each solving a real problem, built with care and AI.</p>
+    </div>
+    <div class="apps-grid">
+      <div class="ac fade-up">
+        <div class="ac-top"><div class="ac-icon">✍️</div><div class="ac-tag">AI Writing</div></div>
+        <div class="ac-name">PostCraft</div>
+        <div class="ac-desc">Turn your raw ideas into polished LinkedIn posts — powered by AI, delivered in seconds.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.07s">
+        <div class="ac-top"><div class="ac-icon">🌤️</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-name">WeatherAlert</div>
+        <div class="ac-desc">Real-time weather intelligence, delivered straight to your Telegram before your day begins.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.14s">
+        <div class="ac-top"><div class="ac-icon">📅</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-name">BaliCalBot</div>
+        <div class="ac-desc">Never miss a sacred day — Bali's traditional calendar, automated and sent to your Telegram daily.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.04s">
+        <div class="ac-top"><div class="ac-icon">🎰</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-name">SpinGather</div>
+        <div class="ac-desc">Spin the wheel, crown the winners — fully automated prize draws with instant Telegram & email reports.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.11s">
+        <div class="ac-top"><div class="ac-icon">🥗</div><div class="ac-tag">Health & Life</div></div>
+        <div class="ac-name">JejakNutrisi</div>
+        <div class="ac-desc">Track every bite, own your health — a smarter way to log and understand your daily nutrition.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.18s">
+        <div class="ac-top"><div class="ac-icon">🖥️</div><div class="ac-tag">Dashboard</div></div>
+        <div class="ac-name">IT Realtime Dashboard</div>
+        <div class="ac-desc">One screen. Every system. Live data from Office365, Calendar, ClickUp — all in one command center.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.07s">
+        <div class="ac-top"><div class="ac-icon">⏳</div><div class="ac-tag">Life Tracking</div></div>
+        <div class="ac-name">HoL</div>
+        <div class="ac-desc">Because life happens fast — every 'last time' moment documented, never forgotten. Less Doing, More Living.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.14s">
+        <div class="ac-top"><div class="ac-icon">🎯</div><div class="ac-tag">Parenting Tech</div></div>
+        <div class="ac-name">QuizDaily</div>
+        <div class="ac-desc">Turn screen time into learning time — kids earn extra play by acing daily quizzes, with results sent straight to parents.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.21s">
+        <div class="ac-top"><div class="ac-icon">📡</div><div class="ac-tag">Infrastructure</div></div>
+        <div class="ac-name">Mikrotik Monitoring</div>
+        <div class="ac-desc">Full visibility over your Mikrotik network — nodes, traffic, and functions monitored live from one clean dashboard.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up">
+        <div class="ac-top"><div class="ac-icon">⚽</div><div class="ac-tag">Sports & Fun</div></div>
+        <div class="ac-name">World Cup 2026</div>
+        <div class="ac-desc">Live match results, standings & news — fully automated via API, zero manual input.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.07s">
+        <div class="ac-top"><div class="ac-icon">🎓</div><div class="ac-tag">Education</div></div>
+        <div class="ac-name">LMS</div>
+        <div class="ac-desc">A complete learning management system — courses, modules, and progress tracking in one clean dashboard.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.14s">
+        <div class="ac-top"><div class="ac-icon">🥦</div><div class="ac-tag">AI & Health</div></div>
+        <div class="ac-name">NutriBot</div>
+        <div class="ac-desc">Chat with AI about any food or drink — get instant nutrition insights powered by Gemini.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.04s">
+        <div class="ac-top"><div class="ac-icon">📋</div><div class="ac-tag">HR Tools</div></div>
+        <div class="ac-name">HR Document Tracker</div>
+        <div class="ac-desc">Track every HR document, deadline, and follow-up — so nothing slips through the cracks.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.11s">
+        <div class="ac-top"><div class="ac-icon">📊</div><div class="ac-tag">Operations</div></div>
+        <div class="ac-name">SOP Dashboard</div>
+        <div class="ac-desc">Your standard operating procedures, organized and accessible — one dashboard for every process.</div>
+        <div class="ac-status"><div class="dot wip"></div> In Progress</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.18s">
+        <div class="ac-top"><div class="ac-icon">💼</div><div class="ac-tag">Finance Ops</div></div>
+        <div class="ac-name">AdminFlow Task</div>
+        <div class="ac-desc">Log daily admin tasks, assign follow-ups, and keep the team accountable — built for real operations.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.07s">
+        <div class="ac-top"><div class="ac-icon">🌐</div><div class="ac-tag">IT Ops</div></div>
+        <div class="ac-name">Domain & IP Check</div>
+        <div class="ac-desc">Instantly check domain and IP status — automated monitoring so your network stays clean.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.14s">
+        <div class="ac-top"><div class="ac-icon">📅</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-name">Employee Schedule to Telegram</div>
+        <div class="ac-desc">Auto-send employee schedules straight to Telegram — no more manual sharing, ever.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+      <div class="ac fade-up" style="transition-delay:.21s">
+        <div class="ac-top"><div class="ac-icon">🎨</div><div class="ac-tag">Creative</div></div>
+        <div class="ac-name">Studio Gambar Anabhi</div>
+        <div class="ac-desc">A drawing studio for kids — trace, create, and send finished artwork straight to mom & dad via Telegram.</div>
+        <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ KNOWLEDGE BASE ══ -->
+<section id="knowledge">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center" style="color:var(--blue);">Resources</div>
+      <h2 class="sec-h2 dark">Knowledge <em>Base</em></h2>
+      <p style="color:#4A5568;">Practical guides and tips — from AI tools to dev workflows, curated by Anabhi Dev.</p>
+    </div>
+    <div class="apps-grid">
+      <div class="ac ac-light fade-up">
+        <div class="ac-top"><div class="ac-icon">🤖</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-name">Claude AI — Token & Efficiency</div>
+        <div class="ac-desc">Master Claude like a pro — tips to save tokens, write better prompts, and get more done with less.</div>
+        <div class="ac-status"><a href="tips-001.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.07s">
+        <div class="ac-top"><div class="ac-icon">💬</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-name">ChatGPT Master Guide</div>
+        <div class="ac-desc">From basic prompts to advanced workflows — everything you need to unlock ChatGPT's full potential.</div>
+        <div class="ac-status"><a href="tips-002.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.14s">
+        <div class="ac-top"><div class="ac-icon">✨</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-name">Gemini + Google Workspace</div>
+        <div class="ac-desc">Supercharge your Google apps with Gemini — smarter Docs, Sheets, Gmail, and beyond.</div>
+        <div class="ac-status"><a href="tips-003.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.04s">
+        <div class="ac-top"><div class="ac-icon">⚙️</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-name">Google Apps Script</div>
+        <div class="ac-desc">Automate anything in Google Workspace with code — no server needed, just vibes and scripts.</div>
+        <div class="ac-status"><a href="tips-004.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.11s">
+        <div class="ac-top"><div class="ac-icon">🐙</div><div class="ac-tag">Dev Workflow</div></div>
+        <div class="ac-name">Git & GitHub Tips</div>
+        <div class="ac-desc">Version control without the headache — essential Git commands and GitHub workflows for builders.</div>
+        <div class="ac-status"><a href="tips-005.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.18s">
+        <div class="ac-top"><div class="ac-icon">💻</div><div class="ac-tag">Dev Workflow</div></div>
+        <div class="ac-name">Visual Studio Code Tips</div>
+        <div class="ac-desc">Work faster in VS Code — shortcuts, extensions, and settings every developer should know.</div>
+        <div class="ac-status"><a href="tips-006.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.04s">
+        <div class="ac-top"><div class="ac-icon">🐍</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-name">Python untuk Automation</div>
+        <div class="ac-desc">Automate your world with Python — practical scripts for files, APIs, bots, and everyday tasks.</div>
+        <div class="ac-status"><a href="tips-007.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.11s">
+        <div class="ac-top"><div class="ac-icon">⚡</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-name">JavaScript / No-code</div>
+        <div class="ac-desc">From vanilla JS to no-code tools — build fast, ship faster, and automate without limits.</div>
+        <div class="ac-status"><a href="tips-008.html" class="read-link">Read Guide →</a></div>
+      </div>
+      <div class="ac ac-light fade-up" style="transition-delay:.18s">
+        <div class="ac-top"><div class="ac-icon">📓</div><div class="ac-tag">Productivity</div></div>
+        <div class="ac-name">Notion Tips</div>
+        <div class="ac-desc">Turn Notion into your second brain — templates, databases, and workflows that actually stick.</div>
+        <div class="ac-status"><a href="tips-009.html" class="read-link">Read Guide →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head fade-up" style="margin-bottom:68px">
+      <div class="lbl center">Why Anabhi Dev</div>
+      <h2 class="sec-h2 dark">Built Different.<br><em>By Design.</em></h2>
+      <p style="color:#4A5568">Everything here is built with purpose — not to impress, but to genuinely make things easier.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="fc fade-up"><div class="fc-icon">🎯</div><div class="fc-title">Real Use Cases</div><div class="fc-desc">Every tool is born from a real problem — not a theoretical one. If it doesn't help in daily life, it doesn't ship.</div></div>
+      <div class="fc fade-up" style="transition-delay:.07s"><div class="fc-icon">⚡</div><div class="fc-title">AI-Powered Speed</div><div class="fc-desc">Built with AI assistance from day one, enabling faster development cycles and smarter solutions at every step.</div></div>
+      <div class="fc fade-up" style="transition-delay:.14s"><div class="fc-icon">🔄</div><div class="fc-title">Automation First</div><div class="fc-desc">If a task is done more than twice, it gets automated. That's the philosophy behind every single app here.</div></div>
+      <div class="fc fade-up" style="transition-delay:.04s"><div class="fc-icon">🏗️</div><div class="fc-title">Constantly Growing</div><div class="fc-desc">New apps are added regularly. The portfolio grows as new problems are discovered and solved.</div></div>
+      <div class="fc fade-up" style="transition-delay:.11s"><div class="fc-icon">🔒</div><div class="fc-title">Built to Last</div><div class="fc-desc">Each app is maintained and improved over time — not abandoned after launch. Long-term thinking, always.</div></div>
+      <div class="fc fade-up" style="transition-delay:.18s"><div class="fc-icon">💡</div><div class="fc-title">Simple by Default</div><div class="fc-desc">Complexity is hidden, simplicity is shown. Tools that anyone can use, no manual required.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section id="cta">
+  <div class="cta-inner fade-up">
+    <div class="lbl center" style="margin-bottom:18px">Let's Connect</div>
+    <h2 class="cta-h2">Have something<br>to <em>automate?</em></h2>
+    <p class="cta-p">Got a repetitive task eating your time? Let's talk — I might already have a tool for it, or I'll build one.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/6282267672828" class="btn-p">💬 WhatsApp Me</a>
+      <a href="mailto:anabhi.dev@gmail.com" class="btn-g">✉️ Send Email</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div style="font-family:'Sora',sans-serif; font-size:28px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; padding-left:12px;">Anabhi <em style="font-style:normal; color:var(--blue);">Dev</em></div>
+        <p class="foot-tag" style="padding-left:4px;">"Less Doing. More Living."</p>
+        <div class="socials">
+          <a href="https://wa.me/6282267672828" class="soc" title="WhatsApp">💬</a>
+          <a href="https://instagram.com/AnabhiDev" class="soc" title="Instagram">📸</a>
+          <a href="https://linkedin.com/in/anabhi-dev" class="soc" title="LinkedIn">💼</a>
+          <a href="mailto:anabhi.dev@gmail.com" class="soc" title="Email">✉️</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#apps">Apps</a></li>
+          <li><a href="#features">Why Us</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Tags</h4>
+        <ul>
+          <li><a href="#">#AnabhiDev</a></li>
+          <li><a href="#">#Automation</a></li>
+          <li><a href="#">#BuildInPublic</a></li>
+          <li><a href="#">#LessDoingMoreLiving</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <div class="ct-row">💬 wa.me/6282267672828</div>
+        <div class="ct-row">✉️ anabhi.dev@gmail.com</div>
+        <div class="ct-row">💼 linkedin.com/in/anabhi-dev</div>
+        <div class="ct-row">📸 @AnabhiDev</div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div class="copy">© 2025 <em>Anabhi Dev</em>. All rights reserved.</div>
+      <div class="foot-badge">Less Doing. More Living. ✦</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sync photo height to hero-text height
+  function syncPhotoHeight() {
+    const heroText = document.querySelector('.hero-text');
+    const photoWrap = document.querySelector('.photo-wrap');
+    if (heroText && photoWrap) {
+      const h = heroText.offsetHeight;
+      photoWrap.style.height = h + 'px';
+    }
+  }
+  syncPhotoHeight();
+  window.addEventListener('resize', syncPhotoHeight);
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive:true });
+
+  // Counter animation
+  function animateCounter(el, target, duration, suffix) {
+    let start = 0;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(ease * target);
+      el.innerHTML = current + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      animateCounter(document.getElementById('stat-apps'), 33, 2000, '<sup>+</sup>');
+      animateCounter(document.getElementById('stat-ai'), 100, 2000, '<sup>%</sup>');
+      animateCounter(document.getElementById('stat-builder'), 1, 800, '');
+    }, 400);
+  });
+
+  // Scroll progress bar
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (scrolled / total * 100) + '%';
+  }, { passive:true });
+
+  // Typing effect
+  window.addEventListener('load', () => {
+    const target = document.getElementById('typing-target');
+    const cursor = document.querySelector('.typing-cursor');
+    const text = 'I build.';
+    let i = 0;
+    setTimeout(() => {
+      const type = () => {
+        if (i < text.length) {
+          target.textContent += text[i];
+          i++;
+          setTimeout(type, i === text.length ? 0 : 80);
+        } else {
+          setTimeout(() => { cursor.style.display = 'none'; }, 1200);
+        }
+      };
+      type();
+    }, 800);
+  });
+
+  // Parallax founder photo
+  const photoWrap = document.querySelector('.photo-wrap');
+  window.addEventListener('scroll', () => {
+    if (photoWrap) {
+      const offset = window.scrollY * 0.12;
+      photoWrap.style.transform = `translateY(${offset}px)`;
+    }
+  }, { passive:true });
+
+  // Stagger cards - dynamic per grid
+  const staggerObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const cards = entry.target.querySelectorAll('.ac, .fc');
+        cards.forEach((card, i) => {
+          card.style.transitionDelay = (i * 0.1) + 's';
+          setTimeout(() => card.classList.add('visible'), i * 100);
+        });
+        staggerObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.apps-grid, .feat-grid').forEach(grid => {
+    const cards = grid.querySelectorAll('.ac, .fc');
+    cards.forEach(card => {
+      card.style.transitionDelay = '0s';
+    });
+    staggerObs.observe(grid);
+  });
+  const sectionFadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('section-visible');
+        sectionFadeObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('section').forEach(s => {
+    s.classList.add('section-fade');
+    sectionFadeObs.observe(s);
+  });
+
+  // Hamburger
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    mob.classList.toggle('open');
+  });
+  function closeMenu() {
+    ham.classList.remove('open');
+    mob.classList.remove('open');
+  }
+
+  // Fade-up on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 65);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.09 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 110) cur = s.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, { passive:true });
+</script>
+</body>
+</html>

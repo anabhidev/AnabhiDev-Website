@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Claude Token Tips — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(32px,7vw,52px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN CONTAINER ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── TOKEN METER (hero visual) ── */
+.token-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.token-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.token-meter-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.token-bars{display:flex;flex-direction:column;gap:10px;}
+.token-bar-row{display:flex;align-items:center;gap:10px;}
+.token-bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:130px;}
+.token-bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.token-bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.token-bar-val{font-size:11px;font-weight:700;min-width:36px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.token-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── DEVICE COMPARISON CARDS ── */
+.device-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.device-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.device-card.best{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.device-card.best::before{content:'BEST';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.device-card.worst{border-color:rgba(220,38,38,0.2);}
+.device-icon{font-size:26px;margin-bottom:10px;}
+.device-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.device-mode{font-size:11px;color:var(--gray);margin-bottom:12px;}
+.device-stats{display:flex;flex-direction:column;gap:5px;}
+.device-stat{display:flex;align-items:center;justify-content:space-between;}
+.device-stat-label{font-size:11px;color:var(--gray);}
+.device-stat-val{font-size:11px;font-weight:700;}
+.stat-great{color:var(--green);}
+.stat-ok{color:var(--yellow);}
+.stat-bad{color:var(--red);}
+
+/* ── DETAIL COMPARISON TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.compare-table th{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);padding:10px 12px;text-align:left;
+  border-bottom:2px solid var(--border);background:var(--gray-light);
+}
+.compare-table td{
+  padding:11px 12px;border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--navy);vertical-align:middle;
+}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table tr:hover td{background:var(--navy-light);}
+.cell-device{font-weight:700;font-size:13px;}
+.chip{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;}
+.chip-green{background:rgba(22,163,74,.1);color:#16A34A;}
+.chip-yellow{background:rgba(217,119,6,.1);color:#D97706;}
+.chip-red{background:rgba(220,38,38,.08);color:#DC2626;}
+.chip-blue{background:rgba(59,123,245,.1);color:var(--blue);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── PROMPT TIPS ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{
+  background:var(--white);border-radius:12px;border:1.5px solid var(--border);
+  padding:16px;
+}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── WHEN TO NEW CHAT ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;}
+.timeline-dot{width:32px;height:32px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.timeline-content{flex:1;}
+.timeline-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.timeline-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;
+  margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--navy);padding:40px 20px;text-align:center;
+}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:40px;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE NAV BOTTOM ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .device-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .compare-table{font-size:11px;}
+  .compare-table th,.compare-table td{padding:8px;}
+  .hero{padding:80px 20px 48px;}
+}
+@media (max-width:380px){
+  .device-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#devices" onclick="setActive(this)">Devices</a>
+      <a class="nav-link" href="#prompt" onclick="setActive(this)">Prompting</a>
+      <a class="nav-link" href="#newchat" onclick="setActive(this)">New Chat</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Hemat Token Claude,<br><span>Kerja Lebih Efisien</span></h1>
+    <p class="hero-sub">Panduan lengkap cara menggunakan Claude AI secara efisien — dari pilihan device yang tepat, cara prompting, sampai kapan harus mulai chat baru.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">📱 Mobile vs Desktop</span>
+      <span class="hero-tag">🖥️ App vs Browser</span>
+      <span class="hero-tag">⚡ Token Efficiency</span>
+      <span class="hero-tag">💡 Prompting Tips</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- TOKEN EXPLAINER -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Kenapa Penting?</div>
+    <h2 class="section-title">Token itu "Bensin"-nya Claude</h2>
+    <p class="section-desc">Setiap pesan yang kamu kirim dan terima menghabiskan token. Makin panjang conversation, makin banyak token yang dikonsumsi — karena Claude membaca semua riwayat chat setiap kali merespons.</p>
+
+    <div class="token-visual">
+      <div class="token-meter-label">Token Usage — Simulasi 1 Sesi Develop</div>
+      <div class="token-bars">
+        <div class="token-bar-row">
+          <span class="token-bar-name">💻 Browser Desktop</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-green" style="width:30%"></div></div>
+          <span class="token-bar-val val-green">~30%</span>
+        </div>
+        <div class="token-bar-row">
+          <span class="token-bar-name">🖥️ Desktop App</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-green" style="width:40%"></div></div>
+          <span class="token-bar-val val-green">~40%</span>
+        </div>
+        <div class="token-bar-row">
+          <span class="token-bar-name">📟 Tablet Browser</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-green" style="width:35%"></div></div>
+          <span class="token-bar-val val-green">~35%</span>
+        </div>
+        <div class="token-bar-row">
+          <span class="token-bar-name">📟 Tablet App</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-yellow" style="width:55%"></div></div>
+          <span class="token-bar-val val-yellow">~55%</span>
+        </div>
+        <div class="token-bar-row">
+          <span class="token-bar-name">📱 HP Browser</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-yellow" style="width:65%"></div></div>
+          <span class="token-bar-val val-yellow">~65%</span>
+        </div>
+        <div class="token-bar-row">
+          <span class="token-bar-name">📱 HP App Claude</span>
+          <div class="token-bar-track"><div class="token-bar-fill fill-red" style="width:85%"></div></div>
+          <span class="token-bar-val val-red">~85%</span>
+        </div>
+      </div>
+      <div class="token-note">* Estimasi untuk 1 sesi develop generate kode panjang (~500+ baris). Angka aktual bervariasi.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DEVICE SECTION -->
+  <div class="section" id="devices">
+    <div class="section-label"><div class="section-label-line"></div>Device Guide</div>
+    <h2 class="section-title">Pilih Device yang Tepat</h2>
+    <p class="section-desc">Device dan mode akses yang berbeda punya dampak signifikan terhadap konsumsi token dan kenyamanan kerja. Ini panduan lengkapnya.</p>
+
+    <!-- Device cards -->
+    <div class="device-grid">
+      <div class="device-card best">
+        <div class="device-icon">💻</div>
+        <div class="device-name">Laptop / Desktop</div>
+        <div class="device-mode">Chrome Browser</div>
+        <div class="device-stats">
+          <div class="device-stat"><span class="device-stat-label">Token usage</span><span class="device-stat-val stat-great">Paling hemat</span></div>
+          <div class="device-stat"><span class="device-stat-label">Stability</span><span class="device-stat-val stat-great">Sangat stabil</span></div>
+          <div class="device-stat"><span class="device-stat-label">For coding</span><span class="device-stat-val stat-great">✅ Ideal</span></div>
+        </div>
+      </div>
+      <div class="device-card">
+        <div class="device-icon">🖥️</div>
+        <div class="device-name">Windows / MacBook</div>
+        <div class="device-mode">Desktop App</div>
+        <div class="device-stats">
+          <div class="device-stat"><span class="device-stat-label">Token usage</span><span class="device-stat-val stat-great">Hemat</span></div>
+          <div class="device-stat"><span class="device-stat-label">Stability</span><span class="device-stat-val stat-great">Stabil</span></div>
+          <div class="device-stat"><span class="device-stat-label">For coding</span><span class="device-stat-val stat-ok">✅ Bagus</span></div>
+        </div>
+      </div>
+      <div class="device-card">
+        <div class="device-icon">📟</div>
+        <div class="device-name">Tablet</div>
+        <div class="device-mode">Chrome Browser</div>
+        <div class="device-stats">
+          <div class="device-stat"><span class="device-stat-label">Token usage</span><span class="device-stat-val stat-great">Hemat</span></div>
+          <div class="device-stat"><span class="device-stat-label">Stability</span><span class="device-stat-val stat-great">Stabil</span></div>
+          <div class="device-stat"><span class="device-stat-label">For coding</span><span class="device-stat-val stat-great">✅ Bagus</span></div>
+        </div>
+      </div>
+      <div class="device-card">
+        <div class="device-icon">📟</div>
+        <div class="device-name">Tablet</div>
+        <div class="device-mode">Claude App</div>
+        <div class="device-stats">
+          <div class="device-stat"><span class="device-stat-label">Token usage</span><span class="device-stat-val stat-ok">Lumayan</span></div>
+          <div class="device-stat"><span class="device-stat-label">Stability</span><span class="device-stat-val stat-ok">Cukup</span></div>
+          <div class="device-stat"><span class="device-stat-label">For coding</span><span class="device-stat-val stat-ok">⚠️ Oke</span></div>
+        </div>
+      </div>
+      <div class="device-card worst">
+        <div class="device-icon">📱</div>
+        <div class="device-name">HP / Smartphone</div>
+        <div class="device-mode">Claude App</div>
+        <div class="device-stats">
+          <div class="device-stat"><span class="device-stat-label">Token usage</span><span class="device-stat-val stat-bad">Paling boros</span></div>
+          <div class="device-stat"><span class="device-stat-label">Stability</span><span class="device-stat-val stat-bad">Bisa crash</span></div>
+          <div class="device-stat"><span class="device-stat-label">For coding</span><span class="device-stat-val stat-bad">❌ Hindari</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed comparison table -->
+    <div style="overflow-x:auto;margin-bottom:20px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Device & Mode</th>
+            <th>Chat Biasa</th>
+            <th>Generate Kode</th>
+            <th>Long Session</th>
+            <th>Rekomendasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="cell-device">💻 Desktop Browser</div></td>
+            <td><span class="chip chip-green">✅ Hemat</span></td>
+            <td><span class="chip chip-green">✅ Ideal</span></td>
+            <td><span class="chip chip-green">✅ Aman</span></td>
+            <td><span class="chip chip-blue">Selalu pakai ini</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-device">🖥️ Desktop App</div></td>
+            <td><span class="chip chip-green">✅ Hemat</span></td>
+            <td><span class="chip chip-green">✅ Bagus</span></td>
+            <td><span class="chip chip-green">✅ Aman</span></td>
+            <td><span class="chip chip-blue">Alternatif browser</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-device">📟 Tablet Browser</div></td>
+            <td><span class="chip chip-green">✅ Hemat</span></td>
+            <td><span class="chip chip-green">✅ Bagus</span></td>
+            <td><span class="chip chip-green">✅ Aman</span></td>
+            <td><span class="chip chip-blue">Rekomendasi ke-2</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-device">📟 Tablet App</div></td>
+            <td><span class="chip chip-green">✅ Oke</span></td>
+            <td><span class="chip chip-yellow">⚠️ Hati-hati</span></td>
+            <td><span class="chip chip-yellow">⚠️ Monitor</span></td>
+            <td><span class="chip chip-yellow">Untuk chat ringan</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-device">📱 HP Browser</div></td>
+            <td><span class="chip chip-green">✅ Oke</span></td>
+            <td><span class="chip chip-yellow">⚠️ Lumayan</span></td>
+            <td><span class="chip chip-red">❌ Berisiko</span></td>
+            <td><span class="chip chip-yellow">Chat saja</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-device">📱 HP App Claude</div></td>
+            <td><span class="chip chip-yellow">⚠️ Oke</span></td>
+            <td><span class="chip chip-red">❌ Boros</span></td>
+            <td><span class="chip chip-red">❌ Hindari</span></td>
+            <td><span class="chip chip-red">Darurat saja</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Key Insight</div>
+      <div class="highlight-box-text">
+        <strong>Beda device BUKAN berarti beda limit token.</strong> Limitnya sama — yang beda adalah seberapa efisien browser me-render conversation history. Browser desktop pakai lazy loading yang lebih baik, sehingga context yang sama di-load lebih efisien. App mobile me-render semua chat history sekaligus setiap ada response baru.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROMPT TIPS -->
+  <div class="section" id="prompt">
+    <div class="section-label"><div class="section-label-line"></div>Prompting</div>
+    <h2 class="section-title">Prompt yang Efisien</h2>
+    <p class="section-desc">Cara kamu nulis prompt sangat mempengaruhi kualitas response dan jumlah token yang dipakai. Ini yang perlu diperhatikan.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Spesifik dan clear dari awal — sebutkan context, tujuan, dan output yang diinginkan</li>
+          <li>Samakan persepsi sebelum generate — konfirmasi dulu sebelum minta kode panjang</li>
+          <li>Satu task per chat untuk task besar</li>
+          <li>Sebutkan tech stack, bahasa, dan constraints di awal</li>
+          <li>Minta revisi spesifik, bukan "perbaiki semua"</li>
+          <li>Pakai kata "jangan generate dulu" kalau masih diskusi</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Prompt ambigu lalu minta revisi berkali-kali — boros token</li>
+          <li>Paste kode panjang bolak-balik di chat yang sama</li>
+          <li>Minta generate kode besar tanpa konfirmasi struktur dulu</li>
+          <li>1 sesi untuk banyak project berbeda</li>
+          <li>Minta "buatkan semua sekaligus" tanpa checkpoint</li>
+          <li>Lanjut di sesi panjang yang sudah 70%+ token terpakai</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Samakan Persepsi Dulu</div>
+        <div class="tip-body">Sebelum minta generate kode atau dokumen panjang, diskusikan dulu struktur, requirement, dan pendekatan. Satu revisi besar = ratusan token terbuang. Konfirmasi kecil di awal = hemat ribuan token di akhir.</div>
+        <span class="tip-tag">⚡ Token Saver</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">Spesifik dari Kalimat Pertama</div>
+        <div class="tip-body">Sertakan: tech stack, bahasa output (Indonesia/English), format yang diinginkan, dan constraints. Makin Claude paham konteks di awal, makin sedikit bolak-balik klarifikasi yang terjadi.</div>
+        <span class="tip-tag">🎯 Quality Prompt</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Pecah Task Besar Jadi Checkpoint</div>
+        <div class="tip-body">Daripada "buatkan aplikasi lengkap sekaligus", pecah jadi: struktur database dulu → backend → frontend per halaman. Tiap checkpoint bisa jadi titik mulai chat baru kalau token mulai habis.</div>
+        <span class="tip-tag">🔄 Best Practice</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Monitor Panjang Conversation</div>
+        <div class="tip-body">Makin panjang chat history, makin banyak token di-load setiap response. Kalau conversation sudah sangat panjang dan task sudah selesai — mulai chat baru untuk task berikutnya.</div>
+        <span class="tip-tag">📊 Token Monitor</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHEN TO NEW CHAT -->
+  <div class="section" id="newchat">
+    <div class="section-label"><div class="section-label-line"></div>New Chat</div>
+    <h2 class="section-title">Kapan Mulai Chat Baru?</h2>
+    <p class="section-desc">Ini salah satu cara paling efektif hemat token — tahu kapan harus mulai fresh conversation.</p>
+
+    <div class="card" style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">🔄</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Pindah ke Task/Project Baru</div>
+            <div class="timeline-desc">Setiap kali ganti project atau topik yang tidak berkaitan dengan conversation sebelumnya. Context lama hanya jadi beban token tanpa manfaat.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">⚠️</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Conversation Sudah Sangat Panjang</div>
+            <div class="timeline-desc">Kalau kamu sudah generate banyak kode panjang dalam 1 sesi, mulai chat baru untuk lanjut. Copy context penting yang dibutuhkan ke chat baru.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">✅</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Setelah 1 Fase Selesai</div>
+            <div class="timeline-desc">Misalnya selesai bikin database structure → chat baru untuk backend. Selesai backend → chat baru untuk frontend. Tiap fase = chat baru yang fresh.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">🐛</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Debugging Session Terpisah</div>
+            <div class="timeline-desc">Debugging butuh konteks spesifik. Mulai chat baru, paste error message + kode yang bermasalah + konteks singkat. Lebih efisien dari lanjut di sesi develop yang panjang.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">💡</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Ketika Response Mulai "Ngelantur"</div>
+            <div class="timeline-desc">Kalau Claude mulai lupa context awal atau jawaban kurang relevan — tanda context window sudah terlalu panjang. Saatnya chat baru dengan summary singkat.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🎯 Pro Tip</div>
+      <div class="highlight-box-text">
+        Sebelum mulai chat baru, tulis <strong>"summary" singkat</strong> dari apa yang sudah dikerjakan — tech stack, keputusan penting, dan next steps. Paste di awal chat baru sebagai konteks. Claude langsung paham tanpa perlu baca ribuan token conversation sebelumnya.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu share atau terapkan tips ini, ada beberapa hal yang perlu dipahami.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dan estimasi dalam panduan ini berdasarkan <strong>pengalaman praktis penggunaan Claude</strong> dan bukan data resmi dari Anthropic. Angka persentase token usage adalah <strong>estimasi kasar</strong> dan bisa berbeda tergantung panjang conversation, kompleksitas kode, dan faktor lainnya.<br><br>
+        <strong>Meskipun fokus di Claude</strong>, prinsip-prinsip efisiensi ini secara umum berlaku juga untuk AI tools lain seperti ChatGPT, Gemini, dan lainnya — karena konsep context window dan token pada dasarnya serupa.<br><br>
+        Panduan ini akan terus diupdate seiring perubahan platform dan fitur Claude. Untuk informasi resmi, selalu cek <strong>docs.anthropic.com</strong>.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Best for Develop</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">💻 Laptop + Chrome</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Best for Mobile</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📟 Tablet + Chrome</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">For Chat Only</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📱 HP App = OK</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Always Remember</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🔄 New chat per task</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-001</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· Claude AI · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      style="height:120px;width:auto;"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Claude Token Tips & Tricks</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('devices',this)">
+      <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>Devices
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('prompt',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Prompt
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('newchat',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New Chat
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+// Update active nav on scroll
+const sections = ['intro','devices','prompt','newchat','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Animate token bars on load
+window.addEventListener('load', function() {
+  document.querySelectorAll('.token-bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>

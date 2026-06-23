@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gemini + Google Workspace Tips — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --teal:#0891B2;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,7vw,48px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN CONTAINER ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── BAR CHART DARK ── */
+.model-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.model-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.model-meter-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.model-bars{display:flex;flex-direction:column;gap:10px;}
+.model-bar-row{display:flex;align-items:center;gap:10px;}
+.model-bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:150px;}
+.model-bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.model-bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.model-bar-val{font-size:11px;font-weight:700;min-width:70px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-teal{background:linear-gradient(90deg,#0891B2,#22D3EE);}
+.fill-purple{background:linear-gradient(90deg,#7C3AED,#A78BFA);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-teal{color:#22D3EE;}
+.val-purple{color:#A78BFA;}
+.model-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── MODEL CARDS ── */
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.model-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.model-card.stable{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.model-card.stable::before{content:'STABLE';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.model-card.preview::before{content:'PREVIEW';position:absolute;top:10px;right:10px;background:var(--gold);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.model-card.preview{border-color:rgba(201,160,90,0.4);}
+.model-emoji{font-size:26px;margin-bottom:10px;}
+.model-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.model-tagline{font-size:11px;color:var(--gray);margin-bottom:12px;line-height:1.4;}
+.model-stats{display:flex;flex-direction:column;gap:5px;}
+.model-stat{display:flex;align-items:center;justify-content:space-between;}
+.model-stat-label{font-size:11px;color:var(--gray);}
+.model-stat-val{font-size:11px;font-weight:700;}
+.stat-great{color:var(--green);}
+.stat-ok{color:var(--yellow);}
+.stat-bad{color:var(--red);}
+.stat-teal{color:var(--teal);}
+
+/* ── COMPARE TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.compare-table th{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);padding:10px 12px;text-align:left;
+  border-bottom:2px solid var(--border);background:var(--gray-light);
+}
+.compare-table td{
+  padding:11px 12px;border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--navy);vertical-align:middle;
+}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table tr:hover td{background:var(--navy-light);}
+.cell-model{font-weight:700;font-size:13px;}
+.chip{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;}
+.chip-green{background:rgba(22,163,74,.1);color:#16A34A;}
+.chip-yellow{background:rgba(217,119,6,.1);color:#D97706;}
+.chip-red{background:rgba(220,38,38,.08);color:#DC2626;}
+.chip-blue{background:rgba(59,123,245,.1);color:var(--blue);}
+.chip-gold{background:rgba(201,160,90,.15);color:#92702A;}
+.chip-teal{background:rgba(8,145,178,.1);color:var(--teal);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── WORKSPACE CARDS ── */
+.workspace-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.workspace-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:border-color .2s;
+}
+.workspace-card:hover{border-color:var(--blue);}
+.workspace-icon{font-size:28px;margin-bottom:8px;}
+.workspace-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+.workspace-tips{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.workspace-tips li{font-size:11px;color:var(--gray);line-height:1.5;padding-left:12px;position:relative;}
+.workspace-tips li::before{content:'';position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;background:var(--blue);}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE NAV BOTTOM ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .model-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .workspace-grid{grid-template-columns:1fr 1fr;}
+  .compare-table{font-size:11px;}
+  .compare-table th,.compare-table td{padding:8px;}
+  .hero{padding:80px 20px 48px;}
+}
+@media (max-width:380px){
+  .model-grid{grid-template-columns:1fr;}
+  .workspace-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#models" onclick="setActive(this)">Models</a>
+      <a class="nav-link" href="#prompt" onclick="setActive(this)">Prompting</a>
+      <a class="nav-link" href="#workspace" onclick="setActive(this)">Workspace</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Gemini + Google Workspace,<br><span>Produktivitas Tanpa Batas</span></h1>
+    <p class="hero-sub">Panduan lengkap untuk pemula — pilih model Gemini yang tepat, cara prompting efektif, dan maksimalkan integrasi di Google Docs, Sheets, Gmail, dan lainnya.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">✨ Gemini AI</span>
+      <span class="hero-tag">📊 Google Workspace</span>
+      <span class="hero-tag">🧠 Model Guide</span>
+      <span class="hero-tag">💡 Untuk Pemula</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — KENAPA GEMINI -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Kenapa Gemini?</div>
+    <h2 class="section-title">Lebih dari Sekadar Chatbot</h2>
+    <p class="section-desc">Gemini bukan hanya AI chat biasa — kelebihannya ada di integrasi langsung dengan Google Workspace. Bayangkan AI yang bisa bantu nulis di Docs, analisis data di Sheets, dan balas email di Gmail — semuanya tanpa keluar dari aplikasi.</p>
+
+    <div class="model-visual">
+      <div class="model-meter-label">Perbandingan Model Gemini — Kecepatan Respons</div>
+      <div class="model-bars">
+        <div class="model-bar-row">
+          <span class="model-bar-name">⚡ Gemini 3.1 Flash-Lite</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-green" style="width:95%"></div></div>
+          <span class="model-bar-val val-green">Tercepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🔥 Gemini 3 Flash</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-green" style="width:82%"></div></div>
+          <span class="model-bar-val val-green">Sangat cepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">⚡ Gemini 2.5 Flash</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-teal" style="width:75%"></div></div>
+          <span class="model-bar-val val-teal">Cepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🌟 Gemini 3.5 Flash</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-blue" style="width:65%"></div></div>
+          <span class="model-bar-val val-blue">Sedang-cepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🧠 Gemini 2.5 Pro</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-yellow" style="width:45%"></div></div>
+          <span class="model-bar-val val-yellow">Sedang</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🎯 Gemini 3.1 Pro</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-purple" style="width:30%"></div></div>
+          <span class="model-bar-val val-purple">Dalam & lambat</span>
+        </div>
+      </div>
+      <div class="model-note">* Bar menunjukkan kecepatan respons. Model lebih lambat = reasoning lebih dalam & kompleks.</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Key Insight</div>
+      <div class="highlight-box-text">
+        <strong>Gemini 3.5 Flash adalah sweet spot untuk pemula.</strong> Cukup cepat untuk chat sehari-hari, cukup pintar untuk task kompleks, dan sudah Stable — bukan Preview. Kalau baru mulai pakai Gemini, mulai dari sini.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — MODEL GUIDE -->
+  <div class="section" id="models">
+    <div class="section-label"><div class="section-label-line"></div>Model Guide</div>
+    <h2 class="section-title">Kenali Semua Model Gemini</h2>
+    <p class="section-desc">Ada 6 model utama Gemini yang perlu kamu tahu. Masing-masing punya kelebihan berbeda — pilih yang sesuai dengan kebutuhanmu.</p>
+
+    <div class="model-grid">
+      <!-- 3.5 Flash -->
+      <div class="model-card stable">
+        <div class="model-emoji">🌟</div>
+        <div class="model-name">Gemini 3.5 Flash</div>
+        <div class="model-tagline">Most intelligent for agentic & coding tasks</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-ok">Sedang-cepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-great">Sangat tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-great">Semua task</span></div>
+        </div>
+      </div>
+      <!-- 3.1 Flash-Lite -->
+      <div class="model-card stable">
+        <div class="model-emoji">⚡</div>
+        <div class="model-name">Gemini 3.1 Flash-Lite</div>
+        <div class="model-tagline">Fastest answers</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Tercepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-ok">Sedang</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Chat & Q&A cepat</span></div>
+        </div>
+      </div>
+      <!-- 3.1 Pro -->
+      <div class="model-card preview">
+        <div class="model-emoji">🎯</div>
+        <div class="model-name">Gemini 3.1 Pro</div>
+        <div class="model-tagline">Advanced intelligence & vibe coding</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-bad">Lambat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-great">Tertinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Coding kompleks</span></div>
+        </div>
+      </div>
+      <!-- 3 Flash -->
+      <div class="model-card preview">
+        <div class="model-emoji">🔥</div>
+        <div class="model-name">Gemini 3 Flash</div>
+        <div class="model-tagline">Frontier-class at fraction of cost</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Sangat cepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-great">Tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-great">Hemat & powerful</span></div>
+        </div>
+      </div>
+      <!-- 2.5 Flash -->
+      <div class="model-card">
+        <div class="model-emoji">💡</div>
+        <div class="model-name">Gemini 2.5 Flash</div>
+        <div class="model-tagline">Best price-performance, low-latency</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Cepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-ok">Tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-val stat-teal">Harga terjangkau</span></div>
+        </div>
+      </div>
+      <!-- 2.5 Pro -->
+      <div class="model-card">
+        <div class="model-emoji">🧠</div>
+        <div class="model-name">Gemini 2.5 Pro</div>
+        <div class="model-tagline">Advanced reasoning & analysis</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-ok">Sedang</span></div>
+          <div class="model-stat"><span class="model-stat-label">Intelligence</span><span class="model-stat-val stat-great">Sangat tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Riset & analisis</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div style="overflow-x:auto;margin-bottom:20px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Chat Harian</th>
+            <th>Coding</th>
+            <th>Analisis</th>
+            <th>Rekomendasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="cell-model">🌟 3.5 Flash</div></td>
+            <td><span class="chip chip-green">✅ Terbaik</span></td>
+            <td><span class="chip chip-green">✅ Terbaik</span></td>
+            <td><span class="chip chip-green">✅ Terbaik</span></td>
+            <td><span class="chip chip-blue">Default utama</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">⚡ 3.1 Flash-Lite</div></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-yellow">⚠️ Terbatas</span></td>
+            <td><span class="chip chip-yellow">⚠️ Terbatas</span></td>
+            <td><span class="chip chip-blue">Chat & Q&A cepat</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🎯 3.1 Pro</div></td>
+            <td><span class="chip chip-yellow">⚠️ Lambat</span></td>
+            <td><span class="chip chip-green">✅ Terbaik</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-gold">Preview — coba dulu</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🔥 3 Flash</div></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-gold">Preview — promising</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">💡 2.5 Flash</div></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-teal">Hemat & handal</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🧠 2.5 Pro</div></td>
+            <td><span class="chip chip-yellow">⚠️ Lambat</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-blue">Riset mendalam</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">⚠️ Catatan Preview</div>
+      <div class="highlight-box-text">
+        Model dengan label <strong>Preview</strong> (3.1 Pro & 3 Flash) masih dalam tahap pengujian — bisa berubah sewaktu-waktu dan belum tentu stabil untuk semua use case. Untuk penggunaan sehari-hari yang andal, pilih model berlabel <strong>Stable</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — PROMPTING -->
+  <div class="section" id="prompt">
+    <div class="section-label"><div class="section-label-line"></div>Prompting</div>
+    <h2 class="section-title">Prompt Efektif untuk Pemula</h2>
+    <p class="section-desc">Gemini sangat responsif terhadap instruksi yang jelas. Ini tips dasar yang langsung bisa dipraktikkan — tidak perlu jadi ahli dulu.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Mulai dengan konteks singkat — "Saya seorang [X], bantu saya..."</li>
+          <li>Tentukan format output — "dalam bentuk poin", "dalam tabel", "ringkas"</li>
+          <li>Gunakan Thinking Level Extended untuk soal rumit</li>
+          <li>Manfaatkan integrasi Workspace langsung dari aplikasi Google</li>
+          <li>Minta Gemini jelaskan langkah-langkah — cocok untuk pemula</li>
+          <li>Gunakan 3.5 Flash sebagai model default sehari-hari</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Prompt terlalu pendek tanpa konteks untuk task penting</li>
+          <li>Pakai 3.1 Pro untuk chat biasa — boros & lambat</li>
+          <li>Berharap Gemini ingat percakapan lama — mulai chat baru</li>
+          <li>Langsung minta output final tanpa draft dulu</li>
+          <li>Gunakan model Preview untuk task penting yang butuh konsistensi</li>
+          <li>Ignore fitur Workspace — itu kelebihan utama Gemini!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Pakai Thinking Level Sesuai Task</div>
+        <div class="tip-body">Gemini punya 2 Thinking Level — <strong>Standard</strong> untuk pertanyaan umum sehari-hari, dan <strong>Extended</strong> untuk problem kompleks yang butuh reasoning mendalam. Pemula sering pakai Standard terus tanpa tahu ada Extended — padahal Extended jauh lebih powerful untuk soal sulit.</div>
+        <span class="tip-tag">🧠 Thinking Level</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">Minta Output dalam Format yang Jelas</div>
+        <div class="tip-body">Contoh prompt yang baik: "Buatkan ringkasan artikel ini dalam 5 poin bullet, bahasa Indonesia, maksimal 2 kalimat per poin." Semakin spesifik format yang kamu minta, semakin langsung bisa dipakai outputnya — tidak perlu edit banyak.</div>
+        <span class="tip-tag">🎯 Prompt Tips</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Iterasi Bertahap, Bukan Langsung Final</div>
+        <div class="tip-body">Untuk task penting, mulai dengan "buatkan draft kasar dulu" → review → "sekarang perbaiki bagian X". Pendekatan bertahap menghasilkan output yang jauh lebih baik dibanding minta semuanya sekaligus dalam satu prompt.</div>
+        <span class="tip-tag">🔄 Best Practice</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Manfaatkan Kemampuan Multimodal</div>
+        <div class="tip-body">Gemini bisa membaca gambar, screenshot, dokumen, bahkan video. Coba upload screenshot error di komputer dan tanya "apa masalahnya?" — atau foto resep masakan dan minta Gemini buat versi lebih sehat. Ini keunggulan yang sering diabaikan pemula.</div>
+        <span class="tip-tag">📸 Multimodal</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — GOOGLE WORKSPACE -->
+  <div class="section" id="workspace">
+    <div class="section-label"><div class="section-label-line"></div>Google Workspace</div>
+    <h2 class="section-title">Gemini di Ekosistem Google</h2>
+    <p class="section-desc">Ini kelebihan terbesar Gemini dibanding AI lain — terintegrasi langsung di aplikasi Google yang sudah kamu pakai setiap hari. Tidak perlu copy-paste bolak-balik!</p>
+
+    <div class="workspace-grid">
+      <div class="workspace-card">
+        <div class="workspace-icon">📝</div>
+        <div class="workspace-name">Google Docs</div>
+        <ul class="workspace-tips">
+          <li>Klik "Help me write" untuk draft otomatis</li>
+          <li>Blok teks → klik Gemini → minta parafrase atau ringkas</li>
+          <li>Generate outline artikel dari topik singkat</li>
+          <li>Ubah tone tulisan: formal ↔ santai</li>
+        </ul>
+      </div>
+      <div class="workspace-card">
+        <div class="workspace-icon">📊</div>
+        <div class="workspace-name">Google Sheets</div>
+        <ul class="workspace-tips">
+          <li>Tanya formula yang tidak kamu tahu langsung di Sheets</li>
+          <li>"Buatkan tabel untuk [kebutuhan]" — auto generate struktur</li>
+          <li>Analisis data dengan bahasa natural</li>
+          <li>Generate chart suggestion dari data yang ada</li>
+        </ul>
+      </div>
+      <div class="workspace-card">
+        <div class="workspace-icon">📧</div>
+        <div class="workspace-name">Gmail</div>
+        <ul class="workspace-tips">
+          <li>"Help me write" untuk draft email profesional</li>
+          <li>Summarize email panjang jadi 3 poin utama</li>
+          <li>Suggest reply berdasarkan isi email masuk</li>
+          <li>Ubah email informal jadi formal sekali klik</li>
+        </ul>
+      </div>
+      <div class="workspace-card">
+        <div class="workspace-icon">📁</div>
+        <div class="workspace-name">Google Drive</div>
+        <ul class="workspace-tips">
+          <li>Tanya isi file tanpa harus buka satu per satu</li>
+          <li>"Cari file tentang [topik]" — search lebih pintar</li>
+          <li>Summarize dokumen langsung dari Drive</li>
+          <li>Compare isi dua dokumen berbeda</li>
+        </ul>
+      </div>
+      <div class="workspace-card">
+        <div class="workspace-icon">🎥</div>
+        <div class="workspace-name">Google Meet</div>
+        <ul class="workspace-tips">
+          <li>Auto-generate notulen meeting setelah selesai</li>
+          <li>Summarize poin penting dari recording</li>
+          <li>Action items otomatis dari transcript</li>
+          <li>Terjemahan real-time (fitur Live Translate)</li>
+        </ul>
+      </div>
+      <div class="workspace-card">
+        <div class="workspace-icon">🖼️</div>
+        <div class="workspace-name">Google Slides</div>
+        <ul class="workspace-tips">
+          <li>"Help me visualize" untuk konten slide</li>
+          <li>Generate slide dari outline teks</li>
+          <li>Suggest layout yang lebih menarik</li>
+          <li>Buat speaker notes otomatis per slide</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🎯 Pro Tip</div>
+      <div class="highlight-box-text">
+        Mulai dari <strong>Gmail atau Docs</strong> — dua aplikasi yang paling sering dipakai dan paling mudah terasa manfaatnya. Coba fitur "Help me write" di Gmail untuk balas email penting. Begitu merasakan manfaatnya, kamu akan otomatis eksplorasi ke Sheets, Slides, dan Meet.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu terapkan tips ini, ada beberapa hal yang perlu dipahami.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini berdasarkan <strong>pengalaman praktis dan dokumentasi resmi Google</strong> per Juni 2026. Model Gemini berkembang sangat cepat — nama model, fitur, dan ketersediaan bisa berubah sewaktu-waktu.<br><br>
+        <strong>Model berlabel Preview</strong> (seperti Gemini 3.1 Pro dan 3 Flash) masih dalam pengujian dan belum tentu tersedia untuk semua pengguna. Selalu cek <strong>gemini.google.com</strong> atau <strong>ai.google.dev</strong> untuk info model terkini.<br><br>
+        Fitur Gemini di Google Workspace <strong>membutuhkan langganan Google Workspace</strong> tertentu — tidak semua fitur tersedia di akun Google gratis. Cek paket yang sesuai di <strong>workspace.google.com</strong>.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Default Model</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🌟 Gemini 3.5 Flash</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Chat Cepat</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">⚡ 3.1 Flash-Lite</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Task Kompleks</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🧠 2.5 Pro / 3.1 Pro</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Mulai Workspace</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📧 Gmail + Docs dulu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-003</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· Gemini + Workspace · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Gemini + Google Workspace Tips</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('models',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Models
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('prompt',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Prompt
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('workspace',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Apps
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+// Scroll spy
+const sections = ['intro','models','prompt','workspace','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Animate bars on load
+window.addEventListener('load', function() {
+  document.querySelectorAll('.model-bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>

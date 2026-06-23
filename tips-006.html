@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Visual Studio Code Tips — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --teal:#0891B2;
+  --purple:#7C3AED;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(26px,6vw,46px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── BAR CHART DARK ── */
+.bar-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.bar-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.bar-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.bar-rows{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:160px;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.bar-val{font-size:11px;font-weight:700;min-width:80px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-teal{background:linear-gradient(90deg,#0891B2,#22D3EE);}
+.fill-purple{background:linear-gradient(90deg,#7C3AED,#A78BFA);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-teal{color:#22D3EE;}
+.val-purple{color:#A78BFA;}
+.bar-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.timeline-dot{width:32px;height:32px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.timeline-content{flex:1;}
+.timeline-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.timeline-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+
+/* ── CODE BLOCK ── */
+.code-block{
+  background:#0F172A;border-radius:12px;padding:16px;
+  margin-top:10px;overflow-x:auto;
+}
+.code-block pre{
+  font-family:'Courier New',monospace;font-size:12px;
+  color:#E2E8F0;line-height:1.7;margin:0;white-space:pre;
+}
+.code-label{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:8px;
+}
+.code-comment{color:#64748B;}
+.code-key{color:#93C5FD;}
+.code-val{color:#86EFAC;}
+.code-cmd{color:#FDE68A;}
+
+/* ── EXTENSION CARDS ── */
+.ext-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.ext-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:border-color .2s;position:relative;overflow:hidden;
+}
+.ext-card:hover{border-color:var(--blue);}
+.ext-card.hero-ext{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.ext-card.hero-ext::before{content:'UTAMA';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.ext-card.ai-extra{border-color:rgba(201,160,90,0.3);}
+.ext-card.ai-extra::before{content:'ALTERNATIF';position:absolute;top:10px;right:10px;background:rgba(201,160,90,0.8);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.ext-icon{font-size:26px;margin-bottom:8px;}
+.ext-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.ext-desc{font-size:11px;color:var(--gray);line-height:1.5;margin-bottom:8px;}
+.ext-tag{
+  display:inline-block;padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── SHORTCUT TABLE ── */
+.shortcut-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.shortcut-table th{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);padding:10px 12px;text-align:left;
+  border-bottom:2px solid var(--border);background:var(--gray-light);
+}
+.shortcut-table td{
+  padding:11px 12px;border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--navy);vertical-align:middle;
+}
+.shortcut-table tr:last-child td{border-bottom:none;}
+.shortcut-table tr:hover td{background:var(--navy-light);}
+.kbd{
+  display:inline-block;background:#1B2A4A;color:#E2E8F0;
+  padding:2px 8px;border-radius:6px;
+  font-family:'Courier New',monospace;font-size:11px;font-weight:700;
+  border-bottom:2px solid rgba(0,0,0,0.3);
+}
+.chip{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;}
+.chip-green{background:rgba(22,163,74,.1);color:#16A34A;}
+.chip-blue{background:rgba(59,123,245,.1);color:var(--blue);}
+.chip-gold{background:rgba(201,160,90,.15);color:#92702A;}
+
+/* ── DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .ext-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .hero{padding:80px 20px 48px;}
+  .code-block pre{font-size:11px;}
+  .shortcut-table{font-size:11px;}
+  .shortcut-table th,.shortcut-table td{padding:8px;}
+}
+@media (max-width:380px){
+  .ext-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#setup" onclick="setActive(this)">Setup</a>
+      <a class="nav-link" href="#extensions" onclick="setActive(this)">Extensions</a>
+      <a class="nav-link" href="#tips" onclick="setActive(this)">Tips</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Visual Studio Code,<br><span>Senjata Utama Vibes Coder</span></h1>
+    <p class="hero-sub">Panduan pemula dari nol — setup awal, extensions wajib, shortcuts penting, dan cara pakai AI langsung di dalam Visual Studio Code untuk coding lebih cepat.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">💻 Visual Studio Code</span>
+      <span class="hero-tag">⚡ Shortcuts</span>
+      <span class="hero-tag">🧩 Extensions</span>
+      <span class="hero-tag">🤖 AI Coding</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — APA ITU VISUAL STUDIO CODE -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Apa itu Visual Studio Code?</div>
+    <h2 class="section-title">Editor Kode Terpopuler di Dunia</h2>
+    <p class="section-desc">Visual Studio Code (dibuat oleh Microsoft) adalah aplikasi untuk menulis kode — gratis, ringan, dan sangat powerful. Lebih dari 70% developer di dunia memakainya. Bukan karena terpaksa, tapi karena memang enak dipakai — apalagi sekarang sudah ada AI built-in di dalamnya.</p>
+
+    <div class="bar-visual">
+      <div class="bar-label">Produktivitas Coding — Tanpa vs Pakai Visual Studio Code</div>
+      <div class="bar-rows">
+        <div class="bar-row">
+          <span class="bar-name">📝 Notepad / TextEdit</span>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:15%"></div></div>
+          <span class="bar-val val-red">Terlalu basic</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🖊️ Notepad++</span>
+          <div class="bar-track"><div class="bar-fill fill-yellow" style="width:40%"></div></div>
+          <span class="bar-val val-yellow">Lumayan tapi terbatas</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">☁️ Replit (browser)</span>
+          <div class="bar-track"><div class="bar-fill fill-yellow" style="width:50%"></div></div>
+          <span class="bar-val val-yellow">Online tapi lambat</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">💡 Sublime Text</span>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:65%"></div></div>
+          <span class="bar-val val-blue">Bagus tapi berbayar</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">💻 Visual Studio Code</span>
+          <div class="bar-track"><div class="bar-fill fill-green" style="width:85%"></div></div>
+          <span class="bar-val val-green">Gratis + powerful</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🤖 Visual Studio Code + AI</span>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:97%"></div></div>
+          <span class="bar-val val-blue">Level up!</span>
+        </div>
+      </div>
+      <div class="bar-note">* Visual Studio Code tersedia gratis di code.visualstudio.com — tersedia untuk Windows, Mac, dan Linux.</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Kenapa Visual Studio Code untuk Pemula?</div>
+      <div class="highlight-box-text">
+        Visual Studio Code punya <strong>autocomplete kode</strong> (saran kode otomatis), <strong>syntax highlighting</strong> (warna-warna yang membantu baca kode), dan ribuan <strong>extensions</strong> yang bisa dipasang sesuai kebutuhan. Yang terpenting — sekarang ada <strong>GitHub Copilot</strong> yang bisa bantu nulis kode langsung dari dalam Visual Studio Code. Vibes coding jadi makin mudah!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — SETUP AWAL -->
+  <div class="section" id="setup">
+    <div class="section-label"><div class="section-label-line"></div>Setup Awal</div>
+    <h2 class="section-title">Dari Install sampai Siap Coding</h2>
+    <p class="section-desc">Ikuti langkah ini dan Visual Studio Code kamu sudah siap dipakai dalam 10 menit — lengkap dengan tampilan yang nyaman di mata.</p>
+
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">1️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Download & Install Visual Studio Code</div>
+            <div class="timeline-desc">Buka <strong>code.visualstudio.com</strong> → klik tombol Download → pilih sesuai sistem operasi (Windows/Mac/Linux). Install seperti biasa. Gratis, tidak ada biaya apapun.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">2️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Pasang Tema yang Nyaman di Mata</div>
+            <div class="timeline-desc">Klik ikon Extensions (kotak-kotak di sidebar kiri) → search "One Dark Pro" atau "Dracula" → Install. Tema gelap lebih nyaman untuk coding lama. Aktifkan via Ctrl+Shift+P → "Color Theme" → pilih tema.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">3️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Ganti Font ke Fira Code atau JetBrains Mono</div>
+            <div class="timeline-desc">Font khusus coding dengan "ligatures" (simbol gabungan seperti → dan ≤ yang lebih mudah dibaca). Download gratis di Google Fonts → install di komputer → di Visual Studio Code: Settings → Font Family → ketik nama font. Aktifkan ligatures: <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">"editor.fontLigatures": true</code></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">4️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Aktifkan Auto Save & Format on Save</div>
+            <div class="timeline-desc">File → Auto Save (centang) supaya kode tersimpan otomatis. Lalu Settings → cari "Format On Save" → centang. Kode kamu otomatis dirapikan setiap kali save — tidak perlu format manual lagi.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">5️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Buka Folder Proyek, Bukan File Satu-satu</div>
+            <div class="timeline-desc">File → Open Folder → pilih folder proyek kamu. Visual Studio Code akan tampilkan semua file proyek di sidebar kiri. Ini cara yang benar — bukan buka file satu per satu. Semua file proyek langsung terlihat dan mudah diakses.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">⚡ Shortcut Paling Pertama yang Harus Dihafal</div>
+      <div class="highlight-box-text">
+        <strong>Ctrl+Shift+P</strong> (Windows) atau <strong>Cmd+Shift+P</strong> (Mac) — ini "Command Palette", pintu masuk ke semua fitur Visual Studio Code. Ketik apa yang kamu mau lakukan dan Visual Studio Code akan temukan perintahnya. Hafal ini dulu sebelum shortcut lainnya!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — EXTENSIONS -->
+  <div class="section" id="extensions">
+    <div class="section-label"><div class="section-label-line"></div>Extensions</div>
+    <h2 class="section-title">Extensions Wajib untuk Vibes Coder</h2>
+    <p class="section-desc">Extensions adalah "aplikasi tambahan" di dalam Visual Studio Code yang memperluas kemampuannya. Ini yang wajib dipasang — terutama yang AI!</p>
+
+    <!-- Productivity Extensions -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">🧩 Productivity Extensions</div>
+    <div class="ext-grid" style="margin-bottom:28px;">
+      <div class="ext-card">
+        <div class="ext-icon">✨</div>
+        <div class="ext-name">Prettier</div>
+        <div class="ext-desc">Auto-format kode supaya rapi dan konsisten. Aktif saat save — kode berantakan langsung dirapikan otomatis.</div>
+        <span class="ext-tag">🔧 Code Formatter</span>
+      </div>
+      <div class="ext-card">
+        <div class="ext-icon">🔍</div>
+        <div class="ext-name">ESLint</div>
+        <div class="ext-desc">Deteksi error dan masalah di kode JavaScript/TypeScript sebelum dijalankan. Garis merah = ada yang salah.</div>
+        <span class="ext-tag">⚠️ Error Checker</span>
+      </div>
+      <div class="ext-card">
+        <div class="ext-icon">🔮</div>
+        <div class="ext-name">GitLens</div>
+        <div class="ext-desc">Lihat siapa yang edit baris kode, kapan, dan commit apa — langsung di dalam Visual Studio Code tanpa buka terminal.</div>
+        <span class="ext-tag">🕰️ Git History</span>
+      </div>
+      <div class="ext-card">
+        <div class="ext-icon">🌐</div>
+        <div class="ext-name">Live Server</div>
+        <div class="ext-desc">Preview halaman HTML langsung di browser dengan auto-reload. Simpan file → browser langsung update otomatis.</div>
+        <span class="ext-tag">⚡ Live Preview</span>
+      </div>
+      <div class="ext-card">
+        <div class="ext-icon">🌈</div>
+        <div class="ext-name">indent-rainbow</div>
+        <div class="ext-desc">Warnai indentasi kode dengan warna berbeda per level. Membantu banget baca kode yang banyak nested-nya.</div>
+        <span class="ext-tag">👁️ Readability</span>
+      </div>
+      <div class="ext-card">
+        <div class="ext-icon">🔗</div>
+        <div class="ext-name">Path Intellisense</div>
+        <div class="ext-desc">Autocomplete path file saat nulis import atau link. Tidak perlu hafal struktur folder — ketik dan pilih dari saran.</div>
+        <span class="ext-tag">📁 File Path</span>
+      </div>
+    </div>
+
+    <!-- AI Extensions -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">🤖 AI Extensions — Level Up Coding</div>
+    <div class="ext-grid">
+      <div class="ext-card hero-ext">
+        <div class="ext-icon">🤖</div>
+        <div class="ext-name">GitHub Copilot</div>
+        <div class="ext-desc">AI autocomplete kode dari GitHub & OpenAI. Tulis komentar apa yang mau dibuat → Copilot langsung sarankan kodenya. Berbayar tapi ada free tier.</div>
+        <span class="ext-tag">⭐ Rekomendasi Utama</span>
+      </div>
+      <div class="ext-card hero-ext">
+        <div class="ext-icon">💬</div>
+        <div class="ext-name">GitHub Copilot Chat</div>
+        <div class="ext-desc">Chat langsung dengan AI di dalam Visual Studio Code. Tanya pertanyaan, minta explain kode, atau debug error — tanpa keluar dari editor.</div>
+        <span class="ext-tag">⭐ Wajib Pasang</span>
+      </div>
+      <div class="ext-card ai-extra">
+        <div class="ext-icon">✨</div>
+        <div class="ext-name">Gemini Code Assist</div>
+        <div class="ext-desc">AI coding assistant dari Google. Alternatif Copilot yang gratis — cocok kalau sudah pakai ekosistem Google. Install via Extensions marketplace.</div>
+        <span class="ext-tag">🆓 Gratis</span>
+      </div>
+      <div class="ext-card ai-extra">
+        <div class="ext-icon">💡</div>
+        <div class="ext-name">ChatGPT (Genie AI)</div>
+        <div class="ext-desc">Akses ChatGPT langsung dari Visual Studio Code. Berguna sebagai alternatif atau pelengkap Copilot — cari "Genie AI" di Extensions marketplace.</div>
+        <span class="ext-tag">🔄 Alternatif</span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🤖 Cara Pakai GitHub Copilot Chat</div>
+      <div class="highlight-box-text">
+        Tekan <strong>Ctrl+Shift+I</strong> (Windows) atau <strong>Cmd+Shift+I</strong> (Mac) untuk buka Copilot Chat. Tanya langsung: <strong>"Jelaskan kode ini"</strong>, <strong>"Kenapa ada error di baris 42?"</strong>, atau <strong>"Buatkan fungsi untuk validasi email"</strong>. Copilot Chat paham konteks kode yang sedang kamu buka — jawabannya langsung relevan!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — SHORTCUTS & TIPS -->
+  <div class="section" id="tips">
+    <div class="section-label"><div class="section-label-line"></div>Shortcuts & Tips</div>
+    <h2 class="section-title">Kerja Lebih Cepat di Visual Studio Code</h2>
+    <p class="section-desc">Tidak perlu hafal semua shortcut sekaligus — mulai dari 5 yang paling sering dipakai, sisanya akan mengikuti dengan sendirinya.</p>
+
+    <!-- Shortcut Table -->
+    <div style="overflow-x:auto;margin-bottom:24px;">
+      <table class="shortcut-table">
+        <thead>
+          <tr>
+            <th>Aksi</th>
+            <th>Windows</th>
+            <th>Mac</th>
+            <th>Fungsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Command Palette</strong></td>
+            <td><span class="kbd">Ctrl+Shift+P</span></td>
+            <td><span class="kbd">Cmd+Shift+P</span></td>
+            <td><span class="chip chip-blue">Akses semua fitur</span></td>
+          </tr>
+          <tr>
+            <td><strong>Quick Open File</strong></td>
+            <td><span class="kbd">Ctrl+P</span></td>
+            <td><span class="kbd">Cmd+P</span></td>
+            <td><span class="chip chip-blue">Cari & buka file cepat</span></td>
+          </tr>
+          <tr>
+            <td><strong>Terminal Baru</strong></td>
+            <td><span class="kbd">Ctrl+`</span></td>
+            <td><span class="kbd">Cmd+`</span></td>
+            <td><span class="chip chip-green">Buka terminal langsung</span></td>
+          </tr>
+          <tr>
+            <td><strong>Copilot Chat</strong></td>
+            <td><span class="kbd">Ctrl+Shift+I</span></td>
+            <td><span class="kbd">Cmd+Shift+I</span></td>
+            <td><span class="chip chip-gold">Chat dengan AI</span></td>
+          </tr>
+          <tr>
+            <td><strong>Multi Cursor</strong></td>
+            <td><span class="kbd">Alt+Click</span></td>
+            <td><span class="kbd">Opt+Click</span></td>
+            <td><span class="chip chip-blue">Edit banyak baris sekaligus</span></td>
+          </tr>
+          <tr>
+            <td><strong>Rename Symbol</strong></td>
+            <td><span class="kbd">F2</span></td>
+            <td><span class="kbd">F2</span></td>
+            <td><span class="chip chip-green">Ganti nama variabel semua file</span></td>
+          </tr>
+          <tr>
+            <td><strong>Format Document</strong></td>
+            <td><span class="kbd">Shift+Alt+F</span></td>
+            <td><span class="kbd">Shift+Opt+F</span></td>
+            <td><span class="chip chip-green">Rapikan semua kode</span></td>
+          </tr>
+          <tr>
+            <td><strong>Find & Replace</strong></td>
+            <td><span class="kbd">Ctrl+H</span></td>
+            <td><span class="kbd">Cmd+H</span></td>
+            <td><span class="chip chip-blue">Cari & ganti teks</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Buka proyek sebagai folder — bukan file satu-satu</li>
+          <li>Pakai terminal bawaan Visual Studio Code — tidak perlu aplikasi terminal terpisah</li>
+          <li>Aktifkan Format on Save dari awal — kode selalu rapi</li>
+          <li>Tanya Copilot Chat kalau stuck — lebih cepat dari googling</li>
+          <li>Pakai Command Palette (Ctrl+Shift+P) untuk semua yang tidak tahu shortcut-nya</li>
+          <li>Install ekstensi satu per satu — test dulu sebelum tambah yang lain</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Install terlalu banyak extensions sekaligus — bikin Visual Studio Code lambat</li>
+          <li>Abaikan garis merah/kuning — itu peringatan penting dari ESLint</li>
+          <li>Edit kode langsung di file explorer tanpa buka Visual Studio Code</li>
+          <li>Lupa simpan file sebelum jalankan — aktifkan Auto Save!</li>
+          <li>Copas kode dari Copilot tanpa baca dulu — pahami dulu apa yang dipasang</li>
+          <li>Pakai font default — ganti ke font coding untuk kenyamanan lebih</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Pakai Terminal Bawaan Visual Studio Code</div>
+        <div class="tip-body">Tekan Ctrl+` (backtick) untuk buka terminal langsung di dalam Visual Studio Code — tidak perlu buka aplikasi terminal terpisah. Di sinilah kamu jalankan perintah Git, npm, python, dan lainnya. Semua dalam satu jendela — lebih efisien dan tidak perlu alt-tab terus.</div>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-label">Terminal Visual Studio Code — Contoh perintah harian</div>
+          <pre><span class="code-comment"># Jalankan proyek web</span>
+<span class="code-cmd">npm start</span>
+
+<span class="code-comment"># Push ke GitHub</span>
+<span class="code-cmd">git add . && git commit -m "update" && git push</span>
+
+<span class="code-comment"># Install package baru</span>
+<span class="code-cmd">npm install nama-package</span></pre>
+        </div>
+        <span class="tip-tag">⚡ Efisiensi</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">Gunakan Copilot Chat untuk Explain Kode</div>
+        <div class="tip-body">Blok kode yang tidak kamu mengerti → klik kanan → "Copilot: Explain This". Copilot akan jelaskan baris per baris dalam bahasa yang mudah dipahami. Ini cara belajar yang sangat efektif untuk vibes coder — kamu paham apa yang AI buatkan untukmu!</div>
+        <span class="tip-tag">🤖 AI Learning</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Multi Cursor — Edit Banyak Baris Sekaligus</div>
+        <div class="tip-body">Tahan Alt (Windows) atau Option (Mac) lalu klik di beberapa tempat — kamu punya banyak cursor sekaligus. Sangat berguna untuk ganti nama variabel di banyak baris, tambah karakter di posisi yang sama, atau hapus teks berulang. Sekali coba, tidak akan mau balik cara lama!</div>
+        <span class="tip-tag">⚡ Power Feature</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Settings Sync — Sinkronisasi Antar Device</div>
+        <div class="tip-body">Kalau kamu coding di lebih dari satu komputer, aktifkan Settings Sync di Visual Studio Code — semua extensions, tema, shortcut, dan pengaturan otomatis tersinkron. Login dengan akun GitHub di Visual Studio Code → Settings Sync → Turn On. Setup sekali, berlaku di semua device.</div>
+        <span class="tip-tag">☁️ Multi Device</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu mulai setup Visual Studio Code, ada beberapa hal yang perlu diketahui.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini berdasarkan <strong>pengalaman praktis menggunakan Visual Studio Code</strong> dan bukan panduan resmi dari Microsoft. Shortcut yang ditampilkan menggunakan default keyboard — bisa berbeda kalau kamu sudah kustomisasi keybinding di Visual Studio Code.<br><br>
+        <strong>GitHub Copilot</strong> adalah layanan berbayar (ada free tier terbatas) — cek harga terkini di <strong>github.com/features/copilot</strong>. <strong>Gemini Code Assist</strong> saat ini gratis untuk penggunaan personal. Kebijakan harga bisa berubah sewaktu-waktu.<br><br>
+        Visual Studio Code terus diupdate — tampilan dan lokasi menu mungkin sedikit berbeda di versi terbaru. Selalu cek <strong>code.visualstudio.com/docs</strong> untuk dokumentasi resmi dan fitur terbaru.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Download</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🌐 code.visualstudio.com</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Shortcut Utama</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">⌨️ Ctrl+Shift+P</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">AI Utama</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🤖 GitHub Copilot Chat</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Setup Pertama</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">✨ Prettier + Format on Save</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-006</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· Visual Studio Code · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Visual Studio Code Tips</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('setup',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>Setup
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('extensions',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Ext
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('tips',this)">
+      <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>Tips
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+const sections = ['intro','setup','extensions','tips','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+window.addEventListener('load', function() {
+  document.querySelectorAll('.bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>
