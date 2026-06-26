@@ -398,12 +398,59 @@ h1.hero-h1 em { font-style:normal; color:var(--blue); }
   background:radial-gradient(ellipse 60% 45% at 50% 0%,rgba(59,158,232,.07) 0%,transparent 60%);
 }
 
+#casestudy {
+  padding:120px var(--gutter);
+  background:#fff; position:relative; overflow:hidden;
+}
+.case-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.case-card {
+  background:#fff; border:1.5px solid #E2E8F0; border-radius:24px;
+  padding:34px 32px; transition:all .3s;
+}
+.case-card:hover { box-shadow:0 24px 60px rgba(0,0,0,.1); border-color:rgba(59,158,232,.35); transform:translateY(-4px); }
+.case-tag {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--blue); background:#EEF2FF;
+  border:1px solid #C7D7FD; padding:5px 13px; border-radius:50px;
+  display:inline-block; margin-bottom:14px;
+}
+.case-name { font-family:'Sora',sans-serif; font-size:22px; font-weight:700; color:#0B1829; margin-bottom:22px; }
+.case-row { margin-bottom:18px; }
+.case-row:last-child { margin-bottom:0; }
+.case-icon {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:700;
+  letter-spacing:.1em; color:var(--blue); margin-bottom:6px;
+}
+.case-row p { font-size:14px; line-height:1.7; color:#4A5568; }
+
 #knowledge {
   padding:120px var(--gutter);
   background:#fff; position:relative; overflow:hidden;
 }
 #knowledge .sec-head p { color:#4A5568; }
 #knowledge .lbl { color:var(--blue); }
+
+#testimonials {
+  padding:120px var(--gutter);
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#testimonials::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 45% at 50% 0%,rgba(59,158,232,.07) 0%,transparent 60%);
+}
+.testi-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+}
+.testi-card {
+  background:var(--navy-card); border:1px solid rgba(184,200,216,.10);
+  border-radius:20px; padding:28px 26px;
+}
+.testi-card:hover { border-color:rgba(59,158,232,.32); }
+.testi-quote { font-size:14px; line-height:1.75; color:var(--w90); margin-bottom:18px; font-style:italic; }
+.testi-name { font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:var(--white); }
+.testi-role { font-size:12px; color:var(--w60); margin-top:2px; }
 
 .sec-head { text-align:center; max-width:640px; margin:0 auto 72px; }
 .sec-head p { font-size:16px; line-height:1.75; color:var(--w60); }
@@ -541,7 +588,7 @@ footer {
 .ct-row { display:flex; align-items:center; gap:9px; font-size:13px; color:var(--w60); margin-bottom:12px; }
 .foot-bot {
   padding-top:32px; border-top:1px solid var(--w07);
-  display:flex; justify-content:space-between; align-items:center;
+  display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;
 }
 .copy { font-size:12px; color:var(--w60); }
 .copy em { font-style:normal; color:var(--blue); }
@@ -614,7 +661,6 @@ footer {
   #cta { padding:88px 40px; }
   footer { padding:60px 40px 32px; }
   .foot-grid { grid-template-columns:1fr 1fr; gap:36px; }
-  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
 }
 
 /* Poco Pad hi-res — same as tablet but more room (min-width trick via dpr) */
@@ -686,6 +732,7 @@ footer {
 
   #apps { padding:72px 20px; }
   .apps-grid { grid-template-columns:1fr; }
+  .case-grid { grid-template-columns:1fr; }
 
   #knowledge { padding:72px 20px; }
 
@@ -695,7 +742,6 @@ footer {
   #cta { padding:72px 20px; }
   footer { padding:52px 20px 28px; }
   .foot-grid { grid-template-columns:1fr 1fr; gap:32px; }
-  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
 }
 
 @media (max-width:480px) {
@@ -718,6 +764,16 @@ footer {
 .upwork-badge:hover { transform:translateY(-2px); box-shadow:0 10px 26px rgba(20,168,0,.45); }
 .upwork-badge.hero-badge { margin-bottom:18px; }
 .upwork-badge.cta-badge { margin-bottom:28px; }
+
+/* ═══════════════════════════════════════
+   ICON SET (SVG outline, replaces emoji)
+═══════════════════════════════════════ */
+.ico { display:block; flex-shrink:0; }
+.ic-icon .ico, .ac-icon .ico { width:24px; height:24px; color:var(--blue); }
+.fc-icon .ico { width:26px; height:26px; color:var(--blue-lt); }
+.badge-icon .ico { width:20px; height:20px; color:#fff; }
+.soc .ico { width:17px; height:17px; }
+.btn-p .ico, .btn-g .ico { width:16px; height:16px; }
 
 .badge-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
 
@@ -810,7 +866,7 @@ footer {
     <div class="photo-wrap">
       <img src="https://anabhidev.netlify.app/founder-anabhi-dev.png" alt="Anabhi Dev Founder" class="founder" loading="lazy">
       <div class="badge">
-        <div class="badge-icon">⚡</div>
+        <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
         <div><div class="badge-n">33 Apps</div><div class="badge-l">and counting</div></div>
       </div>
     </div>
@@ -837,21 +893,21 @@ footer {
     </div>
     <div class="cards-col fade-up" style="transition-delay:.12s">
       <div class="ic">
-        <div class="ic-icon">🤖</div>
+        <div class="ic-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="5" y="9" width="14" height="11" rx="2"/><circle cx="9.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="14.5" r="1.2" fill="currentColor"/><path d="M12 9V5"/><circle cx="12" cy="3.5" r="1.3"/></svg></div>
         <div>
           <div class="ic-title">All Built with AI</div>
           <div class="ic-desc">Every app is crafted with <strong>AI assistance</strong>, making complex automation accessible and fast to deploy.</div>
         </div>
       </div>
       <div class="ic">
-        <div class="ic-icon">⚙️</div>
+        <div class="ic-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
         <div>
           <div class="ic-title">Real Problems, Real Solutions</div>
           <div class="ic-desc">From <strong>weather alerts via Telegram</strong> to HR dashboards — built for actual daily use cases.</div>
         </div>
       </div>
       <div class="ic">
-        <div class="ic-icon">🚀</div>
+        <div class="ic-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M12 2c2.5 2 4 5.5 4 9 0 2-1 4-1 4H9s-1-2-1-4c0-3.5 1.5-7 4-9z"/><path d="M9 15l-3 5M15 15l3 5"/><circle cx="12" cy="9" r="1.3" fill="currentColor"/></svg></div>
         <div>
           <div class="ic-title">Growing Portfolio</div>
           <div class="ic-desc">23 apps and counting — <strong>new tools added regularly</strong> to solve more of life's repetitive tasks.</div>
@@ -871,112 +927,195 @@ footer {
     </div>
     <div class="apps-grid">
       <div class="ac fade-up">
-        <div class="ac-top"><div class="ac-icon">✍️</div><div class="ac-tag">AI Writing</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1z"/><path d="M14 7l3 3"/></svg></div><div class="ac-tag">AI Writing</div></div>
         <div class="ac-name">PostCraft</div>
         <div class="ac-desc">Turn your raw ideas into polished LinkedIn posts — powered by AI, delivered in seconds.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.07s">
-        <div class="ac-top"><div class="ac-icon">🌤️</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M7 18a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0117 18H7z"/></svg></div><div class="ac-tag">Automation</div></div>
         <div class="ac-name">WeatherAlert</div>
         <div class="ac-desc">Real-time weather intelligence, delivered straight to your Telegram before your day begins.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.14s">
-        <div class="ac-top"><div class="ac-icon">📅</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div><div class="ac-tag">Automation</div></div>
         <div class="ac-name">BaliCalBot</div>
         <div class="ac-desc">Never miss a sacred day — Bali's traditional calendar, automated and sent to your Telegram daily.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.04s">
-        <div class="ac-top"><div class="ac-icon">🎰</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="4" y="9" width="16" height="11" rx="1"/><path d="M4 13h16M12 9v11"/><path d="M12 9c-1.5 0-3-1.2-3-3a2.2 2.2 0 014.4-.6c.2.6.4 1.8-.4 2.6M12 9c1.5 0 3-1.2 3-3a2.2 2.2 0 00-4.4-.6"/></svg></div><div class="ac-tag">Automation</div></div>
         <div class="ac-name">SpinGather</div>
         <div class="ac-desc">Spin the wheel, crown the winners — fully automated prize draws with instant Telegram & email reports.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.11s">
-        <div class="ac-top"><div class="ac-icon">🥗</div><div class="ac-tag">Health & Life</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div><div class="ac-tag">Health & Life</div></div>
         <div class="ac-name">JejakNutrisi</div>
         <div class="ac-desc">Track every bite, own your health — a smarter way to log and understand your daily nutrition.</div>
         <div class="ac-status"><div class="dot wip"></div> In Progress</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.18s">
-        <div class="ac-top"><div class="ac-icon">🖥️</div><div class="ac-tag">Dashboard</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="ac-tag">Dashboard</div></div>
         <div class="ac-name">IT Realtime Dashboard</div>
         <div class="ac-desc">One screen. Every system. Live data from Office365, Calendar, ClickUp — all in one command center.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.07s">
-        <div class="ac-top"><div class="ac-icon">⏳</div><div class="ac-tag">Life Tracking</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M6 3h12M6 21h12M7 3c0 5 5 6.5 5 9s-5 4-5 9M17 3c0 5-5 6.5-5 9s5 4 5 9"/></svg></div><div class="ac-tag">Life Tracking</div></div>
         <div class="ac-name">HoL</div>
         <div class="ac-desc">Because life happens fast — every 'last time' moment documented, never forgotten. Less Doing, More Living.</div>
         <div class="ac-status"><div class="dot wip"></div> In Progress</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.14s">
-        <div class="ac-top"><div class="ac-icon">🎯</div><div class="ac-tag">Parenting Tech</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div><div class="ac-tag">Parenting Tech</div></div>
         <div class="ac-name">QuizDaily</div>
         <div class="ac-desc">Turn screen time into learning time — kids earn extra play by acing daily quizzes, with results sent straight to parents.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.21s">
-        <div class="ac-top"><div class="ac-icon">📡</div><div class="ac-tag">Infrastructure</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M5 13a10 10 0 0114 0M8.5 16.3a5.5 5.5 0 017 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg></div><div class="ac-tag">Infrastructure</div></div>
         <div class="ac-name">Mikrotik Monitoring</div>
         <div class="ac-desc">Full visibility over your Mikrotik network — nodes, traffic, and functions monitored live from one clean dashboard.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up">
-        <div class="ac-top"><div class="ac-icon">⚽</div><div class="ac-tag">Sports & Fun</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M7 4h10v6a5 5 0 01-10 0V4z"/><path d="M7 6H4.5A2.5 2.5 0 007 10.5M17 6h2.5A2.5 2.5 0 0117 10.5M9 20h6M12 15v5"/></svg></div><div class="ac-tag">Sports & Fun</div></div>
         <div class="ac-name">World Cup 2026</div>
         <div class="ac-desc">Live match results, standings & news — fully automated via API, zero manual input.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.07s">
-        <div class="ac-top"><div class="ac-icon">🎓</div><div class="ac-tag">Education</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M2 9l10-4 10 4-10 4-10-4z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></svg></div><div class="ac-tag">Education</div></div>
         <div class="ac-name">LMS</div>
         <div class="ac-desc">A complete learning management system — courses, modules, and progress tracking in one clean dashboard.</div>
         <div class="ac-status"><div class="dot wip"></div> In Progress</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.14s">
-        <div class="ac-top"><div class="ac-icon">🥦</div><div class="ac-tag">AI & Health</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M4 5h16v11H9l-4 4V5z"/></svg></div><div class="ac-tag">AI & Health</div></div>
         <div class="ac-name">NutriBot</div>
         <div class="ac-desc">Chat with AI about any food or drink — get instant nutrition insights powered by Gemini.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.04s">
-        <div class="ac-top"><div class="ac-icon">📋</div><div class="ac-tag">HR Tools</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1M8 10h8M8 14h8M8 18h5"/></svg></div><div class="ac-tag">HR Tools</div></div>
         <div class="ac-name">HR Document Tracker</div>
         <div class="ac-desc">Track every HR document, deadline, and follow-up — so nothing slips through the cracks.</div>
         <div class="ac-status"><div class="dot wip"></div> In Progress</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.11s">
-        <div class="ac-top"><div class="ac-icon">📊</div><div class="ac-tag">Operations</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M5 20V11M12 20V6M19 20v-7"/></svg></div><div class="ac-tag">Operations</div></div>
         <div class="ac-name">SOP Dashboard</div>
         <div class="ac-desc">Your standard operating procedures, organized and accessible — one dashboard for every process.</div>
         <div class="ac-status"><div class="dot wip"></div> In Progress</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.18s">
-        <div class="ac-top"><div class="ac-icon">💼</div><div class="ac-tag">Finance Ops</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2M3 13h18"/></svg></div><div class="ac-tag">Finance Ops</div></div>
         <div class="ac-name">AdminFlow Task</div>
         <div class="ac-desc">Log daily admin tasks, assign follow-ups, and keep the team accountable — built for real operations.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.07s">
-        <div class="ac-top"><div class="ac-icon">🌐</div><div class="ac-tag">IT Ops</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z"/></svg></div><div class="ac-tag">IT Ops</div></div>
         <div class="ac-name">Domain & IP Check</div>
         <div class="ac-desc">Instantly check domain and IP status — automated monitoring so your network stays clean.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.14s">
-        <div class="ac-top"><div class="ac-icon">📅</div><div class="ac-tag">Automation</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.5 14.2c2.4.4 4.5 2.5 4.5 5.8"/></svg></div><div class="ac-tag">Automation</div></div>
         <div class="ac-name">Employee Schedule to Telegram</div>
         <div class="ac-desc">Auto-send employee schedules straight to Telegram — no more manual sharing, ever.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
       </div>
       <div class="ac fade-up" style="transition-delay:.21s">
-        <div class="ac-top"><div class="ac-icon">🎨</div><div class="ac-tag">Creative</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M12 3a9 8 0 100 16c1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.3-.3-.3-.5-.7-.5-1.2 0-1 .8-1.7 1.7-1.7H17a4 4 0 004-4c0-3.3-4-6-9-6z"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="7" r="1" fill="currentColor"/><circle cx="14.5" cy="7" r="1" fill="currentColor"/></svg></div><div class="ac-tag">Creative</div></div>
         <div class="ac-name">Studio Gambar Anabhi</div>
         <div class="ac-desc">A drawing studio for kids — trace, create, and send finished artwork straight to mom & dad via Telegram.</div>
         <div class="ac-status"><div class="dot live"></div> Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CASE STUDIES ══ -->
+<section id="casestudy">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">Proven Results</div>
+      <h2 class="sec-h2 dark">From Problem <em>to Solution</em></h2>
+      <p style="color:#4A5568;">A closer look at two apps — the real problem behind them, how they were solved, and what changed.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card fade-up">
+        <div class="case-tag">Automation</div>
+        <h3 class="case-name">SpinGather</h3>
+        <div class="case-row">
+          <div class="case-icon">PROBLEM</div>
+          <p>Generic tools like Wheel of Names meant HR had to manually track and record every winner by hand — slow and error-prone for large staff gatherings.</p>
+        </div>
+        <div class="case-row">
+          <div class="case-icon">SOLUTION</div>
+          <p>A custom spin-wheel app that auto-confirms each winner, instantly logs them to Google Sheets, and sends a Telegram notification — zero manual tracking.</p>
+        </div>
+        <div class="case-row">
+          <div class="case-icon">RESULT</div>
+          <p>Used for a 110-person staff gathering (one spin per employee, so everyone won a prize) — HR walked away with a complete winner list and zero post-event reconciliation.</p>
+        </div>
+      </div>
+      <div class="case-card fade-up" style="transition-delay:.1s">
+        <div class="case-tag">Education</div>
+        <h3 class="case-name">LMS</h3>
+        <div class="case-row">
+          <div class="case-icon">PROBLEM</div>
+          <p>Off-the-shelf LMS platforms were either a poor fit for the company's training needs or came with steep monthly subscription costs.</p>
+        </div>
+        <div class="case-row">
+          <div class="case-icon">SOLUTION</div>
+          <p>A custom LMS built from scratch — including offline training attendance forms — tailored exactly to how the company trains its staff.</p>
+        </div>
+        <div class="case-row">
+          <div class="case-icon">RESULT</div>
+          <p>Reduced reliance on in-person training sessions, letting staff complete modules at their own pace with automatically issued certificates.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">Recommendations</div>
+      <h2 class="sec-h2 light">What People <em>Say</em></h2>
+      <p>Real recommendations from colleagues and clients I've worked with over the years.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-up">
+        <div class="testi-quote">"Wibawa is a DIAMOND, he blinks, attracts and delivers excellent work results from any assignment... the best man to get any solution for IT."</div>
+        <div class="testi-name">Dede Ari Mahendra</div>
+        <div class="testi-role">Graphic Designer / Art Director</div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:.06s">
+        <div class="testi-quote">"Efficient and quick to action... I have seen him work on and solve many IT issues, always with a smile, no matter how big or small those issues were."</div>
+        <div class="testi-name">Natalie Cadell</div>
+        <div class="testi-role">General Manager, Hospitality</div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:.12s">
+        <div class="testi-quote">"The best IT man in the world... Good job n good man."</div>
+        <div class="testi-name">Dewa Ketut Widiarta</div>
+        <div class="testi-role">Director of Security, The Apurva Kempinski Bali</div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:.18s">
+        <div class="testi-quote">"He set up all our hardware and software system configuration, its interfacing and system security... in a timely manner and beyond my expectation."</div>
+        <div class="testi-name">Viveka</div>
+        <div class="testi-role">Hotel Business Expert Advisor</div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:.24s">
+        <div class="testi-quote">"Wibawa is a hard worker. He knows everything about IT, working fast, attention to details and easy going and can easily fit with colleagues."</div>
+        <div class="testi-name">Anindita Widyasari</div>
+        <div class="testi-role">Asst. Director of Weddings</div>
       </div>
     </div>
   </div>
@@ -992,55 +1131,55 @@ footer {
     </div>
     <div class="apps-grid">
       <div class="ac ac-light fade-up">
-        <div class="ac-top"><div class="ac-icon">🤖</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="5" y="9" width="14" height="11" rx="2"/><circle cx="9.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="14.5" r="1.2" fill="currentColor"/><path d="M12 9V5"/><circle cx="12" cy="3.5" r="1.3"/></svg></div><div class="ac-tag">AI Tools</div></div>
         <div class="ac-name">Claude AI — Token & Efficiency</div>
         <div class="ac-desc">Master Claude like a pro — tips to save tokens, write better prompts, and get more done with less.</div>
         <div class="ac-status"><a href="tips-001.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.07s">
-        <div class="ac-top"><div class="ac-icon">💬</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M4 5h16v11H9l-4 4V5z"/></svg></div><div class="ac-tag">AI Tools</div></div>
         <div class="ac-name">ChatGPT Master Guide</div>
         <div class="ac-desc">From basic prompts to advanced workflows — everything you need to unlock ChatGPT's full potential.</div>
         <div class="ac-status"><a href="tips-002.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.14s">
-        <div class="ac-top"><div class="ac-icon">✨</div><div class="ac-tag">AI Tools</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M12 3l1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3z"/><path d="M5 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2zM18 15l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6.6-1.7z"/></svg></div><div class="ac-tag">AI Tools</div></div>
         <div class="ac-name">Gemini + Google Workspace</div>
         <div class="ac-desc">Supercharge your Google apps with Gemini — smarter Docs, Sheets, Gmail, and beyond.</div>
         <div class="ac-status"><a href="tips-003.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.04s">
-        <div class="ac-top"><div class="ac-icon">⚙️</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div><div class="ac-tag">Vibes Coding</div></div>
         <div class="ac-name">Google Apps Script</div>
         <div class="ac-desc">Automate anything in Google Workspace with code — no server needed, just vibes and scripts.</div>
         <div class="ac-status"><a href="tips-004.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.11s">
-        <div class="ac-top"><div class="ac-icon">🐙</div><div class="ac-tag">Dev Workflow</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 8v8M6 12c0-3 3-3 6-3h2"/></svg></div><div class="ac-tag">Dev Workflow</div></div>
         <div class="ac-name">Git & GitHub Tips</div>
         <div class="ac-desc">Version control without the headache — essential Git commands and GitHub workflows for builders.</div>
         <div class="ac-status"><a href="tips-005.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.18s">
-        <div class="ac-top"><div class="ac-icon">💻</div><div class="ac-tag">Dev Workflow</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M9 6L4 12l5 6M15 6l5 6-5 6"/></svg></div><div class="ac-tag">Dev Workflow</div></div>
         <div class="ac-name">Visual Studio Code Tips</div>
         <div class="ac-desc">Work faster in VS Code — shortcuts, extensions, and settings every developer should know.</div>
         <div class="ac-status"><a href="tips-006.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.04s">
-        <div class="ac-top"><div class="ac-icon">🐍</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg></div><div class="ac-tag">Vibes Coding</div></div>
         <div class="ac-name">Python for Automation</div>
         <div class="ac-desc">Automate your world with Python — practical scripts for files, APIs, bots, and everyday tasks.</div>
         <div class="ac-status"><a href="tips-007.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.11s">
-        <div class="ac-top"><div class="ac-icon">⚡</div><div class="ac-tag">Vibes Coding</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div><div class="ac-tag">Vibes Coding</div></div>
         <div class="ac-name">JavaScript / No-code</div>
         <div class="ac-desc">From vanilla JS to no-code tools — build fast, ship faster, and automate without limits.</div>
         <div class="ac-status"><a href="tips-008.html" class="read-link">Read Guide →</a></div>
       </div>
       <div class="ac ac-light fade-up" style="transition-delay:.18s">
-        <div class="ac-top"><div class="ac-icon">📓</div><div class="ac-tag">Productivity</div></div>
+        <div class="ac-top"><div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5c-.8 0-1.5-.7-1.5-1.5v-13zM20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5c.8 0 1.5-.7 1.5-1.5v-13z"/></svg></div><div class="ac-tag">Productivity</div></div>
         <div class="ac-name">Notion Tips</div>
         <div class="ac-desc">Turn Notion into your second brain — templates, databases, and workflows that actually stick.</div>
         <div class="ac-status"><a href="tips-009.html" class="read-link">Read Guide →</a></div>
@@ -1058,12 +1197,12 @@ footer {
       <p style="color:#4A5568">Everything here is built with purpose — not to impress, but to genuinely make things easier.</p>
     </div>
     <div class="feat-grid">
-      <div class="fc fade-up"><div class="fc-icon">🎯</div><div class="fc-title">Real Use Cases</div><div class="fc-desc">Every tool is born from a real problem — not a theoretical one. If it doesn't help in daily life, it doesn't ship.</div></div>
-      <div class="fc fade-up" style="transition-delay:.07s"><div class="fc-icon">⚡</div><div class="fc-title">AI-Powered Speed</div><div class="fc-desc">Built with AI assistance from day one, enabling faster development cycles and smarter solutions at every step.</div></div>
-      <div class="fc fade-up" style="transition-delay:.14s"><div class="fc-icon">🔄</div><div class="fc-title">Automation First</div><div class="fc-desc">If a task is done more than twice, it gets automated. That's the philosophy behind every single app here.</div></div>
-      <div class="fc fade-up" style="transition-delay:.04s"><div class="fc-icon">🏗️</div><div class="fc-title">Constantly Growing</div><div class="fc-desc">New apps are added regularly. The portfolio grows as new problems are discovered and solved.</div></div>
-      <div class="fc fade-up" style="transition-delay:.11s"><div class="fc-icon">🔒</div><div class="fc-title">Built to Last</div><div class="fc-desc">Each app is maintained and improved over time — not abandoned after launch. Long-term thinking, always.</div></div>
-      <div class="fc fade-up" style="transition-delay:.18s"><div class="fc-icon">💡</div><div class="fc-title">Simple by Default</div><div class="fc-desc">Complexity is hidden, simplicity is shown. Tools that anyone can use, no manual required.</div></div>
+      <div class="fc fade-up"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div><div class="fc-title">Real Use Cases</div><div class="fc-desc">Every tool is born from a real problem — not a theoretical one. If it doesn't help in daily life, it doesn't ship.</div></div>
+      <div class="fc fade-up" style="transition-delay:.07s"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div><div class="fc-title">AI-Powered Speed</div><div class="fc-desc">Built with AI assistance from day one, enabling faster development cycles and smarter solutions at every step.</div></div>
+      <div class="fc fade-up" style="transition-delay:.14s"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div><div class="fc-title">Automation First</div><div class="fc-desc">If a task is done more than twice, it gets automated. That's the philosophy behind every single app here.</div></div>
+      <div class="fc fade-up" style="transition-delay:.04s"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><div class="fc-title">Constantly Growing</div><div class="fc-desc">New apps are added regularly. The portfolio grows as new problems are discovered and solved.</div></div>
+      <div class="fc fade-up" style="transition-delay:.11s"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div><div class="fc-title">Built to Last</div><div class="fc-desc">Each app is maintained and improved over time — not abandoned after launch. Long-term thinking, always.</div></div>
+      <div class="fc fade-up" style="transition-delay:.18s"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3 11.2c.5.3.8.9.8 1.5v.3h4.4v-.3c0-.6.3-1.2.8-1.5A6 6 0 0012 3z"/></svg></div><div class="fc-title">Simple by Default</div><div class="fc-desc">Complexity is hidden, simplicity is shown. Tools that anyone can use, no manual required.</div></div>
     </div>
   </div>
 </section>
@@ -1076,8 +1215,8 @@ footer {
     <p class="cta-p">Got a repetitive task eating your time? Let's talk — I might already have a tool for it, or I'll build one.</p>
     <a href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank" rel="noopener noreferrer" class="upwork-badge cta-badge">✓ Verified on Upwork</a>
     <div class="cta-btns">
-      <a href="https://wa.me/6282267672828" class="btn-p">💬 WhatsApp Me</a>
-      <a href="mailto:anabhi.dev@gmail.com" class="btn-g">✉️ Send Email</a>
+      <a href="https://wa.me/6282267672828" class="btn-p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M7 17l-3 1 1-3a8 8 0 113 3z"/><path d="M9 10c0 3 2 5 5 5"/></svg> WhatsApp Me</a>
+      <a href="mailto:anabhi.dev@gmail.com" class="btn-g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Send Email</a>
     </div>
   </div>
 </section>
@@ -1090,11 +1229,11 @@ footer {
         <div style="font-family:'Sora',sans-serif; font-size:28px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; padding-left:12px;">Anabhi <em style="font-style:normal; color:var(--blue);">Dev</em></div>
         <p class="foot-tag" style="padding-left:4px;">"Less Doing. More Living."</p>
         <div class="socials">
-          <a href="https://wa.me/6282267672828" class="soc" title="WhatsApp">💬</a>
-          <a href="https://instagram.com/AnabhiDev" class="soc" title="Instagram">📸</a>
-          <a href="https://linkedin.com/in/I-Gede-Agus-Wibawa" class="soc" title="LinkedIn">💼</a>
-          <a href="https://github.com/anabhidev" class="soc" title="GitHub">🐙</a>
-          <a href="mailto:anabhi.dev@gmail.com" class="soc" title="Email">✉️</a>
+          <a href="https://wa.me/6282267672828" class="soc" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><path d="M7 17l-3 1 1-3a8 8 0 113 3z"/><path d="M9 10c0 3 2 5 5 5"/></svg></a>
+          <a href="https://instagram.com/AnabhiDev" class="soc" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="16.2" cy="7.8" r="0.6" fill="currentColor"/></svg></a>
+          <a href="https://linkedin.com/in/I-Gede-Agus-Wibawa" class="soc" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="8.5" cy="8.5" r="0.9" fill="currentColor"/><path d="M8.5 11v6M12.5 17v-3.5c0-1.2 1-2 2-2s2 .8 2 2V17M12.5 11v6"/></svg></a>
+          <a href="https://github.com/anabhidev" class="soc" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 8v8M6 12c0-3 3-3 6-3h2"/></svg></a>
+          <a href="mailto:anabhi.dev@gmail.com" class="soc" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ico"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
         </div>
       </div>
       <div class="foot-col">
@@ -1124,8 +1263,8 @@ footer {
       </div>
     </div>
     <div class="foot-bot">
-      <div class="copy">© 2025 <em>Anabhi Dev</em>. All rights reserved.</div>
-      <div class="foot-badge">Less Doing. More Living. ✦</div>
+      <div class="foot-badge">✦ Less Doing. More Living. ✦</div>
+      <div class="copy">© 2026 <em>Anabhi Dev</em>. All rights reserved.</div>
     </div>
   </div>
 </footer>
