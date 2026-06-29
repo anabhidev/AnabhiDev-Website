@@ -13,19 +13,13 @@
 <link rel="canonical" href="https://anabhidev.com/">
 <meta name="theme-color" content="#0B1829">
 
-<!-- Google tag (gtag.js) — desktop only (experiment: skip on mobile to test performance impact) -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4S207NQSE7"></script>
 <script>
-  if (window.innerWidth > 768) {
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-4S207NQSE7');
-
-    var gtagScript = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-4S207NQSE7';
-    document.head.appendChild(gtagScript);
-  }
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4S207NQSE7');
 </script>
 
 <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
@@ -1420,10 +1414,17 @@ a.ct-row:hover { color:var(--white); }
 
   // Scroll progress bar
   const progressBar = document.getElementById('scroll-progress');
+  let scrollTicking = false;
   window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (scrolled / total * 100) + '%';
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (scrolled / total * 100) + '%';
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
   }, { passive:true });
 
   // Typing effect
