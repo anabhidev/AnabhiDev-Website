@@ -1,1 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anabhi Dev — Selected Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1829;
+  --navy-mid:#111F33;
+  --navy-card:#162336;
+  --blue:#3B9EE8;
+  --blue-lt:#6AB8F0;
+  --blue-dark:#186DB0;
+  --silver:#B8C8D8;
+  --white:#FFFFFF;
+  --w90:rgba(255,255,255,0.90);
+  --w60:rgba(255,255,255,0.60);
+  --w30:rgba(255,255,255,0.30);
+  --w12:rgba(255,255,255,0.12);
+  --w07:rgba(255,255,255,0.07);
+  --max:1320px;
+  --gutter:80px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy); color:var(--white);
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+@media (max-width:900px){ body{ cursor:auto; } }
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+}
+a{color:inherit; text-decoration:none;}
+:focus-visible{outline:2px solid var(--blue-lt); outline-offset:3px;}
+h1,h2,h3{font-family:'Sora',sans-serif; font-weight:700; line-height:1.1;}
 
+.wrap{max-width:var(--max); margin:0 auto; padding:0 var(--gutter);}
+@media (max-width:760px){ :root{ --gutter:24px; } }
+
+section{position:relative; z-index:1;}
+
+/* ===== CUSTOM CURSOR ===== */
+#cur{position:fixed; width:7px; height:7px; background:var(--blue-lt); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%);}
+#cur-ring{position:fixed; width:38px; height:38px; border:1px solid rgba(59,158,232,0.55); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; opacity:.5;}
+@media (max-width:900px){ #cur,#cur-ring{ display:none; } }
+
+/* ===== BG CANVAS (three.js) ===== */
+#bg-canvas{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
+
+/* ===== NAV ===== */
+nav{position:fixed; top:0; left:0; right:0; z-index:300; padding:22px var(--gutter); display:flex; align-items:center; justify-content:space-between; transition:all .4s;}
+nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:14px var(--gutter); border-bottom:1px solid var(--w07);}
+.nav-brand{display:flex; align-items:center; gap:10px;}
+.nav-brand img{height:32px; display:block;}
+.nav-links{display:flex; align-items:center; gap:6px;}
+.nav-links a{font-family:'Sora',sans-serif; font-size:13px; font-weight:500; color:var(--silver); padding:8px 14px; border-radius:6px; transition:color .25s ease; cursor:none;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{font-family:'Sora',sans-serif; font-size:13px; font-weight:600; color:var(--navy); background:var(--blue-lt); padding:9px 20px; border-radius:999px; margin-left:8px; transition:background .25s ease, transform .25s ease; cursor:none;}
+.nav-cta:hover{background:var(--white); transform:translateY(-1px);}
+@media (max-width:760px){ .nav-links{display:none;} }
+
+/* ===== HERO ===== */
+#hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:140px 24px 80px;}
+.hero-in{opacity:0; transform:translateY(32px);}
+.hero-logo-wrap{position:relative; display:inline-block; margin:0 auto 28px;}
+.hero-logo-glow{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:140%; height:140%; pointer-events:none; background:radial-gradient(ellipse,rgba(59,158,232,0.22) 0%,transparent 65%); z-index:0;}
+#hero-logo{position:relative; z-index:1; width:min(280px,60vw); display:block; margin:0 auto;}
+
+.eyebrow{font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:var(--blue-lt); margin-bottom:18px; display:flex; align-items:center; justify-content:center; gap:10px;}
+.eyebrow::before,.eyebrow::after{content:''; width:24px; height:1px; background:var(--blue-dark);}
+
+.hero-h1{font-size:clamp(34px,5.6vw,58px); max-width:880px; margin:0 auto;}
+.hero-h1 .typed-line{display:block; color:var(--blue-lt); font-weight:600; margin-top:6px;}
+.hero-h1 .cursor{display:inline-block; width:3px; height:0.8em; background:var(--blue-lt); margin-left:4px; vertical-align:-0.05em; animation:blink 1s step-end infinite;}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero-sub{margin-top:24px; max-width:520px; font-size:16px; line-height:1.7; color:var(--silver); margin-left:auto; margin-right:auto;}
+.hero-tagline{display:block; margin-top:10px; font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--w60);}
+
+.hero-cta{margin-top:36px; display:inline-block; padding:14px 38px; background:var(--blue); color:var(--white); font-family:'Sora',sans-serif; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; border-radius:999px; transition:all .3s ease; cursor:none;}
+.hero-cta:hover{background:var(--blue-lt); box-shadow:0 0 40px rgba(59,158,232,0.4); transform:translateY(-2px);}
+
+.stats{margin-top:64px; display:flex; gap:64px; flex-wrap:wrap; justify-content:center; opacity:0;}
+.stat{min-width:140px; text-align:center;}
+.stat-num{font-family:'Sora',sans-serif; font-weight:700; font-size:clamp(40px,5.4vw,56px); line-height:1; color:var(--white); font-variant-numeric:tabular-nums;}
+.stat-num .suffix{color:var(--blue-lt);}
+.stat-label{margin-top:10px; font-family:'Sora',sans-serif; font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--silver);}
+
+.scroll-hint{position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:10px; opacity:0;}
+.scroll-hint span{font-family:'Sora',sans-serif; font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--w60);}
+.scroll-line{width:1px; height:46px; background:linear-gradient(to bottom,var(--blue-lt),transparent); animation:sp 2s ease-in-out infinite;}
+@keyframes sp{0%,100%{opacity:.3} 50%{opacity:1}}
+
+/* ===== SECTION HEADER (shared) ===== */
+.sec-hdr{text-align:center; max-width:640px; margin:0 auto 56px;}
+.sec-title{font-size:clamp(28px,4.4vw,42px); color:var(--white);}
+.sec-title em{color:var(--blue-lt); font-style:normal;}
+.sec-rule{width:56px; height:2px; background:linear-gradient(to right,transparent,var(--blue),transparent); margin:22px auto 0;}
+
+/* ===== FILTER ===== */
+#filter{padding:0 0 50px;}
+.pill-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; padding:0 24px;}
+.pill{font-family:'Sora',sans-serif; font-size:13px; font-weight:500; color:var(--silver); border:1px solid var(--w12); padding:10px 22px; border-radius:999px; cursor:none; transition:all .25s ease; background:transparent;}
+.pill:hover{border-color:var(--blue-dark); color:var(--white);}
+.pill.active{background:var(--blue); border-color:var(--blue); color:var(--white);}
+
+/* ===== WORK / CAROUSEL ===== */
+#work{padding:20px 0 130px;}
+#carousel-canvas{width:100%; height:560px; display:block; cursor:none;}
+@media (max-width:760px){ #carousel-canvas{height:420px;} }
+.carousel-hint{text-align:center; margin-top:14px; font-family:'Sora',sans-serif; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--w60);}
+.work-detail{text-align:center; margin-top:36px; min-height:64px;}
+.work-detail-name{font-family:'Sora',sans-serif; font-size:22px; font-weight:600; color:var(--white);}
+.work-detail-meta{margin-top:6px; font-size:13px; color:var(--silver);}
+.work-detail-meta .dot{display:inline-block; width:6px; height:6px; border-radius:999px; background:#4ADE80; margin-right:6px; vertical-align:1px;}
+.work-detail-meta .dot.progress{background:var(--blue-lt);}
+
+/* ===== ABOUT ===== */
+#about{padding:40px 0 130px;}
+.about-wrap{max-width:980px; margin:0 auto; display:grid; grid-template-columns:220px 1fr; gap:52px; align-items:start;}
+@media (max-width:700px){ .about-wrap{grid-template-columns:1fr; gap:28px; text-align:center;} }
+.about-photo{width:220px; height:220px; border-radius:16px; background:var(--navy-card); border:1px solid var(--w12); display:flex; align-items:center; justify-content:center; color:var(--w60); font-size:12px; text-align:center; padding:16px; opacity:0;}
+@media (max-width:700px){ .about-photo{ width:180px; height:180px; margin:0 auto; } }
+.about-text{opacity:0;}
+.about-text p{font-size:16px; line-height:1.8; color:var(--silver); max-width:560px;}
+.about-skills{margin-top:24px; display:flex; gap:10px; flex-wrap:wrap;}
+@media (max-width:700px){ .about-skills{justify-content:center;} }
+.skill-tag{font-family:'Sora',sans-serif; font-size:12px; font-weight:500; padding:7px 16px; border:1px solid var(--w12); border-radius:999px; color:var(--silver); background:var(--w07);}
+
+/* ===== GALLERY (auto-scroll marquee) ===== */
+#gallery{padding:0 0 130px; overflow:hidden;}
+.gallery-track-wrap{overflow:hidden; position:relative; -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);}
+.gallery-track{display:flex; gap:20px; width:max-content; animation:marquee 38s linear infinite;}
+@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+.gal-item{flex:0 0 auto; width:340px; height:240px; border-radius:10px; overflow:hidden; border:1px solid var(--w12); position:relative;}
+@media (max-width:760px){ .gal-item{width:240px; height:170px;} }
+.gal-item img{width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.82) saturate(.95);}
+.gal-overlay{position:absolute; bottom:0; left:0; right:0; padding:14px 16px; background:linear-gradient(transparent, rgba(6,14,26,0.85)); font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--white);}
+
+/* ===== WHY ANABHI DEV ===== */
+#why{padding:20px 0 130px;}
+.why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; max-width:1100px; margin:0 auto;}
+@media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:600px){ .why-grid{grid-template-columns:1fr;} }
+.why-card{padding:28px 26px; background:var(--w07); border:1px solid var(--w12); border-radius:12px; opacity:0;}
+.why-card h3{font-size:17px; color:var(--white); margin-bottom:10px;}
+.why-card p{font-size:14px; line-height:1.65; color:var(--silver);}
+
+
+#cta{padding:60px 0 140px; text-align:center;}
+.cta-title{font-size:clamp(28px,4.6vw,44px); max-width:580px; margin:0 auto; opacity:0;}
+.cta-buttons{margin-top:36px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; opacity:0;}
+.btn{font-family:'Sora',sans-serif; font-size:13px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:15px 32px; border-radius:999px; transition:all .3s ease; display:inline-block; cursor:none;}
+.btn-filled{background:var(--blue); color:var(--white);}
+.btn-filled:hover{background:var(--blue-lt); box-shadow:0 0 40px rgba(59,158,232,0.4); transform:translateY(-2px);}
+.btn-outline{border:1px solid var(--w30); color:var(--white);}
+.btn-outline:hover{border-color:var(--blue-lt); background:var(--w07); transform:translateY(-2px);}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12px; color:var(--w60); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; position:relative; z-index:1;}
+
+/* ===== MODAL (carousel item detail) ===== */
+.modal-overlay{position:fixed; inset:0; z-index:500; background:rgba(6,14,26,0.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .3s;}
+.modal-overlay.open{opacity:1; pointer-events:all;}
+.modal-box{max-width:640px; width:100%; background:var(--navy-card); border:1px solid var(--w12); position:relative; overflow:hidden; border-radius:12px;}
+.modal-box::before{content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,var(--blue-lt),transparent);}
+.modal-close{position:absolute; top:16px; right:16px; z-index:10; background:transparent; border:1px solid var(--w12); color:var(--silver); width:32px; height:32px; cursor:none; font-size:14px; border-radius:999px; display:flex; align-items:center; justify-content:center; transition:all .3s;}
+.modal-close:hover{border-color:var(--blue-lt); color:var(--white);}
+.modal-media{height:240px; background:repeating-linear-gradient(135deg, var(--navy-mid) 0px, var(--navy-mid) 2px, var(--navy-card) 2px, var(--navy-card) 4px); display:flex; align-items:center; justify-content:center; color:var(--w60); font-size:13px; text-align:center; padding:20px;}
+.modal-body{padding:32px 36px 36px;}
+.modal-eyebrow{font-family:'Sora',sans-serif; font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--blue-lt); display:block; margin-bottom:10px;}
+.modal-name{font-size:26px; margin-bottom:14px;}
+.modal-desc{font-size:14px; line-height:1.8; color:var(--silver); margin-bottom:22px;}
+.modal-link{font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--blue-lt); border-bottom:1px solid var(--blue-dark); padding-bottom:3px;}
+
+/* reveal helper (driven by GSAP, default state set above per-element) */
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<canvas id="bg-canvas"></canvas>
+
+<nav id="nav">
+  <a href="#hero" class="nav-brand">
+    <img src="logo.png" alt="Anabhi Dev">
+  </a>
+  <div class="nav-links">
+    <a href="#work" class="nl">Work</a>
+    <a href="#about" class="nl">About</a>
+    <a href="#cta" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-in" id="heroIn">
+    <div class="eyebrow">Selected Work — Coding &amp; Automation</div>
+    <div class="hero-logo-wrap">
+      <div class="hero-logo-glow"></div>
+      <img id="hero-logo" src="logo.png" alt="Anabhi Dev">
+    </div>
+    <h1 class="hero-h1">
+      Between idea and deploy,
+      <span class="typed-line" id="typedLine">Less Doing. More Building.<span class="cursor"></span></span>
+    </h1>
+    <p class="hero-sub">
+      A curated look at apps, automation, and websites built with AI assistance — for real businesses, real problems.
+    </p>
+    <a href="#work" class="hero-cta">View the Work</a>
+  </div>
+
+  <div class="stats" id="heroStats">
+    <div class="stat">
+      <div class="stat-num" data-target="33" data-suffix="+">0</div>
+      <div class="stat-label">Apps Built</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="95" data-suffix="%">0</div>
+      <div class="stat-label">AI-Assisted</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" id="scrollHint"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<section id="filter">
+  <div class="pill-row" id="pillRow">
+    <button class="pill active" data-filter="all">All Work</button>
+    <button class="pill" data-filter="website">Website</button>
+    <button class="pill" data-filter="webapp">Web App / Automation</button>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap" style="padding:0 24px;">
+    <div class="sec-hdr">
+      <span class="eyebrow" style="justify-content:center;">Portfolio</span>
+      <h2 class="sec-title">Selected <em>Projects</em></h2>
+      <div class="sec-rule"></div>
+    </div>
+  </div>
+  <canvas id="carousel-canvas"></canvas>
+  <p class="carousel-hint">Hover to pause · Click to explore</p>
+  <div class="work-detail" id="workDetail"></div>
+</section>
+
+<section id="gallery">
+  <div class="wrap" style="padding:0 24px;">
+    <div class="sec-hdr">
+      <span class="eyebrow" style="justify-content:center;">A Glimpse</span>
+      <h2 class="sec-title">From the <em>Field</em></h2>
+      <div class="sec-rule"></div>
+    </div>
+  </div>
+  <div class="gallery-track-wrap">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-pool-exterior-1.webp" alt="InnerPeace Villa pool"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/hero.jpg" alt="Delanswit hampers"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="spingather.png" alt="SpinGather wheel"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-bedroom-teak-1.webp" alt="InnerPeace Villa bedroom"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="lms.png" alt="LMS dashboard"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/gallery-1.jpg" alt="Delanswit gallery"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-terrace-view-1.webp" alt="InnerPeace Villa terrace"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/gallery-2.jpg" alt="Delanswit gallery"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <!-- duplicate set for seamless loop -->
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-pool-exterior-1.webp" alt="InnerPeace Villa pool"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/hero.jpg" alt="Delanswit hampers"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="spingather.png" alt="SpinGather wheel"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-bedroom-teak-1.webp" alt="InnerPeace Villa bedroom"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="lms.png" alt="LMS dashboard"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/gallery-1.jpg" alt="Delanswit gallery"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://www.innerpeacebali.com/assets/villa/villa-terrace-view-1.webp" alt="InnerPeace Villa terrace"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://delanswit.netlify.app/gallery-2.jpg" alt="Delanswit gallery"><div class="gal-overlay">Delanswit — Pastry</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap" style="padding:0 24px;">
+    <div class="sec-hdr">
+      <span class="eyebrow" style="justify-content:center;">Why Anabhi Dev</span>
+      <h2 class="sec-title">Built Different. <em>By Design.</em></h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><h3>Real Use Cases</h3><p>Every tool is born from a real problem — not a theoretical one. If it doesn't help in daily life, it doesn't ship.</p></div>
+      <div class="why-card"><h3>AI-Powered Speed</h3><p>Built with AI assistance from day one, enabling faster development cycles and smarter solutions at every step.</p></div>
+      <div class="why-card"><h3>Automation First</h3><p>If a task is done more than twice, it gets automated. That's the philosophy behind every single app here.</p></div>
+      <div class="why-card"><h3>Constantly Growing</h3><p>New apps are added regularly. The portfolio grows as new problems are discovered and solved.</p></div>
+      <div class="why-card"><h3>Built to Last</h3><p>Each app is maintained and improved over time — not abandoned after launch. Long-term thinking, always.</p></div>
+      <div class="why-card"><h3>Simple by Default</h3><p>Complexity is hidden, simplicity is shown. Tools that anyone can use, no manual required.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-photo" id="aboutPhoto" style="background-image:url('https://anabhidev.com/founder-anabhi-dev.webp'); background-size:cover; background-position:center;"></div>
+    <div class="about-text" id="aboutText">
+      <span class="eyebrow" style="margin-bottom:14px;">About</span>
+      <h2 style="font-size:28px; margin-bottom:16px;">I'm Agus Wibawa</h2>
+      <p>Builder behind Anabhi Dev. By day, IT &amp; systems work in Bali's hospitality industry; in spare hours, I build web apps and automation tools with AI assistance — end to end, from idea to a working, deployed product.</p>
+      <div class="about-skills">
+        <span class="skill-tag">Google Apps Script</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Cloudflare Pages</span>
+        <span class="skill-tag">Supabase</span>
+        <span class="skill-tag">Netlify</span>
+        <span class="skill-tag">Railway</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <h2 class="cta-title" id="ctaTitle">Have an idea worth building?</h2>
+  <div class="cta-buttons" id="ctaButtons">
+    <a class="btn btn-filled" href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank" rel="noopener">Hire Me on Upwork</a>
+    <a class="btn btn-outline" href="https://wa.me/6282267672828" target="_blank" rel="noopener">Contact</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Anabhi Dev</span>
+  <span>Less Doing. More Living.</span>
+</footer>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-media" id="modalMedia"></div>
+    <div class="modal-body">
+      <span class="modal-eyebrow" id="modalEyebrow"></span>
+      <h3 class="modal-name" id="modalName"></h3>
+      <p class="modal-desc" id="modalDesc"></p>
+      <span class="modal-link" id="modalLink"></span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+/* ============ CUSTOM CURSOR ============ */
+const $c=document.getElementById('cur'), $cr=document.getElementById('cur-ring');
+let cx=0, cy=0, rx=0, ry=0;
+document.addEventListener('mousemove', e=>{ cx=e.clientX; cy=e.clientY; });
+(function loop(){
+  rx += (cx-rx)*.1; ry += (cy-ry)*.1;
+  $c.style.left=cx+'px'; $c.style.top=cy+'px';
+  $cr.style.left=rx+'px'; $cr.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>{ $cr.style.width='52px'; $cr.style.height='52px'; $cr.style.opacity='.85'; });
+  el.addEventListener('mouseleave', ()=>{ $cr.style.width='38px'; $cr.style.height='38px'; $cr.style.opacity='.5'; });
+});
+
+/* ============ NAV SCROLL STATE ============ */
+window.addEventListener('scroll', ()=>{
+  document.getElementById('nav').classList.toggle('sc', scrollY>60);
+});
+
+/* ============ BACKGROUND THREE.JS ============ */
+const bgC=document.getElementById('bg-canvas');
+const bgR=new THREE.WebGLRenderer({canvas:bgC, alpha:true, antialias:true});
+bgR.setPixelRatio(Math.min(devicePixelRatio,2));
+bgR.setSize(innerWidth, innerHeight);
+const bgS=new THREE.Scene();
+const bgCam=new THREE.PerspectiveCamera(65, innerWidth/innerHeight, .1, 100);
+bgCam.position.z=5;
+
+const N=2200, pa=new Float32Array(N*3), pc=new Float32Array(N*3);
+const pal=[[0.231,0.620,0.910],[0.420,0.722,0.941],[0.094,0.427,0.690],[0.722,0.784,0.847],[1,1,1]];
+for(let i=0;i<N;i++){
+  pa[i*3]=(Math.random()-.5)*26;
+  pa[i*3+1]=(Math.random()-.5)*26;
+  pa[i*3+2]=(Math.random()-.5)*24;
+  const c=pal[~~(Math.random()*pal.length)];
+  pc[i*3]=c[0]; pc[i*3+1]=c[1]; pc[i*3+2]=c[2];
+}
+const pG=new THREE.BufferGeometry();
+pG.setAttribute('position', new THREE.BufferAttribute(pa,3));
+pG.setAttribute('color', new THREE.BufferAttribute(pc,3));
+bgS.add(new THREE.Points(pG, new THREE.PointsMaterial({size:.022, vertexColors:true, transparent:true, opacity:.75, sizeAttenuation:true})));
+
+const wm=(c,o)=>new THREE.MeshBasicMaterial({color:c, wireframe:true, transparent:true, opacity:o});
+const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(2,.38,128,14), wm(0x3B9EE8,.07));
+bgS.add(tk);
+const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.2,1), wm(0x186DB0,.06));
+ico.position.set(3.5,-1,-2); bgS.add(ico);
+const oct=new THREE.Mesh(new THREE.OctahedronGeometry(.9,0), wm(0x6AB8F0,.1));
+oct.position.set(-3.5,1.5,-1.5); bgS.add(oct);
+
+let bmx=0, bmy=0;
+document.addEventListener('mousemove', e=>{
+  bmx=(e.clientX/innerWidth-.5)*.7;
+  bmy=(e.clientY/innerHeight-.5)*.4;
+});
+(function bgTick(){
+  requestAnimationFrame(bgTick);
+  const t=performance.now()*.001;
+  tk.rotation.x=t*.17; tk.rotation.y=t*.1;
+  ico.rotation.x=t*.13; ico.rotation.z=t*.08;
+  oct.rotation.y=t*.12; oct.rotation.x=t*.09;
+  bgCam.position.x += (bmx-bgCam.position.x)*.02;
+  bgCam.position.y += (-bmy-bgCam.position.y)*.02;
+  bgCam.lookAt(bgS.position);
+  bgR.render(bgS, bgCam);
+})();
+window.addEventListener('resize', ()=>{
+  bgR.setSize(innerWidth, innerHeight);
+  bgCam.aspect=innerWidth/innerHeight;
+  bgCam.updateProjectionMatrix();
+});
+
+/* ============ GSAP REVEALS ============ */
+gsap.registerPlugin(ScrollTrigger);
+gsap.set('#heroIn', {y:32, opacity:0});
+gsap.to('#heroIn', {opacity:1, y:0, duration:1.4, ease:'power3.out', delay:.3});
+gsap.to('#heroStats', {opacity:1, duration:1, delay:1.0, onComplete:animateStats});
+gsap.to('#scrollHint', {opacity:1, duration:1, delay:1.8});
+
+gsap.utils.toArray('.why-card').forEach((card,i)=>{
+  gsap.fromTo(card, {opacity:0, y:24}, {opacity:1, y:0, duration:.8, ease:'power3.out', delay:i*0.08, scrollTrigger:{trigger:'#why', start:'top 80%'}});
+});
+
+gsap.fromTo('#aboutPhoto', {opacity:0, x:-40}, {opacity:1, x:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:'#about', start:'top 75%'}});
+gsap.fromTo('#aboutText', {opacity:0, x:40}, {opacity:1, x:0, duration:1, ease:'power3.out', delay:.15, scrollTrigger:{trigger:'#about', start:'top 75%'}});
+gsap.fromTo('#ctaTitle', {opacity:0, y:24}, {opacity:1, y:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:'#cta', start:'top 80%'}});
+gsap.fromTo('#ctaButtons', {opacity:0, y:24}, {opacity:1, y:0, duration:1, ease:'power3.out', delay:.15, scrollTrigger:{trigger:'#cta', start:'top 80%'}});
+
+/* ============ STATS COUNT-UP ============ */
+function animateStats(){
+  document.querySelectorAll('.stat-num').forEach(el=>{
+    const target=parseInt(el.dataset.target,10);
+    const suffix=el.dataset.suffix || '';
+    const dur=1400;
+    const start=performance.now();
+    function tick(now){
+      const p=Math.min((now-start)/dur, 1);
+      const eased=1-Math.pow(1-p,3);
+      el.innerHTML = Math.round(eased*target) + '<span class="suffix">'+suffix+'</span>';
+      if(p<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+/* ============ WORK DATA ============ */
+const WORK=[
+  {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:'https://www.innerpeacebali.com/assets/villa/villa-pool-exterior-1.webp'},
+  {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:'https://delanswit.netlify.app/hero.jpg'},
+  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:'spingather.png'},
+  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:'lms.png'},
+];
+
+/* ============ CAROUSEL 3D (Three.js) ============ */
+const mC=document.getElementById('carousel-canvas');
+const mR=new THREE.WebGLRenderer({canvas:mC, alpha:true, antialias:true});
+mR.setPixelRatio(Math.min(devicePixelRatio,2));
+const mScene=new THREE.Scene();
+const mCam=new THREE.PerspectiveCamera(50, mC.clientWidth/mC.clientHeight, .1, 50);
+mCam.position.set(0, 0.3, 6.2);
+
+function resM(){
+  const w=mC.clientWidth, h=mC.clientHeight;
+  mR.setSize(w,h);
+  mCam.aspect=w/h;
+  mCam.updateProjectionMatrix();
+}
+resM();
+window.addEventListener('resize', resM);
+
+const CARD_W=2.0, CARD_H=2.6, RADIUS=3.4;
+const cGroup=new THREE.Group();
+mScene.add(cGroup);
+
+const oRing=new THREE.Mesh(new THREE.TorusGeometry(RADIUS,.008,8,80), new THREE.MeshBasicMaterial({color:0x3B9EE8, transparent:true, opacity:.22}));
+oRing.rotation.x=Math.PI/2;
+cGroup.add(oRing);
+
+const OP=110, opa=new Float32Array(OP*3);
+for(let i=0;i<OP;i++){
+  const a=Math.random()*Math.PI*2, r=RADIUS+(Math.random()-.5)*.6;
+  opa[i*3]=Math.cos(a)*r; opa[i*3+1]=(Math.random()-.5)*.4; opa[i*3+2]=Math.sin(a)*r;
+}
+const opG=new THREE.BufferGeometry();
+opG.setAttribute('position', new THREE.BufferAttribute(opa,3));
+cGroup.add(new THREE.Points(opG, new THREE.PointsMaterial({color:0x6AB8F0, size:.03, transparent:true, opacity:.5})));
+
+function makeCardTex(item){
+  const cv=document.createElement('canvas'); cv.width=512; cv.height=666;
+  const ctx=cv.getContext('2d');
+  // navy-card background
+  ctx.fillStyle='rgba(22,35,54,0.96)'; ctx.fillRect(0,0,512,666);
+  ctx.strokeStyle='rgba(59,158,232,0.4)'; ctx.lineWidth=2; ctx.strokeRect(2,2,508,662);
+  const cm=18; ctx.strokeStyle='rgba(106,184,240,0.7)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(0,cm); ctx.lineTo(0,0); ctx.lineTo(cm,0); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(512-cm,0); ctx.lineTo(512,0); ctx.lineTo(512,cm); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,666-cm); ctx.lineTo(0,666); ctx.lineTo(cm,666); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(512-cm,666); ctx.lineTo(512,666); ctx.lineTo(512,666-cm); ctx.stroke();
+
+  // media area placeholder (replaced by real image once loaded)
+  ctx.fillStyle='rgba(17,31,51,0.9)';
+  ctx.fillRect(18,18,476,360);
+  ctx.fillStyle='rgba(184,200,216,0.5)';
+  ctx.font='400 14px DM Sans, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('Loading…', 256, 200);
+  ctx.textAlign='left';
+
+  ctx.fillStyle='rgba(106,184,240,0.95)'; ctx.font='600 17px Sora, sans-serif';
+  ctx.fillText(item.tag, 28, 420);
+  ctx.fillStyle='#F5F8FB'; ctx.font='700 32px Sora, sans-serif';
+  wrapText(ctx, item.name, 28, 462, 456, 36);
+  ctx.fillStyle='rgba(184,200,216,0.85)'; ctx.font='300 17px DM Sans, sans-serif';
+  wrapText(ctx, item.desc, 28, 540, 456, 24);
+
+  ctx.fillStyle = item.status==='live' ? 'rgba(74,222,128,0.9)' : 'rgba(106,184,240,0.9)';
+  ctx.beginPath(); ctx.arc(34, 630, 5, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(184,200,216,0.75)'; ctx.font='500 13px Sora, sans-serif';
+  ctx.fillText(item.status==='live' ? 'LIVE' : 'IN PROGRESS', 48, 635);
+
+  const tex=new THREE.CanvasTexture(cv); tex.needsUpdate=true;
+
+  // load real image into the media area once available
+  if(item.img){
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    img.onload=function(){
+      ctx.save();
+      ctx.beginPath(); ctx.rect(18,18,476,360); ctx.clip();
+      const areaW=476, areaH=360;
+      const asp=img.width/img.height;
+      let dw=areaW, dh=areaH;
+      if(asp > areaW/areaH){ dh=areaH; dw=dh*asp; } else { dw=areaW; dh=dw/asp; }
+      ctx.drawImage(img, 18+(areaW-dw)/2, 18+(areaH-dh)/2, dw, dh);
+      ctx.restore();
+      // subtle scanline overlay for cohesion with card aesthetic
+      ctx.strokeStyle='rgba(0,0,0,0.05)'; ctx.lineWidth=.5;
+      for(let y=18;y<378;y+=3){ ctx.beginPath(); ctx.moveTo(18,y); ctx.lineTo(494,y); ctx.stroke(); }
+      tex.needsUpdate=true;
+    };
+    img.onerror=function(){
+      // keep placeholder text but mark as unavailable
+      ctx.fillStyle='rgba(17,31,51,0.9)'; ctx.fillRect(18,18,476,360);
+      ctx.fillStyle='rgba(184,200,216,0.5)'; ctx.font='400 14px DM Sans, sans-serif';
+      ctx.textAlign='center'; ctx.fillText('Image unavailable', 256, 200); ctx.textAlign='left';
+      tex.needsUpdate=true;
+    };
+    img.src=item.img;
+  }
+
+  return tex;
+}
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+  const words=text.split(' ');
+  let line='', cy=y;
+  for(let n=0;n<words.length;n++){
+    const test=line+words[n]+' ';
+    if(ctx.measureText(test).width > maxWidth && n>0){
+      ctx.fillText(line, x, cy);
+      line=words[n]+' '; cy+=lineHeight;
+    } else { line=test; }
+  }
+  ctx.fillText(line, x, cy);
+}
+
+const cards=[];
+const raycaster=new THREE.Raycaster(), mouse=new THREE.Vector2();
+let hoveredCard=null;
+
+WORK.forEach((item,i)=>{
+  const tex=makeCardTex(item);
+  const mat=new THREE.MeshBasicMaterial({map:tex, transparent:true, side:THREE.DoubleSide});
+  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(CARD_W, CARD_H), mat);
+  const angle=(i/WORK.length)*Math.PI*2;
+  mesh.position.x=Math.sin(angle)*RADIUS;
+  mesh.position.z=Math.cos(angle)*RADIUS;
+  mesh.position.y=0;
+  mesh.lookAt(0,0,0);
+  mesh.rotateY(Math.PI);
+  mesh.userData={index:i, item, visible:true};
+  cGroup.add(mesh);
+  cards.push({mesh, mat, item});
+});
+
+mScene.add(new THREE.AmbientLight(0x3B9EE8, .3));
+
+let mAngle=0, mPaused=false; const SPEED=.003;
+let canvasHover=false;
+mC.addEventListener('mouseenter', ()=>{ canvasHover=true; mPaused=true; });
+mC.addEventListener('mouseleave', ()=>{
+  canvasHover=false; mPaused=false; hoveredCard=null;
+  cards.forEach(c=>{ c.mesh.scale.set(1,1,1); c.mat.opacity = c.mesh.userData.visible ? 1 : 0; });
+});
+mC.addEventListener('mousemove', e=>{
+  const r=mC.getBoundingClientRect();
+  mouse.x=((e.clientX-r.left)/r.width)*2-1;
+  mouse.y=-((e.clientY-r.top)/r.height)*2+1;
+});
+mC.addEventListener('click', ()=>{ if(hoveredCard!==null) openModal(hoveredCard); });
+
+let tX=0;
+mC.addEventListener('touchstart', e=>{ tX=e.touches[0].clientX; mPaused=true; }, {passive:true});
+mC.addEventListener('touchmove', e=>{
+  const dx=e.touches[0].clientX-tX;
+  mAngle += dx*.003;
+  tX=e.touches[0].clientX;
+}, {passive:true});
+mC.addEventListener('touchend', ()=>{ mPaused=false; });
+
+let activeFilter='all';
+document.querySelectorAll('.pill').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter=btn.dataset.filter;
+    cards.forEach(c=>{ c.mesh.userData.visible = (activeFilter==='all') || (c.item.cat===activeFilter); });
+  });
+});
+
+(function mTick(){
+  requestAnimationFrame(mTick);
+  if(!mPaused) mAngle += SPEED;
+  cGroup.rotation.y = mAngle;
+  oRing.rotation.z = performance.now()*.0002;
+
+  if(canvasHover){
+    raycaster.setFromCamera(mouse, mCam);
+    const visibleMeshes = cards.filter(c=>c.mesh.userData.visible).map(c=>c.mesh);
+    const hits = raycaster.intersectObjects(visibleMeshes);
+    if(hits.length>0){
+      const idx = hits[0].object.userData.index;
+      hoveredCard = idx;
+      cards.forEach((c,i)=>{
+        if(i===idx){
+          gsap.to(c.mesh.scale, {x:1.1,y:1.1,z:1.1, duration:.3, overwrite:true});
+          c.mat.opacity=1;
+          showWorkDetail(c.item);
+        } else {
+          gsap.to(c.mesh.scale, {x:1,y:1,z:1, duration:.3, overwrite:true});
+          c.mat.opacity = c.mesh.userData.visible ? .5 : 0;
+        }
+      });
+      $cr.style.width='52px'; $cr.style.height='52px'; $cr.style.opacity='.85';
+    } else {
+      hoveredCard=null;
+      cards.forEach(c=>{
+        gsap.to(c.mesh.scale, {x:1,y:1,z:1, duration:.3, overwrite:true});
+        c.mat.opacity = c.mesh.userData.visible ? 1 : 0;
+      });
+      $cr.style.width='38px'; $cr.style.height='38px'; $cr.style.opacity='.5';
+      clearWorkDetail();
+    }
+  }
+  cards.forEach(c=>{ if(!c.mesh.userData.visible) c.mat.opacity = Math.max(c.mat.opacity-.02, 0); });
+
+  mR.render(mScene, mCam);
+})();
+
+ScrollTrigger.create({
+  trigger:'#work', start:'top 70%', once:true,
+  onEnter(){
+    gsap.fromTo(cGroup.scale, {x:.5,y:.5,z:.5}, {x:1,y:1,z:1, duration:1.2, ease:'back.out(1.2)'});
+    gsap.fromTo(cGroup.rotation, {x:.5}, {x:0, duration:1.2, ease:'power3.out'});
+  }
+});
+
+function showWorkDetail(item){
+  const el=document.getElementById('workDetail');
+  const dotClass = item.status==='live' ? 'dot' : 'dot progress';
+  const statusLabel = item.status==='live' ? 'Live' : 'In Progress';
+  el.innerHTML = '<div class="work-detail-name">'+item.name+'</div><div class="work-detail-meta"><span class="'+dotClass+'"></span>'+statusLabel+' · '+item.tag+'</div>';
+}
+function clearWorkDetail(){
+  document.getElementById('workDetail').innerHTML='';
+}
+
+/* ============ MODAL ============ */
+function openModal(idx){
+  const item=WORK[idx];
+  const mediaEl=document.getElementById('modalMedia');
+  if(item.img){
+    mediaEl.style.backgroundImage='url(\''+item.img+'\')';
+    mediaEl.style.backgroundSize='cover';
+    mediaEl.style.backgroundPosition='center';
+    mediaEl.textContent='';
+  } else {
+    mediaEl.style.backgroundImage='none';
+    mediaEl.textContent = item.name + ' — Screenshot Placeholder';
+  }
+  document.getElementById('modalEyebrow').textContent = item.tag + (item.status==='live' ? ' · LIVE' : ' · IN PROGRESS');
+  document.getElementById('modalName').textContent = item.name;
+  document.getElementById('modalDesc').textContent = item.desc;
+  const linkEl=document.getElementById('modalLink');
+  if(item.link && item.link!=='#'){
+    linkEl.innerHTML = '<a href="'+item.link+'" target="_blank" rel="noopener" style="color:inherit;">View site →</a>';
+  } else {
+    linkEl.textContent = '';
+  }
+  document.getElementById('modal').classList.add('open');
+  gsap.fromTo('#modalBox', {scale:.9, opacity:0}, {scale:1, opacity:1, duration:.4, ease:'power3.out'});
+}
+function closeModal(){
+  gsap.to('#modalBox', {scale:.92, opacity:0, duration:.25, ease:'power2.in', onComplete(){
+    document.getElementById('modal').classList.remove('open');
+  }});
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modal').addEventListener('click', e=>{
+  if(e.target===document.getElementById('modal')) closeModal();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+</script>
+
+</body>
+</html>
