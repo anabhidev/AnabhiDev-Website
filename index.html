@@ -13,13 +13,19 @@
 <link rel="canonical" href="https://anabhidev.com/">
 <meta name="theme-color" content="#0B1829">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4S207NQSE7"></script>
+<!-- Google tag (gtag.js) — desktop only (experiment: skip on mobile to test performance impact) -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-4S207NQSE7');
+  if (window.innerWidth > 768) {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4S207NQSE7');
+
+    var gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-4S207NQSE7';
+    document.head.appendChild(gtagScript);
+  }
 </script>
 
 <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
