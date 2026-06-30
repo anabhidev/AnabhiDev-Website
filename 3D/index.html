@@ -103,6 +103,15 @@ section{position:relative; z-index:1;}
 /* ===== BG CANVAS (three.js) ===== */
 #bg-canvas{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
 
+/* ===== BG MODE SWITCHER ===== */
+.bg-switch{position:fixed; bottom:24px; right:24px; z-index:90; display:flex; gap:4px;}
+.bg-btn{padding:8px 16px; background:rgba(11,24,41,0.7); border:1px solid var(--w12); color:var(--silver); font-family:'Sora',sans-serif; font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; cursor:none; transition:all .3s ease; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
+.bg-btn:hover, .bg-btn.active{border-color:var(--blue-lt); color:var(--blue-lt); background:rgba(59,158,232,0.1);}
+@media (max-width:560px){
+  .bg-switch{bottom:16px; right:8px; left:8px; flex-wrap:nowrap; justify-content:center;}
+  .bg-btn{padding:6px 4px; font-size:9px; letter-spacing:.08em; flex:1; text-align:center;}
+}
+
 /* ===== NAV ===== */
 nav{position:fixed; top:0; left:0; right:0; z-index:300; padding:22px var(--gutter); display:flex; align-items:center; justify-content:space-between; transition:all .4s;}
 nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:14px var(--gutter); border-bottom:1px solid var(--w07);}
@@ -267,10 +276,17 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
 <div id="cur-ring"></div>
 <canvas id="bg-canvas"></canvas>
 
+<div class="bg-switch">
+  <button class="bg-btn active" data-bg="classic">Classic</button>
+  <button class="bg-btn" data-bg="ocean">Ocean</button>
+  <button class="bg-btn" data-bg="helix">Helix</button>
+  <button class="bg-btn" data-bg="cosmic">Cosmic</button>
+</div>
+
 <header>
 <nav id="nav">
   <a href="#hero" class="nav-brand">
-    <img src="logo.png" alt="Anabhi Dev" width="120" height="32">
+    <img src="logo.png" alt="Anabhi Dev" width="57" height="32">
   </a>
   <div class="nav-links">
     <a href="#hero" class="nl">Home</a>
@@ -358,23 +374,23 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
   </div>
   <div class="gallery-track-wrap">
     <div class="gallery-track" id="galleryTrack">
-      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240"><div class="gal-overlay">Delanswit — Hampers</div></div>
-      <div class="gal-item"><img src="spingather.png" alt="SpinGather wheel" width="340" height="240"><div class="gal-overlay">SpinGather — Automation</div></div>
-      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="lms.png" alt="LMS dashboard" width="340" height="240"><div class="gal-overlay">LMS — Dashboard</div></div>
-      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240"><div class="gal-overlay">Delanswit — Pastry</div></div>
-      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="spingather.jpg" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="lms.jpg" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
       <!-- duplicate set for seamless loop -->
-      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240"><div class="gal-overlay">Delanswit — Hampers</div></div>
-      <div class="gal-item"><img src="spingather.png" alt="SpinGather wheel" width="340" height="240"><div class="gal-overlay">SpinGather — Automation</div></div>
-      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="lms.png" alt="LMS dashboard" width="340" height="240"><div class="gal-overlay">LMS — Dashboard</div></div>
-      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240"><div class="gal-overlay">Delanswit — Pastry</div></div>
-      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="spingather.jpg" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="lms.jpg" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
     </div>
   </div>
 </section>
@@ -485,7 +501,7 @@ document.querySelectorAll('#mobileMenu .ml').forEach(link=>{
   link.addEventListener('click', closeMobileMenu);
 });
 
-/* ============ BACKGROUND THREE.JS ============ */
+/* ============ BACKGROUND THREE.JS (4 modes) ============ */
 const bgC=document.getElementById('bg-canvas');
 const bgR=new THREE.WebGLRenderer({canvas:bgC, alpha:true, antialias:true});
 bgR.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -494,8 +510,8 @@ const bgS=new THREE.Scene();
 const bgCam=new THREE.PerspectiveCamera(65, innerWidth/innerHeight, .1, 100);
 bgCam.position.z=5;
 
-const N=2200, pa=new Float32Array(N*3), pc=new Float32Array(N*3);
 const pal=[[0.231,0.620,0.910],[0.420,0.722,0.941],[0.094,0.427,0.690],[0.722,0.784,0.847],[1,1,1]];
+const N=2200, pa=new Float32Array(N*3), pc=new Float32Array(N*3);
 for(let i=0;i<N;i++){
   pa[i*3]=(Math.random()-.5)*26;
   pa[i*3+1]=(Math.random()-.5)*26;
@@ -506,15 +522,169 @@ for(let i=0;i<N;i++){
 const pG=new THREE.BufferGeometry();
 pG.setAttribute('position', new THREE.BufferAttribute(pa,3));
 pG.setAttribute('color', new THREE.BufferAttribute(pc,3));
-bgS.add(new THREE.Points(pG, new THREE.PointsMaterial({size:.022, vertexColors:true, transparent:true, opacity:.75, sizeAttenuation:true})));
+const particles=new THREE.Points(pG, new THREE.PointsMaterial({size:.022, vertexColors:true, transparent:true, opacity:.75, sizeAttenuation:true}));
+bgS.add(particles);
+let activeParticleCount=N;
+function setParticleCount(n){ activeParticleCount=n; pG.setDrawRange(0,n); }
 
 const wm=(c,o)=>new THREE.MeshBasicMaterial({color:c, wireframe:true, transparent:true, opacity:o});
+
+/* ── CLASSIC: TorusKnot + Icosahedron + Octahedron ── */
+const classicGroup=new THREE.Group();
 const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(2,.38,128,14), wm(0x3B9EE8,.07));
-bgS.add(tk);
+classicGroup.add(tk);
 const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.2,1), wm(0x186DB0,.06));
-ico.position.set(3.5,-1,-2); bgS.add(ico);
+ico.position.set(3.5,-1,-2); classicGroup.add(ico);
 const oct=new THREE.Mesh(new THREE.OctahedronGeometry(.9,0), wm(0x6AB8F0,.1));
-oct.position.set(-3.5,1.5,-1.5); bgS.add(oct);
+oct.position.set(-3.5,1.5,-1.5); classicGroup.add(oct);
+bgS.add(classicGroup);
+
+function animClassic(t){
+  tk.rotation.x=t*.17; tk.rotation.y=t*.1;
+  ico.rotation.x=t*.13; ico.rotation.z=t*.08;
+  oct.rotation.y=t*.12; oct.rotation.x=t*.09;
+}
+
+/* ── OCEAN: Wave Field + Floating Rings ── */
+const oceanGroup=new THREE.Group(); oceanGroup.visible=false;
+const WG=50, wfPos=new Float32Array(WG*WG*3);
+const wfGeo=new THREE.BufferGeometry();
+for(let i=0;i<WG;i++) for(let j=0;j<WG;j++){ const idx=(i*WG+j)*3; wfPos[idx]=(i-WG/2)*.2; wfPos[idx+1]=0; wfPos[idx+2]=(j-WG/2)*.2; }
+wfGeo.setAttribute('position', new THREE.BufferAttribute(wfPos,3));
+const wfPts=new THREE.Points(wfGeo, new THREE.PointsMaterial({color:0x3B9EE8, size:.035, transparent:true, opacity:.45, sizeAttenuation:true}));
+oceanGroup.add(wfPts);
+
+const ringsGroup=new THREE.Group();
+for(let i=0;i<5;i++){
+  const r=1.5+i*.6;
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.008,8,64), new THREE.MeshBasicMaterial({color:0x6AB8F0, transparent:true, opacity:.12+i*.03}));
+  ring.rotation.x=Math.PI/2+i*.3; ring.rotation.y=i*.5;
+  ring.userData={speed:.1+i*.05, baseRotX:ring.rotation.x, baseRotY:ring.rotation.y};
+  ringsGroup.add(ring);
+}
+oceanGroup.add(ringsGroup.clone());
+bgS.add(oceanGroup);
+
+function animOcean(t){
+  const pos=wfGeo.attributes.position.array;
+  for(let i=0;i<WG;i++) for(let j=0;j<WG;j++){
+    const idx=(i*WG+j)*3;
+    pos[idx+1]=Math.sin(i*.3+t*1.2)*.15+Math.cos(j*.3+t*.8)*.15;
+  }
+  wfGeo.attributes.position.needsUpdate=true;
+  oceanGroup.children.forEach(child=>{
+    if(child.type==='Group'){
+      child.children.forEach(ring=>{
+        ring.rotation.x=ring.userData.baseRotX+t*ring.userData.speed;
+        ring.rotation.z=t*ring.userData.speed*.5;
+      });
+    }
+  });
+}
+
+/* ── HELIX: DNA Helix + Floating Rings ── */
+const helixGroup=new THREE.Group(); helixGroup.visible=false;
+const HP=200, helixPos1=new Float32Array(HP*3), helixPos2=new Float32Array(HP*3);
+const helixCol1=new Float32Array(HP*3), helixCol2=new Float32Array(HP*3);
+for(let i=0;i<HP;i++){
+  const a=i*.12, y=(i/HP)*8-4, r=1.5;
+  helixPos1[i*3]=Math.cos(a)*r; helixPos1[i*3+1]=y; helixPos1[i*3+2]=Math.sin(a)*r;
+  helixPos2[i*3]=Math.cos(a+Math.PI)*r; helixPos2[i*3+1]=y; helixPos2[i*3+2]=Math.sin(a+Math.PI)*r;
+  helixCol1[i*3]=0.231; helixCol1[i*3+1]=0.620; helixCol1[i*3+2]=0.910;
+  helixCol2[i*3]=0.094; helixCol2[i*3+1]=0.427; helixCol2[i*3+2]=0.690;
+}
+const hGeo1=new THREE.BufferGeometry(), hGeo2=new THREE.BufferGeometry();
+hGeo1.setAttribute('position', new THREE.BufferAttribute(helixPos1,3));
+hGeo1.setAttribute('color', new THREE.BufferAttribute(helixCol1,3));
+hGeo2.setAttribute('position', new THREE.BufferAttribute(helixPos2,3));
+hGeo2.setAttribute('color', new THREE.BufferAttribute(helixCol2,3));
+const hMat=new THREE.PointsMaterial({size:.045, vertexColors:true, transparent:true, opacity:.7, sizeAttenuation:true});
+helixGroup.add(new THREE.Points(hGeo1, hMat.clone()));
+helixGroup.add(new THREE.Points(hGeo2, hMat.clone()));
+
+const barMat=new THREE.LineBasicMaterial({color:0x3B9EE8, transparent:true, opacity:.1});
+for(let i=0;i<HP;i+=10){
+  const bGeo=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(helixPos1[i*3],helixPos1[i*3+1],helixPos1[i*3+2]),
+    new THREE.Vector3(helixPos2[i*3],helixPos2[i*3+1],helixPos2[i*3+2])
+  ]);
+  helixGroup.add(new THREE.Line(bGeo, barMat));
+}
+const helixRings=ringsGroup.clone();
+helixGroup.add(helixRings);
+bgS.add(helixGroup);
+
+function animHelix(t){
+  helixGroup.rotation.y=t*.15;
+  const p1=hGeo1.attributes.position.array;
+  const p2=hGeo2.attributes.position.array;
+  for(let i=0;i<HP;i++){
+    const a=i*.12+t*.5, y=(i/HP)*8-4, r=1.5;
+    p1[i*3]=Math.cos(a)*r; p1[i*3+1]=y; p1[i*3+2]=Math.sin(a)*r;
+    p2[i*3]=Math.cos(a+Math.PI)*r; p2[i*3+1]=y; p2[i*3+2]=Math.sin(a+Math.PI)*r;
+  }
+  hGeo1.attributes.position.needsUpdate=true;
+  hGeo2.attributes.position.needsUpdate=true;
+  helixRings.children.forEach(ring=>{
+    ring.rotation.x=ring.userData.baseRotX+t*ring.userData.speed;
+    ring.rotation.z=t*ring.userData.speed*.5;
+  });
+}
+
+/* ── COSMIC: Morphing Sphere + Particle Nebula ── */
+const cosmicGroup=new THREE.Group(); cosmicGroup.visible=false;
+const sphereGeo=new THREE.IcosahedronGeometry(1.8,4);
+const sphereOrigPos=new Float32Array(sphereGeo.attributes.position.array);
+const sphereMesh=new THREE.Mesh(sphereGeo, wm(0x3B9EE8,.12));
+cosmicGroup.add(sphereMesh);
+
+const NEB=800, nebPos=new Float32Array(NEB*3), nebCol=new Float32Array(NEB*3);
+for(let i=0;i<NEB;i++){
+  const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1);
+  const r=1.5+Math.random()*2.5;
+  nebPos[i*3]=Math.sin(phi)*Math.cos(theta)*r;
+  nebPos[i*3+1]=Math.sin(phi)*Math.sin(theta)*r*(0.5+Math.random()*.5);
+  nebPos[i*3+2]=Math.cos(phi)*r;
+  const c=pal[~~(Math.random()*pal.length)];
+  nebCol[i*3]=c[0]; nebCol[i*3+1]=c[1]; nebCol[i*3+2]=c[2];
+}
+const nebGeo=new THREE.BufferGeometry();
+nebGeo.setAttribute('position', new THREE.BufferAttribute(nebPos,3));
+nebGeo.setAttribute('color', new THREE.BufferAttribute(nebCol,3));
+cosmicGroup.add(new THREE.Points(nebGeo, new THREE.PointsMaterial({size:.04, vertexColors:true, transparent:true, opacity:.6, sizeAttenuation:true})));
+bgS.add(cosmicGroup);
+
+function animCosmic(t){
+  const pos=sphereGeo.attributes.position.array;
+  for(let i=0;i<pos.length;i+=3){
+    const ox=sphereOrigPos[i], oy=sphereOrigPos[i+1], oz=sphereOrigPos[i+2];
+    const noise=Math.sin(ox*2+t*1.2)*Math.cos(oy*2+t*.8)*Math.sin(oz*2+t);
+    const scale=1+noise*.15;
+    pos[i]=ox*scale; pos[i+1]=oy*scale; pos[i+2]=oz*scale;
+  }
+  sphereGeo.attributes.position.needsUpdate=true;
+  sphereMesh.rotation.y=t*.08; sphereMesh.rotation.x=t*.05;
+  cosmicGroup.rotation.y=t*.04;
+  cosmicGroup.rotation.x=Math.sin(t*.1)*.1;
+}
+
+/* ── MODE SWITCHER ── */
+let currentMode='classic';
+const bgGroups={classic:classicGroup, ocean:oceanGroup, helix:helixGroup, cosmic:cosmicGroup};
+const bgAnimFns={classic:animClassic, ocean:animOcean, helix:animHelix, cosmic:animCosmic};
+const bgParticleCounts={classic:2200, ocean:1000, helix:1600, cosmic:900};
+
+function switchBgMode(mode){
+  if(mode===currentMode) return;
+  Object.values(bgGroups).forEach(g=>g.visible=false);
+  bgGroups[mode].visible=true;
+  setParticleCount(bgParticleCounts[mode]);
+  currentMode=mode;
+  document.querySelectorAll('.bg-btn').forEach(b=>b.classList.toggle('active', b.dataset.bg===mode));
+}
+document.querySelectorAll('.bg-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>switchBgMode(btn.dataset.bg));
+});
 
 let bmx=0, bmy=0;
 document.addEventListener('mousemove', e=>{
@@ -524,9 +694,8 @@ document.addEventListener('mousemove', e=>{
 (function bgTick(){
   requestAnimationFrame(bgTick);
   const t=performance.now()*.001;
-  tk.rotation.x=t*.17; tk.rotation.y=t*.1;
-  ico.rotation.x=t*.13; ico.rotation.z=t*.08;
-  oct.rotation.y=t*.12; oct.rotation.x=t*.09;
+  bgAnimFns[currentMode](t);
+  particles.rotation.y=t*.015; particles.rotation.x=t*.008;
   bgCam.position.x += (bmx-bgCam.position.x)*.02;
   bgCam.position.y += (-bmy-bgCam.position.y)*.02;
   bgCam.lookAt(bgS.position);
@@ -575,8 +744,8 @@ function animateStats(){
 const WORK=[
   {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:'innerpeace.webp'},
   {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:'delanswit.jpg'},
-  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:'spingather.png'},
-  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:'lms.png'},
+  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:'spingather.jpg'},
+  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:'lms.jpg'},
 ];
 
 /* ============ CAROUSEL 3D (Three.js) ============ */
