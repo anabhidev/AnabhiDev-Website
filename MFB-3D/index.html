@@ -66,7 +66,7 @@ section{position:relative;z-index:1}
 .cat-tabs{display:flex;justify-content:center;gap:4px;margin-top:44px;flex-wrap:wrap}
 .cat-btn{padding:11px 34px;background:transparent;border:1px solid var(--gbl);color:var(--txt-m);font-family:'Montserrat',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;cursor:none;transition:all .3s}
 .cat-btn:hover,.cat-btn.active{background:rgba(201,169,110,.1);border-color:var(--gold);color:var(--gold)}
-#menu-canvas{width:100%;height:520px;display:block;margin:0 auto;cursor:none}
+#menu-canvas{width:100%;max-width:100%;height:520px;display:block;margin:0 auto;cursor:none;position:relative;left:50%;transform:translateX(-50%)}
 .menu-hint{text-align:center;margin-top:16px;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--txt-m)}
 
 /* GALLERY */
@@ -608,11 +608,19 @@ const mC=document.getElementById('menu-canvas'),mR=new THREE.WebGLRenderer({canv
 mR.setPixelRatio(Math.min(devicePixelRatio,2));
 const mScene=new THREE.Scene(),mCam=new THREE.PerspectiveCamera(50,mC.clientWidth/mC.clientHeight,.1,50);
 mCam.position.set(0,0.3,6);
-function resM(){const w=mC.clientWidth,h=mC.clientHeight;mR.setSize(w,h);mCam.aspect=w/h;mCam.updateProjectionMatrix()}
+function resM(){
+  const rect=mC.getBoundingClientRect();
+  const w=rect.width,h=rect.height;
+  mR.setSize(w,h,false);
+  mCam.aspect=w/h;
+  mCam.position.set(0,0.3,6);
+  mCam.lookAt(0,0,0);
+  mCam.updateProjectionMatrix();
+}
 resM();window.addEventListener('resize',resM);
 
 const CARD_W=1.8,CARD_H=2.5,RADIUS=3.2;
-const cGroup=new THREE.Group();mScene.add(cGroup);
+const cGroup=new THREE.Group();cGroup.position.set(0,0,0);mScene.add(cGroup);
 
 // Orbital ring
 const oRing=new THREE.Mesh(new THREE.TorusGeometry(RADIUS,.008,8,80),new THREE.MeshBasicMaterial({color:0xC9A96E,transparent:true,opacity:.2}));
