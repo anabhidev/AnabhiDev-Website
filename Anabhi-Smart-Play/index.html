@@ -179,6 +179,7 @@ body:is(.th-candy,.th-bindo,.th-bing,.th-sains) .who-banner.wb-abhi{background:r
 
 /* 4-opts for compare / odd-one-out */
 .opts-grid-3{grid-template-columns:repeat(3,1fr);}
+.opts-grid-2{grid-template-columns:repeat(2,1fr);max-width:320px;}
 .opts-grid-4-shape{grid-template-columns:repeat(2,1fr);}
 
 /* Feedback */
@@ -987,7 +988,9 @@ function renderQ(q){
     pillText='🔬 Pengetahuan Umum';
     qText=q.q;
     optsHtml=q.o.map((x,i)=>`<button class="opt-btn" data-i="${i}"><span class="opt-time">${x}</span></button>`).join('');
-    if(q.grid3)gridClass='opts-grid opts-grid-3';
+    if(q.o.length===2)gridClass='opts-grid opts-grid-2';
+    else if(q.o.length===3)gridClass='opts-grid opts-grid-3';
+    // 4 opsi: default opts-grid (2 kolom) sudah center
   }
   else if(q.t==='clock'){
     pillText='🕐 Baca Jam';
