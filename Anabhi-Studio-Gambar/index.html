@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎨 Studio Gambar Ana & Abhi v5.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--pink:#FF6B9D;--blue:#4ECDC4;--purple:#A29BFE;--active:#FF6B9D}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:#E8EEFF;touch-action:none;user-select:none;-webkit-user-select:none}
+
+/* ══ WELCOME ══ */
+#WS{position:fixed;inset:0;z-index:500;background:linear-gradient(135deg,#667eea 0%,#764ba2 45%,#f093fb 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;padding:20px 20px 40px}
+.wbg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.wbg i{position:absolute;border-radius:50%;opacity:.12;animation:flt 6s ease-in-out infinite}
+.wbg i:nth-child(1){width:260px;height:260px;background:#FFE66D;top:-80px;left:-80px}
+.wbg i:nth-child(2){width:170px;height:170px;background:#FF6B9D;top:60%;right:-45px;animation-delay:1s}
+.wbg i:nth-child(3){width:130px;height:130px;background:#4ECDC4;bottom:-35px;left:28%;animation-delay:2s}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.wtitle{font-family:'Baloo 2',cursive;font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:#fff;text-align:center;text-shadow:0 4px 20px rgba(0,0,0,.3);margin-bottom:4px;z-index:1}
+.wsub{font-size:clamp(.85rem,2.5vw,1.1rem);color:rgba(255,255,255,.88);margin-bottom:14px;z-index:1;text-align:center}
+.dogwrap{z-index:1;width:100%;max-width:300px;margin-bottom:14px}
+.dogbanner{width:100%;border-radius:16px;border:3px solid rgba(255,255,255,.65);box-shadow:0 5px 20px rgba(0,0,0,.28);overflow:hidden}
+.dogbanner img{width:100%;height:100%;object-fit:cover;display:block}
+.dlabel{color:rgba(255,255,255,.88);font-size:.8rem;font-weight:700;text-align:center;margin-top:6px}
+.pcards{z-index:1;display:flex;gap:18px;justify-content:center;align-items:stretch;width:100%;max-width:580px}
+.pcard{flex:1;min-width:0;background:rgba(255,255,255,.14);backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.3);border-radius:24px;padding:24px 16px;cursor:pointer;text-align:center;transition:all .25s cubic-bezier(.34,1.56,.64,1);touch-action:manipulation;display:flex;flex-direction:column;align-items:center}
+.pcard-ana{border-color:rgba(255,182,193,.65);background:rgba(255,107,157,.15)}
+.pcard-abhi{border-color:rgba(100,220,210,.65);background:rgba(78,205,196,.15)}
+.pcard:active{transform:scale(.94)}
+.pcard:hover{transform:translateY(-6px) scale(1.04)}
+.pphoto{width:120px;height:120px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 12px;border:5px solid rgba(255,255,255,.88);box-shadow:0 5px 20px rgba(0,0,0,.25);animation:wob 2.2s ease-in-out infinite}
+.pcard:last-child .pphoto{animation-delay:.5s}
+@keyframes wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.pnm{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#fff;display:block;margin-bottom:4px}
+.psb{font-size:.75rem;color:rgba(255,255,255,.78)}
+
+/* ══ MAIN APP ══ */
+#APP{display:none;position:fixed;inset:0;flex-direction:column;background:#E8EEFF}
+
+/* BAR 1 */
+#bar1{
+  flex-shrink:0;height:62px;background:#fff;
+  box-shadow:0 1px 0 #EEEEFF;
+  display:flex;align-items:center;
+  padding:0 8px;gap:3px;overflow:hidden;z-index:20;
+}
+/* BAR 2 */
+#bar2{
+  flex-shrink:0;height:50px;background:#F8F9FF;
+  border-top:1px solid #EEEEFF;
+  box-shadow:0 2px 10px rgba(0,0,0,.07);
+  display:flex;align-items:center;
+  padding:0 8px;gap:6px;z-index:20;
+  overflow-x:auto;scrollbar-width:none;
+}
+#bar2::-webkit-scrollbar{display:none}
+
+.logo{font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:800;background:linear-gradient(135deg,#FF6B9D,#A29BFE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;padding-right:3px}
+.sep{width:2px;height:34px;background:#EEEEFF;flex-shrink:0;margin:0 2px}
+
+/* Tool buttons */
+.tbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:46px;height:52px;padding:3px 4px;border:2px solid transparent;border-radius:12px;background:#F5F5F8;cursor:pointer;font-size:18px;transition:all .15s;flex-shrink:0;touch-action:manipulation;gap:1px}
+.tbtn:active{transform:scale(.88)}
+.tbtn.active{background:linear-gradient(135deg,var(--active),var(--purple));border-color:var(--active);box-shadow:0 3px 10px rgba(255,107,157,.4)}
+.tbtn.active .tlbl{color:#fff}
+.tbtn.active span{filter:brightness(10)}
+.tlbl{font-size:7.5px;font-weight:800;color:#777;white-space:nowrap;line-height:1}
+
+/* Size slider */
+.srow{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.slbl{font-size:8px;color:#aaa;font-weight:700}
+.sslider{width:70px;height:5px;appearance:none;background:linear-gradient(to right,#FF6B9D,#A29BFE);border-radius:4px;outline:none;cursor:pointer}
+.sslider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#FF6B9D;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.22)}
+.sval{font-size:11px;color:#777;min-width:20px;text-align:center;font-weight:700}
+
+/* ── COLOR ROW ──
+   Layout dalam bar1 (dari kiri ke kanan):
+   [tools] [sep] [size] [sep] [cpanel dots...] [cstrip] [cpickwrap] [sep] [thumb]
+   cpanel adalah flex container yang bisa scroll, mengambil sisa ruang
+*/
+.cpanel{
+  display:flex;gap:5px;align-items:center;
+  overflow-x:auto;
+  /* flex:1 supaya mengisi ruang tersisa antara size-sep dan cstrip */
+  flex:1;min-width:0;
+  scrollbar-width:none;padding:2px;
+}
+.cpanel::-webkit-scrollbar{display:none}
+.cdot{width:28px;height:28px;border-radius:50%;flex-shrink:0;border:3px solid transparent;cursor:pointer;transition:transform .12s;touch-action:manipulation;box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.cdot:active,.cdot.active{transform:scale(1.32);border-color:#333!important;box-shadow:0 2px 8px rgba(0,0,0,.28)}
+
+/* Strip pemisah tipis antara warna terakhir & picker */
+.cstrip{width:2px;height:22px;background:#DDDDF0;flex-shrink:0;border-radius:2px;margin:0 4px}
+
+/* Picker "Warna Lain" — langsung setelah cstrip, SEBELUM sep & thumb */
+.cpickwrap{
+  flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  cursor:pointer;touch-action:manipulation;
+}
+.cpickring{
+  width:32px;height:32px;border-radius:50%;
+  background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);
+  border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.6);transition:transform .15s;
+}
+.cpickring:active{transform:scale(.88)}
+.cpicklbl{font-size:7px;color:#aaa;font-weight:700;white-space:nowrap}
+
+/* Player thumb */
+.pthumb{width:42px;height:42px;border-radius:50%;border:3px solid var(--active);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);touch-action:manipulation}
+.pthumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Action buttons bar2 */
+.abtn{padding:8px 12px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.74rem;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s;touch-action:manipulation;flex-shrink:0;white-space:nowrap}
+.abtn:active{transform:scale(.91)}
+.a-undo{background:#EEEEF8;color:#555}
+.a-redo{background:#EEEEF8;color:#555}
+.a-clear{background:#FFE8EA;color:#FF4757}
+.a-load{background:#E8F5E9;color:#2E7D32}
+.a-text{background:#FFF3E0;color:#E65100}
+.a-save{background:linear-gradient(135deg,#FF6B9D,#A29BFE);color:#fff;box-shadow:0 3px 12px rgba(255,107,157,.4);margin-left:auto;font-size:.78rem;padding:9px 16px}
+
+/* Main content */
+#MC{flex:1;display:flex;padding:8px;gap:8px;min-height:0;overflow:hidden}
+
+/* ── LEFT PANEL ── */
+#LP{width:400px;flex-shrink:0;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.09);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.lptop{flex-shrink:0;background:linear-gradient(135deg,#FF6B9D,#A29BFE);padding:9px}
+.lptitle{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:#fff;margin-bottom:7px;padding-left:2px}
+.lpbtns{display:flex;gap:7px;margin-bottom:7px}
+.lpbtn{flex:1;padding:9px 4px;border:none;border-radius:11px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.76rem;cursor:pointer;touch-action:manipulation;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px}
+.lpbtn:active{transform:scale(.93)}
+.lpnext{background:#fff;color:#FF6B9D}
+.lpup{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.45)}
+
+/* Search box */
+.lpsearch{display:flex;gap:6px}
+.lpsearch-input{
+  flex:1;padding:7px 10px;border:none;border-radius:10px;
+  font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;
+  background:rgba(255,255,255,.9);color:#333;outline:none;
+  touch-action:auto;user-select:text;-webkit-user-select:text;
+}
+.lpsearch-input::placeholder{color:#bbb}
+.lpsearch-btn{
+  padding:7px 12px;border:none;border-radius:10px;
+  background:#fff;color:#FF6B9D;font-weight:800;font-size:.76rem;
+  cursor:pointer;touch-action:manipulation;white-space:nowrap;
+  transition:all .15s;
+}
+.lpsearch-btn:active{transform:scale(.93)}
+
+/* Category tags */
+.cattags{flex-shrink:0;display:flex;gap:5px;padding:7px 8px;overflow-x:auto;background:#fff;border-bottom:1px solid #F0F0F8;scrollbar-width:none}
+.cattags::-webkit-scrollbar{display:none}
+.ctag{padding:4px 11px;border-radius:20px;border:2px solid #EEE;font-size:.7rem;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;touch-action:manipulation;transition:all .15s}
+.ctag.active{background:var(--active);border-color:var(--active);color:#fff}
+
+/* Ref image area */
+#refOuter{flex:1;min-height:0;overflow:hidden;position:relative;background:#FAFAFA;cursor:grab}
+#refOuter.dragging{cursor:grabbing}
+#refInner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center center;will-change:transform}
+#refImg{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;box-shadow:0 3px 14px rgba(0,0,0,.1);display:none;pointer-events:none}
+.refload{text-align:center;color:#bbb;font-size:.78rem;line-height:1.9;padding:14px}
+.rspin{font-size:36px;display:block;margin-bottom:5px;animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.zoom-reset-btn{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.92);border:2px solid #EEE;border-radius:8px;padding:4px 10px;font-size:.68rem;font-weight:800;color:#666;cursor:pointer;touch-action:manipulation;z-index:5;display:none;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+
+/* ── CANVAS PANEL ── */
+#CP{flex:1;min-width:0;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.09);overflow:hidden;position:relative;touch-action:none}
+#CV{display:block;cursor:crosshair;touch-action:none;position:absolute;inset:0;width:100%;height:100%}
+
+/* Canvas zoom reset */
+#cvZR{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.92);border:2px solid #EEE;border-radius:8px;padding:5px 12px;font-size:.7rem;font-weight:800;color:#555;cursor:pointer;touch-action:manipulation;z-index:25;display:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+
+/* Shape bar */
+#shapeBar{display:none;position:absolute;top:0;left:0;right:0;height:42px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:24;align-items:center;padding:0 10px;gap:8px;border-bottom:2px solid #EEEEFF}
+#shapeBar.show{display:flex}
+.shbtn{padding:5px 12px;border:2px solid #EEE;border-radius:8px;background:#F8F8F8;font-size:.72rem;font-weight:800;cursor:pointer;touch-action:manipulation;transition:all .15s;white-space:nowrap}
+.shbtn:active{transform:scale(.92)}
+.shbtn.active{background:var(--active);border-color:var(--active);color:#fff}
+.shfill{display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:#555;margin-left:auto;flex-shrink:0}
+
+/* Text bar */
+#textBar{display:none;position:absolute;top:0;left:0;right:0;height:42px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:24;align-items:center;padding:0 10px;gap:8px;border-bottom:2px solid #EEEEFF}
+#textBar.show{display:flex}
+.tsbtn{padding:5px 14px;border:2px solid #EEE;border-radius:8px;background:#F8F8F8;font-weight:800;cursor:pointer;touch-action:manipulation;transition:all .15s}
+.tsbtn:active{transform:scale(.92)}
+.tsbtn.active{background:var(--active);border-color:var(--active);color:#fff}
+.tslbl{font-size:.72rem;font-weight:800;color:#888}
+
+/* Text overlay */
+#textOverlay{display:none;position:absolute;inset:0;z-index:22;cursor:text}
+#textOverlay.active{display:block}
+
+/* ══ MODALS ══ */
+.mbg{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.52);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
+.mbg.open{display:flex}
+.mbox{background:#fff;border-radius:26px;padding:28px 22px;width:min(360px,92vw);text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.28);animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.mico{font-size:52px;display:block;margin-bottom:8px}
+.mtit{font-family:'Baloo 2',cursive;font-size:1.35rem;font-weight:800;color:#333;margin-bottom:6px}
+.msub{color:#888;font-size:.86rem;line-height:1.55;margin-bottom:22px}
+.mbtns{display:flex;gap:10px}
+.mbtn{flex:1;padding:14px 8px;border:none;border-radius:16px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;touch-action:manipulation;transition:all .15s}
+.mbtn:active{transform:scale(.93)}
+.mbtn-yes{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 4px 16px rgba(102,126,234,.45)}
+.mbtn-no{background:linear-gradient(135deg,#FF6B9D,#ff8fab);color:#fff;box-shadow:0 4px 16px rgba(255,107,157,.4)}
+.mbtn-ok{background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;box-shadow:0 4px 16px rgba(17,153,142,.4);width:100%}
+
+/* Congrats */
+#CG{display:none;position:fixed;inset:0;z-index:700;align-items:center;justify-content:center;pointer-events:none}
+#CG.show{display:flex}
+.ctxt{font-family:'Baloo 2',cursive;font-size:clamp(2.2rem,8vw,5rem);font-weight:800;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.5);animation:cA 2.2s ease-out forwards}
+@keyframes cA{0%{transform:scale(0) rotate(-15deg);opacity:0}30%{transform:scale(1.3) rotate(5deg);opacity:1}65%{transform:scale(1) rotate(0);opacity:1}100%{transform:scale(.8);opacity:0}}
+
+input[type=file],input[type=color]{display:none}
+</style>
+</head>
+<body>
+
+<!-- ══ WELCOME ══ -->
+<div id="WS">
+  <div class="wbg"><i></i><i></i><i></i></div>
+  <div class="wtitle">🎨 Studio Gambar</div>
+  <div class="wsub">Ana &amp; Abhi Paint v5.0 ✨</div>
+  <div class="dogwrap">
+    <div class="dogbanner">
+      <img src="https://i.ibb.co.com/d3CZgtL/dog-banner-2.png" alt="Billy Mochi Mocha" onerror="this.parentElement.style.display='none'">
+    </div>
+    <div class="dlabel">🐾 Halo Ana &amp; Abhi! Yuk kita menggambar! 🎨</div>
+  </div>
+  <div class="pcards">
+    <div class="pcard pcard-ana" onclick="startApp('ana')">
+      <img class="pphoto" src="https://i.ibb.co.com/TxBTZ6zF/Ana-cr.jpg" alt="Ana" onerror="this.outerHTML='<div style=font-size:80px;margin-bottom:12px>👧</div>'">
+      <span class="pnm">Anjali Kirana</span>
+      <span class="psb">✏️ Senang Menggambar</span>
+    </div>
+    <div class="pcard pcard-abhi" onclick="startApp('abhi')">
+      <img class="pphoto" src="https://i.ibb.co.com/HDBx3B5c/Abhi-cr.jpg" alt="Abhi" onerror="this.outerHTML='<div style=font-size:80px;margin-bottom:12px>👦</div>'">
+      <span class="pnm">Abhinaya Kenzie</span>
+      <span class="psb">🔢 Suka Menghitung</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="APP">
+
+  <!-- BAR 1:
+       [logo][sep][tools x8][sep][size][sep][cpanel → cstrip → cpick][sep][thumb]
+       cpanel pakai flex:1 sehingga mengisi ruang tersisa,
+       cstrip & cpick ada di DALAM urutan setelah cpanel, SEBELUM sep terakhir -->
+  <div id="bar1">
+    <span class="logo">🎨</span>
+    <div class="sep"></div>
+
+    <div class="tbtn active" id="tPencil"      onclick="setTool('pencil')"><span>✏️</span><div class="tlbl">Pensil</div></div>
+    <div class="tbtn"        id="tPen"         onclick="setTool('pen')"><span>🖊️</span><div class="tlbl">Pulpen</div></div>
+    <div class="tbtn"        id="tMarker"      onclick="setTool('marker')"><span>🖌️</span><div class="tlbl">Kuas</div></div>
+    <div class="tbtn"        id="tHighlighter" onclick="setTool('highlighter')"><span>🟡</span><div class="tlbl">Stabilo</div></div>
+    <div class="tbtn"        id="tSpray"       onclick="setTool('spray')"><span>💨</span><div class="tlbl">Spray</div></div>
+    <div class="tbtn"        id="tFill"        onclick="setTool('fill')"><span>🪣</span><div class="tlbl">Isi Warna</div></div>
+    <div class="tbtn"        id="tShape"       onclick="setTool('shape')"><span>🔷</span><div class="tlbl">Bentuk</div></div>
+    <div class="tbtn"        id="tEraser"      onclick="setTool('eraser')"><span>🧽</span><div class="tlbl">Hapus</div></div>
+
+    <div class="sep"></div>
+
+    <div class="srow">
+      <span class="slbl">SIZE</span>
+      <input type="range" class="sslider" id="SS" min="2" max="60" value="8"
+             oninput="brushSize=+this.value;document.getElementById('SV').textContent=this.value">
+      <span class="sval" id="SV">8</span>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- Color dots — flex:1 mengisi ruang -->
+    <div class="cpanel" id="PAL"></div>
+    <!-- Strip lalu picker LANGSUNG setelah dots, sebelum sep & thumb -->
+    <div class="cstrip"></div>
+    <div class="cpickwrap" onclick="document.getElementById('CPK').click()">
+      <div class="cpickring">+</div>
+      <span class="cpicklbl">Warna<br>Lain</span>
+    </div>
+    <input type="color" id="CPK" oninput="pickColor(this.value)">
+
+    <div class="sep"></div>
+
+    <div class="pthumb" id="THB" onclick="confirmHome(false)">
+      <img id="TIMG" src="" alt="">
+    </div>
+  </div>
+
+  <!-- BAR 2 -->
+  <div id="bar2">
+    <button class="abtn a-undo"  onclick="undo()">↩️ Undo</button>
+    <button class="abtn a-redo"  onclick="redo()">↪️ Redo</button>
+    <button class="abtn a-clear" onclick="confirmClear()">🗑️ Hapus Semua</button>
+    <button class="abtn a-load"  onclick="document.getElementById('LDF').click()">📂 Buka Gambar</button>
+    <button class="abtn a-text"  onclick="setTool('text')">🔤 Teks</button>
+    <input type="file" id="LDF" accept="image/*">
+    <button class="abtn a-save"  onclick="confirmSave()">💾 Simpan Gambar</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="MC">
+
+    <!-- LEFT PANEL -->
+    <div id="LP">
+      <div class="lptop">
+        <div class="lptitle">📷 Gambar Contoh</div>
+
+        <!-- Tombol Gambar Baru + Upload -->
+        <div class="lpbtns">
+          <button class="lpbtn lpnext" onclick="loadRandom()">🔀 Gambar Baru</button>
+          <button class="lpbtn lpup"   onclick="document.getElementById('RFI').click()">📁 Upload</button>
+          <input type="file" id="RFI" accept="image/*">
+        </div>
+
+        <!-- Search box — cari gambar dari Wikimedia -->
+        <div class="lpsearch">
+          <input class="lpsearch-input" id="searchInput" type="text"
+                 placeholder="Cari gambar... cth: ikan paus"
+                 onkeydown="if(event.key==='Enter')doSearch()">
+          <button class="lpsearch-btn" onclick="doSearch()">🔍 Cari</button>
+        </div>
+      </div>
+
+      <!-- Category tags -->
+      <div class="cattags" id="CATS"></div>
+
+      <!-- Image display -->
+      <div id="refOuter">
+        <div class="refload" id="RL">
+          <span style="font-size:40px">🖼️</span><br>
+          Tap <b>Gambar Baru</b>, ketik di <b>Cari</b>,<br>atau <b>Upload</b> foto sendiri
+        </div>
+        <div id="refInner"><img id="refImg" alt="Contoh"></div>
+        <button class="zoom-reset-btn" id="refZReset" onclick="resetRefZoom()">🔍 Reset Zoom</button>
+      </div>
+    </div>
+
+    <!-- CANVAS -->
+    <div id="CP">
+      <canvas id="CV"></canvas>
+      <button id="cvZR" onclick="resetCvZoom()">🔍 Reset Zoom</button>
+
+      <!-- Shape toolbar -->
+      <div id="shapeBar">
+        <span class="tslbl">Bentuk:</span>
+        <button class="shbtn active" id="shRect"   onclick="setShape('rect')">⬜ Kotak</button>
+        <button class="shbtn"        id="shRound"  onclick="setShape('round')">▭ Kotak Bulat</button>
+        <button class="shbtn"        id="shCircle" onclick="setShape('circle')">⭕ Lingkaran</button>
+        <button class="shbtn"        id="shOval"   onclick="setShape('oval')">🥚 Oval</button>
+        <button class="shbtn"        id="shLine"   onclick="setShape('line')">╱ Garis</button>
+        <div class="shfill">
+          <input type="checkbox" id="shFillCk" checked>
+          <label for="shFillCk" style="cursor:pointer;font-size:.72rem;font-weight:700">Isi warna</label>
+        </div>
+      </div>
+
+      <!-- Text toolbar -->
+      <div id="textBar">
+        <span class="tslbl">Ukuran teks:</span>
+        <button class="tsbtn active" id="tsS" onclick="setTextSize('S')"><span style="font-size:10px">A</span> Kecil</button>
+        <button class="tsbtn"        id="tsM" onclick="setTextSize('M')"><span style="font-size:14px">A</span> Sedang</button>
+        <button class="tsbtn"        id="tsL" onclick="setTextSize('L')"><span style="font-size:18px">A</span> Besar</button>
+        <span style="font-size:.7rem;color:#aaa;margin-left:8px">← Tap kanvas untuk ketik</span>
+      </div>
+
+      <!-- Text overlay -->
+      <div id="textOverlay" onclick="placeText(event)"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+<div class="mbg" id="MH">
+  <div class="mbox">
+    <span class="mico" id="MHico">🏠</span>
+    <div class="mtit" id="MHtit">Kembali ke Menu?</div>
+    <div class="msub" id="MHsub">Gambar yang belum disimpan akan hilang.<br>Yakin mau keluar?</div>
+    <div class="mbtns">
+      <button class="mbtn mbtn-yes" id="MHyes" onclick="doHome()">✅ Ya, Keluar</button>
+      <button class="mbtn mbtn-no"  onclick="closeM('MH')">🎨 Lanjut Gambar!</button>
+    </div>
+  </div>
+</div>
+<div class="mbg" id="MCL">
+  <div class="mbox">
+    <span class="mico">🗑️</span>
+    <div class="mtit">Hapus Semua?</div>
+    <div class="msub">Semua coretan di kanvas akan hilang.<br>Tidak bisa di-Undo lho!</div>
+    <div class="mbtns">
+      <button class="mbtn mbtn-yes" onclick="doClear()">🗑️ Ya, Hapus</button>
+      <button class="mbtn mbtn-no"  onclick="closeM('MCL')">❌ Batal</button>
+    </div>
+  </div>
+</div>
+<div class="mbg" id="MS">
+  <div class="mbox">
+    <span class="mico">🎨✨</span>
+    <div class="mtit">Gambar Sudah Selesai?</div>
+    <div class="msub">Wahh keren banget! 🌈<br>Apakah mau simpan hasil karya ini?</div>
+    <div class="mbtns">
+      <button class="mbtn mbtn-yes" onclick="doSave()">💙 Ya, Simpan!</button>
+      <button class="mbtn mbtn-no"  onclick="closeM('MS')">💖 Belum Dulu</button>
+    </div>
+  </div>
+</div>
+<div class="mbg" id="MSN">
+  <div class="mbox">
+    <span class="mico">📤</span>
+    <div class="mtit">Menyimpan...</div>
+    <div class="msub" id="MSNM">Sedang menyimpan karya kamu... ✨</div>
+  </div>
+</div>
+<div class="mbg" id="MOK">
+  <div class="mbox">
+    <span class="mico" style="font-size:60px">🎉</span>
+    <div class="mtit">Yeyyy! Berhasil! 🌟</div>
+    <div class="msub" id="MOKM">Gambar berhasil disimpan! 🖼️</div>
+    <button class="mbtn mbtn-ok" onclick="closeM('MOK')">✨ Hore! Lanjut Gambar!</button>
+  </div>
+</div>
+
+<div id="CG"><div class="ctxt" id="CT">🌟 Keren! 🌟</div></div>
+
+<script>
+// ══════════════════════
+//  CONFIG
+// ══════════════════════
+const CFG = {
+  TG_ENABLED:  true,
+  TG_TOKEN:   '8776321440:AAGfcR-0X1sGKJ_Osj8QB8wgtSEIydGMvl0',
+  TG_CHAT_ID: '-1003748720260',
+};
+
+// ══════════════════════
+//  PLAYERS
+// ══════════════════════
+const PL = {
+  ana:  { name:'Anjali Kirana',   first:'Ana',  color:'#FF6B9D', photo:'https://i.ibb.co.com/TxBTZ6zF/Ana-cr.jpg' },
+  abhi: { name:'Abhinaya Kenzie', first:'Abhi', color:'#4ECDC4', photo:'https://i.ibb.co.com/HDBx3B5c/Abhi-cr.jpg' }
+};
+
+const COLORS=['#FF6B9D','#FF4757','#FF6348','#FFA502','#FFD700','#7BED9F','#2ED573','#1E90FF','#5352ED','#A29BFE','#FF8C42','#45B7D1','#96CEB4','#8B4513','#555555','#000000','#FFFFFF'];
+
+// ══════════════════════════════════════════════════════
+//  IMAGE BANK — 24 per kategori
+//  🐾 Binatang : Dog CEO API + Cat API + fallback
+//  🌸 Tumbuhan : Wikimedia Commons direct (verified)
+//  🏠 Benda    : Wikimedia Commons direct (verified)
+//  🎠 Kartun   : OpenMoji SVG (open-source emoji art)
+//
+//  Semua URL di Tumbuhan & Benda sudah diverifikasi
+//  bisa diakses browser tanpa CORS block.
+// ══════════════════════════════════════════════════════
+const IMG = {
+  '🐾 Binatang': {
+    mode: 'animal',
+    breeds: ['labrador','golden','beagle','poodle-standard','husky','corgi-cardigan','pug','chihuahua','dalmatian','shiba','samoyed','boxer','bulldog','dachshund','maltese','pomeranian','setter-english','spaniel-cocker','retriever-golden','akita','malamute','shepherd-german','collie','terrier-yorkshire'],
+    fallback: [
+      'https://images.dog.ceo/breeds/labrador/n02099712_612.jpg',
+      'https://images.dog.ceo/breeds/retriever-golden/n02099601_1629.jpg',
+      'https://images.dog.ceo/breeds/beagle/n02088364_11136.jpg',
+      'https://images.dog.ceo/breeds/husky/n02110185_10047.jpg',
+      'https://images.dog.ceo/breeds/pug/n02110958_15626.jpg',
+      'https://images.dog.ceo/breeds/corgi-cardigan/n02113186_1030.jpg',
+    ]
+  },
+
+  // 🌸 Tumbuhan — bunga, buah, tanaman
+  // Menggunakan Wikimedia thumb URL yang tidak memerlukan Referer
+  '🌸 Tumbuhan': {
+    mode: 'direct',
+    urls: [
+      // Bunga
+      'https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/8/88/Rose-garden_hd.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/4c/Garden_impatiens.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/3/3a/Dahlia_x_hybrida.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/f/f5/Rosaceae_poster_2.jpg',
+      // Buah
+      'https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/9/9e/TC_Fraise_05.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/a/a3/Apples.jpg',
+      // Pakai OpenMoji untuk buah/tumbuhan kartun
+      'https://openmoji.org/data/color/svg/1F33B.svg', // bunga matahari
+      'https://openmoji.org/data/color/svg/1F337.svg', // tulip
+      'https://openmoji.org/data/color/svg/1F339.svg', // mawar
+      'https://openmoji.org/data/color/svg/1F33A.svg', // kembang sepatu
+      'https://openmoji.org/data/color/svg/1F338.svg', // bunga sakura
+      'https://openmoji.org/data/color/svg/1F340.svg', // daun semanggi
+      'https://openmoji.org/data/color/svg/1F341.svg', // daun maple
+      'https://openmoji.org/data/color/svg/1F342.svg', // daun gugur
+      'https://openmoji.org/data/color/svg/1F333.svg', // pohon
+      'https://openmoji.org/data/color/svg/1F332.svg', // pohon cemara
+      'https://openmoji.org/data/color/svg/1F334.svg', // pohon palem
+      'https://openmoji.org/data/color/svg/1F34E.svg', // apel merah
+      'https://openmoji.org/data/color/svg/1F34C.svg', // pisang
+      'https://openmoji.org/data/color/svg/1F347.svg', // anggur
+      'https://openmoji.org/data/color/svg/1F353.svg', // stroberi
+    ]
+  },
+
+  // 🏠 Benda — mainan, makanan, kendaraan, bangunan
+  '🏠 Benda': {
+    mode: 'direct',
+    urls: [
+      // Makanan nyata
+      'https://upload.wikimedia.org/wikipedia/commons/2/28/Birthday_candles.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/0/04/Pound_layer_cake.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/e/e8/Icecream_collection_Gourmet_Popsicles.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/2f/Culinary_fruits_front_view.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/d/d9/Big_red_barn.jpg',
+      // OpenMoji benda/transportasi kartun
+      'https://openmoji.org/data/color/svg/1F682.svg', // kereta api
+      'https://openmoji.org/data/color/svg/2708.svg',  // pesawat
+      'https://openmoji.org/data/color/svg/1F693.svg', // mobil polisi
+      'https://openmoji.org/data/color/svg/1F697.svg', // mobil
+      'https://openmoji.org/data/color/svg/1F6B2.svg', // sepeda
+      'https://openmoji.org/data/color/svg/26F5.svg',  // perahu layar
+      'https://openmoji.org/data/color/svg/1F680.svg', // roket
+      'https://openmoji.org/data/color/svg/1F3E0.svg', // rumah
+      'https://openmoji.org/data/color/svg/1F3EB.svg', // sekolah
+      'https://openmoji.org/data/color/svg/1F3A0.svg', // bianglala
+      'https://openmoji.org/data/color/svg/1F3AF.svg', // target panah
+      'https://openmoji.org/data/color/svg/26BD.svg',  // bola sepak
+      'https://openmoji.org/data/color/svg/1F3B8.svg', // gitar
+      'https://openmoji.org/data/color/svg/1F370.svg', // kue
+      'https://openmoji.org/data/color/svg/1F366.svg', // es krim
+      'https://openmoji.org/data/color/svg/1F354.svg', // burger
+      'https://openmoji.org/data/color/svg/1F355.svg', // pizza
+      'https://openmoji.org/data/color/svg/1F382.svg', // kue ulang tahun
+    ]
+  },
+
+  // 🎠 Kartun — hewan kartun OpenMoji (open license, SVG besar & jelas)
+  '🎠 Kartun': {
+    mode: 'direct',
+    urls: [
+      'https://openmoji.org/data/color/svg/1F431.svg', // kucing
+      'https://openmoji.org/data/color/svg/1F436.svg', // anjing
+      'https://openmoji.org/data/color/svg/1F430.svg', // kelinci
+      'https://openmoji.org/data/color/svg/1F984.svg', // unicorn
+      'https://openmoji.org/data/color/svg/1F43C.svg', // panda
+      'https://openmoji.org/data/color/svg/1F42E.svg', // sapi
+      'https://openmoji.org/data/color/svg/1F437.svg', // babi
+      'https://openmoji.org/data/color/svg/1F438.svg', // katak
+      'https://openmoji.org/data/color/svg/1F42C.svg', // lumba-lumba
+      'https://openmoji.org/data/color/svg/1F433.svg', // paus
+      'https://openmoji.org/data/color/svg/1F98A.svg', // rubah
+      'https://openmoji.org/data/color/svg/1F43B.svg', // beruang
+      'https://openmoji.org/data/color/svg/1F981.svg', // singa
+      'https://openmoji.org/data/color/svg/1F42F.svg', // macan
+      'https://openmoji.org/data/color/svg/1F418.svg', // gajah
+      'https://openmoji.org/data/color/svg/1F98D.svg', // gorila
+      'https://openmoji.org/data/color/svg/1F426.svg', // burung
+      'https://openmoji.org/data/color/svg/1F422.svg', // kura-kura
+      'https://openmoji.org/data/color/svg/1F40D.svg', // ular
+      'https://openmoji.org/data/color/svg/1F434.svg', // kuda
+      'https://openmoji.org/data/color/svg/1F410.svg', // kambing
+      'https://openmoji.org/data/color/svg/1F411.svg', // domba
+      'https://openmoji.org/data/color/svg/1F414.svg', // ayam
+      'https://openmoji.org/data/color/svg/1F427.svg', // pinguin
+    ]
+  }
+};
+
+// ══════════════════════
+//  STATE
+// ══════════════════════
+let who='ana', tool='pencil', penColor='#FF6B9D', brushSize=8;
+let drawing=false, lx=0, ly=0, sprayT=null;
+let uStack=[], rStack=[], cat='🐾 Binatang', catIdx={};
+let cvZoom=1, cvPin=false, cvPD0=0;
+let curShape='rect', shStart=null, shSnap=null;
+let txtSz='S';
+const TS={S:16,M:28,L:44};
+let refScale=1,refTX=0,refTY=0,refPin=false,refPD0=0,refDrag=false,refDX0=0,refDY0=0;
+
+// ══════════════════════
+//  PREVENT REFRESH
+// ══════════════════════
+window.addEventListener('beforeunload', e=>{
+  if(document.getElementById('APP').style.display==='flex'){e.preventDefault();e.returnValue='';}
+});
+let tyStart=0;
+document.addEventListener('touchstart',e=>{tyStart=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchmove',e=>{
+  if(document.getElementById('APP').style.display!=='flex')return;
+  if(e.touches[0].clientY-tyStart>70&&window.scrollY===0)e.preventDefault();
+},{passive:false});
+
+// ══════════════════════
+//  WELCOME
+// ══════════════════════
+function startApp(p){
+  who=p;
+  const d=PL[p];
+  document.documentElement.style.setProperty('--active',d.color);
+  const ti=document.getElementById('TIMG');
+  ti.src=d.photo; ti.onerror=()=>{ti.style.display='none';};
+  document.getElementById('THB').style.borderColor=d.color;
+  document.getElementById('WS').style.display='none';
+  document.getElementById('APP').style.display='flex';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    buildColors(); buildCats(); initCanvas();
+  }));
+}
+
+// ══════════════════════
+//  CANVAS
+// ══════════════════════
+function initCanvas(){
+  const cv=document.getElementById('CV'),p=document.getElementById('CP');
+  cv.width=p.clientWidth; cv.height=p.clientHeight;
+  const ctx=cv.getContext('2d');
+  ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,cv.width,cv.height);
+  uStack=[]; rStack=[]; pushU(); bindCV();
+}
+
+function bindCV(){
+  const old=document.getElementById('CV'),nw=old.cloneNode(false);
+  old.parentNode.replaceChild(nw,old);
+  const cv=document.getElementById('CV');
+  cv.addEventListener('mousedown',onD); cv.addEventListener('mousemove',onM);
+  cv.addEventListener('mouseup',onU);   cv.addEventListener('mouseleave',onU);
+  cv.addEventListener('touchstart',onTS,{passive:false});
+  cv.addEventListener('touchmove',onTM,{passive:false});
+  cv.addEventListener('touchend',onTE,{passive:false});
+}
+
+function gPos(e){
+  const cv=document.getElementById('CV'),r=cv.getBoundingClientRect();
+  const sx=cv.width/r.width,sy=cv.height/r.height;
+  const s=e.touches?e.touches[0]:e;
+  return{x:(s.clientX-r.left)*sx,y:(s.clientY-r.top)*sy};
+}
+function dLen(t){const dx=t[0].clientX-t[1].clientX,dy=t[0].clientY-t[1].clientY;return Math.sqrt(dx*dx+dy*dy)}
+
+function onTS(e){
+  e.preventDefault();
+  if(e.touches.length===2){cvPin=true;cvPD0=dLen(e.touches);return;}
+  cvPin=false; onD(e);
+}
+function onTM(e){
+  e.preventDefault();
+  if(cvPin&&e.touches.length===2){
+    const d=dLen(e.touches);
+    cvZoom=Math.min(Math.max(cvZoom*(d/cvPD0),.5),4); cvPD0=d;
+    const cv=document.getElementById('CV');
+    cv.style.transformOrigin='center'; cv.style.transform=`scale(${cvZoom})`;
+    document.getElementById('cvZR').style.display=cvZoom!==1?'block':'none';
+    return;
+  }
+  if(!cvPin)onM(e);
+}
+function onTE(e){e.preventDefault();if(e.touches.length<2)cvPin=false;onU(e);}
+
+function onD(e){
+  if(cvPin||tool==='text')return;
+  const p=gPos(e); lx=p.x; ly=p.y;
+  if(tool==='fill'){flood(~~p.x,~~p.y,penColor);pushU();return;}
+  if(tool==='spray'){drawing=true;doSpray(p.x,p.y);sprayT=setInterval(()=>doSpray(lx,ly),30);return;}
+  if(tool==='shape'){
+    drawing=true;
+    const cv=document.getElementById('CV');
+    shSnap=cv.getContext('2d').getImageData(0,0,cv.width,cv.height);
+    shStart={x:p.x,y:p.y}; return;
+  }
+  drawing=true;
+  const ctx=document.getElementById('CV').getContext('2d');
+  applyCtx(ctx); ctx.beginPath(); ctx.arc(p.x,p.y,Math.max(1,brushSize/2),0,Math.PI*2); ctx.fill(); rstCtx(ctx);
+}
+function onM(e){
+  if(cvPin)return;
+  const p=gPos(e);
+  if(tool==='spray'){lx=p.x;ly=p.y;return;}
+  if(tool==='shape'&&drawing&&shStart){drawSP(shStart,p);lx=p.x;ly=p.y;return;}
+  if(!drawing)return;
+  const ctx=document.getElementById('CV').getContext('2d');
+  applyCtx(ctx); ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(p.x,p.y); ctx.stroke(); rstCtx(ctx);
+  lx=p.x; ly=p.y;
+}
+function onU(){
+  if(!drawing)return; drawing=false;
+  if(sprayT){clearInterval(sprayT);sprayT=null;}
+  if(tool==='shape'){shStart=null;shSnap=null;}
+  pushU();
+}
+
+function applyCtx(ctx){
+  ctx.lineJoin='round'; ctx.lineCap='round'; ctx.setLineDash([]); ctx.globalCompositeOperation='source-over';
+  switch(tool){
+    case 'pencil':      ctx.globalAlpha=.68;ctx.strokeStyle=penColor;ctx.fillStyle=penColor;ctx.lineWidth=brushSize*.7;ctx.setLineDash([3,1]);break;
+    case 'pen':         ctx.globalAlpha=1;ctx.strokeStyle=penColor;ctx.fillStyle=penColor;ctx.lineWidth=brushSize;break;
+    case 'marker':      ctx.globalAlpha=.9;ctx.strokeStyle=penColor;ctx.fillStyle=penColor;ctx.lineWidth=brushSize*2.2;break;
+    case 'highlighter': ctx.globalAlpha=.3;ctx.strokeStyle=penColor;ctx.fillStyle=penColor;ctx.lineWidth=brushSize*3.5;ctx.globalCompositeOperation='multiply';break;
+    case 'eraser':      ctx.globalAlpha=1;ctx.strokeStyle='#FFFFFF';ctx.fillStyle='#FFFFFF';ctx.lineWidth=brushSize*2.5;break;
+  }
+}
+function rstCtx(ctx){ctx.setLineDash([]);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';}
+
+function doSpray(x,y){
+  const cv=document.getElementById('CV'),ctx=cv.getContext('2d'),r=brushSize*2.5;
+  ctx.fillStyle=penColor; ctx.globalAlpha=.06;
+  for(let i=0;i<35;i++){const a=Math.random()*Math.PI*2,d=Math.random()*r;ctx.beginPath();ctx.arc(x+d*Math.cos(a),y+d*Math.sin(a),1,0,Math.PI*2);ctx.fill();}
+  ctx.globalAlpha=1;
+}
+
+function resetCvZoom(){
+  cvZoom=1; const cv=document.getElementById('CV');
+  cv.style.transform=''; cv.style.transformOrigin='';
+  document.getElementById('cvZR').style.display='none';
+}
+
+// ══════════════════════
+//  SHAPES
+// ══════════════════════
+function setShape(s){
+  curShape=s;
+  document.querySelectorAll('.shbtn').forEach(b=>b.classList.remove('active'));
+  const m={rect:'shRect',round:'shRound',circle:'shCircle',oval:'shOval',line:'shLine'};
+  if(m[s])document.getElementById(m[s]).classList.add('active');
+}
+function drawSP(s,e){
+  const cv=document.getElementById('CV'),ctx=cv.getContext('2d');
+  ctx.putImageData(shSnap,0,0);
+  const f=document.getElementById('shFillCk').checked;
+  const x=Math.min(s.x,e.x),y=Math.min(s.y,e.y),w=Math.abs(e.x-s.x),h=Math.abs(e.y-s.y);
+  ctx.strokeStyle=penColor; ctx.fillStyle=penColor; ctx.lineWidth=brushSize; ctx.globalAlpha=1; ctx.setLineDash([]);
+  ctx.beginPath();
+  switch(curShape){
+    case 'rect':   if(f)ctx.fillRect(x,y,w,h); ctx.strokeRect(x,y,w,h); break;
+    case 'round':  const rr=Math.min(w,h)*.15; if(ctx.roundRect)ctx.roundRect(x,y,w,h,rr);else ctx.rect(x,y,w,h); if(f)ctx.fill(); ctx.stroke(); break;
+    case 'circle': const cr=Math.min(w,h)/2,ccx=s.x+(e.x-s.x)/2,ccy=s.y+(e.y-s.y)/2; ctx.arc(ccx,ccy,cr,0,Math.PI*2); if(f)ctx.fill(); ctx.stroke(); break;
+    case 'oval':   const ocx=s.x+(e.x-s.x)/2,ocy=s.y+(e.y-s.y)/2; ctx.ellipse(ocx,ocy,w/2,h/2,0,0,Math.PI*2); if(f)ctx.fill(); ctx.stroke(); break;
+    case 'line':   ctx.moveTo(s.x,s.y); ctx.lineTo(e.x,e.y); ctx.stroke(); break;
+  }
+}
+
+// ══════════════════════
+//  TEXT TOOL
+// ══════════════════════
+function setTextSize(s){
+  txtSz=s;
+  document.querySelectorAll('.tsbtn').forEach(b=>b.classList.remove('active'));
+  const m={S:'tsS',M:'tsM',L:'tsL'};
+  if(m[s])document.getElementById(m[s]).classList.add('active');
+}
+function placeText(e){
+  if(e.target.tagName==='TEXTAREA')return;
+  commitAll();
+  const ov=document.getElementById('textOverlay'),r=ov.getBoundingClientRect();
+  const x=e.clientX-r.left,y=e.clientY-r.top,fs=TS[txtSz];
+  const ta=document.createElement('textarea');
+  ta.style.cssText=`position:absolute;left:${x}px;top:${y}px;font-size:${fs}px;color:${penColor};min-width:${fs*3}px;min-height:${fs+8}px;border:2px dashed ${penColor};background:rgba(255,255,255,.92);padding:4px 8px;border-radius:8px;outline:none;font-family:'Nunito',sans-serif;font-weight:800;resize:both;overflow:hidden;touch-action:auto;user-select:text;-webkit-user-select:text;line-height:1.3`;
+  ta.rows=1;
+  ta.addEventListener('input',()=>{ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';});
+  ta.addEventListener('blur',()=>setTimeout(()=>commitOne(ta),150));
+  ov.appendChild(ta); setTimeout(()=>ta.focus(),50);
+}
+function commitOne(ta){
+  if(!ta||!ta.value.trim()||!ta.parentNode){ta?.remove();return;}
+  const cv=document.getElementById('CV'),ctx=cv.getContext('2d');
+  const ov=document.getElementById('textOverlay');
+  const ovr=ov.getBoundingClientRect(),cvr=cv.getBoundingClientRect(),tr=ta.getBoundingClientRect();
+  const sx=cv.width/cvr.width,sy=cv.height/cvr.height;
+  const cx=(tr.left-cvr.left)*sx,cy=(tr.top-cvr.top)*sy,fs=TS[txtSz];
+  ctx.font=`bold ${fs}px 'Nunito',sans-serif`;
+  ctx.fillStyle=penColor; ctx.globalAlpha=1; ctx.textBaseline='top';
+  ta.value.split('\n').forEach((l,i)=>ctx.fillText(l,cx+4,cy+4+i*(fs*1.3)));
+  ta.remove(); pushU();
+}
+function commitAll(){document.querySelectorAll('#textOverlay textarea').forEach(commitOne);}
+
+// ══════════════════════
+//  FLOOD FILL
+// ══════════════════════
+function flood(sx,sy,hex){
+  const cv=document.getElementById('CV'),ctx=cv.getContext('2d');
+  const id=ctx.getImageData(0,0,cv.width,cv.height),d=id.data;
+  const fl=h2r(hex);if(!fl)return;
+  const ti=(sy*cv.width+sx)*4,tr=d[ti],tg=d[ti+1],tb=d[ti+2];
+  if(tr===fl.r&&tg===fl.g&&tb===fl.b)return;
+  const st=[[sx,sy]],vi=new Uint8Array(cv.width*cv.height);
+  while(st.length){
+    const[x,y]=st.pop();
+    if(x<0||x>=cv.width||y<0||y>=cv.height)continue;
+    const i2=y*cv.width+x;if(vi[i2])continue;
+    const i=i2*4;
+    if(Math.abs(d[i]-tr)>40||Math.abs(d[i+1]-tg)>40||Math.abs(d[i+2]-tb)>40)continue;
+    vi[i2]=1;d[i]=fl.r;d[i+1]=fl.g;d[i+2]=fl.b;d[i+3]=255;
+    st.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
+  }
+  ctx.putImageData(id,0,0);
+}
+function h2r(h){const m=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);return m?{r:parseInt(m[1],16),g:parseInt(m[2],16),b:parseInt(m[3],16)}:null;}
+
+// ══════════════════════
+//  TOOLS & COLORS
+// ══════════════════════
+const TID={pencil:'tPencil',pen:'tPen',marker:'tMarker',highlighter:'tHighlighter',spray:'tSpray',fill:'tFill',shape:'tShape',eraser:'tEraser'};
+function setTool(t){
+  commitAll(); tool=t;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  if(TID[t])document.getElementById(TID[t])?.classList.add('active');
+  document.getElementById('shapeBar').classList.toggle('show',t==='shape');
+  document.getElementById('textBar').classList.toggle('show',t==='text');
+  const ov=document.getElementById('textOverlay');
+  t==='text'?ov.classList.add('active'):ov.classList.remove('active');
+  document.getElementById('CV').style.cursor=t==='eraser'?'cell':t==='fill'?'crosshair':t==='text'?'text':'crosshair';
+}
+function pickColor(c){penColor=c;document.querySelectorAll('.cdot').forEach(d=>d.classList.remove('active'));if(tool==='eraser')setTool('pen');}
+function buildColors(){
+  const pal=document.getElementById('PAL');pal.innerHTML='';
+  COLORS.forEach((c,i)=>{
+    const d=document.createElement('div');
+    d.className='cdot'+(i===0?' active':'');
+    d.style.background=c;
+    if(c==='#FFFFFF')d.style.border='3px solid #CCC';
+    d.onclick=()=>{document.querySelectorAll('.cdot').forEach(x=>x.classList.remove('active'));d.classList.add('active');penColor=c;if(tool==='eraser')setTool('pen');};
+    pal.appendChild(d);
+  });
+  penColor=COLORS[0];
+}
+
+// ══════════════════════
+//  UNDO / REDO
+// ══════════════════════
+function pushU(){const cv=document.getElementById('CV');uStack.push(cv.toDataURL());if(uStack.length>25)uStack.shift();rStack=[];}
+function undo(){if(uStack.length<=1)return;rStack.push(uStack.pop());applyS(uStack[uStack.length-1]);}
+function redo(){if(!rStack.length)return;const s=rStack.pop();uStack.push(s);applyS(s);}
+function applyS(url){const cv=document.getElementById('CV'),ctx=cv.getContext('2d'),im=new Image();im.onload=()=>{ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(im,0,0);};im.src=url;}
+
+// ══════════════════════
+//  CLEAR & HOME
+// ══════════════════════
+function confirmClear(){openM('MCL');}
+function doClear(){closeM('MCL');const cv=document.getElementById('CV'),ctx=cv.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,cv.width,cv.height);pushU();}
+
+function confirmHome(isReload=false){
+  const pd=PL[who];
+  if(isReload){
+    document.getElementById('MHico').textContent='⚠️';
+    document.getElementById('MHtit').textContent='Reload Halaman?';
+    document.getElementById('MHsub').innerHTML='Gambar yang belum disimpan akan hilang.<br>Yakin mau reload halaman ini?';
+    document.getElementById('MHyes').textContent='🔄 Ya, Reload';
+    document.getElementById('MHyes').onclick=()=>{closeM('MH');location.reload();};
+  } else {
+    document.getElementById('MHico').textContent='🏠';
+    document.getElementById('MHtit').textContent='Kembali ke Menu?';
+    document.getElementById('MHsub').innerHTML=`Gambar yang belum disimpan akan hilang.<br>Apakah <b>${pd.first}</b> yakin mau keluar?`;
+    document.getElementById('MHyes').textContent='✅ Ya, Keluar';
+    document.getElementById('MHyes').onclick=doHome;
+  }
+  openM('MH');
+}
+function doHome(){closeM('MH');resetCvZoom();document.getElementById('APP').style.display='none';document.getElementById('WS').style.display='flex';}
+
+window.addEventListener('popstate',()=>{
+  if(document.getElementById('APP').style.display==='flex'){history.pushState(null,'',location.href);confirmHome(false);}
+});
+history.pushState(null,'',location.href);
+
+// ══════════════════════
+//  REF IMAGE CATEGORIES
+// ══════════════════════
+function buildCats(){
+  const ct=document.getElementById('CATS');ct.innerHTML='';
+  Object.keys(IMG).forEach((c,i)=>{
+    const t=document.createElement('div');
+    t.className='ctag'+(i===0?' active':'');
+    t.textContent=c;
+    t.onclick=()=>{document.querySelectorAll('.ctag').forEach(x=>x.classList.remove('active'));t.classList.add('active');cat=c;};
+    ct.appendChild(t);
+  });
+}
+
+async function loadRandom(){
+  const src=IMG[cat];
+  const img=document.getElementById('refImg'),rl=document.getElementById('RL');
+  img.style.display='none'; rl.style.display='block';
+  rl.innerHTML='<span class="rspin">🎲</span>Memuat gambar...';
+  resetRefZoom();
+
+  let url='';
+
+  if(src.mode==='animal'){
+    // Dog CEO API
+    try{
+      const br=src.breeds[Math.floor(Math.random()*src.breeds.length)];
+      const res=await fetch(`https://dog.ceo/api/breed/${br}/images/random`,{signal:AbortSignal.timeout(5000)});
+      if(res.ok){const j=await res.json();if(j.status==='success')url=j.message;}
+    }catch(e){}
+    // Cat API fallback
+    if(!url){
+      try{
+        const res=await fetch('https://api.thecatapi.com/v1/images/search',{signal:AbortSignal.timeout(5000)});
+        if(res.ok){const j=await res.json();url=j[0]?.url||'';}
+      }catch(e){}
+    }
+    // Hardcoded CDN fallback
+    if(!url){
+      if(!catIdx[cat])catIdx[cat]=0;
+      url=src.fallback[catIdx[cat]%src.fallback.length]; catIdx[cat]++;
+    }
+  } else {
+    if(catIdx[cat]===undefined)catIdx[cat]=Math.floor(Math.random()*src.urls.length);
+    url=src.urls[catIdx[cat]%src.urls.length]; catIdx[cat]++;
+  }
+
+  setRefImg(img,rl,url,src);
+}
+
+function setRefImg(img,rl,url,src){
+  img.onload=()=>{rl.style.display='none';img.style.display='block';};
+  img.onerror=()=>{
+    if(src&&src.urls){
+      const nu=src.urls[(catIdx[cat]||0)%src.urls.length];
+      if(nu&&nu!==img.src){img.onerror=()=>{rl.innerHTML='<span style="font-size:32px">😅</span><br>Coba tap Gambar Baru lagi!';};img.src=nu;return;}
+    }
+    rl.innerHTML='<span style="font-size:32px">😅</span><br>Coba tap Gambar Baru lagi!';
+  };
+  img.crossOrigin='anonymous';
+  img.src=url;
+}
+
+// ══════════════════════════════════════════════
+//  WIKIMEDIA SEARCH
+//  Endpoint: https://en.wikipedia.org/w/api.php
+//  Query → pageimages → thumbnail URL
+//  Default suffix: "+ gambar kartun anak"
+// ══════════════════════════════════════════════
+async function doSearch(){
+  const raw=(document.getElementById('searchInput').value||'').trim();
+  if(!raw)return;
+
+  const img=document.getElementById('refImg'),rl=document.getElementById('RL');
+  img.style.display='none'; rl.style.display='block';
+  rl.innerHTML='<span class="rspin">🔍</span>Mencari gambar...';
+  resetRefZoom();
+
+  // Query ke Wikimedia Commons imageinfo
+  const q=encodeURIComponent(raw+' cartoon children drawing');
+  const api=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&prop=imageinfo&iiprop=url&iiurlwidth=600&format=json&origin=*`;
+
+  try{
+    const res=await fetch(api,{signal:AbortSignal.timeout(8000)});
+    const j=await res.json();
+    const pages=Object.values(j?.query?.pages||{});
+    const found=pages.find(p=>p.imageinfo&&p.imageinfo[0]?.thumburl);
+    if(found){
+      const url=found.imageinfo[0].thumburl;
+      setRefImg(img,rl,url,null);
+      return;
+    }
+  }catch(e){}
+
+  // Fallback: Wikimedia Commons search (broader)
+  try{
+    const q2=encodeURIComponent(raw);
+    const api2=`https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=${q2}&srnamespace=6&srlimit=10&format=json&origin=*`;
+    const res2=await fetch(api2,{signal:AbortSignal.timeout(8000)});
+    const j2=await res2.json();
+    const results=j2?.query?.search||[];
+    if(results.length){
+      // Get imageinfo for first result
+      const title=encodeURIComponent(results[0].title);
+      const api3=`https://commons.wikimedia.org/w/api.php?action=query&titles=${title}&prop=imageinfo&iiprop=url&iiurlwidth=600&format=json&origin=*`;
+      const res3=await fetch(api3,{signal:AbortSignal.timeout(8000)});
+      const j3=await res3.json();
+      const page=Object.values(j3?.query?.pages||{})[0];
+      const url=page?.imageinfo?.[0]?.url||page?.imageinfo?.[0]?.thumburl;
+      if(url){setRefImg(img,rl,url,null);return;}
+    }
+  }catch(e){}
+
+  // Last resort: OpenMoji search by name
+  rl.innerHTML=`<span style="font-size:32px">🔍</span><br>Gambar "<b>${raw}</b>" tidak ditemukan.<br>Coba kata lain!`;
+}
+
+// Ref image pinch/pan
+function applyRefT(){
+  document.getElementById('refInner').style.transform=`translate(${refTX}px,${refTY}px) scale(${refScale})`;
+  document.getElementById('refZReset').style.display=(refScale!==1||refTX!==0||refTY!==0)?'block':'none';
+}
+function resetRefZoom(){refScale=1;refTX=0;refTY=0;document.getElementById('refInner').style.transform='';document.getElementById('refZReset').style.display='none';}
+
+(function initRef(){
+  const go=()=>{
+    const ro=document.getElementById('refOuter');if(!ro)return setTimeout(go,300);
+    ro.addEventListener('touchstart',e=>{
+      if(e.touches.length===2){refPin=true;refPD0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);e.preventDefault();}
+      else if(e.touches.length===1){refDrag=true;refDX0=e.touches[0].clientX-refTX;refDY0=e.touches[0].clientY-refTY;}
+    },{passive:false});
+    ro.addEventListener('touchmove',e=>{
+      if(refPin&&e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);refScale=Math.min(Math.max(refScale*(d/refPD0),.5),5);refPD0=d;applyRefT();e.preventDefault();}
+      else if(refDrag&&e.touches.length===1){refTX=e.touches[0].clientX-refDX0;refTY=e.touches[0].clientY-refDY0;applyRefT();e.preventDefault();}
+    },{passive:false});
+    ro.addEventListener('touchend',e=>{if(e.touches.length<2)refPin=false;if(e.touches.length===0)refDrag=false;},{passive:true});
+    ro.addEventListener('wheel',e=>{e.preventDefault();refScale=Math.min(Math.max(refScale*(e.deltaY<0?1.1:.9),.5),5);applyRefT();},{passive:false});
+  };
+  setTimeout(go,600);
+})();
+
+document.getElementById('RFI').onchange=function(){
+  const f=this.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{const img=document.getElementById('refImg'),rl=document.getElementById('RL');img.src=e.target.result;img.style.display='block';rl.style.display='none';resetRefZoom();};
+  r.readAsDataURL(f);
+};
+
+// ══════════════════════
+//  LOAD GAMBAR
+// ══════════════════════
+document.getElementById('LDF').onchange=function(){
+  const f=this.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const si=new Image();
+    si.onload=()=>{
+      const cv=document.getElementById('CV'),ctx=cv.getContext('2d');
+      const cropH=Math.max(si.height-56,si.height*0.92);
+      ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,cv.width,cv.height);
+      const sc=Math.min(cv.width/si.width,cv.height/cropH);
+      const dw=si.width*sc,dh=cropH*sc,dx=(cv.width-dw)/2,dy=(cv.height-dh)/2;
+      ctx.drawImage(si,0,0,si.width,cropH,dx,dy,dw,dh);
+      pushU();
+    };
+    si.src=e.target.result;
+  };
+  r.readAsDataURL(f); this.value='';
+};
+
+// ══════════════════════
+//  SAVE
+// ══════════════════════
+function confirmSave(){commitAll();openM('MS');}
+
+async function doSave(){
+  closeM('MS');openM('MSN');
+  document.getElementById('MSNM').textContent='Menyimpan karya kamu... ✨';
+  const d=PL[who],now=new Date();
+  const cv=document.getElementById('CV');
+  const svt=cv.style.transform; cv.style.transform='';
+  const fc=document.createElement('canvas');
+  fc.width=cv.width; fc.height=cv.height;
+  const ctx=fc.getContext('2d');
+  ctx.drawImage(cv,0,0);
+  cv.style.transform=svt;
+
+  // Watermark minimal
+  ctx.font='bold 11px sans-serif';
+  const nw=ctx.measureText('🎨 '+d.name).width;
+  ctx.font='9px sans-serif';
+  const ds=now.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+  const dw=ctx.measureText(ds).width;
+  const wmW=Math.max(nw,dw)+32,wmH=34,wmX=fc.width-wmW-5,wmY=fc.height-wmH-5;
+  ctx.save();ctx.globalAlpha=.84;ctx.fillStyle='rgba(255,255,255,.92)';
+  ctx.beginPath();if(ctx.roundRect)ctx.roundRect(wmX,wmY,wmW,wmH,16);else ctx.rect(wmX,wmY,wmW,wmH);
+  ctx.fill();ctx.restore();
+  ctx.font='14px serif';ctx.fillText(d.color==='#FF6B9D'?'👧':'👦',wmX+3,wmY+21);
+  ctx.save();ctx.font='bold 10px sans-serif';ctx.fillStyle=d.color;ctx.textAlign='left';
+  ctx.fillText('🎨 '+d.name,wmX+22,wmY+12);
+  ctx.font='9px sans-serif';ctx.fillStyle='#888';ctx.fillText(ds,wmX+22,wmY+26);ctx.restore();
+
+  const pad=n=>String(n).padStart(2,'0');
+  const ts=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+  const fn=`Karya_${d.name.replace(/\s+/g,'_')}_${ts}.png`;
+  const png=fc.toDataURL('image/png');
+  const a=document.createElement('a');a.href=png;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);
+
+  if(CFG.TG_ENABLED&&!CFG.TG_TOKEN.includes('ISI')&&!CFG.TG_CHAT_ID.includes('ISI')){
+    document.getElementById('MSNM').textContent='Mengirim ke Telegram... 📤';
+    await sendTG(png,d,now);
+  }
+
+  closeM('MSN');
+  document.getElementById('MOKM').innerHTML=CFG.TG_ENABLED
+    ?'Gambar disimpan &amp; dikirim ke Telegram! 📲<br>Mama/Papa bisa lihat hasilnya 💌'
+    :'Gambar berhasil disimpan ke galeri! 🖼️';
+  openM('MOK');showCG();
+}
+
+// ══════════════════════
+//  TELEGRAM
+// ══════════════════════
+async function sendTG(pngURL,d,now){
+  try{
+    const b64=pngURL.replace(/^data:image\/png;base64,/,'');
+    const blob=b64Blob(b64,'image/png');
+    const cap=`🎨 *Studio Gambar Ana & Abhi*\n\n${d.color==='#FF6B9D'?'👧':'👦'} *${esc(d.name)}* selesai menggambar\\!\n📅 *Tanggal:* ${esc(now.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}\n🕐 *Jam:* ${esc(now.toLocaleTimeString('id-ID'))}\n\n🌟 _Semangat terus ya ${d.first}\\!_ 🌟`;
+    const fd=new FormData();
+    fd.append('chat_id',CFG.TG_CHAT_ID);fd.append('caption',cap);fd.append('parse_mode','MarkdownV2');fd.append('photo',blob,'karya.png');
+    const res=await fetch(`https://api.telegram.org/bot${CFG.TG_TOKEN}/sendPhoto`,{method:'POST',body:fd});
+    const j=await res.json();
+    if(!j.ok)await fetch(`https://api.telegram.org/bot${CFG.TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CFG.TG_CHAT_ID,text:cap,parse_mode:'MarkdownV2'})});
+  }catch(e){console.error('TG:',e);}
+}
+function b64Blob(b,m){const bn=atob(b),ar=new Uint8Array(bn.length);for(let i=0;i<bn.length;i++)ar[i]=bn.charCodeAt(i);return new Blob([ar],{type:m});}
+function esc(s){return String(s).replace(/[_*[\]()~`>#+\-=|{}.!\\]/g,'\\$&');}
+
+function showCG(){const el=document.getElementById('CG');document.getElementById('CT').textContent=`🌟 Keren ${PL[who].first}! 🌟`;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400);}
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+
+let RT;
+window.addEventListener('resize',()=>{
+  if(document.getElementById('APP').style.display!=='flex')return;
+  clearTimeout(RT);RT=setTimeout(()=>{
+    const cv=document.getElementById('CV'),old=cv.toDataURL();
+    initCanvas();
+    const im=new Image();im.onload=()=>document.getElementById('CV').getContext('2d').drawImage(im,0,0);im.src=old;
+  },200);
+});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+</script>
+</body>
+</html>
