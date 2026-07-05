@@ -1,412 +1,893 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raja Siomay — Siomay Premium Bali</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+    html { scroll-behavior: smooth; }
 
-  .rs-root {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      overflow-x: hidden;
+    }
 
-  /* NAV */
-  .rs-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,10,0.95);
-    border-bottom: 1px solid #C9A84C33;
-    padding: 16px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .rs-nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #C9A84C;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .rs-nav-links {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-    margin: 0; padding: 0;
-  }
-  .rs-nav-links a {
-    text-decoration: none;
-    color: #ffffff99;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .rs-nav-links a:hover { color: #C9A84C; }
-  .rs-btn-order {
-    background: #C9A84C;
-    color: #0A0A0A;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: none;
-    padding: 10px 24px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .rs-btn-order:hover { background: #E8C96A; }
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-  /* BUTTONS */
-  .rs-btn-primary-dark {
-    background: #C9A84C;
-    color: #0A0A0A;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border: none;
-    padding: 14px 36px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .rs-btn-primary-dark:hover { background: #E8C96A; }
-  .rs-btn-outline-dark {
-    background: transparent;
-    color: #C9A84C;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border: 1px solid #C9A84C;
-    padding: 14px 36px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .rs-btn-outline-dark:hover { background: #C9A84C22; }
+    /* =====================
+       NAV
+    ===================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #C9A84C;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #C9A84C; }
+    .nav-cta {
+      background: #C9A84C;
+      color: #0A0A0A;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #E8C96A; }
 
-  .rs-btn-primary-light {
-    background: #C9A84C;
-    color: #FFFFFF;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border: none;
-    padding: 14px 36px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .rs-btn-primary-light:hover { background: #B8923B; }
-  .rs-btn-outline-light {
-    background: transparent;
-    color: #8B6914;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border: 1px solid #C9A84C;
-    padding: 14px 36px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .rs-btn-outline-light:hover { background: #C9A84C22; }
+    /* =====================
+       BUTTONS
+    ===================== */
+    .btn-primary-dark {
+      background: #C9A84C;
+      color: #0A0A0A;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      padding: 14px 36px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary-dark:hover { background: #E8C96A; }
 
-  /* HERO (dark) */
-  .rs-hero {
-    min-height: 92vh;
-    background: #0A0A0A;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .rs-hero-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 50% at 50% 60%, #C9A84C18, transparent 70%);
-    pointer-events: none;
-  }
-  .rs-hero-eyebrow { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; margin-bottom: 20px; }
-  .rs-hero h1 { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 700; line-height: 1.1; margin: 0 0 8px; color: #FFFFFF; }
-  .rs-hero-sub { font-size: 16px; color: #ffffff77; margin: 0 0 16px; letter-spacing: 3px; text-transform: uppercase; }
-  .rs-divider-gold-dark { width: 60px; height: 1px; background: #C9A84C; margin: 24px auto; }
-  .rs-hero-tagline { font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: #ffffff99; margin: 0 0 40px; max-width: 480px; }
-  .rs-hero-cta-group { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; }
-  .rs-hero-scroll {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: #ffffff44;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .rs-scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, #C9A84C, transparent);
-    animation: scrollAnim 1.8s ease-in-out infinite;
-  }
-  @keyframes scrollAnim {
-    0%,100% { opacity: 0.3; transform: scaleY(0.7); }
-    50% { opacity: 1; transform: scaleY(1); }
-  }
+    .btn-outline-dark {
+      background: transparent;
+      color: #C9A84C;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid #C9A84C;
+      padding: 14px 36px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline-dark:hover { background: rgba(201,168,76,0.12); }
 
-  /* SECTION WRAPPERS */
-  .rs-sec-dark { background: #0A0A0A; }
-  .rs-sec-light { background: #FFFFFF; }
+    .btn-primary-light {
+      background: #C9A84C;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      padding: 14px 36px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary-light:hover { background: #B8923B; }
 
-  .rs-section { padding: 96px 40px; max-width: 1100px; margin: 0 auto; }
+    .btn-outline-light {
+      background: transparent;
+      color: #8B6914;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid #C9A84C;
+      padding: 14px 36px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline-light:hover { background: rgba(201,168,76,0.1); }
 
-  /* LABELS & TITLES — dark bg */
-  .rs-label-dark { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; margin-bottom: 12px; }
-  .rs-title-dark { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: #FFFFFF; margin: 0 0 16px; line-height: 1.2; }
-  .rs-body-dark { font-size: 16px; color: #ffffff77; line-height: 1.8; max-width: 600px; margin: 0; }
+    /* =====================
+       SECTION BACKGROUNDS
+    ===================== */
+    .sec-dark { background: #0A0A0A; }
+    .sec-light { background: #FFFFFF; }
 
-  /* LABELS & TITLES — light bg */
-  .rs-label-light { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #8B6914; margin-bottom: 12px; }
-  .rs-title-light { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: #0A0A0A; margin: 0 0 16px; line-height: 1.2; }
-  .rs-body-light { font-size: 16px; color: #444444; line-height: 1.8; max-width: 600px; margin: 0; }
-  .rs-divider-gold-light { width: 60px; height: 1px; background: #C9A84C; margin: 0 0 24px; }
+    /* =====================
+       SECTION INNER WRAPPER
+    ===================== */
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 96px 48px;
+    }
 
-  /* ABOUT (light) */
-  .rs-about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .rs-about-img {
-    background: #F5F5F5;
-    border: 1px solid #C9A84C44;
-    aspect-ratio: 4/3;
-    display: flex; align-items: center; justify-content: center;
-    color: #00000033; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-  }
-  .rs-about-stats { display: flex; gap: 40px; margin-top: 40px; padding-top: 40px; border-top: 1px solid #C9A84C44; flex-wrap: wrap; }
-  .rs-stat-num-light { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #C9A84C; }
-  .rs-stat-label-light { font-size: 12px; color: #88888888; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+    /* =====================
+       TYPOGRAPHY HELPERS
+    ===================== */
+    .label-dark {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C9A84C;
+      margin-bottom: 12px;
+    }
+    .label-light {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #8B6914;
+      margin-bottom: 12px;
+    }
+    .divider-gold {
+      width: 48px;
+      height: 1px;
+      background: #C9A84C;
+      margin-bottom: 20px;
+    }
+    .title-dark {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .title-light {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0A0A0A;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .body-dark {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      max-width: 580px;
+    }
+    .body-light {
+      font-size: 16px;
+      color: #555555;
+      line-height: 1.8;
+      max-width: 580px;
+    }
 
-  /* WHY US (dark) */
-  .rs-why-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-  .rs-why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
-  .rs-why-card {
-    background: #1A1A1A; padding: 40px 32px; position: relative; transition: background 0.2s;
-  }
-  .rs-why-card:hover { background: #222222; }
-  .rs-why-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: #C9A84C; transform: scaleX(0); transition: transform 0.3s;
-  }
-  .rs-why-card:hover::before { transform: scaleX(1); }
-  .rs-why-icon { width: 40px; height: 40px; border: 1px solid #C9A84C55; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: #C9A84C; font-size: 18px; }
-  .rs-why-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #FFFFFF; margin: 0 0 12px; }
-  .rs-why-text { font-size: 14px; color: #ffffff66; line-height: 1.7; margin: 0; }
+    /* =====================
+       1. HERO (dark) — split layout
+    ===================== */
+    .hero {
+      background: #0A0A0A;
+      min-height: calc(100vh - 57px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 48px 80px 48px;
+      position: relative;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 15%; bottom: 15%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C9A84C;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.0;
+      margin-bottom: 8px;
+    }
+    .hero-subtitle {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0;
+    }
+    .hero-divider {
+      width: 48px;
+      height: 1px;
+      background: #C9A84C;
+      margin: 28px 0;
+    }
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 40px;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+    }
+    .hero-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(10,10,10,0.4), transparent 50%);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.35);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, #C9A84C, transparent);
+      animation: lineAnim 1.8s ease-in-out infinite;
+    }
+    @keyframes lineAnim {
+      0%,100% { opacity: 0.3; transform: scaleX(0.6); transform-origin: left; }
+      50% { opacity: 1; transform: scaleX(1); transform-origin: left; }
+    }
 
-  /* MENU (light) */
-  .rs-menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-  .rs-menu-card {
-    background: #FFFFFF; border: 1px solid #C9A84C33; overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; cursor: pointer;
-  }
-  .rs-menu-card:hover { border-color: #C9A84C; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(201,168,76,0.12); }
-  .rs-menu-img { background: #F5F5F5; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: #00000022; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-  .rs-menu-info { padding: 20px 24px; }
-  .rs-menu-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #0A0A0A; margin: 0 0 6px; }
-  .rs-menu-desc { font-size: 13px; color: #666666; line-height: 1.6; margin: 0 0 16px; }
-  .rs-menu-price { font-size: 14px; font-weight: 600; color: #8B6914; letter-spacing: 1px; }
+    /* =====================
+       2. ABOUT (light)
+    ===================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.25);
+    }
+    .about-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(201,168,76,0.25);
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #C9A84C;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #999999;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+    }
 
-  /* GALLERY (dark) */
-  .rs-gallery-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-  .rs-gallery-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 4px; margin-top: 56px;
-  }
-  .rs-gallery-item { background: #252525; position: relative; overflow: hidden; cursor: pointer; }
-  .rs-gallery-item.rs-gallery-wide { grid-column: span 2; }
-  .rs-gallery-item.rs-gallery-tall { grid-row: span 2; }
-  .rs-gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ffffff22; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; background: #1A1A1A; }
-  .rs-gallery-overlay { position: absolute; inset: 0; background: rgba(201,168,76,0.85); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
-  .rs-gallery-item:hover .rs-gallery-overlay { opacity: 1; }
-  .rs-gallery-zoom-icon { color: #0A0A0A; font-size: 28px; font-weight: 300; }
+    /* =====================
+       3. WHY US (dark)
+    ===================== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+    .why-card {
+      background: #141414;
+      padding: 40px 32px;
+      position: relative;
+      transition: background 0.2s;
+      border-top: 2px solid transparent;
+    }
+    .why-card:hover {
+      background: #1E1E1E;
+      border-top-color: #C9A84C;
+    }
+    .why-icon {
+      font-size: 24px;
+      color: #C9A84C;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+    .why-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    .why-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
 
-  /* CABANG (light) */
-  .rs-cabang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
-  .rs-cabang-card { background: #F9F9F9; padding: 32px 28px; border-bottom: 2px solid transparent; transition: border-color 0.2s; }
-  .rs-cabang-card:hover { border-color: #C9A84C; }
-  .rs-cabang-num { font-size: 11px; color: #C9A84C99; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
-  .rs-cabang-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #0A0A0A; margin: 0 0 8px; }
-  .rs-cabang-addr { font-size: 13px; color: #666666; line-height: 1.6; margin: 0 0 16px; }
-  .rs-cabang-hours { font-size: 12px; color: #8B6914; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
-  .rs-cabang-dot { width: 6px; height: 6px; background: #4CAF50; border-radius: 50%; display: inline-block; }
+    /* =====================
+       4. MENU (light)
+    ===================== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .menu-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(201,168,76,0.2);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .menu-card:hover {
+      border-color: #C9A84C;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(201,168,76,0.1);
+    }
+    .menu-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .menu-img img { transition: transform 0.4s; }
+    .menu-card:hover .menu-img img { transform: scale(1.05); }
+    .menu-info { padding: 20px 24px 24px; }
+    .menu-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #0A0A0A;
+      margin-bottom: 8px;
+    }
+    .menu-desc {
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .menu-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #8B6914;
+      letter-spacing: 0.5px;
+    }
 
-  /* TESTIMONI (dark) */
-  .rs-testi-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-  .rs-testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-  .rs-testi-card { background: #1A1A1A; padding: 32px 28px; border: 1px solid #C9A84C22; }
-  .rs-testi-quote { font-family: 'Playfair Display', serif; font-size: 48px; color: #C9A84C33; line-height: 1; margin: 0 0 12px; }
-  .rs-testi-text { font-size: 14px; color: #ffffff88; line-height: 1.7; margin: 0 0 24px; font-style: italic; }
-  .rs-testi-author { font-size: 13px; font-weight: 600; color: #FFFFFF; margin: 0 0 4px; }
-  .rs-testi-role { font-size: 12px; color: #C9A84C77; letter-spacing: 1px; }
-  .rs-testi-stars { display: flex; gap: 3px; margin-bottom: 16px; }
-  .rs-star { color: #C9A84C; font-size: 13px; }
+    /* =====================
+       5. GALLERY (dark)
+    ===================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 220px;
+      gap: 4px;
+      margin-top: 56px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item img { transition: transform 0.4s; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(201,168,76,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-zoom {
+      color: #0A0A0A;
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1;
+    }
 
-  /* ORDER CTA (light) */
-  .rs-order-wrap { background: #FFFFFF; text-align: center; padding: 120px 40px; position: relative; overflow: hidden; }
-  .rs-order-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, #C9A84C0F, transparent 70%); pointer-events: none; }
-  .rs-order-crown { font-size: 32px; color: #C9A84C66; margin-bottom: 24px; }
-  .rs-order-title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #0A0A0A; margin: 0 0 16px; line-height: 1.2; }
-  .rs-order-sub { font-size: 16px; color: #666666; margin: 0 auto 48px; max-width: 480px; }
-  .rs-order-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    /* =====================
+       6. CABANG (light)
+    ===================== */
+    .cabang-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+    .cabang-card {
+      background: #F8F8F8;
+      padding: 32px 28px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cabang-card:hover {
+      border-bottom-color: #C9A84C;
+      background: #F2F2F2;
+    }
+    .cabang-num {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.7);
+      margin-bottom: 14px;
+    }
+    .cabang-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #0A0A0A;
+      margin-bottom: 8px;
+    }
+    .cabang-addr {
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .cabang-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: #8B6914;
+      letter-spacing: 0.5px;
+    }
+    .dot-green { width: 6px; height: 6px; background: #4CAF50; border-radius: 50%; flex-shrink: 0; }
+    .dot-grey  { width: 6px; height: 6px; background: #BBBBBB; border-radius: 50%; flex-shrink: 0; }
+    .cabang-cta-card {
+      background: #F0F0F0;
+      padding: 40px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+    .cabang-cta-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.7);
+      margin-bottom: 12px;
+    }
+    .cabang-cta-text {
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
 
-  /* FOOTER (dark) */
-  .rs-footer { background: #050505; border-top: 1px solid #C9A84C22; padding: 64px 40px 40px; }
-  .rs-footer-inner { max-width: 1100px; margin: 0 auto; }
-  .rs-footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; padding-bottom: 48px; border-bottom: 1px solid #ffffff11; margin-bottom: 32px; }
-  .rs-footer-brand { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #C9A84C; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-  .rs-footer-desc { font-size: 13px; color: #ffffff44; line-height: 1.7; margin: 0; }
-  .rs-footer-col-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #C9A84C; margin-bottom: 20px; }
-  .rs-footer-links { list-style: none; margin: 0; padding: 0; }
-  .rs-footer-links li { margin-bottom: 10px; }
-  .rs-footer-links a { text-decoration: none; color: #ffffff44; font-size: 13px; transition: color 0.2s; }
-  .rs-footer-links a:hover { color: #C9A84C; }
-  .rs-footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .rs-footer-copy { font-size: 12px; color: #ffffff33; }
-  .rs-footer-socials { display: flex; gap: 16px; }
-  .rs-social-dot { width: 32px; height: 32px; border: 1px solid #C9A84C33; display: flex; align-items: center; justify-content: center; color: #C9A84C77; font-size: 13px; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
-  .rs-social-dot:hover { border-color: #C9A84C; color: #C9A84C; }
+    /* =====================
+       7. TESTIMONI (dark)
+    ===================== */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px;
+    }
+    .testi-card {
+      background: #141414;
+      padding: 32px 28px;
+      border: 1px solid rgba(201,168,76,0.15);
+      transition: border-color 0.2s;
+    }
+    .testi-card:hover { border-color: rgba(201,168,76,0.4); }
+    .testi-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      color: rgba(201,168,76,0.25);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .testi-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .star { color: #C9A84C; font-size: 13px; }
+    .testi-text {
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .testi-author {
+      font-size: 13px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .testi-role {
+      font-size: 12px;
+      color: rgba(201,168,76,0.6);
+      letter-spacing: 0.5px;
+    }
 
-  /* SCROLL ANIMATIONS */
-  .rs-fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .rs-fade-up.rs-visible { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) {
-    .rs-fade-up { opacity: 1; transform: none; transition: none; }
-    .rs-scroll-line { animation: none; }
-  }
+    /* =====================
+       8. ORDER CTA (light)
+    ===================== */
+    .order-section {
+      background: #FFFFFF;
+      text-align: center;
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .order-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.07), transparent 70%);
+      pointer-events: none;
+    }
+    .order-crown {
+      font-size: 36px;
+      color: rgba(201,168,76,0.5);
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+    .order-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: #0A0A0A;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .order-sub {
+      font-size: 16px;
+      color: #666666;
+      margin: 0 auto 48px;
+      max-width: 460px;
+      line-height: 1.7;
+    }
+    .order-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-  /* TABLET */
-  @media (max-width: 1024px) {
-    .rs-nav { padding: 16px 24px; }
-    .rs-section { padding: 80px 24px; }
-    .rs-why-inner { padding: 0 24px; }
-    .rs-gallery-inner { padding: 0 24px; }
-    .rs-testi-inner { padding: 0 24px; }
-    .rs-about-inner { gap: 48px; }
-    .rs-why-grid { grid-template-columns: repeat(2, 1fr); }
-    .rs-cabang-grid { grid-template-columns: repeat(2, 1fr); }
-    .rs-footer { padding: 48px 24px 32px; }
-    .rs-footer-top { gap: 40px; }
-  }
+    /* =====================
+       9. FOOTER (dark)
+    ===================== */
+    .footer {
+      background: #050505;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 64px 48px 40px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 64px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 32px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #C9A84C;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.7; }
+    .footer-col-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #C9A84C; margin-bottom: 20px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { text-decoration: none; color: rgba(255,255,255,0.35); font-size: 13px; transition: color 0.2s; }
+    .footer-links a:hover { color: #C9A84C; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(201,168,76,0.6);
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-btn:hover { border-color: #C9A84C; color: #C9A84C; }
 
-  /* MOBILE */
-  @media (max-width: 768px) {
-    .rs-nav { padding: 14px 20px; }
-    .rs-nav-links { display: none; }
-    .rs-nav-logo { font-size: 17px; }
-    .rs-btn-order { padding: 8px 16px; font-size: 12px; }
-    .rs-hero { padding: 72px 24px 80px; min-height: 88vh; }
-    .rs-hero h1 { font-size: 48px; }
-    .rs-hero-tagline { font-size: 17px; }
-    .rs-hero-sub { font-size: 13px; letter-spacing: 2px; }
-    .rs-btn-primary-dark, .rs-btn-outline-dark,
-    .rs-btn-primary-light, .rs-btn-outline-light { padding: 13px 28px; font-size: 13px; width: 100%; text-align: center; }
-    .rs-hero-cta-group { flex-direction: column; width: 100%; max-width: 320px; }
-    .rs-section { padding: 60px 20px; }
-    .rs-title-dark, .rs-title-light { font-size: 30px; }
-    .rs-body-dark, .rs-body-light { font-size: 15px; }
-    .rs-about-inner { grid-template-columns: 1fr; gap: 32px; }
-    .rs-about-stats { gap: 24px; }
-    .rs-stat-num-light { font-size: 28px; }
-    .rs-why-inner { padding: 0 20px; }
-    .rs-why-grid { grid-template-columns: 1fr; }
-    .rs-why-card { padding: 28px 24px; }
-    .rs-menu-grid { grid-template-columns: 1fr; gap: 16px; }
-    .rs-gallery-inner { padding: 0 20px; }
-    .rs-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
-    .rs-gallery-item.rs-gallery-wide { grid-column: span 2; }
-    .rs-gallery-item.rs-gallery-tall { grid-row: span 1; }
-    .rs-cabang-grid { grid-template-columns: 1fr; }
-    .rs-cabang-card { padding: 24px 20px; }
-    .rs-testi-inner { padding: 0 20px; }
-    .rs-testi-grid { grid-template-columns: 1fr; gap: 16px; }
-    .rs-testi-card { padding: 24px 20px; }
-    .rs-order-wrap { padding: 80px 24px; }
-    .rs-order-title { font-size: 36px; }
-    .rs-order-sub { font-size: 15px; }
-    .rs-order-btns { flex-direction: column; align-items: center; width: 100%; }
-    .rs-order-btns .rs-btn-primary-light,
-    .rs-order-btns .rs-btn-outline-light { width: 100%; max-width: 320px; text-align: center; }
-    .rs-footer { padding: 48px 20px 32px; }
-    .rs-footer-top { grid-template-columns: 1fr; gap: 36px; }
-    .rs-footer-bottom { flex-direction: column; align-items: flex-start; }
-  }
+    /* =====================
+       SCROLL ANIMATIONS
+    ===================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 400px) {
-    .rs-hero h1 { font-size: 38px; }
-    .rs-title-dark, .rs-title-light { font-size: 26px; }
-    .rs-order-title { font-size: 30px; }
-    .rs-gallery-grid { grid-auto-rows: 130px; }
-  }
-</style>
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
+      .hero-scroll-line { animation: none; }
+    }
 
-<div class="rs-root">
+    /* =====================
+       RESPONSIVE — TABLET (≤1024px)
+    ===================== */
+    @media (max-width: 1024px) {
+      .nav { padding: 16px 24px; }
+      .section-inner { padding: 80px 24px; }
+      .hero-left { padding: 60px 32px; }
+      .hero-title { font-size: 56px; }
+      .about-grid { gap: 48px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .cabang-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer { padding: 48px 24px 32px; }
+      .footer-top { gap: 40px; }
+      .order-section { padding: 96px 24px; }
+    }
+
+    /* =====================
+       RESPONSIVE — MOBILE (≤768px)
+    ===================== */
+    @media (max-width: 768px) {
+      /* NAV */
+      .nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 17px; }
+      .nav-cta { padding: 9px 16px; font-size: 12px; }
+
+      /* HERO — teks di atas, foto di bawah */
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        min-height: unset;
+      }
+      .hero-left {
+        padding: 56px 24px 40px;
+        order: 1;
+      }
+      .hero-left::after { display: none; }
+      .hero-title { font-size: 44px; }
+      .hero-tagline { font-size: 17px; max-width: 100%; }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn-primary-dark,
+      .hero-cta .btn-outline-dark { width: 100%; text-align: center; padding: 14px 24px; }
+      .hero-right {
+        order: 2;
+        min-height: 280px;
+        position: relative;
+      }
+      .hero-right img { position: relative; height: 280px; }
+      .hero-scroll { display: none; }
+
+      /* SECTIONS */
+      .section-inner { padding: 60px 20px; }
+      .title-dark, .title-light { font-size: 28px; }
+      .body-dark, .body-light { font-size: 15px; }
+
+      /* ABOUT */
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .about-stats { gap: 24px; }
+      .stat-num { font-size: 28px; }
+
+      /* WHY US */
+      .why-grid { grid-template-columns: 1fr; gap: 2px; }
+      .why-card { padding: 28px 24px; }
+
+      /* MENU */
+      .menu-grid { grid-template-columns: 1fr; gap: 16px; }
+
+      /* GALLERY */
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 160px;
+      }
+      .gallery-item.wide { grid-column: span 2; }
+      .gallery-item.tall { grid-row: span 1; }
+
+      /* CABANG */
+      .cabang-grid { grid-template-columns: 1fr; }
+      .cabang-card { padding: 24px 20px; }
+      .cabang-cta-card { padding: 32px 20px; }
+
+      /* TESTIMONI */
+      .testi-grid { grid-template-columns: 1fr; gap: 16px; }
+      .testi-card { padding: 24px 20px; }
+
+      /* ORDER */
+      .order-section { padding: 80px 24px; }
+      .order-title { font-size: 34px; }
+      .order-sub { font-size: 15px; }
+      .order-btns { flex-direction: column; align-items: center; }
+      .order-btns .btn-primary-light,
+      .order-btns .btn-outline-light { width: 100%; max-width: 320px; text-align: center; }
+
+      /* FOOTER */
+      .footer { padding: 48px 20px 32px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* =====================
+       RESPONSIVE — SMALL (≤400px)
+    ===================== */
+    @media (max-width: 400px) {
+      .hero-title { font-size: 36px; }
+      .title-dark, .title-light { font-size: 24px; }
+      .order-title { font-size: 28px; }
+      .gallery-grid { grid-auto-rows: 130px; }
+    }
+  </style>
+</head>
+<body>
 
   <!-- NAV -->
-  <nav class="rs-nav">
-    <div class="rs-nav-logo">Raja Siomay</div>
-    <ul class="rs-nav-links">
-      <li><a href="#">Tentang</a></li>
-      <li><a href="#">Menu</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="#">Cabang</a></li>
+  <nav class="nav">
+    <a href="#" class="nav-logo">Raja Siomay</a>
+    <ul class="nav-links">
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#cabang">Cabang</a></li>
     </ul>
-    <button class="rs-btn-order">Order Sekarang</button>
+    <button class="nav-cta">Order Sekarang</button>
   </nav>
 
-  <!-- 1. HERO (dark) -->
-  <section class="rs-hero">
-    <div class="rs-hero-bg"></div>
-    <p class="rs-hero-eyebrow rs-fade-up">Bali's Finest · Since 2018</p>
-    <h1 class="rs-fade-up" style="transition-delay:0.1s">Raja<br>Siomay</h1>
-    <p class="rs-hero-sub rs-fade-up" style="transition-delay:0.2s">Cita Rasa Premium, Harga Merakyat</p>
-    <div class="rs-divider-gold-dark rs-fade-up" style="transition-delay:0.3s"></div>
-    <p class="rs-hero-tagline rs-fade-up" style="transition-delay:0.4s">Siomay terbaik yang selalu bikin repeat order.</p>
-    <div class="rs-hero-cta-group rs-fade-up" style="transition-delay:0.5s">
-      <button class="rs-btn-primary-dark">Lihat Menu</button>
-      <button class="rs-btn-outline-dark">Temukan Cabang</button>
+  <!-- 1. HERO (dark) — split: kiri teks, kanan foto -->
+  <section class="hero sec-dark">
+    <div class="hero-left">
+      <p class="hero-eyebrow fade-up">Bali's Finest · Since 2018</p>
+      <h1 class="hero-title fade-up" style="transition-delay:0.1s">Raja<br>Siomay</h1>
+      <p class="hero-subtitle fade-up" style="transition-delay:0.2s">Cita Rasa Premium, Harga Merakyat</p>
+      <div class="hero-divider fade-up" style="transition-delay:0.3s"></div>
+      <p class="hero-tagline fade-up" style="transition-delay:0.4s">Siomay terbaik yang selalu bikin repeat order.</p>
+      <div class="hero-cta fade-up" style="transition-delay:0.5s">
+        <button class="btn-primary-dark">Lihat Menu</button>
+        <button class="btn-outline-dark">Temukan Cabang</button>
+      </div>
+      <div class="hero-scroll fade-up" style="transition-delay:0.6s">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll</span>
+      </div>
     </div>
-    <div class="rs-hero-scroll">
-      <div class="rs-scroll-line"></div>
-      <span>Scroll</span>
+    <div class="hero-right">
+      <img
+        src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=900&q=80"
+        alt="Siomay Raja Siomay"
+        loading="eager"
+      >
+      <div class="hero-right-overlay"></div>
     </div>
   </section>
 
   <!-- 2. ABOUT (light) -->
-  <div class="rs-sec-light">
-    <div class="rs-section">
-      <div class="rs-about-inner">
-        <div class="rs-about-img rs-fade-up">[ Foto Suasana / Brand ]</div>
-        <div class="rs-fade-up" style="transition-delay:0.15s">
-          <p class="rs-label-light">Tentang Kami</p>
-          <div class="rs-divider-gold-light"></div>
-          <h2 class="rs-title-light">Lahir dari Cinta<br>terhadap Siomay</h2>
-          <p class="rs-body-light">Raja Siomay hadir dengan misi sederhana — menyajikan siomay berkualitas premium dengan bahan-bahan segar, tanpa kompromi. Mulai dari satu gerobak kecil, kini kami melayani Bali di lebih dari 5 cabang.</p>
-          <div class="rs-about-stats">
+  <div id="about" class="sec-light">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img fade-up">
+          <img
+            src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=700&q=80"
+            alt="Suasana Raja Siomay"
+            loading="lazy"
+          >
+        </div>
+        <div class="fade-up" style="transition-delay:0.15s">
+          <p class="label-light">Tentang Kami</p>
+          <div class="divider-gold"></div>
+          <h2 class="title-light">Lahir dari Cinta<br>terhadap Siomay</h2>
+          <p class="body-light">Raja Siomay hadir dengan misi sederhana — menyajikan siomay berkualitas premium dengan bahan-bahan segar, tanpa kompromi. Mulai dari satu gerobak kecil, kini kami melayani Bali di lebih dari 5 cabang.</p>
+          <div class="about-stats">
             <div>
-              <div class="rs-stat-num-light">5+</div>
-              <div class="rs-stat-label-light">Cabang di Bali</div>
+              <div class="stat-num">5+</div>
+              <div class="stat-label">Cabang di Bali</div>
             </div>
             <div>
-              <div class="rs-stat-num-light">80+</div>
-              <div class="rs-stat-label-light">Ulasan Positif</div>
+              <div class="stat-num">80+</div>
+              <div class="stat-label">Ulasan Positif</div>
             </div>
             <div>
-              <div class="rs-stat-num-light">1000+</div>
-              <div class="rs-stat-label-light">Pelanggan Setia</div>
+              <div class="stat-num">1000+</div>
+              <div class="stat-label">Pelanggan Setia</div>
             </div>
           </div>
         </div>
@@ -415,78 +896,84 @@
   </div>
 
   <!-- 3. WHY US (dark) -->
-  <div class="rs-sec-dark" style="padding: 96px 0;">
-    <div class="rs-why-inner">
-      <div class="rs-fade-up">
-        <p class="rs-label-dark">Keunggulan Kami</p>
-        <h2 class="rs-title-dark">Kenapa Raja Siomay?</h2>
+  <div class="sec-dark">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="label-dark">Keunggulan Kami</p>
+        <h2 class="title-dark">Kenapa Raja Siomay?</h2>
       </div>
-      <div class="rs-why-grid">
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-why-icon"><i class="ti ti-flame" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">Bahan Segar Setiap Hari</h3>
-          <p class="rs-why-text">Kami tidak pernah pakai bahan kemarin. Setiap pagi, bahan baru disiapkan untuk menjaga kualitas rasa yang konsisten.</p>
+      <div class="why-grid">
+        <div class="why-card fade-up" style="transition-delay:0.1s">
+          <div class="why-icon">🌿</div>
+          <h3 class="why-title">Bahan Segar Setiap Hari</h3>
+          <p class="why-text">Kami tidak pernah pakai bahan kemarin. Setiap pagi, bahan baru disiapkan untuk menjaga kualitas rasa yang konsisten.</p>
         </div>
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-why-icon"><i class="ti ti-coin" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">Harga Terjangkau</h3>
-          <p class="rs-why-text">Mulai dari Rp 1.000 — siomay premium tidak harus menguras kantong. Nikmat untuk semua kalangan.</p>
+        <div class="why-card fade-up" style="transition-delay:0.15s">
+          <div class="why-icon">💰</div>
+          <h3 class="why-title">Harga Terjangkau</h3>
+          <p class="why-text">Mulai dari Rp 1.000 — siomay premium tidak harus menguras kantong. Nikmat untuk semua kalangan.</p>
         </div>
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-why-icon"><i class="ti ti-repeat" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">Selalu Bikin Repeat Order</h3>
-          <p class="rs-why-text">"Siomay favoriteee" — pelanggan kami kembali lagi dan lagi karena rasa yang konsisten dan tidak pernah mengecewakan.</p>
+        <div class="why-card fade-up" style="transition-delay:0.2s">
+          <div class="why-icon">🔁</div>
+          <h3 class="why-title">Selalu Bikin Repeat Order</h3>
+          <p class="why-text">"Siomay favoriteee" — pelanggan kami kembali lagi dan lagi karena rasa yang konsisten dan tidak pernah mengecewakan.</p>
         </div>
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-why-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">5 Lokasi Strategis</h3>
-          <p class="rs-why-text">Tersebar di titik-titik strategis Denpasar — mudah dijangkau dari mana saja, baik untuk makan di tempat maupun takeaway.</p>
+        <div class="why-card fade-up" style="transition-delay:0.1s">
+          <div class="why-icon">📍</div>
+          <h3 class="why-title">5 Lokasi Strategis</h3>
+          <p class="why-text">Tersebar di titik-titik strategis Denpasar — mudah dijangkau dari mana saja, baik untuk makan di tempat maupun takeaway.</p>
         </div>
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-why-icon"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">Tersedia untuk Delivery</h3>
-          <p class="rs-why-text">Dine-in, takeaway, hingga no-contact delivery — kami hadir sesuai kebutuhan kamu, di mana pun kamu berada.</p>
+        <div class="why-card fade-up" style="transition-delay:0.15s">
+          <div class="why-icon">🛵</div>
+          <h3 class="why-title">Tersedia untuk Delivery</h3>
+          <p class="why-text">Dine-in, takeaway, hingga no-contact delivery — kami hadir sesuai kebutuhan kamu, di mana pun kamu berada.</p>
         </div>
-        <div class="rs-why-card rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-why-icon"><i class="ti ti-gift" aria-hidden="true"></i></div>
-          <h3 class="rs-why-title">Tersedia Hampers & Mika</h3>
-          <p class="rs-why-text">Pilihan paket hampers dan mika siap saji — cocok untuk oleh-oleh, acara kantor, atau kenangan manis dari Bali.</p>
+        <div class="why-card fade-up" style="transition-delay:0.2s">
+          <div class="why-icon">🎁</div>
+          <h3 class="why-title">Tersedia Hampers & Mika</h3>
+          <p class="why-text">Pilihan paket hampers dan mika siap saji — cocok untuk oleh-oleh, acara kantor, atau kenangan manis dari Bali.</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 4. MENU (light) -->
-  <div class="rs-sec-light">
-    <div class="rs-section">
-      <div class="rs-fade-up">
-        <p class="rs-label-light">Menu Pilihan</p>
-        <div class="rs-divider-gold-light"></div>
-        <h2 class="rs-title-light">Menu Unggulan</h2>
+  <div id="menu" class="sec-light">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="label-light">Menu Pilihan</p>
+        <div class="divider-gold"></div>
+        <h2 class="title-light">Menu Unggulan</h2>
       </div>
-      <div class="rs-menu-grid">
-        <div class="rs-menu-card rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-menu-img">[ Foto Menu ]</div>
-          <div class="rs-menu-info">
-            <h3 class="rs-menu-name">Siomay Kukus Ayam</h3>
-            <p class="rs-menu-desc">Siomay lembut kukusan dengan isian ayam pilihan, disajikan dengan bumbu kacang khas.</p>
-            <span class="rs-menu-price">Mulai Rp 5.000</span>
+      <div class="menu-grid">
+        <div class="menu-card fade-up" style="transition-delay:0.1s">
+          <div class="menu-img">
+            <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600&q=80" alt="Siomay Kukus Ayam" loading="lazy">
+          </div>
+          <div class="menu-info">
+            <h3 class="menu-name">Siomay Kukus Ayam</h3>
+            <p class="menu-desc">Siomay lembut kukusan dengan isian ayam pilihan, disajikan dengan bumbu kacang khas.</p>
+            <span class="menu-price">Mulai Rp 5.000</span>
           </div>
         </div>
-        <div class="rs-menu-card rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-menu-img">[ Foto Menu ]</div>
-          <div class="rs-menu-info">
-            <h3 class="rs-menu-name">Siomay Goreng</h3>
-            <p class="rs-menu-desc">Siomay renyah goreng sempurna — crunch di luar, juicy di dalam. Cocok untuk camilan.</p>
-            <span class="rs-menu-price">Mulai Rp 5.000</span>
+        <div class="menu-card fade-up" style="transition-delay:0.2s">
+          <div class="menu-img">
+            <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80" alt="Siomay Goreng" loading="lazy">
+          </div>
+          <div class="menu-info">
+            <h3 class="menu-name">Siomay Goreng</h3>
+            <p class="menu-desc">Siomay renyah goreng sempurna — crunch di luar, juicy di dalam. Cocok untuk camilan.</p>
+            <span class="menu-price">Mulai Rp 5.000</span>
           </div>
         </div>
-        <div class="rs-menu-card rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-menu-img">[ Foto Menu ]</div>
-          <div class="rs-menu-info">
-            <h3 class="rs-menu-name">Siomay Hampers</h3>
-            <p class="rs-menu-desc">Paket hampers siomay ayam premium — oleh-oleh khas Bali yang bisa dibawa pulang.</p>
-            <span class="rs-menu-price">Hubungi Kami</span>
+        <div class="menu-card fade-up" style="transition-delay:0.3s">
+          <div class="menu-img">
+            <img src="https://images.unsplash.com/photo-1607301406259-dfb186e15de8?w=600&q=80" alt="Siomay Hampers" loading="lazy">
+          </div>
+          <div class="menu-info">
+            <h3 class="menu-name">Siomay Hampers</h3>
+            <p class="menu-desc">Paket hampers siomay ayam premium — oleh-oleh khas Bali yang bisa dibawa pulang.</p>
+            <span class="menu-price">Hubungi Kami</span>
           </div>
         </div>
       </div>
@@ -494,191 +981,199 @@
   </div>
 
   <!-- 5. GALLERY (dark) -->
-  <div class="rs-sec-dark" style="padding: 96px 0;">
-    <div class="rs-gallery-inner">
-      <div class="rs-fade-up">
-        <p class="rs-label-dark">Gallery</p>
-        <h2 class="rs-title-dark">Momen Raja Siomay</h2>
+  <div id="gallery" class="sec-dark">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="label-dark">Gallery</p>
+        <h2 class="title-dark">Momen Raja Siomay</h2>
       </div>
-      <div class="rs-gallery-grid">
-        <div class="rs-gallery-item rs-gallery-wide rs-gallery-tall rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-gallery-placeholder">[ Foto Utama ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+      <div class="gallery-grid">
+        <div class="gallery-item wide tall fade-up" style="transition-delay:0.1s">
+          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&q=80" alt="Siomay" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
-        <div class="rs-gallery-item rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-gallery-placeholder">[ Foto ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+        <div class="gallery-item fade-up" style="transition-delay:0.15s">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=500&q=80" alt="Makanan" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
-        <div class="rs-gallery-item rs-fade-up" style="transition-delay:0.25s">
-          <div class="rs-gallery-placeholder">[ Foto ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+        <div class="gallery-item fade-up" style="transition-delay:0.2s">
+          <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&q=80" alt="Makanan" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
-        <div class="rs-gallery-item rs-gallery-wide rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-gallery-placeholder">[ Foto Panorama ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+        <div class="gallery-item wide fade-up" style="transition-delay:0.25s">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80" alt="Makanan" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
-        <div class="rs-gallery-item rs-fade-up" style="transition-delay:0.35s">
-          <div class="rs-gallery-placeholder">[ Foto ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+        <div class="gallery-item fade-up" style="transition-delay:0.3s">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Makanan" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
-        <div class="rs-gallery-item rs-fade-up" style="transition-delay:0.4s">
-          <div class="rs-gallery-placeholder">[ Foto ]</div>
-          <div class="rs-gallery-overlay"><span class="rs-gallery-zoom-icon">⊕</span></div>
+        <div class="gallery-item fade-up" style="transition-delay:0.35s">
+          <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=500&q=80" alt="Makanan" loading="lazy">
+          <div class="gallery-overlay"><span class="gallery-zoom">⊕</span></div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 6. CABANG (light) -->
-  <div class="rs-sec-light">
-    <div class="rs-section">
-      <div class="rs-fade-up">
-        <p class="rs-label-light">Lokasi</p>
-        <div class="rs-divider-gold-light"></div>
-        <h2 class="rs-title-light">Cabang Kami</h2>
-        <p class="rs-body-light" style="margin-bottom:0">Temukan Raja Siomay di 5 titik strategis di Denpasar, Bali.</p>
+  <div id="cabang" class="sec-light">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="label-light">Lokasi</p>
+        <div class="divider-gold"></div>
+        <h2 class="title-light">Cabang Kami</h2>
+        <p class="body-light">Temukan Raja Siomay di 5 titik strategis di Denpasar, Bali.</p>
       </div>
-      <div class="rs-cabang-grid">
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-cabang-num">Cabang 01</div>
-          <h3 class="rs-cabang-name">Hasanuddin</h3>
-          <p class="rs-cabang-addr">Jl. Hasanuddin No.2, Dauh Puri Kangin, Denpasar Barat</p>
-          <div class="rs-cabang-hours"><span class="rs-cabang-dot"></span> Buka · Tutup 20.00</div>
+      <div class="cabang-grid" style="margin-top:56px">
+        <div class="cabang-card fade-up" style="transition-delay:0.1s">
+          <div class="cabang-num">Cabang 01</div>
+          <h3 class="cabang-name">Hasanuddin</h3>
+          <p class="cabang-addr">Jl. Hasanuddin No.2, Dauh Puri Kangin, Denpasar Barat</p>
+          <div class="cabang-status"><span class="dot-green"></span> Buka · Tutup 20.00</div>
         </div>
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.15s">
-          <div class="rs-cabang-num">Cabang 02</div>
-          <h3 class="rs-cabang-name">Gatot Subroto Barat</h3>
-          <p class="rs-cabang-addr">Jl. Gatot Subroto Barat No.89, Padangsambian Kaja, Denpasar Barat</p>
-          <div class="rs-cabang-hours"><span class="rs-cabang-dot"></span> Buka · Tutup 22.00</div>
+        <div class="cabang-card fade-up" style="transition-delay:0.15s">
+          <div class="cabang-num">Cabang 02</div>
+          <h3 class="cabang-name">Gatot Subroto Barat</h3>
+          <p class="cabang-addr">Jl. Gatot Subroto Barat No.89, Padangsambian Kaja, Denpasar Barat</p>
+          <div class="cabang-status"><span class="dot-green"></span> Buka · Tutup 22.00</div>
         </div>
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-cabang-num">Cabang 03</div>
-          <h3 class="rs-cabang-name">Barito Barat</h3>
-          <p class="rs-cabang-addr">Jl. Barito Barat, Denpasar</p>
-          <div class="rs-cabang-hours"><span class="rs-cabang-dot"></span> Buka</div>
+        <div class="cabang-card fade-up" style="transition-delay:0.2s">
+          <div class="cabang-num">Cabang 03</div>
+          <h3 class="cabang-name">Barito Barat</h3>
+          <p class="cabang-addr">Jl. Barito Barat, Denpasar</p>
+          <div class="cabang-status"><span class="dot-green"></span> Buka</div>
         </div>
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.25s">
-          <div class="rs-cabang-num">Cabang 04</div>
-          <h3 class="rs-cabang-name">Denpasar Pusat</h3>
-          <p class="rs-cabang-addr">Lokasi segera diumumkan</p>
-          <div class="rs-cabang-hours" style="color:#aaaaaa"><span style="width:6px;height:6px;background:#aaa;border-radius:50%;display:inline-block"></span> Coming soon</div>
+        <div class="cabang-card fade-up" style="transition-delay:0.25s">
+          <div class="cabang-num">Cabang 04</div>
+          <h3 class="cabang-name">Denpasar Pusat</h3>
+          <p class="cabang-addr">Lokasi segera diumumkan</p>
+          <div class="cabang-status" style="color:#BBBBBB"><span class="dot-grey"></span> Coming soon</div>
         </div>
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-cabang-num">Cabang 05</div>
-          <h3 class="rs-cabang-name">Denpasar Selatan</h3>
-          <p class="rs-cabang-addr">Lokasi segera diumumkan</p>
-          <div class="rs-cabang-hours" style="color:#aaaaaa"><span style="width:6px;height:6px;background:#aaa;border-radius:50%;display:inline-block"></span> Coming soon</div>
+        <div class="cabang-card fade-up" style="transition-delay:0.3s">
+          <div class="cabang-num">Cabang 05</div>
+          <h3 class="cabang-name">Denpasar Selatan</h3>
+          <p class="cabang-addr">Lokasi segera diumumkan</p>
+          <div class="cabang-status" style="color:#BBBBBB"><span class="dot-grey"></span> Coming soon</div>
         </div>
-        <div class="rs-cabang-card rs-fade-up" style="transition-delay:0.35s; background:#F0F0F0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:40px 28px">
-          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C99;margin-bottom:12px">Info Cabang</div>
-          <p style="font-size:13px;color:#666666;margin:0 0 20px;line-height:1.6">Ada pertanyaan soal lokasi?<br>Hubungi kami langsung.</p>
-          <button class="rs-btn-outline-light" style="font-size:12px;padding:10px 20px">WhatsApp Kami</button>
+        <div class="cabang-cta-card fade-up" style="transition-delay:0.35s">
+          <div class="cabang-cta-label">Info Cabang</div>
+          <p class="cabang-cta-text">Ada pertanyaan soal lokasi?<br>Hubungi kami langsung.</p>
+          <button class="btn-outline-light" style="font-size:12px;padding:10px 20px">WhatsApp Kami</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 7. TESTIMONI (dark) -->
-  <div class="rs-sec-dark" style="padding: 96px 0;">
-    <div class="rs-testi-inner">
-      <div class="rs-fade-up">
-        <p class="rs-label-dark">Testimoni</p>
-        <h2 class="rs-title-dark">Kata Mereka</h2>
+  <div class="sec-dark">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="label-dark">Testimoni</p>
+        <h2 class="title-dark">Kata Mereka</h2>
       </div>
-      <div class="rs-testi-grid">
-        <div class="rs-testi-card rs-fade-up" style="transition-delay:0.1s">
-          <div class="rs-testi-quote">"</div>
-          <div class="rs-testi-stars"><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span></div>
-          <p class="rs-testi-text">Siomay favoriteee ❤️ Selalu repeat order, rasa ga pernah ngecewain.</p>
-          <div class="rs-testi-author">Bunga Giri Putri</div>
-          <div class="rs-testi-role">Local Guide · Google Maps</div>
+      <div class="testi-grid">
+        <div class="testi-card fade-up" style="transition-delay:0.1s">
+          <div class="testi-quote">"</div>
+          <div class="testi-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testi-text">Siomay favoriteee ❤️ Selalu repeat order, rasa ga pernah ngecewain.</p>
+          <div class="testi-author">Bunga Giri Putri</div>
+          <div class="testi-role">Local Guide · Google Maps</div>
         </div>
-        <div class="rs-testi-card rs-fade-up" style="transition-delay:0.2s">
-          <div class="rs-testi-quote">"</div>
-          <div class="rs-testi-stars"><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span></div>
-          <p class="rs-testi-text">Good price, good siomay! Would love to repeat order for sure.</p>
-          <div class="rs-testi-author">Sharon Julya</div>
-          <div class="rs-testi-role">Local Guide · Google Maps</div>
+        <div class="testi-card fade-up" style="transition-delay:0.2s">
+          <div class="testi-quote">"</div>
+          <div class="testi-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testi-text">Good price, good siomay! Would love to repeat order for sure.</p>
+          <div class="testi-author">Sharon Julya</div>
+          <div class="testi-role">Local Guide · Google Maps</div>
         </div>
-        <div class="rs-testi-card rs-fade-up" style="transition-delay:0.3s">
-          <div class="rs-testi-quote">"</div>
-          <div class="rs-testi-stars"><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span><span class="rs-star">★</span></div>
-          <p class="rs-testi-text">The taste is good. The service very humble. I order for my birthday party — alot of food here and it's not pricy.</p>
-          <div class="rs-testi-author">Embun Dinihari</div>
-          <div class="rs-testi-role">Local Guide · Google Maps</div>
+        <div class="testi-card fade-up" style="transition-delay:0.3s">
+          <div class="testi-quote">"</div>
+          <div class="testi-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testi-text">The taste is good. The service very humble. I order for my birthday party — alot of food here and it's not pricy.</p>
+          <div class="testi-author">Embun Dinihari</div>
+          <div class="testi-role">Local Guide · Google Maps</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 8. ORDER CTA (light) -->
-  <div class="rs-order-wrap">
-    <div class="rs-order-bg"></div>
-    <div class="rs-order-crown rs-fade-up">♛</div>
-    <h2 class="rs-order-title rs-fade-up" style="transition-delay:0.1s">Siap Pesan<br>Sekarang?</h2>
-    <p class="rs-order-sub rs-fade-up" style="transition-delay:0.2s">Nikmati siomay premium langsung di tempat, takeaway, atau delivery ke lokasi kamu.</p>
-    <div class="rs-order-btns rs-fade-up" style="transition-delay:0.3s">
-      <button class="rs-btn-primary-light">Order via WhatsApp</button>
-      <button class="rs-btn-outline-light">Cari Cabang Terdekat</button>
+  <div class="order-section">
+    <div class="order-glow"></div>
+    <div class="order-crown fade-up">♛</div>
+    <h2 class="order-title fade-up" style="transition-delay:0.1s">Siap Pesan<br>Sekarang?</h2>
+    <p class="order-sub fade-up" style="transition-delay:0.2s">Nikmati siomay premium langsung di tempat, takeaway, atau delivery ke lokasi kamu.</p>
+    <div class="order-btns fade-up" style="transition-delay:0.3s">
+      <button class="btn-primary-light">Order via WhatsApp</button>
+      <button class="btn-outline-light">Cari Cabang Terdekat</button>
     </div>
   </div>
 
   <!-- 9. FOOTER (dark) -->
-  <footer class="rs-footer">
-    <div class="rs-footer-inner">
-      <div class="rs-footer-top">
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
         <div>
-          <div class="rs-footer-brand">Raja Siomay</div>
-          <p class="rs-footer-desc">Siomay premium Bali dengan cita rasa autentik dan bahan-bahan segar pilihan. Hadir di 5 cabang strategis di Denpasar.</p>
+          <div class="footer-brand">Raja Siomay</div>
+          <p class="footer-desc">Siomay premium Bali dengan cita rasa autentik dan bahan-bahan segar pilihan. Hadir di 5 cabang strategis di Denpasar.</p>
         </div>
         <div>
-          <div class="rs-footer-col-title">Navigasi</div>
-          <ul class="rs-footer-links">
-            <li><a href="#">Tentang Kami</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="#">Gallery</a></li>
-            <li><a href="#">Cabang</a></li>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#cabang">Cabang</a></li>
           </ul>
         </div>
         <div>
-          <div class="rs-footer-col-title">Kontak</div>
-          <ul class="rs-footer-links">
-            <li><a href="#">0819-1613-5551 (Hasanuddin)</a></li>
-            <li><a href="#">0877-3545-8555 (Gatsu Barat)</a></li>
+          <div class="footer-col-title">Kontak</div>
+          <ul class="footer-links">
+            <li><a href="tel:081916135551">0819-1613-5551 (Hasanuddin)</a></li>
+            <li><a href="tel:087735458555">0877-3545-8555 (Gatsu Barat)</a></li>
             <li><a href="#">Instagram</a></li>
             <li><a href="#">GoFood / GrabFood</a></li>
           </ul>
         </div>
       </div>
-      <div class="rs-footer-bottom">
-        <span class="rs-footer-copy">© 2025 Raja Siomay. Hak cipta dilindungi.</span>
-        <div class="rs-footer-socials">
-          <div class="rs-social-dot"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
-          <div class="rs-social-dot"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></div>
-          <div class="rs-social-dot"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Raja Siomay. Hak cipta dilindungi.</span>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Instagram">&#x1F4F7;</a>
+          <a href="#" class="social-btn" aria-label="WhatsApp">&#x1F4AC;</a>
+          <a href="#" class="social-btn" aria-label="Lokasi">&#x1F4CD;</a>
         </div>
       </div>
     </div>
   </footer>
 
-</div>
+  <script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-<script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('rs-visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => {
+      observer.observe(el);
+      if (!el.style.transitionDelay) el.style.transitionDelay = '0s';
+    });
 
-document.querySelectorAll('.rs-fade-up').forEach(el => {
-  observer.observe(el);
-  if (!el.style.transitionDelay) el.style.transitionDelay = '0s';
-});
-
-document.querySelectorAll('.rs-hero .rs-fade-up').forEach((el, i) => {
-  setTimeout(() => el.classList.add('rs-visible'), 100 + i * 120);
-});
-</script>
+    // Hero elements trigger on load
+    document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 120 + i * 130);
+    });
+  </script>
+</body>
+</html>
