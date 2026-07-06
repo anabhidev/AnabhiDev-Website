@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anabhi Dev Studio — Smart Websites for Real Businesses.</title>
+
+<!-- SEO -->
+<meta name="description" content="Anabhi Dev Studio — We build smart, fast, and reliable websites for real businesses. Company profiles, landing pages, web apps, dashboards, and automation.">
+<meta name="keywords" content="Anabhi Dev Studio, web development Bali, company profile website, landing page, web app, dashboard, automation, Google Apps Script, Telegram bot, Indonesia web developer, Upwork web developer">
+<meta name="author" content="Anabhi Dev Studio">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Anabhi Dev Studio — Smart Websites for Real Businesses.">
+<meta property="og:description" content="We build smart, fast, and reliable websites for real businesses. From company profiles to web apps and automation.">
+<meta property="og:url" content="https://studio.anabhidev.com/">
+<meta property="og:image" content="https://studio.anabhidev.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Anabhi Dev Studio">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anabhi Dev Studio — Smart Websites for Real Businesses.">
+<meta name="twitter:description" content="We build smart, fast, and reliable websites for real businesses.">
+<meta name="twitter:image" content="https://studio.anabhidev.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS — consistent with anabhidev.com
+═══════════════════════════════════════ */
+:root {
+  --navy:      #0B1829;
+  --navy-mid:  #111F33;
+  --navy-card: #162336;
+  --blue:      #3B9EE8;
+  --blue-lt:   #6AB8F0;
+  --blue-dark: #186DB0;
+  --silver:    #B8C8D8;
+  --white:     #FFFFFF;
+  --w90: rgba(255,255,255,0.90);
+  --w60: rgba(255,255,255,0.60);
+  --w30: rgba(255,255,255,0.30);
+  --w12: rgba(255,255,255,0.12);
+  --w07: rgba(255,255,255,0.07);
+  --light-bg:  #F4F7FB;
+  --light-card:#FFFFFF;
+  --text-dark: #1A2540;
+  --text-mid:  #4A5568;
+  --max: 1320px;
+  --gutter: 80px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy); color:var(--white);
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════
+   LANG TOGGLE
+═══════════════════════════════════════ */
+.lang-toggle {
+  display:flex; align-items:center; gap:4px;
+  background:var(--w07); border:1px solid var(--w12);
+  border-radius:50px; padding:4px;
+}
+.lang-btn {
+  font-family:'Sora',sans-serif; font-size:12px; font-weight:600;
+  letter-spacing:.04em; color:var(--w60);
+  background:none; border:none; cursor:pointer;
+  padding:5px 12px; border-radius:50px; transition:all .2s;
+}
+.lang-btn.active { background:var(--blue); color:var(--white); }
+.lang-btn:hover:not(.active) { color:var(--white); }
+
+/* Hide/show lang content */
+[data-en], [data-id] { display:none; }
+body.lang-en [data-en] { display:revert; }
+body.lang-id [data-id] { display:revert; }
+/* For block elements that need display:block */
+section[data-en], section[data-id],
+div[data-en], div[data-id],
+p[data-en], p[data-id],
+span[data-en], span[data-id] { display:none; }
+body.lang-en [data-en] { display:revert; }
+body.lang-id [data-id] { display:revert; }
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:300;
+  height:80px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 var(--gutter);
+  background:rgba(9,16,28,0.97);
+  backdrop-filter:saturate(180%) blur(24px);
+  -webkit-backdrop-filter:saturate(180%) blur(24px);
+  border-bottom:1.5px solid rgba(59,158,232,0.18);
+  transition:background .4s;
+}
+
+.nav-logo {
+  font-family:'Sora',sans-serif; font-size:20px; font-weight:800;
+  letter-spacing:-.02em; text-decoration:none; color:var(--white);
+  display:flex; align-items:center; gap:8px;
+}
+.nav-logo em { font-style:normal; color:var(--blue); }
+.nav-logo .studio-badge {
+  font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--blue); background:rgba(59,158,232,.12);
+  border:1px solid rgba(59,158,232,.25); border-radius:4px;
+  padding:2px 7px; margin-left:2px; align-self:center;
+}
+
+.nav-links {
+  display:flex; gap:4px; list-style:none;
+  position:absolute; left:50%; transform:translateX(-50%);
+}
+.nav-links a {
+  font-family:'Sora',sans-serif;
+  font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--w60); text-decoration:none;
+  padding:8px 14px; border-radius:50px;
+  transition:all .2s; white-space:nowrap;
+}
+.nav-links a:hover { color:var(--white); background:var(--w07); }
+.nav-links a.active { color:var(--white); background:var(--w12); }
+
+.nav-right { display:flex; align-items:center; gap:12px; }
+
+.nav-cta {
+  font-family:'Sora',sans-serif; font-size:13px; font-weight:700;
+  color:var(--white); background:var(--blue);
+  padding:10px 24px; border-radius:50px; text-decoration:none; white-space:nowrap;
+  transition:background .2s, transform .2s; letter-spacing:.04em;
+}
+.nav-cta:hover { background:var(--blue-lt); transform:translateY(-1px); }
+
+/* Hamburger */
+.hamburger {
+  display:none; flex-direction:column; gap:5px;
+  cursor:pointer; padding:4px; background:none; border:none;
+}
+.hamburger span {
+  display:block; width:22px; height:1.5px;
+  background:var(--white); border-radius:2px; transition:all .3s;
+}
+.hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(4.5px,4.5px); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(4.5px,-4.5px); }
+
+.mobile-menu {
+  display:none; position:fixed; top:80px; left:0; right:0;
+  background:rgba(9,16,28,0.98); backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:0.5px solid var(--w12);
+  padding:12px 24px 24px; flex-direction:column; gap:0; z-index:299;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:500;
+  color:var(--w60); text-decoration:none;
+  padding:14px 0; border-bottom:0.5px solid var(--w07); transition:color .2s;
+}
+.mobile-menu a:last-child { border-bottom:none; }
+.mobile-menu a:hover { color:var(--white); }
+.mob-cta {
+  margin-top:12px !important; text-align:center;
+  background:var(--blue) !important; border-radius:50px;
+  padding:14px !important; color:var(--white) !important;
+  font-weight:600 !important; border-bottom:none !important;
+}
+.mob-lang {
+  display:flex; gap:8px; padding:16px 0 8px !important;
+  border-bottom:0.5px solid var(--w07) !important;
+}
+.mob-lang-btn {
+  font-family:'Sora',sans-serif; font-size:13px; font-weight:600;
+  padding:7px 20px; border-radius:50px; border:1px solid var(--w12);
+  background:none; color:var(--w60); cursor:pointer; transition:all .2s;
+}
+.mob-lang-btn.active { background:var(--blue); color:var(--white); border-color:var(--blue); }
+
+/* ═══════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════ */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:3px; z-index:999;
+  background:linear-gradient(90deg, var(--blue), #60c6ff);
+  width:0%; transition:width .1s linear;
+  border-radius:0 2px 2px 0;
+}
+
+/* ═══════════════════════════════════════
+   SHARED LAYOUT
+═══════════════════════════════════════ */
+.wrap { max-width:var(--max); margin:0 auto; }
+
+.lbl {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:14px;
+}
+.lbl::before { content:''; display:block; width:20px; height:1px; background:var(--blue); }
+.lbl.center { justify-content:center; }
+.lbl.center::before { display:none; }
+
+.sec-h2 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(28px,3vw,48px); font-weight:800; line-height:1.08;
+  letter-spacing:-.022em; margin-bottom:16px;
+}
+.sec-h2 em { font-style:normal; color:var(--blue); }
+.sec-h2.light { color:var(--white); }
+.sec-h2.dark  { color:var(--text-dark); }
+
+.sec-head { text-align:center; max-width:600px; margin:0 auto 64px; }
+.sec-head p { font-size:16px; line-height:1.75; }
+.sec-head p.light { color:var(--w60); }
+.sec-head p.dark  { color:var(--text-mid); }
+
+.fade-up {
+  opacity:0; transform:translateY(36px);
+  transition:opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1);
+}
+.fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* ═══════════════════════════════════════
+   SECTION 1 — HERO (Navy)
+═══════════════════════════════════════ */
+#hero {
+  min-height:100svh;
+  padding:120px var(--gutter) 80px;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+  background:var(--navy);
+}
+#hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 20%, rgba(59,158,232,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(59,158,232,.05) 0%, transparent 50%);
+}
+.hero-grid-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(59,158,232,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,158,232,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+.hero-inner {
+  position:relative; z-index:2;
+  max-width:820px;
+}
+
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Sora',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--blue); margin-bottom:28px;
+}
+.hero-eyebrow::before { content:''; width:24px; height:1px; background:var(--blue); display:block; }
+
+h1.hero-h1 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(38px,5vw,78px); font-weight:800; line-height:1.04;
+  color:var(--white); letter-spacing:-.03em; margin-bottom:10px;
+}
+h1.hero-h1 em { font-style:normal; color:var(--blue); }
+
+.hero-sub {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(15px,1.5vw,21px); font-weight:300;
+  color:var(--silver); margin-bottom:28px; letter-spacing:-.01em;
+}
+
+.hero-desc {
+  font-size:16px; line-height:1.85; color:var(--w60);
+  max-width:580px; margin-bottom:44px;
+  padding-left:18px; border-left:2px solid var(--blue);
+}
+
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-p {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:600;
+  color:var(--navy); background:var(--blue);
+  padding:14px 32px; border-radius:50px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 10px 32px rgba(59,158,232,.35); transition:all .25s;
+}
+.btn-p:hover { background:var(--blue-lt); transform:translateY(-2px); box-shadow:0 14px 40px rgba(59,158,232,.48); }
+.btn-g {
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:500;
+  color:var(--w90); background:var(--w07); border:1px solid var(--w12);
+  padding:14px 32px; border-radius:50px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  backdrop-filter:blur(8px); transition:all .25s;
+}
+.btn-g:hover { background:var(--w12); transform:translateY(-2px); }
+
+.hero-stats {
+  display:flex; gap:48px; margin-top:64px; flex-wrap:wrap;
+  padding-top:40px; border-top:1px solid var(--w12);
+}
+.hs-num {
+  font-family:'Sora',sans-serif; font-size:36px; font-weight:800;
+  color:var(--white); line-height:1;
+}
+.hs-num span { color:var(--blue); font-size:20px; }
+.hs-lbl { font-size:12px; color:var(--w60); text-transform:uppercase; letter-spacing:.07em; margin-top:6px; }
+
+.scroll-hint {
+  position:absolute; bottom:32px; left:var(--gutter); z-index:2;
+  display:flex; align-items:center; gap:12px;
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--w30);
+}
+.scroll-hint::before {
+  content:''; display:block; width:1px; height:40px;
+  background:linear-gradient(to bottom,var(--blue),transparent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ═══════════════════════════════════════
+   SECTION 2 — SERVICES (White/Light)
+═══════════════════════════════════════ */
+#services {
+  padding:120px var(--gutter);
+  background:var(--light-bg); position:relative;
+}
+#services::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),var(--navy));
+}
+
+.services-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+.sc {
+  background:var(--white); border:1px solid rgba(13,27,46,.08);
+  border-radius:24px; padding:32px 28px;
+  transition:all .3s; position:relative; overflow:hidden;
+}
+.sc::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  opacity:0; transition:opacity .3s;
+}
+.sc:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(13,27,46,.12); border-color:rgba(59,158,232,.3); }
+.sc:hover::after { opacity:1; }
+.sc-icon {
+  width:56px; height:56px; background:var(--navy); border-radius:15px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; margin-bottom:20px;
+}
+.sc-name {
+  font-family:'Sora',sans-serif; font-size:16px; font-weight:700;
+  color:var(--text-dark); margin-bottom:10px;
+}
+.sc-desc { font-size:13px; line-height:1.75; color:var(--text-mid); margin-bottom:20px; }
+.sc-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.sc-tag {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--blue-dark); background:rgba(59,158,232,.08);
+  border:1px solid rgba(59,158,232,.18); padding:4px 10px; border-radius:50px;
+}
+
+/* ═══════════════════════════════════════
+   SECTION 3 — PORTFOLIO (Navy)
+═══════════════════════════════════════ */
+#portfolio {
+  padding:120px var(--gutter);
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#portfolio::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(59,158,232,.07) 0%,transparent 65%);
+}
+
+.portfolio-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+.pc {
+  background:var(--navy-card); border:1px solid rgba(184,200,216,.1);
+  border-radius:20px; overflow:hidden;
+  transition:all .3s; position:relative;
+}
+.pc:hover { transform:translateY(-5px); box-shadow:0 20px 52px rgba(0,0,0,.5); border-color:rgba(59,158,232,.3); }
+.pc-thumb {
+  width:100%; aspect-ratio:16/9;
+  background:linear-gradient(135deg,var(--navy-mid),var(--navy-card));
+  display:flex; align-items:center; justify-content:center;
+  font-size:32px; position:relative; overflow:hidden;
+}
+.pc-thumb::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom,transparent 40%,rgba(11,24,41,.8));
+}
+.pc-thumb-label {
+  position:absolute; bottom:12px; left:16px; z-index:1;
+  font-family:'Sora',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--blue-lt); background:rgba(11,24,41,.7);
+  border:1px solid rgba(59,158,232,.2); border-radius:4px; padding:3px 8px;
+}
+.pc-body { padding:20px 22px 24px; }
+.pc-name {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:700;
+  color:var(--white); margin-bottom:6px;
+}
+.pc-url { font-size:12px; color:var(--blue); margin-bottom:10px; }
+.pc-desc { font-size:13px; line-height:1.65; color:var(--w60); margin-bottom:16px; }
+.pc-link {
+  font-family:'Sora',sans-serif; font-size:12px; font-weight:600;
+  color:var(--blue); text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+  transition:gap .2s;
+}
+.pc-link:hover { gap:8px; }
+.pc-soon {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--w30); background:var(--w07);
+  border:1px solid var(--w12); border-radius:4px; padding:3px 8px;
+  display:inline-block;
+}
+
+/* ═══════════════════════════════════════
+   SECTION 4 — PROCESS (White/Light)
+═══════════════════════════════════════ */
+#process {
+  padding:120px var(--gutter);
+  background:var(--white); position:relative;
+}
+#process::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),var(--navy));
+}
+
+.process-steps {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  position:relative; margin-top:16px;
+}
+.process-steps::before {
+  content:''; position:absolute;
+  top:38px; left:calc(12.5% + 16px); right:calc(12.5% + 16px);
+  height:1px; background:linear-gradient(90deg,var(--blue),rgba(59,158,232,.2));
+  z-index:0;
+}
+.ps {
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding:0 16px; position:relative; z-index:1;
+}
+.ps-num {
+  width:76px; height:76px; border-radius:50%;
+  background:var(--navy); border:2px solid rgba(59,158,232,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Sora',sans-serif; font-size:24px; font-weight:800;
+  color:var(--blue); margin-bottom:20px; flex-shrink:0;
+  transition:all .3s;
+}
+.ps:hover .ps-num {
+  background:var(--blue); color:var(--navy);
+  border-color:var(--blue);
+  box-shadow:0 0 0 6px rgba(59,158,232,.12);
+}
+.ps-title {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:700;
+  color:var(--text-dark); margin-bottom:10px;
+}
+.ps-desc { font-size:13px; line-height:1.75; color:var(--text-mid); }
+
+/* ═══════════════════════════════════════
+   SECTION 5 — TESTIMONIALS (Navy)
+═══════════════════════════════════════ */
+#testimonials {
+  padding:120px var(--gutter);
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#testimonials::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 55% 65% at 50% 50%,rgba(59,158,232,.06) 0%,transparent 70%);
+}
+
+.testi-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+.tc {
+  background:var(--navy-card); border:1px solid rgba(184,200,216,.1);
+  border-radius:20px; padding:28px 28px 24px;
+  position:relative; transition:all .3s;
+}
+.tc:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,.4); border-color:rgba(59,158,232,.25); }
+.tc-quote {
+  font-size:32px; color:var(--blue); line-height:1;
+  margin-bottom:14px; font-family:'Sora',sans-serif; font-weight:800;
+}
+.tc-text {
+  font-size:14px; line-height:1.8; color:var(--w90);
+  font-style:italic; margin-bottom:20px;
+}
+.tc-author {
+  display:flex; align-items:center; gap:12px;
+  padding-top:16px; border-top:1px solid var(--w07);
+}
+.tc-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:var(--white);
+  flex-shrink:0;
+}
+.tc-name {
+  font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:var(--white);
+}
+.tc-role { font-size:12px; color:var(--w60); margin-top:2px; }
+
+/* ═══════════════════════════════════════
+   SECTION 6 — ABOUT (White/Light)
+═══════════════════════════════════════ */
+#about {
+  padding:120px var(--gutter);
+  background:var(--light-bg); position:relative;
+}
+#about::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),var(--navy));
+}
+
+.about-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+.about-text .bp {
+  font-size:15px; line-height:1.85; color:var(--text-mid); margin-bottom:16px;
+}
+.about-text .bp strong { color:var(--text-dark); }
+.about-highlights {
+  display:flex; flex-direction:column; gap:14px; margin-top:8px;
+}
+.ah {
+  display:flex; align-items:flex-start; gap:14px;
+  background:var(--white); border:1px solid rgba(13,27,46,.07);
+  border-radius:14px; padding:18px 20px; transition:all .3s;
+}
+.ah:hover { box-shadow:0 10px 30px rgba(13,27,46,.1); transform:translateX(4px); }
+.ah-icon {
+  width:40px; height:40px; flex-shrink:0; background:var(--navy);
+  border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.ah-title {
+  font-family:'Sora',sans-serif; font-size:13px; font-weight:700;
+  color:var(--text-dark); margin-bottom:4px;
+}
+.ah-desc { font-size:12px; line-height:1.65; color:var(--text-mid); }
+
+/* ═══════════════════════════════════════
+   SECTION 7 — FAQ (Navy)
+═══════════════════════════════════════ */
+#faq {
+  padding:120px var(--gutter);
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#faq::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 50% 40% at 50% 100%,rgba(59,158,232,.07) 0%,transparent 60%);
+}
+
+.faq-list { max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+.faq-item {
+  background:var(--navy-card); border:1px solid rgba(184,200,216,.1);
+  border-radius:16px; overflow:hidden; transition:border-color .3s;
+}
+.faq-item.open { border-color:rgba(59,158,232,.3); }
+.faq-q {
+  width:100%; background:none; border:none; cursor:pointer;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:22px 24px; gap:16px; text-align:left;
+}
+.faq-q-text {
+  font-family:'Sora',sans-serif; font-size:15px; font-weight:600;
+  color:var(--white); line-height:1.4;
+}
+.faq-icon {
+  width:28px; height:28px; flex-shrink:0;
+  background:rgba(59,158,232,.1); border:1px solid rgba(59,158,232,.2);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:var(--blue); font-size:16px; font-weight:300;
+  transition:transform .3s, background .3s;
+}
+.faq-item.open .faq-icon { transform:rotate(45deg); background:var(--blue); color:var(--navy); }
+.faq-a {
+  max-height:0; overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1), padding .3s;
+  padding:0 24px;
+}
+.faq-item.open .faq-a { max-height:300px; padding:0 24px 22px; }
+.faq-a p { font-size:14px; line-height:1.8; color:var(--w60); }
+.faq-a a { color:var(--blue); text-decoration:none; }
+.faq-a a:hover { text-decoration:underline; }
+
+/* ═══════════════════════════════════════
+   FOOTER (Dark navy)
+═══════════════════════════════════════ */
+footer {
+  background:#060E1A;
+  padding:72px var(--gutter) 40px;
+  border-top:1px solid var(--w12);
+}
+.foot-grid {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px; margin-bottom:48px;
+}
+.foot-brand { display:flex; flex-direction:column; align-items:flex-start; }
+.foot-brand-name {
+  font-family:'Sora',sans-serif; font-size:22px; font-weight:800;
+  letter-spacing:-.02em; margin-bottom:6px;
+}
+.foot-brand-name em { font-style:normal; color:var(--blue); }
+.foot-brand-sub {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--blue); background:rgba(59,158,232,.1);
+  border:1px solid rgba(59,158,232,.2); border-radius:4px;
+  padding:3px 8px; margin-bottom:16px; display:inline-block;
+}
+.foot-tag {
+  font-size:13px; font-style:italic; color:var(--w60); margin-bottom:24px;
+}
+.socials { display:flex; gap:10px; }
+.soc {
+  width:36px; height:36px; background:var(--w07); border:1px solid var(--w12);
+  border-radius:9px; display:flex; align-items:center; justify-content:center;
+  color:var(--w60); text-decoration:none; font-size:15px; transition:all .2s;
+}
+.soc:hover { background:var(--blue); border-color:var(--blue); color:var(--white); }
+
+.foot-col h4 {
+  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--w60); margin-bottom:16px;
+}
+.foot-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.foot-col ul a { font-size:13px; color:var(--w60); text-decoration:none; transition:color .2s; }
+.foot-col ul a:hover { color:var(--white); }
+.ct-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--w60); margin-bottom:10px; }
+.ct-row a { color:var(--w60); text-decoration:none; transition:color .2s; }
+.ct-row a:hover { color:var(--white); }
+
+.foot-bot {
+  padding-top:28px; border-top:1px solid var(--w07);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.copy { font-size:12px; color:var(--w60); }
+.copy em { font-style:normal; color:var(--blue); }
+.foot-badge { font-family:'Sora',sans-serif; font-size:10px; font-weight:600; letter-spacing:.08em; color:var(--w30); text-transform:uppercase; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width:1279px) and (min-width:1024px) {
+  :root { --gutter:52px; }
+  .services-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
+  .portfolio-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
+  .process-steps { grid-template-columns:repeat(4,1fr); }
+  .testi-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
+}
+
+@media (max-width:1023px) and (min-width:768px) {
+  :root { --gutter:40px; }
+  nav { padding:0 32px; }
+  .nav-links { gap:2px; }
+  .nav-links a { font-size:11px; padding:6px 10px; }
+  .nav-cta { padding:8px 16px; font-size:12px; }
+  .lang-toggle { display:none; }
+  .hamburger { display:flex; }
+
+  #hero { padding:100px 40px 72px; }
+  .hero-stats { gap:32px; }
+  .hs-num { font-size:28px; }
+
+  .services-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+  .portfolio-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+  .process-steps { grid-template-columns:repeat(2,1fr); gap:32px; }
+  .process-steps::before { display:none; }
+  .testi-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+  .about-grid { grid-template-columns:1fr; gap:40px; }
+
+  #services, #portfolio, #process, #testimonials, #about, #faq { padding:88px 40px; }
+  footer { padding:60px 40px 32px; }
+  .foot-grid { grid-template-columns:1fr 1fr; gap:36px; }
+  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
+}
+
+@media (max-width:767px) {
+  :root { --gutter:20px; }
+  .nav-links, .nav-cta, .lang-toggle { display:none; }
+  .hamburger { display:flex; }
+
+  #hero { padding:100px 20px 60px; min-height:auto; }
+  h1.hero-h1 { font-size:clamp(32px,8vw,48px); }
+  .hero-desc { border-left:none; border-top:2px solid var(--blue); padding:14px 0 0; }
+  .hero-stats { gap:24px; flex-wrap:wrap; }
+  .hs-num { font-size:26px; }
+  .scroll-hint { display:none; }
+
+  .services-grid { grid-template-columns:1fr; }
+  .portfolio-grid { grid-template-columns:1fr; }
+  .process-steps { grid-template-columns:1fr 1fr; gap:24px; }
+  .process-steps::before { display:none; }
+  .testi-grid { grid-template-columns:1fr; }
+  .about-grid { grid-template-columns:1fr; gap:32px; }
+
+  #services, #portfolio, #process, #testimonials, #about, #faq { padding:72px 20px; }
+  footer { padding:52px 20px 28px; }
+  .foot-grid { grid-template-columns:1fr 1fr; gap:28px; }
+  .foot-bot { flex-direction:column; gap:10px; text-align:center; }
+}
+
+@media (max-width:480px) {
+  .process-steps { grid-template-columns:1fr; }
+  .foot-grid { grid-template-columns:1fr; }
+  h1.hero-h1 { font-size:32px; }
+}
+
+@media (min-width:1600px) {
+  :root { --gutter:100px; --max:1440px; }
+}
+</style>
+</head>
+<body class="lang-en">
+<div id="scroll-progress"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Anabhi <em>Dev</em><span class="studio-badge">Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="#hero"         class="nav-link">Home</a></li>
+    <li><a href="#services"     class="nav-link">Services</a></li>
+    <li><a href="#portfolio"    class="nav-link">Portfolio</a></li>
+    <li><a href="#about"        class="nav-link">About</a></li>
+    <li><a href="#faq"          class="nav-link">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        id="btn-id" onclick="setLang('id')">ID</button>
+    </div>
+    <a href="#footer" class="nav-cta">
+      <span data-en>Contact Us</span>
+      <span data-id>Hubungi Kami</span>
+    </a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mob-lang">
+    <button class="mob-lang-btn active" id="mob-btn-en" onclick="setLang('en');closeMenu()">EN</button>
+    <button class="mob-lang-btn"        id="mob-btn-id" onclick="setLang('id');closeMenu()">ID</button>
+  </div>
+  <a href="#hero"      onclick="closeMenu()">Home</a>
+  <a href="#services"  onclick="closeMenu()">Services</a>
+  <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+  <a href="#about"     onclick="closeMenu()">About</a>
+  <a href="#faq"       onclick="closeMenu()">FAQ</a>
+  <a href="#footer"    onclick="closeMenu()" class="mob-cta">
+    <span data-en>Contact Us</span>
+    <span data-id>Hubungi Kami</span>
+  </a>
+</div>
+
+<!-- ══ SECTION 1: HERO ══ -->
+<section id="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow fade-up">
+      <span data-en>Web Development · Apps · Automation</span>
+      <span data-id>Pengembangan Web · Aplikasi · Otomasi</span>
+    </div>
+
+    <h1 class="hero-h1 fade-up" style="transition-delay:.06s">
+      <span data-en>Smart Websites<br>for <em>Real Businesses.</em></span>
+      <span data-id>Website Cerdas<br>untuk <em>Bisnis Nyata.</em></span>
+    </h1>
+
+    <p class="hero-sub fade-up" style="transition-delay:.10s">
+      <span data-en>Built fast. Delivered clean. Made to grow with you.</span>
+      <span data-id>Dibangun cepat. Diserahkan rapi. Dirancang untuk berkembang.</span>
+    </p>
+
+    <p class="hero-desc fade-up" style="transition-delay:.14s">
+      <span data-en>From company profiles to dashboards and automation — we build websites and web tools that actually work for your business, not just look good on a screen.</span>
+      <span data-id>Dari company profile hingga dashboard dan otomasi — kami membangun website dan tools yang benar-benar bekerja untuk bisnis Anda, bukan sekadar terlihat bagus di layar.</span>
+    </p>
+
+    <div class="hero-btns fade-up" style="transition-delay:.18s">
+      <a href="#portfolio" class="btn-p">
+        <span data-en>See Our Work →</span>
+        <span data-id>Lihat Karya Kami →</span>
+      </a>
+      <a href="#services" class="btn-g">
+        <span data-en>Our Services</span>
+        <span data-id>Layanan Kami</span>
+      </a>
+    </div>
+
+    <div class="hero-stats fade-up" style="transition-delay:.22s">
+      <div>
+        <div class="hs-num">7<span>+</span></div>
+        <div class="hs-lbl">
+          <span data-en>Projects Delivered</span>
+          <span data-id>Proyek Selesai</span>
+        </div>
+      </div>
+      <div>
+        <div class="hs-num">6<span>+</span></div>
+        <div class="hs-lbl">
+          <span data-en>Services Offered</span>
+          <span data-id>Layanan Tersedia</span>
+        </div>
+      </div>
+      <div>
+        <div class="hs-num">100<span>%</span></div>
+        <div class="hs-lbl">
+          <span data-en>AI-Assisted Build</span>
+          <span data-id>Dibangun dengan AI</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ══ SECTION 2: SERVICES ══ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">
+        <span data-en>What We Build</span>
+        <span data-id>Apa yang Kami Bangun</span>
+      </div>
+      <h2 class="sec-h2 dark">
+        <span data-en>Our <em>Services</em></span>
+        <span data-id>Layanan <em>Kami</em></span>
+      </h2>
+      <p class="dark">
+        <span data-en>From simple landing pages to complex web apps — we handle the full build so you can focus on your business.</span>
+        <span data-id>Dari landing page sederhana hingga web app kompleks — kami yang handle semuanya supaya Anda bisa fokus ke bisnis.</span>
+      </p>
+    </div>
+    <div class="services-grid">
+
+      <div class="sc fade-up">
+        <div class="sc-icon">🏢</div>
+        <div class="sc-name">
+          <span data-en>Company Profile Website</span>
+          <span data-id>Website Company Profile</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>A professional online presence that represents your brand 24/7. Clean, fast, and built to convert visitors into clients.</span>
+          <span data-id>Kehadiran online profesional yang merepresentasikan brand Anda 24/7. Bersih, cepat, dan dirancang untuk mengubah pengunjung menjadi klien.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">HTML/CSS/JS</span>
+          <span class="sc-tag">SEO Ready</span>
+          <span class="sc-tag">Mobile First</span>
+        </div>
+      </div>
+
+      <div class="sc fade-up" style="transition-delay:.07s">
+        <div class="sc-icon">🎯</div>
+        <div class="sc-name">
+          <span data-en>Landing Page</span>
+          <span data-id>Landing Page</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>Focused, high-converting pages for your product, event, or campaign. One goal, one page, zero distractions.</span>
+          <span data-id>Halaman terfokus dengan konversi tinggi untuk produk, event, atau kampanye Anda. Satu tujuan, satu halaman, tanpa distraksi.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">Fast Load</span>
+          <span class="sc-tag">CTA Optimized</span>
+          <span class="sc-tag">Analytics</span>
+        </div>
+      </div>
+
+      <div class="sc fade-up" style="transition-delay:.14s">
+        <div class="sc-icon">⚙️</div>
+        <div class="sc-name">
+          <span data-en>Web App / Internal Tool</span>
+          <span data-id>Web App / Tools Internal</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>Custom web applications for your team — task trackers, HR tools, admin dashboards, and more. Built for daily use.</span>
+          <span data-id>Aplikasi web khusus untuk tim Anda — task tracker, tools HR, admin dashboard, dan lainnya. Dibangun untuk penggunaan harian.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">Custom Logic</span>
+          <span class="sc-tag">Auth & Roles</span>
+          <span class="sc-tag">Data Export</span>
+        </div>
+      </div>
+
+      <div class="sc fade-up" style="transition-delay:.04s">
+        <div class="sc-icon">🤖</div>
+        <div class="sc-name">
+          <span data-en>Automation & Bot</span>
+          <span data-id>Otomasi & Bot</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>Eliminate repetitive tasks with smart automation — Telegram bots, scheduled reports, alert systems, and workflow automation.</span>
+          <span data-id>Hilangkan tugas berulang dengan otomasi cerdas — Telegram bot, laporan terjadwal, sistem alert, dan otomasi alur kerja.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">Telegram API</span>
+          <span class="sc-tag">Scheduled Jobs</span>
+          <span class="sc-tag">Auto Reports</span>
+        </div>
+      </div>
+
+      <div class="sc fade-up" style="transition-delay:.11s">
+        <div class="sc-icon">📊</div>
+        <div class="sc-name">
+          <span data-en>Dashboard</span>
+          <span data-id>Dashboard</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>Real-time dashboards that surface the data you need — network monitoring, operations, sales, or IT infrastructure.</span>
+          <span data-id>Dashboard real-time yang menampilkan data yang Anda butuhkan — monitoring jaringan, operasional, sales, atau infrastruktur IT.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">Live Data</span>
+          <span class="sc-tag">Charts & Graphs</span>
+          <span class="sc-tag">Custom KPIs</span>
+        </div>
+      </div>
+
+      <div class="sc fade-up" style="transition-delay:.18s">
+        <div class="sc-icon">📝</div>
+        <div class="sc-name">
+          <span data-en>Google Apps Script</span>
+          <span data-id>Google Apps Script</span>
+        </div>
+        <div class="sc-desc">
+          <span data-en>Supercharge your Google Workspace — automate Sheets, Docs, Gmail, Calendar, and Forms with custom scripts. No server needed.</span>
+          <span data-id>Tingkatkan Google Workspace Anda — otomasi Sheets, Docs, Gmail, Calendar, dan Forms dengan script khusus. Tanpa perlu server.</span>
+        </div>
+        <div class="sc-tags">
+          <span class="sc-tag">Google Sheets</span>
+          <span class="sc-tag">Gmail Automation</span>
+          <span class="sc-tag">No Server</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 3: PORTFOLIO ══ -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">
+        <span data-en>Our Work</span>
+        <span data-id>Karya Kami</span>
+      </div>
+      <h2 class="sec-h2 light">
+        <span data-en>Projects We've <em>Built</em></span>
+        <span data-id>Proyek yang Telah <em>Kami Bangun</em></span>
+      </h2>
+      <p class="light">
+        <span data-en>Real websites built for real clients — each one solving a specific need, delivered with care.</span>
+        <span data-id>Website nyata yang dibangun untuk klien nyata — masing-masing memecahkan kebutuhan spesifik, diserahkan dengan sepenuh hati.</span>
+      </p>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="pc fade-up">
+        <div class="pc-thumb">🧘<div class="pc-thumb-label">Wellness</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Inner Peace Bali</div>
+          <div class="pc-url">innerpeacebali.com</div>
+          <div class="pc-desc">
+            <span data-en>Wellness retreat company profile with booking-focused design and serene visual identity.</span>
+            <span data-id>Company profile retreat wellness dengan desain berorientasi booking dan identitas visual yang tenang.</span>
+          </div>
+          <a href="https://innerpeacebali.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.07s">
+        <div class="pc-thumb">🌿<div class="pc-thumb-label">Business</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Jagadita</div>
+          <div class="pc-url">jagadita.com</div>
+          <div class="pc-desc">
+            <span data-en>Professional company profile with clean layout and strong brand identity for a growing business.</span>
+            <span data-id>Company profile profesional dengan layout bersih dan identitas brand yang kuat untuk bisnis yang berkembang.</span>
+          </div>
+          <a href="https://jagadita.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.14s">
+        <div class="pc-thumb">🤝<div class="pc-thumb-label">Consulting</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Mahadaya Partners</div>
+          <div class="pc-url">mahadayapartners.com</div>
+          <div class="pc-desc">
+            <span data-en>Consulting firm website with authoritative design and clear service presentation.</span>
+            <span data-id>Website firma konsultan dengan desain berwibawa dan presentasi layanan yang jelas.</span>
+          </div>
+          <a href="https://mahadayapartners.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.04s">
+        <div class="pc-thumb">⚖️<div class="pc-thumb-label">Legal</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Patra Legal Consultant</div>
+          <div class="pc-url">patralegalconsultant.com</div>
+          <div class="pc-desc">
+            <span data-en>Legal consultancy landing page with professional tone and trust-building elements throughout.</span>
+            <span data-id>Landing page konsultan hukum dengan tone profesional dan elemen pembangun kepercayaan.</span>
+          </div>
+          <a href="https://patralegalconsultant.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.11s">
+        <div class="pc-thumb">💻<div class="pc-thumb-label">Tech</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Delanswit</div>
+          <div class="pc-url">delanswit.netlify.app</div>
+          <div class="pc-desc">
+            <span data-en>Tech product landing page with modern UI and clear value proposition for a software solution.</span>
+            <span data-id>Landing page produk teknologi dengan UI modern dan value proposition yang jelas untuk solusi software.</span>
+          </div>
+          <a href="https://delanswit.netlify.app" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.18s">
+        <div class="pc-thumb">⚡<div class="pc-thumb-label">Studio</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Anabhi Dev</div>
+          <div class="pc-url">anabhidev.com</div>
+          <div class="pc-desc">
+            <span data-en>Personal brand and apps portfolio — the flagship site that showcases our full design and development capability.</span>
+            <span data-id>Personal brand dan portfolio apps — situs utama yang menampilkan kemampuan desain dan pengembangan kami.</span>
+          </div>
+          <a href="https://anabhidev.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span>
+            <span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" style="transition-delay:.07s">
+        <div class="pc-thumb">🍜<div class="pc-thumb-label">F&B</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Raja Siomay</div>
+          <div class="pc-url">rajasiomay.com</div>
+          <div class="pc-desc">
+            <span data-en>F&B brand website with vibrant identity and menu showcase for a local Indonesian food brand.</span>
+            <span data-id>Website brand F&B dengan identitas cerah dan showcase menu untuk brand kuliner lokal Indonesia.</span>
+          </div>
+          <span class="pc-soon">
+            <span data-en>Coming Soon</span>
+            <span data-id>Segera Hadir</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 4: PROCESS ══ -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">
+        <span data-en>How We Work</span>
+        <span data-id>Cara Kami Bekerja</span>
+      </div>
+      <h2 class="sec-h2 dark">
+        <span data-en>From Brief to <em>Live</em></span>
+        <span data-id>Dari Brief hingga <em>Live</em></span>
+      </h2>
+      <p class="dark">
+        <span data-en>A clear, structured process — so you always know what's happening and what comes next.</span>
+        <span data-id>Proses yang jelas dan terstruktur — sehingga Anda selalu tahu apa yang sedang terjadi dan apa yang akan datang.</span>
+      </p>
+    </div>
+    <div class="process-steps">
+
+      <div class="ps fade-up">
+        <div class="ps-num">01</div>
+        <div class="ps-title">
+          <span data-en>Discovery</span>
+          <span data-id>Diskusi Awal</span>
+        </div>
+        <div class="ps-desc">
+          <span data-en>We start by understanding your business, goals, and target audience. A short brief call or chat via WhatsApp is all it takes.</span>
+          <span data-id>Kami mulai dengan memahami bisnis, tujuan, dan target audiens Anda. Cukup dengan brief call singkat atau chat via WhatsApp.</span>
+        </div>
+      </div>
+
+      <div class="ps fade-up" style="transition-delay:.1s">
+        <div class="ps-num">02</div>
+        <div class="ps-title">
+          <span data-en>Design & Plan</span>
+          <span data-id>Desain & Rencana</span>
+        </div>
+        <div class="ps-desc">
+          <span data-en>We draft the sitemap, layout, and visual direction. You approve before a single line of code is written.</span>
+          <span data-id>Kami menyusun sitemap, layout, dan arah visual. Anda setujui sebelum satu baris kode pun ditulis.</span>
+        </div>
+      </div>
+
+      <div class="ps fade-up" style="transition-delay:.2s">
+        <div class="ps-num">03</div>
+        <div class="ps-title">
+          <span data-en>Build & Review</span>
+          <span data-id>Bangun & Review</span>
+        </div>
+        <div class="ps-desc">
+          <span data-en>We build the site and share a live preview for your feedback. Revisions are handled quickly and transparently.</span>
+          <span data-id>Kami membangun situs dan berbagi live preview untuk feedback Anda. Revisi ditangani dengan cepat dan transparan.</span>
+        </div>
+      </div>
+
+      <div class="ps fade-up" style="transition-delay:.3s">
+        <div class="ps-num">04</div>
+        <div class="ps-title">
+          <span data-en>Launch & Handover</span>
+          <span data-id>Launch & Serah Terima</span>
+        </div>
+        <div class="ps-desc">
+          <span data-en>We deploy to your domain, set up analytics, and hand over everything — files, credentials, and a brief how-to guide.</span>
+          <span data-id>Kami deploy ke domain Anda, pasang analytics, dan serahkan semuanya — file, kredensial, dan panduan singkat penggunaan.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 5: TESTIMONIALS ══ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">
+        <span data-en>What Clients Say</span>
+        <span data-id>Kata Klien Kami</span>
+      </div>
+      <h2 class="sec-h2 light">
+        <span data-en>Real Feedback from <em>Real Clients</em></span>
+        <span data-id>Feedback Nyata dari <em>Klien Nyata</em></span>
+      </h2>
+      <p class="light">
+        <span data-en>We let the results speak — here's what our clients have to say.</span>
+        <span data-id>Kami biarkan hasil yang berbicara — inilah yang dikatakan klien kami.</span>
+      </p>
+    </div>
+    <div class="testi-grid">
+
+      <div class="tc fade-up">
+        <div class="tc-quote">"</div>
+        <div class="tc-text">
+          <span data-en>The website was delivered faster than expected and looked even better than the reference I shared. Very professional communication throughout the process.</span>
+          <span data-id>Website-nya selesai lebih cepat dari yang diharapkan dan tampilannya bahkan lebih bagus dari referensi yang saya berikan. Komunikasi sangat profesional sepanjang prosesnya.</span>
+        </div>
+        <div class="tc-author">
+          <div class="tc-avatar">AP</div>
+          <div>
+            <div class="tc-name">Arya P.</div>
+            <div class="tc-role">
+              <span data-en>Business Owner, Bali</span>
+              <span data-id>Pemilik Usaha, Bali</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tc fade-up" style="transition-delay:.1s">
+        <div class="tc-quote">"</div>
+        <div class="tc-text">
+          <span data-en>I needed a landing page quickly for an event and it was ready in 2 days. Clean design, mobile-friendly, and exactly what I needed. Will definitely come back.</span>
+          <span data-id>Saya butuh landing page cepat untuk sebuah event dan sudah siap dalam 2 hari. Desain bersih, mobile-friendly, dan persis yang saya butuhkan. Pasti akan kembali lagi.</span>
+        </div>
+        <div class="tc-author">
+          <div class="tc-avatar">DS</div>
+          <div>
+            <div class="tc-name">Dewi S.</div>
+            <div class="tc-role">
+              <span data-en>Event Organizer, Denpasar</span>
+              <span data-id>Event Organizer, Denpasar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tc fade-up" style="transition-delay:.2s">
+        <div class="tc-quote">"</div>
+        <div class="tc-text">
+          <span data-en>The automation bot he built for our Telegram group saves our team at least 2 hours every day. Simple request, great result. Highly recommend.</span>
+          <span data-id>Bot otomasi yang dibangun untuk grup Telegram kami menghemat waktu tim setidaknya 2 jam setiap hari. Permintaan sederhana, hasil luar biasa. Sangat direkomendasikan.</span>
+        </div>
+        <div class="tc-author">
+          <div class="tc-avatar">RW</div>
+          <div>
+            <div class="tc-name">Rizky W.</div>
+            <div class="tc-role">
+              <span data-en>Operations Manager, Jakarta</span>
+              <span data-id>Manajer Operasional, Jakarta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 6: ABOUT ══ -->
+<section id="about">
+  <div class="wrap about-grid">
+
+    <div class="about-text fade-up">
+      <div class="lbl">
+        <span data-en>About the Studio</span>
+        <span data-id>Tentang Studio</span>
+      </div>
+      <h2 class="sec-h2 dark">
+        <span data-en>Who is<br><em>Anabhi Dev Studio?</em></span>
+        <span data-id>Siapa<br><em>Anabhi Dev Studio?</em></span>
+      </h2>
+      <p class="bp">
+        <span data-en>Anabhi Dev Studio is a small but capable web development studio focused on building <strong>smart, fast, and purposeful digital products</strong> for businesses of all sizes.</span>
+        <span data-id>Anabhi Dev Studio adalah studio pengembangan web yang kecil namun kapabel, fokus membangun <strong>produk digital yang cerdas, cepat, dan bertujuan</strong> untuk bisnis dari semua skala.</span>
+      </p>
+      <p class="bp">
+        <span data-en>We work with clients across Indonesia and globally — from local Bali businesses to international clients on platforms like Upwork. Every project is treated with the same care: <strong>understand first, then build right.</strong></span>
+        <span data-id>Kami bekerja dengan klien di seluruh Indonesia dan global — dari bisnis lokal Bali hingga klien internasional di platform seperti Upwork. Setiap proyek diperlakukan dengan perhatian yang sama: <strong>pahami dulu, baru bangun dengan benar.</strong></span>
+      </p>
+      <p class="bp">
+        <span data-en>Our approach is AI-assisted development — which means faster turnaround, lower cost, and higher quality output than traditional development alone.</span>
+        <span data-id>Pendekatan kami adalah pengembangan berbantuan AI — yang berarti penyelesaian lebih cepat, biaya lebih rendah, dan kualitas output yang lebih tinggi dari pengembangan tradisional.</span>
+      </p>
+    </div>
+
+    <div class="about-highlights fade-up" style="transition-delay:.12s">
+      <div class="ah">
+        <div class="ah-icon">🌏</div>
+        <div>
+          <div class="ah-title">
+            <span data-en>Local & Global Clients</span>
+            <span data-id>Klien Lokal & Global</span>
+          </div>
+          <div class="ah-desc">
+            <span data-en>Based in Bali, serving clients across Indonesia and internationally via Upwork and direct referrals.</span>
+            <span data-id>Berbasis di Bali, melayani klien di seluruh Indonesia dan internasional melalui Upwork dan referensi langsung.</span>
+          </div>
+        </div>
+      </div>
+      <div class="ah">
+        <div class="ah-icon">⚡</div>
+        <div>
+          <div class="ah-title">
+            <span data-en>AI-Assisted Development</span>
+            <span data-id>Pengembangan Berbantuan AI</span>
+          </div>
+          <div class="ah-desc">
+            <span data-en>Every project is built with AI assistance — meaning faster delivery without compromising on quality or detail.</span>
+            <span data-id>Setiap proyek dibangun dengan bantuan AI — artinya pengiriman lebih cepat tanpa mengorbankan kualitas atau detail.</span>
+          </div>
+        </div>
+      </div>
+      <div class="ah">
+        <div class="ah-icon">🔒</div>
+        <div>
+          <div class="ah-title">
+            <span data-en>Performance & Security First</span>
+            <span data-id>Performa & Keamanan Pertama</span>
+          </div>
+          <div class="ah-desc">
+            <span data-en>We follow strict development standards — fast loading, SEO-ready, accessible, and secure by default.</span>
+            <span data-id>Kami mengikuti standar pengembangan yang ketat — loading cepat, siap SEO, aksesibel, dan aman secara default.</span>
+          </div>
+        </div>
+      </div>
+      <div class="ah">
+        <div class="ah-icon">💬</div>
+        <div>
+          <div class="ah-title">
+            <span data-en>Direct Communication</span>
+            <span data-id>Komunikasi Langsung</span>
+          </div>
+          <div class="ah-desc">
+            <span data-en>No account managers, no middlemen. You communicate directly with the person building your project.</span>
+            <span data-id>Tidak ada account manager, tidak ada perantara. Anda berkomunikasi langsung dengan orang yang membangun proyek Anda.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SECTION 7: FAQ ══ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center">FAQ</div>
+      <h2 class="sec-h2 light">
+        <span data-en>Questions We <em>Always Get</em></span>
+        <span data-id>Pertanyaan yang <em>Sering Masuk</em></span>
+      </h2>
+      <p class="light">
+        <span data-en>Straight answers to what most clients ask before getting started.</span>
+        <span data-id>Jawaban langsung untuk apa yang paling sering ditanyakan klien sebelum memulai.</span>
+      </p>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>How long does it take to build a website?</span>
+            <span data-id>Berapa lama pembuatan website?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>A landing page typically takes 2–5 days. A company profile website takes 5–10 days. A web app or dashboard depends on complexity and is scoped before starting. Timelines are always confirmed upfront.</span>
+            <span data-id>Landing page biasanya memakan waktu 2–5 hari. Company profile website 5–10 hari. Web app atau dashboard tergantung kompleksitas dan di-scope sebelum dimulai. Timeline selalu dikonfirmasi di awal.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>How much does it cost?</span>
+            <span data-id>Berapa biayanya?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>Pricing depends on the scope of each project. We prefer to discuss your specific needs first and give you a fair, transparent quote — no surprises. <a href="https://wa.me/6282267672828">Chat with us on WhatsApp</a> to get started.</span>
+            <span data-id>Harga tergantung pada ruang lingkup setiap proyek. Kami lebih suka mendiskusikan kebutuhan spesifik Anda terlebih dahulu dan memberikan penawaran yang adil dan transparan — tanpa kejutan. <a href="https://wa.me/6282267672828">Chat dengan kami di WhatsApp</a> untuk memulai.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>Do you work with international clients?</span>
+            <span data-id>Apakah Anda menerima klien internasional?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>Yes. We work with clients globally, including via Upwork. Communication in English is no problem, and we're comfortable with international payment methods.</span>
+            <span data-id>Ya. Kami bekerja dengan klien global, termasuk melalui Upwork. Komunikasi dalam bahasa Inggris tidak masalah, dan kami familiar dengan metode pembayaran internasional.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>What do I need to prepare before starting?</span>
+            <span data-id>Apa yang perlu saya siapkan sebelum mulai?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>Ideally: your brand assets (logo, colors), the content you want on the site (text, photos), and a reference site or two you like. If you don't have these ready, we can help guide you through it.</span>
+            <span data-id>Idealnya: aset brand Anda (logo, warna), konten yang ingin ditampilkan di situs (teks, foto), dan satu atau dua referensi situs yang Anda sukai. Jika belum siap, kami bisa membantu memandu Anda.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>Will I be able to update the website myself after it's done?</span>
+            <span data-id>Bisakah saya update website sendiri setelah selesai?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>Yes. We hand over all source files and walk you through how to make basic changes. For ongoing updates or maintenance, we're available to help — just reach out.</span>
+            <span data-id>Ya. Kami menyerahkan semua file sumber dan menjelaskan cara melakukan perubahan dasar. Untuk pembaruan atau pemeliharaan yang berkelanjutan, kami tersedia untuk membantu — hubungi saja kami.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">
+            <span data-en>Which technologies do you use?</span>
+            <span data-id>Teknologi apa yang Anda gunakan?</span>
+          </span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span data-en>For most websites: HTML, CSS, and JavaScript — clean, fast, and easy to maintain. For web apps and dashboards: Supabase for the database, Cloudflare Workers for hosting. For automation: Google Apps Script and Telegram Bot API.</span>
+            <span data-id>Untuk kebanyakan website: HTML, CSS, dan JavaScript — bersih, cepat, dan mudah dipelihara. Untuk web app dan dashboard: Supabase untuk database, Cloudflare Workers untuk hosting. Untuk otomasi: Google Apps Script dan Telegram Bot API.</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-brand-name">Anabhi <em>Dev</em></div>
+        <div class="foot-brand-sub">Studio</div>
+        <p class="foot-tag">
+          <span data-en>"Smart Websites for Real Businesses."</span>
+          <span data-id>"Website Cerdas untuk Bisnis Nyata."</span>
+        </p>
+        <div class="socials">
+          <a href="https://wa.me/6282267672828" class="soc" title="WhatsApp">💬</a>
+          <a href="https://instagram.com/AnabhiDev" class="soc" title="Instagram" style="opacity:.4;pointer-events:none;">📸</a>
+          <a href="https://linkedin.com/in/aguswibawa" class="soc" title="LinkedIn">💼</a>
+          <a href="mailto:hello@anabhidev.com" class="soc" title="Email">✉️</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>
+          <span data-en>Navigate</span>
+          <span data-id>Navigasi</span>
+        </h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">
+            <span data-en>Services</span>
+            <span data-id>Layanan</span>
+          </a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#about">
+            <span data-en>About</span>
+            <span data-id>Tentang</span>
+          </a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>
+          <span data-en>Also Visit</span>
+          <span data-id>Kunjungi Juga</span>
+        </h4>
+        <ul>
+          <li><a href="https://anabhidev.com" target="_blank">anabhidev.com</a></li>
+          <li><a href="https://anabhidev.com/#apps" target="_blank">
+            <span data-en>Apps Portfolio</span>
+            <span data-id>Portfolio Apps</span>
+          </a></li>
+          <li><a href="https://anabhidev.com/#knowledge" target="_blank">
+            <span data-en>Knowledge Base</span>
+            <span data-id>Knowledge Base</span>
+          </a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>
+          <span data-en>Contact</span>
+          <span data-id>Kontak</span>
+        </h4>
+        <div class="ct-row">💬 <a href="https://wa.me/6282267672828">wa.me/6282267672828</a></div>
+        <div class="ct-row">✉️ <a href="mailto:hello@anabhidev.com">hello@anabhidev.com</a></div>
+        <div class="ct-row">💼 <a href="https://linkedin.com/in/aguswibawa" target="_blank">linkedin.com/in/aguswibawa</a></div>
+        <div class="ct-row">📸 @AnabhiDev</div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div class="copy">© 2025 <em>Anabhi Dev Studio</em>.
+        <span data-en>All rights reserved.</span>
+        <span data-id>Semua hak dilindungi.</span>
+      </div>
+      <div class="foot-badge">Smart Websites for Real Businesses. ✦</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Language Toggle ──
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+  document.getElementById('mob-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('mob-btn-id').classList.toggle('active', lang === 'id');
+  localStorage.setItem('studio-lang', lang);
+}
+// Restore saved lang
+(function() {
+  const saved = localStorage.getItem('studio-lang');
+  if (saved) setLang(saved);
+  else setLang('en');
+})();
+
+// ── Scroll progress ──
+const progressBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrolled / total * 100) + '%';
+}, { passive: true });
+
+// ── Navbar scroll ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ── Active nav highlight ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+
+// ── Hamburger ──
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+});
+function closeMenu() {
+  ham.classList.remove('open');
+  mob.classList.remove('open');
+}
+
+// ── FAQ accordion ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── Fade-up on scroll ──
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ── Stagger grid cards ──
+const staggerObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cards = entry.target.querySelectorAll('.sc, .pc, .tc, .ps, .ah');
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), i * 90);
+      });
+      staggerObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.services-grid, .portfolio-grid, .testi-grid, .process-steps, .about-highlights').forEach(g => {
+  staggerObs.observe(g);
+});
+</script>
+</body>
+</html>
