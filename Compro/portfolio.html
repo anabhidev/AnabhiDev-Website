@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Anabhi Studio</title>
+
+<!-- SEO -->
+<meta name="description" content="Anabhi Studio portfolio — real websites built for real clients. Company profiles, landing pages, web apps, and automation tools delivered with care.">
+<meta name="author" content="Anabhi Studio">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://anabhidev.com/Compro/portfolio.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Portfolio — Anabhi Studio">
+<meta property="og:description" content="Real websites built for real clients. Company profiles, landing pages, web apps, and automation tools.">
+<meta property="og:url" content="https://anabhidev.com/Compro/portfolio.html">
+<meta property="og:image" content="https://anabhidev.com/ogimage.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Anabhi Studio">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio — Anabhi Studio">
+<meta name="twitter:description" content="Real websites built for real clients. Company profiles, landing pages, web apps, and automation tools.">
+<meta name="twitter:image" content="https://anabhidev.com/ogimage.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://anabhidev.com/logo.png">
+<link rel="apple-touch-icon" href="https://anabhidev.com/logo.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"></noscript>
+
+<!-- Shared CSS -->
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ── PORTFOLIO-SPECIFIC STYLES ── */
+.filter-bar {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px;
+}
+.filter-btn {
+  font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 18px; border-radius: 50px; border: 1px solid var(--w12);
+  background: none; color: var(--w60); cursor: pointer; transition: all .2s;
+}
+.filter-btn:hover { color: var(--white); border-color: var(--w30); }
+.filter-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+}
+.pc {
+  background: var(--navy-card); border: 1px solid rgba(184,200,216,.1);
+  border-radius: 20px; overflow: hidden; transition: all .3s;
+}
+.pc:hover { transform: translateY(-5px); box-shadow: 0 20px 52px rgba(0,0,0,.5); border-color: rgba(59,158,232,.3); }
+.pc[data-hidden="true"] { display: none; }
+.pc-thumb {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg,var(--navy-mid),var(--navy-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; position: relative; overflow: hidden;
+}
+.pc-thumb::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom,transparent 40%,rgba(11,24,41,.8));
+}
+.pc-thumb-label {
+  position: absolute; bottom: 12px; left: 16px; z-index: 1;
+  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--blue-lt); background: rgba(11,24,41,.7);
+  border: 1px solid rgba(59,158,232,.2); border-radius: 4px; padding: 3px 8px;
+}
+.pc-body { padding: 20px 22px 24px; }
+.pc-name { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.pc-type {
+  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue); background: rgba(59,158,232,.1);
+  border: 1px solid rgba(59,158,232,.2); border-radius: 4px;
+  padding: 2px 8px; display: inline-block; margin-bottom: 10px;
+}
+.pc-desc { font-size: 13px; line-height: 1.65; color: var(--w60); margin-bottom: 16px; }
+.pc-link {
+  font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--blue); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 5px; transition: gap .2s;
+}
+.pc-link:hover { gap: 8px; }
+.pc-soon {
+  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--w30); background: var(--w07);
+  border: 1px solid var(--w12); border-radius: 4px; padding: 3px 8px; display: inline-block;
+}
+
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.tc {
+  background: var(--navy-card); border: 1px solid rgba(184,200,216,.1);
+  border-radius: 20px; padding: 28px; transition: all .3s;
+}
+.tc:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.4); border-color: rgba(59,158,232,.25); }
+.tc-quote { font-size: 32px; color: var(--blue); line-height: 1; margin-bottom: 12px; font-family: 'Sora', sans-serif; font-weight: 800; }
+.tc-text { font-size: 14px; line-height: 1.8; color: var(--w90); font-style: italic; margin-bottom: 18px; }
+.tc-author { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--w07); }
+.tc-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg,var(--blue),var(--blue-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); flex-shrink: 0;
+}
+.tc-name { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); }
+.tc-role { font-size: 12px; color: var(--w60); margin-top: 2px; }
+
+.cta-strip { background: var(--navy); padding: 80px var(--gutter); text-align: center; position: relative; overflow: hidden; }
+.cta-strip::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 55% 75% at 50% 50%,rgba(59,158,232,.12) 0%,transparent 72%);
+}
+.cta-strip-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+.cta-h2 { font-family: 'Sora', sans-serif; font-size: clamp(28px,4vw,48px); font-weight: 800; line-height: 1.08; letter-spacing: -.022em; color: var(--white); margin-bottom: 14px; }
+.cta-h2 em { font-style: normal; color: var(--blue); }
+.cta-p { font-size: 16px; line-height: 1.8; color: var(--w60); margin-bottom: 32px; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width:1023px) and (min-width:768px) {
+  .portfolio-grid { grid-template-columns: repeat(2,1fr); }
+  .testi-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:767px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .cta-strip { padding: 64px 20px; }
+}
+</style>
+</head>
+<body>
+<main id="main-content">
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-grid" aria-hidden="true"></div>
+  <div class="page-hero-inner fade-up">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Portfolio</span>
+    </nav>
+    <h1 id="page-title">
+      <span data-en>Projects We've <em>Built</em></span>
+      <span data-id>Proyek yang Telah <em>Kami Bangun</em></span>
+    </h1>
+    <p>
+      <span data-en>Real websites built for real clients — each one solving a specific need, delivered with care and attention to detail.</span>
+      <span data-id>Website nyata yang dibangun untuk klien nyata — masing-masing memecahkan kebutuhan spesifik, diserahkan dengan perhatian penuh.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ══ PORTFOLIO GRID ══ -->
+<section class="section-navy" aria-labelledby="portfolio-heading">
+  <div class="wrap">
+    <h2 class="sr-only" id="portfolio-heading">Portfolio Projects</h2>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar fade-up" role="group" aria-label="Filter projects by type">
+      <button class="filter-btn active" onclick="filterProjects('all')" aria-pressed="true">
+        <span data-en>All</span><span data-id>Semua</span>
+      </button>
+      <button class="filter-btn" onclick="filterProjects('compro')" aria-pressed="false">
+        <span data-en>Company Profile</span><span data-id>Company Profile</span>
+      </button>
+      <button class="filter-btn" onclick="filterProjects('landing')" aria-pressed="false">
+        <span data-en>Landing Page</span><span data-id>Landing Page</span>
+      </button>
+      <button class="filter-btn" onclick="filterProjects('webapp')" aria-pressed="false">
+        <span data-en>Web App</span><span data-id>Web App</span>
+      </button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolio-grid">
+
+      <div class="pc fade-up" data-type="compro">
+        <div class="pc-thumb" aria-hidden="true">🧘<div class="pc-thumb-label">Wellness</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Inner Peace Bali</div>
+          <div class="pc-type"><span data-en>Company Profile</span><span data-id>Company Profile</span></div>
+          <div class="pc-desc">
+            <span data-en>Wellness retreat company profile with booking-focused design and a serene visual identity that reflects the brand's essence.</span>
+            <span data-id>Company profile retreat wellness dengan desain berorientasi booking dan identitas visual yang menenangkan sesuai esensi brand.</span>
+          </div>
+          <a href="https://innerpeacebali.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="compro" style="transition-delay:.07s">
+        <div class="pc-thumb" aria-hidden="true">🌿<div class="pc-thumb-label">Business</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Jagadita</div>
+          <div class="pc-type"><span data-en>Company Profile</span><span data-id>Company Profile</span></div>
+          <div class="pc-desc">
+            <span data-en>Professional company profile with clean layout and strong brand identity for a growing business looking to establish a credible online presence.</span>
+            <span data-id>Company profile profesional dengan layout bersih dan identitas brand yang kuat untuk bisnis yang sedang berkembang.</span>
+          </div>
+          <a href="https://jagadita.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="compro" style="transition-delay:.14s">
+        <div class="pc-thumb" aria-hidden="true">🤝<div class="pc-thumb-label">Consulting</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Mahadaya Partners</div>
+          <div class="pc-type"><span data-en>Company Profile</span><span data-id>Company Profile</span></div>
+          <div class="pc-desc">
+            <span data-en>Consulting firm website with authoritative design, clear service presentation, and a professional tone that builds client trust instantly.</span>
+            <span data-id>Website firma konsultan dengan desain berwibawa, presentasi layanan yang jelas, dan tone profesional yang membangun kepercayaan klien.</span>
+          </div>
+          <a href="https://mahadayapartners.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="landing">
+        <div class="pc-thumb" aria-hidden="true">⚖️<div class="pc-thumb-label">Legal</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Patra Legal Consultant</div>
+          <div class="pc-type"><span data-en>Landing Page</span><span data-id>Landing Page</span></div>
+          <div class="pc-desc">
+            <span data-en>Legal consultancy landing page with professional tone, trust-building elements, and a clear CTA that drives consultation bookings.</span>
+            <span data-id>Landing page konsultan hukum dengan tone profesional, elemen pembangun kepercayaan, dan CTA yang jelas.</span>
+          </div>
+          <a href="https://patralegalconsultant.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="landing" style="transition-delay:.07s">
+        <div class="pc-thumb" aria-hidden="true">💻<div class="pc-thumb-label">Tech</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Delanswit</div>
+          <div class="pc-type"><span data-en>Landing Page</span><span data-id>Landing Page</span></div>
+          <div class="pc-desc">
+            <span data-en>Tech product landing page with modern UI, clear value proposition, and feature highlights for a software solution targeting SMEs.</span>
+            <span data-id>Landing page produk teknologi dengan UI modern, value proposition yang jelas, dan highlight fitur untuk solusi software.</span>
+          </div>
+          <a href="https://delanswit.netlify.app" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="compro" style="transition-delay:.14s">
+        <div class="pc-thumb" aria-hidden="true">⚡<div class="pc-thumb-label">Studio</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Anabhi Dev</div>
+          <div class="pc-type"><span data-en>Personal Brand</span><span data-id>Personal Brand</span></div>
+          <div class="pc-desc">
+            <span data-en>Personal brand and apps portfolio — the flagship site showcasing full design and development capability including animations and interactions.</span>
+            <span data-id>Personal brand dan portfolio apps — situs utama yang menampilkan kemampuan desain dan pengembangan penuh termasuk animasi dan interaksi.</span>
+          </div>
+          <a href="https://anabhidev.com" target="_blank" rel="noopener" class="pc-link">
+            <span data-en>Visit Site →</span><span data-id>Kunjungi →</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pc fade-up" data-type="compro">
+        <div class="pc-thumb" aria-hidden="true">🍜<div class="pc-thumb-label">F&B</div></div>
+        <div class="pc-body">
+          <div class="pc-name">Raja Siomay</div>
+          <div class="pc-type"><span data-en>Company Profile</span><span data-id>Company Profile</span></div>
+          <div class="pc-desc">
+            <span data-en>F&B brand website with vibrant visual identity, menu showcase, and brand storytelling for a local Indonesian food brand.</span>
+            <span data-id>Website brand F&B dengan identitas visual cerah, showcase menu, dan brand storytelling untuk brand kuliner lokal Indonesia.</span>
+          </div>
+          <span class="pc-soon">
+            <span data-en>Coming Soon</span><span data-id>Segera Hadir</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="section-light" aria-labelledby="testi-heading">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="lbl center"><span data-en>What Clients Say</span><span data-id>Kata Klien Kami</span></div>
+      <h2 class="sec-h2 dark" id="testi-heading">
+        <span data-en>Real Feedback from <em>Real Clients</em></span>
+        <span data-id>Feedback Nyata dari <em>Klien Nyata</em></span>
+      </h2>
+      <p class="dark">
+        <span data-en>We let the results speak — here's what our clients have to say.</span>
+        <span data-id>Kami biarkan hasil yang berbicara — inilah yang dikatakan klien kami.</span>
+      </p>
+    </div>
+    <div class="testi-grid" id="testi-grid">
+      <div class="tc fade-up">
+        <div class="tc-quote" aria-hidden="true">"</div>
+        <div class="tc-text"><span data-en>The website was delivered faster than expected and looked even better than the reference I shared. Very professional communication throughout the process.</span><span data-id>Website-nya selesai lebih cepat dari yang diharapkan dan tampilannya bahkan lebih bagus dari referensi yang saya berikan. Komunikasi sangat profesional sepanjang prosesnya.</span></div>
+        <div class="tc-author">
+          <div class="tc-avatar" aria-hidden="true">AP</div>
+          <div>
+            <div class="tc-name">Arya P.</div>
+            <div class="tc-role"><span data-en>Business Owner, Bali</span><span data-id>Pemilik Usaha, Bali</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tc fade-up" style="transition-delay:.1s">
+        <div class="tc-quote" aria-hidden="true">"</div>
+        <div class="tc-text"><span data-en>I needed a landing page quickly for an event and it was ready in 2 days. Clean design, mobile-friendly, and exactly what I needed. Will definitely come back.</span><span data-id>Saya butuh landing page cepat untuk sebuah event dan sudah siap dalam 2 hari. Desain bersih, mobile-friendly, dan persis yang saya butuhkan. Pasti akan kembali lagi.</span></div>
+        <div class="tc-author">
+          <div class="tc-avatar" aria-hidden="true">DS</div>
+          <div>
+            <div class="tc-name">Dewi S.</div>
+            <div class="tc-role"><span data-en>Event Organizer, Denpasar</span><span data-id>Event Organizer, Denpasar</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tc fade-up" style="transition-delay:.2s">
+        <div class="tc-quote" aria-hidden="true">"</div>
+        <div class="tc-text"><span data-en>The automation bot he built for our Telegram group saves our team at least 2 hours every day. Simple request, great result. Highly recommended.</span><span data-id>Bot otomasi yang dibangun untuk grup Telegram kami menghemat waktu tim setidaknya 2 jam setiap hari. Permintaan sederhana, hasil luar biasa. Sangat direkomendasikan.</span></div>
+        <div class="tc-author">
+          <div class="tc-avatar" aria-hidden="true">RW</div>
+          <div>
+            <div class="tc-name">Rizky W.</div>
+            <div class="tc-role"><span data-en>Operations Manager, Jakarta</span><span data-id>Manajer Operasional, Jakarta</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-strip" aria-labelledby="cta-heading">
+  <div class="cta-strip-inner fade-up">
+    <div class="lbl center"><span data-en>Your Project Next?</span><span data-id>Proyek Anda Berikutnya?</span></div>
+    <h2 class="cta-h2" id="cta-heading">
+      <span data-en>Let's add your project<br>to this <em>portfolio.</em></span>
+      <span data-id>Mari tambahkan proyek Anda<br>ke <em>portfolio ini.</em></span>
+    </h2>
+    <p class="cta-p">
+      <span data-en>Got a project in mind? Reach out and let's build something great together.</span>
+      <span data-id>Punya project yang ingin dikerjakan? Hubungi kami dan mari membangun sesuatu yang luar biasa bersama.</span>
+    </p>
+    <div class="cta-btns">
+      <a href="https://wa.me/6282267672828" class="btn-p">💬 WhatsApp</a>
+      <a href="contact.html" class="btn-g">
+        <span data-en>Contact Page →</span><span data-id>Halaman Kontak →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="main.js" defer></script>
+<script>
+// ── Portfolio filter ──
+function filterProjects(type) {
+  // Update button states
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-pressed', 'false');
+  });
+  event.target.classList.add('active');
+  event.target.setAttribute('aria-pressed', 'true');
+
+  // Show/hide cards
+  document.querySelectorAll('.pc').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.removeAttribute('data-hidden');
+      card.style.display = '';
+    } else {
+      card.setAttribute('data-hidden', 'true');
+      card.style.display = 'none';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initStaggerGrid('#portfolio-grid');
+  initStaggerGrid('#testi-grid');
+});
+</script>
+</body>
+</html>
