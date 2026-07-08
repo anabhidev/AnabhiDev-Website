@@ -3,7 +3,13 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === 'studio.anabhidev.com') {
-      return Response.redirect('https://anabhidev.com/studio/', 301);
+      const workerUrl = new URL(request.url);
+      workerUrl.hostname = 'anabhidev-website.anabhi-dev.workers.dev';
+      workerUrl.pathname = '/studio/';
+      return fetch(workerUrl.toString(), {
+        headers: request.headers,
+        method: request.method,
+      });
     }
 
     return env.ASSETS.fetch(request);
