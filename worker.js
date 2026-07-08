@@ -3,7 +3,6 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === 'studio.anabhidev.com') {
-      // Fetch langsung dari workers.dev URL
       const assetUrl = new URL(request.url);
       assetUrl.hostname = 'anabhidev-website.anabhi-dev.workers.dev';
       assetUrl.pathname = '/studio' + (url.pathname === '/' ? '/index.html' : url.pathname);
