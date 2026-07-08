@@ -5,7 +5,7 @@ export default {
     if (url.hostname === 'studio.anabhidev.com') {
       const assetUrl = new URL(request.url);
       assetUrl.hostname = 'anabhidev-website.anabhi-dev.workers.dev';
-      assetUrl.pathname = '/studio' + (url.pathname === '/' ? '/index.html' : url.pathname);
+      assetUrl.pathname = '/studio/';
       return fetch(assetUrl.toString());
     }
 
