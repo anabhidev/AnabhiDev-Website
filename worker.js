@@ -3,13 +3,10 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === 'studio.anabhidev.com') {
-      const workerUrl = new URL(request.url);
-      workerUrl.hostname = 'anabhidev-website.anabhi-dev.workers.dev';
-      workerUrl.pathname = '/studio/';
-      return fetch(workerUrl.toString(), {
-        headers: request.headers,
-        method: request.method,
-      });
+      // Gunakan env.ASSETS langsung dengan URL yang dimodifikasi
+      // Trick: buat request ke domain root tapi dengan path /studio/
+      const modifiedUrl = new URL('https://anabhidev.com/studio/index.html');
+      return env.ASSETS.fetch(modifiedUrl.toString());
     }
 
     return env.ASSETS.fetch(request);
