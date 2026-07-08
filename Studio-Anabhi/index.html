@@ -10,12 +10,13 @@
 <meta name="keywords" content="Anabhi Dev Studio, web development Bali, company profile website, landing page, web app, dashboard, automation, Google Apps Script, Telegram bot, Indonesia web developer, Upwork web developer">
 <meta name="author" content="Anabhi Dev Studio">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://studio.anabhidev.com/">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Anabhi Dev Studio — Smart Websites for Real Businesses.">
 <meta property="og:description" content="We build smart, fast, and reliable websites for real businesses. From company profiles to web apps and automation.">
 <meta property="og:url" content="https://studio.anabhidev.com/">
-<meta property="og:image" content="https://studio.anabhidev.com/og-image.png">
+<meta property="og:image" content="https://anabhidev.com/ogimage.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
@@ -25,11 +26,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Anabhi Dev Studio — Smart Websites for Real Businesses.">
 <meta name="twitter:description" content="We build smart, fast, and reliable websites for real businesses.">
-<meta name="twitter:image" content="https://studio.anabhidev.com/og-image.png">
+<meta name="twitter:image" content="https://anabhidev.com/ogimage.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://anabhidev.com/logo.png">
+<link rel="apple-touch-icon" href="https://anabhidev.com/logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"></noscript>
 
 <style>
 /* ═══════════════════════════════════════
@@ -123,25 +130,27 @@ nav {
 }
 
 .nav-links {
-  display:flex; gap:4px; list-style:none;
+  display:flex; gap:2px; list-style:none;
   position:absolute; left:50%; transform:translateX(-50%);
+  pointer-events:none;
 }
+.nav-links li { pointer-events:all; }
 .nav-links a {
   font-family:'Sora',sans-serif;
-  font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
   color:var(--w60); text-decoration:none;
-  padding:8px 14px; border-radius:50px;
+  padding:7px 12px; border-radius:50px;
   transition:all .2s; white-space:nowrap;
 }
 .nav-links a:hover { color:var(--white); background:var(--w07); }
 .nav-links a.active { color:var(--white); background:var(--w12); }
 
-.nav-right { display:flex; align-items:center; gap:12px; }
+.nav-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
 
 .nav-cta {
-  font-family:'Sora',sans-serif; font-size:13px; font-weight:700;
+  font-family:'Sora',sans-serif; font-size:12px; font-weight:700;
   color:var(--white); background:var(--blue);
-  padding:10px 24px; border-radius:50px; text-decoration:none; white-space:nowrap;
+  padding:9px 20px; border-radius:50px; text-decoration:none; white-space:nowrap;
   transition:background .2s, transform .2s; letter-spacing:.04em;
 }
 .nav-cta:hover { background:var(--blue-lt); transform:translateY(-1px); }
@@ -208,7 +217,7 @@ nav {
 
 .lbl {
   display:inline-flex; align-items:center; gap:10px;
-  font-family:'Sora',sans-serif; font-size:10px; font-weight:600;
+  font-family:'Sora',sans-serif; font-size:16px; font-weight:600;
   letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:14px;
 }
 .lbl::before { content:''; display:block; width:20px; height:1px; background:var(--blue); }
@@ -331,6 +340,182 @@ h1.hero-h1 em { font-style:normal; color:var(--blue); }
   animation:pulse 2s ease-in-out infinite;
 }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ═══════════════════════════════════════
+   HERO BROWSER MOCKUP
+═══════════════════════════════════════ */
+.hero-mockup {
+  position:relative; z-index:2;
+  flex-shrink:0;
+  width:480px;
+  animation:floatY 5s ease-in-out infinite;
+}
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+.browser-wrap {
+  width:100%;
+  background:#1a2d44;
+  border-radius:14px;
+  border:1px solid rgba(59,158,232,.25);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,.6),
+    0 0 0 1px rgba(59,158,232,.1),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  overflow:hidden;
+}
+
+/* Browser top bar */
+.browser-bar {
+  background:#0d1e30;
+  padding:10px 14px;
+  display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid rgba(59,158,232,.15);
+}
+.browser-dots {
+  display:flex; gap:5px; flex-shrink:0;
+}
+.browser-dot {
+  width:10px; height:10px; border-radius:50%;
+}
+.browser-dot:nth-child(1) { background:#ff5f57; }
+.browser-dot:nth-child(2) { background:#febc2e; }
+.browser-dot:nth-child(3) { background:#28c840; }
+.browser-addr {
+  flex:1;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:6px;
+  padding:5px 10px;
+  font-family:'Sora',sans-serif; font-size:10px;
+  color:var(--w60); letter-spacing:.02em;
+  display:flex; align-items:center; gap:6px;
+}
+.browser-addr::before {
+  content:'🔒'; font-size:9px;
+}
+
+/* Browser content — mini website mockup */
+.browser-content {
+  background:#0f1e30;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  position:relative;
+}
+
+/* Mini navbar */
+.mock-nav {
+  background:rgba(9,16,28,.95);
+  padding:8px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid rgba(59,158,232,.15);
+}
+.mock-nav-logo {
+  display:flex; gap:5px; align-items:center;
+}
+.mock-nav-logo-dot {
+  width:16px; height:16px; border-radius:4px;
+  background:linear-gradient(135deg,var(--blue),#1A6AB0);
+}
+.mock-nav-logo-text {
+  width:48px; height:5px; border-radius:2px;
+  background:rgba(255,255,255,.3);
+}
+.mock-nav-links {
+  display:flex; gap:8px;
+}
+.mock-nav-link {
+  width:24px; height:4px; border-radius:2px;
+  background:rgba(255,255,255,.15);
+}
+.mock-nav-btn {
+  width:36px; height:14px; border-radius:7px;
+  background:var(--blue); opacity:.8;
+}
+
+/* Mini hero area */
+.mock-hero {
+  padding:16px 14px 10px;
+  background:linear-gradient(135deg,#0d1e30 0%,#0f2540 100%);
+}
+.mock-hero-tag {
+  width:60px; height:5px; border-radius:2px;
+  background:var(--blue); opacity:.6; margin-bottom:8px;
+}
+.mock-hero-h1 {
+  width:140px; height:10px; border-radius:3px;
+  background:rgba(255,255,255,.85); margin-bottom:5px;
+}
+.mock-hero-h2 {
+  width:100px; height:10px; border-radius:3px;
+  background:var(--blue); opacity:.8; margin-bottom:10px;
+}
+.mock-hero-p1 {
+  width:160px; height:4px; border-radius:2px;
+  background:rgba(255,255,255,.2); margin-bottom:4px;
+}
+.mock-hero-p2 {
+  width:130px; height:4px; border-radius:2px;
+  background:rgba(255,255,255,.2); margin-bottom:12px;
+}
+.mock-hero-btns { display:flex; gap:6px; }
+.mock-btn-primary {
+  width:52px; height:16px; border-radius:8px;
+  background:var(--blue); opacity:.9;
+}
+.mock-btn-ghost {
+  width:44px; height:16px; border-radius:8px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);
+}
+
+/* Mini cards row */
+.mock-cards {
+  padding:10px 14px;
+  display:flex; gap:7px;
+}
+.mock-card {
+  flex:1; border-radius:6px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(59,158,232,.12);
+  padding:7px;
+}
+.mock-card-icon {
+  width:14px; height:14px; border-radius:4px;
+  background:rgba(59,158,232,.3); margin-bottom:5px;
+}
+.mock-card-t {
+  width:70%; height:4px; border-radius:2px;
+  background:rgba(255,255,255,.3); margin-bottom:4px;
+}
+.mock-card-d1 {
+  width:100%; height:3px; border-radius:2px;
+  background:rgba(255,255,255,.12); margin-bottom:2px;
+}
+.mock-card-d2 {
+  width:80%; height:3px; border-radius:2px;
+  background:rgba(255,255,255,.12);
+}
+
+/* Glow below mockup */
+.mockup-glow {
+  position:absolute; bottom:-20px; left:10%; right:10%; height:40px;
+  background:radial-gradient(ellipse,rgba(59,158,232,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Hero 2-column layout */
+#hero {
+  display:grid !important;
+  grid-template-columns:1fr auto;
+  grid-template-rows:1fr auto;
+  align-items:center;
+  gap:48px;
+  flex-direction:unset;
+  justify-content:unset;
+}
+.hero-inner { grid-column:1; grid-row:1; }
+.hero-mockup { grid-column:2; grid-row:1; }
+.scroll-hint { grid-column:1 / -1; grid-row:2; position:static; }
 
 /* ═══════════════════════════════════════
    SECTION 2 — SERVICES (White/Light)
@@ -665,11 +850,21 @@ footer {
 .copy em { font-style:normal; color:var(--blue); }
 .foot-badge { font-family:'Sora',sans-serif; font-size:10px; font-weight:600; letter-spacing:.08em; color:var(--w30); text-transform:uppercase; }
 
+/* Typing cursor */
+.typing-cursor {
+  display:inline-block; color:var(--blue);
+  animation:blink .7s step-end infinite;
+  font-weight:300; margin-left:1px;
+}
+@keyframes blink { 50%{ opacity:0; } }
+
 /* ═══════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════ */
 @media (max-width:1279px) and (min-width:1024px) {
   :root { --gutter:52px; }
+  .hero-mockup { width:380px; }
+  #hero { gap:32px; }
   .services-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
   .portfolio-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
   .process-steps { grid-template-columns:repeat(4,1fr); }
@@ -685,7 +880,11 @@ footer {
   .lang-toggle { display:none; }
   .hamburger { display:flex; }
 
-  #hero { padding:100px 40px 72px; }
+  #hero {
+    grid-template-columns:1fr 1fr;
+    padding:100px 40px 72px; gap:24px;
+  }
+  .hero-mockup { width:100%; }
   .hero-stats { gap:32px; }
   .hs-num { font-size:28px; }
 
@@ -707,12 +906,22 @@ footer {
   .nav-links, .nav-cta, .lang-toggle { display:none; }
   .hamburger { display:flex; }
 
-  #hero { padding:100px 20px 60px; min-height:auto; }
+  #hero {
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+    padding:100px 20px 60px;
+    min-height:auto; gap:32px;
+  }
+  .hero-inner { grid-column:1; grid-row:1; }
+  .hero-mockup {
+    grid-column:1; grid-row:2;
+    width:100%; animation:none;
+  }
+  .scroll-hint { grid-column:1; grid-row:3; position:static; display:none; }
   h1.hero-h1 { font-size:clamp(32px,8vw,48px); }
   .hero-desc { border-left:none; border-top:2px solid var(--blue); padding:14px 0 0; }
   .hero-stats { gap:24px; flex-wrap:wrap; }
   .hs-num { font-size:26px; }
-  .scroll-hint { display:none; }
 
   .services-grid { grid-template-columns:1fr; }
   .portfolio-grid { grid-template-columns:1fr; }
@@ -743,7 +952,7 @@ footer {
 
 <!-- ══ NAVBAR ══ -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">Anabhi <em>Dev</em><span class="studio-badge">Studio</span></a>
+  <a href="#hero" class="nav-logo" aria-label="Anabhi Dev Studio — Home">Anabhi <em>Dev</em><span class="studio-badge">Studio</span></a>
   <ul class="nav-links">
     <li><a href="#hero"         class="nav-link">Home</a></li>
     <li><a href="#services"     class="nav-link">Services</a></li>
@@ -752,9 +961,9 @@ footer {
     <li><a href="#faq"          class="nav-link">FAQ</a></li>
   </ul>
   <div class="nav-right">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn"        id="btn-id" onclick="setLang('id')">ID</button>
+    <div class="lang-toggle" role="group" aria-label="Language selector">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')" aria-label="Switch to English" aria-pressed="true">EN</button>
+      <button class="lang-btn"        id="btn-id" onclick="setLang('id')" aria-label="Ganti ke Bahasa Indonesia" aria-pressed="false">ID</button>
     </div>
     <a href="#footer" class="nav-cta">
       <span data-en>Contact Us</span>
@@ -783,6 +992,7 @@ footer {
   </a>
 </div>
 
+<main id="main-content">
 <!-- ══ SECTION 1: HERO ══ -->
 <section id="hero">
   <div class="hero-grid-lines"></div>
@@ -794,8 +1004,8 @@ footer {
     </div>
 
     <h1 class="hero-h1 fade-up" style="transition-delay:.06s">
-      <span data-en>Smart Websites<br>for <em>Real Businesses.</em></span>
-      <span data-id>Website Cerdas<br>untuk <em>Bisnis Nyata.</em></span>
+      <span data-en>Smart Websites<br>for <em><span id="typing-target-en"></span><span class="typing-cursor" id="typing-cursor-en">|</span></em></span>
+      <span data-id>Website Cerdas<br>untuk <em><span id="typing-target-id"></span><span class="typing-cursor" id="typing-cursor-id">|</span></em></span>
     </h1>
 
     <p class="hero-sub fade-up" style="transition-delay:.10s">
@@ -821,21 +1031,21 @@ footer {
 
     <div class="hero-stats fade-up" style="transition-delay:.22s">
       <div>
-        <div class="hs-num">7<span>+</span></div>
+        <div class="hs-num" id="stat-projects">0<span>+</span></div>
         <div class="hs-lbl">
           <span data-en>Projects Delivered</span>
           <span data-id>Proyek Selesai</span>
         </div>
       </div>
       <div>
-        <div class="hs-num">6<span>+</span></div>
+        <div class="hs-num" id="stat-services">0<span>+</span></div>
         <div class="hs-lbl">
           <span data-en>Services Offered</span>
           <span data-id>Layanan Tersedia</span>
         </div>
       </div>
       <div>
-        <div class="hs-num">100<span>%</span></div>
+        <div class="hs-num" id="stat-ai">0<span>%</span></div>
         <div class="hs-lbl">
           <span data-en>AI-Assisted Build</span>
           <span data-id>Dibangun dengan AI</span>
@@ -844,6 +1054,20 @@ footer {
     </div>
 
   </div>
+
+  <!-- Hero Image -->
+  <div class="hero-mockup fade-up" style="transition-delay:.2s">
+    <img
+      src="https://anabhidev.com/hero-laptop.webp"
+      alt="Anabhi Dev Studio — Smart website on laptop mockup"
+      width="1672" height="941"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      style="width:100%;height:auto;display:block;border-radius:12px;filter:drop-shadow(0 24px 60px rgba(0,0,0,.55));"
+    >
+  </div>
+
   <div class="scroll-hint">Scroll</div>
 </section>
 
@@ -1456,6 +1680,8 @@ footer {
   </div>
 </section>
 
+</main><!-- end #main-content -->
+
 <!-- ══ FOOTER ══ -->
 <footer id="footer">
   <div class="wrap">
@@ -1537,6 +1763,8 @@ function setLang(lang) {
   document.body.className = 'lang-' + lang;
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+  document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+  document.getElementById('btn-id').setAttribute('aria-pressed', lang === 'id');
   document.getElementById('mob-btn-en').classList.toggle('active', lang === 'en');
   document.getElementById('mob-btn-id').classList.toggle('active', lang === 'id');
   localStorage.setItem('studio-lang', lang);
@@ -1547,6 +1775,54 @@ function setLang(lang) {
   if (saved) setLang(saved);
   else setLang('en');
 })();
+
+// ── Typing animation ──
+window.addEventListener('load', () => {
+  const textEn = 'Real Businesses.';
+  const textId = 'Bisnis Nyata.';
+  function typeText(targetId, cursorId, text) {
+    const target = document.getElementById(targetId);
+    const cursor = document.getElementById(cursorId);
+    if (!target || !cursor) return;
+    let i = 0;
+    setTimeout(() => {
+      const type = () => {
+        if (i < text.length) {
+          target.textContent += text[i];
+          i++;
+          setTimeout(type, 80);
+        } else {
+          setTimeout(() => { cursor.style.display = 'none'; }, 1200);
+        }
+      };
+      type();
+    }, 900);
+  }
+  typeText('typing-target-en', 'typing-cursor-en', textEn);
+  typeText('typing-target-id', 'typing-cursor-id', textId);
+});
+
+// ── Counter animation ──
+function animateCounter(el, target, duration, suffix) {
+  if (!el) return;
+  let start = 0;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(ease * target);
+    el.innerHTML = current + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    animateCounter(document.getElementById('stat-projects'), 7,  1600, '<span>+</span>');
+    animateCounter(document.getElementById('stat-services'), 6,  1400, '<span>+</span>');
+    animateCounter(document.getElementById('stat-ai'),      100, 2000, '<span>%</span>');
+  }, 400);
+});
 
 // ── Scroll progress ──
 const progressBar = document.getElementById('scroll-progress');
