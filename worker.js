@@ -6,7 +6,7 @@ export default {
       // Selalu serve studio/index.html untuk semua path di subdomain ini
       const studioUrl = new URL(request.url);
       studioUrl.hostname = url.hostname;
-      studioUrl.pathname = '/studio/index.html';
+      studioUrl.pathname = '/Studio/index.html';
       return env.ASSETS.fetch(new Request(studioUrl.toString(), request));
     }
     
