@@ -2,14 +2,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     
-    // Kalau request dari studio.anabhidev.com
-    // serve studio/index.html
     if (url.hostname === 'studio.anabhidev.com') {
-      url.pathname = '/studio' + (url.pathname === '/' ? '/index.html' : url.pathname);
-      return env.ASSETS.fetch(new Request(url.toString(), request));
+      // Selalu serve studio/index.html untuk semua path di subdomain ini
+      const studioUrl = new URL(request.url);
+      studioUrl.hostname = url.hostname;
+      studioUrl.pathname = '/studio/index.html';
+      return env.ASSETS.fetch(new Request(studioUrl.toString(), request));
     }
     
-    // Default — serve seperti biasa
+    // Default — serve seperti biasa untuk anabhidev.com
     return env.ASSETS.fetch(request);
   }
 };
