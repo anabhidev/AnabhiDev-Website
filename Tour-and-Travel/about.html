@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>About Us — Anabhi Journey | Bali Private Tour & Travel</title>
+  <meta name="description" content="Kenali tim Anabhi Journey — passionate travelers & local Bali experts yang siap merancang perjalanan impianmu. Less Worry. More Memories." />
+  <meta name="keywords" content="Anabhi Journey, tentang kami, Bali tour guide, local Bali expert, private tour Bali, travel agent Bali terpercaya" />
+  <meta name="author" content="Anabhi Journey" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About Us — Anabhi Journey" />
+  <meta property="og:description" content="Tim lokal Bali yang passionate, siap merancang perjalanan impianmu." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1476158085676-e67f57ed9ed7?w=1200" />
+  <meta property="og:url" content="https://anabhijourney.com/about.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Us — Anabhi Journey" />
+  <meta name="twitter:description" content="Tim lokal Bali yang passionate, siap merancang perjalanan impianmu." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://anabhijourney.com/about.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --navy:   #1B2A6B;
+      --teal:   #2A8A8A;
+      --gold:   #E8A020;
+      --forest: #2D5A3D;
+      --sand:   #F5F0E8;
+      --ivory:  #FDFAF5;
+      --mist:   #EAF2EC;
+      --soil:   #1A1A1A;
+      --white:  #FFFFFF;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --radius: 4px;
+      --transition: 0.4s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ivory);
+      color: var(--soil);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       SCROLL ANIMATION SYSTEM
+    ============================================================ */
+    .fade-in,
+    .fade-left,
+    .fade-right,
+    .fade-scale {
+      opacity: 0;
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-in    { transform: translateY(36px); }
+    .fade-left  { transform: translateX(48px); }
+    .fade-right { transform: translateX(-48px); }
+    .fade-scale { transform: scale(0.94); }
+
+    .fade-in.visible,
+    .fade-left.visible,
+    .fade-right.visible,
+    .fade-scale.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in, .fade-left, .fade-right, .fade-scale {
+        opacity: 1; transform: none; transition: none;
+      }
+    }
+
+    /* ============================================================
+       NAVBAR — Full solid ivory bar
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: var(--ivory);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo img { height: 52px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--soil);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a.active { color: var(--teal); }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white) !important;
+      background: var(--teal);
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+    .nav-cta:hover { background: var(--forest) !important; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 102;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--soil); border-radius: 2px;
+    }
+    .nav-hamburger.hidden { opacity: 0; pointer-events: none; }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--ivory);
+      z-index: 101;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--soil);
+    }
+    .nav-mobile a:hover { color: var(--teal); }
+    .nav-mobile a.active { color: var(--teal); }
+    .nav-mobile-close {
+      position: absolute;
+      top: 22px; right: 5%;
+      background: none; border: none;
+      font-size: 2rem; cursor: pointer;
+      color: var(--soil); z-index: 103; padding: 8px;
+    }
+
+    /* ============================================================
+       PAGE OFFSET (fixed navbar)
+    ============================================================ */
+    body { padding-top: 72px; }
+
+    /* ============================================================
+       PAGE HERO — About
+    ============================================================ */
+    #page-hero {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1476158085676-e67f57ed9ed7?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center 40%;
+    }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(27,42,107,0.82) 0%, rgba(27,42,107,0.4) 70%, transparent 100%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 7%;
+    }
+    .page-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .page-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 560px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--gold); }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       STORY SECTION
+    ============================================================ */
+    #story {
+      padding: 96px 7%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      background: var(--ivory);
+    }
+    .story-visual { position: relative; }
+    .story-img-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .story-img-accent {
+      position: absolute;
+      bottom: -28px; right: -28px;
+      width: 52%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 6px solid var(--ivory);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .story-badge {
+      position: absolute;
+      top: 24px; left: -20px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 16px 20px;
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(27,42,107,0.25);
+    }
+    .story-badge-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .story-badge-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+    }
+
+    .story-content { padding-left: 20px; }
+    .story-text {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.85;
+      margin-top: 20px;
+    }
+    .story-text + .story-text { margin-top: 16px; }
+    .story-quote {
+      margin-top: 32px;
+      padding: 24px 28px;
+      background: var(--mist);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 6px 6px 0;
+    }
+    .story-quote p {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.5;
+    }
+    .story-quote cite {
+      display: block;
+      margin-top: 10px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-style: normal;
+    }
+
+    /* ============================================================
+       VALUES
+    ============================================================ */
+    #values {
+      padding: 96px 7%;
+      background: var(--navy);
+    }
+    .values-header { text-align: center; margin-bottom: 64px; }
+    .values-header .section-eyebrow { color: var(--gold); }
+    .values-header .section-title { color: var(--white); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .value-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 36px 28px;
+      transition: background var(--transition), transform 0.3s;
+    }
+    .value-card:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-4px);
+    }
+    .value-icon {
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+    .value-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .value-desc {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       STATS STRIP
+    ============================================================ */
+    #stats-strip {
+      background: var(--sand);
+      padding: 56px 7%;
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 100px);
+      flex-wrap: wrap;
+    }
+    .strip-item { text-align: center; }
+    .strip-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .strip-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-top: 6px;
+    }
+
+    /* ============================================================
+       TEAM
+    ============================================================ */
+    #team {
+      padding: 96px 7%;
+      background: var(--ivory);
+    }
+    .team-header { text-align: center; margin-bottom: 56px; }
+    .team-header .section-desc { max-width: 480px; margin: 0 auto; text-align: center; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .team-card {
+      background: var(--white);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(27,42,107,0.1);
+    }
+    .team-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+    .team-body { padding: 22px 20px 24px; }
+    .team-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .team-role {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .team-bio {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       APPROACH
+    ============================================================ */
+    #approach {
+      padding: 96px 7%;
+      background: var(--mist);
+    }
+    .approach-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .approach-steps { display: flex; flex-direction: column; gap: 0; }
+    .approach-step {
+      display: flex;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(42,138,138,0.15);
+    }
+    .approach-step:last-child { border-bottom: none; }
+    .approach-step-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--teal);
+      line-height: 1;
+      min-width: 48px;
+      opacity: 0.5;
+    }
+    .approach-step-title {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .approach-step-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.7;
+    }
+    .approach-visual {
+      position: relative;
+    }
+    .approach-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .approach-tag {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+    }
+    .approach-tag span {
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       CTA STRIP
+    ============================================================ */
+    #cta-strip {
+      padding: 96px 7%;
+      background: var(--forest);
+      text-align: center;
+    }
+    .cta-strip-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 16px;
+    }
+    .cta-strip-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 32px;
+    }
+    .cta-strip-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--teal);
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      transition: background var(--transition), transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--navy); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 60px 7% 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-logo img { height: 52px; margin-bottom: 16px; }
+    .footer-about { font-family: var(--font-body); font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+    .footer-tagline { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--gold); margin-top: 12px; }
+    .footer-socials { display: flex; gap: 14px; margin-top: 20px; }
+    .footer-social {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6); font-size: 0.9rem;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .footer-social:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col-title { font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-family: var(--font-body); font-size: 0.85rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+    .footer-nav-links { display: flex; gap: 20px; }
+    .footer-nav-links a { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.4); transition: color var(--transition); }
+    .footer-nav-links a:hover { color: var(--gold); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      #story { grid-template-columns: 1fr; gap: 48px; }
+      .story-visual { max-width: 480px; }
+      .story-img-accent { right: -14px; bottom: -14px; }
+      .story-badge { left: -10px; }
+      .story-content { padding-left: 0; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .approach-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      #page-hero { height: 320px; }
+      .page-hero-title { font-size: 2.2rem; }
+
+      #story, #values, #stats-strip, #team, #approach, #cta-strip { padding: 64px 5%; }
+
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .story-img-accent { display: none; }
+      .story-badge { left: 0; top: 12px; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey Logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#destinations">Destinations</a></li>
+      <li><a href="index.html#experiences">Experiences</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="index.html#inquiry" class="nav-cta">Plan My Trip</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="nav-mobile" id="mobileNav">
+    <button class="nav-mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    <a href="index.html#destinations" class="mobile-link">Destinations</a>
+    <a href="index.html#experiences" class="mobile-link">Experiences</a>
+    <a href="packages.html" class="mobile-link">Packages</a>
+    <a href="about.html" class="mobile-link active">About</a>
+    <a href="index.html#inquiry" class="mobile-link">Plan My Trip</a>
+  </div>
+
+  <!-- ============================================================
+       PAGE HERO
+  ============================================================ -->
+  <section id="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <p class="page-hero-eyebrow">Our Story</p>
+      <h1 class="page-hero-title">Lahir dari cinta<br>pada Bali</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <span>About Us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       STORY
+  ============================================================ -->
+  <section id="story">
+    <div class="story-visual fade-right">
+      <img class="story-img-main" src="https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80" alt="Bali landscape" loading="lazy" />
+      <img class="story-img-accent" src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80" alt="Bali temple" loading="lazy" />
+      <div class="story-badge">
+        <div class="story-badge-num" data-count="5" data-suffix="+">5+</div>
+        <div class="story-badge-label">Years in Bali</div>
+      </div>
+    </div>
+
+    <div class="story-content fade-left">
+      <p class="section-eyebrow">Who We Are</p>
+      <h2 class="section-title">Bukan agen travel<br>biasa</h2>
+      <p class="story-text">Anabhi Journey lahir dari satu keyakinan sederhana: setiap orang berhak mendapatkan perjalanan yang terasa <em>benar-benar milik mereka</em>. Bukan paket massal yang kamu ikuti, tapi pengalaman yang kamu pimpin.</p>
+      <p class="story-text">Kami adalah tim lokal Bali — orang-orang yang tumbuh besar di antara sawah Ubud, tebing Uluwatu, dan sunset Seminyak. Kami tahu tempat-tempat tersembunyi yang tidak ada di Google, warung lokal terbaik yang tidak ada di TripAdvisor, dan waktu terbaik untuk mengunjungi setiap sudut pulau ini.</p>
+      <p class="story-text">Sejak berdiri, kami telah membantu lebih dari 500 traveler dari seluruh dunia menemukan Bali versi terbaik mereka — dari pasangan honeymoon pertama hingga keluarga yang ingin liburan tanpa drama.</p>
+      <div class="story-quote">
+        <p>"Kami tidak jual destinasi. Kami jual ketenangan pikiran — Less Worry, More Memories."</p>
+        <cite>— Founder, Anabhi Journey</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VALUES
+  ============================================================ -->
+  <section id="values">
+    <div class="values-header fade-in">
+      <p class="section-eyebrow">What We Stand For</p>
+      <h2 class="section-title">Nilai yang kami<br>pegang teguh</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card fade-in">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Personal Touch</div>
+        <p class="value-desc">Setiap itinerary dibuat dari nol, khusus untukmu. Tidak ada dua trip yang sama — karena tidak ada dua traveler yang sama.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">🌿</div>
+        <div class="value-title">Local Roots</div>
+        <p class="value-desc">Kami orang Bali asli. Pengetahuan lokal kami bukan dari buku panduan — tapi dari hidup di sini, setiap hari.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">✨</div>
+        <div class="value-title">Hassle-Free</div>
+        <p class="value-desc">Dari booking hotel hingga penjemputan bandara, kami urus semuanya. Kamu tinggal datang dan menikmati.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">🌏</div>
+        <div class="value-title">Responsible Travel</div>
+        <p class="value-desc">Kami mendukung bisnis lokal, menjaga budaya Bali, dan memastikan setiap perjalanan memberi dampak positif bagi komunitas.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">💬</div>
+        <div class="value-title">Always On</div>
+        <p class="value-desc">Tim kami siap 24/7 selama kamu di Bali. Ada pertanyaan, perubahan rencana, atau kebutuhan mendadak — kami di sini.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Transparent</div>
+        <p class="value-desc">Tidak ada hidden cost, tidak ada kejutan. Semua harga dan itinerary dijelaskan sejak awal — jelas dan jujur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       STATS STRIP
+  ============================================================ -->
+  <div id="stats-strip">
+    <div class="strip-item fade-in">
+      <div class="strip-num" data-count="500" data-suffix="+">500+</div>
+      <div class="strip-label">Happy Travellers</div>
+    </div>
+    <div class="strip-item fade-in delay-1">
+      <div class="strip-num" data-count="5" data-suffix="+">5+</div>
+      <div class="strip-label">Years Experience</div>
+    </div>
+    <div class="strip-item fade-in delay-2">
+      <div class="strip-num" data-count="4" data-suffix="">4</div>
+      <div class="strip-label">Destinations</div>
+    </div>
+    <div class="strip-item fade-in delay-3">
+      <div class="strip-num" data-count="100" data-suffix="%">100%</div>
+      <div class="strip-label">5-Star Reviews</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TEAM
+  ============================================================ -->
+  <section id="team">
+    <div class="team-header fade-in">
+      <p class="section-eyebrow">Meet The Team</p>
+      <h2 class="section-title">Orang-orang di balik<br>perjalananmu</h2>
+      <p class="section-desc">Tim kami kecil tapi passionate — dan itu yang membuat perbedaan.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-scale">
+        <img class="team-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Team member" loading="lazy" />
+        <div class="team-body">
+          <div class="team-name">Made Surya</div>
+          <div class="team-role">Founder & Lead Guide</div>
+          <p class="team-bio">Lahir dan besar di Ubud. Made telah menjadi pemandu wisata selama 8 tahun dan hafal setiap sudut Bali seperti halaman belakang rumahnya sendiri.</p>
+        </div>
+      </div>
+      <div class="team-card fade-scale delay-2">
+        <img class="team-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" alt="Team member" loading="lazy" />
+        <div class="team-body">
+          <div class="team-name">Wayan Sari</div>
+          <div class="team-role">Trip Planner & Client Experience</div>
+          <p class="team-bio">Spesialis itinerary honeymoon dan family trip. Wayan memastikan setiap detail — dari bunga di kamar hingga restoran terbaik — sempurna.</p>
+        </div>
+      </div>
+      <div class="team-card fade-scale delay-3">
+        <img class="team-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Team member" loading="lazy" />
+        <div class="team-body">
+          <div class="team-name">Ketut Dharma</div>
+          <div class="team-role">Adventure & Driver Specialist</div>
+          <p class="team-bio">Ahli trekking Gunung Batur dan snorkeling Nusa Penida. Ketut yang memastikan kamu sampai di tempat tujuan dengan selamat dan senyum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APPROACH
+  ============================================================ -->
+  <section id="approach">
+    <div class="approach-inner">
+      <div class="fade-in">
+        <p class="section-eyebrow">How We Work</p>
+        <h2 class="section-title">Proses kami,<br>simple & transparan</h2>
+        <div class="approach-steps">
+          <div class="approach-step">
+            <div class="approach-step-num">01</div>
+            <div>
+              <div class="approach-step-title">Konsultasi Gratis</div>
+              <p class="approach-step-desc">Ceritakan impian tripmu via WhatsApp atau form. Kami dengarkan dulu — tidak ada sales pitch, tidak ada tekanan.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="approach-step-num">02</div>
+            <div>
+              <div class="approach-step-title">Itinerary Custom</div>
+              <p class="approach-step-desc">Dalam 24 jam, kami siapkan itinerary yang dirancang khusus untukmu — lengkap dengan estimasi biaya yang transparan.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="approach-step-num">03</div>
+            <div>
+              <div class="approach-step-title">Revisi Sampai Pas</div>
+              <p class="approach-step-desc">Tidak suka sesuatu? Mau tambah destinasi? Kita revisi bersama sampai itinerary terasa benar-benar milikmu.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="approach-step-num">04</div>
+            <div>
+              <div class="approach-step-title">Nikmati Bali</div>
+              <p class="approach-step-desc">Hari H, kami jemput di bandara. Dari situ — tinggal menikmati. Less Worry. More Memories.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="approach-visual fade-in">
+        <img class="approach-img" src="https://images.unsplash.com/photo-1559628233-100c798642dc?auto=format&fit=crop&w=700&q=80" alt="Bali travel experience" loading="lazy" />
+        <div class="approach-tag">Less Worry.<br><span>More Memories.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA STRIP
+  ============================================================ -->
+  <section id="cta-strip">
+    <p class="cta-strip-eyebrow fade-in">Ready to Explore?</p>
+    <h2 class="cta-strip-title fade-in">Mulai rencanakan<br>perjalananmu hari ini</h2>
+    <div class="cta-strip-actions fade-in">
+      <a href="index.html#inquiry" class="btn-primary">Plan My Trip</a>
+      <a href="packages.html" class="btn-outline">Lihat Paket</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey" />
+        </div>
+        <p class="footer-about">Tour & travel private Bali — kami merancang perjalanan yang personal, bukan paket massal. Dari Ubud hingga Nusa Penida, kami kenalkan Bali yang sesungguhnya.</p>
+        <p class="footer-tagline">Less Worry. More Memories.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.54V6.78a4.85 4.85 0 01-1.03-.09z"/></svg>
+          </a>
+          <a href="https://wa.me/6200000000000" class="footer-social" aria-label="WhatsApp" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="index.html#destinations">Destinations</a></li>
+          <li><a href="index.html#experiences">Experiences</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#inquiry">Plan My Trip</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Destinations</div>
+        <ul class="footer-links">
+          <li><a href="index.html#destinations">Ubud</a></li>
+          <li><a href="index.html#destinations">Uluwatu</a></li>
+          <li><a href="index.html#destinations">Seminyak</a></li>
+          <li><a href="index.html#destinations">Nusa Penida</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Anabhi Journey. All rights reserved.</p>
+      <div class="footer-nav-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+    const mobileClose  = document.getElementById('mobileClose');
+    const mobileLinks  = document.querySelectorAll('.mobile-link');
+
+    function openMobileNav() {
+      mobileNav.classList.add('open');
+      hamburgerBtn.classList.add('hidden');
+    }
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+      hamburgerBtn.classList.remove('hidden');
+    }
+    hamburgerBtn.addEventListener('click', openMobileNav);
+    mobileClose.addEventListener('click',  closeMobileNav);
+    mobileLinks.forEach(link => link.addEventListener('click', closeMobileNav));
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.fade-in, .fade-left, .fade-right, .fade-scale');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.10 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Number counter
+    function animateCounter(el) {
+      const target  = parseInt(el.dataset.count, 10);
+      const suffix  = el.dataset.suffix || '';
+      const dur     = Math.min(1800, Math.max(800, target * 3));
+      const start   = performance.now();
+      const step = (now) => {
+        const elapsed  = now - start;
+        const progress = Math.min(elapsed / dur, 1);
+        const eased    = 1 - Math.pow(1 - progress, 3);
+        const current  = Math.round(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterEls = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counterEls.forEach(el => counterObserver.observe(el));
+  </script>
+
+</body>
+</html>

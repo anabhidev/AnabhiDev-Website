@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>Anabhi Journey — Bali Private Tour & Travel</title>
+  <meta name="description" content="Anabhi Journey menawarkan pengalaman wisata private dan custom di Bali — Ubud, Uluwatu, Seminyak, Nusa Penida. Less Worry. More Memories." />
+  <meta name="keywords" content="Bali tour, Bali travel, private tour Bali, wisata Bali, honeymoon Bali, family tour Bali, luxury Bali tour, Bali travel agent, custom Bali itinerary, Bali holiday package, Ubud tour, Uluwatu tour, Nusa Penida tour, Seminyak travel" />
+  <meta name="author" content="Anabhi Journey" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Anabhi Journey — Bali Private Tour & Travel" />
+  <meta property="og:description" content="Less Worry. More Memories. Private & custom tour Bali terpercaya." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200" />
+  <meta property="og:url" content="https://anabhijourney.com" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Anabhi Journey — Bali Private Tour & Travel" />
+  <meta name="twitter:description" content="Less Worry. More Memories. Private & custom tour Bali terpercaya." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://anabhijourney.com" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --navy:   #1B2A6B;
+      --teal:   #2A8A8A;
+      --gold:   #E8A020;
+      --forest: #2D5A3D;
+      --sand:   #F5F0E8;
+      --ivory:  #FDFAF5;
+      --mist:   #EAF2EC;
+      --soil:   #1A1A1A;
+      --white:  #FFFFFF;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --radius: 4px;
+      --transition: 0.4s ease;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--ivory);
+      color: var(--soil);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       SCROLL ANIMATION SYSTEM
+    ============================================================ */
+
+    /* --- Base: semua reveal classes dimulai dari hidden --- */
+    .fade-in,
+    .fade-left,
+    .fade-right,
+    .fade-scale {
+      opacity: 0;
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* fade-in = slide up (default, pakai di most elements) */
+    .fade-in       { transform: translateY(36px); }
+    /* fade-left = masuk dari kanan ke kiri (kolom kanan di dua-kolom layout) */
+    .fade-left     { transform: translateX(48px); }
+    /* fade-right = masuk dari kiri ke kanan (kolom kiri di dua-kolom layout) */
+    .fade-right    { transform: translateX(-48px); }
+    /* fade-scale = scale up + opacity (untuk card yang butuh pop) */
+    .fade-scale    { transform: scale(0.94); }
+
+    /* --- Visible state --- */
+    .fade-in.visible,
+    .fade-left.visible,
+    .fade-right.visible,
+    .fade-scale.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* --- Stagger delays untuk grid items --- */
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+
+    /* --- Respect reduced motion --- */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in, .fade-left, .fade-right, .fade-scale {
+        opacity: 1; transform: none; transition: none;
+      }
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: var(--ivory);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: box-shadow var(--transition);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 52px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--soil);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white) !important;
+      background: var(--teal);
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      transition: background var(--transition), color var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--forest) !important; color: var(--white) !important; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      position: relative;
+      z-index: 102;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--soil);
+      transition: background var(--transition);
+      border-radius: 2px;
+    }
+    /* hamburger always dark on ivory bg */
+    .nav-hamburger.hidden { opacity: 0; pointer-events: none; }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--ivory);
+      z-index: 101;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--soil);
+      letter-spacing: 0.02em;
+    }
+    .nav-mobile a:hover { color: var(--teal); }
+    .nav-mobile-close {
+      position: absolute;
+      top: 22px; right: 5%;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--soil);
+      z-index: 103;
+      padding: 8px;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 72px);
+      min-height: 560px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+      margin-top: 72px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(27, 42, 107, 0.72) 0%,
+        rgba(27, 42, 107, 0.3) 50%,
+        rgba(0,0,0,0.1) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 7%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+    @media (max-width: 680px) {
+      .hero-eyebrow {
+        display: inline-block;
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 3px;
+        text-shadow: none;
+      }
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 780px;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      max-width: 420px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--teal);
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      transition: background var(--transition), transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--forest); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.4);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.6); }
+    }
+
+    /* ============================================================
+       STATS BAR
+    ============================================================ */
+    #stats {
+      background: var(--navy);
+      padding: 28px 7%;
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    /* ============================================================
+       DESTINATIONS
+    ============================================================ */
+    #destinations {
+      padding: 96px 7%;
+      background: var(--ivory);
+    }
+    .destinations-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .destinations-header .section-desc { margin-bottom: 0; }
+
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .dest-card {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .dest-card:first-child {
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+
+    .dest-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .dest-card:hover img { transform: scale(1.06); }
+
+    .dest-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(27,42,107,0.75) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px 20px;
+    }
+    .dest-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .dest-tag {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       EXPERIENCES
+    ============================================================ */
+    #experiences {
+      padding: 96px 7%;
+      background: var(--mist);
+    }
+    .exp-header { text-align: center; margin-bottom: 56px; }
+    .exp-header .section-desc { margin: 0 auto; text-align: center; }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .exp-card {
+      background: var(--ivory);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .exp-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(27,42,107,0.12);
+    }
+
+    .exp-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+
+    .exp-body {
+      padding: 22px 20px 24px;
+    }
+    .exp-icon {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+    .exp-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .exp-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.65;
+    }
+    .exp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      transition: color var(--transition);
+    }
+    .exp-link:hover { color: var(--forest); }
+    .exp-link::after { content: '→'; transition: transform 0.2s; }
+    .exp-link:hover::after { transform: translateX(4px); }
+
+    /* ============================================================
+       WHY US
+    ============================================================ */
+    #why {
+      padding: 96px 7%;
+      background: var(--ivory);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .why-visual {
+      position: relative;
+    }
+    .why-img-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .why-img-accent {
+      position: absolute;
+      bottom: -28px;
+      right: -28px;
+      width: 48%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 6px solid var(--ivory);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .why-content { padding-left: 20px; }
+    .why-list { margin-top: 36px; display: flex; flex-direction: column; gap: 28px; }
+    .why-item { display: flex; gap: 18px; align-items: flex-start; }
+    .why-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      min-width: 36px;
+    }
+    .why-item-title {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .why-item-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       GALLERY
+    ============================================================ */
+    #gallery {
+      padding: 96px 7%;
+      background: var(--sand);
+    }
+    .gallery-header { text-align: center; margin-bottom: 48px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(4) { grid-column: span 1; grid-row: span 2; }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 1;
+      transition: transform 0.6s ease;
+    }
+    .gallery-item:nth-child(1) img { aspect-ratio: 2/1; }
+    .gallery-item:nth-child(4) img { aspect-ratio: auto; height: 100%; }
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    #testimonials {
+      padding: 96px 7%;
+      background: var(--navy);
+    }
+    .testi-header { text-align: center; margin-bottom: 56px; }
+    .testi-header .section-eyebrow { color: var(--gold); }
+    .testi-header .section-title { color: var(--white); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 32px 28px;
+    }
+    .testi-quote {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .testi-quote::before { content: '\201C'; color: var(--gold); font-size: 2rem; line-height: 0; vertical-align: -0.4em; margin-right: 4px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--teal);
+      flex-shrink: 0;
+    }
+    .testi-name {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .testi-origin {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 2px;
+    }
+    .testi-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 14px; letter-spacing: 2px; }
+
+    /* ============================================================
+       INQUIRY FORM
+    ============================================================ */
+    #inquiry {
+      padding: 96px 7%;
+      background: var(--mist);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .inquiry-info .section-desc { margin-bottom: 36px; }
+
+    .inquiry-details { display: flex; flex-direction: column; gap: 16px; }
+    .inquiry-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: #555;
+    }
+    .inquiry-detail-icon {
+      width: 38px; height: 38px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .inquiry-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--soil);
+      background: var(--white);
+      border: 1px solid #D8D0C4;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color var(--transition);
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--teal);
+      border: none;
+      padding: 16px 36px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition);
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--forest); }
+
+    .form-wa {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: #666;
+      margin-top: 4px;
+    }
+    .form-wa a {
+      color: var(--teal);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 60px 7% 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-logo img { height: 52px; margin-bottom: 16px; }
+    .footer-about {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-top: 12px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-socials {
+      display: flex;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .footer-social {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .footer-social:hover { border-color: var(--gold); color: var(--gold); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-nav-links { display: flex; gap: 20px; }
+    .footer-nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      transition: color var(--transition);
+    }
+    .footer-nav-links a:hover { color: var(--gold); }
+
+    /* ============================================================
+       RESPONSIVE — TABLET
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .dest-card:first-child { grid-row: span 1; }
+      .exp-grid { grid-template-columns: repeat(2, 1fr); }
+      .testi-grid { grid-template-columns: repeat(2, 1fr); }
+      #why { grid-template-columns: 1fr; gap: 40px; }
+      .why-visual { max-width: 480px; }
+      .why-img-accent { right: -14px; bottom: -14px; }
+      #inquiry { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE
+    ============================================================ */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      #hero { padding-bottom: 60px; }
+      .hero-content { padding: 0 5%; }
+
+      #stats { gap: 20px; padding: 24px 5%; }
+      .stat-number { font-size: 1.8rem; }
+
+      #destinations,
+      #experiences,
+      #gallery,
+      #testimonials,
+      #inquiry { padding: 64px 5%; }
+      #why { padding: 64px 5%; }
+
+      .dest-grid { grid-template-columns: 1fr 1fr; }
+      .dest-card:first-child { grid-column: span 2; }
+
+      .exp-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .gallery-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+
+      .form-row { grid-template-columns: 1fr; }
+      .destinations-header { flex-direction: column; align-items: flex-start; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .why-img-accent { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey Logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#experiences">Experiences</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#inquiry" class="nav-cta">Plan My Trip</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="nav-mobile" id="mobileNav">
+    <button class="nav-mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    <a href="#destinations" class="mobile-link">Destinations</a>
+    <a href="#experiences" class="mobile-link">Experiences</a>
+    <a href="packages.html" class="mobile-link">Packages</a>
+    <a href="about.html" class="mobile-link">About</a>
+    <a href="#inquiry" class="mobile-link">Plan My Trip</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Bali Private Tour & Travel</p>
+      <h1 class="hero-headline">Less Worry.<br>More Memories.</h1>
+      <p class="hero-sub">Perjalanan impian ke Bali, dirancang khusus untuk kamu — private, personal, tak terlupakan.</p>
+      <div class="hero-actions">
+        <a href="#inquiry" class="btn-primary">Plan My Trip</a>
+        <a href="#experiences" class="btn-ghost">Explore Experiences</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       STATS BAR
+  ============================================================ -->
+  <div id="stats">
+    <div class="stat-item fade-in">
+      <div class="stat-number" data-count="500" data-suffix="+">500+</div>
+      <div class="stat-label">Happy Travellers</div>
+    </div>
+    <div class="stat-item fade-in delay-1">
+      <div class="stat-number" data-count="4" data-suffix="">4</div>
+      <div class="stat-label">Iconic Destinations</div>
+    </div>
+    <div class="stat-item fade-in delay-2">
+      <div class="stat-number" data-count="100" data-suffix="%">100%</div>
+      <div class="stat-label">Private & Custom</div>
+    </div>
+    <div class="stat-item fade-in delay-3">
+      <div class="stat-number" data-count="5" data-suffix="★">5★</div>
+      <div class="stat-label">Rated by Guests</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DESTINATIONS
+  ============================================================ -->
+  <section id="destinations">
+    <div class="destinations-header fade-in">
+      <div>
+        <p class="section-eyebrow">Where to Go</p>
+        <h2 class="section-title">Jelajahi Bali<br>bersama kami</h2>
+      </div>
+      <p class="section-desc">Dari sawah Ubud hingga tebing Uluwatu — kami kenalkan Bali yang sesungguhnya, jauh dari keramaian.</p>
+    </div>
+
+    <div class="dest-grid">
+      <div class="dest-card fade-in">
+        <img src="https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80" alt="Ubud, Bali" loading="lazy" />
+        <div class="dest-overlay">
+          <div class="dest-name">Ubud</div>
+          <div class="dest-tag">Culture & Nature</div>
+        </div>
+      </div>
+      <div class="dest-card fade-in delay-1">
+        <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=600&q=80" alt="Uluwatu, Bali" loading="lazy" />
+        <div class="dest-overlay">
+          <div class="dest-name">Uluwatu</div>
+          <div class="dest-tag">Clifftop & Sunset</div>
+        </div>
+      </div>
+      <div class="dest-card fade-in delay-2">
+        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80" alt="Seminyak, Bali" loading="lazy" />
+        <div class="dest-overlay">
+          <div class="dest-name">Seminyak</div>
+          <div class="dest-tag">Beach & Lifestyle</div>
+        </div>
+      </div>
+      <div class="dest-card fade-in delay-3">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642dc?auto=format&fit=crop&w=600&q=80" alt="Nusa Penida, Bali" loading="lazy" />
+        <div class="dest-overlay">
+          <div class="dest-name">Nusa Penida</div>
+          <div class="dest-tag">Island & Adventure</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPERIENCES
+  ============================================================ -->
+  <section id="experiences">
+    <div class="exp-header fade-in">
+      <p class="section-eyebrow">What We Offer</p>
+      <h2 class="section-title">Setiap perjalanan,<br>dirancang untuk kamu</h2>
+      <p class="section-desc">Kami tidak jual paket massal. Semua itinerary dibuat personal, sesuai ritme dan cerita hidupmu.</p>
+    </div>
+
+    <div class="exp-grid">
+      <div class="exp-card fade-scale">
+        <img class="exp-img" src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=600&q=80" alt="Private Tour" loading="lazy" />
+        <div class="exp-body">
+          <div class="exp-icon">🗺️</div>
+          <div class="exp-title">Private Tour & Custom Itinerary</div>
+          <p class="exp-desc">Jadwal fleksibel, kendaraan private, guide berpengalaman. Bali versimu, bukan versi orang lain.</p>
+          <a href="packages.html" class="exp-link">Lihat Paket</a>
+        </div>
+      </div>
+      <div class="exp-card fade-scale delay-1">
+        <img class="exp-img" src="https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=600&q=80" alt="Honeymoon" loading="lazy" />
+        <div class="exp-body">
+          <div class="exp-icon">💑</div>
+          <div class="exp-title">Honeymoon & Romantic Getaway</div>
+          <p class="exp-desc">Sunset dinner, villa private, spa romantis — setiap momen dirancang untuk merayakan cinta kalian.</p>
+          <a href="packages.html" class="exp-link">Lihat Paket</a>
+        </div>
+      </div>
+      <div class="exp-card fade-scale delay-2">
+        <img class="exp-img" src="https://images.unsplash.com/photo-1602615576820-ea14cf3e476c?auto=format&fit=crop&w=600&q=80" alt="Family Holiday" loading="lazy" />
+        <div class="exp-body">
+          <div class="exp-icon">👨‍👩‍👧‍👦</div>
+          <div class="exp-title">Family Holiday</div>
+          <p class="exp-desc">Aktivitas seru untuk si kecil, relaksasi untuk orang tua — satu trip, semua bahagia.</p>
+          <a href="packages.html" class="exp-link">Lihat Paket</a>
+        </div>
+      </div>
+      <div class="exp-card fade-scale delay-3">
+        <img class="exp-img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80" alt="Adventure" loading="lazy" />
+        <div class="exp-body">
+          <div class="exp-icon">🧗</div>
+          <div class="exp-title">Adventure & Trekking</div>
+          <p class="exp-desc">Mount Batur sunrise, snorkeling Nusa Penida, rafting Ayung — Bali punya sisi liar yang menakjubkan.</p>
+          <a href="packages.html" class="exp-link">Lihat Paket</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WHY US
+  ============================================================ -->
+  <section id="why">
+    <div class="why-visual fade-right">
+      <img class="why-img-main" src="https://images.unsplash.com/photo-1476158085676-e67f57ed9ed7?auto=format&fit=crop&w=800&q=80" alt="Bali rice terrace" loading="lazy" />
+      <img class="why-img-accent" src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80" alt="Bali temple" loading="lazy" />
+    </div>
+    <div class="why-content fade-left">
+      <p class="section-eyebrow">Why Anabhi Journey</p>
+      <h2 class="section-title">Bukan sekadar<br>tour biasa</h2>
+      <p class="section-desc">Kami percaya perjalanan terbaik adalah yang terasa personal — bukan paket massal yang kamu ikuti, tapi pengalaman yang kamu pimpin.</p>
+      <ul class="why-list">
+        <li class="why-item">
+          <span class="why-num">01</span>
+          <div>
+            <div class="why-item-title">100% Private & Tailored</div>
+            <p class="why-item-desc">Tidak ada rombongan asing. Kendaraan, guide, dan jadwal sepenuhnya milikmu.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">02</span>
+          <div>
+            <div class="why-item-title">Local Knowledge, Global Standard</div>
+            <p class="why-item-desc">Tim kami orang Bali asli — kami tahu tempat tersembunyi yang tidak ada di Google.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">03</span>
+          <div>
+            <div class="why-item-title">Hassle-Free dari A ke Z</div>
+            <p class="why-item-desc">Dari penjemputan bandara hingga check-out hotel, semua kami urus. Less worry, ingat?</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALLERY
+  ============================================================ -->
+  <section id="gallery">
+    <div class="gallery-header fade-in">
+      <p class="section-eyebrow">Gallery</p>
+      <h2 class="section-title">Momen nyata,<br>cerita sungguhan</h2>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=900&q=80" alt="Bali scenery" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=500&q=80" alt="Ubud Bali" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=500&q=80" alt="Bali beach" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642dc?auto=format&fit=crop&w=500&q=80" alt="Nusa Penida" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1476158085676-e67f57ed9ed7?auto=format&fit=crop&w=500&q=80" alt="Rice terrace Bali" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section id="testimonials">
+    <div class="testi-header fade-in">
+      <p class="section-eyebrow">Guest Stories</p>
+      <h2 class="section-title">Kata mereka<br>yang sudah merasakan</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Honestly the best Bali trip we've ever had. Everything was perfectly arranged — no stress, just pure enjoyment. Anabhi Journey truly delivered on their promise.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--teal);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:1rem;">S</div>
+          <div>
+            <div class="testi-name">Sarah & James</div>
+            <div class="testi-origin">Melbourne, Australia</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Honeymoon kami di Bali jadi luar biasa berkat Anabhi Journey. Semua detail kecil diperhatikan, dari bunga di kamar hingga sunset dinner yang romantis.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--forest);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:1rem;">R</div>
+          <div>
+            <div class="testi-name">Rizky & Nadia</div>
+            <div class="testi-origin">Jakarta, Indonesia</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">We traveled with our two kids and Anabhi Journey made it so easy. The guide was patient, the schedule was flexible, and the kids had the time of their lives!</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--gold);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:1rem;">M</div>
+          <div>
+            <div class="testi-name">Michael & Family</div>
+            <div class="testi-origin">Singapore</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INQUIRY FORM
+  ============================================================ -->
+  <section id="inquiry">
+    <div class="inquiry-info fade-in">
+      <p class="section-eyebrow">Plan Your Trip</p>
+      <h2 class="section-title">Mari rencanakan<br>perjalananmu</h2>
+      <p class="section-desc">Ceritakan impian liburanmu — kami akan menyusun itinerary yang pas, gratis tanpa komitmen.</p>
+      <div class="inquiry-details">
+        <div class="inquiry-detail">
+          <div class="inquiry-detail-icon">📧</div>
+          <span>info@anabhijourney.com</span>
+        </div>
+        <div class="inquiry-detail">
+          <div class="inquiry-detail-icon">💬</div>
+          <span><a href="https://wa.me/6200000000000" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600;">Chat via WhatsApp</a></span>
+        </div>
+        <div class="inquiry-detail">
+          <div class="inquiry-detail-icon">⏰</div>
+          <span>Respon dalam 24 jam</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="inquiry-form fade-in">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name / Nama Lengkap</label>
+          <input type="text" id="name" placeholder="John Doe" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="john@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">WhatsApp / Phone</label>
+          <input type="tel" id="phone" placeholder="+62 812 xxxx xxxx" />
+        </div>
+        <div class="form-group">
+          <label for="pax">Number of Pax / Jumlah Orang</label>
+          <input type="number" id="pax" min="1" placeholder="2" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Travel Date / Tanggal</label>
+          <input type="date" id="date" />
+        </div>
+        <div class="form-group">
+          <label for="type">Experience Type</label>
+          <select id="type">
+            <option value="">-- Select --</option>
+            <option>Private Tour & Custom Itinerary</option>
+            <option>Honeymoon & Romantic Getaway</option>
+            <option>Family Holiday</option>
+            <option>Adventure & Trekking</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell us your dream trip / Ceritakan impianmu</label>
+        <textarea id="message" placeholder="Saya ingin ke Ubud 3 hari, tertarik sunset Uluwatu, dan ingin mencoba makanan lokal..."></textarea>
+      </div>
+      <button class="form-submit" id="formSubmit">Send Inquiry →</button>
+      <div class="form-wa">
+        <span>Prefer chat langsung?</span>
+        <a href="https://wa.me/6200000000000" target="_blank" rel="noopener">WhatsApp kami</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey" />
+        </div>
+        <p class="footer-about">Tour & travel private Bali — kami merancang perjalanan yang personal, bukan paket massal. Dari Ubud hingga Nusa Penida, kami kenalkan Bali yang sesungguhnya.</p>
+        <p class="footer-tagline">Less Worry. More Memories.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.54V6.78a4.85 4.85 0 01-1.03-.09z"/></svg>
+          </a>
+          <a href="https://wa.me/6200000000000" class="footer-social" aria-label="WhatsApp" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#inquiry">Plan My Trip</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Destinations</div>
+        <ul class="footer-links">
+          <li><a href="#destinations">Ubud</a></li>
+          <li><a href="#destinations">Uluwatu</a></li>
+          <li><a href="#destinations">Seminyak</a></li>
+          <li><a href="#destinations">Nusa Penida</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Anabhi Journey. All rights reserved.</p>
+      <div class="footer-nav-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // --- Navbar scroll effect ---
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // --- Hero bg parallax load ---
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('load', () => {
+      heroBg.classList.add('loaded');
+    });
+
+    // --- Mobile nav ---
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+    const mobileClose  = document.getElementById('mobileClose');
+    const mobileLinks  = document.querySelectorAll('.mobile-link');
+
+    function openMobileNav() {
+      mobileNav.classList.add('open');
+      hamburgerBtn.classList.add('hidden');
+    }
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+      hamburgerBtn.classList.remove('hidden');
+    }
+    hamburgerBtn.addEventListener('click', openMobileNav);
+    mobileClose.addEventListener('click',  closeMobileNav);
+    mobileLinks.forEach(link => link.addEventListener('click', closeMobileNav));
+
+    // --- Scroll reveal (semua kelas animasi) ---
+    const revealEls = document.querySelectorAll('.fade-in, .fade-left, .fade-right, .fade-scale');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.10 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // --- Number counter animation ---
+    function animateCounter(el) {
+      const target  = parseInt(el.dataset.count, 10);
+      const suffix  = el.dataset.suffix || '';
+      const dur     = Math.min(1800, Math.max(800, target * 3)); // durasi proporsional
+      const start   = performance.now();
+      const step = (now) => {
+        const elapsed  = now - start;
+        const progress = Math.min(elapsed / dur, 1);
+        // ease-out cubic
+        const eased    = 1 - Math.pow(1 - progress, 3);
+        const current  = Math.round(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterEls = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counterEls.forEach(el => counterObserver.observe(el));
+
+    // --- Form submit → WhatsApp ---
+    document.getElementById('formSubmit').addEventListener('click', () => {
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const phone   = document.getElementById('phone').value.trim();
+      const pax     = document.getElementById('pax').value.trim();
+      const date    = document.getElementById('date').value;
+      const type    = document.getElementById('type').value;
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email) {
+        alert('Mohon isi nama dan email terlebih dahulu.');
+        return;
+      }
+
+      const text = encodeURIComponent(
+        `Halo Anabhi Journey! Saya ingin merencanakan perjalanan ke Bali.\n\n` +
+        `Nama: ${name}\nEmail: ${email}\nNo HP: ${phone}\nJumlah Orang: ${pax}\n` +
+        `Tanggal: ${date}\nJenis Trip: ${type}\n\nCerita Trip:\n${message}`
+      );
+      window.open(`https://wa.me/6200000000000?text=${text}`, '_blank');
+    });
+  </script>
+
+</body>
+</html>

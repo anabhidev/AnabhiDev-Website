@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Anabhi Journey CMS</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy:   #1B2A6B;
+      --teal:   #2A8A8A;
+      --gold:   #E8A020;
+      --forest: #2D5A3D;
+      --sand:   #F5F0E8;
+      --ivory:  #FDFAF5;
+      --mist:   #EAF2EC;
+      --soil:   #1A1A1A;
+      --white:  #FFFFFF;
+      --danger: #DC3545;
+      --success:#2A8A8A;
+      --border: #E2D9D0;
+      --sidebar-w: 240px;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 6px;
+      --transition: 0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body { font-family: var(--font-body); background: #F0EDE8; color: var(--soil); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: var(--font-body); cursor: pointer; }
+    input, select, textarea { font-family: var(--font-body); }
+
+    /* ============================================================
+       LOGIN SCREEN
+    ============================================================ */
+    #login-screen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--navy) 0%, #2A3F8F 100%);
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--ivory);
+      border-radius: 12px;
+      padding: 48px 40px;
+      width: 100%; max-width: 400px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    }
+    .login-logo { text-align: center; margin-bottom: 32px; }
+    .login-logo img { height: 64px; margin: 0 auto 12px; }
+    .login-logo h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-style: italic;
+      color: var(--navy);
+    }
+    .login-logo p {
+      font-size: 0.78rem; color: #888; margin-top: 4px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .login-field { margin-bottom: 16px; }
+    .login-field label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .login-field input {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      font-size: 0.9rem; outline: none;
+      transition: border-color var(--transition);
+      background: var(--white);
+    }
+    .login-field input:focus { border-color: var(--teal); }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: var(--teal); color: var(--white);
+      border: none; border-radius: var(--radius);
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background var(--transition); margin-top: 8px;
+    }
+    .login-btn:hover { background: var(--forest); }
+    .login-error {
+      color: var(--danger); font-size: 0.82rem;
+      text-align: center; margin-top: 12px; display: none;
+    }
+    .login-hint {
+      font-size: 0.75rem; color: #aaa;
+      text-align: center; margin-top: 20px;
+    }
+
+    /* ============================================================
+       APP LAYOUT
+    ============================================================ */
+    #app { display: none; min-height: 100vh; }
+
+    /* SIDEBAR */
+    #sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      z-index: 50;
+      transition: transform var(--transition);
+    }
+    .sidebar-brand {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-brand img { height: 44px; }
+    .sidebar-brand-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-top: 8px;
+    }
+    .sidebar-nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+    .sidebar-section {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 14px 20px 6px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      font-size: 0.85rem; font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      transition: all var(--transition);
+      border-left: 3px solid transparent;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .sidebar-link.active {
+      color: var(--white); border-left-color: var(--gold);
+      background: rgba(255,255,255,0.08);
+    }
+    .sidebar-link-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logout {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.5);
+      background: none; border: none; width: 100%;
+      transition: color var(--transition); padding: 4px 0;
+    }
+    .sidebar-logout:hover { color: var(--danger); }
+
+    /* MAIN */
+    #main {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* TOPBAR */
+    #topbar {
+      background: var(--white);
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 40;
+    }
+    .topbar-title {
+      font-size: 1rem; font-weight: 600; color: var(--navy);
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+    .topbar-view-site {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 500; color: var(--teal);
+      padding: 7px 14px; border: 1px solid var(--teal);
+      border-radius: var(--radius); transition: all var(--transition);
+    }
+    .topbar-view-site:hover { background: var(--teal); color: var(--white); }
+    .topbar-user {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+    }
+
+    /* CONTENT */
+    #content { padding: 28px; flex: 1; }
+
+    /* PANELS */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ============================================================
+       CARDS & UI COMPONENTS
+    ============================================================ */
+    .page-heading {
+      font-family: var(--font-display);
+      font-size: 1.9rem; font-style: italic; color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .page-sub {
+      font-size: 0.82rem; color: #888; margin-bottom: 28px;
+    }
+
+    /* Stats cards (dashboard) */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 20px; border-left: 4px solid var(--teal);
+    }
+    .stat-card.gold { border-left-color: var(--gold); }
+    .stat-card.navy { border-left-color: var(--navy); }
+    .stat-card.forest { border-left-color: var(--forest); }
+    .stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+    .stat-value { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; color: var(--navy); line-height: 1; }
+
+    /* Data table */
+    .table-card {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .table-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-header-title { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+    .btn-add {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--white); background: var(--teal);
+      padding: 8px 16px; border: none; border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+    .btn-add:hover { background: var(--forest); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: #F8F5F0; }
+    th {
+      text-align: left; padding: 11px 16px;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #999; border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 13px 16px; font-size: 0.85rem; color: #444;
+      border-bottom: 1px solid #F0EDE8; vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #FDFAF5; }
+
+    .td-img {
+      width: 52px; height: 40px; object-fit: cover;
+      border-radius: 4px; background: var(--border);
+    }
+    .td-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+      background: var(--mist); color: var(--forest);
+    }
+    .td-badge.honey { background: #FCE8F0; color: #B5547A; }
+    .td-badge.adv { background: #E8F2EC; color: var(--forest); }
+    .td-badge.fam { background: #E8F5F5; color: var(--teal); }
+    .td-badge.priv { background: #E8ECF5; color: var(--navy); }
+
+    .btn-row { display: flex; gap: 6px; }
+    .btn-edit, .btn-del {
+      font-size: 0.72rem; font-weight: 600;
+      padding: 5px 12px; border-radius: 4px; border: none;
+      transition: all var(--transition);
+    }
+    .btn-edit { background: #EAF2EC; color: var(--forest); }
+    .btn-edit:hover { background: var(--forest); color: var(--white); }
+    .btn-del { background: #FDECEA; color: var(--danger); }
+    .btn-del:hover { background: var(--danger); color: var(--white); }
+
+    /* ============================================================
+       MODAL
+    ============================================================ */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 200;
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 10px;
+      width: 100%; max-width: 560px; max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--white); z-index: 1;
+    }
+    .modal-title { font-size: 1rem; font-weight: 600; color: var(--navy); }
+    .modal-close {
+      background: none; border: none; font-size: 1.4rem;
+      color: #999; line-height: 1; padding: 4px;
+    }
+    .modal-close:hover { color: var(--danger); }
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 16px 24px; border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 10px;
+      position: sticky; bottom: 0; background: var(--white);
+    }
+
+    /* FORM */
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      font-size: 0.88rem; outline: none; color: var(--soil);
+      transition: border-color var(--transition); background: var(--white);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--teal); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-hint { font-size: 0.72rem; color: #999; margin-top: 4px; }
+
+    /* Image preview */
+    .img-preview-wrap { margin-top: 8px; }
+    .img-preview {
+      width: 100%; max-height: 160px; object-fit: cover;
+      border-radius: 4px; border: 1px solid var(--border);
+      display: none;
+    }
+    .img-preview.show { display: block; }
+
+    /* Tags input */
+    .tags-input-wrap {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 6px 8px; display: flex; flex-wrap: wrap; gap: 6px;
+      min-height: 42px; cursor: text; background: var(--white);
+    }
+    .tags-input-wrap:focus-within { border-color: var(--teal); }
+    .tag-chip {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--mist); color: var(--forest);
+      padding: 3px 10px 3px 10px; border-radius: 100px;
+      font-size: 0.72rem; font-weight: 500;
+    }
+    .tag-chip-del {
+      background: none; border: none; color: var(--forest);
+      font-size: 0.9rem; padding: 0; line-height: 1; cursor: pointer;
+    }
+    .tags-input {
+      border: none !important; padding: 3px 4px !important;
+      min-width: 120px; flex: 1; outline: none;
+      font-size: 0.82rem; background: transparent !important;
+    }
+
+    /* Button variants */
+    .btn-save {
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); background: var(--teal);
+      padding: 10px 22px; border: none; border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+    .btn-save:hover { background: var(--forest); }
+    .btn-cancel {
+      font-size: 0.82rem; font-weight: 500;
+      color: #666; background: #F0EDE8;
+      padding: 10px 22px; border: none; border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+    .btn-cancel:hover { background: var(--border); }
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy); color: var(--white);
+      padding: 12px 20px; border-radius: var(--radius);
+      font-size: 0.85rem; z-index: 9999;
+      transform: translateY(80px); opacity: 0;
+      transition: all 0.3s ease; pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: var(--forest); }
+    #toast.error { background: var(--danger); }
+
+    /* ============================================================
+       SETTINGS PANEL
+    ============================================================ */
+    .settings-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .settings-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .settings-card-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--navy);
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .btn-save-settings {
+      margin-top: 16px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); background: var(--teal);
+      padding: 10px 20px; border: none; border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+    .btn-save-settings:hover { background: var(--forest); }
+
+    /* ============================================================
+       MOBILE SIDEBAR
+    ============================================================ */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4); z-index: 49;
+    }
+    .mobile-topbar-menu {
+      display: none; background: none; border: none;
+      font-size: 1.4rem; color: var(--navy); cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      #main { margin-left: 0; }
+      .mobile-topbar-menu { display: block; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .settings-grid { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      #content { padding: 16px; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .login-box { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN SCREEN
+============================================================ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey" />
+      <h1>Admin Panel</h1>
+      <p>Anabhi Journey CMS</p>
+    </div>
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" />
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" />
+    </div>
+    <button class="login-btn" id="loginBtn">Masuk ke Dashboard</button>
+    <p class="login-error" id="loginError">Username atau password salah.</p>
+    <p class="login-hint">Default: admin / anabhi2025</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP
+============================================================ -->
+<div id="app">
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-brand">
+      <img src="https://i.ibb.co.com/s9dbxnH5/file-00000000980c720bac4e65e33e4c0795.png" alt="Anabhi Journey" />
+      <div class="sidebar-brand-label">CMS Dashboard</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Menu</div>
+      <a href="#" class="sidebar-link active" data-panel="dashboard">
+        <span class="sidebar-link-icon">📊</span> Dashboard
+      </a>
+      <div class="sidebar-section">Konten</div>
+      <a href="#" class="sidebar-link" data-panel="packages">
+        <span class="sidebar-link-icon">🗺️</span> Paket Tour
+      </a>
+      <a href="#" class="sidebar-link" data-panel="destinations">
+        <span class="sidebar-link-icon">📍</span> Destinasi
+      </a>
+      <a href="#" class="sidebar-link" data-panel="testimonials">
+        <span class="sidebar-link-icon">💬</span> Testimoni
+      </a>
+      <a href="#" class="sidebar-link" data-panel="gallery">
+        <span class="sidebar-link-icon">🖼️</span> Galeri Foto
+      </a>
+      <div class="sidebar-section">Sistem</div>
+      <a href="#" class="sidebar-link" data-panel="settings">
+        <span class="sidebar-link-icon">⚙️</span> Pengaturan
+      </a>
+      <a href="index.html" class="sidebar-link" target="_blank">
+        <span class="sidebar-link-icon">🌐</span> Lihat Website
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" id="logoutBtn">
+        <span>🚪</span> Keluar
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="mobile-topbar-menu" id="mobileSidebarToggle">☰</button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      </div>
+      <div class="topbar-actions">
+        <a href="index.html" target="_blank" class="topbar-view-site">
+          <span>🌐</span> View Site
+        </a>
+        <div class="topbar-user">A</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- ==================== DASHBOARD ==================== -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="page-heading">Selamat datang! 👋</div>
+        <p class="page-sub">Kelola konten website Anabhi Journey dari sini.</p>
+
+        <div class="stats-row">
+          <div class="stat-card teal">
+            <div class="stat-label">Total Paket</div>
+            <div class="stat-value" id="stat-packages">0</div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-label">Destinasi</div>
+            <div class="stat-value" id="stat-destinations">0</div>
+          </div>
+          <div class="stat-card navy">
+            <div class="stat-label">Testimoni</div>
+            <div class="stat-value" id="stat-testimonials">0</div>
+          </div>
+          <div class="stat-card forest">
+            <div class="stat-label">Foto Galeri</div>
+            <div class="stat-value" id="stat-gallery">0</div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">⚡ Aksi Cepat</div>
+          </div>
+          <div style="padding:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn-add" onclick="nav('packages');openPkgModal()">+ Tambah Paket</button>
+            <button class="btn-add" style="background:var(--gold);color:var(--navy);" onclick="nav('destinations');openDestModal()">+ Tambah Destinasi</button>
+            <button class="btn-add" style="background:var(--navy);" onclick="nav('testimonials');openTestiModal()">+ Tambah Testimoni</button>
+            <button class="btn-add" style="background:var(--forest);" onclick="nav('gallery');openGalleryModal()">+ Tambah Foto</button>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">📋 Paket Terbaru</div>
+            <button class="btn-add" onclick="nav('packages')">Lihat Semua</button>
+          </div>
+          <table>
+            <thead><tr><th>Foto</th><th>Nama Paket</th><th>Kategori</th><th>Harga</th><th>Durasi</th></tr></thead>
+            <tbody id="dashboard-pkg-table"><tr><td colspan="5" style="color:#aaa;text-align:center;padding:24px;">Belum ada paket.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== PACKAGES ==================== -->
+      <div class="panel" id="panel-packages">
+        <div class="page-heading">Paket Tour</div>
+        <p class="page-sub">Tambah, edit, atau hapus paket wisata yang tampil di website.</p>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Semua Paket (<span id="pkg-count">0</span>)</div>
+            <button class="btn-add" onclick="openPkgModal()">+ Tambah Paket</button>
+          </div>
+          <table>
+            <thead><tr><th>Foto</th><th>Nama Paket</th><th>Kategori</th><th>Harga</th><th>Durasi</th><th>Aksi</th></tr></thead>
+            <tbody id="pkg-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== DESTINATIONS ==================== -->
+      <div class="panel" id="panel-destinations">
+        <div class="page-heading">Destinasi</div>
+        <p class="page-sub">Kelola destinasi yang ditampilkan di section Destinations.</p>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Semua Destinasi (<span id="dest-count">0</span>)</div>
+            <button class="btn-add" onclick="openDestModal()">+ Tambah Destinasi</button>
+          </div>
+          <table>
+            <thead><tr><th>Foto</th><th>Nama</th><th>Tag</th><th>Aksi</th></tr></thead>
+            <tbody id="dest-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== TESTIMONIALS ==================== -->
+      <div class="panel" id="panel-testimonials">
+        <div class="page-heading">Testimoni</div>
+        <p class="page-sub">Kelola ulasan tamu yang tampil di website.</p>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Semua Testimoni (<span id="testi-count">0</span>)</div>
+            <button class="btn-add" onclick="openTestiModal()">+ Tambah Testimoni</button>
+          </div>
+          <table>
+            <thead><tr><th>Nama</th><th>Asal</th><th>Rating</th><th>Ulasan</th><th>Aksi</th></tr></thead>
+            <tbody id="testi-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== GALLERY ==================== -->
+      <div class="panel" id="panel-gallery">
+        <div class="page-heading">Galeri Foto</div>
+        <p class="page-sub">Kelola foto yang tampil di section Gallery.</p>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-header-title">Semua Foto (<span id="gallery-count">0</span>)</div>
+            <button class="btn-add" onclick="openGalleryModal()">+ Tambah Foto</button>
+          </div>
+          <table>
+            <thead><tr><th>Foto</th><th>Caption</th><th>URL Foto</th><th>Aksi</th></tr></thead>
+            <tbody id="gallery-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== SETTINGS ==================== -->
+      <div class="panel" id="panel-settings">
+        <div class="page-heading">Pengaturan</div>
+        <p class="page-sub">Ubah informasi dasar website dan akun admin.</p>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <div class="settings-card-title">🌐 Info Website</div>
+            <div class="form-group"><label>Nama Bisnis</label><input type="text" id="set-name" value="Anabhi Journey" /></div>
+            <div class="form-group"><label>Tagline</label><input type="text" id="set-tagline" value="Less Worry. More Memories." /></div>
+            <div class="form-group"><label>Email Kontak</label><input type="email" id="set-email" value="info@anabhijourney.com" /></div>
+            <div class="form-group"><label>Nomor WhatsApp (dengan kode negara)</label><input type="text" id="set-wa" placeholder="628xxxxxxxxx" /></div>
+            <button class="btn-save-settings" onclick="saveSettings()">Simpan Pengaturan</button>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-title">🔗 Social Media</div>
+            <div class="form-group"><label>Instagram URL</label><input type="url" id="set-ig" placeholder="https://instagram.com/..." /></div>
+            <div class="form-group"><label>TikTok URL</label><input type="url" id="set-tt" placeholder="https://tiktok.com/@..." /></div>
+            <button class="btn-save-settings" onclick="saveSettings()">Simpan</button>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-title">🔒 Ganti Password Admin</div>
+            <div class="form-group"><label>Password Lama</label><input type="password" id="set-old-pass" /></div>
+            <div class="form-group"><label>Password Baru</label><input type="password" id="set-new-pass" /></div>
+            <div class="form-group"><label>Konfirmasi Password Baru</label><input type="password" id="set-conf-pass" /></div>
+            <button class="btn-save-settings" onclick="changePassword()">Ganti Password</button>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-title">🗑️ Reset Data</div>
+            <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:16px;">Hapus semua data paket, destinasi, testimoni, dan galeri. <strong>Tindakan ini tidak bisa dibatalkan.</strong></p>
+            <button class="btn-save-settings" style="background:var(--danger);" onclick="resetAllData()">Reset Semua Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ============================================================
+     MODALS
+============================================================ -->
+
+<!-- Package Modal -->
+<div class="modal-backdrop" id="pkgModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="pkgModalTitle">Tambah Paket</div>
+      <button class="modal-close" onclick="closePkgModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="pkg-id" />
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Nama Paket *</label>
+          <input type="text" id="pkg-name" placeholder="Bali Complete Experience" />
+        </div>
+        <div class="form-group">
+          <label>Kategori *</label>
+          <select id="pkg-cat">
+            <option value="private">Private Tour</option>
+            <option value="honeymoon">Honeymoon</option>
+            <option value="family">Family</option>
+            <option value="adventure">Adventure</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Deskripsi *</label>
+        <textarea id="pkg-desc" placeholder="Deskripsi singkat paket..."></textarea>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Harga (contoh: Rp 3.500.000)</label>
+          <input type="text" id="pkg-price" placeholder="Rp 3.500.000" />
+        </div>
+        <div class="form-group">
+          <label>Satuan Harga</label>
+          <select id="pkg-price-unit">
+            <option value="/ orang">/ orang</option>
+            <option value="/ pasang">/ pasang</option>
+            <option value="/ group">/ group</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Durasi</label>
+          <input type="text" id="pkg-duration" placeholder="5 Hari / 4 Malam" />
+        </div>
+        <div class="form-group">
+          <label>Kapasitas</label>
+          <input type="text" id="pkg-pax" placeholder="2–8 Orang" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>URL Foto</label>
+        <input type="url" id="pkg-img" placeholder="https://images.unsplash.com/..." oninput="previewImg('pkg-img','pkg-img-preview')" />
+        <p class="form-hint">Paste URL foto dari Unsplash, Google Drive (public), atau hosting foto lainnya.</p>
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="pkg-img-preview" src="" alt="Preview" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Highlights (tekan Enter untuk tambah tag)</label>
+        <div class="tags-input-wrap" id="pkg-tags-wrap">
+          <input type="text" class="tags-input" id="pkg-tags-input" placeholder="Ketik lalu Enter..." />
+        </div>
+        <input type="hidden" id="pkg-tags-data" />
+      </div>
+      <div class="form-group">
+        <label>Badge / Label</label>
+        <input type="text" id="pkg-badge" placeholder="⭐ Most Popular" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closePkgModal()">Batal</button>
+      <button class="btn-save" onclick="savePkg()">Simpan Paket</button>
+    </div>
+  </div>
+</div>
+
+<!-- Destination Modal -->
+<div class="modal-backdrop" id="destModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="destModalTitle">Tambah Destinasi</div>
+      <button class="modal-close" onclick="closeDestModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="dest-id" />
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Nama Destinasi *</label>
+          <input type="text" id="dest-name" placeholder="Ubud" />
+        </div>
+        <div class="form-group">
+          <label>Tag (kategori)</label>
+          <input type="text" id="dest-tag" placeholder="Culture & Nature" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>URL Foto</label>
+        <input type="url" id="dest-img" placeholder="https://..." oninput="previewImg('dest-img','dest-img-preview')" />
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="dest-img-preview" src="" alt="Preview" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeDestModal()">Batal</button>
+      <button class="btn-save" onclick="saveDest()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonial Modal -->
+<div class="modal-backdrop" id="testiModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="testiModalTitle">Tambah Testimoni</div>
+      <button class="modal-close" onclick="closeTestiModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="testi-id" />
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Nama Tamu *</label>
+          <input type="text" id="testi-name" placeholder="Sarah & James" />
+        </div>
+        <div class="form-group">
+          <label>Asal / Kota</label>
+          <input type="text" id="testi-origin" placeholder="Melbourne, Australia" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Rating</label>
+        <select id="testi-rating">
+          <option value="5">★★★★★ (5)</option>
+          <option value="4">★★★★ (4)</option>
+          <option value="3">★★★ (3)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ulasan *</label>
+        <textarea id="testi-quote" placeholder="Tulis ulasan tamu di sini..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeTestiModal()">Batal</button>
+      <button class="btn-save" onclick="saveTesti()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery Modal -->
+<div class="modal-backdrop" id="galleryModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="galleryModalTitle">Tambah Foto Galeri</div>
+      <button class="modal-close" onclick="closeGalleryModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="gallery-id" />
+      <div class="form-group">
+        <label>Caption / Keterangan</label>
+        <input type="text" id="gallery-caption" placeholder="Sunset di Uluwatu" />
+      </div>
+      <div class="form-group">
+        <label>URL Foto *</label>
+        <input type="url" id="gallery-img" placeholder="https://..." oninput="previewImg('gallery-img','gallery-img-preview')" />
+        <p class="form-hint">Paste URL foto. Rekomendasi ukuran: minimal 800×600px.</p>
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="gallery-img-preview" src="" alt="Preview" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeGalleryModal()">Batal</button>
+      <button class="btn-save" onclick="saveGallery()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+// ============================================================
+// STORAGE HELPERS
+// ============================================================
+const STORE = {
+  get: (k)    => JSON.parse(localStorage.getItem('aj_' + k) || '[]'),
+  set: (k, v) => localStorage.setItem('aj_' + k, JSON.stringify(v)),
+  getObj: (k, def={}) => JSON.parse(localStorage.getItem('aj_' + k) || JSON.stringify(def)),
+  setObj: (k, v) => localStorage.setItem('aj_' + k, JSON.stringify(v)),
+};
+
+// ============================================================
+// AUTH
+// ============================================================
+const AUTH = {
+  defaultUser: 'admin',
+  getPass: () => localStorage.getItem('aj_admin_pass') || 'anabhi2025',
+  isLoggedIn: () => sessionStorage.getItem('aj_auth') === '1',
+  login: (user, pass) => {
+    if (user === AUTH.defaultUser && pass === AUTH.getPass()) {
+      sessionStorage.setItem('aj_auth', '1');
+      return true;
+    }
+    return false;
+  },
+  logout: () => { sessionStorage.removeItem('aj_auth'); location.reload(); }
+};
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  if (AUTH.isLoggedIn()) {
+    showApp();
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('logoutBtn').addEventListener('click', () => AUTH.logout());
+
+  // Sidebar nav
+  document.querySelectorAll('.sidebar-link[data-panel]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      nav(link.dataset.panel);
+    });
+  });
+
+  // Mobile sidebar
+  document.getElementById('mobileSidebarToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+  });
+  document.getElementById('sidebarOverlay').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  });
+
+  // Tags input for packages
+  setupTagsInput('pkg-tags-wrap', 'pkg-tags-input', 'pkg-tags-data');
+
+  // Load settings
+  loadSettings();
+});
+
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if (AUTH.login(user, pass)) {
+    showApp();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderAll();
+  updateStats();
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function nav(panelId) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+
+  const panel = document.getElementById('panel-' + panelId);
+  if (panel) panel.classList.add('active');
+  document.querySelector(`.sidebar-link[data-panel="${panelId}"]`)?.classList.add('active');
+
+  const titles = { dashboard:'Dashboard', packages:'Paket Tour', destinations:'Destinasi', testimonials:'Testimoni', gallery:'Galeri Foto', settings:'Pengaturan' };
+  document.getElementById('topbarTitle').textContent = titles[panelId] || panelId;
+
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll() {
+  renderPackages();
+  renderDestinations();
+  renderTestimonials();
+  renderGallery();
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('stat-packages').textContent    = STORE.get('packages').length;
+  document.getElementById('stat-destinations').textContent = STORE.get('destinations').length;
+  document.getElementById('stat-testimonials').textContent = STORE.get('testimonials').length;
+  document.getElementById('stat-gallery').textContent     = STORE.get('gallery').length;
+}
+
+// ============================================================
+// IMAGE PREVIEW
+// ============================================================
+function previewImg(inputId, previewId) {
+  const url = document.getElementById(inputId).value.trim();
+  const img = document.getElementById(previewId);
+  if (url) { img.src = url; img.classList.add('show'); }
+  else { img.classList.remove('show'); }
+}
+
+// ============================================================
+// TAGS INPUT
+// ============================================================
+function setupTagsInput(wrapId, inputId, dataId) {
+  const wrap  = document.getElementById(wrapId);
+  const input = document.getElementById(inputId);
+  if (!wrap || !input) return;
+
+  wrap.addEventListener('click', () => input.focus());
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      const val = input.value.trim();
+      if (val) { addTag(val, wrapId, inputId, dataId); input.value = ''; }
+    }
+    if (e.key === 'Backspace' && !input.value) {
+      const chips = wrap.querySelectorAll('.tag-chip');
+      if (chips.length) chips[chips.length-1].remove();
+      syncTags(wrapId, dataId);
+    }
+  });
+}
+
+function addTag(val, wrapId, inputId, dataId) {
+  const wrap  = document.getElementById(wrapId);
+  const input = document.getElementById(inputId);
+  const chip  = document.createElement('span');
+  chip.className = 'tag-chip';
+  chip.innerHTML = `${val}<button class="tag-chip-del" type="button" onclick="this.parentElement.remove();syncTags('${wrapId}','${dataId}')">×</button>`;
+  wrap.insertBefore(chip, input);
+  syncTags(wrapId, dataId);
+}
+
+function syncTags(wrapId, dataId) {
+  const wrap  = document.getElementById(wrapId);
+  const chips = wrap.querySelectorAll('.tag-chip');
+  const tags  = Array.from(chips).map(c => c.textContent.replace('×','').trim());
+  document.getElementById(dataId).value = JSON.stringify(tags);
+}
+
+function setTags(tags, wrapId, inputId, dataId) {
+  const wrap  = document.getElementById(wrapId);
+  // Remove existing chips
+  wrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
+  tags.forEach(t => addTag(t, wrapId, inputId, dataId));
+}
+
+// ============================================================
+// PACKAGES
+// ============================================================
+const catLabels = { private:'Private Tour', honeymoon:'Honeymoon', family:'Family', adventure:'Adventure' };
+
+function renderPackages() {
+  const pkgs = STORE.get('packages');
+  document.getElementById('pkg-count').textContent = pkgs.length;
+
+  const tbody = document.getElementById('pkg-table');
+  const dashTbody = document.getElementById('dashboard-pkg-table');
+
+  if (!pkgs.length) {
+    const empty = `<tr><td colspan="6" style="color:#aaa;text-align:center;padding:24px;">Belum ada paket. Klik "+ Tambah Paket" untuk mulai.</td></tr>`;
+    tbody.innerHTML = empty;
+    dashTbody.innerHTML = `<tr><td colspan="5" style="color:#aaa;text-align:center;padding:24px;">Belum ada paket.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = pkgs.map((p,i) => `
+    <tr>
+      <td><img class="td-img" src="${p.img || 'https://via.placeholder.com/52x40'}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/52x40'" /></td>
+      <td><strong>${p.name}</strong></td>
+      <td><span class="td-badge ${p.category}">${catLabels[p.category]||p.category}</span></td>
+      <td>${p.price||'-'}</td>
+      <td>${p.duration||'-'}</td>
+      <td><div class="btn-row">
+        <button class="btn-edit" onclick="editPkg(${i})">Edit</button>
+        <button class="btn-del" onclick="deletePkg(${i})">Hapus</button>
+      </div></td>
+    </tr>`).join('');
+
+  dashTbody.innerHTML = pkgs.slice(0,5).map(p => `
+    <tr>
+      <td><img class="td-img" src="${p.img||'https://via.placeholder.com/52x40'}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/52x40'" /></td>
+      <td><strong>${p.name}</strong></td>
+      <td><span class="td-badge ${p.category}">${catLabels[p.category]||p.category}</span></td>
+      <td>${p.price||'-'}</td>
+      <td>${p.duration||'-'}</td>
+    </tr>`).join('');
+}
+
+function openPkgModal(data=null) {
+  document.getElementById('pkgModalTitle').textContent = data ? 'Edit Paket' : 'Tambah Paket';
+  document.getElementById('pkg-id').value       = data ? data._idx : '';
+  document.getElementById('pkg-name').value     = data?.name || '';
+  document.getElementById('pkg-cat').value      = data?.category || 'private';
+  document.getElementById('pkg-desc').value     = data?.desc || '';
+  document.getElementById('pkg-price').value    = data?.price || '';
+  document.getElementById('pkg-price-unit').value = data?.priceUnit || '/ orang';
+  document.getElementById('pkg-duration').value = data?.duration || '';
+  document.getElementById('pkg-pax').value      = data?.pax || '';
+  document.getElementById('pkg-img').value      = data?.img || '';
+  document.getElementById('pkg-badge').value    = data?.badge || '';
+
+  const preview = document.getElementById('pkg-img-preview');
+  if (data?.img) { preview.src = data.img; preview.classList.add('show'); }
+  else preview.classList.remove('show');
+
+  // Tags
+  setTags(data?.tags||[], 'pkg-tags-wrap', 'pkg-tags-input', 'pkg-tags-data');
+
+  document.getElementById('pkgModal').classList.add('open');
+}
+function closePkgModal() { document.getElementById('pkgModal').classList.remove('open'); }
+
+function savePkg() {
+  const name = document.getElementById('pkg-name').value.trim();
+  if (!name) { showToast('Nama paket wajib diisi!', 'error'); return; }
+
+  const pkgs = STORE.get('packages');
+  const idx  = document.getElementById('pkg-id').value;
+  const tagsRaw = document.getElementById('pkg-tags-data').value;
+  const tags = tagsRaw ? JSON.parse(tagsRaw) : [];
+
+  const obj = {
+    name, category: document.getElementById('pkg-cat').value,
+    desc: document.getElementById('pkg-desc').value.trim(),
+    price: document.getElementById('pkg-price').value.trim(),
+    priceUnit: document.getElementById('pkg-price-unit').value,
+    duration: document.getElementById('pkg-duration').value.trim(),
+    pax: document.getElementById('pkg-pax').value.trim(),
+    img: document.getElementById('pkg-img').value.trim(),
+    badge: document.getElementById('pkg-badge').value.trim(),
+    tags,
+  };
+
+  if (idx !== '') pkgs[parseInt(idx)] = obj;
+  else pkgs.push(obj);
+
+  STORE.set('packages', pkgs);
+  closePkgModal();
+  renderPackages();
+  updateStats();
+  showToast(idx !== '' ? 'Paket berhasil diupdate! ✓' : 'Paket berhasil ditambahkan! ✓', 'success');
+}
+
+function editPkg(i) {
+  const pkgs = STORE.get('packages');
+  openPkgModal({...pkgs[i], _idx: i});
+}
+
+function deletePkg(i) {
+  if (!confirm('Hapus paket ini?')) return;
+  const pkgs = STORE.get('packages');
+  pkgs.splice(i, 1);
+  STORE.set('packages', pkgs);
+  renderPackages();
+  updateStats();
+  showToast('Paket dihapus.', 'success');
+}
+
+// ============================================================
+// DESTINATIONS
+// ============================================================
+function renderDestinations() {
+  const dests = STORE.get('destinations');
+  document.getElementById('dest-count').textContent = dests.length;
+  const tbody = document.getElementById('dest-table');
+
+  if (!dests.length) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:#aaa;text-align:center;padding:24px;">Belum ada destinasi.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = dests.map((d,i) => `
+    <tr>
+      <td><img class="td-img" src="${d.img||'https://via.placeholder.com/52x40'}" alt="${d.name}" onerror="this.src='https://via.placeholder.com/52x40'" /></td>
+      <td><strong>${d.name}</strong></td>
+      <td><span class="td-badge">${d.tag||'-'}</span></td>
+      <td><div class="btn-row">
+        <button class="btn-edit" onclick="editDest(${i})">Edit</button>
+        <button class="btn-del" onclick="deleteDest(${i})">Hapus</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function openDestModal(data=null) {
+  document.getElementById('destModalTitle').textContent = data ? 'Edit Destinasi' : 'Tambah Destinasi';
+  document.getElementById('dest-id').value   = data ? data._idx : '';
+  document.getElementById('dest-name').value = data?.name || '';
+  document.getElementById('dest-tag').value  = data?.tag || '';
+  document.getElementById('dest-img').value  = data?.img || '';
+  const preview = document.getElementById('dest-img-preview');
+  if (data?.img) { preview.src = data.img; preview.classList.add('show'); }
+  else preview.classList.remove('show');
+  document.getElementById('destModal').classList.add('open');
+}
+function closeDestModal() { document.getElementById('destModal').classList.remove('open'); }
+
+function saveDest() {
+  const name = document.getElementById('dest-name').value.trim();
+  if (!name) { showToast('Nama destinasi wajib diisi!', 'error'); return; }
+  const dests = STORE.get('destinations');
+  const idx   = document.getElementById('dest-id').value;
+  const obj   = { name, tag: document.getElementById('dest-tag').value.trim(), img: document.getElementById('dest-img').value.trim() };
+  if (idx !== '') dests[parseInt(idx)] = obj; else dests.push(obj);
+  STORE.set('destinations', dests);
+  closeDestModal();
+  renderDestinations();
+  updateStats();
+  showToast(idx !== '' ? 'Destinasi diupdate! ✓' : 'Destinasi ditambahkan! ✓', 'success');
+}
+function editDest(i) { const d = STORE.get('destinations'); openDestModal({...d[i], _idx:i}); }
+function deleteDest(i) {
+  if (!confirm('Hapus destinasi ini?')) return;
+  const d = STORE.get('destinations'); d.splice(i,1);
+  STORE.set('destinations', d); renderDestinations(); updateStats();
+  showToast('Destinasi dihapus.', 'success');
+}
+
+// ============================================================
+// TESTIMONIALS
+// ============================================================
+function renderTestimonials() {
+  const testis = STORE.get('testimonials');
+  document.getElementById('testi-count').textContent = testis.length;
+  const tbody = document.getElementById('testi-table');
+  if (!testis.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#aaa;text-align:center;padding:24px;">Belum ada testimoni.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = testis.map((t,i) => `
+    <tr>
+      <td><strong>${t.name}</strong></td>
+      <td>${t.origin||'-'}</td>
+      <td>${'★'.repeat(parseInt(t.rating)||5)}</td>
+      <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.quote}</td>
+      <td><div class="btn-row">
+        <button class="btn-edit" onclick="editTesti(${i})">Edit</button>
+        <button class="btn-del" onclick="deleteTesti(${i})">Hapus</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function openTestiModal(data=null) {
+  document.getElementById('testiModalTitle').textContent = data ? 'Edit Testimoni' : 'Tambah Testimoni';
+  document.getElementById('testi-id').value     = data ? data._idx : '';
+  document.getElementById('testi-name').value   = data?.name || '';
+  document.getElementById('testi-origin').value = data?.origin || '';
+  document.getElementById('testi-rating').value = data?.rating || '5';
+  document.getElementById('testi-quote').value  = data?.quote || '';
+  document.getElementById('testiModal').classList.add('open');
+}
+function closeTestiModal() { document.getElementById('testiModal').classList.remove('open'); }
+
+function saveTesti() {
+  const name  = document.getElementById('testi-name').value.trim();
+  const quote = document.getElementById('testi-quote').value.trim();
+  if (!name || !quote) { showToast('Nama dan ulasan wajib diisi!', 'error'); return; }
+  const testis = STORE.get('testimonials');
+  const idx    = document.getElementById('testi-id').value;
+  const obj    = { name, origin: document.getElementById('testi-origin').value.trim(), rating: document.getElementById('testi-rating').value, quote };
+  if (idx !== '') testis[parseInt(idx)] = obj; else testis.push(obj);
+  STORE.set('testimonials', testis);
+  closeTestiModal(); renderTestimonials(); updateStats();
+  showToast(idx !== '' ? 'Testimoni diupdate! ✓' : 'Testimoni ditambahkan! ✓', 'success');
+}
+function editTesti(i) { const t = STORE.get('testimonials'); openTestiModal({...t[i], _idx:i}); }
+function deleteTesti(i) {
+  if (!confirm('Hapus testimoni ini?')) return;
+  const t = STORE.get('testimonials'); t.splice(i,1);
+  STORE.set('testimonials', t); renderTestimonials(); updateStats();
+  showToast('Testimoni dihapus.', 'success');
+}
+
+// ============================================================
+// GALLERY
+// ============================================================
+function renderGallery() {
+  const photos = STORE.get('gallery');
+  document.getElementById('gallery-count').textContent = photos.length;
+  const tbody = document.getElementById('gallery-table');
+  if (!photos.length) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:#aaa;text-align:center;padding:24px;">Belum ada foto.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = photos.map((p,i) => `
+    <tr>
+      <td><img class="td-img" src="${p.img||'https://via.placeholder.com/52x40'}" alt="${p.caption}" onerror="this.src='https://via.placeholder.com/52x40'" /></td>
+      <td>${p.caption||'-'}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.78rem;color:#aaa;">${p.img||'-'}</td>
+      <td><div class="btn-row">
+        <button class="btn-edit" onclick="editGallery(${i})">Edit</button>
+        <button class="btn-del" onclick="deleteGallery(${i})">Hapus</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function openGalleryModal(data=null) {
+  document.getElementById('galleryModalTitle').textContent = data ? 'Edit Foto' : 'Tambah Foto';
+  document.getElementById('gallery-id').value      = data ? data._idx : '';
+  document.getElementById('gallery-caption').value = data?.caption || '';
+  document.getElementById('gallery-img').value     = data?.img || '';
+  const preview = document.getElementById('gallery-img-preview');
+  if (data?.img) { preview.src = data.img; preview.classList.add('show'); }
+  else preview.classList.remove('show');
+  document.getElementById('galleryModal').classList.add('open');
+}
+function closeGalleryModal() { document.getElementById('galleryModal').classList.remove('open'); }
+
+function saveGallery() {
+  const img = document.getElementById('gallery-img').value.trim();
+  if (!img) { showToast('URL foto wajib diisi!', 'error'); return; }
+  const photos = STORE.get('gallery');
+  const idx    = document.getElementById('gallery-id').value;
+  const obj    = { caption: document.getElementById('gallery-caption').value.trim(), img };
+  if (idx !== '') photos[parseInt(idx)] = obj; else photos.push(obj);
+  STORE.set('gallery', photos);
+  closeGalleryModal(); renderGallery(); updateStats();
+  showToast(idx !== '' ? 'Foto diupdate! ✓' : 'Foto ditambahkan! ✓', 'success');
+}
+function editGallery(i) { const g = STORE.get('gallery'); openGalleryModal({...g[i], _idx:i}); }
+function deleteGallery(i) {
+  if (!confirm('Hapus foto ini?')) return;
+  const g = STORE.get('gallery'); g.splice(i,1);
+  STORE.set('gallery', g); renderGallery(); updateStats();
+  showToast('Foto dihapus.', 'success');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function loadSettings() {
+  const s = STORE.getObj('settings');
+  if (s.name)    document.getElementById('set-name').value    = s.name;
+  if (s.tagline) document.getElementById('set-tagline').value = s.tagline;
+  if (s.email)   document.getElementById('set-email').value   = s.email;
+  if (s.wa)      document.getElementById('set-wa').value      = s.wa;
+  if (s.ig)      document.getElementById('set-ig').value      = s.ig;
+  if (s.tt)      document.getElementById('set-tt').value      = s.tt;
+}
+
+function saveSettings() {
+  STORE.setObj('settings', {
+    name:    document.getElementById('set-name').value.trim(),
+    tagline: document.getElementById('set-tagline').value.trim(),
+    email:   document.getElementById('set-email').value.trim(),
+    wa:      document.getElementById('set-wa').value.trim(),
+    ig:      document.getElementById('set-ig').value.trim(),
+    tt:      document.getElementById('set-tt').value.trim(),
+  });
+  showToast('Pengaturan disimpan! ✓', 'success');
+}
+
+function changePassword() {
+  const oldPass  = document.getElementById('set-old-pass').value;
+  const newPass  = document.getElementById('set-new-pass').value;
+  const confPass = document.getElementById('set-conf-pass').value;
+  if (oldPass !== AUTH.getPass()) { showToast('Password lama salah!', 'error'); return; }
+  if (!newPass) { showToast('Password baru tidak boleh kosong!', 'error'); return; }
+  if (newPass !== confPass) { showToast('Konfirmasi password tidak cocok!', 'error'); return; }
+  localStorage.setItem('aj_admin_pass', newPass);
+  document.getElementById('set-old-pass').value  = '';
+  document.getElementById('set-new-pass').value  = '';
+  document.getElementById('set-conf-pass').value = '';
+  showToast('Password berhasil diubah! ✓', 'success');
+}
+
+function resetAllData() {
+  if (!confirm('YAKIN? Semua data paket, destinasi, testimoni, dan galeri akan dihapus permanen!')) return;
+  if (!confirm('Ini tindakan terakhir — tidak bisa dibatalkan. Lanjutkan?')) return;
+  ['packages','destinations','testimonials','gallery'].forEach(k => STORE.set(k, []));
+  renderAll();
+  showToast('Semua data berhasil direset.', 'success');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = type;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
