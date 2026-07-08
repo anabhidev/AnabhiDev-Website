@@ -3,10 +3,13 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === 'studio.anabhidev.com') {
-      const assetUrl = new URL(request.url);
-      assetUrl.hostname = 'anabhidev-website.anabhi-dev.workers.dev';
-      assetUrl.pathname = '/studio/';
-      return fetch(assetUrl.toString());
+      // Buat request baru dengan path ke studio/index.html
+      // menggunakan URL asli tapi ganti pathname
+      const newRequest = new Request(
+        'https://anabhidev.com/studio/index.html',
+        request
+      );
+      return env.ASSETS.fetch(newRequest);
     }
 
     return env.ASSETS.fetch(request);
