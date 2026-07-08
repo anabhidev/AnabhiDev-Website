@@ -3,11 +3,11 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === 'studio.anabhidev.com') {
-      const studioUrl = new URL(request.url);
-      studioUrl.pathname = '/Studio/index.html';
-      return env.ASSETS.fetch(new Request(studioUrl.toString(), request));
+      // Redirect ke path Studio di domain utama
+      return Response.redirect('https://anabhidev.com/Studio/', 302);
     }
 
+    // Default — serve static assets seperti biasa
     return env.ASSETS.fetch(request);
   }
 };
