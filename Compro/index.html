@@ -351,49 +351,17 @@ h1.hero-h1 em { font-style: normal; color: var(--blue); }
       </div>
     </div>
 
-    <!-- Browser Mockup -->
-    <div class="hero-mockup fade-up" style="transition-delay:.2s" aria-hidden="true">
-      <div class="browser-wrap">
-        <div class="browser-bar">
-          <div class="browser-dots">
-            <div class="browser-dot"></div>
-            <div class="browser-dot"></div>
-            <div class="browser-dot"></div>
-          </div>
-          <div class="browser-addr">anabhistudio.com</div>
-        </div>
-        <div class="browser-content">
-          <div class="mock-nav">
-            <div class="mock-nav-row">
-              <div class="mock-logo-dot"></div>
-              <div class="mock-logo-text"></div>
-            </div>
-            <div class="mock-nav-links">
-              <div class="mock-nav-link"></div>
-              <div class="mock-nav-link"></div>
-              <div class="mock-nav-link"></div>
-            </div>
-            <div class="mock-nav-btn"></div>
-          </div>
-          <div class="mock-hero-area">
-            <div class="mock-tag"></div>
-            <div class="mock-h1"></div>
-            <div class="mock-h2"></div>
-            <div class="mock-p1"></div>
-            <div class="mock-p2"></div>
-            <div class="mock-btns">
-              <div class="mock-btn-p"></div>
-              <div class="mock-btn-g"></div>
-            </div>
-          </div>
-          <div class="mock-cards">
-            <div class="mock-card"><div class="mock-card-icon"></div><div class="mock-card-t"></div><div class="mock-card-d"></div></div>
-            <div class="mock-card"><div class="mock-card-icon"></div><div class="mock-card-t"></div><div class="mock-card-d"></div></div>
-            <div class="mock-card"><div class="mock-card-icon"></div><div class="mock-card-t"></div><div class="mock-card-d"></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="mockup-glow"></div>
+    <!-- Hero Image -->
+    <div class="hero-mockup fade-up" style="transition-delay:.2s">
+      <img
+        src="https://anabhidev.com/hero-laptop.webp"
+        alt="Anabhi Studio — Smart website on laptop mockup"
+        width="1672" height="941"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        style="width:100%;height:auto;display:block;border-radius:12px;filter:drop-shadow(0 24px 60px rgba(0,0,0,.55));"
+      >
     </div>
   </div>
   <div class="scroll-hint" aria-hidden="true">Scroll</div>
@@ -556,8 +524,8 @@ h1.hero-h1 em { font-style: normal; color: var(--blue); }
 </section>
 
 </main>
-<!-- Shared JS -->
-<script src="main.js" defer></script>
+<!-- Shared JS — load first, no defer -->
+<script src="main.js"></script>
 <script>
 // ── Page-specific: typing animation ──
 window.addEventListener('load', () => {
@@ -577,7 +545,7 @@ window.addEventListener('load', () => {
   typeText('typing-en', 'cursor-en', 'Real Businesses.');
   typeText('typing-id', 'cursor-id', 'Bisnis Nyata.');
 
-  // Counter animation
+  // Counter animation — animateCounter defined in main.js
   setTimeout(() => {
     animateCounter(document.getElementById('stat-projects'), 7,  1600, '<span>+</span>');
     animateCounter(document.getElementById('stat-services'), 6,  1400, '<span>+</span>');
@@ -585,7 +553,7 @@ window.addEventListener('load', () => {
   }, 400);
 });
 
-// ── Stagger services grid ──
+// ── Stagger services grid — initStaggerGrid defined in main.js ──
 document.addEventListener('DOMContentLoaded', () => {
   initStaggerGrid('#services-grid');
 });
