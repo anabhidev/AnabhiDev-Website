@@ -42,7 +42,7 @@
 
     /* ─── RESET & BASE ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
     body {
       font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
       color: var(--ink);
@@ -133,12 +133,14 @@
     }
     /* Logo */
     .header-logo img { height: 44px; width: auto; display: block; }
-    /* Nav — positioned absolutely so it's always perfectly centered in header */
-    .site-nav {
-      position: absolute;
-      left: 50%; transform: translateX(-50%);
-      display: flex; align-items: center;
-      gap: clamp(16px, 2vw, 30px);
+    /* Nav — absolutely centered on desktop only */
+    @media (min-width: 769px) {
+      .site-nav {
+        position: absolute;
+        left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center;
+        gap: clamp(16px, 2vw, 30px);
+      }
     }
     .site-nav a {
       font-size: 0.88rem; font-weight: 600;
@@ -941,34 +943,73 @@
       .contact-inner { grid-template-columns: 1fr; gap: 40px; }
     }
     @media (max-width: 768px) {
+      /* ── Hamburger: tampilkan, nav default hidden ── */
       .site-nav, .header-controls { display: none; }
-      .site-nav.open, .header-controls.open { display: flex; }
-      /* Mobile nav dropdown */
+      .nav-hamburger { display: flex; }
+
+      /* ── Mobile nav: dropdown rapi di bawah navbar ── */
       .site-nav.open {
+        display: flex;
         flex-direction: column; align-items: flex-start;
         position: fixed; top: var(--nav-h); left: 0; right: 0;
         background: var(--navy);
-        padding: 20px clamp(16px, 4vw, 52px) 24px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-        z-index: 99; gap: 18px;
+        padding: 20px 24px 28px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        z-index: 98; gap: 16px;
+        border-top: 1px solid rgba(255,255,255,0.08);
       }
+      .site-nav.open a {
+        font-size: 1rem; font-weight: 600;
+        color: rgba(255,255,255,0.88);
+        width: 100%; padding: 6px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      /* Controls ikut di dalam nav dropdown, bukan di posisi terpisah */
       .header-controls.open {
-        position: fixed; top: calc(var(--nav-h) + 200px); left: 0; right: 0;
+        display: flex;
+        position: fixed;
+        top: calc(var(--nav-h) + 268px);  /* tepat di bawah 6 nav links */
+        left: 0; right: 0;
         background: var(--navy);
-        padding: 0 clamp(16px, 4vw, 52px) 20px;
-        flex-wrap: wrap; z-index: 99;
+        padding: 12px 24px 20px;
+        flex-wrap: wrap; gap: 10px; z-index: 98;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
       }
-      .nav-hamburger { display: flex; }
-      .booking-widget {
-        grid-template-columns: 1fr;
-      }
-      .booking-widget-outer { padding: 0 16px; }
-      .pkg-grid, .reviews-grid, .blog-grid, .all-packages-grid, .blog-full-grid { grid-template-columns: 1fr; }
+
+      /* ── Prevent horizontal overflow ── */
+      .site-nav { position: static; transform: none; }
+
+      /* ── Booking widget ── */
+      .booking-widget { grid-template-columns: 1fr; }
+      .booking-widget-outer { padding: 0 16px 32px; }
+
+      /* ── Packages/reviews/blog: 1 col ── */
+      .pkg-grid, .reviews-grid, .blog-grid,
+      .all-packages-grid, .blog-full-grid { grid-template-columns: 1fr; }
+
+      /* ── Gallery: 2 col ── */
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      .dest-grid { grid-template-columns: repeat(2, 1fr); }
-      .dest-row2 { grid-template-columns: 1fr 1fr; }
+
+      /* ── Destinations: semua 2 kolom, simetris ── */
+      .dest-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+      .dest-row2 {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      /* Card ke-7 (Tanah Lot) di row2 center sendiri */
+      .dest-row2 .dest-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        max-width: 50%;
+        margin: 0 auto;
+      }
+
+      /* ── Layout sections ── */
       .custom-inner { grid-template-columns: 1fr; }
-      .custom-features { grid-template-columns: 1fr; }
+      .custom-features { grid-template-columns: 1fr 1fr; }
       .values-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
@@ -976,11 +1017,24 @@
       .hero-content { padding-bottom: 60px; }
     }
     @media (max-width: 480px) {
+      /* ── Prevent any overflow source ── */
+      * { max-width: 100%; }
+      .site-header { overflow: visible; }
+
       .trust-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-actions { flex-direction: column; }
       .hero-actions .btn { width: 100%; justify-content: center; }
+
+      /* Destinations 2 col on small phones too */
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .dest-row2 { grid-template-columns: repeat(2, 1fr); }
+      .dest-row2 .dest-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        max-width: 50%;
+        margin: 0 auto;
+      }
     }
   </style>
 </head>
