@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#10B981">
+
+<!-- ── Canonical ── -->
+<link rel="canonical" href="https://anabhidev.com/BaliEats-AI/">
+
+<!-- ── Favicon ── -->
+<link rel="icon" type="image/webp" href="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
+<link rel="apple-touch-icon" href="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
+
+<!-- ── Font preconnect (item 1-15 SOP) ── -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- ── Preload logo sebagai LCP element (item 1-9 SOP) ── -->
+<link rel="preload" as="image" href="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" fetchpriority="high">
 <title>BaliEats AI — Less searching, more tasting.</title>
 
 <!-- ── SEO ── -->
@@ -494,6 +509,121 @@ body.is-mobile  .mobile-only    { display: flex; }
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── LOCATION BUTTON ── */
+.loc-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; background: transparent; color: var(--emerald);
+  border: 1.5px solid var(--emerald); border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.loc-btn:hover { background: var(--emerald); color: var(--black); }
+.loc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.mobile-loc-btn {
+  background: transparent; border: none; font-size: 18px;
+  cursor: pointer; padding: 4px; line-height: 1;
+}
+.mobile-loc-btn:disabled { opacity: 0.4; }
+
+/* ── AREA MODAL (mobile bottom sheet) ── */
+.area-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 500;
+  align-items: flex-end; justify-content: center;
+}
+.area-modal-overlay.show { display: flex; }
+.area-modal {
+  background: var(--sidebar-bg); border-radius: 20px 20px 0 0;
+  padding: 20px 16px max(20px, env(safe-area-inset-bottom));
+  width: 100%; max-width: 480px;
+}
+.area-modal-title {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--sidebar-muted);
+  margin-bottom: 14px; text-align: center;
+}
+.area-modal-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: 12px; cursor: pointer;
+  color: #fff; font-size: 14px; font-weight: 600;
+  transition: background 0.15s; margin-bottom: 4px; border: none;
+  background: transparent; width: 100%; text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.area-modal-item:hover, .area-modal-item:active { background: rgba(255,255,255,.08); }
+.area-modal-item.loc-item { color: var(--emerald); }
+.area-modal-close {
+  display: block; width: 100%; padding: 13px;
+  background: rgba(255,255,255,.06); border: none; border-radius: 12px;
+  color: var(--sidebar-muted); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px;
+}
+
+/* ── FAVORITES PANEL (desktop) ── */
+.fav-panel {
+  display: none; flex: 1; flex-direction: column;
+  padding: 24px 28px; overflow: hidden;
+  max-width: 860px; width: 100%; margin: 0 auto; align-self: stretch;
+}
+.fav-panel.show { display: flex; }
+.fav-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; flex-shrink: 0;
+}
+.fav-panel-title { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+.fav-panel-clear {
+  padding: 6px 12px; background: transparent; border: 1px solid var(--border);
+  border-radius: 8px; font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  color: var(--text-muted); transition: all 0.2s;
+}
+.fav-panel-clear:hover { background: #EF4444; color: #fff; border-color: #EF4444; }
+.fav-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.fav-list::-webkit-scrollbar { width: 4px; }
+.fav-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.fav-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 16px;
+}
+.fav-item-text {
+  font-size: 13px; line-height: 1.65; color: var(--text-primary);
+  white-space: pre-wrap; word-break: break-word;
+}
+.fav-item-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 10px;
+}
+.fav-item-time { font-size: 10px; color: var(--text-muted); }
+.fav-item-remove {
+  padding: 4px 10px; border: 1px solid var(--border); border-radius: 8px;
+  background: transparent; font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.fav-item-remove:hover { background: #EF4444; color: #fff; border-color: #EF4444; }
+.fav-empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; color: var(--text-muted); font-size: 14px;
+}
+.fav-empty-icon { font-size: 40px; }
+
+/* ── FAVORITES PANEL (mobile) ── */
+.mobile-fav-panel {
+  display: none; flex: 1; flex-direction: column; overflow: hidden;
+  padding: 12px 12px 0;
+  padding-bottom: calc(60px + max(0px, env(safe-area-inset-bottom)));
+}
+.mobile-fav-panel.show { display: flex; }
+.mobile-fav-list {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+  padding-bottom: 8px;
+}
+.mobile-fav-list::-webkit-scrollbar { display: none; }
+
+/* ── SAVE BUTTON ── */
+.msg-action-btn.saved { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
 </style>
 </head>
 <body>
@@ -502,7 +632,7 @@ body.is-mobile  .mobile-only    { display: flex; }
 <div id="pin">
   <div class="pin-wrap">
     <!-- GANTI: isi src dengan URL logo BaliEats AI -->
-    <img class="pin-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" onerror="this.style.display='none'">
+    <img class="pin-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" width="200" height="110" fetchpriority="high" alt="BaliEats AI" onerror="this.style.display='none'">
     <div class="pin-brand">BaliEats AI · Less searching, more tasting.</div>
     <div class="pin-title">Welcome back</div>
     <div class="pin-sub">Enter your PIN to continue.</div>
@@ -537,13 +667,13 @@ body.is-mobile  .mobile-only    { display: flex; }
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <!-- GANTI: isi src dengan URL logo BaliEats AI -->
-      <img src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI"
+      <img src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="160" height="88" fetchpriority="high"
         onerror="this.style.display='none'; document.getElementById('sb-logo-txt').style.display='block'">
       <span id="sb-logo-txt" class="logo-text" style="display:none">BaliEats AI</span>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">BaliEats AI</div>
-      <a class="nav-item active" onclick="setActive(this)">
+      <a class="nav-item active" onclick="setActive(this);showChat()">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
         </svg>
@@ -581,6 +711,33 @@ body.is-mobile  .mobile-only    { display: flex; }
         </svg>
         <span class="nav-label">Minuman</span>
       </a>
+      <div class="nav-divider"></div>
+      <div class="nav-section-label">By Area</div>
+      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner dan makanan terbaik di Ubud, Bali. Sebutkan dari yang murah sampai menengah.')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">Ubud</span>
+      </a>
+      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner dan makanan terbaik di Canggu, Bali. Sebutkan dari yang murah sampai menengah.')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">Canggu</span>
+      </a>
+      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner dan makanan terbaik di Seminyak, Bali. Sebutkan dari yang murah sampai menengah.')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">Seminyak</span>
+      </a>
+      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner seafood dan makanan terbaik di Jimbaran, Bali.')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">Jimbaran</span>
+      </a>
+      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner lokal dan makanan terbaik di Denpasar, Bali. Sebutkan warung dan restoran lokal.')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">Denpasar</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" id="fav-nav" onclick="setActive(this);showFavoritesPanel()">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+        <span class="nav-label fav-count-label">Favorit</span>
+      </a>
     </nav>
     <div class="sidebar-bottom">
       <a class="nav-item" onclick="doLogout()">
@@ -611,6 +768,7 @@ body.is-mobile  .mobile-only    { display: flex; }
         </div>
       </div>
       <div class="topbar-right">
+        <button class="loc-btn" id="loc-btn" onclick="getLocation()">📍 Sekitar Saya</button>
         <button class="topbar-btn" onclick="clearChat()">
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
@@ -649,6 +807,7 @@ body.is-mobile  .mobile-only    { display: flex; }
         </div>
       </div>
     </div>
+    <div id="d-fav" class="fav-panel"></div>
   </div>
 </div>
 
@@ -656,14 +815,17 @@ body.is-mobile  .mobile-only    { display: flex; }
 <div class="mobile-only" id="mobile-layout">
   <div class="mobile-topbar">
     <!-- GANTI: isi src dengan URL logo BaliEats AI -->
-    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI"
+    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="120" height="66" fetchpriority="high"
       onerror="this.style.display='none'; document.getElementById('mb-logo-txt').style.display='block'">
     <span id="mb-logo-txt" class="mobile-logo-text" style="display:none">🌿</span>
     <div class="mobile-topbar-center">
       <div class="mobile-app-name">BaliEats AI</div>
       <div class="mobile-tagline">Less searching, more tasting.</div>
     </div>
-    <div class="mobile-avatar">BE</div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button class="mobile-loc-btn" id="m-loc-btn" onclick="getLocation()" title="Kuliner sekitar saya">📍</button>
+      <div class="mobile-avatar" onclick="doLogout()">BE</div>
+    </div>
   </div>
 
   <div class="mobile-chat-area">
@@ -682,6 +844,7 @@ body.is-mobile  .mobile-only    { display: flex; }
       <div class="chip" onclick="sendChip(this)">Nasi goreng Bali?</div>
     </div>
     <div class="mobile-messages" id="m-msgs"></div>
+    <div id="m-fav" class="mobile-fav-panel"></div>
     <div class="mobile-input-wrap">
       <div class="mobile-input-row">
         <textarea class="mobile-input" id="m-input"
@@ -698,38 +861,60 @@ body.is-mobile  .mobile-only    { display: flex; }
 
   <nav class="mobile-nav">
     <div class="mobile-nav-items">
-      <div class="mobile-nav-item active" onclick="setMNav(this,'chat')">
+      <div class="mobile-nav-item active" onclick="setMNav(this,'chat')" style="min-width:48px">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
         </svg>
         Chat
       </div>
-      <div class="mobile-nav-item" onclick="setMNav(this,'tradisional')">
+      <div class="mobile-nav-item" onclick="setMNav(this,'tradisional')" style="min-width:48px">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
         </svg>
         Tradisional
       </div>
-      <div class="mobile-nav-item" onclick="setMNav(this,'streetfood')">
+      <div class="mobile-nav-item" onclick="setMNav(this,'streetfood')" style="min-width:48px">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
         </svg>
         Street Food
       </div>
-      <div class="mobile-nav-item" onclick="setMNav(this,'minuman')">
+      <div class="mobile-nav-item" onclick="setMNav(this,'area')" style="min-width:48px">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        Area
+      </div>
+      <div class="mobile-nav-item" onclick="setMNav(this,'favorit')" style="min-width:48px">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+        </svg>
+        <span class="fav-count-label">Favorit</span>
+      </div>
+      <div class="mobile-nav-item" onclick="setMNav(this,'minuman')" style="min-width:48px">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8zM5 8a2 2 0 00-2 2v4a2 2 0 002 2v4l4-4"/>
         </svg>
         Minuman
       </div>
-      <div class="mobile-nav-item" onclick="doLogout()">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-        </svg>
-        Logout
-      </div>
     </div>
   </nav>
+</div>
+
+<!-- AREA MODAL (mobile) -->
+<div class="area-modal-overlay" id="area-modal" onclick="if(event.target===this)closeAreaModal()">
+  <div class="area-modal">
+    <div class="area-modal-title">Pilih Area di Bali</div>
+    <button class="area-modal-item loc-item" onclick="getLocation()">
+      📍 Deteksi Lokasi Saya
+    </button>
+    <button class="area-modal-item" onclick="pickArea('Ubud')">🌿 Ubud</button>
+    <button class="area-modal-item" onclick="pickArea('Canggu')">🏄 Canggu</button>
+    <button class="area-modal-item" onclick="pickArea('Seminyak')">✨ Seminyak</button>
+    <button class="area-modal-item" onclick="pickArea('Jimbaran')">🐟 Jimbaran</button>
+    <button class="area-modal-item" onclick="pickArea('Denpasar')">🏙️ Denpasar</button>
+    <button class="area-modal-close" onclick="closeAreaModal()">Tutup</button>
+  </div>
 </div>
 
 <script>
@@ -748,10 +933,12 @@ window.addEventListener('resize', setDevice);
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxvI8NJdV0OnDvwA7l1bZz-YRzWvPP8ZjWQUj-g5HeIEmPUMht843fykuvd_UOHEurCeA/exec';
 
 // ── STATE ─────────────────────────────────────────────────
-let convHistory = [];
-let isLoading   = false;
-let msgCount    = 0;
-let hdrHidden   = false;
+let convHistory    = [];
+let isLoading      = false;
+let msgCount       = 0;
+let hdrHidden      = false;
+const botTexts     = new Map(); // msgId → teks asli bot (untuk favorites)
+let savedFavorites = [];        // array favorit tersimpan
 
 // ── PIN (tersedia, tidak aktif) ────────────────────────────
 let pv = '', pBusy = false;
@@ -829,6 +1016,7 @@ window.addEventListener('load', () => {
 function initDash() {
   updateGreeting(); updateClock(); setInterval(updateClock, 1000);
   setupScrollHide();
+  loadFavorites();
   addBot('Halo! Saya **BaliEats AI** 🌿\n\n*"Less searching, more tasting."*\n\nSaya bisa membantu kamu:\n• Rekomendasi makanan & minuman khas Bali\n• Info street food dan warung tersembunyi\n• Kuliner seafood, vegetarian, dan tradisional\n• Cerita di balik masakan Bali\n• Jawab dalam Bahasa Indonesia, Inggris, Bali, Jawa, atau Mandarin 中文\n\nMau makan apa hari ini? 😋');
 }
 
@@ -928,14 +1116,19 @@ function getTime() {
 
 function addBot(text, animate = false) {
   const id = 'msg' + Date.now();
+  botTexts.set(id, text); // simpan teks asli untuk favorites
   const actionsHtml = `
     <div class="msg-actions">
+      <button class="msg-action-btn" id="sav-${id}" onclick="saveFavorite('${id}')">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+        Simpan
+      </button>
       <button class="msg-action-btn" onclick="copyMsg(this,'${id}')">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         Salin
       </button>
       <button class="msg-action-btn" onclick="exportMsgPDF(this,'${id}')">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         PDF
       </button>
     </div>`;
@@ -1002,6 +1195,7 @@ function setLoading(val) {
 
 function processQuery(q) {
   if (isLoading || !q.trim()) return;
+  showChat();
   addUser(q);
   hideChips();
   setLoading(true);
@@ -1062,6 +1256,8 @@ function setMNav(el, action) {
   if      (action === 'tradisional') processQuery('Rekomendasikan makanan tradisional khas Bali yang wajib dicoba');
   else if (action === 'streetfood')  processQuery('Rekomendasikan street food dan jajanan pinggir jalan terbaik di Bali');
   else if (action === 'minuman')     processQuery('Rekomendasikan minuman tradisional dan kopi khas Bali');
+  else if (action === 'area')        openAreaModal();
+  else if (action === 'favorit')     showFavoritesPanel();
 }
 
 // ── COPY MESSAGE ─────────────────────────────────────────
@@ -1135,6 +1331,203 @@ function exportMsgPDF(btn, msgId) {
 function doLogout() {
   if (!confirm('Keluar dari BaliEats AI?')) return;
   location.reload();
+}
+
+// ── SHOW / HIDE PANELS ────────────────────────────────────
+function showChat() {
+  const dc  = document.querySelector('.chat-container');
+  const dfav = document.getElementById('d-fav');
+  if (dc)   dc.style.display   = '';
+  if (dfav) dfav.classList.remove('show');
+
+  const mca  = document.querySelector('.mobile-chat-area');
+  const mfav = document.getElementById('m-fav');
+  if (mca)  mca.style.display  = '';
+  if (mfav) mfav.classList.remove('show');
+}
+
+function showFavoritesPanel() {
+  const dc  = document.querySelector('.chat-container');
+  const dfav = document.getElementById('d-fav');
+  if (dc)   dc.style.display   = 'none';
+  if (dfav) { dfav.classList.add('show'); renderFavorites(); }
+
+  const mca  = document.querySelector('.mobile-chat-area');
+  const mfav = document.getElementById('m-fav');
+  if (mca)  mca.style.display  = 'none';
+  if (mfav) { mfav.classList.add('show'); renderFavorites(); }
+}
+
+// ── FAVORITES ─────────────────────────────────────────────
+function loadFavorites() {
+  try {
+    savedFavorites = JSON.parse(localStorage.getItem('baliEats_fav') || '[]');
+  } catch(e) {
+    savedFavorites = [];
+  }
+  updateFavCount();
+}
+
+function saveFavorite(msgId) {
+  const rawText = botTexts.get(msgId) || '';
+  if (!rawText) return;
+
+  const btn = document.getElementById('sav-' + msgId);
+  const exists = savedFavorites.findIndex(f => f.id === msgId);
+
+  if (exists !== -1) {
+    // Sudah tersimpan → hapus (toggle off)
+    savedFavorites.splice(exists, 1);
+    if (btn) {
+      btn.classList.remove('saved');
+      btn.innerHTML = `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg> Simpan`;
+    }
+  } else {
+    // Simpan baru
+    const now = new Date();
+    savedFavorites.unshift({
+      id:   msgId,
+      text: rawText,
+      time: getTime(),
+      date: now.toLocaleDateString('id-ID')
+    });
+    if (savedFavorites.length > 50) savedFavorites.pop();
+    if (btn) {
+      btn.classList.add('saved');
+      btn.innerHTML = `<svg fill="none" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:11px;height:11px"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg> Tersimpan`;
+    }
+  }
+
+  localStorage.setItem('baliEats_fav', JSON.stringify(savedFavorites));
+  updateFavCount();
+
+  // Refresh panel jika sedang terbuka
+  const dfav = document.getElementById('d-fav');
+  const mfav = document.getElementById('m-fav');
+  if (dfav && dfav.classList.contains('show')) renderFavorites();
+  if (mfav && mfav.classList.contains('show')) renderFavorites();
+}
+
+function removeFavorite(id) {
+  savedFavorites = savedFavorites.filter(f => f.id !== id);
+  localStorage.setItem('baliEats_fav', JSON.stringify(savedFavorites));
+  updateFavCount();
+  renderFavorites();
+  // Reset save button di chat jika masih ada
+  const btn = document.getElementById('sav-' + id);
+  if (btn) {
+    btn.classList.remove('saved');
+    btn.innerHTML = `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg> Simpan`;
+  }
+}
+
+function clearAllFavorites() {
+  if (!confirm('Hapus semua favorit?')) return;
+  savedFavorites = [];
+  localStorage.removeItem('baliEats_fav');
+  updateFavCount();
+  renderFavorites();
+}
+
+function updateFavCount() {
+  const count = savedFavorites.length;
+  const label = count > 0 ? `Favorit (${count})` : 'Favorit';
+  document.querySelectorAll('.fav-count-label').forEach(el => el.textContent = label);
+}
+
+function renderFavorites() {
+  const emptyHtml = `
+    <div class="fav-empty">
+      <div class="fav-empty-icon">⭐</div>
+      <div>Belum ada yang disimpan</div>
+      <div style="font-size:12px;margin-top:4px;color:var(--text-muted)">Klik Simpan pada jawaban bot</div>
+    </div>`;
+
+  const itemsHtml = savedFavorites.map(f => `
+    <div class="fav-item">
+      <div class="fav-item-text">${escapeHtml(f.text)}</div>
+      <div class="fav-item-footer">
+        <span class="fav-item-time">${f.date} · ${f.time}</span>
+        <button class="fav-item-remove" onclick="removeFavorite('${f.id}')">Hapus</button>
+      </div>
+    </div>`).join('');
+
+  const clearBtn = savedFavorites.length > 0
+    ? `<button class="fav-panel-clear" onclick="clearAllFavorites()">Hapus Semua</button>` : '';
+
+  const dfav = document.getElementById('d-fav');
+  if (dfav) {
+    dfav.innerHTML = `
+      <div class="fav-panel-header">
+        <div class="fav-panel-title">⭐ Favorit Tersimpan</div>
+        ${clearBtn}
+      </div>
+      ${savedFavorites.length === 0 ? emptyHtml : `<div class="fav-list">${itemsHtml}</div>`}`;
+  }
+
+  const mfav = document.getElementById('m-fav');
+  if (mfav) {
+    mfav.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0">
+        <div style="font-size:14px;font-weight:800;color:var(--text-primary)">⭐ Favorit</div>
+        ${clearBtn}
+      </div>
+      ${savedFavorites.length === 0 ? emptyHtml : `<div class="mobile-fav-list">${itemsHtml}</div>`}`;
+  }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── GEOLOCATION ───────────────────────────────────────────
+function getLocation() {
+  if (!navigator.geolocation) {
+    closeAreaModal();
+    addBot('Browser kamu tidak mendukung geolocation. Silakan pilih area secara manual.');
+    return;
+  }
+  const btn  = document.getElementById('loc-btn');
+  const mBtn = document.getElementById('m-loc-btn');
+  if (btn)  { btn.disabled  = true; btn.textContent  = '📍 Mendeteksi...'; }
+  if (mBtn) { mBtn.disabled = true; mBtn.textContent = '⏳'; }
+
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      const lat = pos.coords.latitude.toFixed(4);
+      const lng = pos.coords.longitude.toFixed(4);
+      if (btn)  { btn.disabled  = false; btn.textContent  = '📍 Sekitar Saya'; }
+      if (mBtn) { mBtn.disabled = false; mBtn.textContent = '📍'; }
+      closeAreaModal();
+      processQuery(`Saya sedang berada di Bali pada koordinat latitude ${lat}, longitude ${lng}. Berdasarkan posisi ini, kira-kira saya berada di area mana di Bali? Dan apa saja rekomendasi kuliner terbaik yang bisa saya coba di sekitar sini?`);
+    },
+    function(err) {
+      if (btn)  { btn.disabled  = false; btn.textContent  = '📍 Sekitar Saya'; }
+      if (mBtn) { mBtn.disabled = false; mBtn.textContent = '📍'; }
+      closeAreaModal();
+      let msg = 'Tidak dapat mendeteksi lokasi. Silakan pilih area secara manual.';
+      if (err.code === 1) msg = 'Akses lokasi ditolak. Aktifkan izin lokasi di browser, atau pilih area manual dari sidebar / menu Area.';
+      if (err.code === 3) msg = 'Timeout deteksi lokasi. Coba lagi atau pilih area manual.';
+      addBot(msg);
+    },
+    { timeout: 8000, maximumAge: 60000 }
+  );
+}
+
+// ── AREA MODAL ────────────────────────────────────────────
+function openAreaModal() {
+  const m = document.getElementById('area-modal');
+  if (m) m.classList.add('show');
+}
+function closeAreaModal() {
+  const m = document.getElementById('area-modal');
+  if (m) m.classList.remove('show');
+}
+function pickArea(area) {
+  closeAreaModal();
+  processQuery(`Rekomendasikan kuliner dan makanan terbaik di ${area}, Bali. Sebutkan beberapa pilihan dari yang murah sampai menengah, termasuk makanan khas dan tempat yang direkomendasikan.`);
 }
 </script>
 </body>
