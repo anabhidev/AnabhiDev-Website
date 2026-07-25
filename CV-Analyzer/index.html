@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV ATS Analyzer – Anabhi Dev</title>
+
+<!-- SEO -->
+<meta name="description" content="Analisis CV Anda secara instan dengan AI. Dapatkan ATS Score, keyword analysis, dan rekomendasi perbaikan CV untuk meningkatkan peluang lolos seleksi ATS.">
+<meta name="keywords" content="ATS checker, CV analyzer, resume checker, ATS score, keyword CV, tips CV, lolos ATS, cek CV, analisis CV">
+<meta name="author" content="Anabhi Dev">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="CV ATS Analyzer – Anabhi Dev">
+<meta property="og:description" content="Analisis CV Anda secara instan dengan AI. Dapatkan ATS Score, keyword analysis, dan rekomendasi perbaikan CV.">
+<meta property="og:image"       content="https://anabhidev.com/assets/og-cv-ats-analyzer.webp">
+<meta property="og:url"         content="https://anabhidev.com/cv-ats-analyzer">
+<meta property="og:site_name"   content="Anabhi Dev">
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="CV ATS Analyzer – Anabhi Dev">
+<meta name="twitter:description" content="Analisis CV Anda secara instan dengan AI.">
+<meta name="twitter:image"       content="https://anabhidev.com/assets/og-cv-ats-analyzer.webp">
+
+<!-- Favicon -->
+<link rel="icon"             type="image/png" href="https://anabhidev.com/assets/favicon.png">
+<link rel="apple-touch-icon"                  href="https://anabhidev.com/assets/apple-touch-icon.png">
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- Mammoth.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<style>
+:root {
+  --navy       : #0D1B2A;
+  --navy-light : #162537;
+  --navy-mid   : #1E3448;
+  --blue       : #00A3FF;
+  --blue-dark  : #0082CC;
+  --blue-glow  : rgba(0,163,255,0.12);
+  --white      : #FFFFFF;
+  --gray       : #B0BEC5;
+  --gray-light : #E8F0F7;
+  --success    : #00C853;
+  --warning    : #FFB300;
+  --danger     : #FF3D00;
+  --border     : rgba(0,163,255,0.2);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--navy); color:var(--white); min-height:100vh; }
+
+/* ── HEADER ── */
+header { background:var(--navy-light); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; gap:14px; }
+.hdr-text h1 { font-size:1.05rem; font-weight:700; letter-spacing:0.02em; }
+.hdr-text p  { font-size:0.66rem; color:var(--blue); letter-spacing:0.07em; margin-top:1px; }
+header img   { height:38px; width:auto; margin-left:auto; }
+
+/* ── MAIN ── */
+main { max-width:860px; margin:0 auto; padding:28px 20px 64px; }
+
+/* ── TABS ── */
+.tab-bar { display:flex; background:var(--navy-light); border:1px solid var(--border); border-radius:12px; padding:4px; margin-bottom:14px; width:fit-content; flex-wrap:wrap; gap:2px; }
+.tab-btn { background:none; border:none; color:var(--gray); padding:9px 18px; font-size:0.83rem; font-weight:600; cursor:pointer; border-radius:9px; transition:all 0.18s; white-space:nowrap; }
+.tab-btn.active { background:var(--blue); color:var(--white); }
+.tab-btn:not(.active):hover { color:var(--white); }
+
+/* ── OPTIONS BAR ── */
+.options-bar { background:var(--navy-light); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:14px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.opt-group { display:flex; align-items:center; gap:10px; flex:1; min-width:200px; }
+.opt-group label { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.opt-group input[type="text"] { flex:1; background:var(--navy); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--white); font-size:0.83rem; outline:none; transition:border-color 0.2s; font-family:inherit; }
+.opt-group input[type="text"]:focus { border-color:var(--blue); }
+.opt-group input[type="text"]::placeholder { color:#3A5068; }
+.lang-toggle { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.lang-toggle span { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.lang-btn { background:none; border:1px solid var(--border); color:var(--gray); padding:6px 12px; font-size:0.76rem; font-weight:600; cursor:pointer; border-radius:7px; transition:all 0.18s; white-space:nowrap; }
+.lang-btn.active { background:var(--blue); border-color:var(--blue); color:var(--white); }
+.lang-btn:not(.active):hover { border-color:var(--blue); color:var(--white); }
+
+/* ── INPUT PANELS ── */
+.panel { background:var(--navy-light); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:14px; }
+.panel.hidden { display:none; }
+textarea { width:100%; min-height:200px; background:#FFFFFF; border:1px solid var(--border); border-radius:8px; color:#1A2A3A; font-size:0.84rem; line-height:1.65; padding:14px; resize:vertical; outline:none; font-family:inherit; transition:border-color 0.2s; }
+textarea:focus { border-color:var(--blue); }
+textarea::placeholder { color:#9AAABB; }
+
+/* ── UPLOAD ZONE ── */
+.upload-zone { position:relative; border:2px dashed var(--border); border-radius:10px; padding:40px 24px; text-align:center; cursor:pointer; background:var(--navy); transition:all 0.2s; }
+.upload-zone:hover, .upload-zone.drag-over { border-color:var(--blue); background:var(--blue-glow); }
+.upload-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.upload-icon { font-size:2.2rem; margin-bottom:10px; }
+.upload-zone h3 { font-size:0.95rem; margin-bottom:6px; }
+.upload-zone p  { font-size:0.76rem; color:var(--gray); }
+.upload-zone .fmt { margin-top:5px; }
+.file-chosen { margin-top:12px; font-size:0.8rem; color:var(--blue); font-weight:600; }
+
+/* ── COMPARE PANELS ── */
+.compare-inputs { display:flex; gap:16px; }
+.compare-cv-block { flex:1; min-width:0; }
+.compare-label-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.compare-badge { font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:20px; }
+.compare-badge.a { background:rgba(0,163,255,0.2); color:var(--blue); border:1px solid var(--blue); }
+.compare-badge.b { background:rgba(255,179,0,0.15); color:var(--warning); border:1px solid var(--warning); }
+.mini-tab-bar { display:flex; background:var(--navy); border:1px solid var(--border); border-radius:9px; padding:3px; margin-bottom:10px; width:fit-content; }
+.mini-tab { background:none; border:none; color:var(--gray); padding:6px 14px; font-size:0.76rem; font-weight:600; cursor:pointer; border-radius:7px; transition:all 0.18s; white-space:nowrap; }
+.mini-tab.active { background:var(--blue); color:var(--white); }
+.mini-tab:not(.active):hover { color:var(--white); }
+.cmp-paste-panel { display:block; }
+.cmp-upload-panel { display:none; }
+.compare-divider { display:flex; align-items:center; justify-content:center; padding:0 4px; }
+.compare-divider span { background:var(--navy-mid); border:1px solid var(--border); color:var(--gray); font-size:0.75rem; font-weight:700; padding:6px 10px; border-radius:8px; letter-spacing:0.05em; }
+
+/* ── BUTTONS ── */
+.btn-analyze, .btn-compare { width:100%; border:none; padding:15px; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; letter-spacing:0.02em; transition:all 0.2s; }
+.btn-analyze { background:var(--blue); color:var(--white); }
+.btn-compare { background:linear-gradient(135deg, var(--blue) 0%, #7B5EA7 100%); color:var(--white); }
+.btn-analyze:hover:not(:disabled), .btn-compare:hover:not(:disabled) { opacity:0.9; transform:translateY(-1px); }
+.btn-analyze:disabled, .btn-compare:disabled { opacity:0.45; cursor:not-allowed; transform:none; }
+
+/* ── ERROR ── */
+.error-box { display:none; margin-top:14px; background:rgba(255,61,0,0.1); border:1px solid var(--danger); border-radius:10px; padding:13px 17px; font-size:0.84rem; color:#FF8A65; line-height:1.5; }
+
+/* ── LOADING ── */
+.loading { display:none; text-align:center; padding:44px 20px; }
+.spinner { width:42px; height:42px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; margin:0 auto 16px; animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading p     { color:var(--gray); font-size:0.86rem; }
+.loading small { color:#3A5068; font-size:0.75rem; margin-top:5px; display:block; }
+
+/* Compare step indicator */
+.compare-steps { display:flex; justify-content:center; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.cmp-step { font-size:0.74rem; padding:5px 12px; border-radius:20px; border:1px solid var(--border); color:#3A5068; transition:all 0.3s; }
+.cmp-step.active { border-color:var(--blue); color:var(--blue); background:var(--blue-glow); }
+.cmp-step.done   { border-color:var(--success); color:var(--success); background:rgba(0,200,83,0.1); }
+
+/* ── RESULTS ── */
+#results        { display:none; margin-top:30px; }
+#compareResults { display:none; margin-top:30px; }
+
+/* Download PDF */
+.btn-print-wrap { text-align:right; margin-bottom:14px; }
+.btn-print { background:none; border:1px solid var(--blue); color:var(--blue); padding:8px 18px; border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.18s; }
+.btn-print:hover { background:var(--blue); color:var(--white); }
+
+/* Improve All button */
+.btn-improve-all-wrap { margin-bottom:14px; }
+.btn-improve-all { width:100%; background:none; border:1px solid rgba(0,163,255,0.4); color:var(--blue); padding:11px; border-radius:10px; font-size:0.88rem; font-weight:700; cursor:pointer; transition:all 0.2s; letter-spacing:0.02em; }
+.btn-improve-all:hover:not(:disabled) { background:var(--blue-glow); border-color:var(--blue); }
+.btn-improve-all:disabled { opacity:0.4; cursor:not-allowed; }
+
+/* Score card */
+.score-card { background:var(--navy-light); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:16px; display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+.score-circle { width:94px; height:94px; border-radius:50%; border:4px solid var(--blue); background:var(--blue-glow); display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+.score-num { font-size:1.95rem; font-weight:800; line-height:1; }
+.score-lbl { font-size:0.6rem; color:var(--gray); letter-spacing:0.07em; text-transform:uppercase; }
+.score-info h2 { font-size:1.08rem; margin-bottom:4px; }
+.score-info p  { font-size:0.82rem; color:var(--gray); margin-bottom:10px; line-height:1.5; }
+.bar-wrap { background:var(--navy); border-radius:6px; height:8px; width:220px; max-width:100%; }
+.bar      { height:8px; border-radius:6px; transition:width 0.9s ease; }
+
+/* Collapsible sections */
+.res-section { background:var(--navy-light); border:1px solid var(--border); border-radius:12px; margin-bottom:12px; overflow:hidden; }
+.res-header  { display:flex; align-items:center; gap:10px; padding:14px 20px; cursor:pointer; user-select:none; border-bottom:1px solid transparent; transition:background 0.15s; }
+.res-header:hover { background:var(--navy-mid); }
+.res-header.open  { border-bottom-color:var(--border); }
+.res-icon  { font-size:1rem; }
+.res-title { font-size:0.9rem; font-weight:700; flex:1; }
+.res-arrow { color:var(--gray); font-size:0.74rem; transition:transform 0.2s; }
+.res-header.open .res-arrow { transform:rotate(180deg); }
+.res-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; }
+.res-body.open { max-height:2000px; padding:18px 20px; }
+.res-body p, .res-body li { font-size:0.83rem; line-height:1.75; color:var(--gray-light); }
+.res-body ul, .res-body ol { padding-left:20px; display:flex; flex-direction:column; gap:5px; }
+.res-body strong { color:var(--white); }
+.res-body .sub-title { display:block; font-size:0.76rem; color:var(--blue); text-transform:uppercase; letter-spacing:0.08em; margin:14px 0 5px; font-weight:700; }
+.res-body .sub-title:first-child { margin-top:0; }
+
+/* Section row with improve button */
+.section-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:4px; }
+.section-row p { flex:1; margin:0; }
+.btn-improve-sec { background:none; border:1px solid var(--border); color:var(--gray); font-size:0.72rem; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:all 0.15s; margin-top:2px; }
+.btn-improve-sec:hover { border-color:var(--blue); color:var(--blue); }
+
+/* Rating pills */
+.r-good    { color:var(--success); font-weight:700; }
+.r-improve { color:var(--warning); font-weight:700; }
+.r-missing { color:var(--danger);  font-weight:700; }
+
+/* Keyword chips */
+.kw-wrap { display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
+.kw-chip { background:var(--blue-glow); border:1px solid var(--blue); color:var(--blue); font-size:0.74rem; font-weight:600; padding:4px 11px; border-radius:20px; }
+
+/* Quick wins */
+.qw-item { background:var(--navy); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:11px 15px; margin-bottom:9px; font-size:0.83rem; color:var(--gray-light); line-height:1.65; }
+.qw-item:last-child { margin-bottom:0; }
+
+/* Rewrite loading */
+#loadingRewrite { display:none; text-align:center; padding:28px 20px; margin-top:14px; background:var(--navy-light); border:1px solid var(--border); border-radius:12px; }
+
+/* Rewrite results */
+.rewrite-content { background:var(--navy); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; font-size:0.83rem; line-height:1.7; color:var(--gray-light); white-space:pre-wrap; }
+.rewrite-content:last-child { margin-bottom:0; }
+
+/* ── COMPARE RESULTS ── */
+.compare-score-row { background:var(--navy-light); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center; }
+.cmp-cv-card { display:flex; flex-direction:column; align-items:center; gap:8px; flex:1; min-width:100px; }
+.cmp-score-circle { width:80px; height:80px; border-radius:50%; border:3px solid currentColor; display:flex; align-items:center; justify-content:center; font-size:1.75rem; font-weight:800; }
+.cmp-cv-name { font-size:0.9rem; font-weight:700; }
+.cmp-cv-file { font-size:0.72rem; color:var(--gray); text-align:center; max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cmp-middle  { display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; }
+.cmp-trophy  { font-size:2rem; }
+.cmp-winner-text { font-size:0.72rem; color:var(--blue); font-weight:700; text-align:center; max-width:90px; }
+
+/* ── HISTORY SECTION ── */
+#historySection { margin-top:28px; display:none; }
+.history-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.history-hdr h3 { font-size:0.9rem; font-weight:700; color:var(--gray); }
+.btn-clear-hist { background:none; border:1px solid #3A5068; color:#3A5068; font-size:0.74rem; padding:5px 12px; border-radius:7px; cursor:pointer; transition:all 0.18s; }
+.btn-clear-hist:hover { border-color:var(--danger); color:var(--danger); }
+.history-item { background:var(--navy-light); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:background 0.15s, border-color 0.15s; }
+.history-item:hover { background:var(--navy-mid); border-color:var(--blue); }
+.history-item:last-child { margin-bottom:0; }
+.hist-score { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; border:2px solid currentColor; flex-shrink:0; }
+.hist-info  { flex:1; min-width:0; }
+.hist-role  { font-size:0.85rem; font-weight:700; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hist-cv    { font-size:0.75rem; color:var(--gray); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hist-date  { font-size:0.73rem; color:#3A5068; margin-top:2px; }
+.hist-arrow { color:var(--gray); font-size:0.9rem; flex-shrink:0; }
+
+/* ── FOOTER ── */
+footer { text-align:center; padding:18px; color:#2A3F55; font-size:0.7rem; }
+footer span { color:var(--blue); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:580px) {
+  header { padding:12px 16px; }
+  main   { padding:16px 14px 50px; }
+  .score-card { flex-direction:column; align-items:flex-start; }
+  .bar-wrap   { width:100%; }
+  .options-bar { gap:12px; }
+  .opt-group  { min-width:100%; }
+  .compare-inputs { flex-direction:column; }
+  .compare-divider { padding:8px 0; }
+  .compare-divider span { display:inline-block; }
+}
+
+/* ── PRINT CSS ── */
+@media print {
+  .res-body { max-height:none !important; padding:14px 18px !important; overflow:visible !important; }
+  .res-arrow, .btn-improve-sec, .btn-improve-all-wrap, .btn-print-wrap,
+  header img, .tab-bar, .options-bar, #panel-paste, #panel-upload,
+  #panel-compare, .btn-analyze, .btn-compare, .error-box, .loading,
+  #loadingRewrite, #historySection, footer, #compareResults { display:none !important; }
+  header { border-bottom:2px solid #0082CC !important; padding:10px 20px !important; background:#fff !important; }
+  .hdr-text h1 { color:#0D1B2A !important; }
+  .hdr-text p  { display:none !important; }
+  body { background:#fff !important; color:#111 !important; }
+  main { padding:0 16px !important; max-width:100% !important; }
+  #results { display:block !important; margin-top:12px !important; }
+  .score-card { background:#f5f7fa !important; border:1px solid #dde3ea !important; break-inside:avoid; }
+  .score-info h2 { color:#111 !important; }
+  .score-info p  { color:#555 !important; }
+  .bar-wrap { background:#e0e0e0 !important; }
+  .res-section { background:#fff !important; border:1px solid #dde3ea !important; margin-bottom:8px !important; break-inside:avoid; }
+  .res-header  { background:#f0f4f8 !important; border-bottom:1px solid #dde3ea !important; }
+  .res-title   { color:#111 !important; }
+  .res-body p, .res-body li { color:#333 !important; }
+  .res-body strong { color:#111 !important; }
+  .res-body .sub-title { color:#0082CC !important; }
+  .r-good    { color:#00873a !important; }
+  .r-improve { color:#b37700 !important; }
+  .r-missing { color:#cc2900 !important; }
+  .kw-chip   { background:#e8f4ff !important; color:#0082CC !important; border-color:#0082CC !important; }
+  .qw-item   { background:#f5f7fa !important; color:#333 !important; border-left-color:#0082CC !important; }
+  .rewrite-content { background:#f5f7fa !important; color:#333 !important; border-left-color:#0082CC !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="hdr-text">
+    <h1>CV ATS Analyzer</h1>
+    <p>POWERED BY ANABHI DEV</p>
+  </div>
+  <img src="https://anabhidev.com/assets/logo-anabhidev.webp"
+       alt="Anabhi Dev" onerror="this.style.display='none'">
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-paste"   onclick="switchTab('paste')">📋 Paste Teks CV</button>
+    <button class="tab-btn"        id="tab-upload"  onclick="switchTab('upload')">📄 Upload File (PDF/DOCX)</button>
+    <button class="tab-btn"        id="tab-compare" onclick="switchTab('compare')">⚖️ Compare 2 CVs</button>
+  </div>
+
+  <!-- OPTIONS BAR: shared for all tabs -->
+  <div class="options-bar">
+    <div class="opt-group">
+      <label>🎯 Target Role</label>
+      <input type="text" id="targetRole" placeholder="Contoh: Data Analyst, Software Engineer… (opsional)">
+    </div>
+    <div class="lang-toggle">
+      <span>Bahasa:</span>
+      <button class="lang-btn active" id="lang-auto" onclick="setLang('auto')">Auto</button>
+      <button class="lang-btn"        id="lang-id"   onclick="setLang('id')">🇮🇩 ID</button>
+      <button class="lang-btn"        id="lang-en"   onclick="setLang('en')">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- PASTE PANEL -->
+  <div class="panel" id="panel-paste">
+    <textarea id="cvText" placeholder="Paste isi CV Anda di sini...
+
+Contoh format:
+John Doe
+john@email.com | +62 812 3456 7890 | linkedin.com/in/johndoe
+
+RINGKASAN
+Software Developer berpengalaman 5 tahun di bidang web development...
+
+PENGALAMAN KERJA
+Software Engineer – PT ABC | Jan 2020 – Des 2024
+• Mengembangkan REST API menggunakan Node.js dan Express
+• Mengelola database PostgreSQL dengan 1 juta+ record
+..."></textarea>
+  </div>
+
+  <!-- UPLOAD PANEL -->
+  <div class="panel hidden" id="panel-upload">
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.doc" onchange="onFileSelected(this)">
+      <div class="upload-icon">📁</div>
+      <h3>Drop file CV di sini</h3>
+      <p>atau klik untuk memilih file</p>
+      <p class="fmt">Format: <strong>.PDF</strong> &nbsp;·&nbsp; <strong>.DOCX</strong></p>
+      <div class="file-chosen" id="fileChosen"></div>
+    </div>
+  </div>
+
+  <!-- COMPARE PANEL -->
+  <div class="panel hidden" id="panel-compare">
+    <div class="compare-inputs">
+
+      <!-- CV A -->
+      <div class="compare-cv-block">
+        <div class="compare-label-row">
+          <span class="compare-badge a">CV A</span>
+        </div>
+        <div class="mini-tab-bar">
+          <button class="mini-tab active" id="cmp-tab-a-paste"  onclick="switchCmpTab('a','paste')">📋 Paste</button>
+          <button class="mini-tab"        id="cmp-tab-a-upload" onclick="switchCmpTab('a','upload')">📄 Upload</button>
+        </div>
+        <div class="cmp-paste-panel" id="cmp-paste-a">
+          <textarea id="cvTextA" placeholder="Paste CV A di sini..."></textarea>
+        </div>
+        <div class="cmp-upload-panel" id="cmp-upload-a">
+          <div class="upload-zone" id="uploadZoneA">
+            <input type="file" id="fileInputA" accept=".pdf,.docx,.doc" onchange="onFileSelectedCmp('a',this)">
+            <div class="upload-icon">📁</div>
+            <h3>Drop CV A di sini</h3>
+            <p>atau klik untuk memilih file</p>
+            <p class="fmt">.PDF · .DOCX</p>
+            <div class="file-chosen" id="fileChosenA"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VS divider -->
+      <div class="compare-divider"><span>VS</span></div>
+
+      <!-- CV B -->
+      <div class="compare-cv-block">
+        <div class="compare-label-row">
+          <span class="compare-badge b">CV B</span>
+        </div>
+        <div class="mini-tab-bar">
+          <button class="mini-tab active" id="cmp-tab-b-paste"  onclick="switchCmpTab('b','paste')">📋 Paste</button>
+          <button class="mini-tab"        id="cmp-tab-b-upload" onclick="switchCmpTab('b','upload')">📄 Upload</button>
+        </div>
+        <div class="cmp-paste-panel" id="cmp-paste-b">
+          <textarea id="cvTextB" placeholder="Paste CV B di sini..."></textarea>
+        </div>
+        <div class="cmp-upload-panel" id="cmp-upload-b">
+          <div class="upload-zone" id="uploadZoneB">
+            <input type="file" id="fileInputB" accept=".pdf,.docx,.doc" onchange="onFileSelectedCmp('b',this)">
+            <div class="upload-icon">📁</div>
+            <h3>Drop CV B di sini</h3>
+            <p>atau klik untuk memilih file</p>
+            <p class="fmt">.PDF · .DOCX</p>
+            <div class="file-chosen" id="fileChosenB"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ANALYZE BUTTON -->
+  <button class="btn-analyze" id="btnAnalyze" onclick="analyzeCV()">
+    🔍&nbsp; Analisis CV Sekarang
+  </button>
+
+  <!-- COMPARE BUTTON (hidden initially) -->
+  <button class="btn-compare" id="btnCompare" style="display:none" onclick="compareCV()">
+    ⚖️&nbsp; Bandingkan CV Sekarang
+  </button>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- LOADING: Analyze -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Menganalisis CV Anda…</p>
+    <small>Mohon tunggu beberapa detik</small>
+  </div>
+
+  <!-- LOADING: Compare -->
+  <div class="loading" id="loadingCompare">
+    <div class="spinner"></div>
+    <p id="compareStepText">Menganalisis CV A…</p>
+    <div class="compare-steps">
+      <div class="cmp-step active" id="cmp-step-1">1. Analisa CV A</div>
+      <div class="cmp-step"        id="cmp-step-2">2. Analisa CV B</div>
+      <div class="cmp-step"        id="cmp-step-3">3. Generate Perbandingan</div>
+    </div>
+  </div>
+
+  <!-- ═══ RESULTS: Single CV ═══ -->
+  <div id="results">
+
+    <div class="btn-print-wrap">
+      <button class="btn-print" onclick="downloadPDF()">⬇️ Download PDF</button>
+    </div>
+
+    <div class="btn-improve-all-wrap" id="improveAllWrap" style="display:none">
+      <button class="btn-improve-all" id="btnImproveAll" onclick="rewriteAll()">
+        ✨&nbsp; Improve All CV
+      </button>
+    </div>
+
+    <div class="score-card">
+      <div class="score-circle">
+        <div class="score-num" id="scoreNum">–</div>
+        <div class="score-lbl">ATS Score</div>
+      </div>
+      <div class="score-info">
+        <h2 id="scoreTitle">ATS Compatibility Score</h2>
+        <p  id="scoreDesc"></p>
+        <div class="bar-wrap">
+          <div class="bar" id="scoreBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="resSections"></div>
+
+    <!-- Rewrite Loading -->
+    <div id="loadingRewrite">
+      <div class="spinner"></div>
+      <p>Improving your CV…</p>
+      <small>Mohon tunggu beberapa detik</small>
+    </div>
+
+    <!-- Rewrite Results (populated by JS) -->
+    <div id="rewriteResults"></div>
+
+  </div>
+
+  <!-- ═══ RESULTS: Compare ═══ -->
+  <div id="compareResults">
+    <!-- Score row -->
+    <div class="compare-score-row">
+      <div class="cmp-cv-card">
+        <div class="cmp-score-circle" id="cmpCircleA">–</div>
+        <div class="cmp-cv-name">CV A</div>
+        <div class="cmp-cv-file" id="cmpFileA"></div>
+      </div>
+      <div class="cmp-middle">
+        <div class="cmp-trophy" id="cmpTrophy">⚖️</div>
+        <div class="cmp-winner-text" id="cmpWinnerText"></div>
+      </div>
+      <div class="cmp-cv-card">
+        <div class="cmp-score-circle" id="cmpCircleB">–</div>
+        <div class="cmp-cv-name">CV B</div>
+        <div class="cmp-cv-file" id="cmpFileB"></div>
+      </div>
+    </div>
+    <!-- Narrative sections -->
+    <div id="cmpSections"></div>
+  </div>
+
+  <!-- ═══ HISTORY ═══ -->
+  <div id="historySection">
+    <div class="history-hdr">
+      <h3>🕐 Riwayat Analisa</h3>
+      <button class="btn-clear-hist" onclick="clearHistory()">Hapus Semua</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+
+</main>
+
+<footer>© 2025 <span>Anabhi Dev</span> · Less Doing. More Living.</footer>
+
+<script>
+// ============================================================
+// KONFIGURASI
+// ============================================================
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbzhOA6vG3TeyuZRupeLufTOUUuV7EuILBNm8z6weALJA5pHRlrEvYl76Z-xtS8CQ_Yp/exec';
+// ============================================================
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+var HISTORY_KEY       = 'ats_history';
+var HISTORY_MAX       = 5;
+var currentTab        = 'paste';
+var currentLang       = 'auto';
+var currentCVText     = '';
+var currentAnalysis   = null;
+var hasAnalysisResult = false;
+var hasCompareResult  = false;
+var cmpTabA           = 'paste';
+var cmpTabB           = 'paste';
+
+/* ─── TAB SWITCHING ─── */
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('panel-paste').classList.toggle('hidden', tab !== 'paste');
+  document.getElementById('panel-upload').classList.toggle('hidden', tab !== 'upload');
+  document.getElementById('panel-compare').classList.toggle('hidden', tab !== 'compare');
+  document.getElementById('btnAnalyze').style.display = (tab !== 'compare') ? '' : 'none';
+  document.getElementById('btnCompare').style.display = (tab === 'compare')  ? '' : 'none';
+  document.getElementById('results').style.display =
+    (tab !== 'compare' && hasAnalysisResult) ? 'block' : 'none';
+  document.getElementById('compareResults').style.display =
+    (tab === 'compare' && hasCompareResult) ? 'block' : 'none';
+  document.getElementById('historySection').style.display =
+    (tab !== 'compare' && getHistory().length) ? 'block' : 'none';
+  ['paste','upload','compare'].forEach(function(t) {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+  });
+  clearError();
+}
+
+/* ─── COMPARE MINI TABS ─── */
+function switchCmpTab(cv, mode) {
+  if (cv === 'a') cmpTabA = mode; else cmpTabB = mode;
+  document.getElementById('cmp-paste-'  + cv).style.display  = mode === 'paste'  ? '' : 'none';
+  document.getElementById('cmp-upload-' + cv).style.display  = mode === 'upload' ? '' : 'none';
+  document.getElementById('cmp-tab-' + cv + '-paste').classList.toggle('active',  mode === 'paste');
+  document.getElementById('cmp-tab-' + cv + '-upload').classList.toggle('active', mode === 'upload');
+}
+
+/* ─── LANGUAGE TOGGLE ─── */
+function setLang(lang) {
+  currentLang = lang;
+  ['auto','id','en'].forEach(function(l) {
+    document.getElementById('lang-' + l).classList.toggle('active', l === lang);
+  });
+}
+
+/* ─── FILE SELECT ─── */
+function onFileSelected(input) {
+  if (input.files && input.files[0])
+    document.getElementById('fileChosen').textContent = '✅ ' + input.files[0].name;
+}
+function onFileSelectedCmp(cv, input) {
+  if (input.files && input.files[0])
+    document.getElementById('fileChosen' + cv.toUpperCase()).textContent = '✅ ' + input.files[0].name;
+}
+
+/* ─── DRAG AND DROP (main upload) ─── */
+(function() {
+  var z = document.getElementById('uploadZone');
+  z.addEventListener('dragover',  function(e) { e.preventDefault(); z.classList.add('drag-over'); });
+  z.addEventListener('dragleave', function()  { z.classList.remove('drag-over'); });
+  z.addEventListener('drop', function(e) {
+    e.preventDefault(); z.classList.remove('drag-over');
+    var f = e.dataTransfer.files[0];
+    if (f) { document.getElementById('fileInput').files = e.dataTransfer.files;
+              document.getElementById('fileChosen').textContent = '✅ ' + f.name; }
+  });
+})();
+
+/* ─── DRAG AND DROP (compare) ─── */
+['A','B'].forEach(function(cv) {
+  var z = document.getElementById('uploadZone' + cv);
+  z.addEventListener('dragover',  function(e) { e.preventDefault(); z.classList.add('drag-over'); });
+  z.addEventListener('dragleave', function()  { z.classList.remove('drag-over'); });
+  z.addEventListener('drop', function(e) {
+    e.preventDefault(); z.classList.remove('drag-over');
+    var f = e.dataTransfer.files[0];
+    if (f) { document.getElementById('fileInput' + cv).files = e.dataTransfer.files;
+              document.getElementById('fileChosen' + cv).textContent = '✅ ' + f.name; }
+  });
+});
+
+/* ─── EXTRACT TEXT FROM PDF ─── */
+async function extractPDF(file) {
+  var buf = await file.arrayBuffer();
+  var pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  var txt = '';
+  for (var i = 1; i <= pdf.numPages; i++) {
+    var page    = await pdf.getPage(i);
+    var content = await page.getTextContent();
+    txt += content.items.map(function(x) { return x.str; }).join(' ') + '\n';
+  }
+  return txt;
+}
+
+/* ─── EXTRACT TEXT FROM DOCX ─── */
+async function extractDOCX(file) {
+  var buf    = await file.arrayBuffer();
+  var result = await mammoth.extractRawText({ arrayBuffer: buf });
+  return result.value;
+}
+
+/* ─── GET CV TEXT (single) ─── */
+async function getCVText() {
+  if (currentTab === 'paste') return document.getElementById('cvText').value.trim();
+  var fi  = document.getElementById('fileInput');
+  if (!fi.files || !fi.files[0]) throw new Error('Pilih file CV terlebih dahulu.');
+  var f   = fi.files[0];
+  var ext = f.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf')               return await extractPDF(f);
+  if (ext === 'docx' || ext === 'doc') return await extractDOCX(f);
+  throw new Error('Format file tidak didukung. Gunakan .PDF atau .DOCX.');
+}
+
+/* ─── GET CV TEXT (compare) ─── */
+async function getCVTextCmp(cv) {
+  var mode = (cv === 'a') ? cmpTabA : cmpTabB;
+  if (mode === 'paste') {
+    return document.getElementById('cvText' + cv.toUpperCase()).value.trim();
+  }
+  var fi  = document.getElementById('fileInput' + cv.toUpperCase());
+  if (!fi.files || !fi.files[0]) throw new Error('Pilih file CV ' + cv.toUpperCase() + ' terlebih dahulu.');
+  var f   = fi.files[0];
+  var ext = f.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf')               return await extractPDF(f);
+  if (ext === 'docx' || ext === 'doc') return await extractDOCX(f);
+  throw new Error('Format file CV ' + cv.toUpperCase() + ' tidak didukung.');
+}
+
+/* ─── GET CV LABEL ─── */
+function getCVLabel() {
+  if (currentTab === 'paste') return 'Teks CV';
+  var fi = document.getElementById('fileInput');
+  return (fi.files && fi.files[0]) ? fi.files[0].name : 'File CV';
+}
+function getCVLabelCmp(cv) {
+  var mode = (cv === 'a') ? cmpTabA : cmpTabB;
+  if (mode === 'paste') return 'Teks CV ' + cv.toUpperCase();
+  var fi = document.getElementById('fileInput' + cv.toUpperCase());
+  return (fi.files && fi.files[0]) ? fi.files[0].name : ('File CV ' + cv.toUpperCase());
+}
+
+/* ─── FETCH GAS ─── */
+async function fetchGAS(payload) {
+  var response = await fetch(GAS_URL, {
+    method : 'POST',
+    body   : JSON.stringify(payload)
+    // No Content-Type header → browser sets text/plain → simple CORS → no preflight
+  });
+  if (!response.ok) throw new Error('Server error: HTTP ' + response.status);
+  var result = await response.json();
+  if (!result.success) throw new Error(result.error || 'Terjadi kesalahan di server.');
+  return result;
+}
+
+/* ─── MAIN ANALYZE ─── */
+async function analyzeCV() {
+  clearError();
+  var cvText = '';
+  try { cvText = await getCVText(); } catch (e) { showError(e.message); return; }
+  if (cvText.length < 50) { showError('Isi CV terlalu pendek atau kosong.'); return; }
+
+  var targetRole = document.getElementById('targetRole').value.trim();
+  var cvLabel    = getCVLabel();
+
+  setLoading('analyze', true);
+  document.getElementById('results').style.display = 'none';
+
+  try {
+    var result = await fetchGAS({
+      action: 'analyze', cvText: cvText, targetRole: targetRole, language: currentLang
+    });
+    renderResults(result.data, cvLabel, targetRole, cvText);
+  } catch (e) {
+    showError('Gagal menganalisis CV: ' + e.message);
+  } finally {
+    setLoading('analyze', false);
+  }
+}
+
+/* ─── RENDER RESULTS ─── */
+function renderResults(data, cvLabel, targetRole, cvText) {
+  // Store for rewrite
+  currentCVText   = cvText || '';
+  currentAnalysis = data;
+
+  var score = Math.min(100, Math.max(0, parseInt(data.ats_score) || 0));
+  var color = score >= 70 ? 'var(--success)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
+
+  document.getElementById('scoreNum').textContent      = score;
+  document.getElementById('scoreNum').style.color      = color;
+  document.getElementById('scoreTitle').textContent    = 'ATS Score: ' + getScoreLabel(score);
+  document.getElementById('scoreDesc').textContent     = data.score_reason || '';
+  document.getElementById('scoreBar').style.width      = score + '%';
+  document.getElementById('scoreBar').style.background = color;
+
+  var container = document.getElementById('resSections');
+  container.innerHTML = '';
+
+  // Role
+  if (data.inferred_role)
+    addSection(container, '🎯', 'Role Terdeteksi',
+      '<p><strong>' + escHtml(data.inferred_role) + '</strong></p>', true, false);
+
+  // Strengths
+  if (data.strengths && data.strengths.length)
+    addSection(container, '✅', 'Kekuatan (Strengths)',
+      '<ul>' + data.strengths.map(function(s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>',
+      true, false);
+
+  // Weaknesses
+  if (data.weaknesses && data.weaknesses.length)
+    addSection(container, '⚠️', 'Kelemahan (Weaknesses)',
+      '<ul>' + data.weaknesses.map(function(w) { return '<li>' + escHtml(w) + '</li>'; }).join('') + '</ul>',
+      true, false);
+
+  // Section Review (with improve buttons per item)
+  if (data.sections) {
+    var sectionMap = [
+      { key:'contact',        label:'📇 Contact Information' },
+      { key:'summary',        label:'📝 Summary / Objective'  },
+      { key:'experience',     label:'💼 Work Experience'      },
+      { key:'education',      label:'🎓 Education'            },
+      { key:'skills',         label:'🛠️ Skills'              },
+      { key:'certifications', label:'🏆 Certifications'       }
+    ];
+    var reviewHtml = '';
+    sectionMap.forEach(function(item) {
+      var s = data.sections[item.key];
+      if (!s) return;
+      var cls = s.rating === 'Good' ? 'r-good' : s.rating === 'Missing' ? 'r-missing' : 'r-improve';
+      reviewHtml +=
+        '<span class="sub-title">' + item.label + '</span>' +
+        '<div class="section-row">' +
+          '<p><span class="' + cls + '">' + escHtml(s.rating) + '</span> — ' + escHtml(s.notes || '') + '</p>' +
+          '<button class="btn-improve-sec" onclick="rewriteSection(\'' + item.key + '\')" title="Improve this section">✨</button>' +
+        '</div>';
+    });
+    addSection(container, '📊', 'Section-by-Section Review', reviewHtml, true, false);
+  }
+
+  // Keywords
+  if (data.missing_keywords && data.missing_keywords.length) {
+    var kwHtml = '<p style="color:var(--gray);margin-bottom:10px;">Keyword ATS yang belum ada di CV:</p>' +
+      '<div class="kw-wrap">' +
+      data.missing_keywords.map(function(k) { return '<span class="kw-chip">' + escHtml(k) + '</span>'; }).join('') +
+      '</div>';
+    addSection(container, '🔑', 'Keyword yang Hilang', kwHtml, true, false);
+  }
+
+  // Quick Wins
+  if (data.quick_wins && data.quick_wins.length) {
+    var qwHtml = data.quick_wins.map(function(q, i) {
+      return '<div class="qw-item"><strong>' + (i+1) + '.</strong> ' + escHtml(q) + '</div>';
+    }).join('');
+    addSection(container, '⚡', 'Quick Wins – 3 Perbaikan Segera', qwHtml, true, false);
+  }
+
+  // Recommendation
+  if (data.overall_recommendation)
+    addSection(container, '💡', 'Overall Recommendation',
+      '<p>' + escHtml(data.overall_recommendation) + '</p>', true, false);
+
+  // Clear previous rewrite results
+  document.getElementById('rewriteResults').innerHTML = '';
+  document.getElementById('rewriteResults').style.display = 'none';
+
+  // Show improve all button only if we have cvText (not from history without cvText)
+  document.getElementById('improveAllWrap').style.display = currentCVText ? '' : 'none';
+
+  hasAnalysisResult = true;
+  document.getElementById('results').style.display = 'block';
+
+  setTimeout(function() {
+    document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 80);
+
+  // Save to history
+  saveToHistory(cvLabel, targetRole, data, score);
+  loadHistoryUI();
+}
+
+/* ─── REWRITE: single section ─── */
+function rewriteSection(sectionKey) {
+  if (!currentCVText) { showError('Analisa CV terlebih dahulu untuk menggunakan fitur Improve.'); return; }
+  doRewrite([sectionKey]);
+}
+
+/* ─── REWRITE: all sections ─── */
+function rewriteAll() {
+  if (!currentCVText) { showError('Analisa CV terlebih dahulu untuk menggunakan fitur Improve.'); return; }
+  doRewrite('all');
+}
+
+/* ─── REWRITE: fetch GAS ─── */
+async function doRewrite(sections) {
+  clearError();
+  setRewriteLoading(true);
+
+  try {
+    var result = await fetchGAS({
+      action       : 'rewrite',
+      cvText       : currentCVText,
+      analysisData : currentAnalysis,
+      sections     : sections,
+      language     : currentLang
+    });
+    renderRewriteResults(result.data, sections);
+  } catch (e) {
+    showError('Gagal improve CV: ' + e.message);
+  } finally {
+    setRewriteLoading(false);
+  }
+}
+
+/* ─── RENDER REWRITE RESULTS ─── */
+function renderRewriteResults(data, sections) {
+  var container = document.getElementById('rewriteResults');
+  container.innerHTML = '';
+
+  var sectionMap = [
+    { key:'contact',           label:'📇 Contact Information (Improved)' },
+    { key:'summary',           label:'📝 Summary / Objective (Improved)'  },
+    { key:'experience',        label:'💼 Work Experience (Improved)'      },
+    { key:'education',         label:'🎓 Education (Improved)'            },
+    { key:'skills',            label:'🛠️ Skills (Improved)'              },
+    { key:'certifications',    label:'🏆 Certifications (Improved)'       },
+    { key:'improvement_notes', label:'💡 Catatan Perubahan'               }
+  ];
+
+  var bodyHtml = '';
+  sectionMap.forEach(function(item) {
+    var val = data[item.key];
+    if (!val) return;
+    // Skip if it's a section-specific rewrite and this key wasn't requested
+    if (Array.isArray(sections) && item.key !== 'improvement_notes' && sections.indexOf(item.key) === -1) return;
+    bodyHtml +=
+      '<span class="sub-title">' + item.label + '</span>' +
+      '<div class="rewrite-content">' + escHtml(val) + '</div>';
+  });
+
+  if (!bodyHtml) {
+    showError('Tidak ada konten yang bisa di-improve.');
+    return;
+  }
+
+  addSection(container, '✨', 'CV Improvements', bodyHtml, true, false);
+  container.style.display = 'block';
+  setTimeout(function() {
+    container.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 80);
+}
+
+/* ─── COMPARE: main function ─── */
+async function compareCV() {
+  clearError();
+
+  var cvTextA = '', cvTextB = '';
+  var labelA = getCVLabelCmp('a');
+  var labelB = getCVLabelCmp('b');
+
+  try { cvTextA = await getCVTextCmp('a'); } catch (e) { showError(e.message); return; }
+  try { cvTextB = await getCVTextCmp('b'); } catch (e) { showError(e.message); return; }
+
+  if (cvTextA.length < 50) { showError('CV A terlalu pendek atau kosong.'); return; }
+  if (cvTextB.length < 50) { showError('CV B terlalu pendek atau kosong.'); return; }
+
+  var targetRole = document.getElementById('targetRole').value.trim();
+
+  setLoading('compare', true);
+  document.getElementById('compareResults').style.display = 'none';
+
+  try {
+    // Step 1: Analyze CV A
+    setCmpStep(1);
+    var resultA = await fetchGAS({ action:'analyze', cvText:cvTextA, targetRole:targetRole, language:currentLang });
+
+    // Step 2: Analyze CV B
+    setCmpStep(2);
+    var resultB = await fetchGAS({ action:'analyze', cvText:cvTextB, targetRole:targetRole, language:currentLang });
+
+    // Step 3: Compare
+    setCmpStep(3);
+    var resultCmp = await fetchGAS({
+      action: 'compare',
+      analysisA: resultA.data, analysisB: resultB.data,
+      labelA: labelA, labelB: labelB,
+      targetRole: targetRole, language: currentLang
+    });
+
+    renderCompareResults(resultA.data, resultB.data, resultCmp.data, labelA, labelB);
+
+  } catch (e) {
+    showError('Gagal membandingkan CV: ' + e.message);
+  } finally {
+    setLoading('compare', false);
+  }
+}
+
+/* ─── RENDER COMPARE RESULTS ─── */
+function renderCompareResults(dataA, dataB, cmpData, labelA, labelB) {
+  var scoreA = Math.min(100, Math.max(0, parseInt(dataA.ats_score) || 0));
+  var scoreB = Math.min(100, Math.max(0, parseInt(dataB.ats_score) || 0));
+  var colorA = scoreA >= 70 ? 'var(--success)' : scoreA >= 50 ? 'var(--warning)' : 'var(--danger)';
+  var colorB = scoreB >= 70 ? 'var(--success)' : scoreB >= 50 ? 'var(--warning)' : 'var(--danger)';
+
+  // Score circles
+  var circleA = document.getElementById('cmpCircleA');
+  circleA.textContent  = scoreA;
+  circleA.style.color  = colorA;
+
+  var circleB = document.getElementById('cmpCircleB');
+  circleB.textContent  = scoreB;
+  circleB.style.color  = colorB;
+
+  document.getElementById('cmpFileA').textContent = labelA;
+  document.getElementById('cmpFileB').textContent = labelB;
+
+  // Winner
+  var winner = (cmpData.winner || '').toUpperCase();
+  var trophy = document.getElementById('cmpTrophy');
+  var winnerText = document.getElementById('cmpWinnerText');
+  if (winner === 'A') {
+    trophy.textContent    = '🏆';
+    winnerText.textContent = 'CV A Menang';
+    winnerText.style.color = colorA;
+  } else if (winner === 'B') {
+    trophy.textContent    = '🏆';
+    winnerText.textContent = 'CV B Menang';
+    winnerText.style.color = colorB;
+  } else {
+    trophy.textContent    = '🤝';
+    winnerText.textContent = 'Seimbang';
+    winnerText.style.color = 'var(--gray)';
+  }
+
+  // Narrative sections
+  var sec = document.getElementById('cmpSections');
+  sec.innerHTML = '';
+
+  // Winner reason
+  if (cmpData.winner_reason)
+    addSection(sec, '🎯', 'Kesimpulan',
+      '<p>' + escHtml(cmpData.winner_reason) + '</p>', true, false);
+
+  // Narrative
+  if (cmpData.narrative)
+    addSection(sec, '📖', 'Perbandingan Detail',
+      '<p>' + escHtml(cmpData.narrative).replace(/\n/g, '</p><p style="margin-top:10px;">') + '</p>',
+      true, false);
+
+  // Advantages A
+  if (cmpData.cv_a_advantages && cmpData.cv_a_advantages.length)
+    addSection(sec, '✅', 'Keunggulan CV A',
+      '<ul>' + cmpData.cv_a_advantages.map(function(x) { return '<li>' + escHtml(x) + '</li>'; }).join('') + '</ul>',
+      true, false);
+
+  // Advantages B
+  if (cmpData.cv_b_advantages && cmpData.cv_b_advantages.length)
+    addSection(sec, '✅', 'Keunggulan CV B',
+      '<ul>' + cmpData.cv_b_advantages.map(function(x) { return '<li>' + escHtml(x) + '</li>'; }).join('') + '</ul>',
+      true, false);
+
+  // Recommendation
+  if (cmpData.recommendation)
+    addSection(sec, '💡', 'Rekomendasi',
+      '<p>' + escHtml(cmpData.recommendation) + '</p>', true, false);
+
+  hasCompareResult = true;
+  document.getElementById('compareResults').style.display = 'block';
+  setTimeout(function() {
+    document.getElementById('compareResults').scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 80);
+}
+
+/* ─── DOWNLOAD PDF ─── */
+function downloadPDF() { window.print(); }
+
+window.addEventListener('beforeprint', function() {
+  document.querySelectorAll('.res-body').forEach(function(b) { b.classList.add('open'); });
+  document.querySelectorAll('.res-header').forEach(function(h) { h.classList.add('open'); });
+});
+
+/* ─── HISTORY ─── */
+function saveToHistory(cvLabel, targetRole, data, score) {
+  var history = getHistory();
+  var now     = new Date();
+  var dateStr = now.toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'})
+              + ', ' + now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'});
+  history.unshift({
+    id         : now.getTime(),
+    date       : dateStr,
+    cvLabel    : cvLabel || 'CV',
+    targetRole : targetRole || (data.inferred_role || ''),
+    score      : score,
+    data       : data
+    // cvText NOT stored — could exceed localStorage quota
+  });
+  if (history.length > HISTORY_MAX) history = history.slice(0, HISTORY_MAX);
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (_) {}
+}
+
+function getHistory() {
+  try { var r = localStorage.getItem(HISTORY_KEY); return r ? JSON.parse(r) : []; }
+  catch (_) { return []; }
+}
+
+function loadHistoryUI() {
+  if (currentTab === 'compare') return;
+  var history = getHistory();
+  var section = document.getElementById('historySection');
+  var list    = document.getElementById('historyList');
+  if (!history.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = history.map(function(e) {
+    var c = e.score >= 70 ? '#00C853' : e.score >= 50 ? '#FFB300' : '#FF3D00';
+    return '<div class="history-item" onclick="loadHistoryItem(' + e.id + ')">' +
+      '<div class="hist-score" style="color:' + c + ';border-color:' + c + '">' + e.score + '</div>' +
+      '<div class="hist-info">' +
+        '<div class="hist-role">' + escHtml(e.targetRole || 'Role tidak terdeteksi') + '</div>' +
+        '<div class="hist-cv">'   + escHtml(e.cvLabel)    + '</div>' +
+        '<div class="hist-date">' + escHtml(e.date)        + '</div>' +
+      '</div>' +
+      '<div class="hist-arrow">›</div>' +
+    '</div>';
+  }).join('');
+}
+
+function loadHistoryItem(id) {
+  var history = getHistory();
+  var entry   = null;
+  for (var i = 0; i < history.length; i++) { if (history[i].id === id) { entry = history[i]; break; } }
+  if (!entry) return;
+  // Load without cvText (rewrite unavailable from history)
+  renderResults(entry.data, entry.cvLabel, entry.targetRole, '');
+}
+
+function clearHistory() {
+  try { localStorage.removeItem(HISTORY_KEY); } catch (_) {}
+  document.getElementById('historySection').style.display = 'none';
+  document.getElementById('historyList').innerHTML = '';
+}
+
+/* ─── HELPERS ─── */
+function addSection(container, icon, title, content, startOpen, unused) {
+  var el = document.createElement('div');
+  el.className = 'res-section';
+  el.innerHTML =
+    '<div class="res-header' + (startOpen ? ' open' : '') + '" onclick="toggleSection(this)">' +
+      '<span class="res-icon">'  + icon  + '</span>' +
+      '<span class="res-title">' + title + '</span>' +
+      '<span class="res-arrow">▼</span>' +
+    '</div>' +
+    '<div class="res-body' + (startOpen ? ' open' : '') + '">' + content + '</div>';
+  container.appendChild(el);
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function getScoreLabel(s) {
+  if (s >= 80) return 'Excellent 🌟';
+  if (s >= 65) return 'Good 👍';
+  if (s >= 50) return 'Fair ⚠️';
+  return 'Needs Work 🔧';
+}
+
+function setLoading(type, show) {
+  if (type === 'analyze') {
+    document.getElementById('loading').style.display        = show ? 'block' : 'none';
+    document.getElementById('btnAnalyze').disabled          = show;
+  } else if (type === 'compare') {
+    document.getElementById('loadingCompare').style.display = show ? 'block' : 'none';
+    document.getElementById('btnCompare').disabled          = show;
+    if (!show) setCmpStep(0); // reset steps
+  }
+}
+
+function setRewriteLoading(show) {
+  document.getElementById('loadingRewrite').style.display = show ? 'block' : 'none';
+  document.getElementById('btnImproveAll').disabled       = show;
+  document.querySelectorAll('.btn-improve-sec').forEach(function(b) { b.disabled = show; });
+}
+
+function setCmpStep(n) {
+  var texts = ['', 'Menganalisis CV A…', 'Menganalisis CV B…', 'Membuat narasi perbandingan…'];
+  if (n > 0) document.getElementById('compareStepText').textContent = texts[n];
+  [1,2,3].forEach(function(i) {
+    var el = document.getElementById('cmp-step-' + i);
+    el.className = 'cmp-step' + (i < n ? ' done' : i === n ? ' active' : '');
+  });
+}
+
+function showError(msg) {
+  var el = document.getElementById('errorBox');
+  el.textContent   = '❌ ' + msg;
+  el.style.display = 'block';
+}
+function clearError() { document.getElementById('errorBox').style.display = 'none'; }
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+// Init
+loadHistoryUI();
+</script>
+</body>
+</html>
