@@ -793,11 +793,14 @@ function generate() {
   setLoading(true, jobRole);
   document.getElementById('results').style.display = 'none';
 
-  fetch(GAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'generate', jobRole: jobRole, cvText: cvText })
-  })
+  // GAS hanya support CORS via GET (no preflight)
+  var params = new URLSearchParams({
+    action:  'generate',
+    jobRole: jobRole,
+    cvText:  cvText
+  });
+
+  fetch(GAS_URL + '?' + params.toString(), { method: 'GET' })
   .then(function(r) { return r.json(); })
   .then(function(res) {
     setLoading(false);
