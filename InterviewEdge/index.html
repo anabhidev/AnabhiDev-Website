@@ -247,6 +247,38 @@
     }
     .bank-disclaimer strong { color: var(--navy); }
 
+    /* CV TOGGLE */
+    .cv-toggle {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      background: var(--ice);
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .cv-toggle:hover { border-color: var(--indigo); background: var(--indigo-glow); }
+    .cv-toggle.active { border-color: var(--indigo); background: var(--indigo-glow); }
+    .cv-toggle-check {
+      flex-shrink: 0;
+      width: 18px; height: 18px;
+      border: 2px solid var(--slate-light);
+      border-radius: 4px; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+      background: var(--white);
+    }
+    .cv-toggle.active .cv-toggle-check {
+      background: var(--indigo);
+      border-color: var(--indigo);
+    }
+    .cv-toggle.active .cv-toggle-check::after {
+      content: '✓'; color: white; font-size: 11px; font-weight: 700;
+    }
+    .cv-toggle-label { font-size: 14px; font-weight: 600; color: var(--navy); }
+    .cv-toggle-sub { font-size: 12px; color: var(--slate); margin-top: 2px; }
+
     /* GENERATE BUTTON */
     .btn-generate {
       width: 100%; padding: 16px;
@@ -497,44 +529,65 @@
     />
 
     <div class="field-gap">
-      <label>
-        Your CV / Background
-        <span class="optional-label">— optional, untuk jawaban yang lebih personal</span>
+      <label for="job-context">
+        Additional Context
+        <span class="optional-label">— optional, agar pertanyaan lebih spesifik</span>
       </label>
+      <input
+        type="text"
+        id="job-context"
+        placeholder="e.g. Google, Tech startup, Senior level, Remote, Hospitality industry..."
+        autocomplete="off"
+      />
+    </div>
 
-      <!-- TABS -->
-      <div class="cv-tabs">
-        <button class="cv-tab active" onclick="switchCvTab('upload')" id="tab-upload">📎 Upload File</button>
-        <button class="cv-tab" onclick="switchCvTab('paste')" id="tab-paste">✏️ Paste Text</button>
-      </div>
-
-      <!-- UPLOAD PANEL -->
-      <div id="cv-panel-upload">
-        <div class="upload-zone" id="upload-zone">
-          <input type="file" id="cv-file" accept=".pdf,.doc,.docx" onchange="handleFileSelect(this.files[0])" />
-          <div class="upload-icon">📄</div>
-          <p><strong>Click to upload</strong> or drag & drop here</p>
-          <p style="margin-top:4px;font-size:11px">PDF or Word (.doc, .docx) — max 10MB</p>
+    <div class="field-gap">
+      <!-- CV TOGGLE CHECKBOX -->
+      <div class="cv-toggle" onclick="toggleCvSection()">
+        <div class="cv-toggle-check" id="cv-toggle-check"></div>
+        <div>
+          <div class="cv-toggle-label">Personalize with my CV</div>
+          <div class="cv-toggle-sub">Tambah CV untuk pertanyaan yang lebih personal — optional</div>
         </div>
-        <div class="file-preview" id="file-preview">
-          <span>✅</span>
-          <div class="file-preview-name" id="file-preview-name"></div>
-          <button class="file-preview-remove" onclick="removeFile()" title="Remove file">✕</button>
+      </div>
+
+      <!-- CV SECTION (hidden by default) -->
+      <div id="cv-section" style="display:none; margin-top:12px;">
+
+        <!-- TABS -->
+        <div class="cv-tabs">
+          <button class="cv-tab active" onclick="switchCvTab('upload')" id="tab-upload">📎 Upload File</button>
+          <button class="cv-tab" onclick="switchCvTab('paste')" id="tab-paste">✏️ Paste Text</button>
         </div>
-        <div class="file-extracting" id="file-extracting" style="display:none">⏳ Extracting text from file...</div>
-      </div>
 
-      <!-- PASTE PANEL -->
-      <div id="cv-panel-paste" style="display:none">
-        <textarea
-          id="cv-text"
-          placeholder="Paste ringkasan CV kamu di sini: pengalaman, skills, pendidikan... (opsional)"
-        ></textarea>
-      </div>
+        <!-- UPLOAD PANEL -->
+        <div id="cv-panel-upload">
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="cv-file" accept=".pdf,.doc,.docx" onchange="handleFileSelect(this.files[0])" />
+            <div class="upload-icon">📄</div>
+            <p><strong>Click to upload</strong> or drag & drop here</p>
+            <p style="margin-top:4px;font-size:11px">PDF or Word (.doc, .docx) — max 10MB</p>
+          </div>
+          <div class="file-preview" id="file-preview">
+            <span>✅</span>
+            <div class="file-preview-name" id="file-preview-name"></div>
+            <button class="file-preview-remove" onclick="removeFile()" title="Remove file">✕</button>
+          </div>
+          <div class="file-extracting" id="file-extracting" style="display:none">⏳ Extracting text from file...</div>
+        </div>
 
-      <div class="privacy-note">
-        <span>🔒</span>
-        <div>CV kamu diproses langsung di browser dan <strong>tidak disimpan atau dikumpulkan</strong> oleh kami. Data hanya dikirim ke Gemini AI untuk generate pertanyaan.</div>
+        <!-- PASTE PANEL -->
+        <div id="cv-panel-paste" style="display:none">
+          <textarea
+            id="cv-text"
+            placeholder="Paste ringkasan CV kamu di sini: pengalaman, skills, pendidikan... (opsional)"
+          ></textarea>
+        </div>
+
+        <div class="privacy-note">
+          <span>🔒</span>
+          <div>CV kamu diproses langsung di browser dan <strong>tidak disimpan atau dikumpulkan</strong> oleh kami. Data hanya dikirim ke Gemini AI untuk generate pertanyaan.</div>
+        </div>
       </div>
     </div>
 
@@ -668,6 +721,21 @@ var currentData = null;
 var currentCvTab = 'upload';
 var extractedCvText = '';
 
+// ── CV TOGGLE SHOW/HIDE
+function toggleCvSection() {
+  var toggle  = document.getElementById('cv-toggle-check').parentElement;
+  var section = document.getElementById('cv-section');
+  var isActive = toggle.classList.toggle('active');
+  section.style.display = isActive ? 'block' : 'none';
+  // Reset CV jika disembunyikan
+  if (!isActive) {
+    removeFile();
+    var ta = document.getElementById('cv-text');
+    if (ta) ta.value = '';
+    extractedCvText = '';
+  }
+}
+
 // ── CV TAB SWITCH
 function switchCvTab(tab) {
   currentCvTab = tab;
@@ -793,11 +861,14 @@ function generate() {
   setLoading(true, jobRole);
   document.getElementById('results').style.display = 'none';
 
+  var jobContext = document.getElementById('job-context').value.trim();
+
   // GAS hanya support CORS via GET (no preflight)
   var params = new URLSearchParams({
-    action:  'generate',
-    jobRole: jobRole,
-    cvText:  cvText
+    action:     'generate',
+    jobRole:    jobRole,
+    jobContext: jobContext,
+    cvText:     cvText
   });
 
   fetch(GAS_URL + '?' + params.toString(), { method: 'GET' })
