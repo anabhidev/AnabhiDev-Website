@@ -131,7 +131,7 @@ textarea::placeholder{color:var(--input-ph);}
 .res-body ul{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
 /* Market notes */
 .market-note{background:var(--blue-glow);border:1px solid var(--border);border-radius:9px;padding:12px 16px;font-size:0.83rem;color:var(--text-body);line-height:1.65;}
-footer{text-align:center;padding:16px;color:#2A3F55;font-size:0.7rem;}
+footer{text-align:center;padding:16px;font-size:0.72rem;}
 footer span{color:var(--blue);}
 @media(max-width:580px){
   header{padding:10px 14px;}
@@ -139,6 +139,13 @@ footer span{color:var(--blue);}
   .salary-numbers{gap:14px;}
   .breakdown-grid{grid-template-columns:1fr;}
 }
+
+/* ── PAGE HERO ── */
+.page-hero { text-align:center; padding:28px 20px 4px; }
+.page-hero h2 { font-size:1.55rem; font-weight:800; color:#FFFFFF; line-height:1.3; margin-bottom:10px; }
+.page-hero p  { font-size:0.88rem; color:rgba(255,255,255,0.6); max-width:500px; margin:0 auto; line-height:1.6; }
+@media(max-width:580px){ .page-hero h2{font-size:1.25rem;} .page-hero p{font-size:0.82rem;} }
+@media(max-width:640px){footer{padding-bottom:86px;}}
 </style>
 </head>
 <body>
@@ -166,6 +173,11 @@ footer span{color:var(--blue);}
 </nav>
 
 <main>
+<div class="page-hero">
+  <h2>Know Your Market Value</h2>
+  <p>Get a realistic salary estimate based on your role, experience, and location — instantly.</p>
+</div>
+
 
   <div class="card">
     <div class="card-title">1. Informasi Role</div>
@@ -215,7 +227,8 @@ footer span{color:var(--blue);}
         <div class="currency-toggle">
           <button class="curr-btn active" id="curr-idr" onclick="setCurrency('idr')">🇮🇩 IDR</button>
           <button class="curr-btn"        id="curr-usd" onclick="setCurrency('usd')">🇺🇸 USD</button>
-          <button class="curr-btn"        id="curr-both" onclick="setCurrency('both')">Keduanya</button>
+          <button class="curr-btn"        id="curr-eur"  onclick="setCurrency('eur')">🇪🇺 EUR</button>
+          <button class="curr-btn"        id="curr-all"  onclick="setCurrency('all')">Semua</button>
         </div>
       </div>
     </div>
@@ -266,16 +279,19 @@ footer span{color:var(--blue);}
           <div class="sal-label">Minimum</div>
           <div class="sal-amount" id="salMin"></div>
           <div class="sal-amount usd" id="salMinUSD" style="display:none"></div>
+          <div class="sal-amount usd" id="salMinEUR" style="display:none"></div>
         </div>
         <div class="sal-col">
           <div class="sal-label">⭐ Mid / Ideal</div>
           <div class="sal-amount mid" id="salMid"></div>
           <div class="sal-amount usd" id="salMidUSD" style="display:none"></div>
+          <div class="sal-amount usd" id="salMidEUR" style="display:none"></div>
         </div>
         <div class="sal-col">
           <div class="sal-label">Maksimum</div>
           <div class="sal-amount" id="salMax"></div>
           <div class="sal-amount usd" id="salMaxUSD" style="display:none"></div>
+        <div class="sal-amount usd" id="salMaxEUR" style="display:none"></div>
         </div>
         <div class="sal-col">
           <span class="confidence-badge" id="confBadge"></span>
@@ -348,6 +364,7 @@ var GAS_URL = 'https://script.google.com/macros/s/AKfycbzhOA6vG3TeyuZRupeLufTOUU
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 var currentCurrency = 'idr';
+var eurPerUsd = 0.92; // updated from API
 var usdToIdr        = 16000; // fallback, updated from API
 var salaryData      = null;
 var cvTabMode       = 'paste';
@@ -370,7 +387,7 @@ function toggleTheme() {
 (function fetchRate() {
   fetch('https://open.er-api.com/v6/latest/USD')
     .then(function(r) { return r.json(); })
-    .then(function(d) { if (d.rates && d.rates.IDR) usdToIdr = d.rates.IDR; })
+    .then(function(d) { if (d.rates && d.rates.IDR) usdToIdr = d.rates.IDR; if (d.rates && d.rates.EUR) eurPerUsd = d.rates.EUR; })
     .catch(function() {}); // use fallback on error
 })();
 
@@ -389,27 +406,31 @@ function getLocation() {
 // ── Currency ──
 function setCurrency(c) {
   currentCurrency = c;
-  ['idr','usd','both'].forEach(function(x) {
-    document.getElementById('curr-' + x).classList.toggle('active', x === c);
+  ['idr','usd','eur','all'].forEach(function(x) {
+    var el = document.getElementById('curr-' + x);
+    if (el) el.classList.toggle('active', x === c);
   });
   if (salaryData) updateCurrencyDisplay();
 }
 function updateCurrencyDisplay() {
   var d = salaryData;
-  var showIdr  = currentCurrency === 'idr'  || currentCurrency === 'both';
-  var showUsd  = currentCurrency === 'usd'  || currentCurrency === 'both';
-  document.getElementById('salMin').textContent  = showIdr ? fmtIdr(d.salary_idr.min)  : fmtUsd(d.salary_idr.min);
-  document.getElementById('salMid').textContent  = showIdr ? fmtIdr(d.salary_idr.mid)  : fmtUsd(d.salary_idr.mid);
-  document.getElementById('salMax').textContent  = showIdr ? fmtIdr(d.salary_idr.max)  : fmtUsd(d.salary_idr.max);
-  var showSecond = currentCurrency === 'both';
-  document.getElementById('salMinUSD').style.display = showSecond ? '' : 'none';
-  document.getElementById('salMidUSD').style.display = showSecond ? '' : 'none';
-  document.getElementById('salMaxUSD').style.display = showSecond ? '' : 'none';
-  if (showSecond) {
-    document.getElementById('salMinUSD').textContent = showIdr ? fmtUsd(d.salary_idr.min) : fmtIdr(d.salary_idr.min);
-    document.getElementById('salMidUSD').textContent = showIdr ? fmtUsd(d.salary_idr.mid) : fmtIdr(d.salary_idr.mid);
-    document.getElementById('salMaxUSD').textContent = showIdr ? fmtUsd(d.salary_idr.max) : fmtIdr(d.salary_idr.max);
-  }
+  if (!d || !d.salary_idr) return;
+  var mn = d.salary_idr.min || 0, md = d.salary_idr.mid || 0, mx = d.salary_idr.max || 0;
+  var cur = currentCurrency;
+  // Primary display
+  var fmtPrimary = cur === 'usd' ? fmtUsd : cur === 'eur' ? fmtEur : fmtIdr;
+  document.getElementById('salMin').textContent = fmtPrimary(mn);
+  document.getElementById('salMid').textContent = fmtPrimary(md);
+  document.getElementById('salMax').textContent = fmtPrimary(mx);
+  // Secondary rows
+  var showAll = cur === 'all';
+  ['Min','Mid','Max'].forEach(function(k) {
+    var v = k === 'Min' ? mn : k === 'Mid' ? md : mx;
+    var elU = document.getElementById('sal'+k+'USD');
+    var elE = document.getElementById('sal'+k+'EUR');
+    if (elU) { elU.style.display = showAll ? '' : 'none'; if(showAll) elU.textContent = fmtUsd(v); }
+    if (elE) { elE.style.display = showAll ? '' : 'none'; if(showAll) elE.textContent = fmtEur(v); }
+  });
   // Update city table
   var rows = document.querySelectorAll('#cityTbody tr');
   rows.forEach(function(row, i) {
@@ -424,6 +445,10 @@ function updateCurrencyDisplay() {
 function fmtIdr(n) {
   if (!n) return '-';
   return 'Rp ' + (n/1000000).toFixed(1).replace('.0','') + ' jt';
+}
+function fmtEur(n) {
+  if (!n) return '-';
+  return '€' + Math.round(n / usdToIdr * eurPerUsd).toLocaleString();
 }
 function fmtUsd(n) {
   if (!n) return '-';
@@ -512,6 +537,7 @@ async function estimateSalary() {
 
 // ── Render ──
 function renderResults(data) {
+  if (!data || !data.salary_idr) { showError('Format respons tidak valid. Pastikan Code.gs sudah di-update dan semua Script Properties sudah diset.'); return; }
   salaryData = data;
   var d      = data;
   document.getElementById('salRole').textContent    = d.detected_role || '';
