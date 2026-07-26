@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV ATS Analyzer – Anabhi Dev</title>
+<meta name="description" content="Analisis CV Anda secara instan dengan AI. Dapatkan ATS Score, keyword analysis, cover letter, dan rekomendasi perbaikan CV.">
+<meta name="keywords" content="ATS checker, CV analyzer, resume checker, ATS score, cover letter generator, LinkedIn optimizer, job match">
+<meta name="author" content="Anabhi Dev">
+<meta name="robots" content="index, follow">
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="CV ATS Analyzer – Anabhi Dev">
+<meta property="og:description" content="Analisis CV Anda secara instan dengan AI. ATS Score, keyword analysis, cover letter, LinkedIn optimizer, job match.">
+<meta property="og:image"       content="https://anabhidev.com/assets/og-cv-ats-analyzer.webp">
+<meta property="og:url"         content="https://anabhidev.com/cv-ats-analyzer">
+<meta property="og:site_name"   content="Anabhi Dev">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="CV ATS Analyzer – Anabhi Dev">
+<meta name="twitter:description" content="Analisis CV Anda secara instan dengan AI.">
+<meta name="twitter:image"       content="https://anabhidev.com/assets/og-cv-ats-analyzer.webp">
+<link rel="icon"             type="image/png" href="https://anabhidev.com/assets/favicon.png">
+<link rel="apple-touch-icon"                  href="https://anabhidev.com/assets/apple-touch-icon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+/* ── VARIABLES ── */
+:root {
+  /* Page & header: always dark */
+  --navy:       #0D1B2A;
+  --navy-light: #162537;
+  --navy-mid:   #DCE8F5;
+  --inner-bg:   #EDF2F7;
+  /* Cards: off-white default */
+  --card-bg:    #F8FAFC;
+  --border:     rgba(0,100,180,0.15);
+  /* Blue */
+  --blue:       #0082CC;
+  --blue-dark:  #006BA8;
+  --blue-glow:  rgba(0,130,204,0.12);
+  /* Text */
+  --white:      #FFFFFF;
+  --text:       #0D1B2A;
+  --text-sec:   #4A6080;
+  --text-body:  #2A3A4A;
+  --gray:       #4A6080;
+  --gray-light: #2A3A4A;
+  /* Inputs */
+  --input-bg:   #FFFFFF;
+  --input-color:#0D1B2A;
+  --input-ph:   #90A8BB;
+  /* Functional */
+  --upload-bg:  #F0F4F9;
+  --qw-bg:      #EDF2F7;
+  --rw-bg:      #EDF2F7;
+  /* Status */
+  --success:    #00873A;
+  --warning:    #B37700;
+  --danger:     #CC2900;
+}
+body.dark {
+  --navy:       #0D1B2A;
+  --navy-light: #162537;
+  --navy-mid:   #1E3448;
+  --inner-bg:   #0D1B2A;
+  --card-bg:    #162537;
+  --border:     rgba(0,163,255,0.2);
+  --blue:       #00A3FF;
+  --blue-dark:  #0082CC;
+  --blue-glow:  rgba(0,163,255,0.12);
+  --white:      #FFFFFF;
+  --text:       #FFFFFF;
+  --text-sec:   #B0BEC5;
+  --text-body:  #E8F0F7;
+  --gray:       #B0BEC5;
+  --gray-light: #E8F0F7;
+  --input-bg:   #FFFFFF;
+  --input-color:#1A2A3A;
+  --input-ph:   #9AAABB;
+  --upload-bg:  #0D1B2A;
+  --qw-bg:      #0D1B2A;
+  --rw-bg:      #0D1B2A;
+  --success:    #00C853;
+  --warning:    #FFB300;
+  --danger:     #FF3D00;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--navy); color:var(--text); min-height:100vh; transition:background 0.25s, color 0.25s; }
+
+/* ── HEADER ── */
+header { background:var(--navy-light); border-bottom:1px solid rgba(0,163,255,0.2); padding:12px 32px; display:flex; align-items:center; gap:14px; }
+.hdr-text h1 { font-size:1.05rem; font-weight:700; letter-spacing:0.02em; color:#FFFFFF; }
+.hdr-text p  { font-size:0.66rem; color:#00A3FF; letter-spacing:0.07em; margin-top:1px; }
+.hdr-right   { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.theme-toggle { background:none; border:1px solid rgba(255,255,255,0.25); color:#FFFFFF; width:34px; height:34px; border-radius:8px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+.theme-toggle:hover { border-color:#FFFFFF; opacity:0.8; }
+.btn-screener { background:none; border:1px solid rgba(255,255,255,0.25); color:#FFFFFF; font-size:0.76rem; padding:6px 12px; border-radius:7px; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:all 0.18s; white-space:nowrap; }
+.btn-screener:hover { border-color:#FFFFFF; opacity:0.8; }
+header img { height:38px; width:auto; }
+
+/* ── MAIN ── */
+main { max-width:860px; margin:0 auto; padding:28px 20px 64px; }
+
+/* ── TABS ── */
+.tab-bar { display:flex; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:4px; margin-bottom:14px; flex-wrap:wrap; gap:2px; }
+.tab-btn { background:none; border:none; color:var(--gray); padding:8px 16px; font-size:0.81rem; font-weight:600; cursor:pointer; border-radius:9px; transition:all 0.18s; white-space:nowrap; }
+.tab-btn.active { background:var(--blue); color:#fff; }
+.tab-btn:not(.active):hover { color:var(--text); }
+
+/* ── OPTIONS BAR ── */
+.options-bar { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:14px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.opt-group { display:flex; align-items:center; gap:10px; flex:1; min-width:200px; }
+.opt-group label { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.opt-group input[type="text"] { flex:1; background:var(--inner-bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text); font-size:0.83rem; outline:none; transition:border-color 0.2s; font-family:inherit; }
+.opt-group input[type="text"]:focus { border-color:var(--blue); }
+.opt-group input[type="text"]::placeholder { color:#3A5068; }
+.lang-toggle { display:flex; align-items:center; gap:6px; }
+.lang-toggle span { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.lang-btn { background:none; border:1px solid var(--border); color:var(--gray); padding:6px 10px; font-size:0.75rem; font-weight:600; cursor:pointer; border-radius:7px; transition:all 0.18s; white-space:nowrap; }
+.lang-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+.lang-btn:not(.active):hover { border-color:var(--blue); color:var(--text); }
+
+/* ── PANELS ── */
+.panel { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:14px; }
+.panel.hidden { display:none; }
+
+/* ── TEXTAREA ── */
+textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; color:var(--input-color); font-size:0.84rem; line-height:1.65; padding:14px; resize:vertical; outline:none; font-family:inherit; transition:border-color 0.2s; min-height:200px; }
+textarea:focus { border-color:var(--blue); }
+textarea::placeholder { color:var(--input-ph); }
+
+/* ── UPLOAD ZONE ── */
+.upload-zone { position:relative; border:2px dashed var(--border); border-radius:10px; padding:40px 24px; text-align:center; cursor:pointer; background:var(--upload-bg); transition:all 0.2s; }
+.upload-zone:hover, .upload-zone.drag-over { border-color:var(--blue); background:var(--blue-glow); }
+.upload-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.upload-icon { font-size:2.2rem; margin-bottom:10px; }
+.upload-zone h3 { font-size:0.95rem; margin-bottom:6px; color:var(--text); }
+.upload-zone p  { font-size:0.76rem; color:var(--gray); }
+.file-chosen { margin-top:12px; font-size:0.8rem; color:var(--blue); font-weight:600; }
+
+/* ── COMPARE PANELS ── */
+.compare-inputs { display:flex; gap:16px; }
+.compare-cv-block { flex:1; min-width:0; }
+.compare-label-row { margin-bottom:10px; }
+.compare-badge { font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:20px; }
+.compare-badge.a { background:rgba(0,163,255,0.15); color:var(--blue); border:1px solid var(--blue); }
+.compare-badge.b { background:rgba(255,179,0,0.15); color:var(--warning); border:1px solid var(--warning); }
+.mini-tab-bar { display:flex; background:var(--inner-bg); border:1px solid var(--border); border-radius:9px; padding:3px; margin-bottom:10px; width:fit-content; }
+.mini-tab { background:none; border:none; color:var(--gray); padding:5px 12px; font-size:0.75rem; font-weight:600; cursor:pointer; border-radius:7px; transition:all 0.18s; white-space:nowrap; }
+.mini-tab.active { background:var(--blue); color:#fff; }
+.cmp-paste-panel { display:block; } .cmp-upload-panel { display:none; }
+.compare-divider { display:flex; align-items:center; justify-content:center; padding:0 4px; }
+.compare-divider span { background:var(--navy-mid); border:1px solid var(--border); color:var(--gray); font-size:0.74rem; font-weight:700; padding:6px 9px; border-radius:8px; }
+
+/* ── TOOL PANEL INFO ── */
+.tool-info { margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+.tool-info h3 { font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--text); }
+.tool-info p  { font-size:0.82rem; color:var(--gray); line-height:1.5; }
+.cv-status { margin-bottom:12px; }
+.cv-ready   { background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--success); font-size:0.82rem; padding:9px 14px; border-radius:8px; }
+.cv-missing { background:rgba(255,179,0,0.1); border:1px solid rgba(255,179,0,0.3); color:var(--warning); font-size:0.82rem; padding:9px 14px; border-radius:8px; line-height:1.5; }
+.jd-label { font-size:0.8rem; color:var(--gray); font-weight:600; margin-bottom:8px; display:block; }
+
+/* ── BUTTONS ── */
+.btn-analyze, .btn-compare, .btn-tool {
+  width:100%; border:none; padding:15px; border-radius:10px;
+  font-size:1rem; font-weight:700; cursor:pointer; letter-spacing:0.02em; transition:all 0.2s;
+}
+.btn-analyze { background:var(--blue); color:#fff; }
+.btn-compare { background:linear-gradient(135deg,var(--blue) 0%,#7B5EA7 100%); color:#fff; }
+.btn-tool    { background:var(--blue); color:#fff; }
+.btn-analyze:hover:not(:disabled), .btn-compare:hover:not(:disabled), .btn-tool:hover:not(:disabled) { opacity:0.88; transform:translateY(-1px); }
+.btn-analyze:disabled, .btn-compare:disabled, .btn-tool:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── ERROR ── */
+.error-box { display:none; margin-top:14px; background:rgba(255,61,0,0.1); border:1px solid var(--danger); border-radius:10px; padding:13px 17px; font-size:0.84rem; color:#FF8A65; line-height:1.5; }
+
+/* ── LOADING ── */
+.loading { display:none; text-align:center; padding:36px 20px; }
+.prog-bar-wrap { position:relative; height:3px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:22px; }
+.prog-bar-fill { position:absolute; top:0; left:-40%; height:100%; width:40%; background:var(--blue); border-radius:3px; animation:indeterminate 1.8s ease-in-out infinite; }
+@keyframes indeterminate { 0%{left:-40%} 100%{left:100%} }
+.spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; margin:0 auto 14px; animation:spin 0.8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading p     { color:var(--gray); font-size:0.85rem; }
+.loading small { color:#3A5068; font-size:0.74rem; margin-top:4px; display:block; }
+.compare-steps { display:flex; justify-content:center; gap:7px; margin-top:14px; flex-wrap:wrap; }
+.cmp-step { font-size:0.73rem; padding:4px 11px; border-radius:20px; border:1px solid var(--border); color:#3A5068; transition:all 0.3s; }
+.cmp-step.active { border-color:var(--blue); color:var(--blue); background:var(--blue-glow); }
+.cmp-step.done   { border-color:var(--success); color:var(--success); background:rgba(0,200,83,0.1); }
+
+/* ── RESULTS CONTAINERS ── */
+#results, #compareResults, #coverLetterResults, #linkedInResults, #jobMatchResults { display:none; margin-top:28px; }
+
+/* ── PDF BUTTON ── */
+.btn-print-wrap { text-align:right; margin-bottom:12px; }
+.btn-print { background:none; border:1px solid var(--blue); color:var(--blue); padding:7px 16px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.18s; }
+.btn-print:hover { background:var(--blue); color:#fff; }
+
+/* ── IMPROVE ALL BUTTON ── */
+.btn-improve-all-wrap { margin-bottom:12px; }
+.btn-improve-all { width:100%; background:none; border:1px solid rgba(0,163,255,0.4); color:var(--blue); padding:11px; border-radius:10px; font-size:0.88rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.btn-improve-all:hover:not(:disabled) { background:var(--blue-glow); border-color:var(--blue); }
+.btn-improve-all:disabled { opacity:0.4; cursor:not-allowed; }
+
+/* ── SCORE DONUT ── */
+.score-donut { width:100px; height:100px; flex-shrink:0; }
+.donut-track { stroke:var(--blue-glow); }
+.donut-progress { stroke:var(--blue); transition:stroke-dasharray 1s ease, stroke 0.3s; }
+.donut-num { font-size:22px; font-weight:800; fill:var(--blue); font-family:'Segoe UI',sans-serif; }
+.donut-lbl { font-size:7px; fill:var(--gray); letter-spacing:0.5px; font-family:'Segoe UI',sans-serif; text-transform:uppercase; }
+
+/* ── SCORE CARD ── */
+.score-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:14px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+.score-info h2 { font-size:1.05rem; margin-bottom:4px; color:var(--text); }
+.score-info p  { font-size:0.82rem; color:var(--gray); margin-bottom:10px; line-height:1.5; }
+.bar-wrap { background:var(--inner-bg); border-radius:6px; height:7px; width:200px; max-width:100%; }
+.bar { height:7px; border-radius:6px; transition:width 0.9s ease; }
+
+/* ── COLLAPSIBLE SECTIONS ── */
+.res-section { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; margin-bottom:11px; overflow:hidden; }
+.res-header  { display:flex; align-items:center; gap:10px; padding:13px 18px; cursor:pointer; user-select:none; border-bottom:1px solid transparent; transition:background 0.15s; }
+.res-header:hover { background:var(--navy-mid); }
+.res-header.open  { border-bottom-color:var(--border); }
+.res-icon  { font-size:1rem; }
+.res-title { font-size:0.88rem; font-weight:700; flex:1; color:var(--text); }
+.res-arrow { color:var(--gray); font-size:0.74rem; transition:transform 0.2s; }
+.res-header.open .res-arrow { transform:rotate(180deg); }
+.res-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; }
+.res-body.open { max-height:2000px; padding:16px 18px; }
+.res-body p, .res-body li { font-size:0.83rem; line-height:1.75; color:var(--text-body); }
+.res-body ul, .res-body ol { padding-left:20px; display:flex; flex-direction:column; gap:4px; }
+.res-body strong { color:var(--text); }
+.res-body .sub-title { display:block; font-size:0.74rem; color:var(--blue); text-transform:uppercase; letter-spacing:0.08em; margin:13px 0 5px; font-weight:700; }
+.res-body .sub-title:first-child { margin-top:0; }
+
+/* Section row with improve button */
+.section-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:4px; }
+.section-row p { flex:1; margin:0; }
+.btn-improve-sec { background:none; border:1px solid var(--border); color:var(--gray); font-size:0.7rem; padding:3px 8px; border-radius:6px; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:all 0.15s; margin-top:2px; }
+.btn-improve-sec:hover { border-color:var(--blue); color:var(--blue); }
+
+/* Rating pills */
+.r-good    { color:var(--success); font-weight:700; }
+.r-improve { color:var(--warning); font-weight:700; }
+.r-missing { color:var(--danger);  font-weight:700; }
+
+/* Keyword chips */
+.kw-wrap { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.kw-chip { background:var(--blue-glow); border:1px solid var(--blue); color:var(--blue); font-size:0.73rem; font-weight:600; padding:3px 10px; border-radius:20px; }
+
+/* Quick wins */
+.qw-item { background:var(--qw-bg); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:10px 14px; margin-bottom:8px; font-size:0.82rem; color:var(--text-body); line-height:1.65; }
+.qw-item:last-child { margin-bottom:0; }
+
+/* Copy button */
+.copy-wrap { display:flex; justify-content:flex-end; margin-top:6px; }
+.btn-copy { background:none; border:1px solid var(--border); color:var(--gray); font-size:0.72rem; padding:4px 11px; border-radius:6px; cursor:pointer; transition:all 0.15s; }
+.btn-copy:hover { border-color:var(--success); color:var(--success); }
+.btn-copy.copied { border-color:var(--success); color:var(--success); }
+
+/* ── REWRITE LOADING ── */
+#loadingRewrite { display:none; text-align:center; padding:24px; margin-top:12px; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; }
+
+/* Rewrite content block */
+.rw-block { margin-bottom:10px; }
+.rw-block:last-child { margin-bottom:0; }
+.rewrite-content { background:var(--rw-bg); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:12px 14px; font-size:0.82rem; line-height:1.7; color:var(--text-body); white-space:pre-wrap; word-break:break-word; }
+
+/* ── COMPARE RESULTS ── */
+.compare-score-row { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:14px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center; }
+.cmp-cv-card { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; min-width:90px; }
+.cmp-score-circle { width:76px; height:76px; border-radius:50%; border:3px solid currentColor; display:flex; align-items:center; justify-content:center; font-size:1.65rem; font-weight:800; }
+.cmp-cv-name { font-size:0.88rem; font-weight:700; color:var(--text); }
+.cmp-cv-file { font-size:0.71rem; color:var(--gray); text-align:center; max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cmp-middle  { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; }
+.cmp-trophy  { font-size:1.9rem; }
+.cmp-winner-text { font-size:0.71rem; color:var(--blue); font-weight:700; text-align:center; max-width:80px; }
+
+/* ── COVER LETTER / LINKEDIN OUTPUT ── */
+.output-text { background:var(--rw-bg); border:1px solid var(--border); border-radius:10px; padding:18px; font-size:0.83rem; line-height:1.8; color:var(--text-body); white-space:pre-wrap; word-break:break-word; }
+.output-field-label { font-size:0.76rem; color:var(--blue); text-transform:uppercase; letter-spacing:0.07em; font-weight:700; margin-bottom:6px; }
+.output-field { margin-bottom:14px; }
+.output-field:last-child { margin-bottom:0; }
+.li-headline { background:var(--blue-glow); border:1px solid var(--blue); border-radius:8px; padding:12px 16px; font-size:0.95rem; font-weight:700; color:var(--blue); line-height:1.4; word-break:break-word; }
+.skill-chip { display:inline-block; background:var(--blue-glow); border:1px solid var(--blue); color:var(--blue); font-size:0.72rem; font-weight:600; padding:3px 9px; border-radius:20px; margin:3px; }
+.subject-line { background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); border-radius:8px; padding:10px 14px; font-size:0.85rem; font-weight:600; color:var(--success); }
+
+/* ── JOB MATCH ── */
+.jm-req-item { display:flex; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+.jm-req-item:last-child { border-bottom:none; padding-bottom:0; }
+.req-status { font-size:0.7rem; font-weight:700; padding:3px 8px; border-radius:5px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+.req-status.met     { background:rgba(0,200,83,0.15); color:var(--success); }
+.req-status.partial { background:rgba(255,179,0,0.15); color:var(--warning); }
+.req-status.not-met { background:rgba(255,61,0,0.15);  color:var(--danger);  }
+.req-text strong { display:block; font-size:0.82rem; color:var(--text); margin-bottom:2px; }
+.req-text span   { font-size:0.76rem; color:var(--gray); line-height:1.5; }
+.app-rec { display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:10px; }
+.app-rec.apply-now   { background:rgba(0,200,83,0.1);  border:1px solid rgba(0,200,83,0.3);  }
+.app-rec.apply-notes { background:rgba(255,179,0,0.1); border:1px solid rgba(255,179,0,0.3); }
+.app-rec.needs-prep  { background:rgba(255,61,0,0.1);  border:1px solid rgba(255,61,0,0.3);  }
+.rec-icon   { font-size:1.7rem; flex-shrink:0; }
+.rec-label  { font-size:0.92rem; font-weight:700; margin-bottom:4px; color:var(--text); }
+.rec-reason { font-size:0.81rem; line-height:1.6; color:var(--text-body); }
+
+/* ── HISTORY ── */
+#historySection { margin-top:26px; display:none; }
+.history-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.history-hdr h3 { font-size:0.88rem; font-weight:700; color:var(--gray); }
+.btn-clear-hist { background:none; border:1px solid #3A5068; color:#3A5068; font-size:0.73rem; padding:4px 11px; border-radius:7px; cursor:pointer; transition:all 0.18s; }
+.btn-clear-hist:hover { border-color:var(--danger); color:var(--danger); }
+.history-item { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:11px 15px; margin-bottom:7px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:background 0.15s, border-color 0.15s; }
+.history-item:hover { background:var(--navy-mid); border-color:var(--blue); }
+.history-item:last-child { margin-bottom:0; }
+.hist-score { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.95rem; font-weight:800; border:2px solid currentColor; flex-shrink:0; }
+.hist-info  { flex:1; min-width:0; }
+.hist-role  { font-size:0.83rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hist-cv    { font-size:0.74rem; color:var(--gray); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hist-date  { font-size:0.71rem; color:#3A5068; margin-top:2px; }
+.hist-arrow { color:var(--gray); font-size:0.9rem; flex-shrink:0; }
+
+/* ── FOOTER ── */
+footer { text-align:center; padding:16px; color:#2A3F55; font-size:0.7rem; }
+footer span { color:var(--blue); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:580px) {
+  header { padding:10px 14px; }
+  main   { padding:14px 12px 48px; }
+  .score-card { flex-direction:column; align-items:flex-start; }
+  .bar-wrap   { width:100%; }
+  .options-bar { gap:10px; }
+  .opt-group  { min-width:100%; }
+  .compare-inputs { flex-direction:column; }
+  .compare-divider { padding:8px 0; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .res-body { max-height:none !important; padding:14px 18px !important; overflow:visible !important; }
+  .res-arrow, .btn-improve-sec, .btn-improve-all-wrap, .btn-print-wrap,
+  .hdr-text p, .hdr-right, .tab-bar, .options-bar,
+  .panel, .btn-analyze, .btn-compare, .btn-tool,
+  .error-box, .loading, #loadingRewrite,
+  #historySection, footer,
+  #compareResults, #coverLetterResults, #linkedInResults, #jobMatchResults { display:none !important; }
+  header { border-bottom:2px solid #0082CC !important; padding:10px 18px !important; background:#fff !important; }
+  .hdr-text h1 { color:#0D1B2A !important; }
+  body { background:#fff !important; color:#111 !important; }
+  main { padding:0 14px !important; max-width:100% !important; }
+  #results { display:block !important; margin-top:10px !important; }
+  .score-card { background:#f5f7fa !important; border:1px solid #dde3ea !important; break-inside:avoid; }
+  .score-info h2, .score-info p { color:#111 !important; }
+  .bar-wrap { background:#e0e0e0 !important; }
+  .donut-num { fill:#0082CC !important; }
+  .donut-lbl { fill:#666 !important; }
+  .donut-track { stroke:#e0e0e0 !important; }
+  .res-section { background:#fff !important; border:1px solid #dde3ea !important; break-inside:avoid; margin-bottom:6px !important; }
+  .res-header { background:#f0f4f8 !important; border-bottom:1px solid #dde3ea !important; }
+  .res-title { color:#111 !important; }
+  .res-body p, .res-body li { color:#333 !important; }
+  .res-body strong { color:#111 !important; }
+  .res-body .sub-title { color:#0082CC !important; }
+  .r-good{color:#00873a !important} .r-improve{color:#b37700 !important} .r-missing{color:#cc2900 !important}
+  .kw-chip { background:#e8f4ff !important; color:#0082CC !important; border-color:#0082CC !important; }
+  .qw-item { background:#f5f7fa !important; color:#333 !important; border-left-color:#0082CC !important; }
+  .rewrite-content { background:#f5f7fa !important; color:#333 !important; border-left-color:#0082CC !important; }
+}
+
+/* ── APP NAV ── */
+.app-nav { background:#0D1B2A; border-bottom:1px solid rgba(0,163,255,0.15); display:flex; align-items:center; justify-content:center; gap:2px; padding:0 16px; flex-wrap:wrap; }
+.nav-item { display:flex; align-items:center; gap:5px; padding:10px 14px; color:rgba(255,255,255,0.55); text-decoration:none; font-size:0.8rem; font-weight:600; border-radius:8px; transition:all 0.18s; white-space:nowrap; }
+.nav-item:hover { color:#fff; background:rgba(255,255,255,0.07); }
+.nav-item.active { color:#0082CC; background:rgba(0,130,204,0.15); }
+.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:#0D1B2A; border-top:1px solid rgba(0,163,255,0.2); z-index:200; padding-bottom:env(safe-area-inset-bottom,0px); }
+.bnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 4px 10px; color:rgba(255,255,255,0.5); text-decoration:none; transition:color 0.18s; }
+.bnav-item.active { color:#0082CC; }
+.bnav-item:hover { color:rgba(255,255,255,0.85); }
+.bnav-icon { font-size:1.15rem; }
+.bnav-label { font-size:0.6rem; font-weight:600; letter-spacing:0.02em; }
+@media (max-width:640px) { .app-nav { display:none; } .bottom-nav { display:flex; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-text">
+    <h1>CV ATS Analyzer</h1>
+    <p>POWERED BY ANABHI DEV</p>
+  </div>
+  <div class="hdr-right">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
+    <img src="https://anabhidev.com/assets/logo-anabhidev.webp" alt="Anabhi Dev" onerror="this.style.display='none'">
+  </div>
+</header>
+<!-- APP NAV -->
+<nav class="app-nav">
+  <a class="nav-item" data-page="ats"       href="/CV-Analyzer/">📊 <span>ATS</span></a>
+  <a class="nav-item" data-page="screener"  href="/CV-Analyzer/screener.html">👥 <span>Screener</span></a>
+  <a class="nav-item" data-page="salary"    href="/CV-Analyzer/salary.html">💰 <span>Salary</span></a>
+  <a class="nav-item" data-page="career"    href="/CV-Analyzer/career.html">🗺️ <span>Career</span></a>
+  <a class="nav-item" data-page="interview" href="/CV-Analyzer/interview.html">🎤 <span>Interview</span></a>
+</nav>
+<nav class="bottom-nav">
+  <a class="bnav-item" data-page="ats"       href="/CV-Analyzer/"><span class="bnav-icon">📊</span><span class="bnav-label">ATS</span></a>
+  <a class="bnav-item" data-page="screener"  href="/CV-Analyzer/screener.html"><span class="bnav-icon">👥</span><span class="bnav-label">Screener</span></a>
+  <a class="bnav-item" data-page="salary"    href="/CV-Analyzer/salary.html"><span class="bnav-icon">💰</span><span class="bnav-label">Salary</span></a>
+  <a class="bnav-item" data-page="career"    href="/CV-Analyzer/career.html"><span class="bnav-icon">🗺️</span><span class="bnav-label">Career</span></a>
+  <a class="bnav-item" data-page="interview" href="/CV-Analyzer/interview.html"><span class="bnav-icon">🎤</span><span class="bnav-label">Interview</span></a>
+</nav>
+
+<main>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tab-paste"         onclick="switchTab('paste')">📋 Paste CV</button>
+  <button class="tab-btn"        id="tab-upload"        onclick="switchTab('upload')">📄 Upload File</button>
+  <button class="tab-btn"        id="tab-compare"       onclick="switchTab('compare')">⚖️ Compare</button>
+  <button class="tab-btn"        id="tab-cover-letter"  onclick="switchTab('cover-letter')">📝 Cover Letter</button>
+  <button class="tab-btn"        id="tab-linkedin"      onclick="switchTab('linkedin')">💼 LinkedIn</button>
+  <button class="tab-btn"        id="tab-job-match"     onclick="switchTab('job-match')">🎯 Job Match</button>
+</div>
+
+<!-- OPTIONS BAR (shared) -->
+<div class="options-bar">
+  <div class="opt-group">
+    <label>🎯 Target Role</label>
+    <input type="text" id="targetRole" placeholder="Data Analyst, Software Engineer… (opsional)">
+  </div>
+  <div class="lang-toggle">
+    <span>Bahasa:</span>
+    <button class="lang-btn active" id="lang-auto" onclick="setLang('auto')">Auto</button>
+    <button class="lang-btn"        id="lang-id"   onclick="setLang('id')">🇮🇩 ID</button>
+    <button class="lang-btn"        id="lang-en"   onclick="setLang('en')">🇬🇧 EN</button>
+  </div>
+</div>
+
+<!-- PANEL: Paste -->
+<div class="panel" id="panel-paste">
+  <textarea id="cvText" placeholder="Paste isi CV Anda di sini...
+
+Contoh:
+John Doe
+john@email.com | +62 812 3456 7890
+
+RINGKASAN
+Software Developer berpengalaman 5 tahun...
+
+PENGALAMAN KERJA
+Software Engineer – PT ABC | 2020–2024
+• Mengembangkan REST API menggunakan Node.js
+..."></textarea>
+</div>
+
+<!-- PANEL: Upload -->
+<div class="panel hidden" id="panel-upload">
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" id="fileInput" accept=".pdf,.docx,.doc" onchange="onFileSelected(this)">
+    <div class="upload-icon">📁</div>
+    <h3>Drop file CV di sini</h3>
+    <p>atau klik untuk memilih file</p>
+    <p style="margin-top:5px;">Format: <strong>.PDF</strong> &nbsp;·&nbsp; <strong>.DOCX</strong></p>
+    <div class="file-chosen" id="fileChosen"></div>
+  </div>
+</div>
+
+<!-- PANEL: Compare -->
+<div class="panel hidden" id="panel-compare">
+  <div class="compare-inputs">
+    <div class="compare-cv-block">
+      <div class="compare-label-row"><span class="compare-badge a">CV A</span></div>
+      <div class="mini-tab-bar">
+        <button class="mini-tab active" id="cmp-tab-a-paste"  onclick="switchCmpTab('a','paste')">📋 Paste</button>
+        <button class="mini-tab"        id="cmp-tab-a-upload" onclick="switchCmpTab('a','upload')">📄 Upload</button>
+      </div>
+      <div class="cmp-paste-panel"  id="cmp-paste-a"><textarea id="cvTextA" placeholder="Paste CV A..."></textarea></div>
+      <div class="cmp-upload-panel" id="cmp-upload-a">
+        <div class="upload-zone" id="uploadZoneA">
+          <input type="file" id="fileInputA" accept=".pdf,.docx,.doc" onchange="onFileSelectedCmp('A',this)">
+          <div class="upload-icon">📁</div><h3>Drop CV A</h3>
+          <p>.PDF · .DOCX</p><div class="file-chosen" id="fileChosenA"></div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-divider"><span>VS</span></div>
+    <div class="compare-cv-block">
+      <div class="compare-label-row"><span class="compare-badge b">CV B</span></div>
+      <div class="mini-tab-bar">
+        <button class="mini-tab active" id="cmp-tab-b-paste"  onclick="switchCmpTab('b','paste')">📋 Paste</button>
+        <button class="mini-tab"        id="cmp-tab-b-upload" onclick="switchCmpTab('b','upload')">📄 Upload</button>
+      </div>
+      <div class="cmp-paste-panel"  id="cmp-paste-b"><textarea id="cvTextB" placeholder="Paste CV B..."></textarea></div>
+      <div class="cmp-upload-panel" id="cmp-upload-b">
+        <div class="upload-zone" id="uploadZoneB">
+          <input type="file" id="fileInputB" accept=".pdf,.docx,.doc" onchange="onFileSelectedCmp('B',this)">
+          <div class="upload-icon">📁</div><h3>Drop CV B</h3>
+          <p>.PDF · .DOCX</p><div class="file-chosen" id="fileChosenB"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL: Cover Letter -->
+<div class="panel hidden" id="panel-cover-letter">
+  <div class="tool-info">
+    <h3>📝 Cover Letter Generator</h3>
+    <p>Generate cover letter modern & casual dari CV dan target role Anda. Isi target role di atas untuk hasil terbaik.</p>
+  </div>
+  <div class="cv-status" id="clCVStatus"></div>
+</div>
+
+<!-- PANEL: LinkedIn -->
+<div class="panel hidden" id="panel-linkedin">
+  <div class="tool-info">
+    <h3>💼 LinkedIn Optimizer</h3>
+    <p>Optimize LinkedIn profile Anda: Headline, About section, dan Experience bullets berbasis CV.</p>
+  </div>
+  <div class="cv-status" id="liCVStatus"></div>
+</div>
+
+<!-- PANEL: Job Match -->
+<div class="panel hidden" id="panel-job-match">
+  <div class="tool-info">
+    <h3>🎯 Job Match Analyzer</h3>
+    <p>Analisa seberapa cocok CV Anda dengan job description. Dapatkan match score, gap analysis, dan quick fixes.</p>
+  </div>
+  <div class="cv-status" id="jmCVStatus"></div>
+  <label class="jd-label">Job Description</label>
+  <textarea id="jobDescription" placeholder="Paste job description di sini...
+
+Contoh:
+We are looking for a Senior Software Engineer with:
+• 5+ years experience in Python/Node.js
+• Experience with AWS, Docker, Kubernetes
+• Strong communication skills
+..."></textarea>
+</div>
+
+<!-- BUTTONS -->
+<button class="btn-analyze" id="btnAnalyze"     onclick="analyzeCV()">🔍&nbsp; Analisis CV Sekarang</button>
+<button class="btn-compare" id="btnCompare"     onclick="compareCV()"          style="display:none">⚖️&nbsp; Bandingkan CV Sekarang</button>
+<button class="btn-tool"    id="btnCoverLetter" onclick="generateCoverLetter()" style="display:none">📝&nbsp; Generate Cover Letter</button>
+<button class="btn-tool"    id="btnLinkedIn"    onclick="generateLinkedIn()"    style="display:none">💼&nbsp; Optimize LinkedIn Profile</button>
+<button class="btn-tool"    id="btnJobMatch"    onclick="analyzeJobMatch()"     style="display:none">🎯&nbsp; Analisa Job Match</button>
+
+<!-- ERROR -->
+<div class="error-box" id="errorBox"></div>
+
+<!-- LOADING: Analyze -->
+<div class="loading" id="loading">
+  <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+  <div class="spinner"></div>
+  <p>Menganalisis CV Anda…</p>
+  <small>Mohon tunggu beberapa detik</small>
+</div>
+
+<!-- LOADING: Compare -->
+<div class="loading" id="loadingCompare">
+  <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+  <div class="spinner"></div>
+  <p id="compareStepText">Menganalisis CV A…</p>
+  <div class="compare-steps">
+    <div class="cmp-step active" id="cmp-step-1">1. Analisa CV A</div>
+    <div class="cmp-step"        id="cmp-step-2">2. Analisa CV B</div>
+    <div class="cmp-step"        id="cmp-step-3">3. Generate Perbandingan</div>
+  </div>
+</div>
+
+<!-- LOADING: Cover Letter -->
+<div class="loading" id="loadingCoverLetter">
+  <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+  <div class="spinner"></div>
+  <p>Menulis cover letter Anda…</p>
+</div>
+
+<!-- LOADING: LinkedIn -->
+<div class="loading" id="loadingLinkedIn">
+  <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+  <div class="spinner"></div>
+  <p>Mengoptimasi profil LinkedIn…</p>
+</div>
+
+<!-- LOADING: Job Match -->
+<div class="loading" id="loadingJobMatch">
+  <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+  <div class="spinner"></div>
+  <p>Menganalisa kesesuaian CV dengan JD…</p>
+</div>
+
+<!-- RESULTS: Single CV Analysis -->
+<div id="results">
+  <div class="btn-print-wrap">
+    <button class="btn-print" onclick="downloadPDF()">⬇️ Download PDF</button>
+  </div>
+  <div class="btn-improve-all-wrap" id="improveAllWrap" style="display:none">
+    <button class="btn-improve-all" id="btnImproveAll" onclick="rewriteAll()">✨&nbsp; Improve All CV</button>
+  </div>
+  <div class="score-card">
+    <svg class="score-donut" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="36" fill="none" class="donut-track" stroke-width="8"/>
+      <circle cx="50" cy="50" r="36" fill="none" class="donut-progress" id="donutProgress"
+        stroke-width="8" stroke-linecap="round" transform="rotate(-90 50 50)"
+        stroke-dasharray="0 226.2"/>
+      <text x="50" y="47" text-anchor="middle" dominant-baseline="middle" class="donut-num" id="scoreNum">–</text>
+      <text x="50" y="62" text-anchor="middle" class="donut-lbl">ATS Score</text>
+    </svg>
+    <div class="score-info">
+      <h2 id="scoreTitle">ATS Compatibility Score</h2>
+      <p  id="scoreDesc"></p>
+      <div class="bar-wrap"><div class="bar" id="scoreBar" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="resSections"></div>
+  <div id="loadingRewrite">
+    <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+    <div class="spinner"></div>
+    <p>Improving your CV…</p>
+  </div>
+  <div id="rewriteResults"></div>
+</div>
+
+<!-- RESULTS: Compare -->
+<div id="compareResults">
+  <div class="compare-score-row">
+    <div class="cmp-cv-card">
+      <div class="cmp-score-circle" id="cmpCircleA" style="color:var(--blue)">–</div>
+      <div class="cmp-cv-name">CV A</div>
+      <div class="cmp-cv-file" id="cmpFileA"></div>
+    </div>
+    <div class="cmp-middle">
+      <div class="cmp-trophy" id="cmpTrophy">⚖️</div>
+      <div class="cmp-winner-text" id="cmpWinnerText"></div>
+    </div>
+    <div class="cmp-cv-card">
+      <div class="cmp-score-circle" id="cmpCircleB" style="color:var(--warning)">–</div>
+      <div class="cmp-cv-name">CV B</div>
+      <div class="cmp-cv-file" id="cmpFileB"></div>
+    </div>
+  </div>
+  <div id="cmpSections"></div>
+</div>
+
+<!-- RESULTS: Cover Letter -->
+<div id="coverLetterResults"></div>
+
+<!-- RESULTS: LinkedIn -->
+<div id="linkedInResults"></div>
+
+<!-- RESULTS: Job Match -->
+<div id="jobMatchResults"></div>
+
+<!-- HISTORY -->
+<div id="historySection">
+  <div class="history-hdr">
+    <h3>🕐 Riwayat Analisa</h3>
+    <button class="btn-clear-hist" onclick="clearHistory()">Hapus Semua</button>
+  </div>
+  <div id="historyList"></div>
+</div>
+
+</main>
+
+<footer>© 2025 <span>Anabhi Dev</span> · Less Doing. More Living.</footer>
+
+<script>
+// ============================================================
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbxpiujXorRb-u3GfzljEgI_Pml6WfGQ4M59VuHMOoHLFHYZcz08niCZXJGYIeZZaNee/exec';
+// ============================================================
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+var HISTORY_KEY         = 'ats_history';
+var HISTORY_MAX         = 5;
+var CIRCUMFERENCE       = 226.2; // 2 * PI * 36
+var currentTab          = 'paste';
+var currentLang         = 'auto';
+var currentCVText       = '';
+var currentAnalysis     = null;
+var hasAnalysisResult   = false;
+var hasCompareResult    = false;
+var hasCoverLetterResult = false;
+var hasLinkedInResult   = false;
+var hasJobMatchResult   = false;
+var cmpTabA             = 'paste';
+var cmpTabB             = 'paste';
+
+var ALL_TABS      = ['paste','upload','compare','cover-letter','linkedin','job-match'];
+var ANALYSIS_TABS = ['paste','upload'];
+var TOOL_TABS     = ['cover-letter','linkedin','job-match'];
+
+/* ─── THEME ─── */
+function toggleTheme() {
+  var isDark = document.body.classList.toggle('dark');
+  document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch(_) {}
+}
+function initTheme() {
+  try {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      document.getElementById('themeToggle').textContent = '☀️';
+    }
+  } catch(_) {}
+}
+
+/* ─── TAB SWITCHING ─── */
+function switchTab(tab) {
+  currentTab = tab;
+  ALL_TABS.forEach(function(t) {
+    var p = document.getElementById('panel-' + t);
+    if (p) p.classList.toggle('hidden', t !== tab);
+  });
+  document.getElementById('btnAnalyze').style.display     = ANALYSIS_TABS.indexOf(tab) !== -1 ? '' : 'none';
+  document.getElementById('btnCompare').style.display     = tab === 'compare'      ? '' : 'none';
+  document.getElementById('btnCoverLetter').style.display = tab === 'cover-letter' ? '' : 'none';
+  document.getElementById('btnLinkedIn').style.display    = tab === 'linkedin'     ? '' : 'none';
+  document.getElementById('btnJobMatch').style.display    = tab === 'job-match'    ? '' : 'none';
+  document.getElementById('results').style.display =
+    (ANALYSIS_TABS.indexOf(tab) !== -1 && hasAnalysisResult) ? 'block' : 'none';
+  document.getElementById('compareResults').style.display =
+    (tab === 'compare' && hasCompareResult) ? 'block' : 'none';
+  document.getElementById('coverLetterResults').style.display =
+    (tab === 'cover-letter' && hasCoverLetterResult) ? 'block' : 'none';
+  document.getElementById('linkedInResults').style.display =
+    (tab === 'linkedin' && hasLinkedInResult) ? 'block' : 'none';
+  document.getElementById('jobMatchResults').style.display =
+    (tab === 'job-match' && hasJobMatchResult) ? 'block' : 'none';
+  document.getElementById('historySection').style.display =
+    (ANALYSIS_TABS.indexOf(tab) !== -1 && getHistory().length) ? 'block' : 'none';
+  if (TOOL_TABS.indexOf(tab) !== -1) updateCVStatus(tab);
+  ALL_TABS.forEach(function(t) {
+    var b = document.getElementById('tab-' + t);
+    if (b) b.classList.toggle('active', t === tab);
+  });
+  clearError();
+}
+
+/* ─── CV STATUS for tool tabs ─── */
+function updateCVStatus(tab) {
+  var map = { 'cover-letter':'clCVStatus', 'linkedin':'liCVStatus', 'job-match':'jmCVStatus' };
+  var el  = document.getElementById(map[tab]);
+  if (!el) return;
+  if (currentCVText) {
+    el.innerHTML = '<div class="cv-ready">✅ CV siap dari analisa sebelumnya</div>';
+  } else {
+    el.innerHTML = '<div class="cv-missing">⚠️ Belum ada CV. Silakan analisa terlebih dahulu di tab <strong>Paste CV</strong> atau <strong>Upload File</strong>.</div>';
+  }
+}
+
+/* ─── LANGUAGE ─── */
+function setLang(lang) {
+  currentLang = lang;
+  ['auto','id','en'].forEach(function(l) {
+    document.getElementById('lang-' + l).classList.toggle('active', l === lang);
+  });
+}
+
+/* ─── COMPARE MINI TABS ─── */
+function switchCmpTab(cv, mode) {
+  if (cv === 'a') cmpTabA = mode; else cmpTabB = mode;
+  document.getElementById('cmp-paste-'  + cv).style.display  = mode === 'paste'  ? '' : 'none';
+  document.getElementById('cmp-upload-' + cv).style.display  = mode === 'upload' ? '' : 'none';
+  document.getElementById('cmp-tab-' + cv + '-paste').classList.toggle('active',  mode === 'paste');
+  document.getElementById('cmp-tab-' + cv + '-upload').classList.toggle('active', mode === 'upload');
+}
+
+/* ─── FILE SELECT ─── */
+function onFileSelected(input) {
+  if (input.files && input.files[0])
+    document.getElementById('fileChosen').textContent = '✅ ' + input.files[0].name;
+}
+function onFileSelectedCmp(cv, input) {
+  if (input.files && input.files[0])
+    document.getElementById('fileChosen' + cv).textContent = '✅ ' + input.files[0].name;
+}
+
+/* ─── DRAG AND DROP ─── */
+function makeDraggable(zoneId, inputId, chosenId) {
+  var z = document.getElementById(zoneId);
+  if (!z) return;
+  z.addEventListener('dragover',  function(e) { e.preventDefault(); z.classList.add('drag-over'); });
+  z.addEventListener('dragleave', function()  { z.classList.remove('drag-over'); });
+  z.addEventListener('drop', function(e) {
+    e.preventDefault(); z.classList.remove('drag-over');
+    var f = e.dataTransfer.files[0];
+    if (f) {
+      document.getElementById(inputId).files = e.dataTransfer.files;
+      document.getElementById(chosenId).textContent = '✅ ' + f.name;
+    }
+  });
+}
+makeDraggable('uploadZone',  'fileInput',  'fileChosen');
+makeDraggable('uploadZoneA', 'fileInputA', 'fileChosenA');
+makeDraggable('uploadZoneB', 'fileInputB', 'fileChosenB');
+
+/* ─── EXTRACT PDF ─── */
+async function extractPDF(file) {
+  var buf = await file.arrayBuffer();
+  var pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  var txt = '';
+  for (var i = 1; i <= pdf.numPages; i++) {
+    var page = await pdf.getPage(i);
+    var c    = await page.getTextContent();
+    txt += c.items.map(function(x) { return x.str; }).join(' ') + '\n';
+  }
+  return txt;
+}
+
+/* ─── EXTRACT DOCX ─── */
+async function extractDOCX(file) {
+  var buf = await file.arrayBuffer();
+  return (await mammoth.extractRawText({ arrayBuffer: buf })).value;
+}
+
+/* ─── GET CV TEXT ─── */
+async function getCVText() {
+  if (currentTab === 'paste') return document.getElementById('cvText').value.trim();
+  var fi = document.getElementById('fileInput');
+  if (!fi.files || !fi.files[0]) throw new Error('Pilih file CV terlebih dahulu.');
+  return await extractFile(fi.files[0]);
+}
+async function getCVTextCmp(cv) {
+  var mode = cv === 'a' ? cmpTabA : cmpTabB;
+  if (mode === 'paste') return document.getElementById('cvText' + cv.toUpperCase()).value.trim();
+  var fi = document.getElementById('fileInput' + cv.toUpperCase());
+  if (!fi.files || !fi.files[0]) throw new Error('Pilih file CV ' + cv.toUpperCase() + ' terlebih dahulu.');
+  return await extractFile(fi.files[0]);
+}
+async function extractFile(file) {
+  var ext = file.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf')               return await extractPDF(file);
+  if (ext === 'docx' || ext === 'doc') return await extractDOCX(file);
+  throw new Error('Format tidak didukung. Gunakan .PDF atau .DOCX.');
+}
+function getCVLabel() {
+  if (currentTab === 'paste') return 'Teks CV';
+  var fi = document.getElementById('fileInput');
+  return (fi.files && fi.files[0]) ? fi.files[0].name : 'File CV';
+}
+function getCVLabelCmp(cv) {
+  var mode = cv === 'a' ? cmpTabA : cmpTabB;
+  if (mode === 'paste') return 'Teks CV ' + cv.toUpperCase();
+  var fi = document.getElementById('fileInput' + cv.toUpperCase());
+  return (fi.files && fi.files[0]) ? fi.files[0].name : 'File CV ' + cv.toUpperCase();
+}
+
+/* ─── FETCH GAS ─── */
+async function fetchGAS(payload) {
+  // No Content-Type header → browser sets text/plain → simple CORS → no preflight
+  var res = await fetch(GAS_URL, { method:'POST', body:JSON.stringify(payload) });
+  if (!res.ok) throw new Error('Server error: HTTP ' + res.status);
+  var result = await res.json();
+  if (!result.success) throw new Error(result.error || 'Terjadi kesalahan di server.');
+  return result;
+}
+
+/* ─── ANALYZE CV ─── */
+async function analyzeCV() {
+  clearError();
+  var cvText = '';
+  try { cvText = await getCVText(); } catch(e) { showError(e.message); return; }
+  if (cvText.length < 50) { showError('Isi CV terlalu pendek atau kosong.'); return; }
+  var targetRole = document.getElementById('targetRole').value.trim();
+  var cvLabel    = getCVLabel();
+  setLoading('loading', 'btnAnalyze', true);
+  document.getElementById('results').style.display = 'none';
+  try {
+    var r = await fetchGAS({ action:'analyze', cvText:cvText, targetRole:targetRole, language:currentLang });
+    renderResults(r.data, cvLabel, targetRole, cvText);
+  } catch(e) { showError('Gagal menganalisis: ' + e.message); }
+  finally    { setLoading('loading', 'btnAnalyze', false); }
+}
+
+/* ─── DONUT SCORE ─── */
+function setDonutScore(score, color, numId, progressId) {
+  numId      = numId      || 'scoreNum';
+  progressId = progressId || 'donutProgress';
+  var fill   = (score / 100) * CIRCUMFERENCE;
+  var prog   = document.getElementById(progressId);
+  var numEl  = document.getElementById(numId);
+  if (!prog || !numEl) return;
+  numEl.textContent  = score;
+  numEl.style.fill   = color;
+  prog.style.stroke  = color;
+  prog.setAttribute('stroke-dasharray', '0 ' + CIRCUMFERENCE);
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      prog.style.transition = 'stroke-dasharray 1s ease';
+      prog.setAttribute('stroke-dasharray', fill + ' ' + CIRCUMFERENCE);
+    });
+  });
+}
+
+/* ─── RENDER ANALYSIS RESULTS ─── */
+function renderResults(data, cvLabel, targetRole, cvText) {
+  currentCVText   = cvText || '';
+  currentAnalysis = data;
+  var score = Math.min(100, Math.max(0, parseInt(data.ats_score) || 0));
+  var color = score >= 70 ? 'var(--success)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
+  setDonutScore(score, color);
+  document.getElementById('scoreTitle').textContent    = 'ATS Score: ' + getScoreLabel(score);
+  document.getElementById('scoreDesc').textContent     = data.score_reason || '';
+  document.getElementById('scoreBar').style.width      = score + '%';
+  document.getElementById('scoreBar').style.background = color;
+  var container = document.getElementById('resSections');
+  container.innerHTML = '';
+  if (data.inferred_role)
+    addSection(container,'🎯','Role Terdeteksi','<p><strong>'+escHtml(data.inferred_role)+'</strong></p>',true);
+  if (data.strengths && data.strengths.length)
+    addSection(container,'✅','Kekuatan (Strengths)',
+      '<ul>'+data.strengths.map(function(s){return '<li>'+escHtml(s)+'</li>';}).join('')+'</ul>',true);
+  if (data.weaknesses && data.weaknesses.length)
+    addSection(container,'⚠️','Kelemahan (Weaknesses)',
+      '<ul>'+data.weaknesses.map(function(w){return '<li>'+escHtml(w)+'</li>';}).join('')+'</ul>',true);
+  if (data.sections) {
+    var smap = [
+      {key:'contact',       label:'📇 Contact Information'},
+      {key:'summary',       label:'📝 Summary / Objective'},
+      {key:'experience',    label:'💼 Work Experience'},
+      {key:'education',     label:'🎓 Education'},
+      {key:'skills',        label:'🛠️ Skills'},
+      {key:'certifications',label:'🏆 Certifications'}
+    ];
+    var rHtml = '';
+    smap.forEach(function(item) {
+      var s = data.sections[item.key]; if (!s) return;
+      var cls = s.rating === 'Good' ? 'r-good' : s.rating === 'Missing' ? 'r-missing' : 'r-improve';
+      rHtml += '<span class="sub-title">'+item.label+'</span>'
+             + '<div class="section-row">'
+             + '<p><span class="'+cls+'">'+escHtml(s.rating)+'</span> — '+escHtml(s.notes||'')+'</p>'
+             + '<button class="btn-improve-sec" onclick="rewriteSection(\''+item.key+'\')">✨</button>'
+             + '</div>';
+    });
+    addSection(container,'📊','Section-by-Section Review',rHtml,true);
+  }
+  if (data.missing_keywords && data.missing_keywords.length) {
+    var kwHtml = '<p style="color:var(--gray);margin-bottom:8px;">Keyword ATS yang belum ada di CV:</p>'
+               + '<div class="kw-wrap">'+data.missing_keywords.map(function(k){
+                   return '<span class="kw-chip">'+escHtml(k)+'</span>';}).join('')+'</div>';
+    addSection(container,'🔑','Keyword yang Hilang',kwHtml,true);
+  }
+  if (data.quick_wins && data.quick_wins.length) {
+    var qwHtml = data.quick_wins.map(function(q,i){
+      return '<div class="qw-item"><strong>'+(i+1)+'.</strong> '+escHtml(q)+'</div>';}).join('');
+    addSection(container,'⚡','Quick Wins – 3 Perbaikan Segera',qwHtml,true);
+  }
+  if (data.overall_recommendation)
+    addSection(container,'💡','Overall Recommendation','<p>'+escHtml(data.overall_recommendation)+'</p>',true);
+  document.getElementById('rewriteResults').innerHTML = '';
+  document.getElementById('rewriteResults').style.display = 'none';
+  document.getElementById('improveAllWrap').style.display = currentCVText ? '' : 'none';
+  hasAnalysisResult = true;
+  document.getElementById('results').style.display = 'block';
+  setTimeout(function() { document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+  saveToHistory(cvLabel, targetRole, data, score);
+  loadHistoryUI();
+}
+
+/* ─── REWRITE ─── */
+function rewriteSection(key) {
+  if (!currentCVText) { showError('Analisa CV terlebih dahulu untuk menggunakan fitur Improve.'); return; }
+  doRewrite([key]);
+}
+function rewriteAll() {
+  if (!currentCVText) { showError('Analisa CV terlebih dahulu untuk menggunakan fitur Improve.'); return; }
+  doRewrite('all');
+}
+async function doRewrite(sections) {
+  clearError();
+  setLoading('loadingRewrite', 'btnImproveAll', true);
+  document.querySelectorAll('.btn-improve-sec').forEach(function(b){b.disabled=true;});
+  try {
+    var r = await fetchGAS({ action:'rewrite', cvText:currentCVText, analysisData:currentAnalysis, sections:sections, language:currentLang });
+    renderRewriteResults(r.data, sections);
+  } catch(e) { showError('Gagal improve CV: ' + e.message); }
+  finally {
+    setLoading('loadingRewrite', 'btnImproveAll', false);
+    document.querySelectorAll('.btn-improve-sec').forEach(function(b){b.disabled=false;});
+  }
+}
+function renderRewriteResults(data, sections) {
+  var container = document.getElementById('rewriteResults');
+  container.innerHTML = '';
+  var smap = [
+    {key:'contact','label':'📇 Contact (Improved)'},
+    {key:'summary','label':'📝 Summary (Improved)'},
+    {key:'experience','label':'💼 Experience (Improved)'},
+    {key:'education','label':'🎓 Education (Improved)'},
+    {key:'skills','label':'🛠️ Skills (Improved)'},
+    {key:'certifications','label':'🏆 Certifications (Improved)'},
+    {key:'improvement_notes','label':'💡 Catatan Perubahan'}
+  ];
+  var bodyHtml = '';
+  smap.forEach(function(item) {
+    var val = data[item.key];
+    if (!val) return;
+    if (Array.isArray(sections) && item.key !== 'improvement_notes' && sections.indexOf(item.key) === -1) return;
+    bodyHtml += '<span class="sub-title">'+item.label+'</span>'
+              + '<div class="rw-block">'
+              + '<div class="rewrite-content" id="rwContent-'+item.key+'">'+escHtml(val)+'</div>'
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'rwContent-'+item.key+'\')">📋 Copy</button></div>'
+              + '</div>';
+  });
+  if (!bodyHtml) { showError('Tidak ada konten yang bisa di-improve.'); return; }
+  addSection(container,'✨','CV Improvements',bodyHtml,true);
+  container.style.display = 'block';
+  setTimeout(function() { container.scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+}
+
+/* ─── COMPARE ─── */
+async function compareCV() {
+  clearError();
+  var cvTextA = '', cvTextB = '';
+  var labelA  = getCVLabelCmp('a');
+  var labelB  = getCVLabelCmp('b');
+  try { cvTextA = await getCVTextCmp('a'); } catch(e) { showError(e.message); return; }
+  try { cvTextB = await getCVTextCmp('b'); } catch(e) { showError(e.message); return; }
+  if (cvTextA.length < 50) { showError('CV A terlalu pendek atau kosong.'); return; }
+  if (cvTextB.length < 50) { showError('CV B terlalu pendek atau kosong.'); return; }
+  var targetRole = document.getElementById('targetRole').value.trim();
+  setLoading('loadingCompare', 'btnCompare', true);
+  document.getElementById('compareResults').style.display = 'none';
+  try {
+    setCmpStep(1);
+    var rA = await fetchGAS({ action:'analyze', cvText:cvTextA, targetRole:targetRole, language:currentLang });
+    setCmpStep(2);
+    var rB = await fetchGAS({ action:'analyze', cvText:cvTextB, targetRole:targetRole, language:currentLang });
+    setCmpStep(3);
+    var rC = await fetchGAS({ action:'compare', analysisA:rA.data, analysisB:rB.data, labelA:labelA, labelB:labelB, targetRole:targetRole, language:currentLang });
+    renderCompareResults(rA.data, rB.data, rC.data, labelA, labelB);
+  } catch(e) { showError('Gagal membandingkan: ' + e.message); }
+  finally    { setLoading('loadingCompare','btnCompare',false); setCmpStep(0); }
+}
+function renderCompareResults(dA, dB, cmp, labelA, labelB) {
+  var sA = Math.min(100,Math.max(0,parseInt(dA.ats_score)||0));
+  var sB = Math.min(100,Math.max(0,parseInt(dB.ats_score)||0));
+  var cA = sA>=70?'var(--success)':sA>=50?'var(--warning)':'var(--danger)';
+  var cB = sB>=70?'var(--success)':sB>=50?'var(--warning)':'var(--danger)';
+  var eA = document.getElementById('cmpCircleA');
+  eA.textContent=sA; eA.style.color=cA;
+  var eB = document.getElementById('cmpCircleB');
+  eB.textContent=sB; eB.style.color=cB;
+  document.getElementById('cmpFileA').textContent = labelA;
+  document.getElementById('cmpFileB').textContent = labelB;
+  var winner = (cmp.winner||'').toUpperCase();
+  var trophy = document.getElementById('cmpTrophy');
+  var wtxt   = document.getElementById('cmpWinnerText');
+  if (winner==='A')      { trophy.textContent='🏆'; wtxt.textContent='CV A Menang'; wtxt.style.color=cA; }
+  else if (winner==='B') { trophy.textContent='🏆'; wtxt.textContent='CV B Menang'; wtxt.style.color=cB; }
+  else                   { trophy.textContent='🤝'; wtxt.textContent='Seimbang';    wtxt.style.color='var(--gray)'; }
+  var sec = document.getElementById('cmpSections'); sec.innerHTML = '';
+  if (cmp.winner_reason)   addSection(sec,'🎯','Kesimpulan','<p>'+escHtml(cmp.winner_reason)+'</p>',true);
+  if (cmp.narrative)       addSection(sec,'📖','Perbandingan Detail','<p>'+escHtml(cmp.narrative).replace(/\n/g,'</p><p style="margin-top:10px;">')+'</p>',true);
+  if (cmp.cv_a_advantages&&cmp.cv_a_advantages.length)
+    addSection(sec,'✅','Keunggulan CV A','<ul>'+cmp.cv_a_advantages.map(function(x){return '<li>'+escHtml(x)+'</li>';}).join('')+'</ul>',true);
+  if (cmp.cv_b_advantages&&cmp.cv_b_advantages.length)
+    addSection(sec,'✅','Keunggulan CV B','<ul>'+cmp.cv_b_advantages.map(function(x){return '<li>'+escHtml(x)+'</li>';}).join('')+'</ul>',true);
+  if (cmp.recommendation) addSection(sec,'💡','Rekomendasi','<p>'+escHtml(cmp.recommendation)+'</p>',true);
+  hasCompareResult = true;
+  document.getElementById('compareResults').style.display = 'block';
+  setTimeout(function(){document.getElementById('compareResults').scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+
+/* ─── COVER LETTER ─── */
+async function generateCoverLetter() {
+  if (!currentCVText) { showError('Silakan analisa CV di tab Paste CV atau Upload File terlebih dahulu.'); return; }
+  clearError();
+  setLoading('loadingCoverLetter','btnCoverLetter',true);
+  document.getElementById('coverLetterResults').style.display = 'none';
+  try {
+    var targetRole = document.getElementById('targetRole').value.trim();
+    var r = await fetchGAS({ action:'cover_letter', cvText:currentCVText, targetRole:targetRole, language:currentLang });
+    renderCoverLetterResults(r.data);
+  } catch(e) { showError('Gagal generate cover letter: ' + e.message); }
+  finally    { setLoading('loadingCoverLetter','btnCoverLetter',false); }
+}
+function renderCoverLetterResults(data) {
+  var container = document.getElementById('coverLetterResults');
+  container.innerHTML = '';
+  var bodyHtml = '';
+  if (data.subject_line)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">✉️ Subject Line Email</div>'
+              + '<div class="subject-line">'+escHtml(data.subject_line)+'</div>'
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'clSubject\')">📋 Copy</button></div>'
+              + '<div id="clSubject" style="display:none">'+escHtml(data.subject_line)+'</div>'
+              + '</div>';
+  if (data.cover_letter)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">📄 Cover Letter</div>'
+              + '<div class="output-text" id="clBody">'+escHtml(data.cover_letter)+'</div>'
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'clBody\')">📋 Copy</button></div>'
+              + '</div>';
+  if (data.writing_notes)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">💡 Tips Personalisasi</div>'
+              + '<div class="output-text">'+escHtml(data.writing_notes)+'</div>'
+              + '</div>';
+  addSection(container,'📝','Cover Letter Anda',bodyHtml,true);
+  hasCoverLetterResult = true;
+  container.style.display = 'block';
+  setTimeout(function(){container.scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+
+/* ─── LINKEDIN ─── */
+async function generateLinkedIn() {
+  if (!currentCVText) { showError('Silakan analisa CV di tab Paste CV atau Upload File terlebih dahulu.'); return; }
+  clearError();
+  setLoading('loadingLinkedIn','btnLinkedIn',true);
+  document.getElementById('linkedInResults').style.display = 'none';
+  try {
+    var r = await fetchGAS({ action:'linkedin', cvText:currentCVText, language:currentLang });
+    renderLinkedInResults(r.data);
+  } catch(e) { showError('Gagal optimize LinkedIn: ' + e.message); }
+  finally    { setLoading('loadingLinkedIn','btnLinkedIn',false); }
+}
+function renderLinkedInResults(data) {
+  var container = document.getElementById('linkedInResults');
+  container.innerHTML = '';
+  var bodyHtml = '';
+  if (data.headline)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">🏷️ Headline</div>'
+              + '<div class="li-headline" id="liHeadline">'+escHtml(data.headline)+'</div>'
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'liHeadline\')">📋 Copy</button></div>'
+              + '</div>';
+  if (data.about)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">📄 About Section</div>'
+              + '<div class="output-text" id="liAbout">'+escHtml(data.about)+'</div>'
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'liAbout\')">📋 Copy</button></div>'
+              + '</div>';
+  if (data.experience && data.experience.length) {
+    var expHtml = '';
+    data.experience.forEach(function(exp) {
+      expHtml += '<span class="sub-title">'+escHtml(exp.role||'')+'</span>';
+      if (exp.bullets && exp.bullets.length)
+        expHtml += '<ul>'+exp.bullets.map(function(b){return '<li>'+escHtml(b)+'</li>';}).join('')+'</ul>';
+    });
+    bodyHtml += '<div class="output-field" id="liExp">'
+              + '<div class="output-field-label">💼 Experience Bullets</div>'
+              + expHtml
+              + '<div class="copy-wrap"><button class="btn-copy" onclick="copyText(this,\'liExp\')">📋 Copy</button></div>'
+              + '</div>';
+  }
+  if (data.skills_to_add && data.skills_to_add.length)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">🛠️ Skills to Add</div>'
+              + '<div>'+data.skills_to_add.map(function(s){return '<span class="skill-chip">'+escHtml(s)+'</span>';}).join('')+'</div>'
+              + '</div>';
+  if (data.optimization_tips)
+    bodyHtml += '<div class="output-field">'
+              + '<div class="output-field-label">💡 LinkedIn Tips</div>'
+              + '<div class="output-text">'+escHtml(data.optimization_tips)+'</div>'
+              + '</div>';
+  addSection(container,'💼','LinkedIn Profile Anda',bodyHtml,true);
+  hasLinkedInResult = true;
+  container.style.display = 'block';
+  setTimeout(function(){container.scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+
+/* ─── JOB MATCH ─── */
+async function analyzeJobMatch() {
+  if (!currentCVText) { showError('Silakan analisa CV di tab Paste CV atau Upload File terlebih dahulu.'); return; }
+  var jd = document.getElementById('jobDescription').value.trim();
+  if (jd.length < 30) { showError('Paste job description terlebih dahulu.'); return; }
+  clearError();
+  setLoading('loadingJobMatch','btnJobMatch',true);
+  document.getElementById('jobMatchResults').style.display = 'none';
+  try {
+    var targetRole = document.getElementById('targetRole').value.trim();
+    var r = await fetchGAS({ action:'job_match', cvText:currentCVText, jobDescription:jd, targetRole:targetRole, language:currentLang });
+    renderJobMatchResults(r.data);
+  } catch(e) { showError('Gagal analisa job match: ' + e.message); }
+  finally    { setLoading('loadingJobMatch','btnJobMatch',false); }
+}
+function renderJobMatchResults(data) {
+  var container = document.getElementById('jobMatchResults');
+  container.innerHTML = '';
+  var score = Math.min(100,Math.max(0,parseInt(data.match_score)||0));
+  var color = score>=70?'var(--success)':score>=50?'var(--warning)':'var(--danger)';
+
+  // Score card with its own donut
+  var scoreCard = document.createElement('div');
+  scoreCard.className = 'score-card';
+  scoreCard.innerHTML =
+    '<svg class="score-donut" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+    + '<circle cx="50" cy="50" r="36" fill="none" class="donut-track" stroke-width="8"/>'
+    + '<circle cx="50" cy="50" r="36" fill="none" class="donut-progress" id="donutProgressJM"'
+    + ' stroke-width="8" stroke-linecap="round" transform="rotate(-90 50 50)" stroke-dasharray="0 226.2"/>'
+    + '<text x="50" y="47" text-anchor="middle" dominant-baseline="middle" class="donut-num" id="scoreNumJM">'+score+'</text>'
+    + '<text x="50" y="62" text-anchor="middle" class="donut-lbl">Match</text>'
+    + '</svg>'
+    + '<div class="score-info">'
+    + '<h2>Job Match Score: '+getScoreLabel(score)+'</h2>'
+    + '<p>'+(data.score_reason?escHtml(data.score_reason):'')+'</p>'
+    + '<div class="bar-wrap"><div class="bar" id="jmBar" style="width:'+score+'%;background:'+color+'"></div></div>'
+    + '</div>';
+  container.appendChild(scoreCard);
+  setTimeout(function(){setDonutScore(score,color,'scoreNumJM','donutProgressJM');},100);
+
+  var sec = document.createElement('div');
+  container.appendChild(sec);
+
+  // Application Recommendation first (most important)
+  if (data.application_recommendation) {
+    var recClass = 'apply-now';
+    var recIcon  = '🚀';
+    if (data.application_recommendation === 'Apply with Notes')   { recClass='apply-notes'; recIcon='📝'; }
+    if (data.application_recommendation === 'Needs Preparation')  { recClass='needs-prep';  recIcon='⏳'; }
+    var recHtml = '<div class="app-rec '+recClass+'">'
+                + '<div class="rec-icon">'+recIcon+'</div>'
+                + '<div><div class="rec-label">'+escHtml(data.application_recommendation)+'</div>'
+                + '<div class="rec-reason">'+(data.recommendation_reason?escHtml(data.recommendation_reason):'')+'</div>'
+                + '</div></div>';
+    addSection(sec,'🎯','Rekomendasi Aplikasi',recHtml,true);
+  }
+
+  // Matched keywords
+  if (data.matched_keywords && data.matched_keywords.length) {
+    var mHtml = '<p style="color:var(--gray);margin-bottom:8px;">Keyword JD yang sudah ada di CV Anda:</p>'
+              + '<div class="kw-wrap">'+data.matched_keywords.map(function(k){
+                  return '<span class="kw-chip" style="border-color:var(--success);color:var(--success);background:rgba(0,200,83,0.1)">✅ '+escHtml(k)+'</span>';}).join('')+'</div>';
+    addSection(sec,'✅','Keyword Matched',mHtml,true);
+  }
+
+  // Missing keywords
+  if (data.missing_keywords && data.missing_keywords.length) {
+    var miHtml = '<p style="color:var(--gray);margin-bottom:8px;">Keyword penting di JD yang belum ada di CV:</p>'
+               + '<div class="kw-wrap">'+data.missing_keywords.map(function(k){
+                   return '<span class="kw-chip">'+escHtml(k)+'</span>';}).join('')+'</div>';
+    addSection(sec,'❌','Keyword Missing',miHtml,true);
+  }
+
+  // Requirements analysis
+  if (data.requirements_analysis && data.requirements_analysis.length) {
+    var reqHtml = data.requirements_analysis.map(function(item) {
+      var st  = (item.status||'').toLowerCase().replace(/\s/g,'-');
+      var cls = st === 'met' ? 'met' : st.indexOf('partial') !== -1 ? 'partial' : 'not-met';
+      return '<div class="jm-req-item">'
+           + '<span class="req-status '+cls+'">'+escHtml(item.status||'')+'</span>'
+           + '<div class="req-text"><strong>'+escHtml(item.requirement||'')+'</strong>'
+           + '<span>'+escHtml(item.notes||'')+'</span></div>'
+           + '</div>';
+    }).join('');
+    addSection(sec,'📋','Requirements Analysis',reqHtml,true);
+  }
+
+  // Strengths for role
+  if (data.strengths_for_role && data.strengths_for_role.length)
+    addSection(sec,'💪','Kekuatan untuk Role Ini',
+      '<ul>'+data.strengths_for_role.map(function(s){return '<li>'+escHtml(s)+'</li>';}).join('')+'</ul>',true);
+
+  // Critical gaps
+  if (data.critical_gaps && data.critical_gaps.length)
+    addSection(sec,'⚠️','Critical Gaps',
+      '<ul>'+data.critical_gaps.map(function(g){return '<li>'+escHtml(g)+'</li>';}).join('')+'</ul>',true);
+
+  // Quick fixes
+  if (data.quick_fixes && data.quick_fixes.length) {
+    var qfHtml = data.quick_fixes.map(function(q,i){
+      return '<div class="qw-item"><strong>'+(i+1)+'.</strong> '+escHtml(q)+'</div>';}).join('');
+    addSection(sec,'⚡','Quick Fixes – Tambahkan ke CV Sekarang',qfHtml,true);
+  }
+
+  hasJobMatchResult = true;
+  container.style.display = 'block';
+  setTimeout(function(){container.scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+
+/* ─── DOWNLOAD PDF ─── */
+function downloadPDF() { window.print(); }
+window.addEventListener('beforeprint', function() {
+  document.querySelectorAll('.res-body').forEach(function(b){b.classList.add('open');});
+  document.querySelectorAll('.res-header').forEach(function(h){h.classList.add('open');});
+});
+
+/* ─── COPY TO CLIPBOARD ─── */
+function copyText(btn, elId) {
+  var el   = document.getElementById(elId);
+  var text = el ? (el.innerText || el.textContent) : '';
+  function onCopied() { btn.textContent='✅ Copied!'; btn.classList.add('copied'); setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied');},2000); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onCopied).catch(function(){fallbackCopy(text,onCopied);});
+  } else { fallbackCopy(text, onCopied); }
+}
+function fallbackCopy(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); } catch(_) {}
+  document.body.removeChild(ta);
+}
+
+/* ─── HISTORY ─── */
+function saveToHistory(cvLabel, targetRole, data, score) {
+  var history = getHistory();
+  var now     = new Date();
+  var dateStr = now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})
+              + ', ' + now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+  history.unshift({ id:now.getTime(), date:dateStr, cvLabel:cvLabel||'CV', targetRole:targetRole||(data.inferred_role||''), score:score, data:data });
+  if (history.length > HISTORY_MAX) history = history.slice(0, HISTORY_MAX);
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch(_) {}
+}
+function getHistory() {
+  try { var r = localStorage.getItem(HISTORY_KEY); return r ? JSON.parse(r) : []; } catch(_) { return []; }
+}
+function loadHistoryUI() {
+  if (currentTab === 'compare') return;
+  var history = getHistory();
+  var section = document.getElementById('historySection');
+  var list    = document.getElementById('historyList');
+  if (!history.length) { section.style.display='none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = history.map(function(e) {
+    var c = e.score>=70?'#00C853':e.score>=50?'#FFB300':'#FF3D00';
+    return '<div class="history-item" onclick="loadHistoryItem('+e.id+')">'
+         + '<div class="hist-score" style="color:'+c+';border-color:'+c+'">'+e.score+'</div>'
+         + '<div class="hist-info">'
+         + '<div class="hist-role">'+escHtml(e.targetRole||'Role tidak terdeteksi')+'</div>'
+         + '<div class="hist-cv">'+escHtml(e.cvLabel)+'</div>'
+         + '<div class="hist-date">'+escHtml(e.date)+'</div>'
+         + '</div><div class="hist-arrow">›</div></div>';
+  }).join('');
+}
+function loadHistoryItem(id) {
+  var history = getHistory(); var entry = null;
+  for (var i=0; i<history.length; i++) { if (history[i].id===id) { entry=history[i]; break; } }
+  if (!entry) return;
+  renderResults(entry.data, entry.cvLabel, entry.targetRole, '');
+  switchTab('paste');
+}
+function clearHistory() {
+  try { localStorage.removeItem(HISTORY_KEY); } catch(_) {}
+  document.getElementById('historySection').style.display = 'none';
+  document.getElementById('historyList').innerHTML = '';
+}
+
+/* ─── HELPERS ─── */
+function addSection(container, icon, title, content, startOpen) {
+  var el = document.createElement('div');
+  el.className = 'res-section';
+  el.innerHTML =
+    '<div class="res-header'+(startOpen?' open':'') + '" onclick="toggleSection(this)">'
+    + '<span class="res-icon">'+icon+'</span>'
+    + '<span class="res-title">'+title+'</span>'
+    + '<span class="res-arrow">▼</span>'
+    + '</div>'
+    + '<div class="res-body'+(startOpen?' open':'')+'">'+content+'</div>';
+  container.appendChild(el);
+}
+function toggleSection(h) { h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+function getScoreLabel(s) {
+  return s>=80?'Excellent 🌟':s>=65?'Good 👍':s>=50?'Fair ⚠️':'Needs Work 🔧';
+}
+function setLoading(loadingId, btnId, show) {
+  var ld  = document.getElementById(loadingId);
+  var btn = document.getElementById(btnId);
+  if (ld)  ld.style.display  = show ? 'block' : 'none';
+  if (btn) btn.disabled      = show;
+}
+function setCmpStep(n) {
+  var texts = ['','Menganalisis CV A…','Menganalisis CV B…','Membuat narasi perbandingan…'];
+  if (n>0) document.getElementById('compareStepText').textContent = texts[n];
+  [1,2,3].forEach(function(i) {
+    var el = document.getElementById('cmp-step-'+i);
+    if (el) el.className = 'cmp-step'+(i<n?' done':i===n?' active':'');
+  });
+}
+function showError(msg) { var el=document.getElementById('errorBox'); el.textContent='❌ '+msg; el.style.display='block'; }
+function clearError()   { document.getElementById('errorBox').style.display='none'; }
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+/* ─── INIT ─── */
+initTheme();
+loadHistoryUI();
+</script>
+</body>
+</html>

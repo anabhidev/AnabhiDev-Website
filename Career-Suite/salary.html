@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Estimator – Anabhi Career Suite</title>
+<meta name="description" content="Estimasi range gaji yang wajar berdasarkan role, lokasi, dan CV Anda. Perbandingan antar kota dan tips negosiasi.">
+<link rel="icon" type="image/png" href="https://anabhidev.com/assets/favicon.png">
+<link rel="apple-touch-icon"      href="https://anabhidev.com/assets/apple-touch-icon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+:root {
+  --navy:#0D1B2A; --navy-light:#162537; --navy-mid:#DCE8F5; --inner-bg:#EDF2F7;
+  --card-bg:#F8FAFC; --border:rgba(0,100,180,0.15);
+  --blue:#0082CC; --blue-dark:#006BA8; --blue-glow:rgba(0,130,204,0.12);
+  --white:#FFFFFF; --text:#0D1B2A; --text-sec:#4A6080; --text-body:#2A3A4A;
+  --gray:#4A6080; --input-bg:#FFFFFF; --input-color:#0D1B2A; --input-ph:#90A8BB;
+  --success:#00873A; --warning:#B37700; --danger:#CC2900; --upload-bg:#F0F4F9;
+}
+body.dark {
+  --navy-mid:#1E3448; --inner-bg:#0D1B2A; --card-bg:#162537; --border:rgba(0,163,255,0.2);
+  --blue:#00A3FF; --blue-dark:#0082CC; --blue-glow:rgba(0,163,255,0.12);
+  --white:#FFFFFF; --text:#FFFFFF; --text-sec:#B0BEC5; --text-body:#E8F0F7;
+  --gray:#B0BEC5; --input-bg:#FFFFFF; --input-color:#1A2A3A; --input-ph:#9AAABB;
+  --success:#00C853; --warning:#FFB300; --danger:#FF3D00; --upload-bg:#0D1B2A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--navy);color:var(--text);min-height:100vh;transition:background 0.25s,color 0.25s;}
+header{background:#162537;border-bottom:1px solid rgba(0,163,255,0.2);padding:12px 32px;display:flex;align-items:center;gap:14px;}
+.hdr-text h1{font-size:1.05rem;font-weight:700;color:#FFFFFF;}
+.hdr-text p{font-size:0.66rem;color:#00A3FF;letter-spacing:0.07em;margin-top:1px;}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.theme-toggle{background:none;border:1px solid rgba(255,255,255,0.25);color:#FFFFFF;width:34px;height:34px;border-radius:8px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.theme-toggle:hover{opacity:0.8;}
+header img{height:38px;width:auto;}
+/* ── APP NAV ── */
+.app-nav{background:#0D1B2A;border-bottom:1px solid rgba(0,163,255,0.15);display:flex;align-items:center;justify-content:center;gap:2px;padding:0 16px;flex-wrap:wrap;}
+.nav-item{display:flex;align-items:center;gap:5px;padding:10px 14px;color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.8rem;font-weight:600;border-radius:8px;transition:all 0.18s;white-space:nowrap;}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,0.07);}
+.nav-item.active{color:#0082CC;background:rgba(0,130,204,0.15);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#0D1B2A;border-top:1px solid rgba(0,163,255,0.2);z-index:200;padding-bottom:env(safe-area-inset-bottom,0px);}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 10px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.18s;}
+.bnav-item.active{color:#0082CC;} .bnav-item:hover{color:rgba(255,255,255,0.85);}
+.bnav-icon{font-size:1.15rem;} .bnav-label{font-size:0.6rem;font-weight:600;letter-spacing:0.02em;}
+@media(max-width:640px){.app-nav{display:none;}.bottom-nav{display:flex;}}
+/* ── MAIN ── */
+main{max-width:800px;margin:0 auto;padding:28px 20px 80px;}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.card-title{font-size:0.82rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:14px;}
+.field-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
+.field-group{display:flex;flex-direction:column;gap:6px;flex:1;min-width:180px;}
+.field-group label{font-size:0.78rem;font-weight:600;color:var(--text-sec);}
+.field-group input,.field-group select{background:var(--inner-bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:0.84rem;outline:none;font-family:inherit;transition:border-color 0.2s;width:100%;}
+.field-group input:focus,.field-group select:focus{border-color:var(--blue);}
+.field-group input::placeholder{color:var(--input-ph);}
+.currency-toggle{display:flex;gap:6px;}
+.curr-btn{flex:1;background:none;border:1px solid var(--border);color:var(--gray);padding:8px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.18s;}
+.curr-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+/* CV Optional section */
+.cv-toggle-btn{background:none;border:1px solid var(--border);color:var(--blue);font-size:0.8rem;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all 0.18s;width:100%;}
+.cv-toggle-btn:hover{background:var(--blue-glow);}
+.cv-section{display:none;margin-top:12px;}
+.cv-tabs{display:flex;background:var(--inner-bg);border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:10px;width:fit-content;}
+.cv-tab{background:none;border:none;color:var(--gray);padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;border-radius:7px;transition:all 0.18s;}
+.cv-tab.active{background:var(--blue);color:#fff;}
+textarea{width:100%;min-height:160px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--input-color);font-size:0.83rem;line-height:1.65;padding:12px;resize:vertical;outline:none;font-family:inherit;transition:border-color 0.2s;}
+textarea:focus{border-color:var(--blue);}
+textarea::placeholder{color:var(--input-ph);}
+.upload-zone{position:relative;border:2px dashed var(--border);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;background:var(--upload-bg);transition:all 0.2s;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:var(--blue-glow);}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone p{font-size:0.78rem;color:var(--gray);}
+.file-chosen{margin-top:10px;font-size:0.8rem;color:var(--blue);font-weight:600;}
+/* Buttons */
+.btn-main{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-main:hover:not(:disabled){background:var(--blue-dark);transform:translateY(-1px);}
+.btn-main:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+/* Error / Loading */
+.error-box{display:none;margin-top:12px;background:rgba(204,41,0,0.1);border:1px solid var(--danger);border-radius:10px;padding:12px 16px;font-size:0.83rem;color:#FF6B4A;}
+.loading{display:none;text-align:center;padding:36px 20px;}
+.prog-bar-wrap{position:relative;height:3px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:20px;}
+.prog-bar-fill{position:absolute;top:0;left:-40%;height:100%;width:40%;background:var(--blue);border-radius:3px;animation:indeterminate 1.8s ease-in-out infinite;}
+@keyframes indeterminate{0%{left:-40%}100%{left:100%}}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;margin:0 auto 14px;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:var(--gray);font-size:0.85rem;}
+/* Results */
+#results{display:none;margin-top:20px;}
+/* Salary range bar */
+.salary-hero{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:14px;}
+.salary-role{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.salary-level{font-size:0.82rem;color:var(--gray);margin-bottom:16px;}
+.salary-numbers{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+.sal-col{display:flex;flex-direction:column;align-items:center;}
+.sal-label{font-size:0.68rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.sal-amount{font-size:1.35rem;font-weight:800;color:var(--text);}
+.sal-amount.mid{font-size:1.7rem;color:var(--blue);}
+.sal-amount.usd{font-size:0.85rem;color:var(--text-sec);font-weight:600;margin-top:2px;}
+.salary-bar{height:10px;background:var(--inner-bg);border-radius:10px;overflow:hidden;position:relative;margin-bottom:6px;}
+.salary-bar-fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--blue-glow),var(--blue));border-radius:10px;transition:width 1s ease;}
+.salary-bar-mid{position:absolute;top:-3px;height:16px;width:3px;background:var(--blue);border-radius:2px;transform:translateX(-50%);}
+.confidence-badge{display:inline-flex;align-items:center;gap:5px;font-size:0.74rem;padding:3px 10px;border-radius:20px;font-weight:600;}
+.conf-high{background:rgba(0,135,58,0.12);color:var(--success);}
+.conf-med{background:rgba(179,119,0,0.12);color:var(--warning);}
+.conf-low{background:rgba(204,41,0,0.1);color:var(--danger);}
+/* Breakdown */
+.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.breakdown-item{background:var(--inner-bg);border-radius:9px;padding:12px 14px;}
+.breakdown-label{font-size:0.72rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.breakdown-value{font-size:0.83rem;color:var(--text-body);line-height:1.5;}
+/* City comparison */
+.city-table{width:100%;border-collapse:collapse;}
+.city-table th{font-size:0.72rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.city-table td{font-size:0.82rem;color:var(--text-body);padding:10px 10px;border-bottom:1px solid var(--border);}
+.city-table tr:last-child td{border-bottom:none;}
+.city-table td.city-name{font-weight:600;color:var(--text);}
+.city-table td.city-mid{font-weight:700;color:var(--blue);}
+.city-primary td{background:var(--blue-glow);}
+/* Collapsible */
+.res-section{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.res-header{display:flex;align-items:center;gap:10px;padding:13px 18px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:background 0.15s;}
+.res-header:hover{background:var(--navy-mid);}
+.res-header.open{border-bottom-color:var(--border);}
+.res-title{font-size:0.88rem;font-weight:700;flex:1;color:var(--text);}
+.res-arrow{color:var(--gray);font-size:0.74rem;transition:transform 0.2s;}
+.res-header.open .res-arrow{transform:rotate(180deg);}
+.res-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.2s;}
+.res-body.open{max-height:1200px;padding:16px 18px;}
+.res-body p,.res-body li{font-size:0.83rem;line-height:1.75;color:var(--text-body);}
+.res-body ul{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
+/* Market notes */
+.market-note{background:var(--blue-glow);border:1px solid var(--border);border-radius:9px;padding:12px 16px;font-size:0.83rem;color:var(--text-body);line-height:1.65;}
+footer{text-align:center;padding:16px;color:#2A3F55;font-size:0.7rem;}
+footer span{color:var(--blue);}
+@media(max-width:580px){
+  header{padding:10px 14px;}
+  main{padding:14px 12px 80px;}
+  .salary-numbers{gap:14px;}
+  .breakdown-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-text"><h1>Salary Estimator</h1><p>ANABHI CAREER SUITE</p></div>
+  <div class="hdr-right">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    <img src="https://anabhidev.com/assets/logo-anabhidev.webp" alt="Anabhi Dev" onerror="this.style.display='none'">
+  </div>
+</header>
+
+<nav class="app-nav">
+  <a class="nav-item" data-page="ats"       href="/CV-Analyzer/">📊 <span>ATS</span></a>
+  <a class="nav-item" data-page="screener"  href="/CV-Analyzer/screener.html">👥 <span>Screener</span></a>
+  <a class="nav-item" data-page="salary"    href="/CV-Analyzer/salary.html">💰 <span>Salary</span></a>
+  <a class="nav-item" data-page="career"    href="/CV-Analyzer/career.html">🗺️ <span>Career</span></a>
+  <a class="nav-item" data-page="interview" href="/CV-Analyzer/interview.html">🎤 <span>Interview</span></a>
+</nav>
+<nav class="bottom-nav">
+  <a class="bnav-item" data-page="ats"       href="/CV-Analyzer/"><span class="bnav-icon">📊</span><span class="bnav-label">ATS</span></a>
+  <a class="bnav-item" data-page="screener"  href="/CV-Analyzer/screener.html"><span class="bnav-icon">👥</span><span class="bnav-label">Screener</span></a>
+  <a class="bnav-item" data-page="salary"    href="/CV-Analyzer/salary.html"><span class="bnav-icon">💰</span><span class="bnav-label">Salary</span></a>
+  <a class="bnav-item" data-page="career"    href="/CV-Analyzer/career.html"><span class="bnav-icon">🗺️</span><span class="bnav-label">Career</span></a>
+  <a class="bnav-item" data-page="interview" href="/CV-Analyzer/interview.html"><span class="bnav-icon">🎤</span><span class="bnav-label">Interview</span></a>
+</nav>
+
+<main>
+
+  <div class="card">
+    <div class="card-title">1. Informasi Role</div>
+    <div class="field-row">
+      <div class="field-group" style="flex:2">
+        <label>Target Role *</label>
+        <input type="text" id="targetRole" placeholder="Contoh: Backend Developer, Marketing Manager…">
+      </div>
+      <div class="field-group" id="levelGroup">
+        <label>Experience Level</label>
+        <select id="expLevel">
+          <option value="">– Pilih level –</option>
+          <option>Fresh Graduate</option>
+          <option>Junior (1-2 tahun)</option>
+          <option>Mid-level (3-5 tahun)</option>
+          <option>Senior (5-8 tahun)</option>
+          <option>Lead / Principal</option>
+          <option>Manager</option>
+          <option>Director / VP</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Lokasi</label>
+        <select id="locationSelect" onchange="onLocationChange()">
+          <option value="Jakarta">Jakarta</option>
+          <option value="Surabaya">Surabaya</option>
+          <option value="Bandung">Bandung</option>
+          <option value="Bali/Denpasar">Bali / Denpasar</option>
+          <option value="Yogyakarta">Yogyakarta</option>
+          <option value="Medan">Medan</option>
+          <option value="Makassar">Makassar</option>
+          <option value="Semarang">Semarang</option>
+          <option value="Balikpapan">Balikpapan</option>
+          <option value="Remote (Indonesia)">Remote (Indonesia)</option>
+          <option value="Remote (Internasional)">Remote (Internasional)</option>
+          <option value="other">Lainnya…</option>
+        </select>
+      </div>
+      <div class="field-group" id="locationCustomGroup" style="display:none">
+        <label>Kota / Negara</label>
+        <input type="text" id="locationCustom" placeholder="Contoh: Singapore, Dubai…">
+      </div>
+      <div class="field-group">
+        <label>Tampilkan Gaji Dalam</label>
+        <div class="currency-toggle">
+          <button class="curr-btn active" id="curr-idr" onclick="setCurrency('idr')">🇮🇩 IDR</button>
+          <button class="curr-btn"        id="curr-usd" onclick="setCurrency('usd')">🇺🇸 USD</button>
+          <button class="curr-btn"        id="curr-both" onclick="setCurrency('both')">Keduanya</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2. CV (Opsional — untuk estimasi lebih akurat)</div>
+    <button class="cv-toggle-btn" id="cvToggleBtn" onclick="toggleCV()">📄 Tambahkan CV</button>
+    <div class="cv-section" id="cvSection">
+      <div class="cv-tabs">
+        <button class="cv-tab active" id="cv-tab-paste"  onclick="switchCVTab('paste')">📋 Paste</button>
+        <button class="cv-tab"        id="cv-tab-upload" onclick="switchCVTab('upload')">📄 Upload</button>
+      </div>
+      <div id="cv-paste-panel">
+        <textarea id="cvText" placeholder="Paste isi CV Anda di sini…"></textarea>
+      </div>
+      <div id="cv-upload-panel" style="display:none">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept=".pdf,.docx,.doc" onchange="onFileSelected(this)">
+          <p>Drop file CV atau klik · <strong>.PDF</strong> & <strong>.DOCX</strong></p>
+          <div class="file-chosen" id="fileChosen"></div>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:8px;">
+        ✅ CV digunakan untuk deteksi level otomatis — tidak disimpan
+      </p>
+    </div>
+  </div>
+
+  <button class="btn-main" id="btnEstimate" onclick="estimateSalary()">
+    💰 Estimasi Gaji Sekarang
+  </button>
+  <div class="error-box" id="errorBox"></div>
+  <div class="loading" id="loading">
+    <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+    <div class="spinner"></div>
+    <p>Menganalisis data gaji…</p>
+  </div>
+
+  <div id="results">
+
+    <!-- Salary Hero -->
+    <div class="salary-hero">
+      <div class="salary-role" id="salRole"></div>
+      <div class="salary-level" id="salLevel"></div>
+      <div class="salary-numbers">
+        <div class="sal-col">
+          <div class="sal-label">Minimum</div>
+          <div class="sal-amount" id="salMin"></div>
+          <div class="sal-amount usd" id="salMinUSD" style="display:none"></div>
+        </div>
+        <div class="sal-col">
+          <div class="sal-label">⭐ Mid / Ideal</div>
+          <div class="sal-amount mid" id="salMid"></div>
+          <div class="sal-amount usd" id="salMidUSD" style="display:none"></div>
+        </div>
+        <div class="sal-col">
+          <div class="sal-label">Maksimum</div>
+          <div class="sal-amount" id="salMax"></div>
+          <div class="sal-amount usd" id="salMaxUSD" style="display:none"></div>
+        </div>
+        <div class="sal-col">
+          <span class="confidence-badge" id="confBadge"></span>
+        </div>
+      </div>
+      <div style="position:relative;margin-bottom:8px;">
+        <div class="salary-bar">
+          <div class="salary-bar-fill" id="salBar" style="width:100%"></div>
+          <div class="salary-bar-mid" id="salBarMid" style="left:50%"></div>
+        </div>
+      </div>
+      <div style="font-size:0.74rem;color:var(--gray);" id="salLocation"></div>
+    </div>
+
+    <!-- Breakdown -->
+    <div class="res-section">
+      <div class="res-header open" onclick="toggleSection(this)">
+        <span>💼</span><span class="res-title">Breakdown Komponen Gaji</span><span class="res-arrow">▼</span>
+      </div>
+      <div class="res-body open">
+        <div class="breakdown-grid" id="breakdownGrid"></div>
+      </div>
+    </div>
+
+    <!-- City Comparison -->
+    <div class="res-section">
+      <div class="res-header open" onclick="toggleSection(this)">
+        <span>🗺️</span><span class="res-title">Perbandingan Antar Kota</span><span class="res-arrow">▼</span>
+      </div>
+      <div class="res-body open">
+        <table class="city-table" id="cityTable">
+          <thead><tr><th>Kota</th><th>Minimum</th><th>⭐ Mid</th><th>Maksimum</th></tr></thead>
+          <tbody id="cityTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Negotiation Tips -->
+    <div class="res-section">
+      <div class="res-header open" onclick="toggleSection(this)">
+        <span>🎯</span><span class="res-title">Tips Negosiasi Gaji</span><span class="res-arrow">▼</span>
+      </div>
+      <div class="res-body open">
+        <ul id="negTips"></ul>
+      </div>
+    </div>
+
+    <!-- Market Notes -->
+    <div class="res-section">
+      <div class="res-header open" onclick="toggleSection(this)">
+        <span>📊</span><span class="res-title">Konteks Pasar</span><span class="res-arrow">▼</span>
+      </div>
+      <div class="res-body open">
+        <div class="market-note" id="marketNote"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>© 2025 <span>Anabhi Career Suite</span> · Powered by Anabhi Dev</footer>
+
+<script>
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbxpiujXorRb-u3GfzljEgI_Pml6WfGQ4M59VuHMOoHLFHYZcz08niCZXJGYIeZZaNee/exec';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+var currentCurrency = 'idr';
+var usdToIdr        = 16000; // fallback, updated from API
+var salaryData      = null;
+var cvTabMode       = 'paste';
+var cvVisible       = false;
+
+// ── Theme ──
+function toggleTheme() {
+  var d = document.body.classList.toggle('dark');
+  document.getElementById('themeToggle').textContent = d ? '☀️' : '🌙';
+  try { localStorage.setItem('suite_theme', d ? 'dark' : 'light'); } catch(_) {}
+}
+(function() {
+  try { if (localStorage.getItem('suite_theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('themeToggle').textContent = '☀️';
+  }} catch(_) {}
+})();
+
+// ── Exchange rate ──
+(function fetchRate() {
+  fetch('https://open.er-api.com/v6/latest/USD')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.rates && d.rates.IDR) usdToIdr = d.rates.IDR; })
+    .catch(function() {}); // use fallback on error
+})();
+
+// ── Location ──
+function onLocationChange() {
+  var sel  = document.getElementById('locationSelect').value;
+  var cg   = document.getElementById('locationCustomGroup');
+  cg.style.display = sel === 'other' ? '' : 'none';
+}
+function getLocation() {
+  var sel = document.getElementById('locationSelect').value;
+  if (sel === 'other') return document.getElementById('locationCustom').value.trim() || 'Indonesia';
+  return sel;
+}
+
+// ── Currency ──
+function setCurrency(c) {
+  currentCurrency = c;
+  ['idr','usd','both'].forEach(function(x) {
+    document.getElementById('curr-' + x).classList.toggle('active', x === c);
+  });
+  if (salaryData) updateCurrencyDisplay();
+}
+function updateCurrencyDisplay() {
+  var d = salaryData;
+  var showIdr  = currentCurrency === 'idr'  || currentCurrency === 'both';
+  var showUsd  = currentCurrency === 'usd'  || currentCurrency === 'both';
+  document.getElementById('salMin').textContent  = showIdr ? fmtIdr(d.salary_idr.min)  : fmtUsd(d.salary_idr.min);
+  document.getElementById('salMid').textContent  = showIdr ? fmtIdr(d.salary_idr.mid)  : fmtUsd(d.salary_idr.mid);
+  document.getElementById('salMax').textContent  = showIdr ? fmtIdr(d.salary_idr.max)  : fmtUsd(d.salary_idr.max);
+  var showSecond = currentCurrency === 'both';
+  document.getElementById('salMinUSD').style.display = showSecond ? '' : 'none';
+  document.getElementById('salMidUSD').style.display = showSecond ? '' : 'none';
+  document.getElementById('salMaxUSD').style.display = showSecond ? '' : 'none';
+  if (showSecond) {
+    document.getElementById('salMinUSD').textContent = showIdr ? fmtUsd(d.salary_idr.min) : fmtIdr(d.salary_idr.min);
+    document.getElementById('salMidUSD').textContent = showIdr ? fmtUsd(d.salary_idr.mid) : fmtIdr(d.salary_idr.mid);
+    document.getElementById('salMaxUSD').textContent = showIdr ? fmtUsd(d.salary_idr.max) : fmtIdr(d.salary_idr.max);
+  }
+  // Update city table
+  var rows = document.querySelectorAll('#cityTbody tr');
+  rows.forEach(function(row, i) {
+    var city = salaryData.city_comparison[i];
+    if (!city) return;
+    var tds = row.querySelectorAll('td');
+    tds[1].textContent = showIdr ? fmtIdr(city.min) : fmtUsd(city.min);
+    tds[2].textContent = showIdr ? fmtIdr(city.mid) : fmtUsd(city.mid);
+    tds[3].textContent = showIdr ? fmtIdr(city.max) : fmtUsd(city.max);
+  });
+}
+function fmtIdr(n) {
+  if (!n) return '-';
+  return 'Rp ' + (n/1000000).toFixed(1).replace('.0','') + ' jt';
+}
+function fmtUsd(n) {
+  if (!n) return '-';
+  return '$' + Math.round(n / usdToIdr).toLocaleString();
+}
+
+// ── CV Toggle ──
+function toggleCV() {
+  cvVisible = !cvVisible;
+  document.getElementById('cvSection').style.display = cvVisible ? 'block' : 'none';
+  document.getElementById('cvToggleBtn').textContent  = cvVisible ? '✕ Tutup CV' : '📄 Tambahkan CV';
+  var lg = document.getElementById('levelGroup');
+  lg.style.display = cvVisible ? 'none' : '';
+}
+function switchCVTab(tab) {
+  cvTabMode = tab;
+  document.getElementById('cv-paste-panel').style.display  = tab==='paste'  ? '' : 'none';
+  document.getElementById('cv-upload-panel').style.display = tab==='upload' ? '' : 'none';
+  document.getElementById('cv-tab-paste').classList.toggle('active', tab==='paste');
+  document.getElementById('cv-tab-upload').classList.toggle('active', tab==='upload');
+}
+function onFileSelected(input) {
+  if (input.files && input.files[0])
+    document.getElementById('fileChosen').textContent = '✅ ' + input.files[0].name;
+}
+var uz = document.getElementById('uploadZone');
+uz.addEventListener('dragover', function(e){e.preventDefault();uz.classList.add('drag-over');});
+uz.addEventListener('dragleave', function(){uz.classList.remove('drag-over');});
+uz.addEventListener('drop', function(e){
+  e.preventDefault();uz.classList.remove('drag-over');
+  var f=e.dataTransfer.files[0];
+  if(f){document.getElementById('fileInput').files=e.dataTransfer.files;
+       document.getElementById('fileChosen').textContent='✅ '+f.name;}
+});
+
+// ── Extract CV ──
+async function getCVText() {
+  if (!cvVisible) return '';
+  if (cvTabMode === 'paste') return document.getElementById('cvText').value.trim();
+  var fi = document.getElementById('fileInput');
+  if (!fi.files || !fi.files[0]) return '';
+  var file = fi.files[0];
+  var ext  = file.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf') {
+    var buf = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({data:buf}).promise;
+    var txt = '';
+    for (var i=1;i<=pdf.numPages;i++){
+      var pg=await pdf.getPage(i);var ct=await pg.getTextContent();
+      txt+=ct.items.map(function(x){return x.str;}).join(' ')+'\n';
+    }
+    return txt;
+  }
+  var buf2 = await file.arrayBuffer();
+  return (await mammoth.extractRawText({arrayBuffer:buf2})).value;
+}
+
+// ── Main estimate ──
+async function estimateSalary() {
+  clearError();
+  var role = document.getElementById('targetRole').value.trim();
+  if (!role) { showError('Masukkan target role terlebih dahulu.'); return; }
+  var location = getLocation();
+  var level    = document.getElementById('expLevel').value;
+  var cvText   = '';
+  try { cvText = await getCVText(); } catch(_) {}
+
+  setLoading(true);
+  document.getElementById('results').style.display = 'none';
+
+  try {
+    var res = await fetch(GAS_URL, {
+      method:'POST',
+      body: JSON.stringify({
+        action:'salary_estimate', cvText:cvText, targetRole:role,
+        experienceLevel:level, location:location, language:'auto'
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var result = await res.json();
+    if (!result.success) throw new Error(result.error || 'Server error.');
+    renderResults(result.data);
+  } catch(e) { showError('Gagal estimasi gaji: ' + e.message); }
+  finally    { setLoading(false); }
+}
+
+// ── Render ──
+function renderResults(data) {
+  salaryData = data;
+  var d      = data;
+  document.getElementById('salRole').textContent    = d.detected_role || '';
+  document.getElementById('salLevel').textContent   = d.detected_level || '';
+  document.getElementById('salLocation').textContent = '📍 ' + (d.location || '');
+
+  // Confidence badge
+  var conf = (d.confidence || 'Medium');
+  var confEl = document.getElementById('confBadge');
+  confEl.textContent = conf === 'High' ? '🎯 Akurasi Tinggi' : conf === 'Low' ? '⚠️ Data Terbatas' : '📊 Akurasi Sedang';
+  confEl.className   = 'confidence-badge ' + (conf==='High'?'conf-high':conf==='Low'?'conf-low':'conf-med');
+
+  // Salary bar midpoint position
+  if (d.salary_idr) {
+    var mn = d.salary_idr.min, md = d.salary_idr.mid, mx = d.salary_idr.max;
+    var midPct = mx > mn ? Math.round(((md - mn) / (mx - mn)) * 100) : 50;
+    document.getElementById('salBarMid').style.left = midPct + '%';
+  }
+
+  updateCurrencyDisplay();
+
+  // Breakdown
+  var bg = document.getElementById('breakdownGrid');
+  bg.innerHTML = '';
+  if (d.breakdown) {
+    var fields = [
+      ['💵 Gaji Pokok', d.breakdown.base_salary],
+      ['🎁 Bonus Tahunan', d.breakdown.annual_bonus],
+      ['🕌 THR', d.breakdown.thr],
+      ['🏥 BPJS', d.breakdown.bpjs],
+      ['✨ Benefits Lain', d.breakdown.other_benefits]
+    ];
+    fields.forEach(function(f) {
+      if (!f[1]) return;
+      var div = document.createElement('div');
+      div.className = 'breakdown-item';
+      div.innerHTML = '<div class="breakdown-label">'+escHtml(f[0])+'</div><div class="breakdown-value">'+escHtml(f[1])+'</div>';
+      bg.appendChild(div);
+    });
+  }
+
+  // City comparison
+  var tbody = document.getElementById('cityTbody');
+  tbody.innerHTML = '';
+  var primaryCity = (d.location || '').toLowerCase();
+  if (d.city_comparison) {
+    d.city_comparison.forEach(function(city) {
+      var tr = document.createElement('tr');
+      var isPrimary = city.city.toLowerCase().indexOf(primaryCity) !== -1 || primaryCity.indexOf(city.city.toLowerCase()) !== -1;
+      if (isPrimary) tr.className = 'city-primary';
+      tr.innerHTML = '<td class="city-name">'+escHtml(city.city)+(isPrimary?' ★':'')+'</td>'
+        +'<td>'+fmtIdr(city.min)+'</td>'
+        +'<td class="city-mid">'+fmtIdr(city.mid)+'</td>'
+        +'<td>'+fmtIdr(city.max)+'</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Negotiation tips
+  var ul = document.getElementById('negTips');
+  ul.innerHTML = '';
+  if (d.negotiation_tips) {
+    d.negotiation_tips.forEach(function(tip) {
+      var li = document.createElement('li');
+      li.textContent = tip;
+      ul.appendChild(li);
+    });
+  }
+
+  // Market notes
+  document.getElementById('marketNote').textContent = d.market_notes || '';
+
+  document.getElementById('results').style.display = 'block';
+  setTimeout(function(){document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+
+function toggleSection(h) { h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+function setLoading(show) { document.getElementById('loading').style.display=show?'block':'none'; document.getElementById('btnEstimate').disabled=show; }
+function showError(msg)   { var el=document.getElementById('errorBox'); el.textContent='❌ '+msg; el.style.display='block'; }
+function clearError()     { document.getElementById('errorBox').style.display='none'; }
+function escHtml(str)     { if(!str)return''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Nav active ──
+(function(){
+  var path=window.location.pathname;
+  var page=path.indexOf('screener')!==-1?'screener':path.indexOf('salary')!==-1?'salary':path.indexOf('career')!==-1?'career':path.indexOf('interview')!==-1?'interview':'ats';
+  document.querySelectorAll('[data-page]').forEach(function(el){if(el.getAttribute('data-page')===page)el.classList.add('active');});
+})();
+</script>
+</body>
+</html>

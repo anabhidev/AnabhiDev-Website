@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Screener – Anabhi Dev</title>
+<meta name="description" content="Screening kandidat secara massal dengan AI. Upload 2-10 CV, analisa vs Job Description, dan dapatkan ranking kandidat terbaik.">
+<meta name="robots" content="index, follow">
+<meta property="og:title"       content="CV Screener – Anabhi Dev">
+<meta property="og:description" content="Screening kandidat massal dengan AI. Ranking otomatis siapa yang layak dipanggil interview.">
+<meta property="og:image"       content="https://anabhidev.com/assets/og-cv-screener.webp">
+<link rel="icon"             type="image/png" href="https://anabhidev.com/assets/favicon.png">
+<link rel="apple-touch-icon"                  href="https://anabhidev.com/assets/apple-touch-icon.png">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+/* ── VARIABLES ── */
+:root {
+  /* Page & header: always dark */
+  --navy:       #0D1B2A;
+  --navy-light: #162537;
+  --navy-mid:   #DCE8F5;
+  --inner-bg:   #EDF2F7;
+  /* Cards: off-white default */
+  --card-bg:    #F8FAFC;
+  --border:     rgba(0,100,180,0.15);
+  /* Blue */
+  --blue:       #0082CC;
+  --blue-dark:  #006BA8;
+  --blue-glow:  rgba(0,130,204,0.12);
+  /* Text */
+  --white:      #FFFFFF;
+  --text:       #0D1B2A;
+  --text-sec:   #4A6080;
+  --text-body:  #2A3A4A;
+  --gray:       #4A6080;
+  --gray-light: #2A3A4A;
+  /* Inputs */
+  --input-bg:   #FFFFFF;
+  --input-color:#0D1B2A;
+  --input-ph:   #90A8BB;
+  /* Functional */
+  --upload-bg:  #F0F4F9;
+  /* Status */
+  --success:    #00873A;
+  --warning:    #B37700;
+  --danger:     #CC2900;
+}
+body.dark {
+  --navy:       #0D1B2A;
+  --navy-light: #162537;
+  --navy-mid:   #1E3448;
+  --inner-bg:   #0D1B2A;
+  --card-bg:    #162537;
+  --border:     rgba(0,163,255,0.2);
+  --blue:       #00A3FF;
+  --blue-dark:  #0082CC;
+  --blue-glow:  rgba(0,163,255,0.12);
+  --white:      #FFFFFF;
+  --text:       #FFFFFF;
+  --text-sec:   #B0BEC5;
+  --text-body:  #E8F0F7;
+  --gray:       #B0BEC5;
+  --gray-light: #E8F0F7;
+  --input-bg:   #FFFFFF;
+  --input-color:#1A2A3A;
+  --input-ph:   #9AAABB;
+  --upload-bg:  #0D1B2A;
+  --success:    #00C853;
+  --warning:    #FFB300;
+  --danger:     #FF3D00;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--navy); color:var(--text); min-height:100vh; transition:background 0.25s,color 0.25s; }
+
+/* ── HEADER ── */
+header { background:var(--navy-light); border-bottom:1px solid rgba(0,163,255,0.2); padding:12px 32px; display:flex; align-items:center; gap:14px; }
+.hdr-left h1 { font-size:1.05rem; font-weight:700; color:#FFFFFF; }
+.hdr-left p  { font-size:0.66rem; color:#00A3FF; letter-spacing:0.07em; margin-top:1px; }
+.hdr-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.btn-back { background:none; border:1px solid rgba(255,255,255,0.25); color:#FFFFFF; font-size:0.76rem; padding:6px 12px; border-radius:7px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:all 0.18s; white-space:nowrap; }
+.btn-back:hover { border-color:#FFFFFF; color:#FFFFFF; opacity:0.8; }
+.theme-toggle { background:none; border:1px solid var(--border); color:var(--gray); width:34px; height:34px; border-radius:8px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.theme-toggle:hover { border-color:var(--blue); color:var(--blue); }
+header img { height:38px; width:auto; }
+
+/* ── MAIN ── */
+main { max-width:900px; margin:0 auto; padding:28px 20px 64px; }
+
+/* ── SECTION TITLES ── */
+.section-title { font-size:0.88rem; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:12px; }
+
+/* ── CARD ── */
+.card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:16px; }
+
+/* ── OPTIONS ROW ── */
+.options-row { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+.opt-group { display:flex; align-items:center; gap:8px; flex:1; min-width:200px; }
+.opt-group label { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.opt-group input { flex:1; background:var(--inner-bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text); font-size:0.83rem; outline:none; font-family:inherit; transition:border-color 0.2s; }
+.opt-group input:focus { border-color:var(--blue); }
+.opt-group input::placeholder { color:#3A5068; }
+.lang-toggle { display:flex; align-items:center; gap:6px; }
+.lang-toggle span { font-size:0.8rem; color:var(--gray); font-weight:600; white-space:nowrap; }
+.lang-btn { background:none; border:1px solid var(--border); color:var(--gray); padding:6px 10px; font-size:0.75rem; font-weight:600; cursor:pointer; border-radius:7px; transition:all 0.18s; }
+.lang-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+.lang-btn:not(.active):hover { border-color:var(--blue); color:var(--text); }
+
+/* ── TEXTAREA ── */
+textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; color:var(--input-color); font-size:0.83rem; line-height:1.65; padding:13px; resize:vertical; outline:none; font-family:inherit; transition:border-color 0.2s; }
+textarea:focus { border-color:var(--blue); }
+textarea::placeholder { color:var(--input-ph); }
+
+/* ── DROP ZONE ── */
+.drop-zone { position:relative; border:2px dashed var(--border); border-radius:10px; padding:32px 20px; text-align:center; cursor:pointer; background:var(--upload-bg); transition:all 0.2s; margin-bottom:14px; }
+.drop-zone:hover, .drop-zone.drag-over { border-color:var(--blue); background:var(--blue-glow); }
+.drop-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.drop-icon { font-size:2rem; margin-bottom:8px; }
+.drop-zone h3 { font-size:0.95rem; margin-bottom:5px; color:var(--text); }
+.drop-zone p  { font-size:0.76rem; color:var(--gray); }
+
+/* ── CV COUNTER ── */
+.cv-counter { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cv-count-text { font-size:0.82rem; color:var(--gray); }
+.cv-count-num { color:var(--blue); font-weight:700; }
+.cv-count-limit { color:#3A5068; }
+
+/* ── CV LIST ── */
+#cvList { display:flex; flex-direction:column; gap:8px; }
+.cv-item { background:var(--inner-bg); border:1px solid var(--border); border-radius:9px; padding:11px 14px; display:flex; align-items:center; gap:12px; transition:border-color 0.2s; }
+.cv-item.status-analyzing { border-color:var(--blue); }
+.cv-item.status-done      { border-color:var(--success); }
+.cv-item.status-error     { border-color:var(--danger); }
+.cv-icon { font-size:1.1rem; flex-shrink:0; }
+.cv-file-name { font-size:0.8rem; color:var(--gray); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px; flex-shrink:0; }
+.cv-name-input { flex:1; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:5px 9px; color:var(--input-color); font-size:0.8rem; outline:none; font-family:inherit; min-width:80px; transition:border-color 0.2s; }
+.cv-name-input:focus { border-color:var(--blue); }
+.cv-status-badge { font-size:0.72rem; font-weight:600; padding:3px 9px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+.badge-pending   { background:rgba(176,190,197,0.15); color:var(--gray); }
+.badge-analyzing { background:var(--blue-glow); color:var(--blue); animation:pulse 1.2s ease-in-out infinite; }
+.badge-done      { background:rgba(0,200,83,0.15); color:var(--success); }
+.badge-error     { background:rgba(255,61,0,0.15); color:var(--danger); }
+.badge-score     { background:rgba(0,200,83,0.12); color:var(--success); font-size:0.75rem; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.btn-remove { background:none; border:none; color:#3A5068; font-size:1rem; cursor:pointer; padding:2px 6px; border-radius:5px; flex-shrink:0; transition:color 0.15s; line-height:1; }
+.btn-remove:hover { color:var(--danger); }
+
+/* ── EMPTY STATE ── */
+.cv-empty { text-align:center; padding:20px; color:#3A5068; font-size:0.82rem; }
+
+/* ── START BUTTON ── */
+.btn-start { width:100%; background:var(--blue); color:#fff; border:none; padding:15px; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.2s; letter-spacing:0.02em; }
+.btn-start:hover:not(:disabled) { background:var(--blue-dark); transform:translateY(-1px); }
+.btn-start:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── ERROR ── */
+.error-box { display:none; margin-top:12px; background:rgba(255,61,0,0.1); border:1px solid var(--danger); border-radius:10px; padding:12px 16px; font-size:0.83rem; color:#FF8A65; line-height:1.5; }
+
+/* ── PROGRESS SECTION ── */
+#progressSection { display:none; margin-top:20px; }
+.prog-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.prog-text { font-size:0.88rem; font-weight:600; color:var(--text); }
+.prog-pct  { font-size:0.82rem; color:var(--blue); font-weight:700; }
+.real-prog-wrap { background:var(--inner-bg); border-radius:6px; height:8px; margin-bottom:16px; overflow:hidden; }
+.real-prog-bar { height:8px; background:var(--blue); border-radius:6px; transition:width 0.4s ease; width:0%; }
+
+/* ── RESULTS SECTION ── */
+#resultsSection { display:none; margin-top:24px; }
+
+/* Stats bar */
+.stats-bar { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.stat-card { flex:1; min-width:100px; background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; text-align:center; }
+.stat-num  { font-size:1.6rem; font-weight:800; line-height:1; margin-bottom:4px; }
+.stat-lbl  { font-size:0.72rem; color:var(--gray); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+
+/* Candidate cards */
+.candidate-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:10px; display:flex; gap:16px; flex-wrap:wrap; }
+.candidate-card.rec-panggil      { border-color:rgba(0,200,83,0.5); }
+.candidate-card.rec-pertimbangkan { border-color:rgba(255,179,0,0.5); }
+.candidate-card.rec-tidak        { border-color:rgba(255,61,0,0.3); opacity:0.85; }
+.cand-rank { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; min-width:56px; }
+.rank-num  { font-size:1.4rem; font-weight:800; color:var(--gray); }
+.rank-num.gold   { color:#FFD700; }
+.rank-num.silver { color:#C0C0C0; }
+.rank-num.bronze { color:#CD7F32; }
+.rec-pill { font-size:0.68rem; font-weight:700; padding:3px 8px; border-radius:20px; text-align:center; white-space:nowrap; }
+.rec-pill.panggil       { background:rgba(0,200,83,0.15); color:var(--success); }
+.rec-pill.pertimbangkan { background:rgba(255,179,0,0.15); color:var(--warning); }
+.rec-pill.tidak         { background:rgba(255,61,0,0.12); color:var(--danger); }
+.cand-info { flex:1; min-width:0; }
+.cand-name    { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:3px; }
+.cand-file    { font-size:0.74rem; color:var(--gray); margin-bottom:8px; }
+.cand-reason  { font-size:0.82rem; color:var(--text-body); line-height:1.6; margin-bottom:8px; }
+.cand-tags    { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px; }
+.tag-strength { background:rgba(0,200,83,0.12); border:1px solid rgba(0,200,83,0.3); color:var(--success); font-size:0.7rem; padding:2px 8px; border-radius:12px; }
+.tag-gap      { background:rgba(255,61,0,0.1); border:1px solid rgba(255,61,0,0.25); color:var(--danger); font-size:0.7rem; padding:2px 8px; border-radius:12px; }
+.cand-interview { font-size:0.78rem; color:var(--gray); font-style:italic; line-height:1.5; }
+.cand-interview strong { color:var(--blue); font-style:normal; }
+.cand-score-wrap { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; }
+.cand-score-circle { width:52px; height:52px; border-radius:50%; border:2px solid currentColor; display:flex; align-items:center; justify-content:center; font-size:1.05rem; font-weight:800; }
+.cand-score-lbl { font-size:0.65rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; }
+
+/* AI narrative */
+.narrative-section { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:14px; }
+.narrative-section h3 { font-size:0.88rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
+.narrative-section p  { font-size:0.83rem; color:var(--text-body); line-height:1.75; }
+.narrative-section p + p { margin-top:8px; }
+
+/* Export buttons */
+.export-row { display:flex; gap:10px; flex-wrap:wrap; }
+.btn-export { flex:1; min-width:140px; border:none; padding:13px 16px; border-radius:10px; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn-export-excel { background:rgba(0,200,83,0.15); border:1px solid rgba(0,200,83,0.4); color:var(--success); }
+.btn-export-excel:hover { background:var(--success); color:#fff; }
+.btn-export-pdf   { background:var(--blue-glow); border:1px solid var(--blue); color:var(--blue); }
+.btn-export-pdf:hover { background:var(--blue); color:#fff; }
+
+/* Collapsible (reused) */
+.res-section { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; margin-bottom:10px; overflow:hidden; }
+.res-header  { display:flex; align-items:center; gap:10px; padding:13px 18px; cursor:pointer; user-select:none; border-bottom:1px solid transparent; transition:background 0.15s; }
+.res-header:hover { background:var(--navy-mid); }
+.res-header.open  { border-bottom-color:var(--border); }
+.res-icon  { font-size:1rem; }
+.res-title { font-size:0.88rem; font-weight:700; flex:1; color:var(--text); }
+.res-arrow { color:var(--gray); font-size:0.74rem; transition:transform 0.2s; }
+.res-header.open .res-arrow { transform:rotate(180deg); }
+.res-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; }
+.res-body.open { max-height:3000px; padding:16px 18px; }
+
+/* ── FOOTER ── */
+footer { text-align:center; padding:16px; color:#2A3F55; font-size:0.7rem; }
+footer span { color:var(--blue); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:580px) {
+  header { padding:10px 14px; }
+  main   { padding:14px 12px 80px; }
+  .cand-score-wrap { display:none; }
+  .stats-bar .stat-card { min-width:80px; }
+}
+
+/* ── PRINT CSS ── */
+@media print {
+  .drop-zone, .btn-start, .error-box, #progressSection .real-prog-wrap,
+  .btn-remove, .cv-name-input, .export-row, .btn-back,
+  .hdr-right, footer { display:none !important; }
+  body { background:#fff !important; color:#111 !important; }
+  header { background:#fff !important; border-bottom:2px solid #0082CC !important; padding:10px !important; }
+  .hdr-left h1 { color:#111 !important; }
+  .hdr-left p  { display:none !important; }
+  main { padding:0 10px !important; max-width:100% !important; }
+  .card { background:#fff !important; border:1px solid #ddd !important; }
+  .candidate-card { background:#fff !important; border:1px solid #ddd !important; break-inside:avoid; }
+  .cand-name { color:#111 !important; }
+  .cand-reason, .cand-interview { color:#333 !important; }
+  .narrative-section { background:#f5f7fa !important; border:1px solid #ddd !important; }
+  .narrative-section p { color:#333 !important; }
+  .res-body { max-height:none !important; padding:14px 18px !important; overflow:visible !important; }
+  #resultsSection { display:block !important; }
+}
+
+/* ── APP NAV ── */
+.app-nav { background:#0D1B2A; border-bottom:1px solid rgba(0,163,255,0.15); display:flex; align-items:center; justify-content:center; gap:2px; padding:0 16px; flex-wrap:wrap; }
+.nav-item { display:flex; align-items:center; gap:5px; padding:10px 14px; color:rgba(255,255,255,0.55); text-decoration:none; font-size:0.8rem; font-weight:600; border-radius:8px; transition:all 0.18s; white-space:nowrap; }
+.nav-item:hover { color:#fff; background:rgba(255,255,255,0.07); }
+.nav-item.active { color:#0082CC; background:rgba(0,130,204,0.15); }
+.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:#0D1B2A; border-top:1px solid rgba(0,163,255,0.2); z-index:200; padding-bottom:env(safe-area-inset-bottom,0px); }
+.bnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 4px 10px; color:rgba(255,255,255,0.5); text-decoration:none; transition:color 0.18s; }
+.bnav-item.active { color:#0082CC; }
+.bnav-item:hover { color:rgba(255,255,255,0.85); }
+.bnav-icon { font-size:1.15rem; }
+.bnav-label { font-size:0.6rem; font-weight:600; letter-spacing:0.02em; }
+@media (max-width:640px) { .app-nav { display:none; } .bottom-nav { display:flex; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-left">
+    <h1>CV Screener</h1>
+    <p>POWERED BY ANABHI DEV</p>
+  </div>
+  <div class="hdr-right">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle mode">🌙</button>
+    <img src="https://anabhidev.com/assets/logo-anabhidev.webp" alt="Anabhi Dev" onerror="this.style.display='none'">
+  </div>
+</header>
+<!-- APP NAV -->
+<nav class="app-nav">
+  <a class="nav-item" data-page="ats"       href="/CV-Analyzer/">📊 <span>ATS</span></a>
+  <a class="nav-item" data-page="screener"  href="/CV-Analyzer/screener.html">👥 <span>Screener</span></a>
+  <a class="nav-item" data-page="salary"    href="/CV-Analyzer/salary.html">💰 <span>Salary</span></a>
+  <a class="nav-item" data-page="career"    href="/CV-Analyzer/career.html">🗺️ <span>Career</span></a>
+  <a class="nav-item" data-page="interview" href="/CV-Analyzer/interview.html">🎤 <span>Interview</span></a>
+</nav>
+<nav class="bottom-nav">
+  <a class="bnav-item" data-page="ats"       href="/CV-Analyzer/"><span class="bnav-icon">📊</span><span class="bnav-label">ATS</span></a>
+  <a class="bnav-item" data-page="screener"  href="/CV-Analyzer/screener.html"><span class="bnav-icon">👥</span><span class="bnav-label">Screener</span></a>
+  <a class="bnav-item" data-page="salary"    href="/CV-Analyzer/salary.html"><span class="bnav-icon">💰</span><span class="bnav-label">Salary</span></a>
+  <a class="bnav-item" data-page="career"    href="/CV-Analyzer/career.html"><span class="bnav-icon">🗺️</span><span class="bnav-label">Career</span></a>
+  <a class="bnav-item" data-page="interview" href="/CV-Analyzer/interview.html"><span class="bnav-icon">🎤</span><span class="bnav-label">Interview</span></a>
+</nav>
+
+<main>
+
+  <!-- SETUP: Options + JD -->
+  <div class="card">
+    <div class="section-title">1. Informasi Posisi</div>
+    <div class="options-row">
+      <div class="opt-group">
+        <label>🎯 Target Role</label>
+        <input type="text" id="targetRole" placeholder="Contoh: Backend Developer, HRD Manager…">
+      </div>
+      <div class="lang-toggle">
+        <span>Bahasa:</span>
+        <button class="lang-btn active" id="lang-auto" onclick="setLang('auto')">Auto</button>
+        <button class="lang-btn"        id="lang-id"   onclick="setLang('id')">🇮🇩 ID</button>
+        <button class="lang-btn"        id="lang-en"   onclick="setLang('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <textarea id="jobDescription" rows="6"
+      placeholder="Paste job description di sini...
+
+Contoh:
+Kami mencari Backend Developer dengan:
+• Pengalaman 3+ tahun dengan Node.js atau Python
+• Familiar dengan PostgreSQL dan Redis
+• Pengalaman dengan REST API dan microservices
+• Kemampuan komunikasi yang baik dalam tim
+..."></textarea>
+  </div>
+
+  <!-- CV UPLOAD -->
+  <div class="card">
+    <div class="section-title">2. Upload CV Kandidat</div>
+
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.doc" multiple onchange="onFilesSelected(this)">
+      <div class="drop-icon">📁</div>
+      <h3>Drop CV di sini (bisa beberapa sekaligus)</h3>
+      <p>atau klik untuk memilih file &nbsp;·&nbsp; Format: <strong>.PDF</strong> & <strong>.DOCX</strong></p>
+    </div>
+
+    <div class="cv-counter">
+      <span class="cv-count-text">CV ditambahkan: <span class="cv-count-num" id="cvCountNum">0</span></span>
+      <span class="cv-count-limit">Min 2 · Maks 10</span>
+    </div>
+
+    <div id="cvList">
+      <div class="cv-empty" id="cvEmpty">Belum ada CV. Drop file di atas untuk menambahkan.</div>
+    </div>
+  </div>
+
+  <!-- START BUTTON -->
+  <button class="btn-start" id="btnStart" onclick="startScreening()">
+    🚀&nbsp; Mulai Screening
+  </button>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- PROGRESS -->
+  <div id="progressSection">
+    <div class="card">
+      <div class="prog-header">
+        <span class="prog-text" id="progText">Mempersiapkan…</span>
+        <span class="prog-pct"  id="progPct">0%</span>
+      </div>
+      <div class="real-prog-wrap">
+        <div class="real-prog-bar" id="realProgBar"></div>
+      </div>
+      <div id="progCvList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsSection">
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal" style="color:var(--blue)">0</div>
+        <div class="stat-lbl">Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statPanggil" style="color:var(--success)">0</div>
+        <div class="stat-lbl">✅ Panggil</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statPertimbangkan" style="color:var(--warning)">0</div>
+        <div class="stat-lbl">⚠️ Pertimbangkan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statTidak" style="color:var(--danger)">0</div>
+        <div class="stat-lbl">❌ Tidak</div>
+      </div>
+    </div>
+
+    <!-- Candidate cards -->
+    <div id="candidateCards"></div>
+
+    <!-- AI Narrative -->
+    <div id="narrativeSection" style="display:none">
+      <div class="narrative-section" id="narrativeSummary" style="display:none"></div>
+      <div class="narrative-section" id="narrativeNotes"   style="display:none"></div>
+    </div>
+
+    <!-- Export buttons -->
+    <div class="export-row">
+      <button class="btn-export btn-export-excel" onclick="exportExcel()">📊&nbsp; Export Excel</button>
+      <button class="btn-export btn-export-pdf"   onclick="exportPDF()">🖨️&nbsp; Export PDF</button>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>© 2025 <span>Anabhi Dev</span> · Less Doing. More Living.</footer>
+
+<script>
+// ============================================================
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbxpiujXorRb-u3GfzljEgI_Pml6WfGQ4M59VuHMOoHLFHYZcz08niCZXJGYIeZZaNee/exec';
+// ============================================================
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+var currentLang       = 'auto';
+var candidates        = [];   // array of candidate objects
+var screeningResults  = [];   // [{name, file, analysis}] — successful analyses
+var rankingResult     = null; // final ranking from AI
+var isScreening       = false;
+var idCounter         = 0;
+
+/* ─── THEME ─── */
+function toggleTheme() {
+  var isDark = document.body.classList.toggle('dark');
+  document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('screener_theme', isDark ? 'dark' : 'light'); } catch(_) {}
+}
+(function initTheme() {
+  try { if (localStorage.getItem('screener_theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('themeToggle').textContent = '☀️';
+  }} catch(_) {}
+})();
+
+/* ─── LANGUAGE ─── */
+function setLang(lang) {
+  currentLang = lang;
+  ['auto','id','en'].forEach(function(l) {
+    document.getElementById('lang-' + l).classList.toggle('active', l === lang);
+  });
+}
+
+/* ─── DRAG AND DROP ─── */
+var dz = document.getElementById('dropZone');
+dz.addEventListener('dragover',  function(e) { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', function()  { dz.classList.remove('drag-over'); });
+dz.addEventListener('drop', function(e) {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+
+/* ─── FILE SELECT ─── */
+function onFilesSelected(input) {
+  if (input.files && input.files.length) {
+    addFiles(Array.from(input.files));
+    input.value = ''; // reset so same file can be re-added if removed
+  }
+}
+
+/* ─── ADD FILES ─── */
+function addFiles(files) {
+  var added = 0;
+  files.forEach(function(file) {
+    if (candidates.length >= 10) {
+      showError('Maksimal 10 CV per screening.'); return;
+    }
+    var ext = file.name.split('.').pop().toLowerCase();
+    if (['pdf','docx','doc'].indexOf(ext) === -1) {
+      showError('"' + file.name + '" — format tidak didukung. Gunakan .PDF atau .DOCX.');
+      return;
+    }
+    var isDup = candidates.some(function(c) { return c.fileName === file.name; });
+    if (isDup) { showError('"' + file.name + '" sudah ditambahkan.'); return; }
+
+    candidates.push({
+      id       : ++idCounter,
+      file     : file,
+      fileName : file.name,
+      name     : fileToName(file.name),
+      status   : 'pending',
+      score    : null,
+      error    : null
+    });
+    added++;
+  });
+  if (added > 0) { clearError(); renderCVList(); }
+}
+
+/* ─── FILE NAME → CANDIDATE NAME ─── */
+function fileToName(fileName) {
+  return fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/* ─── RENDER CV LIST ─── */
+function renderCVList() {
+  var list  = document.getElementById('cvList');
+  var empty = document.getElementById('cvEmpty');
+  var countEl = document.getElementById('cvCountNum');
+  countEl.textContent = candidates.length;
+
+  if (!candidates.length) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = candidates.map(function(c) {
+    var statusBadge = '';
+    if      (c.status === 'pending')   statusBadge = '<span class="cv-status-badge badge-pending">Menunggu</span>';
+    else if (c.status === 'analyzing') statusBadge = '<span class="cv-status-badge badge-analyzing">⏳ Analyzing...</span>';
+    else if (c.status === 'done')      statusBadge = '<span class="cv-status-badge badge-score">✅ ' + (c.score !== null ? c.score + ' pts' : 'Done') + '</span>';
+    else if (c.status === 'error')     statusBadge = '<span class="cv-status-badge badge-error">❌ Error</span>';
+
+    var editable = (c.status === 'pending') ? '' : ' disabled';
+    var removable = (c.status === 'pending') ? '' : ' style="display:none"';
+
+    return '<div class="cv-item status-' + c.status + '" id="cvItem-' + c.id + '">'
+         + '<span class="cv-icon">📄</span>'
+         + '<span class="cv-file-name" title="' + escHtml(c.fileName) + '">' + escHtml(c.fileName) + '</span>'
+         + '<input class="cv-name-input" type="text" value="' + escHtml(c.name) + '"'
+         + ' placeholder="Nama kandidat"' + editable
+         + ' onchange="updateName(' + c.id + ', this.value)">'
+         + statusBadge
+         + '<button class="btn-remove"' + removable + ' onclick="removeCandidate(' + c.id + ')" title="Hapus">✕</button>'
+         + '</div>';
+  }).join('');
+}
+
+function updateName(id, val) {
+  var c = candidates.find(function(x) { return x.id === id; });
+  if (c) c.name = val.trim() || c.fileName;
+}
+
+function removeCandidate(id) {
+  candidates = candidates.filter(function(c) { return c.id !== id; });
+  clearError();
+  renderCVList();
+}
+
+/* ─── EXTRACT FILE ─── */
+async function extractPDF(file) {
+  var buf = await file.arrayBuffer();
+  var pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  var txt = '';
+  for (var i = 1; i <= pdf.numPages; i++) {
+    var page = await pdf.getPage(i);
+    var c    = await page.getTextContent();
+    txt += c.items.map(function(x) { return x.str; }).join(' ') + '\n';
+  }
+  return txt;
+}
+async function extractDOCX(file) {
+  var buf = await file.arrayBuffer();
+  return (await mammoth.extractRawText({ arrayBuffer: buf })).value;
+}
+async function extractFile(file) {
+  var ext = file.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf') return await extractPDF(file);
+  return await extractDOCX(file);
+}
+
+/* ─── FETCH GAS ─── */
+async function fetchGAS(payload) {
+  var res    = await fetch(GAS_URL, { method:'POST', body:JSON.stringify(payload) });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  var result = await res.json();
+  if (!result.success) throw new Error(result.error || 'Server error.');
+  return result;
+}
+
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+/* ─── UPDATE CANDIDATE STATUS IN DOM ─── */
+function updateCandidateStatus(id, status, score) {
+  var c = candidates.find(function(x) { return x.id === id; });
+  if (c) { c.status = status; if (score !== undefined) c.score = score; }
+
+  // Also update progress list
+  var progItem = document.getElementById('progItem-' + id);
+  if (progItem) {
+    var badge = progItem.querySelector('.cv-status-badge');
+    if (badge) {
+      if (status === 'analyzing') { badge.className = 'cv-status-badge badge-analyzing'; badge.textContent = '⏳ Analyzing...'; }
+      else if (status === 'done') { badge.className = 'cv-status-badge badge-score'; badge.textContent = '✅ ' + (score !== null ? score + ' pts' : 'Done'); }
+      else if (status === 'error') { badge.className = 'cv-status-badge badge-error'; badge.textContent = '❌ Error'; }
+    }
+  }
+}
+
+/* ─── PROGRESS UI ─── */
+function showProgress() {
+  document.getElementById('progressSection').style.display = 'block';
+  // Build prog cv list
+  var list = document.getElementById('progCvList');
+  list.innerHTML = candidates.map(function(c) {
+    return '<div id="progItem-' + c.id + '" style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">'
+         + '<span>📄</span>'
+         + '<span style="flex:1;font-size:0.8rem;color:var(--text-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(c.name) + '</span>'
+         + '<span class="cv-status-badge badge-pending">Menunggu</span>'
+         + '</div>';
+  }).join('');
+}
+
+function updateProgress(done, total, stepText) {
+  var pct = Math.round((done / total) * 100);
+  document.getElementById('progText').textContent = stepText || ('Menganalisis CV ' + done + ' dari ' + total + '…');
+  document.getElementById('progPct').textContent  = pct + '%';
+  document.getElementById('realProgBar').style.width = pct + '%';
+}
+
+/* ─── START SCREENING ─── */
+async function startScreening() {
+  clearError();
+  var jd = document.getElementById('jobDescription').value.trim();
+  if (jd.length < 30) { showError('Masukkan job description terlebih dahulu (minimal 30 karakter).'); return; }
+  if (candidates.length < 2) { showError('Minimal 2 CV diperlukan untuk screening.'); return; }
+
+  // Lock names from candidates list
+  candidates.forEach(function(c) {
+    var inp = document.querySelector('#cvItem-' + c.id + ' .cv-name-input');
+    if (inp) c.name = inp.value.trim() || c.fileName;
+  });
+
+  isScreening       = true;
+  screeningResults  = [];
+  rankingResult     = null;
+
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('resultsSection').style.display = 'none';
+  showProgress();
+
+  var targetRole = document.getElementById('targetRole').value.trim();
+  var total      = candidates.length;
+
+  // ── Step 1: Analyze each CV ──
+  for (var i = 0; i < candidates.length; i++) {
+    var cand = candidates[i];
+    updateCandidateStatus(cand.id, 'analyzing');
+    updateProgress(i, total + 1, 'Menganalisis "' + cand.name + '" (' + (i+1) + '/' + total + ')…');
+
+    try {
+      var cvText = await extractFile(cand.file);
+      if (cvText.trim().length < 50) throw new Error('Teks CV terlalu pendek atau tidak bisa dibaca.');
+
+      var r = await fetchGAS({
+        action         : 'job_match',
+        source         : 'screener',
+        cvText         : cvText,
+        jobDescription : jd,
+        targetRole     : targetRole,
+        language       : currentLang
+      });
+
+      cand.status = 'done';
+      cand.score  = r.data.match_score || 0;
+      updateCandidateStatus(cand.id, 'done', cand.score);
+      screeningResults.push({ name: cand.name, fileName: cand.fileName, analysis: r.data });
+
+    } catch(e) {
+      cand.status = 'error';
+      cand.error  = e.message;
+      updateCandidateStatus(cand.id, 'error');
+    }
+
+    // Delay between calls — avoid rate limiting
+    if (i < candidates.length - 1) await sleep(600);
+  }
+
+  // ── Step 2: Sort by score ──
+  screeningResults.sort(function(a, b) {
+    return (b.analysis.match_score || 0) - (a.analysis.match_score || 0);
+  });
+
+  // ── Step 3: Get ranking from AI ──
+  updateProgress(total, total + 1, 'Membuat rekomendasi akhir…');
+  document.getElementById('progPct').textContent = '95%';
+  document.getElementById('realProgBar').style.width = '95%';
+
+  if (screeningResults.length >= 1) {
+    try {
+      var rankR = await fetchGAS({
+        action     : 'rank_candidates',
+        candidates : screeningResults,
+        targetRole : targetRole,
+        language   : currentLang
+      });
+      rankingResult = rankR.data;
+    } catch(e) {
+      rankingResult = null; // Non-fatal — show individual results without AI narrative
+    }
+  }
+
+  // ── Step 4: Render ──
+  updateProgress(total + 1, total + 1, 'Selesai!');
+  document.getElementById('progPct').textContent = '100%';
+  document.getElementById('realProgBar').style.width = '100%';
+
+  await sleep(400);
+  isScreening = false;
+  document.getElementById('btnStart').disabled = false;
+  renderResults();
+}
+
+/* ─── RENDER RESULTS ─── */
+function renderResults() {
+  if (!screeningResults.length) {
+    showError('Semua CV gagal dianalisis. Periksa koneksi dan format file.');
+    return;
+  }
+
+  // Build rank map from AI ranking
+  var rankMap = {};
+  if (rankingResult && rankingResult.ranking) {
+    rankingResult.ranking.forEach(function(r, i) {
+      rankMap[r.candidate_name] = { rank: i + 1, data: r };
+    });
+  }
+
+  // Merge results
+  var merged = screeningResults.map(function(r, i) {
+    var rInfo = rankMap[r.name] || {};
+    var rd    = rInfo.data || {};
+    var a     = r.analysis || {};
+    var rec   = (rd.recommendation || a.application_recommendation || '').trim();
+    return {
+      name           : r.name,
+      fileName       : r.fileName,
+      score          : a.match_score || 0,
+      recommendation : rec,
+      reason         : rd.recommendation_reason || a.recommendation_reason || '',
+      strengths      : rd.key_strengths    || a.strengths_for_role || [],
+      gaps           : rd.critical_gaps    || a.critical_gaps      || [],
+      interviewFocus : rd.interview_focus  || '',
+      aiRank         : rInfo.rank || (i + 1)
+    };
+  });
+
+  // Sort by AI rank if available, else by score
+  merged.sort(function(a, b) { return a.aiRank - b.aiRank; });
+
+  // Stats
+  var panggil       = merged.filter(function(r) { return r.recommendation.indexOf('Panggil') !== -1 && r.recommendation.indexOf('Tidak') === -1; }).length;
+  var pertimbangkan = merged.filter(function(r) { return r.recommendation.indexOf('Pertimbangkan') !== -1; }).length;
+  var tidak         = merged.filter(function(r) { return r.recommendation.indexOf('Tidak') !== -1; }).length;
+
+  document.getElementById('statTotal').textContent         = merged.length;
+  document.getElementById('statPanggil').textContent       = panggil;
+  document.getElementById('statPertimbangkan').textContent = pertimbangkan;
+  document.getElementById('statTidak').textContent         = tidak;
+
+  // Candidate cards
+  var cards = document.getElementById('candidateCards');
+  cards.innerHTML = merged.map(function(r, i) {
+    var rank     = i + 1;
+    var rankCls  = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+    var rec      = r.recommendation.toLowerCase();
+    var recKey   = rec.indexOf('tidak') !== -1 ? 'tidak' : rec.indexOf('pertimbangkan') !== -1 ? 'pertimbangkan' : 'panggil';
+    var cardCls  = 'rec-' + recKey;
+    var pillCls  = recKey;
+    var color    = r.score >= 70 ? 'var(--success)' : r.score >= 50 ? 'var(--warning)' : 'var(--danger)';
+    var pillText = r.recommendation || 'N/A';
+    var strengthTags = (r.strengths || []).slice(0, 3).map(function(s) {
+      return '<span class="tag-strength">'+escHtml(s)+'</span>';
+    }).join('');
+    var gapTags = (r.gaps || []).slice(0, 2).map(function(g) {
+      return '<span class="tag-gap">'+escHtml(g)+'</span>';
+    }).join('');
+    var interviewHtml = r.interviewFocus
+      ? '<div class="cand-interview"><strong>Interview focus:</strong> '+escHtml(r.interviewFocus)+'</div>' : '';
+
+    return '<div class="candidate-card ' + cardCls + '">'
+         + '<div class="cand-rank">'
+         + '<div class="rank-num ' + rankCls + '">#' + rank + '</div>'
+         + '<div class="rec-pill ' + pillCls + '">' + escHtml(pillText) + '</div>'
+         + '</div>'
+         + '<div class="cand-info">'
+         + '<div class="cand-name">' + escHtml(r.name) + '</div>'
+         + '<div class="cand-file">' + escHtml(r.fileName) + '</div>'
+         + '<div class="cand-reason">' + escHtml(r.reason) + '</div>'
+         + (strengthTags || gapTags ? '<div class="cand-tags">' + strengthTags + gapTags + '</div>' : '')
+         + interviewHtml
+         + '</div>'
+         + '<div class="cand-score-wrap">'
+         + '<div class="cand-score-circle" style="color:' + color + '">' + r.score + '</div>'
+         + '<div class="cand-score-lbl">Match</div>'
+         + '</div>'
+         + '</div>';
+  }).join('');
+
+  // AI Narrative
+  var narrativeSection = document.getElementById('narrativeSection');
+  if (rankingResult) {
+    if (rankingResult.overall_summary) {
+      var ns = document.getElementById('narrativeSummary');
+      ns.innerHTML = '<h3>📋 Ringkasan Kandidat</h3><p>' + escHtml(rankingResult.overall_summary) + '</p>';
+      ns.style.display = 'block';
+    }
+    if (rankingResult.hiring_notes) {
+      var nn = document.getElementById('narrativeNotes');
+      nn.innerHTML = '<h3>💡 Catatan Rekrutmen</h3><p>' + escHtml(rankingResult.hiring_notes) + '</p>';
+      nn.style.display = 'block';
+    }
+    narrativeSection.style.display = 'block';
+  }
+
+  // Store for export
+  window._screeningMerged = merged;
+
+  document.getElementById('resultsSection').style.display = 'block';
+  setTimeout(function() { document.getElementById('resultsSection').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+}
+
+/* ─── EXPORT EXCEL ─── */
+function exportExcel() {
+  if (!window._screeningMerged || !window._screeningMerged.length) {
+    showError('Tidak ada data untuk di-export.'); return;
+  }
+  var merged     = window._screeningMerged;
+  var targetRole = document.getElementById('targetRole').value || '-';
+  var jd         = document.getElementById('jobDescription').value.trim().substring(0, 200) + '...';
+  var now        = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'});
+  var wb         = XLSX.utils.book_new();
+
+  // ── Sheet 1: Ranking Summary ──
+  var s1 = [
+    ['CV Screener Report', '', '', '', '', '', ''],
+    ['Dibuat oleh', 'Anabhi Dev CV Screener', '', '', '', '', ''],
+    ['Tanggal',     now, '', '', '', '', ''],
+    ['Target Role', targetRole, '', '', '', '', ''],
+    ['Total Kandidat', merged.length, '', '', '', '', ''],
+    [],
+    ['Rank','Nama Kandidat','File','Match Score','Rekomendasi','Alasan','Interview Focus']
+  ];
+  merged.forEach(function(r, i) {
+    s1.push([
+      i + 1,
+      r.name,
+      r.fileName,
+      r.score,
+      r.recommendation,
+      r.reason,
+      r.interviewFocus || '-'
+    ]);
+  });
+  if (rankingResult && rankingResult.overall_summary) {
+    s1.push([]); s1.push(['Ringkasan AI', rankingResult.overall_summary]);
+  }
+  if (rankingResult && rankingResult.hiring_notes) {
+    s1.push(['Catatan Rekrutmen', rankingResult.hiring_notes]);
+  }
+  var ws1 = XLSX.utils.aoa_to_sheet(s1);
+  ws1['!cols'] = [{wch:6},{wch:22},{wch:28},{wch:12},{wch:24},{wch:45},{wch:40}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Ranking Summary');
+
+  // ── Sheet 2: Detail Analysis ──
+  var s2 = [['Nama','File','Match Score','Rekomendasi','Kekuatan','Critical Gaps','Keyword Match','Keyword Missing']];
+  merged.forEach(function(r) {
+    var a = screeningResults.find(function(x){return x.name===r.name;});
+    var analysis = a ? a.analysis : {};
+    s2.push([
+      r.name,
+      r.fileName,
+      r.score,
+      r.recommendation,
+      (r.strengths || []).join('; '),
+      (r.gaps || []).join('; '),
+      (analysis.matched_keywords || []).join(', '),
+      (analysis.missing_keywords || []).join(', ')
+    ]);
+  });
+  var ws2 = XLSX.utils.aoa_to_sheet(s2);
+  ws2['!cols'] = [{wch:22},{wch:28},{wch:12},{wch:24},{wch:40},{wch:35},{wch:35},{wch:35}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Detail Analysis');
+
+  XLSX.writeFile(wb, 'cv-screener-' + now.replace(/\s/g,'-') + '.xlsx');
+}
+
+/* ─── EXPORT PDF ─── */
+function exportPDF() {
+  if (!window._screeningMerged || !window._screeningMerged.length) {
+    showError('Tidak ada data untuk di-export.'); return;
+  }
+  window.print();
+}
+
+/* ─── HELPERS ─── */
+function showError(msg) { var el=document.getElementById('errorBox'); el.textContent='❌ '+msg; el.style.display='block'; }
+function clearError()   { document.getElementById('errorBox').style.display='none'; }
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+/* ─── NAV ACTIVE STATE ─── */
+(function() {
+  var path = window.location.pathname;
+  var page = path.indexOf('screener')  !== -1 ? 'screener'
+           : path.indexOf('salary')    !== -1 ? 'salary'
+           : path.indexOf('career')    !== -1 ? 'career'
+           : path.indexOf('interview') !== -1 ? 'interview'
+           : 'ats';
+  document.querySelectorAll('[data-page]').forEach(function(el) {
+    if (el.getAttribute('data-page') === page) el.classList.add('active');
+  });
+})();
+</script>
+</body>
+</html>
