@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anabhi Dev Studio — Web, Apps & Automation</title>
+  <meta name="description" content="Anabhi Dev Studio — a small but sharp digital studio building websites, automation tools, and AI-powered solutions for global clients." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────── */
+    :root {
+      --navy:        #0A1628;
+      --navy-card:   #112240;
+      --navy-border: #1E3A5F;
+      --white:       #FFFFFF;
+      --off-white:   #F0F4F8;
+      --muted:       #8899AA;
+      --blue:        #3B8BEB;
+      --blue-dark:   #2563EB;
+      --gold:        #C9A84C;
+      --gold-dim:    rgba(201,168,76,0.15);
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --radius:       12px;
+      --radius-sm:    8px;
+      --transition:   0.25s ease;
+    }
+
+    /* ─── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ─── UTILITY ────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section--light { background: var(--off-white); color: var(--navy); }
+    .section--card { background: var(--navy-card); }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .section--light .section-subtitle { color: #4A5568; }
+    .section-header { margin-bottom: 56px; }
+    .section-header--center { text-align: center; }
+    .section-header--center .section-subtitle { margin: 0 auto; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--navy-border);
+      background: var(--navy-card);
+      color: var(--muted);
+    }
+    .badge--live { border-color: #22C55E33; color: #22C55E; background: #22C55E11; }
+    .badge--progress { border-color: #F59E0B33; color: #F59E0B; background: #F59E0B11; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .btn--primary {
+      background: var(--blue);
+      color: var(--white);
+    }
+    .btn--primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn--outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid var(--navy-border);
+    }
+    .btn--outline:hover { border-color: var(--blue); color: var(--blue); }
+    .btn--gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn--gold:hover { background: #d4b05a; transform: translateY(-1px); }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 22, 40, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--navy-border);
+      height: 64px;
+    }
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .navbar__logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar__logo span { color: var(--gold); }
+    .navbar__logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .navbar__nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-item {
+      position: relative;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #A0AEC0;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--white); }
+    .nav-link svg { width: 12px; height: 12px; transition: transform var(--transition); }
+    .nav-item:hover .nav-link svg { transform: rotate(180deg); }
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 220px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .nav-item:hover .dropdown {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    .dropdown a {
+      display: block;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #A0AEC0;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .dropdown a:hover { background: rgba(59,139,235,0.08); color: var(--white); }
+    .dropdown__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      padding: 6px 14px 2px;
+    }
+    .navbar__cta { display: flex; align-items: center; gap: 12px; }
+    .upwork-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #22C55E;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .upwork-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(59,139,235,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero__inner {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+      padding-left: 0;
+    }
+    .hero__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .hero__tag-dot { color: var(--gold); }
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero__headline em {
+      font-style: italic;
+      color: var(--blue);
+    }
+    .hero__sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 440px;
+      margin-bottom: 40px;
+    }
+    .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+    .hero__stats {
+      display: flex;
+      gap: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--navy-border);
+    }
+    .stat-item {}
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+    .stat-number span { color: var(--gold); font-size: 20px; }
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Hero Visual */
+    .hero__visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 24px;
+    }
+    .hero__geo {
+      position: relative;
+      width: 420px;
+      height: 420px;
+    }
+    .geo-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--navy-border);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spin linear infinite;
+    }
+    .geo-ring:nth-child(1) { width: 320px; height: 320px; animation-duration: 24s; border-color: rgba(59,139,235,0.2); }
+    .geo-ring:nth-child(2) { width: 240px; height: 240px; animation-duration: 18s; animation-direction: reverse; border-color: rgba(201,168,76,0.2); }
+    .geo-ring:nth-child(3) { width: 160px; height: 160px; animation-duration: 12s; border-color: rgba(59,139,235,0.15); }
+    @keyframes spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+    .geo-dot {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+    }
+    .geo-ring:nth-child(2) .geo-dot { background: var(--gold); }
+    .geo-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 96px; height: 96px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .geo-center em { color: var(--gold); font-style: normal; }
+    /* floating cards */
+    .hero-card {
+      position: absolute;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .hero-card__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .hero-card__value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--white);
+    }
+    .hero-card--tl { top: 20px; left: -20px; }
+    .hero-card--br { bottom: 40px; right: -10px; }
+    .hero-card--br .hero-card__value { color: var(--gold); }
+    .float-anim { animation: floatY 4s ease-in-out infinite; }
+    .float-anim-r { animation: floatY 5s ease-in-out 1s infinite; }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ─── STATS STRIP ────────────────────────────────── */
+    .stats-strip {
+      background: var(--navy-card);
+      border-top: 1px solid var(--navy-border);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 48px 0;
+    }
+    .stats-strip__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    .stats-strip__item {}
+    .stats-strip__num {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--white);
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 2px;
+    }
+    .stats-strip__num .plus { color: var(--gold); }
+    .stats-strip__label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .stats-strip__divider {
+      width: 1px;
+      background: var(--navy-border);
+      margin: 0 auto;
+    }
+
+    /* ─── ABOUT ──────────────────────────────────────── */
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about__quote {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.65;
+      padding-left: 20px;
+      border-left: 3px solid var(--gold);
+      margin: 28px 0;
+    }
+    .about__links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+    .about__pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .pillar {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: var(--transition);
+    }
+    .pillar:hover { border-left-color: var(--blue); transform: translateX(4px); }
+    .pillar__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .pillar__desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── SERVICES ───────────────────────────────────── */
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at top left, rgba(59,139,235,0.04), transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover {
+      border-color: var(--blue);
+      border-left-color: var(--blue);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .service-card__icon {
+      width: 48px; height: 48px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+    .service-card__title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .service-card__desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .service-card__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border);
+      color: var(--muted);
+    }
+
+    /* ─── PORTFOLIO TABS ─────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--navy-border);
+      padding-bottom: 0;
+    }
+    .tab-btn {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--white); border-bottom-color: var(--gold); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Apps grid */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .app-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all var(--transition);
+    }
+    .app-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .app-card__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .app-card__category {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+    .app-card__name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .app-card__desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* Web projects */
+    .web-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .web-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .web-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
+    .web-card__thumb {
+      height: 160px;
+      background: linear-gradient(135deg, #1E3A5F, #0A1628);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+    .web-card__thumb::before {
+      content: '';
+      position: absolute;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,139,235,0.15), transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .web-card__body { padding: 20px; }
+    .web-card__industry {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .web-card__name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .web-card__desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .web-card__link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap var(--transition);
+    }
+    .web-card:hover .web-card__link { gap: 8px; }
+
+    /* Managed grid */
+    .managed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .managed-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition);
+    }
+    .managed-card:hover { border-color: var(--navy-border); background: #162A47; }
+    .managed-card__name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .managed-card__desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+    .managed-card__link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--blue);
+    }
+
+    /* ─── CASE STUDIES ───────────────────────────────── */
+    .cases__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    .case-card {
+      background: var(--navy);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .case-card__header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--navy-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .case-card__type {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+    .case-card__title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-left: auto;
+    }
+    .case-card__body { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+    .case-block {}
+    .case-block__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .case-block__text { font-size: 13px; color: #CBD5E0; line-height: 1.7; }
+    .case-block__result {
+      font-size: 13px;
+      color: #22C55E;
+      line-height: 1.7;
+      padding: 12px 16px;
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ─── TESTIMONIALS ───────────────────────────────── */
+    .testimonials { background: var(--navy-card); }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testi-card {
+      background: var(--navy);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: var(--transition);
+    }
+    .testi-card:hover { border-color: var(--gold-dim); }
+    .testi-card__quote {
+      font-size: 14px;
+      color: #CBD5E0;
+      line-height: 1.75;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .testi-card__quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--gold);
+      opacity: 0.4;
+      position: absolute;
+      top: -16px;
+      left: -8px;
+    }
+    .testi-card__author { display: flex; flex-direction: column; gap: 4px; }
+    .testi-card__name {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .testi-card__role { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+    /* ─── WHY US ─────────────────────────────────────── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .why-card {
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--navy-border);
+      background: var(--navy-card);
+      transition: var(--transition);
+    }
+    .why-card:hover { border-color: var(--gold); }
+    .why-card__num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .why-card__title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .why-card__desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ─── FAQ ────────────────────────────────────────── */
+    .faq { background: var(--off-white); color: var(--navy); }
+    .faq .section-title em { color: var(--blue-dark); }
+    .faq .eyebrow { color: var(--blue-dark); }
+    .faq-list { display: flex; flex-direction: column; gap: 0; max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid #CBD5E0;
+    }
+    .faq-item:first-child { border-top: 1px solid #CBD5E0; }
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-btn__icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #CBD5E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--blue-dark);
+      transition: var(--transition);
+    }
+    .faq-item.open .faq-btn__icon { background: var(--blue-dark); color: var(--white); border-color: var(--blue-dark); transform: rotate(45deg); }
+    .faq-answer {
+      font-size: 14px;
+      color: #4A5568;
+      line-height: 1.75;
+      padding-bottom: 20px;
+      display: none;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ─── CTA ────────────────────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, #0A1628 0%, #112240 50%, #0A1628 100%);
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 65%);
+      pointer-events: none;
+    }
+    .cta-section__inner { position: relative; text-align: center; }
+    .cta-section__title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cta-section__title em { font-style: italic; color: var(--gold); }
+    .cta-section__sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .cta-section__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .cta-section__upwork {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #22C55E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .cta-section__upwork::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    .footer {
+      background: var(--navy);
+      border-top: 1px solid var(--navy-border);
+      padding: 64px 0 32px;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer__brand-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .footer__brand-name span { color: var(--gold); }
+    .footer__tagline {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .footer__contact { display: flex; flex-direction: column; gap: 8px; }
+    .footer__contact a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer__contact a:hover { color: var(--white); }
+    .footer__col-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .footer__links { display: flex; flex-direction: column; gap: 10px; }
+    .footer__links a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .footer__links a:hover { color: var(--white); }
+    .footer__bottom {
+      border-top: 1px solid var(--navy-border);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer__copy { font-size: 12px; color: var(--muted); }
+    .footer__copy em { color: var(--gold); font-style: normal; }
+    .footer__social { display: flex; gap: 12px; }
+    .social-link {
+      width: 34px; height: 34px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--navy-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+    .social-link:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MOBILE MENU ────────────────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger span {
+      width: 22px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--navy-card);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 20px 24px;
+      z-index: 99;
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a {
+      display: block;
+      padding: 12px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      border-bottom: 1px solid var(--navy-border);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--white); }
+    .mobile-nav a:last-child { border-bottom: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero__inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero__visual { display: none; }
+      .about__inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+      .navbar__nav { display: none; }
+      .navbar__cta .btn--primary { display: none; }
+      .upwork-badge { display: none; }
+      .hamburger { display: flex; }
+      .services__grid { grid-template-columns: 1fr; }
+      .apps-grid { grid-template-columns: 1fr 1fr; }
+      .web-grid { grid-template-columns: 1fr; }
+      .managed-grid { grid-template-columns: 1fr; }
+      .cases__grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .stats-strip__inner { grid-template-columns: repeat(2, 1fr); }
+      .footer__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .apps-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .hero__stats { gap: 24px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ░░ NAVBAR ░░ -->
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="#hero" class="navbar__logo">
+        <div class="navbar__logo-dot"></div>
+        Anabhi Dev <span>Studio</span>
+      </a>
+      <ul class="navbar__nav">
+        <li class="nav-item">
+          <a href="#about" class="nav-link">About</a>
+        </li>
+        <li class="nav-item">
+          <span class="nav-link">
+            Services
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </span>
+          <div class="dropdown">
+            <div class="dropdown__label">What we build</div>
+            <a href="#services">Web Development</a>
+            <a href="#services">Automation & Apps</a>
+            <a href="#services">AI-Powered Solutions</a>
+            <a href="#services">IT Management</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <span class="nav-link">
+            Portfolio
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </span>
+          <div class="dropdown">
+            <div class="dropdown__label">Our work</div>
+            <a href="#portfolio">Apps & Tools</a>
+            <a href="#portfolio">Web Projects</a>
+            <a href="#cases">Case Studies</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#why" class="nav-link">Why Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="#faq" class="nav-link">FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <div class="navbar__cta">
+        <a href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank" class="upwork-badge">Verified on Upwork</a>
+        <a href="#contact" class="btn btn--primary">Get a Quote</a>
+        <button class="hamburger" onclick="document.querySelector('.mobile-nav').classList.toggle('open')">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav">
+  <a href="#about" onclick="this.closest('.mobile-nav').classList.remove('open')">About</a>
+  <a href="#services" onclick="this.closest('.mobile-nav').classList.remove('open')">Services</a>
+  <a href="#portfolio" onclick="this.closest('.mobile-nav').classList.remove('open')">Portfolio</a>
+  <a href="#cases" onclick="this.closest('.mobile-nav').classList.remove('open')">Case Studies</a>
+  <a href="#why" onclick="this.closest('.mobile-nav').classList.remove('open')">Why Us</a>
+  <a href="#faq" onclick="this.closest('.mobile-nav').classList.remove('open')">FAQ</a>
+  <a href="#contact" onclick="this.closest('.mobile-nav').classList.remove('open')">Contact</a>
+</div>
+
+<!-- ░░ HERO ░░ -->
+<section id="hero" class="hero">
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__content">
+        <div class="hero__tag">
+          <span class="hero__tag-dot">◆</span>
+          Web · Apps · Automation · AI
+        </div>
+        <h1 class="hero__headline">
+          Small studio.<br>
+          <em>Sharp results.</em>
+        </h1>
+        <p class="hero__sub">
+          Anabhi Dev Studio builds websites, automation tools, and AI-powered solutions for global clients — with the focus of a freelancer and the quality of a studio.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary">Start a Project</a>
+          <a href="#portfolio" class="btn btn--outline">View Our Work</a>
+        </div>
+        <div class="hero__stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="33">0<span>+</span></div>
+            <div class="stat-label">Apps Built</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="100">0<span>%</span></div>
+            <div class="stat-label">AI-Assisted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="3">0<span></span></div>
+            <div class="stat-label">Web Projects Live</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__geo">
+          <div class="geo-ring"><div class="geo-dot"></div></div>
+          <div class="geo-ring"><div class="geo-dot"></div></div>
+          <div class="geo-ring"></div>
+          <div class="geo-center">Anabhi<br><em>Studio</em></div>
+        </div>
+        <div class="hero-card hero-card--tl float-anim">
+          <div class="hero-card__label">Status</div>
+          <div class="hero-card__value">✓ Open for Projects</div>
+        </div>
+        <div class="hero-card hero-card--br float-anim-r">
+          <div class="hero-card__label">Upwork</div>
+          <div class="hero-card__value">✓ Verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ STATS STRIP ░░ -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-strip__inner">
+      <div class="stats-strip__item reveal">
+        <div class="stats-strip__num"><span class="count" data-target="33">0</span><span class="plus">+</span></div>
+        <div class="stats-strip__label">Apps & Tools Built</div>
+      </div>
+      <div class="stats-strip__item reveal">
+        <div class="stats-strip__num"><span class="count" data-target="3">0</span><span class="plus">+</span></div>
+        <div class="stats-strip__label">Websites Delivered</div>
+      </div>
+      <div class="stats-strip__item reveal">
+        <div class="stats-strip__num"><span class="count" data-target="6">0</span><span class="plus">+</span></div>
+        <div class="stats-strip__label">Clients & Brands</div>
+      </div>
+      <div class="stats-strip__item reveal">
+        <div class="stats-strip__num"><span class="count" data-target="100">0</span><span class="plus">%</span></div>
+        <div class="stats-strip__label">AI-Assisted Delivery</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ ABOUT ░░ -->
+<section id="about" class="section section--light">
+  <div class="container">
+    <div class="about__inner">
+      <div class="reveal">
+        <p class="eyebrow" style="color:var(--blue-dark)">About the Studio</p>
+        <h2 class="section-title" style="color:var(--navy)">What is<br><em style="color:var(--blue-dark)">Anabhi Dev Studio?</em></h2>
+        <p style="font-size:15px;color:#4A5568;line-height:1.75;margin-bottom:16px;">
+          Anabhi Dev Studio is a one-person digital studio accepting client work globally — from web development to automation and AI-powered tools. Built by a Bali-based IT professional with years of hands-on experience in hospitality tech and software development.
+        </p>
+        <p style="font-size:15px;color:#4A5568;line-height:1.75;">
+          Unlike large agencies, you get direct communication with the person building your product — no account managers, no handoffs, no bloat.
+        </p>
+        <div class="about__quote" style="color:#4A5568;border-left-color:var(--blue-dark)">
+          "Technology is not just about doing more. It's about creating systems that give you back time to live better."
+        </div>
+        <div class="about__links">
+          <a href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank" class="btn" style="font-size:13px;padding:10px 18px;border:1.5px solid #CBD5E0;color:var(--navy);background:transparent;">✓ Verified on Upwork</a>
+          <a href="https://linkedin.com/in/I-Gede-Agus-Wibawa" target="_blank" class="btn" style="font-size:13px;padding:10px 18px;border:1.5px solid #CBD5E0;color:var(--navy);background:transparent;">💼 LinkedIn</a>
+        </div>
+      </div>
+      <div class="about__pillars reveal">
+        <div class="pillar" style="background:#fff;border-color:#E2E8F0;border-left-color:var(--blue-dark);">
+          <div class="pillar__title" style="color:var(--navy)">All Built with AI</div>
+          <div class="pillar__desc" style="color:#4A5568">Every project is crafted with AI assistance — making complex automation accessible and fast to deliver.</div>
+        </div>
+        <div class="pillar" style="background:#fff;border-color:#E2E8F0;border-left-color:var(--blue-dark);">
+          <div class="pillar__title" style="color:var(--navy)">Real Problems, Real Solutions</div>
+          <div class="pillar__desc" style="color:#4A5568">From Telegram bots to full web platforms — every build starts from an actual business need.</div>
+        </div>
+        <div class="pillar" style="background:#fff;border-color:#E2E8F0;border-left-color:var(--blue-dark);">
+          <div class="pillar__title" style="color:var(--navy)">Direct & Transparent</div>
+          <div class="pillar__desc" style="color:#4A5568">You work directly with the builder. Clear timelines, clear pricing, no surprises.</div>
+        </div>
+        <div class="pillar" style="background:#fff;border-color:#E2E8F0;border-left-color:var(--blue-dark);">
+          <div class="pillar__title" style="color:var(--navy)">Global-Ready</div>
+          <div class="pillar__desc" style="color:#4A5568">Verified freelancer on Upwork, serving clients across hospitality, F&B, and professional services worldwide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ SERVICES ░░ -->
+<section id="services" class="section" style="background:var(--navy);">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow">What We Do</p>
+      <h2 class="section-title">Four Services.<br><em>One Studio.</em></h2>
+      <p class="section-subtitle">From a landing page to a full automation system — we handle it end-to-end.</p>
+    </div>
+    <div class="services__grid reveal">
+      <div class="service-card">
+        <div class="service-card__icon">🌐</div>
+        <h3 class="service-card__title">Web Development</h3>
+        <p class="service-card__desc">Full-stack web builds from concept to launch. Clean code, fast loading, mobile-first — for hospitality, F&B, and professional services brands.</p>
+        <div class="service-card__tags">
+          <span class="tag">HTML / CSS / JS</span>
+          <span class="tag">Netlify</span>
+          <span class="tag">Cloudflare</span>
+          <span class="tag">Supabase</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon">⚡</div>
+        <h3 class="service-card__title">Automation & Apps</h3>
+        <p class="service-card__desc">Custom automation tools that eliminate repetitive tasks — from Telegram bots and Google Sheets pipelines to full internal web apps.</p>
+        <div class="service-card__tags">
+          <span class="tag">Google Apps Script</span>
+          <span class="tag">Telegram Bot API</span>
+          <span class="tag">n8n</span>
+          <span class="tag">Zapier</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon">🤖</div>
+        <h3 class="service-card__title">AI-Powered Solutions</h3>
+        <p class="service-card__desc">Integrate AI into your workflows — from smart chatbots and content tools to AI-assisted dashboards that make data actually useful.</p>
+        <div class="service-card__tags">
+          <span class="tag">Gemini API</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">RAG</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon">🛠</div>
+        <h3 class="service-card__title">IT Management</h3>
+        <p class="service-card__desc">Ongoing website maintenance, updates, and IT management for brands that need a reliable technical partner — not a one-time fix.</p>
+        <div class="service-card__tags">
+          <span class="tag">Site Maintenance</span>
+          <span class="tag">Domain & DNS</span>
+          <span class="tag">Performance</span>
+          <span class="tag">Security</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ PORTFOLIO ░░ -->
+<section id="portfolio" class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow" style="color:var(--blue-dark)">Portfolio</p>
+      <h2 class="section-title" style="color:var(--navy)">Work We're<br><em style="color:var(--blue-dark)">Proud Of</em></h2>
+      <p class="section-subtitle" style="color:#4A5568">A growing collection of apps, websites, and tools — each solving a real problem.</p>
+    </div>
+
+    <div class="tabs reveal" style="border-bottom-color:#CBD5E0">
+      <button class="tab-btn active" onclick="switchTab(event,'apps')" style="color:#4A5568">Apps & Tools</button>
+      <button class="tab-btn" onclick="switchTab(event,'web')" style="color:#4A5568">Web Projects</button>
+      <button class="tab-btn" onclick="switchTab(event,'managed')" style="color:#4A5568">Sites We Manage</button>
+    </div>
+
+    <!-- Tab: Apps -->
+    <div class="tab-panel active" id="tab-apps">
+      <div class="apps-grid">
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">AI Writing</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">PostCraft</div>
+          <div class="app-card__desc">Turn raw ideas into polished LinkedIn posts — powered by AI, delivered in seconds.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Automation</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">WeatherAlert</div>
+          <div class="app-card__desc">Real-time weather intelligence, delivered to your Telegram before your day begins.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Automation</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">BaliCalBot</div>
+          <div class="app-card__desc">Bali's traditional calendar — automated and sent to your Telegram daily.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Automation</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">SpinGather</div>
+          <div class="app-card__desc">Custom spin-wheel for prize draws — auto-logs winners and sends Telegram notifications.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Dashboard</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">IT Realtime Dashboard</div>
+          <div class="app-card__desc">Live data from Office365, Calendar, ClickUp — all in one command center.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Parenting Tech</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">QuizDaily</div>
+          <div class="app-card__desc">Kids earn screen time by acing daily quizzes — results sent straight to parents.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Infrastructure</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">Mikrotik Monitor</div>
+          <div class="app-card__desc">Full visibility over your Mikrotik network — nodes, traffic, and functions monitored live.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">AI & Health</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">NutriBot</div>
+          <div class="app-card__desc">Chat with AI about any food or drink — get instant nutrition insights powered by Gemini.</div>
+        </div>
+        <div class="app-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="app-card__top">
+            <span class="app-card__category">Finance Ops</span>
+            <span class="badge badge--live">● Live</span>
+          </div>
+          <div class="app-card__name" style="color:var(--navy)">AdminFlow Task</div>
+          <div class="app-card__desc">Log daily admin tasks, assign follow-ups, keep the team accountable — built for real ops.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Web -->
+    <div class="tab-panel" id="tab-web">
+      <div class="web-grid">
+        <div class="web-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="web-card__thumb">INNerpeace Bali</div>
+          <div class="web-card__body">
+            <div class="web-card__industry">Hospitality</div>
+            <div class="web-card__name" style="color:var(--navy)">INNerpeace Bali</div>
+            <div class="web-card__desc">Private ricefield villas & monthly residence in Gianyar — bilingual site with booking info and gallery.</div>
+            <a href="https://www.innerpeacebali.com" target="_blank" class="web-card__link">Visit site →</a>
+          </div>
+        </div>
+        <div class="web-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="web-card__thumb">Delanswit</div>
+          <div class="web-card__body">
+            <div class="web-card__industry">F&B / Gifting</div>
+            <div class="web-card__name" style="color:var(--navy)">Delanswit</div>
+            <div class="web-card__desc">Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.</div>
+            <a href="https://delanswit.netlify.app" target="_blank" class="web-card__link">Visit site →</a>
+          </div>
+        </div>
+        <div class="web-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="web-card__thumb">Anabhi Dev</div>
+          <div class="web-card__body">
+            <div class="web-card__industry">Personal Brand</div>
+            <div class="web-card__name" style="color:var(--navy)">Anabhi Dev</div>
+            <div class="web-card__desc">Personal portfolio — apps showcase, case studies, and full SEO/structured-data setup.</div>
+            <a href="https://www.anabhidev.com" target="_blank" class="web-card__link">Visit site →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Managed -->
+    <div class="tab-panel" id="tab-managed">
+      <div class="managed-grid">
+        <div class="managed-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="managed-card__name" style="color:var(--navy)">Jagadita</div>
+          <div class="managed-card__desc">Hospitality Consulting — ongoing IT & website management.</div>
+          <a href="https://www.jagadita.com" target="_blank" class="managed-card__link">jagadita.com →</a>
+        </div>
+        <div class="managed-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="managed-card__name" style="color:var(--navy)">Mahadaya Partners</div>
+          <div class="managed-card__desc">Public Policy, Legal & Political Consulting — IT & website management.</div>
+          <a href="https://www.mahadayapartners.com" target="_blank" class="managed-card__link">mahadayapartners.com →</a>
+        </div>
+        <div class="managed-card reveal" style="background:#fff;border-color:#E2E8F0;">
+          <div class="managed-card__name" style="color:var(--navy)">Patra Legal Consultant</div>
+          <div class="managed-card__desc">Corporate Legal & HR Consulting — IT & website management.</div>
+          <a href="https://patralegalconsultant.com" target="_blank" class="managed-card__link">patralegalconsultant.com →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ CASE STUDIES ░░ -->
+<section id="cases" class="section" style="background:var(--navy-card);">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow">Proven Results</p>
+      <h2 class="section-title">From Problem<br><em>to Solution</em></h2>
+      <p class="section-subtitle">Real problems. Real builds. Real outcomes.</p>
+    </div>
+    <div class="cases__grid reveal">
+      <div class="case-card">
+        <div class="case-card__header">
+          <span class="case-card__type">Automation</span>
+          <span class="case-card__title">SpinGather</span>
+        </div>
+        <div class="case-card__body">
+          <div class="case-block">
+            <div class="case-block__label">PROBLEM</div>
+            <div class="case-block__text">HR teams used generic tools like Wheel of Names and had to manually track every winner — slow, error-prone for 100+ person gatherings.</div>
+          </div>
+          <div class="case-block">
+            <div class="case-block__label">SOLUTION</div>
+            <div class="case-block__text">A custom spin-wheel app that auto-confirms each winner, logs to Google Sheets, and sends Telegram notifications — zero manual tracking.</div>
+          </div>
+          <div class="case-block">
+            <div class="case-block__label">RESULT</div>
+            <div class="case-block__result">✓ Used for a 110-person gathering — HR walked away with a complete winner list and zero post-event reconciliation.</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card__header">
+          <span class="case-card__type">Education</span>
+          <span class="case-card__title">Custom LMS</span>
+        </div>
+        <div class="case-card__body">
+          <div class="case-block">
+            <div class="case-block__label">PROBLEM</div>
+            <div class="case-block__text">Off-the-shelf LMS platforms were either a poor fit or came with steep monthly subscription costs that didn't scale for internal training.</div>
+          </div>
+          <div class="case-block">
+            <div class="case-block__label">SOLUTION</div>
+            <div class="case-block__text">A custom LMS built from scratch — including offline attendance forms — tailored exactly to how the company trains its staff.</div>
+          </div>
+          <div class="case-block">
+            <div class="case-block__label">RESULT</div>
+            <div class="case-block__result">✓ Reduced reliance on in-person sessions — staff complete modules at their own pace with auto-issued certificates.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ TESTIMONIALS ░░ -->
+<section id="testimonials" class="section section--light">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <p class="eyebrow" style="color:var(--blue-dark)">Recommendations</p>
+      <h2 class="section-title" style="color:var(--navy)">What People <em style="color:var(--blue-dark)">Say</em></h2>
+      <p class="section-subtitle" style="color:#4A5568">Real words from colleagues and clients over the years.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">Wibawa is a DIAMOND — attracts and delivers excellent work results from any assignment. The best man to get any solution for IT.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Dede Ari Mahendra</div>
+          <div class="testi-card__role">Graphic Designer / Art Director</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">Efficient and quick to action. I have seen him solve many IT issues, always with a smile — no matter how big or small those issues were.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Natalie Cadell</div>
+          <div class="testi-card__role">General Manager, Hospitality</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">He set up all our hardware and software system configuration, interfacing and security — in a timely manner and beyond my expectation.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Viveka</div>
+          <div class="testi-card__role">Hotel Business Expert Advisor</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">The best IT man in the world. Good job and good man.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Dewa Ketut Widiarta</div>
+          <div class="testi-card__role">Director of Security, The Apurva Kempinski Bali</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">Agus has the passion to learn anything and upgrade his skill in IT Hospitality — a good example of what IT Hospitality should be.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Armika Jaya</div>
+          <div class="testi-card__role">Director of IT, Potato Head Family</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="background:#fff;border-color:#E2E8F0;">
+        <div class="testi-card__quote" style="color:#4A5568">Very professional as a working partner. Really recommended for next level position — a pleasure to have worked together.</div>
+        <div class="testi-card__author">
+          <div class="testi-card__name" style="color:var(--navy)">Putu Yudhi</div>
+          <div class="testi-card__role">Hospitality Professional</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ WHY US ░░ -->
+<section id="why" class="section" style="background:var(--navy);">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <p class="eyebrow">Why Anabhi Dev Studio</p>
+      <h2 class="section-title">Built Different. <em>By Design.</em></h2>
+      <p class="section-subtitle">Everything here is built with purpose — not to impress, but to genuinely make things work.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-card__num">01</div>
+        <div class="why-card__title">Real Use Cases</div>
+        <div class="why-card__desc">Every tool is born from a real problem — not a theoretical one. If it doesn't help in daily operations, it doesn't ship.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__num">02</div>
+        <div class="why-card__title">AI-Powered Speed</div>
+        <div class="why-card__desc">Built with AI assistance from day one — faster development cycles and smarter solutions at every step.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__num">03</div>
+        <div class="why-card__title">Automation First</div>
+        <div class="why-card__desc">If a task is done more than twice, it gets automated. That's the philosophy behind every product we build.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__num">04</div>
+        <div class="why-card__title">Direct Communication</div>
+        <div class="why-card__desc">No account managers. No handoffs. You talk directly with the builder — fast responses, clear decisions.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__num">05</div>
+        <div class="why-card__title">Built to Last</div>
+        <div class="why-card__desc">Each project is maintained and improved over time — not abandoned after launch. Long-term thinking, always.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__num">06</div>
+        <div class="why-card__title">Simple by Default</div>
+        <div class="why-card__desc">Complexity is hidden, simplicity is shown. Tools that anyone can use — no manual required.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FAQ ░░ -->
+<section id="faq" class="section section--light faq">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title" style="color:var(--navy)">Common <em>Questions</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          What services does Anabhi Dev Studio offer?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">We offer four core services: Web Development (full-stack websites), Automation & Apps (custom tools and bots), AI-Powered Solutions (AI integrations and chatbots), and IT Management (ongoing website and IT support).</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          How is a small studio different from a large agency?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">You get direct communication with the person building your product — no account managers, no internal handoffs. This means faster responses, clearer decisions, and a builder who is personally invested in the outcome.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Are you available for global clients?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">Yes. Anabhi Dev Studio is Upwork-verified and has worked with international clients. We operate fully remotely and accommodate different time zones for communication and delivery.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          What technologies do you work with?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">Web: HTML/CSS/JS, deployed on Netlify, Cloudflare Pages, and Railway. Backend: Supabase, Google Apps Script, Node.js. Automation: Telegram Bot API, n8n, Google Workspace. AI: OpenAI, Gemini API, Claude API.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          How do I start a project?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">Simply reach out via WhatsApp or email — or find us on Upwork. We'll have a quick discovery conversation to understand your needs, then provide a clear scope and timeline before anything starts.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Do you offer ongoing maintenance after delivery?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">Yes. For web projects, we offer ongoing IT management — keeping your site updated, secure, and running smoothly. We currently manage 3+ client websites under this arrangement.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Can the automation tools be customized for my business?
+          <span class="faq-btn__icon">+</span>
+        </button>
+        <div class="faq-answer">Absolutely. Every automation tool is built from scratch for the specific use case — we don't repurpose generic templates. The goal is a solution that fits your workflow exactly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ CTA ░░ -->
+<section id="contact" class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <p class="eyebrow" style="justify-content:center;display:flex;">Let's Work Together</p>
+      <h2 class="cta-section__title">Have a project<br>to <em>build?</em></h2>
+      <p class="cta-section__sub">Got a website to launch, a task to automate, or an idea that needs AI? Let's talk — we might already have something, or we'll build it right.</p>
+      <div class="cta-section__actions">
+        <a href="https://wa.me/6282267672828" target="_blank" class="btn btn--gold">💬 WhatsApp Us</a>
+        <a href="mailto:hello@anabhidev.com" class="btn btn--outline">✉️ Send an Email</a>
+        <a href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank" class="btn btn--outline">Hire on Upwork</a>
+      </div>
+      <div class="cta-section__upwork">✓ Verified Freelancer on Upwork · hello@anabhidev.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">Anabhi Dev <span>Studio</span></div>
+        <div class="footer__tagline">Web · Apps · Automation · AI</div>
+        <div class="footer__contact">
+          <a href="https://wa.me/6282267672828" target="_blank">💬 wa.me/6282267672828</a>
+          <a href="mailto:hello@anabhidev.com">✉️ hello@anabhidev.com</a>
+          <a href="https://linkedin.com/in/I-Gede-Agus-Wibawa" target="_blank">💼 LinkedIn</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <div class="footer__links">
+          <a href="#services">Web Development</a>
+          <a href="#services">Automation & Apps</a>
+          <a href="#services">AI Solutions</a>
+          <a href="#services">IT Management</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Portfolio</div>
+        <div class="footer__links">
+          <a href="#portfolio">Apps & Tools</a>
+          <a href="#portfolio">Web Projects</a>
+          <a href="#portfolio">Sites We Manage</a>
+          <a href="#cases">Case Studies</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Company</div>
+        <div class="footer__links">
+          <a href="#about">About Studio</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#why">Why Us</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://www.anabhidev.com" target="_blank">Personal Site →</a>
+          <a href="https://www.upwork.com/freelancers/~0136fce6d3c8c30f3c" target="_blank">Upwork Profile →</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__copy">© 2026 <em>Anabhi Dev Studio</em>. All rights reserved. Built with AI.</div>
+      <div class="footer__social">
+        <a href="https://wa.me/6282267672828" target="_blank" class="social-link" title="WhatsApp">💬</a>
+        <a href="mailto:hello@anabhidev.com" class="social-link" title="Email">✉️</a>
+        <a href="https://linkedin.com/in/I-Gede-Agus-Wibawa" target="_blank" class="social-link" title="LinkedIn">💼</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ░░ SCRIPTS ░░ -->
+<script>
+  // Tab switcher
+  function switchTab(e, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Animated counter
+  function animateCount(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 1500;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.floor(current);
+    }, 16);
+  }
+  const countEls = document.querySelectorAll('.count');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        countObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  countEls.forEach(el => countObserver.observe(el));
+
+  // Hero stat counters
+  const heroStats = document.querySelectorAll('.stat-number[data-target]');
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const suffix = el.querySelector('span');
+        const suffixText = suffix ? suffix.textContent : '';
+        if (suffix) suffix.remove();
+        let current = 0;
+        const step = target / (1200 / 16);
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent = Math.floor(current);
+          if (suffix) {
+            const s = document.createElement('span');
+            s.textContent = suffixText;
+            el.appendChild(s);
+          }
+        }, 16);
+        heroObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  heroStats.forEach(el => heroObserver.observe(el));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
