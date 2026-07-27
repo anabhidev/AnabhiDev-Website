@@ -150,12 +150,95 @@ footer span{color:var(--blue);}
 @media(max-width:580px){ .page-hero h2{font-size:1.25rem;} .page-hero p{font-size:0.82rem;} }
 
 @media(max-width:640px){footer{padding-bottom:86px;}}
+
+/* ── REDESIGN: InterviewEdge Style ── */
+/* Body: light default, dark via toggle */
+body { background: #F5F6FA !important; }
+body.dark { background: #0D1B2A !important; }
+
+/* Header: redesigned */
+header {
+  background: #0F1C3F !important;
+  padding: 0 28px !important;
+  height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-bottom: none !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.hdr-text, .hdr-left { display: none !important; }
+.hdr-right { position: absolute; right: 28px; display: flex; align-items: center; }
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon-box {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, #3D5AF1 0%, #6B82F5 100%);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+.logo-name-box { display: flex; flex-direction: column; align-items: flex-start; }
+.logo-name-text { font-size: 1rem; font-weight: 700; color: #FFFFFF; line-height: 1.2; }
+.logo-tagline-text { font-size: 0.67rem; color: rgba(255,255,255,0.52); margin-top: 1px; }
+
+/* Hero: dark navy section outside main */
+.hero-section {
+  background: #0F1C3F;
+  padding: 52px 24px 68px;
+  text-align: center;
+}
+.hero-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.hero-section p {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.62);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+@media(max-width:580px){
+  .hero-section h2 { font-size: 1.4rem; }
+  .hero-section p  { font-size: 0.83rem; }
+  header { padding: 0 14px !important; }
+  .hdr-right { right: 14px; }
+}
+
+/* Hide old page-hero (replaced by hero-section outside main) */
+.page-hero { display: none !important; }
+
+/* Main: top padding reduced since hero is outside */
+main { padding-top: 20px !important; }
+
+/* Footer text: dark in light mode, white in dark mode */
+.footer-copy { color: #64748B; }
+body.dark .footer-copy { color: #FFFFFF; }
+.footer-brand { color: #0082CC; }
+body.dark .footer-brand { color: #7DC9FF; }
+
 </style>
 </head>
 <body>
 
 <header>
-  <div class="hdr-text"><h1>Career Path Advisor</h1><p>ANABHI CAREER SUITE</p></div>
+  <div class="header-center">
+    <div class="logo-icon-box">🗺️</div>
+    <div class="logo-name-box">
+      <span class="logo-name-text">Career Path Advisor</span>
+      <span class="logo-tagline-text">Less anxiety, more confidence.</span>
+    </div>
+  </div>
   <div class="hdr-right">
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
   </div>
@@ -176,11 +259,12 @@ footer span{color:var(--blue);}
   <a class="bnav-item" data-page="interview" href="/Career-Suite/interview.html"><span class="bnav-icon">🎤</span><span class="bnav-label">Interview</span></a>
 </nav>
 
-<main>
-<div class="page-hero">
+<section class="hero-section">
   <h2>Plan Your Next 5 Years</h2>
   <p>Get a personalized career roadmap with 3 distinct paths — Technical, Managerial, and Entrepreneurial.</p>
-</div>
+</section>
+<main>
+
 
 
   <div class="card">
@@ -288,7 +372,7 @@ PENGALAMAN: Software Engineer 4 tahun di PT ABC
   <img src="https://anabhidev.com/assets/logo-anabhidev.webp" alt="Anabhi Dev"
        style="height:40px;opacity:0.65;display:block;margin:0 auto 8px;"
        onerror="this.style.display='none'">
-  <span style="color:#FFFFFF;">© 2025 Career Suite · Powered by </span><span style="color:#7DC9FF;">Anabhi Dev</span>
+  <span class="footer-copy">© 2026 Career Suite · Powered by </span><span class="footer-brand">Anabhi Dev</span>
 </footer>
 
 <script>
