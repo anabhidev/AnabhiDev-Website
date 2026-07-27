@@ -147,74 +147,105 @@ footer span{color:var(--blue);}
 @media(max-width:580px){ .page-hero h2{font-size:1.25rem;} .page-hero p{font-size:0.82rem;} }
 @media(max-width:640px){footer{padding-bottom:86px;}}
 
-/* ── REDESIGN: InterviewEdge Style ── */
-/* Body: light default, dark via toggle */
+/* ── REDESIGN v2: Match InterviewEdge style exactly ── */
+
+/* Body: LIGHT default */
 body { background: #F5F6FA !important; }
 body.dark { background: #0D1B2A !important; }
 
-/* Header: redesigned */
+/* ── HEADER: logo kiri, toggle kanan ── */
 header {
   background: #0F1C3F !important;
-  padding: 0 28px !important;
+  padding: 0 24px !important;
   height: 60px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  border-bottom: none !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
   position: sticky;
   top: 0;
   z-index: 100;
 }
-.hdr-text, .hdr-left { display: none !important; }
-.hdr-right { position: absolute; right: 28px; display: flex; align-items: center; }
-.header-center {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.logo-icon-box {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, #3D5AF1 0%, #6B82F5 100%);
-  border-radius: 10px;
+/* Hide old header children */
+.hdr-text, .hdr-left, .hdr-right { display: none !important; }
+/* New header children */
+.hdr-logo { display: flex; align-items: center; gap: 10px; }
+.hdr-logo-icon {
+  width: 32px; height: 32px;
+  background: #3D5AF1;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.15rem;
+  font-size: 16px;
   flex-shrink: 0;
 }
-.logo-name-box { display: flex; flex-direction: column; align-items: flex-start; }
-.logo-name-text { font-size: 1rem; font-weight: 700; color: #FFFFFF; line-height: 1.2; }
-.logo-tagline-text { font-size: 0.67rem; color: rgba(255,255,255,0.52); margin-top: 1px; }
+.hdr-logo-text {
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  font-size: 17px; font-weight: 700;
+  color: #FFFFFF; letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+.hdr-logo-tagline {
+  font-size: 10px;
+  color: rgba(255,255,255,0.52);
+  letter-spacing: 0.4px;
+  margin-top: 1px;
+}
+.hdr-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.hdr-toggle:hover { border-color: #FFFFFF; opacity: 0.8; }
 
-/* Hero: dark navy section outside main */
+/* ── HERO: sama persis interview.html ── */
 .hero-section {
-  background: #0F1C3F;
-  padding: 52px 24px 68px;
+  background: linear-gradient(135deg, #0F1C3F 0%, #1A2E5A 100%);
+  padding: 56px 24px 48px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(61,90,241,0.25) 0%, transparent 70%);
+  pointer-events: none;
 }
 .hero-section h2 {
-  font-size: 2rem;
-  font-weight: 800;
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 5vw, 38px);
+  font-weight: 700;
   color: #FFFFFF;
-  line-height: 1.3;
-  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  position: relative;
+  margin: 0 0 12px 0;
 }
 .hero-section p {
-  font-size: 0.92rem;
-  color: rgba(255,255,255,0.62);
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.65;
+  color: #A8B4CC;
+  font-size: 15px;
+  position: relative;
+  margin: 0;
 }
 @media(max-width:580px){
-  .hero-section h2 { font-size: 1.4rem; }
-  .hero-section p  { font-size: 0.83rem; }
-  header { padding: 0 14px !important; }
-  .hdr-right { right: 14px; }
+  .hero-section { padding: 40px 16px 32px; }
+  .hero-section h2 { font-size: clamp(22px, 6vw, 30px); }
 }
 
-/* Hide old page-hero (replaced by hero-section outside main) */
+/* Hide old page-hero */
 .page-hero { display: none !important; }
 
-/* Main: top padding reduced since hero is outside */
+/* Main padding */
 main { padding-top: 20px !important; }
 
 /* Footer text: dark in light mode, white in dark mode */
@@ -228,16 +259,14 @@ body.dark .footer-brand { color: #7DC9FF; }
 <body>
 
 <header>
-  <div class="header-center">
-    <div class="logo-icon-box">💰</div>
-    <div class="logo-name-box">
-      <span class="logo-name-text">Salary Estimator</span>
-      <span class="logo-tagline-text">Less anxiety, more confidence.</span>
+  <div class="hdr-logo">
+    <div class="hdr-logo-icon">💰</div>
+    <div>
+      <div class="hdr-logo-text">Salary Estimator</div>
+      <div class="hdr-logo-tagline">Less anxiety, more confidence.</div>
     </div>
   </div>
-  <div class="hdr-right">
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
-  </div>
+  <button class="hdr-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
 </header>
 
 <nav class="app-nav">
@@ -257,10 +286,9 @@ body.dark .footer-brand { color: #7DC9FF; }
 
 <section class="hero-section">
   <h2>Know Your Market Value</h2>
-  <p>Get a realistic salary estimate based on your role, experience, and location — instantly.</p>
+  <p>Less anxiety, more confidence.</p>
 </section>
 <main>
-
 
 
   <div class="card">

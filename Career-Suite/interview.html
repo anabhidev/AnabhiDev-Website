@@ -506,11 +506,39 @@
 .bnav-icon{font-size:1.15rem;}.bnav-label{font-size:0.6rem;font-weight:600;letter-spacing:0.02em;}
 @media(max-width:640px){.app-nav{display:none;}.bottom-nav{display:flex;} main{padding-bottom:80px!important;}}
   
-/* Footer text color: dark in light mode, white in dark mode */
-.footer-copy-ie { color: #4A5568; }
-body.dark-mode .footer-copy-ie { color: #FFFFFF; }
+/* ── DARK MODE for InterviewEdge ── */
+body.dark { background: #0A1628 !important; }
+body.dark .input-card,
+body.dark .result-section,
+body.dark .result-card,
+body.dark .checklist-item,
+body.dark .badge-row { background: #0F1C3F; border-color: rgba(61,90,241,0.2); }
+body.dark .input-card input,
+body.dark .input-card textarea { background: #0A1628; color: #FFFFFF; border-color: rgba(61,90,241,0.25); }
+body.dark label,
+body.dark .cv-toggle-label { color: #E2E8F0; }
+body.dark .cv-toggle-sub { color: #A8B4CC; }
+
+/* ── HDR TOGGLE button (same as other pages) ── */
+.hdr-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.hdr-toggle:hover { border-color: #FFFFFF; opacity: 0.8; }
+
+
+.footer-copy-ie { color: #64748B; }
+body.dark .footer-copy-ie { color: #FFFFFF; }
 .footer-brand-ie { color: #0082CC; }
-body.dark-mode .footer-brand-ie { color: #7DC9FF; }
+body.dark .footer-brand-ie { color: #7DC9FF; }
 
 </style>
 </head>
@@ -525,6 +553,7 @@ body.dark-mode .footer-brand-ie { color: #7DC9FF; }
         <div class="logo-tagline">Less anxiety, more confidence.</div>
       </div>
     </div>
+    <button class="hdr-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
   </div>
 </header>
 <!-- APP NAV — Career Suite -->
@@ -1132,6 +1161,21 @@ document.getElementById('job-role').addEventListener('keydown', function(e) {
   var path=window.location.pathname;
   var page=path.indexOf('screener')!==-1?'screener':path.indexOf('salary')!==-1?'salary':path.indexOf('career')!==-1?'career':path.indexOf('interview')!==-1?'interview':'ats';
   document.querySelectorAll('[data-page]').forEach(function(el){if(el.getAttribute('data-page')===page)el.classList.add('active');});
+})();
+
+
+// ── DARK MODE TOGGLE ──
+function toggleTheme() {
+  var isDark = document.body.classList.toggle('dark');
+  document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch(e){}
+}
+(function(){
+  try { if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    var t = document.getElementById('themeToggle');
+    if (t) t.textContent = '☀️';
+  }} catch(e){}
 })();
 
 </script>
