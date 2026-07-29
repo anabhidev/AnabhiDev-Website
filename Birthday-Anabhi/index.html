@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>♥ Happy Birthday ♥</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#f9ede8;font-family:'Cormorant Garamond',serif}
+.scene{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .65s ease}
+.scene.active{opacity:1;pointer-events:all}
+
+#s1{background:radial-gradient(ellipse at 50% 38%,#fde8e0 0%,#f8ddd5 45%,#f2cfc2 100%)}
+.s1-tag{position:absolute;top:10%;left:50%;transform:translateX(-50%);font-size:clamp(16px,4.5vw,22px);font-style:italic;font-weight:600;color:#8b2040;letter-spacing:.06em;white-space:nowrap;animation:fadeD 1.2s ease both}
+.heart-wrap{position:absolute;top:28%;left:50%;transform:translateX(-50%);animation:float 3s ease-in-out infinite}
+.heart-wrap svg{width:clamp(110px,26vw,160px);height:clamp(110px,26vw,160px)}
+#bow-area{position:absolute;bottom:20%;left:5%;width:clamp(120px,28vw,170px);height:clamp(120px,28vw,170px);touch-action:none;user-select:none;cursor:crosshair}
+#bow-area svg{width:100%;height:100%;overflow:visible}
+.pull-hint{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);font-size:clamp(12px,3.2vw,16px);font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:#8b2040;animation:pulse 2s ease-in-out infinite}
+
+#s2{background:#f9ede8}
+#burst-c{position:absolute;inset:0;width:100%;height:100%}
+
+#s3{background:radial-gradient(ellipse at 40% 50%,#d8106a 0%,#c41060 30%,#a80858 65%,#880040 100%);overflow:hidden}
+#s3::before,#s3::after{content:'';position:absolute;left:0;right:0;height:13%;background:#000;z-index:2}
+#s3::before{top:0}#s3::after{bottom:0}
+.hb3-wrap{text-align:center;padding:0 5vw;position:relative;z-index:3}
+.hb3-wish{font-size:clamp(13px,3.5vw,18px);font-style:italic;color:rgba(255,215,230,.88);letter-spacing:.08em;margin-bottom:.4em;opacity:0;animation:fadeU .6s .15s ease both}
+.hb3-big{font-family:'Playfair Display',serif;font-size:clamp(75px,22vw,150px);font-weight:700;font-style:italic;color:#fff;line-height:.88;text-shadow:0 6px 50px rgba(0,0,0,.15);opacity:0;animation:scaleIn .8s .4s cubic-bezier(.175,.885,.32,1.275) both}
+.hb3-line{width:clamp(100px,28vw,200px);height:2px;background:linear-gradient(90deg,transparent,#f8d060,transparent);margin:clamp(10px,2.5vw,18px) auto;opacity:0;animation:fadeI .5s .95s ease both}
+.hb3-sub{font-size:clamp(12px,3.2vw,16px);font-style:italic;color:rgba(255,215,230,.88);letter-spacing:.06em;opacity:0;animation:fadeU .6s 1.1s ease both}
+
+#s4{background:linear-gradient(180deg,#fce4e4 0%,#fdf2ec 50%,#f9e6de 100%);overflow:hidden}
+.rays{position:absolute;top:-8%;left:50%;width:min(130vw,700px);height:90%;opacity:.12;background:repeating-conic-gradient(from 0deg at 50% 0%,#fff 0deg 6deg,transparent 6deg 13deg);transform:translateX(-50%);transform-origin:top center;animation:rayR 25s linear infinite}
+#tree-c{position:absolute;inset:0;width:100%;height:100%}
+.s4-text{position:absolute;bottom:7%;left:3%;text-align:left;opacity:0;animation:fadeU 1s 1.8s ease both}
+.s4-and{font-size:clamp(10px,2.2vw,13px);font-style:italic;color:#a03050;margin-bottom:.1em}
+.s4-hb{font-family:'Great Vibes',cursive;font-size:clamp(36px,8vw,62px);color:#c43060;line-height:1.05;max-width:45vw}
+.s4-sub{font-size:clamp(9px,1.8vw,12px);color:#a03050;margin-top:.2em;letter-spacing:.04em}
+#btn-again{position:absolute;bottom:3%;right:4%;padding:7px 16px;border:1.5px solid #e8607a;background:rgba(255,255,255,.55);color:#c43060;font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.2vw,13px);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border-radius:20px;opacity:0;animation:fadeI .6s 3.5s ease both}
+
+@keyframes fadeD{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-13px)}}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes fadeU{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeI{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
+@keyframes rayR{from{transform:translateX(-50%) rotate(0deg)}to{transform:translateX(-50%) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div class="scene active" id="s1">
+  <p class="s1-tag">a little something, for you</p>
+  <div class="heart-wrap" id="main-heart">
+    <svg viewBox="0 0 100 92" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg" cx="34%" cy="27%" r="70%">
+          <stop offset="0%" stop-color="#ffc5d8"/>
+          <stop offset="40%" stop-color="#f060a8"/>
+          <stop offset="100%" stop-color="#c43060"/>
+        </radialGradient>
+        <radialGradient id="glowbg" cx="50%" cy="58%" r="50%">
+          <stop offset="0%" stop-color="#f090b8" stop-opacity=".55"/>
+          <stop offset="50%" stop-color="#f0b090" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="hglow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <ellipse cx="50" cy="60" rx="58" ry="52" fill="url(#glowbg)"/>
+      <path filter="url(#hglow)" fill="url(#hg)" d="M50 82C50 82 6 54 6 27C6 13 17 3 31 3C39 3 46 8 50 15C54 8 61 3 69 3C83 3 94 13 94 27C94 54 50 82 50 82Z"/>
+      <ellipse cx="31" cy="20" rx="10" ry="6" fill="rgba(255,255,255,.48)" transform="rotate(-20,31,20)"/>
+      <ellipse cx="38" cy="28" rx="4" ry="2.2" fill="rgba(255,255,255,.26)" transform="rotate(-20,38,28)"/>
+    </svg>
+  </div>
+
+  <div id="bow-area">
+    <svg id="bow-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bowgrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#2a1008"/>
+          <stop offset="40%" stop-color="#5a2810"/>
+          <stop offset="100%" stop-color="#2a1008"/>
+        </linearGradient>
+        <filter id="bowshadow"><feDropShadow dx="1.5" dy="2" stdDeviation="2" flood-color="#00000030"/></filter>
+        <filter id="arrowshadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#00000022"/></filter>
+      </defs>
+      <g transform="rotate(-45,80,80)">
+        <!-- Bow arms only — NO stock/grip -->
+        <path d="M58,32 C18,50 14,110 58,128" stroke="url(#bowgrad)" stroke-width="5.5" fill="none" stroke-linecap="round" filter="url(#bowshadow)"/>
+        <path d="M58,32 C74,56 74,104 58,128" stroke="url(#bowgrad)" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".65"/>
+        <!-- String -->
+        <line id="sl" x1="58" y1="32" x2="79" y2="80" stroke="#d4c090" stroke-width="1.4" stroke-linecap="round"/>
+        <line id="sr" x1="58" y1="128" x2="79" y2="80" stroke="#d4c090" stroke-width="1.4" stroke-linecap="round"/>
+        <!-- Arrow group — moves with pull, hidden when fired -->
+        <g id="arr" filter="url(#arrowshadow)">
+          <line id="ashaft" x1="40" y1="80" x2="77" y2="80" stroke="#7a4820" stroke-width="2.2" stroke-linecap="round"/>
+          <polygon id="ahead" points="81,80 70,74.5 70,85.5" fill="#e03060"/>
+          <polygon id="ahead2" points="81,80 70,74.5 75.5,80" fill="rgba(255,255,255,.25)"/>
+          <path id="afletch" d="M43,80 C40,74 36,72 32,71 C36,77 36,83 32,89 C36,88 40,86 43,80Z" fill="#f8a0c0" opacity=".9"/>
+          <!-- Daisy at tip of arrowhead -->
+          <g id="adaisy">
+            <circle cx="81" cy="77"   r="2.2" fill="white" opacity=".95"/>
+            <circle cx="84" cy="80"   r="2.2" fill="white" opacity=".95"/>
+            <circle cx="81" cy="83"   r="2.2" fill="white" opacity=".95"/>
+            <circle cx="78" cy="80"   r="2.2" fill="white" opacity=".95"/>
+            <circle cx="81" cy="80"   r="2.6" fill="#f8c840"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <p class="pull-hint">pull &amp; release</p>
+</div>
+
+<div class="scene" id="s2"><canvas id="burst-c"></canvas></div>
+
+<div class="scene" id="s3">
+  <div class="hb3-wrap">
+    <p class="hb3-wish">make a wish…</p>
+    <div class="hb3-big">Happy<br>Birthday<br>Mama</div>
+    <div class="hb3-line"></div>
+    <p class="hb3-sub">to someone worth celebrating</p>
+  </div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="rays"></div>
+  <canvas id="tree-c"></canvas>
+  <div class="s4-text" id="s4text">
+    <p class="s4-and">and… make it count</p>
+    <div class="s4-hb">Happy Birthday Mama</div>
+    <p class="s4-sub">here's to a year that blooms</p>
+  </div>
+  <button id="btn-again">↺ Again</button>
+</div>
+
+<script>
+const SCENES=['s1','s2','s3','s4'].map(id=>document.getElementById(id));
+function show(i){SCENES.forEach((s,j)=>s.classList.toggle('active',i===j));}
+
+/* ══ CROSSBOW ══ */
+const bowArea=document.getElementById('bow-area');
+const SL=document.getElementById('sl'),SR=document.getElementById('sr');
+const SHAFT=document.getElementById('ashaft');
+const HEAD=document.getElementById('ahead');
+const HEAD2=document.getElementById('ahead2');
+const FLETCH=document.getElementById('afletch');
+const DAISY=document.getElementById('adaisy');
+const ARR=document.getElementById('arr');
+
+const REST={x:79,y:80},MAX_PULL=42;
+let dragging=false,pull={...REST};
+const C45=Math.cos(Math.PI/4);
+const SHAFT_LEN=37, TIP_OFFSET=2;
+
+function screenToLocal(vx,vy){const dx=vx-80,dy=vy-80;return{x:80+C45*(dx-dy),y:80+C45*(dx+dy)};}
+function localToScreen(lx,ly){const dx=lx-80,dy=ly-80;return{x:80+C45*(dx+dy),y:80+C45*(-dx+dy)};}
+function svgPt(e){
+  const r=bowArea.getBoundingClientRect();
+  const cx=e.touches?e.touches[0].clientX:e.clientX;
+  const cy=e.touches?e.touches[0].clientY:e.clientY;
+  return screenToLocal((cx-r.left)*160/r.width,(cy-r.top)*160/r.height);
+}
+
+function applyPull(pt){
+  const nockX=pt.x,nockY=pt.y;
+  const headBaseX=nockX+SHAFT_LEN;
+  const tipX=headBaseX+TIP_OFFSET;
+
+  SL.setAttribute('x2',nockX);SL.setAttribute('y2',nockY);
+  SR.setAttribute('x2',nockX);SR.setAttribute('y2',nockY);
+
+  SHAFT.setAttribute('x1',nockX);SHAFT.setAttribute('y1',nockY);
+  SHAFT.setAttribute('x2',headBaseX);SHAFT.setAttribute('y2',nockY);
+
+  HEAD.setAttribute('points',`${tipX},${nockY} ${headBaseX},${nockY-5.5} ${headBaseX},${nockY+5.5}`);
+  HEAD2.setAttribute('points',`${tipX},${nockY} ${headBaseX},${nockY-5.5} ${headBaseX-6},${nockY}`);
+
+  const fx=nockX;
+  FLETCH.setAttribute('d',`M${fx},${nockY} C${fx-3},${nockY-6} ${fx-7},${nockY-8} ${fx-11},${nockY-9} C${fx-7},${nockY-3} ${fx-7},${nockY+3} ${fx-11},${nockY+9} C${fx-7},${nockY+8} ${fx-3},${nockY+6} ${fx},${nockY}Z`);
+
+  const circles=DAISY.querySelectorAll('circle');
+  circles[0].setAttribute('cx',tipX);circles[0].setAttribute('cy',nockY-3.2);
+  circles[1].setAttribute('cx',tipX+3.2);circles[1].setAttribute('cy',nockY);
+  circles[2].setAttribute('cx',tipX);circles[2].setAttribute('cy',nockY+3.2);
+  circles[3].setAttribute('cx',tipX-3.2);circles[3].setAttribute('cy',nockY);
+  circles[4].setAttribute('cx',tipX);circles[4].setAttribute('cy',nockY);
+}
+
+function resetPull(){pull={...REST};applyPull(REST);ARR.style.visibility='visible';}
+applyPull(REST);
+
+bowArea.addEventListener('pointerdown',e=>{dragging=true;bowArea.setPointerCapture(e.pointerId);e.preventDefault();});
+bowArea.addEventListener('pointermove',e=>{
+  if(!dragging)return;
+  const pt=svgPt(e);
+  const dx=Math.min(0,pt.x-REST.x),dy=pt.y-REST.y;
+  const d=Math.sqrt(dx*dx+dy*dy),lim=d>MAX_PULL?MAX_PULL/d:1;
+  pull={x:REST.x+dx*lim,y:REST.y+dy*lim};
+  applyPull(pull);e.preventDefault();
+});
+bowArea.addEventListener('pointerup',e=>{
+  if(!dragging)return;dragging=false;
+  const d=Math.sqrt((pull.x-REST.x)**2+(pull.y-REST.y)**2);
+  if(d>8)fireArrow();else resetPull();
+  e.preventDefault();
+});
+
+/* ══ FIRE ══ */
+function fireArrow(){
+  ARR.style.visibility='hidden';
+  const hr=document.getElementById('main-heart').getBoundingClientRect();
+  const tx=hr.left+hr.width/2,ty=hr.top+hr.height/2;
+  const br=bowArea.getBoundingClientRect();
+  const tipLocal={x:pull.x+SHAFT_LEN+TIP_OFFSET,y:pull.y};
+  const vsv=localToScreen(tipLocal.x,tipLocal.y);
+  const sx=br.left+vsv.x*(br.width/160),sy=br.top+vsv.y*(br.height/160);
+  const angle=Math.atan2(ty-sy,tx-sx)*180/Math.PI;
+
+  const ov=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  ov.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:visible';
+  const ag=document.createElementNS('http://www.w3.org/2000/svg','g');
+  const SL2=SHAFT_LEN;
+  ag.innerHTML=`
+    <line x1="-${SL2}" y1="0" x2="-2" y2="0" stroke="#7a4820" stroke-width="2.2" stroke-linecap="round"/>
+    <polygon points="2,0 -9,-5.5 -9,5.5" fill="#e03060"/>
+    <polygon points="2,0 -9,-5.5 -3,0" fill="rgba(255,255,255,.25)"/>
+    <path d="-${SL2+3},0 C-${SL2+6},-6 -${SL2+10},-8 -${SL2+14},-9 C-${SL2+10},-3 -${SL2+10},3 -${SL2+14},9 C-${SL2+10},8 -${SL2+6},6 -${SL2+3},0Z" fill="#f8a0c0" opacity=".9"/>
+    <circle cx="3" cy="-3.2" r="2.2" fill="white" opacity=".95"/>
+    <circle cx="6.2" cy="0"  r="2.2" fill="white" opacity=".95"/>
+    <circle cx="3" cy="3.2"  r="2.2" fill="white" opacity=".95"/>
+    <circle cx="-0.2" cy="0" r="2.2" fill="white" opacity=".95"/>
+    <circle cx="3" cy="0"    r="2.6" fill="#f8c840"/>`;
+  ov.appendChild(ag);document.body.appendChild(ov);
+
+  const savedPull={...pull};let sp=0;
+  (function spring(){
+    sp+=0.13;if(sp>=1){
+      SL.setAttribute('x2',REST.x);SL.setAttribute('y2',REST.y);
+      SR.setAttribute('x2',REST.x);SR.setAttribute('y2',REST.y);
+      return;
+    }
+    const e=1-Math.pow(1-sp,3);
+    const cx=savedPull.x+(REST.x-savedPull.x)*e,cy2=savedPull.y+(REST.y-savedPull.y)*e;
+    SL.setAttribute('x2',cx);SL.setAttribute('y2',cy2);
+    SR.setAttribute('x2',cx);SR.setAttribute('y2',cy2);
+    requestAnimationFrame(spring);
+  })();
+
+  const t0=performance.now(),dur=300;
+  (function fly(now){
+    const p=Math.min(1,(now-t0)/dur),e=p<.5?2*p*p:-1+(4-2*p)*p;
+    ag.setAttribute('transform',`translate(${sx+(tx-sx)*e},${sy+(ty-sy)*e}) rotate(${angle})`);
+    if(p<1)requestAnimationFrame(fly);
+    else{ov.remove();doBurst(tx,ty);}
+  })(performance.now());
+}
+
+/* ══ BURST ══ */
+function doBurst(hx,hy){
+  show(1);
+  const c=document.getElementById('burst-c');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const ctx=c.getContext('2d');
+  const COLS=['#e8607a','#c43060','#f4a0b5','#f0a060','#ffd0dc','#ff8099','#ff5577','#f06090'];
+  const pts=[];
+  for(let i=0;i<120;i++){
+    const a=Math.random()*Math.PI*2,s=3+Math.random()*12;
+    pts.push({x:hx,y:hy,vx:Math.cos(a)*s,vy:Math.sin(a)*s,
+      life:1,dec:.011+Math.random()*.013,sz:3+Math.random()*15,
+      col:COLS[~~(Math.random()*COLS.length)],heart:Math.random()>.38});
+  }
+  function ph(x,y,s){
+    ctx.save();ctx.translate(x,y);ctx.scale(s/16,s/16);
+    ctx.beginPath();ctx.moveTo(0,-3);
+    ctx.bezierCurveTo(-4,-9,-12,-6,-12,0);ctx.bezierCurveTo(-12,6,0,14,0,14);
+    ctx.bezierCurveTo(0,14,12,6,12,0);ctx.bezierCurveTo(12,-6,4,-9,0,-3);
+    ctx.restore();
+  }
+  let fr=0;
+  (function loop(){
+    ctx.clearRect(0,0,c.width,c.height);
+    if(fr<12){ctx.fillStyle=`rgba(255,130,180,${.65*(1-fr/12)})`;ctx.fillRect(0,0,c.width,c.height);}
+    if(fr<32){ctx.beginPath();ctx.arc(hx,hy,fr*17,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(220,50,100,${.7*(1-fr/32)})`;ctx.lineWidth=6;ctx.stroke();}
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.vy+=.2;p.vx*=.97;p.life-=p.dec;
+      if(p.life<=0)return;
+      ctx.globalAlpha=p.life;ctx.fillStyle=p.col;
+      if(p.heart){ph(p.x,p.y,p.sz);ctx.fill();}
+      else{ctx.beginPath();ctx.arc(p.x,p.y,p.sz/2,0,Math.PI*2);ctx.fill();}
+      ctx.globalAlpha=1;
+    });
+    fr++;
+    if(fr<130&&pts.some(p=>p.life>0))requestAnimationFrame(loop);
+    else goToHB();
+  })();
+}
+
+function goToHB(){show(2);setTimeout(goToTree,2800);}
+
+/* ══ TREE ══ */
+function goToTree(){
+  show(3);
+  const c=document.getElementById('tree-c');
+  const W=c.width=window.innerWidth,H=c.height=window.innerHeight;
+  const ctx=c.getContext('2d');
+  const isPortrait=H>W;
+  const SCALE=isPortrait?Math.min(W*0.038,H*0.025,16):Math.min(H*0.052,W*0.020,16);
+  const TX=isPortrait?W*0.52:W*0.60;
+  const TBY=H*0.90,TW=Math.max(10,W*0.026);
+  const CY=H*0.06+12*SCALE,CX=TX,TTY=CY+17*SCALE;
+  const COLS=['#f060a0','#f4a0c0','#e84880','#f0a040','#d44878','#f8b0d0','#e06898','#ffd060','#f09060','#e85080','#ffc0e0'];
+  const COUNT=isPortrait?400:500;
+  const miniHearts=[];
+  for(let i=0;i<COUNT;i++){
+    const t=Math.random()*Math.PI*2;
+    const r=Math.sqrt(Math.random())*0.96+0.04;
+    const jx=(Math.random()-.5)*1.6,jy=(Math.random()-.5)*1.6;
+    const bx=(16*Math.pow(Math.sin(t),3)*r+jx)*SCALE;
+    const by=(-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*r+jy)*SCALE;
+    miniHearts.push({
+      tx:CX+bx,ty:CY+by,
+      x:CX+bx+(Math.random()-.5)*W*0.7,
+      y:H*0.55+Math.random()*H*0.5,
+      sz:11+Math.random()*22,
+      col:COLS[~~(Math.random()*COLS.length)],
+      dl:Math.random()*1600,rot:(Math.random()-.5)*70,
+    });
+  }
+  const FALL_DIST=H*0.24;
+  const fallers=[];
+  for(let i=0;i<40;i++){
+    const t=Math.random()*Math.PI*2;
+    const r=0.6+Math.random()*0.45;
+    const bx=16*Math.pow(Math.sin(t),3)*r*SCALE;
+    const by=(-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t)))*r*SCALE;
+    fallers.push({
+      ox:CX+bx,oy:CY+by,vx:(Math.random()-.5)*0.8,
+      sz:7+Math.random()*13,col:COLS[~~(Math.random()*COLS.length)],
+      period:2500+Math.random()*2000,offset:Math.random()*3000,
+      rot0:Math.random()*360,rotv:(Math.random()-.5)*80,
+    });
+  }
+  function mh(x,y,sz,col,alpha,rot){
+    if(alpha<=0||sz<=0)return;
+    ctx.save();ctx.globalAlpha=Math.min(1,alpha);
+    ctx.translate(x,y);ctx.rotate((rot||0)*Math.PI/180);ctx.scale(sz/16,sz/16);
+    ctx.beginPath();ctx.moveTo(0,-3);
+    ctx.bezierCurveTo(-4,-9,-12,-6,-12,0);ctx.bezierCurveTo(-12,6,0,14,0,14);
+    ctx.bezierCurveTo(0,14,12,6,12,0);ctx.bezierCurveTo(12,-6,4,-9,0,-3);
+    ctx.fillStyle=col;ctx.fill();
+    ctx.beginPath();ctx.ellipse(-3,-4,3,1.8,-.4,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.52)';ctx.fill();
+    ctx.beginPath();ctx.ellipse(-1,-6.5,1.2,.7,-.3,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.3)';ctx.fill();
+    ctx.restore();
+  }
+  function drawTrunk(prog){
+    const top=TBY-(TBY-TTY)*Math.min(1,prog);
+    const g=ctx.createLinearGradient(TX-TW,0,TX+TW,0);
+    g.addColorStop(0,'#3d1808');g.addColorStop(.42,'#6b3020');g.addColorStop(1,'#3d1808');
+    ctx.fillStyle=g;ctx.beginPath();
+    ctx.moveTo(TX-TW/2,TBY);ctx.lineTo(TX-TW/3,top);
+    ctx.lineTo(TX+TW/3,top);ctx.lineTo(TX+TW/2,TBY);
+    ctx.fill();
+  }
+  const t0=performance.now(),DUR=2800;
+  (function loop(now){
+    const el=now-t0,p=Math.min(1,el/DUR);
+    ctx.clearRect(0,0,W,H);
+    const grd=ctx.createRadialGradient(CX,CY+2*SCALE,0,CX,CY+2*SCALE,18*SCALE);
+    grd.addColorStop(0,'rgba(255,255,200,.55)');grd.addColorStop(.35,'rgba(255,240,210,.25)');grd.addColorStop(1,'rgba(255,220,200,0)');
+    ctx.fillStyle=grd;ctx.beginPath();ctx.arc(CX,CY,20*SCALE,0,Math.PI*2);ctx.fill();
+    drawTrunk(Math.min(1,p*2.8));
+    miniHearts.forEach(h=>{
+      const hp=Math.max(0,Math.min(1,(el-h.dl)/(DUR*0.60)));
+      if(hp<=0)return;
+      const e=1-Math.pow(1-hp,3);
+      mh(h.x+(h.tx-h.x)*e,h.y+(h.ty-h.y)*e,h.sz*Math.min(1,hp*2.8),h.col,Math.min(1,hp*4),h.rot*(1-e));
+    });
+    if(el>DUR*0.6){
+      const tEl=el-DUR*0.6;
+      fallers.forEach(f=>{
+        const tEff=tEl-f.offset;
+        if(tEff<=0)return;
+        const cycle=(tEff%f.period)/f.period;
+        let alpha;
+        if(cycle<0.20)alpha=cycle/0.20;
+        else if(cycle<=0.50)alpha=1.0;
+        else alpha=1.0-(cycle-0.50)/0.50;
+        alpha*=0.85;if(alpha<0.01)return;
+        mh(f.ox+f.vx*cycle*f.period*0.04+Math.sin(cycle*Math.PI*4)*5,f.oy+cycle*FALL_DIST,f.sz,f.col,alpha,f.rot0+f.rotv*cycle);
+      });
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+}
+
+document.getElementById('btn-again').onclick=()=>{resetPull();show(0);};
+window.addEventListener('resize',()=>{if(SCENES[3].classList.contains('active'))goToTree();});
+</script>
+</body>
+</html>
