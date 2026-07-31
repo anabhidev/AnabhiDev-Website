@@ -657,6 +657,17 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 </div>
 
 <script>
+var GAS_URL='https://script.google.com/macros/s/AKfycbxvI8NJdV0OnDvwA7l1bZz-YRzWvPP8ZjWQUj-g5HeIEmPUMht843fykuvd_UOHEurCeA/exec';
+function gasPost(action,params,onSuccess,onFailure){
+  var body=Object.assign({action:action},params||{});
+  var ctrl=new AbortController();
+  var tid=setTimeout(function(){ctrl.abort();},55000);
+  fetch(GAS_URL,{method:'POST',body:JSON.stringify(body),headers:{'Content-Type':'text/plain;charset=utf-8'},signal:ctrl.signal})
+    .then(function(r){clearTimeout(tid);return r.json();})
+    .then(function(json){if(json.ok){onSuccess(json.data);}else{onFailure(new Error(json.error||'Unknown error'));}})
+    .catch(function(err){clearTimeout(tid);onFailure(err);});
+}
+
 // ── DEVICE DETECTION ─────────────────────────────────────────
 function setDevice(){var w=window.outerWidth||document.documentElement.clientWidth;document.body.classList.toggle('is-mobile',w<=820);document.body.classList.toggle('is-desktop',w>820);}
 setDevice();window.addEventListener('resize',setDevice);
