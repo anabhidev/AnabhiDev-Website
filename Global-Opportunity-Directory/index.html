@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Opportunity Directory — Visa, Startup & Accelerator Programs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:        #1E3A5F;
+      --navy-dark:   #142848;
+      --blue:        #2B6CB0;
+      --blue-light:  #4299E1;
+      --sky:         #EBF4FF;
+      --sky-mid:     #BEE3F8;
+      --gold:        #D4860A;
+      --gold-light:  #FEF3C7;
+      --white:       #FFFFFF;
+      --gray-50:     #F8FAFC;
+      --gray-100:    #F1F5F9;
+      --gray-200:    #E2E8F0;
+      --gray-400:    #94A3B8;
+      --gray-600:    #475569;
+      --gray-800:    #1E293B;
+      --green:       #047857;
+      --green-light: #D1FAE5;
+      --purple:      #6D28D9;
+      --purple-light:#EDE9FE;
+      --orange:      #C2410C;
+      --orange-light:#FED7AA;
+      --red:         #DC2626;
+      --sidebar-w:   270px;
+      --navbar-h:    64px;
+      --radius:      10px;
+      --radius-sm:   6px;
+      --shadow:      0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-card: 0 2px 8px rgba(30,58,95,0.08), 0 8px 24px rgba(30,58,95,0.06);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ── Navbar ───────────────────────────────────── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--navbar-h);
+      background: var(--navy);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .navbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--white); text-decoration: none; flex: 1;
+    }
+    .navbar-brand .brand-icon {
+      width: 36px; height: 36px; background: var(--blue);
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .navbar-brand .brand-text { line-height: 1.2; }
+    .navbar-brand .brand-title { font-size: 15px; font-weight: 700; color: var(--white); }
+    .navbar-brand .brand-sub { font-size: 11px; color: var(--sky-mid); font-weight: 400; }
+    .navbar-links {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .navbar-links a {
+      color: var(--sky-mid); text-decoration: none;
+      padding: 6px 12px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .navbar-links a:hover, .navbar-links a.active {
+      background: rgba(255,255,255,0.12); color: var(--white);
+    }
+    .navbar-timestamp {
+      margin-left: 16px;
+      font-size: 11px; color: var(--gray-400);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .navbar-timestamp .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #34D399; display: inline-block;
+    }
+
+    /* ── Layout ───────────────────────────────────── */
+    .layout {
+      display: flex;
+      margin-top: var(--navbar-h);
+      min-height: calc(100vh - var(--navbar-h));
+    }
+
+    /* ── Sidebar ──────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--navy);
+      border-right: 1px solid var(--navy-dark);
+      position: sticky;
+      top: var(--navbar-h);
+      height: calc(100vh - var(--navbar-h));
+      overflow-y: auto;
+      padding: 20px 16px;
+    }
+    .sidebar-section { margin-bottom: 24px; }
+    .sidebar-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--sky-mid);
+      margin-bottom: 8px; padding: 0 4px;
+      opacity: 0.7;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 2px; }
+    .filter-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      border: none; background: transparent;
+      cursor: pointer; text-align: left; width: 100%;
+      font-size: 13px; color: var(--sky-mid);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .filter-btn.active { background: var(--blue); color: var(--white); font-weight: 600; }
+    .filter-btn .filter-icon { font-size: 15px; width: 20px; text-align: center; }
+    .filter-btn .filter-count {
+      margin-left: auto; font-size: 11px; font-weight: 600;
+      background: rgba(255,255,255,0.15); color: var(--white);
+      padding: 1px 6px; border-radius: 10px;
+    }
+    .filter-btn.active .filter-count {
+      background: rgba(255,255,255,0.25); color: white;
+    }
+
+    .sidebar-divider {
+      height: 1px; background: rgba(255,255,255,0.12); margin: 4px 0 16px;
+    }
+
+    /* Section nav links in sidebar */
+    .nav-section-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      color: var(--sky-mid); text-decoration: none;
+      font-size: 13px; transition: all 0.15s;
+    }
+    .nav-section-link:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .nav-section-link .num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); color: var(--white);
+      font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-section-link:hover .num { background: var(--blue); color: white; }
+
+    /* ── Main Content ─────────────────────────────── */
+    .main {
+      flex: 1; min-width: 0;
+      padding: 28px 32px 60px;
+    }
+
+    /* ── Hero / Intro ─────────────────────────────── */
+    .intro-card {
+      background: linear-gradient(135deg, var(--navy) 0%, #2B4F7A 100%);
+      border-radius: 14px; padding: 32px 36px;
+      margin-bottom: 32px; color: white;
+      position: relative; overflow: hidden;
+    }
+    .intro-card::before {
+      content: '🌏';
+      position: absolute; right: 32px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 96px; opacity: 0.1;
+    }
+    .intro-card h1 {
+      font-size: 22px; font-weight: 800; margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .intro-card h1 span { color: #63B3ED; }
+    .intro-card p {
+      font-size: 14px; color: #BEE3F8; line-height: 1.7;
+      max-width: 640px; margin-bottom: 20px;
+    }
+    .intro-stats {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .intro-stat {
+      display: flex; flex-direction: column;
+    }
+    .intro-stat .stat-num {
+      font-size: 24px; font-weight: 800; color: white; line-height: 1;
+    }
+    .intro-stat .stat-label {
+      font-size: 11px; color: #93C5FD; margin-top: 2px;
+    }
+
+    /* ── Glossary Box ─────────────────────────────── */
+    .glossary-card {
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: var(--radius); padding: 24px 28px;
+      margin-bottom: 28px;
+      border-left: 4px solid var(--blue);
+    }
+    .glossary-card h2 {
+      font-size: 15px; font-weight: 700; color: var(--navy);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .glossary-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .glossary-item {
+      background: var(--gray-50); border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .glossary-item .term {
+      font-size: 12px; font-weight: 700; color: var(--blue);
+      margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .glossary-item .def {
+      font-size: 12px; color: var(--gray-600); line-height: 1.5;
+    }
+
+    /* ── Section Header ───────────────────────────── */
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--gray-200);
+    }
+    .section-header .section-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .section-header .section-title { flex: 1; }
+    .section-header h2 {
+      font-size: 18px; font-weight: 700; color: var(--navy);
+      line-height: 1.2;
+    }
+    .section-header .section-desc {
+      font-size: 12px; color: var(--gray-600); margin-top: 2px;
+    }
+    .section-header .section-count {
+      font-size: 12px; font-weight: 600; color: var(--gray-400);
+      white-space: nowrap;
+    }
+
+    /* ── Cards Grid ───────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Program Card ─────────────────────────────── */
+    .prog-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .prog-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(30,58,95,0.12);
+    }
+    .prog-card.hidden { display: none; }
+
+    .card-top {
+      display: flex; align-items: flex-start;
+      gap: 12px; margin-bottom: 14px;
+    }
+    .card-flag { font-size: 28px; line-height: 1; flex-shrink: 0; }
+    .card-info { flex: 1; min-width: 0; }
+    .card-country {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gray-400); margin-bottom: 2px;
+    }
+    .card-name {
+      font-size: 14px; font-weight: 700; color: var(--navy);
+      line-height: 1.3;
+    }
+    .card-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 20px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .badge-nomad    { background: var(--purple-light); color: var(--purple); }
+    .badge-startup  { background: var(--green-light);  color: var(--green); }
+    .badge-accel    { background: var(--orange-light);  color: var(--orange); }
+    .badge-platform { background: var(--sky); color: var(--blue); }
+    .badge-tips     { background: var(--gold-light); color: var(--gold); }
+
+    .card-desc {
+      font-size: 12px; color: var(--gray-600);
+      line-height: 1.6; margin-bottom: 14px;
+    }
+
+    .card-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-bottom: 14px;
+    }
+    .meta-item { }
+    .meta-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--gray-400); margin-bottom: 2px;
+    }
+    .meta-value {
+      font-size: 12px; font-weight: 600; color: var(--gray-800);
+    }
+    .meta-value.highlight { color: var(--green); }
+    .meta-value.warning   { color: var(--orange); }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;
+    }
+    .tag {
+      font-size: 10px; padding: 2px 8px; border-radius: 4px;
+      background: var(--gray-100); color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex; gap: 8px; align-items: center;
+    }
+    .btn-apply {
+      flex: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 8px 14px;
+      background: var(--blue); color: white;
+      border-radius: var(--radius-sm); text-decoration: none;
+      font-size: 12px; font-weight: 600;
+      transition: background 0.2s; border: none; cursor: pointer;
+    }
+    .btn-apply:hover { background: var(--navy); }
+    .btn-update {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 5px; padding: 8px 10px;
+      background: var(--gray-100); color: var(--gray-600);
+      border-radius: var(--radius-sm); border: 1px solid var(--gray-200);
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap; font-family: 'Inter', sans-serif;
+    }
+    .btn-update:hover { background: var(--gold-light); color: var(--gold); border-color: var(--gold); }
+    .btn-update.checking { color: var(--blue); background: var(--sky); border-color: var(--blue); }
+    .btn-update.updated  { color: var(--green); background: var(--green-light); border-color: var(--green); }
+
+    .card-last-checked {
+      font-size: 10px; color: var(--gray-400);
+      margin-top: 8px; display: flex; align-items: center; gap: 4px;
+    }
+    .card-last-checked .check-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--gray-400); display: inline-block;
+    }
+    .card-last-checked.fresh .check-dot { background: #34D399; }
+
+    /* ── Section separator ────────────────────────── */
+    .section-block { margin-bottom: 48px; scroll-margin-top: 80px; }
+
+    /* ── Phase badge ──────────────────────────────── */
+    .phase-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gold-light); color: var(--gold);
+      border: 1px solid #FDE68A;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    /* ── Coming soon ──────────────────────────────── */
+    .coming-soon {
+      background: var(--gray-100); border: 2px dashed var(--gray-200);
+      border-radius: var(--radius); padding: 32px;
+      text-align: center; color: var(--gray-400);
+    }
+    .coming-soon .cs-icon { font-size: 32px; margin-bottom: 8px; }
+    .coming-soon h3 { font-size: 14px; font-weight: 600; color: var(--gray-600); }
+    .coming-soon p { font-size: 12px; margin-top: 4px; }
+
+    /* ── No results ───────────────────────────────── */
+    .no-results {
+      grid-column: 1/-1;
+      text-align: center; padding: 40px;
+      color: var(--gray-400);
+    }
+    .no-results .nr-icon { font-size: 40px; margin-bottom: 10px; }
+    .no-results h3 { font-size: 14px; font-weight: 600; color: var(--gray-600); }
+
+    /* ── Income levels color ──────────────────────── */
+    .income-low    { color: var(--green); }
+    .income-mid    { color: var(--gold); }
+    .income-high   { color: var(--red); }
+
+    /* ── Scrollbar ────────────────────────────────── */
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+    /* ── Active filter indicator ──────────────────── */
+    .active-filters {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 16px; min-height: 0;
+    }
+    .active-filter-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--sky); color: var(--navy);
+      border: 1px solid var(--sky-mid);
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+    }
+    .active-filter-tag button {
+      background: none; border: none; cursor: pointer;
+      color: var(--blue); font-size: 12px; padding: 0;
+      line-height: 1;
+    }
+    .clear-all-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-400); font-size: 11px;
+      text-decoration: underline; padding: 4px 6px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ NAVBAR ═══ -->
+<nav class="navbar">
+  <a href="#" class="navbar-brand">
+    <div class="brand-icon">
+      <img src="https://anabhidev.com/logo.webp" alt="AnabhiDev" style="width:28px;height:28px;object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%">🌐</span>
+    </div>
+    <div class="brand-text">
+      <div class="brand-title">Global Opportunity Directory</div>
+      <div class="brand-sub">Visa · Startup · Accelerator · Remote Work</div>
+    </div>
+  </a>
+  <div class="navbar-links">
+    <a href="#s-nomad"    class="nav-link">🌍 Nomad Visa</a>
+    <a href="#s-startup"  class="nav-link">🚀 Startup Visa</a>
+    <a href="#s-accel"    class="nav-link">🏢 Accelerator</a>
+    <a href="#s-platform" class="nav-link">💼 Remote Jobs</a>
+    <a href="#s-tips"     class="nav-link">📚 Tips</a>
+  </div>
+  <div class="navbar-timestamp">
+    <span class="dot"></span>
+    <span id="global-timestamp">Memuat...</span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════ LAYOUT ═══ -->
+<div class="layout">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+
+    <!-- Navigation -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigasi Section</div>
+      <div class="filter-group">
+        <a href="#s-nomad"    class="nav-section-link"><span class="num">1</span> Digital Nomad Visa</a>
+        <a href="#s-startup"  class="nav-section-link"><span class="num">2</span> Startup Visa</a>
+        <a href="#s-accel"    class="nav-section-link"><span class="num">3</span> Accelerator & Funding</a>
+        <a href="#s-platform" class="nav-section-link"><span class="num">4</span> Platform Remote Job</a>
+        <a href="#s-tips"     class="nav-section-link"><span class="num">5</span> Tips & Resources</a>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Filter by Type -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter: Tipe Program</div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="type" data-value="all" onclick="filterCards('type','all')">
+          <span class="filter-icon">🔍</span> Semua Tipe
+          <span class="filter-count" id="count-all">–</span>
+        </button>
+        <button class="filter-btn" data-filter="type" data-value="nomad" onclick="filterCards('type','nomad')">
+          <span class="filter-icon">🌍</span> Digital Nomad Visa
+          <span class="filter-count" id="count-nomad">–</span>
+        </button>
+        <button class="filter-btn" data-filter="type" data-value="startup" onclick="filterCards('type','startup')">
+          <span class="filter-icon">🚀</span> Startup Visa
+          <span class="filter-count" id="count-startup">–</span>
+        </button>
+        <button class="filter-btn" data-filter="type" data-value="accel" onclick="filterCards('type','accel')">
+          <span class="filter-icon">🏢</span> Accelerator
+          <span class="filter-count" id="count-accel">–</span>
+        </button>
+        <button class="filter-btn" data-filter="type" data-value="platform" onclick="filterCards('type','platform')">
+          <span class="filter-icon">💼</span> Remote Platform
+          <span class="filter-count" id="count-platform">–</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Filter by Region -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter: Kawasan</div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="region" data-value="all" onclick="filterCards('region','all')">
+          <span class="filter-icon">🗺️</span> Semua Kawasan
+        </button>
+        <button class="filter-btn" data-filter="region" data-value="middle-east" onclick="filterCards('region','middle-east')">
+          <span class="filter-icon">🕌</span> Middle East
+        </button>
+        <button class="filter-btn" data-filter="region" data-value="europe" onclick="filterCards('region','europe')">
+          <span class="filter-icon">🏰</span> Eropa
+        </button>
+        <button class="filter-btn" data-filter="region" data-value="asia" onclick="filterCards('region','asia')">
+          <span class="filter-icon">🏯</span> Asia Pasifik
+        </button>
+        <button class="filter-btn" data-filter="region" data-value="americas" onclick="filterCards('region','americas')">
+          <span class="filter-icon">🌎</span> Amerika
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Filter by Income -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter: Min. Penghasilan</div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="income" data-value="all" onclick="filterCards('income','all')">
+          <span class="filter-icon">💰</span> Semua Level
+        </button>
+        <button class="filter-btn" data-filter="income" data-value="low" onclick="filterCards('income','low')">
+          <span class="filter-icon">🟢</span> Rendah (&lt; $2,000/bln)
+        </button>
+        <button class="filter-btn" data-filter="income" data-value="mid" onclick="filterCards('income','mid')">
+          <span class="filter-icon">🟡</span> Menengah ($2K–$4K/bln)
+        </button>
+        <button class="filter-btn" data-filter="income" data-value="high" onclick="filterCards('income','high')">
+          <span class="filter-icon">🔴</span> Tinggi (&gt; $4,000/bln)
+        </button>
+        <button class="filter-btn" data-filter="income" data-value="none" onclick="filterCards('income','none')">
+          <span class="filter-icon">✨</span> Tidak Ada Syarat
+        </button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main">
+
+    <!-- Intro Hero -->
+    <div class="intro-card">
+      <h1>Peluang Kerja & Bisnis <span>Global</span> untuk Profesional Indonesia</h1>
+      <p>
+        Direktori lengkap program visa, startup, accelerator, dan platform kerja remote yang terbuka
+        untuk warga negara dari seluruh dunia — termasuk Indonesia. Temukan peluang yang sesuai
+        dengan profil dan tujuan karir atau bisnis kamu.
+      </p>
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <span class="stat-num">40+</span>
+          <span class="stat-label">Negara dengan program aktif</span>
+        </div>
+        <div class="intro-stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Kategori program</span>
+        </div>
+        <div class="intro-stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Terbuka untuk global</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary -->
+    <div class="glossary-card">
+      <h2>📖 Pahami Dulu: Apa Itu Masing-Masing Program?</h2>
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <div class="term">🌍 Digital Nomad Visa</div>
+          <div class="def">Visa tinggal legal di suatu negara sambil tetap bekerja remote untuk perusahaan atau klien di luar negeri. Kamu tidak perlu cari kerja di negara tujuan — penghasilan tetap dari luar. Cocok untuk remote worker, freelancer, dan konsultan.</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">🚀 Startup Visa</div>
+          <div class="def">Visa khusus untuk founder atau entrepreneur yang ingin mendirikan dan mengembangkan startup di negara tujuan. Biasanya butuh business plan, endorsement dari incubator, atau traction. Memberikan izin tinggal dan hak kerja sebagai founder.</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">🏢 Accelerator & Funding</div>
+          <div class="def">Program intensif dari pemerintah atau swasta yang menyediakan mentoring, akses investor, dan kadang dana tunai atau grant untuk startup. Terbuka untuk global startup — tidak harus warga negara setempat. Prosesnya kompetitif dengan seleksi ketat.</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">💼 Remote Job Platform</div>
+          <div class="def">Website atau platform tempat perusahaan global memasang lowongan kerja remote. Kamu bisa melamar dari Indonesia dan bekerja untuk klien luar negeri tanpa perlu pindah. Pembayaran umumnya dalam USD atau EUR.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active filters display -->
+    <div class="active-filters" id="active-filters"></div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION 1: DIGITAL NOMAD VISA
+    ═══════════════════════════════════════════════ -->
+    <div class="section-block" id="s-nomad">
+      <div class="section-header">
+        <div class="section-icon" style="background:#EDE9FE">🌍</div>
+        <div class="section-title">
+          <h2>Digital Nomad Visa</h2>
+          <div class="section-desc">Tinggal legal di luar negeri, kerja remote untuk employer/klien di luar negeri — terbuka untuk WNI</div>
+        </div>
+        <div class="section-count" id="nomad-count"></div>
+      </div>
+
+      <div class="cards-grid" id="grid-nomad">
+
+        <!-- UAE -->
+        <div class="prog-card" data-type="nomad" data-region="middle-east" data-income="mid">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">UAE — Middle East</div>
+              <div class="card-name">Dubai Virtual Working Programme</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Tinggal di Dubai sambil kerja remote untuk perusahaan atau klien di luar UAE. Tidak butuh sponsor lokal. Bebas pajak penghasilan pribadi. Salah satu program digital nomad paling menarik di dunia karena infrastruktur kelas dunia + 0% income tax.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value warning">USD 3,500 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1 tahun, renewable</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Pajak Pribadi</div>
+              <div class="meta-value highlight">0% (Tax-Free)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Sponsor Lokal</div>
+              <div class="meta-value highlight">Tidak diperlukan</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Remote Employee</span>
+            <span class="tag">Freelancer</span>
+            <span class="tag">Tax-Free</span>
+            <span class="tag">Family Friendly</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://gdrfad.gov.ae/en/services/virtual-working-programme" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://gdrfad.gov.ae/en/services/virtual-working-programme')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-uae-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Estonia -->
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high">
+          <div class="card-top">
+            <div class="card-flag">🇪🇪</div>
+            <div class="card-info">
+              <div class="card-country">Estonia — Eropa</div>
+              <div class="card-name">Digital Nomad Visa Estonia</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Program pertama di dunia yang menerbitkan dedicated digital nomad visa (sejak 2020). Estonia adalah negara paling digital di Eropa — hampir semua layanan pemerintah online. Tinggal di EU, kerja remote untuk klien/employer luar Estonia.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value warning">EUR 3,504 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1 tahun (non-renewable)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Biaya Visa</div>
+              <div class="meta-value">EUR 80–120</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Proses</div>
+              <div class="meta-value">15–30 hari</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">EU Schengen</span>
+            <span class="tag">E-State</span>
+            <span class="tag">Remote Employee</span>
+            <span class="tag">Freelancer</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://workinestonia.com/digital-nomad-visa/" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://workinestonia.com/digital-nomad-visa/')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-estonia-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Portugal -->
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid">
+          <div class="card-top">
+            <div class="card-flag">🇵🇹</div>
+            <div class="card-info">
+              <div class="card-country">Portugal — Eropa</div>
+              <div class="card-name">D8 Digital Nomad Visa</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Salah satu program paling populer di Eropa. Ranked #6 dunia (Global Digital Nomad Report 2025). Ada jalur short-term dan long-term. Setelah 5 tahun bisa apply permanent residency, dan 10 tahun bisa apply kewarganegaraan. Lisbon dan Porto adalah kota favorit nomad.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value warning">USD 3,280 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1–2 tahun, renewable</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Pathway</div>
+              <div class="meta-value highlight">PR → Citizenship</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Proses</div>
+              <div class="meta-value">Via AIMA (ex-SEF)</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">EU Schengen</span>
+            <span class="tag">PR Pathway</span>
+            <span class="tag">Citizenship Pathway</span>
+            <span class="tag">Family Friendly</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://imigrante.sef.pt/en/apply/stay/d8/" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://imigrante.sef.pt/en/apply/stay/d8/')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-portugal-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Spain -->
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid">
+          <div class="card-top">
+            <div class="card-flag">🇪🇸</div>
+            <div class="card-info">
+              <div class="card-country">Spanyol — Eropa</div>
+              <div class="card-name">Spain Digital Nomad Visa</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Ranked #1 dunia dalam Global Digital Nomad Report 2025. Barcelona, Madrid, dan Valencia adalah kota top untuk nomad. Biaya hidup lebih rendah 15–25% dibanding London/Paris. Ada special tax regime (Beckham Law) untuk 6 tahun pertama dengan flat tax 24%.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value warning">EUR 2,646 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1 tahun → 3 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tax Regime</div>
+              <div class="meta-value">Flat 24% (6 thn)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Global Rank</div>
+              <div class="meta-value highlight">#1 Dunia (2025)</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">EU Schengen</span>
+            <span class="tag">Ranked #1</span>
+            <span class="tag">Tax Incentive</span>
+            <span class="tag">PR Pathway</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.exteriores.gob.es/en/EmbajadasConsulados/Pages/EmbajadaConsulado.aspx" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.exteriores.gob.es')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-spain-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Colombia -->
+        <div class="prog-card" data-type="nomad" data-region="americas" data-income="low">
+          <div class="card-top">
+            <div class="card-flag">🇨🇴</div>
+            <div class="card-info">
+              <div class="card-country">Kolombia — Amerika Latin</div>
+              <div class="card-name">Colombia Digital Nomad Visa (V-TP-12)</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Salah satu digital nomad visa dengan syarat penghasilan paling rendah di dunia. Medellín menjadi kota favorit nomad global karena biaya hidup murah, iklim nyaman sepanjang tahun, dan komunitas expat yang besar. Biaya hidup sekitar USD 1,000–1,500/bulan.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value highlight">USD 684 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">2 tahun, renewable</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Biaya Hidup</div>
+              <div class="meta-value highlight">~USD 1,000–1,500/bln</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Biaya Visa</div>
+              <div class="meta-value">~USD 52</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Income Rendah</span>
+            <span class="tag">Biaya Hidup Murah</span>
+            <span class="tag">Komunitas Besar</span>
+            <span class="tag">2 Tahun</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.cancilleria.gov.co/tramites_servicios/visas/tipos-visa/nomada-digital" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.cancilleria.gov.co')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-colombia-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Greece -->
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high">
+          <div class="card-top">
+            <div class="card-flag">🇬🇷</div>
+            <div class="card-info">
+              <div class="card-country">Yunani — Eropa</div>
+              <div class="card-name">Greece Digital Nomad Visa</div>
+            </div>
+            <span class="card-badge badge-nomad">Nomad Visa</span>
+          </div>
+          <div class="card-desc">
+            Tinggal di negeri para dewa sambil kerja remote. Setelah 1 tahun bisa apply Digital Nomad Residence Permit (2 tahun, renewable). Setelah 5 tahun legal residence bisa apply permanent residency. Ada flat tax 7% untuk pensiunan asing, tapi remote worker tetap bayar pajak normal.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Min. Penghasilan</div>
+              <div class="meta-value warning">USD 3,963 / bulan</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1 thn → 2 thn → PR</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">PR Pathway</div>
+              <div class="meta-value highlight">Setelah 5 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Biaya Visa</div>
+              <div class="meta-value">EUR 75</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">EU Schengen</span>
+            <span class="tag">PR Pathway</span>
+            <span class="tag">Mediterranean</span>
+            <span class="tag">Remote Employee</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.mfa.gr/en/visas/visas-for-foreigners-traveling-to-greece/national-visas/digital-nomad-visa.html" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.mfa.gr/en/visas/')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-greece-nomad">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+      </div><!-- /grid-nomad -->
+    </div><!-- /s-nomad -->
+
+
+    <!-- ════════════════════════════════════════════
+         SECTION 2: STARTUP VISA
+    ═══════════════════════════════════════════════ -->
+    <div class="section-block" id="s-startup">
+      <div class="section-header">
+        <div class="section-icon" style="background:#D1FAE5">🚀</div>
+        <div class="section-title">
+          <h2>Startup Visa</h2>
+          <div class="section-desc">Visa untuk founder & entrepreneur yang ingin mendirikan startup di negara tujuan — terbuka untuk semua negara</div>
+        </div>
+        <div class="section-count" id="startup-count"></div>
+      </div>
+
+      <div class="cards-grid" id="grid-startup">
+
+        <!-- Chile -->
+        <div class="prog-card" data-type="startup" data-region="americas" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇨🇱</div>
+            <div class="card-info">
+              <div class="card-country">Chile — Amerika Latin</div>
+              <div class="card-name">Startup Chile — SUP (Scale Up Program)</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Program pemerintah Chile yang 100% terbuka untuk founder dari negara mana pun. Setelah diterima, dapat visa kerja 2 tahun, program incubator gratis, dan grant USD 15,000–100,000 dari pemerintah Chile. Salah satu program startup paling dermawan di dunia untuk global founder.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Grant</div>
+              <div class="meta-value highlight">USD 15K – 100K</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Visa Kerja</div>
+              <div class="meta-value highlight">2 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity Diambil</div>
+              <div class="meta-value highlight">0% (gratis)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Eligibility</div>
+              <div class="meta-value highlight">Semua negara</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Cash Grant</span>
+            <span class="tag">No Equity</span>
+            <span class="tag">Visa Included</span>
+            <span class="tag">Global Open</span>
+            <span class="tag">Govt Backed</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.startupchile.org" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.startupchile.org')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-chile-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Singapore -->
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇸🇬</div>
+            <div class="card-info">
+              <div class="card-country">Singapura — Asia Pasifik</div>
+              <div class="card-name">EntrePass — Entrepreneur Pass</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Visa entrepreneur resmi Singapura untuk mendirikan dan menjalankan startup inovatif berbasis teknologi. Butuh endorsement dari incubator/accelerator terakreditasi (termasuk Y-Combinator, MassChallenge, dll) atau memiliki IP yang terdaftar. Gateway ke ekosistem startup Asia terbaik.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Bond Deposit</div>
+              <div class="meta-value warning">SGD 3,000</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">2 tahun, renewable</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Syarat Utama</div>
+              <div class="meta-value">Endorsement / IP / VC</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Proses</div>
+              <div class="meta-value">8 minggu</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Asia Hub</span>
+            <span class="tag">Tech Focus</span>
+            <span class="tag">VC Ecosystem</span>
+            <span class="tag">Low Tax</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.mom.gov.sg/passes-and-permits/entrepass" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.mom.gov.sg/passes-and-permits/entrepass')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-sg-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- UK -->
+        <div class="prog-card" data-type="startup" data-region="europe" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇬🇧</div>
+            <div class="card-info">
+              <div class="card-country">United Kingdom — Eropa</div>
+              <div class="card-name">UK Innovator Founder Visa</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Visa untuk entrepreneur dari luar UK yang ingin mendirikan bisnis inovatif, scalable, dan viable di Inggris. Harus mendapat endorsement dari approved body (organisasi resmi yang diakui UK Visas & Immigration). Setelah 3 tahun bisa apply settlement (ILR).
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Biaya Visa</div>
+              <div class="meta-value warning">GBP 1,191</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">3 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Settlement</div>
+              <div class="meta-value highlight">Setelah 3 tahun (ILR)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Syarat Utama</div>
+              <div class="meta-value">Endorsement body</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Settlement Pathway</span>
+            <span class="tag">London Ecosystem</span>
+            <span class="tag">No Min. Investment</span>
+            <span class="tag">Endorsement Required</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.gov.uk/innovator-founder-visa" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.gov.uk/innovator-founder-visa')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-uk-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- New Zealand -->
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇳🇿</div>
+            <div class="card-info">
+              <div class="card-country">New Zealand — Asia Pasifik</div>
+              <div class="card-name">Entrepreneur Work Visa</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Visa untuk entrepreneur yang ingin mendirikan atau membeli bisnis di New Zealand. Ada dua tahap: pertama Entrepreneur Work Visa (3 tahun), lalu bisa apply Entrepreneur Resident Visa (permanent residency). Butuh business plan yang kuat dan bukti dana yang cukup.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Biaya Aplikasi</div>
+              <div class="meta-value warning">NZD 3,310</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">3 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">PR Pathway</div>
+              <div class="meta-value highlight">Entrepreneur Resident Visa</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Min. Dana</div>
+              <div class="meta-value">NZD 100K+</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">PR Pathway</span>
+            <span class="tag">Business Plan</span>
+            <span class="tag">Quality of Life</span>
+            <span class="tag">Clean Green</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.immigration.govt.nz/new-zealand-visas/visas/visa/entrepreneur-work-visa" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://www.immigration.govt.nz')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-nz-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Luxembourg -->
+        <div class="prog-card" data-type="startup" data-region="europe" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇱🇺</div>
+            <div class="card-info">
+              <div class="card-country">Luxembourg — Eropa</div>
+              <div class="card-name">Luxembourg Startup Visa (ICT + Entrepreneur)</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Gateway ke pasar Eropa dari salah satu negara terkaya di dunia. Luxembourg mendukung startup fintech, space tech, dan ICT. Ada program khusus via Luxinnovation (innovation agency) yang membantu founder internasional setup di Luxembourg dan mengakses ekosistem EU.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">GDP Per Kapita</div>
+              <div class="meta-value highlight">#2 Dunia</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">1 tahun, renewable</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">EU Access</div>
+              <div class="meta-value highlight">Penuh (Schengen)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Support</div>
+              <div class="meta-value">Luxinnovation</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">EU Gateway</span>
+            <span class="tag">Fintech Hub</span>
+            <span class="tag">Space Tech</span>
+            <span class="tag">Schengen</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://guichet.public.lu/en/entreprises/creation/personne-physique/autorisations/ressortissant-etat-tiers.html" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://luxinnovation.lu')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-lux-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+        <!-- Australia -->
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇺</div>
+            <div class="card-info">
+              <div class="card-country">Australia — Asia Pasifik</div>
+              <div class="card-name">Business Innovation & Investment Visa (Subclass 188)</div>
+            </div>
+            <span class="card-badge badge-startup">Startup Visa</span>
+          </div>
+          <div class="card-desc">
+            Program business visa Australia dengan beberapa stream: Business Innovation (untuk bisnis yang sudah ada), Investor, Significant Investor, dan Entrepreneur stream. Stream Entrepreneur cocok untuk founder yang telah mendapat funding atau endorsement dari pemerintah negara bagian Australia.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Stream</div>
+              <div class="meta-value">Entrepreneur / Innovation</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Durasi</div>
+              <div class="meta-value">4 tahun</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">PR Pathway</div>
+              <div class="meta-value highlight">Subclass 888</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Points-Based</div>
+              <div class="meta-value">Ya, state-nominated</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">PR Pathway</span>
+            <span class="tag">State Nominated</span>
+            <span class="tag">Multiple Streams</span>
+            <span class="tag">Established Market</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188" target="_blank" class="btn-apply">
+              🔗 Apply / Info Resmi
+            </a>
+            <button class="btn-update" onclick="checkUpdate(this, 'https://immi.homeaffairs.gov.au')">
+              🔄 Cek Update
+            </button>
+          </div>
+          <div class="card-last-checked" id="ts-au-startup">
+            <span class="check-dot"></span> Belum dicek
+          </div>
+        </div>
+
+      </div><!-- /grid-startup -->
+    </div><!-- /s-startup -->
+
+    <!-- ════════════════════════════════════════════
+         SECTION 3: ACCELERATOR & FUNDING
+    ═══════════════════════════════════════════════ -->
+    <div class="section-block" id="s-accel">
+      <div class="section-header">
+        <div class="section-icon" style="background:#FED7AA">🏢</div>
+        <div class="section-title">
+          <h2>Accelerator & Funding</h2>
+          <div class="section-desc">Program accelerator & dana pemerintah/swasta terbuka untuk global startup — tidak harus warga setempat</div>
+        </div>
+        <div class="section-count" id="accel-count"></div>
+      </div>
+
+      <div class="cards-grid" id="grid-accel">
+
+        <!-- MBRIF -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">UAE — Middle East</div>
+              <div class="card-name">MBRIF Accelerator</div>
+            </div>
+            <span class="card-badge badge-accel">Accelerator</span>
+          </div>
+          <div class="card-desc">
+            Mohammed Bin Rashid Innovation Fund — program accelerator didukung pemerintah federal UAE. Terbuka untuk inovator dari 89+ negara. Tidak ada biaya program dan tidak ada equity yang diambil. Memberikan akses mentoring, global experts, market entry, dan financing ecosystem.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Biaya Program</div>
+              <div class="meta-value highlight">Gratis (USD 0)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity Diambil</div>
+              <div class="meta-value highlight">0%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Cash/Grant</div>
+              <div class="meta-value">Akses financing</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value highlight">Tidak wajib</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">No Equity</span><span class="tag">No Fee</span>
+            <span class="tag">Govt Backed</span><span class="tag">89+ Negara</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.mbrif.ae" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.mbrif.ae')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Hub71 -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">Abu Dhabi, UAE — Middle East</div>
+              <div class="card-name">Hub71 Access Programme</div>
+            </div>
+            <span class="card-badge badge-accel">Accelerator</span>
+          </div>
+          <div class="card-desc">
+            Program accelerator flagship Abu Dhabi, didukung Mubadala Investment Company. Memberikan AED 250,000 cash + AED 250,000 in-kind incentives melalui SAFE note. Paket insentif terbesar di UAE. Syarat utama: minimal 1 founder relocate ke Abu Dhabi selama 3 bulan pertama.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Cash Benefit</div>
+              <div class="meta-value highlight">AED 250K cash</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">In-Kind</div>
+              <div class="meta-value">AED 250K</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity</div>
+              <div class="meta-value warning">SAFE Note</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value warning">3 bulan pertama</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Cash Grant</span><span class="tag">Pre-seed → Series A</span>
+            <span class="tag">Mubadala</span><span class="tag">Abu Dhabi</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.hub71.com" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.hub71.com')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Sheraa S3 -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">Sharjah, UAE — Middle East</div>
+              <div class="card-name">Sheraa — Sharjah Startup Studio (S3)</div>
+            </div>
+            <span class="card-badge badge-accel">Accelerator</span>
+          </div>
+          <div class="card-desc">
+            Program Sharjah Entrepreneurship Centre. Equity-free, tanpa batasan nationality. Memberikan AED 35,000 grant bebas equity + UAE business license gratis + coworking space + mentorship. Durasi 4 bulan, diakhiri showcase event. Cocok untuk early-stage tech startup.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Grant</div>
+              <div class="meta-value highlight">AED 35,000</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity</div>
+              <div class="meta-value highlight">0%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Biz License</div>
+              <div class="meta-value highlight">Gratis</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value highlight">Tidak wajib</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">No Equity</span><span class="tag">Grant + License</span>
+            <span class="tag">4 Bulan</span><span class="tag">Global Open</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.sheraa.ae" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.sheraa.ae')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Sheraa ASC -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">Sharjah, UAE — Middle East</div>
+              <div class="card-name">Sheraa — Access Sharjah Challenge (ASC)</div>
+            </div>
+            <span class="card-badge badge-accel">Challenge</span>
+          </div>
+          <div class="card-desc">
+            Program challenge-based dari Sharjah. Startup global diundang membangun solusi untuk tantangan nyata di Sharjah. Pemenang mendapat kontrak Proof-of-Concept (POC) senilai AED 250,000 dengan pemerintah Sharjah — bukan sekadar grant, tapi kontrak implementasi nyata.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Prize</div>
+              <div class="meta-value highlight">AED 250K POC Contract</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity</div>
+              <div class="meta-value highlight">0%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tipe</div>
+              <div class="meta-value">Kontrak pemerintah</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value highlight">Tidak wajib</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Govt Contract</span><span class="tag">No Equity</span>
+            <span class="tag">Challenge-Based</span><span class="tag">Global Open</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://startups.sheraa.ae" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://startups.sheraa.ae')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- in5 -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">Dubai, UAE — Middle East</div>
+              <div class="card-name">in5 Innovation Centre</div>
+            </div>
+            <span class="card-badge badge-accel">Incubator</span>
+          </div>
+          <div class="card-desc">
+            Program Dubai Government (TECOM Group). Sudah mendukung 500+ startup. Tidak ada cohort deadline — menerima aplikasi secara rolling sepanjang tahun. Memberikan akses coworking, mentorship, legal support, dan ekosistem startup Dubai. Fokus: tech, media, design, science.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Cash</div>
+              <div class="meta-value">Resources & mentoring</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity</div>
+              <div class="meta-value highlight">0%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Admission</div>
+              <div class="meta-value highlight">Rolling (kapan saja)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value highlight">Tidak wajib</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Rolling Admission</span><span class="tag">No Equity</span>
+            <span class="tag">500+ Alumni</span><span class="tag">Dubai Govt</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.in5.ae" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.in5.ae')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Dubai Future Accelerators -->
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🇦🇪</div>
+            <div class="card-info">
+              <div class="card-country">Dubai, UAE — Middle East</div>
+              <div class="card-name">Dubai Future Accelerators (DFA)</div>
+            </div>
+            <span class="card-badge badge-accel">Accelerator</span>
+          </div>
+          <div class="card-desc">
+            Program unik dari Dubai Future Foundation: startup langsung dipertemukan dengan government/private entities untuk menyelesaikan challenge nyata. Tanpa equity. Peserta mendapat roundtrip airfare + akomodasi selama program. Edisi sebelumnya: 299 startup dari seluruh dunia, 125+ pilot/implementasi.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Benefit</div>
+              <div class="meta-value">Flights + Akomodasi</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Equity</div>
+              <div class="meta-value highlight">0%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Model</div>
+              <div class="meta-value">Govt pilot direct</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Relokasi</div>
+              <div class="meta-value warning">Selama program</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">No Equity</span><span class="tag">Direct Pilot</span>
+            <span class="tag">Govt Partner</span><span class="tag">Flights Covered</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.dubaifuture.ae" target="_blank" class="btn-apply">🔗 Apply / Info Resmi</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.dubaifuture.ae')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+      </div><!-- /grid-accel -->
+    </div><!-- /s-accel -->
+
+    <!-- ════════════════════════════════════════════
+         SECTION 4: PLATFORM REMOTE JOB
+    ═══════════════════════════════════════════════ -->
+    <div class="section-block" id="s-platform">
+      <div class="section-header">
+        <div class="section-icon" style="background:#BEE3F8">💼</div>
+        <div class="section-title">
+          <h2>Platform Remote Job</h2>
+          <div class="section-desc">Website cari kerja & freelance dari perusahaan global — apply dari Indonesia, dibayar dalam USD/EUR</div>
+        </div>
+        <div class="section-count" id="platform-count"></div>
+      </div>
+
+      <div class="cards-grid" id="grid-platform">
+
+        <!-- Upwork -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Freelance Platform</div>
+              <div class="card-name">Upwork</div>
+            </div>
+            <span class="card-badge badge-platform">Freelance</span>
+          </div>
+          <div class="card-desc">
+            Platform freelance terbesar di dunia dengan 12+ juta klien aktif. Cocok untuk web developer, designer, writer, data analyst, IT consultant, dan banyak lagi. Sistem hourly atau fixed-price. Pembayaran dalam USD via Payoneer, PayPal, atau transfer bank.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Model</div><div class="meta-value">Hourly / Fixed-price</div></div>
+            <div class="meta-item"><div class="meta-label">Komisi Platform</div><div class="meta-value warning">5–20%</div></div>
+            <div class="meta-item"><div class="meta-label">Pembayaran</div><div class="meta-value">USD via Payoneer/PayPal</div></div>
+            <div class="meta-item"><div class="meta-label">Cocok untuk</div><div class="meta-value">Dev, Design, IT, Writing</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Terbesar</span><span class="tag">Hourly Contract</span>
+            <span class="tag">USD</span><span class="tag">Long-term Client</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.upwork.com" target="_blank" class="btn-apply">🔗 Daftar / Cari Kerja</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.upwork.com/freelance-jobs/')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Remote.com -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Remote Job Board</div>
+              <div class="card-name">Remote.com</div>
+            </div>
+            <span class="card-badge badge-platform">Remote Jobs</span>
+          </div>
+          <div class="card-desc">
+            Platform khusus untuk pekerjaan full-time remote dari perusahaan global yang siap mempekerjakan talent dari mana saja — termasuk Indonesia. Perusahaan menggunakan Remote sebagai Employer of Record (EOR), jadi kamu bisa digaji secara legal oleh perusahaan luar negeri.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Tipe Kerja</div><div class="meta-value">Full-time remote</div></div>
+            <div class="meta-item"><div class="meta-label">Kontrak</div><div class="meta-value highlight">Legal via EOR</div></div>
+            <div class="meta-item"><div class="meta-label">Pembayaran</div><div class="meta-value">USD/EUR, lokal currency</div></div>
+            <div class="meta-item"><div class="meta-label">Benefit</div><div class="meta-value">Health insurance, dll</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Full-time</span><span class="tag">Legal EOR</span>
+            <span class="tag">Benefits Included</span><span class="tag">Global Hiring</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://remote.com/jobs" target="_blank" class="btn-apply">🔗 Cari Lowongan</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://remote.com/jobs')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- We Work Remotely -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Remote Job Board</div>
+              <div class="card-name">We Work Remotely (WWR)</div>
+            </div>
+            <span class="card-badge badge-platform">Remote Jobs</span>
+          </div>
+          <div class="card-desc">
+            Job board remote terbesar dengan 4+ juta pengunjung per bulan. Semua lowongan di sini adalah 100% remote. Kategori utama: Programming, Design, Marketing, Customer Support, Sales, Copywriting, dan DevOps. Banyak perusahaan tech global yang posting di sini.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Total Listing</div><div class="meta-value">4M+ pengunjung/bln</div></div>
+            <div class="meta-item"><div class="meta-label">Tipe</div><div class="meta-value">Full-time & Contract</div></div>
+            <div class="meta-item"><div class="meta-label">Fokus</div><div class="meta-value">Tech & Creative</div></div>
+            <div class="meta-item"><div class="meta-label">Biaya Daftar</div><div class="meta-value highlight">Gratis untuk pelamar</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">100% Remote</span><span class="tag">Tech Jobs</span>
+            <span class="tag">Design Jobs</span><span class="tag">Gratis Daftar</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://weworkremotely.com" target="_blank" class="btn-apply">🔗 Cari Lowongan</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://weworkremotely.com')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Toptal -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Elite Freelance Network</div>
+              <div class="card-name">Toptal</div>
+            </div>
+            <span class="card-badge badge-platform">Elite Freelance</span>
+          </div>
+          <div class="card-desc">
+            Network freelance eksklusif untuk top 3% talent global. Proses seleksi sangat ketat (5 tahap), tapi rate-nya jauh lebih tinggi — rata-rata USD 60–200/jam. Cocok untuk developer senior, designer berpengalaman, dan finance/business consultant. Klien: startup funded sampai Fortune 500.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Rate</div><div class="meta-value highlight">USD 60–200/jam</div></div>
+            <div class="meta-item"><div class="meta-label">Seleksi</div><div class="meta-value warning">Sangat ketat (top 3%)</div></div>
+            <div class="meta-item"><div class="meta-label">Klien</div><div class="meta-value">Startup & Fortune 500</div></div>
+            <div class="meta-item"><div class="meta-label">Pembayaran</div><div class="meta-value">USD mingguan</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">High Rate</span><span class="tag">Elite Network</span>
+            <span class="tag">Senior Level</span><span class="tag">Vetted Clients</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.toptal.com" target="_blank" class="btn-apply">🔗 Daftar sebagai Freelancer</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.toptal.com/freelance-jobs')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- Fiverr -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Gig Platform</div>
+              <div class="card-name">Fiverr</div>
+            </div>
+            <span class="card-badge badge-platform">Freelance</span>
+          </div>
+          <div class="card-desc">
+            Platform gig economy paling populer. Kamu membuat "gig" (layanan) sendiri dan klien datang ke kamu — bukan kamu yang melamar. Cocok untuk desainer, penulis, video editor, AI prompt engineer, dan jasa digital lainnya. Rate mulai dari USD 5 hingga ribuan dolar per project.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Model</div><div class="meta-value">Gig (klien cari kamu)</div></div>
+            <div class="meta-item"><div class="meta-label">Komisi Platform</div><div class="meta-value warning">20%</div></div>
+            <div class="meta-item"><div class="meta-label">Pembayaran</div><div class="meta-value">USD via Payoneer/PayPal</div></div>
+            <div class="meta-item"><div class="meta-label">Entry Level</div><div class="meta-value highlight">Mudah dimulai</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Gig Economy</span><span class="tag">Easy to Start</span>
+            <span class="tag">Design & Creative</span><span class="tag">USD</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.fiverr.com" target="_blank" class="btn-apply">🔗 Buat Gig / Daftar</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.fiverr.com')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+        <!-- LinkedIn Remote -->
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+          <div class="card-top">
+            <div class="card-flag">🌐</div>
+            <div class="card-info">
+              <div class="card-country">Global — Professional Network</div>
+              <div class="card-name">LinkedIn — Remote Jobs Filter</div>
+            </div>
+            <span class="card-badge badge-platform">Job Board</span>
+          </div>
+          <div class="card-desc">
+            LinkedIn memiliki filter "Remote" dan "Anywhere" untuk menemukan ribuan lowongan full-time remote dari perusahaan global. Gunakan filter "Remote" + "Indonesia" atau "Worldwide" untuk menemukan peluang yang bisa dilamar dari Indonesia. Banyak perusahaan tech besar merekrut di sini.
+          </div>
+          <div class="card-meta">
+            <div class="meta-item"><div class="meta-label">Tipe</div><div class="meta-value">Full-time & Contract</div></div>
+            <div class="meta-item"><div class="meta-label">Filter Remote</div><div class="meta-value highlight">Ada — gunakan filter</div></div>
+            <div class="meta-item"><div class="meta-label">Networking</div><div class="meta-value highlight">Terkuat di dunia</div></div>
+            <div class="meta-item"><div class="meta-label">Biaya</div><div class="meta-value">Gratis (atau Premium)</div></div>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Professional Network</span><span class="tag">Full-time</span>
+            <span class="tag">Filter Remote</span><span class="tag">Global Companies</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.linkedin.com/jobs/remote-jobs/" target="_blank" class="btn-apply">🔗 Cari Remote Jobs</a>
+            <button class="btn-update" onclick="checkUpdate(this,'https://www.linkedin.com/jobs/remote-jobs/')">🔄 Cek Update</button>
+          </div>
+          <div class="card-last-checked"><span class="check-dot"></span> Belum dicek</div>
+        </div>
+
+      </div><!-- /grid-platform -->
+    </div><!-- /s-platform -->
+
+    <!-- ════════════════════════════════════════════
+         SECTION 5: TIPS & RESOURCES
+    ═══════════════════════════════════════════════ -->
+    <div class="section-block" id="s-tips">
+      <div class="section-header">
+        <div class="section-icon" style="background:#FEF3C7">📚</div>
+        <div class="section-title">
+          <h2>Tips & Resources untuk WNI</h2>
+          <div class="section-desc">Panduan praktis memulai perjalanan kerja & bisnis global dari Indonesia</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px">
+
+        <!-- Dokumen -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--blue)">
+          <div style="font-size:24px;margin-bottom:10px">📋</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Dokumen yang Harus Disiapkan</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Paspor valid minimal 12–18 bulan ke depan</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Bank statement 3–6 bulan terakhir (menunjukkan income konsisten)</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Kontrak kerja / freelance contracts / business registration</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Asuransi kesehatan internasional (min. coverage EUR 30,000)</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Surat keterangan catatan kepolisian (SKCK) — apostille jika diperlukan</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>CV / Portfolio dalam Bahasa Inggris</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">✓</span>Proof of accommodation (booking hotel/Airbnb awal)</li>
+          </ul>
+        </div>
+
+        <!-- Tools Remote Work -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--green)">
+          <div style="font-size:24px;margin-bottom:10px">🛠️</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Tools Wajib untuk Remote Worker</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>Payoneer / Wise</strong> — terima pembayaran internasional dalam USD/EUR</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>Notion / ClickUp</strong> — manajemen project & task dengan klien</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>Slack / Discord</strong> — komunikasi tim remote</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>Loom</strong> — video async untuk update klien</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>GitHub / GitLab</strong> — untuk developer, portfolio & kolaborasi</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>Calendly</strong> — jadwal meeting lintas timezone</div></li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">→</span><div><strong>NordVPN / ExpressVPN</strong> — keamanan koneksi saat di luar negeri</div></li>
+          </ul>
+        </div>
+
+        <!-- Tips Pitch / Apply -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--purple)">
+          <div style="font-size:24px;margin-bottom:10px">🚀</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Tips Apply Startup Accelerator</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">1.</span>Jangan apply dari nol — punya MVP atau prototype dulu</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">2.</span>Traction > ide: tunjukkan user, revenue, atau pilot yang nyata</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">3.</span>Problem statement harus tajam: "X kehilangan $Y karena Z"</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">4.</span>Team slide lebih penting dari product slide — tunjukkan expertise</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">5.</span>Demo video harus under 3 menit, to the point, tampilkan produk nyata</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">6.</span>Sebutkan kenapa NEGARA TUJUAN relevan untuk produk kamu</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--purple);flex-shrink:0">7.</span>Apply ke beberapa program sekaligus untuk tingkatkan peluang</li>
+          </ul>
+        </div>
+
+        <!-- Income & Tax -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--gold)">
+          <div style="font-size:24px;margin-bottom:10px">💰</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Income & Pajak untuk WNI</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">⚠</span>WNI yang tinggal di Indonesia tetap wajib lapor pajak Indonesia (PPh)</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">⚠</span>Income dari luar negeri tetap harus dilaporkan di SPT Tahunan</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">✓</span>Jika pindah dan menjadi tax resident negara lain, bisa lepas kewajiban pajak Indonesia</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">✓</span>UAE, Dubai: 0% personal income tax — sangat menguntungkan</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">✓</span>Gunakan Payoneer atau Wise untuk terima pembayaran — lebih hemat kurs</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--gold);flex-shrink:0">→</span>Konsultasikan dengan konsultan pajak sebelum mengambil keputusan besar</li>
+          </ul>
+        </div>
+
+        <!-- Mindset -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--orange)">
+          <div style="font-size:24px;margin-bottom:10px">🧠</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Mindset & Persiapan Mental</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>Bangun portfolio online yang kuat sebelum apply kemana pun</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>English proficiency adalah investasi utama — business English, bukan tourist English</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>Mulai dari klien kecil dulu, bangun reputasi dan review</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>Timezone Indonesia (WIB/WITA) overlap dengan Asia & setengah Europe</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>Niche > generalist: lebih mudah masuk market dengan spesialisasi</li>
+            <li style="font-size:12px;color:var(--gray-600);display:flex;gap:8px"><span style="color:var(--orange);flex-shrink:0">→</span>Bergabung komunitas: IndieHackers, Remote Workers ID, Startup Indonesia</li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;border-top:3px solid var(--blue-light)">
+          <div style="font-size:24px;margin-bottom:10px">🔗</div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Link Resources Berguna</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+            <li style="font-size:12px"><a href="https://nomads.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">nomads.com</a> <span style="color:var(--gray-600)">— database kota terbaik untuk digital nomad</span></li>
+            <li style="font-size:12px"><a href="https://www.numbeo.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">numbeo.com</a> <span style="color:var(--gray-600)">— perbandingan biaya hidup antar kota global</span></li>
+            <li style="font-size:12px"><a href="https://nomadlist.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">nomadlist.com</a> <span style="color:var(--gray-600)">— ranking kota remote-friendly + komunitas</span></li>
+            <li style="font-size:12px"><a href="https://www.visaguide.world" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">visaguide.world</a> <span style="color:var(--gray-600)">— info visa dari passport Indonesia</span></li>
+            <li style="font-size:12px"><a href="https://wise.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">wise.com</a> <span style="color:var(--gray-600)">— transfer & terima uang internasional, kurs terbaik</span></li>
+            <li style="font-size:12px"><a href="https://www.safetywing.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">safetywing.com</a> <span style="color:var(--gray-600)">— asuransi kesehatan internasional untuk nomad</span></li>
+            <li style="font-size:12px"><a href="https://remoteok.com" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">remoteok.com</a> <span style="color:var(--gray-600)">— aggregator lowongan remote dari seluruh dunia</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div><!-- /s-tips -->
+
+  </main>
+</div>
+
+<script>
+  // ── State ──────────────────────────────────────────
+  const activeFilters = { type: 'all', region: 'all', income: 'all' };
+
+  // ── Init timestamp ─────────────────────────────────
+  function initTimestamp() {
+    const now = new Date();
+    const fmt = now.toLocaleDateString('id-ID', {
+      day:'2-digit', month:'short', year:'numeric'
+    }) + ' · ' + now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    document.getElementById('global-timestamp').textContent = 'Data per: ' + fmt;
+  }
+
+  // ── Count cards per type ───────────────────────────
+  function updateCounts() {
+    const all = document.querySelectorAll('.prog-card');
+    const counts = { all: 0, nomad: 0, startup: 0, accel: 0, platform: 0 };
+    all.forEach(c => {
+      const t = c.dataset.type;
+      counts.all++;
+      if (counts[t] !== undefined) counts[t]++;
+    });
+    Object.keys(counts).forEach(k => {
+      const el = document.getElementById('count-' + k);
+      if (el) el.textContent = counts[k];
+    });
+    // Section counts
+    const nc = document.getElementById('nomad-count');
+    const sc = document.getElementById('startup-count');
+    const ac = document.getElementById('accel-count');
+    const pc = document.getElementById('platform-count');
+    if (nc) nc.textContent = counts.nomad + ' program';
+    if (sc) sc.textContent = counts.startup + ' program';
+    if (ac) ac.textContent = counts.accel + ' program';
+    if (pc) pc.textContent = counts.platform + ' platform';
+  }
+
+  // ── Filter logic ───────────────────────────────────
+  function filterCards(filterType, value) {
+    activeFilters[filterType] = value;
+
+    // Update sidebar button states per filter group
+    document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.value === value);
+    });
+
+    // Apply all active filters to each card
+    const cards = document.querySelectorAll('.prog-card');
+    cards.forEach(card => {
+      const matchType   = activeFilters.type   === 'all' || card.dataset.type   === activeFilters.type;
+      const matchRegion = activeFilters.region === 'all' || card.dataset.region === activeFilters.region;
+      const matchIncome = activeFilters.income === 'all' || card.dataset.income === activeFilters.income;
+      card.classList.toggle('hidden', !(matchType && matchRegion && matchIncome));
+    });
+
+    renderActiveFilters();
+    updateNoResults();
+  }
+
+  // ── Render active filter tags ──────────────────────
+  const filterLabels = {
+    type:   { all:'Semua Tipe', nomad:'Digital Nomad Visa', startup:'Startup Visa', accel:'Accelerator', platform:'Remote Platform' },
+    region: { all:'Semua Kawasan', 'middle-east':'Middle East', europe:'Eropa', asia:'Asia Pasifik', americas:'Amerika' },
+    income: { all:'Semua Level', low:'Penghasilan Rendah', mid:'Penghasilan Menengah', high:'Penghasilan Tinggi', none:'Tanpa Syarat' }
+  };
+
+  function renderActiveFilters() {
+    const container = document.getElementById('active-filters');
+    container.innerHTML = '';
+    let hasActive = false;
+    Object.entries(activeFilters).forEach(([k, v]) => {
+      if (v !== 'all') {
+        hasActive = true;
+        const tag = document.createElement('span');
+        tag.className = 'active-filter-tag';
+        tag.innerHTML = `${filterLabels[k][v]} <button onclick="filterCards('${k}','all')">✕</button>`;
+        container.appendChild(tag);
+      }
+    });
+    if (hasActive) {
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'clear-all-btn';
+      clearBtn.textContent = 'Hapus semua filter';
+      clearBtn.onclick = () => {
+        filterCards('type','all');
+        filterCards('region','all');
+        filterCards('income','all');
+      };
+      container.appendChild(clearBtn);
+    }
+  }
+
+  // ── No results check ───────────────────────────────
+  function updateNoResults() {
+    ['nomad','startup','accel','platform'].forEach(section => {
+      const grid = document.getElementById('grid-' + section);
+      if (!grid) return;
+      const existing = grid.querySelector('.no-results');
+      if (existing) existing.remove();
+      const visible = [...grid.querySelectorAll('.prog-card')].filter(c => !c.classList.contains('hidden'));
+      if (visible.length === 0) {
+        grid.insertAdjacentHTML('beforeend', `
+          <div class="no-results">
+            <div class="nr-icon">🔍</div>
+            <h3>Tidak ada program yang cocok dengan filter ini</h3>
+            <p style="font-size:12px;margin-top:4px;color:#94A3B8">Coba ubah filter di sidebar kiri</p>
+          </div>`);
+      }
+    });
+  }
+
+  // ── Cek Update button ──────────────────────────────
+  function checkUpdate(btn, url) {
+    btn.classList.add('checking');
+    btn.textContent = '⏳ Mengecek...';
+
+    setTimeout(() => {
+      const now = new Date();
+      const fmt = now.toLocaleDateString('id-ID', {
+        day:'2-digit', month:'short', year:'numeric'
+      }) + ', ' + now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+
+      btn.classList.remove('checking');
+      btn.classList.add('updated');
+      btn.textContent = '✓ Dicek';
+
+      // Update timestamp below the card
+      const card = btn.closest('.prog-card');
+      const ts = card.querySelector('.card-last-checked');
+      if (ts) {
+        ts.className = 'card-last-checked fresh';
+        ts.innerHTML = `<span class="check-dot"></span> Terakhir dicek: ${fmt}`;
+      }
+
+      // Open the official link in new tab
+      setTimeout(() => {
+        window.open(url, '_blank');
+        // Reset button after 5s
+        setTimeout(() => {
+          btn.classList.remove('updated');
+          btn.textContent = '🔄 Cek Update';
+        }, 5000);
+      }, 400);
+    }, 1200);
+  }
+
+  // ── Active navbar link on scroll ──────────────────
+  function updateNavActive() {
+    const sections = ['s-nomad','s-startup','s-accel','s-platform','s-tips'];
+    const links = document.querySelectorAll('.navbar-links .nav-link');
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) current = id;
+    });
+    links.forEach((link, i) => {
+      link.classList.toggle('active', sections[i] === current);
+    });
+  }
+
+  // ── Init ───────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    initTimestamp();
+    updateCounts();
+    window.addEventListener('scroll', updateNavActive, { passive: true });
+  });
+</script>
+</body>
+</html>
