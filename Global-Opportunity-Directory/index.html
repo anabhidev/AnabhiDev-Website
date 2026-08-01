@@ -49,45 +49,88 @@
 
     /* ── Navbar ───────────────────────────────────── */
     .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       height: var(--navbar-h);
       background: var(--navy);
       display: flex; align-items: center;
-      padding: 0 24px;
+      padding: 0 20px; gap: 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(255,255,255,0.1); border: none;
+      cursor: pointer; color: white; font-size: 20px;
+      flex-shrink: 0;
     }
     .navbar-brand {
       display: flex; align-items: center; gap: 10px;
-      color: var(--white); text-decoration: none; flex: 1;
+      color: var(--white); text-decoration: none; flex: 1; min-width: 0;
     }
     .navbar-brand .brand-icon {
-      width: 36px; height: 36px; background: var(--blue);
-      border-radius: 8px; display: flex; align-items: center;
-      justify-content: center; font-size: 18px;
+      width: 46px; height: 46px; background: transparent;
+      border-radius: 0; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
     }
-    .navbar-brand .brand-text { line-height: 1.2; }
-    .navbar-brand .brand-title { font-size: 15px; font-weight: 700; color: var(--white); }
+    .navbar-brand .brand-icon img { width: 46px; height: 46px; object-fit: contain; }
+    .navbar-brand .brand-text { line-height: 1.2; min-width: 0; }
+    .navbar-brand .brand-title { font-size: 15px; font-weight: 700; color: var(--white); white-space: nowrap; }
     .navbar-brand .brand-sub { font-size: 11px; color: var(--sky-mid); font-weight: 400; }
     .navbar-links {
-      display: flex; align-items: center; gap: 4px;
+      display: flex; align-items: center; gap: 4px; flex-shrink: 0;
     }
     .navbar-links a {
       color: var(--sky-mid); text-decoration: none;
       padding: 6px 12px; border-radius: var(--radius-sm);
       font-size: 13px; font-weight: 500;
-      transition: all 0.2s;
+      transition: all 0.2s; white-space: nowrap;
     }
     .navbar-links a:hover, .navbar-links a.active {
       background: rgba(255,255,255,0.12); color: var(--white);
     }
     .navbar-timestamp {
-      margin-left: 16px;
+      margin-left: 8px; flex-shrink: 0;
       font-size: 11px; color: var(--gray-400);
-      display: flex; align-items: center; gap: 6px;
+      display: flex; align-items: center; gap: 6px; white-space: nowrap;
     }
     .navbar-timestamp .dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: #34D399; display: inline-block;
+      background: #34D399; display: inline-block; flex-shrink: 0;
+    }
+    /* ── Sidebar overlay for mobile ───────────────── */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; z-index: 150;
+      background: rgba(0,0,0,0.5);
+    }
+    .sidebar-overlay.active { display: block; }
+    /* ── Mobile responsive ────────────────────────── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .navbar-links { display: none; }
+      .navbar-timestamp { display: none; }
+      .navbar-brand .brand-sub { display: none; }
+      .sidebar {
+        position: fixed !important;
+        top: var(--navbar-h) !important;
+        left: 0 !important;
+        height: calc(100vh - var(--navbar-h)) !important;
+        z-index: 160;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        width: 280px !important;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main { padding: 16px 14px 60px; }
+      .intro-card { padding: 20px 16px; }
+      .intro-card h1 { font-size: 17px; }
+      .intro-card::before { display: none; }
+      .intro-stats { gap: 14px; }
+      .intro-stat .stat-num { font-size: 20px; }
+      .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+      .glossary-grid { grid-template-columns: 1fr; }
+      .card-meta { grid-template-columns: 1fr 1fr; }
+      .section-header h2 { font-size: 15px; }
+      .section-header .section-count { display: none; }
     }
 
     /* ── Layout ───────────────────────────────────── */
@@ -435,11 +478,12 @@
 <body>
 
 <!-- ═══════════════════════════════════ NAVBAR ═══ -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 <nav class="navbar">
+  <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
   <a href="#" class="navbar-brand">
     <div class="brand-icon">
-      <img src="https://anabhidev.com/logo.webp" alt="AnabhiDev" style="width:28px;height:28px;object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%">🌐</span>
+      <img src="https://anabhidev.com/logo.webp" alt="AnabhiDev" onerror="this.style.display='none'">
     </div>
     <div class="brand-text">
       <div class="brand-title">Global Opportunity Directory</div>
@@ -463,7 +507,7 @@
 <div class="layout">
 
   <!-- ─── SIDEBAR ─── -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
 
     <!-- Navigation -->
     <div class="sidebar-section">
@@ -554,6 +598,42 @@
       </div>
     </div>
 
+    <div class="sidebar-divider"></div>
+
+    <!-- Filter by Industry -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter: Industri / Profesi</div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="industry" data-value="all" onclick="filterCards('industry','all')">
+          <span class="filter-icon">🔍</span> Semua Industri
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="hotel" onclick="filterCards('industry','hotel')">
+          <span class="filter-icon">🏨</span> Hotel & Hospitality
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="fnb" onclick="filterCards('industry','fnb')">
+          <span class="filter-icon">🍽️</span> Restaurant / F&B
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="fo" onclick="filterCards('industry','fo')">
+          <span class="filter-icon">🤝</span> Front Office / Guest
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="it" onclick="filterCards('industry','it')">
+          <span class="filter-icon">💻</span> IT / Tech
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="ai" onclick="filterCards('industry','ai')">
+          <span class="filter-icon">🤖</span> AI / AI Engineer
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="business" onclick="filterCards('industry','business')">
+          <span class="filter-icon">📊</span> Business / Consulting
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="writing" onclick="filterCards('industry','writing')">
+          <span class="filter-icon">✍️</span> Writing / Creative
+        </button>
+        <button class="filter-btn" data-filter="industry" data-value="design" onclick="filterCards('industry','design')">
+          <span class="filter-icon">🎨</span> Design
+        </button>
+      </div>
+    </div>
+
   </aside>
 
   <!-- ─── MAIN CONTENT ─── -->
@@ -625,7 +705,7 @@
       <div class="cards-grid" id="grid-nomad">
 
         <!-- UAE -->
-        <div class="prog-card" data-type="nomad" data-region="middle-east" data-income="mid">
+        <div class="prog-card" data-type="nomad" data-region="middle-east" data-income="mid" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -675,7 +755,7 @@
         </div>
 
         <!-- Estonia -->
-        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high">
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high" data-industry="it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇪🇪</div>
             <div class="card-info">
@@ -725,7 +805,7 @@
         </div>
 
         <!-- Portugal -->
-        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid">
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇵🇹</div>
             <div class="card-info">
@@ -775,7 +855,7 @@
         </div>
 
         <!-- Spain -->
-        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid">
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="mid" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇪🇸</div>
             <div class="card-info">
@@ -825,7 +905,7 @@
         </div>
 
         <!-- Colombia -->
-        <div class="prog-card" data-type="nomad" data-region="americas" data-income="low">
+        <div class="prog-card" data-type="nomad" data-region="americas" data-income="low" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇨🇴</div>
             <div class="card-info">
@@ -875,7 +955,7 @@
         </div>
 
         <!-- Greece -->
-        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high">
+        <div class="prog-card" data-type="nomad" data-region="europe" data-income="high" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇬🇷</div>
             <div class="card-info">
@@ -944,7 +1024,7 @@
       <div class="cards-grid" id="grid-startup">
 
         <!-- Chile -->
-        <div class="prog-card" data-type="startup" data-region="americas" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="americas" data-income="none" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇨🇱</div>
             <div class="card-info">
@@ -995,7 +1075,7 @@
         </div>
 
         <!-- Singapore -->
-        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none" data-industry="it ai business hotel">
           <div class="card-top">
             <div class="card-flag">🇸🇬</div>
             <div class="card-info">
@@ -1045,7 +1125,7 @@
         </div>
 
         <!-- UK -->
-        <div class="prog-card" data-type="startup" data-region="europe" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="europe" data-income="none" data-industry="hotel fnb it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇬🇧</div>
             <div class="card-info">
@@ -1095,7 +1175,7 @@
         </div>
 
         <!-- New Zealand -->
-        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none" data-industry="hotel fnb fo business it">
           <div class="card-top">
             <div class="card-flag">🇳🇿</div>
             <div class="card-info">
@@ -1145,7 +1225,7 @@
         </div>
 
         <!-- Luxembourg -->
-        <div class="prog-card" data-type="startup" data-region="europe" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="europe" data-income="none" data-industry="it ai business">
           <div class="card-top">
             <div class="card-flag">🇱🇺</div>
             <div class="card-info">
@@ -1195,7 +1275,7 @@
         </div>
 
         <!-- Australia -->
-        <div class="prog-card" data-type="startup" data-region="asia" data-income="none">
+        <div class="prog-card" data-type="startup" data-region="asia" data-income="none" data-industry="hotel fnb fo it business">
           <div class="card-top">
             <div class="card-flag">🇦🇺</div>
             <div class="card-info">
@@ -1263,7 +1343,7 @@
       <div class="cards-grid" id="grid-accel">
 
         <!-- MBRIF -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="hotel fnb fo it ai business">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1305,7 +1385,7 @@
         </div>
 
         <!-- Hub71 -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="hotel fnb it ai business">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1347,7 +1427,7 @@
         </div>
 
         <!-- Sheraa S3 -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="hotel fnb it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1389,7 +1469,7 @@
         </div>
 
         <!-- Sheraa ASC -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="hotel fnb fo it ai business">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1431,7 +1511,7 @@
         </div>
 
         <!-- in5 -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="it ai business design writing hotel">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1473,7 +1553,7 @@
         </div>
 
         <!-- Dubai Future Accelerators -->
-        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none">
+        <div class="prog-card" data-type="accel" data-region="middle-east" data-income="none" data-industry="hotel fnb fo it ai business">
           <div class="card-top">
             <div class="card-flag">🇦🇪</div>
             <div class="card-info">
@@ -1533,7 +1613,7 @@
       <div class="cards-grid" id="grid-platform">
 
         <!-- Upwork -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="it ai writing design business hotel fnb">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1563,7 +1643,7 @@
         </div>
 
         <!-- Remote.com -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="it ai business writing design hotel fnb">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1593,7 +1673,7 @@
         </div>
 
         <!-- We Work Remotely -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="it ai writing design business">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1623,7 +1703,7 @@
         </div>
 
         <!-- Toptal -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="it ai business design">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1653,7 +1733,7 @@
         </div>
 
         <!-- Fiverr -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="design writing ai it hotel fnb">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1683,7 +1763,7 @@
         </div>
 
         <!-- LinkedIn Remote -->
-        <div class="prog-card" data-type="platform" data-region="all" data-income="none">
+        <div class="prog-card" data-type="platform" data-region="all" data-income="none" data-industry="hotel fnb fo it ai business writing design">
           <div class="card-top">
             <div class="card-flag">🌐</div>
             <div class="card-info">
@@ -1825,7 +1905,19 @@
 
 <script>
   // ── State ──────────────────────────────────────────
-  const activeFilters = { type: 'all', region: 'all', income: 'all' };
+  const activeFilters = { type: 'all', region: 'all', income: 'all', industry: 'all' };
+
+  // ── Sidebar toggle (mobile) ────────────────────────
+  function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    sb.classList.toggle('open');
+    ov.classList.toggle('active');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('active');
+  }
 
   // ── Init timestamp ─────────────────────────────────
   function initTimestamp() {
@@ -1865,28 +1957,39 @@
     activeFilters[filterType] = value;
 
     // Update sidebar button states per filter group
-    document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+    document.querySelectorAll('[data-filter="' + filterType + '"]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.value === value);
     });
 
     // Apply all active filters to each card
     const cards = document.querySelectorAll('.prog-card');
     cards.forEach(card => {
-      const matchType   = activeFilters.type   === 'all' || card.dataset.type   === activeFilters.type;
-      const matchRegion = activeFilters.region === 'all' || card.dataset.region === activeFilters.region;
-      const matchIncome = activeFilters.income === 'all' || card.dataset.income === activeFilters.income;
-      card.classList.toggle('hidden', !(matchType && matchRegion && matchIncome));
+      const cardType     = card.dataset.type     || '';
+      const cardRegion   = card.dataset.region   || '';
+      const cardIncome   = card.dataset.income   || '';
+      const cardIndustry = card.dataset.industry || '';
+
+      const matchType     = activeFilters.type     === 'all' || cardType   === activeFilters.type;
+      // Platform cards have region="all" — treat as matching any region filter
+      const matchRegion   = activeFilters.region   === 'all' || cardRegion === activeFilters.region || cardRegion === 'all';
+      const matchIncome   = activeFilters.income   === 'all' || cardIncome === activeFilters.income || cardIncome === 'none';
+      const matchIndustry = activeFilters.industry === 'all' || cardIndustry.split(' ').includes(activeFilters.industry);
+
+      card.classList.toggle('hidden', !(matchType && matchRegion && matchIncome && matchIndustry));
     });
 
     renderActiveFilters();
     updateNoResults();
+    // Close sidebar on mobile after filter tap
+    if (window.innerWidth <= 768) closeSidebar();
   }
 
   // ── Render active filter tags ──────────────────────
   const filterLabels = {
-    type:   { all:'Semua Tipe', nomad:'Digital Nomad Visa', startup:'Startup Visa', accel:'Accelerator', platform:'Remote Platform' },
-    region: { all:'Semua Kawasan', 'middle-east':'Middle East', europe:'Eropa', asia:'Asia Pasifik', americas:'Amerika' },
-    income: { all:'Semua Level', low:'Penghasilan Rendah', mid:'Penghasilan Menengah', high:'Penghasilan Tinggi', none:'Tanpa Syarat' }
+    type:     { all:'Semua Tipe', nomad:'Digital Nomad Visa', startup:'Startup Visa', accel:'Accelerator', platform:'Remote Platform' },
+    region:   { all:'Semua Kawasan', 'middle-east':'Middle East', europe:'Eropa', asia:'Asia Pasifik', americas:'Amerika' },
+    income:   { all:'Semua Level', low:'Penghasilan Rendah', mid:'Penghasilan Menengah', high:'Penghasilan Tinggi', none:'Tanpa Syarat' },
+    industry: { all:'Semua Industri', hotel:'Hotel & Hospitality', fnb:'Restaurant / F&B', fo:'Front Office / Guest', it:'IT / Tech', ai:'AI / AI Engineer', business:'Business / Consulting', writing:'Writing / Creative', design:'Design' }
   };
 
   function renderActiveFilters() {
@@ -1898,7 +2001,8 @@
         hasActive = true;
         const tag = document.createElement('span');
         tag.className = 'active-filter-tag';
-        tag.innerHTML = `${filterLabels[k][v]} <button onclick="filterCards('${k}','all')">✕</button>`;
+        const label = (filterLabels[k] && filterLabels[k][v]) ? filterLabels[k][v] : v;
+        tag.innerHTML = label + ' <button onclick="filterCards(\'' + k + '\',\'all\')">✕</button>';
         container.appendChild(tag);
       }
     });
@@ -1910,6 +2014,7 @@
         filterCards('type','all');
         filterCards('region','all');
         filterCards('income','all');
+        filterCards('industry','all');
       };
       container.appendChild(clearBtn);
     }
