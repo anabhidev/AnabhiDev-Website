@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRD — Jagadita Website Rebuild 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan: #0097B2;
+    --cyan-dark: #00839A;
+    --cyan-soft: #D7F1F5;
+    --cyan-muted: #EAF7FA;
+    --navy: #0A2540;
+    --navy-mid: #1a3a5c;
+    --dark: #121212;
+    --white: #FFFFFF;
+    --gray-100: #F8FAFC;
+    --gray-200: #EDF2F7;
+    --gray-300: #CBD5E0;
+    --gray-500: #718096;
+    --gray-700: #2D3748;
+    --border: #D0E7EB;
+    --green: #22C55E;
+    --amber: #F59E0B;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── SIDEBAR ── */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--navy);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-logo .brand {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    letter-spacing: -0.3px;
+  }
+
+  .sidebar-logo .brand span { color: var(--cyan); }
+
+  .sidebar-logo .doc-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .sidebar-progress {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    height: 5px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--cyan);
+    border-radius: var(--radius-full);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .progress-pct {
+    font-size: 12px;
+    color: var(--cyan);
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  .sidebar-nav { padding: 16px 0; flex: 1; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    padding: 12px 24px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+  }
+
+  .nav-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  .nav-item.active { color: var(--cyan); border-left-color: var(--cyan); background: rgba(0,151,178,0.08); }
+
+  .nav-item .nav-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .nav-item.active .nav-dot { background: var(--cyan); }
+  .nav-item.done .nav-dot { background: var(--green); }
+  .nav-item.done { color: rgba(255,255,255,0.4); }
+
+  .sidebar-footer {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .sidebar-footer strong { color: rgba(255,255,255,0.55); display: block; margin-bottom: 2px; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .topbar-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--navy);
+  }
+
+  .topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .badge-cyan { background: var(--cyan-muted); color: var(--cyan-dark); }
+  .badge-navy { background: rgba(10,37,64,0.08); color: var(--navy); }
+  .badge-green { background: #DCFCE7; color: #15803D; }
+  .badge-amber { background: #FEF3C7; color: #92400E; }
+
+  /* ── SECTIONS ── */
+  .content { padding: 48px 56px 80px; max-width: 1200px; }
+
+  .section {
+    margin-bottom: 64px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 2px;
+    background: var(--cyan);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .section-title span { color: var(--cyan); }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: var(--gray-500);
+    margin-bottom: 28px;
+    max-width: 600px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* ── HERO CARD ── */
+  .hero-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: var(--radius-lg);
+    padding: 44px 48px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(0,151,178,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 120px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(0,151,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-card .doc-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .hero-card .doc-title span { color: var(--cyan); }
+
+  .hero-card .doc-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-meta-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+  }
+
+  .hero-meta-item .label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 5px;
+  }
+
+  .hero-meta-item .value {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--white);
+  }
+
+  .hero-meta-item .value.cyan { color: var(--cyan); }
+
+  /* ── INFO CARDS ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  .card-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--navy);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-icon {
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--cyan-muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .card p { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+
+  /* ── 2-COL GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  /* ── PROBLEM/SOLUTION ── */
+  .problem-solution {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .problem-card {
+    background: #FFF5F5;
+    border: 1px solid #FED7D7;
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+  }
+
+  .problem-card .ps-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #C53030;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .solution-card {
+    background: #F0FFF4;
+    border: 1px solid #C6F6D5;
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+  }
+
+  .solution-card .ps-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #276749;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ps-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .ps-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .problem-card .dot { background: #FC8181; }
+  .solution-card .dot { background: #68D391; }
+
+  /* ── SCORE COMPARE ── */
+  .score-compare {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .score-compare h4 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 20px;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .score-label { font-size: 13px; color: var(--gray-500); font-weight: 600; width: 120px; flex-shrink: 0; }
+
+  .score-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+  .score-bar-item { display: flex; align-items: center; gap: 10px; }
+
+  .score-site { font-size: 11px; color: var(--gray-500); width: 60px; flex-shrink: 0; }
+
+  .bar-track { flex: 1; height: 8px; background: var(--gray-200); border-radius: var(--radius-full); overflow: hidden; }
+
+  .bar-fill { height: 100%; border-radius: var(--radius-full); transition: width 1.2s ease; width: 0%; }
+
+  .bar-fill.red { background: #FC8181; }
+  .bar-fill.amber { background: var(--amber); }
+  .bar-fill.green { background: var(--green); }
+
+  .score-num { font-size: 12px; font-weight: 700; width: 28px; text-align: right; }
+
+  .score-num.red { color: #E53E3E; }
+  .score-num.amber { color: #D97706; }
+  .score-num.green { color: #16A34A; }
+
+  /* ── PAGES TABLE ── */
+  .pages-table {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .pages-table table { width: 100%; border-collapse: collapse; }
+
+  .pages-table th {
+    background: var(--cyan-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cyan-dark);
+    padding: 12px 18px;
+    text-align: left;
+  }
+
+  .pages-table td {
+    padding: 12px 18px;
+    font-size: 13.5px;
+    border-top: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .pages-table tr:hover td { background: var(--gray-100); }
+
+  .page-name { font-weight: 700; color: var(--navy); }
+  .page-url { font-size: 12px; color: var(--gray-500); font-family: monospace; }
+
+  /* ── TECH STACK ── */
+  .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 16px; }
+
+  .tech-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tech-icon {
+    width: 36px; height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--cyan-muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .tech-name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .tech-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .checklist li:hover { color: var(--navy); }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--gray-300);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: var(--white);
+  }
+
+  .checklist li.checked .check-box {
+    background: var(--cyan);
+    border-color: var(--cyan);
+  }
+
+  .checklist li.checked .check-box::after {
+    content: '✓';
+    font-size: 11px;
+    color: white;
+    font-weight: 700;
+  }
+
+  .checklist li.checked .check-text {
+    text-decoration: line-through;
+    color: var(--gray-300);
+  }
+
+  /* ── DESIGN PALETTE ── */
+  .palette { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    width: 90px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .swatch-color { height: 56px; }
+  .swatch-label { background: var(--white); padding: 6px 8px; border: 1px solid var(--border); border-top: none; }
+  .swatch-name { font-size: 11px; font-weight: 700; color: var(--navy); }
+  .swatch-hex { font-size: 10px; color: var(--gray-500); font-family: monospace; }
+
+  /* ── FONT SHOWCASE ── */
+  .font-showcase {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .font-raleway {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .font-label { font-size: 11px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+
+  .font-nunito {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: var(--gray-700);
+    line-height: 1.8;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 6px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item { position: relative; margin-bottom: 24px; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -28px; top: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--cyan);
+    z-index: 1;
+  }
+
+  .timeline-item.done .timeline-dot {
+    background: var(--cyan);
+  }
+
+  .timeline-phase {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+  .timeline-tasks { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .task-chip {
+    background: var(--cyan-muted);
+    color: var(--cyan-dark);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+  }
+
+  /* ── KPI ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; }
+
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 18px;
+    text-align: center;
+  }
+
+  .kpi-value {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-label { font-size: 11px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── STAKEHOLDER ── */
+  .stakeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .stakeholder-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stakeholder-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--navy) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--white);
+    margin: 0 auto 12px;
+  }
+
+  .stakeholder-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 2px; }
+  .stakeholder-role { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+  .stakeholder-resp { font-size: 12px; color: var(--gray-700); line-height: 1.5; }
+
+  /* ── MOBILE TOGGLE ── */
+  .mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 14px; left: 14px;
+    z-index: 200;
+    background: var(--navy);
+    border: none;
+    color: var(--white);
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 18px;
+    align-items: center; justify-content: center;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .sidebar, .topbar, .mobile-nav-toggle { display: none !important; }
+    .main { margin-left: 0; }
+    .content { padding: 20px; }
+    .section { opacity: 1; transform: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .topbar { padding: 14px 20px 14px 64px; }
+    .content { padding: 32px 20px 60px; max-width: 100%; }
+    .mobile-nav-toggle { display: flex; }
+    .hero-meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3, .tech-grid, .kpi-grid, .stakeholder-grid { grid-template-columns: 1fr; }
+    .problem-solution { grid-template-columns: 1fr; }
+    .hero-card { padding: 28px 24px; }
+    .hero-card .doc-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mobile-nav-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">☰</button>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Jagadita<span>.</span></div>
+      <div class="doc-label">Product Requirements Document</div>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="progress-label">Reading Progress</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-pct" id="progressPct">0%</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a class="nav-item" onclick="scrollTo('overview')"><span class="nav-dot"></span> Overview</a>
+      <a class="nav-item" onclick="scrollTo('problem')"><span class="nav-dot"></span> Problem & Solution</a>
+      <a class="nav-item" onclick="scrollTo('goals')"><span class="nav-dot"></span> Goals & KPIs</a>
+
+      <div class="nav-section-label">Website</div>
+      <a class="nav-item" onclick="scrollTo('pages')"><span class="nav-dot"></span> Halaman & Struktur</a>
+      <a class="nav-item" onclick="scrollTo('design')"><span class="nav-dot"></span> Desain & Visual</a>
+      <a class="nav-item" onclick="scrollTo('features')"><span class="nav-dot"></span> Fitur & Fungsi</a>
+
+      <div class="nav-section-label">Teknis</div>
+      <a class="nav-item" onclick="scrollTo('tech')"><span class="nav-dot"></span> Teknologi</a>
+      <a class="nav-item" onclick="scrollTo('performance')"><span class="nav-dot"></span> Performa & SEO</a>
+
+      <div class="nav-section-label">Proyek</div>
+      <a class="nav-item" onclick="scrollTo('timeline')"><span class="nav-dot"></span> Roadmap</a>
+      <a class="nav-item" onclick="scrollTo('team')"><span class="nav-dot"></span> Tim & Peran</a>
+      <a class="nav-item" onclick="scrollTo('checklist')"><span class="nav-dot"></span> Launch Checklist</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <strong>Agus Wibawa</strong>
+      Prepared · August 2026
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <div class="topbar-title">Jagadita Website Rebuild 2026</div>
+      <div class="topbar-meta">
+        <span class="badge badge-cyan">v1.0</span>
+        <span class="badge badge-amber">In Progress</span>
+        <span style="display:none" class="badge badge-navy" id="printBtn" onclick="window.print()" style="cursor:pointer">🖨 Print</span>
+        <button onclick="window.print()" style="background:var(--cyan-muted);color:var(--cyan-dark);border:none;padding:6px 14px;border-radius:var(--radius-full);font-size:12px;font-weight:700;cursor:pointer;">🖨 Print / Save PDF</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <div class="section" id="overview">
+        <div class="hero-card">
+          <div class="doc-title">Jagadita Website<br><span>Rebuild 2026</span></div>
+          <div class="doc-desc">Dokumen ini menjelaskan rencana pembangunan ulang website Jagadita.com dari WordPress ke website modern yang lebih cepat, lebih profesional, dan lebih mudah ditemukan calon klien di internet.</div>
+          <div class="hero-meta-grid">
+            <div class="hero-meta-item">
+              <div class="label">Author</div>
+              <div class="value">Agus Wibawa</div>
+            </div>
+            <div class="hero-meta-item">
+              <div class="label">Status</div>
+              <div class="value cyan">In Development</div>
+            </div>
+            <div class="hero-meta-item">
+              <div class="label">Platform Lama</div>
+              <div class="value">WordPress</div>
+            </div>
+            <div class="hero-meta-item">
+              <div class="label">Platform Baru</div>
+              <div class="value cyan">HTML + Cloudflare</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><div class="card-icon">💡</div> Apa itu dokumen ini?</div>
+          <p>PRD (Product Requirements Document) ini adalah panduan lengkap tentang <strong>apa yang akan dibangun, mengapa, dan bagaimana</strong>. Dokumen ini ditujukan untuk tim Jagadita agar semua pihak memiliki pemahaman yang sama sebelum proses pembangunan dimulai.</p>
+        </div>
+      </div>
+
+      <!-- PROBLEM & SOLUTION -->
+      <div class="section" id="problem">
+        <div class="section-eyebrow">Latar Belakang</div>
+        <div class="section-title">Masalah & <span>Solusi</span></div>
+        <div class="section-subtitle">Mengapa website Jagadita perlu dibangun ulang dari awal.</div>
+
+        <div class="problem-solution">
+          <div class="problem-card">
+            <div class="ps-label">❌ Masalah Saat Ini (WordPress)</div>
+            <div class="ps-item"><span class="dot"></span><span>Kecepatan website lambat — skor performa hanya <strong>61/100</strong></span></div>
+            <div class="ps-item"><span class="dot"></span><span>Biaya hosting tahunan yang bisa dieliminasi</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Ketergantungan pada plugin pihak ketiga yang sering bermasalah</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Skor SEO <strong>85/100</strong> — masih ada ruang besar untuk perbaikan</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Aksesibilitas <strong>86/100</strong> — belum memenuhi standar internasional</span></div>
+            <div class="ps-item"><span class="dot"></span><span>AI browsing agent tidak bisa membaca website dengan baik (<strong>0/3</strong>)</span></div>
+          </div>
+          <div class="solution-card">
+            <div class="ps-label">✅ Solusi Baru (HTML + Cloudflare)</div>
+            <div class="ps-item"><span class="dot"></span><span>Target skor performa <strong>95+/100</strong> — lebih cepat untuk calon klien</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Hosting <strong>gratis selamanya</strong> via Cloudflare Pages</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Tanpa plugin, tanpa dependensi — lebih stabil dan aman</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Target SEO <strong>100/100</strong> — lebih mudah ditemukan di Google</span></div>
+            <div class="ps-item"><span class="dot"></span><span>Target aksesibilitas <strong>100/100</strong> — standar internasional WCAG</span></div>
+            <div class="ps-item"><span class="dot"></span><span>AI-ready — bisa dibaca ChatGPT, Perplexity, Google AI</span></div>
+          </div>
+        </div>
+
+        <div class="score-compare" id="scoreCompare">
+          <h4>📊 Perbandingan Skor PageSpeed (Google) — Sebelum vs Target</h4>
+          <div class="score-row">
+            <div class="score-label">Performance</div>
+            <div class="score-bars">
+              <div class="score-bar-item">
+                <div class="score-site">Sekarang</div>
+                <div class="bar-track"><div class="bar-fill red" data-target="61"></div></div>
+                <div class="score-num red">61</div>
+              </div>
+              <div class="score-bar-item">
+                <div class="score-site">Target</div>
+                <div class="bar-track"><div class="bar-fill green" data-target="95"></div></div>
+                <div class="score-num green">95+</div>
+              </div>
+            </div>
+          </div>
+          <div class="score-row">
+            <div class="score-label">SEO</div>
+            <div class="score-bars">
+              <div class="score-bar-item">
+                <div class="score-site">Sekarang</div>
+                <div class="bar-track"><div class="bar-fill amber" data-target="85"></div></div>
+                <div class="score-num amber">85</div>
+              </div>
+              <div class="score-bar-item">
+                <div class="score-site">Target</div>
+                <div class="bar-track"><div class="bar-fill green" data-target="100"></div></div>
+                <div class="score-num green">100</div>
+              </div>
+            </div>
+          </div>
+          <div class="score-row">
+            <div class="score-label">Accessibility</div>
+            <div class="score-bars">
+              <div class="score-bar-item">
+                <div class="score-site">Sekarang</div>
+                <div class="bar-track"><div class="bar-fill amber" data-target="86"></div></div>
+                <div class="score-num amber">86</div>
+              </div>
+              <div class="score-bar-item">
+                <div class="score-site">Target</div>
+                <div class="bar-track"><div class="bar-fill green" data-target="100"></div></div>
+                <div class="score-num green">100</div>
+              </div>
+            </div>
+          </div>
+          <div class="score-row">
+            <div class="score-label">Best Practices</div>
+            <div class="score-bars">
+              <div class="score-bar-item">
+                <div class="score-site">Sekarang</div>
+                <div class="bar-track"><div class="bar-fill green" data-target="100"></div></div>
+                <div class="score-num green">100</div>
+              </div>
+              <div class="score-bar-item">
+                <div class="score-site">Target</div>
+                <div class="bar-track"><div class="bar-fill green" data-target="100"></div></div>
+                <div class="score-num green">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOALS & KPIs -->
+      <div class="section" id="goals">
+        <div class="section-eyebrow">Tujuan</div>
+        <div class="section-title">Goals & <span>KPIs</span></div>
+        <div class="section-subtitle">Apa yang ingin dicapai dengan website baru ini.</div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value">95+</div>
+            <div class="kpi-label">PageSpeed Score</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">100</div>
+            <div class="kpi-label">SEO Score</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">100</div>
+            <div class="kpi-label">Accessibility</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">Rp 0</div>
+            <div class="kpi-label">Biaya Hosting</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🎯</div> Tujuan Bisnis</div>
+            <p>Website baru harus mampu meyakinkan calon klien hospitality bahwa Jagadita adalah partner konsultan yang profesional dan terpercaya — bahkan sebelum mereka menghubungi tim.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🔍</div> Tujuan Digital</div>
+            <p>Mudah ditemukan di Google Search, Google AI Overviews, ChatGPT, dan platform AI lainnya ketika calon klien mencari "hospitality consultant Bali" atau sejenisnya.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">⚡</div> Tujuan Teknis</div>
+            <p>Website yang ringan, cepat, stabil, dan tidak memerlukan maintenance rutin yang menyita waktu tim. Tidak ada plugin yang bisa rusak kapan saja.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">💰</div> Tujuan Efisiensi</div>
+            <p>Menghilangkan biaya hosting tahunan dengan memanfaatkan Cloudflare Pages yang gratis, tanpa mengorbankan kecepatan atau keandalan website.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGES & STRUCTURE -->
+      <div class="section" id="pages">
+        <div class="section-eyebrow">Struktur Website</div>
+        <div class="section-title">Halaman & <span>Navigasi</span></div>
+        <div class="section-subtitle">10 halaman yang akan dibangun dalam website baru Jagadita.</div>
+
+        <div class="pages-table">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Halaman</th>
+                <th>URL</th>
+                <th>Prioritas</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><div class="page-name">Homepage</div><div class="page-url">jagadita.com/</div></td>
+                <td><span class="badge badge-cyan">index.html</span></td>
+                <td><span class="badge badge-amber">🔴 Utama</span></td>
+                <td><span class="badge badge-green">In Progress</span></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><div class="page-name">About</div><div class="page-url">jagadita.com/about/</div></td>
+                <td><span class="badge badge-cyan">about.html</span></td>
+                <td><span class="badge badge-amber">🔴 Utama</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><div class="page-name">Services</div><div class="page-url">jagadita.com/service/</div></td>
+                <td><span class="badge badge-cyan">service.html</span></td>
+                <td><span class="badge badge-amber">🔴 Utama</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><div class="page-name">Strategic Planning</div><div class="page-url">jagadita.com/strategic-planning/</div></td>
+                <td><span class="badge badge-cyan">strategic-planning.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><div class="page-name">Market Analysis</div><div class="page-url">jagadita.com/market-analysis/</div></td>
+                <td><span class="badge badge-cyan">market-analysis.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><div class="page-name">Guest Experience</div><div class="page-url">jagadita.com/guest-experience/</div></td>
+                <td><span class="badge badge-cyan">guest-experience.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><div class="page-name">Revenue & Pricing Strategy</div><div class="page-url">jagadita.com/revenue-pricing-strategy/</div></td>
+                <td><span class="badge badge-cyan">revenue-pricing.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><div class="page-name">Our Approach</div><div class="page-url">jagadita.com/our-approach-methodology/</div></td>
+                <td><span class="badge badge-cyan">our-approach.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><div class="page-name">Industries / Solutions</div><div class="page-url">jagadita.com/industries-solutions/</div></td>
+                <td><span class="badge badge-cyan">industries.html</span></td>
+                <td><span class="badge badge-cyan">🟡 Sekunder</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td><div class="page-name">Contact</div><div class="page-url">jagadita.com/contact/</div></td>
+                <td><span class="badge badge-cyan">contact.html</span></td>
+                <td><span class="badge badge-amber">🔴 Utama</span></td>
+                <td><span class="badge badge-navy">Planned</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DESIGN -->
+      <div class="section" id="design">
+        <div class="section-eyebrow">Visual Identity</div>
+        <div class="section-title">Desain & <span>Visual</span></div>
+        <div class="section-subtitle">Panduan tampilan yang akan dipertahankan dari brand Jagadita saat ini.</div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title"><div class="card-icon">🎨</div> Palet Warna Brand</div>
+          <div style="margin-top:12px">
+            <div class="palette">
+              <div class="swatch">
+                <div class="swatch-color" style="background:#0097B2"></div>
+                <div class="swatch-label"><div class="swatch-name">Primary</div><div class="swatch-hex">#0097B2</div></div>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#0A2540"></div>
+                <div class="swatch-label"><div class="swatch-name">Navy</div><div class="swatch-hex">#0A2540</div></div>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#D7F1F5"></div>
+                <div class="swatch-label"><div class="swatch-name">Secondary</div><div class="swatch-hex">#D7F1F5</div></div>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#EAF7FA"></div>
+                <div class="swatch-label"><div class="swatch-name">Muted</div><div class="swatch-hex">#EAF7FA</div></div>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#121212"></div>
+                <div class="swatch-label"><div class="swatch-name">Neutral</div><div class="swatch-hex">#121212</div></div>
+              </div>
+              <div class="swatch">
+                <div class="swatch-color" style="background:#FFFFFF;border:1px solid #D0E7EB"></div>
+                <div class="swatch-label"><div class="swatch-name">White</div><div class="swatch-hex">#FFFFFF</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="font-showcase">
+          <div class="font-raleway">Raleway — Headline Font</div>
+          <div class="font-label">Digunakan untuk judul, navigasi, dan tombol</div>
+          <div class="font-nunito">Nunito Sans — Body Font. Digunakan untuk semua teks penjelasan, paragraf, dan konten artikel. Font ini dipilih karena keterbacaannya yang tinggi dan terasa modern namun tetap ramah.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><div class="card-icon">✨</div> Efek & Animasi</div>
+            <p>Website baru akan menggunakan animasi <strong>fade-in saat scroll</strong>, hover effect pada kartu dan foto tim, serta <strong>number counter animation</strong> pada statistik. Semua animasi dirancang agar terasa elegan dan tidak berlebihan.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">📱</div> Responsive Design</div>
+            <p>Website akan tampil sempurna di semua ukuran layar — dari smartphone hingga monitor besar. Prioritas utama adalah tampilan mobile karena mayoritas calon klien pertama kali mengakses lewat ponsel.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <div class="section" id="features">
+        <div class="section-eyebrow">Fungsionalitas</div>
+        <div class="section-title">Fitur & <span>Fungsi</span></div>
+        <div class="section-subtitle">Semua fitur yang akan tersedia di website baru.</div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title"><div class="card-icon">📧</div> Contact Form</div>
+            <p>Form kontak yang fungsional — pesan dari calon klien langsung masuk ke email tim Jagadita via Formspree.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">👥</div> Team Section</div>
+            <p>Foto dan profil 3 founder dengan efek hover yang menampilkan link LinkedIn masing-masing.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🔢</div> Stats Counter</div>
+            <p>Angka pencapaian (150 Hospitality Strategy, 34 Operational Excellence, dll.) yang animasi saat pengunjung scroll ke sana.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">📰</div> Blog / Articles</div>
+            <p>Section artikel hospitality terbaru yang ditampilkan di homepage, membangun kredibilitas dan membantu SEO.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🗂️</div> Portfolio</div>
+            <p>Showcase proyek dengan kategori filter — menampilkan karya dan pengalaman tim secara visual.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🔗</div> Social Links</div>
+            <p>Link ke Twitter, Facebook, LinkedIn, dan Instagram di header dan footer untuk memudahkan calon klien terhubung.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TECH STACK -->
+      <div class="section" id="tech">
+        <div class="section-eyebrow">Infrastruktur</div>
+        <div class="section-title">Teknologi yang <span>Digunakan</span></div>
+        <div class="section-subtitle">Stack teknologi yang dipilih untuk website baru — semua gratis, modern, dan andal.</div>
+
+        <div class="tech-grid">
+          <div class="tech-card">
+            <div class="tech-icon">🌐</div>
+            <div>
+              <div class="tech-name">HTML5 + CSS3</div>
+              <div class="tech-desc">Fondasi website. Kode bersih, ringan, dan standar internasional.</div>
+            </div>
+          </div>
+          <div class="tech-card">
+            <div class="tech-icon">⚡</div>
+            <div>
+              <div class="tech-name">Vanilla JavaScript</div>
+              <div class="tech-desc">Animasi, interaksi, dan counter number tanpa framework berat.</div>
+            </div>
+          </div>
+          <div class="tech-card">
+            <div class="tech-icon">☁️</div>
+            <div>
+              <div class="tech-name">Cloudflare Pages</div>
+              <div class="tech-desc">Hosting gratis dengan CDN global. Lebih cepat dari hosting berbayar biasa.</div>
+            </div>
+          </div>
+          <div class="tech-card">
+            <div class="tech-icon">📬</div>
+            <div>
+              <div class="tech-name">Formspree</div>
+              <div class="tech-desc">Contact form fungsional tanpa backend. Email langsung masuk ke inbox.</div>
+            </div>
+          </div>
+          <div class="tech-card">
+            <div class="tech-icon">🔤</div>
+            <div>
+              <div class="tech-name">Google Fonts</div>
+              <div class="tech-desc">Raleway & Nunito Sans — font brand Jagadita yang sudah ada.</div>
+            </div>
+          </div>
+          <div class="tech-card">
+            <div class="tech-icon">🔒</div>
+            <div>
+              <div class="tech-name">Cloudflare SSL</div>
+              <div class="tech-desc">HTTPS otomatis dan gratis. Keamanan standar untuk website profesional.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><div class="card-icon">📁</div> Struktur File Project</div>
+          <div style="background:var(--navy);border-radius:var(--radius-md);padding:20px 24px;margin-top:12px;font-family:monospace;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.9;">
+            jagadita/<br>
+            ├── <span style="color:#66C8D7">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← Homepage<br>
+            ├── <span style="color:#66C8D7">about.html</span><br>
+            ├── <span style="color:#66C8D7">service.html</span><br>
+            ├── <span style="color:#66C8D7">contact.html</span><br>
+            ├── <span style="color:#66C8D7">... (halaman lainnya)</span><br>
+            ├── <span style="color:#F6AD55">_headers</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← Keamanan & Cache<br>
+            ├── <span style="color:#F6AD55">robots.txt</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← Panduan untuk Google & AI<br>
+            ├── <span style="color:#F6AD55">llms.txt</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← Panduan untuk ChatGPT dll<br>
+            ├── <span style="color:#F6AD55">sitemap.xml</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← Peta website untuk Google<br>
+            ├── css/<br>
+            │ &nbsp;&nbsp; └── <span style="color:#68D391">style.css</span><br>
+            └── js/<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; └── <span style="color:#68D391">main.js</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFORMANCE & SEO -->
+      <div class="section" id="performance">
+        <div class="section-eyebrow">Standar Teknis</div>
+        <div class="section-title">Performa & <span>SEO</span></div>
+        <div class="section-subtitle">Standar kualitas yang harus dipenuhi website baru sebelum diluncurkan.</div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🚀</div> Kecepatan (Core Web Vitals)</div>
+            <p>• LCP (loading konten utama) &lt; 2,5 detik<br>• INP (respons terhadap klik) &lt; 200 ms<br>• CLS (stabilitas layout) &lt; 0,1<br><br>Standar ini adalah yang dipakai Google untuk menentukan ranking pencarian.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🔍</div> SEO Teknis</div>
+            <p>• Meta title & description di setiap halaman<br>• Structured data (schema.org) untuk bisnis<br>• Sitemap XML dikirim ke Google Search Console<br>• Open Graph tags untuk tampilan di media sosial</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">🤖</div> AI Visibility (GEO)</div>
+            <p>Website baru dirancang agar bisa dibaca dan dikutip oleh ChatGPT, Perplexity, Claude, dan Google AI. Ini adalah standar baru 2026 yang penting untuk visibilitas bisnis.</p>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-icon">♿</div> Aksesibilitas</div>
+            <p>• Kontras teks memenuhi standar WCAG 2.2 AA<br>• Navigasi keyboard-friendly<br>• Alt text pada semua gambar<br>• Label pada semua form input</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE / ROADMAP -->
+      <div class="section" id="timeline">
+        <div class="section-eyebrow">Roadmap</div>
+        <div class="section-title">Tahapan <span>Pengerjaan</span></div>
+        <div class="section-subtitle">Rencana pengerjaan website dari awal hingga live.</div>
+
+        <div class="card" style="margin-bottom:24px">
+          <div class="timeline">
+            <div class="timeline-item done">
+              <div class="timeline-dot"></div>
+              <div class="timeline-phase">Fase 1 — Persiapan & Dokumen ✓</div>
+              <div class="timeline-desc">Pengumpulan konten, pembuatan design system, dan penyusunan PRD ini.</div>
+              <div class="timeline-tasks">
+                <span class="task-chip">PRD</span>
+                <span class="task-chip">Design System</span>
+                <span class="task-chip">Konten Homepage</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-phase">Fase 2 — Homepage</div>
+              <div class="timeline-desc">Pembangunan halaman utama lengkap dengan semua section, animasi, dan responsive design.</div>
+              <div class="timeline-tasks">
+                <span class="task-chip">Hero Section</span>
+                <span class="task-chip">Services</span>
+                <span class="task-chip">Team</span>
+                <span class="task-chip">Stats</span>
+                <span class="task-chip">Articles</span>
+                <span class="task-chip">Footer</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-phase">Fase 3 — Halaman Utama</div>
+              <div class="timeline-desc">About, Services index, dan Contact page dengan form fungsional.</div>
+              <div class="timeline-tasks">
+                <span class="task-chip">About</span>
+                <span class="task-chip">Services</span>
+                <span class="task-chip">Contact + Form</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-phase">Fase 4 — Halaman Service Detail</div>
+              <div class="timeline-desc">6 halaman layanan individual dengan konten spesifik per layanan.</div>
+              <div class="timeline-tasks">
+                <span class="task-chip">Strategic Planning</span>
+                <span class="task-chip">Market Analysis</span>
+                <span class="task-chip">Guest Experience</span>
+                <span class="task-chip">Revenue & Pricing</span>
+                <span class="task-chip">Our Approach</span>
+                <span class="task-chip">Industries</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-phase">Fase 5 — QA & Launch</div>
+              <div class="timeline-desc">Testing lintas perangkat dan browser, cek kecepatan, SEO audit, lalu deploy ke Cloudflare Pages.</div>
+              <div class="timeline-tasks">
+                <span class="task-chip">PageSpeed Test</span>
+                <span class="task-chip">Mobile Test</span>
+                <span class="task-chip">Form Test</span>
+                <span class="task-chip">Deploy CF Pages</span>
+                <span class="task-chip">Submit Sitemap</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEAM -->
+      <div class="section" id="team">
+        <div class="section-eyebrow">Tim Proyek</div>
+        <div class="section-title">Peran & <span>Tanggung Jawab</span></div>
+        <div class="section-subtitle">Siapa yang terlibat dan apa perannya dalam proyek ini.</div>
+
+        <div class="stakeholder-grid">
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">VN</div>
+            <div class="stakeholder-name">Viveka Nanda</div>
+            <div class="stakeholder-role">CEO / Decision Maker</div>
+            <div class="stakeholder-resp">Memberikan persetujuan final untuk arah brand, konten, dan keputusan strategis website.</div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">SW</div>
+            <div class="stakeholder-name">Satria Wibawa</div>
+            <div class="stakeholder-role">COO / Content Owner</div>
+            <div class="stakeholder-resp">Memastikan konten setiap halaman akurat, sesuai brand voice, dan merepresentasikan layanan Jagadita dengan benar.</div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">AW</div>
+            <div class="stakeholder-name">Agus Wibawa</div>
+            <div class="stakeholder-role">Web Developer / PIC</div>
+            <div class="stakeholder-resp">Bertanggung jawab penuh atas pembangunan teknis, deployment, dan kualitas akhir website.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div class="section" id="checklist">
+        <div class="section-eyebrow">Pre-Launch</div>
+        <div class="section-title">Launch <span>Checklist</span></div>
+        <div class="section-subtitle">Klik item untuk menandai selesai. Progress tersimpan di browser ini.</div>
+
+        <div class="card">
+          <ul class="checklist" id="launchChecklist">
+            <li onclick="toggleCheck(this)" data-id="c1"><div class="check-box"></div><span class="check-text">✅ Homepage selesai dibangun dan diuji di mobile</span></li>
+            <li onclick="toggleCheck(this)" data-id="c2"><div class="check-box"></div><span class="check-text">✅ Semua 10 halaman selesai</span></li>
+            <li onclick="toggleCheck(this)" data-id="c3"><div class="check-box"></div><span class="check-text">✅ Contact form diuji — pesan masuk ke email</span></li>
+            <li onclick="toggleCheck(this)" data-id="c4"><div class="check-box"></div><span class="check-text">✅ PageSpeed score 90+ di desktop dan mobile</span></li>
+            <li onclick="toggleCheck(this)" data-id="c5"><div class="check-box"></div><span class="check-text">✅ Tidak ada teks placeholder atau lorem ipsum tersisa</span></li>
+            <li onclick="toggleCheck(this)" data-id="c6"><div class="check-box"></div><span class="check-text">✅ Semua foto tim dan foto layanan sudah final</span></li>
+            <li onclick="toggleCheck(this)" data-id="c7"><div class="check-box"></div><span class="check-text">✅ Link LinkedIn founder sudah benar</span></li>
+            <li onclick="toggleCheck(this)" data-id="c8"><div class="check-box"></div><span class="check-text">✅ HTTPS aktif di jagadita.com</span></li>
+            <li onclick="toggleCheck(this)" data-id="c9"><div class="check-box"></div><span class="check-text">✅ Redirect dari www ke non-www berjalan</span></li>
+            <li onclick="toggleCheck(this)" data-id="c10"><div class="check-box"></div><span class="check-text">✅ Sitemap dikirim ke Google Search Console</span></li>
+            <li onclick="toggleCheck(this)" data-id="c11"><div class="check-box"></div><span class="check-text">✅ Website tampil baik di Chrome, Safari, Firefox</span></li>
+            <li onclick="toggleCheck(this)" data-id="c12"><div class="check-box"></div><span class="check-text">✅ Website tampil baik di iPhone dan Android</span></li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:16px;background:var(--cyan-muted);border-color:var(--cyan);border-left:4px solid var(--cyan)">
+          <div class="card-title" style="color:var(--cyan-dark)"><div class="card-icon" style="background:white">🎉</div> Setelah Launch</div>
+          <p style="color:var(--cyan-dark)">Setelah website live, langkah pertama yang wajib dilakukan: submit sitemap ke Google Search Console dan verifikasi bahwa Google sudah mulai mengindeks halaman-halaman baru dalam 24–48 jam pertama.</p>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<script>
+  // ── SCROLL PROGRESS ──
+  function updateProgress() {
+    const winH = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - winH;
+    const scrolled = window.scrollY;
+    const pct = Math.min(100, Math.round((scrolled / docH) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  // ── INTERSECTION OBSERVER (fade-in sections) ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate bars when score section visible
+        if (entry.target.id === 'problem') animateBars();
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+  // ── ACTIVE NAV ──
+  const sections = document.querySelectorAll('.section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  function updateNav() {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('onclick')?.includes(current)) item.classList.add('active');
+    });
+  }
+
+  window.addEventListener('scroll', () => { updateProgress(); updateNav(); });
+
+  // ── SCROLL TO ──
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+  }
+
+  // ── MOBILE SIDEBAR ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // ── BAR ANIMATION ──
+  let barsAnimated = false;
+  function animateBars() {
+    if (barsAnimated) return;
+    barsAnimated = true;
+    setTimeout(() => {
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        const target = bar.getAttribute('data-target');
+        bar.style.width = target + '%';
+      });
+    }, 300);
+  }
+
+  // ── CHECKLIST (localStorage) ──
+  function toggleCheck(li) {
+    li.classList.toggle('checked');
+    const id = li.getAttribute('data-id');
+    const checked = li.classList.contains('checked');
+    localStorage.setItem('jagadita_prd_' + id, checked ? '1' : '0');
+  }
+
+  // Restore checklist
+  document.querySelectorAll('#launchChecklist li').forEach(li => {
+    const id = li.getAttribute('data-id');
+    if (localStorage.getItem('jagadita_prd_' + id) === '1') {
+      li.classList.add('checked');
+    }
+  });
+
+  // Init
+  updateProgress();
+  updateNav();
+</script>
+</body>
+</html>
