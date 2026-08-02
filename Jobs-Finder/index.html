@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<!-- ================================================================
+// Remote Job Finder
+// Teknologi: HTML · CSS · JavaScript · Gemini AI API
+// Anabhi Dev
+// Version : 2.7
+// Generated : 2 August 2026, 06:22:15
+// ================================================================ -->
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Remote Job Finder - v2.7 — I Gede Agus Wibawa, A.Sc., S.T., M.T.</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1E3A5F;--navy-d:#142848;--blue:#2B6CB0;--blue-l:#4299E1;
+  --sky:#EBF4FF;--sky-m:#BEE3F8;--gold:#D4860A;--gold-l:#FEF3C7;
+  --white:#FFFFFF;--g50:#F8FAFC;--g100:#F1F5F9;--g200:#E2E8F0;
+  --g400:#94A3B8;--g600:#475569;--g800:#1E293B;
+  --green:#047857;--green-l:#D1FAE5;
+  --purple:#6D28D9;--purple-l:#EDE9FE;
+  --orange:#C2410C;--orange-l:#FED7AA;
+  --red:#DC2626;--red-l:#FEE2E2;
+  --teal:#0D9488;--teal-l:#CCFBF1;
+  --r:10px;--rs:6px;--sh:0 2px 8px rgba(30,58,95,.08),0 8px 24px rgba(30,58,95,.06);
+  --sidebar:280px;--nav:64px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(--g800);font-size:14px;line-height:1.6}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);background:var(--navy);display:flex;align-items:center;padding:0 20px;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex:1;min-width:0}
+.nav-logo img{width:44px;height:44px;object-fit:contain}
+.nav-logo-text .t1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
+.nav-logo-text .t2{font-size:11px;color:var(--sky-m);font-weight:400}
+.nav-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--sky-m);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.nav-ts{font-size:11px;color:var(--g400);display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.nav-ts .dot{width:6px;height:6px;border-radius:50%;background:#34D399;flex-shrink:0}
+.hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.1);border:none;cursor:pointer;color:#fff;font-size:20px;flex-shrink:0}
+.sidebar-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.5)}
+.sidebar-overlay.active{display:block}
+
+/* LAYOUT */
+.layout{display:flex;margin-top:var(--nav);min-height:calc(100vh - var(--nav))}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--navy);position:sticky;top:var(--nav);height:calc(100vh - var(--nav));overflow-y:auto;padding:16px}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
+.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sky-m);opacity:.7;margin:16px 0 6px 4px}
+.sdiv{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+
+/* checkbox groups */
+.chk-group{display:flex;flex-direction:column;gap:2px}
+.chk-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--rs);cursor:pointer;transition:background .15s}
+.chk-item:hover{background:rgba(255,255,255,.08)}
+.chk-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue-l);cursor:pointer;flex-shrink:0}
+.chk-item label{font-size:12.5px;color:var(--sky-m);cursor:pointer;line-height:1.3}
+.chk-item.selected label{color:#fff;font-weight:600}
+
+/* select-all */
+.sel-all{font-size:11px;color:var(--blue-l);cursor:pointer;padding:2px 10px;text-decoration:underline;display:inline-block;margin-bottom:4px}
+
+/* job type pills */
+.jtype-group{display:flex;flex-wrap:wrap;gap:6px;padding:4px}
+.jtype-pill{padding:5px 10px;border-radius:20px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:var(--sky-m);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.jtype-pill.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* MAIN */
+.main{flex:1;min-width:0;padding:24px 28px 60px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#2B4F7A 100%);border-radius:14px;padding:28px 32px;margin-bottom:24px;color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'🎯';position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:80px;opacity:.08}
+.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.hero-avatar{width:48px;height:48px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
+.hero-avatar img{width:100%;height:100%;object-fit:cover}
+.hero-name{font-size:17px;font-weight:800;line-height:1.2}
+.hero-sub{font-size:12px;color:var(--sky-m)}
+.hero h1{font-size:22px;font-weight:800;line-height:1.3;margin-bottom:6px}
+.hero h1 span{color:#63B3ED}
+.hero p{font-size:13px;color:var(--sky-m);max-width:580px;line-height:1.7}
+.hero-stats{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap}
+.hero-stat .n{font-size:22px;font-weight:800;color:#fff;line-height:1}
+.hero-stat .l{font-size:11px;color:#93C5FD;margin-top:2px}
+
+/* SEARCH BAR */
+.search-wrap{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;box-shadow:var(--sh)}
+.search-row{display:flex;gap:10px;align-items:center}
+.search-input{flex:1;padding:10px 16px;border:1.5px solid var(--g200);border-radius:var(--rs);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--g800);outline:none;transition:border .2s}
+.search-input:focus{border-color:var(--blue)}
+.search-input::placeholder{color:var(--g400)}
+.btn-search{padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap}
+.btn-search:hover{background:var(--blue)}
+.btn-search:disabled{background:var(--g400);cursor:not-allowed}
+.btn-clear{padding:10px 14px;background:var(--g100);color:var(--g600);border:1px solid var(--g200);border-radius:var(--rs);font-size:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+.btn-clear:hover{background:var(--g200)}
+
+/* ACTIVE FILTERS */
+.active-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;min-height:0}
+.af-tag{display:inline-flex;align-items:center;gap:5px;background:var(--sky);color:var(--navy);border:1px solid var(--sky-m);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.af-tag button{background:none;border:none;cursor:pointer;color:var(--blue);font-size:13px;line-height:1;padding:0}
+.clear-all{background:none;border:none;cursor:pointer;color:var(--g400);font-size:11px;text-decoration:underline;padding:4px 6px;font-family:'Plus Jakarta Sans',sans-serif}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--g200)}
+.sec-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sec-title{flex:1}
+.sec-title h2{font-size:16px;font-weight:700;color:var(--navy)}
+.sec-title p{font-size:12px;color:var(--g600);margin-top:1px}
+.sec-count{font-size:12px;font-weight:600;color:var(--g400)}
+
+/* GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-bottom:36px;align-items:stretch}
+
+/* JOB CARD */
+.job-card{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:18px;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;height:100%}
+.job-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(30,58,95,.12)}
+.job-card.hidden{display:none}
+.card-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.card-logo{width:40px;height:40px;border-radius:8px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden;border:1px solid var(--g200)}
+.card-logo img{width:100%;height:100%;object-fit:cover}
+.card-info{flex:1;min-width:0}
+.card-company{font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-title{font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.3}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.tag{font-size:10px;padding:3px 8px;border-radius:4px;font-weight:600}
+.tag-remote{background:var(--green-l);color:var(--green)}
+.tag-fulltime{background:var(--purple-l);color:var(--purple)}
+.tag-hybrid{background:var(--gold-l);color:var(--gold)}
+.tag-contract{background:var(--teal-l);color:var(--teal)}
+.tag-platform{background:var(--sky);color:var(--navy)}
+.tag-role{background:var(--g100);color:var(--g600)}
+.card-meta{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.card-meta-item{font-size:11px;color:var(--g600);display:flex;align-items:center;gap:4px}
+.card-meta-item span{font-size:13px}
+.card-desc{font-size:12px;color:var(--g600);line-height:1.6;margin-bottom:14px;flex:1;min-height:54px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-footer{margin-top:auto;display:flex;gap:8px;align-items:center;min-height:38px}
+.btn-apply{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;background:var(--blue);color:#fff;border-radius:var(--rs);text-decoration:none;font-size:12px;font-weight:600;transition:background .2s;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-apply:hover{background:var(--navy)}
+.card-ts{font-size:10px;color:var(--g400);margin-top:6px;display:flex;align-items:center;gap:4px}
+.card-ts .cdot{width:5px;height:5px;border-radius:50%;background:var(--g400);display:inline-block}
+.card-ts.fresh .cdot{background:#34D399}
+
+/* PLATFORM SECTION */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:36px}
+.platform-card{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;transition:all .2s;cursor:pointer;text-decoration:none}
+.platform-card:hover{border-color:var(--blue);transform:translateY(-1px)}
+.platform-card.selected{border-color:var(--blue);background:var(--sky)}
+.platform-icon{width:40px;height:40px;border-radius:8px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.platform-info{flex:1;min-width:0}
+.platform-name{font-size:13px;font-weight:700;color:var(--navy)}
+.platform-desc{font-size:11px;color:var(--g600);margin-top:1px}
+.platform-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;white-space:nowrap}
+.badge-live{background:var(--green-l);color:var(--green)}
+.badge-link{background:var(--sky);color:var(--blue)}
+.badge-login{background:var(--gold-l);color:var(--gold)}
+
+/* LOADING & STATES */
+.loading-wrap{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:var(--g400)}
+.spinner{width:32px;height:32px;border:3px solid var(--g200);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{grid-column:1/-1;text-align:center;padding:40px;color:var(--g400)}
+.empty-state .ei{font-size:40px;margin-bottom:10px}
+.empty-state h3{font-size:14px;font-weight:600;color:var(--g600)}
+.empty-state p{font-size:12px;margin-top:4px}
+.error-state{grid-column:1/-1;background:var(--red-l);border:1px solid #FCA5A5;border-radius:var(--r);padding:16px;color:var(--red);font-size:13px;text-align:center}
+
+/* INFO BOX */
+.info-box{background:var(--sky);border:1px solid var(--sky-m);border-left:4px solid var(--blue);border-radius:var(--r);padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--navy);line-height:1.6}
+
+/* NOTICE */
+.notice{background:var(--gold-l);border:1px solid #FDE68A;border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--g800);margin-bottom:16px;display:flex;align-items:flex-start;gap:8px}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-badge,.nav-ts{display:none}
+  .sidebar{position:fixed!important;top:var(--nav)!important;left:0!important;height:calc(100vh - var(--nav))!important;z-index:160;transform:translateX(-100%);transition:transform .25s ease;width:280px!important}
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:16px 14px 60px}
+  .hero{padding:20px 18px}
+  .hero::after{display:none}
+  .hero h1{font-size:17px}
+  .cards-grid{grid-template-columns:1fr}
+  .platform-grid{grid-template-columns:1fr}
+  .search-row{flex-wrap:wrap}
+  .search-input{min-width:0}
+}
+/* LANG TOGGLE */
+.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.1);border-radius:20px;padding:3px;gap:2px;flex-shrink:0}
+.lang-btn{padding:4px 10px;border-radius:16px;border:none;background:transparent;color:var(--sky-m);font-size:11px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.lang-btn.active{background:var(--blue);color:#fff}
+@media(max-width:768px){.lang-toggle{display:none}}
+
+/* ── GEMINI API SETUP ──────────────────────────────────── */
+.api-setup{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:1px solid rgba(99,179,237,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.api-setup-icon{font-size:28px;flex-shrink:0}
+.api-setup-info{flex:1;min-width:200px}
+.api-setup-info h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.api-setup-info p{font-size:12px;color:#93C5FD}
+.api-input-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.api-key-input{flex:1;min-width:200px;padding:9px 14px;border:1.5px solid rgba(255,255,255,.15);border-radius:var(--rs);background:rgba(255,255,255,.08);color:#fff;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .2s}
+.api-key-input:focus{border-color:var(--blue-l)}
+.api-key-input::placeholder{color:rgba(255,255,255,.3)}
+.btn-save-key{padding:9px 16px;background:var(--blue);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;transition:background .2s}
+.btn-save-key:hover{background:var(--navy)}
+.btn-toggle-key{padding:9px 12px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+.btn-toggle-key:hover{background:rgba(255,255,255,.2)}
+.btn-clear-key{padding:9px 12px;background:rgba(220,38,38,.2);color:#FCA5A5;border:1px solid rgba(220,38,38,.3);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+.api-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap}
+.api-status.ok{color:#34D399}
+.api-status.missing{color:#FCA5A5}
+.api-status .sdot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* ── INTELLIGENCE REPORT ─────────────────────────────── */
+.intel-report{background:linear-gradient(135deg,#0F2027,#203A43,#2C5364);border:1px solid rgba(99,179,237,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:24px;display:none}
+.intel-report.visible{display:block}
+.intel-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.intel-hdr h3{font-size:15px;font-weight:700;color:#fff}
+.intel-hdr .ai-badge{background:rgba(99,179,237,.2);color:#63B3ED;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:.05em}
+.intel-body{font-size:13px;color:#BEE3F8;line-height:1.8;white-space:pre-wrap}
+.intel-loading{display:flex;align-items:center;gap:10px;color:#93C5FD;font-size:13px}
+.intel-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:#63B3ED;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+
+/* ── MATCH SCORE ─────────────────────────────────────── */
+.match-score{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:10px;margin-bottom:4px}
+.match-high{background:#D1FAE5;color:#047857}
+.match-mid{background:#FEF3C7;color:#D4860A}
+.match-low{background:#FEE2E2;color:#DC2626}
+.match-loading{background:var(--g100);color:var(--g400)}
+.match-reason{font-size:11px;color:var(--g600);margin-bottom:10px;line-height:1.5;font-style:italic}
+
+/* ── COVER LETTER MODAL ──────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:28px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+.modal h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--g600);margin-bottom:16px}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--g100);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--g600)}
+.modal-close:hover{background:var(--g200)}
+.cl-output{background:var(--g50);border:1px solid var(--g200);border-radius:var(--rs);padding:16px;font-size:13px;color:var(--g800);line-height:1.8;white-space:pre-wrap;min-height:200px;max-height:400px;overflow-y:auto;font-family:'Plus Jakarta Sans',sans-serif}
+.cl-loading{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--g400);padding:40px;font-size:13px}
+.btn-copy-cl{margin-top:12px;padding:9px 18px;background:var(--navy);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.btn-copy-cl:hover{background:var(--blue)}
+.btn-cover{flex-shrink:0;padding:8px 12px;background:var(--gold-l);color:var(--gold);border:1px solid #FDE68A;border-radius:var(--rs);font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-cover:hover{background:#FDE68A}
+.btn-cover:disabled{background:var(--g100);color:var(--g400);border-color:var(--g200);cursor:not-allowed}
+
+/* ── SMART SEARCH TAG ────────────────────────────────── */
+.smart-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0}
+.smart-tag{background:var(--purple-l);color:var(--purple);font-size:10px;padding:3px 8px;border-radius:4px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:'Plus Jakarta Sans',sans-serif}
+.smart-tag:hover{background:var(--purple);color:#fff}
+.smart-label{font-size:10px;color:var(--g400);align-self:center}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <a href="#" class="nav-logo">
+    <img src="https://anabhidev.com/logo.webp" alt="AnabhiDev" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <div class="t1">Remote Job Finder</div>
+      <div class="t2">I Gede Agus Wibawa, A.Sc., S.T., M.T.</div>
+    </div>
+  </a>
+  <span class="nav-badge">🎯 Lempar Jala Selebar-lebarnya</span>
+  <div class="lang-toggle" id="lang-toggle">
+    <button class="lang-btn active" id="btn-id" onclick="switchLang('id')">🇮🇩 ID</button>
+    <button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button>
+  </div>
+  <div class="nav-ts"><span class="dot"></span><span id="nav-ts">Memuat...</span></div>
+</nav>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+  <!-- JOB TYPE -->
+  <div class="sl">Filter: Tipe Kerja</div>
+  <div class="jtype-group" id="jtype-group">
+    <button class="jtype-pill active" data-jtype="all" onclick="setJobType('all',this)">Semua</button>
+    <button class="jtype-pill" data-jtype="remote" onclick="setJobType('remote',this)">🟢 Remote</button>
+    <button class="jtype-pill" data-jtype="fulltime" onclick="setJobType('fulltime',this)">🔵 Full-time</button>
+    <button class="jtype-pill" data-jtype="hybrid" onclick="setJobType('hybrid',this)">🟡 Hybrid</button>
+    <button class="jtype-pill" data-jtype="contract" onclick="setJobType('contract',this)">🟣 Contract</button>
+  </div>
+
+  <div class="sdiv"></div>
+
+  <!-- ROLE PRESETS -->
+  <div class="sl">Filter: Role / Keahlian</div>
+  <span class="sel-all" onclick="selectAllRoles()">Pilih Semua</span>
+  <div class="chk-group" id="role-group">
+    <label class="chk-item selected"><input type="checkbox" value="AI Consultant" checked onchange="updateRoles()"><label>🤖 AI Consultant / Advisor</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="Hospitality IT Consultant" checked onchange="updateRoles()"><label>🏨 Hospitality IT Consultant</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="IT Pre-Opening Consultant" checked onchange="updateRoles()"><label>🏗️ IT Pre-Opening Consultant</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="Automation Specialist" checked onchange="updateRoles()"><label>⚙️ Automation Specialist</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="AWS Cloud Consultant" checked onchange="updateRoles()"><label>☁️ AWS / Cloud Consultant</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="Web Developer" checked onchange="updateRoles()"><label>💻 Web Developer</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="IT Manager Remote" checked onchange="updateRoles()"><label>🖥️ IT Manager (Remote)</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="Systems Integration Consultant" checked onchange="updateRoles()"><label>🔗 Systems Integration</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="AI App Builder" checked onchange="updateRoles()"><label>🛠️ AI App Builder / No-Code</label></label>
+  </div>
+
+  <div class="sdiv"></div>
+
+  <!-- PLATFORMS -->
+  <div class="sl">Filter: Platform</div>
+  <span class="sel-all" onclick="selectAllPlatforms()">Pilih Semua</span>
+  <div class="chk-group" id="platform-group">
+    <label class="chk-item selected"><input type="checkbox" value="remoteok" checked onchange="updatePlatforms()"><label>🌐 RemoteOK <span style="font-size:10px;color:#34D399">(live)</span></label></label>
+    <label class="chk-item selected"><input type="checkbox" value="arbeitnow" checked onchange="updatePlatforms()"><label>🌐 Arbeitnow <span style="font-size:10px;color:#34D399">(live)</span></label></label>
+    <label class="chk-item selected"><input type="checkbox" value="linkedin" checked onchange="updatePlatforms()"><label>💼 LinkedIn Jobs</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="indeed" checked onchange="updatePlatforms()"><label>🔍 Indeed</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="wwr" checked onchange="updatePlatforms()"><label>🏠 We Work Remotely</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="glassdoor" checked onchange="updatePlatforms()"><label>🚪 Glassdoor</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="remoteco" checked onchange="updatePlatforms()"><label>🌍 Remote.co</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="himalayas" checked onchange="updatePlatforms()"><label>⛰️ Himalayas</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="wellfound" checked onchange="updatePlatforms()"><label>🚀 Wellfound (AngelList)</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="upwork" checked onchange="updatePlatforms()"><label>🎯 Upwork</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="freelancer" checked onchange="updatePlatforms()"><label>💰 Freelancer.com</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="jobstreet" checked onchange="updatePlatforms()"><label>🇮🇩 Jobstreet</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="workana" checked onchange="updatePlatforms()"><label>🌎 Workana</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="toptal" checked onchange="updatePlatforms()"><label>⭐ Toptal</label></label>
+    <label class="chk-item selected"><input type="checkbox" value="getonboard" checked onchange="updatePlatforms()"><label>🛳️ GetOnBoard</label></label>
+  </div>
+
+  <div class="sdiv"></div>
+
+  <!-- LANGUAGE -->
+  <div class="sl">Bahasa</div>
+  <div class="jtype-group">
+    <button class="jtype-pill active" data-lang="both" onclick="setLang('both',this)">EN + ID</button>
+    <button class="jtype-pill" data-lang="en" onclick="setLang('en',this)">English</button>
+    <button class="jtype-pill" data-lang="id" onclick="setLang('id',this)">Indonesia</button>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-avatar">👨‍💻</div>
+      <div>
+        <div class="hero-name">I Gede Agus Wibawa, A.Sc., S.T., M.T.</div>
+        <div class="hero-sub">IT Manager · Hospitality Technology · Automation & AI App Builder</div>
+      </div>
+    </div>
+    <h1>Lempar Jala <span>Selebar-lebarnya</span></h1>
+    <p>Dashboard pencari kerja remote & freelance personal. Cari di 15+ platform sekaligus — satu keyword, satu klik, semua terbuka. Tangkap peluang sebesar-besarnya.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="n">15+</div><div class="l">Platform dicari</div></div>
+      <div class="hero-stat"><div class="n">9</div><div class="l">Role preset</div></div>
+      <div class="hero-stat"><div class="n" id="stat-live">2</div><div class="l">Live data API</div></div>
+      <div class="hero-stat"><div class="n" id="stat-jobs">–</div><div class="l">Jobs ditemukan</div></div>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-wrap">
+    <div class="search-row">
+      <input class="search-input" id="kw-input" type="text" placeholder="Ketik keyword tambahan... (cth: PMS, Infor, Oracle, n8n, Node.js)" value=""/>
+      <button class="btn-search" id="btn-lempar" onclick="lemparJala()">🎣 Lempar Jala</button>
+      <button class="btn-clear" onclick="clearResults()">Reset</button>
+    </div>
+    <div class="smart-tags" id="smart-tags"></div>
+  </div>
+
+  <!-- ACTIVE FILTERS -->
+  <div class="active-filters" id="active-filters"></div>
+
+
+  <!-- API SETUP -->
+  <div class="api-setup" id="api-setup">
+    <div class="api-setup-icon">🤖</div>
+    <div class="api-setup-info">
+      <h3>Gemini AI — Power Up Dashboard</h3>
+      <p>Paste Gemini API Key untuk aktifkan: Job Match Score, Intelligence Report, Smart Search & Cover Letter</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:300px">
+      <div class="api-input-row">
+        <input class="api-key-input" type="password" id="api-key-input" placeholder="AIza...paste Gemini API Key di sini"/>
+        <button class="btn-toggle-key" onclick="toggleKeyVisibility()" id="btn-show-key" title="Tampilkan key">👁</button>
+        <button class="btn-save-key" onclick="saveApiKey()">Simpan</button>
+        <button class="btn-clear-key" onclick="clearApiKey()" title="Hapus key">🗑</button>
+      </div>
+      <div class="api-status missing" id="api-status">
+        <span class="sdot"></span><span id="api-status-text">API Key belum diset</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTELLIGENCE REPORT -->
+  <div class="intel-report" id="intel-report">
+    <div class="intel-hdr">
+      <span style="font-size:20px">🧠</span>
+      <h3>Intelligence Report</h3>
+      <span class="ai-badge">GEMINI AI</span>
+    </div>
+    <div class="intel-body" id="intel-body">
+      <div class="intel-loading"><div class="intel-spinner"></div> Menganalisis hasil pencarian...</div>
+    </div>
+  </div>
+
+  <!-- COVER LETTER MODAL -->
+  <div class="modal-overlay" id="cl-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeCLModal()">✕</button>
+      <h3 id="cl-modal-title">Cover Letter</h3>
+      <div class="modal-sub" id="cl-modal-sub">Dibuat oleh Gemini AI berdasarkan CV dan job description</div>
+      <div class="cl-output" id="cl-output">
+        <div class="cl-loading"><div class="spinner"></div> Membuat cover letter...</div>
+      </div>
+      <button class="btn-copy-cl" onclick="copyCL()">📋 Copy Cover Letter</button>
+    </div>
+  </div>
+
+  <!-- NOTICE -->
+  <div class="notice">
+    ⚡ <span><b>RemoteOK & Arbeitnow</b> menampilkan data langsung (live). Platform lain akan terbuka sebagai tab baru dengan filter sudah applied — mungkin perlu login untuk melihat hasil penuh.</span>
+  </div>
+
+  <!-- LIVE RESULTS -->
+  <div class="sec-hdr">
+    <div class="sec-icon" style="background:var(--green-l)">📡</div>
+    <div class="sec-title">
+      <h2>Hasil Live — RemoteOK & Arbeitnow</h2>
+      <p>Data langsung dari API publik — tidak perlu login</p>
+    </div>
+    <div class="sec-count" id="live-count">Belum dicari</div>
+  </div>
+  <div class="cards-grid" id="live-grid">
+    <div class="empty-state">
+      <div class="ei">🎣</div>
+      <h3>Klik "Lempar Jala" untuk mulai cari</h3>
+      <p>Atau pilih role preset di sidebar kiri</p>
+    </div>
+  </div>
+
+  <!-- PLATFORM LINKS -->
+  <div class="sec-hdr" style="margin-top:8px">
+    <div class="sec-icon" style="background:var(--sky)">🌐</div>
+    <div class="sec-title">
+      <h2>Buka di Platform Lain</h2>
+      <p>Klik platform di bawah untuk buka hasil search yang sudah di-filter</p>
+    </div>
+    <div class="sec-count" id="platform-count">15 platform</div>
+  </div>
+  <div class="platform-grid" id="platform-grid">
+    <!-- populated by JS -->
+  </div>
+
+</main>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────
+const state = {
+  jobType: 'all',
+  lang: 'both',
+  roles: ['AI Consultant','Hospitality IT Consultant','IT Pre-Opening Consultant',
+          'Automation Specialist','AWS Cloud Consultant','Web Developer',
+          'IT Manager Remote','Systems Integration Consultant','AI App Builder'],
+  platforms: ['remoteok','arbeitnow','linkedin','indeed','wwr','glassdoor',
+              'remoteco','himalayas','wellfound','upwork','freelancer',
+              'jobstreet','workana','toptal','getonboard'],
+  keyword: '',
+  jobs: [],
+  lastSearch: null,
+};
+
+// ── PLATFORM DEFINITIONS ───────────────────────────────────
+const PLATFORMS = {
+  remoteok:   { name:'RemoteOK',      icon:'🌐', type:'live',  badge:'live',  desc:'Real-time remote jobs' },
+  arbeitnow:  { name:'Arbeitnow',     icon:'🌐', type:'live',  badge:'live',  desc:'Global job board API' },
+  linkedin:   { name:'LinkedIn Jobs', icon:'💼', type:'link',  badge:'login', desc:'Butuh login untuk akses penuh' },
+  indeed:     { name:'Indeed',        icon:'🔍', type:'link',  badge:'link',  desc:'Jutaan lowongan global' },
+  wwr:        { name:'We Work Remotely',icon:'🏠',type:'link', badge:'link',  desc:'100% remote jobs only' },
+  glassdoor:  { name:'Glassdoor',     icon:'🚪', type:'link',  badge:'login', desc:'Jobs + salary info' },
+  remoteco:   { name:'Remote.co',     icon:'🌍', type:'link',  badge:'link',  desc:'Curated remote positions' },
+  himalayas:  { name:'Himalayas',     icon:'⛰️', type:'link',  badge:'link',  desc:'Remote-first companies' },
+  wellfound:  { name:'Wellfound',     icon:'🚀', type:'link',  badge:'login', desc:'Startup jobs globally' },
+  upwork:     { name:'Upwork',        icon:'🎯', type:'link',  badge:'login', desc:'Freelance & contract' },
+  freelancer: { name:'Freelancer.com',icon:'💰', type:'link',  badge:'login', desc:'Project-based global' },
+  jobstreet:  { name:'Jobstreet',     icon:'🇮🇩', type:'link', badge:'link',  desc:'Asia Pacific + Indonesia' },
+  workana:    { name:'Workana',       icon:'🌎', type:'link',  badge:'login', desc:'Latin America & global' },
+  toptal:     { name:'Toptal',        icon:'⭐', type:'link',  badge:'login', desc:'Elite freelance network' },
+  getonboard: { name:'GetOnBoard',    icon:'🛳️', type:'link', badge:'link',  desc:'Global remote roles' },
+};
+
+// ── SEARCH URL BUILDERS ────────────────────────────────────
+function buildQuery(extra='') {
+  const roles = state.roles.slice(0,3).join(' OR ');
+  const kw = state.keyword.trim();
+  return encodeURIComponent([kw, roles].filter(Boolean).join(' '));
+}
+
+function getJobTypeParam(platform) {
+  const t = state.jobType;
+  if (t === 'all') return '';
+  const map = {
+    linkedin: { remote:'f_WT=2', fulltime:'f_JT=F', contract:'f_JT=C', hybrid:'f_WT=3' },
+    indeed:   { remote:'remotejob=1', fulltime:'jt=fulltime', contract:'jt=contract', hybrid:'' },
+    glassdoor:{ remote:'remoteWorkType=1', fulltime:'', contract:'', hybrid:'' },
+  };
+  return map[platform]?.[t] || '';
+}
+
+function buildPlatformURL(pid) {
+  const q = buildQuery();
+  const jt = getJobTypeParam(pid);
+  const urls = {
+    linkedin:   `https://www.linkedin.com/jobs/search/?keywords=${q}&location=Worldwide${jt?'&'+jt:''}`,
+    indeed:     `https://www.indeed.com/jobs?q=${q}&l=Remote${jt?'&'+jt:''}`,
+    wwr:        `https://weworkremotely.com/remote-jobs/search?term=${q}`,
+    glassdoor:  `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${q}${jt?'&'+jt:''}`,
+    remoteco:   `https://remote.co/remote-jobs/search/?search_keywords=${q}`,
+    himalayas:  `https://himalayas.app/jobs?q=${q}`,
+    wellfound:  `https://wellfound.com/jobs?q=${q}&remote=true`,
+    upwork:     `https://www.upwork.com/search/jobs/?q=${q}`,
+    freelancer: `https://www.freelancer.com/jobs/?keyword=${q}`,
+    jobstreet:  `https://www.jobstreet.co.id/jobs/${encodeURIComponent(state.keyword||state.roles[0]||'IT')}`,
+    workana:    `https://www.workana.com/jobs?search=${q}&language=${state.lang==='id'?'es':'en'}`,
+    toptal:     `https://www.toptal.com/freelance-jobs`,
+    getonboard: `https://www.getonbrd.com/?q=${q}&remote=true`,
+  };
+  return urls[pid] || '#';
+}
+
+// ── LIVE FETCH ─────────────────────────────────────────────
+async function fetchRemoteOK(keyword, roles) {
+  const tags = [...roles.slice(0,4), ...(keyword?[keyword]:[])].map(r=>r.toLowerCase().replace(/\s+/g,'-')).join(',');
+  const url = `https://remoteok.com/api?tags=${encodeURIComponent(tags)}`;
+  const res = await fetch(url, { headers:{'User-Agent':'Mozilla/5.0'} });
+  const data = await res.json();
+  // first element is metadata, skip it
+  return (Array.isArray(data) ? data.slice(1) : []).slice(0,20).map(j => ({
+    id: 'rok-'+j.id,
+    title: j.position || j.title || 'Unknown Role',
+    company: j.company || 'Unknown',
+    logo: j.company_logo || '',
+    location: j.location || 'Remote',
+    type: 'remote',
+    tags: (j.tags || []).slice(0,4),
+    url: j.url || `https://remoteok.com/l/${j.slug}`,
+    salary: j.salary || '',
+    desc: (j.description || '').replace(/<[^>]+>/g,'').slice(0,200),
+    platform: 'RemoteOK',
+    date: j.date || '',
+    source: 'remoteok',
+  }));
+}
+
+async function fetchArbeitnow(keyword, roles) {
+  const q = [...roles.slice(0,3), keyword].filter(Boolean).join(' ');
+  const remote = state.jobType !== 'fulltime' ? '&remote=true' : '';
+  const url = `https://www.arbeitnow.com/api/job-board-api?search=${encodeURIComponent(q)}${remote}&language=${state.lang==='id'?'id':'en'}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return (data.data || []).slice(0,20).map(j => ({
+    id: 'arb-'+j.slug,
+    title: j.title || 'Unknown Role',
+    company: j.company_name || 'Unknown',
+    logo: j.company_logo || '',
+    location: j.location || 'Remote',
+    type: j.remote ? 'remote' : (j.job_types?.includes('Contract')?'contract':'fulltime'),
+    tags: (j.tags || []).slice(0,4),
+    url: j.url || '#',
+    salary: j.salary_from ? `$${j.salary_from}–${j.salary_to}` : '',
+    desc: (j.description || '').replace(/<[^>]+>/g,'').slice(0,200),
+    platform: 'Arbeitnow',
+    date: j.created_at || '',
+    source: 'arbeitnow',
+  }));
+}
+
+// ── RENDER CARDS ───────────────────────────────────────────
+function jobTypeTag(t) {
+  const map = {
+    remote:   ['tag-remote','🟢 Remote'],
+    fulltime: ['tag-fulltime','🔵 Full-time'],
+    hybrid:   ['tag-hybrid','🟡 Hybrid'],
+    contract: ['tag-contract','🟣 Contract'],
+  };
+  const [cls,label] = map[t] || ['tag-role',t];
+  return `<span class="tag ${cls}">${label}</span>`;
+}
+
+// Store job data for safe cover letter access
+const jobStore = {};
+
+function renderCard(job) {
+  jobStore[job.id] = job;
+  const logoHtml = job.logo
+    ? `<img src="${job.logo}" alt="" onerror="this.style.display='none'">`
+    : `<span style="font-size:20px">🏢</span>`;
+  const tagHtml = (job.tags||[]).map(t=>`<span class="tag tag-role">${t}</span>`).join('');
+  const salary = job.salary ? `<div class="card-meta-item"><span>💰</span>${job.salary}</div>` : '';
+  const loc = `<div class="card-meta-item"><span>📍</span>${job.location||'Remote'}</div>`;
+  const plat = `<span class="tag tag-platform">${job.platform}</span>`;
+  const hasKey = typeof geminiKey !== 'undefined' && geminiKey;
+  return `
+<div class="job-card" data-type="${job.type}" data-source="${job.source}" data-id="${job.id}">
+  <div class="card-top">
+    <div class="card-logo">${logoHtml}</div>
+    <div class="card-info">
+      <div class="card-company">${job.company}</div>
+      <div class="card-title">${job.title}</div>
+    </div>
+  </div>
+  <div class="card-tags">${jobTypeTag(job.type)}${plat}${tagHtml}</div>
+  <div class="card-meta">${loc}${salary}</div>
+  <div class="card-desc">${(job.desc||'Klik Apply untuk melihat detail lengkap.')}</div>
+  <div class="card-footer">
+    <a href="${job.url}" target="_blank" class="btn-apply">🔗 Lihat & Apply</a>
+    <button class="btn-cover" onclick="openCoverLetterById('${job.id}')" ${hasKey?'':'disabled title="Set API Key dulu"'}>✉️ Cover Letter</button>
+  </div>
+  <div id="match-${job.id}" class="match-score match-loading">⏳ Menganalisis...</div>
+  <div id="reason-${job.id}" class="match-reason"></div>
+</div>`;}
+// ── RENDER PLATFORMS ───────────────────────────────────────
+function renderPlatforms() {
+  const grid = document.getElementById('platform-grid');
+  const activePids = state.platforms.filter(p => !['remoteok','arbeitnow'].includes(p));
+  let html = '';
+  activePids.forEach(pid => {
+    const p = PLATFORMS[pid];
+    if (!p) return;
+    const url = buildPlatformURL(pid);
+    const badgeCls = {live:'badge-live',link:'badge-link',login:'badge-login'}[p.badge]||'badge-link';
+    const badgeTxt = {live:'✓ Live',link:'🔗 Open',login:'🔐 Login'}[p.badge]||'🔗';
+    html += `
+<a href="${url}" target="_blank" class="platform-card" title="Buka ${p.name} dengan filter aktif">
+  <div class="platform-icon">${p.icon}</div>
+  <div class="platform-info">
+    <div class="platform-name">${p.name}</div>
+    <div class="platform-desc">${p.desc}</div>
+  </div>
+  <span class="platform-badge ${badgeCls}">${badgeTxt}</span>
+</a>`;
+  });
+  grid.innerHTML = html || '<p style="color:var(--g400);padding:16px">Tidak ada platform dipilih.</p>';
+  document.getElementById('platform-count').textContent = activePids.length + ' platform';
+}
+
+// ── MAIN SEARCH ────────────────────────────────────────────
+async function lemparJala() {
+  const btn = document.getElementById('btn-lempar');
+  const grid = document.getElementById('live-grid');
+  const kw = document.getElementById('kw-input').value.trim();
+  state.keyword = kw;
+
+  btn.disabled = true;
+  btn.textContent = i18n[currentLang].searching;
+  grid.innerHTML = `<div class="loading-wrap"><div class="spinner"></div><p>${i18n[currentLang].loading}</p></div>`;
+  document.getElementById('live-count').textContent = 'Memuat...';
+
+  // Update platform links first
+  renderPlatforms();
+  renderActiveFilters();
+
+  let allJobs = [];
+  const errors = [];
+
+  // Fetch live APIs
+  const livePlatforms = state.platforms.filter(p => ['remoteok','arbeitnow'].includes(p));
+
+  const fetches = [];
+  if (livePlatforms.includes('remoteok')) fetches.push(fetchRemoteOK(kw, state.roles).catch(e=>{ errors.push('RemoteOK: '+e.message); return []; }));
+  if (livePlatforms.includes('arbeitnow')) fetches.push(fetchArbeitnow(kw, state.roles).catch(e=>{ errors.push('Arbeitnow: '+e.message); return []; }));
+
+  const results = await Promise.all(fetches);
+  results.forEach(r => allJobs = allJobs.concat(r));
+
+  // Filter by job type
+  if (state.jobType !== 'all') {
+    allJobs = allJobs.filter(j => j.type === state.jobType);
+  }
+
+  // Deduplicate by title+company
+  const seen = new Set();
+  allJobs = allJobs.filter(j => {
+    const k = (j.title+j.company).toLowerCase();
+    if (seen.has(k)) return false;
+    seen.add(k); return true;
+  });
+
+  state.jobs = allJobs;
+  state.lastSearch = new Date();
+
+  // Render
+  if (allJobs.length === 0) {
+    grid.innerHTML = `
+<div class="empty-state">
+  <div class="ei">🔍</div>
+  <h3>Tidak ada hasil ditemukan</h3>
+  <p>Coba ubah keyword atau filter role. Platform lain sudah terbuka di tab baru.</p>
+</div>`;
+  } else {
+    grid.innerHTML = allJobs.map(j => renderCard(j)).join('');
+  }
+
+  document.getElementById('live-count').textContent = allJobs.length + i18n[currentLang].found;
+  document.getElementById('stat-jobs').textContent = allJobs.length;
+
+  if (errors.length) {
+    grid.insertAdjacentHTML('afterbegin',
+      `<div class="error-state">⚠️ Sebagian API gagal: ${errors.join(', ')}. Coba lagi atau gunakan link platform di bawah.</div>`);
+  }
+
+  // Platform links stay as manual clicks in the "Buka di Platform Lain" section below
+  // No auto-open tabs — user clicks manually
+
+  btn.disabled = false;
+  btn.textContent = i18n[currentLang].btn_search;
+
+  // Update timestamp
+  const now = new Date();
+  const ts = now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}) +
+             ' · ' + now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('nav-ts').textContent = i18n[currentLang].ts_last + ': ' + ts;
+}
+
+// ── FILTER FUNCTIONS ───────────────────────────────────────
+function resetJobType() {
+  const btn = document.querySelector('[data-jtype="all"]');
+  if (btn) setJobType('all', btn);
+}
+
+function setJobType(type, btn) {
+  state.jobType = type;
+  document.querySelectorAll('.jtype-pill[data-jtype]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterLiveCards();
+  renderPlatforms();
+  renderActiveFilters();
+}
+
+function setLang(lang, btn) {
+  state.lang = lang;
+  document.querySelectorAll('.jtype-pill[data-lang]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterLiveCards() {
+  document.querySelectorAll('.job-card').forEach(card => {
+    const t = card.dataset.type;
+    const show = state.jobType === 'all' || t === state.jobType;
+    card.classList.toggle('hidden', !show);
+  });
+  const visible = document.querySelectorAll('.job-card:not(.hidden)').length;
+  document.getElementById('live-count').textContent = visible + i18n[currentLang].shown;
+}
+
+function updateRoles() {
+  state.roles = [...document.querySelectorAll('#role-group input:checked')].map(i=>i.value);
+  document.querySelectorAll('#role-group .chk-item').forEach(item => {
+    item.classList.toggle('selected', item.querySelector('input').checked);
+  });
+  renderActiveFilters();
+}
+
+function updatePlatforms() {
+  state.platforms = [...document.querySelectorAll('#platform-group input:checked')].map(i=>i.value);
+  document.querySelectorAll('#platform-group .chk-item').forEach(item => {
+    item.classList.toggle('selected', item.querySelector('input').checked);
+  });
+  renderPlatforms();
+  renderActiveFilters();
+}
+
+function selectAllRoles() {
+  document.querySelectorAll('#role-group input').forEach(i=>{ i.checked=true; });
+  updateRoles();
+}
+
+function selectAllPlatforms() {
+  document.querySelectorAll('#platform-group input').forEach(i=>{ i.checked=true; });
+  updatePlatforms();
+}
+
+function renderActiveFilters() {
+  const c = document.getElementById('active-filters');
+  let html = '';
+  if (state.jobType !== 'all') html += '<span class="af-tag">Tipe: ' + state.jobType + ' <button onclick="resetJobType()">✕</button></span>';
+  if (state.keyword) html += '<span class="af-tag">Keyword: "' + state.keyword.replace(/"/g,'') + '" <button onclick="clearKw()">✕</button></span>';
+  const roleCount = state.roles.length;
+  if (roleCount < 9) html += `<span class="af-tag">${roleCount} role dipilih</span>`;
+  if (html) html += `<button class="clear-all" onclick="resetAll()">Reset semua</button>`;
+  c.innerHTML = html;
+}
+
+function clearKw() {
+  state.keyword = '';
+  document.getElementById('kw-input').value = '';
+  renderActiveFilters();
+}
+
+function clearResults() {
+  state.jobs = [];
+  state.keyword = '';
+  document.getElementById('kw-input').value = '';
+  document.getElementById('live-grid').innerHTML = `
+<div class="empty-state"><div class="ei">🎣</div>
+<h3>Klik "Lempar Jala" untuk mulai cari</h3>
+<p>Atau pilih role preset di sidebar kiri</p></div>`;
+  document.getElementById('live-count').textContent = 'Belum dicari';
+  document.getElementById('stat-jobs').textContent = '–';
+  renderActiveFilters();
+}
+
+function resetAll() {
+  state.jobType = 'all';
+  state.keyword = '';
+  state.lang = 'both';
+  document.getElementById('kw-input').value = '';
+  document.querySelectorAll('[data-jtype]')[0]?.click();
+  selectAllRoles();
+  selectAllPlatforms();
+  clearResults();
+}
+
+// ── SIDEBAR (MOBILE) ───────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('active');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+// ── ENTER KEY ──────────────────────────────────────────────
+document.getElementById('kw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') lemparJala();
+});
+
+// ── I18N ──────────────────────────────────────────────────
+const i18n = {
+  id: {
+    hero_title: 'Lempar Jala <span>Selebar-lebarnya</span>',
+    hero_sub: 'Dashboard pencari kerja remote & freelance personal. Cari di 15+ platform sekaligus — satu keyword, satu klik, semua terbuka. Tangkap peluang sebesar-besarnya.',
+    hero_s1: 'Platform dicari', hero_s2: 'Role preset', hero_s3: 'Live data API', hero_s4: 'Jobs ditemukan',
+    placeholder: 'Ketik keyword tambahan... (cth: PMS, Infor, Oracle, n8n)',
+    btn_search: '🎣 Lempar Jala', btn_clear: 'Reset',
+    notice: '⚡ <span><b>RemoteOK & Arbeitnow</b> menampilkan data langsung (live). Platform lain akan terbuka sebagai tab baru dengan filter sudah applied — mungkin perlu login untuk melihat hasil penuh.</span>',
+    live_title: 'Hasil Live — RemoteOK & Arbeitnow',
+    live_desc: 'Data langsung dari API publik — tidak perlu login',
+    live_empty: 'Belum dicari',
+    platform_title: 'Buka di Platform Lain',
+    platform_desc: 'Klik platform di bawah untuk buka hasil search yang sudah di-filter',
+    empty_h: 'Klik "Lempar Jala" untuk mulai cari',
+    empty_p: 'Atau pilih role preset di sidebar kiri',
+    loading: 'Mengambil data dari RemoteOK & Arbeitnow...',
+    searching: '⏳ Melempar...',
+    found: ' jobs ditemukan',
+    shown: ' jobs ditampilkan',
+    no_result_h: 'Tidak ada hasil ditemukan',
+    no_result_p: 'Coba ubah keyword atau filter role. Platform lain sudah terbuka di tab baru.',
+    sl_jtype: 'Filter: Tipe Kerja', sl_role: 'Filter: Role / Keahlian',
+    sl_platform: 'Filter: Platform', sl_lang: 'Bahasa',
+    sel_all: 'Pilih Semua',
+    jt_all:'Semua', jt_remote:'🟢 Remote', jt_full:'🔵 Full-time', jt_hybrid:'🟡 Hybrid', jt_contract:'🟣 Contract',
+    apply_btn: '🔗 Lihat & Apply',
+    just_fetched: 'Baru saja diambil',
+    ts_active: 'Dashboard aktif',
+    ts_last: 'Terakhir',
+    reset_all: 'Reset semua',
+    err_partial: '⚠️ Sebagian API gagal: ',
+    err_retry: '. Coba lagi atau gunakan link platform di bawah.',
+    open_badge: '🔗 Buka',
+  },
+  en: {
+    hero_title: 'Cast the Net <span>as Wide as Possible</span>',
+    hero_sub: 'Personal remote & freelance job search dashboard. Search 15+ platforms at once — one keyword, one click, all open. Catch every opportunity.',
+    hero_s1: 'Platforms searched', hero_s2: 'Role presets', hero_s3: 'Live data APIs', hero_s4: 'Jobs found',
+    placeholder: 'Add keywords... (e.g. PMS, Infor, Oracle, n8n, automation)',
+    btn_search: '🎣 Cast Net', btn_clear: 'Reset',
+    notice: '⚡ <span><b>RemoteOK & Arbeitnow</b> show live data directly. Other platforms will open in new tabs with filters already applied — may require login for full results.</span>',
+    live_title: 'Live Results — RemoteOK & Arbeitnow',
+    live_desc: 'Real-time data from public APIs — no login required',
+    live_empty: 'Not searched yet',
+    platform_title: 'Open on Other Platforms',
+    platform_desc: 'Click a platform to open search results with your filters applied',
+    empty_h: 'Click "Cast Net" to start searching',
+    empty_p: 'Or select role presets in the left sidebar',
+    loading: 'Fetching data from RemoteOK & Arbeitnow...',
+    searching: '⏳ Casting...',
+    found: ' jobs found',
+    shown: ' jobs shown',
+    no_result_h: 'No results found',
+    no_result_p: 'Try changing the keyword or role filters. Other platforms have opened in new tabs.',
+    sl_jtype: 'Filter: Job Type', sl_role: 'Filter: Role / Skills',
+    sl_platform: 'Filter: Platform', sl_lang: 'Language',
+    sel_all: 'Select All',
+    jt_all:'All', jt_remote:'🟢 Remote', jt_full:'🔵 Full-time', jt_hybrid:'🟡 Hybrid', jt_contract:'🟣 Contract',
+    apply_btn: '🔗 View & Apply',
+    just_fetched: 'Just fetched',
+    ts_active: 'Dashboard active',
+    ts_last: 'Last search',
+    reset_all: 'Reset all',
+    err_partial: '⚠️ Some APIs failed: ',
+    err_retry: '. Try again or use platform links below.',
+    open_badge: '🔗 Open',
+  }
+};
+
+let currentLang = 'id';
+
+function switchLang(lang) {
+  currentLang = lang;
+  const t = i18n[lang];
+  // Nav buttons
+  document.getElementById('btn-id').classList.toggle('active', lang==='id');
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  // Hero
+  document.querySelector('.hero h1').innerHTML = t.hero_title;
+  document.querySelector('.hero p').textContent = t.hero_sub;
+  document.querySelectorAll('.hero-stat .l')[0].textContent = t.hero_s1;
+  document.querySelectorAll('.hero-stat .l')[1].textContent = t.hero_s2;
+  document.querySelectorAll('.hero-stat .l')[2].textContent = t.hero_s3;
+  document.querySelectorAll('.hero-stat .l')[3].textContent = t.hero_s4;
+  // Search
+  document.getElementById('kw-input').placeholder = t.placeholder;
+  document.getElementById('btn-lempar').textContent = t.btn_search;
+  document.querySelector('.btn-clear').textContent = t.btn_clear;
+  // Notice
+  document.querySelector('.notice').innerHTML = t.notice;
+  // Section headers
+  const secTitles = document.querySelectorAll('.sec-title');
+  if (secTitles[0]) { secTitles[0].querySelector('h2').textContent = t.live_title; secTitles[0].querySelector('p').textContent = t.live_desc; }
+  if (secTitles[1]) { secTitles[1].querySelector('h2').textContent = t.platform_title; secTitles[1].querySelector('p').textContent = t.platform_desc; }
+  // Sidebar labels
+  const sls = document.querySelectorAll('.sl');
+  if (sls[0]) sls[0].textContent = t.sl_jtype;
+  if (sls[1]) sls[1].textContent = t.sl_role;
+  if (sls[2]) sls[2].textContent = t.sl_platform;
+  if (sls[3]) sls[3].textContent = t.sl_lang;
+  // Job type pills
+  const pills = document.querySelectorAll('.jtype-pill[data-jtype]');
+  const jtLabels = [t.jt_all, t.jt_remote, t.jt_full, t.jt_hybrid, t.jt_contract];
+  pills.forEach((p,i) => { if (jtLabels[i]) p.textContent = jtLabels[i]; });
+  // Select all buttons
+  document.querySelectorAll('.sel-all').forEach(b => b.textContent = t.sel_all);
+  // Live count if not searched yet
+  const lc = document.getElementById('live-count');
+  if (lc.textContent === i18n[lang==='id'?'en':'id'].live_empty) lc.textContent = t.live_empty;
+  // Empty state if showing
+  const empty = document.querySelector('.empty-state h3');
+  if (empty) empty.textContent = t.empty_h;
+  const emptyP = document.querySelector('.empty-state p');
+  if (emptyP) emptyP.textContent = t.empty_p;
+  // Also update sidebar lang filter
+  state.lang = lang;
+  const langPills = document.querySelectorAll('.jtype-pill[data-lang]');
+  langPills.forEach(p => p.classList.toggle('active', p.dataset.lang === lang || (lang!=='en'&&lang!=='id'&&p.dataset.lang==='both')));
+}
+
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  document.getElementById('nav-ts').textContent = i18n[currentLang].ts_active + ' · ' +
+    now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+  renderPlatforms();
+  loadApiKey();
+});
+
+// ══════════════════════════════════════════════════════════
+// GEMINI AI INTEGRATION
+// ══════════════════════════════════════════════════════════
+
+const CV_CONTEXT = `I Gede Agus Wibawa, A.Sc., S.T., M.T. — IT Manager & Hospitality Technology Specialist, Automation & AI App Builder.
+
+EXPERIENCE (11+ years hospitality IT):
+- IT Manager, Miss Fish Bali (Nov 2025–Present): full IT ops, automation apps, AI-powered tools for hospitality & F&B
+- IT & Communication Manager Pre-Opening, Kappa Senses Ubud 76-villa luxury resort (Sep 2022–Nov 2025): end-to-end IT pre-opening, fiber network, IPTV, PABX, CCTV
+- Group IT Manager, Soul Cafes 4 F&B outlets (Apr 2021–Sep 2022): POS V-Soft, network, IT budget
+- IT Network Specialist, PT Aplikasi Pintar/Digitels (Dec 2020–Apr 2021): SaaS hospitality platform deployment at Signature Seminyak
+- Cluster IT Manager Pre-Opening, Signature Bali Sanur & Bali Water World (Jun 2019–Dec 2020): full IT stack hotel+waterpark
+- Project Manager System Migration, The Ungasan Clifftop Resort (Oct 2017–Jun 2019): migrated to Infor HMS, Agilysys Infogenesis, Infor SunSystems, BEEEES, Datacom
+
+SKILLS: Infor HMS, Agilysys Infogenesis, Mews PMS, HotelTime, Lightspeed POS, Oracle OPERA, Fortinet FortiGate, HPE Aruba, Mikrotik, Ubiquiti, Ruckus, Cisco CCNA, Google Cloud, Active Directory, Windows Server, Linux, HTML/CSS/JavaScript, Google Apps Script, Automation apps, AI-powered tools, n8n, Telegram bots, Dashboard development, Network architecture, Cybersecurity, Pre-opening IT projects, System migration, Vendor management, IT budget planning, SLA management
+
+EDUCATION: M.Sc Information Systems — Institut Teknologi Bandung (ITB) GPA 3.39 | B.Eng Computer Science — Universitas Surabaya | A.S. Business Administration — University of the People GPA 3.86
+
+CERTIFICATIONS: IBM AI Fundamentals, Google AI Essentials, Microsoft Applied Skills AI Research Agents, Elements of AI (Helsinki), Microsoft 365 Copilot, CompTIA Network+, Fortinet NSE1&2, Cisco CCNAv7, AWS, Google Cloud, Aviatrix ACE Multi-Cloud, PMEC, Lean Six Sigma White Belt, Stanford Innovation & Entrepreneurship, Remote Work & Virtual Collaboration (CertiProf)
+
+PUBLICATIONS: IEEE Eii-Forum — Teknologi WiMAX untuk Operator Seluler di Indonesia (2008)
+SPEAKING: BV E-Talk #23: AI Revolutionizing Guest Experience (2023); DCD>Connect APAC 2026; World AI Show 2026 Jakarta
+
+LANGUAGES: English (Fluent), Indonesian (Native)
+LOCATION: Denpasar, Bali, Indonesia — open to remote worldwide, relocation if salary min IDR 80-100M per month`;
+
+const COVER_LETTER_TEMPLATE = `I Gede Agus Wibawa, A.Sc., S.T., M.T.
+Sekar Jepun no 20
+Denpasar, Bali, Indonesia, 80237
++62 822 6767 2828 | wibawa@rumahdebara.com
+linkedin.com/in/i-gede-agus-wibawa`;
+
+let geminiKey = '';
+
+// ── API KEY MANAGEMENT ─────────────────────────────────────
+function loadApiKey() {
+  try {
+    const saved = localStorage.getItem('gemini_api_key_agus_dashboard');
+    if (saved && saved.length > 10) {
+      geminiKey = saved;
+      document.getElementById('api-key-input').value = saved;
+      updateApiStatus(true);
+    }
+  } catch(e) {
+    console.warn('localStorage not available:', e);
+  }
+}
+
+function saveApiKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val) {
+    alert('API Key kosong. Paste dulu API Key dari Google AI Studio.');
+    return;
+  }
+  // Accept any non-empty key — let Gemini API itself validate
+  geminiKey = val;
+  localStorage.setItem('gemini_api_key_agus_dashboard', val);
+  updateApiStatus(true);
+  // Visual feedback
+  const btn = document.querySelector('.btn-save-key');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Tersimpan!';
+  btn.style.background = '#047857';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+}
+
+function clearApiKey() {
+  if (!confirm('Hapus API Key dari browser?')) return;
+  geminiKey = '';
+  localStorage.removeItem('gemini_api_key_agus_dashboard');
+  document.getElementById('api-key-input').value = '';
+  updateApiStatus(false);
+}
+
+function toggleKeyVisibility() {
+  const inp = document.getElementById('api-key-input');
+  const btn = document.getElementById('btn-show-key');
+  if (!inp) return;
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = '🙈';
+    btn.title = 'Sembunyikan key';
+  } else {
+    inp.type = 'password';
+    btn.textContent = '👁';
+    btn.title = 'Tampilkan key';
+  }
+}
+
+function updateApiStatus(ok) {
+  const el = document.getElementById('api-status');
+  const txt = document.getElementById('api-status-text');
+  el.className = 'api-status ' + (ok ? 'ok' : 'missing');
+  txt.textContent = ok ? 'API Key aktif — semua fitur AI tersedia ✓' : 'API Key belum diset';
+}
+
+// ── CORE GEMINI CALL ───────────────────────────────────────
+async function callGemini(prompt, maxTokens=800, retries=2) {
+  if (!geminiKey) throw new Error('No API key');
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${geminiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+          })
+        }
+      );
+      if (res.status === 429) {
+        // Rate limit — wait then retry
+        const wait = (attempt + 1) * 3000;
+        await new Promise(r => setTimeout(r, wait));
+        continue;
+      }
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || 'Gemini API error ' + res.status);
+      }
+      const data = await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    } catch(e) {
+      if (attempt === retries) throw e;
+      await new Promise(r => setTimeout(r, 2000));
+    }
+  }
+}
+
+// ── 1. SMART SEARCH ENHANCEMENT ───────────────────────────
+async function expandKeyword(kw) {
+  if (!geminiKey || !kw) return;
+  const tagsEl = document.getElementById('smart-tags');
+  tagsEl.innerHTML = '<span class="smart-label">🤖 AI expanding...</span>';
+  try {
+    const prompt = `You are a job search expert. The user is an IT professional in hospitality technology with skills in: PMS systems (Infor HMS, Agilysys, Mews, Oracle OPERA), networking, automation, AI tools, web development.
+
+They typed this keyword: "${kw}"
+
+Generate exactly 6 related search keywords/phrases that would find more relevant jobs for this person. Return ONLY a JSON array of strings, no explanation. Example: ["keyword1","keyword2","keyword3","keyword4","keyword5","keyword6"]`;
+    const result = await callGemini(prompt, 200);
+    const clean = result.replace(/```json|```/g,'').trim();
+    const tags = JSON.parse(clean);
+    if (Array.isArray(tags) && tags.length > 0) {
+      tagsEl.innerHTML = '<span class="smart-label">💡 AI suggests:</span>' +
+        tags.map(t => { const safe = t.replace(/['"`]/g,''); return `<button class="smart-tag" onclick="addSmartTag('${safe}')">${t}</button>`; }).join('');
+    }
+  } catch(e) {
+    tagsEl.innerHTML = `<span class="smart-label" style="color:var(--red)">⚠️ ${e.message}</span>`;
+  }
+}
+
+function addSmartTag(tag) {
+  const inp = document.getElementById('kw-input');
+  const cur = inp.value.trim();
+  inp.value = cur ? cur + ' ' + tag : tag;
+  inp.focus();
+}
+
+// ── 2. JOB MATCH SCORE ────────────────────────────────────
+async function scoreJob(job) {
+  if (!geminiKey) return;
+  const scoreEl = document.getElementById('match-' + job.id);
+  const reasonEl = document.getElementById('reason-' + job.id);
+  if (!scoreEl) return;
+
+  try {
+    const prompt = `You are a career advisor. Analyze how well this job matches the candidate's profile.
+
+CANDIDATE PROFILE:
+${CV_CONTEXT}
+
+JOB:
+Title: ${job.title}
+Company: ${job.company}
+Description: ${job.desc}
+Tags: ${job.tags?.join(', ')}
+
+Return ONLY a JSON object like this (no explanation, no markdown):
+{"score": 85, "label": "Strong Match", "reason": "One sentence why this matches or doesn't match."}
+
+Score rules: 80-100 = Strong Match (green), 50-79 = Partial Match (yellow), 0-49 = Low Match (red).`;
+
+    const result = await callGemini(prompt, 150);
+    const clean = result.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    const score = parsed.score || 0;
+    const cls = score >= 80 ? 'match-high' : score >= 50 ? 'match-mid' : 'match-low';
+    const icon = score >= 80 ? '🟢' : score >= 50 ? '🟡' : '🔴';
+    scoreEl.className = 'match-score ' + cls;
+    scoreEl.textContent = `${icon} ${score}% — ${parsed.label || ''}`;
+    if (reasonEl) reasonEl.textContent = parsed.reason || '';
+  } catch(e) {
+    if (scoreEl) {
+      scoreEl.className = 'match-score match-loading';
+      scoreEl.textContent = e.message.includes('429') ? '⏳ Rate limit, skip' : '— Tidak tersedia';
+    }
+  }
+}
+
+async function scoreAllJobs(jobs) {
+  if (!geminiKey || !jobs.length) return;
+  // Score ALL jobs sequentially with 3s delay each to avoid rate limit
+  for (let i = 0; i < jobs.length; i++) {
+    await scoreJob(jobs[i]);
+    if (i < jobs.length - 1) await new Promise(r => setTimeout(r, 2000));
+  }
+}
+
+// ── 3. INTELLIGENCE REPORT ────────────────────────────────
+async function generateIntelReport(jobs) {
+  if (!geminiKey || !jobs.length) return;
+  const report = document.getElementById('intel-report');
+  const body = document.getElementById('intel-body');
+  report.classList.add('visible');
+  body.innerHTML = '<div class="intel-loading"><div class="intel-spinner"></div> Menganalisis ' + jobs.length + ' jobs...</div>';
+
+  try {
+    const jobSummary = jobs.slice(0,20).map((j,i) =>
+      `${i+1}. ${j.title} at ${j.company} (${j.type}) — Tags: ${j.tags?.join(', ')}`
+    ).join('\n');
+
+    const lang = currentLang === 'en' ? 'English' : 'Bahasa Indonesia';
+    const prompt = `You are a career intelligence analyst. Analyze these job search results for a hospitality IT professional.
+
+CANDIDATE: ${CV_CONTEXT.split('\n')[0]}
+
+JOBS FOUND (${jobs.length} total):
+${jobSummary}
+
+Write a concise intelligence report in ${lang} covering:
+1. Overall market snapshot (2-3 sentences)
+2. Top 3 most relevant jobs and why
+3. Skills in demand based on listings
+4. One strategic recommendation for this candidate
+
+Keep it practical and specific. Max 250 words. Use simple formatting with line breaks, no markdown headers.`;
+
+    const result = await callGemini(prompt, 400);
+    body.textContent = result;
+  } catch(e) {
+    body.innerHTML = `<span style="color:#FCA5A5">⚠️ Error: ${e.message}</span>`;
+  }
+}
+
+// ── 4. COVER LETTER ───────────────────────────────────────
+function openCoverLetterById(jobId) {
+  const job = jobStore[jobId];
+  if (!job) { alert('Data job tidak ditemukan.'); return; }
+  openCoverLetter(job.title, job.company, job.desc || '');
+}
+
+function openCoverLetter(title, company, desc) {
+  if (!geminiKey) { alert('Set Gemini API Key dulu ya Kak!'); return; }
+  const modal = document.getElementById('cl-modal');
+  const output = document.getElementById('cl-output');
+  document.getElementById('cl-modal-title').textContent = 'Cover Letter — ' + title;
+  document.getElementById('cl-modal-sub').textContent = company;
+  output.innerHTML = '<div class="cl-loading"><div class="spinner"></div> Membuat cover letter dengan Gemini AI...</div>';
+  modal.classList.add('open');
+  generateCoverLetter(title, company, desc);
+}
+
+async function generateCoverLetter(title, company, desc) {
+  const output = document.getElementById('cl-output');
+  try {
+    const today = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+    const lang = currentLang === 'en' ? 'English' : 'Bahasa Indonesia';
+    const prompt = `Write a professional cover letter in ${lang} for this job application.
+
+CANDIDATE PROFILE:
+${CV_CONTEXT}
+
+COVER LETTER HEADER (use exactly):
+${COVER_LETTER_TEMPLATE}
+
+JOB:
+Position: ${title}
+Company: ${company}
+Description: ${desc}
+
+Date: ${today}
+
+Instructions:
+- Start with the header, then date, then "Attention to: Human Resources / Hiring Manager at ${company}"
+- Write 3-4 paragraphs: opening with position interest, relevant experience matching the job, specific achievements with numbers, closing with call to action
+- Match tone: professional but warm, confident not arrogant
+- Highlight the most relevant skills from the candidate's profile that match this specific job
+- Keep it under 350 words
+- End with "Sincerely," then "I Gede Agus Wibawa, A.Sc., S.T., M.T."`;
+
+    const result = await callGemini(prompt, 700);
+    output.textContent = result;
+  } catch(e) {
+    output.innerHTML = `<span style="color:var(--red)">⚠️ Error: ${e.message}</span>`;
+  }
+}
+
+function closeCLModal() {
+  document.getElementById('cl-modal').classList.remove('open');
+}
+
+function copyCL() {
+  const text = document.getElementById('cl-output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy-cl');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Cover Letter', 2000);
+  });
+}
+
+// Close modal on overlay click
+document.getElementById('cl-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeCLModal();
+});
+
+// ── HOOK INTO SEARCH ───────────────────────────────────────
+// Patch lemparJala to also trigger AI features after results
+const _origLempar = lemparJala;
+lemparJala = async function() {
+  // Smart search expand if has keyword
+  const kw = document.getElementById('kw-input').value.trim();
+  if (kw && geminiKey) expandKeyword(kw);
+  await _origLempar();
+  // After results are rendered, score jobs + intel report
+  if (geminiKey && state.jobs.length > 0) {
+    // Start scoring first
+    setTimeout(() => scoreAllJobs(state.jobs), 500);
+    // Intel report after scoring jobs (5 jobs x 3s = ~15s + buffer)
+    setTimeout(() => generateIntelReport(state.jobs), 2000);
+  }
+};
+
+// Expand keyword on input blur if gemini active
+document.getElementById('kw-input').addEventListener('blur', function() {
+  if (this.value.trim() && geminiKey) expandKeyword(this.value.trim());
+});
+
+</script>
+</body>
+</html>
