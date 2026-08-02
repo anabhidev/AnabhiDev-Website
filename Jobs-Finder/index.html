@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!-- ================================================================
 // Remote Job Finder
-// Teknologi: HTML · CSS · JavaScript · Gemini AI API
+// Teknologi: HTML · CSS · JavaScript · Gemini AI API (via GAS Proxy)
 // Anabhi Dev
-// Version : 2.8
-// Generated : 2 August 2026, 07:15:40
+// Version : 2.9
+// Generated : 2 August 2026, 17:35:56
 // ================================================================ -->
 <html lang="id">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Remote Job Finder - v2.8 — I Gede Agus Wibawa, A.Sc., S.T., M.T.</title>
+<title>Remote Job Finder - v2.9 — I Gede Agus Wibawa, A.Sc., S.T., M.T.</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -196,26 +196,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
 .lang-btn.active{background:var(--blue);color:#fff}
 @media(max-width:768px){.lang-toggle{display:none}}
 
-/* ── GEMINI API SETUP ──────────────────────────────────── */
-.api-setup{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:1px solid rgba(99,179,237,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.api-setup-icon{font-size:28px;flex-shrink:0}
-.api-setup-info{flex:1;min-width:200px}
-.api-setup-info h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
-.api-setup-info p{font-size:12px;color:#93C5FD}
-.api-input-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.api-key-input{flex:1;min-width:200px;padding:9px 14px;border:1.5px solid rgba(255,255,255,.15);border-radius:var(--rs);background:rgba(255,255,255,.08);color:#fff;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .2s}
-.api-key-input:focus{border-color:var(--blue-l)}
-.api-key-input::placeholder{color:rgba(255,255,255,.3)}
-.btn-save-key{padding:9px 16px;background:var(--blue);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;transition:background .2s}
-.btn-save-key:hover{background:var(--navy)}
-.btn-toggle-key{padding:9px 12px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
-.btn-toggle-key:hover{background:rgba(255,255,255,.2)}
-.btn-clear-key{padding:9px 12px;background:rgba(220,38,38,.2);color:#FCA5A5;border:1px solid rgba(220,38,38,.3);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
-.api-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap}
-.api-status.ok{color:#34D399}
-.api-status.missing{color:#FCA5A5}
-.api-status .sdot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
-
 /* ── INTELLIGENCE REPORT ─────────────────────────────── */
 .intel-report{background:linear-gradient(135deg,#0F2027,#203A43,#2C5364);border:1px solid rgba(99,179,237,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:24px;display:none}
 .intel-report.visible{display:block}
@@ -261,7 +241,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
 .smart-tag{background:var(--purple-l);color:var(--purple);font-size:10px;padding:3px 8px;border-radius:4px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:'Plus Jakarta Sans',sans-serif}
 .smart-tag:hover{background:var(--purple);color:#fff}
 .smart-label{font-size:10px;color:var(--g400);align-self:center}
-</style>
+
+    .nav-powered{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+    .powered-dot{width:8px;height:8px;border-radius:50%;background:#34D399;flex-shrink:0;animation:pulse-dot 2s infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+    .powered-text{font-size:11px;font-weight:600;color:#fff}
+    @media(max-width:768px){.nav-powered{display:none}}
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -284,7 +270,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
     <button class="lang-btn active" id="btn-id" onclick="switchLang('id')">🇮🇩 ID</button>
     <button class="lang-btn" id="btn-en" onclick="switchLang('en')">🇬🇧 EN</button>
   </div>
-  <div class="nav-ts"><span class="dot"></span><span id="nav-ts">Memuat...</span></div>
+  <div class="nav-powered">
+    <span class="powered-dot"></span>
+    <span class="powered-text">⚡ Powered by Gemini AI</span>
+  </div>
 </nav>
 
 <div class="layout">
@@ -369,10 +358,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
     <h1>Lempar Jala <span>Selebar-lebarnya</span></h1>
     <p>Dashboard pencari kerja remote & freelance personal. Cari di 15+ platform sekaligus — satu keyword, satu klik, semua terbuka. Tangkap peluang sebesar-besarnya.</p>
     <div class="hero-stats">
+      <div class="hero-stat"><div class="n">5</div><div class="l">Live data API</div></div>
       <div class="hero-stat"><div class="n">15+</div><div class="l">Platform dicari</div></div>
       <div class="hero-stat"><div class="n">9</div><div class="l">Role preset</div></div>
-      <div class="hero-stat"><div class="n" id="stat-live">2</div><div class="l">Live data API</div></div>
       <div class="hero-stat"><div class="n" id="stat-jobs">–</div><div class="l">Jobs ditemukan</div></div>
+      <div class="hero-stat"><div class="n" id="stat-high">–</div><div class="l">High Match ≥75%</div></div>
+      <div class="hero-stat"><div class="n" id="stat-saved" style="font-size:14px">–</div><div class="l">Last Saved</div></div>
     </div>
   </div>
 
@@ -390,39 +381,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
   <div class="active-filters" id="active-filters"></div>
 
 
-  <!-- API SETUP -->
-  <div class="api-setup" id="api-setup">
-    <div class="api-setup-icon">🤖</div>
-    <div class="api-setup-info">
-      <h3>Gemini AI — Power Up Dashboard</h3>
-      <p>Paste Gemini API Key untuk aktifkan: Job Match Score, Intelligence Report, Smart Search & Cover Letter</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:8px;min-width:300px">
-      <div class="api-input-row">
-        <input class="api-key-input" type="password" id="api-key-input" placeholder="AIza...paste Gemini API Key di sini"/>
-        <button class="btn-toggle-key" onclick="toggleKeyVisibility()" id="btn-show-key" title="Tampilkan key">👁</button>
-        <button class="btn-save-key" onclick="saveApiKey()">Simpan</button>
-        <button class="btn-clear-key" onclick="clearApiKey()" title="Hapus key">🗑</button>
-      </div>
-      <div class="api-status missing" id="api-status">
-        <span class="sdot"></span><span id="api-status-text">API Key belum diset</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- INTELLIGENCE REPORT -->
-  <div class="intel-report" id="intel-report">
-    <div class="intel-hdr">
-      <span style="font-size:20px">🧠</span>
-      <h3>Intelligence Report</h3>
-      <span class="ai-badge">GEMINI AI</span>
-    </div>
-    <div class="intel-body" id="intel-body">
-      <div class="intel-loading"><div class="intel-spinner"></div> Menganalisis hasil pencarian...</div>
-    </div>
-  </div>
-
-  <!-- COVER LETTER MODAL -->
+  <!-- API Key dikelola via GAS Proxy -->
+    <!-- COVER LETTER MODAL -->
   <div class="modal-overlay" id="cl-modal">
     <div class="modal">
       <button class="modal-close" onclick="closeCLModal()">✕</button>
@@ -475,6 +435,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
 
 <script>
 // ── STATE ──────────────────────────────────────────────────
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyXOp6JLQSqJq6CNPg9ubXBDJ3_limhDs58-D4wvnulQyRXdxQdm-FAvHCoV08g8jq_/exec';
+
 const state = {
   jobType: 'all',
   lang: 'both',
@@ -594,6 +556,88 @@ async function fetchArbeitnow(keyword, roles) {
   }));
 }
 
+// ── FETCH HIMALAYAS ───────────────────────────────────────────────
+async function fetchHimalayas() {
+  try {
+    const res = await fetch('https://himalayas.app/jobs/api?limit=20', {
+      headers: { 'User-Agent': 'Mozilla/5.0 AnabhiDev/JobFetcher' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.jobs || []).slice(0, 20).map(j => ({
+      id: 'him-' + (j.id || j.slug || Math.random()),
+      title: j.title || '',
+      company: (j.company && j.company.name) ? j.company.name : (j.companyName || ''),
+      location: j.locationRestrictions ? j.locationRestrictions.join(', ') : 'Remote',
+      country: extractCountryClient(j.locationRestrictions ? j.locationRestrictions.join(', ') : 'Remote'),
+      type: 'remote',
+      tags: (j.categories || []).slice(0, 4),
+      url: j.applicationLink || ('https://himalayas.app/jobs/' + j.slug),
+      salary: '',
+      desc: ((j.description || j.shortDescription || '').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).slice(0,250),
+      platform: 'Himalayas',
+      date: new Date().toISOString(),
+      source: 'himalayas',
+    }));
+  } catch(e) { console.warn('fetchHimalayas:', e.message); return []; }
+}
+
+async function fetchRemoteJobsOrg() {
+  try {
+    const res = await fetch('https://remotejobs.org/api/v1/jobs?limit=20');
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.data || []).slice(0, 20).map(j => ({
+      id: 'rjo-' + (j.id || Math.random()),
+      title: j.title || '',
+      company: (j.company && j.company.name) ? j.company.name : '',
+      location: j.location || 'Remote',
+      country: extractCountryClient(j.location || 'Remote'),
+      type: 'remote',
+      tags: (j.category && j.category.name) ? [j.category.name] : [],
+      url: j.apply_url || j.url || '',
+      salary: j.salary_text || '',
+      desc: ((j.description || '').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).slice(0,250),
+      platform: 'RemoteJobs.org',
+      date: new Date().toISOString(),
+      source: 'remotejobsorg',
+    }));
+  } catch(e) { console.warn('fetchRemoteJobsOrg:', e.message); return []; }
+}
+
+function extractCountryClient(loc) {
+  if (!loc) return 'Unknown';
+  if (/remote|worldwide|anywhere/i.test(loc)) return 'Remote / Global';
+  const parts = loc.split(',').map(p => p.trim());
+  return parts.length >= 2 ? parts[parts.length - 1] : loc;
+}
+
+// ── GAS PROXY — Score via GAS ──────────────────────────────────────
+async function scoreViaGAS(job) {
+  if (!GAS_URL) return null;
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'score', job }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.success ? data.score : null;
+  } catch(e) { console.warn('GAS score error:', e.message); return null; }
+}
+
+async function saveReportViaGAS(report) {
+  if (!GAS_URL) return;
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save_report', report }),
+    });
+  } catch(e) { console.warn('GAS save report error:', e.message); }
+}
+
 // ── RENDER CARDS ───────────────────────────────────────────
 function jobTypeTag(t) {
   const map = {
@@ -686,8 +730,11 @@ async function lemparJala() {
   const livePlatforms = state.platforms.filter(p => ['remoteok','arbeitnow'].includes(p));
 
   const fetches = [];
-  if (livePlatforms.includes('remoteok')) fetches.push(fetchRemoteOK(kw, state.roles).catch(e=>{ errors.push('RemoteOK: '+e.message); return []; }));
-  if (livePlatforms.includes('arbeitnow')) fetches.push(fetchArbeitnow(kw, state.roles).catch(e=>{ errors.push('Arbeitnow: '+e.message); return []; }));
+  if (livePlatforms.includes('remoteok'))   fetches.push(fetchRemoteOK(kw, state.roles).catch(e=>{ errors.push('RemoteOK: '+e.message); return []; }));
+  if (livePlatforms.includes('arbeitnow'))  fetches.push(fetchArbeitnow(kw, state.roles).catch(e=>{ errors.push('Arbeitnow: '+e.message); return []; }));
+  // Always fetch from these 3 additional live APIs
+  fetches.push(fetchHimalayas().catch(e=>{ errors.push('Himalayas: '+e.message); return []; }));
+  fetches.push(fetchRemoteJobsOrg().catch(e=>{ errors.push('RemoteJobs.org: '+e.message); return []; }));
 
   const results = await Promise.all(fetches);
   results.forEach(r => allJobs = allJobs.concat(r));
@@ -982,7 +1029,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('nav-ts').textContent = i18n[currentLang].ts_active + ' · ' +
     now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
   renderPlatforms();
-  loadApiKey();
 });
 
 // ══════════════════════════════════════════════════════════
@@ -1044,125 +1090,6 @@ linkedin.com/in/i-gede-agus-wibawa`;
 let geminiKey = '';
 
 // ── API KEY MANAGEMENT ─────────────────────────────────────
-function loadApiKey() {
-  try {
-    const saved = localStorage.getItem('gemini_api_key_agus_dashboard');
-    if (saved && saved.length > 10) {
-      geminiKey = saved;
-      document.getElementById('api-key-input').value = saved;
-      updateApiStatus(true);
-    }
-  } catch(e) {
-    console.warn('localStorage not available:', e);
-  }
-}
-
-function saveApiKey() {
-  const val = document.getElementById('api-key-input').value.trim();
-  if (!val) {
-    alert('API Key kosong. Paste dulu API Key dari Google AI Studio.');
-    return;
-  }
-  // Accept any non-empty key — let Gemini API itself validate
-  geminiKey = val;
-  localStorage.setItem('gemini_api_key_agus_dashboard', val);
-  updateApiStatus(true);
-  // Visual feedback
-  const btn = document.querySelector('.btn-save-key');
-  const orig = btn.textContent;
-  btn.textContent = '✓ Tersimpan!';
-  btn.style.background = '#047857';
-  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
-}
-
-function clearApiKey() {
-  if (!confirm('Hapus API Key dari browser?')) return;
-  geminiKey = '';
-  localStorage.removeItem('gemini_api_key_agus_dashboard');
-  document.getElementById('api-key-input').value = '';
-  updateApiStatus(false);
-}
-
-function toggleKeyVisibility() {
-  const inp = document.getElementById('api-key-input');
-  const btn = document.getElementById('btn-show-key');
-  if (!inp) return;
-  if (inp.type === 'password') {
-    inp.type = 'text';
-    btn.textContent = '🙈';
-    btn.title = 'Sembunyikan key';
-  } else {
-    inp.type = 'password';
-    btn.textContent = '👁';
-    btn.title = 'Tampilkan key';
-  }
-}
-
-function updateApiStatus(ok) {
-  const el = document.getElementById('api-status');
-  const txt = document.getElementById('api-status-text');
-  el.className = 'api-status ' + (ok ? 'ok' : 'missing');
-  txt.textContent = ok ? 'API Key aktif — semua fitur AI tersedia ✓' : 'API Key belum diset';
-}
-
-// ── CORE GEMINI CALL ───────────────────────────────────────
-async function callGemini(prompt, maxTokens=800, retries=2) {
-  if (!geminiKey) throw new Error('No API key');
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${geminiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
-          })
-        }
-      );
-      if (res.status === 429) {
-        // Rate limit — wait then retry
-        const wait = (attempt + 1) * 3000;
-        await new Promise(r => setTimeout(r, wait));
-        continue;
-      }
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error?.message || 'Gemini API error ' + res.status);
-      }
-      const data = await res.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    } catch(e) {
-      if (attempt === retries) throw e;
-      await new Promise(r => setTimeout(r, 2000));
-    }
-  }
-}
-
-// ── 1. SMART SEARCH ENHANCEMENT ───────────────────────────
-async function expandKeyword(kw) {
-  if (!geminiKey || !kw) return;
-  const tagsEl = document.getElementById('smart-tags');
-  tagsEl.innerHTML = '<span class="smart-label">🤖 AI expanding...</span>';
-  try {
-    const prompt = `You are a job search expert. The user is an IT professional in hospitality technology with skills in: PMS systems (Infor HMS, Agilysys, Mews, Oracle OPERA), networking, automation, AI tools, web development.
-
-They typed this keyword: "${kw}"
-
-Generate exactly 6 related search keywords/phrases that would find more relevant jobs for this person. Return ONLY a JSON array of strings, no explanation. Example: ["keyword1","keyword2","keyword3","keyword4","keyword5","keyword6"]`;
-    const result = await callGemini(prompt, 200);
-    const clean = result.replace(/```json|```/g,'').trim();
-    const tags = JSON.parse(clean);
-    if (Array.isArray(tags) && tags.length > 0) {
-      tagsEl.innerHTML = '<span class="smart-label">💡 AI suggests:</span>' +
-        tags.map(t => { const safe = t.replace(/['"`]/g,''); return `<button class="smart-tag" onclick="addSmartTag('${safe}')">${t}</button>`; }).join('');
-    }
-  } catch(e) {
-    tagsEl.innerHTML = `<span class="smart-label" style="color:var(--red)">⚠️ ${e.message}</span>`;
-  }
-}
-
 function addSmartTag(tag) {
   const inp = document.getElementById('kw-input');
   const cur = inp.value.trim();
@@ -1172,6 +1099,26 @@ function addSmartTag(tag) {
 
 // ── 2. JOB MATCH SCORE ────────────────────────────────────
 async function scoreJob(job) {
+  // Use GAS proxy for scoring (API key stored safely in GAS)
+  const gasResult = await scoreViaGAS(job);
+  if (gasResult) {
+    const scoreEl = document.getElementById('match-' + job.id);
+    const reasonEl = document.getElementById('reason-' + job.id);
+    const score = gasResult.score || 0;
+    const cls = score >= 75 ? 'match-high' : score >= 50 ? 'match-mid' : 'match-low';
+    const icon = score >= 75 ? '🟢' : score >= 50 ? '🟡' : '🔴';
+    if (scoreEl) { scoreEl.className = 'match-score ' + cls; scoreEl.textContent = icon + ' ' + score + '% — ' + (gasResult.label || ''); }
+    if (reasonEl) reasonEl.textContent = gasResult.reason || '';
+    const jobObj = jobStore[job.id];
+    if (jobObj) jobObj._score = score;
+    // Update high match stat
+    updateHighMatchStat();
+    return;
+  }
+  // Fallback: direct Gemini if GAS unavailable
+  if (!geminiKey) return;}
+
+async function scoreJobDirect(job) {
   if (!geminiKey) return;
   const scoreEl = document.getElementById('match-' + job.id);
   const reasonEl = document.getElementById('reason-' + job.id);
@@ -1223,6 +1170,12 @@ async function scoreAllJobs(jobs) {
   }
   // After all scored, re-sort cards by score (highest first)
   sortCardsByScore();
+}
+
+function updateHighMatchStat() {
+  const high = Object.values(jobStore).filter(j => (j._score || 0) >= 75).length;
+  const el = document.getElementById('stat-high');
+  if (el && high > 0) el.textContent = high;
 }
 
 function sortCardsByScore() {
@@ -1306,6 +1259,22 @@ Keep it practical and specific. Max 250 words. Use simple formatting with line b
     const result = await callGemini(prompt, 400);
     const dist = buildMatchDistribution(state.jobs);
     body.innerHTML = dist + renderMarkdown(result);
+    // Save to Google Sheets via GAS
+    const dist_data = buildMatchDistribution(state.jobs);
+    const scored = state.jobs.map(j => j._score || 0);
+    saveReportViaGAS({
+      total: state.jobs.length,
+      high:  scored.filter(s => s >= 75).length,
+      good:  scored.filter(s => s >= 50 && s < 75).length,
+      fair:  scored.filter(s => s >= 25 && s < 50).length,
+      low:   scored.filter(s => s < 25).length,
+      text:  result,
+    }).then(() => {
+      const now = new Date();
+      const ts = now.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}) + ' ' + now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+      const statSaved = document.getElementById('stat-saved');
+      if (statSaved) statSaved.textContent = ts;
+    });
   } catch(e) {
     body.innerHTML = `<span style="color:#FCA5A5">⚠️ Error: ${e.message}</span>`;
   }
