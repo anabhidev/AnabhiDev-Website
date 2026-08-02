@@ -3,14 +3,14 @@
 // Remote Job Finder
 // Teknologi: HTML · CSS · JavaScript · Gemini AI API
 // Anabhi Dev
-// Version : 2.7
-// Generated : 2 August 2026, 06:22:15
+// Version : 2.8
+// Generated : 2 August 2026, 07:15:40
 // ================================================================ -->
 <html lang="id">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Remote Job Finder - v2.7 — I Gede Agus Wibawa, A.Sc., S.T., M.T.</title>
+<title>Remote Job Finder - v2.8 — I Gede Agus Wibawa, A.Sc., S.T., M.T.</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -222,7 +222,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
 .intel-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .intel-hdr h3{font-size:15px;font-weight:700;color:#fff}
 .intel-hdr .ai-badge{background:rgba(99,179,237,.2);color:#63B3ED;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:.05em}
-.intel-body{font-size:13px;color:#BEE3F8;line-height:1.8;white-space:pre-wrap}
+.intel-body{font-size:13px;color:#BEE3F8;line-height:1.8}
+.intel-body h3,.intel-body h4{color:#93C5FD;margin:10px 0 4px}
+.intel-body strong{color:#fff;font-weight:700}
+.intel-body em{color:#FDE68A;font-style:italic}
+.intel-body ul{margin:6px 0 6px 16px}
+.intel-body li{margin:3px 0}
+.intel-body p{margin:6px 0}
 .intel-loading{display:flex;align-items:center;gap:10px;color:#93C5FD;font-size:13px}
 .intel-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:#63B3ED;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 
@@ -256,6 +262,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(
 .smart-tag:hover{background:var(--purple);color:#fff}
 .smart-label{font-size:10px;color:var(--g400);align-self:center}
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -543,11 +550,11 @@ function buildPlatformURL(pid) {
 // ── LIVE FETCH ─────────────────────────────────────────────
 async function fetchRemoteOK(keyword, roles) {
   const tags = [...roles.slice(0,4), ...(keyword?[keyword]:[])].map(r=>r.toLowerCase().replace(/\s+/g,'-')).join(',');
-  const url = `https://remoteok.com/api?tags=${encodeURIComponent(tags)}`;
+  const url = `https://remoteok.com/api?tags=${encodeURIComponent(tags)}&limit=80`;
   const res = await fetch(url, { headers:{'User-Agent':'Mozilla/5.0'} });
   const data = await res.json();
   // first element is metadata, skip it
-  return (Array.isArray(data) ? data.slice(1) : []).slice(0,20).map(j => ({
+  return (Array.isArray(data) ? data.slice(1) : []).slice(0,40).map(j => ({
     id: 'rok-'+j.id,
     title: j.position || j.title || 'Unknown Role',
     company: j.company || 'Unknown',
@@ -557,7 +564,7 @@ async function fetchRemoteOK(keyword, roles) {
     tags: (j.tags || []).slice(0,4),
     url: j.url || `https://remoteok.com/l/${j.slug}`,
     salary: j.salary || '',
-    desc: (j.description || '').replace(/<[^>]+>/g,'').slice(0,200),
+    desc: (j.description || '').replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim().slice(0,250),
     platform: 'RemoteOK',
     date: j.date || '',
     source: 'remoteok',
@@ -567,10 +574,10 @@ async function fetchRemoteOK(keyword, roles) {
 async function fetchArbeitnow(keyword, roles) {
   const q = [...roles.slice(0,3), keyword].filter(Boolean).join(' ');
   const remote = state.jobType !== 'fulltime' ? '&remote=true' : '';
-  const url = `https://www.arbeitnow.com/api/job-board-api?search=${encodeURIComponent(q)}${remote}&language=${state.lang==='id'?'id':'en'}`;
+  const url = `https://www.arbeitnow.com/api/job-board-api?search=${encodeURIComponent(q)}${remote}&page=1&language=${state.lang==='id'?'id':'en'}`;
   const res = await fetch(url);
   const data = await res.json();
-  return (data.data || []).slice(0,20).map(j => ({
+  return (data.data || []).slice(0,40).map(j => ({
     id: 'arb-'+j.slug,
     title: j.title || 'Unknown Role',
     company: j.company_name || 'Unknown',
@@ -580,7 +587,7 @@ async function fetchArbeitnow(keyword, roles) {
     tags: (j.tags || []).slice(0,4),
     url: j.url || '#',
     salary: j.salary_from ? `$${j.salary_from}–${j.salary_to}` : '',
-    desc: (j.description || '').replace(/<[^>]+>/g,'').slice(0,200),
+    desc: (j.description || '').replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim().slice(0,250),
     platform: 'Arbeitnow',
     date: j.created_at || '',
     source: 'arbeitnow',
@@ -982,27 +989,51 @@ document.addEventListener('DOMContentLoaded', () => {
 // GEMINI AI INTEGRATION
 // ══════════════════════════════════════════════════════════
 
-const CV_CONTEXT = `I Gede Agus Wibawa, A.Sc., S.T., M.T. — IT Manager & Hospitality Technology Specialist, Automation & AI App Builder.
+const CV_CONTEXT = `I Gede Agus Wibawa, A.Sc., S.T., M.T.
+IT Manager | Hospitality Technology Specialist | Automation & AI App Builder
++62 822 6767 2828 | wibawa@rumahdebara.com | Denpasar, Bali
+linkedin.com/in/i-gede-agus-wibawa
 
-EXPERIENCE (11+ years hospitality IT):
-- IT Manager, Miss Fish Bali (Nov 2025–Present): full IT ops, automation apps, AI-powered tools for hospitality & F&B
-- IT & Communication Manager Pre-Opening, Kappa Senses Ubud 76-villa luxury resort (Sep 2022–Nov 2025): end-to-end IT pre-opening, fiber network, IPTV, PABX, CCTV
-- Group IT Manager, Soul Cafes 4 F&B outlets (Apr 2021–Sep 2022): POS V-Soft, network, IT budget
-- IT Network Specialist, PT Aplikasi Pintar/Digitels (Dec 2020–Apr 2021): SaaS hospitality platform deployment at Signature Seminyak
-- Cluster IT Manager Pre-Opening, Signature Bali Sanur & Bali Water World (Jun 2019–Dec 2020): full IT stack hotel+waterpark
-- Project Manager System Migration, The Ungasan Clifftop Resort (Oct 2017–Jun 2019): migrated to Infor HMS, Agilysys Infogenesis, Infor SunSystems, BEEEES, Datacom
+PROFESSIONAL SUMMARY:
+IT Manager with 11+ years of hospitality technology experience across luxury resorts, beach clubs, and F&B groups in Bali. Specializes in hotel pre-opening projects, complex system migrations, end-to-end network infrastructure deployments, and cybersecurity management. Combines deep technical expertise with a business-oriented mindset — actively building automation apps and AI-powered internal tools that reduce manual workload and elevate operational efficiency.
 
-SKILLS: Infor HMS, Agilysys Infogenesis, Mews PMS, HotelTime, Lightspeed POS, Oracle OPERA, Fortinet FortiGate, HPE Aruba, Mikrotik, Ubiquiti, Ruckus, Cisco CCNA, Google Cloud, Active Directory, Windows Server, Linux, HTML/CSS/JavaScript, Google Apps Script, Automation apps, AI-powered tools, n8n, Telegram bots, Dashboard development, Network architecture, Cybersecurity, Pre-opening IT projects, System migration, Vendor management, IT budget planning, SLA management
+PROFESSIONAL EXPERIENCE:
+- IT Manager, Miss Fish Bali (Nov 2025–Present): Manage all IT operations for high-volume F&B and hospitality property. Architect and develop internal automation applications and AI-powered tools to streamline operations and improve staff productivity.
+- IT & Communication Manager Pre-Opening, Kappa Senses Ubud 76-villa luxury resort (Sep 2022–Nov 2025): Delivered full IT pre-opening from ground up — on time, within Rp 120M CAPEX budget. Architected enterprise-grade network, fiber backbone, VLANs, IPTV across 76 villas, PABX, CCTV.
+- Group IT Manager, Soul Cafes 4 F&B outlets (Apr 2021–Sep 2022): Oversaw IT infrastructure across 4 active F&B outlets. Managed V-Soft POS systems. Budget OPEX Rp 6M.
+- IT Network Specialist, PT Aplikasi Pintar/Digitels (Dec 2020–Apr 2021): Deployed Digitels hospitality SaaS platform at Signature Seminyak Hotel — Smart Reception, Smart Access Control, Smart Guest Room.
+- Cluster IT Manager Pre-Opening, Signature Bali Sanur & Bali Water World (Jun 2019–Dec 2020): Full IT pre-opening for 54-room boutique hotel and water park. Deployed FortiGate 60E, HPE Aruba, Mikrotik. Full hospitality stack: PMS, POS, Accounting, HR, PABX, CCTV, guest Wi-Fi.
+- Project Manager System Migration, The Ungasan Clifftop Resort & Sundays Beach Club (Oct 2017–Jun 2019): End-to-end migration from legacy VHP to 5 integrated hospitality systems. Deployed Infor HMS, Agilysys Infogenesis, Infor SunSystems, BEEEES, Datacom. Zero revenue disruption.
+- IT Supervisor & IT Support, The Ungasan Clifftop Resort (May 2016–Oct 2017): Network topology re-engineering, fiber optic backbone, captive portal, LAN, Active Directory, Windows Server.
+- IT Support & EDP, PT Putri Bintang Sentosa – Boost Juice Bars (Nov 2015–May 2016): IT infrastructure, network, CCTV, inventory across 3 locations.
 
-EDUCATION: M.Sc Information Systems — Institut Teknologi Bandung (ITB) GPA 3.39 | B.Eng Computer Science — Universitas Surabaya | A.S. Business Administration — University of the People GPA 3.86
+EDUCATION:
+- Master of Science, Information Technology — Institut Teknologi Bandung (ITB) | GPA: 3.39
+- Associate of Science, Business Administration (High Honors) — University of the People | GPA: 3.86
+- Bachelor of Engineering, Computer Science — Universitas Surabaya (UBAYA) | GPA: 3.27
 
-CERTIFICATIONS: IBM AI Fundamentals, Google AI Essentials, Microsoft Applied Skills AI Research Agents, Elements of AI (Helsinki), Microsoft 365 Copilot, CompTIA Network+, Fortinet NSE1&2, Cisco CCNAv7, AWS, Google Cloud, Aviatrix ACE Multi-Cloud, PMEC, Lean Six Sigma White Belt, Stanford Innovation & Entrepreneurship, Remote Work & Virtual Collaboration (CertiProf)
+CORE SKILLS:
+Hospitality Systems: Infor HMS, Agilysys Infogenesis, Mews PMS, HotelTime, Lightspeed POS, Vento POS, Infrasys, SunSystems, BEEEES, Datacom PABX, Gaji.id, Zero Accounting, Libero Spa, BlueLedger, Talenta, ESB POS
+Networking & Security: Fortinet FortiGate, HPE Aruba, Mikrotik, Ubiquiti, Ruckus, Engenius, Allied Telesis, Cisco CCNA, IP CCTV
+Cloud & Infrastructure: Google Cloud, Active Directory, Windows Server, Domain Controller, Linux
+Automation & AI: Internal automation apps, AI-powered tools, Google Apps Script, Telegram bots, dashboard development, process automation
+IT Management: Pre-opening Projects, System Migration, Budget Planning, Vendor Management, Risk Management, Business Continuity, Disaster Recovery, SLA Management, IT Service Desk
+Dev Skills: HTML, CSS, JavaScript, Google Apps Script, Automation workflows
 
-PUBLICATIONS: IEEE Eii-Forum — Teknologi WiMAX untuk Operator Seluler di Indonesia (2008)
-SPEAKING: BV E-Talk #23: AI Revolutionizing Guest Experience (2023); DCD>Connect APAC 2026; World AI Show 2026 Jakarta
+CERTIFICATIONS:
+AI: Elements of AI (Helsinki), Google AI Essentials, Microsoft Applied Skills AI Research Agents (2026), IBM AI Fundamentals, Microsoft 365 Copilot
+Networking: CNSS (UK), Fortinet NSE1 & NSE2, Cisco CCNAv7, Aviatrix ACE Multi-Cloud
+Cloud: AWS, Google Cloud Industrial IoT, Microsoft Azure, Alibaba Cloud
+PM: PMEC, Lean Six Sigma White Belt, Stanford Innovation, Agile PM, Remote Work Certificate (CertiProf)
 
-LANGUAGES: English (Fluent), Indonesian (Native)
-LOCATION: Denpasar, Bali, Indonesia — open to remote worldwide, relocation if salary min IDR 80-100M per month`;
+SPEAKING & PUBLICATIONS:
+- Speaker: BV E-Talk #23 — AI Revolutionizing Guest Experience (2023)
+- IEEE Publication: Teknologi WiMAX untuk Operator Seluler di Indonesia (2008)
+- Conference: DCD>Connect APAC 2026, World AI Show 2026 Jakarta
+
+LOCATION: Denpasar, Bali, Indonesia
+AVAILABILITY: Open to remote worldwide. Relocation if salary min IDR 80-100M per month.
+LANGUAGES: English (Fluent), Indonesian (Native)`;
 
 const COVER_LETTER_TEMPLATE = `I Gede Agus Wibawa, A.Sc., S.T., M.T.
 Sekar Jepun no 20
@@ -1172,6 +1203,9 @@ Score rules: 80-100 = Strong Match (green), 50-79 = Partial Match (yellow), 0-49
     scoreEl.className = 'match-score ' + cls;
     scoreEl.textContent = `${icon} ${score}% — ${parsed.label || ''}`;
     if (reasonEl) reasonEl.textContent = parsed.reason || '';
+    // Store score on job for sorting & distribution
+    const jobObj = jobStore[job.id];
+    if (jobObj) jobObj._score = score;
   } catch(e) {
     if (scoreEl) {
       scoreEl.className = 'match-score match-loading';
@@ -1187,15 +1221,66 @@ async function scoreAllJobs(jobs) {
     await scoreJob(jobs[i]);
     if (i < jobs.length - 1) await new Promise(r => setTimeout(r, 2000));
   }
+  // After all scored, re-sort cards by score (highest first)
+  sortCardsByScore();
+}
+
+function sortCardsByScore() {
+  const grid = document.getElementById('live-grid');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.job-card')];
+  cards.sort((a, b) => {
+    const idA = a.dataset.id;
+    const idB = b.dataset.id;
+    const scoreA = (jobStore[idA] && jobStore[idA]._score !== undefined) ? jobStore[idA]._score : -1;
+    const scoreB = (jobStore[idB] && jobStore[idB]._score !== undefined) ? jobStore[idB]._score : -1;
+    return scoreB - scoreA;
+  });
+  cards.forEach(c => grid.appendChild(c));
+  document.getElementById('live-count').textContent = cards.length + i18n[currentLang].found;
 }
 
 // ── 3. INTELLIGENCE REPORT ────────────────────────────────
+function renderMarkdown(text) {
+  if (typeof marked !== 'undefined') {
+    // Configure marked for safe rendering
+    marked.setOptions({ breaks: true, gfm: true });
+    return marked.parse(text);
+  }
+  // Fallback: basic markdown
+  return text
+    .replace(/[*][*](.+?)[*][*]/g, '<strong>$1</strong>')
+    .replace(/[*](.+?)[*]/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<h4 style="color:#63B3ED;margin:10px 0 4px">$1</h4>')
+    .replace(/^## (.+)$/gm, '<h3 style="color:#93C5FD;margin:12px 0 4px">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h3 style="color:#fff;margin:12px 0 4px">$1</h3>')
+    .replace(/^- (.+)$/gm, '<li style="margin:2px 0">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, '<ul style="margin:6px 0 6px 16px">$&</ul>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+function buildMatchDistribution(jobs) {
+  const scored = jobs.filter(j => j._score !== undefined);
+  const b75 = scored.filter(j => j._score >= 75).length;
+  const b50 = scored.filter(j => j._score >= 50 && j._score < 75).length;
+  const b25 = scored.filter(j => j._score >= 25 && j._score < 50).length;
+  const b0  = scored.filter(j => j._score < 25).length;
+  if (scored.length === 0) return '';
+  return `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.15)">
+    <div style="background:rgba(37,99,235,.3);border:1px solid rgba(37,99,235,.5);padding:6px 14px;border-radius:20px;font-size:12px;color:#93C5FD;font-weight:700">🔵 75%+: ${b75} jobs</div>
+    <div style="background:rgba(4,120,87,.3);border:1px solid rgba(4,120,87,.5);padding:6px 14px;border-radius:20px;font-size:12px;color:#6EE7B7;font-weight:700">🟢 50–75%: ${b50} jobs</div>
+    <div style="background:rgba(212,134,10,.3);border:1px solid rgba(212,134,10,.5);padding:6px 14px;border-radius:20px;font-size:12px;color:#FDE68A;font-weight:700">🟡 25–50%: ${b25} jobs</div>
+    <div style="background:rgba(220,38,38,.3);border:1px solid rgba(220,38,38,.5);padding:6px 14px;border-radius:20px;font-size:12px;color:#FCA5A5;font-weight:700">🔴 &lt;25%: ${b0} jobs</div>
+  </div>`;
+}
+
 async function generateIntelReport(jobs) {
   if (!geminiKey || !jobs.length) return;
   const report = document.getElementById('intel-report');
   const body = document.getElementById('intel-body');
   report.classList.add('visible');
-  body.innerHTML = '<div class="intel-loading"><div class="intel-spinner"></div> Menganalisis ' + jobs.length + ' jobs...</div>';
+  body.innerHTML = '<div class="intel-loading"><div class="intel-spinner"></div> Menganalisis ' + jobs.length + ' jobs dengan Gemini AI...</div>';
 
   try {
     const jobSummary = jobs.slice(0,20).map((j,i) =>
@@ -1219,7 +1304,8 @@ Write a concise intelligence report in ${lang} covering:
 Keep it practical and specific. Max 250 words. Use simple formatting with line breaks, no markdown headers.`;
 
     const result = await callGemini(prompt, 400);
-    body.textContent = result;
+    const dist = buildMatchDistribution(state.jobs);
+    body.innerHTML = dist + renderMarkdown(result);
   } catch(e) {
     body.innerHTML = `<span style="color:#FCA5A5">⚠️ Error: ${e.message}</span>`;
   }
