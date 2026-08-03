@@ -1714,12 +1714,32 @@
         if(data.error) throw new Error(data.error);
         var text=data.text||'';
         if(text){
-          var html=text
-            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-            .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-            .replace(/\*(.+?)\*/g,'<em>$1</em>')
-            .replace(/^[\-\•] (.+)$/gm,'<span style="display:block;padding-left:12px">• $1</span>')
-            .replace(/\n/g,'<br>');
+          // Rich colored rendering — parse line by line
+          var lines=text.split('\n');
+          var html='';
+          for(var li=0;li<lines.length;li++){
+            var line=lines[li];
+            // Escape HTML entities first
+            var safe=line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            // Bold **text**
+            safe=safe.replace(/\*\*(.+?)\*\*/g,'<strong style="color:#fff;font-weight:700">$1</strong>');
+            // Section headers by emoji
+            if(/^📧/.test(safe)){
+              html+='<span style="display:block;color:#C9A84C;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
+            } else if(/^📅/.test(safe)){
+              html+='<span style="display:block;color:#3B82F6;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
+            } else if(/^✅/.test(safe)){
+              html+='<span style="display:block;color:#22C55E;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
+            } else if(/^⚠️/.test(safe)){
+              html+='<span style="display:block;color:#F59E0B;font-weight:600;font-size:12px;margin:4px 0">'+safe+'</span>';
+            } else if(/^•/.test(safe)){
+              html+='<span style="display:block;padding-left:14px;color:rgba(255,255,255,0.85);margin:2px 0">'+safe+'</span>';
+            } else if(safe.trim()===''){
+              html+='<span style="display:block;height:4px"></span>';
+            } else {
+              html+='<span style="display:block;color:rgba(255,255,255,0.85)">'+safe+'</span>';
+            }
+          }
           el.innerHTML=html;
         } else {
           throw new Error('No response from Gemini');
