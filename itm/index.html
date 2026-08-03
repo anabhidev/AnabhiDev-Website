@@ -1224,6 +1224,28 @@
           </div>
         </div>
 
+        <!-- NETWORK + ALERTS -->
+        <div class="grid-2">
+          <!-- NETWORK DEVICES -->
+          <div class="card" id="section-network">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-title-icon">📡</div>
+                Network Devices
+              </div>
+              <span id="network-devices-badge" class="badge-noconn">&#9202; Waiting</span>
+            </div>
+            <div id="network-devices-content"><div class="loading-state">Waiting for Mikrotik push...</div></div>
+          </div>
+
+          <!-- ALERTS -->
+          <div class="card" id="section-alerts">
+            <div class="card-header"><div class="card-title"><div class="card-title-icon">!</div>Alerts</div><button onclick="window.fetchAlerts()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-muted);font-family:inherit;font-weight:500;">Refresh</button></div>
+            <div id="alerts-content"><div class="loading-state">Scanning alerts...</div></div>
+          </div>
+        </div>
+
+
         <!-- SERVERS + TASKS -->
         <div class="grid-2">
           <!-- SERVER STATUS -->
@@ -1327,61 +1349,6 @@
               <span id="clickup-status-badge" class="badge-noconn">&#10007; NOT CONNECTED</span>
             </div>
             <div id="clickup-content"><div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div></div>
-          </div>
-        </div>
-
-        <!-- NETWORK + ALERTS -->
-        <div class="grid-2">
-          <!-- NETWORK DEVICES -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <div class="card-title-icon">📡</div>
-                Network Devices
-              </div>
-              <span class="badge-mock">&#9888; MOCK DATA</span>
-            </div>
-            <div class="device-item">
-              <div>
-                <div class="device-name">Mikrotik RB3011</div>
-                <div class="device-ip">192.168.1.1 · RouterOS v6</div>
-              </div>
-              <span class="status-badge up">● Online</span>
-            </div>
-            <div class="device-item">
-              <div>
-                <div class="device-name">Ruijie AP-01 (Floor 1)</div>
-                <div class="device-ip">192.168.1.10 · Ruijie Cloud</div>
-              </div>
-              <span class="status-badge up">● Online</span>
-            </div>
-            <div class="device-item">
-              <div>
-                <div class="device-name">Ruijie AP-02 (Floor 2)</div>
-                <div class="device-ip">192.168.1.11 · Ruijie Cloud</div>
-              </div>
-              <span class="status-badge up">● Online</span>
-            </div>
-            <div class="device-item">
-              <div>
-                <div class="device-name">Ruijie AP-03 (Floor 3)</div>
-                <div class="device-ip">192.168.1.12 · Ruijie Cloud</div>
-              </div>
-              <span class="status-badge warn">● Weak Signal</span>
-            </div>
-            <div class="device-item">
-              <div>
-                <div class="device-name">Core Switch</div>
-                <div class="device-ip">192.168.1.254 · Ruijie Cloud</div>
-              </div>
-              <span class="status-badge up">● Online</span>
-            </div>
-          </div>
-
-          <!-- ALERTS -->
-          <div class="card" id="section-alerts">
-            <div class="card-header"><div class="card-title"><div class="card-title-icon">!</div>Alerts</div><button onclick="window.fetchAlerts()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-muted);font-family:inherit;font-weight:500;">Refresh</button></div>
-            <div id="alerts-content"><div class="loading-state">Scanning alerts...</div></div>
           </div>
         </div>
 
@@ -1649,11 +1616,13 @@
     Promise.all([
       gFetch('/me/mailFolders/inbox/messages?$filter=isRead eq false&$top=20&$select=subject,sender,receivedDateTime,importance,hasAttachments'),
       gFetch('/me/calendarView?startDateTime='+now.toISOString()+'&endDateTime='+in7.toISOString()+'&$top=15&$select=subject,start,end,location,showAs'),
-      GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'clickup-tasks'})}).then(function(r){return r.json();}) : Promise.resolve({tasks:[]})
+      GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'clickup-tasks'})}).then(function(r){return r.json();}) : Promise.resolve({tasks:[]}),
+      GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'mikrotik-status'})}).then(function(r){return r.json();}).catch(function(){return {devices:[]};}) : Promise.resolve({devices:[]})
     ]).then(function(results){
       var emails=(results[0]&&results[0].value)||[];
       var events=(results[1]&&results[1].value)||[];
       var tasks=(results[2]&&results[2].tasks)||[];
+      var devices=(results[3]&&results[3].devices)||[];
 
       var h=now.getHours(),tod=h<12?'morning':h<17?'afternoon':'evening';
       var dateStr=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -1674,7 +1643,24 @@
       calCtx+='Upcoming 7 days ('+upEvs.length+'): '+upEvs.slice(0,5).map(function(e){return e.subject+' on '+fD(e.start.dateTime||e.start.date);}).join(', ')+'\n';
       if(tentEvs.length) calCtx+='Tentative events ('+tentEvs.length+'): '+tentEvs.slice(0,3).map(function(e){return e.subject;}).join(', ')+'\n';
 
-      var taskCtx=tasks.length>0?'Active tasks ('+tasks.length+'): '+tasks.slice(0,5).map(function(t){var p=(t.priority&&t.priority.priority)||'normal';return t.name+' ['+p+']';}).join(', '):'No active tasks';
+      // Enhanced ClickUp context — urgent/high tasks by name
+      var urgentTasks=tasks.filter(function(t){var p=t.priority&&t.priority.priority;return p==='urgent'||p==='high';});
+      var normalTasks=tasks.filter(function(t){var p=t.priority&&t.priority.priority;return p!=='urgent'&&p!=='high';});
+      var taskCtx='Total active: '+tasks.length+'\n';
+      if(urgentTasks.length) taskCtx+='Urgent/High ('+urgentTasks.length+'): '+urgentTasks.slice(0,5).map(function(t){return '"'+t.name+'"';}).join(', ')+'\n';
+      if(normalTasks.length) taskCtx+='Normal priority: '+normalTasks.length+' tasks\n';
+      if(!tasks.length) taskCtx='No active tasks';
+
+      // Network device context
+      var onlineDevices=devices.filter(function(d){return d.status==='ONLINE';});
+      var offlineDevices=devices.filter(function(d){return d.status==='OFFLINE';});
+      var deviceCtx='Total monitored: '+devices.length+'\n';
+      if(devices.length){
+        deviceCtx+='Online: '+onlineDevices.length+', Offline: '+offlineDevices.length+'\n';
+        if(offlineDevices.length) deviceCtx+='Offline devices: '+offlineDevices.map(function(d){return d.name;}).join(', ')+'\n';
+      } else {
+        deviceCtx='No device data yet (Mikrotik push pending)';
+      }
 
       var prompt='You are an AI assistant for '+
         'Agus Wibawa, IT Manager at Miss Fish restaurant group in Bali. '+
@@ -1684,7 +1670,8 @@
         'Keep it focused, actionable, 3-5 sentences max. Start with a greeting.\n\n'+
         '📧 EMAIL DATA:\n'+emailCtx+'\n'+
         '📅 CALENDAR DATA:\n'+calCtx+'\n'+
-        '✅ CLICKUP TASKS:\n'+taskCtx+'\n\n'+
+        '✅ CLICKUP TASKS:\n'+taskCtx+'\n'+
+        '📡 NETWORK DEVICES:\n'+deviceCtx+'\n\n'+
         'Write the briefing now:';
 
       if(!GAS_URL){
