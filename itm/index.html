@@ -1014,8 +1014,6 @@
     .server-metrics { display: none; }
     .login-left { display: none; }
     .login-right { flex: 1; }
-
-    /* Mobile login full screen */
     #login-page { flex-direction: column; }
   }
 
@@ -1226,7 +1224,7 @@
           </div>
         </div>
 
-                <!-- SERVERS + TASKS -->
+        <!-- SERVERS + TASKS -->
         <div class="grid-2">
           <!-- SERVER STATUS -->
           <div class="card">
@@ -1328,7 +1326,7 @@
               </div>
               <span id="clickup-status-badge" class="badge-noconn">&#10007; NOT CONNECTED</span>
             </div>
-            <div id="clickup-content"><div class="loading-state" style="animation:none;opacity:0.5">Set CLICKUP_API_KEY to connect</div></div>
+            <div id="clickup-content"><div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div></div>
           </div>
         </div>
 
@@ -1425,7 +1423,7 @@
   // ╔══════════════════════════════════════════╗
   // ║           CONFIG — EDIT HERE             ║
   // ╠══════════════════════════════════════════╣
-  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwgs7EJj2Sywfiw_a_Iwf306kqSgKgAt59KodGVaC13bGa6xu0USSj6P5AuXowtv23SKg/exec';  // GAS Web App URL → script.google.com/macros/s/xxx/exec
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwgs7EJj2Sywfiw_a_Iwf306kqSgKgAt59KodGVaC13bGa6xu0USSj6P5AuXowtv23SKg/exec';
   // ╚══════════════════════════════════════════╝
 
   var VU='1d4b9ea9a302a3b8ff9db92f2eadfe610af477704e60cc2fde3954d1a2f1e2f8';
@@ -1437,13 +1435,14 @@
   var GB='https://graph.microsoft.com/v1.0';
   var mApp=null, gTok=null, msalReady=false;
 
-  // Initialize MSAL and handle redirect on page load
+  // ── MSAL SETUP ──
+  // DEBUG: console.log added to trace O365 login flow
   (function setupMSAL(){
     if(typeof msal==='undefined'){
-      // Retry if MSAL CDN hasn't loaded yet
       setTimeout(setupMSAL, 200);
       return;
     }
+    console.log('[MSAL] Library loaded, initializing...');
     try{
       mApp = new msal.PublicClientApplication({
         auth:{ clientId:CID, authority:'https://login.microsoftonline.com/'+TID, redirectUri:RU },
@@ -1451,12 +1450,12 @@
       });
       mApp.initialize().then(function(){
         msalReady = true;
-        // Check if returning from O365 redirect
+        console.log('[MSAL] Initialized. Checking redirect response...');
         return mApp.handleRedirectPromise();
       }).then(function(r){
         if(r && r.accessToken){
           gTok = r.accessToken;
-          // Returning from O365 login - restore dashboard state
+          console.log('[MSAL] Redirect response received — token obtained. Account:', r.account && r.account.username);
           if(sessionStorage.getItem('mf_pending') === '1'){
             sessionStorage.removeItem('mf_pending');
             var lp=document.getElementById('login-page');
@@ -1465,27 +1464,31 @@
             if(dp) dp.style.display='block';
             doActualLoad();
           }
+        } else {
+          console.log('[MSAL] No redirect response (normal on first load). Accounts cached:', mApp.getAllAccounts().length);
         }
-      }).catch(function(e){ console.warn('MSAL init error:',e); });
-    } catch(e){ console.warn('MSAL setup error:',e); }
+      }).catch(function(e){ console.warn('[MSAL] Init error:', e); });
+    } catch(e){ console.warn('[MSAL] Setup error:', e); }
   })();
 
   function getTok(){
     return new Promise(function(resolve, reject){
-      // Wait for MSAL to be ready (max 5 seconds)
       var attempts = 0;
       function check(){
         if(gTok){ resolve(gTok); return; }
         if(msalReady && mApp){
           var accs = mApp.getAllAccounts();
+          console.log('[MSAL] getTok — accounts found:', accs.length);
           if(accs.length){
             mApp.acquireTokenSilent({scopes:SC, account:accs[0]})
-              .then(function(r){ gTok=r.accessToken; resolve(gTok); })
-              .catch(function(){
+              .then(function(r){ gTok=r.accessToken; console.log('[MSAL] Silent token OK'); resolve(gTok); })
+              .catch(function(e){
+                console.warn('[MSAL] Silent token failed, redirecting to O365 login. Reason:', e.name);
                 sessionStorage.setItem('mf_pending','1');
                 mApp.loginRedirect({scopes:SC});
               });
           } else {
+            console.log('[MSAL] No accounts cached — redirecting to O365 login...');
             sessionStorage.setItem('mf_pending','1');
             mApp.loginRedirect({scopes:SC});
           }
@@ -1499,11 +1502,11 @@
       check();
     });
   }
+
   function gFetch(p, retry){
     return getTok().then(function(t){
       return fetch(GB+p,{headers:{Authorization:'Bearer '+t}}).then(function(r){
         if(r.status===429){
-          // Rate limited - retry after 2 seconds
           var retryAfter=(retry||0);
           if(retryAfter<3){
             return new Promise(function(res){ setTimeout(function(){ res(gFetch(p,retryAfter+1)); },2000); });
@@ -1515,6 +1518,7 @@
       });
     });
   }
+
   function sha256(s){
     return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');});
   }
@@ -1573,7 +1577,6 @@
     var t=document.getElementById('section-'+sec);
     if(t){
       t.scrollIntoView({behavior:'smooth',block:'start'});
-      // Highlight flash effect
       setTimeout(function(){
         t.style.transition='box-shadow 0.2s, outline 0.2s';
         t.style.outline='2px solid rgba(201,168,76,0.6)';
@@ -1587,6 +1590,7 @@
     }
   }
   function setActive(el){document.querySelectorAll('.nav-item').forEach(function(i){i.classList.remove('active');});el.classList.add('active');}
+
   function fetchCalendar(){
     var el=document.getElementById('calendar-content'),se=document.getElementById('cal-status');
     if(!el)return;el.innerHTML='<div class="loading-state">Fetching calendar...</div>';
@@ -1611,6 +1615,7 @@
       el.innerHTML=html;if(se)se.textContent='Office 365 - '+evs.length+' events';
     }).catch(function(err){el.innerHTML='<div class="error-state">Failed: '+err.message+'</div>';if(se)se.textContent='Error';});
   }
+
   function fetchEmails(){
     var el=document.getElementById('email-content'),se=document.getElementById('email-status');
     if(!el)return;el.innerHTML='<div class="loading-state">Fetching emails...</div>';
@@ -1632,6 +1637,7 @@
       if(se)se.textContent='Office 365 - '+ic+' internal';
     }).catch(function(err){el.innerHTML='<div class="error-state">Failed: '+err.message+'</div>';if(se)se.textContent='Error';});
   }
+
   function generateBriefing(){
     var el=document.getElementById('briefing-text'),btn=document.querySelector('.ai-refresh-btn');
     if(!el)return;
@@ -1649,12 +1655,10 @@
       var events=(results[1]&&results[1].value)||[];
       var tasks=(results[2]&&results[2].tasks)||[];
 
-      // Build context for Gemini
       var h=now.getHours(),tod=h<12?'morning':h<17?'afternoon':'evening';
       var dateStr=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
       var timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
 
-      // Summarize emails
       var ieEmails=emails.filter(function(e){return isI(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.address);});
       var impEmails=emails.filter(function(e){return e.importance==='high';});
       var attEmails=emails.filter(function(e){return e.hasAttachments;});
@@ -1663,7 +1667,6 @@
       if(impEmails.length) emailCtx+='High priority ('+impEmails.length+'): '+impEmails.slice(0,2).map(function(e){return '"'+e.subject+'"';}).join(', ')+'\n';
       if(attEmails.length) emailCtx+='With attachments: '+attEmails.length+'\n';
 
-      // Summarize calendar
       var todayEvs=events.filter(function(e){return fD(e.start.dateTime||e.start.date)==='Today';});
       var tentEvs=events.filter(function(e){return e.showAs==='tentative';});
       var upEvs=events.filter(function(e){return fD(e.start.dateTime||e.start.date)!=='Today';});
@@ -1671,7 +1674,6 @@
       calCtx+='Upcoming 7 days ('+upEvs.length+'): '+upEvs.slice(0,5).map(function(e){return e.subject+' on '+fD(e.start.dateTime||e.start.date);}).join(', ')+'\n';
       if(tentEvs.length) calCtx+='Tentative events ('+tentEvs.length+'): '+tentEvs.slice(0,3).map(function(e){return e.subject;}).join(', ')+'\n';
 
-      // Summarize tasks
       var taskCtx=tasks.length>0?'Active tasks ('+tasks.length+'): '+tasks.slice(0,5).map(function(t){var p=(t.priority&&t.priority.priority)||'normal';return t.name+' ['+p+']';}).join(', '):'No active tasks';
 
       var prompt='You are an AI assistant for '+
@@ -1686,7 +1688,6 @@
         'Write the briefing now:';
 
       if(!GAS_URL){
-        // Fallback to rule-based if no GAS_URL
         var parts=[];
         var inboxMsg='You have '+emails.length+' unread email'+(emails.length!==1?'s':'');
         if(ieEmails.length) inboxMsg+=' including **'+ieEmails.length+' internal** from '+ieEmails[0].sender.emailAddress.name;
@@ -1703,7 +1704,6 @@
         return;
       }
 
-      // Call GAS proxy → Gemini
       fetch(GAS_URL, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -1738,6 +1738,7 @@
       if(btn){btn.textContent='↻ Generate';btn.disabled=false;}
     });
   }
+
   function fetchAlerts(){
     var el=document.getElementById('alerts-content');if(!el)return;
     el.innerHTML='<div class="loading-state">Scanning alerts...</div>';
@@ -1761,52 +1762,45 @@
       el.innerHTML=html;
     }).catch(function(err){el.innerHTML='<div class="error-state">Failed: '+err.message+'</div>';});
   }
-  function refreshAll(){
-    fetchCalendar();fetchEmails();fetchAlerts();updateGreeting();
-    var btn=document.querySelector('.topbar-btn');
-    if(btn){btn.textContent='Updated';setTimeout(function(){btn.textContent='Refresh';},1500);}
-    updateLastRefresh();
-  }
-  // ── CLICKUP CONFIG ──
-  // Paste your ClickUp API Key and Team ID here
+
+  // ── FIX: fetchClickUpTasks via GAS proxy (was: direct browser→ClickUp call with undefined variables) ──
   function fetchClickUpTasks(){
     var el=document.getElementById('clickup-content');
     var badge=document.getElementById('clickup-status-badge');
     if(!el) return;
+
     if(!GAS_URL){
       el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div>';
       if(badge){badge.className='badge-noconn';badge.innerHTML='&#10007; NOT CONNECTED';}
       return;
     }
-    el.innerHTML='<div class="loading-state">Fetching from ClickUp...</div>';
 
-    // Step 1: Get current user ID from API Key
-    fetch('https://api.clickup.com/api/v2/user',{
-      headers:{Authorization:CLICKUP_API_KEY}
-    }).then(function(r){
-      if(!r.ok) throw new Error('ClickUp auth failed: '+r.status);
+    el.innerHTML='<div class="loading-state">Fetching tasks...</div>';
+    if(badge){badge.className='badge-mock';badge.innerHTML='&#9202; Loading';}
+
+    fetch(GAS_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'clickup-tasks'})
+    })
+    .then(function(r){
+      if(!r.ok) throw new Error('GAS HTTP ' + r.status);
       return r.json();
-    }).then(function(userData){
-      var userId=userData.user&&userData.user.id;
-      if(!userId) throw new Error('Cannot get user ID');
+    })
+    .then(function(data){
+      if(data.error) throw new Error(data.error);
+      var tasks = data.tasks || [];
 
-      // Step 2: Fetch all tasks assigned to this user across workspace
-      return fetch('https://api.clickup.com/api/v2/team/'+CLICKUP_TEAM_ID+'/task?assignees[]='+userId+'&include_closed=false&subtasks=false',{
-        headers:{Authorization:CLICKUP_API_KEY}
-      }).then(function(r){
-        if(!r.ok)throw new Error('ClickUp '+r.status);
-        return r.json();
-      });
-    }).then(function(data){
-      var tasks=(data&&data.tasks)||[];
       if(badge){badge.className='badge-live';badge.innerHTML='&#9679; LIVE';}
-      updateSidebarBadge('badge-tasks',tasks.length);
+      updateSidebarBadge('badge-tasks', tasks.length);
       var statEl=document.getElementById('stat-tasks');
-      if(statEl)statEl.textContent=tasks.length;
+      if(statEl) statEl.textContent = tasks.length;
+
       if(!tasks.length){
         el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">No active tasks &#127881;</div>';
         return;
       }
+
       var html='';
       tasks.slice(0,8).forEach(function(t){
         var prio=(t.priority&&t.priority.priority)||'normal';
@@ -1816,20 +1810,31 @@
         if(t.due_date){
           var d=new Date(parseInt(t.due_date)),today=new Date();
           var diff=Math.floor((d-today)/86400000);
-          due=diff<0?'<span style="color:var(--red);font-size:10px;margin-left:4px">Overdue</span>':diff===0?'<span style="color:var(--yellow);font-size:10px;margin-left:4px">Due today</span>':diff<=3?'<span style="color:var(--yellow);font-size:10px;margin-left:4px">'+diff+'d left</span>':'';
+          due=diff<0?'<span style="color:var(--red);font-size:10px;margin-left:4px">Overdue</span>':
+              diff===0?'<span style="color:var(--yellow);font-size:10px;margin-left:4px">Due today</span>':
+              diff<=3?'<span style="color:var(--yellow);font-size:10px;margin-left:4px">'+diff+'d left</span>':'';
         }
         var listName=t.list&&t.list.name?'<span style="font-size:10px;color:var(--text-muted);margin-left:4px">['+t.list.name+']</span>':'';
         html+='<div class="task-item"><div class="task-check"></div><div class="task-name">'+t.name+listName+due+'</div><span class="task-priority '+pc+'">'+pl+'</span></div>';
       });
       el.innerHTML=html;
-    }).catch(function(err){
+    })
+    .catch(function(err){
+      console.warn('[ClickUp] fetchClickUpTasks error:', err.message);
       el.innerHTML='<div class="error-state">ClickUp error: '+err.message+'</div>';
       if(badge){badge.className='badge-noconn';badge.innerHTML='&#10007; ERROR';}
     });
   }
 
+  function refreshAll(){
+    fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();updateGreeting();
+    var btn=document.querySelector('.topbar-btn');
+    if(btn){btn.textContent='Updated';setTimeout(function(){btn.textContent='Refresh';},1500);}
+    updateLastRefresh();
+  }
+
   function doActualLoad(){
-    // Show MS account name + email
+    console.log('[Dashboard] doActualLoad — starting data fetch');
     if(mApp){
       var accs=mApp.getAllAccounts();
       if(accs.length){
@@ -1846,8 +1851,11 @@
         }
       }
     }
-    fetchCalendar();fetchEmails();generateBriefing();fetchAlerts();fetchClickUpTasks();
-    // Auto-refresh every 5 minutes
+    fetchCalendar();
+    fetchEmails();
+    generateBriefing();
+    fetchAlerts();
+    fetchClickUpTasks();
     if(!window._autoRefresh){
       window._autoRefresh = setInterval(function(){
         var dp=document.getElementById('dashboard-page');
@@ -1871,6 +1879,7 @@
       else{el.style.display='none';}
     }
   }
+
   function loadData(){
     if(!msalReady){
       setTimeout(loadData,300);
@@ -1936,10 +1945,12 @@
   var qe=document.getElementById('daily-quote'),ae=document.getElementById('daily-author');
   if(qe)qe.textContent='"'+q.text+'"';
   if(ae)ae.textContent='-- '+q.author;
+
   window.doLogin=doLogin;window.doLogout=doLogout;window.toggleSidebar=toggleSidebar;
   window.navTo=navTo;window.setActive=setActive;window.refreshAll=refreshAll;
   window.generateBriefing=generateBriefing;window.fetchAlerts=fetchAlerts;
   window.fetchClickUpTasks=fetchClickUpTasks;
+
   (function initCanvas() {
     const canvas = document.getElementById('particle-canvas');
     if (!canvas) return;
@@ -1947,7 +1958,6 @@
     let W, H, pts = [], running = true;
     const COUNT = 32, MAX_DIST = 110;
 
-    // Fixed topology nodes (network map shape)
     const topoRel = [
       [0.18,0.22],[0.28,0.18],[0.38,0.24],[0.32,0.34],[0.22,0.32],
       [0.45,0.18],[0.55,0.22],[0.50,0.32],[0.60,0.38],[0.68,0.28],
@@ -1978,12 +1988,9 @@
       for (let i = 0; i < COUNT; i++) pts.push(mkPt());
     }
 
-    // Draw static topology network
     function drawTopo() {
       if (!W || !H) return;
       const nodes = topoRel.map(([rx,ry]) => ({ x: rx*W, y: ry*H }));
-
-      // edges
       ctx.strokeStyle = 'rgba(255,255,255,0.18)';
       ctx.lineWidth = 0.8;
       for (const [a,b] of topoEdges) {
@@ -1992,8 +1999,6 @@
         ctx.lineTo(nodes[b].x, nodes[b].y);
         ctx.stroke();
       }
-
-      // nodes
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         const isHub = [2,7,10,15].includes(i);
@@ -2012,16 +2017,10 @@
       }
     }
 
-    // Draw isometric server rack (bottom right, near quote)
-    // ── 3 ILLUSTRATIONS — horizontally aligned at same Y level ──
-    // Base Y = 72% of height (same level as quote text)
-    // Positions: Router ~42%, Laptop ~57%, Server ~72%
-
     function drawRouter() {
       const BOTTOM_Y = H * 0.80;
       const rx = W * 0.70 - 26, ry = BOTTOM_Y - 16;
       const bw = 52, bh = 16, a = 0.22, r2 = 4;
-
       ctx.fillStyle = `rgba(255,255,255,${a})`;
       ctx.strokeStyle = `rgba(255,255,255,${a*2})`; ctx.lineWidth = 0.7;
       ctx.beginPath();
@@ -2034,7 +2033,6 @@
       ctx.lineTo(rx,ry+r2);
       ctx.quadraticCurveTo(rx,ry,rx+r2,ry);
       ctx.closePath(); ctx.fill(); ctx.stroke();
-
       for (let i=0;i<5;i++) {
         ctx.fillStyle = i<3 ? 'rgba(100,220,255,0.7)':'rgba(201,168,76,0.8)';
         ctx.fillRect(rx+6+i*9, ry+5, 6, 6);
@@ -2050,19 +2048,15 @@
       const BOTTOM_Y = H * 0.80;
       const lx = W * 0.80 - 23, ly = BOTTOM_Y - 30;
       const lw = 46, lh = 30, a = 0.22;
-
       ctx.fillStyle=`rgba(255,255,255,${a})`; ctx.strokeStyle=`rgba(255,255,255,${a*2})`; ctx.lineWidth=0.7;
       ctx.fillRect(lx+4,ly,lw-8,lh-6); ctx.strokeRect(lx+4,ly,lw-8,lh-6);
-
       ctx.strokeStyle=`rgba(201,168,76,${a*3})`; ctx.lineWidth=0.5;
       for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(lx+8,ly+5+i*6);ctx.lineTo(lx+lw-12,ly+5+i*6);ctx.stroke();}
       ctx.fillStyle='rgba(100,255,140,0.85)'; ctx.beginPath(); ctx.arc(lx+lw-11,ly+4,2,0,Math.PI*2); ctx.fill();
-
       ctx.fillStyle=`rgba(255,255,255,${a*1.3})`; ctx.strokeStyle=`rgba(255,255,255,${a*2})`; ctx.lineWidth=0.7;
       ctx.fillRect(lx,ly+lh-6,lw,5); ctx.strokeRect(lx,ly+lh-6,lw,5);
       ctx.strokeStyle=`rgba(255,255,255,${a*1.5})`; ctx.lineWidth=0.4;
       for(let i=0;i<6;i++){ctx.beginPath();ctx.moveTo(lx+3+i*7,ly+lh-5);ctx.lineTo(lx+3+i*7,ly+lh-1);ctx.stroke();}
-
       ctx.fillStyle='rgba(255,255,255,0.28)'; ctx.font='500 7px Inter,sans-serif';
       ctx.textAlign='center'; ctx.fillText('WORKSTATION', lx+lw/2, ly+lh+11);
     }
@@ -2071,21 +2065,17 @@
       const BOTTOM_Y = H * 0.80;
       const rx = W * 0.90 - 19, ry = BOTTOM_Y - 76;
       const rw = 38, rh = 76, depth = 10, a = 0.22;
-
       ctx.beginPath();
       ctx.moveTo(rx+rw,ry); ctx.lineTo(rx+rw+depth,ry-depth*0.5);
       ctx.lineTo(rx+rw+depth,ry+rh-depth*0.5); ctx.lineTo(rx+rw,ry+rh);
       ctx.closePath(); ctx.fillStyle=`rgba(255,255,255,${a*0.6})`; ctx.fill();
       ctx.strokeStyle=`rgba(255,255,255,${a})`; ctx.lineWidth=0.7; ctx.stroke();
-
       ctx.beginPath();
       ctx.moveTo(rx,ry); ctx.lineTo(rx+depth,ry-depth*0.5);
       ctx.lineTo(rx+rw+depth,ry-depth*0.5); ctx.lineTo(rx+rw,ry);
       ctx.closePath(); ctx.fillStyle=`rgba(255,255,255,${a*1.3})`; ctx.fill(); ctx.stroke();
-
       ctx.fillStyle=`rgba(255,255,255,${a*0.9})`; ctx.strokeStyle=`rgba(255,255,255,${a*1.5})`; ctx.lineWidth=0.7;
       ctx.fillRect(rx,ry,rw,rh); ctx.strokeRect(rx,ry,rw,rh);
-
       for(let i=0;i<7;i++){
         const uy=ry+5+i*10;
         ctx.fillStyle=i%2===0?`rgba(201,168,76,${a*1.5})`:`rgba(255,255,255,${a*1.2})`;
@@ -2100,21 +2090,15 @@
     function tick() {
       if (!running) return;
       ctx.clearRect(0, 0, W, H);
-
-      // Static topology
       drawTopo();
-      // 3 tech illustrations
       drawServerRack();
       drawRouter();
       drawLaptop();
-
-      // Floating particles + connections
       for (let i = 0; i < COUNT; i++) {
         const a = pts[i];
         a.x += a.vx; a.y += a.vy;
         if (a.x < 0 || a.x > W) a.vx *= -1;
         if (a.y < 0 || a.y > H) a.vy *= -1;
-
         for (let j = i+1; j < COUNT; j++) {
           const b = pts[j];
           const dx = a.x-b.x, dy = a.y-b.y;
@@ -2126,19 +2110,15 @@
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
           }
         }
-
         ctx.fillStyle = a.gold ? 'rgba(201,168,76,0.75)' : 'rgba(255,255,255,0.4)';
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI*2); ctx.fill();
       }
-
       requestAnimationFrame(tick);
     }
 
     resize(); init(); tick();
-
     window.addEventListener('resize', () => { resize(); init(); });
 
-    // Stop animation when on dashboard
     const origLogin = window.doLogin;
     window.doLogin = function() { running = false; if(origLogin) origLogin(); };
     const origLogout = window.doLogout;
