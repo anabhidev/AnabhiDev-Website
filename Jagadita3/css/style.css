@@ -608,62 +608,75 @@ h1, h2, h3, h4, h5 {
 
 /* FAQ */
 .faq-title {
+  font-family: 'Raleway', sans-serif;
   font-size: 20px;
   font-weight: 800;
   color: var(--cyan);
   margin-bottom: 20px;
-  font-family: 'Raleway', sans-serif;
 }
 
 .faq-item {
-  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 10px;
+  border-left: 3px solid transparent;
+  transition: box-shadow var(--transition), border-left-color var(--transition);
+  overflow: hidden;
 }
+.faq-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.faq-item.open {
+  border-left-color: var(--cyan);
+  box-shadow: 0 4px 16px rgba(0,151,178,0.10);
+}
+
 .faq-question {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  width: 100%;
+  padding: 18px 20px;
   cursor: pointer;
   font-family: 'Raleway', sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--navy);
   gap: 12px;
+  background: none;
+  border: none;
+  text-align: left;
   transition: color var(--transition);
   user-select: none;
 }
 .faq-question:hover { color: var(--cyan); }
-.faq-icon {
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--border);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--cyan);
+.faq-item.open .faq-question { color: var(--cyan); }
+
+.faq-chevron {
   flex-shrink: 0;
-  transition: background var(--transition), border-color var(--transition);
+  width: 20px;
+  height: 20px;
+  color: var(--gray-300);
+  transition: transform 0.35s ease, color 0.35s ease;
 }
-.faq-item.open .faq-icon {
-  background: var(--cyan);
-  border-color: var(--cyan);
-  color: var(--white);
+.faq-item.open .faq-chevron {
+  transform: rotate(90deg);
+  color: var(--cyan);
 }
+
 .faq-answer {
   font-size: 14px;
   color: var(--gray-500);
   line-height: 1.75;
   overflow: hidden;
   max-height: 0;
+  padding: 0 20px;
   transition: max-height 0.35s ease, padding 0.35s ease;
-  padding-bottom: 0;
 }
 .faq-item.open .faq-answer {
   max-height: 200px;
-  padding-bottom: 18px;
+  padding: 0 20px 18px;
 }
 
 /* ══════════════════════════════════════════
