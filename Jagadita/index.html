@@ -73,93 +73,108 @@
       padding-top: var(--nav-h);
     }
 
-    .hero-bg-shape {
+    /* ── Decorative blobs ── */
+    .hero-blob {
       position: absolute;
+      pointer-events: none;
       border-radius: 50%;
+    }
+
+    /* top-right: navy dark blob */
+    .hero-blob-1 {
+      width: 220px; height: 220px;
+      background: var(--navy);
+      top: -60px; right: 60px;
+      opacity: 0.85;
+    }
+
+    /* top-right: cyan lighter blob overlapping */
+    .hero-blob-2 {
+      width: 140px; height: 140px;
+      background: var(--cyan-soft);
+      top: 40px; right: 20px;
+      opacity: 0.7;
+    }
+
+    /* bottom-left: cyan lighter blob */
+    .hero-blob-3 {
+      width: 160px; height: 160px;
+      background: var(--cyan-soft);
+      bottom: 20px; left: 20px;
+      opacity: 0.65;
+    }
+
+    /* bottom-left: navy small blob */
+    .hero-blob-4 {
+      width: 90px; height: 90px;
+      background: var(--navy);
+      bottom: 60px; left: 120px;
+      opacity: 0.5;
+    }
+
+    /* Dotted wave texture — bottom right */
+    .hero-texture {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 480px; height: 220px;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image: radial-gradient(circle, rgba(0,40,60,0.9) 1.5px, transparent 1.5px);
+      background-size: 18px 18px;
+      /* wave mask */
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    /* ── Vertical side text ── */
+    .hero-vertical-text {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
       pointer-events: none;
     }
 
-    .hero-bg-shape-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255,255,255,0.10) 0%, transparent 70%);
-      top: -120px; right: -80px;
+    .hero-vertical-text .vline {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.4);
+      flex-shrink: 0;
     }
 
-    .hero-bg-shape-2 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(0,60,80,0.15) 0%, transparent 70%);
-      bottom: 60px; left: -60px;
+    .hero-vertical-text span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
     }
 
+    /* ── Inner layout: foto kiri, teks kanan ── */
     .hero-inner {
       display: grid;
-      grid-template-columns: 1fr 420px;
+      grid-template-columns: 480px 1fr;
       gap: 64px;
       align-items: center;
-      padding: 80px 0;
+      padding: 80px 0 80px 40px;
       position: relative;
       z-index: 1;
     }
 
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: var(--radius-full);
-      padding: 6px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .hero-tag span {
-      width: 6px; height: 6px;
-      background: var(--white);
-      border-radius: 50%;
-      animation: pulse-dot 2s infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
-    }
-
-    .hero-headline {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 800;
-      font-size: clamp(22px, 3vw, 36px);
-      line-height: 1.2;
-      color: var(--white);
-      margin-bottom: 24px;
-    }
-
-    .hero-headline em {
-      font-style: normal;
-      color: var(--navy);
-    }
-
-    .hero-sub {
-      font-size: 17px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.8;
-      max-width: 520px;
-      margin-bottom: 40px;
-    }
-
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-
-    /* Hero image side */
+    /* ── Circle foto ── */
     .hero-visual { position: relative; }
 
     .hero-img-wrap {
       width: 420px;
-      height: 480px;
-      border-radius: var(--radius-md);
+      height: 420px;
+      border-radius: 50%;
       overflow: hidden;
       position: relative;
     }
@@ -168,43 +183,68 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center center;
     }
 
-    .hero-img-badge {
-      position: absolute;
-      bottom: 32px;
-      left: -32px;
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 14px 20px;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .hero-img-badge .badge-icon {
-      width: 40px; height: 40px;
-      background: var(--cyan-muted);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-
-    .hero-img-badge .badge-text strong {
-      display: block;
+    /* ── Teks kanan ── */
+    .hero-headline {
       font-family: 'Raleway', sans-serif;
       font-weight: 800;
-      font-size: 18px;
-      color: var(--navy);
-      line-height: 1;
+      font-size: clamp(22px, 3vw, 36px);
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 16px;
     }
 
-    .hero-img-badge .badge-text span {
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 32px;
+    }
+
+    /* ── Single dark pill button ── */
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Raleway', sans-serif;
       font-size: 12px;
-      color: var(--gray-500);
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: var(--radius-full);
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .hero-btn:hover {
+      background: #061829;
+      transform: translateY(-2px);
+    }
+
+    /* ── Responsive hero ── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 400px 1fr; gap: 48px; }
+      .hero-img-wrap { width: 360px; height: 360px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 60px 0;
+        text-align: center;
+      }
+      .hero-visual { display: flex; justify-content: center; }
+      .hero-img-wrap { width: 280px; height: 280px; }
+      .hero-vertical-text { display: none; }
+      .hero-blob-1 { width: 140px; height: 140px; }
+      .hero-blob-2 { width: 90px; height: 90px; }
     }
 
     /* ── SERVICE HIGHLIGHTS ── */
@@ -924,8 +964,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .hero-inner { grid-template-columns: 1fr 360px; gap: 48px; }
-      .hero-img-wrap { width: 360px; height: 420px; }
+      .hero-inner { grid-template-columns: 400px 1fr; gap: 48px; }
       .growth-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -937,13 +976,9 @@
         padding: 60px 0;
       }
 
-      .hero-headline { font-size: clamp(32px, 8vw, 44px); }
+      .hero-headline { font-size: clamp(20px, 6vw, 28px); }
       .hero-sub { margin-inline: auto; }
-      .hero-actions { justify-content: center; }
-
       .hero-visual { display: flex; justify-content: center; }
-      .hero-img-wrap { width: 300px; height: 340px; }
-      .hero-img-badge { left: 0; }
 
       .highlights-inner { grid-template-columns: repeat(2, 1fr); }
 
@@ -1047,17 +1082,39 @@
        HERO
   ════════════════════════════════════════ -->
   <section class="hero" aria-label="Hero">
-    <div class="hero-bg-shape hero-bg-shape-1" aria-hidden="true"></div>
-    <div class="hero-bg-shape hero-bg-shape-2" aria-hidden="true"></div>
+
+    <!-- Decorative blobs -->
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-3" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-4" aria-hidden="true"></div>
+
+    <!-- Dotted texture bottom-right -->
+    <div class="hero-texture" aria-hidden="true"></div>
+
+    <!-- Vertical rotated text left side -->
+    <div class="hero-vertical-text" aria-hidden="true">
+      <div class="vline"></div>
+      <span>Think Local, Act Global</span>
+    </div>
 
     <div class="container">
       <div class="hero-inner">
 
-        <div class="hero-content">
-          <div class="hero-tag fade-in" aria-hidden="true">
-            <span></span> Think Local, Act Global
+        <!-- Foto kiri — circle -->
+        <div class="hero-visual fade-left">
+          <div class="hero-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=75"
+              alt="Hospitality consulting team meeting"
+              width="420" height="420"
+              fetchpriority="high"
+            >
           </div>
+        </div>
 
+        <!-- Teks kanan -->
+        <div class="hero-content">
           <h1 class="hero-headline fade-up delay-1">
             Stop losing revenue to inefficiency, errors, and inconsistent service across your hospitality operations.
           </h1>
@@ -1066,27 +1123,8 @@
             We design and implement the right technology and workflows to help hospitality brands operate smarter, serve better, and earn more.
           </p>
 
-          <div class="hero-actions fade-up delay-3">
-            <a href="#" class="btn btn-primary">Get in Touch</a>
-            <a href="#" class="btn btn-outline">Our Services</a>
-          </div>
-        </div>
-
-        <div class="hero-visual fade-right delay-2">
-          <div class="hero-img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=75"
-              alt="Hospitality team in a strategy meeting"
-              width="420" height="480"
-              fetchpriority="high"
-            >
-          </div>
-          <div class="hero-img-badge">
-            <div class="badge-icon">🏨</div>
-            <div class="badge-text">
-              <strong>150+</strong>
-              <span>Hospitality Projects</span>
-            </div>
+          <div class="fade-up delay-3">
+            <a href="#" class="hero-btn">Get in Touch</a>
           </div>
         </div>
 
