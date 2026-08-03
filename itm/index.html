@@ -1649,7 +1649,7 @@
     Promise.all([
       gFetch('/me/mailFolders/inbox/messages?$filter=isRead eq false&$top=20&$select=subject,sender,receivedDateTime,importance,hasAttachments'),
       gFetch('/me/calendarView?startDateTime='+now.toISOString()+'&endDateTime='+in7.toISOString()+'&$top=15&$select=subject,start,end,location,showAs'),
-      GAS_URL ? fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'clickup-tasks'})}).then(function(r){return r.json();}) : Promise.resolve({tasks:[]})
+      GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'clickup-tasks'})}).then(function(r){return r.json();}) : Promise.resolve({tasks:[]})
     ]).then(function(results){
       var emails=(results[0]&&results[0].value)||[];
       var events=(results[1]&&results[1].value)||[];
@@ -1706,8 +1706,7 @@
 
       fetch(GAS_URL, {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({ action:'gemini', prompt:prompt })
+        body:new URLSearchParams({action:'gemini', prompt:prompt})
       }).then(function(r){
         if(!r.ok) throw new Error('GAS '+r.status);
         return r.json();
@@ -1780,8 +1779,7 @@
 
     fetch(GAS_URL, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({action: 'clickup-tasks'})
+      body: new URLSearchParams({action: 'clickup-tasks'})
     })
     .then(function(r){
       if(!r.ok) throw new Error('GAS HTTP ' + r.status);
