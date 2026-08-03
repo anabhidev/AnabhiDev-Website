@@ -1844,8 +1844,65 @@
     });
   }
 
-  function refreshAll(){
-    fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();updateGreeting();
+  function fetchDevices(){
+    var el=document.getElementById('network-devices-content');
+    var badge=document.getElementById('network-devices-badge');
+    if(!el) return;
+    if(!GAS_URL){
+      el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div>';
+      return;
+    }
+    el.innerHTML='<div class="loading-state">Fetching device status...</div>';
+
+    fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'mikrotik-status'})})
+    .then(function(r){
+      if(!r.ok) throw new Error('GAS HTTP '+r.status);
+      return r.json();
+    })
+    .then(function(data){
+      if(data.error) throw new Error(data.error);
+      var devices=data.devices||[];
+
+      if(!devices.length){
+        el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">No devices configured in Sheet</div>';
+        if(badge){badge.className='badge-mock';badge.innerHTML='&#9888; No Data';}
+        return;
+      }
+
+      var online=devices.filter(function(d){return d.status==='ONLINE';}).length;
+      var total=devices.length;
+      if(badge){
+        if(online===total){badge.className='badge-live';badge.innerHTML='&#9679; '+online+'/'+total+' Online';}
+        else if(online===0){badge.className='badge-noconn';badge.innerHTML='&#10007; All Offline';}
+        else{badge.className='badge-mock';badge.innerHTML='&#9888; '+online+'/'+total+' Online';}
+      }
+
+      var html='';
+      devices.forEach(function(d){
+        var isOn=d.status==='ONLINE';
+        var lastInfo='';
+        if(!isOn&&d.lastSeen){
+          lastInfo=' <span style="font-size:10px;color:var(--text-muted)">Last: '+d.lastSeen+'</span>';
+        }
+        html+='<div class="device-item">'+
+          '<div>'+
+            '<div class="device-name">'+d.name+'</div>'+
+            '<div class="device-ip">'+d.ip+' · '+d.location+' · '+d.type+lastInfo+'</div>'+
+          '</div>'+
+          '<span class="status-badge '+(isOn?'up':'down')+'">● '+(isOn?'Online':'Offline')+'</span>'+
+        '</div>';
+      });
+      el.innerHTML=html;
+    })
+    .catch(function(err){
+      console.warn('[Devices] fetchDevices error:',err.message);
+      el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">Waiting for Mikrotik push...</div>';
+      if(badge){badge.className='badge-noconn';badge.innerHTML='&#9202; Waiting';}
+    });
+  }
+
+    function refreshAll(){
+    fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();fetchDevices();updateGreeting();
     var btn=document.querySelector('.topbar-btn');
     if(btn){btn.textContent='Updated';setTimeout(function(){btn.textContent='Refresh';},1500);}
     updateLastRefresh();
@@ -1874,11 +1931,12 @@
     generateBriefing();
     fetchAlerts();
     fetchClickUpTasks();
+    fetchDevices();
     if(!window._autoRefresh){
       window._autoRefresh = setInterval(function(){
         var dp=document.getElementById('dashboard-page');
         if(dp&&dp.style.display!=='none'){
-          fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();updateGreeting();
+          fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();fetchDevices();updateGreeting();
           updateLastRefresh();
         }
       }, 5*60*1000);
@@ -1968,6 +2026,7 @@
   window.navTo=navTo;window.setActive=setActive;window.refreshAll=refreshAll;
   window.generateBriefing=generateBriefing;window.fetchAlerts=fetchAlerts;
   window.fetchClickUpTasks=fetchClickUpTasks;
+  window.fetchDevices=fetchDevices;
 
   (function initCanvas() {
     const canvas = document.getElementById('particle-canvas');
