@@ -666,6 +666,32 @@
     color: var(--white);
   }
 
+  .ai-collapse-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .ai-collapse-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: var(--white);
+  }
+
+  .ai-briefing-text.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   /* STATUS BADGES */
   .status-dot {
     width: 8px; height: 8px;
@@ -1186,7 +1212,10 @@
               <div class="ai-dot"></div>
               AI Briefing
             </div>
-            <button class="ai-refresh-btn" onclick="generateBriefing()">↻ Generate</button>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <button class="ai-collapse-btn" id="briefing-collapse-btn" onclick="toggleBriefing()">▲ Collapse</button>
+              <button class="ai-refresh-btn" onclick="generateBriefing()">↻ Generate</button>
+            </div>
           </div>
           <div class="ai-briefing-text" id="briefing-text">
             All systems are operational. 3 servers online, 1 requiring attention (Web-Server-02 at 87% CPU). You have 2 meetings today and 5 pending ClickUp tasks. 3 unread emails in your inbox. Mikrotik RB3011 is online, all Ruijie APs are active. No critical alerts at this time.
@@ -2042,6 +2071,20 @@
   if(qe)qe.textContent='"'+q.text+'"';
   if(ae)ae.textContent='-- '+q.author;
 
+  function toggleBriefing(){
+    var el=document.getElementById('briefing-text');
+    var btn=document.getElementById('briefing-collapse-btn');
+    if(!el||!btn) return;
+    var isCollapsed=el.classList.contains('collapsed');
+    if(isCollapsed){
+      el.classList.remove('collapsed');
+      btn.textContent='▲ Collapse';
+    } else {
+      el.classList.add('collapsed');
+      btn.textContent='▼ Expand';
+    }
+  }
+  window.toggleBriefing=toggleBriefing;
   window.doLogin=doLogin;window.doLogout=doLogout;window.toggleSidebar=toggleSidebar;
   window.navTo=navTo;window.setActive=setActive;window.refreshAll=refreshAll;
   window.generateBriefing=generateBriefing;window.fetchAlerts=fetchAlerts;
