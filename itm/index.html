@@ -1079,39 +1079,39 @@
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section-label" style="padding-top:12px;">Overview</div>
-        <a class="nav-item active" onclick="setActive(this)">
+        <a class="nav-item active" onclick="setActive(this);window.scrollTo({top:0,behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           <span class="nav-label">Dashboard</span>
         </a>
         <div class="nav-divider"></div>
         <div class="nav-section-label">Productivity</div>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-inbox').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <span class="nav-label">Inbox</span>
           <span class="nav-badge" id="badge-inbox">3</span>
         </a>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-calendar').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span class="nav-label">Calendar</span>
         </a>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-tasks').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span class="nav-label">Tasks</span>
           <span class="nav-badge" id="badge-tasks">5</span>
         </a>
         <div class="nav-divider"></div>
         <div class="nav-section-label">Infrastructure</div>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-servers').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
           <span class="nav-label">Servers</span>
         </a>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-network').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           <span class="nav-label">Network</span>
         </a>
         <div class="nav-divider"></div>
         <div class="nav-section-label">System</div>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);document.getElementById('section-alerts').scrollIntoView({behavior:'smooth'})">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
           <span class="nav-label">Alerts</span>
           <span class="nav-badge" id="badge-alerts">2</span>
@@ -1212,19 +1212,20 @@
           </div>
         </div>
 
-        <!-- CALENDAR + EMAIL -->
+        <!-- INBOX + CALENDAR -->
         <div class="grid-2">
-          <div class="card" id="section-calendar">
-            <div class="card-header"><div class="card-title"><div class="card-title-icon">Cal</div>Schedule (7 Days)</div><span class="card-action" id="cal-status">Loading...</span></div>
-            <div id="calendar-content"><div class="loading-state">Fetching calendar...</div></div>
-          </div>
           <div class="card" id="section-inbox">
             <div class="card-header"><div class="card-title"><div class="card-title-icon">@</div>Inbox Highlights</div><span class="card-action" id="email-status">Loading...</span></div>
             <div id="email-content"><div class="loading-state">Fetching emails...</div></div>
           </div>
+          <div class="card" id="section-calendar">
+            <div class="card-header"><div class="card-title"><div class="card-title-icon">Cal</div>Schedule (7 Days)</div><span class="card-action" id="cal-status">Loading...</span></div>
+            <div id="calendar-content"><div class="loading-state">Fetching calendar...</div></div>
+          </div>
+
         </div>
 
-        <!-- NETWORK + ALERTS -->
+        <!-- NETWORK + TASKS -->
         <div class="grid-2">
           <!-- NETWORK DEVICES -->
           <div class="card" id="section-network">
@@ -1238,18 +1239,23 @@
             <div id="network-devices-content"><div class="loading-state">Waiting for Mikrotik push...</div></div>
           </div>
 
-          <!-- ALERTS -->
-          <div class="card" id="section-alerts">
-            <div class="card-header"><div class="card-title"><div class="card-title-icon">!</div>Alerts</div><button onclick="window.fetchAlerts()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-muted);font-family:inherit;font-weight:500;">Refresh</button></div>
-            <div id="alerts-content"><div class="loading-state">Scanning alerts...</div></div>
+          <!-- CLICKUP TASKS -->
+          <div class="card" id="section-tasks">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-title-icon">✓</div>
+                ClickUp Tasks
+              </div>
+              <span id="clickup-status-badge" class="badge-noconn">&#10007; NOT CONNECTED</span>
+            </div>
+            <div id="clickup-content"><div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div></div>
           </div>
         </div>
 
-
-        <!-- SERVERS + TASKS -->
+        <!-- SERVERS + ALERTS -->
         <div class="grid-2">
           <!-- SERVER STATUS -->
-          <div class="card">
+          <div class="card" id="section-servers">
             <div class="card-header">
               <div class="card-title">
                 <div class="card-title-icon">🖥</div>
@@ -1339,16 +1345,10 @@
             </div>
           </div>
 
-          <!-- CLICKUP TASKS -->
-          <div class="card" id="section-tasks">
-            <div class="card-header">
-              <div class="card-title">
-                <div class="card-title-icon">✓</div>
-                ClickUp Tasks
-              </div>
-              <span id="clickup-status-badge" class="badge-noconn">&#10007; NOT CONNECTED</span>
-            </div>
-            <div id="clickup-content"><div class="loading-state" style="animation:none;opacity:0.5">Set GAS_URL to connect</div></div>
+          <!-- ALERTS -->
+          <div class="card" id="section-alerts">
+            <div class="card-header"><div class="card-title"><div class="card-title-icon">!</div>Alerts</div><button onclick="window.fetchAlerts()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-muted);font-family:inherit;font-weight:500;">Refresh</button></div>
+            <div id="alerts-content"><div class="loading-state">Scanning alerts...</div></div>
           </div>
         </div>
 
@@ -1665,9 +1665,12 @@
       var prompt='You are an AI assistant for '+
         'Agus Wibawa, IT Manager at Miss Fish restaurant group in Bali. '+
         'Today is '+dateStr+', '+timeStr+' (Bali time, WITA).\n\n'+
-        'Based on the data below, write a **concise, natural, professional daily briefing** in English. '+
-        'Format using markdown: use **bold** for important items, bullet points where needed. '+
-        'Keep it focused, actionable, 3-5 sentences max. Start with a greeting.\n\n'+
+        'Based on the data below, write a professional daily briefing in English with EXACTLY FOUR separate sections:\n'+
+        '📧 INBOX — email summary\n'+
+        '📅 SCHEDULE — calendar summary\n'+
+        '✅ CLICKUP TASKS — tasks summary\n'+
+        '📡 NETWORK DEVICES — device status summary\n\n'+
+        'Rules: each section on its own line with emoji header, bullets start with •, **bold** for important items, 2-3 bullets per section max. Start with a short greeting line.\n\n'+
         '📧 EMAIL DATA:\n'+emailCtx+'\n'+
         '📅 CALENDAR DATA:\n'+calCtx+'\n'+
         '✅ CLICKUP TASKS:\n'+taskCtx+'\n'+
