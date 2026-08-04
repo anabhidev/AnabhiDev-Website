@@ -1064,6 +1064,38 @@
   .badge-live{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#16A34A;background:rgba(34,197,94,0.12);padding:3px 8px;border-radius:20px;border:1px solid rgba(34,197,94,0.3)}
   .badge-mock{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#D97706;background:rgba(245,158,11,0.1);padding:3px 8px;border-radius:20px;border:1px solid rgba(245,158,11,0.25)}
   .badge-noconn{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#DC2626;background:rgba(239,68,68,0.08);padding:3px 8px;border-radius:20px;border:1px solid rgba(239,68,68,0.2)}
+
+  /* ── SETTINGS PANEL ── */
+  #settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;opacity:0;pointer-events:none;transition:opacity 0.3s}
+  #settings-overlay.open{opacity:1;pointer-events:all}
+  #settings-panel{position:fixed;top:0;right:0;bottom:0;width:360px;max-width:100vw;background:var(--white);z-index:301;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,0.12)}
+  #settings-panel.open{transform:translateX(0)}
+  .settings-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+  .settings-title{font-size:15px;font-weight:700;color:var(--text-primary)}
+  .settings-close{background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:18px;line-height:1;border-radius:4px;transition:color 0.2s}
+  .settings-close:hover{color:var(--text-primary)}
+  .settings-body{flex:1;overflow-y:auto;padding:16px 24px}
+  .settings-section{margin-bottom:24px}
+  .settings-section-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  .settings-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--surface-2)}
+  .settings-row:last-child{border-bottom:none}
+  .settings-row-label{font-size:13px;font-weight:500;color:var(--text-primary)}
+  .settings-row-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+  .settings-row-value{font-size:12px;color:var(--text-secondary);font-weight:600}
+  .settings-toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+  .settings-toggle input{opacity:0;width:0;height:0}
+  .settings-toggle-slider{position:absolute;inset:0;background:var(--surface-2);border-radius:22px;cursor:pointer;transition:0.2s}
+  .settings-toggle-slider:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.2s}
+  .settings-toggle input:checked + .settings-toggle-slider{background:var(--black)}
+  .settings-toggle input:checked + .settings-toggle-slider:before{transform:translateX(18px)}
+  .settings-select{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;color:var(--text-primary);background:var(--surface);cursor:pointer}
+  .settings-conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .settings-conn-dot.connected{background:var(--green)}
+  .settings-conn-dot.disconnected{background:var(--red)}
+  .settings-theme-btn{padding:6px 14px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.2s;background:var(--surface)}
+  .settings-theme-btn:hover{background:var(--black);color:white;border-color:var(--black)}
+  .settings-about-badge{display:inline-block;padding:3px 10px;background:var(--surface-2);border-radius:20px;font-size:11px;font-weight:600;color:var(--text-secondary);margin:2px}
+  body.dark-mode{--surface:#111111;--surface-2:#1a1a1a;--white:#181818;--text-primary:#ffffff;--text-secondary:#aaaaaa;--text-muted:#666666;--border:#2a2a2a}
 </style>
 </head>
 <body>
@@ -1147,7 +1179,7 @@
           <span class="nav-label">Alerts</span>
           <span class="nav-badge" id="badge-alerts">2</span>
         </a>
-        <a class="nav-item" onclick="setActive(this)">
+        <a class="nav-item" onclick="setActive(this);openSettings()">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
           <span class="nav-label">Settings</span>
         </a>
@@ -1415,11 +1447,117 @@
       </div>
     </div>
   </nav>
+
+  <!-- SETTINGS PANEL -->
+  <div id="settings-overlay" onclick="closeSettings()"></div>
+  <div id="settings-panel">
+    <div class="settings-header">
+      <span class="settings-title">⚙ Settings</span>
+      <button class="settings-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="settings-body">
+
+      <!-- Section 1: Dashboard Info -->
+      <div class="settings-section">
+        <div class="settings-section-title">Dashboard Info</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Version</div></div>
+          <span class="settings-row-value">v1.0</span>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Last Opened</div></div>
+          <span class="settings-row-value" id="settings-last-opened">—</span>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">GAS Endpoint</div>
+            <div class="settings-row-sub" id="settings-gas-url">—</div>
+          </div>
+          <span class="settings-row-value" id="settings-gas-status">—</span>
+        </div>
+      </div>
+
+      <!-- Section 2: Auto-refresh -->
+      <div class="settings-section">
+        <div class="settings-section-title">Auto Refresh</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Auto Refresh</div><div class="settings-row-sub">Refresh data automatically</div></div>
+          <label class="settings-toggle">
+            <input type="checkbox" id="settings-autorefresh-toggle" checked onchange="onAutoRefreshToggle(this.checked)">
+            <span class="settings-toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Interval</div></div>
+          <select class="settings-select" id="settings-interval" onchange="onIntervalChange(this.value)">
+            <option value="1">1 minute</option>
+            <option value="3">3 minutes</option>
+            <option value="5" selected>5 minutes</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 3: Theme -->
+      <div class="settings-section">
+        <div class="settings-section-title">Appearance</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Dark Mode</div><div class="settings-row-sub">Toggle dark content area</div></div>
+          <label class="settings-toggle">
+            <input type="checkbox" id="settings-darkmode-toggle" onchange="onDarkModeToggle(this.checked)">
+            <span class="settings-toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 4: Connections -->
+      <div class="settings-section">
+        <div class="settings-section-title">Connections</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Office 365</div><div class="settings-row-sub" id="settings-o365-sub">Not connected</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="settings-conn-dot disconnected" id="settings-o365-dot"></div><span class="settings-row-value" id="settings-o365-val">—</span></div>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">ClickUp</div><div class="settings-row-sub">Task management</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="settings-conn-dot disconnected" id="settings-clickup-dot"></div><span class="settings-row-value" id="settings-clickup-val">—</span></div>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Mikrotik</div><div class="settings-row-sub">Network monitoring</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="settings-conn-dot disconnected" id="settings-mikrotik-dot"></div><span class="settings-row-value" id="settings-mikrotik-val">—</span></div>
+        </div>
+      </div>
+
+      <!-- Section 5: About -->
+      <div class="settings-section">
+        <div class="settings-section-title">About</div>
+        <div style="padding:8px 0">
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Miss Fish IT Dashboard</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Realtime IT monitoring for Miss Fish Bali</div>
+          <div>
+            <span class="settings-about-badge">GAS</span>
+            <span class="settings-about-badge">Office 365</span>
+            <span class="settings-about-badge">ClickUp</span>
+            <span class="settings-about-badge">Mikrotik</span>
+            <span class="settings-about-badge">Gemini AI</span>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)">Built by Agus Wibawa · IT Manager</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script>
 (function() {
   "use strict";
+
+  // ── SETTINGS STATE ──
+  var autoRefreshEnabled = true;
+  var autoRefreshIntervalMin = 5;
+  var _autoRefreshTimer = null;
+  var clickupConnected = false;
+  var mikrotikConnected = false;
 
   // ╔══════════════════════════════════════════╗
   // ║           CONFIG — EDIT HERE             ║
@@ -1842,6 +1980,7 @@
       var tasks = data.tasks || [];
 
       if(badge){badge.className='badge-live';badge.innerHTML='&#9679; LIVE';}
+      clickupConnected=true;
       updateSidebarBadge('badge-tasks', tasks.length);
       var statEl=document.getElementById('stat-tasks');
       var statSub=document.getElementById('stat-tasks-sub');
@@ -1909,6 +2048,7 @@
       var online=devices.filter(function(d){return d.status==='ONLINE';}).length;
       var offline=devices.filter(function(d){return d.status==='OFFLINE';}).length;
       var total=devices.length;
+      mikrotikConnected=true;
       if(badge){
         if(online===total){badge.className='badge-live';badge.innerHTML='&#9679; '+online+'/'+total+' Online';}
         else if(online===0){badge.className='badge-noconn';badge.innerHTML='&#10007; All Offline';}
@@ -1981,15 +2121,7 @@
     fetchAlerts();
     fetchClickUpTasks();
     fetchDevices();
-    if(!window._autoRefresh){
-      window._autoRefresh = setInterval(function(){
-        var dp=document.getElementById('dashboard-page');
-        if(dp&&dp.style.display!=='none'){
-          fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();fetchDevices();updateGreeting();
-          updateLastRefresh();
-        }
-      }, 5*60*1000);
-    }
+    updateAutoRefresh();
   }
 
   function updateLastRefresh(){
@@ -2084,6 +2216,87 @@
       btn.textContent='▼ Expand';
     }
   }
+  // ── SETTINGS FUNCTIONS ──
+  function updateAutoRefresh(){
+    if(_autoRefreshTimer) clearInterval(_autoRefreshTimer);
+    if(!autoRefreshEnabled) return;
+    _autoRefreshTimer = setInterval(function(){
+      var dp=document.getElementById('dashboard-page');
+      if(dp&&dp.style.display!=='none'){
+        fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();fetchDevices();updateGreeting();
+        updateLastRefresh();
+      }
+    }, autoRefreshIntervalMin * 60 * 1000);
+  }
+
+  function openSettings(){
+    var overlay=document.getElementById('settings-overlay');
+    var panel=document.getElementById('settings-panel');
+    if(!overlay||!panel) return;
+    // Update dynamic values
+    var now=new Date();
+    var lo=document.getElementById('settings-last-opened');
+    if(lo) lo.textContent=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+', '+now.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    var gu=document.getElementById('settings-gas-url');
+    var gs=document.getElementById('settings-gas-status');
+    if(gu) gu.textContent=GAS_URL?(GAS_URL.substring(0,45)+'...'):'Not configured';
+    if(gs) gs.textContent=GAS_URL?'Configured':'—';
+    // O365 status
+    var o365dot=document.getElementById('settings-o365-dot');
+    var o365val=document.getElementById('settings-o365-val');
+    var o365sub=document.getElementById('settings-o365-sub');
+    if(gTok&&mApp&&mApp.getAllAccounts().length){
+      var acc=mApp.getAllAccounts()[0];
+      if(o365dot){o365dot.className='settings-conn-dot connected';}
+      if(o365val) o365val.textContent='Connected';
+      if(o365sub) o365sub.textContent=acc.username||'Office 365';
+    } else {
+      if(o365dot){o365dot.className='settings-conn-dot disconnected';}
+      if(o365val) o365val.textContent='—';
+      if(o365sub) o365sub.textContent='Not connected';
+    }
+    // ClickUp status
+    var cudot=document.getElementById('settings-clickup-dot');
+    var cuval=document.getElementById('settings-clickup-val');
+    if(cudot) cudot.className='settings-conn-dot '+(clickupConnected?'connected':'disconnected');
+    if(cuval) cuval.textContent=clickupConnected?'Connected':'—';
+    // Mikrotik status
+    var mtdot=document.getElementById('settings-mikrotik-dot');
+    var mtval=document.getElementById('settings-mikrotik-val');
+    if(mtdot) mtdot.className='settings-conn-dot '+(mikrotikConnected?'connected':'disconnected');
+    if(mtval) mtval.textContent=mikrotikConnected?'Connected':'—';
+    // Open panel
+    overlay.classList.add('open');
+    panel.classList.add('open');
+  }
+
+  function closeSettings(){
+    var overlay=document.getElementById('settings-overlay');
+    var panel=document.getElementById('settings-panel');
+    if(overlay) overlay.classList.remove('open');
+    if(panel) panel.classList.remove('open');
+  }
+
+  function onAutoRefreshToggle(enabled){
+    autoRefreshEnabled=enabled;
+    updateAutoRefresh();
+  }
+
+  function onIntervalChange(val){
+    autoRefreshIntervalMin=parseInt(val)||5;
+    updateAutoRefresh();
+  }
+
+  function onDarkModeToggle(enabled){
+    if(enabled){ document.body.classList.add('dark-mode'); }
+    else { document.body.classList.remove('dark-mode'); }
+  }
+
+  window.openSettings=openSettings;
+  window.closeSettings=closeSettings;
+  window.onAutoRefreshToggle=onAutoRefreshToggle;
+  window.onIntervalChange=onIntervalChange;
+  window.onDarkModeToggle=onDarkModeToggle;
   window.toggleBriefing=toggleBriefing;
   window.doLogin=doLogin;window.doLogout=doLogout;window.toggleSidebar=toggleSidebar;
   window.navTo=navTo;window.setActive=setActive;window.refreshAll=refreshAll;
