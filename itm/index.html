@@ -1004,13 +1004,18 @@
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .topbar { padding: 10px 16px; gap: 8px; }
     .topbar-left { flex: 1; min-width: 0; }
-    .topbar-date { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .topbar-date { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .topbar-greeting { font-size: 9px; }
-    .topbar-right { gap: 8px; flex-shrink: 0; }
+    .topbar-clock { font-size: 15px; padding-left: 10px; }
+    .topbar-right { gap: 6px; flex-shrink: 0; }
     .data-updated { display: none; }
-    .topbar-btn span { display: none; }
+    .btn-refresh-text { display: none; }
     .topbar-btn { padding: 8px; border-radius: 50%; width: 36px; height: 36px; justify-content: center; }
-    .content-area { padding: 16px; }
+    .content-area { padding: 12px; }
+    .card { padding: 16px; }
+    .stat-card { padding: 16px; }
+    .stat-value { font-size: 28px; }
+    .ai-briefing-card { padding: 16px; }
     .server-metrics { display: none; }
     .login-left { display: none; }
     .login-right { flex: 1; }
@@ -1164,7 +1169,7 @@
           </span>
           <button class="topbar-btn" onclick="refreshAll()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-3.36"/></svg>
-            Refresh
+            <span class="btn-refresh-text">Refresh</span>
           </button>
           <div class="topbar-avatar" title="IT Admin">IT</div>
         </div>
@@ -1191,24 +1196,24 @@
         <!-- STAT CARDS -->
         <div class="grid-4">
           <div class="stat-card">
-            <div class="stat-label">Servers Online <span class="badge-mock">MOCK</span></div>
-            <div class="stat-value">4<span style="font-size:16px;color:var(--text-muted)">/5</span></div>
-            <div class="stat-sub"><span class="stat-down">● 1 warning</span></div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Active Tasks <span class="badge-mock">MOCK</span></div>
-            <div class="stat-value" id="stat-tasks">5</div>
-            <div class="stat-sub" style="color:var(--text-muted)">2 due today</div>
-          </div>
-          <div class="stat-card">
             <div class="stat-label">Unread Emails <span class="badge-live">&#9679; LIVE</span></div>
             <div class="stat-value" id="stat-unread">-</div>
-            <div class="stat-sub" style="color:var(--text-muted)">Loading...</div>
+            <div class="stat-sub" style="color:var(--text-muted)" id="stat-unread-sub">Loading...</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Network Devices <span class="badge-mock">MOCK</span></div>
-            <div class="stat-value">12</div>
-            <div class="stat-sub"><span class="stat-up">● All online</span></div>
+            <div class="stat-label">Meetings Today <span class="badge-live">&#9679; LIVE</span></div>
+            <div class="stat-value" id="stat-meetings">-</div>
+            <div class="stat-sub" style="color:var(--text-muted)" id="stat-meetings-sub">Loading...</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Network Devices <span class="badge-live" id="stat-network-badge">&#9679; LIVE</span></div>
+            <div class="stat-value" id="stat-network">-</div>
+            <div class="stat-sub" style="color:var(--text-muted)" id="stat-network-sub">Loading...</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active Tasks <span class="badge-live">&#9679; LIVE</span></div>
+            <div class="stat-value" id="stat-tasks">-</div>
+            <div class="stat-sub" style="color:var(--text-muted)" id="stat-tasks-sub">Loading...</div>
           </div>
         </div>
 
@@ -1580,6 +1585,12 @@
         });
       });
       el.innerHTML=html;if(se)se.textContent='Office 365 - '+evs.length+' events';
+      // Update meetings today stat card
+      var todayCount=evs.filter(function(e){return fD(e.start.dateTime||e.start.date)==='Today';}).length;
+      var sm=document.getElementById('stat-meetings');
+      var sms=document.getElementById('stat-meetings-sub');
+      if(sm) sm.textContent=todayCount;
+      if(sms) sms.textContent=todayCount===0?'No meetings':todayCount+' scheduled';
     }).catch(function(err){el.innerHTML='<div class="error-state">Failed: '+err.message+'</div>';if(se)se.textContent='Error';});
   }
 
@@ -1720,6 +1731,8 @@
               html+='<span style="display:block;color:#3B82F6;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
             } else if(/^✅/.test(safe)){
               html+='<span style="display:block;color:#22C55E;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
+            } else if(/^📡/.test(safe)){
+              html+='<span style="display:block;color:#06B6D4;font-weight:700;font-size:12px;letter-spacing:1px;margin:10px 0 4px">'+safe+'</span>';
             } else if(/^⚠️/.test(safe)){
               html+='<span style="display:block;color:#F59E0B;font-weight:600;font-size:12px;margin:4px 0">'+safe+'</span>';
             } else if(/^•/.test(safe)){
@@ -1802,7 +1815,12 @@
       if(badge){badge.className='badge-live';badge.innerHTML='&#9679; LIVE';}
       updateSidebarBadge('badge-tasks', tasks.length);
       var statEl=document.getElementById('stat-tasks');
+      var statSub=document.getElementById('stat-tasks-sub');
       if(statEl) statEl.textContent = tasks.length;
+      if(statSub){
+        var urgCount=tasks.filter(function(t){var p=t.priority&&t.priority.priority;return p==='urgent'||p==='high';}).length;
+        statSub.textContent=urgCount>0?urgCount+' urgent/high':'All normal priority';
+      }
 
       if(!tasks.length){
         el.innerHTML='<div class="loading-state" style="animation:none;opacity:0.5">No active tasks &#127881;</div>';
@@ -1860,11 +1878,23 @@
       }
 
       var online=devices.filter(function(d){return d.status==='ONLINE';}).length;
+      var offline=devices.filter(function(d){return d.status==='OFFLINE';}).length;
       var total=devices.length;
       if(badge){
         if(online===total){badge.className='badge-live';badge.innerHTML='&#9679; '+online+'/'+total+' Online';}
         else if(online===0){badge.className='badge-noconn';badge.innerHTML='&#10007; All Offline';}
         else{badge.className='badge-mock';badge.innerHTML='&#9888; '+online+'/'+total+' Online';}
+      }
+      // Update network stat card
+      var sn=document.getElementById('stat-network');
+      var sns=document.getElementById('stat-network-sub');
+      var snb=document.getElementById('stat-network-badge');
+      if(sn) sn.textContent=online+'/'+total;
+      if(sns) sns.textContent=online===total?'● All online':'● '+offline+' offline';
+      if(snb){
+        if(online===total){snb.className='badge-live';snb.innerHTML='&#9679; LIVE';}
+        else if(online===0){snb.className='badge-noconn';snb.innerHTML='&#9679; LIVE';}
+        else{snb.className='badge-live';snb.innerHTML='&#9679; LIVE';}
       }
 
       var html='';
@@ -1894,7 +1924,7 @@
     function refreshAll(){
     fetchCalendar();fetchEmails();fetchAlerts();fetchClickUpTasks();fetchDevices();updateGreeting();
     var btn=document.querySelector('.topbar-btn');
-    if(btn){btn.textContent='Updated';setTimeout(function(){btn.textContent='Refresh';},1500);}
+    var rspan=btn?btn.querySelector('.btn-refresh-text'):null;if(rspan){rspan.textContent='✓';setTimeout(function(){rspan.textContent='Refresh';},1500);}
     updateLastRefresh();
   }
 
