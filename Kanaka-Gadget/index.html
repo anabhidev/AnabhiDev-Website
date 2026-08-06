@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanaka Gadget Bali — Mockup v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --navy-deep: #0B1220;
+    --navy-mid: #1C2B45;
+    --off-white: #F7F8FA;
+    --amber: #D4A24C;
+    --amber-soft: rgba(212, 162, 76, 0.12);
+    --text-secondary: #8B93A3;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: hidden; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--navy-deep);
+    line-height: 1.6;
+    padding-top: 130px; /* fallback awal, dikoreksi presisi oleh JS di bawah */
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .note {
+    background: #FFF4E0;
+    border-bottom: 2px dashed var(--amber);
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #5c4419;
+  }
+  .note b { color: #8a5a00; }
+  .header-fixed-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== fade-in on scroll (generic) ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* staggered delay untuk card dalam grid */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.05s; }
+  .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.15s; }
+  .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.25s; }
+  .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.35s; }
+  .reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    background: var(--navy-mid);
+    padding: 16px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; color: var(--white); font-size: 18px; font-weight: 600; }
+  .nav-logo .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--navy-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--white);
+    border: 1px solid var(--amber-soft);
+  }
+  .nav-links { display: flex; gap: 26px; list-style: none; color: var(--white); font-size: 17.5px; font-weight: 700; }
+  .nav-links a { color: var(--white); text-decoration: none; }
+  .nav-cart { background: var(--amber); color: var(--navy-deep); padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+  /* ===== 1. HERO — navy gelap ===== */
+  .hero { background: var(--navy-deep); color: var(--white); padding: 100px 6% 80px; position: relative; overflow: hidden; }
+  .hero::before {
+    content: "K"; position: absolute; font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 560px; line-height: 1; color: var(--navy-mid); opacity: 0.35; right: -80px; top: -120px; z-index: 0; pointer-events: none;
+  }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; max-width: 1180px; margin: 0 auto; }
+  .hero-inner { max-width: 640px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--amber-soft);
+    border: 1px solid rgba(212,162,76,0.4); color: var(--amber); padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500; margin-bottom: 24px;
+  }
+  .hero h1 { font-size: 46px; line-height: 1.12; margin-bottom: 20px; }
+  .hero h1 span { color: var(--amber); }
+  .hero p.sub { color: var(--text-secondary); font-size: 17px; max-width: 460px; margin-bottom: 36px; }
+  .hero-cta { display: flex; gap: 14px; }
+  .btn-primary { background: var(--amber); color: var(--navy-deep); padding: 14px 26px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 15px; }
+  .btn-secondary { border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 14px 26px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 15px; }
+  .hero-img-wrap {
+    border-radius: 16px; overflow: hidden; aspect-ratio: 4/3.4; border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ===== 2. STATS / COUNTING NUMBER — abu-abu silver, beda dari off-white sekitarnya ===== */
+  .stats-section { background: #E4E7EC; padding: 60px 6%; border-bottom: 1px solid #D5D9E0; }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto;
+  }
+  .stat-box { text-align: center; padding: 20px 10px; }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 42px; color: var(--navy-deep); line-height: 1;
+    display: flex; align-items: baseline; justify-content: center; gap: 2px;
+  }
+  .stat-num .suffix { font-size: 24px; color: var(--amber); }
+  .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
+  .stat-box.is-placeholder .stat-label::after {
+    content: " *"; color: var(--amber); font-weight: 700;
+  }
+
+  /* ===== generic section wrapper ===== */
+  section.block { padding: 90px 6%; }
+  .section-light { background: var(--off-white); }
+  .section-navy { background: var(--navy-mid); color: var(--white); }
+  .section-head { max-width: 580px; margin: 0 auto 56px; text-align: center; }
+  .section-head .eyebrow { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 12px; display: block; }
+  .section-head h2 { font-size: 32px; margin-bottom: 14px; }
+  .section-head p { color: var(--text-secondary); font-size: 15px; }
+  .section-navy .section-head p { color: rgba(255,255,255,0.6); }
+
+  /* ===== 3. KATEGORI ===== */
+  .category-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; max-width: 1100px; margin: 0 auto; }
+  .category-card {
+    background: var(--white); border: 1px solid #E8EAEE; border-radius: 12px; padding: 28px 16px; text-align: center; cursor: pointer; transition: all 0.2s ease;
+  }
+  .category-card:hover { border-color: var(--amber); transform: translateY(-3px); }
+  .category-icon { font-size: 30px; margin-bottom: 12px; }
+  .category-card h4 { font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600; }
+
+  /* ===== 4 & 5. PRODUK GRID (dipakai 2x: Unggulan & Promo) ===== */
+  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; max-width: 1180px; margin: 0 auto; }
+  .product-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid #E8EAEE; transition: transform 0.35s ease, box-shadow 0.35s ease; }
+  .product-card:hover { transform: scale(1.05); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.35); z-index: 2; position: relative; }
+  .section-navy .product-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+  .product-img { aspect-ratio: 4/3; overflow: hidden; background: var(--navy-mid); position: relative; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-info { padding: 16px; }
+  .product-info .badge { display: inline-block; background: var(--amber-soft); color: #8a6317; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 4px; margin-bottom: 8px; }
+  .section-navy .product-info .badge { background: rgba(212,162,76,0.18); color: var(--amber); }
+  .product-info h4 { font-size: 15px; margin-bottom: 4px; font-weight: 600; }
+  .product-info .price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; margin-top: 6px; }
+  .product-info .price span { font-size: 12px; color: var(--text-secondary); font-weight: 400; font-family: 'Inter', sans-serif; }
+  .badge-promo { background: #C0392B !important; color: white !important; }
+
+  /* ===== 6. TESTIMONI ===== */
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
+  .testi-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 28px; }
+  .testi-stars { color: var(--amber); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testi-quote { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+  .testi-name { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+
+  /* ===== 7. CARA KERJA ===== */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 1100px; margin: 0 auto; position: relative; }
+  .flow::before {
+    content: ""; position: absolute; top: 26px; left: 12%; right: 12%; height: 1px;
+    background: repeating-linear-gradient(90deg, #D4A24C 0, #D4A24C 6px, transparent 6px, transparent 12px);
+  }
+  .flow-step { text-align: center; padding: 0 16px; position: relative; }
+  .flow-num {
+    width: 52px; height: 52px; border-radius: 50%; background: var(--off-white); border: 2px solid var(--amber);
+    display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--navy-deep);
+    margin: 0 auto 18px; position: relative; z-index: 1;
+  }
+  .flow-step h4 { font-size: 15px; margin-bottom: 8px; }
+  .flow-step p { font-size: 13px; color: var(--text-secondary); }
+
+  /* ===== 8. FAQ ===== */
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+  .faq-question {
+    padding: 18px 22px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 15px;
+  }
+  .faq-icon { color: var(--amber); font-size: 18px; transition: transform 0.25s ease; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 22px; font-size: 14px; color: rgba(255,255,255,0.7);
+  }
+  .faq-item.open .faq-answer { max-height: 200px; padding: 0 22px 20px; }
+
+  /* ===== 9. TENTANG + KONTAK ===== */
+  .about-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto; align-items: start; }
+  .about-contact h3 { font-size: 22px; margin-bottom: 16px; }
+  .about-contact p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; }
+  .contact-info { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .contact-info li { font-size: 14px; display: flex; gap: 10px; }
+  .contact-info .icon { color: var(--amber); }
+  .map-placeholder {
+    border-radius: 12px; aspect-ratio: 4/3; overflow: hidden; border: 1px solid #D5D9E0; position: relative;
+    background: #E9EDF2;
+  }
+  .map-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .map-placeholder svg { width: 100%; height: 100%; display: block; }
+  .map-placeholder .map-tag {
+    position: absolute; bottom: 14px; left: 14px; background: rgba(11,18,32,0.85); color: var(--white);
+    font-size: 12px; padding: 6px 12px; border-radius: 6px; z-index: 2;
+  }
+  .map-placeholder .map-pin {
+    position: absolute; top: 42%; left: 48%; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .map-placeholder .map-pin-dot {
+    width: 22px; height: 22px; border-radius: 50% 50% 50% 0; background: var(--amber);
+    transform: rotate(-45deg); box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--navy-deep);
+  }
+  .map-placeholder .map-pin-shadow {
+    width: 16px; height: 6px; background: rgba(0,0,0,0.2); border-radius: 50%; margin-top: 4px;
+  }
+
+  /* ===== 10. CTA BANNER ===== */
+  .cta-banner { background: var(--navy-deep); text-align: center; padding: 70px 6%; }
+  .cta-banner h2 { color: var(--white); font-size: 30px; margin-bottom: 14px; }
+  .cta-banner p { color: var(--text-secondary); margin-bottom: 30px; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--navy-deep); border-top: 1px solid rgba(255,255,255,0.08); padding: 50px 6% 30px; color: var(--text-secondary); font-size: 14px; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; max-width: 1180px; margin: 0 auto 40px; }
+  .footer-grid h5 { color: var(--white); font-size: 14px; margin-bottom: 16px; }
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 10px; }
+  .footer-grid a { color: var(--text-secondary); text-decoration: none; }
+  .footer-bottom { max-width: 1180px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; display: flex; justify-content: space-between; }
+
+  @media (max-width: 900px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .testi-grid { grid-template-columns: 1fr; }
+    .category-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .flow { grid-template-columns: repeat(2, 1fr); gap: 40px 0; }
+    .flow::before { display: none; }
+    .about-contact { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 34px; }
+    .hero::before { font-size: 280px; }
+    section.block { padding: 60px 6%; }
+  }
+</style>
+  <script>
+    // Ukur tinggi header (note + nav) secara dinamis, apply sebagai padding body,
+    // supaya tidak ada celah walau tinggi berubah karena teks wrap di layar sempit
+    function fixHeaderOffset() {
+      const wrap = document.querySelector('.header-fixed-wrap');
+      document.body.style.paddingTop = wrap.offsetHeight + 'px';
+    }
+    window.addEventListener('load', fixHeaderOffset);
+    window.addEventListener('resize', fixHeaderOffset);
+  </script>
+</head>
+<body>
+
+<div class="header-fixed-wrap">
+  <div class="note">📌 MOCKUP untuk presentasi ke klien — statis, belum ada fungsi cart/checkout/admin sungguhan. Angka bertanda <b>(*)</b> di section stats masih KARANGAN untuk contoh layout, akan diganti data asli klien.</div>
+
+  <nav>
+    <div class="nav-logo"><div class="mark">K</div>Kanaka Gadget Bali</div>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#service">Service</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <a href="#" class="nav-cart">🛒 Cart (0)</a>
+  </nav>
+</div>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">📍 Denpasar Utara, Bali</span>
+      <h1>Macbook, Laptop & PC Berkualitas — <span>Bergaransi</span>, Bukan Untung-untungan.</h1>
+      <p class="sub">Jual beli Macbook & laptop second/baru, jasa service profesional, sparepart & aksesoris. Dipercaya ratusan pelanggan di Bali.</p>
+      <div class="hero-cta">
+        <a href="#produk" class="btn-primary">Lihat Produk</a>
+        <a href="#service" class="btn-secondary">Booking Service</a>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=700&q=80" alt="MacBook Air">
+    </div>
+  </div>
+</section>
+
+<!-- 2. STATS / COUNTING NUMBER -->
+<section class="stats-section">
+  <div class="stats-grid reveal-stagger">
+    <div class="stat-box">
+      <div class="stat-num"><span class="count" data-target="366">0</span></div>
+      <div class="stat-label">Review Google</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num"><span class="count" data-target="5" data-decimal="1">0</span></div>
+      <div class="stat-label">Rating Rata-rata</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num"><span class="count" data-target="6">0</span><span class="suffix">+</span></div>
+      <div class="stat-label">Tahun Pengalaman</div>
+    </div>
+    <div class="stat-box is-placeholder">
+      <div class="stat-num"><span class="count" data-target="500">0</span><span class="suffix">+</span></div>
+      <div class="stat-label">Device Terjual/Diperbaiki</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. KATEGORI -->
+<section class="block section-light" id="produk">
+  <div class="section-head reveal">
+    <span class="eyebrow">Kategori</span>
+    <h2>Belanja per Kategori</h2>
+    <p>Langsung ke jenis produk yang kamu cari.</p>
+  </div>
+  <div class="category-grid reveal-stagger">
+    <div class="category-card"><div class="category-icon">💻</div><h4>Macbook</h4></div>
+    <div class="category-card"><div class="category-icon">💼</div><h4>Laptop</h4></div>
+    <div class="category-card"><div class="category-icon">🖥️</div><h4>PC / Desktop</h4></div>
+    <div class="category-card"><div class="category-icon">🎧</div><h4>Aksesoris</h4></div>
+    <div class="category-card"><div class="category-icon">🔧</div><h4>Sparepart</h4></div>
+  </div>
+</section>
+
+<!-- 4. PRODUK UNGGULAN -->
+<section class="block section-navy">
+  <div class="section-head reveal">
+    <span class="eyebrow">Katalog</span>
+    <h2>Produk Unggulan</h2>
+    <p>Beberapa pilihan device yang tersedia — cek stok lengkap di halaman produk.</p>
+  </div>
+  <div class="product-grid reveal-stagger">
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80" alt="MacBook Air"></div>
+      <div class="product-info">
+        <span class="badge">Second — Grade A</span>
+        <h4>MacBook Air M2 2023</h4>
+        <div class="price">Rp 11.500.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&q=80" alt="MacBook Pro"></div>
+      <div class="product-info">
+        <span class="badge">Baru</span>
+        <h4>MacBook Pro 14" M3</h4>
+        <div class="price">Rp 24.900.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80" alt="Laptop"></div>
+      <div class="product-info">
+        <span class="badge">Second — Grade B</span>
+        <h4>MacBook Neo 13"</h4>
+        <div class="price">Rp 7.200.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=500&q=80" alt="Charger"></div>
+      <div class="product-info">
+        <span class="badge">Sparepart</span>
+        <h4>Adapter Charger 61W</h4>
+        <div class="price">Rp 350.000 <span>/ unit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PROMO / PRODUK TERBARU -->
+<section class="block section-light">
+  <div class="section-head reveal">
+    <span class="eyebrow">Promo</span>
+    <h2>Produk Terbaru & Promo</h2>
+    <p>Baru masuk atau lagi diskon — sebelum kehabisan.</p>
+  </div>
+  <div class="product-grid reveal-stagger">
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500&q=80" alt="Macbook baru"></div>
+      <div class="product-info">
+        <span class="badge badge-promo">Promo -10%</span>
+        <h4>MacBook Air 13" M1</h4>
+        <div class="price">Rp 8.500.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500&q=80" alt="Laptop baru"></div>
+      <div class="product-info">
+        <span class="badge">Baru Masuk</span>
+        <h4>Laptop Gaming 15"</h4>
+        <div class="price">Rp 13.900.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80" alt="iPad"></div>
+      <div class="product-info">
+        <span class="badge badge-promo">Promo</span>
+        <h4>iPad Air 5</h4>
+        <div class="price">Rp 6.900.000 <span>/ unit</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=500&q=80" alt="Mouse"></div>
+      <div class="product-info">
+        <span class="badge">Baru Masuk</span>
+        <h4>Magic Mouse</h4>
+        <div class="price">Rp 950.000 <span>/ unit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. TESTIMONI -->
+<section class="block section-navy" id="testimoni">
+  <div class="section-head reveal">
+    <span class="eyebrow">Testimoni</span>
+    <h2>Apa Kata Pelanggan</h2>
+    <p>Diambil dari review asli Google — 366 ulasan, rating 5.0.</p>
+  </div>
+  <div class="testi-grid reveal-stagger">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"Good stuff, good place, good price & good quality for the MacBook."</div>
+      <div class="testi-name">— Google Review</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"Nice owner, friendly and is assisting me with setting up my mac!"</div>
+      <div class="testi-name">— Google Review</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"The best service in all of Bali for laptop repairs and purchases."</div>
+      <div class="testi-name">— Google Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CARA KERJA SERVICE -->
+<section class="block section-light" id="service">
+  <div class="section-head reveal">
+    <span class="eyebrow">Jasa Service</span>
+    <h2>Cara Kerja Booking Service</h2>
+    <p>Prosesnya jelas dan singkat — tidak perlu datang dulu untuk sekadar tanya.</p>
+  </div>
+  <div class="flow reveal-stagger">
+    <div class="flow-step"><div class="flow-num">1</div><h4>Isi Form Booking</h4><p>Ceritakan keluhan device kamu lewat form singkat.</p></div>
+    <div class="flow-step"><div class="flow-num">2</div><h4>Dihubungi Tim</h4><p>Kami hubungi untuk konfirmasi & estimasi biaya.</p></div>
+    <div class="flow-step"><div class="flow-num">3</div><h4>Dikerjakan</h4><p>Device diperbaiki oleh teknisi berpengalaman.</p></div>
+    <div class="flow-step"><div class="flow-num">4</div><h4>Ambil / Dikirim</h4><p>Device siap diambil di toko atau dikirim balik.</p></div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section class="block section-navy">
+  <div class="section-head reveal">
+    <span class="eyebrow">FAQ</span>
+    <h2>Pertanyaan Umum</h2>
+    <p style="color: var(--amber); font-size: 13px;">*Draft pertanyaan & jawaban untuk mockup — akan dikoreksi bersama klien.</p>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Apakah semua produk bergaransi?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p>Ya, setiap unit second maupun baru dilengkapi garansi toko. Lama garansi tergantung kondisi & jenis produk.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Berapa lama proses service?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p>Umumnya 1–3 hari kerja tergantung tingkat kerusakan dan ketersediaan sparepart.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Bisa COD atau kirim ke luar Denpasar?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p>Bisa. Untuk area Denpasar tersedia COD, untuk luar kota bisa dikirim via ekspedisi.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Bagaimana cara menjual device saya?</span><span class="faq-icon">+</span></div>
+      <div class="faq-answer"><p>Datang langsung ke toko atau hubungi kami untuk cek kondisi & penawaran harga cepat.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. TENTANG + KONTAK -->
+<section class="block section-light" id="kontak">
+  <div class="section-head reveal">
+    <span class="eyebrow">Tentang & Kontak</span>
+    <h2>Kenali Kanaka Gadget Bali</h2>
+  </div>
+  <div class="about-contact reveal">
+    <div>
+      <h3>Tentang Kami</h3>
+      <p>Kanaka Gadget Bali adalah pusat jual-beli, service, dan sparepart Macbook, Laptop & PC di Denpasar. Sudah melayani pelanggan di Bali selama 6 tahun dengan komitmen kualitas dan kejujuran.</p>
+      <ul class="contact-info">
+        <li><span class="icon">📍</span> Jl. Bedahulu XVIII No.1, Peguyangan, Denpasar Utara, Bali</li>
+        <li><span class="icon">📞</span> 0895-7005-66669</li>
+        <li><span class="icon">🕒</span> Setiap hari, 09.00 – 20.00 WITA</li>
+      </ul>
+    </div>
+    <div class="map-placeholder">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="300" fill="#E9EDF2"/>
+        <rect x="0" y="0" width="400" height="300" fill="#DCE2E9"/>
+        <!-- blok bangunan -->
+        <rect x="30" y="30" width="70" height="55" fill="#CBD3DC"/>
+        <rect x="130" y="20" width="55" height="70" fill="#CBD3DC"/>
+        <rect x="220" y="35" width="90" height="50" fill="#CBD3DC"/>
+        <rect x="40" y="140" width="60" height="60" fill="#CBD3DC"/>
+        <rect x="150" y="160" width="80" height="45" fill="#CBD3DC"/>
+        <rect x="270" y="150" width="65" height="70" fill="#CBD3DC"/>
+        <rect x="30" y="230" width="90" height="45" fill="#CBD3DC"/>
+        <rect x="200" y="235" width="70" height="45" fill="#CBD3DC"/>
+        <!-- jalan utama -->
+        <rect x="0" y="105" width="400" height="16" fill="#FFFFFF"/>
+        <rect x="185" y="0" width="16" height="300" fill="#FFFFFF"/>
+        <rect x="0" y="215" width="400" height="10" fill="#FFFFFF"/>
+        <rect x="290" y="0" width="10" height="300" fill="#FFFFFF"/>
+        <!-- garis jalan putus-putus -->
+        <line x1="0" y1="113" x2="400" y2="113" stroke="#B8C2CD" stroke-width="1.5" stroke-dasharray="6,5"/>
+        <line x1="193" y1="0" x2="193" y2="300" stroke="#B8C2CD" stroke-width="1.5" stroke-dasharray="6,5"/>
+      </svg>
+      <div class="map-pin">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-shadow"></div>
+      </div>
+      <span class="map-tag">📍 Ilustrasi peta — nanti diganti Google Maps embed asli</span>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CTA -->
+<section class="cta-banner">
+  <h2>Punya Macbook atau Laptop yang Mau Dijual?</h2>
+  <p>Proses cepat, harga terbaik, aman & terpercaya.</p>
+  <a href="#" class="btn-primary">Hubungi Kami</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="nav-logo" style="margin-bottom: 14px;"><div class="mark">K</div>Kanaka Gadget Bali</div>
+      <p style="font-size: 13px; max-width: 240px;">Pusat Macbook, Laptop & PC — Service, Sparepart, Software & Accessories.</p>
+    </div>
+    <div><h5>Navigasi</h5><ul><li><a href="#produk">Produk</a></li><li><a href="#service">Service</a></li><li><a href="#testimoni">Testimoni</a></li></ul></div>
+    <div><h5>Kontak</h5><ul><li>0895-7005-66669</li><li>Jl. Bedahulu XVIII No.1, Denpasar Utara</li></ul></div>
+    <div><h5>Jam Buka</h5><ul><li>Setiap hari</li><li>09.00 – 20.00 WITA</li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Kanaka Gadget Bali</span><span>Denpasar, Bali</span></div>
+</footer>
+
+<script>
+  // Scroll reveal (fade in per section / per card)
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Counting number animation
+  const countEls = document.querySelectorAll('.count');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseFloat(el.dataset.target);
+        const decimal = parseInt(el.dataset.decimal || "0");
+        const duration = 1400;
+        const startTime = performance.now();
+
+        function tick(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          const current = target * eased;
+          el.textContent = decimal > 0 ? current.toFixed(decimal) : Math.round(current);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  countEls.forEach(el => countObserver.observe(el));
+
+  // FAQ accordion
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
