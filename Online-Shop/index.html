@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanaka Gadget Bali — MacBook, Laptop &amp; PC Bergaransi | Denpasar Utara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" fetchpriority="high"
+      href="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1800&q=80&auto=format&fit=crop">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   KANAKA GADGET BALI — TEMPLATE 2 "TITANIUM LIGHT"
+   Mockup v3
+   Perubahan dari v1:
+   - Kartu produk mengikuti struktur Gemini (warna diadaptasi tema terang)
+   - Battery Health jadi overlay di gambar (BH 92% · 128 CC)
+   - Tombol WA hijau + logo WhatsApp + wa.me deep link terisi otomatis
+   - Tokopedia hijau / Shopee orange
+   - Baris kartu dikunci sejajar (judul, spek, harga, tombol)
+   - Field Kelengkapan (Fullset / Unit Only)
+   - Modal: Detail Produk, Kalkulator Service, Panel Admin
+   - Section baru: 25 Titik Pengecekan
+   - SOP: width/height semua gambar, hero pakai <img fetchpriority>, overflow-x html+body
+   Perubahan v2 → v3:
+   - Kontras section dinaikkan ke ~10% (bg #FFFFFF vs bg-alt #E6E7EA),
+     elemen mikro (icon bulat, thumbnail) pakai token terpisah --bg-soft
+     supaya tidak ikut gelap berlebihan
+   - Hover kartu produk diganti ke gaya template 1: scale(1.05) + shadow tebal
+   - Grid gap produk 18px → 22px, scroller & grid diberi padding ekstra
+     supaya kartu yang scale tidak terpotong tetangganya
+   ============================================================ */
+
+:root{
+  --bg:#FFFFFF;
+  --bg-alt:#E6E7EA;
+  --bg-soft:#F3F4F6;
+  --surface:#FFFFFF;
+  --ink:#1D1D1F;
+  --ink-2:#6E6E73;
+  --ink-3:#9A9AA0;
+  --line:#E5E5EA;
+  --accent:#0071E3;
+  --accent-dark:#0058B8;
+  --accent-soft:rgba(0,113,227,.08);
+  --graphite:#16181D;
+  --wa:#25D366;
+  --wa-dark:#1EBE5A;
+  --tokped:#42B549;
+  --shopee:#EE4D2D;
+  --green:#34C759;
+  --amber:#FF9F0A;
+  --red:#FF3B30;
+  --radius:16px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.04);
+  --shadow-md:0 4px 8px rgba(0,0,0,.05), 0 16px 40px rgba(0,0,0,.08);
+  --nav-h:64px;
+  --maxw:1200px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px;overflow-x:hidden}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+h1,h2,h3,h4{letter-spacing:-.022em;line-height:1.12;font-weight:700}
+h1{font-size:clamp(38px,6.2vw,74px);font-weight:800;letter-spacing:-.034em}
+h2{font-size:clamp(28px,3.6vw,44px)}
+h3{font-size:22px}
+h4{font-size:15.5px;letter-spacing:-.01em;line-height:1.35}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.block{padding:96px 0}
+.block.tone-alt{background:var(--bg-alt)}
+.tone-alt .card,.tone-alt .cat,.tone-alt .testi,.tone-alt .qc-col,.tone-alt .faq-item,.tone-alt .contact-float,.tone-alt .stats-grid{border-color:#D7D9DD}
+.sec-head{max-width:660px;margin-bottom:44px}
+.sec-head.is-center{margin-left:auto;margin-right:auto;text-align:center}
+.eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.sec-head p{color:var(--ink-2);margin-top:14px;font-size:17px}
+.note-star{color:var(--amber);font-size:13px;font-weight:500;margin-top:10px}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border-radius:100px;font-size:15px;font-weight:600;letter-spacing:-.01em;
+  transition:transform .2s cubic-bezier(.2,.9,.3,1.2),background .2s,border-color .2s,box-shadow .2s;
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.97)}
+.btn svg{flex-shrink:0}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 20px rgba(0,113,227,.32)}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px)}
+.btn-wa{background:var(--wa);color:#fff;box-shadow:0 6px 20px rgba(37,211,102,.32)}
+.btn-wa:hover{background:var(--wa-dark);transform:translateY(-2px)}
+.btn-amber{background:var(--amber);color:#1D1D1F;box-shadow:0 6px 20px rgba(255,159,10,.3)}
+.btn-amber:hover{filter:brightness(.95);transform:translateY(-2px)}
+.btn-dark{background:var(--graphite);color:#fff}
+.btn-dark:hover{background:#000;transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn-outline:hover{border-color:var(--ink-3);transform:translateY(-2px)}
+.btn-sm{padding:10px 18px;font-size:13.5px}
+.btn-block{width:100%}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+  background:rgba(22,24,29,.84);
+  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:0 24px;height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:15px;letter-spacing:-.01em;justify-self:start}
+.brand .mark{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;letter-spacing:0;flex-shrink:0}
+.brand small{display:block;font-size:10.5px;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:0}
+.nav-links{display:flex;gap:30px;justify-self:center}
+.nav-links a{font-size:15px;font-weight:600;color:#FFFFFF;transition:opacity .2s;position:relative;padding:4px 0}
+.nav-links a:hover{opacity:.72}
+.nav-links a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--accent);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:9px;justify-self:end}
+.nav-admin{
+  display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.72);font-size:12.5px;font-weight:500;
+  border:1px solid rgba(255,255,255,.2);padding:7px 13px;border-radius:100px;transition:all .2s;
+}
+.nav-admin:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.nav-cart{
+  display:flex;align-items:center;gap:8px;background:var(--accent);color:#fff;
+  padding:8px 16px;border-radius:100px;font-size:13.5px;font-weight:600;
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.3),background .2s;
+}
+.nav-cart:hover{background:var(--accent-dark)}
+.cart-count{background:rgba(255,255,255,.24);min-width:20px;height:20px;border-radius:100px;display:grid;place-items:center;font-size:11.5px;font-weight:700;padding:0 5px}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;min-height:min(100svh,880px);display:flex;align-items:center;justify-content:center;
+  padding:calc(var(--nav-h) + 72px) 24px 120px;background:var(--graphite);overflow:hidden;isolation:isolate;max-width:100vw;
+}
+.hero-slides{position:absolute;inset:0;z-index:-2}
+.hero-slide{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity 1.6s ease-in-out;
+}
+.hero-slide.on{opacity:1;animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(10,11,14,.80) 0%,rgba(10,11,14,.50) 34%,rgba(10,11,14,.88) 100%),
+             radial-gradient(80% 60% at 50% 45%,rgba(0,0,0,0) 0%,rgba(0,0,0,.42) 100%);
+}
+.hero-in{max-width:920px;text-align:center;color:#fff;position:relative}
+.hero-rating{
+  display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;margin-bottom:26px;
+}
+.hero-rating .stars{color:#FFC93E;letter-spacing:2px;font-size:12px}
+.hero-rating b{font-weight:700}
+.hero-rating span{color:rgba(255,255,255,.66)}
+.hero h1{color:#fff;margin-bottom:22px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:#7FC0FF}
+.hero-sub{font-size:clamp(15px,1.7vw,19px);color:rgba(255,255,255,.8);max-width:640px;margin:0 auto 34px;text-wrap:balance}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
+.hero-trust{
+  display:flex;justify-content:center;flex-wrap:wrap;border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;overflow:hidden;background:rgba(255,255,255,.07);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);max-width:780px;margin:0 auto;
+}
+.hero-trust div{flex:1 1 170px;padding:16px 18px;text-align:left;border-right:1px solid rgba(255,255,255,.14)}
+.hero-trust div:last-child{border-right:none}
+.hero-trust b{display:block;font-size:13.5px;color:#fff;font-weight:600}
+.hero-trust span{font-size:12px;color:rgba(255,255,255,.6)}
+.hero-dots{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.hero-dots i{width:28px;height:3px;border-radius:2px;background:rgba(255,255,255,.28);transition:background .4s;display:block;cursor:pointer}
+.hero-dots i.on{background:#fff}
+
+/* ---------- STATS ---------- */
+.stats{margin-top:-70px;position:relative;z-index:10}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#F3F4F6;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden}
+.stat{padding:30px 24px;border-right:1px solid #E0E2E6;text-align:center}
+.stat:last-child{border-right:none}
+.stat-num{font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.stat-label{font-size:12.5px;color:var(--ink-2);margin-top:8px;font-weight:500}
+.stat.is-star .stat-num{color:var(--ink-2)}
+.stat.is-star .stat-label::after{content:' ⭐';font-size:10px}
+
+/* ---------- KATEGORI ---------- */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cat{position:relative;aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;background:var(--graphite);cursor:pointer;display:block;width:100%;text-align:left;transition:transform .35s ease,box-shadow .35s ease}
+.cat img{width:100%;height:100%;object-fit:cover;transition:opacity .35s ease;opacity:.72}
+.cat:hover img{opacity:.88}
+.cat::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(0,0,0,.78) 100%)}
+.cat-txt{position:absolute;left:20px;bottom:18px;right:20px;z-index:2;color:#fff}
+.cat-txt h4{font-size:18px;font-weight:700}
+.cat-txt span{font-size:12.5px;color:rgba(255,255,255,.72)}
+
+/* ---------- FILTER ---------- */
+.filter-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.chip{padding:8px 15px;border-radius:100px;font-size:13px;font-weight:500;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);transition:all .2s}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip.on{background:var(--graphite);border-color:var(--graphite);color:#fff;font-weight:600}
+.cond-select{padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:500;color:var(--ink);cursor:pointer}
+
+/* ============================================================
+   PRODUCT CARD — struktur Gemini, warna tema terang
+   Baris dikunci supaya sejajar antar kartu:
+   eyebrow / judul / spek / harga / tombol / marketplace
+   ============================================================ */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:stretch}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+
+.card-media{position:relative;aspect-ratio:4/3;background:var(--bg-soft);overflow:hidden;cursor:pointer}
+.card-media img{width:100%;height:100%;object-fit:cover}
+.tag-cond{
+  position:absolute;top:10px;left:10px;z-index:2;background:rgba(22,24,29,.85);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;
+  font-size:10.5px;font-weight:600;padding:5px 11px;border-radius:100px;
+}
+.tag-rec{
+  position:absolute;top:10px;right:10px;z-index:2;background:var(--amber);color:#1D1D1F;
+  font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:100px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.tag-rec.is-promo{background:var(--red);color:#fff}
+
+/* Battery Health overlay — ala Gemini */
+.bh-pill{
+  position:absolute;left:10px;bottom:10px;z-index:2;
+  background:rgba(10,12,16,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:6px 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.bh-pill b{font-size:11px;font-weight:700;color:#fff;letter-spacing:-.01em;white-space:nowrap}
+.bh-mini{width:38px;height:3px;border-radius:3px;background:rgba(255,255,255,.24);overflow:hidden;flex-shrink:0}
+.bh-mini i{display:block;height:100%;width:0;border-radius:3px;transition:width 1.1s cubic-bezier(.2,.8,.3,1)}
+
+.card-body{padding:15px;display:flex;flex-direction:column;flex:1;gap:9px}
+.card-eyebrow{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);line-height:1.3}
+.card-title{min-height:42px}
+.specs{display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--ink-2);line-height:1.45;min-height:74px}
+.specs li{display:flex;gap:7px;align-items:flex-start}
+.specs .ic{flex-shrink:0;font-size:11px;opacity:.7;width:13px}
+.specs .warr{color:#2A9D4A;font-weight:500}
+.specs .kit{color:var(--ink);font-weight:500}
+
+.price-block{margin-top:auto;padding-top:6px;min-height:52px}
+.price{font-size:19px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
+.price-old{font-size:12.5px;color:var(--ink-3);text-decoration:line-through;margin-left:7px;font-weight:400}
+.stock-line{font-size:11px;color:var(--ink-3);margin-top:2px}
+
+.card-actions{display:flex;gap:7px}
+.card-actions .btn{flex:1;padding:10px 10px;font-size:12.5px;border-radius:10px;box-shadow:none}
+.card-actions .btn-wa{flex:0 0 auto;padding:10px 14px}
+
+.mp-row{
+  font-size:10.5px;color:var(--ink-3);padding-top:10px;margin-top:2px;
+  border-top:1px solid var(--line);display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:33px;
+}
+.mp-row.is-empty{visibility:hidden}
+.mp-row .tokped{color:var(--tokped);font-weight:700}
+.mp-row .shopee{color:var(--shopee);font-weight:700}
+.mp-row .dot{color:var(--line)}
+.mp-cheap{display:block;width:100%;color:var(--accent);font-weight:600;font-size:10px;margin-top:2px}
+
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink-2);border:1px dashed var(--line);border-radius:var(--radius)}
+.empty-state b{display:block;color:var(--ink);margin-bottom:6px;font-weight:600}
+
+/* ---------- PROMO SCROLLER ---------- */
+.scroller{display:flex;gap:22px;overflow-x:auto;overflow-y:visible;padding:16px 24px 32px;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -24px;align-items:stretch}
+.scroller::-webkit-scrollbar{display:none}
+.scroller > .card{flex:0 0 280px;scroll-snap-align:start}
+.scroll-hint{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+
+/* ---------- TESTIMONI ---------- */
+.marquee{overflow:hidden;position:relative;margin:0 -24px;padding:4px 0;max-width:100vw}
+.marquee::before,.marquee::after{content:'';position:absolute;top:0;bottom:0;width:90px;z-index:3;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--bg-alt),transparent)}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--bg-alt),transparent)}
+.marquee-track{display:flex;gap:18px;width:max-content;animation:slide 42s linear infinite;padding:0 9px}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.testi{flex:0 0 360px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:12px}
+.testi-stars{color:#FFC93E;letter-spacing:2px;font-size:13px}
+.testi q{font-size:15px;line-height:1.55;quotes:none;letter-spacing:-.01em}
+.testi-by{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:6px}
+.avatar{width:32px;height:32px;border-radius:100px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:12.5px;font-weight:700;flex-shrink:0}
+.testi-by small{font-size:11.5px;color:var(--ink-3);display:block}
+.testi-by b{font-size:13px;font-weight:600}
+.google-line{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:13px;color:var(--ink-2)}
+.google-line b{color:var(--ink);font-weight:600}
+
+/* ---------- TIMELINE ---------- */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.timeline::before{content:'';position:absolute;top:19px;left:11%;right:11%;height:1.5px;background:linear-gradient(90deg,var(--line),var(--accent),var(--line))}
+.tl-step{text-align:center;position:relative}
+.tl-num{width:38px;height:38px;border-radius:100px;background:var(--surface);border:1.5px solid var(--accent);color:var(--accent);font-weight:700;font-size:14px;display:grid;place-items:center;margin:0 auto 18px;position:relative;z-index:2}
+.tl-step h4{margin-bottom:7px;font-size:16px}
+.tl-step p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.service-cta{margin-top:46px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+.service-cta b{font-size:17px;font-weight:700;letter-spacing:-.02em;display:block}
+.service-cta span{font-size:13.5px;color:var(--ink-2)}
+.service-cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---------- 25 TITIK PENGECEKAN ---------- */
+.qc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.qc-badge{
+  display:inline-flex;align-items:center;gap:12px;background:var(--surface);
+  border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow-sm);
+}
+.qc-badge .num{font-size:38px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--accent)}
+.qc-badge small{font-size:12px;color:var(--ink-2);display:block;line-height:1.35}
+.qc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.qc-col{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.qc-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:14px}
+.qc-col li{display:flex;gap:9px;font-size:13px;color:var(--ink-2);line-height:1.45;margin-bottom:9px}
+.qc-col li:last-child{margin-bottom:0}
+.qc-check{
+  flex-shrink:0;width:16px;height:16px;border-radius:100px;background:rgba(52,199,89,.14);
+  color:#2A9D4A;display:grid;place-items:center;font-size:9px;font-weight:800;margin-top:3px;
+}
+
+/* ---------- FAQ ---------- */
+.faq-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;align-items:start}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--ink-3)}
+.faq-q{width:100%;text-align:left;padding:17px 19px;display:flex;justify-content:space-between;gap:14px;align-items:center;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.faq-ic{flex-shrink:0;width:20px;height:20px;border-radius:100px;background:var(--bg-soft);display:grid;place-items:center;font-size:15px;color:var(--ink-2);transition:transform .3s cubic-bezier(.2,.8,.3,1),background .2s;line-height:1}
+.faq-item.open .faq-ic{transform:rotate(45deg);background:var(--accent);color:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.2,.8,.3,1)}
+.faq-item.open .faq-a{max-height:320px}
+.faq-a p{padding:0 19px 19px;font-size:14px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- TENTANG + MAP ---------- */
+.about-txt{max-width:760px;margin-bottom:38px}
+.about-txt p{color:var(--ink-2);font-size:16.5px;margin-top:16px}
+.map-shell{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.map-shell iframe{width:100%;height:460px;border:0;display:block;filter:grayscale(.28) contrast(1.04)}
+.contact-float{position:absolute;top:26px;left:26px;z-index:5;width:min(340px,calc(100% - 52px));background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-md);padding:24px}
+.contact-float h4{font-size:17px;margin-bottom:16px}
+.contact-list li{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.contact-list li:last-child{border-bottom:none}
+.contact-list .ic{flex-shrink:0;opacity:.6;font-size:14px}
+.contact-list b{color:var(--ink);font-weight:600;display:block;font-size:13.5px}
+.contact-float .btn{margin-top:16px}
+
+/* ---------- CTA ---------- */
+.cta-banner{position:relative;padding:110px 24px;text-align:center;color:#fff;overflow:hidden;isolation:isolate;background:var(--graphite);max-width:100vw}
+.cta-banner > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.cta-banner::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,11,14,.78),rgba(10,11,14,.9))}
+.cta-banner h2{color:#fff;max-width:660px;margin:0 auto 16px;text-wrap:balance}
+.cta-banner p{color:rgba(255,255,255,.74);max-width:520px;margin:0 auto 30px;font-size:16.5px}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- FOOTER ---------- */
+.foot{background:var(--graphite);color:rgba(255,255,255,.62);padding:64px 0 26px;font-size:13.5px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.foot h5{color:#fff;font-size:12px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.foot li{margin-bottom:9px;line-height:1.5}
+.foot a:hover{color:#fff}
+.foot-about{max-width:270px;margin-top:14px;line-height:1.6}
+.foot-bottom{margin-top:48px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:rgba(255,255,255,.42)}
+
+/* ---------- DRAWER + SCRIM ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:var(--bg);z-index:310;transform:translateX(100%);transition:transform .38s cubic-bezier(.3,.9,.3,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,.15)}
+.drawer.on{transform:translateX(0)}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--surface);flex-shrink:0}
+.drawer-head h3{font-size:18px}
+.x-btn{width:32px;height:32px;border-radius:100px;background:var(--bg-soft);display:grid;place-items:center;font-size:17px;color:var(--ink-2);flex-shrink:0}
+.x-btn:hover{background:var(--line)}
+.drawer-body{flex:1;overflow-y:auto;padding:20px 22px}
+.drawer-foot{padding:18px 22px;border-top:1px solid var(--line);background:var(--surface);flex-shrink:0}
+
+.cart-group{margin-bottom:26px}
+.cart-group-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cart-group-head b{font-size:13px;font-weight:700}
+.cart-group-note{font-size:11.5px;color:var(--ink-2);margin-bottom:14px;line-height:1.45}
+.cart-item{display:flex;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:9px}
+.cart-item img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-info h5{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.cart-item-info .p{font-size:13.5px;font-weight:700;letter-spacing:-.02em}
+.qty{display:flex;align-items:center;gap:9px;margin-top:7px}
+.qty button{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:14px;color:var(--ink-2);line-height:1}
+.qty button:hover{border-color:var(--ink-3);color:var(--ink)}
+.qty span{font-size:12.5px;font-weight:600;min-width:16px;text-align:center}
+.qty .locked{font-size:11px;color:var(--ink-3);font-weight:500}
+.rm{font-size:11.5px;color:var(--ink-3);margin-top:6px;display:inline-block;cursor:pointer}
+.rm:hover{color:var(--red)}
+.cart-empty{text-align:center;padding:70px 20px;color:var(--ink-2)}
+.cart-empty .big{font-size:38px;margin-bottom:14px;opacity:.35}
+.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:13.5px;color:var(--ink-2)}
+.total-row.grand{font-size:16px;color:var(--ink);font-weight:700;margin-bottom:14px}
+.total-row.grand b{font-size:21px;letter-spacing:-.03em}
+.pay-note{font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:10px;line-height:1.45}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field textarea{resize:vertical;min-height:70px}
+.back-link{font-size:13px;color:var(--accent);font-weight:500;margin-bottom:16px;display:inline-block;cursor:pointer}
+
+.confirm{text-align:center;padding:36px 8px}
+.confirm-ic{width:64px;height:64px;border-radius:100px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:30px;margin:0 auto 20px;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.confirm h3{margin-bottom:10px}
+.confirm > p{color:var(--ink-2);font-size:14px;margin-bottom:22px}
+.order-no{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:14px;margin-bottom:18px}
+.order-no small{font-size:11px;color:var(--ink-3);display:block;margin-bottom:3px}
+.order-no b{font-size:18px;letter-spacing:.04em;font-weight:700}
+.telegram-sim{background:var(--accent-soft);border:1px solid rgba(0,113,227,.18);border-radius:12px;padding:13px 15px;font-size:12.5px;color:var(--accent-dark);text-align:left;display:flex;gap:9px;line-height:1.5;margin-bottom:18px}
+.next-steps{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.next-steps b{font-size:12.5px;display:block;margin-bottom:9px}
+.next-steps li{font-size:12.5px;color:var(--ink-2);padding-left:16px;position:relative;margin-bottom:7px;line-height:1.45}
+.next-steps li::before{content:'→';position:absolute;left:0;color:var(--accent)}
+
+/* ============================================================
+   MODALS — detail produk / kalkulator service / panel admin
+   ============================================================ */
+.modal{
+  position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;
+  padding:24px;opacity:0;pointer-events:none;transition:opacity .28s;
+}
+.modal.on{opacity:1;pointer-events:auto}
+.modal-box{
+  background:var(--bg);border-radius:20px;width:100%;max-width:900px;max-height:88vh;
+  display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.28);
+  transform:translateY(18px) scale(.98);transition:transform .32s cubic-bezier(.2,.9,.3,1);
+}
+.modal.on .modal-box{transform:none}
+.modal-box.is-wide{max-width:1040px}
+.modal-head{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--surface);flex-shrink:0}
+.modal-head h3{font-size:18px}
+.modal-head .demo-tag{font-size:10.5px;font-weight:700;background:var(--amber);color:#1D1D1F;padding:3px 9px;border-radius:100px;letter-spacing:.02em}
+.modal-body{flex:1;overflow-y:auto;padding:24px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--line);background:var(--surface);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;flex-wrap:wrap}
+
+/* detail produk */
+.pd{display:grid;grid-template-columns:1.05fr 1fr;gap:28px}
+.pd-gallery .main-img{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:var(--bg-soft)}
+.pd-gallery .main-img img{width:100%;height:100%;object-fit:cover}
+.pd-thumbs{display:flex;gap:9px;margin-top:10px}
+.pd-thumbs button{flex:1;border-radius:9px;overflow:hidden;aspect-ratio:4/3;border:2px solid transparent;background:var(--bg-soft);padding:0}
+.pd-thumbs button.on{border-color:var(--accent)}
+.pd-thumbs img{width:100%;height:100%;object-fit:cover}
+.pd-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.pd h3{font-size:24px;margin:8px 0 14px;line-height:1.2}
+.pd-price{font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.1}
+.pd-price span{font-size:15px;color:var(--ink-3);text-decoration:line-through;margin-left:9px;font-weight:400;letter-spacing:0}
+.pd-save{display:inline-block;background:rgba(255,59,48,.1);color:var(--red);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:100px;margin-top:8px}
+.pd-bh{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:18px 0}
+.pd-bh-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.pd-bh-top b{font-size:14px}
+.pd-bh-top span{font-size:12px;color:var(--ink-2)}
+.pd-bh-track{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.pd-bh-track i{display:block;height:100%;border-radius:6px;transition:width 1s cubic-bezier(.2,.8,.3,1)}
+.pd-bh small{display:block;font-size:11.5px;color:var(--ink-3);margin-top:9px;line-height:1.45}
+.spec-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:18px}
+.spec-table tr{border-bottom:1px solid var(--line)}
+.spec-table tr:last-child{border-bottom:none}
+.spec-table td{padding:10px 0;vertical-align:top}
+.spec-table td:first-child{color:var(--ink-2);width:40%;font-size:12.5px}
+.spec-table td:last-child{font-weight:500}
+.pd-actions{display:flex;gap:10px;flex-wrap:wrap}
+.pd-actions .btn{flex:1;min-width:150px}
+.pd-mp{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3)}
+.pd-mp .tokped{color:var(--tokped);font-weight:700}
+.pd-mp .shopee{color:var(--shopee);font-weight:700}
+
+/* kalkulator service */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.calc-result{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center;min-height:240px}
+.calc-result .empty{color:var(--ink-3);font-size:13.5px;text-align:center;line-height:1.5}
+.calc-range{font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:4px}
+.calc-meta{display:flex;flex-direction:column;gap:9px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.calc-meta div{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+.calc-meta b{color:var(--ink);font-weight:600}
+.calc-disclaimer{font-size:11.5px;color:var(--amber);margin-top:16px;line-height:1.5;font-weight:500}
+
+/* panel admin */
+.adm-tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
+.adm-tab{padding:10px 16px;font-size:13.5px;font-weight:600;color:var(--ink-2);border-bottom:2px solid transparent;margin-bottom:-1px}
+.adm-tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.adm-table{width:100%;border-collapse:collapse;font-size:13px}
+.adm-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding:10px 12px;border-bottom:1px solid var(--line);font-weight:600}
+.adm-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.adm-table tr:last-child td{border-bottom:none}
+.adm-table img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+.adm-name{font-weight:600;font-size:12.5px;line-height:1.3;max-width:260px}
+.adm-pill{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:100px;background:var(--bg-soft);color:var(--ink-2);white-space:nowrap}
+.adm-pill.res{background:rgba(0,113,227,.1);color:var(--accent)}
+.adm-act{display:flex;gap:6px}
+.adm-act button{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;background:var(--surface)}
+.adm-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.adm-form-grid .full{grid-column:1/-1}
+.adm-notice{background:rgba(255,159,10,.1);border:1px solid rgba(255,159,10,.28);border-radius:12px;padding:13px 16px;font-size:12.5px;color:#8A5A00;margin-bottom:20px;line-height:1.5}
+.adm-set-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}
+.adm-set-row:last-child{border-bottom:none}
+.adm-set-row b{font-size:13.5px;display:block}
+.adm-set-row small{font-size:12px;color:var(--ink-2)}
+.toggle{width:42px;height:24px;border-radius:100px;background:var(--accent);position:relative;flex-shrink:0}
+.toggle::after{content:'';position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:100px;background:#fff}
+.toggle.off{background:var(--line)}
+.toggle.off::after{right:auto;left:3px}
+
+/* ---------- MOBILE BAR ---------- */
+.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:190;display:none;gap:9px;padding:10px 14px;background:rgba(255,255,255,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .35s cubic-bezier(.3,.9,.3,1)}
+.mobile-bar.on{transform:translateY(0)}
+.mobile-bar .btn{flex:1;padding:12px;font-size:13.5px}
+
+.fly-dot{position:fixed;width:16px;height:16px;border-radius:100px;background:var(--accent);z-index:400;pointer-events:none;transition:all .7s cubic-bezier(.35,.05,.3,1);box-shadow:0 2px 12px rgba(0,113,227,.5)}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.stagger > *{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.2,.8,.3,1),transform .6s cubic-bezier(.2,.8,.3,1)}
+.stagger.in > *{opacity:1;transform:none}
+.stagger.in > *:nth-child(1){transition-delay:0s}
+.stagger.in > *:nth-child(2){transition-delay:.07s}
+.stagger.in > *:nth-child(3){transition-delay:.14s}
+.stagger.in > *:nth-child(4){transition-delay:.21s}
+.stagger.in > *:nth-child(5){transition-delay:.28s}
+.stagger.in > *:nth-child(6){transition-delay:.35s}
+.stagger.in > *:nth-child(7){transition-delay:.42s}
+.stagger.in > *:nth-child(8){transition-delay:.49s}
+
+/* --------------------------------------------------------------
+   HOVER SCALE — WAJIB ditulis setelah blok .stagger.
+   Sebab: .stagger.in > *{transform:none} punya bobot 2 class,
+   sama dengan .card:hover, jadi yang menang adalah yang ditulis
+   paling belakang. Di sini bobotnya dinaikkan jadi 3 class
+   supaya menang telak.
+   Dibungkus @media(hover:hover) supaya di layar sentuh efeknya
+   tidak "nyangkut" setelah di-tap.
+   -------------------------------------------------------------- */
+@media (hover:hover){
+  .stagger.in > .card:hover,
+  .stagger.in > .cat:hover,
+  .card:hover,
+  .cat:hover{
+    transform:scale(1.05);
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.28);
+    z-index:2;position:relative;
+  }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .qc-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .nav-links{display:none}
+  .timeline{grid-template-columns:repeat(2,1fr);gap:32px 24px}
+  .timeline::before{display:none}
+  .pd{grid-template-columns:1fr;gap:22px}
+  .calc-grid{grid-template-columns:1fr}
+}
+@media (max-width:820px){
+  .contact-float{position:static;width:100%;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+  .map-shell iframe{height:320px}
+  .faq-cols{grid-template-columns:1fr}
+  .adm-form-grid{grid-template-columns:1fr}
+}
+@media (max-width:680px){
+  .block{padding:64px 0}
+  .hero{padding-top:calc(var(--nav-h) + 46px);padding-bottom:110px;min-height:auto}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta .btn{width:100%}
+  .hero-trust{flex-direction:column}
+  .hero-trust div{border-right:none;border-bottom:1px solid rgba(255,255,255,.14);text-align:center}
+  .hero-trust div:last-child{border-bottom:none}
+  .stats{margin-top:-44px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat{border-bottom:1px solid var(--line)}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+  .cat-grid{grid-template-columns:1fr;gap:12px}
+  .prod-grid{grid-template-columns:1fr}
+  .qc-grid{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr;gap:26px}
+  .tl-step{display:grid;grid-template-columns:38px 1fr;gap:16px;text-align:left}
+  .tl-num{margin:0}
+  .testi{flex:0 0 290px}
+  .foot-grid{grid-template-columns:1fr;gap:28px}
+  .mobile-bar{display:flex}
+  .brand small{display:none}
+  .nav-admin span{display:none}
+  .scroller > .card{flex:0 0 250px}
+  .modal{padding:0}
+  .modal-box{max-width:100%;max-height:100vh;height:100vh;border-radius:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  .reveal,.stagger > *{opacity:1;transform:none}
+  .hero-slide.on{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#top" class="brand">
+      <span class="mark">KG</span>
+      <span>Kanaka Gadget Bali<small>Spesialis MacBook, Laptop &amp; PC</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#service">Service</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="nav-admin" onclick="openModal('modalAdmin')" title="Demo panel admin untuk presentasi">
+        <span>⚙</span><span>Panel Admin</span>
+      </button>
+      <button class="nav-cart" id="cartBtn" onclick="openCart()" aria-label="Buka keranjang">
+        <span>Keranjang</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ 1. HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-slides">
+    <img class="hero-slide on" fetchpriority="high" width="1800" height="1000" alt=""
+         src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1800&q=80&auto=format&fit=crop">
+    <img class="hero-slide" loading="lazy" width="1800" height="1000" alt=""
+         data-src="https://images.unsplash.com/photo-1721333089073-215a56fd710c?w=1800&q=80&auto=format&fit=crop">
+    <img class="hero-slide" loading="lazy" width="1800" height="1000" alt=""
+         data-src="https://images.unsplash.com/photo-1544281679-a59fb2359715?w=1800&q=80&auto=format&fit=crop">
+  </div>
+
+  <div class="hero-in">
+    <div class="hero-rating">
+      <span class="stars">★★★★★</span><b>5.0</b><span>366 ulasan Google</span>
+    </div>
+    <h1>MacBook, Laptop &amp; PC Berkualitas — <em>Bergaransi</em>, Bukan Untung-untungan.</h1>
+    <p class="hero-sub">Toko fisik &amp; bengkel service di Denpasar Utara. Setiap unit lolos 25 titik pengecekan, dan battery health-nya kami tulis terbuka.</p>
+
+    <div class="hero-cta">
+      <a href="#produk" class="btn btn-primary">Lihat Katalog Stok</a>
+      <button class="btn btn-amber" onclick="openModal('modalCalc')">Hitung Biaya Service</button>
+      <a class="btn btn-wa" id="heroWa" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+        Tanya WA
+      </a>
+    </div>
+
+    <div class="hero-trust">
+      <div><b>25 Titik Cek</b><span>Setiap unit second</span></div>
+      <div><b>Garansi Toko</b><span>30–90 hari</span></div>
+      <div><b>6 Tahun</b><span>Melayani Bali</span></div>
+      <div><b>Denpasar Utara</b><span>Buka 09.00–20.00</span></div>
+    </div>
+  </div>
+
+  <div class="hero-dots" id="heroDots">
+    <i class="on" onclick="goSlide(0)" role="button" tabindex="0" aria-label="Slide 1"></i>
+    <i onclick="goSlide(1)" role="button" tabindex="0" aria-label="Slide 2"></i>
+    <i onclick="goSlide(2)" role="button" tabindex="0" aria-label="Slide 3"></i>
+  </div>
+</header>
+
+<!-- ============ 2. STATS ============ -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat"><div class="stat-num"><span class="count" data-target="366">0</span></div><div class="stat-label">Review Google</div></div>
+      <div class="stat"><div class="stat-num"><span class="count" data-target="5" data-dec="1">0</span></div><div class="stat-label">Rating Rata-rata</div></div>
+      <div class="stat"><div class="stat-num"><span class="count" data-target="6">0</span>+</div><div class="stat-label">Tahun Pengalaman</div></div>
+      <div class="stat is-star"><div class="stat-num"><span class="count" data-target="500">0</span>+</div><div class="stat-label">Device Terjual</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. KATEGORI ============ -->
+<section class="block" id="produk">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Kategori</span>
+      <h2>Belanja per Kategori</h2>
+      <p>Langsung ke jenis produk yang kamu cari.</p>
+    </div>
+    <div class="cat-grid stagger" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 4. PRODUK UNGGULAN ============ -->
+<section class="block tone-alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Katalog</span>
+      <h2>Produk Unggulan</h2>
+      <p>Unit laptop &amp; PC dipesan lewat <b>Reservasi</b> (stok 1 unit, dibayar setelah dicek di toko). Aksesoris &amp; sparepart bisa langsung masuk keranjang.</p>
+      <p class="note-star">⭐ Harga, spesifikasi &amp; battery health di mockup ini masih karangan — akan diganti data asli dari klien.</p>
+    </div>
+
+    <div class="filter-bar reveal">
+      <div class="chips" id="chips"></div>
+      <select class="cond-select" id="condSelect" onchange="renderMain()" aria-label="Filter kondisi">
+        <option value="all">Semua Kondisi</option>
+        <option value="second">Second</option>
+        <option value="baru">Baru</option>
+      </select>
+    </div>
+
+    <div class="prod-grid stagger" id="mainGrid" style="padding-top:6px"></div>
+  </div>
+</section>
+
+<!-- ============ 5. PROMO ============ -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Promo</span>
+      <h2>Produk Terbaru &amp; Promo</h2>
+      <p>Baru masuk atau lagi turun harga — sebelum kehabisan.</p>
+      <p class="scroll-hint">← Geser untuk lihat semua →</p>
+    </div>
+    <div class="scroller stagger" id="promoGrid" style="overflow-x:auto"></div>
+  </div>
+</section>
+
+<!-- ============ 6. TESTIMONI ============ -->
+<section class="block tone-alt" id="testimoni">
+  <div class="wrap">
+    <div class="sec-head is-center reveal">
+      <span class="eyebrow">Testimoni</span>
+      <h2>Apa Kata Pelanggan</h2>
+      <p>Diambil dari review asli Google — 366 ulasan, rating 5.0.</p>
+    </div>
+  </div>
+  <div class="marquee reveal"><div class="marquee-track" id="marqueeTrack"></div></div>
+  <div class="wrap" style="text-align:center">
+    <div class="google-line">
+      <span style="color:#FFC93E;letter-spacing:2px">★★★★★</span>
+      <span><b>5.0</b> dari <b>366</b> ulasan di Google Maps</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. CARA KERJA SERVICE ============ -->
+<section class="block" id="service">
+  <div class="wrap">
+    <div class="sec-head is-center reveal">
+      <span class="eyebrow">Jasa Service</span>
+      <h2>Cara Kerja Booking Service</h2>
+      <p>Prosesnya jelas dan singkat — tidak perlu datang dulu untuk sekadar tanya.</p>
+    </div>
+    <div class="timeline stagger">
+      <div class="tl-step"><div class="tl-num">1</div><div><h4>Isi Form Booking</h4><p>Ceritakan keluhan device kamu lewat form singkat.</p></div></div>
+      <div class="tl-step"><div class="tl-num">2</div><div><h4>Dihubungi Tim</h4><p>Kami hubungi untuk konfirmasi &amp; estimasi biaya.</p></div></div>
+      <div class="tl-step"><div class="tl-num">3</div><div><h4>Dikerjakan</h4><p>Device diperbaiki oleh teknisi berpengalaman.</p></div></div>
+      <div class="tl-step"><div class="tl-num">4</div><div><h4>Ambil / Dikirim</h4><p>Device siap diambil di toko atau dikirim balik.</p></div></div>
+    </div>
+
+    <div class="service-cta reveal">
+      <div>
+        <b>Belum yakin kerusakannya apa?</b>
+        <span>Coba hitung estimasi dulu, atau kirim foto lewat WhatsApp — gratis, tanpa harus datang.</span>
+      </div>
+      <div class="service-cta-actions">
+        <button class="btn btn-amber" onclick="openModal('modalCalc')">Hitung Biaya Service</button>
+        <a class="btn btn-wa" id="serviceWa" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+          Booking Service
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. 25 TITIK PENGECEKAN ============ -->
+<section class="block tone-alt" id="qc">
+  <div class="wrap">
+    <div class="qc-head reveal">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">Standar Kanaka</span>
+        <h2>25 Titik Pengecekan Sebelum Unit Dipajang</h2>
+        <p>Tidak ada unit second yang langsung masuk etalase. Semuanya lewat daftar ini dulu — dan kalau ada yang tidak lolos, unitnya tidak kami jual.</p>
+      </div>
+      <div class="qc-badge">
+        <span class="num">25</span>
+        <small>Titik pengecekan<br>hardware &amp; software</small>
+      </div>
+    </div>
+
+    <div class="qc-grid stagger">
+      <div class="qc-col">
+        <h4>Fisik &amp; Layar</h4>
+        <ul>
+          <li><span class="qc-check">✓</span>Bodi, casing &amp; baut lengkap</li>
+          <li><span class="qc-check">✓</span>Engsel layar tidak oblak</li>
+          <li><span class="qc-check">✓</span>Layar bebas dead pixel &amp; flicker</li>
+          <li><span class="qc-check">✓</span>Semua tombol keyboard berfungsi</li>
+          <li><span class="qc-check">✓</span>Trackpad klik &amp; gesture normal</li>
+        </ul>
+      </div>
+      <div class="qc-col">
+        <h4>Daya &amp; Baterai</h4>
+        <ul>
+          <li><span class="qc-check">✓</span>Battery health dibaca &amp; dicatat</li>
+          <li><span class="qc-check">✓</span>Cycle count diverifikasi</li>
+          <li><span class="qc-check">✓</span>Port charging &amp; pengisian stabil</li>
+          <li><span class="qc-check">✓</span>Adaptor diuji beban penuh</li>
+        </ul>
+      </div>
+      <div class="qc-col">
+        <h4>Konektivitas &amp; Audio</h4>
+        <ul>
+          <li><span class="qc-check">✓</span>WiFi tersambung &amp; stabil</li>
+          <li><span class="qc-check">✓</span>Bluetooth pairing normal</li>
+          <li><span class="qc-check">✓</span>Semua port USB / Thunderbolt</li>
+          <li><span class="qc-check">✓</span>Kamera &amp; mikrofon</li>
+          <li><span class="qc-check">✓</span>Speaker kiri &amp; kanan seimbang</li>
+          <li><span class="qc-check">✓</span>Jack audio 3.5mm</li>
+        </ul>
+      </div>
+      <div class="qc-col">
+        <h4>Sistem, Keamanan &amp; Software</h4>
+        <ul>
+          <li><span class="qc-check">✓</span>Boot test berulang</li>
+          <li><span class="qc-check">✓</span>SMART status storage sehat</li>
+          <li><span class="qc-check">✓</span>Memory test lolos</li>
+          <li><span class="qc-check">✓</span>Suhu &amp; kipas dipantau</li>
+          <li><span class="qc-check">✓</span>Stress test 30 menit</li>
+          <li><span class="qc-check">✓</span>iCloud / Find My sudah lepas</li>
+          <li><span class="qc-check">✓</span>Bebas MDM / activation lock</li>
+          <li><span class="qc-check">✓</span>Serial terdaftar resmi</li>
+          <li><span class="qc-check">✓</span>OS clean install</li>
+          <li><span class="qc-check">✓</span>Driver &amp; update lengkap</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. FAQ ============ -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Pertanyaan Umum</h2>
+      <p class="note-star">⭐ Draft pertanyaan &amp; jawaban untuk mockup — akan dikoreksi bersama klien.</p>
+    </div>
+    <div class="faq-cols reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Apakah semua produk bergaransi?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Ya, setiap unit second maupun baru dilengkapi garansi toko. Lama garansi tergantung kondisi &amp; jenis produk.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Berapa lama proses service?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Umumnya 1–3 hari kerja tergantung tingkat kerusakan dan ketersediaan sparepart.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Bisa COD atau kirim ke luar Denpasar?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Bisa. Untuk area Denpasar tersedia COD, untuk luar kota bisa dikirim via ekspedisi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Bagaimana cara menjual device saya?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Datang langsung ke toko atau hubungi kami untuk cek kondisi &amp; penawaran harga cepat.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Apa bedanya Reservasi Unit dan beli langsung?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Unit laptop/PC stoknya cuma 1 per barang, jadi lewat Reservasi unit ditahan 24 jam atas nama kamu. Pembayaran dilakukan setelah unit dicek langsung di toko. Aksesoris &amp; sparepart tidak perlu reservasi, bisa langsung dipesan.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Apa arti "Fullset" dan "Unit Only"?</span><span class="faq-ic">+</span></button>
+        <div class="faq-a"><p>Fullset berarti unit lengkap dengan dus dan charger bawaan. Unit Only berarti hanya unit-nya saja — charger bisa ditambah terpisah. Status ini selalu kami tulis di setiap produk supaya tidak ada kejutan saat serah terima.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. TENTANG + KONTAK ============ -->
+<section class="block tone-alt" id="kontak">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:28px">
+      <span class="eyebrow">Tentang &amp; Kontak</span>
+      <h2>Kenali Kanaka Gadget Bali</h2>
+    </div>
+    <div class="about-txt reveal">
+      <p>Kanaka Gadget Bali adalah pusat jual-beli, service, dan sparepart MacBook, Laptop &amp; PC di Denpasar. Sudah melayani pelanggan di Bali selama 6 tahun dengan komitmen kualitas dan kejujuran.</p>
+    </div>
+    <div class="map-shell reveal">
+      <div class="contact-float">
+        <h4>Kunjungi Toko</h4>
+        <ul class="contact-list">
+          <li><span class="ic">📍</span><span><b>Alamat</b>Jl. Bedahulu XVIII No.1, Peguyangan, Denpasar Utara, Bali</span></li>
+          <li><span class="ic">📞</span><span><b>WhatsApp</b>0895-7005-66669</span></li>
+          <li><span class="ic">🕒</span><span><b>Jam Buka</b>Setiap hari, 09.00 – 20.00 WITA</span></li>
+        </ul>
+        <a class="btn btn-wa btn-sm btn-block" id="contactWa" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+          Chat via WhatsApp
+        </a>
+      </div>
+      <iframe src="https://www.google.com/maps?q=Jl.+Bedahulu+XVIII+No.1,+Peguyangan,+Denpasar+Utara,+Bali&output=embed"
+              loading="lazy" title="Lokasi Kanaka Gadget Bali" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. CTA ============ -->
+<section class="cta-banner">
+  <img src="https://images.unsplash.com/photo-1658240527554-9cf987b4de49?w=1800&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1800" height="1000">
+  <h2>Punya MacBook atau Laptop yang Mau Dijual?</h2>
+  <p>Kami cek kondisinya di tempat dan langsung kasih penawaran harga. Proses cepat, tanpa drama.</p>
+  <div class="cta-actions">
+    <a class="btn btn-wa" id="sellWa" target="_blank" rel="noopener">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+      Kirim Foto via WhatsApp
+    </a>
+    <a href="#kontak" class="btn btn-outline">Lihat Lokasi Toko</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="brand"><span class="mark">KG</span><span>Kanaka Gadget Bali</span></a>
+        <p class="foot-about">Pusat MacBook, Laptop &amp; PC — Service, Sparepart, Software &amp; Accessories. Denpasar Utara, Bali.</p>
+      </div>
+      <div><h5>Navigasi</h5><ul>
+        <li><a href="#produk">Produk</a></li><li><a href="#service">Service</a></li>
+        <li><a href="#qc">25 Titik Cek</a></li><li><a href="#kontak">Kontak</a></li></ul></div>
+      <div><h5>Kontak</h5><ul><li>0895-7005-66669</li><li>Jl. Bedahulu XVIII No.1,<br>Peguyangan, Denpasar Utara</li></ul></div>
+      <div><h5>Jam Buka</h5><ul><li>Setiap hari</li><li>09.00 – 20.00 WITA</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Kanaka Gadget Bali</span><span>Denpasar, Bali</span></div>
+  </div>
+</footer>
+
+<!-- ============ MOBILE BAR ============ -->
+<div class="mobile-bar" id="mobileBar">
+  <button class="btn btn-outline" onclick="openModal('modalCalc')">Biaya Service</button>
+  <a class="btn btn-wa" id="mobileWa" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+    Tanya WA
+  </a>
+</div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="scrim" id="scrim" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Keranjang">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">Keranjang</h3>
+    <button class="x-btn" onclick="closeCart()" aria-label="Tutup">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<!-- ============ MODAL: DETAIL PRODUK ============ -->
+<div class="modal" id="modalProduct" onclick="if(event.target===this)closeModal('modalProduct')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Detail Produk</h3>
+      <button class="x-btn" onclick="closeModal('modalProduct')" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body" id="pdBody"></div>
+  </div>
+</div>
+
+<!-- ============ MODAL: KALKULATOR SERVICE ============ -->
+<div class="modal" id="modalCalc" onclick="if(event.target===this)closeModal('modalCalc')">
+  <div class="modal-box" style="max-width:760px">
+    <div class="modal-head">
+      <h3>Estimasi Biaya Service <span class="demo-tag">MOCKUP</span></h3>
+      <button class="x-btn" onclick="closeModal('modalCalc')" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="calc-grid">
+        <div>
+          <div class="field">
+            <label for="calcDevice">Jenis Device</label>
+            <select id="calcDevice" onchange="calcRun()">
+              <option value="macbook">MacBook</option>
+              <option value="laptop">Laptop Windows</option>
+              <option value="pc">PC Desktop</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="calcIssue">Keluhan Utama</label>
+            <select id="calcIssue" onchange="calcRun()">
+              <option value="">— Pilih keluhan —</option>
+              <option value="mati">Mati total / tidak menyala</option>
+              <option value="baterai">Baterai boros / cepat habis</option>
+              <option value="lcd">Layar retak / bergaris</option>
+              <option value="keyboard">Keyboard bermasalah</option>
+              <option value="lambat">Lambat / perlu upgrade SSD</option>
+              <option value="air">Kena air / korosi</option>
+              <option value="panas">Cepat panas / kipas berisik</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="calcNote">Catatan tambahan <span style="font-weight:400;color:var(--ink-3)">(opsional)</span></label>
+            <textarea id="calcNote" placeholder="Contoh: MacBook Air M1 2020, mati sejak kena tumpahan kopi"></textarea>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult">
+          <div class="empty">Pilih jenis device dan keluhan untuk melihat perkiraan biaya.</div>
+        </div>
+      </div>
+      <p class="calc-disclaimer">⭐ Angka di kalkulator ini masih dummy untuk keperluan mockup. Nanti akan diisi tabel harga asli dari Kanaka Gadget dan dikelola lewat panel admin.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('modalCalc')">Tutup</button>
+      <a class="btn btn-wa btn-sm" id="calcWa" target="_blank" rel="noopener">Konsultasi via WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: PANEL ADMIN ============ -->
+<div class="modal" id="modalAdmin" onclick="if(event.target===this)closeModal('modalAdmin')">
+  <div class="modal-box is-wide">
+    <div class="modal-head">
+      <h3>Panel Admin Kanaka <span class="demo-tag">MOCKUP</span></h3>
+      <button class="x-btn" onclick="closeModal('modalAdmin')" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="adm-notice">
+        <b>Ini tampilan demo untuk presentasi.</b> Tombol belum berfungsi. Di versi asli, panel ini terpisah di halaman sendiri di balik login Supabase Auth — tidak ikut ter-download oleh pengunjung toko.
+      </div>
+
+      <div class="adm-tabs">
+        <button class="adm-tab on" data-tab="list" onclick="admTab('list')">Daftar Produk</button>
+        <button class="adm-tab" data-tab="add" onclick="admTab('add')">Tambah Produk</button>
+        <button class="adm-tab" data-tab="set" onclick="admTab('set')">Pengaturan</button>
+      </div>
+
+      <div id="admList">
+        <div style="overflow-x:auto"><table class="adm-table"><thead><tr>
+          <th></th><th>Produk</th><th>Kategori</th><th>Harga</th><th>Tipe</th><th>Stok</th><th></th>
+        </tr></thead><tbody id="admRows"></tbody></table></div>
+      </div>
+
+      <div id="admAdd" style="display:none">
+        <div class="adm-form-grid">
+          <div class="field full"><label>Nama Produk</label><input type="text" value="MacBook Air M2 2022 8GB / 256GB SSD"></div>
+          <div class="field"><label>Kategori</label><select><option>MacBook</option><option>Laptop Windows</option><option>PC Desktop &amp; Gaming</option><option>Mobile Phones</option><option>Aksesoris</option><option>Sparepart</option></select></div>
+          <div class="field"><label>Brand</label><input type="text" value="Apple"></div>
+          <div class="field"><label>Harga Jual</label><input type="text" value="12.900.000"></div>
+          <div class="field"><label>Harga Coret</label><input type="text" value="13.890.000"></div>
+          <div class="field"><label>Kondisi</label><select><option>Mulus 99%</option><option>Second Mulus</option><option>Baru Garansi Resmi</option></select></div>
+          <div class="field"><label>Kelengkapan</label><select><option>Fullset Original</option><option>Unit Only</option><option>Unit + Charger</option></select></div>
+          <div class="field"><label>Battery Health (%)</label><input type="text" value="95"></div>
+          <div class="field"><label>Cycle Count</label><input type="text" value="84"></div>
+          <div class="field"><label>Tipe Pemesanan</label><select><option>Reservasi Unit (stok 1)</option><option>Beli Langsung</option></select></div>
+          <div class="field"><label>Stok</label><input type="text" value="1"></div>
+          <div class="field full"><label>Spesifikasi</label><textarea>Apple M2 (8-Core CPU / 8-Core GPU)&#10;8 GB Unified Memory / 256 GB SSD</textarea></div>
+          <div class="field"><label>Link Tokopedia</label><input type="text" placeholder="https://tokopedia.com/..."></div>
+          <div class="field"><label>Link Shopee</label><input type="text" placeholder="https://shopee.co.id/..."></div>
+          <div class="field full"><label>Foto Produk</label><input type="text" placeholder="Klik untuk upload — maks 5 foto"></div>
+        </div>
+      </div>
+
+      <div id="admSet" style="display:none">
+        <div class="adm-set-row"><div><b>Notifikasi Telegram</b><small>Kirim pesanan baru ke bot admin</small></div><span class="toggle"></span></div>
+        <div class="adm-set-row"><div><b>Reservasi otomatis kedaluwarsa</b><small>Lepas unit setelah 24 jam tanpa konfirmasi</small></div><span class="toggle"></span></div>
+        <div class="adm-set-row"><div><b>Tampilkan Battery Health di katalog</b><small>Angka BH &amp; cycle count terlihat publik</small></div><span class="toggle"></span></div>
+        <div class="adm-set-row"><div><b>Mode libur</b><small>Sembunyikan tombol pesan, tampilkan pengumuman</small></div><span class="toggle off"></span></div>
+        <div class="adm-set-row"><div><b>Banner &amp; Logo</b><small>Ganti gambar hero dan logo toko</small></div><button class="btn btn-outline btn-sm">Kelola</button></div>
+        <div class="adm-set-row"><div><b>Nomor WhatsApp</b><small>0895-7005-66669</small></div><button class="btn btn-outline btn-sm">Ubah</button></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('modalAdmin')">Tutup</button>
+      <button class="btn btn-primary btn-sm">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA — disusun seperti tabel database (siap dipindah ke Supabase)
+   type: 'reservasi' = stok 1 unit, bayar setelah cek di toko
+         'beli'      = barang biasa, qty bebas
+   ============================================================ */
+const U = 'https://images.unsplash.com/';
+const IMG = (q, w) => U + q + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop';
+const WA_NUMBER = '62895700566669';
+const waLink = txt => 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(txt);
+
+const CATS = [
+  {key:'macbook',   label:'MacBook',             desc:'Air & Pro, M1–M3',         img:'photo-1541807084-5c52b6b3adef'},
+  {key:'laptop',    label:'Laptop Windows',      desc:'ASUS, Lenovo, HP, Dell',   img:'photo-1544281679-70f2022b5ced'},
+  {key:'pc',        label:'PC Desktop & Gaming', desc:'Custom build & rakitan',   img:'photo-1580910051074-3eb694886505'},
+  {key:'mobile',    label:'Mobile Phones',       desc:'iPhone & Android second',  img:'photo-1616410011236-7a42121dd981'},
+  {key:'aksesoris', label:'Aksesoris',           desc:'Charger, mouse, keyboard', img:'photo-1587614382346-4ec70e388b28'},
+  {key:'sparepart', label:'Sparepart',           desc:'SSD, RAM, baterai, LCD',   img:'photo-1620283085439-39620a1e21c4'}
+];
+
+const PRODUCTS = [
+  {id:'p1', cat:'macbook', brand:'Apple', name:'MacBook Air M1 2020 8GB / 256GB SSD',
+   cond:'second', condLabel:'Mulus 99%', rec:true, type:'reservasi', stock:1,
+   img:'photo-1517336714731-489689fd1ca8',
+   gallery:['photo-1517336714731-489689fd1ca8','photo-1544281679-a59fb2359715','photo-1602763288580-927cfda37a72'],
+   bh:92, cyc:128, kit:'Fullset Original',
+   specs:{'Prosesor':'Apple M1 (8-Core CPU / 7-Core GPU)','Memori':'8 GB Unified Memory','Penyimpanan':'256 GB NVMe SSD','Layar':'13,3" Retina 2560×1600','Warna':'Space Grey'},
+   warranty:'Garansi Toko 30 Hari + Lifetime Software',
+   price:9450000, old:10290000, mp:true},
+
+  {id:'p2', cat:'macbook', brand:'Apple', name:'MacBook Pro 14" M1 Pro 2021 16GB / 512GB',
+   cond:'second', condLabel:'Mulus 99%', rec:true, type:'reservasi', stock:1,
+   img:'photo-1541807084-5c52b6b3adef',
+   gallery:['photo-1541807084-5c52b6b3adef','photo-1602763288580-927cfda37a72','photo-1654119895136-6aad918f412c'],
+   bh:89, cyc:210, kit:'Fullset Original',
+   specs:{'Prosesor':'Apple M1 Pro (8-Core CPU / 14-Core GPU)','Memori':'16 GB Unified Memory','Penyimpanan':'512 GB SSD','Layar':'14,2" Liquid Retina XDR','Warna':'Space Grey'},
+   warranty:'Garansi Toko 1 Bulan Full Hardware',
+   price:18850000, old:20500000, mp:true},
+
+  {id:'p3', cat:'laptop', brand:'ASUS', name:'ROG Zephyrus G14 Ryzen 7 / RTX 3060 16GB',
+   cond:'second', condLabel:'Second Mulus', rec:true, type:'reservasi', stock:1,
+   img:'photo-1544281679-70f2022b5ced',
+   gallery:['photo-1544281679-70f2022b5ced','photo-1544281679-32a3de086805','photo-1580910051074-3eb694886505'],
+   bh:87, cyc:null, kit:'Unit + Charger',
+   specs:{'Prosesor':'AMD Ryzen 7 5800HS (8-Core / 16-Threads)','GPU':'NVIDIA RTX 3060 6GB','Memori':'16 GB DDR4 Dual Channel','Penyimpanan':'512 GB NVMe SSD','Layar':'14" QHD 120Hz'},
+   warranty:'Garansi Toko 1 Bulan',
+   price:13500000, old:15000000, mp:true},
+
+  {id:'p4', cat:'laptop', brand:'Lenovo', name:'ThinkPad X1 Carbon Gen 9 i7 / 16GB / 512GB',
+   cond:'second', condLabel:'Mulus 99%', type:'reservasi', stock:1,
+   img:'photo-1496181133206-80ce9b88a853',
+   gallery:['photo-1496181133206-80ce9b88a853','photo-1654119895136-6aad918f412c','photo-1699905527162-8b932a8e9206'],
+   bh:84, cyc:null, kit:'Unit Only',
+   specs:{'Prosesor':'Intel Core i7-1165G7 Quad-Core','Memori':'16 GB LPDDR4x','Penyimpanan':'512 GB PCIe Gen4 SSD','Layar':'14" WUXGA IPS','Warna':'Black'},
+   warranty:'Garansi Toko 1 Bulan',
+   price:10800000, old:12000000, mp:true},
+
+  {id:'p5', cat:'pc', brand:'Custom Build', name:'PC Workstation Intel i5-13400F / RTX 4060 8GB',
+   cond:'baru', condLabel:'Baru Garansi Resmi', rec:true, type:'reservasi', stock:1,
+   img:'photo-1593687395549-400945fed803',
+   gallery:['photo-1593687395549-400945fed803','photo-1620283085439-39620a1e21c4','photo-1705494833979-9377fbdee229'],
+   bh:null, cyc:null, kit:'Fullset Original',
+   specs:{'Prosesor':'Intel Core i5-13400F (10-Core / 16-Threads)','GPU':'NVIDIA RTX 4060 8GB','Memori':'32 GB DDR4 3200MHz (2×16)','Penyimpanan':'1 TB NVMe Gen4','PSU':'650W 80+ Bronze'},
+   warranty:'Garansi Part 1–3 Tahun + Garansi Service Toko 1 Thn',
+   price:14200000, old:15500000, mp:true},
+
+  {id:'p6', cat:'mobile', brand:'Apple', name:'iPhone 13 128GB Inter Ex-iBox',
+   cond:'second', condLabel:'Second Mulus', type:'reservasi', stock:1,
+   img:'photo-1616410011236-7a42121dd981',
+   gallery:['photo-1616410011236-7a42121dd981','photo-1709102884400-b50ca1a12bc3','photo-1654593114209-d915f46be333'],
+   bh:91, cyc:284, kit:'Unit + Charger',
+   specs:{'Chipset':'Apple A15 Bionic','Penyimpanan':'128 GB','Layar':'6,1" Super Retina XDR','Face ID':'Normal','Warna':'Midnight'},
+   warranty:'Garansi Toko 1 Bulan',
+   price:6750000, old:7400000, mp:true},
+
+  {id:'p7', cat:'aksesoris', brand:'Apple Original', name:'Charger MagSafe 67W USB-C',
+   cond:'baru', condLabel:'Baru Garansi Resmi', type:'beli', stock:12,
+   img:'photo-1585790050230-5dd28404ccb9',
+   gallery:['photo-1585790050230-5dd28404ccb9','photo-1699905527162-8b932a8e9206','photo-1517336714731-489689fd1ca8'],
+   bh:null, cyc:null, kit:'Fullset Original',
+   specs:{'Daya':'67W Fast Charging','Kompatibel':'MacBook Air / Pro 13"–14"','Kabel':'USB-C to MagSafe 3 (2m)','Kondisi':'Baru segel'},
+   warranty:'Garansi Toko 3 Bulan Ganti Baru',
+   price:850000, old:1100000, mp:true},
+
+  {id:'p8', cat:'sparepart', brand:'Kingston', name:'SSD NVMe 512GB + Jasa Pasang & Migrasi Data',
+   cond:'baru', condLabel:'Baru', type:'beli', stock:8,
+   img:'photo-1588515603140-81bd9f7d1db0',
+   gallery:['photo-1588515603140-81bd9f7d1db0','photo-1620368523635-df9d83338fc1','photo-1705494833979-9377fbdee229'],
+   bh:null, cyc:null, kit:'Unit Only',
+   specs:{'Kapasitas':'512 GB','Interface':'NVMe PCIe Gen3 ×4','Kecepatan Baca':'~3.500 MB/s','Termasuk':'Pasang & migrasi data di toko'},
+   warranty:'Garansi Part 3 Tahun',
+   price:1250000, old:1450000, mp:false}
+];
+
+const PROMOS = [
+  {id:'r1', cat:'macbook', brand:'Apple', name:'MacBook Air M2 2022 8GB / 256GB SSD',
+   cond:'second', condLabel:'Second Mulus', promo:'Promo -7%', type:'reservasi', stock:1,
+   img:'photo-1602763288580-927cfda37a72',
+   gallery:['photo-1602763288580-927cfda37a72','photo-1544281679-a59fb2359715','photo-1654119895136-6aad918f412c'],
+   bh:95, cyc:84, kit:'Fullset Original',
+   specs:{'Prosesor':'Apple M2 (8-Core CPU / 8-Core GPU)','Memori':'8 GB Unified Memory','Penyimpanan':'256 GB SSD','Layar':'13,6" Liquid Retina','Warna':'Starlight'},
+   warranty:'Garansi Toko 1 Bulan',
+   price:12900000, old:13890000, mp:true},
+
+  {id:'r2', cat:'macbook', brand:'Apple', name:'MacBook Air 13" M1 2020 Baru Masuk',
+   cond:'second', condLabel:'Baru Masuk', type:'reservasi', stock:1,
+   img:'photo-1611186871348-b1ce696e52c9',
+   gallery:['photo-1611186871348-b1ce696e52c9','photo-1517336714731-489689fd1ca8','photo-1544281679-a59fb2359715'],
+   bh:88, cyc:196, kit:'Unit Only',
+   specs:{'Prosesor':'Apple M1 (8-Core CPU / 7-Core GPU)','Memori':'8 GB Unified Memory','Penyimpanan':'256 GB SSD','Layar':'13,3" Retina','Warna':'Silver'},
+   warranty:'Garansi Toko 30 Hari',
+   price:8500000, old:9200000, mp:true},
+
+  {id:'r3', cat:'aksesoris', brand:'Apple Original', name:'Magic Mouse Multi-Touch',
+   cond:'baru', condLabel:'Baru Garansi Resmi', promo:'Promo', type:'beli', stock:6,
+   img:'photo-1587614382346-4ec70e388b28',
+   gallery:['photo-1587614382346-4ec70e388b28','photo-1735875530804-d661ca2001da','photo-1699905527162-8b932a8e9206'],
+   bh:null, cyc:null, kit:'Fullset Original',
+   specs:{'Koneksi':'Bluetooth','Baterai':'Rechargeable built-in','Permukaan':'Multi-Touch','Kondisi':'Baru segel'},
+   warranty:'Garansi Toko 3 Bulan',
+   price:950000, old:1200000, mp:true},
+
+  {id:'r4', cat:'aksesoris', brand:'Kanaka Pick', name:'Mousepad XL Premium Anti-Slip',
+   cond:'baru', condLabel:'Baru Masuk', type:'beli', stock:24,
+   img:'photo-1735875530804-d661ca2001da',
+   gallery:['photo-1735875530804-d661ca2001da','photo-1587614382346-4ec70e388b28','photo-1699905527162-8b932a8e9206'],
+   bh:null, cyc:null, kit:'Unit Only',
+   specs:{'Ukuran':'90 × 40 cm','Permukaan':'Kain halus, jahitan tepi','Alas':'Karet anti-slip'},
+   warranty:'Garansi Tukar 7 Hari',
+   price:145000, old:190000, mp:false}
+];
+
+const ALL = [...PRODUCTS, ...PROMOS];
+
+const TESTIS = [
+  {q:'Good stuff, good place, good price & good quality for the MacBook.', n:'Google Review', i:'G'},
+  {q:'Nice owner, friendly and is assisting me with setting up my mac!',   n:'Google Review', i:'G'},
+  {q:'The best service in all of Bali for laptop repairs and purchases.',  n:'Google Review', i:'G'}
+];
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const rp = n => 'Rp ' + n.toLocaleString('id-ID');
+const bhColor = v => v >= 85 ? '#34C759' : (v >= 70 ? '#FF9F0A' : '#9A9AA0');
+const catLabel = k => (CATS.find(c => c.key === k) || {}).label || k;
+const findP = id => ALL.find(p => p.id === id);
+const WA_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.2-3.59.94.96-3.5-.23-.36a9.44 9.44 0 0 1-1.45-5.05c0-5.22 4.26-9.47 9.5-9.47 2.54 0 4.92.99 6.71 2.78a9.4 9.4 0 0 1 2.78 6.7c0 5.22-4.26 9.48-9.5 9.48m8.07-17.55A11.34 11.34 0 0 0 12.04 .6C5.78.6.69 5.68.69 11.93c0 2 .52 3.95 1.52 5.67L.6 23.4l5.94-1.56a11.35 11.35 0 0 0 5.5 1.4h.01c6.25 0 11.34-5.08 11.34-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>';
+
+const waProduct = p => waLink('Halo Kanaka Gadget, saya mau tanya ' + p.name + ' (' + rp(p.price) + ') yang ada di web. Masih ready?');
+
+/* ============================================================
+   WA LINK STATIS
+   ============================================================ */
+document.getElementById('heroWa').href    = waLink('Halo Kanaka Gadget, saya mau tanya-tanya soal produk dan service.');
+document.getElementById('serviceWa').href = waLink('Halo Kanaka Gadget, saya mau booking service. Device saya: ');
+document.getElementById('contactWa').href = waLink('Halo Kanaka Gadget, saya mau tanya alamat dan jam buka toko.');
+document.getElementById('sellWa').href    = waLink('Halo Kanaka Gadget, saya mau jual device saya. Ini fotonya:');
+document.getElementById('mobileWa').href  = waLink('Halo Kanaka Gadget, saya mau tanya-tanya soal produk dan service.');
+document.getElementById('calcWa').href    = waLink('Halo Kanaka Gadget, saya mau konsultasi biaya service.');
+
+/* ============================================================
+   RENDER — KATEGORI
+   ============================================================ */
+document.getElementById('catGrid').innerHTML = CATS.map(c => `
+  <button class="cat" onclick="filterTo('${c.key}')">
+    <img src="${IMG(c.img, 800)}" alt="${c.label}" loading="lazy" width="800" height="500">
+    <span class="cat-txt"><h4>${c.label}</h4><span>${c.desc}</span></span>
+  </button>`).join('');
+
+/* ============================================================
+   RENDER — PRODUCT CARD (struktur Gemini, tema terang)
+   ============================================================ */
+function cardHTML(p){
+  const isRes = p.type === 'reservasi';
+  const specKeys = Object.keys(p.specs);
+  const line1 = p.specs[specKeys[0]];
+  const line2 = p.specs[specKeys[1]] || '';
+
+  return `
+  <article class="card" data-cat="${p.cat}" data-cond="${p.cond}">
+    <div class="card-media" onclick="openProduct('${p.id}')" title="Lihat detail">
+      <img src="${IMG(p.img)}" alt="${p.name}" loading="lazy" width="600" height="450">
+      <span class="tag-cond">${p.condLabel}</span>
+      ${p.promo ? `<span class="tag-rec is-promo">${p.promo}</span>` : (p.rec ? '<span class="tag-rec">⚡ Rekomendasi</span>' : '')}
+      ${p.bh ? `
+      <span class="bh-pill">
+        <b>BH ${p.bh}%${p.cyc ? ' · ' + p.cyc + ' CC' : ''}</b>
+        <span class="bh-mini"><i data-w="${p.bh}" style="background:${bhColor(p.bh)}"></i></span>
+      </span>` : ''}
+    </div>
+
+    <div class="card-body">
+      <span class="card-eyebrow">${p.brand} • ${catLabel(p.cat)}</span>
+      <h4 class="card-title"><a onclick="openProduct('${p.id}')" style="cursor:pointer">${p.name}</a></h4>
+
+      <ul class="specs">
+        <li><span class="ic">⚙️</span><span>${line1}</span></li>
+        ${line2 ? `<li><span class="ic">💾</span><span>${line2}</span></li>` : ''}
+        <li><span class="ic">📦</span><span class="kit">${p.kit}</span></li>
+        <li><span class="ic">🛡️</span><span class="warr">${p.warranty}</span></li>
+      </ul>
+
+      <div class="price-block">
+        <div class="price">${rp(p.price)}${p.old ? `<span class="price-old">${rp(p.old)}</span>` : ''}</div>
+        <div class="stock-line">${isRes ? 'Stok 1 unit — ready di toko Denpasar' : 'Stok tersedia'}</div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn ${isRes ? 'btn-dark' : 'btn-primary'}" onclick="addToCart('${p.id}', this)">
+          ${isRes ? 'Reservasi Unit' : '+ Keranjang'}
+        </button>
+        <a class="btn btn-wa" href="${waProduct(p)}" target="_blank" rel="noopener" title="Tanya via WhatsApp" aria-label="Tanya ${p.name} via WhatsApp">${WA_ICON}</a>
+      </div>
+
+      <div class="mp-row ${p.mp ? '' : 'is-empty'}">
+        <span>Tersedia juga di:</span>
+        <span class="tokped">Tokopedia</span><span class="dot">•</span><span class="shopee">Shopee</span>
+        <span class="mp-cheap">Harga di web lebih murah</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ============================================================
+   FILTER + GRID
+   ============================================================ */
+let activeCat = 'all';
+
+document.getElementById('chips').innerHTML =
+  `<button class="chip on" data-c="all" onclick="filterTo('all')">Semua Produk</button>` +
+  CATS.map(c => `<button class="chip" data-c="${c.key}" onclick="filterTo('${c.key}')">${c.label}</button>`).join('');
+
+function filterTo(cat){
+  activeCat = cat;
+  document.querySelectorAll('.chip').forEach(b => b.classList.toggle('on', b.dataset.c === cat));
+  renderMain();
+  document.getElementById('mainGrid').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function renderMain(){
+  const cond = document.getElementById('condSelect').value;
+  const list = PRODUCTS.filter(p =>
+    (activeCat === 'all' || p.cat === activeCat) && (cond === 'all' || p.cond === cond));
+  const grid = document.getElementById('mainGrid');
+  grid.innerHTML = list.length ? list.map(cardHTML).join('')
+    : `<div class="empty-state"><b>Belum ada unit di filter ini</b>Stok berganti tiap minggu — tanya lewat WhatsApp untuk unit yang kamu cari.</div>`;
+  grid.classList.add('in');
+  animateBH(grid);
+}
+
+document.getElementById('promoGrid').innerHTML = PROMOS.map(cardHTML).join('');
+
+/* ============================================================
+   TESTIMONI MARQUEE
+   ============================================================ */
+document.getElementById('marqueeTrack').innerHTML =
+  [...TESTIS, ...TESTIS, ...TESTIS, ...TESTIS].map(t => `
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <q>${t.q}</q>
+      <div class="testi-by"><span class="avatar">${t.i}</span><span><b>${t.n}</b><small>Ulasan Google Maps</small></span></div>
+    </div>`).join('');
+
+/* ============================================================
+   MODAL — generic
+   ============================================================ */
+function openModal(id){
+  document.getElementById(id).classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('on');
+  if (!document.querySelector('.modal.on') && !document.getElementById('drawer').classList.contains('on'))
+    document.body.style.overflow = '';
+}
+
+/* ============================================================
+   MODAL — DETAIL PRODUK
+   ============================================================ */
+let pdCurrent = null;
+
+function openProduct(id){
+  const p = findP(id);
+  pdCurrent = p;
+  const isRes = p.type === 'reservasi';
+  const save = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+
+  document.getElementById('pdBody').innerHTML = `
+  <div class="pd">
+    <div class="pd-gallery">
+      <div class="main-img"><img id="pdMain" src="${IMG(p.gallery[0], 900)}" alt="${p.name}" width="900" height="675"></div>
+      <div class="pd-thumbs" id="pdThumbs">
+        ${p.gallery.map((g, i) => `
+          <button class="${i === 0 ? 'on' : ''}" onclick="pdPick(${i})">
+            <img src="${IMG(g, 240)}" alt="Foto ${i + 1} ${p.name}" loading="lazy" width="240" height="180">
+          </button>`).join('')}
+      </div>
+    </div>
+
+    <div>
+      <span class="pd-eyebrow">${p.brand} • ${catLabel(p.cat)}</span>
+      <h3>${p.name}</h3>
+      <div class="pd-price">${rp(p.price)}${p.old ? `<span>${rp(p.old)}</span>` : ''}</div>
+      ${save > 0 ? `<span class="pd-save">Hemat ${save}% · ${rp(p.old - p.price)}</span>` : ''}
+
+      ${p.bh ? `
+      <div class="pd-bh">
+        <div class="pd-bh-top">
+          <b>Battery Health ${p.bh}%</b>
+          <span>${p.cyc ? p.cyc + ' cycle count' : 'baterai sehat'}</span>
+        </div>
+        <div class="pd-bh-track"><i id="pdBhFill" style="width:0;background:${bhColor(p.bh)}"></i></div>
+        <small>Angka dibaca langsung dari unit sebelum dipajang. Kalau turun sebelum terjual, kami perbarui.</small>
+      </div>` : '<div style="height:14px"></div>'}
+
+      <table class="spec-table">
+        ${Object.entries(p.specs).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+        <tr><td>Kelengkapan</td><td>${p.kit}</td></tr>
+        <tr><td>Kondisi</td><td>${p.condLabel}</td></tr>
+        <tr><td>Garansi</td><td>${p.warranty}</td></tr>
+        <tr><td>Stok</td><td>${isRes ? '1 unit (stok tunggal)' : p.stock + ' pcs'}</td></tr>
+      </table>
+
+      <div class="pd-actions">
+        <button class="btn ${isRes ? 'btn-dark' : 'btn-primary'}" onclick="addToCart('${p.id}', this)">
+          ${isRes ? 'Reservasi Unit Ini' : '+ Masukkan Keranjang'}
+        </button>
+        <a class="btn btn-wa" href="${waProduct(p)}" target="_blank" rel="noopener">${WA_ICON} Tanya via WA</a>
+      </div>
+
+      ${p.mp ? `<div class="pd-mp">Tersedia juga di <span class="tokped">Tokopedia</span> dan <span class="shopee">Shopee</span> — harga di web ini lebih murah karena tanpa biaya marketplace.</div>` : ''}
+    </div>
+  </div>`;
+
+  openModal('modalProduct');
+  if (p.bh) setTimeout(() => { const f = document.getElementById('pdBhFill'); if (f) f.style.width = p.bh + '%'; }, 260);
+}
+
+function pdPick(i){
+  document.getElementById('pdMain').src = IMG(pdCurrent.gallery[i], 900);
+  document.querySelectorAll('#pdThumbs button').forEach((b, k) => b.classList.toggle('on', k === i));
+}
+
+/* ============================================================
+   MODAL — KALKULATOR SERVICE (mockup, angka dummy)
+   ============================================================ */
+const CALC = {
+  macbook:{
+    mati:     [1200000, 3500000, '2–5 hari', 'Perbaikan logicboard / IC power'],
+    baterai:  [750000,  1450000, '1 hari',   'Ganti baterai original / OEM grade A'],
+    lcd:      [1800000, 4500000, '2–4 hari', 'Ganti LCD assembly'],
+    keyboard: [900000,  2200000, '2–3 hari', 'Ganti topcase / keyboard'],
+    lambat:   [450000,  1600000, '1 hari',   'Upgrade SSD + clean install'],
+    air:      [1500000, 4000000, '3–7 hari', 'Ultrasonic cleaning + perbaikan jalur'],
+    panas:    [350000,  850000,  '1 hari',   'Bersih kipas + repaste thermal']
+  },
+  laptop:{
+    mati:     [600000,  2200000, '2–4 hari', 'Cek IC power / ganti komponen'],
+    baterai:  [450000,  950000,  '1 hari',   'Ganti baterai internal'],
+    lcd:      [800000,  2400000, '1–3 hari', 'Ganti panel LCD'],
+    keyboard: [350000,  850000,  '1 hari',   'Ganti modul keyboard'],
+    lambat:   [400000,  1400000, '1 hari',   'Upgrade SSD / tambah RAM'],
+    air:      [800000,  2600000, '3–6 hari', 'Cleaning + perbaikan mainboard'],
+    panas:    [250000,  600000,  '1 hari',   'Bersih kipas + ganti thermal paste']
+  },
+  pc:{
+    mati:     [400000,  1800000, '1–3 hari', 'Cek PSU / mainboard'],
+    baterai:  [150000,  300000,  '1 hari',   'Ganti baterai CMOS'],
+    lcd:      [500000,  2000000, '1–2 hari', 'Cek monitor / kabel display'],
+    keyboard: [150000,  600000,  '1 hari',   'Ganti keyboard eksternal'],
+    lambat:   [400000,  1800000, '1 hari',   'Upgrade SSD / RAM / clean install'],
+    air:      [600000,  2200000, '2–5 hari', 'Cleaning menyeluruh + cek komponen'],
+    panas:    [200000,  700000,  '1 hari',   'Bersih debu + repaste + cek airflow']
+  }
+};
+const DEV_LABEL = {macbook:'MacBook', laptop:'Laptop Windows', pc:'PC Desktop'};
+
+function calcRun(){
+  const dev = document.getElementById('calcDevice').value;
+  const iss = document.getElementById('calcIssue').value;
+  const box = document.getElementById('calcResult');
+  if (!iss){
+    box.innerHTML = '<div class="empty">Pilih jenis device dan keluhan untuk melihat perkiraan biaya.</div>';
+    return;
+  }
+  const [min, max, time, action] = CALC[dev][iss];
+  box.innerHTML = `
+    <div style="font-size:12px;color:var(--ink-2);margin-bottom:6px">Perkiraan biaya</div>
+    <div class="calc-range">${rp(min)} – ${rp(max)}</div>
+    <div style="font-size:12.5px;color:var(--ink-2)">${DEV_LABEL[dev]}</div>
+    <div class="calc-meta">
+      <div><span>Tindakan umum</span><b style="text-align:right;max-width:60%">${action}</b></div>
+      <div><span>Estimasi waktu</span><b>${time}</b></div>
+      <div><span>Garansi service</span><b>30 hari</b></div>
+    </div>`;
+}
+
+/* ============================================================
+   MODAL — PANEL ADMIN (mockup)
+   ============================================================ */
+document.getElementById('admRows').innerHTML = ALL.map(p => `
+  <tr>
+    <td><img src="${IMG(p.img, 120)}" alt="" loading="lazy" width="40" height="40"></td>
+    <td><div class="adm-name">${p.name}</div></td>
+    <td><span class="adm-pill">${catLabel(p.cat)}</span></td>
+    <td style="font-weight:600;white-space:nowrap">${rp(p.price)}</td>
+    <td><span class="adm-pill ${p.type === 'reservasi' ? 'res' : ''}">${p.type === 'reservasi' ? 'Reservasi' : 'Beli'}</span></td>
+    <td>${p.stock}</td>
+    <td><div class="adm-act"><button title="Edit">✎</button><button title="Hapus">🗑</button></div></td>
+  </tr>`).join('');
+
+function admTab(t){
+  document.querySelectorAll('.adm-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  document.getElementById('admList').style.display = t === 'list' ? '' : 'none';
+  document.getElementById('admAdd').style.display  = t === 'add'  ? '' : 'none';
+  document.getElementById('admSet').style.display  = t === 'set'  ? '' : 'none';
+}
+
+/* ============================================================
+   HERO SLIDESHOW
+   ============================================================ */
+const slides = [...document.querySelectorAll('.hero-slide')];
+const dots = [...document.querySelectorAll('#heroDots i')];
+let slideIx = 0, slideTimer;
+
+window.addEventListener('load', () => {
+  slides.forEach(s => { if (s.dataset.src) s.src = s.dataset.src; });
+});
+
+function goSlide(i){
+  slideIx = i;
+  slides.forEach((s, k) => s.classList.toggle('on', k === i));
+  dots.forEach((d, k) => d.classList.toggle('on', k === i));
+  clearInterval(slideTimer);
+  slideTimer = setInterval(nextSlide, 6000);
+}
+function nextSlide(){ goSlide((slideIx + 1) % slides.length); }
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  slideTimer = setInterval(nextSlide, 6000);
+
+/* ============================================================
+   REVEAL / COUNTING / BATTERY BAR
+   ============================================================ */
+const revealObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting){
+      e.target.classList.add('in');
+      if (e.target.classList.contains('stagger')) animateBH(e.target);
+      revealObs.unobserve(e.target);
+    }
+  });
+}, {threshold:.12});
+document.querySelectorAll('.reveal, .stagger').forEach(el => revealObs.observe(el));
+
+const countObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = parseFloat(el.dataset.target), dec = parseInt(el.dataset.dec || '0');
+    const t0 = performance.now(), dur = 1400;
+    (function tick(now){
+      const pr = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - pr, 3);
+      el.textContent = dec ? (target * eased).toFixed(dec) : Math.round(target * eased);
+      if (pr < 1) requestAnimationFrame(tick);
+    })(performance.now());
+    countObs.unobserve(el);
+  });
+}, {threshold:.5});
+document.querySelectorAll('.count').forEach(el => countObs.observe(el));
+
+function animateBH(scope){
+  setTimeout(() => {
+    scope.querySelectorAll('.bh-mini i').forEach(f => { f.style.width = f.dataset.w + '%'; });
+  }, 220);
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+function toggleFaq(btn){
+  const item = btn.parentElement, wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ============================================================
+   CART — satu keranjang, item bertipe
+   ============================================================ */
+let cart = [], view = 'cart', orderNo = '';
+
+function addToCart(id, btn){
+  const p = findP(id);
+  const line = cart.find(c => c.id === id);
+  if (line){ if (p.type === 'beli') line.qty++; } else cart.push({id, qty:1});
+
+  flyDot(btn);
+  const original = btn.textContent;
+  btn.textContent = '✓ Ditambahkan';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 900);
+  setTimeout(syncCount, 700);
+}
+
+function flyDot(btn){
+  const target = document.getElementById('cartBtn');
+  const a = btn.getBoundingClientRect(), b = target.getBoundingClientRect();
+  const dot = document.createElement('div');
+  dot.className = 'fly-dot';
+  dot.style.left = (a.left + a.width / 2 - 8) + 'px';
+  dot.style.top  = (a.top + a.height / 2 - 8) + 'px';
+  document.body.appendChild(dot);
+  requestAnimationFrame(() => {
+    dot.style.left = (b.left + b.width / 2 - 8) + 'px';
+    dot.style.top  = (b.top + b.height / 2 - 8) + 'px';
+    dot.style.width = '6px'; dot.style.height = '6px'; dot.style.opacity = '.25';
+  });
+  setTimeout(() => {
+    dot.remove();
+    target.style.transform = 'scale(1.14)';
+    setTimeout(() => target.style.transform = 'scale(1)', 200);
+  }, 700);
+}
+
+function syncCount(){
+  document.getElementById('cartCount').textContent = cart.reduce((s, c) => s + c.qty, 0);
+}
+function changeQty(id, d){
+  const line = cart.find(c => c.id === id);
+  if (!line) return;
+  line.qty += d;
+  if (line.qty < 1) cart = cart.filter(c => c.id !== id);
+  syncCount(); renderDrawer();
+}
+function removeItem(id){
+  cart = cart.filter(c => c.id !== id);
+  syncCount(); renderDrawer();
+}
+
+function openCart(){
+  view = 'cart';
+  document.getElementById('drawer').classList.add('on');
+  document.getElementById('scrim').classList.add('on');
+  document.body.style.overflow = 'hidden';
+  renderDrawer();
+}
+function closeCart(){
+  document.getElementById('drawer').classList.remove('on');
+  document.getElementById('scrim').classList.remove('on');
+  if (!document.querySelector('.modal.on')) document.body.style.overflow = '';
+}
+
+function itemHTML(line){
+  const p = findP(line.id), isRes = p.type === 'reservasi';
+  return `
+  <div class="cart-item">
+    <img src="${IMG(p.img, 160)}" alt="" width="56" height="56" loading="lazy">
+    <div class="cart-item-info">
+      <h5>${p.name}</h5>
+      <div class="p">${rp(p.price * line.qty)}</div>
+      <div class="qty">
+        ${isRes ? `<span class="locked">1 unit — stok tunggal</span>`
+                : `<button onclick="changeQty('${p.id}',-1)" aria-label="Kurangi">−</button>
+                   <span>${line.qty}</span>
+                   <button onclick="changeQty('${p.id}',1)" aria-label="Tambah">+</button>`}
+      </div>
+      <a class="rm" onclick="removeItem('${p.id}')" role="button" tabindex="0">Hapus</a>
+    </div>
+  </div>`;
+}
+
+function totals(){
+  let res = 0, buy = 0;
+  cart.forEach(c => {
+    const p = findP(c.id);
+    if (p.type === 'reservasi') res += p.price * c.qty; else buy += p.price * c.qty;
+  });
+  return {res, buy, all: res + buy};
+}
+
+function renderDrawer(){
+  const body = document.getElementById('drawerBody');
+  const foot = document.getElementById('drawerFoot');
+  const title = document.getElementById('drawerTitle');
+
+  if (view === 'done'){
+    title.textContent = 'Pesanan Terkirim';
+    body.innerHTML = `
+      <div class="confirm">
+        <div class="confirm-ic">✓</div>
+        <h3>Pesanan kamu masuk</h3>
+        <p>Tim Kanaka Gadget akan menghubungi lewat WhatsApp dalam beberapa menit.</p>
+        <div class="order-no"><small>Nomor Pesanan</small><b>${orderNo}</b></div>
+        <div class="telegram-sim"><span>✈️</span><span><b>Notifikasi terkirim ke admin via Telegram</b><br>
+          Di versi live, Cloudflare Pages Function mengirim detail pesanan ini ke bot Telegram toko secara otomatis.</span></div>
+        <div class="next-steps"><b>Langkah berikutnya</b><ul>
+          <li>Unit yang direservasi ditahan 24 jam atas nama kamu</li>
+          <li>Datang ke toko untuk cek unit sebelum bayar</li>
+          <li>Aksesoris bisa diambil bersamaan atau dikirim</li>
+        </ul></div>
+      </div>`;
+    foot.innerHTML = `<button class="btn btn-outline btn-block" onclick="resetCart()">Selesai</button>`;
+    return;
+  }
+
+  if (view === 'form'){
+    const t = totals();
+    title.textContent = 'Data Pemesan';
+    body.innerHTML = `
+      <a class="back-link" onclick="view='cart';renderDrawer()" role="button" tabindex="0">← Kembali ke keranjang</a>
+      <div class="field"><label>Nama Lengkap</label><input type="text" placeholder="Nama kamu"></div>
+      <div class="field"><label>Nomor WhatsApp</label><input type="tel" placeholder="08xx xxxx xxxx"></div>
+      <div class="field"><label>Metode Pengambilan</label><select>
+        <option>Ambil di toko — Denpasar Utara</option>
+        <option>Kirim (COD area Denpasar)</option>
+        <option>Kirim via ekspedisi (luar kota)</option></select></div>
+      <div class="field"><label>Catatan <span style="font-weight:400;color:var(--ink-3)">(opsional)</span></label>
+        <textarea placeholder="Contoh: rencana datang Sabtu sore"></textarea></div>
+      <div class="total-row grand"><span>Total estimasi</span><b>${rp(t.all)}</b></div>
+      <p class="pay-note">Tanpa pembayaran online. Pembayaran dilakukan di toko atau via transfer setelah dikonfirmasi admin.</p>`;
+    foot.innerHTML = `<button class="btn btn-primary btn-block" onclick="submitOrder()">Kirim Pesanan</button>`;
+    return;
+  }
+
+  title.textContent = 'Keranjang';
+  if (!cart.length){
+    body.innerHTML = `<div class="cart-empty"><div class="big">🛒</div><b>Keranjang masih kosong</b><br>
+      <span style="font-size:13.5px">Pilih unit untuk direservasi, atau aksesoris untuk dibeli langsung.</span></div>`;
+    foot.innerHTML = `<button class="btn btn-outline btn-block" onclick="closeCart()">Lanjut Lihat Katalog</button>`;
+    return;
+  }
+
+  const res = cart.filter(c => findP(c.id).type === 'reservasi');
+  const buy = cart.filter(c => findP(c.id).type === 'beli');
+  const t = totals();
+
+  body.innerHTML = `
+    ${res.length ? `<div class="cart-group">
+      <div class="cart-group-head"><span>🔒</span><b>Unit Direservasi</b></div>
+      <p class="cart-group-note">Ditahan 24 jam atas nama kamu. Dibayar setelah unit dicek langsung di toko.</p>
+      ${res.map(itemHTML).join('')}</div>` : ''}
+    ${buy.length ? `<div class="cart-group">
+      <div class="cart-group-head"><span>🛒</span><b>Barang Dibeli</b></div>
+      <p class="cart-group-note">Aksesoris &amp; sparepart — bisa diambil di toko atau dikirim.</p>
+      ${buy.map(itemHTML).join('')}</div>` : ''}`;
+
+  foot.innerHTML = `
+    ${res.length ? `<div class="total-row"><span>Subtotal reservasi</span><span>${rp(t.res)}</span></div>` : ''}
+    ${buy.length ? `<div class="total-row"><span>Subtotal pembelian</span><span>${rp(t.buy)}</span></div>` : ''}
+    <div class="total-row grand"><span>Total</span><b>${rp(t.all)}</b></div>
+    <button class="btn btn-primary btn-block" onclick="view='form';renderDrawer()">Lanjut ke Pemesanan</button>
+    <p class="pay-note">Belum ada pembayaran di tahap ini.</p>`;
+}
+
+function submitOrder(){
+  const d = new Date(), pad = n => String(n).padStart(2, '0');
+  orderNo = `KG-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${Math.floor(Math.random()*9000)+1000}`;
+  view = 'done';
+  renderDrawer();
+}
+function resetCart(){
+  cart = []; view = 'cart'; syncCount(); closeCart();
+  setTimeout(renderDrawer, 400);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const open = document.querySelector('.modal.on');
+  if (open) closeModal(open.id); else closeCart();
+});
+
+/* ============================================================
+   STICKY MOBILE BAR
+   ============================================================ */
+const bar = document.getElementById('mobileBar');
+new IntersectionObserver(([e]) => bar.classList.toggle('on', !e.isIntersecting), {threshold:0})
+  .observe(document.querySelector('.hero'));
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderMain();
+renderDrawer();
+</script>
+
+</body>
+</html>
