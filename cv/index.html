@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Gede Agus Wibawa — Digital Transformation & AI Solutions Developer</title>
+<meta name="description" content="IT Manager, Digital Transformation Specialist and AI Solutions Developer with 11+ years in hospitality technology. 37 applications deployed, 59 projects built.">
+<link rel="icon" href="https://anabhidev.com/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16283F;
+  --navy-deep:#0E1B2B;
+  --navy-mid:#1F3552;
+  --navy-soft:#2B4566;
+  --gold:#C9A84C;
+  --gold-lt:#E0C87F;
+  --gold-dk:#A98A34;
+  --paper:#FFFFFF;
+  --paper-warm:#FAF9F6;
+  --ink:#151515;
+  --ink-mid:#4A4A4A;
+  --ink-lt:#7C7C7C;
+  --rule:#E6E3DC;
+  --rule-dk:#D3CFC5;
+  --live:#2E7D5B;
+  --test:#B8860B;
+  --build:#3A6EA5;
+  --concept:#8A8A8A;
+  --sb:344px;
+  --label:#16283F;
+  --f-display:'Fraunces',Georgia,serif;
+  --f-body:'Inter',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{
+  font-family:var(--f-body);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16.5px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:var(--navy-deep)}
+
+/* ─── LANG TOGGLE ─── */
+.lang{
+  position:fixed;top:20px;right:24px;z-index:120;
+  display:flex;border:1px solid var(--rule-dk);border-radius:2px;
+  background:var(--paper);overflow:hidden;
+  box-shadow:0 2px 12px rgba(20,35,55,.08);
+}
+.lang button{
+  font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.08em;
+  padding:7px 12px;border:0;background:transparent;color:var(--ink-lt);
+  cursor:pointer;transition:background .18s,color .18s;
+}
+.lang button.on{background:var(--navy);color:var(--gold-lt)}
+.lang button:not(.on):hover{background:var(--paper-warm);color:var(--ink)}
+
+/* ─── SIDEBAR ─── */
+.sb{
+  position:fixed;top:0;left:0;width:var(--sb);height:100vh;
+  background:linear-gradient(170deg,var(--navy) 0%,var(--navy-deep) 100%);
+  color:#E8EDF3;display:flex;flex-direction:column;z-index:100;
+  border-right:1px solid rgba(201,168,76,.18);
+}
+.sb-scroll{flex:1;overflow-y:auto;padding:26px 24px 20px;scrollbar-width:thin;scrollbar-color:var(--navy-soft) transparent}
+.sb-scroll::-webkit-scrollbar{width:4px}
+.sb-scroll::-webkit-scrollbar-thumb{background:var(--navy-soft);border-radius:2px}
+
+.sb-logo{height:56px;width:auto;margin:0 auto 26px;display:block;opacity:.97}
+.sb-photo{
+  width:132px;height:132px;border-radius:50%;margin:0 auto 18px;
+  background:linear-gradient(150deg,var(--navy-mid),var(--navy-soft));
+  border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:40px;color:var(--gold-lt);letter-spacing:.02em;
+  overflow:hidden;position:relative;
+}
+.sb-photo img{width:100%;height:100%;object-fit:cover}
+.sb-name{
+  font-family:var(--f-display);font-size:22px;font-weight:500;line-height:1.28;
+  text-align:center;color:#fff;letter-spacing:.01em;margin-bottom:7px;
+}
+.sb-role{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  text-align:center;color:var(--gold-lt);line-height:1.75;margin-bottom:16px;
+}
+.sb-avail{
+  display:flex;align-items:center;gap:7px;justify-content:center;
+  font-size:12.5px;color:#C6D2E0;border:1px solid rgba(201,168,76,.34);
+  border-radius:2px;padding:6px 9px;margin-bottom:22px;letter-spacing:.01em;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}
+  70%{box-shadow:0 0 0 7px rgba(74,222,128,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
+}
+
+.sb-nav{border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:20px}
+.sb-nav a{
+  display:flex;align-items:baseline;gap:9px;padding:6px 0 6px 11px;
+  font-size:14.5px;color:#9DB0C6;border-left:2px solid transparent;
+  transition:color .18s,border-color .18s;letter-spacing:.005em;
+}
+.sb-nav a .num{font-family:var(--f-mono);font-size:10px;color:var(--navy-soft);transition:color .18s}
+.sb-nav a:hover{color:#DCE5EF}
+.sb-nav a:hover .num{color:var(--gold-dk)}
+.sb-nav a.active{color:var(--gold-lt);border-left-color:var(--gold)}
+.sb-nav a.active .num{color:var(--gold)}
+
+.sb-dl{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.sb-dl a{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  border:1px solid rgba(201,168,76,.42);color:var(--gold-lt);
+  padding:8px 10px;text-align:center;transition:background .2s,color .2s;
+}
+.sb-dl a:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.sb-dl a.sb-alt{border:0;padding:2px 0;font-size:10.5px;letter-spacing:.06em;color:#8EA1B7;text-decoration:underline;text-underline-offset:3px}
+.sb-dl a.sb-alt:hover{background:transparent;color:var(--gold-lt)}
+
+.sb-links{display:flex;flex-direction:column;gap:6px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
+.sb-links a{font-size:13px;color:#8C9EB3;display:flex;gap:8px;align-items:center;transition:color .18s;word-break:break-all}
+.sb-links a:hover{color:var(--gold-lt)}
+.sb-links .ic{width:13px;flex-shrink:0;opacity:.75}
+
+/* ─── MOBILE NAV ─── */
+.mob-bar{display:none}
+.mob-btn{display:none}
+.scrim{display:none}
+
+/* ─── MAIN ─── */
+.main{margin-left:var(--sb);max-width:none;padding:0 60px}
+.sec{padding:62px 0;border-bottom:1px solid var(--rule)}
+.sec:last-child{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--f-mono);font-size:11.5px;color:var(--gold-dk);letter-spacing:.1em;padding-top:4px}
+.sec-title{font-family:var(--f-display);font-size:31px;font-weight:500;letter-spacing:-.01em;color:var(--navy)}
+.sec-sub{font-size:15px;color:var(--ink-lt);margin:-18px 0 28px 0;max-width:none}
+
+/* ─── HERO ─── */
+.hero{padding:86px 0 58px;border-bottom:1px solid var(--rule)}
+.hero .eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-dk);margin-bottom:20px;display:flex;align-items:center;gap:11px;
+}
+.hero .eyebrow::after{content:'';height:1px;flex:1;max-width:120px;background:var(--rule-dk)}
+.hero h1{
+  font-family:var(--f-display);font-size:clamp(34px,3.9vw,56px);font-weight:400;
+  line-height:1.16;letter-spacing:-.021em;color:var(--navy);margin-bottom:22px;max-width:26ch;
+}
+.hero h1 em{font-style:italic;color:var(--gold-dk)}
+.hero .lede{font-size:19px;line-height:1.7;color:var(--ink-mid);max-width:none;margin-bottom:18px}
+.hero .lede strong{color:var(--ink);font-weight:600}
+.hero .meta{
+  font-family:var(--f-mono);font-size:12.5px;color:var(--ink-lt);letter-spacing:.03em;
+  margin-bottom:34px;padding-top:16px;border-top:1px solid var(--rule);
+}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:15px 26px;border:1px solid var(--navy);transition:all .22s;cursor:pointer;
+}
+.btn-fill{background:var(--navy);color:var(--gold-lt)}
+.btn-fill:hover{background:var(--navy-deep);border-color:var(--navy-deep)}
+.btn-out{background:transparent;color:var(--navy)}
+.btn-out:hover{background:var(--navy);color:var(--gold-lt)}
+
+
+/* ─── OPTIONAL LARGE HERO PHOTO ─── */
+.hero-wrap{display:flex;gap:56px;align-items:flex-start}
+.hero-txt{flex:1;min-width:0}
+.hero-photo{
+  width:260px;height:320px;flex-shrink:0;object-fit:cover;
+  border:1px solid var(--rule-dk);
+  box-shadow:14px 14px 0 0 var(--paper-warm), 14px 14px 0 1px var(--rule);
+}
+@media(max-width:1100px){.hero-photo{display:none}}
+
+/* ─── ABOUT ─── */
+.about p{font-size:17px;line-height:1.78;color:var(--ink-mid);max-width:none;margin-bottom:16px}
+.about p strong{color:var(--ink);font-weight:600}
+.about p:last-child{margin-bottom:0}
+
+/* ─── STATS ─── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.stat{background:var(--paper);padding:32px 20px;text-align:center}
+.stat .n{
+  font-family:var(--f-mono);font-size:44px;font-weight:600;color:var(--navy);
+  line-height:1;letter-spacing:-.03em;display:block;margin-bottom:9px;
+}
+.stat .n .suf{color:var(--gold);font-size:30px}
+.stat .l{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-lt);line-height:1.65;
+}
+
+/* ─── FEATURED ─── */
+.feat{display:flex;flex-direction:column;gap:0}
+.fcard{padding:26px 0;border-top:1px solid var(--rule)}
+.fcard:first-child{border-top:0;padding-top:4px}
+.fhead{display:flex;align-items:baseline;gap:13px;margin-bottom:6px;flex-wrap:wrap}
+.fnum{font-family:var(--f-mono);font-size:11.5px;color:var(--gold-dk);letter-spacing:.06em}
+.fname{font-family:var(--f-display);font-size:23px;font-weight:500;color:var(--navy);letter-spacing:-.005em}
+.fyear{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-lt);margin-left:auto;letter-spacing:.04em}
+.fbody{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:14px 0 15px}
+.flabel{
+  font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--label);padding-top:5px;white-space:nowrap;
+}
+.ftext{font-size:16px;line-height:1.7;color:var(--ink-mid);max-width:none}
+.ftext strong{color:var(--ink);font-weight:600}
+.ftags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;
+  background:var(--paper-warm);border:1px solid var(--rule);color:var(--ink-mid);
+  padding:5px 10px;
+}
+.flink{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--gold-dk);border-bottom:1px solid var(--gold);padding-bottom:1px;
+  margin-left:auto;transition:color .18s,border-color .18s;
+}
+.flink:hover{color:var(--navy);border-color:var(--navy)}
+.fprivate{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-lt);margin-left:auto;
+}
+
+/* ─── PROJECT INDEX ─── */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.fbtn{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:9px 15px;border:1px solid var(--rule-dk);background:transparent;color:var(--ink-lt);
+  cursor:pointer;transition:all .18s;
+}
+.fbtn:hover{border-color:var(--navy);color:var(--navy)}
+.fbtn.on{background:var(--navy);border-color:var(--navy);color:var(--gold-lt)}
+.fbtn .ct{color:var(--gold-dk);margin-left:4px}
+.fbtn.on .ct{color:var(--gold)}
+
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.pitem{background:var(--paper);padding:18px 20px;display:flex;gap:11px;transition:background .18s}
+.pitem:hover{background:var(--paper-warm)}
+.pid{font-family:var(--f-mono);font-size:11px;color:var(--rule-dk);padding-top:3px;flex-shrink:0;letter-spacing:.02em}
+.pbody{flex:1;min-width:0}
+.pname{font-size:15.5px;font-weight:600;color:var(--navy);margin-bottom:3px;line-height:1.4;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pdesc{font-size:14.5px;line-height:1.62;color:var(--ink-lt)}
+.pmeta{display:flex;gap:7px;align-items:center;margin-top:7px;flex-wrap:wrap}
+.pstat{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;display:flex;align-items:center;gap:4px}
+.pstat::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.s-live{color:var(--live)} .s-live::before{background:var(--live)}
+.s-test{color:var(--test)} .s-test::before{background:var(--test)}
+.s-build{color:var(--build)} .s-build::before{background:var(--build)}
+.s-concept{color:var(--concept)} .s-concept::before{background:var(--concept)}
+.pcat{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-lt);
+  border-left:1px solid var(--rule-dk);padding-left:7px}
+.plink{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--gold-dk);border-bottom:1px solid var(--gold-lt);transition:color .16s}
+.plink:hover{color:var(--navy);border-color:var(--navy)}
+.pnone{grid-column:1/-1;background:var(--paper);padding:34px;text-align:center;color:var(--ink-lt);font-size:13px}
+
+/* ─── EXPERIENCE ─── */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:4px;top:7px;bottom:7px;width:1px;background:var(--rule-dk)}
+.job{position:relative;padding-bottom:26px}
+.job:last-child{padding-bottom:0}
+.job::before{
+  content:'';position:absolute;left:-26px;top:7px;width:9px;height:9px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--gold);
+}
+.job.past::before{border-color:var(--rule-dk)}
+.jco{font-family:var(--f-display);font-size:20px;font-weight:500;color:var(--navy);line-height:1.35}
+.jrole{font-size:15.5px;color:var(--ink-mid);margin-top:1px}
+.jdate{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-lt);letter-spacing:.04em;margin-top:4px}
+.jdesc{font-size:15.5px;line-height:1.7;color:var(--ink-mid);margin-top:10px;max-width:none}
+
+/* ─── SKILLS ─── */
+.skills{display:flex;flex-direction:column;gap:0}
+.srow{display:grid;grid-template-columns:220px 1fr;gap:26px;padding:17px 0;border-top:1px solid var(--rule)}
+.srow:first-child{border-top:0;padding-top:0}
+.skey{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--label);padding-top:4px}
+.sval{font-size:15.5px;line-height:1.74;color:var(--ink-mid)}
+
+/* ─── TECH ─── */
+.tech{display:flex;gap:7px;flex-wrap:wrap}
+.tchip{
+  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.02em;
+  border:1px solid var(--rule-dk);padding:10px 16px;color:var(--navy);
+  background:var(--paper-warm);transition:all .18s;
+}
+.tchip:hover{border-color:var(--gold);background:var(--paper);color:var(--gold-dk)}
+
+/* ─── EDUCATION ─── */
+.edu{margin-bottom:26px}
+.eitem{padding:13px 0;border-top:1px solid var(--rule);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.eitem:first-child{border-top:0;padding-top:0}
+.edeg{font-size:16.5px;font-weight:600;color:var(--navy);flex:1;min-width:280px}
+.einst{font-size:15px;color:var(--ink-mid)}
+.eyear{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-lt);letter-spacing:.04em;margin-left:auto}
+.cgroup{margin-bottom:19px}
+.ctitle{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--label);margin-bottom:10px}
+.clist{list-style:none;display:flex;flex-direction:column;gap:5px}
+.clist li{font-size:15.5px;color:var(--ink-mid);padding-left:15px;position:relative;line-height:1.6}
+.clist li::before{content:'';position:absolute;left:0;top:9px;width:4px;height:1px;background:var(--gold)}
+
+/* ─── SPEAKING ─── */
+.spk{list-style:none;display:flex;flex-direction:column;gap:11px}
+.spk li{font-size:15.5px;line-height:1.68;color:var(--ink-mid);padding-left:17px;position:relative}
+.spk li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--gold)}
+.spk strong{color:var(--navy);font-weight:600}
+
+/* ─── RECOMMENDATIONS ─── */
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:26px}
+.rec{border-left:2px solid var(--gold);padding:2px 0 2px 17px}
+.rquote{font-family:var(--f-display);font-size:16.5px;font-style:italic;line-height:1.66;color:var(--ink-mid);margin-bottom:9px}
+.rname{font-size:14.5px;font-weight:600;color:var(--navy)}
+.rrole{font-family:var(--f-mono);font-size:11px;color:var(--ink-lt);letter-spacing:.03em;margin-top:2px;line-height:1.5}
+
+/* ─── CONTACT ─── */
+.work{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:30px}
+.wcard{background:var(--paper);padding:28px 24px}
+.wtitle{font-family:var(--f-display);font-size:19px;font-weight:500;color:var(--navy);margin-bottom:7px}
+.wtext{font-size:15px;line-height:1.65;color:var(--ink-lt)}
+.contact{display:flex;flex-direction:column;gap:0}
+.crow{display:grid;grid-template-columns:140px 1fr;gap:20px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
+.crow:first-child{border-top:0}
+.ckey{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--label)}
+.cval{font-size:16px;color:var(--navy);font-weight:500;word-break:break-word}
+.cval:hover{color:var(--gold-dk)}
+
+/* ─── FOOTER ─── */
+.foot{padding:30px 0 50px;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-lt);letter-spacing:.05em;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid var(--rule)}
+.foot a{color:var(--gold-dk)}
+
+/* ─── REVEAL ─── */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .62s ease,transform .62s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1080px){
+  .main{padding:0 46px}
+  .recs{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  :root{--sb:0px}
+  .sb{
+    transform:translateX(-100%);transition:transform .3s ease;width:288px;
+  }
+  .sb.open{transform:translateX(0)}
+  .mob-bar{
+    display:flex;position:sticky;top:0;z-index:90;background:var(--navy);
+    align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(201,168,76,.2);
+  }
+  .mob-bar img{height:20px}
+  .mob-bar .mn{font-family:var(--f-mono);font-size:10px;color:var(--gold-lt);letter-spacing:.08em;text-transform:uppercase}
+  .mob-btn{
+    display:flex;flex-direction:column;gap:4px;background:transparent;border:0;
+    cursor:pointer;padding:5px;margin-left:auto;
+  }
+  .mob-btn span{width:19px;height:1.5px;background:var(--gold-lt);transition:transform .25s,opacity .25s}
+  .mob-btn.x span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+  .mob-btn.x span:nth-child(2){opacity:0}
+  .mob-btn.x span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(14,27,43,.55);z-index:95;
+    opacity:0;pointer-events:none;transition:opacity .3s}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .sb{z-index:100}
+  .main{margin-left:0;padding:0 24px}
+  .lang{top:auto;bottom:18px;right:18px}
+  .stats{grid-template-columns:1fr 1fr}
+  .plist{grid-template-columns:1fr}
+  .work{grid-template-columns:1fr}
+  .hero{padding:44px 0 40px}
+  .sec{padding:44px 0}
+  .srow{grid-template-columns:1fr;gap:6px}
+  .fbody{grid-template-columns:1fr;gap:2px 0}
+  .flabel{padding-top:9px}
+  .crow{grid-template-columns:1fr;gap:2px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+}
+@media print{
+  .sb,.lang,.mob-bar,.filters,.scrim{display:none}
+  .main{margin:0;padding:0;max-width:100%}
+  .rv{opacity:1;transform:none}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="lang">
+  <button id="btnEN" class="on" onclick="setLang('en')">EN</button>
+  <button id="btnID" onclick="setLang('id')">ID</button>
+</div>
+
+<div class="scrim" id="scrim" onclick="closeNav()"></div>
+
+<div class="mob-bar">
+  <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev">
+  <span class="mn">Agus Wibawa</span>
+  <button class="mob-btn" id="mobBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<aside class="sb" id="sb">
+  <div class="sb-scroll">
+    <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" class="sb-logo">
+
+    <div class="sb-photo"><span>IGW</span></div>
+
+    <div class="sb-name">I Gede Agus Wibawa<br><span style="font-size:12px;opacity:.7">S.T., M.T.</span></div>
+    <div class="sb-role" data-en="Digital Transformation<br>AI Solutions Developer" data-id="Digital Transformation<br>AI Solutions Developer">Digital Transformation<br>AI Solutions Developer</div>
+
+    <div class="sb-avail">
+      <span class="dot"></span>
+      <span data-en="Open to remote work" data-id="Terbuka untuk kerja remote">Open to remote work</span>
+    </div>
+
+    <nav class="sb-nav" id="nav">
+      <a href="#about"><span class="num">01</span><span data-en="About" data-id="Tentang">About</span></a>
+      <a href="#impact"><span class="num">02</span><span data-en="By the numbers" data-id="Dalam angka">By the numbers</span></a>
+      <a href="#featured"><span class="num">03</span><span data-en="Selected work" data-id="Karya pilihan">Selected work</span></a>
+      <a href="#index"><span class="num">04</span><span data-en="Project index" data-id="Indeks proyek">Project index</span></a>
+      <a href="#experience"><span class="num">05</span><span data-en="Experience" data-id="Pengalaman">Experience</span></a>
+      <a href="#education"><span class="num">06</span><span data-en="Education" data-id="Pendidikan">Education</span></a>
+      <a href="#skills"><span class="num">07</span><span data-en="Skills" data-id="Keahlian">Skills</span></a>
+      <a href="#stack"><span class="num">08</span><span data-en="Tech stack" data-id="Tech stack">Tech stack</span></a>
+      <a href="#speaking"><span class="num">09</span><span data-en="Speaking" data-id="Pembicara">Speaking</span></a>
+      <a href="#recommendations"><span class="num">10</span><span data-en="References" data-id="Referensi">References</span></a>
+      <a href="#contact"><span class="num">11</span><span data-en="Work together" data-id="Mari bekerja sama">Work together</span></a>
+    </nav>
+
+    <div class="sb-dl">
+      <a href="https://www.anabhidev.com/cv/cv-i-gede-agus-wibawa.pdf" target="_blank" rel="noopener" data-en="Download CV" data-id="Unduh CV">Download CV</a>
+      <a href="https://anabhidev.com" target="_blank" rel="noopener" data-en="Visit portfolio" data-id="Lihat portofolio">Visit portfolio</a>
+      <a class="sb-alt" href="https://www.anabhidev.com/cv/cv-i-gede-agus-wibawa-ats.pdf" target="_blank" rel="noopener" data-en="ATS version" data-id="Versi ATS">ATS version</a>
+    </div>
+
+    <div class="sb-links">
+      <a href="mailto:wibawa@anabhidev.com"><span class="ic">✉</span>wibawa@anabhidev.com</a>
+      <a href="https://wa.me/6282267672828" target="_blank" rel="noopener"><span class="ic">✆</span>+62 822 6767 2828</a>
+      <a href="https://linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener"><span class="ic">in</span>linkedin.com/in/i-gede-agus-wibawa</a>
+      <a href="https://anabhidev.com" target="_blank" rel="noopener"><span class="ic">◆</span>anabhidev.com</a>
+      <span style="font-size:13px;color:#8EA1B7;display:flex;gap:8px"><span class="ic">⌖</span>Denpasar, Bali · GMT+8</span>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+   <div class="hero-wrap">
+    <div class="hero-txt">
+    <div class="eyebrow" data-en="Denpasar, Bali · Available worldwide, remote" data-id="Denpasar, Bali · Tersedia global, remote">Denpasar, Bali · Available worldwide, remote</div>
+    <h1 data-en="I build AI tools for the operations I<em> spent 11 years running.</em>" data-id="Saya membangun AI untuk operasional yang<em> 11 tahun saya jalankan.</em>">I build AI tools for the operations I<em> spent 11 years running.</em></h1>
+    <p class="lede" data-en="Most AI developers have never run a hotel IT department. Most hospitality IT managers can't ship a production app. I do both — <strong>37 applications deployed</strong>, from an LMS serving 110+ staff to AI assistants built on Gemini and Claude." data-id="Kebanyakan AI developer belum pernah memimpin IT hotel. Kebanyakan IT manager hospitality tidak bisa merilis aplikasi produksi. Saya melakukan keduanya — <strong>37 aplikasi ter-deploy</strong>, dari LMS untuk 110+ staf sampai asisten AI berbasis Gemini dan Claude.">Most AI developers have never run a hotel IT department. Most hospitality IT managers can't ship a production app. I do both — <strong>37 applications deployed</strong>, from an LMS serving 110+ staff to AI assistants built on Gemini and Claude.</p>
+    <div class="meta" data-en="IT Manager @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung" data-id="IT Manager @ Miss Fish Bali  ·  Pendiri, Anabhi Dev  ·  M.T. Institut Teknologi Bandung">IT Manager @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung</div>
+    <div class="cta-row">
+      <a href="#featured" class="btn btn-fill" data-en="See selected work" data-id="Lihat karya pilihan">See selected work</a>
+      <a href="#contact" class="btn btn-out" data-en="Start a conversation" data-id="Mulai percakapan">Start a conversation</a>
+    </div>
+    </div>
+
+    <!-- ══ FOTO BESAR DI HERO ══════════════════════════════════════════
+         Hapus tanda komentar di bawah ini untuk menampilkan foto besar,
+         lalu ganti src dengan URL foto Anda.
+    <img class="hero-photo" src="https://anabhidev.com/foto-agus.jpg" alt="I Gede Agus Wibawa">
+    ═══════════════════════════════════════════════════════════════════ -->
+
+   </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec rv" id="about">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title" data-en="About" data-id="Tentang">About</h2></div>
+    <div class="about">
+      <p data-en="I've spent eleven years as the person a hotel calls when the PMS stops talking to the POS at 11pm on New Year's Eve. Pre-openings, system migrations, network builds, vendor negotiations — six properties across Bali, including a 76-villa resort I brought online from bare walls." data-id="Sebelas tahun saya jadi orang yang dihubungi hotel ketika PMS berhenti berkomunikasi dengan POS jam 11 malam di malam Tahun Baru. Pre-opening, migrasi sistem, pembangunan jaringan, negosiasi vendor — enam properti di Bali, termasuk resort 76 vila yang saya bangun sistemnya dari nol.">I've spent eleven years as the person a hotel calls when the PMS stops talking to the POS at 11pm on New Year's Eve. Pre-openings, system migrations, network builds, vendor negotiations — six properties across Bali, including a 76-villa resort I brought online from bare walls.</p>
+      <p data-en="In 2025 I started building the software instead of just buying it. What began as small automations became <strong>Anabhi Dev</strong> — a working catalogue of 59 projects, 37 of them deployed and running. A learning management system with an AI reporting layer. A knowledge-based chatbot for restaurant operations. Dashboards that turn IT noise into a morning summary someone actually reads." data-id="Di 2025 saya mulai membangun perangkat lunaknya sendiri, bukan sekadar membelinya. Yang berawal dari otomasi kecil berkembang jadi <strong>Anabhi Dev</strong> — katalog kerja berisi 59 proyek, 37 di antaranya sudah ter-deploy dan berjalan. Learning management system dengan lapisan pelaporan AI. Chatbot berbasis pengetahuan untuk operasional restoran. Dashboard yang mengubah kebisingan IT jadi ringkasan pagi yang benar-benar dibaca orang.">In 2025 I started building the software instead of just buying it. What began as small automations became <strong>Anabhi Dev</strong> — a working catalogue of 59 projects, 37 of them deployed and running. A learning management system with an AI reporting layer. A knowledge-based chatbot for restaurant operations. Dashboards that turn IT noise into a morning summary someone actually reads.</p>
+      <p data-en="That combination is the whole point. I know why a training module fails on the floor, because I've watched it fail. I know what a GM will actually open on their phone. Domain knowledge is the hard part; the code is how I express it." data-id="Kombinasi itulah intinya. Saya tahu kenapa sebuah modul training gagal di lapangan, karena saya menyaksikannya gagal. Saya tahu apa yang benar-benar dibuka GM di ponselnya. Pemahaman domain adalah bagian tersulit; kode adalah cara saya mengekspresikannya.">That combination is the whole point. I know why a training module fails on the floor, because I've watched it fail. I know what a GM will actually open on their phone. Domain knowledge is the hard part; the code is how I express it.</p>
+      <p data-en="Currently IT Manager at Miss Fish Bali, and open to remote roles and freelance projects anywhere." data-id="Saat ini IT Manager di Miss Fish Bali, dan terbuka untuk peran remote serta proyek freelance di mana saja.">Currently IT Manager at Miss Fish Bali, and open to remote roles and freelance projects anywhere.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="sec rv" id="impact">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title" data-en="By the numbers" data-id="Dalam angka">By the numbers</h2></div>
+    <div class="stats">
+      <div class="stat"><span class="n" data-count="11" data-suffix="+">0</span><span class="l" data-en="Years in IT &amp;<br>hospitality tech" data-id="Tahun di IT &amp;<br>teknologi hospitality">Years in IT &amp;<br>hospitality tech</span></div>
+      <div class="stat"><span class="n" data-count="37">0</span><span class="l" data-en="Applications<br>deployed" data-id="Aplikasi<br>ter-deploy">Applications<br>deployed</span></div>
+      <div class="stat"><span class="n" data-count="59">0</span><span class="l" data-en="Total projects<br>built" data-id="Total proyek<br>dibangun">Total projects<br>built</span></div>
+      <div class="stat"><span class="n" data-count="110" data-suffix="+">0</span><span class="l" data-en="Staff on the<br>production LMS" data-id="Staf pengguna<br>LMS produksi">Staff on the<br>production LMS</span></div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="sec rv" id="featured">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title" data-en="Selected work" data-id="Karya pilihan">Selected work</h2></div>
+    <p class="sec-sub" data-en="Eight projects that show the range — AI products, internal platforms, and the operational tooling in between." data-id="Delapan proyek yang menunjukkan rentang kemampuan — produk AI, platform internal, dan perkakas operasional di antaranya.">Eight projects that show the range — AI products, internal platforms, and the operational tooling in between.</p>
+    <div class="feat" id="featWrap"></div>
+  </section>
+
+  <!-- PROJECT INDEX -->
+  <section class="sec rv" id="index">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title" data-en="Project index" data-id="Indeks proyek">Project index</h2></div>
+    <p class="sec-sub" data-en="Every project I've built, tracked as I built it. Live means deployed and in use. Internal tools built for my employer are listed without links." data-id="Semua proyek yang saya bangun, dicatat sejak dikerjakan. Live berarti sudah ter-deploy dan digunakan. Perkakas internal untuk perusahaan tempat saya bekerja dicantumkan tanpa tautan.">Every project I've built, tracked as I built it. Live means deployed and in use. Internal tools built for my employer are listed without links.</p>
+    <div class="filters" id="filters"></div>
+    <div class="plist" id="plist"></div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="sec rv" id="experience">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title" data-en="Experience" data-id="Pengalaman">Experience</h2></div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="sec rv" id="education">
+    <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title" data-en="Education &amp; certifications" data-id="Pendidikan &amp; sertifikasi">Education &amp; certifications</h2></div>
+    <div class="edu" id="eduWrap"></div>
+    <div id="certWrap"></div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="sec rv" id="skills">
+    <div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title" data-en="Skills" data-id="Keahlian">Skills</h2></div>
+    <div class="skills" id="skillsWrap"></div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="sec rv" id="stack">
+    <div class="sec-head"><span class="sec-num">08</span><h2 class="sec-title" data-en="Tech stack" data-id="Tech stack">Tech stack</h2></div>
+    <p class="sec-sub" data-en="What I actually build with, day to day." data-id="Yang benar-benar saya pakai membangun, sehari-hari.">What I actually build with, day to day.</p>
+    <div class="tech" id="techWrap"></div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="sec rv" id="speaking">
+    <div class="sec-head"><span class="sec-num">09</span><h2 class="sec-title" data-en="Speaking &amp; publications" data-id="Pembicara &amp; publikasi">Speaking &amp; publications</h2></div>
+    <ul class="spk" id="spkWrap"></ul>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section class="sec rv" id="recommendations">
+    <div class="sec-head"><span class="sec-num">10</span><h2 class="sec-title" data-en="References" data-id="Referensi">References</h2></div>
+    <p class="sec-sub" data-en="From people I worked for and alongside." data-id="Dari orang-orang yang pernah bekerja dengan saya.">From people I worked for and alongside.</p>
+    <div class="recs" id="recsWrap"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="sec rv" id="contact">
+    <div class="sec-head"><span class="sec-num">11</span><h2 class="sec-title" data-en="Work together" data-id="Mari bekerja sama">Work together</h2></div>
+    <div class="work">
+      <div class="wcard">
+        <div class="wtitle" data-en="Remote, full-time" data-id="Remote, penuh waktu">Remote, full-time</div>
+        <div class="wtext" data-en="Digital transformation, AI solutions, or hospitality technology leadership. Comfortable across GMT+1 to GMT+10." data-id="Digital transformation, solusi AI, atau kepemimpinan teknologi hospitality. Nyaman di zona GMT+1 sampai GMT+10.">Digital transformation, AI solutions, or hospitality technology leadership. Comfortable across GMT+1 to GMT+10.</div>
+      </div>
+      <div class="wcard">
+        <div class="wtitle" data-en="Freelance projects" data-id="Proyek freelance">Freelance projects</div>
+        <div class="wtext" data-en="AI assistants, internal dashboards, workflow automation, web applications. Scoped and delivered end to end." data-id="Asisten AI, dashboard internal, otomasi alur kerja, aplikasi web. Dirancang dan diselesaikan menyeluruh.">AI assistants, internal dashboards, workflow automation, web applications. Scoped and delivered end to end.</div>
+      </div>
+      <div class="wcard">
+        <div class="wtitle" data-en="Advisory" data-id="Konsultasi">Advisory</div>
+        <div class="wtext" data-en="Hotel pre-opening IT planning, system selection, migration strategy. Where the operational experience pays for itself." data-id="Perencanaan IT pre-opening hotel, pemilihan sistem, strategi migrasi. Di sinilah pengalaman operasional terbayar.">Hotel pre-opening IT planning, system selection, migration strategy. Where the operational experience pays for itself.</div>
+      </div>
+    </div>
+    <div class="contact">
+      <div class="crow"><span class="ckey" data-en="Email" data-id="Email">Email</span><a class="cval" href="mailto:wibawa@anabhidev.com">wibawa@anabhidev.com</a></div>
+      <div class="crow"><span class="ckey" data-en="WhatsApp" data-id="WhatsApp">WhatsApp</span><a class="cval" href="https://wa.me/6282267672828" target="_blank" rel="noopener">+62 822 6767 2828</a></div>
+      <div class="crow"><span class="ckey">LinkedIn</span><a class="cval" href="https://linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener">linkedin.com/in/i-gede-agus-wibawa</a></div>
+      <div class="crow"><span class="ckey" data-en="Portfolio" data-id="Portofolio">Portfolio</span><a class="cval" href="https://anabhidev.com" target="_blank" rel="noopener">anabhidev.com</a></div>
+      <div class="crow"><span class="ckey" data-en="Based in" data-id="Berbasis di">Based in</span><span class="cval">Denpasar, Bali, Indonesia · GMT+8</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span data-en="I Gede Agus Wibawa · Built with Anabhi Dev" data-id="I Gede Agus Wibawa · Dibangun bersama Anabhi Dev">I Gede Agus Wibawa · Built with Anabhi Dev</span>
+    <span><a href="https://anabhidev.com" target="_blank" rel="noopener">anabhidev.com</a></span>
+  </div>
+
+</main>
+
+<script>
+/* ============================================================
+   CV DATA — I Gede Agus Wibawa
+   To add a live URL later, fill the "url" field. Leave "" to hide the link.
+   Office/internal projects intentionally have no url.
+   ============================================================ */
+
+const FEATURED = [
+  {
+    n: "01", name: "Learning Management System", year: "2025 — present",
+    nameId: "Learning Management System",
+    problem: {
+      en: "Training 110+ hospitality staff across departments meant paper checklists, WhatsApp reminders, and no reliable way to prove who had actually completed what.",
+      id: "Melatih 110+ staf hospitality lintas departemen berarti checklist kertas, pengingat WhatsApp, dan tidak ada cara andal membuktikan siapa yang benar-benar menyelesaikan apa."
+    },
+    solution: {
+      en: "Built a full LMS from scratch — course delivery, a quiz engine with anti-cheating measures, role-based access for managers and staff, and automatic certificate generation. On top sits an AI reporting layer that reads the raw activity data and writes the daily, monthly, and quarterly training summaries management actually reads.",
+      id: "Membangun LMS lengkap dari nol — penyampaian materi, mesin kuis dengan pencegahan kecurangan, akses berbasis peran untuk manajer dan staf, serta pembuatan sertifikat otomatis. Di atasnya ada lapisan pelaporan AI yang membaca data aktivitas mentah dan menulis ringkasan pelatihan harian, bulanan, dan kuartalan yang benar-benar dibaca manajemen."
+    },
+    result: {
+      en: "110+ active staff on the platform. Training status went from a question nobody could answer to a dashboard anyone can open. Currently in final testing before full rollout.",
+      id: "110+ staf aktif di platform. Status pelatihan berubah dari pertanyaan yang tak bisa dijawab siapa pun jadi dashboard yang bisa dibuka siapa saja. Saat ini dalam pengujian akhir sebelum peluncuran penuh."
+    },
+    tags: ["Google Apps Script", "Gemini API", "Cloudflare", "HTML/CSS/JS"],
+    url: "", priv: true
+  },
+  {
+    n: "02", name: "MF-AIA — Knowledge-Based AI Assistant",
+    nameId: "MF-AIA — Asisten AI Berbasis Pengetahuan",
+    year: "2025 — present",
+    problem: {
+      en: "The same operational questions reached the IT desk every week — where a policy lives, how a system works, what the procedure is for an edge case.",
+      id: "Pertanyaan operasional yang sama masuk ke meja IT tiap minggu — di mana letak kebijakan, cara kerja sistem, prosedur untuk kasus tak biasa."
+    },
+    solution: {
+      en: "A conversational assistant grounded in the company's own documentation, so answers come from internal reality rather than generic model knowledge. Context-aware and wired into existing internal workflows.",
+      id: "Asisten percakapan yang berpijak pada dokumentasi internal perusahaan, sehingga jawabannya berasal dari kenyataan internal, bukan pengetahuan model yang generik. Sadar konteks dan terhubung ke alur kerja internal yang ada."
+    },
+    result: {
+      en: "Routine lookups resolve without a human in the loop. In testing with the operations team.",
+      id: "Pencarian rutin selesai tanpa perlu campur tangan manusia. Sedang diuji bersama tim operasional."
+    },
+    tags: ["Gemini API", "Knowledge Base", "Prompt Engineering"],
+    url: "", priv: true
+  },
+  {
+    n: "03", name: "Career Suite", nameId: "Career Suite", year: "2025 — present",
+    problem: {
+      en: "Job seekers write a CV once and send it everywhere, then never learn why it gets filtered out before a human sees it.",
+      id: "Pencari kerja menulis CV sekali lalu mengirimnya ke mana-mana, tanpa pernah tahu kenapa CV itu tersaring sebelum dilihat manusia."
+    },
+    solution: {
+      en: "An AI platform that scores a CV against a specific job description, surfaces the missing keywords, generates a tailored cover letter, rewrites the LinkedIn profile, and compares two CV versions side by side.",
+      id: "Platform AI yang menilai CV terhadap deskripsi pekerjaan tertentu, memunculkan kata kunci yang hilang, membuat surat lamaran yang disesuaikan, menulis ulang profil LinkedIn, dan membandingkan dua versi CV berdampingan."
+    },
+    result: {
+      en: "Live and in public use. Built end to end — interface, AI integration, and deployment.",
+      id: "Sudah live dan dipakai publik. Dibangun menyeluruh — antarmuka, integrasi AI, dan deployment."
+    },
+    tags: ["Gemini API", "HTML/CSS/JS", "Cloudflare Pages"],
+    url: "https://anabhidev.com/Career-Suite/", priv: false
+  },
+  {
+    n: "04", name: "NutriBot", nameId: "NutriBot", year: "June 2026",
+    problem: {
+      en: "Nutrition advice online is either too generic to act on or locked behind a subscription.",
+      id: "Saran nutrisi online kalau tidak terlalu generik untuk ditindaklanjuti, ya terkunci di balik langganan."
+    },
+    solution: {
+      en: "A conversational nutrition assistant — ask about recipes, diets, or healthy drinks in plain language, with a calorie calculator, daily meal planner, dietary filters for vegan, keto and gluten-free, and PDF export of any answer.",
+      id: "Asisten nutrisi percakapan — tanya soal resep, diet, atau minuman sehat dengan bahasa biasa, dilengkapi kalkulator kalori, perencana makan harian, filter diet vegan, keto, bebas gluten, dan ekspor jawaban ke PDF."
+    },
+    result: {
+      en: "Built as the final project for Maju Bareng AI (Hacktiv8 × Google.org), then developed further into a standalone product. Live on Railway.",
+      id: "Dibangun sebagai proyek akhir Maju Bareng AI (Hacktiv8 × Google.org), lalu dikembangkan jadi produk mandiri. Live di Railway."
+    },
+    tags: ["Gemini 2.5 Flash", "Railway", "PDF Export", "Responsive"],
+    url: "https://nutribot-production-0c16.up.railway.app/", priv: false
+  },
+  {
+    n: "05", name: "BaliEats AI", nameId: "BaliEats AI", year: "2025 — present",
+    problem: {
+      en: "Visitors and locals alike default to the same handful of restaurants because discovery tools rank by marketing spend, not by what the food actually is.",
+      id: "Wisatawan maupun warga lokal terjebak di restoran yang itu-itu saja karena alat pencarian memeringkat berdasarkan belanja iklan, bukan makanannya."
+    },
+    solution: {
+      en: "A culinary assistant that recommends by area — Ubud, Canggu, Seminyak, Jimbaran, Denpasar — across traditional food, street food, seafood and vegetarian, and tells the cultural story behind a dish rather than just naming it.",
+      id: "Asisten kuliner yang merekomendasikan per area — Ubud, Canggu, Seminyak, Jimbaran, Denpasar — mencakup makanan tradisional, kaki lima, seafood, dan vegetarian, serta menceritakan kisah budaya di balik hidangannya."
+    },
+    result: {
+      en: "Live and open to the public.",
+      id: "Sudah live dan terbuka untuk publik."
+    },
+    tags: ["Gemini API", "HTML/CSS/JS", "Cloudflare Pages"],
+    url: "https://anabhidev.com/BaliEats-AI/", priv: false
+  },
+  {
+    n: "06", name: "IT Intelligence Dashboard", nameId: "IT Intelligence Dashboard",
+    year: "2025 — present",
+    problem: {
+      en: "Infrastructure status lived in five different tools. Nobody outside IT could see it, and inside IT it took a morning to assemble.",
+      id: "Status infrastruktur tersebar di lima alat berbeda. Tidak ada yang di luar IT bisa melihatnya, dan di dalam IT butuh sepagi untuk merangkumnya."
+    },
+    solution: {
+      en: "A single operational dashboard consolidating network, systems and service health into one view, written for a non-technical reader as much as for the IT team.",
+      id: "Satu dashboard operasional yang menyatukan kesehatan jaringan, sistem, dan layanan dalam satu tampilan, ditulis untuk pembaca non-teknis sebagaimana untuk tim IT."
+    },
+    result: {
+      en: "Deployed and in daily use. Status reporting moved from reactive to at-a-glance.",
+      id: "Sudah ter-deploy dan dipakai harian. Pelaporan status berubah dari reaktif jadi sekali lihat."
+    },
+    tags: ["Google Apps Script", "Dashboard", "Automation"],
+    url: "", priv: true
+  },
+  {
+    n: "07", name: "3D Web Experience", nameId: "Pengalaman Web 3D", year: "2025",
+    problem: {
+      en: "Client sites in hospitality and lifestyle all reach for the same template. There was no evidence I could build something visually ambitious.",
+      id: "Situs klien di hospitality dan lifestyle semuanya memakai template yang sama. Belum ada bukti bahwa saya bisa membangun sesuatu yang ambisius secara visual."
+    },
+    solution: {
+      en: "An interactive 3D web build — real-time rendering in the browser, no plugin, tuned to stay usable on mid-range phones.",
+      id: "Bangunan web 3D interaktif — render real-time di browser, tanpa plugin, dioptimalkan agar tetap nyaman di ponsel kelas menengah."
+    },
+    result: {
+      en: "Live as a public demonstration piece, and the reference I point clients to when they ask what else is possible.",
+      id: "Live sebagai karya demonstrasi publik, dan referensi yang saya tunjukkan ke klien saat mereka bertanya apa lagi yang mungkin."
+    },
+    tags: ["3D Web", "JavaScript", "WebGL"],
+    url: "https://anabhidev.com/3D/", priv: false
+  },
+  {
+    n: "08", name: "Application Monitoring Hub", nameId: "Hub Pemantauan Aplikasi",
+    year: "2025 — present",
+    problem: {
+      en: "Running dozens of small applications across different hosts, I lost track of what was live, what had quietly broken, and what was still half-finished.",
+      id: "Menjalankan puluhan aplikasi kecil di berbagai host, saya kehilangan jejak mana yang live, mana yang diam-diam rusak, dan mana yang masih setengah jadi."
+    },
+    solution: {
+      en: "A central monitoring hub that tracks every Anabhi Dev application in one place — status, category, and deployment state.",
+      id: "Hub pemantauan terpusat yang melacak setiap aplikasi Anabhi Dev di satu tempat — status, kategori, dan kondisi deployment."
+    },
+    result: {
+      en: "The system of record behind this page. Deployed and maintained continuously.",
+      id: "Sistem pencatatan di balik halaman ini. Ter-deploy dan dipelihara terus-menerus."
+    },
+    tags: ["Google Apps Script", "Dashboard", "Cloudflare"],
+    url: "https://anabhidev.com", priv: false
+  }
+];
+
+/* ── FULL PROJECT INDEX ──
+   status: live | testing | building | concept
+   cat: ai | web | automation | dashboard | internal            */
+
+const PROJECTS = [
+  { id:"03", name:{en:"Mikrotik Script Scheduler",id:"Mikrotik Script Scheduler"}, desc:{en:"Scheduled scripts on Mikrotik routers to run maintenance, backups and configuration tasks automatically instead of by hand.",id:"Skrip terjadwal di router Mikrotik untuk menjalankan pemeliharaan, backup, dan tugas konfigurasi secara otomatis, bukan manual."}, status:"live", cat:"automation", url:"", priv:true },
+  { id:"05", name:{en:"Adventure Ana dan Abhi",id:"Adventure Ana dan Abhi"}, desc:{en:"An interactive story web app built for my children — a personal project that doubled as a testing ground for browser animation.",id:"Aplikasi web cerita interaktif yang dibuat untuk anak-anak saya — proyek pribadi yang sekaligus jadi lahan uji animasi browser."}, status:"live", cat:"web", url:"" },
+  { id:"06", name:{en:"Culinary Dashboard",id:"Dashboard Kuliner"}, desc:{en:"A dashboard for browsing and filtering Bali culinary data by area, type and price range.",id:"Dashboard untuk menelusuri dan menyaring data kuliner Bali berdasarkan area, jenis, dan rentang harga."}, status:"live", cat:"dashboard", url:"" },
+  { id:"07", name:{en:"Shopee Affiliate Web App",id:"Web Afiliasi Shopee"}, desc:{en:"An affiliate link manager built on Google Apps Script, tracking product links and click performance in one sheet-backed interface.",id:"Pengelola tautan afiliasi berbasis Google Apps Script, melacak tautan produk dan performa klik dalam satu antarmuka berbasis spreadsheet."}, status:"building", cat:"web", url:"" },
+  { id:"08", name:{en:"Balinese Calendar to Telegram",id:"Kalender Bali ke Telegram"}, desc:{en:"A daily bot that pushes the Balinese calendar — wuku, dewasa ayu and ceremonial dates — to Telegram each morning.",id:"Bot harian yang mengirim kalender Bali — wuku, dewasa ayu, dan tanggal upacara — ke Telegram setiap pagi."}, status:"live", cat:"automation", url:"" },
+  { id:"09", name:{en:"Daily Expenses Tracker",id:"Pelacak Pengeluaran Harian"}, desc:{en:"A lightweight personal finance tracker for logging daily spend and reviewing it by category.",id:"Pelacak keuangan pribadi ringan untuk mencatat pengeluaran harian dan meninjaunya per kategori."}, status:"concept", cat:"internal", url:"" },
+  { id:"10", name:{en:"General Manager Dashboard",id:"Dashboard General Manager"}, desc:{en:"An executive view pulling operational metrics into a single screen a GM can read on a phone in under a minute.",id:"Tampilan eksekutif yang menarik metrik operasional ke satu layar yang bisa dibaca GM di ponsel dalam waktu kurang dari semenit."}, status:"building", cat:"dashboard", url:"", priv:true },
+  { id:"11", name:{en:"Employee Schedule System",id:"Sistem Jadwal Karyawan"}, desc:{en:"Staff rosters published from a central sheet and delivered straight to each department, replacing printed schedules on a noticeboard.",id:"Jadwal staf diterbitkan dari satu sumber terpusat dan dikirim langsung ke tiap departemen, menggantikan jadwal cetak di papan pengumuman."}, status:"live", cat:"internal", url:"", priv:true },
+  { id:"12", name:{en:"Massage Booking Schedule",id:"Jadwal Pijat"}, desc:{en:"A simple booking and schedule tool built for an independent local therapist to manage appointments without paperwork.",id:"Alat pemesanan dan penjadwalan sederhana untuk terapis lokal independen agar bisa mengelola janji temu tanpa berkas kertas."}, status:"live", cat:"internal", url:"" },
+  { id:"13", name:{en:"Learning Management System",id:"Learning Management System"}, desc:{en:"A full training platform for 110+ hospitality staff, with a quiz engine, certificates, and an AI layer that writes the periodic training reports.",id:"Platform pelatihan lengkap untuk 110+ staf hospitality, dengan mesin kuis, sertifikat, dan lapisan AI yang menulis laporan pelatihan berkala."}, status:"testing", cat:"ai", url:"", priv:true, feat:true },
+  { id:"14", name:{en:"Engineering Work Order",id:"Work Order Engineering"}, desc:{en:"A maintenance request and work order system to route engineering jobs from report to sign-off.",id:"Sistem permintaan pemeliharaan dan work order untuk mengalirkan pekerjaan teknik dari laporan sampai persetujuan."}, status:"concept", cat:"internal", url:"", priv:true },
+  { id:"15", name:{en:"Weather Alerts to Telegram",id:"Peringatan Cuaca ke Telegram"}, desc:{en:"Automated weather and severe-condition alerts pushed to Telegram, used both personally and for operational planning around outdoor venues.",id:"Peringatan cuaca dan kondisi ekstrem otomatis yang dikirim ke Telegram, dipakai untuk kebutuhan pribadi maupun perencanaan operasional venue terbuka."}, status:"live", cat:"automation", url:"" },
+  { id:"16", name:{en:"Anabhi Daily Quiz",id:"Anabhi Daily Quiz"}, desc:{en:"A daily educational quiz app for children, with question sets that rotate automatically.",id:"Aplikasi kuis edukatif harian untuk anak-anak, dengan set pertanyaan yang berganti otomatis."}, status:"live", cat:"web", url:"" },
+  { id:"17", name:{en:"Anabhi Drawing Studio",id:"Studio Gambar Anabhi"}, desc:{en:"A browser-based drawing canvas for kids — no install, works on a tablet, saves locally.",id:"Kanvas gambar berbasis browser untuk anak-anak — tanpa instalasi, jalan di tablet, tersimpan lokal."}, status:"live", cat:"web", url:"" },
+  { id:"18", name:{en:"IT Task Log to Monthly Report",id:"Log Tugas IT ke Laporan Bulanan"}, desc:{en:"Daily IT task entries roll up automatically into a formatted monthly report, removing a recurring end-of-month writing job.",id:"Catatan tugas IT harian terangkum otomatis jadi laporan bulanan terformat, menghapus pekerjaan menulis rutin tiap akhir bulan."}, status:"live", cat:"internal", url:"", priv:true },
+  { id:"19", name:{en:"Organisation Chart",id:"Struktur Organisasi"}, desc:{en:"A living org chart generated from HR data, so structure changes propagate without redrawing anything.",id:"Bagan organisasi hidup yang dihasilkan dari data HR, sehingga perubahan struktur menyebar tanpa perlu menggambar ulang."}, status:"testing", cat:"internal", url:"", priv:true },
+  { id:"20", name:{en:"Prize Wheel — Staff Gathering",id:"Roda Undian — Staff Gathering"}, desc:{en:"A randomised prize draw for company events, projected on screen with weighted entries and no repeat winners.",id:"Undian hadiah acak untuk acara perusahaan, ditampilkan di layar dengan entri berbobot dan tanpa pemenang berulang."}, status:"live", cat:"internal", url:"", priv:true },
+  { id:"21", name:{en:"History of Life",id:"History of Life"}, desc:{en:"An interactive timeline exploring the history of life on earth, built as a learning resource.",id:"Linimasa interaktif yang menelusuri sejarah kehidupan di bumi, dibangun sebagai sumber belajar."}, status:"building", cat:"web", url:"" },
+  { id:"22", name:{en:"JejakNutrisi",id:"JejakNutrisi"}, desc:{en:"A nutrition tracking app for logging meals and reviewing intake patterns over time.",id:"Aplikasi pelacak nutrisi untuk mencatat makanan dan meninjau pola asupan dari waktu ke waktu."}, status:"building", cat:"web", url:"" },
+  { id:"23", name:{en:"Application Monitoring Hub",id:"Hub Pemantauan Aplikasi"}, desc:{en:"A central registry tracking every Anabhi Dev application — live status, category, and deployment state in one view.",id:"Registri terpusat yang melacak setiap aplikasi Anabhi Dev — status live, kategori, dan kondisi deployment dalam satu tampilan."}, status:"live", cat:"dashboard", url:"https://anabhidev.com", feat:true },
+  { id:"24", name:{en:"Daily Admin Task — True Finance",id:"Tugas Admin Harian — True Finance"}, desc:{en:"A daily task and checklist system for a finance admin team, with completion tracked per person.",id:"Sistem tugas dan checklist harian untuk tim admin keuangan, dengan penyelesaian terlacak per orang."}, status:"live", cat:"internal", url:"", priv:true },
+  { id:"25", name:{en:"Domain & IP Monitor",id:"Monitor Domain & IP"}, desc:{en:"Automated checks on domain expiry and IP reachability, alerting before something lapses rather than after.",id:"Pemeriksaan otomatis masa berlaku domain dan keterjangkauan IP, memberi peringatan sebelum sesuatu kedaluwarsa, bukan sesudah."}, status:"live", cat:"automation", url:"", priv:true },
+  { id:"26", name:{en:"Exchange Rate Monitor",id:"Monitor Kurs Rupiah"}, desc:{en:"Tracks IDR exchange rates and reports movement on a schedule.",id:"Melacak kurs rupiah dan melaporkan pergerakannya secara terjadwal."}, status:"live", cat:"automation", url:"" },
+  { id:"27", name:{en:"Earthquake & Air Quality Alerts",id:"Peringatan Gempa & Kualitas Udara"}, desc:{en:"Pulls live seismic and air quality data for the region and pushes alerts when thresholds are crossed.",id:"Menarik data seismik dan kualitas udara terkini untuk wilayah ini dan mengirim peringatan saat ambang batas terlampaui."}, status:"live", cat:"automation", url:"" },
+  { id:"28", name:{en:"Football News Digest",id:"Ringkasan Berita Sepak Bola"}, desc:{en:"A scheduled news digest bot — built to learn feed parsing and scheduled delivery on a subject I actually follow.",id:"Bot ringkasan berita terjadwal — dibuat untuk mempelajari parsing feed dan pengiriman terjadwal pada topik yang memang saya ikuti."}, status:"live", cat:"automation", url:"" },
+  { id:"29", name:{en:"Training & Seminar Dashboard",id:"Dashboard Training & Seminar"}, desc:{en:"Tracks staff attendance across training sessions and seminars, showing coverage gaps by department.",id:"Melacak kehadiran staf di sesi pelatihan dan seminar, menunjukkan celah cakupan per departemen."}, status:"live", cat:"dashboard", url:"", priv:true },
+  { id:"30", name:{en:"Prize Wheel — Brand Takeover",id:"Roda Undian — Brand Takeover"}, desc:{en:"A branded prize wheel built for a spirits brand bar takeover event, themed to the client's identity.",id:"Roda undian ber-branding untuk acara bar takeover sebuah merek minuman, disesuaikan dengan identitas klien."}, status:"live", cat:"internal", url:"", priv:true },
+  { id:"31", name:{en:"Daily Reminder",id:"Pengingat Harian"}, desc:{en:"A personal reminder system that delivers the day's commitments to a single channel each morning.",id:"Sistem pengingat pribadi yang mengirim komitmen hari itu ke satu kanal setiap pagi."}, status:"building", cat:"internal", url:"" },
+  { id:"32", name:{en:"Staff Birthday Automation",id:"Otomasi Ulang Tahun Staf"}, desc:{en:"Reads the HR roster and sends birthday notifications to the right department lead automatically.",id:"Membaca data HR dan mengirim notifikasi ulang tahun ke kepala departemen terkait secara otomatis."}, status:"building", cat:"automation", url:"", priv:true },
+  { id:"33", name:{en:"World Cup 2026 Companion",id:"Pendamping Piala Dunia 2026"}, desc:{en:"Fixtures, results and news for the 2026 World Cup in one lightweight web app.",id:"Jadwal, hasil, dan berita Piala Dunia 2026 dalam satu aplikasi web ringan."}, status:"live", cat:"web", url:"" },
+  { id:"34", name:{en:"One-Time Sign Web App",id:"Aplikasi Tanda Tangan Sekali Pakai"}, desc:{en:"A single-use digital signature flow for internal document approval.",id:"Alur tanda tangan digital sekali pakai untuk persetujuan dokumen internal."}, status:"concept", cat:"internal", url:"", priv:true },
+  { id:"35", name:{en:"MF-AIA — AI Assistant",id:"MF-AIA — Asisten AI"}, desc:{en:"A knowledge-based conversational assistant answering operational questions from the company's own documentation.",id:"Asisten percakapan berbasis pengetahuan yang menjawab pertanyaan operasional dari dokumentasi internal perusahaan."}, status:"testing", cat:"ai", url:"", priv:true, feat:true },
+  { id:"36", name:{en:"NFC Digital Name Card",id:"Kartu Nama Digital NFC"}, desc:{en:"An HTML business card that opens from an NFC tap — contact details, links and profile in one page.",id:"Kartu nama HTML yang terbuka dari sentuhan NFC — detail kontak, tautan, dan profil dalam satu halaman."}, status:"live", cat:"web", url:"" },
+  { id:"37", name:{en:"Career Suite",id:"Career Suite"}, desc:{en:"An AI platform for job seekers — ATS scoring against a real job description, keyword gap analysis, cover letter generation and LinkedIn optimisation.",id:"Platform AI untuk pencari kerja — penilaian ATS terhadap deskripsi pekerjaan nyata, analisis celah kata kunci, pembuatan surat lamaran, dan optimasi LinkedIn."}, status:"live", cat:"ai", url:"https://anabhidev.com/Career-Suite/", feat:true },
+  { id:"38", name:{en:"3D Web Experience",id:"Pengalaman Web 3D"}, desc:{en:"An interactive 3D scene rendered in the browser with no plugin, tuned to stay smooth on mid-range phones.",id:"Adegan 3D interaktif yang dirender di browser tanpa plugin, dioptimalkan agar tetap mulus di ponsel kelas menengah."}, status:"live", cat:"web", url:"https://anabhidev.com/3D/", feat:true },
+  { id:"39", name:{en:"IT Intelligence Dashboard",id:"IT Intelligence Dashboard"}, desc:{en:"Consolidates network, systems and service health into one operational view readable by non-technical management.",id:"Menyatukan kesehatan jaringan, sistem, dan layanan dalam satu tampilan operasional yang terbaca oleh manajemen non-teknis."}, status:"live", cat:"dashboard", url:"", priv:true, feat:true },
+  { id:"40", name:{en:"DISC Assessment for HR",id:"Psikotes DISC untuk HR"}, desc:{en:"A digital DISC personality assessment for recruitment and team placement, scored automatically.",id:"Asesmen kepribadian DISC digital untuk rekrutmen dan penempatan tim, dinilai otomatis."}, status:"concept", cat:"internal", url:"", priv:true },
+  { id:"41", name:{en:"Internal App Directory",id:"Direktori Aplikasi Internal"}, desc:{en:"A single landing page linking every internal web app, so staff stop hunting through bookmarks.",id:"Satu halaman yang menautkan semua aplikasi web internal, agar staf berhenti mencari-cari di bookmark."}, status:"concept", cat:"web", url:"", priv:true },
+  { id:"42", name:{en:"HR Legal Document Tracker",id:"Pelacak Dokumen Legal HR"}, desc:{en:"Tracks contracts, permits and legal document expiry dates with advance renewal alerts.",id:"Melacak kontrak, izin, dan tanggal kedaluwarsa dokumen legal dengan peringatan perpanjangan lebih awal."}, status:"building", cat:"internal", url:"", priv:true },
+  { id:"43", name:{en:"Network Checklist Automation",id:"Otomasi Checklist Jaringan"}, desc:{en:"Turns the recurring network inspection checklist into an automated routine with logged results.",id:"Mengubah checklist inspeksi jaringan rutin jadi prosedur otomatis dengan hasil tercatat."}, status:"testing", cat:"automation", url:"", priv:true },
+  { id:"44", name:{en:"Exchange Rate to Telegram",id:"Kurs Rupiah ke Telegram"}, desc:{en:"Delivers the daily IDR exchange rate to Telegram on a fixed schedule.",id:"Mengirim kurs rupiah harian ke Telegram pada jadwal tetap."}, status:"live", cat:"automation", url:"" },
+  { id:"45", name:{en:"Ruijie Cloud Dashboard",id:"Ruijie Cloud Dashboard"}, desc:{en:"A monitoring layer over Ruijie cloud-managed network hardware, surfacing device health in one place.",id:"Lapisan pemantauan di atas perangkat jaringan berbasis cloud Ruijie, menampilkan kesehatan perangkat dalam satu tempat."}, status:"concept", cat:"dashboard", url:"", priv:true },
+  { id:"46", name:{en:"SOP Dashboard",id:"Dashboard SOP"}, desc:{en:"A searchable home for standard operating procedures, replacing scattered PDFs with one canonical source.",id:"Rumah yang bisa dicari untuk prosedur operasional standar, menggantikan PDF yang tersebar dengan satu sumber resmi."}, status:"building", cat:"dashboard", url:"", priv:true },
+  { id:"47", name:{en:"E-commerce Website",id:"Website Toko Online"}, desc:{en:"A storefront build covering catalogue, product pages and checkout flow.",id:"Bangunan etalase daring mencakup katalog, halaman produk, dan alur checkout."}, status:"live", cat:"web", url:"" },
+  { id:"48", name:{en:"Tour & Travel Website",id:"Website Tour & Travel"}, desc:{en:"A travel platform with tour packages, itinerary pages and enquiry flow, built for the Bali market.",id:"Platform perjalanan dengan paket tur, halaman itinerary, dan alur pertanyaan, dibangun untuk pasar Bali."}, status:"live", cat:"web", url:"" },
+  { id:"49", name:{en:"Company Profile Website",id:"Website Company Profile"}, desc:{en:"A corporate profile site template — services, portfolio and contact, adaptable per client.",id:"Templat situs profil perusahaan — layanan, portofolio, dan kontak, bisa disesuaikan per klien."}, status:"live", cat:"web", url:"" },
+  { id:"50", name:{en:"Mikrotik Dashboard",id:"Mikrotik Dashboard"}, desc:{en:"A visual monitoring layer for Mikrotik routers, showing traffic, uptime and interface state.",id:"Lapisan pemantauan visual untuk router Mikrotik, menampilkan trafik, uptime, dan status antarmuka."}, status:"building", cat:"dashboard", url:"", priv:true },
+  { id:"51", name:{en:"Jagadita — Client Website",id:"Jagadita — Website Klien"}, desc:{en:"A hospitality client site covering brand story, offering and enquiry.",id:"Situs klien hospitality yang mencakup kisah merek, penawaran, dan pertanyaan."}, status:"testing", cat:"web", url:"" },
+  { id:"52", name:{en:"AI Tips & Techniques Library",id:"Pustaka Tips & Teknik AI"}, desc:{en:"A written library of practical AI workflow techniques, published on the Anabhi Dev site.",id:"Pustaka tertulis berisi teknik alur kerja AI yang praktis, dipublikasikan di situs Anabhi Dev."}, status:"live", cat:"web", url:"https://anabhidev.com" },
+  { id:"53", name:{en:"BaliEats AI",id:"BaliEats AI"}, desc:{en:"A culinary AI assistant recommending Bali food by area and category, with the cultural story behind each dish.",id:"Asisten AI kuliner yang merekomendasikan makanan Bali per area dan kategori, lengkap dengan kisah budaya di balik tiap hidangan."}, status:"live", cat:"ai", url:"https://anabhidev.com/BaliEats-AI/", feat:true },
+  { id:"54", name:{en:"Anniversary Microsite",id:"Microsite Ulang Tahun"}, desc:{en:"A personal one-page site built as a birthday gift — an exercise in scroll-driven storytelling.",id:"Situs satu halaman pribadi sebagai hadiah ulang tahun — latihan bercerita lewat scroll."}, status:"live", cat:"web", url:"" },
+  { id:"55", name:{en:"Raja Siomay — Client Website",id:"Raja Siomay — Website Klien"}, desc:{en:"An F&B client site with menu, location and ordering contact.",id:"Situs klien F&B dengan menu, lokasi, dan kontak pemesanan."}, status:"testing", cat:"web", url:"" },
+  { id:"56", name:{en:"Link Hub",id:"Link Hub"}, desc:{en:"A link-in-bio page builder, self-hosted rather than dependent on a third-party service.",id:"Pembuat halaman link-in-bio, di-host sendiri alih-alih bergantung pada layanan pihak ketiga."}, status:"building", cat:"web", url:"" },
+  { id:"57", name:{en:"Anabhi Playground",id:"Anabhi Playground"}, desc:{en:"A collection of small interactive browser experiments, kept public as a working sketchbook.",id:"Kumpulan eksperimen browser interaktif kecil, dibiarkan publik sebagai buku sketsa kerja."}, status:"live", cat:"web", url:"" },
+  { id:"58", name:{en:"Anabhi Smart Play",id:"Anabhi Smart Play"}, desc:{en:"Educational browser games built around early numeracy and pattern recognition.",id:"Permainan browser edukatif seputar berhitung dini dan pengenalan pola."}, status:"live", cat:"web", url:"" },
+  { id:"59", name:{en:"Child Smart Play",id:"Child Smart Play"}, desc:{en:"A second set of learning games for younger children, with simplified interaction and larger targets.",id:"Set kedua permainan belajar untuk anak yang lebih kecil, dengan interaksi lebih sederhana dan target lebih besar."}, status:"live", cat:"web", url:"" },
+  { id:"60", name:{en:"Delanswit — Client Website",id:"Delanswit — Website Klien"}, desc:{en:"An F&B brand site covering identity, menu and location.",id:"Situs merek F&B yang mencakup identitas, menu, dan lokasi."}, status:"live", cat:"web", url:"" },
+  { id:"61", name:{en:"Inner Peace Bali — Client Website",id:"Inner Peace Bali — Website Klien"}, desc:{en:"A wellness client site presenting programmes, practitioners and booking enquiry.",id:"Situs klien wellness yang menyajikan program, praktisi, dan pertanyaan pemesanan."}, status:"live", cat:"web", url:"" },
+  { id:"62", name:{en:"NutriBot",id:"NutriBot"}, desc:{en:"An AI nutrition assistant with a calorie calculator, meal planner, dietary filters and PDF export. Final project for Maju Bareng AI (Hacktiv8 × Google.org).",id:"Asisten nutrisi AI dengan kalkulator kalori, perencana makan, filter diet, dan ekspor PDF. Proyek akhir Maju Bareng AI (Hacktiv8 × Google.org)."}, status:"live", cat:"ai", url:"https://nutribot-production-0c16.up.railway.app/", feat:true }
+];
+
+const EXPERIENCE = [
+  { co:"Miss Fish Bali", role:{en:"Information Technology Manager",id:"Information Technology Manager"}, date:{en:"Nov 2025 — Present",id:"Nov 2025 — Sekarang"}, cur:true,
+    desc:{en:"All IT operations for a high-volume F&B and hospitality property — 24/7 reliability across POS, network and security. Directed a full network build for a new office building. Architecting and shipping the internal automation and AI tools listed above.",
+          id:"Seluruh operasional IT untuk properti F&B dan hospitality bervolume tinggi — keandalan 24/7 di POS, jaringan, dan keamanan. Memimpin pembangunan jaringan penuh untuk gedung kantor baru. Merancang dan merilis perkakas otomasi serta AI internal yang tercantum di atas."} },
+  { co:"Kappa Senses Ubud", role:{en:"IT & Communication Manager — Pre-Opening",id:"IT & Communication Manager — Pre-Opening"}, date:{en:"Sep 2022 — Nov 2025",id:"Sep 2022 — Nov 2025"},
+    desc:{en:"Delivered the full IT pre-opening for a 76-villa resort from bare walls — fiber backbone, segmented VLANs, IPTV across every villa, captive portal guest Wi-Fi, PABX and CCTV. On time and within budget.",
+          id:"Menyelesaikan seluruh pre-opening IT untuk resort 76 vila dari nol — backbone fiber, VLAN tersegmentasi, IPTV di setiap vila, Wi-Fi tamu captive portal, PABX, dan CCTV. Tepat waktu dan sesuai anggaran."} },
+  { co:"Soul Cafe's", role:{en:"Group IT Manager",id:"Group IT Manager"}, date:{en:"Apr 2021 — Sep 2022",id:"Apr 2021 — Sep 2022"},
+    desc:{en:"IT across four active F&B outlets. POS administration, pre-opening for new outlets, unified digital ecosystem front and back of house, and group-level budget and vendor negotiation.",
+          id:"IT untuk empat outlet F&B aktif. Administrasi POS, pre-opening outlet baru, ekosistem digital terpadu untuk area depan dan belakang, serta anggaran dan negosiasi vendor tingkat grup."} },
+  { co:"PT Aplikasi Pintar Indonesia", role:{en:"IT Network Specialist",id:"IT Network Specialist"}, date:{en:"Dec 2020 — Apr 2021",id:"Des 2020 — Apr 2021"},
+    desc:{en:"Deployed the pilot of a hospitality SaaS platform at a Seminyak hotel — smart reception, access control, guest room and travel modules.",
+          id:"Menerapkan pilot platform SaaS hospitality di sebuah hotel Seminyak — smart reception, kontrol akses, kamar tamu, dan modul travel."} },
+  { co:"Signature Bali Sanur & Bali Water World", role:{en:"Cluster IT Manager — Pre-Opening",id:"Cluster IT Manager — Pre-Opening"}, date:{en:"Jun 2019 — Dec 2020",id:"Jun 2019 — Des 2020"},
+    desc:{en:"Full pre-opening IT for a 54-room hotel and adjacent water park. Enterprise firewall, core switching, wireless infrastructure, and the complete hospitality systems stack.",
+          id:"Pre-opening IT lengkap untuk hotel 54 kamar dan taman air di sebelahnya. Firewall enterprise, core switching, infrastruktur nirkabel, dan tumpukan sistem hospitality menyeluruh."} },
+  { co:"The Ungasan Clifftop Resort & Sundays Beach Club", role:{en:"Project Manager — System Migration",id:"Project Manager — Migrasi Sistem"}, date:{en:"Oct 2017 — Jun 2019",id:"Okt 2017 — Jun 2019"},
+    desc:{en:"Led the migration from a legacy PMS to five integrated hospitality systems with full data continuity and zero revenue disruption. Provisioned the server environment and delivered cross-departmental training.",
+          id:"Memimpin migrasi dari PMS lama ke lima sistem hospitality terintegrasi dengan kontinuitas data penuh dan tanpa gangguan pendapatan. Menyiapkan lingkungan server dan menyampaikan pelatihan lintas departemen."} },
+  { co:"The Ungasan Clifftop Resort & Sundays Beach Club", role:{en:"IT Supervisor → IT Support",id:"IT Supervisor → IT Support"}, date:{en:"May 2016 — Oct 2017",id:"Mei 2016 — Okt 2017"},
+    desc:{en:"Promoted to Head of IT; re-engineered the network from wireless-dependent to a full fiber backbone. Previously maintained LAN, Active Directory, Windows Server and 12 POS terminals for 54 users.",
+          id:"Dipromosikan jadi Head of IT; merekayasa ulang jaringan dari bergantung nirkabel menjadi backbone fiber penuh. Sebelumnya memelihara LAN, Active Directory, Windows Server, dan 12 terminal POS untuk 54 pengguna."} },
+  { co:"PT Putri Bintang Sentosa — Boost Juice Bars", role:{en:"IT Support & EDP",id:"IT Support & EDP"}, date:{en:"Nov 2015 — May 2016",id:"Nov 2015 — Mei 2016"},
+    desc:{en:"IT infrastructure, network, CCTV and inventory systems across three retail locations.",
+          id:"Infrastruktur IT, jaringan, CCTV, dan sistem inventaris di tiga lokasi ritel."} }
+];
+
+const SKILLS = [
+  { key:{en:"AI & Development",id:"AI & Pengembangan"}, val:{en:"Gemini AI API, Claude / Anthropic API, Google Apps Script, prompt engineering, LMS development, chatbot development, AI-assisted development workflows",id:"Gemini AI API, Claude / Anthropic API, Google Apps Script, prompt engineering, pengembangan LMS, pengembangan chatbot, alur kerja pengembangan berbantuan AI"} },
+  { key:{en:"Digital Transformation",id:"Digital Transformation"}, val:{en:"Process automation, workflow redesign, internal tooling, systems consolidation, data-driven reporting, change management across non-technical teams",id:"Otomasi proses, perancangan ulang alur kerja, perkakas internal, konsolidasi sistem, pelaporan berbasis data, manajemen perubahan di tim non-teknis"} },
+  { key:{en:"Hospitality Systems",id:"Sistem Hospitality"}, val:{en:"Infor HMS, Agilysys Infogenesis, Mews PMS, HotelTime, Lightspeed POS, Vento POS, Infrasys, SunSystems, BEEEES, Datacom PABX, Talenta, ESB POS",id:"Infor HMS, Agilysys Infogenesis, Mews PMS, HotelTime, Lightspeed POS, Vento POS, Infrasys, SunSystems, BEEEES, Datacom PABX, Talenta, ESB POS"} },
+  { key:{en:"Network & Security",id:"Jaringan & Keamanan"}, val:{en:"Fortinet FortiGate, HPE Aruba, Mikrotik, Ubiquiti, Ruckus, Engenius, Allied Telesis, Cisco CCNA, IP CCTV, VLAN segmentation, captive portal",id:"Fortinet FortiGate, HPE Aruba, Mikrotik, Ubiquiti, Ruckus, Engenius, Allied Telesis, Cisco CCNA, IP CCTV, segmentasi VLAN, captive portal"} },
+  { key:{en:"Cloud & Infrastructure",id:"Cloud & Infrastruktur"}, val:{en:"Google Cloud, Cloudflare Pages & Workers, Railway, Netlify, Active Directory, Windows Server, Linux, domain controller",id:"Google Cloud, Cloudflare Pages & Workers, Railway, Netlify, Active Directory, Windows Server, Linux, domain controller"} },
+  { key:{en:"IT Management",id:"Manajemen IT"}, val:{en:"Hotel pre-opening projects, system migration, budget planning, vendor management, SLA management, business continuity, disaster recovery, IT service desk",id:"Proyek pre-opening hotel, migrasi sistem, perencanaan anggaran, manajemen vendor, manajemen SLA, kelangsungan bisnis, pemulihan bencana, IT service desk"} }
+];
+
+const TECH = ["Gemini AI API","Claude / Anthropic API","Google Apps Script","JavaScript","HTML / CSS","Cloudflare Pages","Cloudflare Workers","Railway","Netlify","Telegram Bot API","Google Workspace","Supabase","3D Web / WebGL","Mikrotik RouterOS","Fortinet","HPE Aruba","Windows Server","Linux"];
+
+const EDU = [
+  { deg:{en:"Master of Science — Information Technology",id:"Master of Science — Information Technology"}, inst:"Institut Teknologi Bandung (ITB)", year:"2006 — 2009 · GPA 3.39" },
+  { deg:{en:"Associate of Science — Business Administration",id:"Associate of Science — Business Administration"}, inst:{en:"University of the People · High Honors",id:"University of the People · High Honors"}, year:"2021 — 2023 · GPA 3.86" },
+  { deg:{en:"Bachelor of Engineering — Computer Science",id:"Bachelor of Engineering — Computer Science"}, inst:"Universitas Surabaya (UBAYA)", year:"2001 — 2005 · GPA 3.27" }
+];
+
+const CERTS = [
+  { title:{en:"AI & Development",id:"AI & Pengembangan"}, items:[
+    "AI Productivity and AI API Integration for Developers — Maju Bareng AI, Hacktiv8 × Google.org (2026)",
+    "Microsoft Applied Skills: Generate Reports with AI Research Agents (2026)",
+    "Google AI Essentials — Google",
+    "Artificial Intelligence Fundamentals — IBM SkillsBuild",
+    "Elements of AI & Building AI — University of Helsinki & Reaktor"
+  ]},
+  { title:{en:"Network & Security",id:"Jaringan & Keamanan"}, items:[
+    "Certified Network Security Specialist (CNSS) — International Cybersecurity Institute, UK",
+    "Fortinet NSE 1 & NSE 2 Network Security Associate",
+    "Cisco CCNAv7: Bridging, Cybersecurity Essentials, IoT, Linux Essentials",
+    "Aviatrix Certified Engineer (ACE) — Multi-Cloud Network Associate"
+  ]},
+  { title:{en:"Cloud Platforms",id:"Platform Cloud"}, items:[
+    "AWS: Getting Started with .NET, IAM, S3 Basics — Amazon Web Services",
+    "Google Cloud Industrial IoT — Coursera / Google",
+    "Microsoft Azure Essentials — GreatLearning",
+    "Alibaba Cloud: Cloud Computing Operate and Manage"
+  ]},
+  { title:{en:"Project Management & Strategy",id:"Manajemen Proyek & Strategi"}, items:[
+    "Project Management Essentials Certified (PMEC) — Management & Strategy Institute",
+    "Lean Six Sigma White Belt (LSSWB)",
+    "Innovation & Entrepreneurship; Product Management — Stanford University",
+    "Agile Project Management, PMP Masterclass — IT Masters (Charles Sturt University)",
+    "Remote Work and Virtual Collaboration Professional Certificate — CertiProf"
+  ]}
+];
+
+const SPEAKING = [
+  { en:"<strong>BV E-Talk #23</strong> — Next-Level Hospitality: How AI is Revolutionizing Your Guest Experience (2023). Invited speaker.",
+    id:"<strong>BV E-Talk #23</strong> — Next-Level Hospitality: How AI is Revolutionizing Your Guest Experience (2023). Pembicara undangan." },
+  { en:"<strong>IEEE Eii-Forum</strong> — <em>Teknologi WiMAX untuk Operator Seluler di Indonesia</em> (2008). Speaker and author; published in IEEE proceedings.",
+    id:"<strong>IEEE Eii-Forum</strong> — <em>Teknologi WiMAX untuk Operator Seluler di Indonesia</em> (2008). Pembicara dan penulis; diterbitkan dalam prosiding IEEE." },
+  { en:"<strong>Trainer</strong> — Butler training and Google Workspace optimisation for heads of department, The Ungasan Clifftop Resort (2017).",
+    id:"<strong>Trainer</strong> — Pelatihan butler dan optimasi Google Workspace untuk kepala departemen, The Ungasan Clifftop Resort (2017)." },
+  { en:"<strong>UoPeople Ambassador</strong> — University of the People (2025 — present).",
+    id:"<strong>UoPeople Ambassador</strong> — University of the People (2025 — sekarang)." },
+  { en:"<strong>Conferences</strong> — DCD&gt;Connect APAC (2026), Indonesia Security Summit (2018, 2020 — social media contest winner), Cisco, Aruba, IBM and HPE hospitality technology sessions.",
+    id:"<strong>Konferensi</strong> — DCD&gt;Connect APAC (2026), Indonesia Security Summit (2018, 2020 — pemenang kontes media sosial), sesi teknologi hospitality Cisco, Aruba, IBM, dan HPE." }
+];
+
+const RECS = [
+  { q:{en:"I Gede Agus Wibawa was the best IT expert I have been working with. He set up all hardware and software system configuration, interfacing and system security including PMS and POS, in a timely manner and beyond my expectation.",
+       id:"I Gede Agus Wibawa adalah ahli IT terbaik yang pernah bekerja dengan saya. Ia menyiapkan seluruh konfigurasi sistem perangkat keras dan lunak, interfacing, dan keamanan sistem termasuk PMS dan POS, tepat waktu dan melampaui ekspektasi saya."},
+    name:"Viveka", role:{en:"Hotel Business Expert Advisor · managed directly, Feb 2021",id:"Hotel Business Expert Advisor · atasan langsung, Feb 2021"} },
+  { q:{en:"Agus Wibawa has the passion to learn anything to upgrade his skill in IT Hospitality. With his good attitude and willingness to provide solutions, he is a good example of what IT Hospitality should be.",
+       id:"Agus Wibawa punya semangat mempelajari apa pun untuk meningkatkan keahliannya di IT Hospitality. Dengan sikap baik dan kesediaannya memberi solusi, ia contoh baik seperti apa IT Hospitality seharusnya."},
+    name:"Armika Jaya", role:{en:"Director of IT, Potato Head Group · mentor, Oct 2019",id:"Director of IT, Potato Head Group · mentor, Okt 2019"} },
+  { q:{en:"Efficient and quick to action is how I would describe I Gede Agus Wibawa. I have seen him work on and solve many IT issues, always with a smile, no matter how big or small those issues were.",
+       id:"Efisien dan cepat bertindak — begitu saya menggambarkan I Gede Agus Wibawa. Saya melihatnya mengerjakan dan menyelesaikan banyak masalah IT, selalu dengan senyum, sebesar atau sekecil apa pun masalahnya."},
+    name:"Natalie Cadell", role:{en:"General Manager · Operations & Commercial Leadership, May 2018",id:"General Manager · Operations & Commercial Leadership, Mei 2018"} },
+  { q:{en:"Wibawa is a hard worker. He knows everything about IT, working fast, attention to details and easy going. He has many connections to many vendors for every IT need and actively participates in the IT community.",
+       id:"Wibawa pekerja keras. Ia tahu segala hal tentang IT, bekerja cepat, teliti, dan mudah diajak bekerja sama. Ia punya banyak koneksi vendor untuk setiap kebutuhan IT dan aktif di komunitas IT."},
+    name:"Anindita Widyasari", role:{en:"Asst. Director of Weddings, The Ungasan Clifftop Resort · Apr 2019",id:"Asst. Director of Weddings, The Ungasan Clifftop Resort · Apr 2019"} }
+];
+
+const REFS = [
+  { name:"Anak Agung Gede Agung Satria Wibawa", role:"General Manager, Miss Fish Bali" },
+  { name:"Armika Jaya", role:"Director of Information Technology, Potato Head Group" },
+  { name:"Ade Satria Kusuma", role:"Director of HR, Soulshine Bali" },
+  { name:"Viveka Nanda", role:"Director Operational, Sari Pacific Jakarta" },
+  { name:"Ray Sugiarto", role:"Co-Founder, Indonesian CIO Network (ICION)" },
+  { name:"Budi Utomo", role:"Corporate Head of IT, The Seminyak Beach Resort & Spa" },
+  { name:"Wayan Anggi Budiastra", role:"Owner, Asoka Hotel Sanur" }
+];
+
+const T = {
+  problem:{en:"Problem",id:"Masalah"},
+  solution:{en:"Built",id:"Dibangun"},
+  result:{en:"Result",id:"Hasil"},
+  viewLive:{en:"View live",id:"Lihat live"},
+  internal:{en:"Internal — no public link",id:"Internal — tanpa tautan publik"},
+  all:{en:"All",id:"Semua"},
+  ai:{en:"AI",id:"AI"},
+  web:{en:"Web",id:"Web"},
+  automation:{en:"Automation",id:"Otomasi"},
+  dashboard:{en:"Dashboards",id:"Dashboard"},
+  internalCat:{en:"Internal tools",id:"Perkakas internal"},
+  live:{en:"Live",id:"Live"},
+  testing:{en:"Testing",id:"Pengujian"},
+  building:{en:"Building",id:"Dibangun"},
+  concept:{en:"Concept",id:"Konsep"},
+  none:{en:"Nothing in this category yet.",id:"Belum ada di kategori ini."},
+  refTitle:{en:"Professional references",id:"Referensi profesional"},
+  refNote:{en:"Contact details available on request.",id:"Detail kontak tersedia atas permintaan."}
+};
+
+/* ============================================================
+   CV APP — rendering, filtering, language, motion
+   ============================================================ */
+
+let LANG = 'en';
+let FILTER = 'all';
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const t = k => (T[k] && T[k][LANG]) || '';
+const pick = v => (typeof v === 'object' && v !== null) ? (v[LANG] || v.en) : v;
+const reduced = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+/* ── FEATURED ── */
+function renderFeatured(){
+  $('#featWrap').innerHTML = FEATURED.map(f => {
+    const link = f.url
+      ? `<a class="flink" href="${f.url}" target="_blank" rel="noopener">${t('viewLive')} →</a>`
+      : `<span class="fprivate">${t('internal')}</span>`;
+    return `
+    <article class="fcard">
+      <div class="fhead">
+        <span class="fnum">${f.n}</span>
+        <h3 class="fname">${LANG === 'id' ? (f.nameId || f.name) : f.name}</h3>
+        <span class="fyear">${f.year}</span>
+      </div>
+      <div class="fbody">
+        <span class="flabel">${t('problem')}</span><p class="ftext">${pick(f.problem)}</p>
+        <span class="flabel">${t('solution')}</span><p class="ftext">${pick(f.solution)}</p>
+        <span class="flabel">${t('result')}</span><p class="ftext">${pick(f.result)}</p>
+      </div>
+      <div class="ftags">
+        ${f.tags.map(x => `<span class="tag">${x}</span>`).join('')}
+        ${link}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ── FILTERS ── */
+function renderFilters(){
+  const cats = [
+    ['all', t('all')],
+    ['ai', t('ai')],
+    ['web', t('web')],
+    ['dashboard', t('dashboard')],
+    ['automation', t('automation')],
+    ['internal', t('internalCat')]
+  ];
+  $('#filters').innerHTML = cats.map(([k, label]) => {
+    const n = k === 'all' ? PROJECTS.length : PROJECTS.filter(p => p.cat === k).length;
+    return `<button class="fbtn${FILTER === k ? ' on' : ''}" data-cat="${k}">${label}<span class="ct">${n}</span></button>`;
+  }).join('');
+  $$('.fbtn').forEach(b => b.onclick = () => { FILTER = b.dataset.cat; renderFilters(); renderProjects(); });
+}
+
+/* ── PROJECT INDEX ── */
+function renderProjects(){
+  const list = FILTER === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === FILTER);
+  if(!list.length){
+    $('#plist').innerHTML = `<div class="pnone">${t('none')}</div>`;
+    return;
+  }
+  const order = { live:0, testing:1, building:2, concept:3 };
+  const sorted = [...list].sort((a,b) => order[a.status] - order[b.status] || a.id.localeCompare(b.id));
+
+  $('#plist').innerHTML = sorted.map(p => {
+    const link = p.url ? `<a class="plink" href="${p.url}" target="_blank" rel="noopener">${t('viewLive')} →</a>` : '';
+    const star = p.feat ? `<span style="color:var(--gold);font-size:10px">◆</span>` : '';
+    return `
+    <div class="pitem">
+      <span class="pid">${p.id}</span>
+      <div class="pbody">
+        <div class="pname">${pick(p.name)} ${star}</div>
+        <div class="pdesc">${pick(p.desc)}</div>
+        <div class="pmeta">
+          <span class="pstat s-${p.status}">${t(p.status)}</span>
+          <span class="pcat">${t(p.cat === 'internal' ? 'internalCat' : p.cat)}</span>
+          ${link}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── EXPERIENCE ── */
+function renderExperience(){
+  $('#tl').innerHTML = EXPERIENCE.map(j => `
+    <div class="job${j.cur ? '' : ' past'}">
+      <div class="jco">${j.co}</div>
+      <div class="jrole">${pick(j.role)}</div>
+      <div class="jdate">${pick(j.date)}</div>
+      <p class="jdesc">${pick(j.desc)}</p>
+    </div>`).join('');
+}
+
+/* ── SKILLS ── */
+function renderSkills(){
+  $('#skillsWrap').innerHTML = SKILLS.map(s => `
+    <div class="srow">
+      <span class="skey">${pick(s.key)}</span>
+      <span class="sval">${pick(s.val)}</span>
+    </div>`).join('');
+}
+
+/* ── TECH ── */
+function renderTech(){
+  $('#techWrap').innerHTML = TECH.map(x => `<span class="tchip">${x}</span>`).join('');
+}
+
+/* ── EDUCATION + CERTS ── */
+function renderEdu(){
+  $('#eduWrap').innerHTML = EDU.map(e => `
+    <div class="eitem">
+      <span class="edeg">${pick(e.deg)}</span>
+      <span class="einst">${pick(e.inst)}</span>
+      <span class="eyear">${e.year}</span>
+    </div>`).join('');
+
+  $('#certWrap').innerHTML = CERTS.map(c => `
+    <div class="cgroup">
+      <div class="ctitle">${pick(c.title)}</div>
+      <ul class="clist">${c.items.map(i => `<li>${i}</li>`).join('')}</ul>
+    </div>`).join('');
+}
+
+/* ── SPEAKING ── */
+function renderSpeaking(){
+  $('#spkWrap').innerHTML = SPEAKING.map(s => `<li>${pick(s)}</li>`).join('');
+}
+
+/* ── RECOMMENDATIONS + REFS ── */
+function renderRecs(){
+  const recs = RECS.map(r => `
+    <div class="rec">
+      <p class="rquote">"${pick(r.q)}"</p>
+      <div class="rname">${r.name}</div>
+      <div class="rrole">${pick(r.role)}</div>
+    </div>`).join('');
+
+  const refs = `
+    <div style="grid-column:1/-1;margin-top:12px;padding-top:22px;border-top:1px solid var(--rule)">
+      <div class="ctitle" style="margin-bottom:11px">${t('refTitle')}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:11px 30px">
+        ${REFS.map(r => `<div style="font-size:12.5px;line-height:1.5"><strong style="color:var(--navy)">${r.name}</strong><br><span style="color:var(--ink-lt);font-size:11.5px">${r.role}</span></div>`).join('')}
+      </div>
+      <p style="font-size:11.5px;color:var(--ink-lt);margin-top:13px;font-family:var(--f-mono);letter-spacing:.02em">${t('refNote')}</p>
+    </div>`;
+
+  $('#recsWrap').innerHTML = recs + refs;
+}
+
+/* ── LANGUAGE ── */
+function setLang(l){
+  LANG = l;
+  document.documentElement.lang = l;
+  $('#btnEN').classList.toggle('on', l === 'en');
+  $('#btnID').classList.toggle('on', l === 'id');
+
+  $$('[data-en]').forEach(el => {
+    const v = el.getAttribute('data-' + l);
+    if(v !== null) el.innerHTML = v;
+  });
+
+  renderAll();
+  try{ localStorage.setItem('cvlang', l); }catch(e){}
+}
+
+function renderAll(){
+  renderFeatured();
+  renderFilters();
+  renderProjects();
+  renderExperience();
+  renderSkills();
+  renderTech();
+  renderEdu();
+  renderSpeaking();
+  renderRecs();
+}
+
+/* ── COUNTERS ── */
+function initCounters(){
+  const els = $$('[data-count]');
+  if(reduced()){
+    els.forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      io.unobserve(el);
+      const target = +el.dataset.count;
+      const suf = el.dataset.suffix || '';
+      const dur = 1400;
+      const t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(target * eased);
+        el.innerHTML = val + (suf ? `<span class="suf">${suf}</span>` : '');
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.4 });
+  els.forEach(el => io.observe(el));
+}
+
+/* ── REVEAL ── */
+function initReveal(){
+  if(reduced()){
+    $$('.rv').forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+  $$('.rv').forEach(el => io.observe(el));
+}
+
+/* ── SCROLLSPY ── */
+function initSpy(){
+  const links = [...$$('#nav a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  secs.forEach(s => io.observe(s));
+
+  links.forEach(a => a.addEventListener('click', closeNav));
+}
+
+/* ── MOBILE NAV ── */
+function toggleNav(){
+  const open = $('#sb').classList.toggle('open');
+  $('#scrim').classList.toggle('on', open);
+  $('#mobBtn').classList.toggle('x', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeNav(){
+  if(!$('#sb').classList.contains('open')) return;
+  $('#sb').classList.remove('open');
+  $('#scrim').classList.remove('on');
+  $('#mobBtn').classList.remove('x');
+  document.body.style.overflow = '';
+}
+
+/* ── BOOT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  let saved = 'en';
+  try{ saved = localStorage.getItem('cvlang') || 'en'; }catch(e){}
+  if(saved === 'id') setLang('id'); else renderAll();
+
+  initCounters();
+  initReveal();
+  initSpy();
+
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeNav(); });
+});
+
+</script>
+</body>
+</html>
