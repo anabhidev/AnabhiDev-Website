@@ -2,16 +2,16 @@
 <html lang="en">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFish_FlipbookAudio_Mockup_v1.4.html
+     File        : MissFish_FlipbookAudio_Mockup_v1.5.html
      Description : Mockup fungsional flipbook + read-aloud. Berdiri
                    sendiri — tanpa GAS, tanpa server.
-                   v1.4: tombol tukar 1 halaman / 2 halaman, orientasi
-                   ditentukan mutlak lewat usePortrait, panggung 82vh, dan
-                   animasi buku saat memuat maupun membangun ulang.
+                   v1.5: suara bawaan dipilih lewat skor (English lebih
+                   dulu, mengutamakan suara on-device), penjaga suara bisu,
+                   dan tombol Test di sebelah pemilih suara.
      HtmlService · Google Apps Script · Google Sheets
      IT Department · Miss Fish Bali
-     Version     : 1.4
-     Generated   : 8 August 2026, 11:25:08 WITA
+     Version     : 1.5
+     Generated   : 8 August 2026, 13:16:34 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -304,13 +304,17 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
             <label>Language</label>
             <select id="selLang">
               <option value="all">All available</option>
-              <option value="en">English</option>
+              <option value="en" selected>English</option>
               <option value="id">Bahasa Indonesia</option>
             </select>
           </div>
           <div class="row">
             <label>Voice</label>
-            <select id="selVoice"><option>Loading…</option></select>
+            <div style="display:flex;gap:7px;align-items:stretch">
+              <select id="selVoice" style="flex:1;min-width:0"><option>Loading…</option></select>
+              <button class="btn" id="bTestVoice" style="padding:9px 13px;font-size:12px;flex-shrink:0"
+                      title="Play a short sample with this voice">Test</button>
+            </div>
           </div>
           <div class="row" id="rowRate">
             <label>Speed <span class="rateval" id="rateVal">1.00&times;</span></label>
@@ -360,7 +364,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
 
   <footer>
     <span>IT Department · Miss Fish Bali</span>
-    <span>Mockup v1.4 · 8 August 2026</span>
+    <span>Mockup v1.5 · 8 August 2026</span>
     <span>PDF.js 3.11 · StPageFlip 2.0.7 · Web Speech API</span>
   </footer>
 </div>
@@ -896,10 +900,22 @@ function paintLocks(){
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 /* ═══════════ Suara ═══════════ */
+var voiceInit=false;
 function loadVoices(){
   voices=window.speechSynthesis?(speechSynthesis.getVoices()||[]):[];
   if(!voices.length) return;
-  fillVoiceSelect(); fillLab();
+
+  /* Sekali saja, jangan menimpa pilihan manual pada pemanggilan berikutnya.
+     Daftar suara bisa terisi bertahap, terutama di Android. */
+  if(!voiceInit){
+    voiceInit=true;
+    var en=voices.filter(function(v){ return normLang(v).indexOf('en')===0; });
+    $('selLang').value = en.length ? 'en' : 'all';   /* tanpa English -> semua */
+    fillVoiceSelect(true);
+  }else{
+    fillVoiceSelect(false);
+  }
+  fillLab();
 }
 if(window.speechSynthesis){
   loadVoices();
@@ -908,20 +924,103 @@ if(window.speechSynthesis){
   setTimeout(loadVoices,1800);
 }
 
+/* ══════════════════════════════════════════════════════
+   PEMILIHAN SUARA BAWAAN — v1.5
+   Sebelumnya daftar suara diisi tanpa memilih satu pun, sehingga
+   <select> memakai opsi PERTAMA. Android mengurutkan suara menurut
+   kode bahasa, jadi yang terpilih 'as_IN' (Assamese) — terdaftar
+   tapi datanya tidak terpasang, hasilnya bisu tanpa pesan galat.
+   Sekarang suara dipilih lewat skor, bukan urutan.
+══════════════════════════════════════════════════════ */
+function normLang(v){ return String((v&&v.lang)||'').toLowerCase().replace(/_/g,'-'); }
+
+function voiceScore(v){
+  var s=0, lang=normLang(v);
+  if(v.localService) s+=50;   /* terpasang di perangkat — paling bisa diandalkan */
+  if(v.default)      s+=30;   /* sudah divalidasi sistem                        */
+  var nav=String(navigator.language||'').toLowerCase().replace(/_/g,'-');
+  if(nav && lang===nav) s+=20;
+  if(lang.indexOf('en-au')===0) s+=12;   /* preferensi yang diminta */
+  if(lang.indexOf('en-us')===0) s+=8;
+  if(lang.indexOf('en-gb')===0) s+=6;
+  return s;
+}
+
+function bestVoice(list){
+  var best=null,bs=-1;
+  for(var i=0;i<list.length;i++){
+    var sc=voiceScore(list[i]);
+    if(sc>bs){ bs=sc; best=list[i]; }
+  }
+  return best;
+}
+
 function langFiltered(){
   var f=$('selLang').value;
   if(f==='all') return voices;
   return voices.filter(function(v){ return (v.lang||'').toLowerCase().indexOf(f)===0; });
 }
-function fillVoiceSelect(){
+/* forcePick = true  -> selalu pilih yang terbaik (mis. saat ganti bahasa)
+   forcePick = false -> pertahankan pilihan manual kalau masih tersedia */
+function fillVoiceSelect(forcePick){
   var list=langFiltered(), sel=$('selVoice'), keep=sel.value;
-  if(!list.length){ sel.innerHTML='<option value="">No voice for this language</option>'; return; }
+  if(!list.length){
+    sel.innerHTML='<option value="">No voice available for this language</option>';
+    return;
+  }
   sel.innerHTML=list.map(function(v){
     return '<option value="'+esc(v.name)+'">'+esc(v.name)+' — '+esc(v.lang)+'</option>';
   }).join('');
-  for(var i=0;i<list.length;i++){ if(list[i].name===keep){ sel.value=keep; break; } }
+
+  var kept=false;
+  if(!forcePick && keep){
+    for(var i=0;i<list.length;i++){ if(list[i].name===keep){ sel.value=keep; kept=true; break; } }
+  }
+  if(!kept){
+    var b=bestVoice(list);
+    if(b) sel.value=b.name;
+  }
 }
-$('selLang').addEventListener('change',fillVoiceSelect);
+$('selLang').addEventListener('change',function(){ fillVoiceSelect(true); });
+
+/* Kalimat contoh untuk menguji sebuah suara */
+function sampleFor(v){
+  return normLang(v).indexOf('id')===0
+    ? 'Ini contoh suara untuk membacakan prosedur Miss Fish Bali.'
+    : 'This is a sample voice for reading Miss Fish Bali procedures.';
+}
+
+/* Penjaga suara bisu. Sebagian suara terdaftar di perangkat tetapi
+   datanya tidak terpasang — speak() dipanggil, tidak ada bunyi, dan
+   tidak ada galat sama sekali. Tanpa penjaga ini, kegagalannya sunyi. */
+var speakWatch=null;
+function clearWatch(){ if(speakWatch){ clearTimeout(speakWatch); speakWatch=null; } }
+function armWatch(voiceName){
+  clearWatch();
+  var fired=false;
+  speakWatch=setTimeout(function(){
+    if(!fired && playing && !paused){
+      $('sStat').textContent='No sound from "'+voiceName+'" — try another voice.';
+    }
+  },3500);
+  return function(){ fired=true; clearWatch(); };
+}
+
+$('bTestVoice').onclick=function(){
+  var v=voiceByName($('selVoice').value);
+  if(!v){ $('sStat').textContent='No voice selected.'; setTimeout(updateStat,1800); return; }
+  if(playing) stopSpeak();
+  try{ speechSynthesis.cancel(); }catch(e){}
+  var u=new SpeechSynthesisUtterance(sampleFor(v));
+  u.voice=v; u.lang=v.lang; u.rate=currentRate();
+  var ok=false;
+  u.onstart=function(){ ok=true; $('sStat').textContent='Playing sample — '+v.name; };
+  u.onend  =function(){ setTimeout(updateStat,600); };
+  try{ speechSynthesis.speak(u); }catch(e){ console.error(e); }
+  setTimeout(function(){
+    if(!ok) $('sStat').textContent='No sound from "'+v.name+'" — try another voice.';
+  },3000);
+};
 
 function voiceByName(n){
   for(var i=0;i<voices.length;i++) if(voices[i].name===n) return voices[i];
@@ -951,10 +1050,7 @@ function fillLab(){
     b.addEventListener('click',function(){
       var v=voiceByName(b.getAttribute('data-v')); if(!v) return;
       try{ speechSynthesis.cancel(); }catch(e){}
-      var u=new SpeechSynthesisUtterance(
-        (v.lang||'').toLowerCase().indexOf('id')===0
-          ? 'Ini contoh suara untuk membacakan prosedur Miss Fish Bali.'
-          : 'This is a sample voice for reading Miss Fish Bali procedures.');
+      var u=new SpeechSynthesisUtterance(sampleFor(v));
       u.voice=v; u.lang=v.lang; u.rate=currentRate();
       speechSynthesis.speak(u);
     });
@@ -1032,10 +1128,12 @@ function next(){
   if(!v) v=voiceByName($('selVoice').value);
   if(v){ u.voice=v; u.lang=v.lang; }
   u.rate=currentRate();
-  u.onend  =function(){ if(stopping||!playing) return; idx++; if(idx>maxIdx) maxIdx=idx; highlight(); next(); };
-  u.onerror=function(){ if(stopping||!playing) return; idx++; if(idx>maxIdx) maxIdx=idx; highlight(); next(); };
+  var heard=armWatch(v?v.name:'this voice');
+  u.onstart=function(){ heard(); };
+  u.onend  =function(){ heard(); if(stopping||!playing) return; idx++; if(idx>maxIdx) maxIdx=idx; highlight(); next(); };
+  u.onerror=function(){ heard(); if(stopping||!playing) return; idx++; if(idx>maxIdx) maxIdx=idx; highlight(); next(); };
   highlight();
-  try{ speechSynthesis.speak(u); }catch(e){ console.error(e); stopSpeak(); }
+  try{ speechSynthesis.speak(u); }catch(e){ console.error(e); clearWatch(); stopSpeak(); }
 }
 
 function highlight(){
@@ -1066,6 +1164,7 @@ function updateStat(){
 
 function stopSpeak(){
   stopping=true;
+  clearWatch();
   try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
   playing=false; paused=false; stopping=false;
   releaseWake(); setPlayBtn();
