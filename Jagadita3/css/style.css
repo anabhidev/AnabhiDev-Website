@@ -8,8 +8,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* ── BRAND ──
+     --cyan       : warna utama. Background solid, border, ikon, aksen, judul besar.
+     --cyan-text  : teks cyan kecil di background TERANG    — 5.29:1 ✓
+     --cyan-light : teks cyan kecil di background NAVY      — 6.81:1 ✓
+     --cyan-fill  : background solid yang berisi teks putih — 5.29:1 ✓            */
   --cyan:        #0097B2;
-  --cyan-dark:   #00839A;
+  --cyan-text:   #00768C;
+  --cyan-light:  #35BBD4;
+  --cyan-fill:   #00768C;
+  --cyan-dark:   #006B80;
   --cyan-soft:   #D7F1F5;
   --cyan-muted:  #EAF7FA;
   --navy:        #0A2540;
@@ -17,8 +25,9 @@
   --white:       #FFFFFF;
   --gray-100:    #F8FAFC;
   --gray-200:    #EDF2F7;
-  --gray-300:    #CBD5E0;
-  --gray-500:    #718096;
+  --gray-300:    #CBD5E0;  /* border & divider saja — jangan untuk teks */
+  --gray-400:    #78859A;  /* ikon & elemen UI — 3.74:1 ✓ */
+  --gray-500:    #5A6878;  /* body text & placeholder — 5.70:1 ✓ */
   --gray-700:    #2D3748;
   --dark:        #121212;
   --border:      #D0E7EB;
@@ -36,6 +45,14 @@
   --transition:  0.3s ease;
 }
 
+/* Kunci overflow 2 lapis — WAJIB di html DAN body.
+   overflow-x pada body saja tidak cukup: sebagian browser tetap
+   bisa scroll di level html. */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -44,7 +61,53 @@ body {
   font-size: 16px;
   line-height: 1.7;
   background: var(--white);
-  overflow-x: hidden;
+}
+
+/* ── SKIP LINK (a11y) ── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 2000;
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid var(--cyan-light);
+  outline-offset: 2px;
+}
+
+/* ── FOCUS VISIBLE (a11y) ──
+   Outline 2px + offset, kontras >= 3:1 terhadap latar terang maupun gelap. */
+:focus-visible {
+  outline: 2px solid var(--cyan-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.navbar :focus-visible,
+.nav-mobile :focus-visible {
+  outline-color: var(--cyan-text);
+}
+.hero :focus-visible,
+.page-hero :focus-visible,
+.footer :focus-visible,
+.stats-section :focus-visible,
+.dark-banner :focus-visible,
+.consult-strip :focus-visible,
+.approach-stats :focus-visible,
+.why-section :focus-visible,
+.about-cta :focus-visible,
+.service-cta :focus-visible,
+.contact-cta :focus-visible,
+.approach-cta :focus-visible {
+  outline-color: var(--cyan-light);
 }
 
 img { display: block; max-width: 100%; }
@@ -94,9 +157,9 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-cyan {
-  background: var(--cyan);
+  background: var(--cyan-fill);
   color: var(--white);
-  border-color: var(--cyan);
+  border-color: var(--cyan-fill);
 }
 .btn-cyan:hover {
   background: var(--cyan-dark);
@@ -128,7 +191,7 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--cyan);
+  color: var(--cyan-text);
   margin-bottom: 12px;
 }
 .section-eyebrow::before {
@@ -237,7 +300,7 @@ h1, h2, h3, h4, h5 {
   transition: color var(--transition), background var(--transition);
   letter-spacing: 0.02em;
 }
-.nav-link:hover, .nav-link.active { color: var(--cyan); }
+.nav-link:hover, .nav-link.active { color: var(--cyan-text); }
 
 /* dropdown */
 .nav-dropdown {
@@ -269,7 +332,7 @@ h1, h2, h3, h4, h5 {
   color: var(--gray-700);
   transition: color var(--transition), background var(--transition);
 }
-.nav-dropdown a:hover { color: var(--cyan); background: var(--gray-100); }
+.nav-dropdown a:hover { color: var(--cyan-text); background: var(--gray-100); }
 
 .nav-chevron {
   font-size: 10px;
@@ -325,13 +388,14 @@ h1, h2, h3, h4, h5 {
   border-bottom: 1px solid var(--gray-200);
 }
 .nav-mobile a:last-child { border-bottom: none; }
-.nav-mobile a:hover { color: var(--cyan); }
+.nav-mobile a:hover { color: var(--cyan-text); }
 
 /* ══════════════════════════════════════════
    2. HERO
 ══════════════════════════════════════════ */
 .hero {
   position: relative;
+  max-width: 100vw;
   min-height: 100vh;
   padding-top: var(--nav-h);
   display: flex;
@@ -367,7 +431,7 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--cyan);
+  color: var(--cyan-light);
   background: rgba(0,151,178,0.12);
   border: 1px solid rgba(0,151,178,0.3);
   border-radius: var(--radius-pill);
@@ -404,7 +468,7 @@ h1, h2, h3, h4, h5 {
    3. FREE CONSULTATION STRIP
 ══════════════════════════════════════════ */
 .consult-strip {
-  background: var(--cyan);
+  background: var(--cyan-fill);
   padding: 28px 0;
 }
 .consult-strip .container {
@@ -536,7 +600,7 @@ h1, h2, h3, h4, h5 {
   font-family: 'Raleway', sans-serif;
   font-size: 13px;
   font-weight: 700;
-  color: var(--cyan);
+  color: var(--cyan-text);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   transition: gap var(--transition);
@@ -550,8 +614,10 @@ h1, h2, h3, h4, h5 {
 .dark-banner {
   position: relative;
   padding: 100px 0;
-  background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600&q=80') center/cover no-repeat fixed;
+  background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600&q=80') center/cover no-repeat;
+  background-attachment: scroll;
   text-align: center;
+  max-width: 100vw;
   overflow: hidden;
 }
 .dark-banner-overlay {
@@ -650,14 +716,14 @@ h1, h2, h3, h4, h5 {
   transition: color var(--transition);
   user-select: none;
 }
-.faq-question:hover { color: var(--cyan); }
-.faq-item.open .faq-question { color: var(--cyan); }
+.faq-question:hover { color: var(--cyan-text); }
+.faq-item.open .faq-question { color: var(--cyan-text); }
 
 .faq-chevron {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  color: var(--gray-300);
+  color: var(--gray-400);
   transition: transform 0.35s ease, color 0.35s ease;
 }
 .faq-item.open .faq-chevron {
@@ -747,7 +813,7 @@ h1, h2, h3, h4, h5 {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--gray-300);
+  background: var(--gray-400);
   border: none;
   cursor: pointer;
   padding: 0;
@@ -851,7 +917,7 @@ h1, h2, h3, h4, h5 {
 }
 .team-role {
   font-size: 13px;
-  color: var(--cyan);
+  color: var(--cyan-text);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -891,7 +957,7 @@ h1, h2, h3, h4, h5 {
 }
 .stat-number .stat-plus {
   font-size: 32px;
-  color: var(--cyan);
+  color: var(--cyan-light);
 }
 .stat-label {
   font-size: 13px;
@@ -921,7 +987,7 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--cyan);
+  color: var(--cyan-text);
   margin-bottom: 16px;
 }
 .cta-title {
@@ -954,7 +1020,7 @@ h1, h2, h3, h4, h5 {
   width: 20px;
   height: 20px;
   background: var(--cyan-muted);
-  color: var(--cyan);
+  color: var(--cyan-text);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1037,7 +1103,7 @@ h1, h2, h3, h4, h5 {
   color: rgba(255,255,255,0.5);
   transition: color var(--transition);
 }
-.footer-links a:hover { color: var(--cyan); }
+.footer-links a:hover { color: var(--cyan-light); }
 
 .footer-contact-item {
   display: flex;
@@ -1046,10 +1112,11 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 12px;
 }
 .footer-contact-icon {
-  color: var(--cyan);
+  color: var(--cyan-light);
   font-size: 14px;
   margin-top: 3px;
   flex-shrink: 0;
+  stroke: var(--cyan-light);
 }
 .footer-contact-text {
   font-size: 14px;
@@ -1057,7 +1124,7 @@ h1, h2, h3, h4, h5 {
   line-height: 1.6;
 }
 .footer-contact-text a { color: rgba(255,255,255,0.5); transition: color var(--transition); }
-.footer-contact-text a:hover { color: var(--cyan); }
+.footer-contact-text a:hover { color: var(--cyan-light); }
 
 /* callback form in footer */
 .footer-form-title {
@@ -1107,7 +1174,7 @@ h1, h2, h3, h4, h5 {
 .btn-callback {
   width: 100%;
   height: 44px;
-  background: var(--cyan);
+  background: var(--cyan-fill);
   border: none;
   border-radius: var(--radius-sm);
   font-family: 'Raleway', sans-serif;
@@ -1136,7 +1203,7 @@ h1, h2, h3, h4, h5 {
   font-size: 13px;
   color: rgba(255,255,255,0.3);
 }
-.footer-copy a { color: var(--cyan); }
+.footer-copy a { color: var(--cyan-light); }
 .footer-bottom-links {
   display: flex;
   gap: 20px;
@@ -1146,7 +1213,7 @@ h1, h2, h3, h4, h5 {
   color: rgba(255,255,255,0.3);
   transition: color var(--transition);
 }
-.footer-bottom-links a:hover { color: var(--cyan); }
+.footer-bottom-links a:hover { color: var(--cyan-light); }
 
 /* ══════════════════════════════════════════
    RESPONSIVE
@@ -1253,3 +1320,46 @@ h1, h2, h3, h4, h5 {
   }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ══════════════════════════════════════════
+   UTILITIES
+   Class pengganti inline style — supaya CSP
+   bisa dipasang tanpa 'unsafe-inline'.
+══════════════════════════════════════════ */
+
+/* Visually hidden — terbaca screen reader, tak terlihat mata */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Eyebrow yang di-center */
+.section-eyebrow.is-center { display: flex; justify-content: center; }
+
+/* Judul & subtitle rata tengah */
+.section-title.is-center   { text-align: center; }
+.section-subtitle.is-center{ margin-left: auto; margin-right: auto; text-align: center; }
+
+/* Jarak atas untuk judul kolom footer kedua */
+.footer-col-title.has-gap  { margin-top: 28px; }
+
+/* LCP hint image — tersembunyi tapi tetap di-fetch prioritas tinggi */
+.lcp-hint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Testimonial slider — hanya slide aktif yang tampil (menggantikan inline style) */
+.t-slide { display: none; }
+.t-slide.active { display: block; }
