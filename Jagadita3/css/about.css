@@ -1,0 +1,407 @@
+/* ═══════════════════════════════════════════
+   JAGADITA — about.css
+   Styles khusus halaman About Us
+═══════════════════════════════════════════ */
+
+/* ── PAGE HERO ── */
+.page-hero {
+  position: relative;
+  padding: calc(var(--nav-h) + 60px) 0 60px;
+  background: linear-gradient(135deg, var(--navy) 0%, #0d3460 60%, var(--cyan-dark) 100%);
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=60') center/cover no-repeat;
+  opacity: 0.08;
+}
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,37,64,0.92) 0%, rgba(0,131,154,0.5) 100%);
+}
+.page-hero-content {
+  position: relative;
+  z-index: 2;
+}
+.page-hero-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+}
+.breadcrumb a {
+  color: rgba(255,255,255,0.55);
+  transition: color var(--transition);
+}
+.breadcrumb a:hover { color: var(--cyan); }
+.breadcrumb span[aria-current] { color: var(--cyan); font-weight: 700; }
+
+/* ── PHILOSOPHY ── */
+.philosophy-section {
+  padding: 96px 0;
+  background: var(--white);
+}
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.philosophy-desc {
+  font-size: 15px;
+  color: var(--gray-500);
+  line-height: 1.85;
+  margin-bottom: 16px;
+}
+.philosophy-desc strong { color: var(--navy); font-weight: 700; }
+.philosophy-desc em { color: var(--cyan); font-style: normal; font-weight: 700; }
+
+.philosophy-visual { position: relative; }
+.philosophy-img-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 7/5;
+}
+.philosophy-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.philosophy-badge {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  background: var(--cyan);
+  color: var(--white);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+.philosophy-badge-year {
+  font-family: 'Raleway', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+}
+.philosophy-badge-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+/* ── TIMELINE ── */
+.timeline-section {
+  padding: 96px 0;
+  background: var(--gray-100);
+}
+.timeline {
+  position: relative;
+  margin-top: 56px;
+}
+/* vertical center line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 0;
+  align-items: center;
+  margin-bottom: 64px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+
+/* dot di tengah */
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  background: var(--cyan);
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--cyan);
+  justify-self: center;
+  z-index: 1;
+  transition: transform var(--transition);
+}
+.timeline-item:hover .timeline-dot { transform: scale(1.3); }
+
+/* LEFT item: content kiri, gambar kanan */
+.timeline-left .timeline-content { padding-right: 40px; text-align: right; }
+.timeline-left .timeline-img-wrap { padding-left: 40px; }
+
+/* RIGHT item: gambar kiri, content kanan */
+.timeline-right .timeline-content { padding-left: 40px; }
+.timeline-right .timeline-img-wrap { padding-right: 40px; }
+
+.timeline-img-wrap img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: block;
+  aspect-ratio: 5/3;
+  object-fit: cover;
+}
+
+.timeline-year {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+.timeline-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.timeline-desc {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.8;
+}
+
+/* ── CORE VALUES ── */
+.values-section {
+  padding: 96px 0;
+  background: var(--white);
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 16px;
+}
+.value-card {
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+  padding: 32px 28px;
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+}
+.value-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--cyan);
+}
+.value-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(0,151,178,0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  margin-bottom: 16px;
+}
+.value-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+.value-desc {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.75;
+}
+
+/* ── FOUNDERS ── */
+.founders-section {
+  padding: 96px 0;
+  background: var(--gray-100);
+}
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 16px;
+}
+.founder-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition);
+}
+.founder-card:hover { box-shadow: var(--shadow-md); }
+
+.founder-img-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 840/600;
+}
+.founder-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+}
+.founder-card:hover .founder-img { transform: scale(1.04); }
+
+.founder-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,37,64,0.85) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+.founder-card:hover .founder-overlay { opacity: 1; }
+
+.founder-socials {
+  display: flex;
+  gap: 10px;
+  transform: translateY(10px);
+  transition: transform 0.35s ease;
+}
+.founder-card:hover .founder-socials { transform: translateY(0); }
+
+.founder-social-link {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  backdrop-filter: blur(4px);
+  transition: background var(--transition), border-color var(--transition);
+}
+.founder-social-link:hover { background: var(--cyan); border-color: var(--cyan); }
+
+.founder-info {
+  padding: 24px 24px 28px;
+}
+.founder-name {
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 3px;
+}
+.founder-role {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+.founder-bio {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.8;
+}
+
+/* ── CTA STRIP ── */
+.about-cta {
+  background: var(--cyan);
+  padding: 56px 0;
+}
+.about-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.about-cta-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.about-cta-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.78);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .founders-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .philosophy-section { padding: 64px 0; }
+  .philosophy-grid { grid-template-columns: 1fr; gap: 48px; }
+  .philosophy-badge { bottom: -16px; left: 16px; }
+
+  .timeline-section { padding: 64px 0; }
+  .timeline::before { left: 20px; }
+  .timeline-item {
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .timeline-left .timeline-content,
+  .timeline-right .timeline-content {
+    padding: 0 0 0 16px;
+    text-align: left;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .timeline-left .timeline-img-wrap,
+  .timeline-right .timeline-img-wrap {
+    padding: 16px 0 0 16px;
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .timeline-dot {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: start;
+    margin-top: 6px;
+  }
+
+  .values-section { padding: 64px 0; }
+  .values-grid { grid-template-columns: 1fr; }
+
+  .founders-section { padding: 64px 0; }
+  .founders-grid { grid-template-columns: 1fr; max-width: 400px; margin: 16px auto 0; }
+
+  .about-cta { padding: 40px 0; }
+  .about-cta-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { padding: calc(var(--nav-h) + 40px) 0 40px; }
+  .values-grid { grid-template-columns: 1fr; }
+  .founders-grid { max-width: 100%; }
+}
