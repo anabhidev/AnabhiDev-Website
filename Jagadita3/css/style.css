@@ -1527,3 +1527,224 @@ h1, h2, h3, h4, h5 {
   .team-card:nth-child(2) { order: 1; }  /* Satria — CEO tampil pertama */
   .team-card:nth-child(3) { order: 3; }  /* Agus */
 }
+
+/* ══════════════════════════════════════════
+   SERVICES — 3 VARIAN UNTUK DIBANDINGKAN
+   Hapus 2 yang tidak dipilih setelah keputusan.
+══════════════════════════════════════════ */
+
+/* Label pembanding — HAPUS setelah memilih */
+.variant-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--navy);
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 28px;
+}
+.variant-tag.is-rec { background: var(--cyan-fill); }
+
+/* ─────────── OPSI 1 — Dua kolom, deskripsi selalu tampil ─────────── */
+.svc1-split {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 76px;
+  align-items: start;
+}
+.svc1-aside { position: sticky; top: calc(var(--nav-h) + 40px); }
+.svc1-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+.svc1-title span { color: var(--cyan-text); }
+.svc1-intro {
+  font-size: 16px;
+  color: var(--gray-500);
+  line-height: 1.85;
+  margin-bottom: 28px;
+}
+.svc1-list { border-top: 1px solid var(--border); }
+.svc1-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 22px;
+  align-items: start;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: padding-left var(--transition);
+}
+.svc1-row:hover { padding-left: 10px; }
+.svc1-num {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cyan-text);
+  min-width: 26px;
+  padding-top: 6px;
+}
+.svc1-name {
+  display: block;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  font-size: clamp(19px, 2vw, 25px);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  transition: color var(--transition);
+}
+.svc1-row:hover .svc1-name { color: var(--cyan-text); }
+.svc1-desc {
+  display: block;
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.75;
+  margin-top: 7px;
+}
+.svc1-arrow {
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--gray-400);
+  padding-top: 4px;
+  transition: color var(--transition), transform var(--transition);
+}
+.svc1-row:hover .svc1-arrow { color: var(--cyan-text); transform: translateX(5px); }
+
+/* ─────────── OPSI 2 — Kartu (foto sudah diperbaiki) ─────────── */
+.svc2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.svc2-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.svc2-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.svc2-img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.94);
+  transition: filter var(--transition);
+}
+.svc2-card:hover .svc2-img { filter: saturate(1.05); }
+.svc2-body { padding: 24px 26px 28px; }
+.svc2-accent { width: 30px; height: 2px; background: var(--cyan); margin-bottom: 15px; }
+.svc2-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.svc2-desc { font-size: 14px; color: var(--gray-500); line-height: 1.75; margin-bottom: 16px; }
+.svc2-more {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan-text);
+  display: inline-flex;
+  gap: 6px;
+  transition: gap var(--transition);
+}
+.svc2-card:hover .svc2-more { gap: 11px; }
+
+/* ─────────── OPSI 3 — Hybrid, preview foto saat hover ─────────── */
+.svc3-list { border-top: 1px solid var(--border); position: relative; }
+.svc3-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 26px;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: padding-left var(--transition);
+}
+.svc3-row:hover { padding-left: 12px; }
+.svc3-num {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cyan-text);
+  min-width: 26px;
+}
+.svc3-name {
+  display: block;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  font-size: clamp(21px, 2.4vw, 30px);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  transition: color var(--transition);
+}
+.svc3-row:hover .svc3-name { color: var(--cyan-text); }
+.svc3-desc {
+  display: block;
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.7;
+  margin-top: 7px;
+  max-width: 420px;
+}
+.svc3-thumb {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  width: 250px;
+  height: 156px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(-50%) translateX(18px) scale(0.96);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  pointer-events: none;
+  z-index: 4;
+}
+.svc3-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.svc3-row:hover .svc3-thumb { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
+.svc3-arrow {
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--gray-400);
+  transition: color var(--transition), transform var(--transition);
+}
+.svc3-row:hover .svc3-arrow { color: var(--cyan-text); transform: translateX(5px); }
+
+/* ─────────── RESPONSIVE 3 VARIAN ─────────── */
+@media (max-width: 1024px) {
+  .svc1-split { grid-template-columns: 1fr; gap: 40px; }
+  .svc1-aside { position: static; }
+  .svc2-grid { grid-template-columns: repeat(2, 1fr); }
+  .svc3-thumb { display: none; }
+}
+@media (max-width: 768px) {
+  .svc2-grid { grid-template-columns: 1fr; }
+  .svc1-row, .svc3-row { grid-template-columns: auto 1fr; gap: 16px; }
+  .svc1-arrow, .svc3-arrow { display: none; }
+}
