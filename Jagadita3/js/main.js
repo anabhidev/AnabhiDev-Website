@@ -14,9 +14,10 @@
   }, { passive: true });
 
   hamburger?.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    const isOpen = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
   // Close mobile menu on link click
@@ -24,6 +25,7 @@
     a.addEventListener('click', () => {
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     });
   });
@@ -56,11 +58,18 @@
       const item = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
 
-      // tutup semua
-      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      // tutup semua + reset aria
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        const q = i.querySelector('.faq-question');
+        if (q) q.setAttribute('aria-expanded', 'false');
+      });
 
       // buka yg diklik (kalau belum open)
-      if (!isOpen) item.classList.add('open');
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 })();
