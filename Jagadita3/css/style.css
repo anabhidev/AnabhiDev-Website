@@ -1,13 +1,19 @@
 /* ═══════════════════════════════════════════
    JAGADITA — style.css
    Brand: Cyan #0097B2 · Navy #0A2540
-   Font: Raleway (heading) + Nunito Sans (body)
+   Font: Fraunces (display/heading) + Nunito Sans (body/UI)
 ═══════════════════════════════════════════ */
 
 /* ── RESET & ROOT ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* ── TIPOGRAFI ──
+     Fraunces  : variable serif, sumbu SOFT & WONK. Untuk judul & angka.
+     Nunito Sans: body + seluruh elemen UI (nav, tombol, label). */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Nunito Sans', -apple-system, sans-serif;
+
   /* ── BRAND ──
      --cyan       : warna utama. Background solid, border, ikon, aksen, judul besar.
      --cyan-text  : teks cyan kecil di background TERANG    — 5.29:1 ✓
@@ -23,27 +29,51 @@
   --navy:        #0A2540;
   --navy-mid:    #1a3a5c;
   --white:       #FFFFFF;
-  --gray-100:    #F8FAFC;
-  --gray-200:    #EDF2F7;
+  --gray-100:    #FAF9F6;  /* ivory hangat — menggantikan abu kebiruan */
+  --gray-200:    #F2F0EB;
   --gray-300:    #CBD5E0;  /* border & divider saja — jangan untuk teks */
   --gray-400:    #78859A;  /* ikon & elemen UI — 3.74:1 ✓ */
   --gray-500:    #5A6878;  /* body text & placeholder — 5.70:1 ✓ */
   --gray-700:    #2D3748;
   --dark:        #121212;
-  --border:      #D0E7EB;
+  --border:      rgba(10,37,64,0.10);   /* hairline */
+  --border-soft: rgba(10,37,64,0.06);
 
-  --radius-sm:   4px;
-  --radius-md:   10px;
-  --radius-lg:   20px;
+  --radius-sm:   3px;
+  --radius-md:   4px;    /* kartu — tegas & arsitektural */
+  --radius-lg:   6px;
   --radius-pill: 9999px;
 
-  --shadow-sm:   0 1px 4px rgba(0,0,0,0.08);
-  --shadow-md:   0 4px 20px rgba(0,0,0,0.10);
-  --shadow-lg:   0 8px 40px rgba(0,0,0,0.13);
+  /* Shadow lebar & halus — kedalaman tanpa kesan berat */
+  --shadow-sm:   0 2px 10px rgba(10,37,64,0.04);
+  --shadow-md:   0 12px 32px rgba(10,37,64,0.06);
+  --shadow-lg:   0 24px 60px rgba(10,37,64,0.08);
 
+  /* Motion — kurva expo-out, lambat dan menetap */
+  --ease:        cubic-bezier(.16,1,.3,1);
+  --dur:         1s;
   --nav-h:       80px;
-  --transition:  0.3s ease;
+  --transition:  0.4s cubic-bezier(.16,1,.3,1);
 }
+
+/* Grain halus untuk section gelap — menghilangkan kesan flat digital */
+.hero::after,
+.dark-banner::after,
+.stats-section::after,
+.why-section::after,
+.approach-stats::after,
+.page-hero::after,
+.footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+.footer { position: relative; }
+.stats-section { position: relative; }
 
 /* Kunci overflow 2 lapis — WAJIB di html DAN body.
    overflow-x pada body saja tidak cukup: sebagian browser tetap
@@ -56,10 +86,10 @@ html, body {
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: var(--font-body);
   color: var(--gray-700);
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.85;
   background: var(--white);
 }
 
@@ -71,7 +101,7 @@ body {
   z-index: 2000;
   background: var(--navy);
   color: var(--white);
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
   padding: 12px 24px;
@@ -116,9 +146,12 @@ ul { list-style: none; }
 
 /* ── TYPOGRAPHY ── */
 h1, h2, h3, h4, h5 {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
   color: var(--navy);
-  line-height: 1.2;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
 }
 
 /* ── CONTAINER ── */
@@ -134,12 +167,12 @@ h1, h2, h3, h4, h5 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   border-radius: var(--radius-pill);
-  padding: 14px 32px;
+  padding: 15px 34px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: all var(--transition);
@@ -186,13 +219,13 @@ h1, h2, h3, h4, h5 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Raleway', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   color: var(--cyan-text);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .section-eyebrow::before {
   content: '';
@@ -204,10 +237,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .section-title {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 600;
   color: var(--navy);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .section-title span { color: var(--cyan); }
 
@@ -226,28 +259,29 @@ h1, h2, h3, h4, h5 {
 .section-subtitle {
   font-size: 17px;
   color: var(--gray-500);
-  max-width: 560px;
-  line-height: 1.75;
+  max-width: 580px;
+  line-height: 1.85;
 }
 
 /* ── FADE ANIMATION ── */
 .fade-up {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(14px) scale(0.985);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  will-change: opacity, transform;
 }
 .fade-up.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* staggered delay helpers */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
-.delay-5 { transition-delay: 0.5s; }
-.delay-6 { transition-delay: 0.6s; }
+.delay-1 { transition-delay: 0.11s; }
+.delay-2 { transition-delay: 0.22s; }
+.delay-3 { transition-delay: 0.33s; }
+.delay-4 { transition-delay: 0.44s; }
+.delay-5 { transition-delay: 0.55s; }
+.delay-6 { transition-delay: 0.66s; }
 
 /* ══════════════════════════════════════════
    1. NAVBAR
@@ -291,7 +325,7 @@ h1, h2, h3, h4, h5 {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
   color: var(--navy);
@@ -380,7 +414,7 @@ h1, h2, h3, h4, h5 {
 .nav-mobile.open { display: block; }
 .nav-mobile a {
   display: block;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 16px;
   color: var(--navy);
@@ -426,7 +460,7 @@ h1, h2, h3, h4, h5 {
 
 .hero-eyebrow {
   display: inline-block;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -440,22 +474,23 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-title {
-  font-family: 'Raleway', sans-serif;
-  font-size: clamp(36px, 5vw, 56px);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6.4vw, 84px);
+  font-weight: 600;
   color: var(--white);
-  line-height: 1.12;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
+  line-height: 1.05;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
 }
 .hero-title span { color: var(--cyan); }
 
 .hero-desc {
   font-size: 17px;
-  color: rgba(255,255,255,0.78);
-  line-height: 1.75;
-  margin-bottom: 36px;
-  max-width: 500px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.85;
+  margin-bottom: 40px;
+  max-width: 520px;
 }
 
 .hero-actions {
@@ -478,9 +513,10 @@ h1, h2, h3, h4, h5 {
   flex-wrap: wrap;
 }
 .consult-strip-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--white);
   white-space: nowrap;
   flex-shrink: 0;
@@ -518,7 +554,7 @@ h1, h2, h3, h4, h5 {
   color: var(--white);
   border: none;
   border-radius: var(--radius-pill);
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
@@ -548,7 +584,7 @@ h1, h2, h3, h4, h5 {
 
 .service-card {
   background: var(--white);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -556,7 +592,7 @@ h1, h2, h3, h4, h5 {
 }
 .service-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
 .service-img {
@@ -579,9 +615,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .service-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--navy);
   margin-bottom: 10px;
 }
@@ -597,7 +634,7 @@ h1, h2, h3, h4, h5 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 700;
   color: var(--cyan-text);
@@ -628,9 +665,10 @@ h1, h2, h3, h4, h5 {
 .dark-banner .container { position: relative; z-index: 2; }
 
 .dark-banner-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: clamp(26px, 4vw, 44px);
-  font-weight: 800;
+  font-weight: 600;
   color: var(--white);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -674,9 +712,10 @@ h1, h2, h3, h4, h5 {
 
 /* FAQ */
 .faq-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--cyan);
   margin-bottom: 20px;
 }
@@ -684,18 +723,18 @@ h1, h2, h3, h4, h5 {
 .faq-item {
   background: var(--white);
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-sm);
   margin-bottom: 10px;
   border-left: 3px solid transparent;
   transition: box-shadow var(--transition), border-left-color var(--transition);
   overflow: hidden;
 }
 .faq-item:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  box-shadow: var(--shadow-md);
 }
 .faq-item.open {
   border-left-color: var(--cyan);
-  box-shadow: 0 4px 16px rgba(0,151,178,0.10);
+  box-shadow: 0 12px 32px rgba(0,151,178,0.10);
 }
 
 .faq-question {
@@ -705,7 +744,7 @@ h1, h2, h3, h4, h5 {
   width: 100%;
   padding: 18px 20px;
   cursor: pointer;
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: 700;
   color: var(--navy);
@@ -791,9 +830,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .testimonial-author-name {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--navy);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -909,9 +949,10 @@ h1, h2, h3, h4, h5 {
   border-top: none;
 }
 .team-name {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--navy);
   margin-bottom: 3px;
 }
@@ -944,9 +985,11 @@ h1, h2, h3, h4, h5 {
 .stat-item:last-child { border-right: none; }
 
 .stat-number {
-  font-family: 'Raleway', sans-serif;
-  font-size: 56px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.4vw, 68px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
   color: var(--white);
   line-height: 1;
   margin-bottom: 8px;
@@ -982,7 +1025,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .cta-eyebrow {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1088,7 +1131,7 @@ h1, h2, h3, h4, h5 {
 .footer-social:hover { background: var(--cyan); color: var(--white); border-color: var(--cyan); }
 
 .footer-col-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 800;
   color: var(--white);
@@ -1128,7 +1171,7 @@ h1, h2, h3, h4, h5 {
 
 /* callback form in footer */
 .footer-form-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 700;
   color: rgba(255,255,255,0.55);
@@ -1177,7 +1220,7 @@ h1, h2, h3, h4, h5 {
   background: var(--cyan-fill);
   border: none;
   border-radius: var(--radius-sm);
-  font-family: 'Raleway', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 13px;
   color: var(--white);
