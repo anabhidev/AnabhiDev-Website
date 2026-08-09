@@ -15,6 +15,7 @@
   <meta property="og:image" content="https://jagadita.com/wp-content/uploads/2026/04/logo-jagadita-transparent-black.webp">
   <meta property="og:url" content="https://jagadita.com">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_ID">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -31,15 +32,62 @@
 
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- Structured Data: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Jagadita Hospitality Consulting",
+    "alternateName": "Jagadita",
+    "url": "https://jagadita.com/",
+    "inLanguage": "en",
+    "publisher": { "@id": "https://jagadita.com/#organization" }
+  }
+  </script>
+
   <!-- Structured Data: ProfessionalService -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": "https://jagadita.com/#organization",
     "name": "Jagadita Hospitality Consulting",
     "url": "https://jagadita.com",
     "description": "Hospitality consulting for Hotels, Resorts, Villas, and F&B in Bali.",
-    "address": { "@type": "PostalAddress", "addressLocality": "Bali", "addressCountry": "ID" },
+    "foundingDate": "2026-03-23",
+    "priceRange": "$$",
+    "telephone": "+62-819-4749-4989",
+    "email": "hello@jagadita.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Denpasar",
+      "addressRegion": "Bali",
+      "addressCountry": "ID"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -8.670458,
+      "longitude": 115.212629
+    },
+    "areaServed": [
+      { "@type": "Place", "name": "Bali, Indonesia" },
+      { "@type": "Country", "name": "Indonesia" }
+    ],
+    "knowsAbout": [
+      "Hospitality Strategy",
+      "Market Analysis",
+      "Guest Experience Design",
+      "Revenue Management",
+      "Hospitality Staff Training",
+      "Hotel Operational Excellence",
+      "Hospitality Technology Integration"
+    ],
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }],
     "sameAs": [
       "https://www.linkedin.com/in/viveka888",
       "https://www.linkedin.com/in/aasatriawibawa/",
@@ -91,6 +139,7 @@
   </script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- LCP hint: preload hero background image -->
 <img
@@ -99,7 +148,7 @@
   aria-hidden="true"
   fetchpriority="high"
   width="1600" height="900"
-  style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"
+  class="lcp-hint"
 >
 
 <!-- ══════════════════════════════════════════
@@ -187,8 +236,10 @@
   <div class="container">
     <div class="consult-strip-title fade-up">Free Consultation</div>
     <form class="consult-form" action="https://formspree.io/f/placeholder" method="POST" aria-label="Free consultation form">
-      <input class="consult-input fade-up delay-1" type="text" name="name" placeholder="Your name" aria-label="Your name" required>
-      <input class="consult-input fade-up delay-2" type="email" name="email" placeholder="Your email" aria-label="Your email" required>
+      <label class="sr-only" for="consult-name">Your name</label>
+      <input class="consult-input fade-up delay-1" type="text" id="consult-name" name="name" placeholder="Your name" required>
+      <label class="sr-only" for="consult-email">Your email</label>
+      <input class="consult-input fade-up delay-2" type="email" id="consult-email" name="email" placeholder="Your email" required>
       <button type="submit" class="btn-consult fade-up delay-3">Send Request</button>
     </form>
   </div>
@@ -423,7 +474,7 @@
     </div>
 
     <!-- Slide 2 -->
-    <div class="t-slide" role="region" aria-label="Testimonial 2" style="display:none">
+    <div class="t-slide" role="region" aria-label="Testimonial 2">
       <p class="testimonial-text">
         We were amazed by how practical and actionable their recommendations were. No fluff — just clear strategies that our team could implement immediately.
       </p>
@@ -434,7 +485,7 @@
     </div>
 
     <!-- Slide 3 -->
-    <div class="t-slide" role="region" aria-label="Testimonial 3" style="display:none">
+    <div class="t-slide" role="region" aria-label="Testimonial 3">
       <p class="testimonial-text">
         The SOP and training program Jagadita designed for us elevated our service standards dramatically. Our TripAdvisor score jumped from 4.1 to 4.7 in one season.
       </p>
@@ -464,7 +515,7 @@
         Discovery, Concept, <span>Operational System</span> and Team Training
       </h2>
       <div class="section-divider fade-up delay-2"></div>
-      <p class="section-subtitle fade-up delay-3" style="margin: 0 auto; text-align:center;">
+      <p class="section-subtitle is-center fade-up delay-3">
         We listen carefully, define clear positioning, design efficient systems, and train teams to deliver exceptional service across every guest touchpoint.
       </p>
     </div>
@@ -689,26 +740,20 @@
           <a href="contact.html">Contact</a>
         </nav>
 
-        <div class="footer-col-title" style="margin-top:28px;">Contact</div>
+        <div class="footer-col-title has-gap">Contact</div>
         <div class="footer-contact-item">
-          <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <div class="footer-contact-text">
-            <a href="mailto:hello@jagadita.com">hello@jagadita.com</a>
-          </div>
-        </div>
-        <div class="footer-contact-item">
-          <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.339 3.011C3.381 3.011 2 4.381 2 6.293c0 1.158.487 2.27 1.355 3.09L2.5 12.5l3.22-.849C6.567 12.185 7.648 12.5 8.75 12.5c1.913 0 3.293-1.381 3.293-3.293V6.293C12.043 4.381 10.663 3.011 8.75 3.011H5.339zM12 12c-1.1 0-2-.9-2-2V6c0-3.314 2.686-6 6-6s6 2.686 6 6v4c0 1.1-.9 2-2 2h-8z" style="display:none"/></svg>
+          <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <div class="footer-contact-text">Bali, Indonesia</div>
         </div>
         <div class="footer-contact-item">
-          <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:var(--cyan)" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.857L0 24l6.293-1.506A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.85 0-3.584-.504-5.073-1.383l-.363-.216-3.736.894.944-3.637-.237-.375A9.795 9.795 0 012.182 12C2.182 6.618 6.618 2.182 12 2.182S21.818 6.618 21.818 12 17.382 21.818 12 21.818z"/></svg>
+          <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.857L0 24l6.293-1.506A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.85 0-3.584-.504-5.073-1.383l-.363-.216-3.736.894.944-3.637-.237-.375A9.795 9.795 0 012.182 12C2.182 6.618 6.618 2.182 12 2.182S21.818 6.618 21.818 12 17.382 21.818 12 21.818z"/></svg>
           <div class="footer-contact-text">
             <a href="https://wa.me/6281947494989" target="_blank" rel="noopener noreferrer">+62-819-4749-4989</a>
           </div>
         </div>
         <div class="footer-contact-item">
           <svg class="footer-contact-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <div class="footer-contact-text">Mon–Fri: 9:00 AM – 6:00 PM<br>WITA (UTC+8)</div>
+          <div class="footer-contact-text">We reply within 24 hours<br>Consultations by appointment</div>
         </div>
       </div>
 
@@ -717,9 +762,12 @@
         <div class="footer-col-title">Request a Call Back</div>
         <p class="footer-form-title">I would like to discuss:</p>
         <form action="https://formspree.io/f/placeholder" method="POST" aria-label="Call back request form">
-          <input class="footer-input" type="text" name="name" placeholder="Your name" aria-label="Your name" required>
-          <input class="footer-input" type="tel" name="phone" placeholder="Your phone number" aria-label="Phone number">
-          <select class="footer-select" name="topic" aria-label="Topic to discuss">
+          <label class="sr-only" for="fcb-name-index">Your name</label>
+          <input class="footer-input" type="text" id="fcb-name-index" name="name" placeholder="Your name" required>
+          <label class="sr-only" for="fcb-phone-index">Phone number</label>
+          <input class="footer-input" type="tel" id="fcb-phone-index" name="phone" placeholder="Your phone number">
+          <label class="sr-only" for="fcb-topic-index">Topic to discuss</label>
+          <select class="footer-select" id="fcb-topic-index" name="topic">
             <option value="" disabled selected>Select a topic</option>
             <option value="strategic-planning">Strategic Planning</option>
             <option value="market-analysis">Market Analysis</option>
