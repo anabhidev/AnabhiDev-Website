@@ -1,0 +1,1181 @@
+<!--
+================================================================
+MFB-IT — Miss Fish IT Daily Activity System
+HTML · CSS · JavaScript · Supabase Edge Function
+IT Department · Miss Fish Bali
+Version   : 1.8
+Generated : 9 August 2026, 23:23:18
+================================================================
+CARA PASANG
+  1. Ganti nama berkas menjadi index.html
+  2. Unggah ke anabhidev.com (atau Cloudflare Pages)
+  3. Buka di ponsel, masukkan PIN
+
+CATATAN
+  Berkas ini berdiri sendiri. Tidak perlu server, tidak perlu build.
+  Kunci anon Supabase memang terlihat di sini — itu wajar dan aman,
+  karena seluruh tabel ditolak RLS. Yang menjaga data adalah PIN
+  yang diperiksa di sisi server.
+================================================================
+-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0B1B2E">
+<title>Miss Fish — IT Daily Activity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   TOKEN
+══════════════════════════════════════════════ */
+:root {
+  --navy:    #0B1B2E;
+  --navy2:   #16304A;
+  --navy3:   #1F4266;
+  --brass:   #C9A84C;
+  --bg:      #EDF0F3;
+  --card:    #FFFFFF;
+  --ink:     #0B1B2E;
+  --mid:     #5C6B7A;
+  --muted:   #7C8A99;
+  --line:    #E4E8ED;
+  --field:   #F4F6F8;
+  --red:     #B3352C;
+  --green:   #2E7D5B;
+  --amber:   #B7791F;
+  --nav-h:   72px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea, select {
+  font-family: inherit; font-size: inherit; color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* ══════════════════════════════════════════════
+   LAYAR PIN
+══════════════════════════════════════════════ */
+#pinScreen {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  transition: opacity .4s ease;
+}
+#pinScreen.hide { opacity: 0; pointer-events: none; }
+
+.pin-wrap {
+  width: 100%; max-width: 330px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.pin-logo {
+  width: clamp(120px, 46vw, 168px); height: auto;
+  object-fit: contain; margin-bottom: 18px;
+}
+.pin-logo-fb {
+  font-family: 'Instrument Serif', serif; font-size: 46px;
+  color: var(--brass); margin-bottom: 18px; display: none;
+}
+.pin-brand {
+  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--brass); margin-bottom: 22px; text-align: center;
+}
+.pin-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 8vw, 36px); color: #fff;
+  margin-bottom: 6px; text-align: center; line-height: 1.1;
+}
+.pin-sub {
+  font-size: 13px; color: rgba(255,255,255,.5);
+  margin-bottom: 30px; text-align: center;
+}
+
+.pin-dots { display: flex; gap: 16px; margin-bottom: 32px; }
+.pin-dot {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.28);
+  transition: all .18s ease;
+}
+.pin-dot.fill { background: var(--brass); border-color: var(--brass); transform: scale(1.18); }
+.pin-dot.err  { background: #E05A4E; border-color: #E05A4E; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-9px); }
+  40%,80% { transform: translateX(9px); }
+}
+.pin-dots.shake { animation: shake .4s ease; }
+
+.pin-pad {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; width: min(264px, 76vw);
+}
+.pin-key {
+  height: clamp(54px, 15vw, 66px);
+  background: var(--navy2);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 15px; color: #fff;
+  font-size: clamp(19px, 5.4vw, 23px); font-weight: 500;
+  cursor: pointer; transition: transform .1s, background .15s;
+  display: flex; align-items: center; justify-content: center;
+  user-select: none; -webkit-user-select: none;
+}
+.pin-key:active { background: var(--navy3); transform: scale(.94); }
+.pin-key:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.pin-key.ghost {
+  background: transparent; border-color: transparent;
+  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 1.2px; color: rgba(255,255,255,.42);
+}
+.pin-msg {
+  margin-top: 20px; min-height: 20px;
+  font-size: 13px; text-align: center; color: rgba(255,255,255,.5);
+}
+.pin-msg.err  { color: #E05A4E; }
+.pin-msg.busy { color: var(--brass); }
+
+
+/* ══════════════════════════════════════════════
+   RANGKA APLIKASI
+══════════════════════════════════════════════ */
+#app { display: none; flex-direction: column; height: 100dvh; }
+#app.on { display: flex; }
+
+
+/* ── KEPALA ── */
+.header {
+  background: var(--navy);
+  padding: max(14px, env(safe-area-inset-top)) 18px 13px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid var(--brass);
+  position: relative; z-index: 50; flex-shrink: 0;
+  transition: box-shadow .25s ease;
+}
+.header.lifted { box-shadow: 0 6px 22px rgba(11,27,46,.28); }
+
+.hd-logo {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: var(--navy2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hd-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.hd-logo-fb {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  color: var(--brass); font-size: 14px; display: none;
+}
+
+.hd-text { flex: 1; min-width: 0; }
+.hd-brand {
+  font-family: 'Instrument Serif', serif; font-size: 21px;
+  color: #fff; line-height: 1;
+}
+.hd-sub {
+  font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brass); margin-top: 4px;
+}
+
+.hd-meta { text-align: right; flex-shrink: 0; }
+.hd-time {
+  display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+  font-family: 'DM Mono', monospace; font-size: 14px; color: #fff;
+}
+.hd-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #3FBF7F; flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(63,191,127,.18);
+}
+.hd-dot.stale { background: #E0A84E; box-shadow: 0 0 0 3px rgba(224,168,78,.18); }
+.hd-day {
+  font-size: 10.5px; color: rgba(255,255,255,.5);
+  margin-top: 3px; letter-spacing: .2px;
+}
+
+
+/* ── AREA GULIR ── */
+.scroll {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 15px 15px calc(var(--nav-h) + 28px);
+}
+
+
+/* ── KARTU AI (putih, aksen kuningan di kiri) ── */
+.ai {
+  background: var(--card); border-radius: 17px;
+  border-left: 3px solid var(--brass);
+  padding: 16px 15px; margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(11,27,46,.05), 0 6px 18px rgba(11,27,46,.05);
+}
+.ai-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 11px;
+}
+.ai-title {
+  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+}
+.ai-badge {
+  font-family: 'DM Mono', monospace; font-size: 8.5px;
+  letter-spacing: .6px; color: var(--amber);
+  background: rgba(201,168,76,.14); padding: 3px 8px; border-radius: 5px;
+}
+.ai-box {
+  width: 100%; background: var(--field);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; font-size: 14.5px; line-height: 1.55;
+  color: var(--ink); resize: none; height: 78px; outline: none;
+  transition: border-color .18s;
+}
+.ai-box::placeholder { color: #A9B4BF; }
+.ai-box:focus { border-color: var(--brass); }
+.ai-btn {
+  width: 100%; margin-top: 10px; border: none;
+  background: var(--brass); color: var(--navy);
+  border-radius: 12px; padding: 13px;
+  font-family: 'Syne', sans-serif; font-size: 10px;
+  font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase;
+  cursor: pointer; transition: transform .1s, opacity .15s;
+}
+.ai-btn:active { transform: scale(.985); opacity: .88; }
+
+
+/* ── KARTU FORM ── */
+.card {
+  background: var(--card); border-radius: 17px;
+  padding: 18px 16px; margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(11,27,46,.05), 0 6px 18px rgba(11,27,46,.05);
+}
+.card-title {
+  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 15px;
+}
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.label { font-size: 11.5px; color: var(--muted); margin-bottom: 7px; display: block; }
+
+.input, .textarea, .select {
+  width: 100%; background: var(--field);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 13px 14px; font-size: 15px; color: var(--ink);
+  outline: none; transition: border-color .18s;
+  -webkit-appearance: none; appearance: none;
+}
+.input:focus, .textarea:focus, .select:focus { border-color: var(--navy3); }
+.textarea { resize: none; height: 92px; line-height: 1.55; }
+.select {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237C8A99' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* Tanggal */
+.date-row {
+  position: relative; background: var(--field);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 13px 14px; display: flex; align-items: center; justify-content: space-between;
+}
+.date-text { font-size: 15px; color: var(--ink); }
+.date-row input {
+  position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%;
+  border: none; background: transparent; cursor: pointer;
+}
+
+/* Pil pilihan */
+.pills { display: flex; gap: 7px; flex-wrap: wrap; }
+.pill {
+  font-size: 12.5px; padding: 9px 15px; border-radius: 100px;
+  background: var(--field); border: 1px solid var(--line);
+  color: var(--mid); cursor: pointer;
+  transition: all .16s; user-select: none;
+}
+.pill:active { transform: scale(.96); }
+.pill.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* Tag */
+.tags { display: flex; gap: 7px; flex-wrap: wrap; }
+.tag {
+  font-size: 12px; padding: 8px 13px; border-radius: 10px;
+  background: var(--field); border: 1px solid var(--line);
+  color: var(--mid); cursor: pointer;
+  transition: all .16s; user-select: none;
+}
+.tag:active { transform: scale(.95); }
+.tag.on {
+  background: rgba(201,168,76,.15);
+  border-color: rgba(201,168,76,.5);
+  color: #8A6D1E; font-weight: 500;
+}
+.tag-add {
+  font-size: 12px; padding: 8px 13px; border-radius: 10px;
+  background: transparent; border: 1px dashed var(--line);
+  color: var(--muted); cursor: pointer;
+}
+
+/* Prioritas 2×2 */
+.prio { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pb {
+  padding: 13px 8px; border-radius: 12px; text-align: center;
+  background: var(--field); border: 1px solid var(--line);
+  font-size: 13px; color: var(--mid); cursor: pointer;
+  transition: all .16s; user-select: none;
+}
+.pb:active { transform: scale(.97); }
+.pb.on { color: #fff; font-weight: 500; }
+.pb[data-p="Low"].on      { background: #4A6572; border-color: #4A6572; }
+.pb[data-p="Medium"].on   { background: var(--navy3); border-color: var(--navy3); }
+.pb[data-p="High"].on     { background: var(--amber); border-color: var(--amber); }
+.pb[data-p="Critical"].on { background: var(--red); border-color: var(--red); }
+
+/* Saklar hari libur */
+.switch-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--field); border: 1px solid var(--line);
+  border-radius: 12px; padding: 13px 14px; cursor: pointer;
+}
+.switch-label { font-size: 14px; color: var(--ink); }
+.switch {
+  width: 46px; height: 27px; border-radius: 100px;
+  background: #CDD5DD; position: relative; flex-shrink: 0;
+  transition: background .2s;
+}
+.switch.on { background: var(--navy); }
+.switch::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: #fff; transition: transform .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.switch.on::after { transform: translateX(19px); }
+
+.hint { font-size: 11.5px; color: var(--muted); margin-top: 7px; line-height: 1.5; }
+
+/* Tombol simpan */
+.submit {
+  width: 100%; border: none; background: var(--navy); color: #fff;
+  border-radius: 15px; padding: 17px;
+  font-family: 'Syne', sans-serif; font-size: 11px;
+  font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; box-shadow: 0 6px 20px rgba(11,27,46,.22);
+  transition: transform .1s, opacity .15s;
+  position: relative; overflow: hidden;
+}
+.submit:active { transform: scale(.99); }
+.submit:disabled { opacity: .55; }
+.submit .lbl-txt { transition: opacity .2s; }
+.submit .lbl-load {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  opacity: 0; transition: opacity .2s;
+}
+.submit.busy .lbl-txt  { opacity: 0; }
+.submit.busy .lbl-load { opacity: 1; }
+.dot3 {
+  width: 6px; height: 6px; border-radius: 50%; background: #fff;
+  animation: bounce 1.3s infinite ease-in-out;
+}
+.dot3:nth-child(2) { animation-delay: .16s; }
+.dot3:nth-child(3) { animation-delay: .32s; }
+@keyframes bounce {
+  0%,80%,100% { transform: translateY(0); opacity: .4; }
+  40%         { transform: translateY(-5px); opacity: 1; }
+}
+
+
+/* ── NAVIGASI BAWAH ── */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: rgba(255,255,255,.93);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border-top: 1px solid var(--line);
+  padding: 9px 6px calc(9px + env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.nb {
+  border: none; background: none; text-align: center;
+  font-size: 9.5px; color: var(--muted); cursor: pointer;
+  padding: 4px 2px; transition: color .16s;
+}
+.nb .ic { display: block; font-size: 17px; margin-bottom: 3px; opacity: .45; }
+.nb.on { color: var(--navy); font-weight: 700; }
+.nb.on .ic { opacity: 1; }
+
+
+/* ── PESAN SINGKAT ── */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 22px);
+  transform: translate(-50%, 18px); z-index: 9500;
+  background: var(--navy); color: #fff;
+  padding: 13px 20px; border-radius: 13px;
+  font-size: 13.5px; max-width: 88vw; text-align: center;
+  box-shadow: 0 10px 30px rgba(11,27,46,.32);
+  opacity: 0; pointer-events: none; transition: all .3s ease;
+}
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+.toast.err  { background: var(--red); }
+.toast.good { background: var(--green); }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ LAYAR PIN ══════════ -->
+<div id="pinScreen">
+  <div class="pin-wrap">
+    <img class="pin-logo" id="pinLogo"
+         src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish"
+         onerror="this.style.display='none';document.getElementById('pinLogoFb').style.display='block'">
+    <div class="pin-logo-fb" id="pinLogoFb">Miss Fish</div>
+
+    <div class="pin-brand">MFB-IT · Daily Activity</div>
+    <div class="pin-title">Selamat datang</div>
+    <div class="pin-sub">Masukkan PIN untuk melanjutkan.</div>
+
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+    </div>
+
+    <div class="pin-pad" id="pinPad">
+      <button class="pin-key" data-k="1">1</button>
+      <button class="pin-key" data-k="2">2</button>
+      <button class="pin-key" data-k="3">3</button>
+      <button class="pin-key" data-k="4">4</button>
+      <button class="pin-key" data-k="5">5</button>
+      <button class="pin-key" data-k="6">6</button>
+      <button class="pin-key" data-k="7">7</button>
+      <button class="pin-key" data-k="8">8</button>
+      <button class="pin-key" data-k="9">9</button>
+      <button class="pin-key ghost" data-k="clear">Hapus</button>
+      <button class="pin-key" data-k="0">0</button>
+      <button class="pin-key ghost" data-k="del">&#9003;</button>
+    </div>
+
+    <div class="pin-msg" id="pinMsg"></div>
+  </div>
+</div>
+
+
+<!-- ══════════ APLIKASI ══════════ -->
+<div id="app">
+
+  <div class="header" id="header">
+    <div class="hd-logo">
+      <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish"
+           onerror="this.style.display='none';document.getElementById('hdLogoFb').style.display='block'">
+      <span class="hd-logo-fb" id="hdLogoFb">MF</span>
+    </div>
+    <div class="hd-text">
+      <div class="hd-brand">Miss Fish</div>
+      <div class="hd-sub">IT Daily Activity</div>
+    </div>
+    <div class="hd-meta">
+      <div class="hd-time">
+        <span class="hd-dot" id="sesDot"></span>
+        <span id="clock">--:--</span>
+      </div>
+      <div class="hd-day" id="hdDay">—</div>
+    </div>
+  </div>
+
+  <div class="scroll" id="scroll">
+
+    <!-- Tulis bebas -->
+    <div class="ai">
+      <div class="ai-head">
+        <div class="ai-title">&#10022; &nbsp;Tulis bebas</div>
+        <div class="ai-badge">SEGERA</div>
+      </div>
+      <textarea class="ai-box" id="aiInput"
+        placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer kitchen, sempat putus pas prep dinner, urgent belum kelar."></textarea>
+      <button class="ai-btn" id="aiBtn">Uraikan dengan AI</button>
+    </div>
+
+    <!-- Kartu 1 -->
+    <div class="card">
+      <div class="card-title">Kapan &amp; apa</div>
+
+      <div class="field">
+        <label class="label" for="taskDate">Tanggal</label>
+        <div class="date-row">
+          <span class="date-text" id="dateText">—</span>
+          <span style="opacity:.4">&#128197;</span>
+          <input type="date" id="taskDate">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Jenis hari</label>
+        <div class="pills" id="actPills"></div>
+      </div>
+
+      <div class="field hidden" id="offBox">
+        <div class="switch-row" id="offToggle">
+          <span class="switch-label">Tetap ada pekerjaan?</span>
+          <span class="switch" id="offSwitch"></span>
+        </div>
+        <div class="hint">Nyalakan bila kamu tetap menangani sesuatu di hari libur.</div>
+      </div>
+
+      <div class="field" id="workTypeBox">
+        <label class="label">Jenis pekerjaan</label>
+        <div class="pills" id="wtPills"></div>
+      </div>
+    </div>
+
+    <!-- Kartu 2 -->
+    <div class="card" id="workCard">
+      <div class="card-title">Pekerjaan</div>
+
+      <div class="field">
+        <label class="label" for="taskDesc">Apa yang dikerjakan</label>
+        <textarea class="textarea" id="taskDesc"
+          placeholder="Tulis sejelasnya, biar mudah dibaca lagi nanti."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="label">Tag</label>
+        <div class="tags" id="tagGrid">
+          <span class="tag-add" style="opacity:.6">Memuat tag…</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kartu 3 -->
+    <div class="card" id="metaCard">
+      <div class="card-title">Prioritas &amp; status</div>
+
+      <div class="field">
+        <label class="label">Prioritas</label>
+        <div class="prio" id="prioGrid">
+          <div class="pb" data-p="Low">Low</div>
+          <div class="pb" data-p="Medium">Medium</div>
+          <div class="pb" data-p="High">High</div>
+          <div class="pb" data-p="Critical">Critical</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="statusSel">Status</label>
+        <select class="select" id="statusSel">
+          <option value="On Progress">On Progress</option>
+          <option value="Done">Done</option>
+          <option value="Pending">Pending</option>
+          <option value="Waiting Vendor">Waiting Vendor</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="label" for="remarkInput">Catatan <span style="opacity:.6">— boleh dikosongkan</span></label>
+        <input class="input" id="remarkInput" placeholder="Misal: menunggu sparepart dari vendor">
+      </div>
+    </div>
+
+    <button class="submit" id="submitBtn">
+      <span class="lbl-txt">Simpan aktivitas</span>
+      <span class="lbl-load">
+        <span class="dot3"></span><span class="dot3"></span><span class="dot3"></span>
+      </span>
+    </button>
+  </div>
+
+  <nav class="nav">
+    <button class="nb on" data-tab="input"><span class="ic">&#9998;</span>Input</button>
+    <button class="nb" data-tab="report"><span class="ic">&#9636;</span>Laporan</button>
+    <button class="nb" data-tab="dash"><span class="ic">&#9672;</span>Dasbor</button>
+    <button class="nb" data-tab="log"><span class="ic">&#8801;</span>Log</button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* ══════════════════════════════════════════════
+   KONFIGURASI
+══════════════════════════════════════════════ */
+const CONFIG = {
+  SUPABASE_URL:      'https://hiwtsreqeizvmjcrxjxd.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhpd3RzcmVxZWl6dm1qY3J4anhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNTY4NjYsImV4cCI6MjEwMTgzMjg2Nn0.8v25vSSg0o5cw5qEadZ0WACycvId3rYEXQsNbxAarD0',
+  FUNCTION_NAME:     'submit-task',
+  GEMINI_MODEL:      'gemini-3.5-flash-lite',  // dipakai mulai Phase 1B
+  APP_TITLE:         'Miss Fish IT Daily Activity',
+  APP_VERSION:       '1.8',
+  PIN_LENGTH:        4,
+  TIMEZONE:          'Asia/Makassar',
+};
+
+const ENDPOINT = CONFIG.SUPABASE_URL + '/functions/v1/' + CONFIG.FUNCTION_NAME;
+
+
+/* ══════════════════════════════════════════════
+   PENYIMPANAN SESI
+   localStorage dipakai bila tersedia. Bila diblokir
+   (mode privat, pratinjau dalam bingkai), otomatis
+   beralih ke penyimpanan sementara di memori.
+══════════════════════════════════════════════ */
+const Store = (() => {
+  let memory = {};
+  let usable = true;
+  try {
+    localStorage.setItem('__t', '1');
+    localStorage.removeItem('__t');
+  } catch (e) { usable = false; }
+
+  return {
+    get(k)    { try { return usable ? localStorage.getItem(k) : memory[k] ?? null; } catch (e) { return memory[k] ?? null; } },
+    set(k, v) { try { usable ? localStorage.setItem(k, v) : memory[k] = v; } catch (e) { memory[k] = v; } },
+    del(k)    { try { usable ? localStorage.removeItem(k) : delete memory[k]; } catch (e) { delete memory[k]; } }
+  };
+})();
+
+const KEY_TOKEN = 'mfbit_session';
+
+
+/* ══════════════════════════════════════════════
+   PADANAN ISTILAH
+   Layar berbahasa Indonesia, nilai tersimpan tetap Inggris
+   agar laporan dan View SQL tidak perlu diubah.
+══════════════════════════════════════════════ */
+const ACTIVITY_TYPES = [
+  { db: 'Working Day',    id: 'Hari kerja'     },
+  { db: 'Day Off',        id: 'Libur'          },
+  { db: 'Public Holiday', id: 'Libur Nasional' },
+  { db: 'Annual Leave',   id: 'Cuti Tahunan'   },
+  { db: 'Sick Leave',     id: 'Sakit'          },
+  { db: 'Extra Off (EO)', id: 'Extra Off'      },
+  { db: 'PDO',            id: 'PDO'            },
+];
+
+// Istilah kerja IT dibiarkan dalam bahasa Inggris — lebih dikenal.
+const WORK_TYPES = [
+  'Task', 'Meeting Online', 'Meeting Offline', 'Training',
+  'Trainer', 'WFH', 'Remote Working', 'Event/Seminar',
+];
+
+const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni',
+               'Juli','Agustus','September','Oktober','November','Desember'];
+
+
+/* ══════════════════════════════════════════════
+   KEADAAN
+══════════════════════════════════════════════ */
+const state = {
+  token:        null,
+  activityType: 'Working Day',
+  workType:     'Task',
+  priority:     'Medium',
+  offWorking:   false,   // di hari libur, tetap ada pekerjaan
+  tags:         [],      // daftar tag dari server
+  selected:     new Set(),
+  editCount:    0,
+  openedAt:     Date.now(),
+  submitCount:  0,
+  taskToday:    0,
+};
+
+
+/* ══════════════════════════════════════════════
+   PEMBANTU
+══════════════════════════════════════════════ */
+function $(id) { return document.getElementById(id); }
+
+function toast(msg, kind) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast on' + (kind ? ' ' + kind : '');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { t.className = 'toast'; }, 2600);
+}
+
+function todayISO() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: CONFIG.TIMEZONE });
+}
+
+function formatTanggal(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  return HARI[dt.getDay()] + ', ' + d + ' ' + BULAN[m - 1] + ' ' + y;
+}
+
+function trackEdit() { state.editCount++; }
+
+
+/* ══════════════════════════════════════════════
+   PANGGILAN KE EDGE FUNCTION
+══════════════════════════════════════════════ */
+async function callApi(payload) {
+  const started = performance.now();
+  const res = await fetch(ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  let data;
+  try { data = await res.json(); }
+  catch (e) { throw new Error('Jawaban server tidak terbaca.'); }
+
+  data._ms = Math.round(performance.now() - started);
+
+  // Sesi habis — minta PIN lagi
+  if (res.status === 401 && payload.action !== 'login') {
+    Store.del(KEY_TOKEN);
+    state.token = null;
+    showPin('Sesi berakhir. Masukkan PIN lagi.');
+    throw new Error(data.error || 'Sesi berakhir.');
+  }
+
+  return data;
+}
+
+
+/* ══════════════════════════════════════════════
+   DATA PERANGKAT — untuk activity_log
+══════════════════════════════════════════════ */
+function clientMeta() {
+  const ua = navigator.userAgent;
+
+  let browser = 'Lainnya';
+  if (/Edg\//.test(ua))          browser = 'Edge';
+  else if (/OPR\//.test(ua))     browser = 'Opera';
+  else if (/Chrome\//.test(ua))  browser = 'Chrome';
+  else if (/Firefox\//.test(ua)) browser = 'Firefox';
+  else if (/Safari\//.test(ua))  browser = 'Safari';
+
+  let os = 'Lainnya';
+  if (/Android/.test(ua))               os = 'Android';
+  else if (/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+  else if (/Windows/.test(ua))          os = 'Windows';
+  else if (/Mac OS X/.test(ua))         os = 'macOS';
+  else if (/Linux/.test(ua))            os = 'Linux';
+
+  const device = /Mobi|Android|iPhone/.test(ua) ? 'Mobile'
+               : /iPad|Tablet/.test(ua)          ? 'Tablet'
+               : 'Desktop';
+
+  let load = 0;
+  try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    if (nav) load = Math.round(nav.duration);
+  } catch (e) {}
+
+  let sid = Store.get('mfbit_sid');
+  if (!sid) {
+    sid = 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    Store.set('mfbit_sid', sid);
+  }
+
+  return {
+    formEditCount:   state.editCount,
+    timeToSubmitSec: Math.round((Date.now() - state.openedAt) / 1000),
+    tasksInSession:  state.submitCount + 1,
+    browser, os,
+    deviceType:       device,
+    screenResolution: screen.width + 'x' + screen.height,
+    connectionType:   (navigator.connection && navigator.connection.effectiveType) || '',
+    pageLoadTimeMs:   load,
+    language:         navigator.language || '',
+    timezone:         Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+    referrer:         document.referrer || '',
+    userAgentRaw:     ua,
+    sessionId:        sid,
+  };
+}
+
+
+/* ══════════════════════════════════════════════
+   LAYAR PIN
+══════════════════════════════════════════════ */
+let pinBuffer = '';
+let pinBusy   = false;
+
+function showPin(message) {
+  pinBuffer = '';
+  paintDots();
+  $('pinMsg').textContent = message || '';
+  $('pinMsg').className = 'pin-msg' + (message ? ' err' : '');
+  $('pinScreen').classList.remove('hide');
+  $('app').classList.remove('on');
+}
+
+function hidePin() {
+  $('pinScreen').classList.add('hide');
+  setTimeout(() => { $('pinScreen').style.display = 'none'; }, 420);
+  $('app').classList.add('on');
+}
+
+function paintDots(errored) {
+  const dots = $('pinDots').children;
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].className = 'pin-dot'
+      + (errored ? ' err' : (i < pinBuffer.length ? ' fill' : ''));
+  }
+}
+
+function pinPress(k) {
+  if (pinBusy) return;
+
+  if (k === 'clear') { pinBuffer = ''; paintDots(); return; }
+  if (k === 'del')   { pinBuffer = pinBuffer.slice(0, -1); paintDots(); return; }
+  if (pinBuffer.length >= CONFIG.PIN_LENGTH) return;
+
+  pinBuffer += k;
+  paintDots();
+
+  if (pinBuffer.length === CONFIG.PIN_LENGTH) submitPin();
+}
+
+async function submitPin() {
+  pinBusy = true;
+  $('pinMsg').textContent = 'Memeriksa…';
+  $('pinMsg').className = 'pin-msg busy';
+
+  try {
+    const r = await callApi({ action: 'login', pin: pinBuffer });
+
+    if (!r.ok) {
+      paintDots(true);
+      $('pinDots').classList.add('shake');
+      setTimeout(() => $('pinDots').classList.remove('shake'), 420);
+      $('pinMsg').textContent = r.error || 'PIN belum cocok.';
+      $('pinMsg').className = 'pin-msg err';
+      setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 700);
+      return;
+    }
+
+    state.token = r.sessionToken;
+    Store.set(KEY_TOKEN, r.sessionToken);
+    $('pinMsg').textContent = '';
+    pinBusy = false;
+    hidePin();
+    startApp();
+
+  } catch (e) {
+    $('pinMsg').textContent = 'Tidak bisa menghubungi server. Periksa koneksi.';
+    $('pinMsg').className = 'pin-msg err';
+    setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 900);
+  }
+}
+
+
+/* ══════════════════════════════════════════════
+   MEMBANGUN FORM
+══════════════════════════════════════════════ */
+function buildActivityPills() {
+  const box = $('actPills');
+  box.innerHTML = '';
+  ACTIVITY_TYPES.forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'pill' + (a.db === state.activityType ? ' on' : '');
+    el.textContent = a.id;
+    el.onclick = () => {
+      state.activityType = a.db;
+      trackEdit();
+      buildActivityPills();
+      applyActivityMode();
+    };
+    box.appendChild(el);
+  });
+}
+
+function buildWorkTypePills() {
+  const box = $('wtPills');
+  box.innerHTML = '';
+  WORK_TYPES.forEach(w => {
+    const el = document.createElement('div');
+    el.className = 'pill' + (w === state.workType ? ' on' : '');
+    el.textContent = w;
+    el.onclick = () => { state.workType = w; trackEdit(); buildWorkTypePills(); };
+    box.appendChild(el);
+  });
+}
+
+function applyActivityMode() {
+  const isWorking = state.activityType === 'Working Day';
+  $('offBox').classList.toggle('hidden', isWorking);
+
+  const showWork = isWorking || state.offWorking;
+  $('workTypeBox').classList.toggle('hidden', !showWork);
+  $('workCard').classList.toggle('hidden', !showWork);
+  $('metaCard').classList.toggle('hidden', !showWork);
+}
+
+function buildTags() {
+  const box = $('tagGrid');
+  box.innerHTML = '';
+
+  state.tags.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tag' + (state.selected.has(t) ? ' on' : '');
+    el.textContent = t;
+    el.onclick = () => {
+      state.selected.has(t) ? state.selected.delete(t) : state.selected.add(t);
+      trackEdit();
+      buildTags();
+    };
+    box.appendChild(el);
+  });
+
+  const add = document.createElement('div');
+  add.className = 'tag-add';
+  add.textContent = '+ tag baru';
+  add.onclick = () => {
+    const v = prompt('Nama tag baru:');
+    if (!v) return;
+    const clean = v.trim();
+    if (!clean) return;
+    if (!state.tags.some(t => t.toLowerCase() === clean.toLowerCase())) {
+      state.tags.push(clean);
+    }
+    state.selected.add(clean);
+    trackEdit();
+    buildTags();
+  };
+  box.appendChild(add);
+}
+
+function buildPriority() {
+  document.querySelectorAll('#prioGrid .pb').forEach(el => {
+    el.classList.toggle('on', el.dataset.p === state.priority);
+    el.onclick = () => {
+      state.priority = el.dataset.p;
+      trackEdit();
+      buildPriority();
+    };
+  });
+}
+
+
+/* ══════════════════════════════════════════════
+   KEPALA — jam & penanda sesi
+══════════════════════════════════════════════ */
+function tickClock() {
+  const now = new Date();
+  const jam = now.toLocaleTimeString('id-ID', {
+    timeZone: CONFIG.TIMEZONE, hour: '2-digit', minute: '2-digit', hour12: false,
+  });
+  $('clock').textContent = jam;
+
+  const iso = todayISO();
+  const [y, m, d] = iso.split('-').map(Number);
+  const short = HARI[new Date(y, m - 1, d).getDay()].slice(0, 3) + ' ' + d;
+  const count = state.taskToday > 0 ? ' · ' + state.taskToday + ' \u270E' : '';
+  $('hdDay').textContent = short + count;
+}
+
+
+/* ══════════════════════════════════════════════
+   KIRIM DATA
+══════════════════════════════════════════════ */
+async function doSubmit() {
+  const btn = $('submitBtn');
+  if (btn.classList.contains('busy')) return;
+
+  const isWorking = state.activityType === 'Working Day';
+  const needWork  = isWorking || state.offWorking;
+  const task      = $('taskDesc').value.trim();
+
+  if (needWork && !task) {
+    toast('Isi dulu pekerjaannya.', 'err');
+    $('taskDesc').focus();
+    return;
+  }
+
+  btn.classList.add('busy');
+  btn.disabled = true;
+
+  try {
+    const r = await callApi({
+      action:       'submit',
+      sessionToken: state.token,
+      taskDate:     $('taskDate').value || todayISO(),
+      activityType: state.activityType,
+      workType:     needWork ? state.workType : '',
+      task:         needWork ? task : '',
+      tags:         needWork ? Array.from(state.selected) : [],
+      priority:     needWork ? state.priority : '',
+      status:       needWork ? $('statusSel').value : '',
+      remark:       $('remarkInput').value.trim(),
+      meta:         clientMeta(),
+    });
+
+    if (!r.ok) {
+      toast(r.error || 'Gagal menyimpan.', 'err');
+      return;
+    }
+
+    state.submitCount++;
+    if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+    tickClock();
+
+    toast('Tersimpan · ' + r.taskIdFormatted, 'good');
+    resetForm();
+    $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (e) {
+    if (state.token) toast(e.message || 'Gagal menghubungi server.', 'err');
+  } finally {
+    btn.classList.remove('busy');
+    btn.disabled = false;
+  }
+}
+
+function resetForm() {
+  $('taskDesc').value    = '';
+  $('remarkInput').value = '';
+  $('aiInput').value     = '';
+  state.selected.clear();
+  state.priority   = 'Medium';
+  state.editCount  = 0;
+  state.openedAt   = Date.now();
+  $('statusSel').value = 'On Progress';
+  buildTags();
+  buildPriority();
+}
+
+
+/* ══════════════════════════════════════════════
+   MULAI
+══════════════════════════════════════════════ */
+async function startApp() {
+  const iso = todayISO();
+  $('taskDate').value  = iso;
+  $('dateText').textContent = formatTanggal(iso);
+
+  buildActivityPills();
+  buildWorkTypePills();
+  buildPriority();
+  applyActivityMode();
+  tickClock();
+
+  // Ambil tag dari Supabase
+  try {
+    const r = await callApi({ action: 'get-tags', sessionToken: state.token });
+    if (r.ok) {
+      state.tags = r.tags || [];
+      if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+      tickClock();
+    } else {
+      state.tags = [];
+      toast('Daftar tag gagal dimuat.', 'err');
+    }
+  } catch (e) {
+    state.tags = [];
+  }
+  buildTags();
+}
+
+function wireEvents() {
+  // Papan PIN
+  $('pinPad').addEventListener('click', e => {
+    const b = e.target.closest('.pin-key');
+    if (b) pinPress(b.dataset.k);
+  });
+
+  // Papan ketik fisik (untuk laptop)
+  document.addEventListener('keydown', e => {
+    if ($('pinScreen').classList.contains('hide')) return;
+    if (/^[0-9]$/.test(e.key))    pinPress(e.key);
+    else if (e.key === 'Backspace') pinPress('del');
+    else if (e.key === 'Escape')    pinPress('clear');
+  });
+
+  // Tanggal
+  $('taskDate').addEventListener('change', e => {
+    const v = e.target.value;
+    if (v) $('dateText').textContent = formatTanggal(v);
+    trackEdit();
+  });
+
+  // Saklar hari libur
+  $('offToggle').addEventListener('click', () => {
+    state.offWorking = !state.offWorking;
+    $('offSwitch').classList.toggle('on', state.offWorking);
+    trackEdit();
+    applyActivityMode();
+  });
+
+  // Hitung suntingan
+  ['taskDesc', 'remarkInput'].forEach(id => {
+    $(id).addEventListener('input', trackEdit);
+  });
+  $('statusSel').addEventListener('change', trackEdit);
+
+  // Simpan
+  $('submitBtn').addEventListener('click', doSubmit);
+
+  // Tulis bebas — aktif mulai Phase 1B
+  $('aiBtn').addEventListener('click', () => {
+    toast('Penguraian AI segera hadir.', '');
+  });
+
+  // Navigasi bawah
+  document.querySelectorAll('.nb').forEach(b => {
+    b.addEventListener('click', () => {
+      if (b.dataset.tab === 'input') return;
+      toast('Halaman ini segera hadir.', '');
+    });
+  });
+
+  // Bayangan kepala saat digulir
+  $('scroll').addEventListener('scroll', e => {
+    $('header').classList.toggle('lifted', e.target.scrollTop > 4);
+  }, { passive: true });
+}
+
+function init() {
+  wireEvents();
+  setInterval(tickClock, 1000 * 20);
+
+  const saved = Store.get(KEY_TOKEN);
+  if (saved) {
+    state.token = saved;
+    hidePin();
+    startApp();
+  } else {
+    $('pinScreen').style.display = 'flex';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
