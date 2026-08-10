@@ -3,19 +3,29 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 1.9
-Generated : 10 August 2026, 16:07:03
+Version   : 2.1
+Generated : 10 August 2026, 17:21:43
 ================================================================
+PERUBAHAN BESAR DARI v1.9
+  - Jenis huruf disederhanakan: SF Pro/Inter untuk seluruh
+    antarmuka, Georgia khusus judul layar PIN (menyamai MF-AIA).
+  - Header ditata ulang: logo lebar 28%, judul dua baris di
+    tengah 22%, jam+tanggal kanan 22%. Tanpa nama hari.
+  - Panel sesi: ketuk jam untuk melihat sisa waktu dan Keluar.
+  - Jenis hari, jenis pekerjaan, dan status kini berbentuk
+    baris pilihan (picker row) — ketuk membuka panel dari bawah.
+  - Kartu dibuat rata tanpa bayangan tebal, hanya garis tipis.
+  - Warna emas dikurangi menjadi elemen pemanis saja.
+  - Ikon navigasi bawah diganti SVG.
+  - Jarak dirapikan ke kelipatan 4. Target ketuk minimal 44px.
+
 CARA PASANG
-  1. Ganti nama berkas menjadi index.html
-  2. Unggah ke anabhidev.com (atau Cloudflare Pages)
-  3. Buka di ponsel, masukkan PIN
+  Sama seperti v1.9 — ganti nama menjadi index.html, unggah.
+  Edge Function TIDAK berubah, masih memakai MFB-IT_v1.7.ts.
 
 CATATAN
-  Berkas ini berdiri sendiri. Tidak perlu server, tidak perlu build.
-  Kunci anon Supabase memang terlihat di sini — itu wajar dan aman,
-  karena seluruh tabel ditolak RLS. Yang menjaga data adalah PIN
-  yang diperiksa di sisi server.
+  AI Parse dan tab Laporan/Dasbor/Log masih "segera hadir" —
+  itu pekerjaan tahap berikutnya.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -25,452 +35,314 @@ CATATAN
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0B1B2E">
 <title>Miss Fish — IT Daily Activity</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════════════
-   TOKEN
-══════════════════════════════════════════════ */
 :root {
   --navy:    #0B1B2E;
-  --navy2:   #16304A;
-  --navy3:   #1F4266;
+  --navy2:   #14273D;
   --brass:   #C9A84C;
-  --bg:      #EDF0F3;
+  --bg:      #EEF1F4;
   --card:    #FFFFFF;
-  --ink:     #0B1B2E;
+  --ink:     #12181F;
   --mid:     #5C6B7A;
-  --muted:   #7C8A99;
-  --line:    #E4E8ED;
+  --muted:   #8A96A3;
+  --line:    #E6E9ED;
   --field:   #F4F6F8;
-  --red:     #B3352C;
-  --green:   #2E7D5B;
+  --red:     #C0392B;
   --amber:   #B7791F;
-  --nav-h:   72px;
-  --app-w:   520px;   /* lebar maksimum di layar besar */
+  --nav-h:   64px;
+  --app-w:   520px;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
+  --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-7: 32px;
+
+  --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+             'Inter', 'Segoe UI', Roboto, sans-serif;
+  --font-pin: Georgia, 'Times New Roman', serif;
 }
 
 *, *::before, *::after {
   box-sizing: border-box; margin: 0; padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
-
 html, body {
-  height: 100%;
-  overflow-x: hidden;
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
+  height: 100%; overflow-x: hidden;
+  font-family: var(--font-ui);
+  background: var(--bg); color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum' 1;
 }
-
-button, input, textarea, select {
-  font-family: inherit; font-size: inherit; color: inherit;
-}
-
+button, input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
-
-/* ══════════════════════════════════════════════
-   LAYAR PIN
-   Ukuran & bobot huruf mengikuti MF-AIA persis.
-   Yang dibedakan hanya warna dasar: navy, bukan hitam.
-══════════════════════════════════════════════ */
 #pinScreen {
   position: fixed; inset: 0; z-index: 9000;
   background: var(--navy);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-start;
-  padding: calc(env(safe-area-inset-top) + clamp(20px, 6vh, 54px)) 24px
-           max(20px, env(safe-area-inset-bottom));
-  overflow-y: auto;
-  transition: opacity .4s ease;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding: calc(env(safe-area-inset-top) + clamp(20px, 6vh, 54px)) 24px max(20px, env(safe-area-inset-bottom));
+  overflow-y: auto; transition: opacity .4s ease;
 }
 #pinScreen.hide { opacity: 0; pointer-events: none; }
 
-.pin-wrap {
-  width: 100%; max-width: 360px;
-  display: flex; flex-direction: column; align-items: center;
-}
-.pin-logo {
-  width: clamp(140px, 60vw, 200px); height: auto;
-  object-fit: contain; margin-bottom: 16px;
-}
-.pin-logo-fb {
-  font-family: Georgia, serif; font-weight: bold; font-size: 44px;
-  color: var(--brass); margin-bottom: 16px; display: none;
-}
-.pin-brand {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: 4px;
-  text-transform: uppercase; color: var(--brass);
-  margin-bottom: 20px; text-align: center;
-}
-.pin-title {
-  font-family: Georgia, serif;
-  font-size: clamp(30px, 9vw, 40px); font-weight: bold;
-  color: #fff; margin-bottom: 6px; text-align: center; line-height: 1.1;
-}
-.pin-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px; color: rgba(255,255,255,.55);
-  margin-bottom: 28px; text-align: center;
-}
+.pin-wrap { width: 100%; max-width: 360px; display: flex; flex-direction: column; align-items: center; }
+.pin-logo { width: clamp(140px, 60vw, 200px); height: auto; object-fit: contain; margin-bottom: var(--sp-4); }
+.pin-logo-fb { font-family: var(--font-pin); font-weight: bold; font-size: 44px; color: var(--brass); margin-bottom: var(--sp-4); display: none; }
+.pin-brand { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--brass); margin-bottom: var(--sp-5); text-align: center; }
+.pin-title { font-family: var(--font-pin); font-size: clamp(30px, 9vw, 40px); font-weight: bold; color: #fff; margin-bottom: var(--sp-1); text-align: center; line-height: 1.1; }
+.pin-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: var(--sp-7); text-align: center; }
 
-.pin-dots { display: flex; gap: 14px; margin-bottom: 28px; }
-.pin-dot {
-  width: 14px; height: 14px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,.25);
-  transition: all .18s;
-}
+.pin-dots { display: flex; gap: 14px; margin-bottom: var(--sp-7); }
+.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); transition: all .18s; }
 .pin-dot.fill { background: #fff; border-color: #fff; transform: scale(1.2); }
 .pin-dot.err  { background: #EF4444; border-color: #EF4444; }
-
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20%,60% { transform: translateX(-10px); }
-  40%,80% { transform: translateX(10px); }
-}
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-10px)} 40%,80%{transform:translateX(10px)} }
 .pin-dots.shake { animation: shake .4s ease; }
 
-.pin-pad {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 9px; width: min(270px, 78vw);
-}
+.pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; width: min(270px, 78vw); }
 .pin-key {
-  height: clamp(52px, 14vw, 64px);
-  background: #16304A; border: 1.5px solid #23486E;
-  border-radius: 14px; color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(18px, 5vw, 22px); font-weight: 600;
+  height: clamp(52px, 14vw, 64px); background: #16304A; border: 1.5px solid #23486E;
+  border-radius: 14px; color: #fff; font-size: clamp(18px, 5vw, 22px); font-weight: 600;
   cursor: pointer; transition: all .12s;
-  display: flex; align-items: center; justify-content: center;
-  user-select: none; -webkit-user-select: none;
+  display: flex; align-items: center; justify-content: center; user-select: none;
 }
 .pin-key:active { background: #24507A; transform: scale(.93); }
 .pin-key:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
-.pin-key.ghost {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(10px, 2.8vw, 12px); font-weight: 700;
-  letter-spacing: 1px; color: rgba(255,255,255,.4);
-  background: transparent; border-color: transparent;
-}
-.pin-msg {
-  font-family: 'Inter', sans-serif;
-  margin-top: 18px; min-height: 20px;
-  font-size: 13px; text-align: center; color: rgba(255,255,255,.5);
-  line-height: 1.5; max-width: 300px;
-}
+.pin-key.ghost { font-size: clamp(10px, 2.8vw, 12px); font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,.4); background: transparent; border-color: transparent; }
+.pin-msg { margin-top: var(--sp-5); min-height: 20px; font-size: 13px; text-align: center; color: rgba(255,255,255,.5); line-height: 1.5; max-width: 300px; }
 .pin-msg.err  { color: #EF4444; }
 .pin-msg.busy { color: var(--brass); }
 
-
-/* ══════════════════════════════════════════════
-   RANGKA APLIKASI
-   Di layar lebar, aplikasi dibatasi selebar kolom
-   dan diletakkan di tengah — bukan melar penuh.
-══════════════════════════════════════════════ */
 #app {
   display: none; flex-direction: column; height: 100dvh;
-  max-width: var(--app-w); margin: 0 auto;
-  background: var(--bg); position: relative;
+  max-width: var(--app-w); margin: 0 auto; background: var(--bg); position: relative;
 }
 #app.on { display: flex; }
-
 @media (min-width: 620px) {
-  body { background: #DCE2E8; }
-  #app { box-shadow: 0 0 0 1px rgba(11,27,46,.07), 0 20px 60px rgba(11,27,46,.14); }
+  body { background: #DCE2E8; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  #app { box-shadow: 0 0 0 1px rgba(11,27,46,.07), 0 24px 64px rgba(11,27,46,.16); border-radius: 20px; overflow: hidden; height: min(100dvh, 880px); }
 }
 
-
-/* ── KEPALA ── */
 .header {
   background: var(--navy);
-  padding: max(13px, env(safe-area-inset-top)) 18px 12px;
-  display: flex; align-items: center; gap: 12px;
+  padding: max(12px, env(safe-area-inset-top)) var(--sp-4) var(--sp-3);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
   border-bottom: 2px solid var(--brass);
   position: relative; z-index: 50; flex-shrink: 0;
   transition: box-shadow .25s ease;
 }
 .header.lifted { box-shadow: 0 6px 22px rgba(11,27,46,.28); }
 
-/* Logo dibiarkan apa adanya — sudah transparan, tidak perlu kotak */
-.hd-logo {
-  width: 46px; height: 40px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.hd-logo img { width: 100%; height: 100%; object-fit: contain; }
-.hd-logo-fb {
-  font-family: Georgia, serif; font-weight: bold;
-  color: var(--brass); font-size: 15px; display: none;
-}
+.hd-logo { flex: 0 0 28%; max-width: 130px; height: 34px; display: flex; align-items: center; }
+.hd-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+.hd-logo-fb { font-family: var(--font-pin); font-weight: bold; color: var(--brass); font-size: 16px; }
 
-.hd-text { flex: 1; min-width: 0; }
-.hd-brand {
-  font-family: 'Instrument Serif', serif; font-size: 21px;
-  color: #fff; line-height: 1;
+.hd-title {
+  flex: 0 0 auto; text-align: center; line-height: 1.25;
+  font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.85);
 }
-.hd-sub {
-  font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--brass); margin-top: 4px;
-}
+.hd-title span { display: block; }
 
-.hd-meta { text-align: right; flex-shrink: 0; }
-.hd-time {
-  display: flex; align-items: center; justify-content: flex-end; gap: 6px;
-  font-family: 'DM Mono', monospace; font-size: 14px; color: #fff;
+.hd-meta {
+  flex: 0 0 auto; text-align: right; cursor: pointer;
+  padding: 4px 2px; border-radius: 8px; transition: background .15s;
+  min-width: 44px; min-height: 44px; display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: center;
 }
-.hd-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #3FBF7F; flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(63,191,127,.18);
-}
-.hd-dot.stale { background: #E0A84E; box-shadow: 0 0 0 3px rgba(224,168,78,.18); }
-.hd-day {
-  font-size: 10.5px; color: rgba(255,255,255,.5);
-  margin-top: 3px; letter-spacing: .2px;
-}
+.hd-meta:active { background: rgba(255,255,255,.08); }
+.hd-time { display: flex; align-items: baseline; gap: 5px; justify-content: flex-end; }
+.hd-dot { width: 7px; height: 7px; border-radius: 50%; background: #3FBF7F; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(63,191,127,.18); align-self: center; }
+.hd-dot.warn  { background: #E0A84E; box-shadow: 0 0 0 3px rgba(224,168,78,.18); }
+.hd-dot.stale { background: #E05A4E; box-shadow: 0 0 0 3px rgba(224,90,78,.18); }
+.hd-clock-main { font-size: 14px; color: #fff; font-weight: 600; }
+.hd-clock-sec { font-size: 10px; color: rgba(255,255,255,.45); }
+.hd-date { font-size: 10.5px; color: rgba(255,255,255,.5); margin-top: 3px; }
 
-
-/* ── AREA GULIR ── */
-.scroll {
-  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 15px 15px calc(var(--nav-h) + 28px);
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 8000; background: rgba(11,27,46,.42);
+  opacity: 0; pointer-events: none; transition: opacity .22s ease;
 }
+.sheet-backdrop.on { opacity: 1; pointer-events: auto; }
 
-
-/* ── KARTU AI (putih, aksen kuningan di kiri) ── */
-.ai {
-  background: var(--card); border-radius: 17px;
-  border-left: 3px solid var(--brass);
-  padding: 16px 15px; margin-bottom: 14px;
-  box-shadow: 0 1px 3px rgba(11,27,46,.05), 0 6px 18px rgba(11,27,46,.05);
+.sheet {
+  position: fixed; left: 50%; bottom: 0; z-index: 8100;
+  width: 100%; max-width: var(--app-w);
+  background: var(--card); border-radius: 20px 20px 0 0;
+  padding: var(--sp-2) 0 max(var(--sp-6), env(safe-area-inset-bottom));
+  transform: translate(-50%, 100%); transition: transform .28s cubic-bezier(.22,1,.36,1);
+  max-height: 78vh; overflow-y: auto;
 }
-.ai-head {
+.sheet.on { transform: translate(-50%, 0); }
+.sheet-handle { width: 36px; height: 4px; border-radius: 3px; background: var(--line); margin: var(--sp-2) auto var(--sp-4); }
+.sheet-title { font-size: 15px; font-weight: 600; padding: 0 var(--sp-5) var(--sp-4); color: var(--ink); }
+
+.session-info { padding: 0 var(--sp-5) var(--sp-5); }
+.session-row { display: flex; justify-content: space-between; align-items: center; padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.session-row:last-of-type { border-bottom: none; }
+.session-label { color: var(--mid); }
+.session-value { color: var(--ink); font-weight: 500; }
+.btn-logout {
+  width: 100%; margin-top: var(--sp-4); padding: var(--sp-4);
+  background: var(--field); border: 1px solid var(--line); border-radius: 12px;
+  color: var(--red); font-size: 15px; font-weight: 600; text-align: center; cursor: pointer;
+}
+.btn-logout:active { background: #EFE3E1; }
+
+.option-list { padding: 0 var(--sp-3) var(--sp-3); }
+.option-item {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 11px;
+  padding: var(--sp-4) var(--sp-3); border-radius: 12px; cursor: pointer;
+  min-height: 44px; font-size: 15px; color: var(--ink);
 }
-.ai-title {
-  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+.option-item:active { background: var(--field); }
+.option-item.selected { color: var(--navy); font-weight: 600; }
+.option-check { color: var(--navy); font-weight: 700; opacity: 0; }
+.option-item.selected .option-check { opacity: 1; }
+
+.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--sp-4) var(--sp-4) calc(var(--nav-h) + var(--sp-7)); }
+@media (min-height: 760px) {
+  .scroll { display: flex; flex-direction: column; justify-content: center; }
 }
-.ai-badge {
-  font-family: 'DM Mono', monospace; font-size: 8.5px;
-  letter-spacing: .6px; color: var(--amber);
-  background: rgba(201,168,76,.14); padding: 3px 8px; border-radius: 5px;
+
+.ai {
+  background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
+  border-radius: 16px; padding: var(--sp-4); margin-bottom: var(--sp-3);
+  box-shadow: 0 1px 2px rgba(11,27,46,.03);
 }
+.ai-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); }
+.ai-title { font-size: 13px; font-weight: 600; color: var(--mid); display: flex; align-items: center; gap: 6px; }
+.ai-badge { font-size: 10px; font-weight: 600; color: var(--amber); background: rgba(201,168,76,.14); padding: 3px var(--sp-2); border-radius: 6px; }
 .ai-box {
-  width: 100%; background: var(--field);
-  border: 1px solid var(--line); border-radius: 12px;
-  padding: 12px 14px; font-size: 14.5px; line-height: 1.55;
-  color: var(--ink); resize: none; height: 78px; outline: none;
-  transition: border-color .18s;
+  width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); font-size: 15px; line-height: 1.55; color: var(--ink);
+  resize: none; height: 76px; outline: none; transition: border-color .18s;
 }
 .ai-box::placeholder { color: #A9B4BF; }
 .ai-box:focus { border-color: var(--brass); }
 .ai-btn {
-  width: 100%; margin-top: 10px; border: none;
-  background: var(--brass); color: var(--navy);
-  border-radius: 12px; padding: 13px;
-  font-family: 'Syne', sans-serif; font-size: 10px;
-  font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase;
-  cursor: pointer; transition: transform .1s, opacity .15s;
+  width: 100%; margin-top: var(--sp-3); border: 1px solid var(--line);
+  background: var(--field); color: var(--navy);
+  border-radius: 12px; padding: var(--sp-3); min-height: 44px;
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .1s, opacity .15s;
 }
-.ai-btn:active { transform: scale(.985); opacity: .88; }
+.ai-btn:active { transform: scale(.985); opacity: .85; }
 
-
-/* ── KARTU FORM ── */
 .card {
-  background: var(--card); border-radius: 17px;
-  padding: 18px 16px; margin-bottom: 14px;
-  box-shadow: 0 1px 3px rgba(11,27,46,.05), 0 6px 18px rgba(11,27,46,.05);
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: var(--sp-5) var(--sp-4); margin-bottom: var(--sp-3);
+  box-shadow: 0 1px 2px rgba(11,27,46,.03);
 }
-.card-title {
-  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 15px;
-}
-.field { margin-bottom: 16px; }
+.card-title { font-size: 13px; font-weight: 600; color: var(--mid); margin-bottom: var(--sp-4); }
+.field { margin-bottom: var(--sp-4); }
 .field:last-child { margin-bottom: 0; }
-.label { font-size: 11.5px; color: var(--muted); margin-bottom: 7px; display: block; }
+.label { font-size: 13px; color: var(--mid); margin-bottom: var(--sp-2); display: block; }
 
-.input, .textarea, .select {
-  width: 100%; background: var(--field);
-  border: 1px solid var(--line); border-radius: 12px;
-  padding: 13px 14px; font-size: 15px; color: var(--ink);
-  outline: none; transition: border-color .18s;
-  -webkit-appearance: none; appearance: none;
+.input, .textarea {
+  width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); font-size: 16px; color: var(--ink);
+  outline: none; transition: border-color .18s; -webkit-appearance: none; appearance: none;
 }
-.input:focus, .textarea:focus, .select:focus { border-color: var(--navy3); }
+.input:focus, .textarea:focus { border-color: var(--navy); }
 .textarea { resize: none; height: 92px; line-height: 1.55; }
-.select {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237C8A99' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 14px center;
-  padding-right: 36px;
-}
 
-/* Tanggal */
 .date-row {
-  position: relative; background: var(--field);
-  border: 1px solid var(--line); border-radius: 12px;
-  padding: 13px 14px; display: flex; align-items: center; justify-content: space-between;
+  position: relative; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); display: flex; align-items: center; justify-content: space-between; min-height: 44px;
 }
-.date-text { font-size: 15px; color: var(--ink); }
-.date-row input {
-  position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%;
-  border: none; background: transparent; cursor: pointer;
-}
+.date-text { font-size: 16px; color: var(--ink); }
+.date-row input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; border: none; background: transparent; cursor: pointer; }
 
-/* Pil pilihan */
-.pills { display: flex; gap: 7px; flex-wrap: wrap; }
-.pill {
-  font-size: 12.5px; padding: 9px 15px; border-radius: 100px;
-  background: var(--field); border: 1px solid var(--line);
-  color: var(--mid); cursor: pointer;
-  transition: all .16s; user-select: none;
+.picker-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--field); border: 1px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); min-height: 44px; cursor: pointer;
 }
-.pill:active { transform: scale(.96); }
-.pill.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.picker-row:active { background: #EAEDF1; }
+.picker-value { font-size: 16px; color: var(--ink); }
+.picker-chevron { color: var(--muted); font-size: 15px; }
 
-/* Tag */
-.tags { display: flex; gap: 7px; flex-wrap: wrap; }
+.tags { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
 .tag {
-  font-size: 12px; padding: 8px 13px; border-radius: 10px;
-  background: var(--field); border: 1px solid var(--line);
-  color: var(--mid); cursor: pointer;
-  transition: all .16s; user-select: none;
+  font-size: 13px; padding: var(--sp-2) var(--sp-3); border-radius: 10px;
+  background: var(--field); border: 1px solid var(--line); color: var(--mid);
+  cursor: pointer; transition: all .16s; user-select: none; min-height: 36px; display: flex; align-items: center;
 }
-.tag:active { transform: scale(.95); }
-.tag.on {
-  background: rgba(201,168,76,.15);
-  border-color: rgba(201,168,76,.5);
-  color: #8A6D1E; font-weight: 500;
-}
-.tag-add {
-  font-size: 12px; padding: 8px 13px; border-radius: 10px;
-  background: transparent; border: 1px dashed var(--line);
-  color: var(--muted); cursor: pointer;
-}
+.tag:active { transform: scale(.96); }
+.tag.on { background: rgba(201,168,76,.14); border-color: rgba(201,168,76,.5); color: #8A6D1E; font-weight: 500; }
+.tag-add { font-size: 13px; padding: var(--sp-2) var(--sp-3); border-radius: 10px; background: transparent; border: 1px dashed var(--line); color: var(--muted); cursor: pointer; min-height: 36px; display: flex; align-items: center; }
 
-/* Prioritas 2×2 */
-.prio { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.prio { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
 .pb {
-  padding: 13px 8px; border-radius: 12px; text-align: center;
-  background: var(--field); border: 1px solid var(--line);
-  font-size: 13px; color: var(--mid); cursor: pointer;
-  transition: all .16s; user-select: none;
+  padding: var(--sp-3) var(--sp-2); border-radius: 12px; text-align: center;
+  background: var(--field); border: 1px solid var(--line); font-size: 14px; color: var(--mid);
+  cursor: pointer; transition: all .16s; user-select: none; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
 }
 .pb:active { transform: scale(.97); }
-.pb.on { color: #fff; font-weight: 500; }
-.pb[data-p="Low"].on      { background: #4A6572; border-color: #4A6572; }
-.pb[data-p="Medium"].on   { background: var(--navy3); border-color: var(--navy3); }
-.pb[data-p="High"].on     { background: var(--amber); border-color: var(--amber); }
-.pb[data-p="Critical"].on { background: var(--red); border-color: var(--red); }
+.pb.on { color: #fff; font-weight: 600; border-color: transparent; }
+.pb[data-p="Low"].on      { background: #64748A; }
+.pb[data-p="Medium"].on   { background: var(--navy); }
+.pb[data-p="High"].on     { background: var(--amber); }
+.pb[data-p="Critical"].on { background: var(--red); }
 
-/* Saklar hari libur */
-.switch-row {
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--field); border: 1px solid var(--line);
-  border-radius: 12px; padding: 13px 14px; cursor: pointer;
-}
-.switch-label { font-size: 14px; color: var(--ink); }
-.switch {
-  width: 46px; height: 27px; border-radius: 100px;
-  background: #CDD5DD; position: relative; flex-shrink: 0;
-  transition: background .2s;
-}
+.switch-row { display: flex; align-items: center; justify-content: space-between; background: var(--field); border: 1px solid var(--line); border-radius: 12px; padding: var(--sp-3) var(--sp-4); cursor: pointer; min-height: 44px; }
+.switch-label { font-size: 15px; color: var(--ink); }
+.switch { width: 46px; height: 27px; border-radius: 100px; background: #CDD5DD; position: relative; flex-shrink: 0; transition: background .2s; }
 .switch.on { background: var(--navy); }
-.switch::after {
-  content: ''; position: absolute; top: 3px; left: 3px;
-  width: 21px; height: 21px; border-radius: 50%;
-  background: #fff; transition: transform .2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,.2);
-}
+.switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
 .switch.on::after { transform: translateX(19px); }
 
-.hint { font-size: 11.5px; color: var(--muted); margin-top: 7px; line-height: 1.5; }
+.hint { font-size: 12.5px; color: var(--muted); margin-top: var(--sp-2); line-height: 1.5; }
 
-/* Tombol simpan */
 .submit {
   width: 100%; border: none; background: var(--navy); color: #fff;
-  border-radius: 15px; padding: 17px;
-  font-family: 'Syne', sans-serif; font-size: 11px;
-  font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-  cursor: pointer; box-shadow: 0 6px 20px rgba(11,27,46,.22);
-  transition: transform .1s, opacity .15s;
+  border-radius: 14px; padding: var(--sp-4); min-height: 52px;
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(11,27,46,.20); transition: transform .1s, opacity .15s;
   position: relative; overflow: hidden;
 }
 .submit:active { transform: scale(.99); }
 .submit:disabled { opacity: .55; }
-.submit .lbl-txt { transition: opacity .2s; }
-.submit .lbl-load {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-  opacity: 0; transition: opacity .2s;
+.submit .lbl-txt, .submit .lbl-ok { transition: opacity .2s; }
+.submit .lbl-load, .submit .lbl-ok {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; opacity: 0; transition: opacity .2s;
 }
-.submit.busy .lbl-txt  { opacity: 0; }
+.submit.busy .lbl-txt { opacity: 0; }
 .submit.busy .lbl-load { opacity: 1; }
-.dot3 {
-  width: 6px; height: 6px; border-radius: 50%; background: #fff;
-  animation: bounce 1.3s infinite ease-in-out;
-}
+.submit.done .lbl-txt { opacity: 0; }
+.submit.done .lbl-ok { opacity: 1; }
+.dot3 { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: bounce 1.3s infinite ease-in-out; }
 .dot3:nth-child(2) { animation-delay: .16s; }
 .dot3:nth-child(3) { animation-delay: .32s; }
-@keyframes bounce {
-  0%,80%,100% { transform: translateY(0); opacity: .4; }
-  40%         { transform: translateY(-5px); opacity: 1; }
-}
+@keyframes bounce { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
 
-
-/* ── NAVIGASI BAWAH ── */
 .nav {
-  position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: 0; z-index: 60;
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; z-index: 60;
   width: 100%; max-width: var(--app-w);
-  background: rgba(255,255,255,.93);
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
-  border-top: 1px solid var(--line);
-  padding: 9px 6px calc(9px + env(safe-area-inset-bottom));
+  background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border-top: 1px solid var(--line); padding: var(--sp-2) var(--sp-1) calc(var(--sp-2) + env(safe-area-inset-bottom));
   display: grid; grid-template-columns: repeat(4, 1fr);
 }
-.nb {
-  border: none; background: none; text-align: center;
-  font-size: 9.5px; color: var(--muted); cursor: pointer;
-  padding: 4px 2px; transition: color .16s;
-}
-.nb .ic { display: block; font-size: 17px; margin-bottom: 3px; opacity: .45; }
-.nb.on { color: var(--navy); font-weight: 700; }
-.nb.on .ic { opacity: 1; }
+.nb { border: none; background: none; text-align: center; font-size: 10px; color: var(--muted); cursor: pointer; padding: 6px 2px; min-height: 44px; transition: color .16s; }
+.nb svg { display: block; margin: 0 auto 3px; opacity: .5; }
+.nb.on { color: var(--navy); font-weight: 600; }
+.nb.on svg { opacity: 1; }
 
-
-/* ── PESAN SINGKAT ── */
 .toast {
-  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 22px);
-  transform: translate(-50%, 18px); z-index: 9500;
-  background: var(--navy); color: #fff;
-  padding: 13px 20px; border-radius: 13px;
+  position: fixed; left: 50%; bottom: calc(var(--nav-h) + var(--sp-6)); transform: translate(-50%, 18px); z-index: 9500;
+  background: var(--navy); color: #fff; padding: var(--sp-3) var(--sp-5); border-radius: 13px;
   font-size: 13.5px; max-width: min(88vw, 420px); text-align: center;
-  box-shadow: 0 10px 30px rgba(11,27,46,.32);
-  opacity: 0; pointer-events: none; transition: all .3s ease;
+  box-shadow: 0 10px 30px rgba(11,27,46,.32); opacity: 0; pointer-events: none; transition: all .3s ease;
 }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .toast.err  { background: var(--red); }
-.toast.good { background: var(--green); }
+.toast.good { background: #2E7D5B; }
 
 .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<!-- ══════════ LAYAR PIN ══════════ -->
 <div id="pinScreen">
   <div class="pin-wrap">
     <img class="pin-logo" id="pinLogo"
@@ -483,10 +355,8 @@ button, input, textarea, select {
     <div class="pin-sub">Masukkan PIN untuk melanjutkan.</div>
 
     <div class="pin-dots" id="pinDots">
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
 
     <div class="pin-pad" id="pinPad">
@@ -509,282 +379,319 @@ button, input, textarea, select {
 </div>
 
 
-<!-- ══════════ APLIKASI ══════════ -->
 <div id="app">
 
   <div class="header" id="header">
     <div class="hd-logo">
       <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish"
            onerror="this.style.display='none';document.getElementById('hdLogoFb').style.display='block'">
-      <span class="hd-logo-fb" id="hdLogoFb">MF</span>
+      <span class="hd-logo-fb hidden" id="hdLogoFb">Miss Fish</span>
     </div>
-    <div class="hd-text">
-      <div class="hd-brand">Miss Fish</div>
-      <div class="hd-sub">IT Daily Activity</div>
-    </div>
-    <div class="hd-meta">
+
+    <div class="hd-title"><span>IT Daily</span><span>Activity</span></div>
+
+    <div class="hd-meta" id="sesTrigger">
       <div class="hd-time">
         <span class="hd-dot" id="sesDot"></span>
-        <span id="clock">--:--</span>
+        <span class="hd-clock-main" id="clockMain">--:--</span><span class="hd-clock-sec" id="clockSec">--</span>
       </div>
-      <div class="hd-day" id="hdDay">—</div>
+      <div class="hd-date" id="hdDate">—</div>
     </div>
   </div>
 
   <div class="scroll" id="scroll">
+    <div>
 
-    <!-- Tulis bebas -->
-    <div class="ai">
-      <div class="ai-head">
-        <div class="ai-title">&#10022; &nbsp;Tulis bebas</div>
-        <div class="ai-badge">SEGERA</div>
+      <div class="ai">
+        <div class="ai-head">
+          <div class="ai-title">&#10022; Tulis bebas</div>
+          <div class="ai-badge">Segera</div>
+        </div>
+        <textarea class="ai-box" id="aiInput"
+          placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer kitchen, sempat putus pas prep dinner, urgent belum kelar."></textarea>
+        <button class="ai-btn" id="aiBtn">Uraikan dengan AI</button>
       </div>
-      <textarea class="ai-box" id="aiInput"
-        placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer kitchen, sempat putus pas prep dinner, urgent belum kelar."></textarea>
-      <button class="ai-btn" id="aiBtn">Uraikan dengan AI</button>
-    </div>
 
-    <!-- Kartu 1 -->
-    <div class="card">
-      <div class="card-title">Kapan &amp; apa</div>
+      <div class="card">
+        <div class="card-title">Kapan &amp; apa</div>
 
-      <div class="field">
-        <label class="label" for="taskDate">Tanggal</label>
-        <div class="date-row">
-          <span class="date-text" id="dateText">—</span>
-          <span style="opacity:.4">&#128197;</span>
-          <input type="date" id="taskDate">
+        <div class="field">
+          <label class="label" for="taskDate">Tanggal</label>
+          <div class="date-row">
+            <span class="date-text" id="dateText">—</span>
+            <span style="opacity:.4">&#128197;</span>
+            <input type="date" id="taskDate">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Jenis hari</label>
+          <div class="picker-row" id="rowActivity">
+            <span class="picker-value" id="valActivity">Hari kerja</span>
+            <span class="picker-chevron">&#8250;</span>
+          </div>
+        </div>
+
+        <div class="field hidden" id="offBox">
+          <div class="switch-row" id="offToggle">
+            <span class="switch-label">Tetap ada pekerjaan?</span>
+            <span class="switch" id="offSwitch"></span>
+          </div>
+          <div class="hint">Nyalakan bila kamu tetap menangani sesuatu di hari libur.</div>
+        </div>
+
+        <div class="field" id="workTypeBox">
+          <label class="label">Jenis pekerjaan</label>
+          <div class="picker-row" id="rowWorkType">
+            <span class="picker-value" id="valWorkType">Task</span>
+            <span class="picker-chevron">&#8250;</span>
+          </div>
         </div>
       </div>
 
-      <div class="field">
-        <label class="label">Jenis hari</label>
-        <div class="pills" id="actPills"></div>
-      </div>
+      <div class="card" id="workCard">
+        <div class="card-title">Pekerjaan</div>
 
-      <div class="field hidden" id="offBox">
-        <div class="switch-row" id="offToggle">
-          <span class="switch-label">Tetap ada pekerjaan?</span>
-          <span class="switch" id="offSwitch"></span>
+        <div class="field">
+          <label class="label" for="taskDesc">Apa yang dikerjakan</label>
+          <textarea class="textarea" id="taskDesc" placeholder="Tulis sejelasnya, biar mudah dibaca lagi nanti."></textarea>
         </div>
-        <div class="hint">Nyalakan bila kamu tetap menangani sesuatu di hari libur.</div>
-      </div>
 
-      <div class="field" id="workTypeBox">
-        <label class="label">Jenis pekerjaan</label>
-        <div class="pills" id="wtPills"></div>
-      </div>
-    </div>
-
-    <!-- Kartu 2 -->
-    <div class="card" id="workCard">
-      <div class="card-title">Pekerjaan</div>
-
-      <div class="field">
-        <label class="label" for="taskDesc">Apa yang dikerjakan</label>
-        <textarea class="textarea" id="taskDesc"
-          placeholder="Tulis sejelasnya, biar mudah dibaca lagi nanti."></textarea>
-      </div>
-
-      <div class="field">
-        <label class="label">Tag</label>
-        <div class="tags" id="tagGrid">
-          <span class="tag-add" style="opacity:.6">Memuat tag…</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kartu 3 -->
-    <div class="card" id="metaCard">
-      <div class="card-title">Prioritas &amp; status</div>
-
-      <div class="field">
-        <label class="label">Prioritas</label>
-        <div class="prio" id="prioGrid">
-          <div class="pb" data-p="Low">Low</div>
-          <div class="pb" data-p="Medium">Medium</div>
-          <div class="pb" data-p="High">High</div>
-          <div class="pb" data-p="Critical">Critical</div>
+        <div class="field">
+          <label class="label">Tag</label>
+          <div class="tags" id="tagGrid">
+            <span class="tag-add" style="opacity:.6">Memuat tag…</span>
+          </div>
         </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="statusSel">Status</label>
-        <select class="select" id="statusSel">
-          <option value="On Progress">On Progress</option>
-          <option value="Done">Done</option>
-          <option value="Pending">Pending</option>
-          <option value="Waiting Vendor">Waiting Vendor</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+      <div class="card" id="metaCard">
+        <div class="card-title">Prioritas &amp; status</div>
+
+        <div class="field">
+          <label class="label">Prioritas</label>
+          <div class="prio" id="prioGrid">
+            <div class="pb" data-p="Low">Low</div>
+            <div class="pb" data-p="Medium">Medium</div>
+            <div class="pb" data-p="High">High</div>
+            <div class="pb" data-p="Critical">Critical</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Status</label>
+          <div class="picker-row" id="rowStatus">
+            <span class="picker-value" id="valStatus">On Progress</span>
+            <span class="picker-chevron">&#8250;</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="remarkInput">Catatan <span style="opacity:.6">— boleh dikosongkan</span></label>
+          <input class="input" id="remarkInput" placeholder="Misal: menunggu sparepart dari vendor">
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="remarkInput">Catatan <span style="opacity:.6">— boleh dikosongkan</span></label>
-        <input class="input" id="remarkInput" placeholder="Misal: menunggu sparepart dari vendor">
-      </div>
+      <button class="submit" id="submitBtn">
+        <span class="lbl-txt">Simpan aktivitas</span>
+        <span class="lbl-load"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span></span>
+        <span class="lbl-ok">&#10003; Tersimpan</span>
+      </button>
     </div>
-
-    <button class="submit" id="submitBtn">
-      <span class="lbl-txt">Simpan aktivitas</span>
-      <span class="lbl-load">
-        <span class="dot3"></span><span class="dot3"></span><span class="dot3"></span>
-      </span>
-    </button>
   </div>
 
   <nav class="nav">
-    <button class="nb on" data-tab="input"><span class="ic">&#9998;</span>Input</button>
-    <button class="nb" data-tab="report"><span class="ic">&#9636;</span>Laporan</button>
-    <button class="nb" data-tab="dash"><span class="ic">&#9672;</span>Dasbor</button>
-    <button class="nb" data-tab="log"><span class="ic">&#8801;</span>Log</button>
+    <button class="nb on" data-tab="input">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Input
+    </button>
+    <button class="nb" data-tab="report">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Laporan
+    </button>
+    <button class="nb" data-tab="dash">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="4" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="10" y="9" width="4" height="11" rx="1" stroke="currentColor" stroke-width="2"/><rect x="16" y="5" width="4" height="15" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+      Dasbor
+    </button>
+    <button class="nb" data-tab="log">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Log
+    </button>
   </nav>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="sheetTitle">Judul</div>
+  <div id="sheetBody"></div>
+</div>
 
-<!-- data-cfasync="false" mencegah Rocket Loader milik Cloudflare
-     menunda atau menulis ulang skrip ini. Tanpa penanda tersebut,
-     halaman kerap berjalan di komputer sendiri tetapi gagal setelah
-     diunggah ke Cloudflare. -->
+
 <script data-cfasync="false">
-/* ══════════════════════════════════════════════
-   KONFIGURASI
-══════════════════════════════════════════════ */
 const CONFIG = {
   SUPABASE_URL:      'https://hiwtsreqeizvmjcrxjxd.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhpd3RzcmVxZWl6dm1qY3J4anhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNTY4NjYsImV4cCI6MjEwMTgzMjg2Nn0.8v25vSSg0o5cw5qEadZ0WACycvId3rYEXQsNbxAarD0',
   FUNCTION_NAME:     'submit-task',
-  GEMINI_MODEL:      'gemini-3.5-flash-lite',  // dipakai mulai Phase 1B
+  GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '1.8',
+  APP_VERSION:       '2.1',
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
+  SESSION_DAYS:      3,
 };
-
 const ENDPOINT = CONFIG.SUPABASE_URL + '/functions/v1/' + CONFIG.FUNCTION_NAME;
 
-
-/* ══════════════════════════════════════════════
-   PENYIMPANAN SESI
-   localStorage dipakai bila tersedia. Bila diblokir
-   (mode privat, pratinjau dalam bingkai), otomatis
-   beralih ke penyimpanan sementara di memori.
-══════════════════════════════════════════════ */
 const Store = (() => {
-  let memory = {};
-  let usable = true;
-  try {
-    localStorage.setItem('__t', '1');
-    localStorage.removeItem('__t');
-  } catch (e) { usable = false; }
-
+  let memory = {}, usable = true;
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); } catch(e){ usable=false; }
   return {
-    get(k)    { try { return usable ? localStorage.getItem(k) : memory[k] ?? null; } catch (e) { return memory[k] ?? null; } },
-    set(k, v) { try { usable ? localStorage.setItem(k, v) : memory[k] = v; } catch (e) { memory[k] = v; } },
-    del(k)    { try { usable ? localStorage.removeItem(k) : delete memory[k]; } catch (e) { delete memory[k]; } }
+    get(k)    { try { return usable ? localStorage.getItem(k) : memory[k] ?? null; } catch(e){ return memory[k] ?? null; } },
+    set(k, v) { try { usable ? localStorage.setItem(k, v) : memory[k]=v; } catch(e){ memory[k]=v; } },
+    del(k)    { try { usable ? localStorage.removeItem(k) : delete memory[k]; } catch(e){ delete memory[k]; } }
   };
 })();
-
 const KEY_TOKEN = 'mfbit_session';
+const KEY_LOGIN_AT = 'mfbit_login_at';
 
-
-/* ══════════════════════════════════════════════
-   PADANAN ISTILAH
-   Layar berbahasa Indonesia, nilai tersimpan tetap Inggris
-   agar laporan dan View SQL tidak perlu diubah.
-══════════════════════════════════════════════ */
 const ACTIVITY_TYPES = [
-  { db: 'Working Day',    id: 'Hari kerja'     },
-  { db: 'Day Off',        id: 'Libur'          },
-  { db: 'Public Holiday', id: 'Libur Nasional' },
-  { db: 'Annual Leave',   id: 'Cuti Tahunan'   },
-  { db: 'Sick Leave',     id: 'Sakit'          },
-  { db: 'Extra Off (EO)', id: 'Extra Off'      },
-  { db: 'PDO',            id: 'PDO'            },
+  { db:'Working Day',    id:'Hari kerja'     },
+  { db:'Day Off',        id:'Libur'          },
+  { db:'Public Holiday', id:'Libur Nasional' },
+  { db:'Annual Leave',   id:'Cuti Tahunan'   },
+  { db:'Sick Leave',     id:'Sakit'          },
+  { db:'Extra Off (EO)', id:'Extra Off'      },
+  { db:'PDO',            id:'PDO'            },
+];
+const WORK_TYPES = ['Task','Meeting Online','Meeting Offline','Training','Trainer','WFH','Remote Working','Event/Seminar'];
+const STATUS_TYPES = [
+  { db:'On Progress',    id:'On Progress'    },
+  { db:'Done',           id:'Done'           },
+  { db:'Pending',        id:'Pending'        },
+  { db:'Waiting Vendor', id:'Waiting Vendor' },
+  { db:'Cancelled',      id:'Cancelled'      },
 ];
 
-// Istilah kerja IT dibiarkan dalam bahasa Inggris — lebih dikenal.
-const WORK_TYPES = [
-  'Task', 'Meeting Online', 'Meeting Offline', 'Training',
-  'Trainer', 'WFH', 'Remote Working', 'Event/Seminar',
-];
+const BULAN3 = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-const BULAN = ['Januari','Februari','Maret','April','Mei','Juni',
-               'Juli','Agustus','September','Oktober','November','Desember'];
-
-
-/* ══════════════════════════════════════════════
-   KEADAAN
-══════════════════════════════════════════════ */
 const state = {
-  token:        null,
-  activityType: 'Working Day',
-  workType:     'Task',
-  priority:     'Medium',
-  offWorking:   false,   // di hari libur, tetap ada pekerjaan
-  tags:         [],      // daftar tag dari server
-  selected:     new Set(),
-  editCount:    0,
-  openedAt:     Date.now(),
-  submitCount:  0,
-  taskToday:    0,
+  token: null, loginAt: null,
+  activityType: 'Working Day', workType: 'Task', priority: 'Medium',
+  status: 'On Progress', offWorking: false,
+  tags: [], selected: new Set(),
+  editCount: 0, openedAt: Date.now(), submitCount: 0, taskToday: 0,
 };
 
-
-/* ══════════════════════════════════════════════
-   PEMBANTU
-══════════════════════════════════════════════ */
 function $(id) { return document.getElementById(id); }
 
 function toast(msg, kind) {
   const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast on' + (kind ? ' ' + kind : '');
+  t.textContent = msg; t.className = 'toast on' + (kind ? ' ' + kind : '');
   clearTimeout(toast._t);
-  toast._t = setTimeout(() => { t.className = 'toast'; }, 2600);
+  toast._t = setTimeout(() => { t.className = 'toast'; }, 2800);
 }
 
-function todayISO() {
-  return new Date().toLocaleDateString('en-CA', { timeZone: CONFIG.TIMEZONE });
+function todayISO() { return new Date().toLocaleDateString('en-CA', { timeZone: CONFIG.TIMEZONE }); }
+function formatTanggalPendek(iso) {
+  const [y,m,d] = iso.split('-').map(Number);
+  return String(d).padStart(2,'0') + ' ' + BULAN3[m-1] + ' ' + y;
 }
-
-function formatTanggal(iso) {
-  const [y, m, d] = iso.split('-').map(Number);
-  const dt = new Date(y, m - 1, d);
-  return HARI[dt.getDay()] + ', ' + d + ' ' + BULAN[m - 1] + ' ' + y;
+function formatTanggalPanjang(iso) {
+  const HARI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const BULANFULL=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const [y,m,d]=iso.split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  return HARI[dt.getDay()]+', '+d+' '+BULANFULL[m-1]+' '+y;
 }
-
 function trackEdit() { state.editCount++; }
 
+function openSheet(title, bodyHtml) {
+  $('sheetTitle').textContent = title;
+  $('sheetBody').innerHTML = bodyHtml;
+  $('sheetBackdrop').classList.add('on');
+  $('sheet').classList.add('on');
+}
+function closeSheet() {
+  $('sheetBackdrop').classList.remove('on');
+  $('sheet').classList.remove('on');
+}
+$('sheetBackdrop').addEventListener('click', closeSheet);
 
-/* ══════════════════════════════════════════════
-   PANGGILAN KE EDGE FUNCTION
-══════════════════════════════════════════════ */
+function openOptionSheet(title, options, currentDb, onPick) {
+  const html = '<div class="option-list">' + options.map(o => {
+    const sel = o.db === currentDb;
+    return '<div class="option-item' + (sel ? ' selected' : '') + '" data-db="' + o.db + '">'
+         + '<span>' + o.id + '</span><span class="option-check">&#10003;</span></div>';
+  }).join('') + '</div>';
+
+  openSheet(title, html);
+  $('sheetBody').querySelectorAll('.option-item').forEach(el => {
+    el.addEventListener('click', () => {
+      onPick(el.dataset.db);
+      closeSheet();
+    });
+  });
+}
+
+function sisaWaktuSesi() {
+  if (!state.loginAt) return null;
+  const berakhir = state.loginAt + CONFIG.SESSION_DAYS * 24 * 60 * 60 * 1000;
+  return berakhir - Date.now();
+}
+
+function updateSessionDot() {
+  const sisa = sisaWaktuSesi();
+  const dot = $('sesDot');
+  if (sisa === null) { dot.className = 'hd-dot'; return; }
+  if (sisa < 0)                    dot.className = 'hd-dot stale';
+  else if (sisa < 24*60*60*1000)   dot.className = 'hd-dot warn';
+  else                              dot.className = 'hd-dot';
+}
+
+function formatSisaWaktu(ms) {
+  if (ms <= 0) return 'Sudah berakhir';
+  const jam = Math.floor(ms / (60*60*1000));
+  const hari = Math.floor(jam / 24);
+  const sisaJam = jam % 24;
+  if (hari > 0) return hari + ' hari ' + sisaJam + ' jam lagi';
+  return sisaJam + ' jam lagi';
+}
+
+function openSessionSheet() {
+  const sisa = sisaWaktuSesi();
+  const html = '<div class="session-info">'
+    + '<div class="session-row"><span class="session-label">Status sesi</span>'
+    + '<span class="session-value">' + (sisa > 0 ? 'Aktif' : 'Berakhir') + '</span></div>'
+    + '<div class="session-row"><span class="session-label">Berlaku hingga</span>'
+    + '<span class="session-value">' + (sisa !== null ? formatSisaWaktu(sisa) : '—') + '</span></div>'
+    + '</div>'
+    + '<div style="padding:0 20px"><button class="btn-logout" id="btnLogoutInline">Keluar</button></div>';
+
+  openSheet('Sesi', html);
+  $('btnLogoutInline').addEventListener('click', doLogout);
+}
+
+function doLogout() {
+  closeSheet();
+  Store.del(KEY_TOKEN);
+  Store.del(KEY_LOGIN_AT);
+  state.token = null;
+  showPin('');
+}
+
 async function callApi(payload) {
-  const started = performance.now();
-
   let res;
   try {
     res = await fetch(ENDPOINT, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY },
       body: JSON.stringify(payload),
     });
   } catch (e) {
-    // Permintaan tidak sampai ke server sama sekali.
-    // Penyebab tersering: koneksi putus, CORS, atau CSP situs.
     console.error('[MFB-IT] fetch gagal:', e);
-    const err = new Error(
-      'Tidak sampai ke server. Kemungkinan koneksi terputus, ' +
-      'atau permintaan diblokir kebijakan keamanan situs (CORS/CSP). ' +
-      'Buka Console peramban untuk rincian.'
-    );
+    const err = new Error('Tidak sampai ke server. Kemungkinan koneksi terputus, atau permintaan diblokir kebijakan keamanan situs (CORS/CSP). Buka Console peramban untuk rincian.');
     err.network = true;
     throw err;
   }
@@ -796,185 +703,141 @@ async function callApi(payload) {
     throw new Error('Server menjawab ' + res.status + ', tetapi isinya tidak terbaca.');
   }
 
-  data._ms = Math.round(performance.now() - started);
-
-  // Sesi habis — minta PIN lagi
   if (res.status === 401 && payload.action !== 'login') {
-    Store.del(KEY_TOKEN);
+    Store.del(KEY_TOKEN); Store.del(KEY_LOGIN_AT);
     state.token = null;
     showPin('Sesi berakhir. Masukkan PIN lagi.');
     throw new Error(data.error || 'Sesi berakhir.');
   }
-
   return data;
 }
 
-
-/* ══════════════════════════════════════════════
-   DATA PERANGKAT — untuk activity_log
-══════════════════════════════════════════════ */
 function clientMeta() {
   const ua = navigator.userAgent;
+  let browser='Lainnya';
+  if (/Edg\//.test(ua)) browser='Edge';
+  else if (/OPR\//.test(ua)) browser='Opera';
+  else if (/Chrome\//.test(ua)) browser='Chrome';
+  else if (/Firefox\//.test(ua)) browser='Firefox';
+  else if (/Safari\//.test(ua)) browser='Safari';
 
-  let browser = 'Lainnya';
-  if (/Edg\//.test(ua))          browser = 'Edge';
-  else if (/OPR\//.test(ua))     browser = 'Opera';
-  else if (/Chrome\//.test(ua))  browser = 'Chrome';
-  else if (/Firefox\//.test(ua)) browser = 'Firefox';
-  else if (/Safari\//.test(ua))  browser = 'Safari';
+  let os='Lainnya';
+  if (/Android/.test(ua)) os='Android';
+  else if (/iPhone|iPad|iPod/.test(ua)) os='iOS';
+  else if (/Windows/.test(ua)) os='Windows';
+  else if (/Mac OS X/.test(ua)) os='macOS';
+  else if (/Linux/.test(ua)) os='Linux';
 
-  let os = 'Lainnya';
-  if (/Android/.test(ua))               os = 'Android';
-  else if (/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
-  else if (/Windows/.test(ua))          os = 'Windows';
-  else if (/Mac OS X/.test(ua))         os = 'macOS';
-  else if (/Linux/.test(ua))            os = 'Linux';
-
-  const device = /Mobi|Android|iPhone/.test(ua) ? 'Mobile'
-               : /iPad|Tablet/.test(ua)          ? 'Tablet'
-               : 'Desktop';
+  const device = /Mobi|Android|iPhone/.test(ua) ? 'Mobile' : /iPad|Tablet/.test(ua) ? 'Tablet' : 'Desktop';
 
   let load = 0;
-  try {
-    const nav = performance.getEntriesByType('navigation')[0];
-    if (nav) load = Math.round(nav.duration);
-  } catch (e) {}
+  try { const nav = performance.getEntriesByType('navigation')[0]; if (nav) load = Math.round(nav.duration); } catch(e){}
 
   let sid = Store.get('mfbit_sid');
-  if (!sid) {
-    sid = 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-    Store.set('mfbit_sid', sid);
-  }
+  if (!sid) { sid = 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); Store.set('mfbit_sid', sid); }
 
   return {
-    formEditCount:   state.editCount,
+    formEditCount: state.editCount,
     timeToSubmitSec: Math.round((Date.now() - state.openedAt) / 1000),
-    tasksInSession:  state.submitCount + 1,
-    browser, os,
-    deviceType:       device,
+    tasksInSession: state.submitCount + 1,
+    browser, os, deviceType: device,
     screenResolution: screen.width + 'x' + screen.height,
-    connectionType:   (navigator.connection && navigator.connection.effectiveType) || '',
-    pageLoadTimeMs:   load,
-    language:         navigator.language || '',
-    timezone:         Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-    referrer:         document.referrer || '',
-    userAgentRaw:     ua,
-    sessionId:        sid,
+    connectionType: (navigator.connection && navigator.connection.effectiveType) || '',
+    pageLoadTimeMs: load,
+    language: navigator.language || '',
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+    referrer: document.referrer || '',
+    userAgentRaw: ua,
+    sessionId: sid,
   };
 }
 
-
-/* ══════════════════════════════════════════════
-   LAYAR PIN
-══════════════════════════════════════════════ */
-let pinBuffer = '';
-let pinBusy   = false;
+let pinBuffer = '', pinBusy = false;
 
 function showPin(message) {
-  pinBuffer = '';
-  paintDots();
+  pinBuffer = ''; paintDots();
   $('pinMsg').textContent = message || '';
   $('pinMsg').className = 'pin-msg' + (message ? ' err' : '');
+  $('pinScreen').style.display = 'flex';
   $('pinScreen').classList.remove('hide');
   $('app').classList.remove('on');
 }
-
 function hidePin() {
   $('pinScreen').classList.add('hide');
   setTimeout(() => { $('pinScreen').style.display = 'none'; }, 420);
   $('app').classList.add('on');
 }
-
 function paintDots(errored) {
   const dots = $('pinDots').children;
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].className = 'pin-dot'
-      + (errored ? ' err' : (i < pinBuffer.length ? ' fill' : ''));
-  }
+  for (let i=0;i<dots.length;i++) dots[i].className = 'pin-dot' + (errored ? ' err' : (i<pinBuffer.length ? ' fill' : ''));
 }
-
 function pinPress(k) {
   if (pinBusy) return;
-
-  if (k === 'clear') { pinBuffer = ''; paintDots(); return; }
-  if (k === 'del')   { pinBuffer = pinBuffer.slice(0, -1); paintDots(); return; }
+  if (k==='clear') { pinBuffer=''; paintDots(); return; }
+  if (k==='del')   { pinBuffer=pinBuffer.slice(0,-1); paintDots(); return; }
   if (pinBuffer.length >= CONFIG.PIN_LENGTH) return;
-
-  pinBuffer += k;
-  paintDots();
-
+  pinBuffer += k; paintDots();
   if (pinBuffer.length === CONFIG.PIN_LENGTH) submitPin();
 }
-
 async function submitPin() {
   pinBusy = true;
-  $('pinMsg').textContent = 'Memeriksa…';
-  $('pinMsg').className = 'pin-msg busy';
-
+  $('pinMsg').textContent = 'Memeriksa…'; $('pinMsg').className = 'pin-msg busy';
   try {
-    const r = await callApi({ action: 'login', pin: pinBuffer });
-
+    const r = await callApi({ action:'login', pin: pinBuffer });
     if (!r.ok) {
       paintDots(true);
       $('pinDots').classList.add('shake');
-      setTimeout(() => $('pinDots').classList.remove('shake'), 420);
+      setTimeout(()=>$('pinDots').classList.remove('shake'), 420);
       $('pinMsg').textContent = r.error || 'PIN belum cocok.';
       $('pinMsg').className = 'pin-msg err';
-      setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 700);
+      setTimeout(()=>{ pinBuffer=''; paintDots(); pinBusy=false; }, 700);
       return;
     }
-
     state.token = r.sessionToken;
+    state.loginAt = Date.now();
     Store.set(KEY_TOKEN, r.sessionToken);
-    $('pinMsg').textContent = '';
-    pinBusy = false;
-    hidePin();
-    startApp();
-
+    Store.set(KEY_LOGIN_AT, String(state.loginAt));
+    $('pinMsg').textContent = ''; pinBusy = false;
+    hidePin(); startApp();
   } catch (e) {
     $('pinMsg').textContent = e.message || 'Tidak bisa menghubungi server.';
     $('pinMsg').className = 'pin-msg err';
-    setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 1200);
+    setTimeout(()=>{ pinBuffer=''; paintDots(); pinBusy=false; }, 1200);
   }
 }
 
-
-/* ══════════════════════════════════════════════
-   MEMBANGUN FORM
-══════════════════════════════════════════════ */
-function buildActivityPills() {
-  const box = $('actPills');
-  box.innerHTML = '';
-  ACTIVITY_TYPES.forEach(a => {
-    const el = document.createElement('div');
-    el.className = 'pill' + (a.db === state.activityType ? ' on' : '');
-    el.textContent = a.id;
-    el.onclick = () => {
-      state.activityType = a.db;
+function setupActivityPicker() {
+  $('rowActivity').addEventListener('click', () => {
+    openOptionSheet('Jenis hari', ACTIVITY_TYPES, state.activityType, (db) => {
+      state.activityType = db;
+      const found = ACTIVITY_TYPES.find(a => a.db === db);
+      $('valActivity').textContent = found.id;
       trackEdit();
-      buildActivityPills();
       applyActivityMode();
-    };
-    box.appendChild(el);
+    });
   });
 }
-
-function buildWorkTypePills() {
-  const box = $('wtPills');
-  box.innerHTML = '';
-  WORK_TYPES.forEach(w => {
-    const el = document.createElement('div');
-    el.className = 'pill' + (w === state.workType ? ' on' : '');
-    el.textContent = w;
-    el.onclick = () => { state.workType = w; trackEdit(); buildWorkTypePills(); };
-    box.appendChild(el);
+function setupWorkTypePicker() {
+  $('rowWorkType').addEventListener('click', () => {
+    const opts = WORK_TYPES.map(w => ({ db: w, id: w }));
+    openOptionSheet('Jenis pekerjaan', opts, state.workType, (db) => {
+      state.workType = db; $('valWorkType').textContent = db; trackEdit();
+    });
+  });
+}
+function setupStatusPicker() {
+  $('rowStatus').addEventListener('click', () => {
+    openOptionSheet('Status', STATUS_TYPES, state.status, (db) => {
+      state.status = db;
+      const found = STATUS_TYPES.find(s => s.db === db);
+      $('valStatus').textContent = found.id; trackEdit();
+    });
   });
 }
 
 function applyActivityMode() {
   const isWorking = state.activityType === 'Working Day';
   $('offBox').classList.toggle('hidden', isWorking);
-
   const showWork = isWorking || state.offWorking;
   $('workTypeBox').classList.toggle('hidden', !showWork);
   $('workCard').classList.toggle('hidden', !showWork);
@@ -982,79 +845,51 @@ function applyActivityMode() {
 }
 
 function buildTags() {
-  const box = $('tagGrid');
-  box.innerHTML = '';
-
+  const box = $('tagGrid'); box.innerHTML = '';
   state.tags.forEach(t => {
     const el = document.createElement('div');
     el.className = 'tag' + (state.selected.has(t) ? ' on' : '');
     el.textContent = t;
-    el.onclick = () => {
-      state.selected.has(t) ? state.selected.delete(t) : state.selected.add(t);
-      trackEdit();
-      buildTags();
-    };
+    el.onclick = () => { state.selected.has(t) ? state.selected.delete(t) : state.selected.add(t); trackEdit(); buildTags(); };
     box.appendChild(el);
   });
-
   const add = document.createElement('div');
-  add.className = 'tag-add';
-  add.textContent = '+ tag baru';
+  add.className = 'tag-add'; add.textContent = '+ tag baru';
   add.onclick = () => {
     const v = prompt('Nama tag baru:');
     if (!v) return;
-    const clean = v.trim();
-    if (!clean) return;
-    if (!state.tags.some(t => t.toLowerCase() === clean.toLowerCase())) {
-      state.tags.push(clean);
-    }
-    state.selected.add(clean);
-    trackEdit();
-    buildTags();
+    const clean = v.trim(); if (!clean) return;
+    if (!state.tags.some(t => t.toLowerCase() === clean.toLowerCase())) state.tags.push(clean);
+    state.selected.add(clean); trackEdit(); buildTags();
   };
   box.appendChild(add);
 }
-
 function buildPriority() {
   document.querySelectorAll('#prioGrid .pb').forEach(el => {
     el.classList.toggle('on', el.dataset.p === state.priority);
-    el.onclick = () => {
-      state.priority = el.dataset.p;
-      trackEdit();
-      buildPriority();
-    };
+    el.onclick = () => { state.priority = el.dataset.p; trackEdit(); buildPriority(); };
   });
 }
 
-
-/* ══════════════════════════════════════════════
-   KEPALA — jam & penanda sesi
-══════════════════════════════════════════════ */
 function tickClock() {
   const now = new Date();
-  const jam = now.toLocaleTimeString('id-ID', {
-    timeZone: CONFIG.TIMEZONE, hour: '2-digit', minute: '2-digit', hour12: false,
-  });
-  $('clock').textContent = jam;
+  const jamMenit = now.toLocaleTimeString('id-ID', { timeZone: CONFIG.TIMEZONE, hour:'2-digit', minute:'2-digit', hour12:false });
+  const detik = now.toLocaleTimeString('id-ID', { timeZone: CONFIG.TIMEZONE, second:'2-digit' }).padStart(2,'0');
+  $('clockMain').textContent = jamMenit;
+  $('clockSec').textContent = ':' + detik;
 
   const iso = todayISO();
-  const [y, m, d] = iso.split('-').map(Number);
-  const short = HARI[new Date(y, m - 1, d).getDay()].slice(0, 3) + ' ' + d;
-  const count = state.taskToday > 0 ? ' · ' + state.taskToday + ' \u270E' : '';
-  $('hdDay').textContent = short + count;
+  $('hdDate').textContent = formatTanggalPendek(iso);
+  updateSessionDot();
 }
 
-
-/* ══════════════════════════════════════════════
-   KIRIM DATA
-══════════════════════════════════════════════ */
 async function doSubmit() {
   const btn = $('submitBtn');
   if (btn.classList.contains('busy')) return;
 
   const isWorking = state.activityType === 'Working Day';
-  const needWork  = isWorking || state.offWorking;
-  const task      = $('taskDesc').value.trim();
+  const needWork = isWorking || state.offWorking;
+  const task = $('taskDesc').value.trim();
 
   if (needWork && !task) {
     toast('Isi dulu pekerjaannya.', 'err');
@@ -1062,155 +897,109 @@ async function doSubmit() {
     return;
   }
 
-  btn.classList.add('busy');
-  btn.disabled = true;
+  btn.classList.add('busy'); btn.disabled = true;
 
   try {
     const r = await callApi({
-      action:       'submit',
-      sessionToken: state.token,
-      taskDate:     $('taskDate').value || todayISO(),
+      action: 'submit', sessionToken: state.token,
+      taskDate: $('taskDate').value || todayISO(),
       activityType: state.activityType,
-      workType:     needWork ? state.workType : '',
-      task:         needWork ? task : '',
-      tags:         needWork ? Array.from(state.selected) : [],
-      priority:     needWork ? state.priority : '',
-      status:       needWork ? $('statusSel').value : '',
-      remark:       $('remarkInput').value.trim(),
-      meta:         clientMeta(),
+      workType: needWork ? state.workType : '',
+      task: needWork ? task : '',
+      tags: needWork ? Array.from(state.selected) : [],
+      priority: needWork ? state.priority : '',
+      status: needWork ? state.status : '',
+      remark: $('remarkInput').value.trim(),
+      meta: clientMeta(),
     });
 
     if (!r.ok) {
-      toast(r.error || 'Gagal menyimpan.', 'err');
+      toast(r.error || 'Belum terkirim. Isianmu masih tersimpan, coba lagi.', 'err');
+      btn.classList.remove('busy'); btn.disabled = false;
       return;
     }
 
     state.submitCount++;
     if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
-    tickClock();
+
+    btn.classList.remove('busy'); btn.classList.add('done');
+    setTimeout(() => { btn.classList.remove('done'); btn.disabled = false; }, 1100);
 
     toast('Tersimpan · ' + r.taskIdFormatted, 'good');
     resetForm();
     $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (e) {
-    if (state.token) toast(e.message || 'Gagal menghubungi server.', 'err');
-  } finally {
-    btn.classList.remove('busy');
-    btn.disabled = false;
+    if (state.token) toast(e.message || 'Belum terkirim. Isianmu masih tersimpan, coba lagi.', 'err');
+    btn.classList.remove('busy'); btn.disabled = false;
   }
 }
 
 function resetForm() {
-  $('taskDesc').value    = '';
-  $('remarkInput').value = '';
-  $('aiInput').value     = '';
+  $('taskDesc').value = ''; $('remarkInput').value = ''; $('aiInput').value = '';
   state.selected.clear();
-  state.priority   = 'Medium';
-  state.editCount  = 0;
-  state.openedAt   = Date.now();
-  $('statusSel').value = 'On Progress';
-  buildTags();
-  buildPriority();
+  state.priority = 'Medium'; state.status = 'On Progress';
+  state.editCount = 0; state.openedAt = Date.now();
+  $('valStatus').textContent = 'On Progress';
+  buildTags(); buildPriority();
 }
 
-
-/* ══════════════════════════════════════════════
-   MULAI
-══════════════════════════════════════════════ */
 async function startApp() {
   const iso = todayISO();
-  $('taskDate').value  = iso;
-  $('dateText').textContent = formatTanggal(iso);
+  $('taskDate').value = iso;
+  $('dateText').textContent = formatTanggalPanjang(iso);
 
-  buildActivityPills();
-  buildWorkTypePills();
-  buildPriority();
   applyActivityMode();
+  buildPriority();
   tickClock();
 
-  // Ambil tag dari Supabase
   try {
-    const r = await callApi({ action: 'get-tags', sessionToken: state.token });
+    const r = await callApi({ action:'get-tags', sessionToken: state.token });
     if (r.ok) {
       state.tags = r.tags || [];
       if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
-      tickClock();
     } else {
       state.tags = [];
       toast('Daftar tag gagal dimuat.', 'err');
     }
-  } catch (e) {
-    state.tags = [];
-  }
+  } catch (e) { state.tags = []; }
   buildTags();
 }
 
 function wireEvents() {
-  // Papan PIN
-  $('pinPad').addEventListener('click', e => {
-    const b = e.target.closest('.pin-key');
-    if (b) pinPress(b.dataset.k);
-  });
-
-  // Papan ketik fisik (untuk laptop)
+  $('pinPad').addEventListener('click', e => { const b=e.target.closest('.pin-key'); if (b) pinPress(b.dataset.k); });
   document.addEventListener('keydown', e => {
-    if ($('pinScreen').classList.contains('hide')) return;
-    if (/^[0-9]$/.test(e.key))    pinPress(e.key);
+    if ($('pinScreen').classList.contains('hide') || $('pinScreen').style.display === 'none') return;
+    if (/^[0-9]$/.test(e.key)) pinPress(e.key);
     else if (e.key === 'Backspace') pinPress('del');
-    else if (e.key === 'Escape')    pinPress('clear');
+    else if (e.key === 'Escape') pinPress('clear');
   });
 
-  // Tanggal
-  $('taskDate').addEventListener('change', e => {
-    const v = e.target.value;
-    if (v) $('dateText').textContent = formatTanggal(v);
-    trackEdit();
-  });
+  $('taskDate').addEventListener('change', e => { const v=e.target.value; if (v) $('dateText').textContent = formatTanggalPanjang(v); trackEdit(); });
+  $('offToggle').addEventListener('click', () => { state.offWorking = !state.offWorking; $('offSwitch').classList.toggle('on', state.offWorking); trackEdit(); applyActivityMode(); });
+  ['taskDesc','remarkInput'].forEach(id => $(id).addEventListener('input', trackEdit));
 
-  // Saklar hari libur
-  $('offToggle').addEventListener('click', () => {
-    state.offWorking = !state.offWorking;
-    $('offSwitch').classList.toggle('on', state.offWorking);
-    trackEdit();
-    applyActivityMode();
-  });
-
-  // Hitung suntingan
-  ['taskDesc', 'remarkInput'].forEach(id => {
-    $(id).addEventListener('input', trackEdit);
-  });
-  $('statusSel').addEventListener('change', trackEdit);
-
-  // Simpan
   $('submitBtn').addEventListener('click', doSubmit);
+  $('aiBtn').addEventListener('click', () => toast('Penguraian AI segera hadir.', ''));
 
-  // Tulis bebas — aktif mulai Phase 1B
-  $('aiBtn').addEventListener('click', () => {
-    toast('Penguraian AI segera hadir.', '');
-  });
+  document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => { if (b.dataset.tab !== 'input') toast('Halaman ini segera hadir.', ''); }));
 
-  // Navigasi bawah
-  document.querySelectorAll('.nb').forEach(b => {
-    b.addEventListener('click', () => {
-      if (b.dataset.tab === 'input') return;
-      toast('Halaman ini segera hadir.', '');
-    });
-  });
+  $('scroll').addEventListener('scroll', e => { $('header').classList.toggle('lifted', e.target.scrollTop > 4); }, { passive: true });
 
-  // Bayangan kepala saat digulir
-  $('scroll').addEventListener('scroll', e => {
-    $('header').classList.toggle('lifted', e.target.scrollTop > 4);
-  }, { passive: true });
+  $('sesTrigger').addEventListener('click', openSessionSheet);
+
+  setupActivityPicker(); setupWorkTypePicker(); setupStatusPicker();
 }
 
 function init() {
   wireEvents();
-  setInterval(tickClock, 1000 * 20);
+  setInterval(tickClock, 1000);
 
   const saved = Store.get(KEY_TOKEN);
+  const savedLoginAt = Store.get(KEY_LOGIN_AT);
   if (saved) {
     state.token = saved;
+    state.loginAt = savedLoginAt ? Number(savedLoginAt) : Date.now();
     hidePin();
     startApp();
   } else {
