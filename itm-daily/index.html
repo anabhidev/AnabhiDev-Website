@@ -3,8 +3,8 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 1.8
-Generated : 9 August 2026, 23:23:18
+Version   : 1.9
+Generated : 10 August 2026, 16:07:03
 ================================================================
 CARA PASANG
   1. Ganti nama berkas menjadi index.html
@@ -27,7 +27,7 @@ CATATAN
 <title>Miss Fish — IT Daily Activity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════
    TOKEN
@@ -48,6 +48,7 @@ CATATAN
   --green:   #2E7D5B;
   --amber:   #B7791F;
   --nav-h:   72px;
+  --app-w:   520px;   /* lebar maksimum di layar besar */
 }
 
 *, *::before, *::after {
@@ -78,101 +79,120 @@ button, input, textarea, select {
 
 /* ══════════════════════════════════════════════
    LAYAR PIN
+   Ukuran & bobot huruf mengikuti MF-AIA persis.
+   Yang dibedakan hanya warna dasar: navy, bukan hitam.
 ══════════════════════════════════════════════ */
 #pinScreen {
   position: fixed; inset: 0; z-index: 9000;
   background: var(--navy);
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  align-items: center; justify-content: flex-start;
+  padding: calc(env(safe-area-inset-top) + clamp(20px, 6vh, 54px)) 24px
+           max(20px, env(safe-area-inset-bottom));
   overflow-y: auto;
   transition: opacity .4s ease;
 }
 #pinScreen.hide { opacity: 0; pointer-events: none; }
 
 .pin-wrap {
-  width: 100%; max-width: 330px;
+  width: 100%; max-width: 360px;
   display: flex; flex-direction: column; align-items: center;
 }
 .pin-logo {
-  width: clamp(120px, 46vw, 168px); height: auto;
-  object-fit: contain; margin-bottom: 18px;
+  width: clamp(140px, 60vw, 200px); height: auto;
+  object-fit: contain; margin-bottom: 16px;
 }
 .pin-logo-fb {
-  font-family: 'Instrument Serif', serif; font-size: 46px;
-  color: var(--brass); margin-bottom: 18px; display: none;
+  font-family: Georgia, serif; font-weight: bold; font-size: 44px;
+  color: var(--brass); margin-bottom: 16px; display: none;
 }
 .pin-brand {
-  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 3.5px; text-transform: uppercase;
-  color: var(--brass); margin-bottom: 22px; text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--brass);
+  margin-bottom: 20px; text-align: center;
 }
 .pin-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(28px, 8vw, 36px); color: #fff;
-  margin-bottom: 6px; text-align: center; line-height: 1.1;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 9vw, 40px); font-weight: bold;
+  color: #fff; margin-bottom: 6px; text-align: center; line-height: 1.1;
 }
 .pin-sub {
-  font-size: 13px; color: rgba(255,255,255,.5);
-  margin-bottom: 30px; text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; color: rgba(255,255,255,.55);
+  margin-bottom: 28px; text-align: center;
 }
 
-.pin-dots { display: flex; gap: 16px; margin-bottom: 32px; }
+.pin-dots { display: flex; gap: 14px; margin-bottom: 28px; }
 .pin-dot {
-  width: 13px; height: 13px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,.28);
-  transition: all .18s ease;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.25);
+  transition: all .18s;
 }
-.pin-dot.fill { background: var(--brass); border-color: var(--brass); transform: scale(1.18); }
-.pin-dot.err  { background: #E05A4E; border-color: #E05A4E; }
+.pin-dot.fill { background: #fff; border-color: #fff; transform: scale(1.2); }
+.pin-dot.err  { background: #EF4444; border-color: #EF4444; }
 
 @keyframes shake {
   0%,100% { transform: translateX(0); }
-  20%,60% { transform: translateX(-9px); }
-  40%,80% { transform: translateX(9px); }
+  20%,60% { transform: translateX(-10px); }
+  40%,80% { transform: translateX(10px); }
 }
 .pin-dots.shake { animation: shake .4s ease; }
 
 .pin-pad {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 10px; width: min(264px, 76vw);
+  gap: 9px; width: min(270px, 78vw);
 }
 .pin-key {
-  height: clamp(54px, 15vw, 66px);
-  background: var(--navy2);
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 15px; color: #fff;
-  font-size: clamp(19px, 5.4vw, 23px); font-weight: 500;
-  cursor: pointer; transition: transform .1s, background .15s;
+  height: clamp(52px, 14vw, 64px);
+  background: #16304A; border: 1.5px solid #23486E;
+  border-radius: 14px; color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(18px, 5vw, 22px); font-weight: 600;
+  cursor: pointer; transition: all .12s;
   display: flex; align-items: center; justify-content: center;
   user-select: none; -webkit-user-select: none;
 }
-.pin-key:active { background: var(--navy3); transform: scale(.94); }
+.pin-key:active { background: #24507A; transform: scale(.93); }
 .pin-key:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 .pin-key.ghost {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 2.8vw, 12px); font-weight: 700;
+  letter-spacing: 1px; color: rgba(255,255,255,.4);
   background: transparent; border-color: transparent;
-  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
-  letter-spacing: 1.2px; color: rgba(255,255,255,.42);
 }
 .pin-msg {
-  margin-top: 20px; min-height: 20px;
+  font-family: 'Inter', sans-serif;
+  margin-top: 18px; min-height: 20px;
   font-size: 13px; text-align: center; color: rgba(255,255,255,.5);
+  line-height: 1.5; max-width: 300px;
 }
-.pin-msg.err  { color: #E05A4E; }
+.pin-msg.err  { color: #EF4444; }
 .pin-msg.busy { color: var(--brass); }
 
 
 /* ══════════════════════════════════════════════
    RANGKA APLIKASI
+   Di layar lebar, aplikasi dibatasi selebar kolom
+   dan diletakkan di tengah — bukan melar penuh.
 ══════════════════════════════════════════════ */
-#app { display: none; flex-direction: column; height: 100dvh; }
+#app {
+  display: none; flex-direction: column; height: 100dvh;
+  max-width: var(--app-w); margin: 0 auto;
+  background: var(--bg); position: relative;
+}
 #app.on { display: flex; }
+
+@media (min-width: 620px) {
+  body { background: #DCE2E8; }
+  #app { box-shadow: 0 0 0 1px rgba(11,27,46,.07), 0 20px 60px rgba(11,27,46,.14); }
+}
 
 
 /* ── KEPALA ── */
 .header {
   background: var(--navy);
-  padding: max(14px, env(safe-area-inset-top)) 18px 13px;
+  padding: max(13px, env(safe-area-inset-top)) 18px 12px;
   display: flex; align-items: center; gap: 12px;
   border-bottom: 2px solid var(--brass);
   position: relative; z-index: 50; flex-shrink: 0;
@@ -180,16 +200,15 @@ button, input, textarea, select {
 }
 .header.lifted { box-shadow: 0 6px 22px rgba(11,27,46,.28); }
 
+/* Logo dibiarkan apa adanya — sudah transparan, tidak perlu kotak */
 .hd-logo {
-  width: 42px; height: 42px; border-radius: 12px;
-  background: var(--navy2); flex-shrink: 0;
+  width: 46px; height: 40px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
 }
-.hd-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.hd-logo img { width: 100%; height: 100%; object-fit: contain; }
 .hd-logo-fb {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  color: var(--brass); font-size: 14px; display: none;
+  font-family: Georgia, serif; font-weight: bold;
+  color: var(--brass); font-size: 15px; display: none;
 }
 
 .hd-text { flex: 1; min-width: 0; }
@@ -412,7 +431,9 @@ button, input, textarea, select {
 
 /* ── NAVIGASI BAWAH ── */
 .nav {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: 0; z-index: 60;
+  width: 100%; max-width: var(--app-w);
   background: rgba(255,255,255,.93);
   backdrop-filter: saturate(180%) blur(18px);
   -webkit-backdrop-filter: saturate(180%) blur(18px);
@@ -436,7 +457,7 @@ button, input, textarea, select {
   transform: translate(-50%, 18px); z-index: 9500;
   background: var(--navy); color: #fff;
   padding: 13px 20px; border-radius: 13px;
-  font-size: 13.5px; max-width: 88vw; text-align: center;
+  font-size: 13.5px; max-width: min(88vw, 420px); text-align: center;
   box-shadow: 0 10px 30px rgba(11,27,46,.32);
   opacity: 0; pointer-events: none; transition: all .3s ease;
 }
@@ -623,7 +644,11 @@ button, input, textarea, select {
 <div class="toast" id="toast"></div>
 
 
-<script>
+<!-- data-cfasync="false" mencegah Rocket Loader milik Cloudflare
+     menunda atau menulis ulang skrip ini. Tanpa penanda tersebut,
+     halaman kerap berjalan di komputer sendiri tetapi gagal setelah
+     diunggah ke Cloudflare. -->
+<script data-cfasync="false">
 /* ══════════════════════════════════════════════
    KONFIGURASI
 ══════════════════════════════════════════════ */
@@ -740,18 +765,36 @@ function trackEdit() { state.editCount++; }
 ══════════════════════════════════════════════ */
 async function callApi(payload) {
   const started = performance.now();
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY,
-    },
-    body: JSON.stringify(payload),
-  });
+
+  let res;
+  try {
+    res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch (e) {
+    // Permintaan tidak sampai ke server sama sekali.
+    // Penyebab tersering: koneksi putus, CORS, atau CSP situs.
+    console.error('[MFB-IT] fetch gagal:', e);
+    const err = new Error(
+      'Tidak sampai ke server. Kemungkinan koneksi terputus, ' +
+      'atau permintaan diblokir kebijakan keamanan situs (CORS/CSP). ' +
+      'Buka Console peramban untuk rincian.'
+    );
+    err.network = true;
+    throw err;
+  }
 
   let data;
   try { data = await res.json(); }
-  catch (e) { throw new Error('Jawaban server tidak terbaca.'); }
+  catch (e) {
+    console.error('[MFB-IT] jawaban bukan JSON. Status:', res.status);
+    throw new Error('Server menjawab ' + res.status + ', tetapi isinya tidak terbaca.');
+  }
 
   data._ms = Math.round(performance.now() - started);
 
@@ -889,9 +932,9 @@ async function submitPin() {
     startApp();
 
   } catch (e) {
-    $('pinMsg').textContent = 'Tidak bisa menghubungi server. Periksa koneksi.';
+    $('pinMsg').textContent = e.message || 'Tidak bisa menghubungi server.';
     $('pinMsg').className = 'pin-msg err';
-    setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 900);
+    setTimeout(() => { pinBuffer = ''; paintDots(); pinBusy = false; }, 1200);
   }
 }
 
