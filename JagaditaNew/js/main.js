@@ -74,6 +74,41 @@
   });
 })();
 
+/* ── CREDIBILITY BAR: acak urutan tampil setiap load ──
+   HTML aslinya statis dan berurutan (penting untuk SEO/crawler —
+   semua nama tetap terbaca apa adanya). Shuffle ini murni visual,
+   dijalankan di client setelah DOM siap. */
+(function () {
+  const flow = document.getElementById('credFlow');
+  if (!flow) return;
+
+  const nodes = Array.from(flow.children);
+  const groups = [];
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].classList.contains('cred-item')) {
+      const group = [nodes[i]];
+      if (nodes[i + 1] && nodes[i + 1].classList.contains('cred-sep')) {
+        group.push(nodes[i + 1]);
+        i++;
+      }
+      groups.push(group);
+    }
+  }
+
+  for (let i = groups.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [groups[i], groups[j]] = [groups[j], groups[i]];
+  }
+
+  const frag = document.createDocumentFragment();
+  groups.forEach(g => g.forEach(el => frag.appendChild(el)));
+  flow.innerHTML = '';
+  flow.appendChild(frag);
+
+  const last = flow.lastElementChild;
+  if (last && last.classList.contains('cred-sep')) last.remove();
+})();
+
 /* ── COUNTER ANIMATION ── */
 (function () {
   const counters = document.querySelectorAll('[data-count]');
@@ -84,6 +119,7 @@
   function animateCounter(el) {
     const target = parseInt(el.getAttribute('data-count'), 10);
     const duration = 1800;
+    el.textContent = '0'; // reset visual ke 0 — HTML aslinya sudah berisi angka final untuk crawler/AI
     const start = performance.now();
 
     function step(now) {
