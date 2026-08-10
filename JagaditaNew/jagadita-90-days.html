@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Jagadita — Rencana 90 Hari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Nunito+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — konsisten dengan jagadita.com (Template 3 / Marseille)
+   ============================================================ */
+:root{
+  --navy:#0A2540;
+  --cyan-text:#00768C;
+  --cyan-light:#35BBD4;
+  --cyan-fill:#00768C;
+  --gray-400:#78859A;
+  --gray-500:#5A6878;
+  --gray-100:#FAF9F6;
+  --white:#FFFFFF;
+  --red:#C0392B;
+  --amber:#B7791F;
+  --green:#1E7A4C;
+  --border:rgba(10,37,64,.10);
+  --shadow: 0 24px 60px rgba(10,37,64,.08);
+  --shadow-sm: 0 8px 24px rgba(10,37,64,.06);
+  --radius:4px;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --font-display:'Fraunces', serif;
+  --font-body:'Nunito Sans', sans-serif;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--font-body);
+  background:var(--gray-100);
+  color:var(--navy);
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+html{overflow-x:hidden;}
+
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-variation-settings:'SOFT' 20, 'WONK' 1;
+  color:var(--navy);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+}
+
+a{color:var(--cyan-text);}
+button{font-family:inherit; cursor:pointer;}
+:focus-visible{outline:2px solid var(--cyan-light); outline-offset:2px; border-radius:2px;}
+
+.skip-link{
+  position:absolute; left:-999px; top:0; background:var(--navy); color:#fff;
+  padding:10px 16px; z-index:200; border-radius:0 0 4px 0;
+}
+.skip-link:focus{left:0;}
+
+.wrap{max-width:1080px; margin:0 auto; padding:0 20px;}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header{
+  background:var(--navy);
+  color:#fff;
+  padding:28px 0 22px;
+  position:relative;
+  overflow:hidden;
+}
+.app-header::after{
+  content:"";
+  position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.app-header .wrap{position:relative; z-index:1;}
+.eyebrow{
+  font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--cyan-light); font-weight:800; margin-bottom:8px;
+}
+.app-header h1{color:#fff; font-size:clamp(24px,5vw,34px); margin-bottom:4px;}
+.app-header .sub{color:rgba(255,255,255,.68); font-size:14px; max-width:520px;}
+
+.header-controls{
+  display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; align-items:center;
+}
+.identity-pill{
+  display:flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:99px; padding:6px 14px 6px 6px;
+  font-size:13px; color:#fff;
+}
+.identity-pill .avatar{
+  width:24px; height:24px; border-radius:50%;
+  background:var(--cyan-light); color:var(--navy);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:11px;
+}
+.identity-pill button{
+  background:none; border:none; color:rgba(255,255,255,.6);
+  font-size:12px; text-decoration:underline;
+}
+
+.sync-badge{
+  display:flex; align-items:center; gap:6px;
+  font-size:12px; color:rgba(255,255,255,.7);
+  padding:6px 12px; border-radius:99px;
+  background:rgba(255,255,255,.06);
+}
+.sync-dot{width:7px; height:7px; border-radius:50%; background:var(--green); flex-shrink:0;}
+.sync-dot.offline{background:var(--amber);}
+.sync-dot.error{background:var(--red);}
+
+.date-set{
+  display:flex; align-items:center; gap:8px; font-size:13px; color:rgba(255,255,255,.75);
+}
+.date-set input{
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+  color:#fff; padding:6px 10px; border-radius:4px; font-family:inherit; font-size:13px;
+}
+
+.progress-wrap{margin-top:18px;}
+.progress-label{
+  display:flex; justify-content:space-between; font-size:12px;
+  color:rgba(255,255,255,.7); margin-bottom:6px;
+}
+.progress-track{
+  height:8px; background:rgba(255,255,255,.12); border-radius:99px; overflow:hidden;
+}
+.progress-fill{
+  height:100%; background:linear-gradient(90deg, var(--cyan-light), var(--cyan-text));
+  border-radius:99px; transition:width .6s var(--ease); width:0%;
+}
+
+/* ============================================================
+   LAYOUT / SECTION
+   ============================================================ */
+section{padding:40px 0;}
+.section-label{
+  font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--cyan-text); font-weight:800; margin-bottom:8px;
+}
+.section-title{font-size:clamp(20px,4vw,26px); margin-bottom:6px;}
+.section-desc{color:var(--gray-500); font-size:14.5px; max-width:640px; margin-bottom:24px;}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card{
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+}
+.card-pad{padding:20px;}
+
+.grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+@media (max-width:860px){ .grid-4{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .grid-4, .grid-2{grid-template-columns:1fr;} }
+
+.strategy-card{
+  padding:20px; display:flex; flex-direction:column; gap:8px;
+}
+.strategy-card .icon-tag{
+  width:32px; height:32px; border-radius:var(--radius);
+  background:var(--gray-100); display:flex; align-items:center; justify-content:center;
+  color:var(--cyan-text); font-weight:800; font-size:14px; margin-bottom:4px;
+}
+.strategy-card h3{font-size:15px;}
+.strategy-card p{font-size:13.5px; color:var(--gray-500); line-height:1.55;}
+.strategy-card .pos-quote{
+  font-family:var(--font-display); font-style:italic; font-size:15px;
+  color:var(--navy); line-height:1.4;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+.tabs{
+  display:flex; gap:4px; background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); padding:4px; margin-bottom:24px; flex-wrap:wrap;
+}
+.tab-btn{
+  flex:1; min-width:120px; text-align:center;
+  background:none; border:none; padding:10px 14px;
+  font-family:var(--font-body); font-weight:700; font-size:13.5px;
+  color:var(--gray-500); border-radius:2px; transition:all .2s var(--ease);
+}
+.tab-btn.active{background:var(--navy); color:#fff;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block; animation:fadeUp .5s var(--ease);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(14px) scale(.985);} to{opacity:1; transform:none;}}
+
+/* ============================================================
+   WEEK BLOCK / TASK CARD
+   ============================================================ */
+.week-block{margin-bottom:28px;}
+.week-header{
+  display:flex; align-items:baseline; gap:10px; margin-bottom:12px;
+  padding-bottom:8px; border-bottom:1px solid var(--border);
+}
+.week-header h4{font-size:16px;}
+.week-header .week-range{font-size:12.5px; color:var(--gray-400);}
+.week-header .week-count{
+  margin-left:auto; font-size:12px; color:var(--gray-500); font-weight:700;
+}
+
+.task-list{display:flex; flex-direction:column; gap:8px;}
+.task-card{
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  padding:12px 14px; display:flex; gap:12px; align-items:flex-start;
+  transition:all .3s var(--ease);
+}
+.task-card.done{background:var(--gray-100); border-color:transparent;}
+.task-card.done .task-title{color:var(--gray-400); text-decoration:line-through;}
+
+.task-check{
+  width:20px; height:20px; border-radius:4px; border:2px solid var(--gray-400);
+  flex-shrink:0; margin-top:2px; background:#fff;
+  display:flex; align-items:center; justify-content:center; transition:all .2s var(--ease);
+}
+.task-card.done .task-check{background:var(--cyan-fill); border-color:var(--cyan-fill);}
+.task-check svg{width:12px; height:12px; opacity:0; transition:opacity .15s;}
+.task-card.done .task-check svg{opacity:1;}
+
+.task-body{flex:1; min-width:0;}
+.task-title-row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.task-title{font-size:14px; font-weight:700; color:var(--navy);}
+.task-meta{display:flex; gap:6px; align-items:center; flex-shrink:0;}
+
+.badge{
+  font-size:11px; font-weight:800; padding:2px 8px; border-radius:99px;
+  white-space:nowrap;
+}
+.badge-pic{background:var(--gray-100); color:var(--gray-500);}
+.badge-pri-tinggi{background:#FBEAE8; color:var(--red);}
+.badge-pri-sedang{background:#FBF2E3; color:var(--amber);}
+.badge-pri-rendah{background:#E9F5EE; color:var(--green);}
+.badge-hours{background:#EAF6F8; color:var(--cyan-text);}
+
+.task-why{
+  margin-top:6px; font-size:13px; color:var(--gray-500);
+  background:var(--gray-100); border-radius:4px; padding:0; max-height:0;
+  overflow:hidden; transition:all .3s var(--ease);
+}
+.task-why.open{padding:10px 12px; max-height:300px; margin-top:8px;}
+.task-why-toggle{
+  font-size:12px; color:var(--cyan-text); font-weight:700; background:none; border:none;
+  margin-top:4px; padding:0; display:flex; align-items:center; gap:4px;
+}
+.task-done-by{
+  font-size:11.5px; color:var(--gray-400); margin-top:6px; font-style:italic;
+}
+
+/* ============================================================
+   FILTER BAR
+   ============================================================ */
+.filter-bar{
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:12px;
+}
+.filter-group{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.filter-group label{font-size:11.5px; color:var(--gray-400); font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-right:2px;}
+.chip{
+  font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:99px;
+  border:1px solid var(--border); background:#fff; color:var(--gray-500);
+  transition:all .15s;
+}
+.chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+/* ============================================================
+   WORKLOAD PANEL
+   ============================================================ */
+.workload-row{
+  display:flex; align-items:center; gap:12px; padding:10px 0;
+  border-bottom:1px solid var(--border);
+}
+.workload-row:last-child{border-bottom:none;}
+.workload-name{width:80px; font-size:13px; font-weight:700; flex-shrink:0;}
+.workload-bar-track{
+  flex:1; height:10px; background:var(--gray-100); border-radius:99px; overflow:hidden;
+}
+.workload-bar-fill{height:100%; border-radius:99px; background:var(--cyan-fill); transition:width .4s var(--ease);}
+.workload-bar-fill.over{background:var(--red);}
+.workload-hours{width:90px; text-align:right; font-size:12.5px; color:var(--gray-500); flex-shrink:0;}
+.workload-warning{
+  font-size:12px; color:var(--red); margin-top:4px; display:flex; align-items:center; gap:4px;
+}
+
+/* ============================================================
+   BUDGET
+   ============================================================ */
+.budget-slider-row{margin-bottom:20px;}
+.budget-slider-row input[type=range]{
+  width:100%; height:6px; -webkit-appearance:none; background:var(--gray-100);
+  border-radius:99px; margin:12px 0;
+}
+.budget-slider-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+  background:var(--cyan-fill); border:3px solid #fff; box-shadow:0 2px 8px rgba(10,37,64,.25); cursor:pointer;
+}
+.budget-value{font-family:var(--font-display); font-size:28px; color:var(--navy); font-weight:600;}
+.budget-alloc{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.alloc-row{display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:var(--gray-100); border-radius:4px;}
+.alloc-label{font-size:13px; font-weight:700;}
+.alloc-reason{font-size:12px; color:var(--gray-500); margin-top:2px;}
+.alloc-amount{font-size:14px; font-weight:800; color:var(--cyan-text); flex-shrink:0; margin-left:12px;}
+
+/* ============================================================
+   KPI
+   ============================================================ */
+.kpi-table{width:100%; border-collapse:collapse; font-size:13px;}
+.kpi-table th, .kpi-table td{padding:8px 10px; text-align:left; border-bottom:1px solid var(--border);}
+.kpi-table th{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--gray-400);}
+.kpi-table input{
+  width:60px; border:1px solid var(--border); border-radius:4px; padding:5px 6px; font-family:inherit; font-size:13px;
+}
+.kpi-funnel{display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;}
+.kpi-funnel-step{
+  flex:1; min-width:100px; text-align:center; background:var(--gray-100); border-radius:4px; padding:14px 10px;
+}
+.kpi-funnel-step .num{font-family:var(--font-display); font-size:26px; color:var(--navy); font-weight:600;}
+.kpi-funnel-step .label{font-size:11px; color:var(--gray-500); text-transform:uppercase; letter-spacing:.04em; margin-top:2px;}
+.kpi-funnel-step .rate{font-size:11px; color:var(--cyan-text); font-weight:800; margin-top:4px;}
+
+/* ============================================================
+   REFERRAL TRACKER
+   ============================================================ */
+.ref-table-wrap{overflow-x:auto;}
+.ref-table{width:100%; border-collapse:collapse; font-size:13px; min-width:640px;}
+.ref-table th{
+  text-align:left; padding:8px 10px; font-size:11px; text-transform:uppercase;
+  letter-spacing:.04em; color:var(--gray-400); border-bottom:2px solid var(--border);
+}
+.ref-table td{padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:middle;}
+.ref-table input[type=text], .ref-table select{
+  width:100%; border:1px solid transparent; background:transparent; border-radius:4px;
+  padding:5px 6px; font-family:inherit; font-size:12.5px; color:var(--navy);
+}
+.ref-table input[type=text]:hover, .ref-table select:hover{border-color:var(--border);}
+.ref-table input[type=text]:focus, .ref-table select:focus{border-color:var(--cyan-light); background:#fff;}
+.status-select{font-weight:700;}
+.status-belum_dihubungi{color:var(--gray-400);}
+.status-sudah_kontak{color:var(--amber);}
+.status-sudah_ngopi{color:var(--cyan-text);}
+.status-sudah_referral{color:var(--green);}
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.hint-box{
+  background:#EAF6F8; border-left:3px solid var(--cyan-text); border-radius:0 4px 4px 0;
+  padding:12px 14px; font-size:13px; color:var(--navy); margin-bottom:20px;
+}
+footer{
+  padding:30px 0 50px; text-align:center; font-size:12px; color:var(--gray-400);
+}
+.settings-fab{
+  position:fixed; bottom:20px; right:20px; width:46px; height:46px; border-radius:50%;
+  background:var(--navy); color:#fff; border:none; display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow); z-index:50;
+}
+.settings-panel{
+  position:fixed; bottom:76px; right:20px; background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; width:280px; z-index:50;
+  display:none;
+}
+.settings-panel.open{display:block;}
+.settings-panel label{font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:800; display:block; margin-bottom:4px;}
+.settings-panel input{width:100%; border:1px solid var(--border); border-radius:4px; padding:7px 9px; font-family:inherit; font-size:12.5px; margin-bottom:10px;}
+.settings-panel button.save-btn{
+  width:100%; background:var(--navy); color:#fff; border:none; padding:9px; border-radius:4px; font-weight:700; font-size:13px;
+}
+
+@media print{
+  .settings-fab, .settings-panel, .filter-bar, .tabs{display:none !important;}
+  .tab-panel{display:block !important;}
+  body{background:#fff;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Lompat ke konten utama</a>
+
+<header class="app-header">
+  <div class="wrap">
+    <div class="eyebrow">Jagadita Hospitality Consulting</div>
+    <h1>Rencana 90 Hari — Go-To-Market</h1>
+    <p class="sub">Dari Sprint 0 sampai hari ke-90: fondasi, aktivasi, dan konversi. Dikerjakan bertiga, sambil jalan.</p>
+
+    <div class="header-controls">
+      <div class="identity-pill" id="identityPill">
+        <span class="avatar" id="identityAvatar">?</span>
+        <span id="identityLabel">Pilih identitas Anda</span>
+        <button id="changeIdentityBtn" type="button">ganti</button>
+      </div>
+
+      <div class="sync-badge" id="syncBadge">
+        <span class="sync-dot" id="syncDot"></span>
+        <span id="syncText">Menyambungkan…</span>
+      </div>
+
+      <div class="date-set">
+        <label for="startDateInput">Mulai:</label>
+        <input type="date" id="startDateInput">
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progress keseluruhan</span>
+        <span id="progressPercentText">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+
+  <!-- ============================================================
+       IDENTITY MODAL (tampil sekali saat pertama buka)
+       ============================================================ -->
+  <div id="identityModalBackdrop" style="display:none; position:fixed; inset:0; background:rgba(10,37,64,.55); z-index:100; align-items:center; justify-content:center; padding:20px;">
+    <div class="card card-pad" style="max-width:360px; width:100%;">
+      <h3 style="margin-bottom:6px;">Anda siapa?</h3>
+      <p style="font-size:13px; color:var(--gray-500); margin-bottom:16px;">Supaya tercatat siapa yang mengerjakan tiap task. Cukup dipilih sekali.</p>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button class="identity-choice-btn" data-user="Satria" type="button" style="text-align:left; padding:12px 14px; border:1px solid var(--border); border-radius:4px; background:#fff; font-family:inherit; font-size:14px; font-weight:700;">Satria Wibawa <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— CEO</span></button>
+        <button class="identity-choice-btn" data-user="Viveka" type="button" style="text-align:left; padding:12px 14px; border:1px solid var(--border); border-radius:4px; background:#fff; font-family:inherit; font-size:14px; font-weight:700;">Viveka Nanda <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— COO</span></button>
+        <button class="identity-choice-btn" data-user="Agus" type="button" style="text-align:left; padding:12px 14px; border:1px solid var(--border); border-radius:4px; background:#fff; font-family:inherit; font-size:14px; font-weight:700;">Agus Wibawa <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— CTO</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       STRATEGY SUMMARY
+       ============================================================ -->
+  <section>
+    <div class="section-label">Ringkasan</div>
+    <h2 class="section-title">Arah strategi</h2>
+    <p class="section-desc">Empat hal ini jadi kompas selama 90 hari. Kalau ragu ambil keputusan di tengah jalan, kembali ke sini.</p>
+
+    <div class="grid-4">
+      <div class="card strategy-card">
+        <div class="icon-tag">P</div>
+        <h3>Positioning</h3>
+        <p class="pos-quote">"Kami perbaiki sistemnya. Properti Anda tetap milik Anda."</p>
+        <p>Beda dari kompetitor yang menjual manajemen properti — Jagadita menjual kemerdekaan operasional, bukan pengambilalihan.</p>
+      </div>
+      <div class="card strategy-card">
+        <div class="icon-tag">ICP</div>
+        <h3>Target utama</h3>
+        <p>Hotel/resort owner, villa owner &amp; manager, restaurant/beach club, dan investor yang mau buka properti baru — semua di Bali dulu.</p>
+      </div>
+      <div class="card strategy-card">
+        <div class="icon-tag">CH</div>
+        <h3>Prioritas channel</h3>
+        <p>Referral partner &amp; networking dulu, LinkedIn organik, SEO. Iklan berbayar porsinya kecil — budget di bawah Rp5 juta/bulan.</p>
+      </div>
+      <div class="card strategy-card">
+        <div class="icon-tag">90</div>
+        <h3>Target realistis</h3>
+        <p>3–5 proposal terkirim, 1–2 paid engagement (boleh pilot), 15+ referral partner aktif, dan 1 case study jadi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SPRINT 0
+       ============================================================ -->
+  <section>
+    <div class="hint-box">
+      <strong>Sprint 0 dulu sebelum Hari 1.</strong> Ini perbaikan cepat di website JagaditaNew yang harus beres sebelum mulai kirim traffic ke sana — supaya tidak bocor di depan calon klien.
+    </div>
+    <div class="section-label">Sebelum mulai</div>
+    <h2 class="section-title">Sprint 0 — Fix &amp; Launch</h2>
+    <p class="section-desc">6 perbaikan teknis, estimasi total 2–3 jam kerja.</p>
+    <div class="task-list" id="sprint0List"></div>
+  </section>
+
+  <!-- ============================================================
+       TABS — 3 FASE
+       ============================================================ -->
+  <section>
+    <div class="section-label">Rencana per fase</div>
+    <h2 class="section-title">90 hari, 3 fase</h2>
+    <p class="section-desc">Tiap task punya penanggung jawab (PIC) dan estimasi jam, supaya bebannya kelihatan jujur.</p>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>PIC</label>
+        <button class="chip active" data-filter-type="pic" data-filter-value="all" type="button">Semua</button>
+        <button class="chip" data-filter-type="pic" data-filter-value="Satria" type="button">Satria</button>
+        <button class="chip" data-filter-type="pic" data-filter-value="Viveka" type="button">Viveka</button>
+        <button class="chip" data-filter-type="pic" data-filter-value="Agus" type="button">Agus</button>
+        <button class="chip" data-filter-type="pic" data-filter-value="Semua" type="button">Bertiga</button>
+      </div>
+      <div class="filter-group">
+        <label>Prioritas</label>
+        <button class="chip active" data-filter-type="pri" data-filter-value="all" type="button">Semua</button>
+        <button class="chip" data-filter-type="pri" data-filter-value="tinggi" type="button">🔴 Tinggi</button>
+        <button class="chip" data-filter-type="pri" data-filter-value="sedang" type="button">🟡 Sedang</button>
+        <button class="chip" data-filter-type="pri" data-filter-value="rendah" type="button">🟢 Rendah</button>
+      </div>
+      <div class="filter-group">
+        <button class="chip" id="hideDoneChip" type="button">Sembunyikan yang selesai</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="fase1" type="button">Fase 1 · Foundation<br><span style="font-weight:400; font-size:11px;">Hari 1–30</span></button>
+      <button class="tab-btn" data-tab="fase2" type="button">Fase 2 · Activation<br><span style="font-weight:400; font-size:11px;">Hari 31–60</span></button>
+      <button class="tab-btn" data-tab="fase3" type="button">Fase 3 · Conversion<br><span style="font-weight:400; font-size:11px;">Hari 61–90</span></button>
+    </div>
+
+    <div class="tab-panel active" id="panel-fase1"></div>
+    <div class="tab-panel" id="panel-fase2"></div>
+    <div class="tab-panel" id="panel-fase3"></div>
+  </section>
+
+  <!-- ============================================================
+       WORKLOAD PANEL
+       ============================================================ -->
+  <section>
+    <div class="section-label">Kapasitas</div>
+    <h2 class="section-title">Beban kerja per orang</h2>
+    <p class="section-desc">Total jam dari task yang belum selesai, dihitung per minggu rata-rata (12 minggu). Kalau merah, kemungkinan besar tidak akan tercapai — turunkan scope, bukan paksakan.</p>
+    <div class="card card-pad" id="workloadPanel"></div>
+  </section>
+
+  <!-- ============================================================
+       BUDGET
+       ============================================================ -->
+  <section>
+    <div class="section-label">Alokasi</div>
+    <h2 class="section-title">Kalkulator budget marketing</h2>
+    <p class="section-desc">Rentang Rp0–5 juta/bulan, sesuai kesepakatan: fokus organik &amp; referral, iklan berbayar porsi kecil.</p>
+    <div class="card card-pad">
+      <div class="budget-slider-row">
+        <div class="budget-value" id="budgetValue">Rp 3.000.000</div>
+        <input type="range" id="budgetSlider" min="0" max="5000000" step="250000" value="3000000">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-400);">
+          <span>Rp 0</span><span>Rp 5.000.000</span>
+        </div>
+      </div>
+      <div class="budget-alloc" id="budgetAlloc"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       KPI TRACKER
+       ============================================================ -->
+  <section>
+    <div class="section-label">Ukur</div>
+    <h2 class="section-title">KPI mingguan</h2>
+    <p class="section-desc">Isi tiap minggu. Funnel di bawah otomatis menghitung conversion rate.</p>
+    <div class="card card-pad">
+      <div style="overflow-x:auto;">
+        <table class="kpi-table" id="kpiTable">
+          <thead>
+            <tr>
+              <th>Minggu</th><th>Leads</th><th>Discovery call</th><th>Proposal terkirim</th><th>Closed</th><th>Revenue (Rp)</th>
+            </tr>
+          </thead>
+          <tbody id="kpiTableBody"></tbody>
+        </table>
+      </div>
+      <div class="kpi-funnel" id="kpiFunnel"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REFERRAL PARTNER TRACKER
+       ============================================================ -->
+  <section>
+    <div class="section-label">Distribusi</div>
+    <h2 class="section-title">Referral partner tracker</h2>
+    <p class="section-desc">Di Bali, 5 hubungan referral aktif biasanya lebih efektif daripada iklan. 20 slot — vendor PMS/POS, arsitek, notaris/PMA, konsultan pajak, recruiter, asosiasi (PHRI/IHGMA).</p>
+    <div class="card card-pad">
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th style="width:20%">Nama</th>
+              <th style="width:16%">Kategori</th>
+              <th style="width:10%">PIC</th>
+              <th style="width:16%">Status</th>
+              <th style="width:26%">Catatan</th>
+              <th style="width:12%">Kontak terakhir</th>
+            </tr>
+          </thead>
+          <tbody id="referralTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  Jagadita Hospitality Consulting — dokumen internal, tidak untuk publik.
+</footer>
+
+<!-- ============================================================
+     SETTINGS FAB (konfigurasi endpoint GAS)
+     ============================================================ -->
+<button class="settings-fab" id="settingsFab" type="button" aria-label="Pengaturan koneksi" title="Pengaturan koneksi">⚙</button>
+<div class="settings-panel" id="settingsPanel">
+  <label for="gasUrlInput">GAS Web App URL</label>
+  <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/…/exec">
+  <label for="gasTokenInput">Token</label>
+  <input type="text" id="gasTokenInput" placeholder="token rahasia">
+  <button class="save-btn" id="saveSettingsBtn" type="button">Simpan &amp; sambungkan</button>
+</div>
+
+<script>
+/* ============================================================
+   JAGADITA 90-DAY TRACKER — APP LOGIC
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ------------------------------------------------------------
+   0. KONFIGURASI KONEKSI (diisi lewat tombol ⚙ pengaturan)
+   ------------------------------------------------------------ */
+var CONFIG_KEY = "jagadita90_config";
+var STATE_KEY = "jagadita90_state";
+var IDENTITY_KEY = "jagadita90_identity";
+
+function loadConfig(){
+  try{ return JSON.parse(localStorage.getItem(CONFIG_KEY)) || { gasUrl:"", token:"" }; }
+  catch(e){ return { gasUrl:"", token:"" }; }
+}
+function saveConfig(cfg){ localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg)); }
+
+var CONFIG = loadConfig();
+
+/* ------------------------------------------------------------
+   1. DATA TASK — Sprint 0 + 3 fase
+   Setiap task: id, title, pic, hours, priority, why, week
+   ------------------------------------------------------------ */
+
+var SPRINT0 = [
+  {id:"s0-1", title:"Perbaiki 5 link 404 di footer (strategic-planning, market-analysis, guest-experience, revenue-pricing, industries)", pic:"Agus", hours:1, pri:"tinggi",
+   why:"Link mati di footer muncul di semua halaman — sinyal kualitas buruk ke Google sejak hari pertama, dan bikin pengunjung mentok."},
+  {id:"s0-2", title:"Perbaiki logo & copyright footer yang link ke anabhidev.com, arahkan ke index.html jagadita.com", pic:"Agus", hours:1, pri:"tinggi",
+   why:"Kalau ini kebawa live, orang klik logo malah keluar ke situs lain — kehilangan pengunjung tanpa sadar."},
+  {id:"s0-3", title:"Pastikan angka statistik (65+ Years, 25+ Properties, 130 Rooms, 5 Systems) tertulis final di HTML, animasi cuma efek visual", pic:"Agus", hours:1, pri:"tinggi",
+   why:"Crawler & AI (Google, ChatGPT, Perplexity) membaca HTML mentah, bukan hasil animasi JS. Kalau HTML awal '0+', itu yang terekam sebagai fakta oleh mesin."},
+  {id:"s0-4", title:"Isi halaman Privacy Policy & Terms of Service (bukan href=\"#\")", pic:"Satria", hours:2, pri:"sedang",
+   why:"Untuk klien asing/investor, dua halaman ini murah dibuat tapi menaikkan kredibilitas — placeholder kosong terlihat tidak profesional."},
+  {id:"s0-5", title:"Perbaiki social link founder (semua sekarang mengarah ke LinkedIn Viveka)", pic:"Agus", hours:0.5, pri:"sedang",
+   why:"Tiap founder harus link ke LinkedIn masing-masing, bukan satu link yang sama untuk semua."},
+  {id:"s0-6", title:"Migrasi ke jagadita.com: setup GA4, Search Console, robots.txt, sitemap.xml, llms.txt", pic:"Agus", hours:2, pri:"tinggi",
+   why:"Tanpa ini kita buta terhadap traffic dan tidak punya baseline untuk mengukur hasil 90 hari."}
+];
+
+var FASE1 = {
+  "Minggu 1": [
+    {id:"f1w1-1", title:"Kunci ICP final: 4 segmen (hotel/resort owner, villa owner/manager, F&B/beach club, investor pre-opening)", pic:"Semua", hours:1, pri:"tinggi",
+     why:"Semua keputusan konten & outreach berikutnya bergantung pada ini — kalau ICP kabur, pesan jadi kabur."},
+    {id:"f1w1-2", title:"Finalisasi 4 tier paket & harga (Free Consultation, Health Check, Improvement Sprint, Transformation Project)", pic:"Satria", hours:2, pri:"tinggi",
+     why:"Tanpa harga jelas, tiap calon klien harus ditanya satu-satu — memperlambat proses closing."},
+    {id:"f1w1-3", title:"Setup email domain @jagadita.com untuk bertiga", pic:"Agus", hours:1, pri:"tinggi",
+     why:"Kirim proposal dari alamat Gmail pribadi menurunkan kredibilitas di mata investor/GM."},
+    {id:"f1w1-4", title:"Buat Google Business Profile untuk Jagadita", pic:"Agus", hours:1, pri:"tinggi",
+     why:"Saat orang cari 'hospitality consultant Bali' di Google Maps, kompetitor muncul — Jagadita harus juga ada di sana."}
+  ],
+  "Minggu 2": [
+    {id:"f1w2-1", title:"Buat LinkedIn Company Page Jagadita, 3 founder update experience-nya", pic:"Semua", hours:2, pri:"tinggi",
+     why:"Company page kosong = terlihat tidak eksis saat calon klien riset sebelum meeting."},
+    {id:"f1w2-2", title:"Susun daftar 150 target akun (hotel/resort, villa, F&B, beach club) di spreadsheet", pic:"Agus", hours:4, pri:"sedang",
+     why:"Basis untuk account-based marketing — supaya usaha outreach terarah, bukan asal tembak."},
+    {id:"f1w2-3", title:"Susun daftar 20 calon referral partner (vendor PMS/POS, arsitek, notaris/PMA, konsultan pajak, recruiter, PHRI/IHGMA)", pic:"Semua", hours:2, pri:"tinggi",
+     why:"Di Bali, jalur referral biasanya lebih efektif daripada iklan — ini fondasi channel distribusi utama."}
+  ],
+  "Minggu 3": [
+    {id:"f1w3-1", title:"Draft & desain Credential Deck PDF (6–8 halaman)", pic:"Satria", hours:4, pri:"sedang",
+     why:"Ini 'kartu nama' sebenarnya di dunia B2B consulting — dilampirkan di tiap email pertama ke calon klien."},
+    {id:"f1w3-2", title:"Kartu nama digital 3 founder (mirip AnabhiDev-Name-Card) + QR code", pic:"Agus", hours:5, pri:"sedang",
+     why:"Konversi kontak dari networking offline jadi jauh lebih tinggi dibanding kartu nama kertas."},
+    {id:"f1w3-3", title:"Mulai posting LinkedIn 2x/minggu dari akun Satria (fokus insight operasional, bukan jualan)", pic:"Satria", hours:2, pri:"sedang",
+     why:"Membangun authority pelan-pelan sebelum mulai outreach — orang lebih percaya yang sudah dikenal."}
+  ],
+  "Minggu 4": [
+    {id:"f1w4-1", title:"Riset & tulis draft 1 case study anonim (properti, masalah, intervensi, hasil)", pic:"Satria", hours:3, pri:"tinggi",
+     why:"Kredensial 'founder pernah kerja di Accor/Pullman' itu bagus, tapi belum ada bukti hasil sebagai Jagadita — case study menutup celah ini."},
+    {id:"f1w4-2", title:"Kontak 5 calon referral partner pertama untuk kopi darat", pic:"Semua", hours:5, pri:"tinggi",
+     why:"Mulai membangun jalur distribusi utama — 5 relasi aktif seringkali lebih berharga dari budget iklan sebulan."},
+    {id:"f1w4-3", title:"Review Sprint 0 selesai semua, siap migrasi ke jagadita.com", pic:"Agus", hours:1, pri:"tinggi",
+     why:"Checkpoint sebelum masuk fase aktivasi — pastikan tidak ada yang bocor sebelum traffic mulai dikirim."}
+  ]
+};
+
+var FASE2 = {
+  "Minggu 5": [
+    {id:"f2w5-1", title:"Riset keyword kompetitor (Dijiwa, Zenith, Weggis) untuk 3 topik artikel SEO", pic:"Agus", hours:2, pri:"sedang",
+     why:"Kompetitor sudah menang di SEO dengan artikel insight panjang — kita perlu tahu keyword apa yang mereka kuasai untuk menyerangnya."},
+    {id:"f2w5-2", title:"Tulis & publish artikel SEO #1 (contoh: kapan butuh feasibility study sebelum buka properti)", pic:"Satria", hours:4, pri:"sedang",
+     why:"SEO konten menang di niche kecil seperti ini — volume search Google Ads terlalu tipis untuk diandalkan sendirian."},
+    {id:"f2w5-3", title:"Lanjutkan kopi darat referral partner (target total 10)", pic:"Semua", hours:5, pri:"tinggi",
+     why:"Konsistensi outreach personal — ini channel utama, bukan channel sampingan."}
+  ],
+  "Minggu 6": [
+    {id:"f2w6-1", title:"Tulis & publish artikel SEO #2", pic:"Satria", hours:4, pri:"sedang", why:"Konsistensi konten membangun momentum ranking dan otoritas topik."},
+    {id:"f2w6-2", title:"Rancang struktur pertanyaan Bali Hospitality Performance Scorecard (20–25 pertanyaan, 5 pilar)", pic:"Agus", hours:3, pri:"tinggi",
+     why:"Ini unfair advantage Jagadita — tidak ada kompetitor di Bali yang punya tool interaktif seperti ini."},
+    {id:"f2w6-3", title:"Setup Google Search Ads kecil (budget sesuai kalkulator), fokus 5–8 keyword long-tail", pic:"Agus", hours:2, pri:"rendah",
+     why:"Volume search niche ini kecil — ini eksperimen murah untuk mengukur cost-per-lead, bukan mesin utama."}
+  ],
+  "Minggu 7": [
+    {id:"f2w7-1", title:"Bangun Scorecard tool (frontend + logic skor)", pic:"Agus", hours:6, pri:"tinggi", why:"Lead magnet paling kuat yang dimiliki Jagadita — investasi waktu di sini paling worth it."},
+    {id:"f2w7-2", title:"Tulis & publish artikel SEO #3", pic:"Satria", hours:4, pri:"sedang", why:"Konsistensi — 3 artikel jadi fondasi topical authority pertama."},
+    {id:"f2w7-3", title:"Hadiri 1 event/gathering industri hospitality Bali (PHRI/IHGMA atau komunitas)", pic:"Satria", hours:4, pri:"sedang",
+     why:"Networking langsung mempercepat kepercayaan dibanding konten online semata."}
+  ],
+  "Minggu 8": [
+    {id:"f2w8-1", title:"Selesaikan & testing Scorecard tool, sambungkan ke email capture", pic:"Agus", hours:4, pri:"tinggi", why:"Pastikan lead yang masuk benar-benar tersimpan sebelum di-launch ke publik."},
+    {id:"f2w8-2", title:"Draft template proposal standar (untuk 4 tier paket)", pic:"Satria", hours:3, pri:"sedang",
+     why:"Mempercepat proses closing — proposal custom dari nol tiap kali makan waktu terlalu banyak untuk tim part-time."},
+    {id:"f2w8-3", title:"Review progress referral (target total 20 kontak, minimal 8 sudah kopi darat)", pic:"Semua", hours:1, pri:"sedang", why:"Checkpoint untuk memastikan channel utama tetap berjalan, bukan terlupakan."}
+  ]
+};
+
+var FASE3 = {
+  "Minggu 9": [
+    {id:"f3w9-1", title:"Launch Bali Hospitality Performance Scorecard secara resmi", pic:"Semua", hours:2, pri:"tinggi",
+     why:"Ini momen kampanye utama fase konversi — semua channel organik diarahkan ke sini."},
+    {id:"f3w9-2", title:"Posting LinkedIn khusus mengumumkan Scorecard, minta 3 founder share dari akun masing-masing", pic:"Semua", hours:2, pri:"tinggi", why:"Distribusi awal paling murah — jaringan personal founder bertiga."},
+    {id:"f3w9-3", title:"Meta Ads kecil khusus mendorong orang isi Scorecard (bukan jualan consulting langsung)", pic:"Agus", hours:2, pri:"rendah",
+     why:"Traffic organik sudah mulai terbentuk di fase ini, jadi retargeting punya pool yang cukup untuk dicoba kecil-kecilan."}
+  ],
+  "Minggu 10": [
+    {id:"f3w10-1", title:"Follow up manual semua yang isi Scorecard minggu pertama, kirim hasil personal + tawarkan discovery call", pic:"Semua", hours:4, pri:"tinggi",
+     why:"Scorecard hanya berguna kalau follow-up-nya cepat dan personal — jangan biarkan lead dingin."},
+    {id:"f3w10-2", title:"Tawarkan 2 pilot project dengan harga khusus ke prospek paling hangat", pic:"Satria", hours:3, pri:"tinggi",
+     why:"Pilot project murah tapi menghasilkan case study nyata — lebih berharga dari margin di 90 hari pertama."}
+  ],
+  "Minggu 11": [
+    {id:"f3w11-1", title:"Kirim 3–5 proposal formal ke prospek yang sudah discovery call", pic:"Satria", hours:4, pri:"tinggi", why:"Target utama fase ini — proposal terkirim adalah metrik keberhasilan paling konkret."},
+    {id:"f3w11-2", title:"Tulis artikel SEO #4 berdasarkan insight dari data Scorecard (anonim)", pic:"Satria", hours:4, pri:"sedang",
+     why:"Data dari Scorecard adalah bahan konten unik yang tidak dimiliki kompetitor manapun."}
+  ],
+  "Minggu 12": [
+    {id:"f3w12-1", title:"Review KPI lengkap: leads, discovery call, proposal, closed, CAC", pic:"Semua", hours:2, pri:"tinggi",
+     why:"Baru setelah angka ini ada, keputusan naikkan budget iklan bisa diambil berdasarkan data, bukan tebakan."},
+    {id:"f3w12-2", title:"Tulis 1 case study lagi dari pilot project (kalau sudah ada hasil awal)", pic:"Satria", hours:3, pri:"sedang", why:"Menambah bukti sosial untuk fase berikutnya."},
+    {id:"f3w12-3", title:"Rencanakan 90 hari berikutnya berdasarkan channel yang paling efektif", pic:"Semua", hours:2, pri:"tinggi", why:"Tutup siklus — lanjutkan yang terbukti bekerja, hentikan yang tidak."}
+  ]
+};
+
+var ALL_PHASES = { fase1: FASE1, fase2: FASE2, fase3: FASE3 };
+
+var REFERRAL_SEED = [
+  {category:"Vendor PMS/POS"}, {category:"Vendor PMS/POS"}, {category:"Vendor PMS/POS"},
+  {category:"Arsitek/Kontraktor"}, {category:"Arsitek/Kontraktor"}, {category:"Arsitek/Kontraktor"},
+  {category:"Notaris/PMA"}, {category:"Notaris/PMA"}, {category:"Notaris/PMA"},
+  {category:"Konsultan Pajak"}, {category:"Konsultan Pajak"},
+  {category:"Recruiter Hospitality"}, {category:"Recruiter Hospitality"},
+  {category:"Asosiasi (PHRI/IHGMA/BHA)"}, {category:"Asosiasi (PHRI/IHGMA/BHA)"}, {category:"Asosiasi (PHRI/IHGMA/BHA)"},
+  {category:"Lainnya"}, {category:"Lainnya"}, {category:"Lainnya"}, {category:"Lainnya"}
+].map(function(r, i){ return { partnerId:"ref-"+(i+1), name:"", category:r.category, pic:"", status:"belum_dihubungi", notes:"", lastContact:"" }; });
+
+var BUDGET_ALLOCATION = [
+  {key:"referral", label:"Networking & referral (kopi, transport, entertainment)", min:0.35, reason:"Channel utama sesuai kesepakatan — biaya kecil, dampak besar di pasar sekecil Bali."},
+  {key:"content", label:"Produksi konten (desain, foto, tulisan)", min:0.25, reason:"Aset permanen — LinkedIn & artikel SEO butuh visual yang layak."},
+  {key:"tools", label:"Tools & asosiasi (domain, iuran PHRI/IHGMA)", min:0.20, reason:"Investasi kredibilitas jangka panjang, bukan biaya berulang besar."},
+  {key:"ads", label:"Google Search Ads (eksperimen kecil)", min:0.20, reason:"Volume keyword niche ini kecil — cukup untuk uji cost-per-lead, bukan mesin utama."}
+];
+
+/* ------------------------------------------------------------
+   Placeholder state — akan disambung ke bagian sinkronisasi
+   ------------------------------------------------------------ */
+var APP = {
+  identity: null,
+  taskState: {},   // { taskId: {status, doneBy, doneAt} }
+  kpiState: {},    // { week: {...} }
+  referralState: {}, // { partnerId: {...} }
+  meta: {},
+  filters: { pic:"all", pri:"all", hideDone:false },
+  online: false
+};
+
+window.__JAGADITA_APP__ = APP; // untuk debugging manual di console kalau perlu
+
+/* ------------------------------------------------------------
+   2. LOCAL PERSISTENCE (fallback / cache offline)
+   ------------------------------------------------------------ */
+function loadLocalState(){
+  try{
+    var raw = localStorage.getItem(STATE_KEY);
+    if(!raw) return { taskState:{}, kpiState:{}, referralState:{}, meta:{} };
+    return JSON.parse(raw);
+  }catch(e){ return { taskState:{}, kpiState:{}, referralState:{}, meta:{} }; }
+}
+function saveLocalState(){
+  localStorage.setItem(STATE_KEY, JSON.stringify({
+    taskState: APP.taskState, kpiState: APP.kpiState, referralState: APP.referralState, meta: APP.meta
+  }));
+}
+
+/* ------------------------------------------------------------
+   3. SYNC LAYER — GAS kalau tersedia, localStorage kalau tidak
+   ------------------------------------------------------------ */
+var syncDot = document.getElementById("syncDot");
+var syncText = document.getElementById("syncText");
+
+function setSyncStatus(mode, text){
+  syncDot.className = "sync-dot" + (mode === "ok" ? "" : mode === "offline" ? " offline" : " error");
+  syncText.textContent = text;
+}
+
+function hasGasConfigured(){ return !!(CONFIG.gasUrl && CONFIG.token); }
+
+function gasGet(){
+  if(!hasGasConfigured()) return Promise.resolve(null);
+  var url = CONFIG.gasUrl + "?token=" + encodeURIComponent(CONFIG.token);
+  return fetch(url).then(function(r){ return r.json(); }).catch(function(err){ return { ok:false, error:String(err) }; });
+}
+
+function gasPost(action, payload){
+  if(!hasGasConfigured()) return Promise.resolve({ ok:false, error:"not_configured" });
+  return fetch(CONFIG.gasUrl, {
+    method:"POST",
+    headers:{ "Content-Type":"text/plain" }, // supaya tidak kena CORS preflight di GAS
+    body: JSON.stringify({ token: CONFIG.token, action: action, payload: payload })
+  }).then(function(r){ return r.json(); }).catch(function(err){ return { ok:false, error:String(err) }; });
+}
+
+function normalizeServerData(data){
+  var taskState = {};
+  (data.tasks || []).forEach(function(row){
+    if(!row.task_id) return;
+    taskState[row.task_id] = { status: row.status || "undone", doneBy: row.done_by || "", doneAt: row.done_at || "" };
+  });
+  var kpiState = {};
+  (data.kpi || []).forEach(function(row){
+    if(!row.week) return;
+    kpiState[row.week] = {
+      leads:row.leads||0, discoveryCalls:row.discovery_calls||0, proposalsSent:row.proposals_sent||0,
+      closed:row.closed||0, revenue:row.revenue||0
+    };
+  });
+  var referralState = {};
+  (data.referral || []).forEach(function(row){
+    if(!row.partner_id) return;
+    referralState[row.partner_id] = {
+      name:row.name||"", category:row.category||"", pic:row.pic||"", status:row.status||"belum_dihubungi",
+      notes:row.notes||"", lastContact:row.last_contact||""
+    };
+  });
+  return { taskState:taskState, kpiState:kpiState, referralState:referralState, meta:data.meta||{} };
+}
+
+var syncInterval = null;
+
+function initialLoad(){
+  if(!hasGasConfigured()){
+    setSyncStatus("offline", "Mode lokal — belum tersambung ke Google Sheet");
+    var local = loadLocalState();
+    APP.taskState = local.taskState; APP.kpiState = local.kpiState;
+    APP.referralState = local.referralState; APP.meta = local.meta;
+    renderAll();
+    return;
+  }
+  setSyncStatus("offline", "Menyambungkan…");
+  gasGet().then(function(res){
+    if(res && res.ok){
+      var norm = normalizeServerData(res);
+      APP.taskState = norm.taskState; APP.kpiState = norm.kpiState;
+      APP.referralState = norm.referralState; APP.meta = norm.meta;
+      APP.online = true;
+      saveLocalState();
+      setSyncStatus("ok", "Tersambung ke Google Sheet");
+    } else {
+      APP.online = false;
+      var local2 = loadLocalState();
+      APP.taskState = local2.taskState; APP.kpiState = local2.kpiState;
+      APP.referralState = local2.referralState; APP.meta = local2.meta;
+      setSyncStatus("error", "Gagal sambung — pakai data lokal sementara");
+    }
+    renderAll();
+    if(!syncInterval){
+      syncInterval = setInterval(pollServer, 60000);
+    }
+  });
+}
+
+function pollServer(){
+  if(!hasGasConfigured()) return;
+  gasGet().then(function(res){
+    if(res && res.ok){
+      var norm = normalizeServerData(res);
+      APP.taskState = norm.taskState; APP.kpiState = norm.kpiState;
+      APP.referralState = norm.referralState; APP.meta = norm.meta;
+      APP.online = true;
+      saveLocalState();
+      setSyncStatus("ok", "Tersambung — sinkron " + new Date().toLocaleTimeString("id-ID"));
+      renderAll();
+    } else {
+      APP.online = false;
+      setSyncStatus("offline", "Offline — perubahan tersimpan lokal");
+    }
+  });
+}
+
+/* ------------------------------------------------------------
+   4. IDENTITY
+   ------------------------------------------------------------ */
+function loadIdentity(){ return localStorage.getItem(IDENTITY_KEY) || null; }
+function saveIdentity(name){ localStorage.setItem(IDENTITY_KEY, name); APP.identity = name; renderIdentityPill(); }
+
+function renderIdentityPill(){
+  var avatar = document.getElementById("identityAvatar");
+  var label = document.getElementById("identityLabel");
+  if(APP.identity){
+    avatar.textContent = APP.identity.charAt(0);
+    label.textContent = APP.identity;
+  } else {
+    avatar.textContent = "?";
+    label.textContent = "Pilih identitas Anda";
+  }
+}
+
+document.getElementById("changeIdentityBtn").addEventListener("click", function(){
+  document.getElementById("identityModalBackdrop").style.display = "flex";
+});
+
+Array.prototype.forEach.call(document.querySelectorAll(".identity-choice-btn"), function(btn){
+  btn.addEventListener("click", function(){
+    saveIdentity(btn.getAttribute("data-user"));
+    document.getElementById("identityModalBackdrop").style.display = "none";
+  });
+});
+
+/* ------------------------------------------------------------
+   5. RENDER: TASK CARD (dipakai untuk sprint0 + 3 fase)
+   ------------------------------------------------------------ */
+var PRI_LABEL = { tinggi:"🔴 Tinggi", sedang:"🟡 Sedang", rendah:"🟢 Rendah" };
+
+function taskMatchesFilter(task){
+  if(APP.filters.pic !== "all" && task.pic !== APP.filters.pic) return false;
+  if(APP.filters.pri !== "all" && task.pri !== APP.filters.pri) return false;
+  var state = APP.taskState[task.id];
+  if(APP.filters.hideDone && state && state.status === "done") return false;
+  return true;
+}
+
+function renderTaskCard(task){
+  var state = APP.taskState[task.id] || { status:"undone" };
+  var isDone = state.status === "done";
+  var el = document.createElement("div");
+  el.className = "task-card" + (isDone ? " done" : "");
+  el.innerHTML =
+    '<button class="task-check" type="button" aria-label="Tandai selesai" data-task-id="'+task.id+'">' +
+      '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</button>' +
+    '<div class="task-body">' +
+      '<div class="task-title-row">' +
+        '<div class="task-title">'+escapeHtml(task.title)+'</div>' +
+        '<div class="task-meta">' +
+          '<span class="badge badge-pic">'+task.pic+'</span>' +
+          '<span class="badge badge-hours">'+task.hours+' jam</span>' +
+          '<span class="badge badge-pri-'+task.pri+'">'+PRI_LABEL[task.pri]+'</span>' +
+        '</div>' +
+      '</div>' +
+      '<button class="task-why-toggle" type="button" data-why-toggle="'+task.id+'">Kenapa ini penting? ▾</button>' +
+      '<div class="task-why" id="why-'+task.id+'">'+escapeHtml(task.why)+'</div>' +
+      (isDone && state.doneBy ? '<div class="task-done-by">✓ oleh '+escapeHtml(state.doneBy)+(state.doneAt ? ", " + formatRelativeTime(state.doneAt) : "")+'</div>' : '') +
+    '</div>';
+  return el;
+}
+
+function escapeHtml(str){
+  var div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatRelativeTime(iso){
+  try{
+    var d = new Date(iso);
+    var diffMs = Date.now() - d.getTime();
+    var diffDay = Math.floor(diffMs / 86400000);
+    if(diffDay <= 0) return "hari ini";
+    if(diffDay === 1) return "kemarin";
+    if(diffDay < 30) return diffDay + " hari lalu";
+    return d.toLocaleDateString("id-ID");
+  }catch(e){ return ""; }
+}
+
+function renderSprint0(){
+  var container = document.getElementById("sprint0List");
+  container.innerHTML = "";
+  SPRINT0.filter(taskMatchesFilter).forEach(function(task){
+    container.appendChild(renderTaskCard(task));
+  });
+}
+
+function renderPhase(phaseKey, weeks){
+  var panel = document.getElementById("panel-" + phaseKey);
+  panel.innerHTML = "";
+  Object.keys(weeks).forEach(function(weekLabel){
+    var tasks = weeks[weekLabel].filter(taskMatchesFilter);
+    if(tasks.length === 0) return;
+    var block = document.createElement("div");
+    block.className = "week-block";
+    var doneCount = weeks[weekLabel].filter(function(t){
+      var s = APP.taskState[t.id]; return s && s.status === "done";
+    }).length;
+    block.innerHTML =
+      '<div class="week-header"><h4>'+weekLabel+'</h4><span class="week-count">'+doneCount+'/'+weeks[weekLabel].length+' selesai</span></div>' +
+      '<div class="task-list"></div>';
+    var list = block.querySelector(".task-list");
+    tasks.forEach(function(task){ list.appendChild(renderTaskCard(task)); });
+    panel.appendChild(block);
+  });
+}
+
+function renderAllTasks(){
+  renderSprint0();
+  renderPhase("fase1", FASE1);
+  renderPhase("fase2", FASE2);
+  renderPhase("fase3", FASE3);
+  bindTaskEvents();
+  updateOverallProgress();
+}
+
+function bindTaskEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll(".task-check"), function(btn){
+    btn.addEventListener("click", function(){
+      var taskId = btn.getAttribute("data-task-id");
+      toggleTask(taskId);
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-why-toggle]"), function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-why-toggle");
+      var el = document.getElementById("why-" + id);
+      el.classList.toggle("open");
+      btn.textContent = el.classList.contains("open") ? "Kenapa ini penting? ▴" : "Kenapa ini penting? ▾";
+    });
+  });
+}
+
+function toggleTask(taskId){
+  if(!APP.identity){
+    document.getElementById("identityModalBackdrop").style.display = "flex";
+    return;
+  }
+  var current = APP.taskState[taskId] || { status:"undone" };
+  var newStatus = current.status === "done" ? "undone" : "done";
+  APP.taskState[taskId] = { status:newStatus, doneBy: newStatus === "done" ? APP.identity : "", doneAt: newStatus === "done" ? new Date().toISOString() : "" };
+  saveLocalState();
+  renderAllTasks();
+  renderWorkload();
+
+  if(hasGasConfigured()){
+    gasPost("update_task", { taskId:taskId, status:newStatus, doneBy: APP.identity }).then(function(res){
+      if(!(res && res.ok)) setSyncStatus("error", "Gagal simpan ke server — dicoba lagi otomatis");
+    });
+  }
+}
+
+function updateOverallProgress(){
+  var allTasks = SPRINT0.concat(
+    Object.keys(FASE1).reduce(function(a,k){ return a.concat(FASE1[k]); }, []),
+    Object.keys(FASE2).reduce(function(a,k){ return a.concat(FASE2[k]); }, []),
+    Object.keys(FASE3).reduce(function(a,k){ return a.concat(FASE3[k]); }, [])
+  );
+  var done = allTasks.filter(function(t){ var s = APP.taskState[t.id]; return s && s.status === "done"; }).length;
+  var pct = allTasks.length ? Math.round((done / allTasks.length) * 100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressPercentText").textContent = pct + "% (" + done + "/" + allTasks.length + " task)";
+}
+
+/* ------------------------------------------------------------
+   6. FILTERS
+   ------------------------------------------------------------ */
+Array.prototype.forEach.call(document.querySelectorAll(".chip[data-filter-type]"), function(chip){
+  chip.addEventListener("click", function(){
+    var type = chip.getAttribute("data-filter-type");
+    var value = chip.getAttribute("data-filter-value");
+    APP.filters[type] = value;
+    Array.prototype.forEach.call(document.querySelectorAll('.chip[data-filter-type="'+type+'"]'), function(c){
+      c.classList.toggle("active", c === chip);
+    });
+    renderAllTasks();
+  });
+});
+
+document.getElementById("hideDoneChip").addEventListener("click", function(){
+  APP.filters.hideDone = !APP.filters.hideDone;
+  this.classList.toggle("active", APP.filters.hideDone);
+  renderAllTasks();
+});
+
+/* ------------------------------------------------------------
+   7. TABS
+   ------------------------------------------------------------ */
+Array.prototype.forEach.call(document.querySelectorAll(".tab-btn"), function(btn){
+  btn.addEventListener("click", function(){
+    var tab = btn.getAttribute("data-tab");
+    Array.prototype.forEach.call(document.querySelectorAll(".tab-btn"), function(b){ b.classList.toggle("active", b === btn); });
+    Array.prototype.forEach.call(document.querySelectorAll(".tab-panel"), function(p){ p.classList.toggle("active", p.id === "panel-" + tab); });
+  });
+});
+
+/* ------------------------------------------------------------
+   8. WORKLOAD PANEL
+   ------------------------------------------------------------ */
+function renderWorkload(){
+  var allTasks = Object.keys(FASE1).reduce(function(a,k){ return a.concat(FASE1[k]); }, [])
+    .concat(Object.keys(FASE2).reduce(function(a,k){ return a.concat(FASE2[k]); }, []))
+    .concat(Object.keys(FASE3).reduce(function(a,k){ return a.concat(FASE3[k]); }, []))
+    .concat(SPRINT0);
+
+  var people = ["Satria", "Viveka", "Agus"];
+  var totals = { Satria:0, Viveka:0, Agus:0 };
+
+  allTasks.forEach(function(t){
+    var s = APP.taskState[t.id];
+    if(s && s.status === "done") return; // hanya hitung yang belum selesai
+    if(t.pic === "Semua"){
+      totals.Satria += t.hours / 3; totals.Viveka += t.hours / 3; totals.Agus += t.hours / 3;
+    } else if(totals[t.pic] !== undefined){
+      totals[t.pic] += t.hours;
+    }
+  });
+
+  var WEEKS = 12;
+  var CAPACITY_PER_WEEK = 6; // asumsi jam/minggu realistis untuk kerja sambilan
+
+  var panel = document.getElementById("workloadPanel");
+  panel.innerHTML = "";
+  people.forEach(function(name){
+    var totalHours = totals[name];
+    var perWeek = totalHours / WEEKS;
+    var pct = Math.min(100, (perWeek / CAPACITY_PER_WEEK) * 100);
+    var over = perWeek > CAPACITY_PER_WEEK;
+    var row = document.createElement("div");
+    row.innerHTML =
+      '<div class="workload-row">' +
+        '<div class="workload-name">'+name+'</div>' +
+        '<div class="workload-bar-track"><div class="workload-bar-fill'+(over?' over':'')+'" style="width:'+pct+'%"></div></div>' +
+        '<div class="workload-hours">'+perWeek.toFixed(1)+' jam/minggu</div>' +
+      '</div>' +
+      (over ? '<div class="workload-warning">⚠ Melebihi kapasitas realistis (~'+CAPACITY_PER_WEEK+' jam/minggu untuk kerja sambilan) — pertimbangkan kurangi scope atau geser ke orang lain.</div>' : '');
+    panel.appendChild(row);
+  });
+}
+
+/* ------------------------------------------------------------
+   9. BUDGET CALCULATOR
+   ------------------------------------------------------------ */
+var budgetSlider = document.getElementById("budgetSlider");
+var budgetValue = document.getElementById("budgetValue");
+var budgetAlloc = document.getElementById("budgetAlloc");
+
+function formatRupiah(n){
+  return "Rp " + Math.round(n).toLocaleString("id-ID");
+}
+
+function renderBudget(){
+  var total = parseInt(budgetSlider.value, 10);
+  budgetValue.textContent = formatRupiah(total);
+  budgetAlloc.innerHTML = "";
+  BUDGET_ALLOCATION.forEach(function(item){
+    var amount = total * item.min;
+    var row = document.createElement("div");
+    row.className = "alloc-row";
+    row.innerHTML =
+      '<div><div class="alloc-label">'+item.label+'</div><div class="alloc-reason">'+item.reason+'</div></div>' +
+      '<div class="alloc-amount">'+formatRupiah(amount)+'</div>';
+    budgetAlloc.appendChild(row);
+  });
+}
+budgetSlider.addEventListener("input", renderBudget);
+
+/* ------------------------------------------------------------
+   10. KPI TRACKER
+   ------------------------------------------------------------ */
+var KPI_WEEKS = [];
+for(var w=1; w<=12; w++){ KPI_WEEKS.push("Minggu " + w); }
+
+function renderKpiTable(){
+  var tbody = document.getElementById("kpiTableBody");
+  tbody.innerHTML = "";
+  KPI_WEEKS.forEach(function(week){
+    var data = APP.kpiState[week] || { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td>'+week+'</td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="leads" value="'+data.leads+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="discoveryCalls" value="'+data.discoveryCalls+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="proposalsSent" value="'+data.proposalsSent+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="closed" value="'+data.closed+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="revenue" value="'+data.revenue+'" style="width:100px;"></td>';
+    tbody.appendChild(tr);
+  });
+  bindKpiEvents();
+  renderKpiFunnel();
+}
+
+var kpiDebounce = {};
+function bindKpiEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-kpi-week]"), function(input){
+    input.addEventListener("change", function(){
+      var week = input.getAttribute("data-kpi-week");
+      var field = input.getAttribute("data-kpi-field");
+      var val = parseInt(input.value, 10) || 0;
+      if(!APP.kpiState[week]) APP.kpiState[week] = { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+      APP.kpiState[week][field] = val;
+      saveLocalState();
+      renderKpiFunnel();
+      if(hasGasConfigured()){
+        var payload = Object.assign({ week:week, doneBy:APP.identity||"" }, APP.kpiState[week]);
+        gasPost("update_kpi", payload);
+      }
+    });
+  });
+}
+
+function renderKpiFunnel(){
+  var totals = { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+  KPI_WEEKS.forEach(function(week){
+    var d = APP.kpiState[week];
+    if(!d) return;
+    totals.leads += d.leads||0; totals.discoveryCalls += d.discoveryCalls||0;
+    totals.proposalsSent += d.proposalsSent||0; totals.closed += d.closed||0; totals.revenue += d.revenue||0;
+  });
+  var steps = [
+    { label:"Leads", value: totals.leads, rate:null },
+    { label:"Discovery Call", value: totals.discoveryCalls, rate: totals.leads ? Math.round((totals.discoveryCalls/totals.leads)*100)+"%" : null },
+    { label:"Proposal", value: totals.proposalsSent, rate: totals.discoveryCalls ? Math.round((totals.proposalsSent/totals.discoveryCalls)*100)+"%" : null },
+    { label:"Closed", value: totals.closed, rate: totals.proposalsSent ? Math.round((totals.closed/totals.proposalsSent)*100)+"%" : null }
+  ];
+  var el = document.getElementById("kpiFunnel");
+  el.innerHTML = "";
+  steps.forEach(function(s){
+    var div = document.createElement("div");
+    div.className = "kpi-funnel-step";
+    div.innerHTML = '<div class="num">'+s.value+'</div><div class="label">'+s.label+'</div>' + (s.rate ? '<div class="rate">'+s.rate+' konversi</div>' : '');
+    el.appendChild(div);
+  });
+}
+
+/* ------------------------------------------------------------
+   11. REFERRAL TRACKER
+   ------------------------------------------------------------ */
+var STATUS_OPTIONS = [
+  {v:"belum_dihubungi", l:"Belum dihubungi"},
+  {v:"sudah_kontak", l:"Sudah kontak"},
+  {v:"sudah_ngopi", l:"Sudah ngopi"},
+  {v:"sudah_referral", l:"Sudah kasih referral"}
+];
+
+function renderReferralTable(){
+  var tbody = document.getElementById("referralTableBody");
+  tbody.innerHTML = "";
+  REFERRAL_SEED.forEach(function(seed){
+    var data = APP.referralState[seed.partnerId] || seed;
+    var tr = document.createElement("tr");
+    var statusOptionsHtml = STATUS_OPTIONS.map(function(o){
+      return '<option value="'+o.v+'"'+(data.status===o.v?' selected':'')+'>'+o.l+'</option>';
+    }).join("");
+    tr.innerHTML =
+      '<td><input type="text" placeholder="Nama" data-ref-id="'+seed.partnerId+'" data-ref-field="name" value="'+escapeHtml(data.name||"")+'"></td>' +
+      '<td style="font-size:12px; color:var(--gray-500);">'+data.category+'</td>' +
+      '<td><input type="text" placeholder="PIC" data-ref-id="'+seed.partnerId+'" data-ref-field="pic" value="'+escapeHtml(data.pic||"")+'" style="width:70px;"></td>' +
+      '<td><select class="status-select status-'+data.status+'" data-ref-id="'+seed.partnerId+'" data-ref-field="status">'+statusOptionsHtml+'</select></td>' +
+      '<td><input type="text" placeholder="Catatan" data-ref-id="'+seed.partnerId+'" data-ref-field="notes" value="'+escapeHtml(data.notes||"")+'"></td>' +
+      '<td><input type="date" data-ref-id="'+seed.partnerId+'" data-ref-field="lastContact" value="'+(data.lastContact||"")+'" style="font-size:11.5px;"></td>';
+    tbody.appendChild(tr);
+  });
+  bindReferralEvents();
+}
+
+function bindReferralEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ref-id]"), function(input){
+    input.addEventListener("change", function(){
+      var id = input.getAttribute("data-ref-id");
+      var field = input.getAttribute("data-ref-field");
+      var seed = REFERRAL_SEED.find(function(s){ return s.partnerId === id; });
+      if(!APP.referralState[id]) APP.referralState[id] = Object.assign({}, seed);
+      APP.referralState[id][field] = input.value;
+      if(field === "status" && input.tagName === "SELECT"){
+        input.className = "status-select status-" + input.value;
+      }
+      saveLocalState();
+      if(hasGasConfigured()){
+        var payload = Object.assign({ partnerId:id, doneBy:APP.identity||"" }, APP.referralState[id]);
+        gasPost("update_referral", payload);
+      }
+    });
+  });
+}
+
+/* ------------------------------------------------------------
+   12. START DATE (meta)
+   ------------------------------------------------------------ */
+var startDateInput = document.getElementById("startDateInput");
+startDateInput.addEventListener("change", function(){
+  APP.meta.startDate = startDateInput.value;
+  saveLocalState();
+  if(hasGasConfigured()){
+    gasPost("set_meta", { key:"startDate", value:startDateInput.value, doneBy: APP.identity||"" });
+  }
+});
+
+/* ------------------------------------------------------------
+   13. SETTINGS PANEL (konfigurasi GAS URL & token)
+   ------------------------------------------------------------ */
+document.getElementById("settingsFab").addEventListener("click", function(){
+  document.getElementById("settingsPanel").classList.toggle("open");
+});
+document.getElementById("gasUrlInput").value = CONFIG.gasUrl;
+document.getElementById("gasTokenInput").value = CONFIG.token;
+document.getElementById("saveSettingsBtn").addEventListener("click", function(){
+  CONFIG.gasUrl = document.getElementById("gasUrlInput").value.trim();
+  CONFIG.token = document.getElementById("gasTokenInput").value.trim();
+  saveConfig(CONFIG);
+  document.getElementById("settingsPanel").classList.remove("open");
+  initialLoad();
+});
+
+/* ------------------------------------------------------------
+   14. MASTER RENDER
+   ------------------------------------------------------------ */
+function renderAll(){
+  renderIdentityPill();
+  renderAllTasks();
+  renderWorkload();
+  renderBudget();
+  renderKpiTable();
+  renderReferralTable();
+  if(APP.meta && APP.meta.startDate) startDateInput.value = APP.meta.startDate;
+}
+
+/* ------------------------------------------------------------
+   15. BOOTSTRAP
+   ------------------------------------------------------------ */
+APP.identity = loadIdentity();
+if(!APP.identity){
+  document.getElementById("identityModalBackdrop").style.display = "flex";
+}
+initialLoad();
+
+})();
+</script>
+</body>
+</html>
