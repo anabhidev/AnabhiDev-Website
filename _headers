@@ -2,26 +2,29 @@
 # Miss Fish Bali — anabhidev.com
 # File        : _headers
 # Description : Cloudflare Pages response headers.
-#               Perubahan: script-src kini mengizinkan blob: dan
-#               cdn.jsdelivr.net, ditambah worker-src baru — supaya
-#               PDF.js dan StPageFlip pada halaman mockup bisa dimuat.
+#               Digabung dari versi sebelumnya (Microsoft auth,
+#               Google Analytics, PDF.js/StPageFlip) DITAMBAH
+#               dukungan Supabase untuk MFB-IT.
 # IT Department · Miss Fish Bali
-# Version     : 1.1
-# Generated   : 8 August 2026, 12:48:33 WITA
+# Version     : 1.2
+# Generated   : 10 August 2026, 16:17:35 WITA
 # ================================================================
 #
-# Yang diubah, hanya dua:
-#   1. script-src  + blob:  + https://cdn.jsdelivr.net
-#   2. worker-src 'self' blob:            <- baris baru
+# YANG DIUBAH DARI v1.1 — HANYA SATU BARIS:
 #
-# Kenapa blob: juga perlu — PDF.js menjalankan pembacanya di dalam
-# Web Worker. Karena berkas worker-nya beda domain, browser melarang
-# pemanggilan langsung, jadi PDF.js membungkusnya dengan URL blob:
-# yang isinya importScripts() ke CDN. Tanpa izin blob:, perbaikan
-# script-src saja akan tetap gagal di langkah berikutnya.
+#   connect-src  + https://*.supabase.co
 #
-# Direktif lain (default-src, style-src, font-src, img-src,
-# connect-src, frame-ancestors, base-uri, form-action) TIDAK diubah.
+# Alasan: webapp MFB-IT (Miss Fish IT Daily Activity) memanggil
+# Edge Function di Supabase lewat fetch(). Tanpa domain ini
+# terdaftar di connect-src, permintaan ditolak oleh CSP —
+# meskipun kode webapp-nya sendiri benar.
+#
+# TIDAK ADA yang dihapus. Semua aturan v1.1 (Microsoft auth,
+# Google Analytics, PDF.js, jsdelivr, dst) tetap utuh.
+#
+# img-src sudah berisi "https:" secara umum — jadi logo dari
+# anabhidev.com/MFB/ dan domain HTTPS lain otomatis tercakup,
+# tidak perlu ditambah baris terpisah.
 # ================================================================
 
 /*
@@ -30,7 +33,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 /*.webp
   Cache-Control: public, max-age=31536000, immutable
@@ -49,3 +52,9 @@
 #
 # /MFB-PDFAudio/*
 #   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+#
+# Kalau caramu itu ditempuh, tambahkan juga blok khusus untuk MFB-IT
+# supaya tetap bisa memanggil Supabase meski aturan umum diperketat:
+#
+# /itm-daily/*
+#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
