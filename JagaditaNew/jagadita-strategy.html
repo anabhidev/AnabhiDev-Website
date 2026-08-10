@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Jagadita — Strategi Go-To-Market 90 Hari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Nunito+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — konsisten dengan jagadita.com
+   ============================================================ */
+:root{
+  --navy:#0A2540;
+  --cyan-text:#00768C;
+  --cyan-light:#35BBD4;
+  --cyan-fill:#00768C;
+  --cyan-brand:#0097B2;
+  --gray-400:#78859A;
+  --gray-500:#5A6878;
+  --gray-100:#FAF9F6;
+  --white:#FFFFFF;
+  --red:#C0392B;
+  --amber:#B7791F;
+  --green:#1E7A4C;
+  --border:rgba(10,37,64,.10);
+  --shadow: 0 24px 60px rgba(10,37,64,.08);
+  --shadow-sm: 0 8px 24px rgba(10,37,64,.06);
+  --radius:4px;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --font-display:'Fraunces', serif;
+  --font-body:'Nunito Sans', sans-serif;
+  --sidebar-w: 280px;
+  --navbar-h: 64px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{-webkit-text-size-adjust:100%; overflow-x:hidden;}
+body{
+  font-family:var(--font-body);
+  background:var(--gray-100);
+  color:var(--navy);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-variation-settings:'SOFT' 20, 'WONK' 1;
+  color:var(--navy);
+  line-height:1.18;
+  letter-spacing:-0.01em;
+}
+p{color:var(--navy);}
+a{color:var(--cyan-text);}
+button{font-family:inherit; cursor:pointer;}
+:focus-visible{outline:2px solid var(--cyan-light); outline-offset:2px; border-radius:2px;}
+
+.skip-link{
+  position:absolute; left:-999px; top:0; background:var(--navy); color:#fff;
+  padding:10px 16px; z-index:300; border-radius:0 0 4px 0;
+}
+.skip-link:focus{left:0;}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar{
+  position:fixed; top:0; left:0; right:0; height:var(--navbar-h);
+  background:#fff; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:14px; padding:0 18px;
+  z-index:100;
+}
+.navbar .hamburger{
+  display:none; background:none; border:none; width:36px; height:36px;
+  align-items:center; justify-content:center; border-radius:4px; flex-shrink:0;
+}
+.navbar .hamburger:hover{background:var(--gray-100);}
+.navbar .hamburger span{display:block; width:18px; height:2px; background:var(--navy); position:relative;}
+.navbar .hamburger span::before, .navbar .hamburger span::after{
+  content:""; position:absolute; width:18px; height:2px; background:var(--navy); left:0;
+}
+.navbar .hamburger span::before{top:-6px;}
+.navbar .hamburger span::after{top:6px;}
+
+.navbar-logo{height:30px; width:auto; display:block;}
+.navbar-title{
+  font-family:var(--font-display); font-size:15px; font-weight:600; color:var(--navy);
+  border-left:1px solid var(--border); padding-left:14px; margin-left:2px;
+}
+.navbar-title .sub{display:block; font-family:var(--font-body); font-weight:700; font-size:10.5px; color:var(--cyan-text); text-transform:uppercase; letter-spacing:.08em;}
+
+.navbar-right{margin-left:auto; display:flex; align-items:center; gap:10px;}
+.identity-pill{
+  display:flex; align-items:center; gap:8px;
+  background:var(--gray-100); border:1px solid var(--border);
+  border-radius:99px; padding:5px 12px 5px 5px; font-size:12.5px; color:var(--navy);
+}
+.identity-pill .avatar{
+  width:22px; height:22px; border-radius:50%; background:var(--cyan-fill); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:10.5px; flex-shrink:0;
+}
+.identity-pill button{background:none; border:none; color:var(--gray-400); font-size:11px; text-decoration:underline;}
+
+.sync-badge{
+  display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--gray-500);
+  padding:5px 11px; border-radius:99px; background:var(--gray-100); border:1px solid var(--border);
+}
+.sync-dot{width:7px; height:7px; border-radius:50%; background:var(--green); flex-shrink:0;}
+.sync-dot.offline{background:var(--amber);}
+.sync-dot.error{background:var(--red);}
+
+@media (max-width:860px){
+  .navbar .hamburger{display:flex;}
+  .navbar-title{font-size:13px; padding-left:10px;}
+  .sync-badge span:not(.sync-dot){display:none;}
+}
+
+/* ============================================================
+   LAYOUT SHELL
+   ============================================================ */
+.shell{display:flex; padding-top:var(--navbar-h); min-height:100vh;}
+
+.sidebar{
+  position:fixed; top:var(--navbar-h); left:0; bottom:0; width:var(--sidebar-w);
+  background:var(--navy); overflow-y:auto; z-index:90;
+  padding:22px 0 40px;
+  transition:transform .3s var(--ease);
+}
+.sidebar-group{margin-bottom:22px;}
+.sidebar-group-label{
+  font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:800;
+  color:rgba(255,255,255,.4); padding:0 22px; margin-bottom:8px;
+}
+.sidebar-link{
+  display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+  background:none; border:none; color:rgba(255,255,255,.72);
+  padding:9px 22px; font-size:13.5px; font-weight:600; border-left:3px solid transparent;
+  transition:all .15s var(--ease);
+}
+.sidebar-link:hover{background:rgba(255,255,255,.05); color:#fff;}
+.sidebar-link.active{background:rgba(255,255,255,.08); color:#fff; border-left-color:var(--cyan-light);}
+.sidebar-link .num{
+  font-family:var(--font-display); font-size:11px; color:rgba(255,255,255,.35); width:16px; flex-shrink:0;
+}
+.sidebar-link.active .num{color:var(--cyan-light);}
+.sidebar-progress-mini{
+  margin:0 22px 4px; height:4px; background:rgba(255,255,255,.1); border-radius:99px; overflow:hidden;
+}
+.sidebar-progress-mini-fill{height:100%; background:var(--cyan-light); border-radius:99px; transition:width .4s var(--ease);}
+
+.sidebar-backdrop{
+  display:none; position:fixed; inset:0; top:var(--navbar-h); background:rgba(10,37,64,.5); z-index:80;
+}
+
+@media (max-width:860px){
+  .sidebar{transform:translateX(-100%); box-shadow:var(--shadow);}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-backdrop.open{display:block;}
+}
+
+.content{
+  flex:1; min-width:0; margin-left:var(--sidebar-w);
+  max-width:900px; padding:0 32px 80px;
+}
+@media (max-width:860px){
+  .content{margin-left:0; padding:0 20px 60px;}
+}
+
+/* ============================================================
+   DOC SECTIONS
+   ============================================================ */
+.doc-section{padding-top:38px; scroll-margin-top:calc(var(--navbar-h) + 16px);}
+.doc-section:first-child{padding-top:28px;}
+.doc-eyebrow{
+  font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--cyan-text);
+  font-weight:800; margin-bottom:8px;
+}
+.doc-title{font-size:clamp(22px,4vw,30px); margin-bottom:10px;}
+.doc-lede{font-size:15px; color:var(--gray-500); max-width:640px; margin-bottom:26px; line-height:1.65;}
+
+.status-strip{
+  display:inline-flex; align-items:center; gap:8px; background:#E9F5EE; color:var(--green);
+  border-radius:99px; padding:6px 14px; font-size:12.5px; font-weight:800; margin-bottom:20px;
+}
+.status-strip .dot{width:7px; height:7px; border-radius:50%; background:var(--green);}
+
+.hint-box{
+  background:#EAF6F8; border-left:3px solid var(--cyan-text); border-radius:0 4px 4px 0;
+  padding:13px 16px; font-size:13.5px; color:var(--navy); margin:18px 0; line-height:1.6;
+}
+.warn-box{
+  background:#FBEAE8; border-left:3px solid var(--red); border-radius:0 4px 4px 0;
+  padding:13px 16px; font-size:13.5px; color:var(--navy); margin:18px 0; line-height:1.6;
+}
+
+.prose{font-size:14.5px; color:var(--navy); margin-bottom:16px; line-height:1.7;}
+.prose strong{font-weight:800;}
+.prose + h3{margin-top:24px;}
+
+/* ============================================================
+   CARDS / GRIDS
+   ============================================================ */
+.card{background:#fff; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-sm);}
+.card-pad{padding:22px;}
+
+.grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:20px 0;}
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:20px 0;}
+@media (max-width:760px){ .grid-4, .grid-3{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .grid-4, .grid-2, .grid-3{grid-template-columns:1fr;} }
+
+.mini-card{padding:18px; display:flex; flex-direction:column; gap:7px;}
+.mini-card .icon-tag{
+  width:30px; height:30px; border-radius:4px; background:var(--gray-100);
+  display:flex; align-items:center; justify-content:center; color:var(--cyan-text);
+  font-weight:800; font-size:13px; margin-bottom:2px;
+}
+.mini-card h4{font-size:14.5px;}
+.mini-card p{font-size:13px; color:var(--gray-500); line-height:1.55;}
+.mini-card .pos-quote{font-family:var(--font-display); font-style:italic; font-size:14.5px; color:var(--navy); line-height:1.42;}
+
+/* insight callout cards */
+.insight-card{padding:24px; margin:18px 0;}
+.insight-card .tag{
+  display:inline-block; font-size:11px; font-weight:800; color:var(--cyan-text);
+  background:#EAF6F8; padding:4px 11px; border-radius:99px; margin-bottom:12px; letter-spacing:.03em;
+}
+.insight-card h3{font-size:18px; margin-bottom:10px;}
+.insight-card .prose{margin-bottom:12px;}
+.insight-card ul{margin:10px 0 10px 20px; font-size:14px; color:var(--navy); line-height:1.7;}
+
+/* comparison / eval list (setuju vs tidak setuju) */
+.eval-row{
+  display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); align-items:flex-start;
+}
+.eval-row:last-child{border-bottom:none;}
+.eval-icon{
+  width:26px; height:26px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:800; color:#fff; margin-top:1px;
+}
+.eval-icon.agree{background:var(--green);}
+.eval-icon.disagree{background:var(--red);}
+.eval-body h4{font-size:14px; margin-bottom:3px;}
+.eval-body p{font-size:13.5px; color:var(--gray-500); line-height:1.6;}
+
+/* data table (aset prioritas, dsb) */
+.data-table{width:100%; border-collapse:collapse; font-size:13.5px; margin:18px 0;}
+.data-table th{
+  text-align:left; padding:10px 12px; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--gray-400); border-bottom:2px solid var(--border); background:var(--gray-100);
+}
+.data-table td{padding:11px 12px; border-bottom:1px solid var(--border); vertical-align:top;}
+.data-table tr:last-child td{border-bottom:none;}
+.pri-badge{font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:99px; white-space:nowrap;}
+.pri-wajib{background:#FBEAE8; color:var(--red);}
+.pri-penting{background:#FBF2E3; color:var(--amber);}
+.pri-nanti{background:var(--gray-100); color:var(--gray-500);}
+
+.table-scroll{overflow-x:auto;}
+
+/* phase timeline */
+.phase-block{margin:22px 0;}
+.phase-head{
+  display:flex; align-items:baseline; gap:10px; margin-bottom:12px; padding-bottom:10px; border-bottom:2px solid var(--navy);
+}
+.phase-head .phase-num{font-family:var(--font-display); font-size:22px; color:var(--cyan-text); font-weight:600;}
+.phase-head h4{font-size:16px;}
+.phase-head .phase-days{font-size:12px; color:var(--gray-400); margin-left:auto;}
+.phase-desc{font-size:13.5px; color:var(--gray-500); margin-bottom:10px; line-height:1.6;}
+.phase-list{margin-left:18px; font-size:13.5px; line-height:1.8;}
+
+footer.doc-footer{
+  margin-top:60px; padding-top:20px; border-top:1px solid var(--border);
+  font-size:12px; color:var(--gray-400);
+}
+
+/* ============================================================
+   CHECKLIST SECTION (dari tracker sebelumnya)
+   ============================================================ */
+.tabs{
+  display:flex; gap:4px; background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); padding:4px; margin-bottom:20px; flex-wrap:wrap;
+}
+.tab-btn{
+  flex:1; min-width:110px; text-align:center; background:none; border:none; padding:9px 12px;
+  font-family:var(--font-body); font-weight:700; font-size:12.5px; color:var(--gray-500);
+  border-radius:2px; transition:all .2s var(--ease);
+}
+.tab-btn.active{background:var(--navy); color:#fff;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block; animation:fadeUp .4s var(--ease);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+
+.filter-bar{
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:11px;
+}
+.filter-group{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.filter-group label{font-size:11px; color:var(--gray-400); font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-right:2px;}
+.chip{
+  font-size:12px; font-weight:700; padding:5px 11px; border-radius:99px;
+  border:1px solid var(--border); background:#fff; color:var(--gray-500); transition:all .15s;
+}
+.chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+.week-block{margin-bottom:24px;}
+.week-header{display:flex; align-items:baseline; gap:10px; margin-bottom:10px; padding-bottom:7px; border-bottom:1px solid var(--border);}
+.week-header h4{font-size:15px;}
+.week-header .week-count{margin-left:auto; font-size:11.5px; color:var(--gray-500); font-weight:700;}
+
+.task-list{display:flex; flex-direction:column; gap:7px;}
+.task-card{
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  padding:11px 13px; display:flex; gap:11px; align-items:flex-start; transition:all .3s var(--ease);
+}
+.task-card.done{background:var(--gray-100); border-color:transparent;}
+.task-card.done .task-title{color:var(--gray-400); text-decoration:line-through;}
+.task-check{
+  width:19px; height:19px; border-radius:4px; border:2px solid var(--gray-400); flex-shrink:0; margin-top:2px;
+  background:#fff; display:flex; align-items:center; justify-content:center; transition:all .2s var(--ease);
+}
+.task-card.done .task-check{background:var(--cyan-fill); border-color:var(--cyan-fill);}
+.task-check svg{width:11px; height:11px; opacity:0; transition:opacity .15s;}
+.task-card.done .task-check svg{opacity:1;}
+.task-body{flex:1; min-width:0;}
+.task-title-row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.task-title{font-size:13.5px; font-weight:700; color:var(--navy);}
+.task-meta{display:flex; gap:6px; align-items:center; flex-shrink:0;}
+.badge{font-size:10.5px; font-weight:800; padding:2px 8px; border-radius:99px; white-space:nowrap;}
+.badge-pic{background:var(--gray-100); color:var(--gray-500);}
+.badge-pri-tinggi{background:#FBEAE8; color:var(--red);}
+.badge-pri-sedang{background:#FBF2E3; color:var(--amber);}
+.badge-pri-rendah{background:#E9F5EE; color:var(--green);}
+.badge-hours{background:#EAF6F8; color:var(--cyan-text);}
+.task-why{margin-top:6px; font-size:12.5px; color:var(--gray-500); background:var(--gray-100); border-radius:4px; padding:0; max-height:0; overflow:hidden; transition:all .3s var(--ease);}
+.task-why.open{padding:9px 11px; max-height:300px; margin-top:7px;}
+.task-why-toggle{font-size:11.5px; color:var(--cyan-text); font-weight:700; background:none; border:none; margin-top:4px; padding:0; display:flex; align-items:center; gap:4px;}
+.task-done-by{font-size:11px; color:var(--gray-400); margin-top:5px; font-style:italic;}
+
+.workload-row{display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid var(--border);}
+.workload-row:last-child{border-bottom:none;}
+.workload-name{width:75px; font-size:12.5px; font-weight:700; flex-shrink:0;}
+.workload-bar-track{flex:1; height:9px; background:var(--gray-100); border-radius:99px; overflow:hidden;}
+.workload-bar-fill{height:100%; border-radius:99px; background:var(--cyan-fill); transition:width .4s var(--ease);}
+.workload-bar-fill.over{background:var(--red);}
+.workload-hours{width:85px; text-align:right; font-size:12px; color:var(--gray-500); flex-shrink:0;}
+.workload-warning{font-size:11.5px; color:var(--red); margin-top:3px;}
+
+.budget-slider-row{margin-bottom:18px;}
+.budget-slider-row input[type=range]{width:100%; height:6px; -webkit-appearance:none; background:var(--gray-100); border-radius:99px; margin:12px 0;}
+.budget-slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--cyan-fill); border:3px solid #fff; box-shadow:0 2px 8px rgba(10,37,64,.25); cursor:pointer;}
+.budget-value{font-family:var(--font-display); font-size:25px; color:var(--navy); font-weight:600;}
+.budget-alloc{display:flex; flex-direction:column; gap:9px; margin-top:14px;}
+.alloc-row{display:flex; justify-content:space-between; align-items:center; padding:9px 11px; background:var(--gray-100); border-radius:4px;}
+.alloc-label{font-size:12.5px; font-weight:700;}
+.alloc-reason{font-size:11.5px; color:var(--gray-500); margin-top:2px;}
+.alloc-amount{font-size:13px; font-weight:800; color:var(--cyan-text); flex-shrink:0; margin-left:10px;}
+
+.kpi-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+.kpi-table th, .kpi-table td{padding:7px 9px; text-align:left; border-bottom:1px solid var(--border);}
+.kpi-table th{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--gray-400);}
+.kpi-table input{width:58px; border:1px solid var(--border); border-radius:4px; padding:5px 6px; font-family:inherit; font-size:12.5px;}
+.kpi-funnel{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+.kpi-funnel-step{flex:1; min-width:95px; text-align:center; background:var(--gray-100); border-radius:4px; padding:13px 9px;}
+.kpi-funnel-step .num{font-family:var(--font-display); font-size:24px; color:var(--navy); font-weight:600;}
+.kpi-funnel-step .label{font-size:10.5px; color:var(--gray-500); text-transform:uppercase; letter-spacing:.04em; margin-top:2px;}
+.kpi-funnel-step .rate{font-size:10.5px; color:var(--cyan-text); font-weight:800; margin-top:3px;}
+
+.ref-table-wrap{overflow-x:auto;}
+.ref-table{width:100%; border-collapse:collapse; font-size:12.5px; min-width:620px;}
+.ref-table th{text-align:left; padding:7px 9px; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--gray-400); border-bottom:2px solid var(--border);}
+.ref-table td{padding:5px 9px; border-bottom:1px solid var(--border); vertical-align:middle;}
+.ref-table input[type=text], .ref-table select{width:100%; border:1px solid transparent; background:transparent; border-radius:4px; padding:5px 6px; font-family:inherit; font-size:12px; color:var(--navy);}
+.ref-table input[type=text]:hover, .ref-table select:hover{border-color:var(--border);}
+.ref-table input[type=text]:focus, .ref-table select:focus{border-color:var(--cyan-light); background:#fff;}
+.status-select{font-weight:700;}
+.status-belum_dihubungi{color:var(--gray-400);}
+.status-sudah_kontak{color:var(--amber);}
+.status-sudah_ngopi{color:var(--cyan-text);}
+.status-sudah_referral{color:var(--green);}
+
+.settings-fab{
+  position:fixed; bottom:20px; right:20px; width:44px; height:44px; border-radius:50%;
+  background:var(--navy); color:#fff; border:none; display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow); z-index:50;
+}
+.settings-panel{
+  position:fixed; bottom:74px; right:20px; background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; width:270px; z-index:50; display:none;
+}
+.settings-panel.open{display:block;}
+.settings-panel label{font-size:11px; text-transform:uppercase; color:var(--gray-400); font-weight:800; display:block; margin-bottom:4px;}
+.settings-panel input{width:100%; border:1px solid var(--border); border-radius:4px; padding:7px 9px; font-family:inherit; font-size:12.5px; margin-bottom:10px;}
+.settings-panel button.save-btn{width:100%; background:var(--navy); color:#fff; border:none; padding:9px; border-radius:4px; font-weight:700; font-size:13px;}
+
+.identity-modal-backdrop{display:none; position:fixed; inset:0; background:rgba(10,37,64,.55); z-index:200; align-items:center; justify-content:center; padding:20px;}
+.identity-choice-btn{text-align:left; padding:12px 14px; border:1px solid var(--border); border-radius:4px; background:#fff; font-family:inherit; font-size:14px; font-weight:700; width:100%;}
+
+@media print{
+  .navbar, .sidebar, .sidebar-backdrop, .settings-fab, .settings-panel, .filter-bar, .tabs{display:none !important;}
+  .content{margin-left:0 !important; max-width:100% !important;}
+  .tab-panel{display:block !important;}
+  .shell{padding-top:0 !important;}
+  body{background:#fff;}
+}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Lompat ke konten utama</a>
+<div id="app-root">
+<nav class="navbar">
+  <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Buka menu"><span></span></button>
+  <img src="data:image/png;base64,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LtLudHAuI7IR5UqZyYlJduyYZmpqSmq12rb3czVcNnLV0NNxudcn9ar+msLl642XbnwZNmSxDLbKP7JWRJEPJJSVSy0O+cY3BcItyVwZHNelabaDX2/e5OKc4+zZs/ra66/zymuv8c6773L2zBk67Q69Xg9FGRkZ5cC+fdx2223ccccxPXLoMFNTk7KVh77b7XLhwgV98623+PkLL/DmW29x/tw5lldWUFUqlQqNRoMD+/dz9Paj3HnHMT144MBVDdm1sLCwoD985Ee8/NIrOO+589gd/MonPq7Hjh6T0iWNs51zLC4u6vd/8APeeec4Bw8e4Gtf/aqWSqVNP6hLy8u88cYb+rOf/4znn3+BM2fP0ml3AIiThEq5zJ49uzl8+DB33XmnHjt6lB07dmzqxlJVsizj0cce46WXX2bH9DSf/+zntNFoyJXOS7PV4qfP/ownn3qGUpLwhV/9HB+65y42a+AvXLigP3n6aZ599jmiyPK7X/sdrd9555au9Xq8c/y4/vjHP+bc3Hxe1LbuGRfJ8/rz9oEEEbJ+v8fevXt56NOf0smJiU2dp8w55i9e1L/65jdZXlrm2G238+CvfEJHRka29AA//8KLPP3ss1xcXGRiaoJf++xn9Y7bj8royMhlRr7VavHKK6/yrYe/jYjh7/7O7/Che+7eVrFWr9djfn5e33zrLV568SXefOstzp07R7MZHKA4jihXKuzatYvDhw9x221H9PChw+zatUtKSXLDMrk2jNyr0ssc862ePnt+kflml9T5NQ77MrtUGPhLCe783yIdb13Z/qAJh1nfURZqpZi9o2W9c7rBWCmW2Gw9R/tSrM9mubQM56ZRJHmlR5BtXmtzUIjYFdjYVPjGwDnHxYUF/fpf/RXf+Na3eOudd6RSqypemRgfJ44iut0up8+ckZdeegn/zW9y91136Ve/8hV+6ytfplarberGcs5x8tQp/dbDD/Pwww/z5ttvS6VcIYoirddrlJISKysrHD/xLj9//nkpxd/RO++4g7/3+7+nn/70p6W+yf0UWFpa5qmfPMWTTzwlvV6Pp558St984w3+6T/9p3pg/z4plUrrKh2V5uoqTzz2OE89/bTcd++9+tCnP83szMym9uW957nnntU/+4s/55FHHxURIY7LOjoyQpLENJfbHD+xwgsvvyRpmvLRBx7Qv/d7v8dvffnL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" alt="Jagadita Consulting" class="navbar-logo">
+  <div class="navbar-title">Strategi Go-To-Market<span class="sub">90 Hari &middot; Dokumen Kerja</span></div>
+  <div class="navbar-right">
+    <div class="sync-badge" id="syncBadge"><span class="sync-dot" id="syncDot"></span><span id="syncText">Menyambungkan&hellip;</span></div>
+    <div class="identity-pill" id="identityPill">
+      <span class="avatar" id="identityAvatar">?</span>
+      <span id="identityLabel">Pilih identitas</span>
+      <button id="changeIdentityBtn" type="button">ganti</button>
+    </div>
+  </div>
+</nav>
+
+<div class="shell">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Dokumen Strategi</div>
+      <button class="sidebar-link active" data-target="sec-ringkasan" type="button"><span class="num">01</span> Ringkasan Eksekutif</button>
+      <button class="sidebar-link" data-target="sec-sprint0" type="button"><span class="num">02</span> Sprint 0 &mdash; Fix &amp; Launch</button>
+      <button class="sidebar-link" data-target="sec-evaluasi" type="button"><span class="num">03</span> Evaluasi Rencana ChatGPT</button>
+      <button class="sidebar-link" data-target="sec-insight" type="button"><span class="num">04</span> 3 Insight Utama</button>
+      <button class="sidebar-link" data-target="sec-branding" type="button"><span class="num">05</span> Prioritas Aset Branding</button>
+      <button class="sidebar-link" data-target="sec-kerangka" type="button"><span class="num">06</span> Kerangka 90 Hari</button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Checklist Kerja</div>
+      <div class="sidebar-progress-mini"><div class="sidebar-progress-mini-fill" id="sidebarProgressFill" style="width:0%"></div></div>
+      <button class="sidebar-link" data-target="sec-checklist" type="button"><span class="num">&check;</span> Task, Budget &amp; KPI</button>
+    </div>
+  </aside>
+
+  <main class="content" id="main">
+<!-- ============================================================
+     SECTION 01 — RINGKASAN EKSEKUTIF
+     ============================================================ -->
+<section class="doc-section" id="sec-ringkasan">
+  <div class="doc-eyebrow">01 &middot; Ringkasan</div>
+  <h1 class="doc-title">Strategi Go-To-Market Jagadita — 90 Hari</h1>
+  <p class="doc-lede">Dokumen ini merangkum arah pemasaran B2B Jagadita untuk 90 hari pertama: evaluasi rencana awal, tiga insight utama yang menjadi dasar strategi, dan kerangka kerja yang realistis untuk tim part-time. Dibuat untuk dibaca bertiga — Satria, Viveka, dan Agus — sebagai satu rujukan bersama.</p>
+
+  <div class="grid-4">
+    <div class="card mini-card">
+      <div class="icon-tag">P</div>
+      <h4>Positioning</h4>
+      <p class="pos-quote">"Kami perbaiki sistemnya. Properti Anda tetap milik Anda."</p>
+      <p>Beda dari kompetitor yang menjual manajemen properti — Jagadita menjual kemerdekaan operasional, bukan pengambilalihan.</p>
+    </div>
+    <div class="card mini-card">
+      <div class="icon-tag">ICP</div>
+      <h4>Target utama</h4>
+      <p>Hotel/resort owner, villa owner &amp; manager, restaurant/beach club, dan investor yang mau buka properti baru — semua di Bali dulu.</p>
+    </div>
+    <div class="card mini-card">
+      <div class="icon-tag">CH</div>
+      <h4>Prioritas channel</h4>
+      <p>Referral partner &amp; networking dulu, LinkedIn organik, SEO. Iklan berbayar porsinya kecil — budget di bawah Rp5 juta/bulan.</p>
+    </div>
+    <div class="card mini-card">
+      <div class="icon-tag">90</div>
+      <h4>Target realistis</h4>
+      <p>3–5 proposal terkirim, 1–2 paid engagement (boleh pilot), 15+ referral partner aktif, dan 1 case study jadi.</p>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    <strong>Cara membaca dokumen ini:</strong> gunakan sidebar di kiri (atau menu ☰ di HP) untuk lompat ke section yang dibutuhkan. Section 02–06 adalah bacaan strategi. Section terakhir, "Task, Budget &amp; KPI", adalah checklist kerja yang sifatnya opsional — dokumen ini tetap berguna dibaca meski checklist-nya tidak pernah disentuh.
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 02 — SPRINT 0
+     ============================================================ -->
+<section class="doc-section" id="sec-sprint0">
+  <div class="doc-eyebrow">02 &middot; Fondasi Teknis</div>
+  <h2 class="doc-title">Sprint 0 — Fix &amp; Launch</h2>
+  <p class="doc-lede">Sebelum marketing jalan, landing page JagaditaNew harus bersih dari bug yang bisa merusak kredibilitas atau menyesatkan crawler AI. Ini enam perbaikan yang diidentifikasi dari audit teknis langsung ke situs.</p>
+
+  <div class="status-strip"><span class="dot"></span> Semua item Sprint 0 sudah diperbaiki oleh Agus</div>
+
+  <div class="card card-pad">
+    <div class="prose"><strong>a. 5 link 404 di footer</strong> — strategic-planning.html, market-analysis.html, guest-experience.html, revenue-pricing.html, industries.html. Link mati di footer muncul di semua halaman, jadi sinyal kualitas rendah ke Google sejak hari pertama domain baru. <em>&mdash; Diperbaiki.</em></div>
+    <div class="prose"><strong>b. Logo &amp; copyright footer salah arah</strong> — sebelumnya link ke anabhidev.com alih-alih index.html. Kalau kebawa live ke jagadita.com, pengunjung yang klik logo malah keluar ke situs lain. <em>&mdash; Diperbaiki.</em></div>
+    <div class="prose"><strong>c. Statistik "0+ Years Combined" di HTML mentah</strong> — animasi count-up terlihat normal di browser manusia, tapi crawler dan AI (Google, ChatGPT, Perplexity) membaca HTML mentah, bukan hasil animasi. Kalau angka awal di HTML adalah "0", itu yang terekam sebagai fakta oleh mesin — termasuk saat calon klien asing bertanya ke AI "carikan hospitality consultant di Bali". Fix: angka final (65+, 25+, 130, 5) ditulis langsung di HTML, animasi count-up hanya efek visual di atasnya. <em>&mdash; Diperbaiki.</em></div>
+    <div class="prose"><strong>d. Social link founder salah target</strong> — sebelumnya semua mengarah ke LinkedIn Viveka. <em>&mdash; Diperbaiki.</em></div>
+    <div class="prose"><strong>e. Privacy Policy &amp; Terms kosong</strong> — untuk B2B yang berhadapan dengan investor/GM asing, dua halaman ini murah dibuat tapi menaikkan kredibilitas secara nyata. <em>&mdash; Diperbaiki.</em></div>
+    <div class="prose" style="margin-bottom:0;"><strong>f. Migrasi ke jagadita.com</strong> — termasuk setup GA4, Search Console, robots.txt, sitemap.xml, dan llms.txt, supaya ada baseline data sebelum traffic marketing mulai dikirim.</div>
+  </div>
+</section>
+<!-- ============================================================
+     SECTION 03 — EVALUASI RENCANA CHATGPT
+     ============================================================ -->
+<section class="doc-section" id="sec-evaluasi">
+  <div class="doc-eyebrow">03 &middot; Evaluasi</div>
+  <h2 class="doc-title">Evaluasi rencana marketing awal</h2>
+  <p class="doc-lede">Sebelum dokumen ini disusun, ada insight marketing dari ChatGPT yang jadi bahan diskusi awal. Sebagian benar dan tetap dipakai, sebagian lain perlu dikoreksi karena tidak realistis untuk kondisi tim Jagadita yang part-time. Berikut evaluasinya secara terbuka.</p>
+
+  <h3 style="font-size:16px; margin-bottom:6px;">Yang disepakati</h3>
+  <div class="card card-pad">
+    <div class="eval-row">
+      <div class="eval-icon agree">&check;</div>
+      <div class="eval-body"><h4>Meta Ads bukan mesin utama</h4><p>Consulting itu high-ticket dan high-trust. Orang tidak melihat iklan lalu langsung transfer puluhan juta rupiah.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon agree">&check;</div>
+      <div class="eval-body"><h4>Google Search lebih baik dari Meta untuk menangkap intent</h4><p>Orang yang mencari "hotel consultant Bali" sudah punya kebutuhan aktif, berbeda dengan iklan yang menyela.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon agree">&check;</div>
+      <div class="eval-body"><h4>Account-Based Marketing cocok karena Bali kecil</h4><p>Ini insight terbaik dari rencana awal. Bali bukan pasar mass-market — ini pasar 300–500 akun yang bisa dihitung satu per satu.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon agree">&check;</div>
+      <div class="eval-body"><h4>Jual outcome, bukan service</h4><p>"Lower operational friction" lebih menjual daripada daftar layanan generik.</p></div>
+    </div>
+    <div class="eval-row" style="border-bottom:none;">
+      <div class="eval-icon agree">&check;</div>
+      <div class="eval-body"><h4>Positioning "Stop losing revenue to inefficiency" sudah kuat</h4><p>Langsung bicara pain, bukan mendeskripsikan diri sebagai perusahaan konsultan.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:16px; margin:22px 0 6px;">Yang dikoreksi</h3>
+  <div class="card card-pad">
+    <div class="eval-row">
+      <div class="eval-icon disagree">&times;</div>
+      <div class="eval-body"><h4>Beban kerja tidak realistis untuk tim part-time</h4><p>Rencana awal menyarankan 3 konten LinkedIn/minggu + 3 IG/minggu + 1 YouTube/minggu + outreach 300 akun + kelola 3 channel ads sekaligus — itu beban kerja minimal satu orang marketing full-time. Realitanya, ketiga founder punya kesibukan lain. Rencana yang dibuat untuk tim yang tidak ada akan gagal di minggu ke-3, bukan bulan ke-3, dan mematikan momentum untuk mencoba lagi.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon disagree">&times;</div>
+      <div class="eval-body"><h4>Personal branding sebaiknya bukan Agus sebagai wajah utama</h4><p>Agus berstatus karyawan tetap di perusahaan lain. Membangun personal brand publik sebagai konsultan aktif di industri yang sama — lengkap dengan posting rutin dan CTA jualan — berisiko menimbulkan persepsi konflik kepentingan dengan employer, terlepas dari isi kontrak kerja. Alokasi yang lebih aman: Satria (CEO) jadi wajah utama LinkedIn untuk konten strategi &amp; operasi, Viveka (COO) untuk konten SOP/training, dan Agus tetap tercantum di kredensial tapi kontribusinya di membangun aset digital — bukan tampil di depan.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon disagree">&times;</div>
+      <div class="eval-body"><h4>Volume Google Search Ads di niche ini sangat kecil</h4><p>"Hotel consultant Bali" bukan keyword bervolume ribuan — realistisnya puluhan hingga low-hundreds pencarian/bulan untuk seluruh cluster keyword. Budget Rp3 juta/bulan kemungkinan besar tidak akan habis, dan datanya terlalu tipis untuk dioptimasi. Kompetitor seperti Dijiwa justru menang lewat artikel SEO panjang, bukan lewat ads — artinya konten yang seharusnya jadi prioritas di niche ini, bukan iklan berbayar.</p></div>
+    </div>
+    <div class="eval-row">
+      <div class="eval-icon disagree">&times;</div>
+      <div class="eval-body"><h4>Retargeting Meta di bulan ke-2 tidak mungkin secara matematis</h4><p>Retargeting butuh audience pool minimum. Website baru dengan 200–400 visitor/bulan berada jauh di bawah ambang minimum Meta untuk retargeting berjalan efektif. Urutan yang benar: bangun traffic dulu, retargeting baru masuk akal sekitar bulan 4–6 — bukan bulan 2.</p></div>
+    </div>
+    <div class="eval-row" style="border-bottom:none;">
+      <div class="eval-icon disagree">&times;</div>
+      <div class="eval-body"><h4>Otomasi scraping + WhatsApp blast berisiko tinggi</h4><p>Funnel "scrape Google Maps → LinkedIn → CRM → WhatsApp blast" menggoda secara teknis, tapi nomor WhatsApp bisnis bisa terkena banned kalau blast ke kontak yang belum pernah berinteraksi, dan LinkedIn membatasi automation dengan agresif. Untuk brand yang menjual kredibilitas, ketahuan spam adalah kerusakan reputasi permanen di pasar sekecil Bali. Database target tetap dibangun (itu legal dan berguna), tapi eksekusinya manual-assisted — 10 pendekatan personal per hari jauh lebih efektif daripada 500 pesan blast.</p></div>
+    </div>
+  </div>
+</section>
+<!-- ============================================================
+     SECTION 04 — 3 INSIGHT UTAMA
+     ============================================================ -->
+<section class="doc-section" id="sec-insight">
+  <div class="doc-eyebrow">04 &middot; Insight Utama</div>
+  <h2 class="doc-title">3 hal yang tidak ada di rencana awal</h2>
+  <p class="doc-lede">Tiga insight ini adalah dasar dari seluruh strategi 90 hari. Kalau harus memilih hanya beberapa hal untuk difokuskan, ketiga hal inilah yang paling menentukan.</p>
+
+  <div class="card insight-card">
+    <span class="tag">INSIGHT #1</span>
+    <h3>Musuh Jagadita bukan konsultan lain — tapi management company</h3>
+    <div class="prose">Mayoritas pemain "hospitality consulting" di Bali sebenarnya adalah perusahaan manajemen properti yang menawarkan konsultasi sebagai pintu masuk. iNi ViE memposisikan diri sebagai resort &amp; villa management sekaligus konsultan yang melakukan ideate, design, brand, build, dan operate dalam satu atap. Bali Asia Villa menawarkan consulting di samping full-service property management. Zenith Hospitality memposisikan diri sebagai konsultansi sekaligus partner business set-up dan management.</div>
+    <div class="prose">Ini membuka celah positioning yang tajam untuk Jagadita:</div>
+    <div class="hint-box" style="margin:0 0 12px;"><strong>"Jagadita tidak mau mengambil alih properti Anda. Kami memperbaiki sistemnya, lalu tim Anda sendiri yang menjalankannya."</strong></div>
+    <div class="prose" style="margin-bottom:0;">Bagi owner, memanggil management company berarti menyerahkan kendali dan bagi hasil bertahun-tahun. Memanggil Jagadita berarti membeli perbaikan, lalu selesai. Independensi sebagai selling point adalah diferensiasi yang tidak bisa ditiru kompetitor, karena model bisnis mereka justru mengharuskan mereka ingin mengelola properti klien.</div>
+  </div>
+
+  <div class="card insight-card">
+    <span class="tag">INSIGHT #2</span>
+    <h3>Aset paling kuat buat Jagadita adalah tool, bukan konten</h3>
+    <div class="prose">Kombinasi hospitality operator + kemampuan membangun web app adalah sesuatu yang tidak dimiliki kompetitor manapun di Bali. Lead magnet umum seperti "free 30-minute consultation" bukan pembeda — semua orang menawarkan itu, termasuk Jagadita sendiri di FAQ website.</div>
+    <div class="prose"><strong>Yang diusulkan:</strong> Bali Hospitality Performance Scorecard — tool interaktif gratis di jagadita.com. Owner/GM menjawab 20–25 pertanyaan (operations, SOP, guest experience, revenue/OTA dependency, technology, people), langsung dapat skor per pilar + benchmark + 3 rekomendasi prioritas, lalu versi PDF lengkap dikirim setelah mengisi email.</div>
+    <ul>
+      <li><strong>Lead magnet</strong> — email dan profil properti masuk, dan pain calon klien sudah terpetakan sebelum discovery call pertama.</li>
+      <li><strong>Konten tahunan</strong> — hasil agregatnya jadi laporan "State of Bali Hospitality Operations", bahan PR dan konten LinkedIn setahun penuh.</li>
+      <li><strong>SEO/AI-visibility</strong> — tool interaktif mendapat backlink secara alami, artikel jasa biasa tidak.</li>
+      <li><strong>Sales tool</strong> — bisa diisi bersama calon klien di meeting, mengubah presentasi jualan jadi sesi diagnosa.</li>
+      <li><strong>Biaya nyaris nol</strong> — dikerjakan sendiri lewat weekend, sementara kompetitor harus membayar agency puluhan juta untuk hal setara.</li>
+    </ul>
+    <div class="prose" style="margin-bottom:0;">Ini satu-satunya <em>unfair advantage</em> yang dimiliki Jagadita dan tidak dimiliki kompetitor. Dari seluruh rencana 90 hari, ini yang paling layak diprioritaskan kalau waktu terbatas.</div>
+  </div>
+
+  <div class="card insight-card">
+    <span class="tag">INSIGHT #3</span>
+    <h3>Di Bali, distribusi bukan lewat iklan — lewat supplier &amp; orang tengah</h3>
+    <div class="prose">Owner hotel/villa di Bali umumnya tidak mencari konsultan lewat Google. Mereka bertanya ke orang yang mereka percaya, dan profil orang-orang itu cukup bisa ditebak:</div>
+    <ul>
+      <li><strong>Vendor PMS/POS/channel manager</strong> — teritori yang persis dikuasai Agus; mereka sering diminta rekomendasi saat implementasi klien berantakan.</li>
+      <li><strong>Arsitek &amp; kontraktor</strong> properti hospitality — biasanya tahu 12–18 bulan sebelum properti buka.</li>
+      <li><strong>Notaris/konsultan legal &amp; PMA setup</strong> — memegang relasi investor asing yang baru membeli tanah.</li>
+      <li><strong>Konsultan pajak &amp; akuntan</strong> properti.</li>
+      <li><strong>Recruiter hospitality.</strong></li>
+      <li><strong>Asosiasi</strong>: PHRI Bali, IHGMA, BHA.</li>
+    </ul>
+    <div class="prose" style="margin-bottom:0;">Lima hubungan referral aktif seringkali lebih berharga daripada Rp10 juta budget iklan per bulan — dan biayanya nyaris gratis, hanya butuh waktu untuk membangun relasi. Ini elemen yang sepenuhnya hilang dari rencana awal, padahal untuk pasar Bali inilah channel distribusi utama.</div>
+  </div>
+</section>
+<!-- ============================================================
+     SECTION 05 — PRIORITAS ASET BRANDING
+     ============================================================ -->
+<section class="doc-section" id="sec-branding">
+  <div class="doc-eyebrow">05 &middot; Branding</div>
+  <h2 class="doc-title">Prioritas aset branding</h2>
+  <p class="doc-lede">Untuk B2B high-ticket, kartu nama saja tidak cukup. Ini urutan prioritas aset kredibilitas, dari yang wajib ada sebelum mulai outreach sampai yang bisa menyusul belakangan.</p>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead><tr><th style="width:12%">Prioritas</th><th style="width:24%">Aset</th><th style="width:44%">Kenapa</th><th style="width:20%">Beban</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pri-badge pri-wajib">Wajib</span></td><td><strong>Email @jagadita.com</strong></td><td>Kirim proposal dari alamat Gmail pribadi menurunkan kredibilitas sebelum percakapan dimulai.</td><td>1 jam</td></tr>
+        <tr><td><span class="pri-badge pri-wajib">Wajib</span></td><td><strong>Google Business Profile</strong></td><td>Saat calon klien mencari "hospitality consultant Bali" di Maps, kompetitor muncul — Jagadita harus juga ada di sana.</td><td>1 jam</td></tr>
+        <tr><td><span class="pri-badge pri-wajib">Wajib</span></td><td><strong>LinkedIn Company Page</strong> + 3 founder update experience</td><td>Company page kosong terlihat seperti perusahaan yang tidak benar-benar eksis.</td><td>2 jam</td></tr>
+        <tr><td><span class="pri-badge pri-wajib">Wajib</span></td><td><strong>Credential Deck PDF</strong> (6–8 halaman)</td><td>Ini "kartu nama" sesungguhnya di dunia B2B consulting — dilampirkan di setiap email pertama ke calon klien.</td><td>1 weekend</td></tr>
+        <tr><td><span class="pri-badge pri-penting">Penting</span></td><td><strong>Kartu nama digital</strong> 3 founder + QR code</td><td>Meningkatkan konversi kontak dari networking offline dibanding kartu nama kertas biasa.</td><td>1 weekend</td></tr>
+        <tr><td><span class="pri-badge pri-penting">Penting</span></td><td><strong>2–3 case study anonim</strong></td><td>Kredensial founder di Accor/Pullman/ISMAYA dkk itu pengalaman individu, bukan bukti hasil sebagai Jagadita. Tanpa case study, prospek besar tetap ragu.</td><td>2 weekend</td></tr>
+        <tr><td><span class="pri-badge pri-penting">Penting</span></td><td><strong>Scorecard tool</strong> (lihat Insight #2)</td><td>Unfair advantage utama — lead magnet sekaligus sales tool sekaligus mesin konten.</td><td>3–4 weekend</td></tr>
+        <tr><td><span class="pri-badge pri-nanti">Nanti</span></td><td>Foto tim profesional, WA Business, template proposal, video</td><td>Berguna, tapi tidak menghambat kalau ditunda ke fase berikutnya.</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn-box">
+    <strong>Catatan soal case study:</strong> website menampilkan nama besar seperti Accor, Pullman, ISMAYA, Ungasan, Sundays Beach Club — ini kredensial individu founder di pekerjaan sebelumnya, bukan klien Jagadita, dan harus dibingkai hati-hati (mis. "Our founders have led operations at..."). Tanpa satu pun bukti hasil sebagai Jagadita, prospek besar akan tetap ragu. Case study anonim pertama adalah aset kepercayaan paling mendesak setelah 90 hari ini berjalan.
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 06 — KERANGKA 90 HARI
+     ============================================================ -->
+<section class="doc-section" id="sec-kerangka">
+  <div class="doc-eyebrow">06 &middot; Rencana Kerja</div>
+  <h2 class="doc-title">Kerangka 90 hari</h2>
+  <p class="doc-lede">Tiga fase, disusun untuk kapasitas tim part-time. Breakdown per minggu dan per task ada di section Checklist Kerja di bawah — ini ringkasan arahnya.</p>
+
+  <div class="phase-block">
+    <div class="phase-head"><span class="phase-num">01</span><h4>Foundation</h4><span class="phase-days">Hari 1–30</span></div>
+    <p class="phase-desc">Belum jualan. Fokus membangun aset kredibilitas dan fondasi channel distribusi.</p>
+    <ul class="phase-list">
+      <li>Aset kredibilitas: email domain, Google Business Profile, LinkedIn company page, credential deck, kartu nama digital</li>
+      <li>Kunci ICP final dan struktur paket harga</li>
+      <li>Susun database 150 akun target (hotel, villa, F&amp;B, beach club)</li>
+      <li>Susun daftar 20 calon referral partner</li>
+      <li>Konten pelan: 2 post LinkedIn/minggu dari Satria</li>
+    </ul>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-head"><span class="phase-num">02</span><h4>Activation</h4><span class="phase-days">Hari 31–60</span></div>
+    <p class="phase-desc">Mulai bergerak keluar — referral outreach, konten SEO, dan membangun Scorecard tool.</p>
+    <ul class="phase-list">
+      <li>Referral outreach aktif, target 10 kopi darat/bulan</li>
+      <li>Publikasikan 3 artikel SEO panjang, menyasar keyword yang dikuasai kompetitor</li>
+      <li>Google Search Ads dengan budget kecil sebagai eksperimen cost-per-lead</li>
+      <li>Bangun Bali Hospitality Performance Scorecard</li>
+      <li>Hadiri 2 event industri (PHRI/IHGMA atau komunitas)</li>
+    </ul>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-head"><span class="phase-num">03</span><h4>Conversion &amp; Measure</h4><span class="phase-days">Hari 61–90</span></div>
+    <p class="phase-desc">Launch Scorecard sebagai kampanye utama, ukur semua angka, baru putuskan langkah berikutnya berdasarkan data.</p>
+    <ul class="phase-list">
+      <li>Launch Scorecard secara resmi, distribusi lewat jaringan personal ketiga founder</li>
+      <li>Meta Ads kecil khusus mendorong pengisian Scorecard — bukan jualan consulting langsung</li>
+      <li>Tawarkan 2 pilot project dengan harga khusus untuk mendapat case study nyata</li>
+      <li>Review lengkap: leads, discovery call, proposal, closed, CAC</li>
+      <li>Keputusan naikkan budget iklan baru diambil setelah angka ini ada, bukan sebelumnya</li>
+    </ul>
+  </div>
+
+  <div class="hint-box" style="margin-top:26px;">
+    <strong>Target realistis 90 hari bukan "10 klien".</strong> Yang realistis: 3–5 proposal terkirim, 1–2 paid engagement (boleh pilot), 15+ referral relationship aktif, dan 1 case study jadi. Untuk consulting firm umur 5 bulan yang dikerjakan sambil kerja penuh waktu di tempat lain, itu sudah pencapaian yang baik.
+  </div>
+
+  <footer class="doc-footer">
+    Jagadita Hospitality Consulting — dokumen strategi internal, disusun bersama Satria Wibawa (CEO), Viveka Nanda (COO), dan Agus Wibawa (CTO). Tidak untuk distribusi publik.
+  </footer>
+</section>
+<!-- ============================================================
+     SECTION 07 — CHECKLIST KERJA
+     ============================================================ -->
+<section class="doc-section" id="sec-checklist">
+  <div class="doc-eyebrow">Checklist &middot; Opsional</div>
+  <h2 class="doc-title">Task, Budget &amp; KPI</h2>
+  <p class="doc-lede">Bagian ini opsional. Kalau tidak sempat rutin dicentang, tidak masalah — dokumen di atas tetap berguna dibaca sendiri. Kalau dipakai, progress tersimpan bersama lewat Google Sheet.</p>
+
+  <div class="hint-box">
+    <strong>Sprint 0 sudah selesai</strong> (lihat section 02) — task-nya tidak ditampilkan di checklist ini lagi. Checklist di bawah mulai dari Fase 1.
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label>PIC</label>
+      <button class="chip active" data-filter-type="pic" data-filter-value="all" type="button">Semua</button>
+      <button class="chip" data-filter-type="pic" data-filter-value="Satria" type="button">Satria</button>
+      <button class="chip" data-filter-type="pic" data-filter-value="Viveka" type="button">Viveka</button>
+      <button class="chip" data-filter-type="pic" data-filter-value="Agus" type="button">Agus</button>
+      <button class="chip" data-filter-type="pic" data-filter-value="Semua" type="button">Bertiga</button>
+    </div>
+    <div class="filter-group">
+      <label>Prioritas</label>
+      <button class="chip active" data-filter-type="pri" data-filter-value="all" type="button">Semua</button>
+      <button class="chip" data-filter-type="pri" data-filter-value="tinggi" type="button">🔴 Tinggi</button>
+      <button class="chip" data-filter-type="pri" data-filter-value="sedang" type="button">🟡 Sedang</button>
+      <button class="chip" data-filter-type="pri" data-filter-value="rendah" type="button">🟢 Rendah</button>
+    </div>
+    <div class="filter-group"><button class="chip" id="hideDoneChip" type="button">Sembunyikan yang selesai</button></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="fase1" type="button">Fase 1<br><span style="font-weight:400; font-size:10.5px;">Hari 1–30</span></button>
+    <button class="tab-btn" data-tab="fase2" type="button">Fase 2<br><span style="font-weight:400; font-size:10.5px;">Hari 31–60</span></button>
+    <button class="tab-btn" data-tab="fase3" type="button">Fase 3<br><span style="font-weight:400; font-size:10.5px;">Hari 61–90</span></button>
+  </div>
+  <div class="tab-panel active" id="panel-fase1"></div>
+  <div class="tab-panel" id="panel-fase2"></div>
+  <div class="tab-panel" id="panel-fase3"></div>
+
+  <h3 style="font-size:16px; margin:30px 0 10px;">Beban kerja per orang</h3>
+  <p class="prose" style="font-size:13px; color:var(--gray-500);">Total jam dari task yang belum selesai, dihitung rata-rata per minggu (12 minggu). Kalau merah, kemungkinan besar tidak akan tercapai sesuai jadwal — bukan berarti gagal, tapi sinyal untuk menurunkan scope.</p>
+  <div class="card card-pad" id="workloadPanel"></div>
+
+  <h3 style="font-size:16px; margin:30px 0 10px;">Kalkulator budget marketing</h3>
+  <p class="prose" style="font-size:13px; color:var(--gray-500);">Rentang Rp0–5 juta/bulan, sesuai kesepakatan: fokus organik &amp; referral, iklan berbayar porsi kecil.</p>
+  <div class="card card-pad">
+    <div class="budget-slider-row">
+      <div class="budget-value" id="budgetValue">Rp 3.000.000</div>
+      <input type="range" id="budgetSlider" min="0" max="5000000" step="250000" value="3000000">
+      <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-400);"><span>Rp 0</span><span>Rp 5.000.000</span></div>
+    </div>
+    <div class="budget-alloc" id="budgetAlloc"></div>
+  </div>
+
+  <h3 style="font-size:16px; margin:30px 0 10px;">KPI mingguan</h3>
+  <p class="prose" style="font-size:13px; color:var(--gray-500);">Isi tiap minggu. Funnel di bawah otomatis menghitung conversion rate.</p>
+  <div class="card card-pad">
+    <div style="overflow-x:auto;">
+      <table class="kpi-table" id="kpiTable">
+        <thead><tr><th>Minggu</th><th>Leads</th><th>Discovery call</th><th>Proposal</th><th>Closed</th><th>Revenue (Rp)</th></tr></thead>
+        <tbody id="kpiTableBody"></tbody>
+      </table>
+    </div>
+    <div class="kpi-funnel" id="kpiFunnel"></div>
+  </div>
+
+  <h3 style="font-size:16px; margin:30px 0 10px;">Referral partner tracker</h3>
+  <p class="prose" style="font-size:13px; color:var(--gray-500);">20 slot — vendor PMS/POS, arsitek, notaris/PMA, konsultan pajak, recruiter, asosiasi (PHRI/IHGMA).</p>
+  <div class="card card-pad">
+    <div class="ref-table-wrap">
+      <table class="ref-table">
+        <thead><tr><th style="width:20%">Nama</th><th style="width:16%">Kategori</th><th style="width:10%">PIC</th><th style="width:16%">Status</th><th style="width:26%">Catatan</th><th style="width:12%">Kontak terakhir</th></tr></thead>
+        <tbody id="referralTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+  </main>
+</div>
+
+<!-- ============================================================
+     IDENTITY MODAL
+     ============================================================ -->
+<div id="identityModalBackdrop" class="identity-modal-backdrop">
+  <div class="card card-pad" style="max-width:360px; width:100%;">
+    <h3 style="margin-bottom:6px;">Anda siapa?</h3>
+    <p style="font-size:13px; color:var(--gray-500); margin-bottom:16px;">Supaya tercatat siapa yang mengerjakan tiap task. Cukup dipilih sekali per device.</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="identity-choice-btn" data-user="Satria" type="button">Satria Wibawa <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— CEO</span></button>
+      <button class="identity-choice-btn" data-user="Viveka" type="button">Viveka Nanda <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— COO</span></button>
+      <button class="identity-choice-btn" data-user="Agus" type="button">Agus Wibawa <span style="font-weight:400; color:var(--gray-500); font-size:12px;">— CTO</span></button>
+    </div>
+  </div>
+</div>
+
+<button class="settings-fab" id="settingsFab" type="button" aria-label="Pengaturan koneksi" title="Pengaturan koneksi">⚙</button>
+<div class="settings-panel" id="settingsPanel">
+  <label for="gasUrlInput">GAS Web App URL</label>
+  <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/…/exec">
+  <label for="gasTokenInput">Token</label>
+  <input type="text" id="gasTokenInput" placeholder="token rahasia">
+  <button class="save-btn" id="saveSettingsBtn" type="button">Simpan &amp; sambungkan</button>
+</div>
+
+</div>
+<script>
+/* ============================================================
+   JAGADITA STRATEGY DOC + CHECKLIST — APP LOGIC
+   ============================================================ */
+(function(){
+"use strict";
+
+var CONFIG_KEY = "jagadita_strategy_config";
+var STATE_KEY = "jagadita_strategy_state";
+var IDENTITY_KEY = "jagadita_strategy_identity";
+
+function loadConfig(){
+  try{ return JSON.parse(localStorage.getItem(CONFIG_KEY)) || { gasUrl:"", token:"" }; }
+  catch(e){ return { gasUrl:"", token:"" }; }
+}
+function saveConfig(cfg){ localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg)); }
+var CONFIG = loadConfig();
+
+/* ------------------------------------------------------------
+   DATA TASK — Fase 1-3 (Sprint 0 sudah selesai, tidak ditampilkan di checklist)
+   ------------------------------------------------------------ */
+var FASE1 = {
+  "Minggu 1": [
+    {id:"f1w1-1", title:"Kunci ICP final: 4 segmen (hotel/resort owner, villa owner/manager, F&B/beach club, investor pre-opening)", pic:"Semua", hours:1, pri:"tinggi", why:"Semua keputusan konten & outreach berikutnya bergantung pada ini — kalau ICP kabur, pesan jadi kabur."},
+    {id:"f1w1-2", title:"Finalisasi 4 tier paket & harga (Free Consultation, Health Check, Improvement Sprint, Transformation Project)", pic:"Satria", hours:2, pri:"tinggi", why:"Tanpa harga jelas, tiap calon klien harus ditanya satu-satu — memperlambat proses closing."},
+    {id:"f1w1-3", title:"Setup email domain @jagadita.com untuk bertiga", pic:"Agus", hours:1, pri:"tinggi", why:"Kirim proposal dari alamat Gmail pribadi menurunkan kredibilitas di mata investor/GM."},
+    {id:"f1w1-4", title:"Buat Google Business Profile untuk Jagadita", pic:"Agus", hours:1, pri:"tinggi", why:"Saat orang cari 'hospitality consultant Bali' di Google Maps, kompetitor muncul — Jagadita harus juga ada di sana."}
+  ],
+  "Minggu 2": [
+    {id:"f1w2-1", title:"Buat LinkedIn Company Page Jagadita, 3 founder update experience-nya", pic:"Semua", hours:2, pri:"tinggi", why:"Company page kosong = terlihat tidak eksis saat calon klien riset sebelum meeting."},
+    {id:"f1w2-2", title:"Susun daftar 150 target akun (hotel/resort, villa, F&B, beach club) di spreadsheet", pic:"Agus", hours:4, pri:"sedang", why:"Basis untuk account-based marketing — supaya usaha outreach terarah, bukan asal tembak."},
+    {id:"f1w2-3", title:"Susun daftar 20 calon referral partner (vendor PMS/POS, arsitek, notaris/PMA, konsultan pajak, recruiter, PHRI/IHGMA)", pic:"Semua", hours:2, pri:"tinggi", why:"Di Bali, jalur referral biasanya lebih efektif daripada iklan — ini fondasi channel distribusi utama."}
+  ],
+  "Minggu 3": [
+    {id:"f1w3-1", title:"Draft & desain Credential Deck PDF (6–8 halaman)", pic:"Satria", hours:4, pri:"sedang", why:"Ini 'kartu nama' sebenarnya di dunia B2B consulting — dilampirkan di tiap email pertama ke calon klien."},
+    {id:"f1w3-2", title:"Kartu nama digital 3 founder (mirip AnabhiDev-Name-Card) + QR code", pic:"Agus", hours:5, pri:"sedang", why:"Konversi kontak dari networking offline jadi jauh lebih tinggi dibanding kartu nama kertas."},
+    {id:"f1w3-3", title:"Mulai posting LinkedIn 2x/minggu dari akun Satria (fokus insight operasional, bukan jualan)", pic:"Satria", hours:2, pri:"sedang", why:"Membangun authority pelan-pelan sebelum mulai outreach — orang lebih percaya yang sudah dikenal."}
+  ],
+  "Minggu 4": [
+    {id:"f1w4-1", title:"Riset & tulis draft 1 case study anonim (properti, masalah, intervensi, hasil)", pic:"Satria", hours:3, pri:"tinggi", why:"Kredensial 'founder pernah kerja di Accor/Pullman' itu bagus, tapi belum ada bukti hasil sebagai Jagadita — case study menutup celah ini."},
+    {id:"f1w4-2", title:"Kontak 5 calon referral partner pertama untuk kopi darat", pic:"Semua", hours:5, pri:"tinggi", why:"Mulai membangun jalur distribusi utama — 5 relasi aktif seringkali lebih berharga dari budget iklan sebulan."}
+  ]
+};
+
+var FASE2 = {
+  "Minggu 5": [
+    {id:"f2w5-1", title:"Riset keyword kompetitor (Dijiwa, Zenith, Weggis) untuk 3 topik artikel SEO", pic:"Agus", hours:2, pri:"sedang", why:"Kompetitor sudah menang di SEO dengan artikel insight panjang — kita perlu tahu keyword apa yang mereka kuasai untuk menyerangnya."},
+    {id:"f2w5-2", title:"Tulis & publish artikel SEO #1 (contoh: kapan butuh feasibility study sebelum buka properti)", pic:"Satria", hours:4, pri:"sedang", why:"SEO konten menang di niche kecil seperti ini — volume search Google Ads terlalu tipis untuk diandalkan sendirian."},
+    {id:"f2w5-3", title:"Lanjutkan kopi darat referral partner (target total 10)", pic:"Semua", hours:5, pri:"tinggi", why:"Konsistensi outreach personal — ini channel utama, bukan channel sampingan."}
+  ],
+  "Minggu 6": [
+    {id:"f2w6-1", title:"Tulis & publish artikel SEO #2", pic:"Satria", hours:4, pri:"sedang", why:"Konsistensi konten membangun momentum ranking dan otoritas topik."},
+    {id:"f2w6-2", title:"Rancang struktur pertanyaan Bali Hospitality Performance Scorecard (20–25 pertanyaan, 5 pilar)", pic:"Agus", hours:3, pri:"tinggi", why:"Ini unfair advantage Jagadita — tidak ada kompetitor di Bali yang punya tool interaktif seperti ini."},
+    {id:"f2w6-3", title:"Setup Google Search Ads kecil (budget sesuai kalkulator), fokus 5–8 keyword long-tail", pic:"Agus", hours:2, pri:"rendah", why:"Volume search niche ini kecil — ini eksperimen murah untuk mengukur cost-per-lead, bukan mesin utama."}
+  ],
+  "Minggu 7": [
+    {id:"f2w7-1", title:"Bangun Scorecard tool (frontend + logic skor)", pic:"Agus", hours:6, pri:"tinggi", why:"Lead magnet paling kuat yang dimiliki Jagadita — investasi waktu di sini paling worth it."},
+    {id:"f2w7-2", title:"Tulis & publish artikel SEO #3", pic:"Satria", hours:4, pri:"sedang", why:"Konsistensi — 3 artikel jadi fondasi topical authority pertama."},
+    {id:"f2w7-3", title:"Hadiri 1 event/gathering industri hospitality Bali (PHRI/IHGMA atau komunitas)", pic:"Satria", hours:4, pri:"sedang", why:"Networking langsung mempercepat kepercayaan dibanding konten online semata."}
+  ],
+  "Minggu 8": [
+    {id:"f2w8-1", title:"Selesaikan & testing Scorecard tool, sambungkan ke email capture", pic:"Agus", hours:4, pri:"tinggi", why:"Pastikan lead yang masuk benar-benar tersimpan sebelum di-launch ke publik."},
+    {id:"f2w8-2", title:"Draft template proposal standar (untuk 4 tier paket)", pic:"Satria", hours:3, pri:"sedang", why:"Mempercepat proses closing — proposal custom dari nol tiap kali makan waktu terlalu banyak untuk tim part-time."},
+    {id:"f2w8-3", title:"Review progress referral (target total 20 kontak, minimal 8 sudah kopi darat)", pic:"Semua", hours:1, pri:"sedang", why:"Checkpoint untuk memastikan channel utama tetap berjalan, bukan terlupakan."}
+  ]
+};
+
+var FASE3 = {
+  "Minggu 9": [
+    {id:"f3w9-1", title:"Launch Bali Hospitality Performance Scorecard secara resmi", pic:"Semua", hours:2, pri:"tinggi", why:"Ini momen kampanye utama fase konversi — semua channel organik diarahkan ke sini."},
+    {id:"f3w9-2", title:"Posting LinkedIn khusus mengumumkan Scorecard, minta 3 founder share dari akun masing-masing", pic:"Semua", hours:2, pri:"tinggi", why:"Distribusi awal paling murah — jaringan personal founder bertiga."},
+    {id:"f3w9-3", title:"Meta Ads kecil khusus mendorong orang isi Scorecard (bukan jualan consulting langsung)", pic:"Agus", hours:2, pri:"rendah", why:"Traffic organik sudah mulai terbentuk di fase ini, jadi retargeting punya pool yang cukup untuk dicoba kecil-kecilan."}
+  ],
+  "Minggu 10": [
+    {id:"f3w10-1", title:"Follow up manual semua yang isi Scorecard minggu pertama, kirim hasil personal + tawarkan discovery call", pic:"Semua", hours:4, pri:"tinggi", why:"Scorecard hanya berguna kalau follow-up-nya cepat dan personal — jangan biarkan lead dingin."},
+    {id:"f3w10-2", title:"Tawarkan 2 pilot project dengan harga khusus ke prospek paling hangat", pic:"Satria", hours:3, pri:"tinggi", why:"Pilot project murah tapi menghasilkan case study nyata — lebih berharga dari margin di 90 hari pertama."}
+  ],
+  "Minggu 11": [
+    {id:"f3w11-1", title:"Kirim 3–5 proposal formal ke prospek yang sudah discovery call", pic:"Satria", hours:4, pri:"tinggi", why:"Target utama fase ini — proposal terkirim adalah metrik keberhasilan paling konkret."},
+    {id:"f3w11-2", title:"Tulis artikel SEO #4 berdasarkan insight dari data Scorecard (anonim)", pic:"Satria", hours:4, pri:"sedang", why:"Data dari Scorecard adalah bahan konten unik yang tidak dimiliki kompetitor manapun."}
+  ],
+  "Minggu 12": [
+    {id:"f3w12-1", title:"Review KPI lengkap: leads, discovery call, proposal, closed, CAC", pic:"Semua", hours:2, pri:"tinggi", why:"Baru setelah angka ini ada, keputusan naikkan budget iklan bisa diambil berdasarkan data, bukan tebakan."},
+    {id:"f3w12-2", title:"Tulis 1 case study lagi dari pilot project (kalau sudah ada hasil awal)", pic:"Satria", hours:3, pri:"sedang", why:"Menambah bukti sosial untuk fase berikutnya."},
+    {id:"f3w12-3", title:"Rencanakan 90 hari berikutnya berdasarkan channel yang paling efektif", pic:"Semua", hours:2, pri:"tinggi", why:"Tutup siklus — lanjutkan yang terbukti bekerja, hentikan yang tidak."}
+  ]
+};
+
+var REFERRAL_SEED = [
+  {category:"Vendor PMS/POS"}, {category:"Vendor PMS/POS"}, {category:"Vendor PMS/POS"},
+  {category:"Arsitek/Kontraktor"}, {category:"Arsitek/Kontraktor"}, {category:"Arsitek/Kontraktor"},
+  {category:"Notaris/PMA"}, {category:"Notaris/PMA"}, {category:"Notaris/PMA"},
+  {category:"Konsultan Pajak"}, {category:"Konsultan Pajak"},
+  {category:"Recruiter Hospitality"}, {category:"Recruiter Hospitality"},
+  {category:"Asosiasi (PHRI/IHGMA/BHA)"}, {category:"Asosiasi (PHRI/IHGMA/BHA)"}, {category:"Asosiasi (PHRI/IHGMA/BHA)"},
+  {category:"Lainnya"}, {category:"Lainnya"}, {category:"Lainnya"}, {category:"Lainnya"}
+].map(function(r, i){ return { partnerId:"ref-"+(i+1), name:"", category:r.category, pic:"", status:"belum_dihubungi", notes:"", lastContact:"" }; });
+
+var BUDGET_ALLOCATION = [
+  {key:"referral", label:"Networking & referral (kopi, transport, entertainment)", min:0.35, reason:"Channel utama sesuai kesepakatan — biaya kecil, dampak besar di pasar sekecil Bali."},
+  {key:"content", label:"Produksi konten (desain, foto, tulisan)", min:0.25, reason:"Aset permanen — LinkedIn & artikel SEO butuh visual yang layak."},
+  {key:"tools", label:"Tools & asosiasi (domain, iuran PHRI/IHGMA)", min:0.20, reason:"Investasi kredibilitas jangka panjang, bukan biaya berulang besar."},
+  {key:"ads", label:"Google Search Ads (eksperimen kecil)", min:0.20, reason:"Volume keyword niche ini kecil — cukup untuk uji cost-per-lead, bukan mesin utama."}
+];
+
+var APP = { identity:null, taskState:{}, kpiState:{}, referralState:{}, meta:{}, filters:{pic:"all", pri:"all", hideDone:false}, online:false };
+
+/* ------------------------------------------------------------
+   LOCAL PERSISTENCE
+   ------------------------------------------------------------ */
+function loadLocalState(){
+  try{ var raw = localStorage.getItem(STATE_KEY); if(!raw) return { taskState:{}, kpiState:{}, referralState:{}, meta:{} }; return JSON.parse(raw); }
+  catch(e){ return { taskState:{}, kpiState:{}, referralState:{}, meta:{} }; }
+}
+function saveLocalState(){
+  localStorage.setItem(STATE_KEY, JSON.stringify({ taskState:APP.taskState, kpiState:APP.kpiState, referralState:APP.referralState, meta:APP.meta }));
+}
+
+/* ------------------------------------------------------------
+   SYNC LAYER
+   ------------------------------------------------------------ */
+var syncDot = document.getElementById("syncDot");
+var syncText = document.getElementById("syncText");
+function setSyncStatus(mode, text){
+  syncDot.className = "sync-dot" + (mode === "ok" ? "" : mode === "offline" ? " offline" : " error");
+  syncText.textContent = text;
+}
+function hasGasConfigured(){ return !!(CONFIG.gasUrl && CONFIG.token); }
+function gasGet(){
+  if(!hasGasConfigured()) return Promise.resolve(null);
+  var url = CONFIG.gasUrl + "?token=" + encodeURIComponent(CONFIG.token);
+  return fetch(url).then(function(r){ return r.json(); }).catch(function(err){ return { ok:false, error:String(err) }; });
+}
+function gasPost(action, payload){
+  if(!hasGasConfigured()) return Promise.resolve({ ok:false, error:"not_configured" });
+  return fetch(CONFIG.gasUrl, {
+    method:"POST", headers:{ "Content-Type":"text/plain" },
+    body: JSON.stringify({ token: CONFIG.token, action: action, payload: payload })
+  }).then(function(r){ return r.json(); }).catch(function(err){ return { ok:false, error:String(err) }; });
+}
+function normalizeServerData(data){
+  var taskState = {};
+  (data.tasks || []).forEach(function(row){ if(!row.task_id) return; taskState[row.task_id] = { status: row.status || "undone", doneBy: row.done_by || "", doneAt: row.done_at || "" }; });
+  var kpiState = {};
+  (data.kpi || []).forEach(function(row){ if(!row.week) return; kpiState[row.week] = { leads:row.leads||0, discoveryCalls:row.discovery_calls||0, proposalsSent:row.proposals_sent||0, closed:row.closed||0, revenue:row.revenue||0 }; });
+  var referralState = {};
+  (data.referral || []).forEach(function(row){ if(!row.partner_id) return; referralState[row.partner_id] = { name:row.name||"", category:row.category||"", pic:row.pic||"", status:row.status||"belum_dihubungi", notes:row.notes||"", lastContact:row.last_contact||"" }; });
+  return { taskState:taskState, kpiState:kpiState, referralState:referralState, meta:data.meta||{} };
+}
+
+var syncInterval = null;
+function initialLoad(){
+  if(!hasGasConfigured()){
+    setSyncStatus("offline", "Mode lokal — belum tersambung ke Google Sheet");
+    var local = loadLocalState();
+    APP.taskState = local.taskState; APP.kpiState = local.kpiState; APP.referralState = local.referralState; APP.meta = local.meta;
+    renderAll();
+    return;
+  }
+  setSyncStatus("offline", "Menyambungkan…");
+  gasGet().then(function(res){
+    if(res && res.ok){
+      var norm = normalizeServerData(res);
+      APP.taskState = norm.taskState; APP.kpiState = norm.kpiState; APP.referralState = norm.referralState; APP.meta = norm.meta;
+      APP.online = true; saveLocalState(); setSyncStatus("ok", "Tersambung ke Google Sheet");
+    } else {
+      APP.online = false;
+      var local2 = loadLocalState();
+      APP.taskState = local2.taskState; APP.kpiState = local2.kpiState; APP.referralState = local2.referralState; APP.meta = local2.meta;
+      setSyncStatus("error", "Gagal sambung — pakai data lokal");
+    }
+    renderAll();
+    if(!syncInterval) syncInterval = setInterval(pollServer, 60000);
+  });
+}
+function pollServer(){
+  if(!hasGasConfigured()) return;
+  gasGet().then(function(res){
+    if(res && res.ok){
+      var norm = normalizeServerData(res);
+      APP.taskState = norm.taskState; APP.kpiState = norm.kpiState; APP.referralState = norm.referralState; APP.meta = norm.meta;
+      APP.online = true; saveLocalState();
+      setSyncStatus("ok", "Tersambung — sinkron " + new Date().toLocaleTimeString("id-ID"));
+      renderAll();
+    } else { APP.online = false; setSyncStatus("offline", "Offline — perubahan tersimpan lokal"); }
+  });
+}
+
+/* ------------------------------------------------------------
+   IDENTITY
+   ------------------------------------------------------------ */
+function loadIdentity(){ return localStorage.getItem(IDENTITY_KEY) || null; }
+function saveIdentity(name){ localStorage.setItem(IDENTITY_KEY, name); APP.identity = name; renderIdentityPill(); }
+function renderIdentityPill(){
+  var avatar = document.getElementById("identityAvatar"); var label = document.getElementById("identityLabel");
+  if(APP.identity){ avatar.textContent = APP.identity.charAt(0); label.textContent = APP.identity; }
+  else { avatar.textContent = "?"; label.textContent = "Pilih identitas"; }
+}
+document.getElementById("changeIdentityBtn").addEventListener("click", function(){ document.getElementById("identityModalBackdrop").style.display = "flex"; });
+Array.prototype.forEach.call(document.querySelectorAll(".identity-choice-btn"), function(btn){
+  btn.addEventListener("click", function(){ saveIdentity(btn.getAttribute("data-user")); document.getElementById("identityModalBackdrop").style.display = "none"; });
+});
+
+/* ------------------------------------------------------------
+   TASK RENDER
+   ------------------------------------------------------------ */
+var PRI_LABEL = { tinggi:"🔴 Tinggi", sedang:"🟡 Sedang", rendah:"🟢 Rendah" };
+function taskMatchesFilter(task){
+  if(APP.filters.pic !== "all" && task.pic !== APP.filters.pic) return false;
+  if(APP.filters.pri !== "all" && task.pri !== APP.filters.pri) return false;
+  var state = APP.taskState[task.id];
+  if(APP.filters.hideDone && state && state.status === "done") return false;
+  return true;
+}
+function escapeHtml(str){ var div = document.createElement("div"); div.textContent = str; return div.innerHTML; }
+function formatRelativeTime(iso){
+  try{ var d = new Date(iso); var diffDay = Math.floor((Date.now()-d.getTime())/86400000);
+    if(diffDay<=0) return "hari ini"; if(diffDay===1) return "kemarin"; if(diffDay<30) return diffDay+" hari lalu";
+    return d.toLocaleDateString("id-ID"); }catch(e){ return ""; }
+}
+function renderTaskCard(task){
+  var state = APP.taskState[task.id] || { status:"undone" };
+  var isDone = state.status === "done";
+  var el = document.createElement("div");
+  el.className = "task-card" + (isDone ? " done" : "");
+  el.innerHTML =
+    '<button class="task-check" type="button" aria-label="Tandai selesai" data-task-id="'+task.id+'">' +
+      '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+    '<div class="task-body">' +
+      '<div class="task-title-row"><div class="task-title">'+escapeHtml(task.title)+'</div>' +
+      '<div class="task-meta"><span class="badge badge-pic">'+task.pic+'</span><span class="badge badge-hours">'+task.hours+' jam</span><span class="badge badge-pri-'+task.pri+'">'+PRI_LABEL[task.pri]+'</span></div></div>' +
+      '<button class="task-why-toggle" type="button" data-why-toggle="'+task.id+'">Kenapa ini penting? ▾</button>' +
+      '<div class="task-why" id="why-'+task.id+'">'+escapeHtml(task.why)+'</div>' +
+      (isDone && state.doneBy ? '<div class="task-done-by">✓ oleh '+escapeHtml(state.doneBy)+(state.doneAt ? ", "+formatRelativeTime(state.doneAt) : "")+'</div>' : '') +
+    '</div>';
+  return el;
+}
+function renderPhase(phaseKey, weeks){
+  var panel = document.getElementById("panel-" + phaseKey);
+  panel.innerHTML = "";
+  Object.keys(weeks).forEach(function(weekLabel){
+    var tasks = weeks[weekLabel].filter(taskMatchesFilter);
+    if(tasks.length === 0) return;
+    var doneCount = weeks[weekLabel].filter(function(t){ var s = APP.taskState[t.id]; return s && s.status === "done"; }).length;
+    var block = document.createElement("div");
+    block.className = "week-block";
+    block.innerHTML = '<div class="week-header"><h4>'+weekLabel+'</h4><span class="week-count">'+doneCount+'/'+weeks[weekLabel].length+' selesai</span></div><div class="task-list"></div>';
+    var list = block.querySelector(".task-list");
+    tasks.forEach(function(task){ list.appendChild(renderTaskCard(task)); });
+    panel.appendChild(block);
+  });
+}
+function renderAllTasks(){
+  renderPhase("fase1", FASE1); renderPhase("fase2", FASE2); renderPhase("fase3", FASE3);
+  bindTaskEvents(); updateOverallProgress();
+}
+function bindTaskEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll(".task-check"), function(btn){
+    btn.addEventListener("click", function(){ toggleTask(btn.getAttribute("data-task-id")); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-why-toggle]"), function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-why-toggle"); var el = document.getElementById("why-" + id);
+      el.classList.toggle("open");
+      btn.textContent = el.classList.contains("open") ? "Kenapa ini penting? ▴" : "Kenapa ini penting? ▾";
+    });
+  });
+}
+function toggleTask(taskId){
+  if(!APP.identity){ document.getElementById("identityModalBackdrop").style.display = "flex"; return; }
+  var current = APP.taskState[taskId] || { status:"undone" };
+  var newStatus = current.status === "done" ? "undone" : "done";
+  APP.taskState[taskId] = { status:newStatus, doneBy: newStatus==="done" ? APP.identity : "", doneAt: newStatus==="done" ? new Date().toISOString() : "" };
+  saveLocalState(); renderAllTasks(); renderWorkload();
+  if(hasGasConfigured()){
+    gasPost("update_task", { taskId:taskId, status:newStatus, doneBy: APP.identity }).then(function(res){
+      if(!(res && res.ok)) setSyncStatus("error", "Gagal simpan — dicoba lagi otomatis");
+    });
+  }
+}
+function updateOverallProgress(){
+  var allTasks = Object.keys(FASE1).reduce(function(a,k){return a.concat(FASE1[k]);},[])
+    .concat(Object.keys(FASE2).reduce(function(a,k){return a.concat(FASE2[k]);},[]))
+    .concat(Object.keys(FASE3).reduce(function(a,k){return a.concat(FASE3[k]);},[]));
+  var done = allTasks.filter(function(t){ var s=APP.taskState[t.id]; return s && s.status==="done"; }).length;
+  var pct = allTasks.length ? Math.round((done/allTasks.length)*100) : 0;
+  var fillEl = document.getElementById("sidebarProgressFill");
+  if(fillEl) fillEl.style.width = pct + "%";
+}
+
+/* ------------------------------------------------------------
+   FILTERS & TABS
+   ------------------------------------------------------------ */
+Array.prototype.forEach.call(document.querySelectorAll(".chip[data-filter-type]"), function(chip){
+  chip.addEventListener("click", function(){
+    var type = chip.getAttribute("data-filter-type"); var value = chip.getAttribute("data-filter-value");
+    APP.filters[type] = value;
+    Array.prototype.forEach.call(document.querySelectorAll('.chip[data-filter-type="'+type+'"]'), function(c){ c.classList.toggle("active", c===chip); });
+    renderAllTasks();
+  });
+});
+document.getElementById("hideDoneChip").addEventListener("click", function(){
+  APP.filters.hideDone = !APP.filters.hideDone; this.classList.toggle("active", APP.filters.hideDone); renderAllTasks();
+});
+Array.prototype.forEach.call(document.querySelectorAll(".tab-btn"), function(btn){
+  btn.addEventListener("click", function(){
+    var tab = btn.getAttribute("data-tab");
+    Array.prototype.forEach.call(document.querySelectorAll(".tab-btn"), function(b){ b.classList.toggle("active", b===btn); });
+    Array.prototype.forEach.call(document.querySelectorAll(".tab-panel"), function(p){ p.classList.toggle("active", p.id==="panel-"+tab); });
+  });
+});
+
+/* ------------------------------------------------------------
+   WORKLOAD
+   ------------------------------------------------------------ */
+function renderWorkload(){
+  var allTasks = Object.keys(FASE1).reduce(function(a,k){return a.concat(FASE1[k]);},[])
+    .concat(Object.keys(FASE2).reduce(function(a,k){return a.concat(FASE2[k]);},[]))
+    .concat(Object.keys(FASE3).reduce(function(a,k){return a.concat(FASE3[k]);},[]));
+  var people = ["Satria","Viveka","Agus"]; var totals = { Satria:0, Viveka:0, Agus:0 };
+  allTasks.forEach(function(t){
+    var s = APP.taskState[t.id]; if(s && s.status==="done") return;
+    if(t.pic === "Semua"){ totals.Satria += t.hours/3; totals.Viveka += t.hours/3; totals.Agus += t.hours/3; }
+    else if(totals[t.pic] !== undefined){ totals[t.pic] += t.hours; }
+  });
+  var WEEKS = 11, CAPACITY_PER_WEEK = 6;
+  var panel = document.getElementById("workloadPanel"); panel.innerHTML = "";
+  people.forEach(function(name){
+    var perWeek = totals[name] / WEEKS; var pct = Math.min(100, (perWeek/CAPACITY_PER_WEEK)*100); var over = perWeek > CAPACITY_PER_WEEK;
+    var row = document.createElement("div");
+    row.innerHTML = '<div class="workload-row"><div class="workload-name">'+name+'</div><div class="workload-bar-track"><div class="workload-bar-fill'+(over?' over':'')+'" style="width:'+pct+'%"></div></div><div class="workload-hours">'+perWeek.toFixed(1)+' jam/minggu</div></div>' +
+      (over ? '<div class="workload-warning">⚠ Melebihi kapasitas realistis (~'+CAPACITY_PER_WEEK+' jam/minggu) — pertimbangkan kurangi scope.</div>' : '');
+    panel.appendChild(row);
+  });
+}
+
+/* ------------------------------------------------------------
+   BUDGET
+   ------------------------------------------------------------ */
+var budgetSlider = document.getElementById("budgetSlider"); var budgetValue = document.getElementById("budgetValue"); var budgetAlloc = document.getElementById("budgetAlloc");
+function formatRupiah(n){ return "Rp " + Math.round(n).toLocaleString("id-ID"); }
+function renderBudget(){
+  var total = parseInt(budgetSlider.value, 10); budgetValue.textContent = formatRupiah(total); budgetAlloc.innerHTML = "";
+  BUDGET_ALLOCATION.forEach(function(item){
+    var amount = total * item.min; var row = document.createElement("div"); row.className = "alloc-row";
+    row.innerHTML = '<div><div class="alloc-label">'+item.label+'</div><div class="alloc-reason">'+item.reason+'</div></div><div class="alloc-amount">'+formatRupiah(amount)+'</div>';
+    budgetAlloc.appendChild(row);
+  });
+}
+budgetSlider.addEventListener("input", renderBudget);
+
+/* ------------------------------------------------------------
+   KPI
+   ------------------------------------------------------------ */
+var KPI_WEEKS = []; for(var w=1; w<=12; w++){ KPI_WEEKS.push("Minggu " + w); }
+function renderKpiTable(){
+  var tbody = document.getElementById("kpiTableBody"); tbody.innerHTML = "";
+  KPI_WEEKS.forEach(function(week){
+    var data = APP.kpiState[week] || { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<td>'+week+'</td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="leads" value="'+data.leads+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="discoveryCalls" value="'+data.discoveryCalls+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="proposalsSent" value="'+data.proposalsSent+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="closed" value="'+data.closed+'"></td>' +
+      '<td><input type="number" min="0" data-kpi-week="'+week+'" data-kpi-field="revenue" value="'+data.revenue+'" style="width:95px;"></td>';
+    tbody.appendChild(tr);
+  });
+  bindKpiEvents(); renderKpiFunnel();
+}
+function bindKpiEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-kpi-week]"), function(input){
+    input.addEventListener("change", function(){
+      var week = input.getAttribute("data-kpi-week"); var field = input.getAttribute("data-kpi-field"); var val = parseInt(input.value,10) || 0;
+      if(!APP.kpiState[week]) APP.kpiState[week] = { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+      APP.kpiState[week][field] = val; saveLocalState(); renderKpiFunnel();
+      if(hasGasConfigured()){ var payload = Object.assign({ week:week, doneBy:APP.identity||"" }, APP.kpiState[week]); gasPost("update_kpi", payload); }
+    });
+  });
+}
+function renderKpiFunnel(){
+  var totals = { leads:0, discoveryCalls:0, proposalsSent:0, closed:0, revenue:0 };
+  KPI_WEEKS.forEach(function(week){ var d = APP.kpiState[week]; if(!d) return;
+    totals.leads+=d.leads||0; totals.discoveryCalls+=d.discoveryCalls||0; totals.proposalsSent+=d.proposalsSent||0; totals.closed+=d.closed||0; totals.revenue+=d.revenue||0; });
+  var steps = [
+    { label:"Leads", value: totals.leads, rate:null },
+    { label:"Discovery Call", value: totals.discoveryCalls, rate: totals.leads ? Math.round((totals.discoveryCalls/totals.leads)*100)+"%" : null },
+    { label:"Proposal", value: totals.proposalsSent, rate: totals.discoveryCalls ? Math.round((totals.proposalsSent/totals.discoveryCalls)*100)+"%" : null },
+    { label:"Closed", value: totals.closed, rate: totals.proposalsSent ? Math.round((totals.closed/totals.proposalsSent)*100)+"%" : null }
+  ];
+  var el = document.getElementById("kpiFunnel"); el.innerHTML = "";
+  steps.forEach(function(s){ var div = document.createElement("div"); div.className = "kpi-funnel-step";
+    div.innerHTML = '<div class="num">'+s.value+'</div><div class="label">'+s.label+'</div>' + (s.rate ? '<div class="rate">'+s.rate+' konversi</div>' : '');
+    el.appendChild(div); });
+}
+
+/* ------------------------------------------------------------
+   REFERRAL
+   ------------------------------------------------------------ */
+var STATUS_OPTIONS = [ {v:"belum_dihubungi",l:"Belum dihubungi"}, {v:"sudah_kontak",l:"Sudah kontak"}, {v:"sudah_ngopi",l:"Sudah ngopi"}, {v:"sudah_referral",l:"Sudah kasih referral"} ];
+function renderReferralTable(){
+  var tbody = document.getElementById("referralTableBody"); tbody.innerHTML = "";
+  REFERRAL_SEED.forEach(function(seed){
+    var data = APP.referralState[seed.partnerId] || seed;
+    var tr = document.createElement("tr");
+    var statusOptionsHtml = STATUS_OPTIONS.map(function(o){ return '<option value="'+o.v+'"'+(data.status===o.v?' selected':'')+'>'+o.l+'</option>'; }).join("");
+    tr.innerHTML =
+      '<td><input type="text" placeholder="Nama" data-ref-id="'+seed.partnerId+'" data-ref-field="name" value="'+escapeHtml(data.name||"")+'"></td>' +
+      '<td style="font-size:11.5px; color:var(--gray-500);">'+data.category+'</td>' +
+      '<td><input type="text" placeholder="PIC" data-ref-id="'+seed.partnerId+'" data-ref-field="pic" value="'+escapeHtml(data.pic||"")+'" style="width:65px;"></td>' +
+      '<td><select class="status-select status-'+data.status+'" data-ref-id="'+seed.partnerId+'" data-ref-field="status">'+statusOptionsHtml+'</select></td>' +
+      '<td><input type="text" placeholder="Catatan" data-ref-id="'+seed.partnerId+'" data-ref-field="notes" value="'+escapeHtml(data.notes||"")+'"></td>' +
+      '<td><input type="date" data-ref-id="'+seed.partnerId+'" data-ref-field="lastContact" value="'+(data.lastContact||"")+'" style="font-size:11px;"></td>';
+    tbody.appendChild(tr);
+  });
+  bindReferralEvents();
+}
+function bindReferralEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ref-id]"), function(input){
+    input.addEventListener("change", function(){
+      var id = input.getAttribute("data-ref-id"); var field = input.getAttribute("data-ref-field");
+      var seed = REFERRAL_SEED.find(function(s){ return s.partnerId === id; });
+      if(!APP.referralState[id]) APP.referralState[id] = Object.assign({}, seed);
+      APP.referralState[id][field] = input.value;
+      if(field === "status" && input.tagName === "SELECT"){ input.className = "status-select status-" + input.value; }
+      saveLocalState();
+      if(hasGasConfigured()){ var payload = Object.assign({ partnerId:id, doneBy:APP.identity||"" }, APP.referralState[id]); gasPost("update_referral", payload); }
+    });
+  });
+}
+
+/* ------------------------------------------------------------
+   SETTINGS PANEL
+   ------------------------------------------------------------ */
+document.getElementById("settingsFab").addEventListener("click", function(){ document.getElementById("settingsPanel").classList.toggle("open"); });
+document.getElementById("gasUrlInput").value = CONFIG.gasUrl;
+document.getElementById("gasTokenInput").value = CONFIG.token;
+document.getElementById("saveSettingsBtn").addEventListener("click", function(){
+  CONFIG.gasUrl = document.getElementById("gasUrlInput").value.trim();
+  CONFIG.token = document.getElementById("gasTokenInput").value.trim();
+  saveConfig(CONFIG); document.getElementById("settingsPanel").classList.remove("open"); initialLoad();
+});
+
+/* ------------------------------------------------------------
+   NAVBAR / SIDEBAR NAVIGATION
+   ------------------------------------------------------------ */
+var sidebar = document.getElementById("sidebar");
+var sidebarBackdrop = document.getElementById("sidebarBackdrop");
+var hamburgerBtn = document.getElementById("hamburgerBtn");
+function openSidebar(){ sidebar.classList.add("open"); sidebarBackdrop.classList.add("open"); }
+function closeSidebar(){ sidebar.classList.remove("open"); sidebarBackdrop.classList.remove("open"); }
+hamburgerBtn.addEventListener("click", function(){ sidebar.classList.contains("open") ? closeSidebar() : openSidebar(); });
+sidebarBackdrop.addEventListener("click", closeSidebar);
+
+var sidebarLinks = Array.prototype.slice.call(document.querySelectorAll(".sidebar-link[data-target]"));
+sidebarLinks.forEach(function(link){
+  link.addEventListener("click", function(){
+    var target = document.getElementById(link.getAttribute("data-target"));
+    if(target){ target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    closeSidebar();
+  });
+});
+
+/* Scroll-spy sederhana: highlight sidebar link sesuai section yang sedang dilihat */
+var sections = Array.prototype.slice.call(document.querySelectorAll(".doc-section"));
+function updateActiveSidebarLink(){
+  var scrollPos = window.scrollY + 120;
+  var currentId = sections[0] ? sections[0].id : null;
+  sections.forEach(function(sec){ if(sec.offsetTop <= scrollPos) currentId = sec.id; });
+  sidebarLinks.forEach(function(link){ link.classList.toggle("active", link.getAttribute("data-target") === currentId); });
+}
+window.addEventListener("scroll", updateActiveSidebarLink, { passive:true });
+
+/* ------------------------------------------------------------
+   START DATE (meta) — tidak ada input khusus di UI baru ini,
+   tapi meta tetap disiapkan untuk kompatibilitas data GAS
+   ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------
+   MASTER RENDER
+   ------------------------------------------------------------ */
+function renderAll(){
+  renderIdentityPill(); renderAllTasks(); renderWorkload(); renderBudget(); renderKpiTable(); renderReferralTable();
+}
+
+/* ------------------------------------------------------------
+   BOOTSTRAP
+   ------------------------------------------------------------ */
+APP.identity = loadIdentity();
+if(!APP.identity){ document.getElementById("identityModalBackdrop").style.display = "flex"; }
+initialLoad();
+updateActiveSidebarLink();
+
+})();
+</script>
+</body>
+</html>
