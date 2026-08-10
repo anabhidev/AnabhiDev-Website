@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anabhi Dev — Less Doing. More Living.</title>
+
+<meta name="description" content="I Gede Agus Wibawa — web developer and automation builder in Bali. Client websites, AI products, and internal platforms for hospitality operations.">
+<meta name="author" content="I Gede Agus Wibawa">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://anabhidev.com/">
+
+<link rel="icon" href="https://anabhidev.com/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="https://anabhidev.com/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Anabhi Dev">
+<meta property="og:title" content="Anabhi Dev — Less Doing. More Living.">
+<meta property="og:description" content="Web developer and automation builder in Bali. Client websites, AI products, and internal platforms for hospitality operations.">
+<meta property="og:url" content="https://anabhidev.com/">
+<meta property="og:image" content="https://anabhidev.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Anabhi Dev — Less Doing. More Living.">
+<meta property="og:locale" content="en_ID">
+<meta property="og:locale:alternate" content="id_ID">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anabhi Dev — Less Doing. More Living.">
+<meta name="twitter:description" content="Web developer and automation builder in Bali.">
+<meta name="twitter:image" content="https://anabhidev.com/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..500&display=swap" rel="stylesheet">
+
+<!--
+  GAMBAR YANG PERLU DIUPLOAD ke /img/  (rasio 16:10, webp, lebar ±1200px)
+    img/work-career-suite.webp
+    img/work-balieats.webp
+    img/work-child-smart-play.webp
+    img/work-innerpeace.webp
+    img/work-delanswit.webp
+    img/work-jagadita.webp
+    img/work-anabhidev.webp
+-->
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   ANABHI DEV — v2
+   Navy-Black · Ivory · Blue · Champagne · Sage
+   Band selang-seling: hero gelap, footer gelap
+═══════════════════════════════════════════════════════════ */
+:root{
+  --blue:#3B9EE8;   --blue-dark:#186DB0;
+  --gold:#C9A96A;   --gold-dark:#7A5F26;
+  --warm:#E8DCC8;   --sage:#4E8F86;  --sage-dark:#3A6B62;
+  --navy:#08111D;   --ivory:#F5F1EA;
+
+  --r-sm:4px; --r-md:10px; --r-lg:20px;
+  --gutter:clamp(20px,5vw,64px);
+  --max:1200px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+/* ── BAND: kanvas lokal ── */
+.band-dark{
+  --bg:#08111D; --surface:#101A28; --ink:#F4EFE5; --muted:rgba(232,220,200,.66);
+  --line:rgba(232,220,200,.14); --edge:rgba(201,169,106,.55);
+  --accent:var(--gold); --accent-ink:#08111D; --soft:rgba(201,169,106,.10); --live:var(--sage);
+  background:var(--bg); color:var(--ink);
+}
+.band-light{
+  --bg:#F5F1EA; --surface:#FFFFFF; --ink:#0B1829; --muted:#4A5568;
+  --line:#DED6C6; --edge:#9A8B6E;
+  --accent:var(--gold-dark); --accent-ink:#FFFFFF; --soft:rgba(122,95,38,.08); --live:var(--sage-dark);
+  background:var(--bg); color:var(--ink);
+}
+
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:17px; line-height:1.7; letter-spacing:-.003em;
+  background:#08111D; color:#F4EFE5;
+  overflow-x:hidden; max-width:100vw;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--accent,#C9A96A);outline-offset:3px;border-radius:var(--r-sm)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.dsp{font-family:'Bricolage Grotesque','Inter',sans-serif}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:999;
+  background:var(--gold);color:#08111D;padding:12px 20px;border-radius:0 0 var(--r-md) 0;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;text-decoration:none;
+}
+.skip:focus{left:0}
+
+/* ── REVEAL (konten tetap tampil tanpa JS) ── */
+.reveal-on .reveal{opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.reveal-on .reveal.in{opacity:1;transform:none}
+
+/* ── NAV ── */
+.nav-outer{position:sticky;top:0;z-index:200;background:rgba(8,17,29,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0}
+.nav-logo{height:58px;width:auto}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;
+  letter-spacing:.09em;text-transform:uppercase;text-decoration:none;line-height:1;
+  color:var(--muted);padding:9px 14px;border-radius:var(--r-sm);transition:color .2s var(--ease);
+  display:inline-flex;align-items:center;
+}
+.nav-links a:hover,.nav-links a.on{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.lang{display:flex;border:1px solid var(--edge);border-radius:var(--r-sm);overflow:hidden}
+.lang button{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:11px;letter-spacing:.08em;
+  padding:7px 10px;background:transparent;color:var(--muted);border:0;cursor:pointer;transition:all .2s var(--ease);
+}
+.lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.nav-cta{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;
+  color:var(--accent-ink);background:var(--accent);padding:12px 22px;border-radius:var(--r-md);
+  text-decoration:none;white-space:nowrap;transition:opacity .2s var(--ease);
+}
+.nav-cta:hover{opacity:.86}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
+.burger span{display:block;width:22px;height:1.5px;background:var(--ink);border-radius:2px;transition:transform .3s var(--ease),opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mob{display:none;flex-direction:column;border-top:1px solid var(--line);padding:8px 0 18px}
+.mob.open{display:flex}
+.mob a{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:15px;color:var(--muted);text-decoration:none;padding:13px 0;border-bottom:1px solid var(--line)}
+.mob a:last-child{border-bottom:0}
+@media(max-width:980px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .nav-logo{height:46px}
+  .nav-cta{display:none}
+}
+
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(30px,5vw,68px);align-items:center;padding:clamp(52px,7vw,100px) 0 clamp(52px,7vw,92px)}
+@media(max-width:920px){.hero{grid-template-columns:1fr;gap:42px}}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:11px;letter-spacing:.20em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+.eyebrow::before{content:'';width:30px;height:1px;background:var(--accent)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(38px,5.4vw,72px);line-height:1.04;letter-spacing:-.022em;margin-bottom:14px}
+h1 em,h2 em{font-style:normal;color:var(--accent)}
+.sub{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(16px,1.7vw,21px);color:var(--muted);letter-spacing:-.01em;margin-bottom:26px}
+.lede{font-size:16px;line-height:1.8;color:var(--muted);max-width:470px;margin-bottom:34px;padding-left:18px;border-left:2px solid var(--accent)}
+.lede b{color:var(--ink);font-weight:600}
+.stats{display:flex;gap:clamp(22px,4vw,46px);flex-wrap:wrap;margin-bottom:32px}
+.stat{padding-top:13px;border-top:1px solid var(--edge);min-width:92px}
+.stat-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(30px,3.4vw,42px);line-height:1;letter-spacing:-.02em}
+.stat-l{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:9px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p,.btn-g{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;padding:13px 26px;border-radius:var(--r-md);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s var(--ease),background .2s var(--ease)}
+.btn-p{background:var(--accent);color:var(--accent-ink)}
+.btn-p:hover{opacity:.86}
+.btn-g{border:1px solid var(--edge);color:var(--ink)}
+.btn-g:hover{background:var(--soft)}
+.photo{position:relative}
+.photo-frame{background:#0B1829;border:1px solid var(--edge);border-radius:var(--r-lg);overflow:hidden;aspect-ratio:5/5.4}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.badge{position:absolute;left:-14px;bottom:26px;background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-md);padding:13px 18px;display:flex;align-items:center;gap:13px}
+@media(max-width:920px){.badge{left:12px;bottom:16px}}
+.badge-mark{width:2px;height:34px;background:var(--accent);border-radius:2px}
+.badge-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;line-height:1;letter-spacing:-.01em}
+.badge-l{font-size:11px;letter-spacing:.08em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+
+/* ── SECTION ── */
+.sec{padding:clamp(58px,7.5vw,104px) 0}
+.sec + .sec{border-top:1px solid var(--line)}
+.lbl{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:11px;letter-spacing:.20em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:11px;margin-bottom:16px}
+.lbl::before{content:'';width:22px;height:1px;background:var(--accent)}
+h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,3.5vw,46px);line-height:1.08;letter-spacing:-.022em;margin-bottom:12px}
+h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:-.018em}
+.sec-p{color:var(--muted);max-width:540px;font-size:16px;margin-bottom:44px}
+
+/* ── ABOUT + INDEKS (band terang, tanpa kartu) ── */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:40px}}
+.about-p{color:var(--muted);font-size:16px;margin-bottom:16px}
+.about-p b{color:var(--ink);font-weight:600}
+.pull{margin-top:24px;padding-left:20px;border-left:2px solid var(--accent);font-family:'Bricolage Grotesque',sans-serif;font-size:17px;line-height:1.6;color:var(--ink)}
+.idx{border-top:1px solid var(--line)}
+.idx-row{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:15px 2px;border-bottom:1px solid var(--line);transition:padding-left .25s var(--ease)}
+.idx-row:hover{padding-left:10px}
+.idx-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.idx-cat{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.idx-st{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);min-width:100px;justify-content:flex-end}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot.live{background:var(--live)}
+.dot.wip{background:var(--accent)}
+.link-a{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;display:inline-block}
+.idx-more{margin-top:24px}
+@media(max-width:560px){.idx-cat{display:none}}
+
+/* ── PRODUCTS (band gelap, kartu) ── */
+.frame{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--bg)}
+.frame-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--line)}
+.fdot{width:7px;height:7px;border-radius:50%;background:var(--edge);opacity:.6}
+.furl{margin-left:8px;font-size:11px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.frame-img{aspect-ratio:16/10;background:linear-gradient(160deg,var(--soft),transparent 72%)}
+.frame-img img{width:100%;height:100%;object-fit:cover;object-position:top center}
+
+.hero-prod{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,52px);align-items:center;background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-lg);padding:clamp(20px,3vw,32px);margin-bottom:24px}
+@media(max-width:880px){.hero-prod{grid-template-columns:1fr}}
+.tag{display:inline-block;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--edge);padding:5px 11px;border-radius:var(--r-sm);margin-bottom:14px}
+.hero-prod h3{font-size:clamp(24px,2.8vw,34px);margin-bottom:10px}
+.hero-prod p{color:var(--muted);font-size:15px;margin-bottom:18px}
+.feats{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.feat{font-size:12px;letter-spacing:.02em;color:var(--muted);border:1px solid var(--line);padding:5px 11px;border-radius:var(--r-sm)}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:820px){.prod-grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-lg);padding:clamp(18px,2.4vw,26px);transition:transform .3s var(--ease)}
+.card:hover{transform:translateY(-3px)}
+.card .frame{margin-bottom:20px}
+.card h3{font-size:clamp(19px,2.1vw,24px);margin-bottom:9px}
+.card p{color:var(--muted);font-size:15px;margin-bottom:18px}
+
+/* ── CLIENT WORK (band terang, terbuka) ── */
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,52px)}
+@media(max-width:820px){.work-grid{grid-template-columns:1fr}}
+.work-item .frame{margin-bottom:18px;border-color:var(--line)}
+.work-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:8px}
+.work-item h3{font-size:clamp(20px,2.2vw,26px)}
+.work-year{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.work-item p{color:var(--muted);font-size:15px;margin-bottom:14px}
+
+/* ── CASE STUDIES (band gelap) ── */
+.case{border-top:1px solid var(--line);padding:clamp(28px,4vw,44px) 0;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,54px)}
+@media(max-width:820px){.case{grid-template-columns:1fr;gap:20px}}
+.case-no{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(30px,3.4vw,44px);color:var(--accent);line-height:1;letter-spacing:-.02em;opacity:.75}
+.case-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.case h3{font-size:clamp(22px,2.6vw,30px)}
+.case-when{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pbr{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.6vw,32px);margin-bottom:24px}
+@media(max-width:820px){.pbr{grid-template-columns:1fr;gap:18px}}
+.pbr h4{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+.pbr p{color:var(--muted);font-size:14.5px;line-height:1.72}
+.stack{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.chip{font-size:11.5px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:5px 10px;border-radius:var(--r-sm)}
+.chip.note{border-style:dashed;color:var(--muted);opacity:.85}
+
+/* ── TESTIMONI (band terang, tanpa kotak) ── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,44px)}
+@media(max-width:960px){.testi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.testi-grid{grid-template-columns:1fr}}
+.testi{padding-left:18px;border-left:2px solid var(--edge)}
+.testi q{quotes:none;display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:16px;line-height:1.6;letter-spacing:-.008em;margin-bottom:16px}
+.testi-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px}
+.testi-r{font-size:13px;color:var(--muted);margin-top:2px}
+
+/* ── CTA ── */
+.cta{text-align:center;padding:clamp(58px,7.5vw,104px) 0}
+.cta h2{margin-inline:auto;max-width:15ch}
+.cta .sec-p{margin-inline:auto;margin-bottom:32px}
+.cta .btns{justify-content:center}
+
+/* ── FOOTER ── */
+.foot{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 32px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:clamp(28px,4vw,56px);margin-bottom:48px}
+@media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-mark{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em;margin-bottom:8px}
+.foot-mark em{font-style:normal;color:var(--accent)}
+.foot-tag{font-size:14px;color:var(--muted);margin-bottom:22px}
+.socials{display:flex;gap:9px}
+.soc{width:38px;height:38px;border:1px solid var(--edge);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:all .2s var(--ease)}
+.soc:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+.soc svg{width:17px;height:17px}
+.foot h4{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.foot li{margin-bottom:11px}
+.foot li a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s var(--ease)}
+.foot li a:hover{color:var(--ink)}
+.foot-bot{border-top:1px solid var(--line);padding-top:26px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.foot-bot em{font-style:normal;color:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main" data-en="Skip to content" data-id="Lewati ke konten">Skip to content</a>
+
+<!-- ══════════ BAND 1 · GELAP — NAV + HERO ══════════ -->
+<div class="band-dark">
+  <div class="nav-outer">
+    <div class="wrap">
+      <header class="nav">
+        <a href="#top" aria-label="Anabhi Dev — home">
+          <img class="nav-logo" src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="400" height="224" fetchpriority="high">
+        </a>
+        <nav aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
+            <li><a href="https://anabhidev.com/tips-001.html" data-en="Guides" data-id="Panduan">Guides</a></li>
+            <li><a href="#contact" data-en="Contact" data-id="Kontak">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="nav-right">
+          <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="id" aria-pressed="false">ID</button>
+          </div>
+          <a class="nav-cta" href="#contact" data-en="Get in Touch" data-id="Hubungi Saya">Get in Touch</a>
+          <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobmenu" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+      <nav class="mob" id="mobmenu" aria-label="Mobile">
+        <a href="#about" data-en="About" data-id="Tentang">About</a>
+        <a href="#products" data-en="Products" data-id="Produk">Products</a>
+        <a href="#work" data-en="Websites" data-id="Website">Websites</a>
+        <a href="#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a>
+        <a href="https://anabhidev.com/tips-001.html" data-en="Guides" data-id="Panduan">Guides</a>
+        <a href="#contact" data-en="Contact" data-id="Kontak">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="main">
+  <div class="wrap" id="top">
+    <section class="hero">
+      <div class="reveal">
+        <p class="eyebrow" data-en="Web · Automation · AI" data-id="Web · Otomasi · AI">Web · Automation · AI</p>
+        <h1 data-en="Between work<br>and sleep,<br><em>I build.</em>" data-id="Di sela kerja<br>dan tidur,<br><em>saya membangun.</em>">Between work<br>and sleep,<br><em>I build.</em></h1>
+        <p class="sub">Less Doing. More Living.</p>
+        <p class="lede" data-en="I'm <b>I Gede Agus Wibawa</b> — fifteen years running IT for hotels and resorts in Bali, now building the websites, AI products, and internal platforms that make those operations lighter." data-id="Saya <b>I Gede Agus Wibawa</b> — lima belas tahun menangani IT hotel dan resort di Bali, sekarang membangun website, produk AI, dan platform internal yang membuat operasional itu lebih ringan.">I'm <b>I Gede Agus Wibawa</b> — fifteen years running IT for hotels and resorts in Bali, now building the websites, AI products, and internal platforms that make those operations lighter.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-n">58</div><div class="stat-l" data-en="Projects" data-id="Proyek">Projects</div></div>
+          <div class="stat"><div class="stat-n">30</div><div class="stat-l" data-en="Shipped" data-id="Selesai">Shipped</div></div>
+          <div class="stat"><div class="stat-n">23</div><div class="stat-l" data-en="For Hospitality" data-id="Untuk Hospitality">For Hospitality</div></div>
+        </div>
+        <div class="btns">
+          <a class="btn-p" href="#products" data-en="See the work" data-id="Lihat karya">See the work</a>
+          <a class="btn-g" href="https://anabhidev.com/cv/" data-en="Read my CV" data-id="Baca CV saya">Read my CV</a>
+        </div>
+      </div>
+      <div class="photo reveal">
+        <div class="photo-frame">
+          <img src="https://anabhidev.com/founder-anabhi-dev.webp" alt="I Gede Agus Wibawa" width="650" height="707" fetchpriority="high">
+        </div>
+        <div class="badge">
+          <div class="badge-mark"></div>
+          <div>
+            <div class="badge-n">Bali, Indonesia</div>
+            <div class="badge-l" data-en="Available for work" data-id="Terbuka untuk proyek">Available for work</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 2 · TERANG — ABOUT + INDEKS ══════════ -->
+<div class="band-light">
+  <div class="wrap">
+    <section class="sec" id="about">
+      <div class="split">
+        <div class="reveal">
+          <p class="lbl" data-en="About" data-id="Tentang">About</p>
+          <h2 data-en="One person,<br>fifty-eight <em>builds.</em>" data-id="Satu orang,<br>lima puluh delapan <em>karya.</em>">One person,<br>fifty-eight <em>builds.</em></h2>
+          <p class="about-p" data-en="Anabhi Dev is not an agency. It's where I put everything I build — client websites, AI products, and the internal systems that keep a hospitality operation running." data-id="Anabhi Dev bukan agency. Ini tempat saya menaruh semua yang saya bangun — website klien, produk AI, dan sistem internal yang menjaga operasional hospitality tetap jalan.">Anabhi Dev is not an agency. It's where I put everything I build — client websites, AI products, and the internal systems that keep a hospitality operation running.</p>
+          <p class="about-p" data-en="Fifteen years on the operations side taught me the part most developers miss: <b>a system only works if the people using it at 6am actually want to open it.</b>" data-id="Lima belas tahun di sisi operasional mengajarkan hal yang sering terlewat: <b>sebuah sistem baru berhasil kalau orang yang memakainya jam 6 pagi memang mau membukanya.</b>">Fifteen years on the operations side taught me the part most developers miss: <b>a system only works if the people using it at 6am actually want to open it.</b></p>
+          <p class="pull" data-en="Build smart. Automate the rest. Enjoy life." data-id="Bangun yang cerdas. Otomasi sisanya. Nikmati hidup.">Build smart. Automate the rest. Enjoy life.</p>
+        </div>
+
+        <div class="reveal">
+          <div class="idx">
+            <div class="idx-row"><div class="idx-name">SpinGather</div><div class="idx-cat" data-en="Automation" data-id="Otomasi">Automation</div><div class="idx-st"><span class="dot live"></span><span data-en="Live" data-id="Live">Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">BaliCalBot</div><div class="idx-cat" data-en="Automation" data-id="Otomasi">Automation</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">NutriBot</div><div class="idx-cat" data-en="AI · Health" data-id="AI · Kesehatan">AI · Health</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">QuizDaily</div><div class="idx-cat" data-en="Parenting" data-id="Parenting">Parenting</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">Employee Schedule → Telegram</div><div class="idx-cat" data-en="Automation" data-id="Otomasi">Automation</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">Domain &amp; IP Check</div><div class="idx-cat" data-en="IT Ops" data-id="IT Ops">IT Ops</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">Application Monitoring Hub</div><div class="idx-cat" data-en="Dashboard" data-id="Dashboard">Dashboard</div><div class="idx-st"><span class="dot live"></span><span>Live</span></div></div>
+            <div class="idx-row"><div class="idx-name">HR Document Tracker</div><div class="idx-cat" data-en="HR Tools" data-id="HR Tools">HR Tools</div><div class="idx-st"><span class="dot wip"></span><span data-en="In progress" data-id="Berjalan">In progress</span></div></div>
+          </div>
+          <p class="idx-more"><a class="link-a" href="https://anabhidev.com/cv/" data-en="Full project list on my CV →" data-id="Daftar lengkap ada di CV saya →">Full project list on my CV →</a></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 3 · GELAP — PRODUCTS ══════════ -->
+<div class="band-dark">
+  <div class="wrap">
+    <section class="sec" id="products">
+      <div class="reveal">
+        <p class="lbl" data-en="Products" data-id="Produk">Products</p>
+        <h2 data-en="Things you can <em>open right now.</em>" data-id="Yang bisa <em>langsung dibuka.</em>">Things you can <em>open right now.</em></h2>
+        <p class="sec-p" data-en="Built end to end — interface, AI integration, and deployment. No demo videos, no mockups. Click and use them." data-id="Dibangun dari hulu ke hilir — antarmuka, integrasi AI, sampai deployment. Tanpa video demo, tanpa mockup. Klik dan langsung pakai.">Built end to end — interface, AI integration, and deployment. No demo videos, no mockups. Click and use them.</p>
+      </div>
+
+      <article class="hero-prod reveal">
+        <div class="frame">
+          <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">anabhidev.com/Career-Suite/</span></div>
+          <div class="frame-img"><img src="https://anabhidev.com/img/work-career-suite.webp" alt="Career Suite — CV Analyzer interface" loading="lazy" width="1200" height="750"></div>
+        </div>
+        <div>
+          <span class="tag" data-en="Flagship · 5 tools" data-id="Unggulan · 5 tool">Flagship · 5 tools</span>
+          <h3>Career Suite</h3>
+          <p data-en="Five tools under one roof for people applying for jobs — and for the people screening them. Score a CV against a real job description, surface the missing keywords, and prepare for the interview that follows." data-id="Lima tool dalam satu atap untuk yang sedang melamar kerja — dan untuk yang menyeleksi. Nilai CV terhadap job description asli, temukan kata kunci yang hilang, dan siapkan wawancara setelahnya.">Five tools under one roof for people applying for jobs — and for the people screening them. Score a CV against a real job description, surface the missing keywords, and prepare for the interview that follows.</p>
+          <div class="feats">
+            <span class="feat">CV Analyzer</span><span class="feat">CV Screener</span><span class="feat">Salary</span><span class="feat">Career</span><span class="feat">Interview</span>
+          </div>
+          <a class="link-a" href="https://anabhidev.com/Career-Suite/" target="_blank" rel="noopener noreferrer" data-en="Open Career Suite →" data-id="Buka Career Suite →">Open Career Suite →</a>
+        </div>
+      </article>
+
+      <div class="prod-grid">
+        <article class="card reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">anabhidev.com/BaliEats-AI/</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-balieats.webp" alt="BaliEats AI chat interface" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <span class="tag">AI · Culinary</span>
+          <h3>BaliEats AI</h3>
+          <p data-en="A culinary assistant for Bali that recommends by area — Ubud, Canggu, Seminyak, Jimbaran — and tells you the story behind a dish instead of just naming it." data-id="Asisten kuliner Bali yang merekomendasikan per area — Ubud, Canggu, Seminyak, Jimbaran — dan menceritakan latar di balik makanannya, bukan sekadar menyebut nama.">A culinary assistant for Bali that recommends by area — Ubud, Canggu, Seminyak, Jimbaran — and tells you the story behind a dish instead of just naming it.</p>
+          <a class="link-a" href="https://anabhidev.com/BaliEats-AI/" target="_blank" rel="noopener noreferrer" data-en="Open BaliEats AI →" data-id="Buka BaliEats AI →">Open BaliEats AI →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">anabhidev.com/Child-Smart-Play/</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-child-smart-play.webp" alt="Child Smart Play quiz screen" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <span class="tag">Education · Kids</span>
+          <h3>Child Smart Play</h3>
+          <p data-en="Eight learning games for children — maths, language, logic and general knowledge — built for my own kids first, then opened to everyone." data-id="Delapan permainan belajar untuk anak — matematika, bahasa, logika, dan pengetahuan umum — dibuat untuk anak saya dulu, lalu dibuka untuk semua.">Eight learning games for children — maths, language, logic and general knowledge — built for my own kids first, then opened to everyone.</p>
+          <a class="link-a" href="https://anabhidev.com/Child-Smart-Play/" target="_blank" rel="noopener noreferrer" data-en="Open Child Smart Play →" data-id="Buka Child Smart Play →">Open Child Smart Play →</a>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 4 · TERANG — CLIENT WEBSITES ══════════ -->
+<div class="band-light">
+  <div class="wrap">
+    <section class="sec" id="work">
+      <div class="reveal">
+        <p class="lbl" data-en="Websites" data-id="Website">Websites</p>
+        <h2 data-en="Sites I <em>built</em> and still run." data-id="Website yang saya <em>bangun</em> dan tetap saya urus.">Sites I <em>built</em> and still run.</h2>
+        <p class="sec-p" data-en="Each one from blank file to live domain — design, code, hosting, and the maintenance afterwards." data-id="Semuanya dari file kosong sampai domain aktif — desain, kode, hosting, dan perawatan setelahnya.">Each one from blank file to live domain — design, code, hosting, and the maintenance afterwards.</p>
+      </div>
+
+      <div class="work-grid">
+        <article class="work-item reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">innerpeacebali.com</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-innerpeace.webp" alt="INNerpeace Bali homepage" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <div class="work-head"><h3>INNerpeace Bali</h3><span class="work-year">2026</span></div>
+          <p data-en="A private rice-field villa and a monthly residence in Gianyar, under one bilingual site with separate booking paths for each." data-id="Villa sawah privat dan residence bulanan di Gianyar, dalam satu situs bilingual dengan alur booking terpisah.">A private rice-field villa and a monthly residence in Gianyar, under one bilingual site with separate booking paths for each.</p>
+          <a class="link-a" href="https://innerpeacebali.com/" target="_blank" rel="noopener noreferrer" data-en="Visit site →" data-id="Kunjungi →">Visit site →</a>
+        </article>
+
+        <article class="work-item reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">delanswit.com</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-delanswit.webp" alt="Delanswit homepage" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <div class="work-head"><h3>Delanswit</h3><span class="work-year">2026</span></div>
+          <p data-en="Premium hampers and pastries. Product catalogue, a WhatsApp ordering flow, and a gallery that does the selling." data-id="Hampers dan pastry premium. Katalog produk, alur pemesanan WhatsApp, dan galeri yang menjual.">Premium hampers and pastries. Product catalogue, a WhatsApp ordering flow, and a gallery that does the selling.</p>
+          <a class="link-a" href="https://delanswit.netlify.app/" target="_blank" rel="noopener noreferrer" data-en="Visit site →" data-id="Kunjungi →">Visit site →</a>
+        </article>
+
+        <article class="work-item reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">jagadita.com</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-jagadita.webp" alt="Jagadita Consulting homepage" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <div class="work-head"><h3>Jagadita Consulting</h3><span class="work-year">2026</span></div>
+          <p data-en="Hospitality consulting firm. Rebuilt from a slow WordPress install into a static site — same content, a fraction of the load time." data-id="Firma konsultan hospitality. Dibangun ulang dari WordPress yang lambat menjadi situs statis — konten sama, waktu muat jauh lebih ringan.">Hospitality consulting firm. Rebuilt from a slow WordPress install into a static site — same content, a fraction of the load time.</p>
+          <a class="link-a" href="https://jagadita.com/" target="_blank" rel="noopener noreferrer" data-en="Visit site →" data-id="Kunjungi →">Visit site →</a>
+        </article>
+
+        <article class="work-item reveal">
+          <div class="frame">
+            <div class="frame-bar"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span><span class="furl">anabhidev.com</span></div>
+            <div class="frame-img"><img src="https://anabhidev.com/img/work-anabhidev.webp" alt="Anabhi Dev homepage" loading="lazy" width="1200" height="750"></div>
+          </div>
+          <div class="work-head"><h3>Anabhi Dev</h3><span class="work-year">2026</span></div>
+          <p data-en="This site. Hand-written HTML, CSS and JavaScript on Cloudflare — no framework, no build step, no CMS." data-id="Situs ini. HTML, CSS, dan JavaScript ditulis tangan di atas Cloudflare — tanpa framework, tanpa build step, tanpa CMS.">This site. Hand-written HTML, CSS and JavaScript on Cloudflare — no framework, no build step, no CMS.</p>
+          <a class="link-a" href="https://anabhidev.com/" data-en="You're on it →" data-id="Anda sedang di sini →">You're on it →</a>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 5 · GELAP — CASE STUDIES ══════════ -->
+<div class="band-dark">
+  <div class="wrap">
+    <section class="sec" id="cases">
+      <div class="reveal">
+        <p class="lbl" data-en="Case studies" data-id="Studi kasus">Case studies</p>
+        <h2 data-en="What changed <em>after</em> I built it." data-id="Apa yang berubah <em>setelah</em> saya bangun.">What changed <em>after</em> I built it.</h2>
+        <p class="sec-p" data-en="Internal platforms built for a hospitality group. No public links — but these are the ones with numbers behind them." data-id="Platform internal untuk sebuah grup hospitality. Tidak ada link publik — tapi ini yang punya angka di belakangnya.">Internal platforms built for a hospitality group. No public links — but these are the ones with numbers behind them.</p>
+      </div>
+
+      <article class="case reveal">
+        <div class="case-no">01</div>
+        <div>
+          <div class="case-head"><h3 data-en="Learning Management System" data-id="Learning Management System">Learning Management System</h3><span class="case-when">2025 — 2026</span></div>
+          <div class="pbr">
+            <div><h4 data-en="Problem" data-id="Masalah">Problem</h4><p data-en="Training 110+ staff across departments meant paper checklists, WhatsApp reminders, and no reliable way to prove who had actually completed what." data-id="Melatih 110+ karyawan lintas departemen berarti checklist kertas, pengingat WhatsApp, dan tidak ada cara pasti untuk membuktikan siapa yang benar-benar sudah selesai.">Training 110+ staff across departments meant paper checklists, WhatsApp reminders, and no reliable way to prove who had actually completed what.</p></div>
+            <div><h4 data-en="Built" data-id="Dibangun">Built</h4><p data-en="A full LMS from scratch — course delivery, a quiz engine with anti-cheating measures, role-based access, and automatic certificates. An AI layer on top writes the daily and monthly summaries management actually reads." data-id="LMS lengkap dari nol — pengiriman materi, mesin kuis dengan pengaman anti-curang, akses berbasis peran, dan sertifikat otomatis. Lapisan AI di atasnya menulis ringkasan harian dan bulanan yang benar-benar dibaca manajemen.">A full LMS from scratch — course delivery, a quiz engine with anti-cheating measures, role-based access, and automatic certificates. An AI layer on top writes the daily and monthly summaries management actually reads.</p></div>
+            <div><h4 data-en="Result" data-id="Hasil">Result</h4><p data-en="110+ staff on the platform. Training status went from a question nobody could answer to a dashboard anyone can open." data-id="110+ karyawan aktif di platform. Status training berubah dari pertanyaan yang tak bisa dijawab siapa pun menjadi dashboard yang bisa dibuka siapa saja.">110+ staff on the platform. Training status went from a question nobody could answer to a dashboard anyone can open.</p></div>
+          </div>
+          <div class="stack"><span class="chip">Google Apps Script</span><span class="chip">Gemini API</span><span class="chip">Cloudflare</span><span class="chip">HTML/CSS/JS</span><span class="chip note" data-en="Internal — no public link" data-id="Internal — tanpa link publik">Internal — no public link</span></div>
+        </div>
+      </article>
+
+      <article class="case reveal">
+        <div class="case-no">02</div>
+        <div>
+          <div class="case-head"><h3 data-en="Knowledge-Based AI Assistant" data-id="Asisten AI Berbasis Knowledge Base">Knowledge-Based AI Assistant</h3><span class="case-when">2025 — 2026</span></div>
+          <div class="pbr">
+            <div><h4 data-en="Problem" data-id="Masalah">Problem</h4><p data-en="The same operational questions reached the IT desk every week — where a policy lives, how a system works, what the procedure is for an edge case." data-id="Pertanyaan operasional yang sama sampai ke meja IT setiap minggu — di mana letak sebuah kebijakan, bagaimana sistemnya bekerja, apa prosedur untuk kasus tak biasa.">The same operational questions reached the IT desk every week — where a policy lives, how a system works, what the procedure is for an edge case.</p></div>
+            <div><h4 data-en="Built" data-id="Dibangun">Built</h4><p data-en="A conversational assistant grounded in the company's own documentation, so answers come from internal reality rather than generic model knowledge." data-id="Asisten percakapan yang berpijak pada dokumentasi perusahaan sendiri, sehingga jawabannya berasal dari kenyataan internal, bukan pengetahuan model yang umum.">A conversational assistant grounded in the company's own documentation, so answers come from internal reality rather than generic model knowledge.</p></div>
+            <div><h4 data-en="Result" data-id="Hasil">Result</h4><p data-en="Routine lookups now resolve without a human in the loop. In testing with the operations team." data-id="Pencarian rutin kini selesai tanpa melibatkan manusia. Sedang diuji bersama tim operasional.">Routine lookups now resolve without a human in the loop. In testing with the operations team.</p></div>
+          </div>
+          <div class="stack"><span class="chip">Gemini API</span><span class="chip">Knowledge Base</span><span class="chip">Prompt Engineering</span><span class="chip note" data-en="Internal — no public link" data-id="Internal — tanpa link publik">Internal — no public link</span></div>
+        </div>
+      </article>
+
+      <article class="case reveal">
+        <div class="case-no">03</div>
+        <div>
+          <div class="case-head"><h3 data-en="IT Intelligence Dashboard" data-id="IT Intelligence Dashboard">IT Intelligence Dashboard</h3><span class="case-when">2025 — 2026</span></div>
+          <div class="pbr">
+            <div><h4 data-en="Problem" data-id="Masalah">Problem</h4><p data-en="Infrastructure status lived in five different tools. Nobody outside IT could see it, and inside IT it took a morning to assemble." data-id="Status infrastruktur tersebar di lima tool berbeda. Tidak ada yang bisa melihatnya dari luar IT, dan di dalam IT butuh satu pagi untuk merangkumnya.">Infrastructure status lived in five different tools. Nobody outside IT could see it, and inside IT it took a morning to assemble.</p></div>
+            <div><h4 data-en="Built" data-id="Dibangun">Built</h4><p data-en="One operational dashboard consolidating network, systems and service health — written for a non-technical reader as much as for the IT team." data-id="Satu dashboard operasional yang menyatukan jaringan, sistem, dan kesehatan layanan — ditulis untuk pembaca non-teknis, bukan hanya tim IT.">One operational dashboard consolidating network, systems and service health — written for a non-technical reader as much as for the IT team.</p></div>
+            <div><h4 data-en="Result" data-id="Hasil">Result</h4><p data-en="In daily use. Status reporting moved from reactive to at-a-glance." data-id="Dipakai harian. Pelaporan status berubah dari reaktif menjadi sekali lihat.">In daily use. Status reporting moved from reactive to at-a-glance.</p></div>
+          </div>
+          <div class="stack"><span class="chip">Google Apps Script</span><span class="chip">Dashboard</span><span class="chip">Automation</span><span class="chip note" data-en="Internal — no public link" data-id="Internal — tanpa link publik">Internal — no public link</span></div>
+        </div>
+      </article>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 6 · TERANG — TESTIMONI ══════════ -->
+<div class="band-light">
+  <div class="wrap">
+    <section class="sec">
+      <div class="reveal">
+        <p class="lbl" data-en="Recommendations" data-id="Rekomendasi">Recommendations</p>
+        <h2 data-en="What people who <em>worked with me</em> say." data-id="Kata mereka yang <em>pernah bekerja</em> dengan saya.">What people who <em>worked with me</em> say.</h2>
+        <p class="sec-p" data-en="Written on LinkedIn by colleagues and managers across hotels and resorts in Bali." data-id="Ditulis di LinkedIn oleh rekan kerja dan atasan dari berbagai hotel dan resort di Bali.">Written on LinkedIn by colleagues and managers across hotels and resorts in Bali.</p>
+      </div>
+      <div class="testi-grid">
+        <blockquote class="testi reveal">
+          <q>I Gede Agus Wibawa was the best IT expert I have been working with. He contributed a lot both in pre-opening and post-opening period of our Signature Bali Sanur hotel.</q>
+          <div class="testi-n">Viveka</div>
+          <div class="testi-r">Hotel Business Expert Advisor</div>
+        </blockquote>
+        <blockquote class="testi reveal">
+          <q>Agus Wibawa have the passionate to learn anything to upgrade his skill in IT Hospitality... good example of what IT Hospitality was.</q>
+          <div class="testi-n">Armika Jaya</div>
+          <div class="testi-r">Director of IT, Potato Head Family</div>
+        </blockquote>
+        <blockquote class="testi reveal">
+          <q>Very quick responses, good leader and friend.</q>
+          <div class="testi-n">Albertus Nugraha Darmaji</div>
+          <div class="testi-r">Corporate IT Manager, Padma Hotels</div>
+        </blockquote>
+        <blockquote class="testi reveal">
+          <q>Pak Wibawa that I know is smart and creative person. His IT skills and experiences in handling IT infrastructure are awesome.</q>
+          <div class="testi-n">Dr. Yohan Naftali</div>
+          <div class="testi-r">Application Developer</div>
+        </blockquote>
+        <blockquote class="testi reveal">
+          <q>Wibawa is a hard worker. He knows everything about IT, working fast, attention to details and easy going... always up to date with new info.</q>
+          <div class="testi-n">Anindita Widyasari</div>
+          <div class="testi-r">Asst. Director of Weddings, The Ungasan Clifftop Resort</div>
+        </blockquote>
+        <blockquote class="testi reveal">
+          <q>Efficient and quick to action... I have seen him work on and solve many IT issues, always with a smile, no matter how big or small those issues were.</q>
+          <div class="testi-n">Natalie Cadell</div>
+          <div class="testi-r">General Manager, Luxury Resorts &amp; Lifestyle Destinations</div>
+        </blockquote>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════ BAND 7 · GELAP — CTA + FOOTER ══════════ -->
+<div class="band-dark">
+  <div class="wrap">
+    <section class="cta" id="contact">
+      <div class="reveal">
+        <p class="lbl" style="justify-content:center" data-en="Let's talk" data-id="Mari bicara">Let's talk</p>
+        <h2 data-en="Have something to <em>automate?</em>" data-id="Ada yang mau <em>diotomasi?</em>">Have something to <em>automate?</em></h2>
+        <p class="sec-p" data-en="A website that needs rebuilding, a task eating your team's morning, or a system nobody wants to open. Tell me which one." data-id="Website yang perlu dibangun ulang, tugas yang menghabiskan pagi tim Anda, atau sistem yang tak seorang pun mau membukanya. Ceritakan yang mana.">A website that needs rebuilding, a task eating your team's morning, or a system nobody wants to open. Tell me which one.</p>
+        <div class="btns">
+          <a class="btn-p" href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" data-en="Message on WhatsApp" data-id="Chat via WhatsApp">Message on WhatsApp</a>
+          <a class="btn-g" href="mailto:hello@anabhidev.com" data-en="Send an email" data-id="Kirim email">Send an email</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <div class="foot-mark">Anabhi <em>Dev</em></div>
+          <p class="foot-tag">Less Doing. More Living.</p>
+          <div class="socials">
+            <a class="soc" href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-4-1L3 21l2.1-4.9A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg>
+            </a>
+            <a class="soc" href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a class="soc" href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.3 6.4-1.5 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.7 16 2.5a13.4 13.4 0 0 0-7 0C6.3.7 5.1 1 5.1 1A5 5 0 0 0 5 4.8a5.4 5.4 0 0 0-1.5 3.8c0 5.5 3.3 6.7 6.4 7A3.4 3.4 0 0 0 9 18.1V22"/></svg>
+            </a>
+            <a class="soc" href="mailto:hello@anabhidev.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 data-en="Navigate" data-id="Navigasi">Navigate</h4>
+          <ul>
+            <li><a href="#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 data-en="Resources" data-id="Sumber">Resources</h4>
+          <ul>
+            <li><a href="https://anabhidev.com/cv/" data-en="Full CV" data-id="CV Lengkap">Full CV</a></li>
+            <li><a href="https://anabhidev.com/tips-001.html" data-en="Guides" data-id="Panduan">Guides</a></li>
+            <li><a href="https://www.upwork.com/freelancers/anabhidev" target="_blank" rel="noopener noreferrer">Upwork</a></li>
+            <li><a href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 data-en="Contact" data-id="Kontak">Contact</h4>
+          <ul>
+            <li><a href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" data-en="WhatsApp" data-id="WhatsApp">WhatsApp</a></li>
+            <li><a href="mailto:hello@anabhidev.com">hello@anabhidev.com</a></li>
+            <li><a href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer" data-en="LinkedIn Profile" data-id="Profil LinkedIn">LinkedIn Profile</a></li>
+            <li><span data-en="Denpasar, Bali — Indonesia" data-id="Denpasar, Bali — Indonesia">Denpasar, Bali — Indonesia</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot-bot">
+        <div>© 2026 <em>Anabhi Dev</em>. <span data-en="All rights reserved." data-id="Hak cipta dilindungi.">All rights reserved.</span></div>
+        <div data-en="Hand-coded in Bali." data-id="Ditulis tangan di Bali.">Hand-coded in Bali.</div>
+      </div>
+    </div>
+  </footer>
+  </main>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://anabhidev.com/#website",
+      "url":"https://anabhidev.com/",
+      "name":"Anabhi Dev",
+      "inLanguage":["en","id"],
+      "publisher":{"@id":"https://anabhidev.com/#org"}
+    },
+    {
+      "@type":"Person",
+      "@id":"https://anabhidev.com/#person",
+      "name":"I Gede Agus Wibawa",
+      "alternateName":"Anabhi Dev",
+      "url":"https://anabhidev.com/",
+      "email":"hello@anabhidev.com",
+      "jobTitle":"Web Developer & Automation Engineer",
+      "description":"Web developer and automation builder based in Bali, with fifteen years of hospitality IT experience.",
+      "knowsAbout":["Web Development","Google Apps Script","Automation","AI Integration","Hospitality IT","Cloudflare","Telegram Bots"],
+      "address":{"@type":"PostalAddress","addressLocality":"Denpasar","addressRegion":"Bali","addressCountry":"ID"},
+      "worksFor":{"@id":"https://anabhidev.com/#org"},
+      "sameAs":[
+        "https://www.linkedin.com/in/i-gede-agus-wibawa",
+        "https://github.com/anabhidev",
+        "https://www.upwork.com/freelancers/anabhidev"
+      ]
+    },
+    {
+      "@type":"ProfessionalService",
+      "@id":"https://anabhidev.com/#org",
+      "name":"Anabhi Dev",
+      "url":"https://anabhidev.com/",
+      "logo":"https://anabhidev.com/logo.webp",
+      "image":"https://anabhidev.com/og-image.jpg",
+      "slogan":"Less Doing. More Living.",
+      "description":"Web development, automation and AI integration for small and medium businesses.",
+      "founder":{"@id":"https://anabhidev.com/#person"},
+      "areaServed":[
+        {"@type":"AdministrativeArea","name":"Bali"},
+        {"@type":"Country","name":"Indonesia"},
+        {"@type":"Place","name":"Worldwide"}
+      ],
+      "serviceType":["Web Development","Workflow Automation","AI Integration"],
+      "contactPoint":{
+        "@type":"ContactPoint",
+        "contactType":"sales",
+        "email":"hello@anabhidev.com",
+        "availableLanguage":["English","Indonesian"]
+      }
+    },
+    {
+      "@type":"ItemList",
+      "@id":"https://anabhidev.com/#products",
+      "name":"Products by Anabhi Dev",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"Career Suite","url":"https://anabhidev.com/Career-Suite/","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+        {"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"BaliEats AI","url":"https://anabhidev.com/BaliEats-AI/","applicationCategory":"LifestyleApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+        {"@type":"ListItem","position":3,"item":{"@type":"SoftwareApplication","name":"Child Smart Play","url":"https://anabhidev.com/Child-Smart-Play/","applicationCategory":"EducationalApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}}
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function(){
+  var doc = document.documentElement;
+
+  /* ── Bahasa ── */
+  function setLang(lang){
+    doc.lang = lang;
+    var nodes = document.querySelectorAll('[data-' + lang + ']');
+    for(var i=0;i<nodes.length;i++){
+      nodes[i].innerHTML = nodes[i].getAttribute('data-' + lang);
+    }
+    var btns = document.querySelectorAll('.lang button');
+    for(var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', String(btns[j].getAttribute('data-lang') === lang));
+    }
+  }
+  var langBox = document.querySelector('.lang');
+  if(langBox){
+    langBox.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-lang]');
+      if(b) setLang(b.getAttribute('data-lang'));
+    });
+  }
+
+  /* ── Menu mobile ── */
+  var burger = document.getElementById('burger');
+  var mob = document.getElementById('mobmenu');
+  if(burger && mob){
+    burger.addEventListener('click', function(){
+      var open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      mob.classList.toggle('open', !open);
+    });
+    mob.addEventListener('click', function(e){
+      if(e.target.tagName === 'A'){
+        burger.setAttribute('aria-expanded','false');
+        mob.classList.remove('open');
+      }
+    });
+  }
+
+  /* ── Reveal: hanya aktif kalau JS jalan & motion diizinkan ── */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    doc.classList.add('reveal-on');
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+    var items = document.querySelectorAll('.reveal');
+    for(var k=0;k<items.length;k++){ obs.observe(items[k]); }
+  }
+
+  /* ── Nav aktif ── */
+  var links = document.querySelectorAll('.nav-links a[href^="#"]');
+  var targets = [];
+  for(var m=0;m<links.length;m++){
+    var t = document.querySelector(links[m].getAttribute('href'));
+    if(t) targets.push({ link:links[m], el:t });
+  }
+  if(targets.length && 'IntersectionObserver' in window){
+    var navObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          for(var n=0;n<targets.length;n++){
+            targets[n].link.classList.toggle('on', targets[n].el === e.target);
+          }
+        }
+      });
+    }, { rootMargin:'-45% 0px -50% 0px' });
+    for(var p=0;p<targets.length;p++){ navObs.observe(targets[p].el); }
+  }
+})();
+</script>
+</body>
+</html>
