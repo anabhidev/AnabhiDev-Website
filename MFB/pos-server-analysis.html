@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Server Review — Miss Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0E0F;
+  --ink-2:#171B1C;
+  --ink-3:#252B2C;
+  --canvas:#F2F5F4;
+  --card:#FFFFFF;
+  --line:#DCE3E1;
+  --line-2:#EBEFEE;
+  --text:#131718;
+  --muted:#5E6A6B;
+  --brine:#0E6B63;
+  --brine-soft:#E4F0EE;
+  --amber:#B8791F;
+  --amber-soft:#FBF1E0;
+  --red:#A32A2A;
+  --red-soft:#FBE9E9;
+  --nav-h:60px;
+  --side-w:262px;
+  --f-display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --f-body:'Public Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--canvas);
+  color:var(--text);
+  font-family:var(--f-body);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  width:100%;
+}
+img{max-width:100%;height:auto}
+:focus-visible{outline:2px solid var(--brine);outline-offset:2px;border-radius:2px}
+a{color:inherit}
+
+/* ---------- NAVBAR ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:60;
+  background:var(--ink);
+  display:flex;align-items:center;gap:14px;
+  padding:0 16px;
+  border-bottom:1px solid #000;
+}
+.nav-divider{width:1px;height:24px;background:#2C3334;flex-shrink:0}
+.nav-title{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;
+  color:#8A9799;text-transform:uppercase;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+
+.lang{
+  display:flex;background:var(--ink-3);border-radius:999px;padding:3px;gap:2px;
+}
+.lang button{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.06em;
+  border:0;background:transparent;color:#8A9799;cursor:pointer;
+  padding:5px 11px;border-radius:999px;transition:background .18s,color .18s;
+}
+.lang button.on{background:#fff;color:var(--ink)}
+.lang button:hover:not(.on){color:#fff}
+
+.burger{
+  display:none;border:0;background:var(--ink-3);color:#fff;
+  width:36px;height:34px;border-radius:8px;cursor:pointer;
+  align-items:center;justify-content:center;
+}
+.burger span{display:block;width:16px;height:2px;background:#fff;position:relative}
+.burger span::before,.burger span::after{
+  content:'';position:absolute;left:0;width:16px;height:2px;background:#fff;
+}
+.burger span::before{top:-5px}
+.burger span::after{top:5px}
+
+/* ---------- SIDEBAR ---------- */
+.side{
+  position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--side-w);z-index:50;
+  background:var(--ink);padding:22px 0 40px;overflow-y:auto;
+}
+.side-group{padding:0 20px;margin-bottom:22px}
+.side-group-label{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;
+  color:#5C6768;text-transform:uppercase;margin-bottom:8px;padding-left:11px;
+}
+.side a{
+  display:flex;align-items:baseline;gap:9px;
+  padding:7px 11px;border-radius:7px;
+  color:#9BA7A8;text-decoration:none;font-size:13.5px;line-height:1.35;
+  transition:background .16s,color .16s;
+}
+.side a:hover{background:var(--ink-2);color:#fff}
+.side a.active{background:var(--brine);color:#fff}
+.side a .num{
+  font-family:var(--f-mono);font-size:10px;color:#4E5A5B;flex-shrink:0;
+  transition:color .16s;
+}
+.side a.active .num,.side a:hover .num{color:#B6C9C6}
+.side-foot{
+  padding:16px 31px 0;margin-top:6px;border-top:1px solid #1C2122;
+  font-family:var(--f-mono);font-size:10px;line-height:1.7;color:#4E5A5B;
+}
+.scrim{
+  display:none;position:fixed;inset:var(--nav-h) 0 0;background:rgba(0,0,0,.5);z-index:45;
+}
+
+/* ---------- MAIN ---------- */
+.main{margin-left:var(--side-w);padding:var(--nav-h) 0 0;min-width:0}
+.wrap{width:100%;padding:0 40px 90px}
+
+.hero{padding:52px 0 44px;border-bottom:1px solid var(--line)}
+.hero-logo{height:88px;width:auto;display:block;margin-bottom:28px}
+.hero-logo-fb{
+  font-family:var(--f-display);font-weight:800;letter-spacing:.1em;
+  font-size:26px;color:var(--ink);text-transform:uppercase;margin-bottom:28px;
+}
+.eyebrow{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brine);margin-bottom:14px;
+}
+.hero h1{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(30px,5.2vw,50px);line-height:1.02;letter-spacing:-.025em;
+  margin-bottom:16px;
+}
+.hero p{font-size:16.5px;color:var(--muted)}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;
+  font-family:var(--f-mono);font-size:11px;color:var(--muted);
+}
+.meta b{color:var(--text);font-weight:500}
+
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.sec-num{font-family:var(--f-mono);font-size:12px;color:var(--brine);font-weight:700}
+h2{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(22px,3.4vw,30px);letter-spacing:-.02em;line-height:1.12;
+}
+.lede{color:var(--muted);font-size:16px;margin-bottom:26px}
+h3{
+  font-family:var(--f-display);font-weight:700;font-size:17px;
+  letter-spacing:-.01em;margin:30px 0 12px;
+}
+p+p{margin-top:12px}
+
+/* ---------- CAPACITY METER (signature) ---------- */
+.meter-card{
+  background:var(--ink);border-radius:14px;padding:30px 28px 26px;color:#fff;
+  margin:8px 0 30px;
+}
+.meter-top{
+  display:flex;flex-wrap:wrap;justify-content:space-between;
+  align-items:baseline;gap:10px;margin-bottom:22px;
+}
+.meter-title{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:#7E8C8D;
+}
+.meter-ratio{font-family:var(--f-mono);font-size:12px;color:#E8A33C;font-weight:700}
+.meter-track{
+  position:relative;height:46px;border-radius:8px;
+  background:#1B2021;display:flex;overflow:hidden;
+}
+.meter-fill{
+  width:33.34%;background:var(--brine);flex-shrink:0;
+  display:flex;align-items:center;padding-left:12px;
+  font-family:var(--f-mono);font-size:11px;font-weight:700;white-space:nowrap;
+  overflow:hidden;min-width:0;
+}
+.meter-over{
+  width:66.66%;
+  background:repeating-linear-gradient(-45deg,#3A2119,#3A2119 6px,#4A2A1F 6px,#4A2A1F 12px);
+  display:flex;align-items:center;padding-left:12px;
+  font-family:var(--f-mono);font-size:11px;font-weight:700;color:#F0A75A;
+  white-space:nowrap;overflow:hidden;
+}
+.meter-legend{
+  display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:16px;
+  font-family:var(--f-mono);font-size:11px;color:#7E8C8D;
+}
+.meter-legend b{color:#fff;font-weight:500}
+
+/* ---------- CARDS / GRID ---------- */
+.grid{display:grid;gap:14px;margin:20px 0}
+.grid.g2{grid-template-columns:repeat(2,1fr)}
+.grid.g3{grid-template-columns:repeat(3,1fr)}
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:18px 18px 17px;
+}
+.card-k{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:7px;
+}
+.card-v{
+  font-family:var(--f-display);font-weight:700;font-size:20px;
+  letter-spacing:-.015em;line-height:1.2;margin-bottom:5px;
+}
+.card-n{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* cause cards */
+.cause{
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);
+  border-radius:10px;padding:16px 18px;
+}
+.cause h4{
+  font-family:var(--f-display);font-weight:700;font-size:15.5px;
+  margin-bottom:5px;letter-spacing:-.01em;
+}
+.cause p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+/* ---------- TABLES ---------- */
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+th{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+  background:#F8FAF9;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td.k{font-weight:600;white-space:nowrap}
+td.m,th.m{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.flag{
+  display:inline-block;font-family:var(--f-mono);font-size:10px;font-weight:700;
+  letter-spacing:.06em;padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.flag.ok{background:var(--brine-soft);color:var(--brine)}
+.flag.warn{background:var(--amber-soft);color:var(--amber)}
+.flag.bad{background:var(--red-soft);color:var(--red)}
+
+/* ---------- BENCHMARK BARS ---------- */
+.bars{margin:22px 0 8px}
+.bar-row{margin-bottom:18px}
+.bar-label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:12px;margin-bottom:6px;
+}
+.bar-name{font-weight:600;font-size:14px}
+.bar-name small{
+  display:block;font-weight:400;font-size:11.5px;color:var(--muted);
+  font-family:var(--f-mono);margin-top:1px;
+}
+.bar-val{font-family:var(--f-mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.bar-track{height:12px;background:#E3E9E7;border-radius:6px;overflow:hidden}
+.bar-fill{
+  height:100%;border-radius:6px;width:0;
+  transition:width 1s cubic-bezier(.22,.8,.3,1);
+}
+.bar-fill.now{background:var(--red)}
+.bar-fill.xeon{background:var(--amber)}
+.bar-fill.new{background:var(--brine)}
+
+/* ---------- OPTIONS ---------- */
+.opts{display:grid;gap:14px;margin:24px 0;grid-template-columns:repeat(2,1fr)}
+.opt{
+  background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:20px;display:flex;flex-direction:column;position:relative;
+}
+.opt.pick{border-color:var(--brine);box-shadow:0 0 0 2px var(--brine-soft)}
+.opt-tag{
+  position:absolute;top:-9px;right:16px;background:var(--brine);color:#fff;
+  font-family:var(--f-mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  padding:3px 9px;border-radius:4px;text-transform:uppercase;
+}
+.opt-id{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;
+  color:var(--muted);letter-spacing:.1em;margin-bottom:6px;
+}
+.opt h3{margin:0 0 4px;font-size:18px}
+.opt-sub{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-bottom:14px}
+.opt-price{
+  font-family:var(--f-display);font-weight:800;font-size:22px;
+  letter-spacing:-.02em;margin-bottom:14px;
+}
+.opt-price.tbd{font-size:16px;color:var(--amber);font-weight:700}
+.opt ul{list-style:none;margin-bottom:14px}
+.opt li{
+  font-size:13.3px;padding:5px 0 5px 19px;position:relative;
+  color:var(--muted);line-height:1.5;border-bottom:1px solid var(--line-2);
+}
+.opt li:last-child{border-bottom:0}
+.opt li::before{
+  content:'';position:absolute;left:4px;top:12px;
+  width:5px;height:5px;border-radius:50%;background:#C3CDCB;
+}
+.opt li.plus::before{background:var(--brine)}
+.opt li.minus::before{background:var(--red)}
+.opt-verdict{
+  margin-top:auto;padding-top:13px;border-top:1px solid var(--line);
+  font-size:13px;line-height:1.5;
+}
+.opt-verdict b{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;
+  display:block;margin-bottom:4px;color:var(--muted);text-transform:uppercase}
+
+/* ---------- CALLOUT ---------- */
+.callout{
+  border-radius:11px;padding:16px 18px;margin:20px 0;
+  font-size:14px;line-height:1.6;border:1px solid;
+}
+.callout b{display:block;font-family:var(--f-display);font-weight:700;
+  font-size:14.5px;margin-bottom:4px}
+.callout.risk{background:var(--red-soft);border-color:#EBC9C9;color:#5C1A1A}
+.callout.note{background:var(--amber-soft);border-color:#EEDCBC;color:#5C3E12}
+.callout.good{background:var(--brine-soft);border-color:#C3DCD8;color:#0A4B45}
+
+/* ---------- CHECKLIST ---------- */
+.checks{margin:22px 0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.check{
+  display:flex;gap:13px;padding:13px 17px;border-bottom:1px solid var(--line-2);
+  cursor:pointer;transition:background .14s;align-items:flex-start;
+}
+.check:last-child{border-bottom:0}
+.check:hover{background:#F8FAF9}
+.check input{
+  appearance:none;width:17px;height:17px;flex-shrink:0;margin-top:2px;
+  border:1.5px solid #B9C4C2;border-radius:4px;cursor:pointer;
+  transition:background .14s,border-color .14s;
+}
+.check input:checked{background:var(--brine);border-color:var(--brine)}
+.check input:checked::after{
+  content:'';display:block;width:4px;height:8px;margin:2px auto;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg);
+}
+.check-body{flex:1}
+.check-t{font-size:14px;font-weight:500;line-height:1.45}
+.check-n{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.check input:checked ~ .check-body .check-t{text-decoration:line-through;color:var(--muted)}
+.check-count{
+  padding:11px 17px;background:#F8FAF9;border-top:1px solid var(--line);
+  font-family:var(--f-mono);font-size:11px;color:var(--muted);
+}
+
+.footnote{
+  font-size:12.5px;color:var(--muted);font-style:italic;
+  margin-top:12px;line-height:1.55;
+}
+.figure{
+  margin:20px 0;border:1px solid var(--line);border-radius:12px;
+  background:var(--card);overflow:hidden;
+}
+.figure img{width:100%;display:block;background:#fff}
+.figure figcaption{
+  padding:12px 16px;border-top:1px solid var(--line-2);background:#F8FAF9;
+  font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.7;
+}
+.figure figcaption b{color:var(--text);font-weight:500}
+.end{
+  padding:30px 0 0;font-family:var(--f-mono);font-size:11px;
+  color:var(--muted);line-height:1.8;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(min-width:1200px){
+  .causes{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1440px){
+  .wrap{padding:0 52px 90px}
+  .grid.g2{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:1680px){
+  .wrap{padding:0 64px 90px}
+  .opts{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:1000px){
+  .grid.g3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  .burger{display:flex}
+  .side{transform:translateX(-100%);transition:transform .24s ease;width:270px}
+  body.menu .side{transform:translateX(0)}
+  body.menu .scrim{display:block}
+  .main{margin-left:0}
+  .wrap{padding:0 20px 70px}
+  .nav-divider,.nav-title{display:none}
+  .grid.g2,.grid.g3,.opts{grid-template-columns:1fr}
+  .hero{padding:38px 0 32px}
+  section{padding:40px 0}
+  .meter-card{padding:22px 18px 20px}
+  .meter-fill,.meter-over{font-size:10px;padding-left:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="nav">
+  <button class="burger" id="burger" aria-label="Menu"><span></span></button>
+  <div class="nav-title" data-en="POS Server Review" data-id="Kajian Server POS">POS Server Review</div>
+  <div class="nav-right">
+    <div class="lang" role="group" aria-label="Language">
+      <button id="btn-en" class="on" onclick="setLang('en')">EN</button>
+      <button id="btn-id" onclick="setLang('id')">ID</button>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- SIDEBAR -->
+<aside class="side" id="side">
+  <nav class="side-group">
+    <div class="side-group-label" data-en="Diagnosis" data-id="Diagnosa">Diagnosis</div>
+    <a href="#s1"><span class="num">01</span><span data-en="Summary" data-id="Ringkasan">Summary</span></a>
+    <a href="#s2"><span class="num">02</span><span data-en="Current setup" data-id="Kondisi saat ini">Current setup</span></a>
+    <a href="#s3"><span class="num">03</span><span data-en="Root cause" data-id="Akar masalah">Root cause</span></a>
+    <a href="#s4"><span class="num">04</span><span data-en="Failure risk" data-id="Risiko kegagalan">Failure risk</span></a>
+  </nav>
+  <nav class="side-group">
+    <div class="side-group-label" data-en="Evidence" data-id="Data pendukung">Evidence</div>
+    <a href="#s5"><span class="num">05</span><span data-en="CPU comparison" data-id="Perbandingan CPU">CPU comparison</span></a>
+    <a href="#s6"><span class="num">06</span><span data-en="Three options" data-id="Tiga opsi">Three options</span></a>
+  </nav>
+  <nav class="side-group">
+    <div class="side-group-label" data-en="Decision" data-id="Keputusan">Decision</div>
+    <a href="#s7"><span class="num">07</span><span data-en="Target spec &amp; budget" data-id="Spek target &amp; anggaran">Target spec &amp; budget</span></a>
+    <a href="#s8"><span class="num">08</span><span data-en="Before ordering" data-id="Sebelum PO">Before ordering</span></a>
+  </nav>
+  <div class="side-foot">
+    <div data-en="Internal working document" data-id="Dokumen kerja internal">Internal working document</div>
+    <div data-en="Not for external circulation" data-id="Bukan untuk pihak luar">Not for external circulation</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+<div class="wrap">
+
+  <div class="hero">
+    <img class="hero-logo" src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish"
+         onerror="this.style.display='none';document.getElementById('hero-lg-fb').style.display='block'">
+    <div class="hero-logo-fb" id="hero-lg-fb" style="display:none">Miss&nbsp;Fish</div>
+    <div class="eyebrow" data-en="Infrastructure review" data-id="Kajian infrastruktur">Infrastructure review</div>
+    <h1 data-en="The cash register is doing a server's job."
+        data-id="Mesin kasir dipaksa mengerjakan tugas server.">The cash register is doing a server's job.</h1>
+    <p data-en="ESB POS slows to a crawl every night between 01:00 and 03:00. This document works through what is actually causing it, and compares three ways forward."
+       data-id="ESB POS melambat parah setiap malam antara jam 01.00 dan 03.00. Dokumen ini menelusuri penyebab sebenarnya, lalu membandingkan tiga pilihan langkah selanjutnya.">ESB POS slows to a crawl every night between 01:00 and 03:00. This document works through what is actually causing it, and compares three ways forward.</p>
+    <div class="meta">
+      <span><span data-en="Site" data-id="Lokasi">Site</span>: <b>Miss Fish</b></span>
+      <span><span data-en="System" data-id="Sistem">System</span>: <b>ESB POS</b></span>
+      <span><span data-en="Hours" data-id="Jam operasional">Hours</span>: <b>18:00 – 06:00</b></span>
+      <span><span data-en="Status" data-id="Status">Status</span>: <b data-en="Quotation in hand" data-id="Penawaran sudah ada">Quotation in hand</b></span>
+    </div>
+  </div>
+
+  <!-- 01 SUMMARY -->
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span>
+      <h2 data-en="Summary" data-id="Ringkasan">Summary</h2></div>
+    <p class="lede"
+       data-en="The machine acting as the ESB server is a 15-inch all-in-one cash register. At around five tablets it still ran normally. It now serves fifteen devices while also running the main cashier lane."
+       data-id="Mesin yang berperan sebagai server ESB sebenarnya adalah kasir all-in-one 15 inci. Saat masih sekitar lima tablet, semuanya normal. Sekarang melayani lima belas perangkat sekaligus menjalankan kasir utama.">The machine acting as the ESB server is a 15-inch all-in-one cash register. At around five tablets it still ran normally. It now serves fifteen devices while also running the main cashier lane.</p>
+
+    <div class="grid g3">
+      <div class="card">
+        <div class="card-k" data-en="Diagnosis" data-id="Diagnosa">Diagnosis</div>
+        <div class="card-v" data-en="Under-specified host" data-id="Host kurang spek">Under-specified host</div>
+        <div class="card-n" data-en="A 15 W mobile processor carrying a four-role workload." data-id="Prosesor mobile 15 W memikul empat peran sekaligus.">A 15 W mobile processor carrying a four-role workload.</div>
+      </div>
+      <div class="card">
+        <div class="card-k" data-en="Network" data-id="Jaringan">Network</div>
+        <div class="card-v" data-en="Ruled out" data-id="Bukan penyebab">Ruled out</div>
+        <div class="card-n" data-en="Gigabit LAN, Ruijie switch, Wi-Fi on standby only." data-id="LAN gigabit, switch Ruijie, Wi-Fi hanya cadangan.">Gigabit LAN, Ruijie switch, Wi-Fi on standby only.</div>
+      </div>
+      <div class="card">
+        <div class="card-k" data-en="Recommendation" data-id="Rekomendasi">Recommendation</div>
+        <div class="card-v" data-en="Split the roles" data-id="Pisahkan perannya">Split the roles</div>
+        <div class="card-n" data-en="Dedicated business desktop as server; keep the Iware as a till." data-id="Business desktop khusus sebagai server; Iware tetap dipakai sebagai kasir.">Dedicated business desktop as server; keep the Iware as a till.</div>
+      </div>
+    </div>
+
+    <div class="callout good">
+      <b data-en="Why this is not just &ldquo;buy a faster PC&rdquo;" data-id="Kenapa ini bukan sekadar &ldquo;beli PC lebih kencang&rdquo;">Why this is not just &ldquo;buy a faster PC&rdquo;</b>
+      <span data-en="Moving the server off the cashier lane fixes two problems at once: it frees the capacity that Chrome POS is currently eating, and it removes the single point of failure that can stop every section at once."
+            data-id="Memindahkan server dari jalur kasir menyelesaikan dua masalah sekaligus: membebaskan kapasitas yang selama ini dimakan Chrome POS, dan menghapus titik kegagalan tunggal yang bisa menghentikan seluruh operasional.">Moving the server off the cashier lane fixes two problems at once: it frees the capacity that Chrome POS is currently eating, and it removes the single point of failure that can stop every section at once.</span>
+    </div>
+  </section>
+
+  <!-- 02 CURRENT -->
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span>
+      <h2 data-en="Current setup" data-id="Kondisi saat ini">Current setup</h2></div>
+    <p class="lede"
+       data-en="One Iware F1 Mono Prime all-in-one till, sitting in the cashier area, running four jobs at the same time."
+       data-id="Satu unit kasir all-in-one Iware F1 Mono Prime, berada di area kasir, menjalankan empat pekerjaan sekaligus.">One Iware F1 Mono Prime all-in-one till, sitting in the cashier area, running four jobs at the same time.</p>
+
+    <div class="meter-card">
+      <div class="meter-top">
+        <div class="meter-title" data-en="Load where it still ran well vs. load today" data-id="Beban saat masih lancar vs. beban sekarang">Load where it still ran well vs. load today</div>
+        <div class="meter-ratio">3.0&times; <span data-en="over" data-id="lipat">over</span></div>
+      </div>
+      <div class="meter-track">
+        <div class="meter-fill"><span data-en="5 — still normal" data-id="5 — masih normal">5 — still normal</span></div>
+        <div class="meter-over"><span data-en="+10 added since" data-id="+10 tambahan sejak itu">+10 added since</span></div>
+      </div>
+      <div class="meter-legend">
+        <span><span data-en="Ran normally at" data-id="Masih lancar di">Ran normally at</span>: <b data-en="around 5 tablets" data-id="sekitar 5 tablet">around 5 tablets</b></span>
+        <span><span data-en="Connected today" data-id="Terhubung sekarang">Connected today</span>: <b data-en="14 tablets + 1 extra POS" data-id="14 tablet + 1 POS tambahan">14 tablets + 1 extra POS</b></span>
+        <span><span data-en="Plus" data-id="Ditambah">Plus</span>: <b data-en="its own cashier lane" data-id="jalur kasirnya sendiri">its own cashier lane</b></span>
+      </div>
+    </div>
+
+    <h3 data-en="Four roles on one box" data-id="Empat peran dalam satu mesin">Four roles on one box</h3>
+    <div class="grid g2">
+      <div class="card"><div class="card-k">01</div>
+        <div class="card-v" data-en="Database" data-id="Database">Database</div>
+        <div class="card-n" data-en="Holds every transaction written across all sections." data-id="Menyimpan seluruh transaksi dari semua section.">Holds every transaction written across all sections.</div></div>
+      <div class="card"><div class="card-k">02</div>
+        <div class="card-v" data-en="HTTP server" data-id="Server HTTP">HTTP server</div>
+        <div class="card-n" data-en="Serves the Chrome-to-Chrome POS session on every tablet." data-id="Melayani sesi POS Chrome-to-Chrome di setiap tablet.">Serves the Chrome-to-Chrome POS session on every tablet.</div></div>
+      <div class="card"><div class="card-k">03</div>
+        <div class="card-v" data-en="Main cashier lane" data-id="Kasir utama">Main cashier lane</div>
+        <div class="card-n" data-en="Runs its own Chrome POS window — the heaviest local load." data-id="Menjalankan jendela Chrome POS sendiri — beban lokal paling berat.">Runs its own Chrome POS window — the heaviest local load.</div></div>
+      <div class="card"><div class="card-k">04</div>
+        <div class="card-v" data-en="Cloud sync" data-id="Sinkronisasi cloud">Cloud sync</div>
+        <div class="card-n" data-en="Pushes to ESB cloud from the server, not from the tablets." data-id="Mengirim ke cloud ESB dari server, bukan dari tablet.">Pushes to ESB cloud from the server, not from the tablets.</div></div>
+    </div>
+
+    <h3 data-en="Hardware on record" data-id="Perangkat keras terpasang">Hardware on record</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Component" data-id="Komponen">Component</th>
+        <th data-en="Specification" data-id="Spesifikasi">Specification</th>
+        <th data-en="Assessment" data-id="Penilaian">Assessment</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k" data-en="Unit" data-id="Unit">Unit</td>
+            <td class="m">Iware F1 Mono Prime 15&Prime;</td>
+            <td><span class="flag bad" data-en="Till, not server" data-id="Kasir, bukan server">Till, not server</span></td></tr>
+        <tr><td class="k">CPU</td>
+            <td class="m">Core i5-10130U · 4C/8T · 1.7 GHz · 15 W</td>
+            <td><span class="flag bad" data-en="Mobile class" data-id="Kelas mobile">Mobile class</span></td></tr>
+        <tr><td class="k">RAM</td>
+            <td class="m">16 GB DDR4</td>
+            <td><span class="flag warn" data-en="Tight at peak" data-id="Mepet saat peak">Tight at peak</span></td></tr>
+        <tr><td class="k" data-en="Storage" data-id="Penyimpanan">Storage</td>
+            <td class="m">SSD 256 GB · &gt;50 GB free</td>
+            <td><span class="flag ok" data-en="Capacity fine" data-id="Kapasitas aman">Capacity fine</span></td></tr>
+        <tr><td class="k" data-en="Drive interface" data-id="Antarmuka drive">Drive interface</td>
+            <td class="m" data-en="SATA — confirmed · no NVMe path on this platform" data-id="SATA — terkonfirmasi · platform ini tidak berjalur NVMe">SATA — confirmed · no NVMe path on this platform</td>
+            <td><span class="flag bad" data-en="Adds write latency" data-id="Menambah latensi tulis">Adds write latency</span></td></tr>
+        <tr><td class="k">OS</td>
+            <td class="m" data-en="Windows 10 in use · listing states Windows 11" data-id="Windows 10 terpasang · brosur menyebut Windows 11">Windows 10 in use · listing states Windows 11</td>
+            <td><span class="flag warn" data-en="Verify" data-id="Cek dulu">Verify</span></td></tr>
+        <tr><td class="k" data-en="Cooling" data-id="Pendinginan">Cooling</td>
+            <td class="m" data-en="Slim all-in-one chassis" data-id="Sasis all-in-one tipis">Slim all-in-one chassis</td>
+            <td><span class="flag bad" data-en="Throttles" data-id="Rawan throttle">Throttles</span></td></tr>
+        <tr><td class="k" data-en="Placement" data-id="Penempatan">Placement</td>
+            <td class="m" data-en="Cashier counter — heat, spills, traffic" data-id="Meja kasir — panas, tumpahan, lalu lalang">Cashier counter — heat, spills, traffic</td>
+            <td><span class="flag bad" data-en="Exposed" data-id="Rawan">Exposed</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 data-en="Network — already clean" data-id="Jaringan — sudah bersih">Network — already clean</h3>
+
+    <figure class="figure">
+      <img src="https://anabhidev.com/MFB/topology.jpg" alt="Ruijie network topology">
+      <figcaption>
+        <span data-en="Ruijie controller topology — one gigabit switch feeding 13 access points across five models. Every uplink reads full, and the ESB host sits on a wired port rather than Wi-Fi."
+              data-id="Topologi controller Ruijie — satu switch gigabit menyuplai 13 access point dari lima model. Semua uplink terbaca penuh, dan host ESB terpasang di port kabel, bukan Wi-Fi.">Ruijie controller topology — one gigabit switch feeding 13 access points across five models. Every uplink reads full, and the ESB host sits on a wired port rather than Wi-Fi.</span>
+      </figcaption>
+    </figure>
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Item" data-id="Item">Item</th>
+        <th data-en="Detail" data-id="Detail">Detail</th>
+        <th data-en="Verdict" data-id="Kesimpulan">Verdict</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k" data-en="Server link" data-id="Koneksi server">Server link</td>
+            <td class="m" data-en="Wired LAN · Wi-Fi kept as backup" data-id="LAN kabel · Wi-Fi sebagai cadangan">Wired LAN · Wi-Fi kept as backup</td>
+            <td><span class="flag ok" data-en="Correct" data-id="Sudah benar">Correct</span></td></tr>
+        <tr><td class="k" data-en="Switch" data-id="Switch">Switch</td><td class="m">Ruijie · Gigabit</td>
+            <td><span class="flag ok" data-en="Sufficient" data-id="Memadai">Sufficient</span></td></tr>
+        <tr><td class="k" data-en="Access points" data-id="Access point">Access points</td>
+            <td class="m" data-en="13 units · AP820-L ×8, AP720-L ×2, AP720-I, AP840-L, RAP2200" data-id="13 unit · AP820-L ×8, AP720-L ×2, AP720-I, AP840-L, RAP2200">13 units · AP820-L ×8, AP720-L ×2, AP720-I, AP840-L, RAP2200</td>
+            <td><span class="flag ok" data-en="Not the bottleneck" data-id="Bukan penyebab">Not the bottleneck</span></td></tr>
+        <tr><td class="k" data-en="Symptom shape" data-id="Pola gejala">Symptom shape</td>
+            <td class="m" data-en="Slow posting, no disconnects" data-id="Posting lambat, tanpa putus koneksi">Slow posting, no disconnects</td>
+            <td><span class="flag ok" data-en="Points to host" data-id="Mengarah ke mesin">Points to host</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="footnote"
+       data-en="A network fault produces dropouts, timeouts and &ldquo;no internet&rdquo; states. This system stays connected and simply gets slow — and only when load peaks. That pattern belongs to the host, not the network."
+       data-id="Gangguan jaringan biasanya memunculkan putus koneksi, timeout, dan status &ldquo;no internet&rdquo;. Sistem ini tetap tersambung, hanya melambat — dan hanya saat beban memuncak. Pola itu milik mesin, bukan jaringan.">A network fault produces dropouts, timeouts and &ldquo;no internet&rdquo; states. This system stays connected and simply gets slow — and only when load peaks. That pattern belongs to the host, not the network.</p>
+  </section>
+
+  <!-- 03 ROOT CAUSE -->
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span>
+      <h2 data-en="Root cause" data-id="Akar masalah">Root cause</h2></div>
+    <p class="lede"
+       data-en="Four factors stack on top of each other, and they all peak at the same hour."
+       data-id="Empat faktor menumpuk satu sama lain, dan semuanya memuncak di jam yang sama.">Four factors stack on top of each other, and they all peak at the same hour.</p>
+
+    <div class="grid causes" style="gap:12px">
+      <div class="cause">
+        <h4 data-en="1 — Three times the load it last handled well" data-id="1 — Tiga kali lipat dari beban terakhir yang masih sanggup">1 — Three times the load it last handled well</h4>
+        <p data-en="At around five tablets this machine behaved normally. Fifteen devices now depend on it. Before midnight the restaurant is quiet and everything still works; from 01:00 every terminal is live at once."
+           data-id="Saat masih sekitar lima tablet, mesin ini berjalan normal. Sekarang lima belas perangkat bergantung padanya. Sebelum tengah malam restoran masih sepi dan semuanya lancar; mulai jam 01.00 semua terminal aktif bersamaan.">At around five tablets this machine behaved normally. Fifteen devices now depend on it. Before midnight the restaurant is quiet and everything still works; from 01:00 every terminal is live at once.</p>
+      </div>
+      <div class="cause">
+        <h4 data-en="2 — A laptop processor in a sealed chassis" data-id="2 — Prosesor laptop di dalam sasis tertutup">2 — A laptop processor in a sealed chassis</h4>
+        <p data-en="The i5-10310U is a 15 W mobile part built for thin laptops. Inside an all-in-one till with a small fan, sustained load pushes it into thermal throttling — clock speed drops exactly when demand is highest."
+           data-id="i5-10310U adalah chip mobile 15 W untuk laptop tipis. Di dalam kasir all-in-one berkipas kecil, beban berkelanjutan memicu thermal throttling — clock turun justru saat kebutuhan paling tinggi.">The i5-10310U is a 15 W mobile part built for thin laptops. Inside an all-in-one till with a small fan, sustained load pushes it into thermal throttling — clock speed drops exactly when demand is highest.</p>
+      </div>
+      <div class="cause">
+        <h4 data-en="3 — The server is also the busiest cashier" data-id="3 — Server merangkap kasir tersibuk">3 — The server is also the busiest cashier</h4>
+        <p data-en="A local Chrome POS window competes for the same cores and memory that fifteen other terminals depend on. This is the load that a dedicated server would remove entirely."
+           data-id="Jendela Chrome POS lokal berebut core dan memori yang sama dengan lima belas terminal lain. Inilah beban yang akan hilang sepenuhnya jika server dipisahkan.">A local Chrome POS window competes for the same cores and memory that fifteen other terminals depend on. This is the load that a dedicated server would remove entirely.</p>
+      </div>
+      <div class="cause">
+        <h4 data-en="4 — Memory pressure lands on a SATA drive" data-id="4 — Tekanan memori jatuh ke drive SATA">4 — Memory pressure lands on a SATA drive</h4>
+        <p data-en="Once 16 GB fills, Windows pages to disk — and that disk is SATA, confirmed. Every page-out adds latency to database writes, which slows posting further, which holds memory longer. The platform has no NVMe path, so this cannot be fixed on the current unit."
+           data-id="Begitu 16 GB penuh, Windows melakukan paging ke disk — dan disk itu SATA, sudah terkonfirmasi. Setiap paging menambah latensi pada penulisan database, posting makin lambat, memori makin lama tertahan. Platform ini tidak punya jalur NVMe, jadi hal ini tidak bisa diperbaiki di unit yang sekarang.">Once 16 GB fills, Windows pages to disk — and that disk is SATA, confirmed. Every page-out adds latency to database writes, which slows posting further, which holds memory longer. The platform has no NVMe path, so this cannot be fixed on the current unit.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <b data-en="Still unmeasured" data-id="Masih belum terukur">Still unmeasured</b>
+      <span data-en="No Task Manager capture has been taken during peak. Screenshots of CPU, memory and disk between 01:00 and 03:00 would confirm which of the four is dominant — and are worth having on file regardless of which option is chosen."
+            data-id="Belum ada tangkapan Task Manager saat peak. Screenshot CPU, memori, dan disk antara jam 01.00–03.00 akan memastikan faktor mana yang paling dominan — dan tetap berguna disimpan apa pun opsi yang dipilih.">No Task Manager capture has been taken during peak. Screenshots of CPU, memory and disk between 01:00 and 03:00 would confirm which of the four is dominant — and are worth having on file regardless of which option is chosen.</span>
+    </div>
+
+    <div class="callout good">
+      <b data-en="Replacing the SATA drive is not worth doing" data-id="Mengganti drive SATA tidak layak dikerjakan">Replacing the SATA drive is not worth doing</b>
+      <span data-en="The Iware F1 platform runs on SATA lanes, so there is likely no M.2 NVMe slot to upgrade into — a new drive would still be SATA. On top of that, the unit is being demoted to a plain cashier terminal, where a SATA drive is perfectly adequate. Opening an all-in-one till risks the warranty for no real gain. Put the NVMe requirement on the new server instead."
+            data-id="Platform Iware F1 berjalan di jalur SATA, jadi kemungkinan besar tidak ada slot M.2 NVMe untuk di-upgrade — drive baru pun tetap SATA. Selain itu, unit ini akan diturunkan perannya menjadi terminal kasir biasa, yang mana drive SATA sudah lebih dari cukup. Membongkar kasir all-in-one berisiko menggugurkan garansi tanpa manfaat nyata. Letakkan kebutuhan NVMe di server baru saja.">The Iware F1 platform runs on SATA lanes, so there is likely no M.2 NVMe slot to upgrade into — a new drive would still be SATA. On top of that, the unit is being demoted to a plain cashier terminal, where a SATA drive is perfectly adequate. Opening an all-in-one till risks the warranty for no real gain. Put the NVMe requirement on the new server instead.</span>
+    </div>
+
+    <div class="callout note">
+      <b data-en="One free thing worth trying while the quotation is pending" data-id="Satu langkah gratis yang layak dicoba sambil menunggu penawaran">One free thing worth trying while the quotation is pending</b>
+      <span data-en="Move the main cashier lane onto the extra POS terminal and let the Iware F1 run as server only. That removes the heaviest local job — a full Chrome POS window — from the machine everyone depends on. It costs nothing, it can be reversed in minutes, and if posting improves noticeably it confirms the diagnosis before any money is spent."
+            data-id="Pindahkan jalur kasir utama ke unit POS tambahan, dan biarkan Iware F1 berjalan sebagai server saja. Langkah ini mengangkat pekerjaan lokal paling berat — satu jendela Chrome POS penuh — dari mesin yang jadi tumpuan semua orang. Tanpa biaya, bisa dikembalikan dalam hitungan menit, dan kalau posting terasa membaik, diagnosanya terkonfirmasi sebelum uang dikeluarkan.">Move the main cashier lane onto the extra POS terminal and let the Iware F1 run as server only. That removes the heaviest local job — a full Chrome POS window — from the machine everyone depends on. It costs nothing, it can be reversed in minutes, and if posting improves noticeably it confirms the diagnosis before any money is spent.</span>
+    </div>
+  </section>
+
+  <!-- 04 RISK -->
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span>
+      <h2 data-en="Failure risk" data-id="Risiko kegagalan">Failure risk</h2></div>
+    <p class="lede"
+       data-en="Performance is the visible problem. The structural one is that a single till on an open counter can stop every section at once."
+       data-id="Performa hanyalah masalah yang terlihat. Masalah struktural sebenarnya: satu unit kasir di meja terbuka bisa menghentikan seluruh restoran.">Performance is the visible problem. The structural one is that a single till on an open counter can stop every section at once.</p>
+
+    <div class="callout risk">
+      <b data-en="If the main till goes down, everything goes down" data-id="Kalau kasir utama mati, semuanya ikut mati">If the main till goes down, everything goes down</b>
+      <span data-en="A hang, a power trip, a spilt drink or a failed fan on that one machine takes all 14 tablets and the extra POS with it. There is no second host to fall back to."
+            data-id="Hang, listrik terputus, tumpahan minuman, atau kipas rusak pada satu mesin itu akan menjatuhkan seluruh 14 tablet dan POS tambahan. Tidak ada host cadangan.">A hang, a power trip, a spilt drink or a failed fan on that one machine takes all 14 tablets and the extra POS with it. There is no second host to fall back to.</span>
+    </div>
+
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Exposure" data-id="Titik risiko">Exposure</th>
+        <th data-en="Today" data-id="Saat ini">Today</th>
+        <th data-en="After splitting the roles" data-id="Setelah peran dipisah">After splitting the roles</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k" data-en="Main till fails" data-id="Kasir utama gagal">Main till fails</td>
+            <td><span class="flag bad" data-en="Every section stops" data-id="Semua section berhenti">Every section stops</span></td>
+            <td><span class="flag ok" data-en="One lane down" data-id="Satu jalur saja">One lane down</span></td></tr>
+        <tr><td class="k" data-en="Physical environment" data-id="Lingkungan fisik">Physical environment</td>
+            <td><span class="flag bad" data-en="Open counter" data-id="Meja terbuka">Open counter</span></td>
+            <td><span class="flag ok" data-en="AV Room, air-conditioned" data-id="AV Room, ber-AC">AV Room, air-conditioned</span></td></tr>
+        <tr><td class="k" data-en="Power interruption" data-id="Listrik terputus">Power interruption</td>
+            <td><span class="flag bad" data-en="No UPS on the host" data-id="Host tanpa UPS">No UPS on the host</span></td>
+            <td><span class="flag ok" data-en="UPS-backed, clean shutdown" data-id="Didukung UPS, shutdown aman">UPS-backed, clean shutdown</span></td></tr>
+        <tr><td class="k" data-en="Hardware service" data-id="Servis perangkat">Hardware service</td>
+            <td><span class="flag warn" data-en="Supplier warranty, carry-in" data-id="Garansi supplier, dibawa ke servis">Supplier warranty, carry-in</span></td>
+            <td><span class="flag ok" data-en="3-year onsite" data-id="Onsite 3 tahun">3-year onsite</span></td></tr>
+        <tr><td class="k" data-en="Spare capacity" data-id="Cadangan">Spare capacity</td>
+            <td><span class="flag bad" data-en="None" data-id="Tidak ada">None</span></td>
+            <td><span class="flag ok" data-en="Iware F1 becomes the fallback" data-id="Iware F1 jadi cadangan">Iware F1 becomes the fallback</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout good">
+      <b data-en="The old unit keeps earning" data-id="Unit lama tetap terpakai">The old unit keeps earning</b>
+      <span data-en="Once the server role moves off it, the Iware F1 goes back to being what it was built for — a cashier terminal. Nothing is written off, and its workload drops to a level it can actually handle."
+            data-id="Setelah peran server dilepas, Iware F1 kembali ke fungsi aslinya — terminal kasir. Tidak ada yang mubazir, dan bebannya turun ke tingkat yang memang sanggup ditangani.">Once the server role moves off it, the Iware F1 goes back to being what it was built for — a cashier terminal. Nothing is written off, and its workload drops to a level it can actually handle.</span>
+    </div>
+  </section>
+
+  <!-- 05 CPU -->
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span>
+      <h2 data-en="CPU comparison" data-id="Perbandingan CPU">CPU comparison</h2></div>
+    <p class="lede"
+       data-en="Indicative multi-threaded performance, relative to the processor in service today."
+       data-id="Perkiraan performa multi-thread, dibandingkan prosesor yang dipakai saat ini.">Indicative multi-threaded performance, relative to the processor in service today.</p>
+
+    <div class="bars" id="bars">
+      <div class="bar-row">
+        <div class="bar-label">
+          <span class="bar-name">Core i5-10310U<small data-en="in service · 4C/8T · 15 W" data-id="terpasang · 4C/8T · 15 W">in service · 4C/8T · 15 W</small></span>
+          <span class="bar-val">1.0&times;</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill now" data-w="13"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">
+          <span class="bar-name">Xeon E-2434<small data-en="option B · 4C/8T · 55 W" data-id="opsi B · 4C/8T · 55 W">option B · 4C/8T · 55 W</small></span>
+          <span class="bar-val">&asymp; 2.3&times;</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill xeon" data-w="31"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">
+          <span class="bar-name">Core Ultra 7 265<small data-en="option C · 20C/20T · 65 W" data-id="opsi C · 20C/20T · 65 W">option C · 20C/20T · 65 W</small></span>
+          <span class="bar-val">&asymp; 7.0&times;</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill new" data-w="93"></div></div>
+      </div>
+    </div>
+
+    <p class="footnote"
+       data-en="Figures are indicative multi-threaded benchmark ratios, not measured on this workload. They are useful for judging scale, not for predicting exact response times."
+       data-id="Angka di atas adalah rasio benchmark multi-thread yang bersifat indikatif, bukan hasil pengukuran pada beban kerja ini. Berguna untuk menilai skalanya, bukan memprediksi waktu respons persisnya.">Figures are indicative multi-threaded benchmark ratios, not measured on this workload. They are useful for judging scale, not for predicting exact response times.</p>
+
+    <h3 data-en="What the ESB workload actually needs" data-id="Yang sebenarnya dibutuhkan beban ESB">What the ESB workload actually needs</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Workload" data-id="Beban kerja">Workload</th>
+        <th data-en="Demands" data-id="Menuntut">Demands</th>
+        <th data-en="Note" data-id="Catatan">Note</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k" data-en="Serving HTTP to tablets" data-id="Melayani HTTP ke tablet">Serving HTTP to tablets</td>
+            <td class="m" data-en="Low CPU" data-id="CPU rendah">Low CPU</td>
+            <td data-en="Light on its own; heavy only when everything else competes." data-id="Ringan bila berdiri sendiri; berat hanya saat berebut dengan yang lain.">Light on its own; heavy only when everything else competes.</td></tr>
+        <tr><td class="k" data-en="Database writes" data-id="Penulisan database">Database writes</td>
+            <td class="m" data-en="CPU + fast disk" data-id="CPU + disk cepat">CPU + fast disk</td>
+            <td data-en="NVMe matters more here than extra cores." data-id="NVMe lebih berpengaruh di sini dibanding tambahan core.">NVMe matters more here than extra cores.</td></tr>
+        <tr><td class="k" data-en="Local Chrome POS" data-id="Chrome POS lokal">Local Chrome POS</td>
+            <td class="m" data-en="RAM + CPU" data-id="RAM + CPU">RAM + CPU</td>
+            <td data-en="Removed entirely once the server is separated." data-id="Hilang sepenuhnya setelah server dipisahkan.">Removed entirely once the server is separated.</td></tr>
+        <tr><td class="k" data-en="Single-threaded backend" data-id="Backend single-thread">Single-threaded backend</td>
+            <td class="m" data-en="Clock speed" data-id="Kecepatan clock">Clock speed</td>
+            <td data-en="If ESB runs on Node.js, per-core speed beats core count." data-id="Kalau ESB berjalan di Node.js, kecepatan per core lebih menentukan daripada jumlah core.">If ESB runs on Node.js, per-core speed beats core count.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 06 OPTIONS -->
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span>
+      <h2 data-en="Three options" data-id="Tiga opsi">Three options</h2></div>
+    <p class="lede"
+       data-en="Option C is a firm quotation — desktop, monitor and UPS all included in one price."
+       data-id="Opsi C sudah berupa penawaran fix — desktop, monitor, dan UPS semuanya termasuk dalam satu harga.">Option C is a firm quotation — desktop, monitor and UPS all included in one price.</p>
+
+    <div class="opts">
+
+      <div class="opt">
+        <div class="opt-id">OPTION A</div>
+        <h3 data-en="Keep the Iware F1" data-id="Tetap pakai Iware F1">Keep the Iware F1</h3>
+        <div class="opt-sub" data-en="No change" data-id="Tanpa perubahan">No change</div>
+        <div class="opt-price">Rp 0</div>
+        <ul>
+          <li class="plus" data-en="No spend, no migration work" data-id="Tanpa biaya, tanpa kerja migrasi">No spend, no migration work</li>
+          <li class="minus" data-en="Peak-hour slowdown continues nightly" data-id="Perlambatan saat peak berlanjut tiap malam">Peak-hour slowdown continues nightly</li>
+          <li class="minus" data-en="Single point of failure stays in place" data-id="Titik kegagalan tunggal tetap ada">Single point of failure stays in place</li>
+          <li class="minus" data-en="Hardware stays 3&times; beyond its rated load" data-id="Perangkat tetap 3&times; di atas beban rancangannya">Hardware stays 3&times; beyond its rated load</li>
+        </ul>
+        <div class="opt-verdict">
+          <b data-en="Verdict" data-id="Kesimpulan">Verdict</b>
+          <span data-en="Baseline for comparison only. The load is not going back down." data-id="Hanya sebagai pembanding. Bebannya tidak akan berkurang.">Baseline for comparison only. The load is not going back down.</span>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt-id">OPTION B</div>
+        <h3>HPE ProLiant DL20 Gen11</h3>
+        <div class="opt-sub">Xeon E-2434 · 4C/8T · ECC · iLO</div>
+        <div class="opt-price">&asymp; Rp 56 jt</div>
+        <ul>
+          <li class="plus" data-en="Enterprise build, ECC memory, iLO remote management" data-id="Rakitan enterprise, memori ECC, manajemen jarak jauh iLO">Enterprise build, ECC memory, iLO remote management</li>
+          <li class="plus" data-en="3-year onsite warranty" data-id="Garansi onsite 3 tahun">3-year onsite warranty</li>
+          <li class="minus" data-en="Only 4 cores — the weakest CPU of the two upgrades" data-id="Hanya 4 core — CPU terlemah di antara dua opsi upgrade">Only 4 cores — the weakest CPU of the two upgrades</li>
+          <li class="minus" data-en="24/7 durability is the main premium, and the server runs 12 h/day" data-id="Nilai utamanya ketahanan 24/7, padahal server hanya menyala 12 jam/hari">24/7 durability is the main premium, and the server runs 12 h/day</li>
+          <li class="minus" data-en="Highest cost, and does not include a monitor or a UPS" data-id="Biaya tertinggi, dan belum termasuk monitor atau UPS">Highest cost, and does not include a monitor or a UPS</li>
+        </ul>
+        <div class="opt-verdict">
+          <b data-en="Verdict" data-id="Kesimpulan">Verdict</b>
+          <span data-en="Well built, but priced for a duty cycle this site does not run." data-id="Kualitasnya bagus, tetapi harganya untuk pola pemakaian yang tidak berlaku di sini.">Well built, but priced for a duty cycle this site does not run.</span>
+        </div>
+      </div>
+
+      <div class="opt pick">
+        <div class="opt-tag" data-en="Preferred" data-id="Pilihan">Preferred</div>
+        <div class="opt-id">OPTION C</div>
+        <h3>Lenovo ThinkCentre M70t Gen 6</h3>
+        <div class="opt-sub">Core Ultra 7 265 · 20C/20T · Tower</div>
+        <div class="opt-price">Rp 44.530.000</div>
+        <ul>
+          <li class="plus" data-en="Firm quotation — PC, monitor and UPS all included" data-id="Penawaran sudah fix — PC, monitor, dan UPS semuanya termasuk">Firm quotation — PC, monitor and UPS all included</li>
+          <li class="plus" data-en="32 GB DDR5-5600, 1 TB + 2 TB NVMe — both drives, no SATA in the box" data-id="32 GB DDR5-5600, 1 TB + 2 TB NVMe — kedua drive, tanpa SATA sama sekali">32 GB DDR5-5600, 1 TB + 2 TB NVMe — both drives, no SATA in the box</li>
+          <li class="plus" data-en="Roughly 7&times; the current processor — far beyond what ESB needs" data-id="Sekitar 7&times; prosesor saat ini — jauh melampaui kebutuhan ESB">Roughly 7&times; the current processor — far beyond what ESB needs</li>
+          <li class="plus" data-en="3/3/3 warranty, Windows 11 Pro, dual LAN" data-id="Garansi 3/3/3, Windows 11 Pro, dual LAN">3/3/3 warranty, Windows 11 Pro, dual LAN</li>
+          <li class="minus" data-en="Confirm exactly what 3/3/3 covers before ordering" data-id="Pastikan cakupan garansi 3/3/3 secara pasti sebelum PO">Confirm exactly what 3/3/3 covers before ordering</li>
+        </ul>
+        <div class="opt-verdict">
+          <b data-en="Verdict" data-id="Kesimpulan">Verdict</b>
+          <span data-en="A firm, all-in price well under the ceiling, with capacity far beyond what this workload will ever use." data-id="Harga sudah fix, jauh di bawah batas anggaran, dengan kapasitas yang jauh melampaui kebutuhan beban kerja ini.">A firm, all-in price well under the ceiling, with capacity far beyond what this workload will ever use.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 07 SPEC -->
+  <section id="s7">
+    <div class="sec-head"><span class="sec-num">07</span>
+      <h2 data-en="Target spec &amp; budget" data-id="Spek target &amp; anggaran">Target spec &amp; budget</h2></div>
+    <p class="lede"
+       data-en="Specification behind Option C. Business desktop class, no discrete graphics."
+       data-id="Spesifikasi di balik Opsi C. Kelas business desktop, tanpa kartu grafis diskrit.">Specification behind Option C. Business desktop class, no discrete graphics.</p>
+
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Component" data-id="Komponen">Component</th>
+        <th data-en="Requirement" data-id="Ketentuan">Requirement</th>
+        <th data-en="Reason" data-id="Alasan">Reason</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k">CPU</td><td class="m">Core Ultra 7 265</td>
+            <td data-en="Removes the processor ceiling entirely." data-id="Menghilangkan batas prosesor sepenuhnya.">Removes the processor ceiling entirely.</td></tr>
+        <tr><td class="k">RAM</td><td class="m">32 GB DDR5-5600 (2&times;16 GB)</td>
+            <td data-en="Ends paging under peak load; room to reach 64 GB later." data-id="Menghentikan paging saat beban puncak; masih bisa naik ke 64 GB.">Ends paging under peak load; room to reach 64 GB later.</td></tr>
+        <tr><td class="k" data-en="Primary drive" data-id="Drive utama">Primary drive</td><td class="m">NVMe 1 TB</td>
+            <td data-en="OS and ESB database — the write path that posting depends on." data-id="OS dan database ESB — jalur tulis yang menentukan kecepatan posting.">OS and ESB database — the write path that posting depends on.</td></tr>
+        <tr><td class="k" data-en="Secondary drive" data-id="Drive sekunder">Secondary drive</td><td class="m">NVMe 2 TB</td>
+            <td data-en="Local backup target, kept off the database drive. Both drives are NVMe — this platform has no SATA bay to fall back to." data-id="Tujuan backup lokal, terpisah dari drive database. Kedua drive NVMe — platform ini tidak punya slot SATA sebagai cadangan.">Local backup target, kept off the database drive. Both drives are NVMe — this platform has no SATA bay to fall back to.</td></tr>
+        <tr><td class="k" data-en="Graphics" data-id="Grafis">Graphics</td>
+            <td class="m" data-en="Integrated only" data-id="Hanya terintegrasi">Integrated only</td>
+            <td data-en="A discrete GPU adds cost, heat and noise for no benefit here." data-id="GPU diskrit hanya menambah biaya, panas, dan bising tanpa manfaat.">A discrete GPU adds cost, heat and noise for no benefit here.</td></tr>
+        <tr><td class="k">OS</td><td class="m">Windows 11 Pro</td>
+            <td data-en="Remote Desktop and domain join; ESB supports Windows 11." data-id="Remote Desktop dan domain join; ESB mendukung Windows 11.">Remote Desktop and domain join; ESB supports Windows 11.</td></tr>
+        <tr><td class="k" data-en="Network" data-id="Jaringan">Network</td>
+            <td class="m" data-en="Gigabit, 2.5 GbE if offered" data-id="Gigabit, 2.5 GbE bila tersedia">Gigabit, 2.5 GbE if offered</td>
+            <td data-en="Matches the existing Ruijie switch." data-id="Menyesuaikan switch Ruijie yang sudah ada.">Matches the existing Ruijie switch.</td></tr>
+        <tr><td class="k" data-en="Warranty" data-id="Garansi">Warranty</td>
+            <td class="m" data-en="3-year onsite" data-id="Onsite 3 tahun">3-year onsite</td>
+            <td data-en="Non-negotiable for a machine every section depends on." data-id="Tidak bisa ditawar untuk mesin yang menopang seluruh operasional.">Non-negotiable for a machine every section depends on.</td></tr>
+        <tr><td class="k" data-en="Form factor" data-id="Bentuk">Form factor</td>
+            <td class="m" data-en="Tower" data-id="Tower">Tower</td>
+            <td data-en="AV Room is air-conditioned around the clock — no space constraint." data-id="AV Room ber-AC 24 jam — tidak ada kendala ruang.">AV Room is air-conditioned around the clock — no space constraint.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 data-en="Budget — Option C quotation" data-id="Anggaran — penawaran Opsi C">Budget — Option C quotation</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th data-en="Line" data-id="Item">Line</th>
+        <th data-en="Detail" data-id="Detail">Detail</th>
+        <th class="m" data-en="Amount" data-id="Nilai">Amount</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="k" data-en="Desktop unit" data-id="Unit desktop">Desktop unit</td>
+            <td data-en="Lenovo ThinkCentre M70t Gen 6 — Ultra 7 265, 32 GB, 1 TB + 2 TB NVMe, DVDRW, 3/3/3" data-id="Lenovo ThinkCentre M70t Gen 6 — Ultra 7 265, 32 GB, 1 TB + 2 TB NVMe, DVDRW, 3/3/3">Lenovo ThinkCentre M70t Gen 6 — Ultra 7 265, 32 GB, 1 TB + 2 TB NVMe, DVDRW, 3/3/3</td>
+            <td class="m" rowspan="3" style="vertical-align:middle;text-align:center">
+              <b style="font-family:var(--f-display);font-size:17px;letter-spacing:-.01em">Rp 44.530.000</b><br>
+              <span class="flag ok" style="margin-top:6px" data-en="All-in, firm quote" data-id="Sudah termasuk semua, harga fix">All-in, firm quote</span>
+            </td></tr>
+        <tr><td class="k" data-en="Monitor" data-id="Monitor">Monitor</td>
+            <td class="m" data-en="Lenovo LED 23.8&Prime; · 1 unit" data-id="Lenovo LED 23.8&Prime; · 1 unit">Lenovo LED 23.8&Prime; · 1 unit</td></tr>
+        <tr><td class="k">UPS</td><td class="m">APC BVG2200I-GR</td></tr>
+        <tr><td class="k" data-en="Ceiling" data-id="Batas atas">Ceiling</td>
+            <td data-en="Was set at, unit comes in under" data-id="Batas yang ditetapkan, unit ini di bawahnya">Was set at, unit comes in under</td>
+            <td class="m">&lt; Rp 50 jt</td></tr>
+      </tbody>
+    </table></div>
+    <p class="footnote"
+       data-en="One quotation, one line item — the desktop, monitor and UPS are priced together and are not sold separately at this rate. Confirm exactly what the 3/3/3 warranty covers (parts / labour / onsite is the usual read) before the purchase order goes out."
+       data-id="Satu penawaran, satu baris — desktop, monitor, dan UPS dihargai bersama dan tidak dijual terpisah pada harga ini. Pastikan cakupan pasti garansi 3/3/3 (biasanya berarti parts / labor / onsite) sebelum PO diterbitkan.">One quotation, one line item — the desktop, monitor and UPS are priced together and are not sold separately at this rate. Confirm exactly what the 3/3/3 warranty covers (parts / labour / onsite is the usual read) before the purchase order goes out.</p>
+
+
+    <div class="callout note">
+      <b data-en="Shutting down outside service hours" data-id="Mematikan server di luar jam operasional">Shutting down outside service hours</b>
+      <span data-en="Powering the server down between 06:00 and 18:00 is fine, provided the shutdown is clean rather than forced, and provided ESB has no end-of-day, backup or sync task scheduled outside service hours. Confirm that with ESB before adopting the routine."
+            data-id="Mematikan server antara jam 06.00 dan 18.00 tidak masalah, asalkan shutdown dilakukan secara wajar bukan paksa, dan asalkan ESB tidak menjadwalkan proses end-of-day, backup, atau sinkronisasi di luar jam operasional. Pastikan hal ini ke ESB sebelum diterapkan rutin.">Powering the server down between 06:00 and 18:00 is fine, provided the shutdown is clean rather than forced, and provided ESB has no end-of-day, backup or sync task scheduled outside service hours. Confirm that with ESB before adopting the routine.</span>
+    </div>
+  </section>
+
+  <!-- 08 CHECKLIST -->
+  <section id="s8">
+    <div class="sec-head"><span class="sec-num">08</span>
+      <h2 data-en="Before ordering" data-id="Sebelum PO">Before ordering</h2></div>
+    <p class="lede"
+       data-en="Open items to close before a purchase order goes out."
+       data-id="Hal-hal yang perlu diselesaikan sebelum PO diterbitkan.">Open items to close before a purchase order goes out.</p>
+
+    <div class="checks" id="checks">
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Get ESB's written spec recommendation for 15–20 tablets" data-id="Minta rekomendasi spek tertulis dari ESB untuk 15–20 tablet">Get ESB's written spec recommendation for 15–20 tablets</span>
+          <span class="check-n" data-en="A vendor statement carries more weight than an internal estimate, and covers you later." data-id="Pernyataan vendor lebih kuat daripada perkiraan internal, sekaligus jadi pegangan nanti.">A vendor statement carries more weight than an internal estimate, and covers you later.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Capture Task Manager during peak, 01:00–03:00" data-id="Ambil tangkapan Task Manager saat peak, 01.00–03.00">Capture Task Manager during peak, 01:00–03:00</span>
+          <span class="check-n" data-en="Performance and Processes tabs. Note which process leads: chrome.exe, node.exe or the database." data-id="Tab Performance dan Processes. Catat proses mana yang paling tinggi: chrome.exe, node.exe, atau database.">Performance and Processes tabs. Note which process leads: chrome.exe, node.exe or the database.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Trial moving the main cashier lane onto the extra POS" data-id="Uji coba pindahkan kasir utama ke unit POS tambahan">Trial moving the main cashier lane onto the extra POS</span>
+          <span class="check-n" data-en="Free, reversible, and it tests the diagnosis before any spend." data-id="Gratis, bisa dikembalikan, dan menguji diagnosa sebelum ada pengeluaran.">Free, reversible, and it tests the diagnosis before any spend.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Settle the CPU model — 10310U or 10130U" data-id="Pastikan model CPU — 10310U atau 10130U">Settle the CPU model — 10310U or 10130U</span>
+          <span class="check-n" data-en="The retail listing and the site record disagree. Either way the conclusion holds." data-id="Data brosur dan catatan di lokasi berbeda. Apa pun hasilnya, kesimpulannya tetap sama.">The retail listing and the site record disagree. Either way the conclusion holds.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Get written confirmation of what 3/3/3 covers" data-id="Minta konfirmasi tertulis cakupan garansi 3/3/3">Get written confirmation of what 3/3/3 covers</span>
+          <span class="check-n" data-en="Confirm it reads as parts / labour / onsite, and the response-time commitment." data-id="Pastikan artinya parts / labor / onsite, dan komitmen waktu responsnya.">Confirm it reads as parts / labour / onsite, and the response-time commitment.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Confirm the quotation's validity period before ordering" data-id="Pastikan masa berlaku penawaran sebelum PO">Confirm the quotation's validity period before ordering</span>
+          <span class="check-n" data-en="Component pricing moves quickly; lock the quote before it expires." data-id="Harga komponen bergerak cepat; kunci penawaran sebelum kedaluwarsa.">Component pricing moves quickly; lock the quote before it expires.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Confirm 3-year onsite warranty is included, not an add-on" data-id="Pastikan garansi onsite 3 tahun sudah termasuk, bukan biaya tambahan">Confirm 3-year onsite warranty is included, not an add-on</span>
+          <span class="check-n" data-en="Ask for the response-time commitment in writing." data-id="Minta komitmen waktu respons secara tertulis.">Ask for the response-time commitment in writing.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Quote the APC 2200 VA and check runtime against the load" data-id="Minta penawaran APC 2200 VA dan cek daya tahannya terhadap beban">Quote the APC 2200 VA and check runtime against the load</span>
+          <span class="check-n" data-en="Enough runtime for a clean shutdown, not for continued trading." data-id="Cukup untuk shutdown yang aman, bukan untuk melanjutkan operasional.">Enough runtime for a clean shutdown, not for continued trading.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Confirm ESB has no scheduled task outside 18:00–06:00" data-id="Pastikan ESB tidak punya proses terjadwal di luar 18.00–06.00">Confirm ESB has no scheduled task outside 18:00–06:00</span>
+          <span class="check-n" data-en="Decides whether the daytime shutdown routine is safe." data-id="Menentukan apakah rutinitas mematikan server di siang hari aman.">Decides whether the daytime shutdown routine is safe.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Plan the migration window and a rollback path" data-id="Susun jadwal migrasi dan jalur rollback">Plan the migration window and a rollback path</span>
+          <span class="check-n" data-en="Keep the Iware F1 configured as server until the new host has run a full peak night." data-id="Biarkan Iware F1 tetap terkonfigurasi sebagai server sampai host baru melewati satu malam peak penuh.">Keep the Iware F1 configured as server until the new host has run a full peak night.</span>
+        </span></label>
+      <label class="check"><input type="checkbox">
+        <span class="check-body">
+          <span class="check-t" data-en="Assign the Iware F1 its new role as a cashier terminal" data-id="Tetapkan peran baru Iware F1 sebagai terminal kasir">Assign the Iware F1 its new role as a cashier terminal</span>
+          <span class="check-n" data-en="Server services disabled, database moved, kept as a fallback host." data-id="Layanan server dimatikan, database dipindah, tetap disimpan sebagai host cadangan.">Server services disabled, database moved, kept as a fallback host.</span>
+        </span></label>
+      <div class="check-count" id="cnt">0 / 11</div>
+    </div>
+
+    <div class="end">
+      <div data-en="Miss Fish · POS server review · internal working document" data-id="Miss Fish · Kajian server POS · dokumen kerja internal">Miss Fish · POS server review · internal working document</div>
+      <div data-en="Checklist state is not saved — it resets when the page reloads." data-id="Status checklist tidak tersimpan — akan kembali kosong saat halaman dimuat ulang.">Checklist state is not saved — it resets when the page reloads.</div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+/* ---------- language ---------- */
+var lang='en';
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    var t=el.getAttribute('data-'+l);
+    if(t!==null) el.innerHTML=t;
+  });
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  document.getElementById('btn-id').classList.toggle('on',l==='id');
+  document.title = (l==='id') ? 'Kajian Server POS — Miss Fish' : 'POS Server Review — Miss Fish';
+}
+
+/* ---------- mobile menu ---------- */
+var burger=document.getElementById('burger'),scrim=document.getElementById('scrim');
+burger.addEventListener('click',function(){document.body.classList.toggle('menu')});
+scrim.addEventListener('click',function(){document.body.classList.remove('menu')});
+document.querySelectorAll('.side a').forEach(function(a){
+  a.addEventListener('click',function(){document.body.classList.remove('menu')});
+});
+
+/* ---------- scroll spy ---------- */
+var links=document.querySelectorAll('.side a');
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(l){
+        l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id);
+      });
+    }
+  });
+},{rootMargin:'-70px 0px -60% 0px',threshold:0});
+document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+
+/* ---------- benchmark bars ---------- */
+var barObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar-fill').forEach(function(f,i){
+        setTimeout(function(){f.style.width=f.dataset.w+'%'},i*110);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:.25});
+barObs.observe(document.getElementById('bars'));
+
+/* ---------- checklist counter ---------- */
+var boxes=document.querySelectorAll('#checks input');
+var cnt=document.getElementById('cnt');
+boxes.forEach(function(b){
+  b.addEventListener('change',function(){
+    var done=document.querySelectorAll('#checks input:checked').length;
+    cnt.textContent=done+' / '+boxes.length;
+  });
+});
+cnt.textContent='0 / '+boxes.length;
+</script>
+</body>
+</html>
