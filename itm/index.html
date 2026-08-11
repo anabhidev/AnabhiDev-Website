@@ -1285,7 +1285,7 @@
             <div id="email-content"><div class="loading-state">Fetching emails...</div></div>
           </div>
           <div class="card" id="section-calendar">
-            <div class="card-header"><div class="card-title"><div class="card-title-icon">Cal</div>Schedule (7 Days)</div><span class="card-action" id="cal-status">Loading...</span></div>
+            <div class="card-header"><div class="card-title"><div class="card-title-icon">Cal</div>Schedule (-3 to +7 Days)</div><span class="card-action" id="cal-status">Loading...</span></div>
             <div id="calendar-content"><div class="loading-state">Fetching calendar...</div></div>
           </div>
 
@@ -1695,7 +1695,7 @@
   function acol(s){var c=['#1a1a2e','#16213e','#0f3460','#533483','#2d6a4f','#1b4332','#7b2d8b','#c0392b','#1a535c'],h=0;for(var i=0;i<(s||'').length;i++)h=s.charCodeAt(i)+((h<<5)-h);return c[Math.abs(h)%c.length];}
   function isI(e){return!!(e&&(e.includes('@missfishgroup.com')||e.includes('@missfishbali.com')));}
   function fT(iso){return new Date(iso).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Makassar'});}
-  function fD(iso){var d=new Date(iso),t=new Date(),tm=new Date();tm.setDate(t.getDate()+1);if(d.toDateString()===t.toDateString())return 'Today';if(d.toDateString()===tm.toDateString())return 'Tomorrow';return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'Asia/Makassar'});}
+  function fD(iso){var d=new Date(iso),t=new Date(),tm=new Date();tm.setDate(t.getDate()+1);if(d.toDateString()===t.toDateString())return 'Today';if(d.toDateString()===tm.toDateString())return 'Tomorrow';var diffDays=Math.round((new Date(t.toDateString())-new Date(d.toDateString()))/86400000);if(diffDays>0&&diffDays<=3)return diffDays===1?'Yesterday':diffDays+' days ago';return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'Asia/Makassar'});}
   function fET(iso){var d=new Date(iso),t=new Date();if(d.toDateString()===t.toDateString())return d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Makassar'});var df=Math.floor((t-d)/86400000);return df===1?'Yesterday':df+'d ago';}
   function updateGreeting(){
     var n=new Date(),h=n.getHours(),g=h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
@@ -1733,11 +1733,11 @@
   function fetchCalendar(){
     var el=document.getElementById('calendar-content'),se=document.getElementById('cal-status');
     if(!el)return;el.innerHTML='<div class="loading-state">Fetching calendar...</div>';
-    var now=new Date(),in7=new Date(now);in7.setDate(now.getDate()+7);
-    gFetch('/me/calendarView?startDateTime='+now.toISOString()+'&endDateTime='+in7.toISOString()+'&$orderby=start/dateTime&$top=15&$select=subject,start,end,location,showAs')
+    var now=new Date(),back3=new Date(now);back3.setDate(now.getDate()-3);var in7=new Date(now);in7.setDate(now.getDate()+7);
+    gFetch('/me/calendarView?startDateTime='+back3.toISOString()+'&endDateTime='+in7.toISOString()+'&$orderby=start/dateTime&$top=30&$select=subject,start,end,location,showAs')
     .then(function(d){
       var evs=(d&&d.value)||[];
-      if(!evs.length){el.innerHTML='<div class="loading-state" style="animation:none;opacity:.5">No events in 7 days</div>';if(se)se.textContent='Office 365';return;}
+      if(!evs.length){el.innerHTML='<div class="loading-state" style="animation:none;opacity:.5">No events in range</div>';if(se)se.textContent='Office 365';return;}
       var grp={};evs.forEach(function(e){var day=fD(e.start.dateTime||e.start.date);if(!grp[day])grp[day]=[];grp[day].push(e);});
       var html='';
       Object.keys(grp).forEach(function(day){
@@ -1764,18 +1764,22 @@
   function fetchEmails(){
     var el=document.getElementById('email-content'),se=document.getElementById('email-status');
     if(!el)return;el.innerHTML='<div class="loading-state">Fetching emails...</div>';
-    gFetch('/me/mailFolders/inbox/messages?$filter=isRead eq false&$orderby=receivedDateTime desc&$top=10&$select=subject,sender,receivedDateTime,hasAttachments')
+    var ninetyAgo=new Date();ninetyAgo.setDate(ninetyAgo.getDate()-90);
+    gFetch('/me/mailFolders/inbox/messages?$filter=receivedDateTime ge '+ninetyAgo.toISOString()+'&$orderby=receivedDateTime desc&$top=50&$select=subject,sender,receivedDateTime,hasAttachments,isRead,importance')
     .then(function(d){
       var emails=(d&&d.value)||[];
-      var su=document.getElementById('stat-unread');if(su)su.textContent=emails.length||'0';
-      updateSidebarBadge('badge-inbox', emails.length);
+      var unreadCount=emails.filter(function(e){return e.isRead===false;}).length;
+      var su=document.getElementById('stat-unread');if(su)su.textContent=unreadCount||'0';
+      updateSidebarBadge('badge-inbox', unreadCount);
+      window._lastEmails=emails; // cache for AI briefing use
       if(!emails.length){el.innerHTML='<div class="loading-state" style="animation:none">Inbox empty!</div>';if(se)se.textContent='Office 365';return;}
       var html='';
-      emails.forEach(function(e){
+      emails.slice(0,15).forEach(function(e){
         var sn=(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.name)||'Unknown';
         var sa=(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.address)||'';
         var isIn=isI(sa);
-        html+='<div class="email-item'+(isIn?' email-internal':'')+'"><div class="unread-dot"></div><div class="email-avatar" style="background:'+acol(sa)+';flex-shrink:0">'+ini(sn||sa)+'</div><div style="flex:1;min-width:0"><div class="email-sender">'+sn+(isIn?' <span style="font-size:9px;background:var(--gold);color:#000;padding:1px 5px;border-radius:3px;font-weight:700">INT</span>':'')+'</div><div class="email-subject">'+((e.subject||'').substring(0,55))+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0"><div class="email-time">'+fET(e.receivedDateTime)+'</div>'+(e.hasAttachments?'<span>clip</span>':'')+'</div></div>';
+        var isRead=e.isRead===true;
+        html+='<div class="email-item'+(isIn?' email-internal':'')+'"'+(isRead?' style="opacity:0.5"':'')+'><div class="unread-dot"'+(isRead?' style="visibility:hidden"':'')+'></div><div class="email-avatar" style="background:'+acol(sa)+';flex-shrink:0">'+ini(sn||sa)+'</div><div style="flex:1;min-width:0"><div class="email-sender">'+sn+(isIn?' <span style="font-size:9px;background:var(--gold);color:#000;padding:1px 5px;border-radius:3px;font-weight:700">INT</span>':'')+'</div><div class="email-subject">'+((e.subject||'').substring(0,55))+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0"><div class="email-time">'+fET(e.receivedDateTime)+'</div>'+(e.hasAttachments?'<span>clip</span>':'')+'</div></div>';
       });
       el.innerHTML=html;
       var ic=emails.filter(function(e){return isI(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.address);}).length;
@@ -1789,11 +1793,12 @@
     el.style.opacity='.4';
     if(btn){btn.textContent='⟳ Generating...';btn.disabled=true;}
 
-    var now=new Date(),in7=new Date(now);in7.setDate(now.getDate()+7);
+    var now=new Date(),back3=new Date(now);back3.setDate(now.getDate()-3);var in7=new Date(now);in7.setDate(now.getDate()+7);
+    var ninetyAgo=new Date();ninetyAgo.setDate(ninetyAgo.getDate()-90);
 
     Promise.all([
-      gFetch('/me/mailFolders/inbox/messages?$filter=isRead eq false&$top=20&$select=subject,sender,receivedDateTime,importance,hasAttachments'),
-      gFetch('/me/calendarView?startDateTime='+now.toISOString()+'&endDateTime='+in7.toISOString()+'&$top=15&$select=subject,start,end,location,showAs'),
+      gFetch('/me/mailFolders/inbox/messages?$filter=receivedDateTime ge '+ninetyAgo.toISOString()+'&$orderby=receivedDateTime desc&$top=30&$select=subject,sender,receivedDateTime,importance,hasAttachments,isRead'),
+      gFetch('/me/calendarView?startDateTime='+back3.toISOString()+'&endDateTime='+in7.toISOString()+'&$top=30&$select=subject,start,end,location,showAs'),
       GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'clickup-tasks'})}).then(function(r){return r.json();}) : Promise.resolve({tasks:[]}),
       GAS_URL ? fetch(GAS_URL,{method:'POST',body:new URLSearchParams({action:'mikrotik-status'})}).then(function(r){return r.json();}).catch(function(){return {devices:[]};}) : Promise.resolve({devices:[]})
     ]).then(function(results){
@@ -1806,18 +1811,31 @@
       var dateStr=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
       var timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
 
+      var unreadEmails=emails.filter(function(e){return e.isRead===false;});
       var ieEmails=emails.filter(function(e){return isI(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.address);});
       var impEmails=emails.filter(function(e){return e.importance==='high';});
       var attEmails=emails.filter(function(e){return e.hasAttachments;});
-      var emailCtx='Total unread: '+emails.length+'\n';
-      if(ieEmails.length) emailCtx+='Internal emails ('+ieEmails.length+'): '+ieEmails.slice(0,3).map(function(e){return '"'+e.subject+'" from '+e.sender.emailAddress.name;}).join(', ')+'\n';
-      if(impEmails.length) emailCtx+='High priority ('+impEmails.length+'): '+impEmails.slice(0,2).map(function(e){return '"'+e.subject+'"';}).join(', ')+'\n';
+      // Per-email list (subject + sender + read state) so Gemini can classify Need Reply / FYI / Urgent
+      var emailList=emails.slice(0,25).map(function(e){
+        var sn=(e.sender&&e.sender.emailAddress&&e.sender.emailAddress.name)||'Unknown';
+        var readTag=e.isRead===false?'[UNREAD]':'[read]';
+        var impTag=e.importance==='high'?'[HIGH]':'';
+        return readTag+impTag+' "'+(e.subject||'')+'" from '+sn;
+      }).join('\n');
+      var emailCtx='Total (last 90 days, read+unread): '+emails.length+'\n';
+      emailCtx+='Unread: '+unreadEmails.length+'\n';
+      if(ieEmails.length) emailCtx+='Internal senders: '+ieEmails.length+'\n';
+      if(impEmails.length) emailCtx+='Marked high importance: '+impEmails.length+'\n';
       if(attEmails.length) emailCtx+='With attachments: '+attEmails.length+'\n';
+      emailCtx+='Email list:\n'+emailList+'\n';
+      emailCtx+='\nTASK: Classify the emails above into three groups — Need Reply, FYI, Urgent — based on subject/sender/tags. Report counts per group and name 1-2 examples per group in the briefing.\n';
 
       var todayEvs=events.filter(function(e){return fD(e.start.dateTime||e.start.date)==='Today';});
       var tentEvs=events.filter(function(e){return e.showAs==='tentative';});
-      var upEvs=events.filter(function(e){return fD(e.start.dateTime||e.start.date)!=='Today';});
+      var pastEvs=events.filter(function(e){var lbl=fD(e.start.dateTime||e.start.date);return lbl==='Yesterday'||/days ago$/.test(lbl);});
+      var upEvs=events.filter(function(e){var lbl=fD(e.start.dateTime||e.start.date);return lbl!=='Today'&&lbl!=='Yesterday'&&!/days ago$/.test(lbl);});
       var calCtx='Today meetings ('+todayEvs.length+'): '+(todayEvs.length?todayEvs.map(function(e){return e.subject+' at '+fT(e.start.dateTime);}).join(', '):'none')+'\n';
+      if(pastEvs.length) calCtx+='Recent past (last 3 days, '+pastEvs.length+'): '+pastEvs.slice(0,5).map(function(e){return e.subject+' on '+fD(e.start.dateTime||e.start.date)+' at '+fT(e.start.dateTime);}).join(', ')+'\n';
       calCtx+='Upcoming 7 days ('+upEvs.length+'): '+upEvs.slice(0,5).map(function(e){return e.subject+' on '+fD(e.start.dateTime||e.start.date);}).join(', ')+'\n';
       if(tentEvs.length) calCtx+='Tentative events ('+tentEvs.length+'): '+tentEvs.slice(0,3).map(function(e){return e.subject;}).join(', ')+'\n';
 
@@ -1857,7 +1875,7 @@
 
       if(!GAS_URL){
         var parts=[];
-        var inboxMsg='You have '+emails.length+' unread email'+(emails.length!==1?'s':'');
+        var inboxMsg='You have '+unreadEmails.length+' unread email'+(unreadEmails.length!==1?'s':'');
         if(ieEmails.length) inboxMsg+=' including **'+ieEmails.length+' internal** from '+ieEmails[0].sender.emailAddress.name;
         if(impEmails.length) inboxMsg+=', **'+impEmails.length+' high priority**';
         parts.push(inboxMsg+'.');
