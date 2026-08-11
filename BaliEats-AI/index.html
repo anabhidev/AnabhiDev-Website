@@ -8,6 +8,22 @@
 <link rel="canonical" href="https://anabhidev.com/BaliEats-AI/">
 <link rel="icon" type="image/webp" href="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
 <link rel="apple-touch-icon" href="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
+<link rel="manifest" href="/BaliEats-AI/manifest.json">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anabhidev.com/BaliEats-AI/">
+<meta property="og:title" content="BaliEats AI — Less searching, more tasting.">
+<meta property="og:description" content="Asisten kuliner cerdas untuk eksplorasi makanan dan minuman di Bali. Tanya soal makanan tradisional, street food, seafood, nutrisi, dan rekomendasi area.">
+<meta property="og:image" content="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="BaliEats AI">
+<meta property="og:locale" content="id_ID">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BaliEats AI — Less searching, more tasting.">
+<meta name="twitter:description" content="Asisten kuliner cerdas untuk eksplorasi makanan dan minuman di Bali.">
+<meta name="twitter:image" content="https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <title>BaliEats AI — Less searching, more tasting.</title>
@@ -299,7 +315,82 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .mobile-fav-panel.show{display:flex;}
 .mobile-fav-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:8px;}
 .mobile-fav-list::-webkit-scrollbar{display:none;}
+
+/* DIETARY PROFILE */
+.diet-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:transparent;color:var(--text-primary);border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.diet-btn:hover{background:var(--border);}
+.diet-btn.diet-active{border-color:var(--emerald);color:var(--emerald);}
+.diet-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:501;align-items:flex-end;justify-content:center;}
+.diet-modal-overlay.show{display:flex;}
+.diet-modal{background:var(--sidebar-bg);border-radius:20px 20px 0 0;padding:20px 16px max(20px,env(safe-area-inset-bottom));width:100%;max-width:480px;}
+.diet-modal-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sidebar-muted);margin-bottom:14px;text-align:center;}
+.diet-option{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;cursor:pointer;color:#fff;font-size:14px;font-weight:600;transition:background 0.15s;margin-bottom:4px;border:none;background:transparent;width:100%;text-align:left;font-family:'Inter',sans-serif;}
+.diet-option:hover,.diet-option:active{background:rgba(255,255,255,.08);}
+.diet-option.diet-selected{background:rgba(16,185,129,.15);color:var(--emerald);}
+.diet-modal-close{display:block;width:100%;padding:13px;background:rgba(255,255,255,.06);border:none;border-radius:12px;color:var(--sidebar-muted);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;}
+/* BUDGET CHIPS */
+.budget-row{display:flex;gap:6px;margin-bottom:10px;flex-shrink:0;overflow-x:auto;padding-bottom:2px;}
+.budget-row::-webkit-scrollbar{display:none;}
+.budget-chip{padding:5px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:16px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#555;cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0;}
+.budget-chip:hover{background:var(--black);color:#fff;border-color:var(--black);}
+.budget-chip.active{background:var(--emerald);color:var(--black);border-color:var(--emerald);}
+/* MOBILE DIET BTN */
+.mobile-diet-btn{background:transparent;border:none;font-size:17px;cursor:pointer;padding:2px;line-height:1;}
+
+/* CALENDAR PANEL */
+.calendar-panel{display:none;flex:1;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
+.calendar-panel.show{display:flex;}
+.cal-panel-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;flex-shrink:0;}
+.cal-panel-title{font-size:16px;font-weight:800;color:var(--text-primary);}
+.cal-filter-row{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;}
+.cal-filter-btn{padding:5px 12px;border-radius:16px;border:1.5px solid var(--border);background:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#555;cursor:pointer;transition:all 0.2s;}
+.cal-filter-btn.active{background:var(--black);color:#fff;border-color:var(--black);}
+.calendar-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;}
+.calendar-list::-webkit-scrollbar{width:4px;}.calendar-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.cal-event{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.2s;border-left:3px solid #ddd;}
+.cal-event:hover{border-color:#bbb;background:#FAFAF8;transform:translateX(2px);}
+.cal-event.cat-hari-raya{border-left-color:#22C55E;}
+.cal-event.cat-tumpek{border-left-color:#F59E0B;}
+.cal-event.cat-purnama{border-left-color:#A855F7;}
+.cal-event.cat-kajeng{border-left-color:#F97316;}
+.cal-event.cat-persiapan{border-left-color:#3B82F6;}
+.cal-event.cat-upacara{border-left-color:#EC4899;}
+.cal-event-top{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.cal-event-date{font-size:11px;font-weight:700;color:var(--text-muted);white-space:nowrap;}
+.cal-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.badge-hari-raya{background:#DCFCE7;color:#166534;}
+.badge-tumpek{background:#FEF9C3;color:#854D0E;}
+.badge-purnama{background:#EDE9FE;color:#5B21B6;}
+.badge-kajeng{background:#FEF3C7;color:#92400E;}
+.badge-persiapan{background:#DBEAFE;color:#1E40AF;}
+.badge-upacara{background:#FCE7F3;color:#9D174D;}
+.badge-hari-suci{background:#F3F4F6;color:#374151;}
+.cal-event-name{font-size:13px;font-weight:700;color:var(--text-primary);}
+.cal-event-food{font-size:11px;color:var(--text-muted);margin-top:3px;}
+.cal-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-muted);font-size:14px;}
+.cal-empty-icon{font-size:40px;}
+.mobile-calendar-panel{display:none;flex:1;flex-direction:column;overflow:hidden;padding:12px 12px 0;padding-bottom:calc(60px + max(0px,env(safe-area-inset-bottom)));}
+.mobile-calendar-panel.show{display:flex;}
+.mobile-cal-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:8px;}
+.mobile-cal-list::-webkit-scrollbar{display:none;}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BaliEats AI",
+  "description": "Asisten kuliner cerdas untuk eksplorasi makanan dan minuman di Bali. Tanya soal makanan tradisional, street food, seafood, nutrisi, dan rekomendasi area.",
+  "url": "https://anabhidev.com/BaliEats-AI/",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Any",
+  "inLanguage": ["id", "en", "ban", "jv", "zh"],
+  "keywords": "kuliner Bali, makanan Bali, street food Bali, seafood Bali, AI chatbot kuliner, BaliEats, Bali food",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+  "creator": { "@type": "Organization", "name": "Anabhi Dev", "url": "https://anabhidev.com" },
+  "image": "https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp",
+  "featureList": ["Rekomendasi makanan & minuman Bali","Analisa foto makanan","Kalender kuliner upacara Bali","Filter dietary & budget","Deteksi lokasi sekitar"]
+}
+</script>
 </head>
 <body>
 
@@ -388,6 +479,10 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <span class="nav-label">📍 Denpasar</span>
       </a>
       <div class="nav-divider"></div>
+      <a class="nav-item" onclick="setActive(this);showCalendarPanel()">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nav-label">🗓️ Kalender Kuliner</span>
+      </a>
       <a class="nav-item" onclick="setActive(this);showFavoritesPanel()">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         <span class="nav-label fav-count-label">Favorit</span>
@@ -418,6 +513,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       </div>
       <div class="topbar-right">
         <button class="loc-btn" id="loc-btn" onclick="getLocation()">📍 Sekitar Saya</button>
+        <button class="diet-btn" id="diet-btn" onclick="openDietModal()">🏷️ Semua</button>
         <button class="topbar-btn" onclick="clearChat()">↺ New Chat</button>
         <div class="topbar-avatar" id="d-avatar">BE</div>
       </div>
@@ -453,6 +549,12 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <div class="chip" onclick="sendChip(this)">Minuman tradisional Bali</div>
         <div class="chip" onclick="sendChip(this)">Vegetarian options in Ubud</div>
         <div class="chip" onclick="sendChip(this)">Analisa foto makanan saya</div>
+      </div>
+      <div class="budget-row" id="d-budget-chips">
+        <button class="budget-chip active" data-budget="semua" onclick="setBudget(this,'semua')">💰 Semua Budget</button>
+        <button class="budget-chip" data-budget="hemat" onclick="setBudget(this,'hemat')">🟢 &lt; Rp50rb</button>
+        <button class="budget-chip" data-budget="sedang" onclick="setBudget(this,'sedang')">🟡 Rp50-150rb</button>
+        <button class="budget-chip" data-budget="premium" onclick="setBudget(this,'premium')">🔴 &gt; Rp150rb</button>
       </div>
       <div class="chat-messages" id="d-msgs"></div>
       <div class="chat-input-area">
@@ -549,6 +651,22 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       </div>
     </div>
 
+    <!-- CALENDAR PANEL DESKTOP -->
+    <div id="d-cal" class="calendar-panel">
+      <div class="cal-panel-header">
+        <div class="cal-panel-title">🗓️ Kalender Kuliner Bali 2026</div>
+        <div class="cal-filter-row">
+          <button class="cal-filter-btn active" data-filter="upcoming" onclick="filterCalendar(this,'upcoming')">Mendatang</button>
+          <button class="cal-filter-btn" data-filter="all" onclick="filterCalendar(this,'all')">Semua</button>
+          <button class="cal-filter-btn" data-filter="hari-raya" onclick="filterCalendar(this,'hari-raya')">Hari Raya</button>
+          <button class="cal-filter-btn" data-filter="tumpek" onclick="filterCalendar(this,'tumpek')">Tumpek</button>
+        </div>
+      </div>
+      <div class="calendar-list" id="d-cal-list">
+        <div class="cal-empty"><div class="cal-empty-icon">🗓️</div><div>Memuat kalender...</div></div>
+      </div>
+    </div>
+
     <!-- FAVORITES PANEL DESKTOP -->
     <div id="d-fav" class="fav-panel"></div>
   </div>
@@ -565,6 +683,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
     </div>
     <div class="mobile-topbar-right">
       <button class="mobile-loc-btn" id="m-loc-btn" onclick="getLocation()">📍</button>
+      <button class="mobile-diet-btn" id="m-diet-btn" onclick="openDietModal()">🏷️</button>
       <div class="mobile-avatar" id="m-avatar" onclick="doLogout()">BE</div>
     </div>
   </div>
@@ -599,8 +718,30 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       <div class="chip" onclick="sendChip(this)">Vegetarian di Bali?</div>
       <div class="chip" onclick="sendChip(this)">Analisa foto makanan</div>
     </div>
+    <div class="budget-row" style="padding:4px 12px;margin-bottom:0;" id="m-budget-chips">
+      <button class="budget-chip active" data-budget="semua" onclick="setBudget(this,'semua')">💰 Semua</button>
+      <button class="budget-chip" data-budget="hemat" onclick="setBudget(this,'hemat')">🟢 &lt;50rb</button>
+      <button class="budget-chip" data-budget="sedang" onclick="setBudget(this,'sedang')">🟡 50-150rb</button>
+      <button class="budget-chip" data-budget="premium" onclick="setBudget(this,'premium')">🔴 &gt;150rb</button>
+    </div>
     <div class="mobile-messages" id="m-msgs"></div>
     <div id="m-fav" class="mobile-fav-panel"></div>
+    <!-- CALENDAR PANEL MOBILE -->
+    <div id="m-cal" class="mobile-calendar-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-shrink:0;">
+        <div style="font-size:14px;font-weight:800;color:var(--text-primary);">🗓️ Kalender Kuliner 2026</div>
+      </div>
+      <div class="cal-filter-row" style="flex-shrink:0;margin-bottom:10px;">
+        <button class="cal-filter-btn active" data-filter="upcoming" onclick="filterCalendar(this,'upcoming')">Mendatang</button>
+        <button class="cal-filter-btn" data-filter="all" onclick="filterCalendar(this,'all')">Semua</button>
+        <button class="cal-filter-btn" data-filter="hari-raya" onclick="filterCalendar(this,'hari-raya')">Hari Raya</button>
+        <button class="cal-filter-btn" data-filter="tumpek" onclick="filterCalendar(this,'tumpek')">Tumpek</button>
+      </div>
+      <div class="mobile-cal-list" id="m-cal-list">
+        <div class="cal-empty"><div class="cal-empty-icon">🗓️</div><div>Memuat kalender...</div></div>
+      </div>
+    </div>
+    
     <div class="mobile-input-wrap">
       <div class="img-preview-wrap" id="m-img-preview"></div>
       <div class="mobile-input-row">
@@ -634,6 +775,10 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         <span class="fav-count-label">Favorit</span>
       </div>
+      <div class="mobile-nav-item" onclick="setMNav(this,'kalender')">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Kalender
+      </div>
       <div class="mobile-nav-item" onclick="doLogout()">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         Logout
@@ -653,6 +798,20 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
     <button class="area-modal-item" onclick="pickArea('Jimbaran')">🐟 Jimbaran</button>
     <button class="area-modal-item" onclick="pickArea('Denpasar')">🏙️ Denpasar</button>
     <button class="area-modal-close" onclick="closeAreaModal()">Tutup</button>
+  </div>
+</div>
+
+<!-- DIET MODAL -->
+<div class="diet-modal-overlay" id="diet-modal" onclick="if(event.target===this)closeDietModal()">
+  <div class="diet-modal">
+    <div class="diet-modal-title">Preferensi Makanan</div>
+    <button class="diet-option diet-selected" data-diet="semua" onclick="setDiet('semua',this)">🌿 Semua</button>
+    <button class="diet-option" data-diet="vegetarian" onclick="setDiet('vegetarian',this)">🥗 Vegetarian</button>
+    <button class="diet-option" data-diet="vegan" onclick="setDiet('vegan',this)">🌱 Vegan</button>
+    <button class="diet-option" data-diet="halal" onclick="setDiet('halal',this)">☪️ Halal</button>
+    <button class="diet-option" data-diet="no_pork" onclick="setDiet('no_pork',this)">🚫 No Babi (No Pork)</button>
+    <button class="diet-option" data-diet="seafood" onclick="setDiet('seafood',this)">🐟 Seafood Only</button>
+    <button class="diet-modal-close" onclick="closeDietModal()">Tutup</button>
   </div>
 </div>
 
@@ -677,6 +836,7 @@ var convHistory=[];var isLoading=false;var msgCount=0;var hdrHidden=false;
 var botTexts=new Map();var savedFavorites=[];var userName='';var userTitle='Kak';
 var cachedIntelData=null;var intelCollapsed=false;var sCol=false;
 var currentImages=[];var idleTimer=null;var lastActivity=Date.now();
+var dietPref='semua';var budgetPref='semua';
 var IDLE_TIMEOUT=1*60*1000; // 1 menit — ubah ke 10-30 menit untuk produksi
 
 // ── NAME SCREEN ──────────────────────────────────────────────
@@ -711,7 +871,7 @@ window.addEventListener('load',function(){showNameScreen();});
 // ── DASHBOARD INIT ───────────────────────────────────────────
 function initDash(){
   updateGreeting();updateClock();setInterval(updateClock,1000);
-  setupScrollHide();loadFavorites();loadIntelligence();
+  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadIntelligence();
   resetIdleTimer();requestNotifPermission();
   var displayName=getUserDisplayName();
   if(userName){
@@ -822,9 +982,10 @@ function setLoading(val){isLoading=val;var ds=document.getElementById('d-send');
 function processQuery(q){
   if(isLoading||!q.trim())return;
   resetIdleTimer();showChatView();addUser(q);hideChips();setLoading(true);
+  var fullQ=q;var dCtx=getDietContext();var bCtx=getBudgetContext();if(dCtx)fullQ+=' '+dCtx;if(bCtx)fullQ+=' '+bCtx;
   var tid=addTyping();
   var tOut=setTimeout(function(){var el=document.querySelector('#'+tid+' .typing-indicator');if(el)el.innerHTML='<span style="font-size:11px;color:var(--text-muted);padding:0 4px;">Memproses, harap tunggu... \u23f3</span>';},10000);
-  gasPost('askBaliEats',{q:q,history:convHistory.slice(-10)},
+  gasPost('askBaliEats',{q:fullQ,history:convHistory.slice(-10)},
     function(answer){clearTimeout(tOut);rmTyping(tid);var bid=addBot(answer||'Maaf, tidak ada respon. Silakan coba lagi.',true);addFollowUpSuggestions(bid,q);setLoading(false);},
     function(err){clearTimeout(tOut);rmTyping(tid);addBot('Maaf, terjadi kesalahan. Silakan coba lagi.');setLoading(false);console.error(err);}
   );
@@ -868,7 +1029,7 @@ function toggleSidebar(){sCol=!sCol;document.getElementById('sidebar').classList
 function setActive(el){document.querySelectorAll('.nav-item').forEach(function(i){i.classList.remove('active');});el.classList.add('active');}
 function setMNav(el,action){
   document.querySelectorAll('.mobile-nav-item').forEach(function(i){i.classList.remove('active');});el.classList.add('active');
-  if(action==='chat')showChatView();else if(action==='report')showReport();else if(action==='area')openAreaModal();else if(action==='favorit')showFavoritesPanel();
+  if(action==='chat')showChatView();else if(action==='report')showReport();else if(action==='area')openAreaModal();else if(action==='favorit')showFavoritesPanel();else if(action==='kalender')showCalendarPanel();
 }
 function showChatView(){
   var cc=document.getElementById('chat-container');if(cc)cc.style.display='';
@@ -1037,7 +1198,7 @@ function renderPreviews(){
 function onFileSelect(event,prefix){
   var files=Array.from(event.target.files);if(!files.length)return;
   var allowed=['image/jpeg','image/png','image/webp','image/heic'];
-  if(currentImages.length+files.length>2){alert('Maximum 2 images allowed.');event.target.value='';return;}
+  if(currentImages.length+files.length>5){alert('Maximum 5 images allowed.');event.target.value='';return;}
   files.forEach(function(file){
     if(!allowed.includes(file.type)){alert('Invalid file type: '+file.name);return;}
     if(file.size>10*1024*1024){alert(file.name+' exceeds 10MB.');return;}
@@ -1150,6 +1311,144 @@ function renderFavorites(){
   if(mf)mf.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0"><div style="font-size:14px;font-weight:800;color:var(--text-primary)">\u2b50 Favorit</div>'+clearBtn+'</div>'+(savedFavorites.length===0?empty:'<div class="mobile-fav-list">'+items+'</div>');
 }
 
+
+// ── DIETARY PROFILE ───────────────────────────────────────────────────────
+var DIET_LABELS={semua:'',vegetarian:'[Preferensi: Vegetarian]',vegan:'[Preferensi: Vegan]',halal:'[Preferensi: Halal]',no_pork:'[Preferensi: No Babi/Pork]',seafood:'[Preferensi: Seafood Only]'};
+var DIET_ICONS={semua:'🌿 Semua',vegetarian:'🥗 Vegetarian',vegan:'🌱 Vegan',halal:'☪️ Halal',no_pork:'🚫 No Babi',seafood:'🐟 Seafood'};
+function loadDietPref(){dietPref=localStorage.getItem('balieats_diet')||'semua';updateDietUI();}
+function openDietModal(){var m=document.getElementById('diet-modal');if(m)m.classList.add('show');}
+function closeDietModal(){var m=document.getElementById('diet-modal');if(m)m.classList.remove('show');}
+function setDiet(pref,btn){
+  dietPref=pref;localStorage.setItem('balieats_diet',pref);
+  closeDietModal();updateDietUI();
+}
+function updateDietUI(){
+  var label=DIET_ICONS[dietPref]||'🌿 Semua';
+  var db=document.getElementById('diet-btn');if(db){db.textContent=label;db.classList.toggle('diet-active',dietPref!=='semua');}
+  var mdb=document.getElementById('m-diet-btn');if(mdb)mdb.textContent=dietPref==='semua'?'🏷️':label.split(' ')[0];
+  document.querySelectorAll('.diet-option').forEach(function(opt){opt.classList.remove('diet-selected');});
+  var activeOpt=document.querySelector('.diet-option[data-diet="'+dietPref+'"]');if(activeOpt)activeOpt.classList.add('diet-selected');
+}
+function getDietContext(){return DIET_LABELS[dietPref]||'';}
+
+// ── BUDGET FILTER ─────────────────────────────────────────────────────────────
+var BUDGET_LABELS={semua:'',hemat:'[Budget: <Rp50.000]',sedang:'[Budget: Rp50.000-150.000]',premium:'[Budget: >Rp150.000]'};
+function loadBudgetPref(){budgetPref=localStorage.getItem('balieats_budget')||'semua';updateBudgetUI();}
+function setBudget(btn,pref){budgetPref=pref;localStorage.setItem('balieats_budget',pref);updateBudgetUI();}
+function updateBudgetUI(){
+  document.querySelectorAll('.budget-chip').forEach(function(c){c.classList.toggle('active',c.getAttribute('data-budget')===budgetPref);});
+}
+function getBudgetContext(){return BUDGET_LABELS[budgetPref]||'';}
+
+
+// ── CALENDAR KULINER ───────────────────────────────────────────────────────────
+var calendarEvents=[];var calFilter='upcoming';var calLoaded=false;
+
+function showCalendarPanel(){
+  var cc=document.getElementById('chat-container');if(cc)cc.style.display='none';
+  var rp=document.getElementById('report-page');if(rp)rp.classList.remove('active');
+  var df=document.getElementById('d-fav');if(df)df.classList.remove('show');
+  var dc=document.getElementById('d-cal');if(dc)dc.classList.add('show');
+  var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='none';
+  var mf=document.getElementById('m-fav');if(mf)mf.classList.remove('show');
+  var mc=document.getElementById('m-cal');if(mc)mc.classList.add('show');
+  if(!calLoaded) loadCalendarData();
+}
+
+function loadCalendarData(){
+  gasPost('getCalendarData',{},
+    function(jsonStr){
+      try{var data=JSON.parse(jsonStr);
+        if(data.error){renderCalError(data.error);return;}
+        calendarEvents=data.events||[];calLoaded=true;renderCalendarEvents();
+      }catch(e){renderCalError('Gagal memuat data kalender.');}
+    },
+    function(err){renderCalError('Gagal memuat kalender. Pastikan setupCalendarSheet2026() sudah dijalankan dari GAS editor.');}
+  );
+}
+
+function renderCalError(msg){
+  var h='<div class="cal-empty"><div class="cal-empty-icon">⚠️</div><div style="text-align:center;padding:0 16px;">'+msg+'</div></div>';
+  var dl=document.getElementById('d-cal-list');if(dl)dl.innerHTML=h;
+  var ml=document.getElementById('m-cal-list');if(ml)ml.innerHTML=h;
+}
+
+function filterCalendar(btn,filter){
+  calFilter=filter;
+  document.querySelectorAll('.cal-filter-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.cal-filter-btn[data-filter="'+filter+'"]').forEach(function(b){b.classList.add('active');});
+  renderCalendarEvents();
+}
+
+function parseCalDate(t){
+  try{var p=t.split('/');return p.length===3?new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0])):new Date(t);}
+  catch(e){return new Date();}
+}
+
+function getCalCat(k){
+  k=k.toLowerCase();
+  if(k.includes('hari raya'))return 'hari-raya';
+  if(k.includes('tumpek'))return 'tumpek';
+  if(k.includes('purnama')||k.includes('tilem'))return 'purnama';
+  if(k.includes('kajeng'))return 'kajeng';
+  if(k.includes('persiapan'))return 'persiapan';
+  if(k.includes('upacara'))return 'upacara';
+  return 'hari-suci';
+}
+
+function renderCalendarEvents(){
+  var today=new Date();today.setHours(0,0,0,0);
+  var events=calendarEvents.slice();
+  if(calFilter==='upcoming'){events=events.filter(function(e){return parseCalDate(e.tanggal)>=today;});}
+  else if(calFilter==='hari-raya'){events=events.filter(function(e){return e.kategori.toLowerCase().includes('hari raya');});}
+  else if(calFilter==='tumpek'){events=events.filter(function(e){return e.kategori.toLowerCase().includes('tumpek');});}
+
+  var empty='<div class="cal-empty"><div class="cal-empty-icon">🗓️</div><div>'+(calFilter==='upcoming'?'Tidak ada event mendatang.':'Tidak ada event ditemukan.')+'</div></div>';
+  if(events.length===0){
+    var dl=document.getElementById('d-cal-list');if(dl)dl.innerHTML=empty;
+    var ml=document.getElementById('m-cal-list');if(ml)ml.innerHTML=empty;
+    return;
+  }
+
+  // Store filtered events globally for click handler
+  window._calFiltered=events;
+
+  var h=events.map(function(ev,idx){
+    var cat=getCalCat(ev.kategori);
+    var past=parseCalDate(ev.tanggal)<today;
+    return '<div class="cal-event cat-'+cat+'" style="'+(past?'opacity:0.45;':'')+'" data-cidx="'+idx+'">'+
+      '<div class="cal-event-top"><span class="cal-event-date">'+ev.tanggal+'</span><span class="cal-badge badge-'+cat+'">'+ev.kategori+'</span></div>'+
+      '<div class="cal-event-name">'+escHtml(ev.nama)+'</div>'+
+      (ev.makanan?'<div class="cal-event-food">🍽️ '+escHtml(ev.makanan)+'</div>':'')+
+      '</div>';
+  }).join('');
+
+  var lists=['d-cal-list','m-cal-list'];
+  lists.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.innerHTML=h;
+    el.querySelectorAll('.cal-event[data-cidx]').forEach(function(div){
+      div.addEventListener('click',function(){
+        var idx=parseInt(this.getAttribute('data-cidx'));
+        var ev=window._calFiltered[idx];
+        if(ev) onCalEventClick(ev.nama,ev.makanan);
+      });
+    });
+  });
+}
+
+function onCalEventClick(nama,makanan){
+  showChatView();
+  document.querySelectorAll('.nav-item').forEach(function(i){i.classList.remove('active');});
+  var cn=document.querySelector('.nav-item[onclick*="showChat"]');if(cn)cn.classList.add('active');
+  document.querySelectorAll('.mobile-nav-item').forEach(function(i){i.classList.remove('active');});
+  var mn=document.querySelector(".mobile-nav-item[onclick*=\"'chat'\"]");if(mn)mn.classList.add('active');
+  var q='Ceritakan makanan khas untuk '+nama+' di Bali';
+  if(makanan) q+='. Makanan yang biasa dibuat: '+makanan+'. Jelaskan cara membuat, bahan-bahan, dan maknanya dalam upacara ini.';
+  setTimeout(function(){processQuery(q);},100);
+}
+
 // ── GEOLOCATION ──────────────────────────────────────────────
 function getLocation(){
   if(!navigator.geolocation){closeAreaModal();addBot('Browser kamu tidak mendukung geolocation. Pilih area manual dari sidebar.');return;}
@@ -1247,6 +1546,15 @@ function loadDailyReports(){
   );
 }
 function toggleDailyReport(header){var item=header.closest('.daily-report-item');var detail=item?item.querySelector('.daily-report-detail'):null;if(detail)detail.classList.toggle('open');}
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/BaliEats-AI/sw.js')
+      .then(function(r){console.log('[BaliEats SW] registered:',r.scope);})
+      .catch(function(e){console.warn('[BaliEats SW] failed:',e);});
+  });
+}
 </script>
 </body>
 </html>
