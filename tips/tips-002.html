@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ChatGPT Master Guide — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(32px,7vw,52px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN CONTAINER ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── MODEL VISUAL (bar chart dark) ── */
+.model-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.model-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.model-meter-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.model-bars{display:flex;flex-direction:column;gap:10px;}
+.model-bar-row{display:flex;align-items:center;gap:10px;}
+.model-bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:130px;}
+.model-bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.model-bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.model-bar-val{font-size:11px;font-weight:700;min-width:60px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-purple{background:linear-gradient(90deg,#7C3AED,#A78BFA);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-purple{color:#A78BFA;}
+.model-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── MODEL COMPARISON CARDS ── */
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.model-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.model-card.best{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.model-card.best::before{content:'NEW';position:absolute;top:10px;right:10px;background:var(--gold);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.model-card.flagship::before{content:'FLAGSHIP';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.model-card.flagship{border-color:var(--blue);background:linear-gradient(135deg,#F0F6FF,#FAFBFF);}
+.model-emoji{font-size:26px;margin-bottom:10px;}
+.model-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.model-tagline{font-size:11px;color:var(--gray);margin-bottom:12px;}
+.model-stats{display:flex;flex-direction:column;gap:5px;}
+.model-stat{display:flex;align-items:center;justify-content:space-between;}
+.model-stat-label{font-size:11px;color:var(--gray);}
+.model-stat-val{font-size:11px;font-weight:700;}
+.stat-great{color:var(--green);}
+.stat-ok{color:var(--yellow);}
+.stat-bad{color:var(--red);}
+.stat-purple{color:#7C3AED;}
+
+/* ── DETAIL COMPARISON TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.compare-table th{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);padding:10px 12px;text-align:left;
+  border-bottom:2px solid var(--border);background:var(--gray-light);
+}
+.compare-table td{
+  padding:11px 12px;border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--navy);vertical-align:middle;
+}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table tr:hover td{background:var(--navy-light);}
+.cell-model{font-weight:700;font-size:13px;}
+.chip{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;}
+.chip-green{background:rgba(22,163,74,.1);color:#16A34A;}
+.chip-yellow{background:rgba(217,119,6,.1);color:#D97706;}
+.chip-red{background:rgba(220,38,38,.08);color:#DC2626;}
+.chip-blue{background:rgba(59,123,245,.1);color:var(--blue);}
+.chip-gold{background:rgba(201,160,90,.15);color:#92702A;}
+.chip-purple{background:rgba(124,58,237,.1);color:#7C3AED;}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── PROMPT DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{
+  background:var(--white);border-radius:12px;border:1.5px solid var(--border);
+  padding:16px;
+}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.timeline-dot{width:32px;height:32px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.timeline-content{flex:1;}
+.timeline-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.timeline-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;
+  margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE NAV BOTTOM ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .model-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .compare-table{font-size:11px;}
+  .compare-table th,.compare-table td{padding:8px;}
+  .hero{padding:80px 20px 48px;}
+}
+@media (max-width:380px){
+  .model-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#models" onclick="setActive(this)">Models</a>
+      <a class="nav-link" href="#prompt" onclick="setActive(this)">Prompting</a>
+      <a class="nav-link" href="#memory" onclick="setActive(this)">Memory</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Maksimalkan ChatGPT,<br><span>Kerja Lebih Cerdas</span></h1>
+    <p class="hero-sub">Panduan lengkap pilih model yang tepat, nulis prompt yang efektif, dan kelola memory ChatGPT — biar hasil maksimal tanpa buang-buang waktu.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🤖 ChatGPT</span>
+      <span class="hero-tag">⚡ Prompt Tips</span>
+      <span class="hero-tag">🧠 Model Guide</span>
+      <span class="hero-tag">💡 Custom Instructions</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — KENAPA PENTING -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Kenapa Penting?</div>
+    <h2 class="section-title">Banyak Model, Beda Fungsi</h2>
+    <p class="section-desc">ChatGPT bukan cuma satu model — ada 6 model dengan kemampuan berbeda. Salah pilih model = hasil kurang optimal, atau bayar lebih mahal dari yang perlu.</p>
+
+    <div class="model-visual">
+      <div class="model-meter-label">Perbandingan Model — Speed vs Reasoning Power</div>
+      <div class="model-bars">
+        <div class="model-bar-row">
+          <span class="model-bar-name">⚡ GPT-4o mini</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-green" style="width:95%"></div></div>
+          <span class="model-bar-val val-green">Tercepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🚀 GPT-4o</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-blue" style="width:80%"></div></div>
+          <span class="model-bar-val val-blue">Cepat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🌟 GPT-5</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-gold" style="width:75%"></div></div>
+          <span class="model-bar-val val-gold">Cepat+</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🧠 o4 mini</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-yellow" style="width:55%"></div></div>
+          <span class="model-bar-val val-yellow">Sedang</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🔬 o3</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-red" style="width:35%"></div></div>
+          <span class="model-bar-val val-red">Lambat</span>
+        </div>
+        <div class="model-bar-row">
+          <span class="model-bar-name">🎯 o1</span>
+          <div class="model-bar-track"><div class="model-bar-fill fill-purple" style="width:25%"></div></div>
+          <span class="model-bar-val val-purple">Paling Lambat</span>
+        </div>
+      </div>
+      <div class="model-note">* Bar menunjukkan kecepatan respons, bukan kecerdasan. Model lambat = lebih dalam reasoning-nya.</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Key Insight</div>
+      <div class="highlight-box-text">
+        <strong>Lebih lambat bukan berarti lebih buruk.</strong> Model reasoning (o-series) sengaja "berpikir lebih lama" sebelum menjawab — hasilnya lebih akurat untuk soal kompleks. Tapi untuk chat biasa atau menulis konten, GPT-4o atau GPT-5 jauh lebih efisien.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — MODEL GUIDE -->
+  <div class="section" id="models">
+    <div class="section-label"><div class="section-label-line"></div>Model Guide</div>
+    <h2 class="section-title">Pilih Model yang Tepat</h2>
+    <p class="section-desc">Setiap model punya kelebihan masing-masing. Ini panduan singkat kapan harus pakai yang mana.</p>
+
+    <div class="model-grid">
+      <!-- GPT-5 -->
+      <div class="model-card best">
+        <div class="model-emoji">🌟</div>
+        <div class="model-name">GPT-5</div>
+        <div class="model-tagline">All-in-one terbaru</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Cepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-great">Sangat tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-great">Semua task</span></div>
+        </div>
+      </div>
+      <!-- GPT-4o -->
+      <div class="model-card flagship">
+        <div class="model-emoji">🚀</div>
+        <div class="model-name">GPT-4o</div>
+        <div class="model-tagline">Flagship multimodal</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Cepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-ok">Tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-great">Chat & konten</span></div>
+        </div>
+      </div>
+      <!-- GPT-4o mini -->
+      <div class="model-card">
+        <div class="model-emoji">⚡</div>
+        <div class="model-name">GPT-4o mini</div>
+        <div class="model-tagline">Ringan & hemat</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-great">Tercepat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-ok">Sedang</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Task sederhana</span></div>
+        </div>
+      </div>
+      <!-- o4 mini -->
+      <div class="model-card">
+        <div class="model-emoji">🧠</div>
+        <div class="model-name">o4 mini</div>
+        <div class="model-tagline">Reasoning ringan</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-ok">Sedang</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-great">Tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Math & logika</span></div>
+        </div>
+      </div>
+      <!-- o3 -->
+      <div class="model-card">
+        <div class="model-emoji">🔬</div>
+        <div class="model-name">o3</div>
+        <div class="model-tagline">Deep reasoning</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-bad">Lambat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-purple">Sangat tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Problem kompleks</span></div>
+        </div>
+      </div>
+      <!-- o1 -->
+      <div class="model-card">
+        <div class="model-emoji">🎯</div>
+        <div class="model-name">o1</div>
+        <div class="model-tagline">Original reasoning</div>
+        <div class="model-stats">
+          <div class="model-stat"><span class="model-stat-label">Speed</span><span class="model-stat-val stat-bad">Paling lambat</span></div>
+          <div class="model-stat"><span class="model-stat-label">Reasoning</span><span class="model-stat-val stat-great">Tinggi</span></div>
+          <div class="model-stat"><span class="model-stat-label">Best for</span><span class="model-stat-val stat-ok">Research & analisis</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div style="overflow-x:auto;margin-bottom:20px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Chat & Tulis</th>
+            <th>Coding</th>
+            <th>Analisis</th>
+            <th>Rekomendasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="cell-model">🌟 GPT-5</div></td>
+            <td><span class="chip chip-gold">⭐ Terbaik</span></td>
+            <td><span class="chip chip-gold">⭐ Terbaik</span></td>
+            <td><span class="chip chip-gold">⭐ Terbaik</span></td>
+            <td><span class="chip chip-gold">Default utama</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🚀 GPT-4o</div></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-blue">Alternatif GPT-5</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">⚡ GPT-4o mini</div></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-yellow">⚠️ Cukup</span></td>
+            <td><span class="chip chip-yellow">⚠️ Terbatas</span></td>
+            <td><span class="chip chip-blue">Task ringan</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🧠 o4 mini</div></td>
+            <td><span class="chip chip-yellow">⚠️ Cukup</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-blue">Math & logika</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🔬 o3</div></td>
+            <td><span class="chip chip-red">❌ Tidak ideal</span></td>
+            <td><span class="chip chip-green">✅ Terbaik</span></td>
+            <td><span class="chip chip-purple">🔬 Deep analysis</span></td>
+            <td><span class="chip chip-purple">Problem kompleks</span></td>
+          </tr>
+          <tr>
+            <td><div class="cell-model">🎯 o1</div></td>
+            <td><span class="chip chip-red">❌ Tidak ideal</span></td>
+            <td><span class="chip chip-green">✅ Baik</span></td>
+            <td><span class="chip chip-green">✅ Sangat baik</span></td>
+            <td><span class="chip chip-yellow">Research & riset</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — PROMPT FRAMEWORK -->
+  <div class="section" id="prompt">
+    <div class="section-label"><div class="section-label-line"></div>Prompting</div>
+    <h2 class="section-title">Prompt yang Efektif</h2>
+    <p class="section-desc">Kualitas output ChatGPT sangat bergantung pada cara kamu nulis prompt. Ini yang perlu diperhatikan — plus cara setup Custom Instructions agar tidak perlu explain ulang setiap sesi.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Berikan konteks: siapa kamu, untuk apa, output seperti apa</li>
+          <li>Tentukan format output — bullet, paragraf, tabel, kode</li>
+          <li>Sebutkan panjang yang diinginkan — "singkat", "detail", "max 200 kata"</li>
+          <li>Gunakan role: "Kamu adalah [ahli X], bantu saya..."</li>
+          <li>Iterasi bertahap — mulai dari draft, lalu refine</li>
+          <li>Setup Custom Instructions sekali untuk semua sesi</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Prompt 1 kalimat tanpa konteks untuk task kompleks</li>
+          <li>Berharap ChatGPT "tebak" maksud kamu</li>
+          <li>Minta 5 hal sekaligus dalam 1 prompt</li>
+          <li>Pakai model reasoning (o1/o3) untuk chat biasa — boros & lambat</li>
+          <li>Lanjut di chat yang sudah sangat panjang tanpa summary</li>
+          <li>Ignore Custom Instructions — harus setup dari awal terus</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Setup Custom Instructions Sekarang</div>
+        <div class="tip-body">Pergi ke Settings → Personalization → Custom Instructions. Isi "Tentang kamu" (profesi, bahasa, gaya komunikasi) dan "Cara ChatGPT harus respond" (format, panjang, tone). Berlaku untuk semua chat baru — tidak perlu explain ulang setiap sesi.</div>
+        <span class="tip-tag">⚡ One-time Setup</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">Gunakan Kerangka C-T-F-O</div>
+        <div class="tip-body"><strong>Context</strong> (siapa & situasinya) + <strong>Task</strong> (apa yang mau dilakukan) + <strong>Format</strong> (output seperti apa) + <strong>Output length</strong> (panjang jawaban). Contoh: "Saya seorang marketer [C], buatkan caption Instagram untuk produk skincare [T], dalam format bullet 3 poin [F], max 100 kata [O]."</div>
+        <span class="tip-tag">🎯 Prompt Framework</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Pakai GPT-5 sebagai Default Baru</div>
+        <div class="tip-body">GPT-5 menggabungkan kecepatan GPT-4o dengan kemampuan reasoning o-series dalam satu model. Untuk sebagian besar task sehari-hari, GPT-5 adalah pilihan terbaik — tidak perlu lagi bingung pilih antara GPT-4o vs o1.</div>
+        <span class="tip-tag">🌟 Model Tips</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Simpan Prompt Template yang Sering Dipakai</div>
+        <div class="tip-body">Buat dokumen kecil berisi prompt template untuk task yang sering kamu lakukan — nulis email, summarize artikel, draft konten, dll. Tinggal copy-paste dan ganti variabelnya. Hemat waktu dan hasilnya konsisten.</div>
+        <span class="tip-tag">📋 Productivity</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — MEMORY & CONTEXT -->
+  <div class="section" id="memory">
+    <div class="section-label"><div class="section-label-line"></div>Memory & Context</div>
+    <h2 class="section-title">Kelola Memory dengan Bijak</h2>
+    <p class="section-desc">ChatGPT punya fitur Memory yang bisa menyimpan informasi tentang kamu lintas sesi. Kalau dikelola dengan baik, ini sangat powerful — tapi kalau dibiarkan, bisa jadi berantakan.</p>
+
+    <div class="card" style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">🔍</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Cek & Audit Memory Secara Berkala</div>
+            <div class="timeline-desc">Buka Settings → Personalization → Manage Memory. Lihat apa yang disimpan ChatGPT tentang kamu. Hapus yang sudah tidak relevan atau salah — memory lama bisa mempengaruhi jawaban baru.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">💾</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Minta ChatGPT Simpan Info Penting</div>
+            <div class="timeline-desc">Kamu bisa bilang "Ingat bahwa saya seorang [profesi] yang sering butuh [X]" — ChatGPT akan menyimpannya ke memory. Berguna untuk preferensi atau konteks yang selalu berulang.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">🚫</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Nonaktifkan Memory untuk Chat Sensitif</div>
+            <div class="timeline-desc">Kalau mau diskusi topik yang tidak ingin disimpan, mulai chat baru dengan Memory dimatikan sementara — atau pakai mode Temporary Chat (tidak menyimpan apapun ke history dan memory).</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">🔄</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Reset Chat untuk Task Baru yang Tidak Berkaitan</div>
+            <div class="timeline-desc">Sama seperti prinsip di Claude Tips — mulai chat baru untuk task yang tidak berkaitan. Context lama bisa "mengkontaminasi" jawaban untuk task baru yang berbeda topik.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">📝</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Gunakan Summary di Awal Chat Panjang</div>
+            <div class="timeline-desc">Untuk project yang butuh banyak sesi, buat "summary doc" yang berisi progress dan context penting. Paste di awal setiap chat baru — ChatGPT langsung paham tanpa baca ribuan pesan sebelumnya.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🎯 Pro Tip</div>
+      <div class="highlight-box-text">
+        Buat <strong>satu chat khusus</strong> sebagai "notepad" untuk masing-masing project besar. Semua diskusi, keputusan, dan output tersimpan di satu tempat — mudah dicari kembali dan tidak campur dengan chat lain.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu terapkan tips ini, ada beberapa hal yang perlu dipahami.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini berdasarkan <strong>pengalaman praktis penggunaan ChatGPT</strong> dan bukan panduan resmi dari OpenAI. Perbandingan model bersifat <strong>estimasi umum</strong> — performa aktual bisa berbeda tergantung task spesifik dan versi model terkini.<br><br>
+        <strong>Model ChatGPT terus berkembang cepat.</strong> GPT-5 dan model o-series masih dalam pengembangan aktif — fitur, harga, dan akses bisa berubah sewaktu-waktu. Selalu cek <strong>platform.openai.com</strong> untuk info model terkini.<br><br>
+        Prinsip-prinsip di sini (prompt yang jelas, kelola context, pilih tool yang tepat) bersifat <strong>universal</strong> — berlaku juga untuk AI tools lain seperti Claude, Gemini, dan lainnya.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Default Model</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🌟 GPT-5</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Task Ringan</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">⚡ GPT-4o mini</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Problem Kompleks</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🔬 o3 / o4 mini</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Always Setup</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">💡 Custom Instructions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-002</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· ChatGPT · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · ChatGPT Master Guide</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('models',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Models
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('prompt',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Prompt
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('memory',this)">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Memory
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+// Scroll spy
+const sections = ['intro','models','prompt','memory','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Animate bars on load
+window.addEventListener('load', function() {
+  document.querySelectorAll('.model-bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>

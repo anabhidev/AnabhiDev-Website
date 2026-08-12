@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Python untuk Automation — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --teal:#0891B2;
+  --purple:#7C3AED;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(26px,6vw,46px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── BAR CHART DARK ── */
+.bar-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.bar-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.bar-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.bar-rows{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:160px;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.bar-val{font-size:11px;font-weight:700;min-width:80px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-teal{background:linear-gradient(90deg,#0891B2,#22D3EE);}
+.fill-purple{background:linear-gradient(90deg,#7C3AED,#A78BFA);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-teal{color:#22D3EE;}
+.val-purple{color:#A78BFA;}
+.bar-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.timeline-dot{width:32px;height:32px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.timeline-content{flex:1;}
+.timeline-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.timeline-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+
+/* ── CODE BLOCK ── */
+.code-block{
+  background:#0F172A;border-radius:12px;padding:16px;
+  margin-top:10px;overflow-x:auto;
+}
+.code-block pre{
+  font-family:'Courier New',monospace;font-size:12px;
+  color:#E2E8F0;line-height:1.7;margin:0;white-space:pre;
+}
+.code-label{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:8px;
+}
+.code-comment{color:#64748B;}
+.code-keyword{color:#93C5FD;}
+.code-string{color:#86EFAC;}
+.code-function{color:#FDE68A;}
+.code-cmd{color:#FDE68A;}
+
+/* ── LIBRARY CARDS ── */
+.lib-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.lib-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:border-color .2s;position:relative;overflow:hidden;
+}
+.lib-card:hover{border-color:var(--blue);}
+.lib-card.builtin{border-color:var(--green);background:linear-gradient(135deg,#F0FDF4,#FAFBFF);}
+.lib-card.builtin::before{content:'BUILT-IN';position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.lib-card.install::before{content:'INSTALL';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:1px;}
+.lib-icon{font-size:26px;margin-bottom:8px;}
+.lib-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.lib-desc{font-size:11px;color:var(--gray);line-height:1.5;margin-bottom:8px;}
+.lib-install{
+  background:#0F172A;border-radius:6px;padding:4px 10px;
+  font-family:'Courier New',monospace;font-size:10px;color:#86EFAC;
+  display:inline-block;margin-bottom:6px;
+}
+.lib-tag{
+  display:inline-block;padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .lib-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .hero{padding:80px 20px 48px;}
+  .code-block pre{font-size:11px;}
+}
+@media (max-width:380px){
+  .lib-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#mulai" onclick="setActive(this)">Mulai</a>
+      <a class="nav-link" href="#library" onclick="setActive(this)">Library</a>
+      <a class="nav-link" href="#tips" onclick="setActive(this)">Tips</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Python untuk Automation,<br><span>Kerja Sekali Jalan Selamanya</span></h1>
+    <p class="hero-sub">Panduan newbie dari nol — kenalan dengan Python, install yang dibutuhkan, dan langsung coba automation sederhana untuk file, email, hingga Google Sheets.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🐍 Python</span>
+      <span class="hero-tag">🤖 Automation</span>
+      <span class="hero-tag">💻 Vibes Coding</span>
+      <span class="hero-tag">🔰 Newbie Friendly</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — APA ITU PYTHON -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Apa itu Python?</div>
+    <h2 class="section-title">Bahasa Paling Ramah untuk Pemula</h2>
+    <p class="section-desc">Python adalah bahasa pemrograman yang terkenal karena sintaksnya yang simpel — hampir seperti bahasa Inggris biasa. Tidak ada kurung kurawal rumit seperti JavaScript atau Java. Cocok banget untuk newbie yang mau mulai automation tanpa harus jago coding dulu.</p>
+
+    <div class="bar-visual">
+      <div class="bar-label">Perbandingan Cara Automation — Tingkat Kemudahan</div>
+      <div class="bar-rows">
+        <div class="bar-row">
+          <span class="bar-name">✍️ Manual berulang</span>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:15%"></div></div>
+          <span class="bar-val val-red">Melelahkan</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🔧 Zapier / Make</span>
+          <div class="bar-track"><div class="bar-fill fill-yellow" style="width:60%"></div></div>
+          <span class="bar-val val-yellow">Bagus tapi berbayar</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">📊 Google Apps Script</span>
+          <div class="bar-track"><div class="bar-fill fill-teal" style="width:72%"></div></div>
+          <span class="bar-val val-teal">Gratis, khusus Google</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🐍 Python</span>
+          <div class="bar-track"><div class="bar-fill fill-green" style="width:88%"></div></div>
+          <span class="bar-val val-green">Gratis + serba bisa</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🤖 Python + AI</span>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:97%"></div></div>
+          <span class="bar-val val-blue">Level maksimal!</span>
+        </div>
+      </div>
+      <div class="bar-note">* Python bisa automation hampir apa saja — file, email, web, spreadsheet, API, dan masih banyak lagi.</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Kenapa Python untuk Automation?</div>
+      <div class="highlight-box-text">
+        Python punya <strong>ribuan library siap pakai</strong> — tinggal install dan langsung pakai. Mau kirim email otomatis? Ada library-nya. Mau baca Excel? Ada library-nya. Mau ambil data dari website? Ada library-nya juga. <strong>Tulis sekali, jalan selamanya</strong> — itu kekuatan Python untuk automation.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — MULAI DARI MANA -->
+  <div class="section" id="mulai">
+    <div class="section-label"><div class="section-label-line"></div>Mulai dari Mana?</div>
+    <h2 class="section-title">Install & Jalankan Script Pertama</h2>
+    <p class="section-desc">Dari nol sampai script Python pertama jalan — ikuti 5 langkah ini. Tidak sampai 15 menit!</p>
+
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">1️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Install Python</div>
+            <div class="timeline-desc">Buka <strong>python.org/downloads</strong> → klik Download Python (versi terbaru) → install. Saat instalasi, centang <strong>"Add Python to PATH"</strong> — ini penting! Tanpa ini, Python tidak bisa dijalankan dari terminal.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">2️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Buka Terminal & Cek Instalasi</div>
+            <div class="timeline-desc">Buka Terminal (Mac) atau Command Prompt (Windows) → ketik perintah ini untuk cek Python sudah terinstall:</div>
+            <div class="code-block">
+              <div class="code-label">Terminal — Cek versi Python</div>
+              <pre><span class="code-cmd">python --version</span>
+<span class="code-comment"># Harusnya muncul: Python 3.x.x</span></pre>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">3️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Buat File Python Pertama di Visual Studio Code</div>
+            <div class="timeline-desc">Buka Visual Studio Code → buat file baru → simpan dengan nama <strong>hello.py</strong> (ekstensi .py = file Python). Ketik kode pertama kamu:</div>
+            <div class="code-block">
+              <div class="code-label">hello.py — Script pertama</div>
+              <pre><span class="code-comment"># Script Python pertama saya!</span>
+<span class="code-keyword">print</span>(<span class="code-string">"Halo! Python saya jalan! 🐍"</span>)
+
+<span class="code-comment"># Coba hitung sederhana</span>
+hasil = <span class="code-keyword">10</span> + <span class="code-keyword">20</span>
+<span class="code-keyword">print</span>(<span class="code-string">f"10 + 20 = {hasil}"</span>)</pre>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">4️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Jalankan Script dari Terminal</div>
+            <div class="timeline-desc">Di terminal Visual Studio Code (Ctrl+`) → navigasi ke folder file Python kamu → jalankan:</div>
+            <div class="code-block">
+              <div class="code-label">Terminal — Jalankan script Python</div>
+              <pre><span class="code-comment"># Masuk ke folder proyek</span>
+<span class="code-cmd">cd nama-folder-proyek</span>
+
+<span class="code-comment"># Jalankan script</span>
+<span class="code-cmd">python hello.py</span>
+
+<span class="code-comment"># Output yang muncul:</span>
+<span class="code-string">Halo! Python saya jalan! 🐍</span>
+<span class="code-string">10 + 20 = 30</span></pre>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">5️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Install Library dengan pip</div>
+            <div class="timeline-desc">pip adalah "app store"-nya Python — untuk install library tambahan. Contoh install library requests:</div>
+            <div class="code-block">
+              <div class="code-label">Terminal — Install library</div>
+              <pre><span class="code-comment"># Format: pip install nama-library</span>
+<span class="code-cmd">pip install requests</span>
+<span class="code-cmd">pip install gspread</span>
+<span class="code-cmd">pip install openpyxl</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🤖 Vibes Coding dengan Python</div>
+      <div class="highlight-box-text">
+        Tidak tahu cara nulis script Python? Ceritakan ke Claude atau ChatGPT: <strong>"Buatkan script Python untuk [kebutuhan kamu]. Saya newbie, tolong jelaskan juga setiap bagian kodenya."</strong> Copy hasilnya ke Visual Studio Code, jalankan, lihat hasilnya. Itu inti vibes coding — AI yang nulis, kamu yang arahkan!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — LIBRARY -->
+  <div class="section" id="library">
+    <div class="section-label"><div class="section-label-line"></div>Library Penting</div>
+    <h2 class="section-title">6 Library yang Wajib Dikenal</h2>
+    <p class="section-desc">Library adalah "kumpulan kode siap pakai" yang bisa kamu pakai langsung tanpa nulis dari nol. Ini 6 library paling berguna untuk automation sehari-hari.</p>
+
+    <div class="lib-grid">
+      <!-- os -->
+      <div class="lib-card builtin">
+        <div class="lib-icon">📁</div>
+        <div class="lib-name">os</div>
+        <div class="lib-desc">Kelola file & folder — buat folder, rename file, list isi direktori, cek apakah file ada.</div>
+        <div class="lib-install">import os</div><br>
+        <span class="lib-tag">🔧 File & Folder</span>
+      </div>
+      <!-- shutil -->
+      <div class="lib-card builtin">
+        <div class="lib-icon">📋</div>
+        <div class="lib-name">shutil</div>
+        <div class="lib-desc">Copy, pindah, dan hapus file/folder. Cocok untuk automation backup atau organize file otomatis.</div>
+        <div class="lib-install">import shutil</div><br>
+        <span class="lib-tag">🗂️ File Operations</span>
+      </div>
+      <!-- smtplib -->
+      <div class="lib-card builtin">
+        <div class="lib-icon">📧</div>
+        <div class="lib-name">smtplib</div>
+        <div class="lib-desc">Kirim email otomatis langsung dari Python. Bisa kirim ke banyak penerima sekaligus dari data di file.</div>
+        <div class="lib-install">import smtplib</div><br>
+        <span class="lib-tag">✉️ Auto Email</span>
+      </div>
+      <!-- requests -->
+      <div class="lib-card install">
+        <div class="lib-icon">🌐</div>
+        <div class="lib-name">requests</div>
+        <div class="lib-desc">Ambil data dari internet — bisa akses API, download file, atau scraping data dari website.</div>
+        <div class="lib-install">pip install requests</div><br>
+        <span class="lib-tag">🔗 Web & API</span>
+      </div>
+      <!-- gspread -->
+      <div class="lib-card install">
+        <div class="lib-icon">📊</div>
+        <div class="lib-name">gspread</div>
+        <div class="lib-desc">Baca dan tulis Google Sheets dari Python. Otomatisasi laporan, update data, atau ambil data dari Sheets.</div>
+        <div class="lib-install">pip install gspread</div><br>
+        <span class="lib-tag">📊 Google Sheets</span>
+      </div>
+      <!-- openpyxl -->
+      <div class="lib-card install">
+        <div class="lib-icon">📈</div>
+        <div class="lib-name">openpyxl</div>
+        <div class="lib-desc">Baca dan tulis file Excel (.xlsx) tanpa perlu buka Excel. Cocok untuk automation laporan atau olah data.</div>
+        <div class="lib-install">pip install openpyxl</div><br>
+        <span class="lib-tag">📈 Excel Files</span>
+      </div>
+    </div>
+
+    <!-- Contoh script nyata -->
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;">🐍 Contoh Script Nyata — Organize File Otomatis</div>
+      <div style="font-size:12px;color:var(--gray);margin-bottom:12px;">Script ini otomatis pindahkan file di folder Downloads berdasarkan jenisnya:</div>
+      <div class="code-block">
+        <div class="code-label">organize_files.py</div>
+        <pre><span class="code-keyword">import</span> os
+<span class="code-keyword">import</span> shutil
+
+<span class="code-comment"># Folder yang mau dirapikan</span>
+folder = <span class="code-string">"/Users/kamu/Downloads"</span>
+
+<span class="code-comment"># Kategori file</span>
+kategori = {
+  <span class="code-string">"Gambar"</span>: [<span class="code-string">".jpg"</span>, <span class="code-string">".png"</span>, <span class="code-string">".gif"</span>],
+  <span class="code-string">"Dokumen"</span>: [<span class="code-string">".pdf"</span>, <span class="code-string">".docx"</span>, <span class="code-string">".xlsx"</span>],
+  <span class="code-string">"Video"</span>: [<span class="code-string">".mp4"</span>, <span class="code-string">".mov"</span>]
+}
+
+<span class="code-keyword">for</span> file <span class="code-keyword">in</span> os.listdir(folder):
+  <span class="code-keyword">for</span> nama, ekstensi <span class="code-keyword">in</span> kategori.items():
+    <span class="code-keyword">if</span> <span class="code-keyword">any</span>(file.endswith(e) <span class="code-keyword">for</span> e <span class="code-keyword">in</span> ekstensi):
+      <span class="code-comment"># Buat folder kalau belum ada</span>
+      dest = os.path.join(folder, nama)
+      os.makedirs(dest, exist_ok=<span class="code-keyword">True</span>)
+      <span class="code-comment"># Pindahkan file</span>
+      shutil.move(
+        os.path.join(folder, file),
+        os.path.join(dest, file)
+      )
+      <span class="code-keyword">print</span>(<span class="code-string">f"Dipindah: {file} → {nama}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🎯 Tips Minta Script ke AI</div>
+      <div class="highlight-box-text">
+        Gunakan prompt ini: <strong>"Buatkan script Python menggunakan library [nama library] untuk [jelaskan tugasnya]. Saya newbie Python, tolong pakai kode yang simpel dan tambahkan komentar di setiap baris."</strong> Hasilnya langsung bisa dicopy dan dijalankan!
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — TIPS & DO/DONT -->
+  <div class="section" id="tips">
+    <div class="section-label"><div class="section-label-line"></div>Tips & Best Practices</div>
+    <h2 class="section-title">Mulai Benar dari Awal</h2>
+    <p class="section-desc">Kebiasaan Python yang baik dari awal akan menghemat banyak waktu — ini yang sering bikin newbie stuck dan cara menghindarinya.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Test script di data kecil dulu sebelum jalankan ke semua data</li>
+          <li>Tambahkan print() untuk cek nilai variabel saat debugging</li>
+          <li>Simpan script di folder proyek yang rapi — satu folder per project</li>
+          <li>Pakai AI untuk jelaskan error — copy paste error message-nya</li>
+          <li>Simpan API key di file .env terpisah, bukan di dalam script</li>
+          <li>Beri nama variabel yang jelas — nama_file bukan nf</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Langsung jalankan script ke semua file/data tanpa test dulu</li>
+          <li>Simpan password atau API key langsung di dalam script</li>
+          <li>Copas script tanpa baca sekilas — minimal tahu fungsinya apa</li>
+          <li>Menyerah saat error pertama — error itu normal di Python</li>
+          <li>Buat satu script untuk semua hal — pecah jadi beberapa script kecil</li>
+          <li>Lupa install library sebelum import — pip install dulu!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Baca Error Message dengan Tenang</div>
+        <div class="tip-body">Error di Python biasanya sangat deskriptif — ada nama error, baris yang bermasalah, dan penjelasannya. Baca dari bawah ke atas — baris paling bawah biasanya paling penting. Tidak paham? Copy paste ke Claude: "Tolong jelaskan error Python ini dan cara fixnya."</div>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-label">Contoh error yang umum</div>
+          <pre><span class="code-comment"># ModuleNotFoundError = library belum diinstall</span>
+<span class="code-string">ModuleNotFoundError: No module named 'requests'</span>
+<span class="code-comment"># Fix: pip install requests</span>
+
+<span class="code-comment"># FileNotFoundError = file tidak ditemukan</span>
+<span class="code-string">FileNotFoundError: No such file or directory</span>
+<span class="code-comment"># Fix: cek nama & path file sudah benar</span></pre>
+        </div>
+        <span class="tip-tag">🐛 Debugging</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-tip-title">Gunakan Virtual Environment</div>
+        <div class="tip-title">Gunakan Virtual Environment</div>
+        <div class="tip-body">Virtual environment adalah "ruangan terisolasi" untuk tiap proyek Python — library yang diinstall di satu proyek tidak campur dengan proyek lain. Buat dengan perintah <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">python -m venv venv</code> di folder proyek, lalu aktifkan dengan <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">source venv/bin/activate</code> (Mac) atau <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">venv\Scripts\activate</code> (Windows).</div>
+        <span class="tip-tag">🔒 Best Practice</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Simpan Dependensi di requirements.txt</div>
+        <div class="tip-body">Setelah install semua library yang dibutuhkan, jalankan <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">pip freeze > requirements.txt</code>. File ini menyimpan daftar semua library + versinya. Kalau suatu saat pindah komputer atau share ke orang lain, tinggal jalankan <code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--blue);">pip install -r requirements.txt</code> — semua library langsung terinstall.</div>
+        <span class="tip-tag">📋 Project Management</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Mulai dari Script Kecil yang Berguna</div>
+        <div class="tip-body">Jangan langsung bikin automation kompleks. Mulai dari yang simpel dan langsung terasa manfaatnya — misalnya script rename file otomatis, atau script yang kirim reminder email setiap Senin pagi. Sukses di script kecil = motivasi untuk lanjut ke yang lebih besar!</div>
+        <span class="tip-tag">🚀 Mindset Pemula</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu mulai eksplorasi Python, ada beberapa hal yang perlu diketahui.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini berdasarkan <strong>pengalaman praktis menggunakan Python untuk automation</strong> dan ditujukan untuk pemula. Contoh kode yang ditampilkan disederhanakan untuk tujuan edukasi — selalu test di environment yang aman sebelum digunakan untuk data penting.<br><br>
+        <strong>Jangan simpan API key, password, atau data sensitif</strong> langsung di dalam script Python — gunakan file .env atau environment variables. Library seperti <strong>python-dotenv</strong> bisa membantu mengelola ini dengan aman.<br><br>
+        Versi Python dan library terus berkembang — ada kemungkinan sintaks atau cara install sedikit berbeda di versi terbaru. Selalu cek dokumentasi resmi di <strong>python.org</strong> dan halaman library masing-masing di <strong>pypi.org</strong>.
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Download Python</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🌐 python.org/downloads</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Install Library</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">⚡ pip install nama</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Jalankan Script</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🐍 python nama.py</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Stuck? Tanya</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🤖 Claude / ChatGPT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-007</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· Python untuk Automation · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Python untuk Automation</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('mulai',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Mulai
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('library',this)">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('tips',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Tips
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+const sections = ['intro','mulai','library','tips','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+window.addEventListener('load', function() {
+  document.querySelectorAll('.bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>

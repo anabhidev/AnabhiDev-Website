@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Google Apps Script Tips — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --teal:#0891B2;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(27,42,74,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 20px;
+}
+.nav-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:28px;object-fit:contain;}
+.nav-logo-text{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+  text-decoration:none;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:96px 20px 64px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);
+  padding:6px 14px;border-radius:20px;margin-bottom:24px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,7vw,48px);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:32px;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-tag{
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ── MAIN ── */
+.main{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── SECTION ── */
+.section{padding:48px 0 0;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,5vw,32px);color:var(--navy);
+  line-height:1.2;margin-bottom:8px;
+}
+.section-desc{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:48px 0 0;}
+
+/* ── BAR CHART DARK ── */
+.bar-visual{
+  background:var(--navy);border-radius:16px;padding:24px;
+  margin-bottom:28px;position:relative;overflow:hidden;
+}
+.bar-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(59,123,245,0.1) 0%,transparent 60%);pointer-events:none;}
+.bar-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.bar-rows{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);min-width:150px;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.bar-val{font-size:11px;font-weight:700;min-width:80px;text-align:right;}
+.fill-green{background:linear-gradient(90deg,#16A34A,#22C55E);}
+.fill-yellow{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.fill-red{background:linear-gradient(90deg,#DC2626,#EF4444);}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.fill-gold{background:linear-gradient(90deg,#C9A05A,#F0DEB4);}
+.fill-teal{background:linear-gradient(90deg,#0891B2,#22D3EE);}
+.val-green{color:#22C55E;}
+.val-yellow{color:#F59E0B;}
+.val-red{color:#EF4444;}
+.val-blue{color:var(--blue-light);}
+.val-gold{color:#F0DEB4;}
+.val-teal{color:#22D3EE;}
+.bar-note{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);font-style:italic;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.highlight-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.highlight-box-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.highlight-box-text{font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.highlight-box-text strong{color:#fff;}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.timeline-dot{width:32px;height:32px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.timeline-content{flex:1;}
+.timeline-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.timeline-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+
+/* ── CODE SNIPPET ── */
+.code-block{
+  background:#0F172A;border-radius:12px;padding:16px;
+  margin-top:10px;overflow-x:auto;
+}
+.code-block pre{
+  font-family:'Courier New',monospace;font-size:12px;
+  color:#E2E8F0;line-height:1.7;margin:0;white-space:pre;
+}
+.code-label{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:8px;
+}
+.code-comment{color:#64748B;}
+.code-keyword{color:#93C5FD;}
+.code-string{color:#86EFAC;}
+.code-function{color:#FDE68A;}
+
+/* ── USE CASE CARDS ── */
+.usecase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.usecase-card{
+  background:var(--white);border-radius:14px;
+  border:1.5px solid var(--border);padding:18px 16px;
+  transition:border-color .2s;
+}
+.usecase-card:hover{border-color:var(--blue);}
+.usecase-icon{font-size:28px;margin-bottom:8px;}
+.usecase-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+.usecase-desc{font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:10px;}
+.usecase-tag{
+  display:inline-block;padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DO/DONT ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.prompt-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;}
+.prompt-card.do{border-color:rgba(22,163,74,.25);background:#F0FDF4;}
+.prompt-card.dont{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.prompt-card-header{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.prompt-card-icon{font-size:16px;}
+.prompt-card-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.prompt-card.do .prompt-card-title{color:var(--green);}
+.prompt-card.dont .prompt-card-title{color:var(--red);}
+.prompt-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.prompt-card li{font-size:12px;color:var(--navy);line-height:1.5;padding-left:14px;position:relative;}
+.prompt-card li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.prompt-card.do li::before{background:var(--green);}
+.prompt-card.dont li::before{background:var(--red);}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+.tip-card{
+  background:var(--white);border-radius:14px;border:1.5px solid var(--border);
+  padding:18px 18px 18px 56px;position:relative;transition:border-color .2s;
+}
+.tip-card:hover{border-color:var(--blue);}
+.tip-number{
+  position:absolute;left:16px;top:18px;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.tip-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.tip-body{font-size:13px;color:var(--gray);line-height:1.65;}
+.tip-tag{
+  display:inline-block;margin-top:8px;
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
+  background:var(--navy-light);color:var(--navy-mid);
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--gray-light);border-radius:14px;
+  border:1.5px solid var(--border);padding:20px;margin-bottom:20px;
+}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7;}
+.disclaimer-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:40px 20px;text-align:center;}
+.footer-inner{max-width:780px;margin:0 auto;}
+.footer-logo{height:120px;width:auto;object-fit:contain;margin-bottom:12px;}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-style:italic;}
+.footer-link{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:20px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);
+  text-decoration:none;transition:all .2s;margin-bottom:20px;
+}
+.footer-link:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── MOBILE NAV BOTTOM ── */
+.mobile-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.mobile-bottom-items{display:flex;justify-content:space-around;}
+.mobile-bottom-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:4px 8px;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  transition:color .2s;
+}
+.mobile-bottom-item.active{color:var(--gold);}
+.mobile-bottom-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── RESPONSIVE ── */
+@media (max-width:640px){
+  .sticky-nav .nav-links{display:none;}
+  .mobile-bottom-nav{display:block;}
+  body{padding-bottom:60px;}
+  .usecase-grid{grid-template-columns:1fr 1fr;}
+  .prompt-grid{grid-template-columns:1fr;}
+  .hero{padding:80px 20px 48px;}
+  .code-block pre{font-size:11px;}
+}
+@media (max-width:380px){
+  .usecase-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Tips & Tricks</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#intro" onclick="setActive(this)">Intro</a>
+      <a class="nav-link" href="#mulai" onclick="setActive(this)">Mulai</a>
+      <a class="nav-link" href="#usecase" onclick="setActive(this)">Use Cases</a>
+      <a class="nav-link" href="#tips" onclick="setActive(this)">Tips</a>
+      <a class="nav-link" href="#disclaimer" onclick="setActive(this)">Disclaimer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="intro">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <img src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png" alt="Anabhi Dev" style="width:200px;object-fit:contain;margin-bottom:6px;" onerror="this.style.display='none'">
+    <div style="margin-bottom:20px;">
+      <a href="https://anabhidev.netlify.app/" target="_blank" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">anabhidev.netlify.app</a>
+    </div>
+    <h1 class="hero-title">Google Apps Script,<br><span>Otomasi Tanpa Ribet</span></h1>
+    <p class="hero-sub">Mulai vibes coding dari nol — pakai JavaScript sederhana untuk otomatisasi Google Sheets, Gmail, dan Docs. Tidak perlu jago coding, cukup tahu dasarnya!</p>
+    <div class="hero-tags">
+      <span class="hero-tag">⚡ GAS</span>
+      <span class="hero-tag">🤖 Automation</span>
+      <span class="hero-tag">💻 Vibes Coding</span>
+      <span class="hero-tag">🔰 Untuk Pemula</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- SECTION 1 — APA ITU GAS -->
+  <div class="section">
+    <div class="section-label"><div class="section-label-line"></div>Apa itu GAS?</div>
+    <h2 class="section-title">Coding Gratis Bawaan Google</h2>
+    <p class="section-desc">Google Apps Script adalah tool coding <strong>gratis</strong> yang sudah built-in di semua produk Google — Sheets, Docs, Gmail, Drive, Forms. Bayangkan kamu bisa buat robot kecil yang kerja otomatis di dalam Google Workspace kamu, tanpa bayar apapun.</p>
+
+    <div class="bar-visual">
+      <div class="bar-label">Perbandingan — Kerja Manual vs Otomasi</div>
+      <div class="bar-rows">
+        <div class="bar-row">
+          <span class="bar-name">✍️ Manual tiap hari</span>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:15%"></div></div>
+          <span class="bar-val val-red">Capek banget</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🔧 Zapier / Make</span>
+          <div class="bar-track"><div class="bar-fill fill-yellow" style="width:60%"></div></div>
+          <span class="bar-val val-yellow">Bagus tapi berbayar</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">⚡ Google Apps Script</span>
+          <div class="bar-track"><div class="bar-fill fill-green" style="width:90%"></div></div>
+          <span class="bar-val val-green">Gratis + powerful</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">🐍 Python script</span>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:75%"></div></div>
+          <span class="bar-val val-blue">Butuh server</span>
+        </div>
+      </div>
+      <div class="bar-note">* GAS jalan langsung di cloud Google — tidak perlu install apapun, tidak perlu server sendiri.</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">💡 Kenapa GAS cocok untuk pemula?</div>
+      <div class="highlight-box-text">
+        GAS pakai <strong>JavaScript</strong> — bahasa yang paling banyak tutorialnya di internet. Tapi yang lebih penting: kamu tidak perlu paham semua JavaScript dulu. Cukup <strong>copas dari AI</strong> (Claude, ChatGPT, Gemini), tempel di GAS, jalankan — selesai. Ini yang disebut <strong>Vibes Coding</strong>: lebih fokus ke hasil, bukan hafalan sintaks.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2 — MULAI DARI MANA -->
+  <div class="section" id="mulai">
+    <div class="section-label"><div class="section-label-line"></div>Mulai dari Mana?</div>
+    <h2 class="section-title">Dari Nol ke Script Pertama</h2>
+    <p class="section-desc">Ikuti langkah ini dan kamu sudah bisa jalankan script pertama dalam 5 menit — serius, semudah itu.</p>
+
+    <div style="background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:20px;margin-bottom:20px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">1️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Buka Google Sheets → Extensions → Apps Script</div>
+            <div class="timeline-desc">Buka Google Sheets manapun. Klik menu Extensions di atas → pilih Apps Script. Otomatis terbuka editor GAS di tab baru. Tidak perlu install apapun — langsung siap pakai.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">2️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Hapus kode default, ketik Hello World</div>
+            <div class="timeline-desc">Ada kode default di editor — hapus semua. Ketik script pertama kamu:</div>
+            <div class="code-block">
+              <div class="code-label">script.gs — Hello World</div>
+              <pre><span class="code-keyword">function</span> <span class="code-function">helloWorld</span>() {
+  <span class="code-comment">// Tampilkan pesan di layar</span>
+  Browser.<span class="code-function">msgBox</span>(<span class="code-string">'Halo! GAS kamu jalan! 🎉'</span>);
+}</pre>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">3️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Klik Run → Authorize → Lihat hasilnya!</div>
+            <div class="timeline-desc">Klik tombol ▶ Run di atas. Pertama kali akan minta izin (Authorization) — klik Review Permissions → Allow. Kembali ke Sheets, akan muncul popup "Halo! GAS kamu jalan!" 🎉</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">4️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Coba script yang lebih berguna</div>
+            <div class="timeline-desc">Sekarang coba sesuatu yang nyata — tulis nama di cell A1 Sheets kamu, lalu jalankan ini:</div>
+            <div class="code-block">
+              <div class="code-label">script.gs — Baca data dari Sheets</div>
+              <pre><span class="code-keyword">function</span> <span class="code-function">bacaNama</span>() {
+  <span class="code-keyword">var</span> sheet = SpreadsheetApp
+    .<span class="code-function">getActiveSheet</span>();
+  <span class="code-keyword">var</span> nama = sheet
+    .<span class="code-function">getRange</span>(<span class="code-string">'A1'</span>)
+    .<span class="code-function">getValue</span>();
+  Browser.<span class="code-function">msgBox</span>(
+    <span class="code-string">'Nama kamu: '</span> + nama
+  );
+}</pre>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot">5️⃣</div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Pakai AI untuk bantu nulis script</div>
+            <div class="timeline-desc">Stuck? Tinggal tanya ke Claude atau ChatGPT: "Buatkan Google Apps Script untuk [kebutuhan kamu]." Copy hasilnya, paste di editor GAS, Run. Ini inti dari Vibes Coding — AI yang nulis, kamu yang arahkan dan jalankan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🎯 Vibes Coding Mindset</div>
+      <div class="highlight-box-text">
+        Kamu tidak harus paham <strong>setiap baris kode</strong> yang kamu jalankan — terutama di awal. Yang penting kamu paham <strong>apa yang kamu minta</strong> ke AI dan <strong>apa hasilnya</strong>. Seiring waktu, kamu akan otomatis paham polanya. Mulai dulu, ngerti belakangan.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3 — USE CASES -->
+  <div class="section" id="usecase">
+    <div class="section-label"><div class="section-label-line"></div>Use Cases</div>
+    <h2 class="section-title">6 Automation yang Bisa Langsung Dicoba</h2>
+    <p class="section-desc">Ini bukan contoh akademis — semua ini bisa kamu minta ke AI, copy-paste ke GAS, dan langsung jalan. Mulai dari yang paling simpel!</p>
+
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="usecase-icon">📧</div>
+        <div class="usecase-name">Auto Kirim Email</div>
+        <div class="usecase-desc">Kirim email otomatis dari data di Google Sheets — nama, email, dan isi pesan sudah ada di Sheets, GAS yang kirim.</div>
+        <span class="usecase-tag">🔰 Paling Populer</span>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">📊</div>
+        <div class="usecase-name">Auto Format Sheets</div>
+        <div class="usecase-desc">Warnai baris otomatis berdasarkan nilai — misal baris merah kalau angka di bawah target, hijau kalau tercapai.</div>
+        <span class="usecase-tag">⚡ Super Simpel</span>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">📝</div>
+        <div class="usecase-name">Generate Dokumen</div>
+        <div class="usecase-desc">Buat puluhan Google Docs dari template secara otomatis — cocok untuk surat, invoice, atau laporan berulang.</div>
+        <span class="usecase-tag">💡 Time Saver</span>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">⏰</div>
+        <div class="usecase-name">Scheduled Trigger</div>
+        <div class="usecase-desc">Jalankan script otomatis setiap hari/minggu tanpa harus klik Run — GAS bisa dijadwalkan seperti alarm.</div>
+        <span class="usecase-tag">🤖 Full Auto</span>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">📋</div>
+        <div class="usecase-name">Google Forms → Sheets</div>
+        <div class="usecase-desc">Setiap ada form masuk, otomatis proses datanya — kirim notif email, tambah baris ke sheet lain, atau format data.</div>
+        <span class="usecase-tag">🔗 Integrasi</span>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">🔔</div>
+        <div class="usecase-name">Reminder Otomatis</div>
+        <div class="usecase-desc">Cek data di Sheets setiap pagi, kirim email reminder kalau ada deadline yang mendekati atau stok yang menipis.</div>
+        <span class="usecase-tag">⚡ Praktis</span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-label">🚀 Prompt Template untuk AI</div>
+      <div class="highlight-box-text">
+        Pakai prompt ini ke Claude/ChatGPT: <strong>"Buatkan Google Apps Script untuk [use case]. Sheet bernama '[nama sheet]', kolom A berisi [isi kolom A], kolom B berisi [isi kolom B]. Script harus [jelaskan hasilnya]."</strong> Semakin detail konteksmu, semakin akurat kode yang dihasilkan.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4 — TIPS & DO/DONT -->
+  <div class="section" id="tips">
+    <div class="section-label"><div class="section-label-line"></div>Tips & Best Practices</div>
+    <h2 class="section-title">Biar Tidak Salah Langkah</h2>
+    <p class="section-desc">Pengalaman vibes coder pemula — ini yang sering bikin stuck dan cara menghindarinya.</p>
+
+    <div class="prompt-grid">
+      <div class="prompt-card do">
+        <div class="prompt-card-header"><span class="prompt-card-icon">✅</span><span class="prompt-card-title">Do This</span></div>
+        <ul>
+          <li>Mulai dari script simpel — 1 fungsi, 1 tujuan</li>
+          <li>Test di sheet dummy dulu sebelum pakai data asli</li>
+          <li>Selalu baca error message — biasanya petunjuknya jelas</li>
+          <li>Pakai Logger.log() untuk debug — lihat hasilnya di Execution log</li>
+          <li>Simpan backup sheet sebelum jalankan script baru</li>
+          <li>Tanya AI kalau stuck — paste error message-nya sekalian</li>
+        </ul>
+      </div>
+      <div class="prompt-card dont">
+        <div class="prompt-card-header"><span class="prompt-card-icon">❌</span><span class="prompt-card-title">Don't Do This</span></div>
+        <ul>
+          <li>Langsung jalankan di data penting tanpa test dulu</li>
+          <li>Copas kode tanpa baca sekilas — minimal tahu fungsinya apa</li>
+          <li>Buat 1 script untuk semua hal sekaligus — bikin bingung</li>
+          <li>Ignore Authorization warning — baca dulu sebelum Allow</li>
+          <li>Menyerah saat error pertama — error itu normal, bagian dari proses</li>
+          <li>Lupa save script sebelum Run (Ctrl+S dulu!)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div class="tip-title">Pakai Logger.log() untuk Debug</div>
+        <div class="tip-body">Kalau script tidak jalan sesuai ekspektasi, tambahkan Logger.log() untuk "ngintip" nilai variabel. Hasilnya bisa dilihat di menu View → Execution log. Ini cara paling simpel debug GAS tanpa perlu tools tambahan.</div>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-label">Contoh debug dengan Logger</div>
+          <pre><span class="code-keyword">function</span> <span class="code-function">cekData</span>() {
+  <span class="code-keyword">var</span> nilai = sheet
+    .<span class="code-function">getRange</span>(<span class="code-string">'A1'</span>)
+    .<span class="code-function">getValue</span>();
+  <span class="code-comment">// Cek nilai di Execution log</span>
+  Logger.<span class="code-function">log</span>(<span class="code-string">'Nilai A1: '</span> + nilai);
+}</pre>
+        </div>
+        <span class="tip-tag">🐛 Debugging</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div class="tip-title">Buat Trigger Otomatis</div>
+        <div class="tip-body">Script tidak harus dijalankan manual. Di editor GAS, klik ikon jam (Triggers) → Add Trigger → pilih fungsi dan jadwal (setiap jam, setiap hari, setiap minggu). Script langsung jalan otomatis tanpa kamu harus buka laptop — inilah kekuatan sesungguhnya GAS.</div>
+        <span class="tip-tag">⏰ Auto Trigger</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div class="tip-title">Minta AI Jelaskan Kode yang Dibuat</div>
+        <div class="tip-body">Setelah AI buatkan kode, tanya lagi: "Jelaskan kode ini baris per baris dalam bahasa Indonesia yang sederhana." Lama-lama kamu akan paham pola yang berulang — getRange, getValue, sendEmail, setBackground — dan mulai bisa modifikasi sendiri tanpa minta AI.</div>
+        <span class="tip-tag">🧠 Belajar Bertahap</span>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div class="tip-title">Simpan Library Script Pribadimu</div>
+        <div class="tip-body">Setiap script yang berhasil — simpan di Google Docs atau Notion sebagai "library" pribadi. Lengkapi dengan catatan: script ini untuk apa, cara pakainya, dan bagian mana yang perlu diubah. Ke depannya kamu bisa reuse tanpa minta AI dari awal lagi.</div>
+        <span class="tip-tag">📚 Knowledge Base</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5 — DISCLAIMER -->
+  <div class="section" id="disclaimer">
+    <div class="section-label"><div class="section-label-line"></div>Disclaimer</div>
+    <h2 class="section-title">Catatan Penting</h2>
+    <p class="section-desc">Sebelum kamu mulai eksplorasi GAS, ada beberapa hal yang perlu diketahui.</p>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Disclaimer</div>
+      <div class="disclaimer-text">
+        Tips dalam panduan ini berdasarkan <strong>pengalaman praktis menggunakan Google Apps Script</strong> dan bukan panduan resmi dari Google. Snippet kode yang ditampilkan adalah contoh sederhana untuk tujuan edukasi — selalu test di environment yang aman sebelum digunakan untuk data penting.<br><br>
+        <strong>GAS memiliki quota harian</strong> — jumlah email yang bisa dikirim, jumlah eksekusi script, dll. Untuk penggunaan personal/kecil biasanya lebih dari cukup. Cek <strong>developers.google.com/apps-script/guides/services/quotas</strong> untuk detail quota terkini.<br><br>
+        <strong>Vibes Coding dengan AI</strong> sangat membantu untuk pemula, tapi tetap penting untuk memahami dasar-dasarnya agar bisa troubleshoot saat ada error. Panduan ini sebagai titik awal — terus eksplorasi dan belajar!
+      </div>
+    </div>
+
+    <div style="background:var(--navy-light);border-radius:14px;border:1.5px solid var(--border);padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-mid);margin-bottom:12px;">📋 Quick Reference</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Buka GAS</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📊 Sheets → Extensions</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Mulai Dari</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">📧 Auto Kirim Email</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Stuck? Tanya</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🤖 Claude / ChatGPT</div>
+        </div>
+        <div style="background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:var(--gray);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Debug dengan</div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">🐛 Logger.log()</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── TIPS ID ── -->
+<div style="text-align:center;padding:20px 20px 0;background:var(--off-white);">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--navy-light);border:1.5px solid var(--border);padding:8px 18px;border-radius:20px;">
+    <div style="width:6px;height:6px;background:var(--blue);border-radius:50%;"></div>
+    <span style="font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy-mid);">TIPS-004</span>
+    <span style="font-size:10px;color:var(--gray);font-weight:600;">· Google Apps Script · 2026</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo"
+      src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+      alt="Anabhi Dev"
+      onerror="this.style.display='none'">
+    <div class="footer-tagline">Less Doing. More Living.</div>
+    <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">
+      🌐 anabhidev.netlify.app
+    </a>
+    <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Google Apps Script Tips</div>
+  </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-items">
+    <div class="mobile-bottom-item active" onclick="scrollToSection('intro',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Intro
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('mulai',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Mulai
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('usecase',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Cases
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('tips',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Tips
+    </div>
+    <div class="mobile-bottom-item" onclick="scrollToSection('disclaimer',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Info
+    </div>
+  </div>
+</nav>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function scrollToSection(id, el) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.mobile-bottom-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+const sections = ['intro','mulai','usecase','tips','disclaimer'];
+window.addEventListener('scroll', function() {
+  let current = 'intro';
+  sections.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  document.querySelectorAll('.mobile-bottom-item').forEach(function(item, i) {
+    item.classList.toggle('active', sections[i] === current);
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+window.addEventListener('load', function() {
+  document.querySelectorAll('.bar-fill').forEach(function(bar) {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(function() { bar.style.width = w; }, 300);
+  });
+});
+</script>
+</body>
+</html>
