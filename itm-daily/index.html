@@ -3,29 +3,29 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.1
-Generated : 10 August 2026, 17:21:43
+Version   : 2.2
+Generated : 10 August 2026, 20:55:10
 ================================================================
-PERUBAHAN BESAR DARI v1.9
-  - Jenis huruf disederhanakan: SF Pro/Inter untuk seluruh
-    antarmuka, Georgia khusus judul layar PIN (menyamai MF-AIA).
-  - Header ditata ulang: logo lebar 28%, judul dua baris di
-    tengah 22%, jam+tanggal kanan 22%. Tanpa nama hari.
-  - Panel sesi: ketuk jam untuk melihat sisa waktu dan Keluar.
-  - Jenis hari, jenis pekerjaan, dan status kini berbentuk
-    baris pilihan (picker row) — ketuk membuka panel dari bawah.
-  - Kartu dibuat rata tanpa bayangan tebal, hanya garis tipis.
-  - Warna emas dikurangi menjadi elemen pemanis saja.
-  - Ikon navigasi bawah diganti SVG.
-  - Jarak dirapikan ke kelipatan 4. Target ketuk minimal 44px.
+PERUBAHAN DARI v2.1
+  - Layout: kartu pertama tidak lagi kepotong di HP — penengahan
+    vertikal dibatasi hanya untuk layar yang benar-benar tinggi
+    tanpa mengganggu scroll natural.
+  - Header: "IT Daily Activity" kini benar-benar di tengah —
+    kolom kiri dan kanan diberi lebar tetap yang sama.
+  - Bottom nav: 5 tombol (+ Riwayat), latar navy transparan,
+    ikon disesuaikan.
+  - Tag terpilih: latar solid, kontras jelas, senada gaya
+    tombol Prioritas.
+  - AI Parse: tombol "Uraikan dengan AI" kini benar-benar
+    memanggil Edge Function, hasilnya mengisi form otomatis.
+  - Riwayat: tab baru menampilkan task 7 hari terakhir.
+  - Peringatan keluar: bila form terisi namun belum disimpan,
+    menutup tab akan memicu konfirmasi bawaan peramban.
 
 CARA PASANG
-  Sama seperti v1.9 — ganti nama menjadi index.html, unggah.
-  Edge Function TIDAK berubah, masih memakai MFB-IT_v1.7.ts.
-
-CATATAN
-  AI Parse dan tab Laporan/Dasbor/Log masih "segera hadir" —
-  itu pekerjaan tahap berikutnya.
+  Edge Function WAJIB diperbarui dulu ke MFB-IT_v1.8.ts sebelum
+  mengunggah berkas ini — AI Parse dan Riwayat memanggil action
+  baru yang hanya ada di v1.8.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -137,15 +137,19 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .hd-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
 .hd-logo-fb { font-family: var(--font-pin); font-weight: bold; color: var(--brass); font-size: 16px; }
 
+/* Kolom kanan diberi lebar tetap yang SAMA dengan estimasi kolom kiri
+   sehingga judul di tengah benar-benar berada di titik tengah header,
+   bukan sekadar di tengah sisa ruang yang kebetulan tidak simetris. */
+.hd-side { flex: 0 0 28%; max-width: 130px; }
+
 .hd-title {
-  flex: 0 0 auto; text-align: center; line-height: 1.25;
+  flex: 1 1 auto; text-align: center; line-height: 1.25;
   font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.85);
 }
 .hd-title span { display: block; }
 
 .hd-meta {
-  flex: 0 0 auto; text-align: right; cursor: pointer;
-  padding: 4px 2px; border-radius: 8px; transition: background .15s;
+  cursor: pointer; padding: 4px 2px; border-radius: 8px; transition: background .15s;
   min-width: 44px; min-height: 44px; display: flex; flex-direction: column;
   align-items: flex-end; justify-content: center;
 }
@@ -200,9 +204,11 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .option-item.selected .option-check { opacity: 1; }
 
 .scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--sp-4) var(--sp-4) calc(var(--nav-h) + var(--sp-7)); }
-@media (min-height: 760px) {
-  .scroll { display: flex; flex-direction: column; justify-content: center; }
-}
+.scroll-inner { min-height: 100%; display: flex; flex-direction: column; }
+/* Penengahan HANYA aktif bila konten muat penuh tanpa perlu scroll —
+   dicek lewat JS (lihat centerIfFits), bukan lewat media query, karena
+   tinggi konten berubah-ubah tergantung mode Hari Kerja / Libur. */
+.scroll-inner.centered { justify-content: center; flex: 1; }
 
 .ai {
   background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
@@ -224,8 +230,33 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
   background: var(--field); color: var(--navy);
   border-radius: 12px; padding: var(--sp-3); min-height: 44px;
   font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .1s, opacity .15s;
+  position: relative; overflow: hidden;
 }
 .ai-btn:active { transform: scale(.985); opacity: .85; }
+.ai-btn .ai-btn-txt, .ai-btn .ai-btn-load { transition: opacity .2s; }
+.ai-btn .ai-btn-load {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; opacity: 0;
+}
+.ai-btn.busy .ai-btn-txt { opacity: 0; }
+.ai-btn.busy .ai-btn-load { opacity: 1; }
+.ai-btn.busy .dot3 { background: var(--navy); }
+
+/* ── RIWAYAT ── */
+.riwayat-head { margin-bottom: var(--sp-3); }
+.riwayat-empty { text-align: center; color: var(--muted); font-size: 14px; padding: var(--sp-7) 0; }
+.riwayat-item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: var(--sp-4); margin-bottom: var(--sp-3);
+}
+.riwayat-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-2); }
+.riwayat-id { font-size: 11px; color: var(--muted); font-weight: 500; }
+.riwayat-date { font-size: 11px; color: var(--muted); }
+.riwayat-task { font-size: 15px; color: var(--ink); line-height: 1.45; margin-bottom: var(--sp-2); }
+.riwayat-meta { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+.riwayat-chip { font-size: 11px; padding: 3px var(--sp-2); border-radius: 8px; background: var(--field); color: var(--mid); }
+.riwayat-chip.critical { background: rgba(192,57,43,.12); color: var(--red); }
+.riwayat-chip.high     { background: rgba(183,121,31,.12); color: var(--amber); }
+.riwayat-chip.done     { background: rgba(46,125,91,.12); color: #2E7D5B; }
 
 .card {
   background: var(--card); border: 1px solid var(--line); border-radius: 16px;
@@ -268,7 +299,7 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
   cursor: pointer; transition: all .16s; user-select: none; min-height: 36px; display: flex; align-items: center;
 }
 .tag:active { transform: scale(.96); }
-.tag.on { background: rgba(201,168,76,.14); border-color: rgba(201,168,76,.5); color: #8A6D1E; font-weight: 500; }
+.tag.on { background: var(--brass); border-color: var(--brass); color: #fff; font-weight: 600; }
 .tag-add { font-size: 13px; padding: var(--sp-2) var(--sp-3); border-radius: 10px; background: transparent; border: 1px dashed var(--line); color: var(--muted); cursor: pointer; min-height: 36px; display: flex; align-items: center; }
 
 .prio { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
@@ -319,12 +350,16 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .nav {
   position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; z-index: 60;
   width: 100%; max-width: var(--app-w);
-  background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px);
-  border-top: 1px solid var(--line); padding: var(--sp-2) var(--sp-1) calc(var(--sp-2) + env(safe-area-inset-bottom));
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  /* Navy dengan transparansi — tetap terasa dari palet brand yang sama
+     dengan header, tapi jauh lebih lembut. Bukan abu netral murni. */
+  background: rgba(11,27,46,.06);
+  backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border-top: 1px solid rgba(11,27,46,.10);
+  padding: var(--sp-2) var(--sp-1) calc(var(--sp-2) + env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: repeat(5, 1fr);
 }
-.nb { border: none; background: none; text-align: center; font-size: 10px; color: var(--muted); cursor: pointer; padding: 6px 2px; min-height: 44px; transition: color .16s; }
-.nb svg { display: block; margin: 0 auto 3px; opacity: .5; }
+.nb { border: none; background: none; text-align: center; font-size: 9.5px; color: var(--muted); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
+.nb svg { display: block; margin: 0 auto 3px; opacity: .5; width: 18px; height: 18px; }
 .nb.on { color: var(--navy); font-weight: 600; }
 .nb.on svg { opacity: 1; }
 
@@ -390,26 +425,30 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 
     <div class="hd-title"><span>IT Daily</span><span>Activity</span></div>
 
-    <div class="hd-meta" id="sesTrigger">
-      <div class="hd-time">
-        <span class="hd-dot" id="sesDot"></span>
-        <span class="hd-clock-main" id="clockMain">--:--</span><span class="hd-clock-sec" id="clockSec">--</span>
+    <div class="hd-side">
+      <div class="hd-meta" id="sesTrigger">
+        <div class="hd-time">
+          <span class="hd-dot" id="sesDot"></span>
+          <span class="hd-clock-main" id="clockMain">--:--</span><span class="hd-clock-sec" id="clockSec">--</span>
+        </div>
+        <div class="hd-date" id="hdDate">—</div>
       </div>
-      <div class="hd-date" id="hdDate">—</div>
     </div>
   </div>
 
   <div class="scroll" id="scroll">
-    <div>
+    <div class="scroll-inner" id="viewInput">
 
       <div class="ai">
         <div class="ai-head">
           <div class="ai-title">&#10022; Tulis bebas</div>
-          <div class="ai-badge">Segera</div>
         </div>
         <textarea class="ai-box" id="aiInput"
           placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer kitchen, sempat putus pas prep dinner, urgent belum kelar."></textarea>
-        <button class="ai-btn" id="aiBtn">Uraikan dengan AI</button>
+        <button class="ai-btn" id="aiBtn">
+          <span class="ai-btn-txt">Uraikan dengan AI</span>
+          <span class="ai-btn-load"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span></span>
+        </button>
       </div>
 
       <div class="card">
@@ -498,6 +537,15 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
         <span class="lbl-ok">&#10003; Tersimpan</span>
       </button>
     </div>
+
+    <div class="scroll-inner hidden" id="viewRiwayat">
+      <div class="riwayat-head">
+        <div class="card-title" style="margin-bottom:0">Riwayat 7 hari terakhir</div>
+      </div>
+      <div id="riwayatList">
+        <div class="riwayat-empty">Memuat riwayat…</div>
+      </div>
+    </div>
   </div>
 
   <nav class="nav">
@@ -514,8 +562,12 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
       Dasbor
     </button>
     <button class="nb" data-tab="log">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       Log
+    </button>
+    <button class="nb" data-tab="riwayat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+      Riwayat
     </button>
   </nav>
 </div>
@@ -582,7 +634,27 @@ const state = {
   status: 'On Progress', offWorking: false,
   tags: [], selected: new Set(),
   editCount: 0, openedAt: Date.now(), submitCount: 0, taskToday: 0,
+  currentView: 'input',
 };
+
+function switchView(view) {
+  state.currentView = view;
+  $('viewInput').classList.toggle('hidden', view !== 'input');
+  $('viewRiwayat').classList.toggle('hidden', view !== 'riwayat');
+  document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.tab === view));
+  $('scroll').scrollTop = 0;
+  if (view === 'riwayat') loadRiwayat();
+}
+
+// Form dianggap "kotor" bila ada isian yang belum disimpan —
+// dipakai untuk peringatan sebelum menutup tab (bukan pencegahan mutlak,
+// browser tidak mengizinkan itu; ini hanya jeda konfirmasi).
+function formIsDirty() {
+  return $('taskDesc') && ($('taskDesc').value.trim() !== '' || $('remarkInput').value.trim() !== '');
+}
+window.addEventListener('beforeunload', (e) => {
+  if (formIsDirty()) { e.preventDefault(); e.returnValue = ''; }
+});
 
 function $(id) { return document.getElementById(id); }
 
@@ -966,6 +1038,132 @@ async function startApp() {
   buildTags();
 }
 
+/* ══════════════════════════════════════════════
+   AI PARSE — Tulis bebas diuraikan Gemini lewat Edge Function
+══════════════════════════════════════════════ */
+async function doAiParse() {
+  const btn = $('aiBtn');
+  if (btn.classList.contains('busy')) return;
+
+  const text = $('aiInput').value.trim();
+  if (!text) {
+    toast('Tulis dulu ceritanya, baru bisa diuraikan.', 'err');
+    $('aiInput').focus();
+    return;
+  }
+
+  btn.classList.add('busy'); btn.disabled = true;
+
+  try {
+    const r = await callApi({ action: 'parse-task', sessionToken: state.token, text });
+
+    if (!r.ok) {
+      toast(r.error || 'AI belum bisa memproses. Isi manual dulu ya.', 'err');
+      return;
+    }
+
+    applyParseResult(r.result);
+    toast('Form terisi dari hasil AI ✦', 'good');
+
+  } catch (e) {
+    if (state.token) toast(e.message || 'AI belum bisa memproses. Isi manual dulu ya.', 'err');
+  } finally {
+    btn.classList.remove('busy'); btn.disabled = false;
+  }
+}
+
+function applyParseResult(result) {
+  if (result.activityType) {
+    state.activityType = result.activityType;
+    const found = ACTIVITY_TYPES.find(a => a.db === result.activityType);
+    if (found) $('valActivity').textContent = found.id;
+    applyActivityMode();
+  }
+
+  if (result.workType && WORK_TYPES.includes(result.workType)) {
+    state.workType = result.workType;
+    $('valWorkType').textContent = result.workType;
+  }
+
+  if (result.task) { $('taskDesc').value = result.task; trackEdit(); }
+
+  if (Array.isArray(result.tags)) {
+    state.selected.clear();
+    result.tags.forEach(t => {
+      const clean = String(t).trim();
+      if (!clean) return;
+      if (!state.tags.some(x => x.toLowerCase() === clean.toLowerCase())) state.tags.push(clean);
+      state.selected.add(clean);
+    });
+    buildTags();
+  }
+
+  if (result.priority && ['Low','Medium','High','Critical'].includes(result.priority)) {
+    state.priority = result.priority; buildPriority();
+  }
+
+  const statusValid = STATUS_TYPES.find(s => s.db === result.status);
+  if (statusValid) { state.status = statusValid.db; $('valStatus').textContent = statusValid.id; }
+
+  if (result.remark) $('remarkInput').value = result.remark;
+
+  $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════
+   RIWAYAT
+══════════════════════════════════════════════ */
+const RIWAYAT_ACTIVITY_LABEL = Object.fromEntries(ACTIVITY_TYPES.map(a => [a.db, a.id]));
+const RIWAYAT_STATUS_LABEL = Object.fromEntries(STATUS_TYPES.map(s => [s.db, s.id]));
+
+function chipClassForPriority(p) {
+  if (p === 'Critical') return 'riwayat-chip critical';
+  if (p === 'High') return 'riwayat-chip high';
+  return 'riwayat-chip';
+}
+function chipClassForStatus(s) {
+  if (s === 'Done') return 'riwayat-chip done';
+  return 'riwayat-chip';
+}
+
+async function loadRiwayat() {
+  const box = $('riwayatList');
+  box.innerHTML = '<div class="riwayat-empty">Memuat riwayat…</div>';
+
+  try {
+    const r = await callApi({ action: 'get-history', sessionToken: state.token });
+    if (!r.ok) {
+      box.innerHTML = '<div class="riwayat-empty">' + (r.error || 'Riwayat gagal dimuat.') + '</div>';
+      return;
+    }
+
+    const items = r.items || [];
+    if (items.length === 0) {
+      box.innerHTML = '<div class="riwayat-empty">Belum ada aktivitas dalam 7 hari terakhir.</div>';
+      return;
+    }
+
+    box.innerHTML = items.map(it => {
+      const tanggal = formatTanggalPendek(it.task_date);
+      const actLabel = RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || '';
+      const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
+      const taskText = it.task ? it.task : '<span style="color:var(--muted)">(' + actLabel + ')</span>';
+      return '<div class="riwayat-item">'
+        + '<div class="riwayat-top"><span class="riwayat-id">' + it.task_id + '</span>'
+        + '<span class="riwayat-date">' + tanggal + '</span></div>'
+        + '<div class="riwayat-task">' + taskText + '</div>'
+        + '<div class="riwayat-meta">'
+        + (it.priority ? '<span class="' + chipClassForPriority(it.priority) + '">' + it.priority + '</span>' : '')
+        + (statLabel ? '<span class="' + chipClassForStatus(it.status) + '">' + statLabel + '</span>' : '')
+        + (it.work_type ? '<span class="riwayat-chip">' + it.work_type + '</span>' : '')
+        + '</div></div>';
+    }).join('');
+
+  } catch (e) {
+    box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Riwayat gagal dimuat.') + '</div>';
+  }
+}
+
 function wireEvents() {
   $('pinPad').addEventListener('click', e => { const b=e.target.closest('.pin-key'); if (b) pinPress(b.dataset.k); });
   document.addEventListener('keydown', e => {
@@ -980,9 +1178,12 @@ function wireEvents() {
   ['taskDesc','remarkInput'].forEach(id => $(id).addEventListener('input', trackEdit));
 
   $('submitBtn').addEventListener('click', doSubmit);
-  $('aiBtn').addEventListener('click', () => toast('Penguraian AI segera hadir.', ''));
+  $('aiBtn').addEventListener('click', doAiParse);
 
-  document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => { if (b.dataset.tab !== 'input') toast('Halaman ini segera hadir.', ''); }));
+  document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.tab === 'input' || b.dataset.tab === 'riwayat') { switchView(b.dataset.tab); return; }
+    toast('Halaman ini segera hadir.', '');
+  }));
 
   $('scroll').addEventListener('scroll', e => { $('header').classList.toggle('lifted', e.target.scrollTop > 4); }, { passive: true });
 
