@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Product Requirements Document — M365 Intelligence Dashboard | UPC Renewables Indonesia</title>
+<style>
+/* ============================================================
+   SOP CSS STARTER BLOCK — MANDATORY
+   ============================================================ */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+:focus-visible { outline: 2px solid var(--accent, #FD8409); outline-offset: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Brand — sampled from client logo, contrast-checked per WCAG */
+  --navy:        #000087;   /* primary brand — sidebar/navbar base, headings */
+  --navy-deep:   #00005C;   /* darker navy for sidebar depth/gradient */
+  --navy-ink:    #05063A;   /* near-black navy, body text on light bg */
+  --orange:      #FD8409;   /* brand accent — non-text only (2.48:1, fails AA for text) */
+  --orange-text: #A34F00;   /* text-safe orange variant (5.71:1, passes AA) */
+  --orange-soft: #FFF1E2;   /* tint background for callouts */
+
+  /* Surface — light content area */
+  --bg:          #FAFAF9;
+  --surface:     #FFFFFF;
+  --surface-alt: #F4F5F8;
+  --border:      #E4E6ED;
+  --border-soft: #EDEEF3;
+
+  /* Text on light surfaces */
+  --text-primary:   #14152B;
+  --text-secondary: #4A4D63;
+  --text-muted:      #7A7D91;
+
+  /* Sidebar/navbar — dark */
+  --side-bg:       #000063;
+  --side-bg-alt:   #000048;
+  --side-text:     #E8E9F5;
+  --side-text-dim: #9A9DC2;
+  --side-border:   rgba(255,255,255,0.08);
+  --side-active:   #FD8409;
+
+  /* Status */
+  --ok:      #1B7F4C;
+  --ok-bg:   #E9F7EF;
+  --warn:    #A36A00;
+  --warn-bg: #FFF6E0;
+  --risk:    #B3261E;
+  --risk-bg: #FDEBEA;
+  --info:    #0B4FA0;
+  --info-bg: #EAF2FD;
+
+  /* Type */
+  --font-display: 'Georgia', 'Iowan Old Style', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+
+  /* Layout */
+  --sidebar-w: 280px;
+  --topbar-h: 64px;
+  --radius: 8px;
+  --radius-sm: 5px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--navy);
+  line-height: 1.25;
+  margin: 0 0 0.5em;
+}
+
+p { margin: 0 0 1em; color: var(--text-secondary); }
+a { color: var(--info); }
+strong { color: var(--text-primary); }
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--navy); color: #fff; padding: 12px 20px;
+  border-radius: 0 0 8px 0; font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+/* ============================================================
+   LAYOUT SHELL — width NOT locked on desktop; padding-only per SOP Blueprint B
+   ============================================================ */
+.app {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Sidebar — dark, fixed */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--side-bg) 0%, var(--side-bg-alt) 100%);
+  color: var(--side-text);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 40;
+  padding: 24px 0 32px;
+  transition: transform 0.25s ease;
+}
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+.sidebar-brand {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--side-border);
+  margin-bottom: 16px;
+}
+.sidebar-brand img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+.sidebar-brand .doc-tag {
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--side-text-dim);
+  font-weight: 600;
+}
+
+.nav-group { margin-bottom: 4px; }
+.nav-group-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--side-text-dim);
+  padding: 14px 20px 6px;
+  font-weight: 700;
+}
+.nav-link {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 20px;
+  color: var(--side-text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.nav-link .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--side-text-dim);
+  flex-shrink: 0;
+  width: 18px;
+}
+.nav-link:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--side-text);
+}
+.nav-link.active {
+  color: #fff;
+  border-left-color: var(--side-active);
+  background: rgba(253,132,9,0.12);
+  font-weight: 600;
+}
+.nav-link.active .num { color: var(--side-active); }
+
+/* Main content */
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;           /* SOP: guide/dashboard content — no px cap on desktop */
+  margin-left: var(--sidebar-w);
+  width: calc(100% - var(--sidebar-w));
+}
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--topbar-h);
+  background: rgba(250,250,249,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  gap: 16px;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.hamburger {
+  display: none;
+  width: 38px; height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.hamburger span, .hamburger span::before, .hamburger span::after {
+  content: ''; display: block; width: 18px; height: 2px; background: var(--navy);
+  position: relative; transition: transform 0.2s;
+}
+.hamburger span::before { position: absolute; top: -6px; }
+.hamburger span::after { position: absolute; top: 6px; }
+
+.topbar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--navy); }
+.btn-primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--navy-deep); }
+
+/* Content container */
+.content {
+  padding: 40px clamp(20px, 4vw, 56px) 120px;
+}
+
+.doc-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--border);
+}
+.doc-header .eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange-text);
+  margin-bottom: 12px;
+}
+.doc-header h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  max-width: 900px;
+  margin-bottom: 14px;
+}
+.doc-header .subtitle {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  font-size: 13px;
+}
+.doc-meta dt {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.doc-meta dd { margin: 0; font-weight: 600; color: var(--text-primary); }
+
+/* Sections */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: 84px;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.section-head .section-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--orange-text);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section-head h2 { font-size: 26px; margin: 0; }
+.section-intro { max-width: 760px; }
+
+/* Cards / callouts */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card h3 { font-size: 16px; margin-bottom: 8px; }
+.card-body { margin: 0; font-size: 14px; }
+.mt-lg { margin-top: 20px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.callout {
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  font-size: 14.5px;
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout-risk    { background: var(--risk-bg); border-color: #F3C6C2; color: #7A1D17; }
+.callout-risk .callout-title { color: var(--risk); }
+.callout-warn    { background: var(--warn-bg); border-color: #F0DBA3; color: #6B4B00; }
+.callout-warn .callout-title { color: var(--warn); }
+.callout-ok      { background: var(--ok-bg); border-color: #B9E4C9; color: #12522F; }
+.callout-ok .callout-title { color: var(--ok); }
+.callout-info    { background: var(--info-bg); border-color: #BBD7F5; color: #073366; }
+.callout-info .callout-title { color: var(--info); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); font-weight: 700; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td.mono { font-family: var(--font-mono); font-size: 12px; color: var(--navy-ink); }
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.badge-v1 { background: var(--ok-bg); color: var(--ok); }
+.badge-v2 { background: var(--warn-bg); color: var(--warn); }
+.badge-v3 { background: var(--surface-alt); color: var(--text-muted); }
+.badge-risk { background: var(--risk-bg); color: var(--risk); }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* Scope filter tabs */
+.scope-filter {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--surface-alt);
+  padding: 4px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.scope-filter button {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.scope-filter button.active {
+  background: var(--navy);
+  color: #fff;
+}
+[data-scope-item] { transition: opacity 0.15s; }
+[data-scope-item].scope-hidden { display: none; }
+
+/* Architecture diagram (SVG, not screenshot — per SOP cat.12) */
+.diagram-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  overflow-x: auto;
+}
+.diagram-wrap svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+/* Numbered process list */
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 4px 0 18px 40px;
+  border-left: 2px solid var(--border);
+  margin-left: 15px;
+}
+.steps li:last-child { border-color: transparent; padding-bottom: 0; }
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: -15px; top: 0;
+  width: 30px; height: 30px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+.steps strong { color: var(--navy-ink); display: block; margin-bottom: 3px; font-size: 14.5px; }
+.steps span { color: var(--text-secondary); font-size: 13.5px; }
+
+/* Footer */
+.doc-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 40px;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Mobile overlay for sidebar */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(5,6,30,0.5);
+  z-index: 35;
+}
+.sidebar-overlay.show { display: block; }
+
+/* ============================================================
+   MOBILE — viewport width is HARD-LOCKED, no horizontal scroll
+   ============================================================ */
+@media (max-width: 880px) {
+  html, body { width: 100%; overflow-x: hidden; }
+  .app { max-width: 100vw; overflow-x: hidden; }
+
+  .sidebar {
+    transform: translateX(-100%);
+    width: min(var(--sidebar-w), 82vw);
+    box-shadow: 8px 0 24px rgba(0,0,0,0.25);
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100vw;
+  }
+  .hamburger { display: inline-flex; }
+  .topbar { padding: 0 16px; }
+  .content { padding: 28px 18px 100px; }
+
+  .doc-meta { gap: 16px 28px; }
+  .section-head h2 { font-size: 21px; }
+  table { min-width: 480px; }
+}
+
+@media (max-width: 480px) {
+  .content { padding: 22px 14px 90px; }
+  .card { padding: 18px; }
+  .doc-header h1 { font-size: 24px; }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  .sidebar, .topbar, .sidebar-overlay, .scope-filter, .no-print { display: none !important; }
+  .main { margin-left: 0 !important; width: 100% !important; }
+  .content { padding: 0 !important; }
+  body { background: #fff; }
+  .section { break-inside: avoid; margin-bottom: 32px; }
+  .card, .callout, table { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+  [data-scope-item].scope-hidden { display: block !important; } /* show all scope tiers when printing */
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="app">
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar" id="sidebar" aria-label="Document sections">
+    <div class="sidebar-brand">
+      <img src="data:image/png;base64,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jI2rl7mJ7kgy0aGXiP/GESXzl4xe92wNeW1TcorgS4/EndQUw6tZi40LYYc1egzJiUnovVB/AMd5VHwKE9/O/uGKK++48KLbr7ji7utufPSqqx+98poxV1095oprRl9x7UNXXfPgVdfec9V1/7j88ptHjRxTWRlNCaqGiYeD1RMJJJQA389aPOKaO2+87r4rLr/numsfvfbasddeQ4xT8bWjrx3x8LXXjbz+xvu/+36pbuCrb1deefXtl13xjxtufPjOuydffdXjV139xFVXP36VSjx29VVJPHL1NQ9efc1Ixlde89Cll91/4YX3nT/s7iGD7zxrwF1XXfnKC8//UFkNd5v6Na7BEtT7RsYSPxx9AtKD7rnSiuH7b2K33PjuySfdPvjs2265ZcJLL30z67v1q9bUryquXlVcSfyweOOMt769/4EXL7ps1LDhdz8+4dut/EousWIZbrp27NkDbp488e3EqLf3nejpbxxRG/6S0UtHpiHYNL2gfXnIEX6/E69Lc8rrl36JUAmsBljxpFpQA8iipibNoyNBXh3b7tG9xz777FNU1Myx4YkUuOmel+4h6GmmJ61mbbP33r/D/gd1OfqYg5q38MfojdNHgR/qyEHVJz2SUaipru7Tu/e+++zTrLC5bUkrKuCkm3pmLB4H7M57tNp3v66HHt6rR88OZMOyY526F3bp0axl2/y4E/OEdKG7nunCb1nCinuWpXvCpzLBIgk6J55pRbz6ejsU8i1b3DDluXkjrpx6/pAXvv46xjte24NLuj+yA8uK2+QDil1mx12QkW+/xbAhrw4688EHR7++ZEWN6wSduE0vLjc3rbBZSo+9Cvfap7Btx9TsAt0IeOGwV1MZmD2r5qbrpl52wQtLfsDUFxavWBaKx7PrquhiqVFD7BAnkr8/Infb8ftb/99owQH8VYxQOfxGXmuZludQj7yoz6m3azegjJ5BPYRNttzkJCk3n3wKQ6rsM04/6KVpt70x/bJnn7/jgAO7gsddOuWeqRIiPvCc456feueUl294fcad9z80KCUNysWAhAJJEkwjOf3DzuszZdrtL716y8uv3HvC8UcBIZ6eY6HIPj3bP//8A2+8ccW0aVc++8/rDundRHg46rBuU56//513bpr28ogjD98bDOxUkbWLWuSfe96Zl119zoWXnjrsguPOu+AEhfNPGHDGYUcc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" alt="UPC Renewables logo" width="254" height="80" style="width:180px;height:auto;">
+      <div class="doc-tag">Product Requirements Document</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <a class="nav-link" data-nav href="#executive-summary"><span class="num">01</span><span>Executive Summary</span></a>
+      <a class="nav-link" data-nav href="#problem-statement"><span class="num">02</span><span>Problem Statement</span></a>
+      <a class="nav-link" data-nav href="#objectives"><span class="num">03</span><span>Objectives &amp; Success Metrics</span></a>
+      <a class="nav-link" data-nav href="#users"><span class="num">04</span><span>Users &amp; Personas</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Solution</div>
+      <a class="nav-link" data-nav href="#scope"><span class="num">05</span><span>Scope &amp; Roadmap</span></a>
+      <a class="nav-link" data-nav href="#features"><span class="num">06</span><span>Functional Requirements</span></a>
+      <a class="nav-link" data-nav href="#attention-center"><span class="num">07</span><span>Attention Center Logic</span></a>
+      <a class="nav-link" data-nav href="#server-monitoring"><span class="num">08</span><span>Server Monitoring</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Technical</div>
+      <a class="nav-link" data-nav href="#architecture"><span class="num">09</span><span>Architecture &amp; Data Flow</span></a>
+      <a class="nav-link" data-nav href="#current-system"><span class="num">10</span><span>Current System Review</span></a>
+      <a class="nav-link" data-nav href="#security"><span class="num">11</span><span>Security &amp; Data Privacy</span></a>
+      <a class="nav-link" data-nav href="#nfr"><span class="num">12</span><span>Non-Functional Requirements</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Delivery</div>
+      <a class="nav-link" data-nav href="#risks"><span class="num">13</span><span>Assumptions, Dependencies &amp; Risks</span></a>
+      <a class="nav-link" data-nav href="#timeline"><span class="num">14</span><span>Timeline &amp; Deliverables</span></a>
+      <a class="nav-link" data-nav href="#commercial"><span class="num">15</span><span>Commercial Terms</span></a>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+          <span></span>
+        </button>
+        <span class="topbar-title" id="topbarTitle">Product Requirements Document</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn no-print" id="printBtn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Print / Save PDF</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content" class="content">
+
+      <div class="doc-header">
+        <div class="eyebrow">Confidential — Prepared for Review</div>
+        <h1>Microsoft 365 Intelligence Dashboard</h1>
+        <p class="subtitle">A unified operations command center for IT management at UPC Renewables Indonesia — surfacing what needs attention today across email, calendar, tasks, files, and infrastructure health.</p>
+        <dl class="doc-meta">
+          <div><dt>Prepared for</dt><dd>IT Management, UPC Renewables Indonesia</dd></div>
+          <div><dt>Prepared by</dt><dd>Anabhidev</dd></div>
+          <div><dt>Document type</dt><dd>Product Requirements Document</dd></div>
+          <div><dt>Status</dt><dd>Draft for Discussion</dd></div>
+        </dl>
+      </div>
+
+      <!-- SECTIONS INSERTED HERE -->
+      <div id="sections-root">
+
+      <!-- 01 EXECUTIVE SUMMARY -->
+      <section class="section" id="executive-summary">
+        <div class="section-head"><span class="section-num">01</span><h2>Executive Summary</h2></div>
+        <div class="section-intro">
+          <p>UPC Renewables Indonesia operates critical energy infrastructure across three sites — Bali, Jakarta, and Sidrap — with a single IT Manager responsible for systems, security, and operations across all of them. Today, that visibility is scattered across Outlook, Teams, a task list, and manual server checks. Nothing is missed because of a lack of tools; things are missed because no single screen tells the IT Manager what actually needs attention <em>right now</em>.</p>
+          <p>This document proposes a browser-based, mobile-friendly command center that connects directly to Microsoft 365 (via Microsoft Graph) and to the three production servers, and distills all of it into one prioritized view: <strong>what's urgent, what needs follow-up, and what's just for awareness</strong> — refreshed automatically throughout the day.</p>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <h3>One login, one screen</h3>
+            <p class="card-body">Sign in once with a Microsoft work account. No separate password to manage, no second system to check.</p>
+          </div>
+          <div class="card">
+            <h3>Built for how you already work</h3>
+            <p class="card-body">Reads directly from Outlook, Calendar, Tasks, and OneDrive — no new place to enter data.</p>
+          </div>
+          <div class="card">
+            <h3>Infrastructure included</h3>
+            <p class="card-body">The three Jakarta servers are monitored on the same screen, without ever exposing their IP addresses in the app itself.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 PROBLEM STATEMENT -->
+      <section class="section" id="problem-statement">
+        <div class="section-head"><span class="section-num">02</span><h2>Problem Statement</h2></div>
+        <div class="section-intro">
+          <p>A one-person IT function covering three sites has no room for information that hides in the wrong app. The core problem is not a missing tool — it's fragmentation and lack of prioritization.</p>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <h3>Fragmented visibility</h3>
+            <p class="card-body">Email, calendar, tasks, files, and server status each live in a different place, checked separately and manually.</p>
+          </div>
+          <div class="card">
+            <h3>No prioritization signal</h3>
+            <p class="card-body">A full inbox and a full calendar don't say what's actually urgent — everything looks equally important until it's read.</p>
+          </div>
+          <div class="card">
+            <h3>Manual infrastructure checks</h3>
+            <p class="card-body">Server health across three sites is checked reactively, not surfaced proactively in one place.</p>
+          </div>
+          <div class="card">
+            <h3>Single point of coverage</h3>
+            <p class="card-body">One person, three locations. Time spent switching between systems is time not spent resolving issues.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 OBJECTIVES -->
+      <section class="section" id="objectives">
+        <div class="section-head"><span class="section-num">03</span><h2>Objectives &amp; Success Metrics</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Objective</th><th>What success looks like</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Reduce time to "what needs my attention"</strong></td><td>The IT Manager can identify the day's top priorities from one screen in under a minute, instead of checking 4–5 separate apps.</td></tr>
+              <tr><td><strong>Surface infrastructure status proactively</strong></td><td>Server issues across the three sites appear on the dashboard automatically, without a manual check-in.</td></tr>
+              <tr><td><strong>Centralize without duplicating</strong></td><td>The dashboard reads live from Microsoft 365 — it is a lens, not a second copy of the data.</td></tr>
+              <tr><td><strong>Work reliably on mobile</strong></td><td>Full functionality on a phone browser, since IT issues don't wait for a desk.</td></tr>
+              <tr><td><strong>Protect sensitive infrastructure data</strong></td><td>No server IP addresses, credentials, or tenant secrets are ever exposed in client-side source code.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 04 USERS -->
+      <section class="section" id="users">
+        <div class="section-head"><span class="section-num">04</span><h2>Users &amp; Personas</h2></div>
+        <div class="section-intro">
+          <p>Version 1 is scoped for a single user. The architecture is designed so additional users can be added later without a redesign.</p>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <h3>Primary — IT Manager <span class="badge badge-v1">V1</span></h3>
+            <p class="card-body">Sole user in V1. Holds Microsoft 365 admin rights on the UPC Renewables Indonesia tenant, giving direct access to configure the required app registration and permissions.</p>
+          </div>
+          <div class="card">
+            <h3>Future — Additional staff <span class="badge badge-v2">V2+</span></h3>
+            <p class="card-body">Potential expansion to other IT or management staff once V1 is validated. Would introduce role-based views (e.g. a management-facing summary vs. an IT-facing technical view).</p>
+          </div>
+        </div>
+      </section>
+
+      </div> <!-- /sections-root -->
+
+      <div id="sections-root-2">
+
+      <!-- 05 SCOPE & ROADMAP -->
+      <section class="section" id="scope">
+        <div class="section-head"><span class="section-num">05</span><h2>Scope &amp; Roadmap</h2></div>
+        <div class="section-intro">
+          <p>Features are grouped into three tiers, ordered by how much value they deliver relative to their implementation effort and permission requirements. Filter the list below to focus on one tier at a time.</p>
+        </div>
+
+        <div class="scope-filter" role="tablist" aria-label="Filter by version">
+          <button type="button" class="active" data-scope-filter="all" role="tab" aria-selected="true">All Tiers</button>
+          <button type="button" data-scope-filter="v1" role="tab" aria-selected="false">V1 — Foundation</button>
+          <button type="button" data-scope-filter="v2" role="tab" aria-selected="false">V2 — Expansion</button>
+          <button type="button" data-scope-filter="v3" role="tab" aria-selected="false">V3 — Intelligence</button>
+        </div>
+
+        <div class="card-grid" id="scopeGrid">
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Sign-in &amp; Identity</h3>
+            <p class="card-body">Single sign-on with Microsoft work account (MSAL). Replaces the current dual login with one secure flow.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Inbox Highlights</h3>
+            <p class="card-body">Unread count, sender, subject, internal vs. external flag.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Calendar</h3>
+            <p class="card-body">7-day schedule view, today's meetings, tentative event flagging.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Microsoft To&nbsp;Do / Tasks</h3>
+            <p class="card-body">Task list with overdue and due-today grouping — replaces the current unconnected task placeholder.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> OneDrive Recent Files</h3>
+            <p class="card-body">Recent and shared files, storage quota. Metadata only — files open in Microsoft 365, never stored in the dashboard.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> User Profile &amp; Presence</h3>
+            <p class="card-body">Real name, photo, job title, and the signed-in user's own availability status.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Server Monitoring</h3>
+            <p class="card-body">Up/down status for the three Jakarta servers, checked on a timer via a secure intermediary — see Section 08.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> AI Daily Briefing</h3>
+            <p class="card-body">Automated narrative summary of the day's priorities, generated from the Attention Center's rule engine. Data flow disclosed in Section 11.</p>
+          </div>
+          <div class="card" data-scope-item="v1">
+            <h3><span class="badge badge-v1">V1</span> Attention Center</h3>
+            <p class="card-body">The prioritization engine that turns raw data into a High / Follow-up / FYI list. See Section 07.</p>
+          </div>
+
+          <div class="card" data-scope-item="v2">
+            <h3><span class="badge badge-v2">V2</span> Teams Chat <span class="badge badge-risk">flagged</span></h3>
+            <p class="card-body">Recent chats and unread count. Requires verification against Microsoft's current Graph API access terms for message content before commitment — see Section 13.</p>
+          </div>
+          <div class="card" data-scope-item="v2">
+            <h3><span class="badge badge-v2">V2</span> Planner</h3>
+            <p class="card-body">Task boards, assigned tasks, overdue tracking — conditional on confirming UPC Renewables actively uses Planner.</p>
+          </div>
+          <div class="card" data-scope-item="v2">
+            <h3><span class="badge badge-v2">V2</span> SharePoint Documents</h3>
+            <p class="card-body">Recent activity across SharePoint sites. Broader scope than OneDrive; higher implementation effort.</p>
+          </div>
+          <div class="card" data-scope-item="v2">
+            <h3><span class="badge badge-v2">V2</span> Multi-user Access</h3>
+            <p class="card-body">Role-based views for additional staff beyond the initial IT Manager user.</p>
+          </div>
+
+          <div class="card" data-scope-item="v3">
+            <h3><span class="badge badge-v3">V3</span> Historical Uptime Log</h3>
+            <p class="card-body">Trend view of server availability over time, built from the same monitoring data collected in V1.</p>
+          </div>
+          <div class="card" data-scope-item="v3">
+            <h3><span class="badge badge-v3">V3</span> Teams Channel Activity Feed</h3>
+            <p class="card-body">Office-wide activity feed from Teams channels. Same access-policy caveat as V2 Teams Chat.</p>
+          </div>
+          <div class="card" data-scope-item="v3">
+            <h3><span class="badge badge-v3">V3</span> Employee Directory</h3>
+            <p class="card-body">Static organizational reference — low priority for a "realtime" dashboard, suited to a separate page.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 FUNCTIONAL REQUIREMENTS -->
+      <section class="section" id="features">
+        <div class="section-head"><span class="section-num">06</span><h2>Functional Requirements</h2></div>
+        <div class="section-intro">
+          <p>Each module maps to a specific Microsoft Graph endpoint and permission scope. "Admin consent" indicates whether a tenant administrator must approve the permission before it can be used — relevant here since the primary user already holds admin rights on the tenant.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Module</th><th>Graph endpoint</th><th>Permission scope</th><th>Admin consent</th><th>Tier</th></tr></thead>
+            <tbody>
+              <tr><td>Sign-in / Identity</td><td class="mono">/me</td><td class="mono">User.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>Inbox Highlights</td><td class="mono">/me/mailFolders/inbox/messages</td><td class="mono">Mail.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>Calendar</td><td class="mono">/me/calendarView</td><td class="mono">Calendars.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>Tasks</td><td class="mono">/me/todo/lists</td><td class="mono">Tasks.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>OneDrive Files</td><td class="mono">/me/drive/recent</td><td class="mono">Files.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>Presence (self)</td><td class="mono">/me/presence</td><td class="mono">Presence.Read</td><td>No</td><td><span class="badge badge-v1">V1</span></td></tr>
+              <tr><td>Teams Chat</td><td class="mono">/me/chats</td><td class="mono">Chat.ReadBasic</td><td>Depends on access tier — verify at build time</td><td><span class="badge badge-v2">V2</span></td></tr>
+              <tr><td>Planner</td><td class="mono">/me/planner/tasks</td><td class="mono">Tasks.Read</td><td>No</td><td><span class="badge badge-v2">V2</span></td></tr>
+              <tr><td>SharePoint</td><td class="mono">/sites/{id}/drive/recent</td><td class="mono">Sites.Read.All</td><td>Yes</td><td><span class="badge badge-v2">V2</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-info">
+          <div class="callout-title">Why V1 avoids admin-consent scopes</div>
+          <p>Even though the primary user holds admin rights, V1 is deliberately scoped to permissions a signed-in user can grant to themselves. This keeps the first release independent of any separate Azure Portal approval step, so it can be built, tested, and delivered without a blocking dependency.</p>
+        </div>
+      </section>
+
+      <!-- 07 ATTENTION CENTER -->
+      <section class="section" id="attention-center">
+        <div class="section-head"><span class="section-num">07</span><h2>Attention Center Logic</h2></div>
+        <div class="section-intro">
+          <p>The dashboard's core differentiator is not displaying more data — it's turning email, calendar, tasks, and files into one prioritized list. This engine is rule-based, not AI-based: deterministic, free to run, and never subject to hallucination. AI (Section 06) is used only to narrate the output of these rules, never to decide priority.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tier</th><th>Trigger conditions</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-risk">High</span></td><td>Meeting starting within 30 minutes · Task overdue · Unread email flagged High Importance</td></tr>
+              <tr><td><span class="badge badge-v2">Follow-up</span></td><td>Email unread for more than 24 hours · Task due today · Meeting marked Tentative</td></tr>
+              <tr><td><span class="badge badge-v1">FYI</span></td><td>New file added in the last 24 hours · Meeting scheduled for tomorrow</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-ok">
+          <div class="callout-title">Design principle</div>
+          <p>Thresholds above are a starting proposal, not a fixed spec — they should be reviewed and tuned with the IT Manager once real inbox/calendar volume is observed during pilot use.</p>
+        </div>
+      </section>
+
+      <!-- 08 SERVER MONITORING -->
+      <section class="section" id="server-monitoring">
+        <div class="section-head"><span class="section-num">08</span><h2>Server Monitoring</h2></div>
+        <div class="section-intro">
+          <p>Three production servers in Jakarta, monitored via public IP. Browsers cannot perform ICMP ping, and a direct <code>fetch()</code> from the dashboard to a public IP will typically fail due to CORS. Monitoring is therefore handled by an intermediary — see the data flow in Section 09.</p>
+        </div>
+        <ol class="steps">
+          <li><strong>Scheduled check</strong><span>A server-side script polls each of the three servers on a timer (e.g. every 5 minutes) — not the browser.</span></li>
+          <li><strong>Status written to a private store</strong><span>Each check's result (up / down / response time) is written to a datastore the dashboard does not expose publicly.</span></li>
+          <li><strong>Dashboard reads status only</strong><span>The dashboard fetches a simple status JSON — never the server IPs themselves, which stay out of client-side source code entirely.</span></li>
+        </ol>
+        <div class="callout callout-risk">
+          <div class="callout-title">Non-negotiable constraint</div>
+          <p>Because UPC Renewables operates energy infrastructure, the three server IP addresses must never appear in the dashboard's HTML/JS source — anyone using "View Source" on the public file would otherwise see them. This is treated as a hard requirement, not a preference.</p>
+        </div>
+      </section>
+
+      </div>
+
+      <div id="sections-root-3">
+
+      <!-- 09 ARCHITECTURE -->
+      <section class="section" id="architecture">
+        <div class="section-head"><span class="section-num">09</span><h2>Architecture &amp; Data Flow</h2></div>
+        <div class="section-intro">
+          <p>The dashboard is a single-file, standalone web app — no backend server of its own. Two distinct authentication paths handle two different needs: the browser talks to Microsoft Graph directly with the signed-in user's own permissions, while a separate proxy handles anything that needs a secret (AI summarization, server status).</p>
+        </div>
+
+        <div class="diagram-wrap" role="img" aria-label="Architecture diagram: browser dashboard connects via MSAL to Microsoft Entra ID and Microsoft Graph directly; a separate Google Apps Script intermediary handles server monitoring and AI briefing generation, keeping secrets and server IP addresses out of the browser.">
+          <svg viewBox="0 0 920 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:920px;">
+            <defs>
+              <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#7A7D91"/>
+              </marker>
+            </defs>
+            <!-- Browser -->
+            <rect x="30" y="30" width="230" height="90" rx="8" fill="#FFFFFF" stroke="#000087" stroke-width="2"/>
+            <text x="145" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#000087" font-weight="bold">Dashboard</text>
+            <text x="145" y="82" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Browser · MSAL.js</text>
+            <text x="145" y="98" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">No secrets stored client-side</text>
+
+            <!-- Entra ID -->
+            <rect x="340" y="30" width="230" height="90" rx="8" fill="#FFFFFF" stroke="#0B4FA0" stroke-width="2"/>
+            <text x="455" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#0B4FA0" font-weight="bold">Microsoft Entra ID</text>
+            <text x="455" y="82" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">UPC Renewables tenant</text>
+            <text x="455" y="98" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">App Registration (single-tenant)</text>
+
+            <!-- Graph -->
+            <rect x="650" y="30" width="230" height="90" rx="8" fill="#FFFFFF" stroke="#0B4FA0" stroke-width="2"/>
+            <text x="765" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#0B4FA0" font-weight="bold">Microsoft Graph</text>
+            <text x="765" y="82" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Mail · Calendar · Tasks</text>
+            <text x="765" y="98" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">OneDrive · Presence</text>
+
+            <line x1="260" y1="75" x2="335" y2="75" stroke="#7A7D91" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="298" y="68" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7A7D91">login</text>
+            <line x1="455" y1="120" x2="455" y2="150" stroke="#7A7D91" stroke-width="1.5"/>
+            <line x1="455" y1="150" x2="765" y2="150" stroke="#7A7D91" stroke-width="1.5"/>
+            <line x1="765" y1="150" x2="765" y2="125" stroke="#7A7D91" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="610" y="143" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7A7D91">access token</text>
+            <line x1="650" y1="75" x2="875" y2="75" stroke="#7A7D91" stroke-width="0" />
+            <line x1="145" y1="120" x2="145" y2="180" stroke="#FD8409" stroke-width="1.5"/>
+            <line x1="145" y1="180" x2="765" y2="180" stroke="#FD8409" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="455" y="173" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#A34F00">direct Graph API calls (Bearer token)</text>
+
+            <!-- GAS Proxy -->
+            <rect x="30" y="240" width="230" height="100" rx="8" fill="#FFF1E2" stroke="#FD8409" stroke-width="2"/>
+            <text x="145" y="272" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#A34F00" font-weight="bold">Google Apps Script</text>
+            <text x="145" y="292" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Secret-holding proxy</text>
+            <text x="145" y="308" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Timer-based server polling</text>
+            <text x="145" y="324" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">AI briefing generation</text>
+
+            <!-- Servers -->
+            <rect x="340" y="240" width="230" height="100" rx="8" fill="#FFFFFF" stroke="#B3261E" stroke-width="2" stroke-dasharray="5,3"/>
+            <text x="455" y="272" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#B3261E" font-weight="bold">3 Servers (Jakarta)</text>
+            <text x="455" y="292" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Public IP — never in browser code</text>
+            <text x="455" y="308" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Status checked on schedule</text>
+
+            <!-- Gemini -->
+            <rect x="650" y="240" width="230" height="100" rx="8" fill="#FFFFFF" stroke="#7A7D91" stroke-width="2"/>
+            <text x="765" y="272" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#4A4D63" font-weight="bold">Gemini AI</text>
+            <text x="765" y="292" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Narrative briefing only</text>
+            <text x="765" y="308" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A4D63">Never decides priority — see §11</text>
+
+            <line x1="260" y1="290" x2="335" y2="290" stroke="#B3261E" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="298" y="283" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#B3261E">poll status</text>
+            <line x1="650" y1="290" x2="265" y2="290" stroke="#7A7D91" stroke-width="1.5" marker-end="url(#arrow)" transform="translate(0,20)"/>
+            <text x="455" y="333" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7A7D91">summarize (subject lines only)</text>
+
+            <line x1="145" y1="340" x2="145" y2="380" stroke="#7A7D91" stroke-width="1.5"/>
+            <line x1="145" y1="380" x2="145" y2="120" stroke="#7A7D91" stroke-width="0"/>
+            <path d="M145,340 L145,400 L145,400" fill="none" stroke="#7A7D91" stroke-width="1.5"/>
+            <line x1="30" y1="380" x2="145" y2="340" stroke="none"/>
+            <line x1="145" y1="240" x2="145" y2="120" stroke="#000087" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" transform="translate(-90,0)"/>
+            <text x="35" y="180" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#000087" transform="rotate(-90 35 180)">status JSON</text>
+
+            <text x="460" y="420" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7A7D91" font-style="italic">Two auth paths: browser → Graph (user's own delegated permissions) · GAS → Graph (application permissions, server-to-server, for scheduled tasks only)</text>
+          </svg>
+        </div>
+
+        <div class="card-grid" class="mt-lg">
+          <div class="card">
+            <h3>Hosting</h3>
+            <p class="card-body">Static hosting on Anabhidev's domain for trial. A migration path to a UPC Renewables–controlled domain can be scoped separately if the pilot proceeds.</p>
+          </div>
+          <div class="card">
+            <h3>Token storage</h3>
+            <p class="card-body"><code>sessionStorage</code> only — cleared when the browser tab closes. Nothing persisted to disk or a database.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10 CURRENT SYSTEM -->
+      <section class="section" id="current-system">
+        <div class="section-head"><span class="section-num">10</span><h2>Current System Review</h2></div>
+        <div class="section-intro">
+          <p>Anabhidev has already built and tested a working prototype (a single standalone HTML dashboard) that proves the core architecture — MSAL sign-in, live Graph API calls for mail and calendar, and a Google Apps Script proxy for AI summarization. The table below summarizes what that prototype validated and what needs to change before a production release.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Area</th><th>Prototype status</th><th>Action for this project</th></tr></thead>
+            <tbody>
+              <tr><td>Sign-in</td><td>Dual flow — a custom password form running alongside Microsoft sign-in</td><td>Consolidate to Microsoft sign-in only, removing the separate password form</td></tr>
+              <tr><td>Graph API connection</td><td>Working — live mail and calendar data confirmed</td><td>Reuse as-is; extend to Tasks, OneDrive, Presence</td></tr>
+              <tr><td>Server &amp; tenant identifiers</td><td>Present directly in the client-side file</td><td>Move to the proxy layer, out of browser-visible source — see Section 11</td></tr>
+              <tr><td>Branding &amp; layout</td><td>Hardcoded for a single prior client</td><td>Rebuilt as configurable tokens for this engagement</td></tr>
+              <tr><td>Rate-limit handling</td><td>Working — automatic retry on Graph API throttling</td><td>Reuse as-is</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 11 SECURITY -->
+      <section class="section" id="security">
+        <div class="section-head"><span class="section-num">11</span><h2>Security &amp; Data Privacy</h2></div>
+
+        <div class="callout callout-risk">
+          <div class="callout-title">Data sent to a third party — disclosed explicitly</div>
+          <p>The AI Daily Briefing feature sends email subject lines, sender names, and calendar event titles to Google's Gemini API for summarization, via the Anabhidev-controlled Google Apps Script proxy. No message bodies or attachments are sent. This is disclosed here so it can be reviewed against UPC Renewables' data handling policy before the feature is enabled in production. It should ship as a feature that can be switched off.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Control</th><th>Approach</th></tr></thead>
+            <tbody>
+              <tr><td>Authentication</td><td>Microsoft sign-in (MSAL) only — no client-side password comparison</td></tr>
+              <tr><td>Token storage</td><td><code>sessionStorage</code>, cleared on tab close, never written to disk</td></tr>
+              <tr><td>Server IP addresses</td><td>Never present in client-side source — held only in the proxy layer's private configuration</td></tr>
+              <tr><td>Tenant &amp; app identifiers</td><td>Client ID and tenant ID are visible in the client (standard for public client apps) — client secret is never present in the browser</td></tr>
+              <tr><td>Data persistence</td><td>None. The dashboard reads live from Microsoft Graph on each load; nothing is stored in a database</td></tr>
+              <tr><td>Transport</td><td>HTTPS enforced for all connections, including the proxy endpoint</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 12 NFR -->
+      <section class="section" id="nfr">
+        <div class="section-head"><span class="section-num">12</span><h2>Non-Functional Requirements</h2></div>
+        <div class="card-grid">
+          <div class="card"><h3>Mobile-first</h3><p class="card-body">Full functionality on a phone browser; layout locked to viewport width with no horizontal scroll.</p></div>
+          <div class="card"><h3>Responsive desktop</h3><p class="card-body">Content uses full available browser width rather than a fixed centered column.</p></div>
+          <div class="card"><h3>Refresh behavior</h3><p class="card-body">Auto-refresh on a configurable interval, with Graph API rate-limit retry handling.</p></div>
+          <div class="card"><h3>Browser support</h3><p class="card-body">Current versions of Chrome, Edge, Safari, and Firefox on desktop and mobile.</p></div>
+          <div class="card"><h3>Accessibility</h3><p class="card-body">Keyboard navigable, visible focus states, WCAG-checked color contrast throughout.</p></div>
+          <div class="card"><h3>Performance</h3><p class="card-body">No unnecessary polling; requests batched and cached within the session where possible.</p></div>
+        </div>
+      </section>
+
+      </div>
+
+      <div id="sections-root-4">
+
+      <!-- 13 RISKS -->
+      <section class="section" id="risks">
+        <div class="section-head"><span class="section-num">13</span><h2>Assumptions, Dependencies &amp; Risks</h2></div>
+
+        <div class="callout callout-ok">
+          <div class="callout-title">Assumption — tenant access</div>
+          <p>The primary user holds administrator rights on the UPC Renewables Indonesia Microsoft 365 tenant, which is expected to make the required App Registration and permission approvals straightforward compared to a typical external-vendor engagement.</p>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-title">Risk — Teams message access policy</div>
+          <p>Microsoft periodically adjusts access terms for programmatic access to Teams chat and channel content, particularly around metered or protected API scenarios. The specific terms applicable to this deployment must be re-verified against current Microsoft Learn documentation at build time, before Teams Chat (Section 05, V2) is committed to a client-facing timeline.</p>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-title">Dependency — feature usage confirmation</div>
+          <p>Planner and SharePoint modules (Section 05, V2) depend on confirming that UPC Renewables actively uses those tools day-to-day. Building against an unused tool produces a feature with no ongoing value.</p>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-title">Assumption — hosting</div>
+          <p>The trial/pilot phase is hosted on Anabhidev's own domain. A production deployment on UPC Renewables-controlled infrastructure or domain is treated as a separate follow-on scope item.</p>
+        </div>
+      </section>
+
+      <!-- 14 TIMELINE -->
+      <section class="section" id="timeline">
+        <div class="section-head"><span class="section-num">14</span><h2>Timeline &amp; Deliverables</h2></div>
+        <div class="section-intro">
+          <p>This project is developed outside standard working hours, alongside a full-time role. The timeline below reflects that pace honestly rather than a full-time delivery schedule.</p>
+        </div>
+        <ol class="steps">
+          <li><strong>Discovery &amp; setup</strong><span>Confirm tenant details, register the application in Microsoft Entra ID, confirm which V2 modules (Teams, Planner, SharePoint) are actually in active use.</span></li>
+          <li><strong>V1 build</strong><span>Sign-in, Inbox, Calendar, Tasks, OneDrive, Presence, Server Monitoring, Attention Center, AI Briefing.</span></li>
+          <li><strong>Pilot review</strong><span>Hands-on review with the IT Manager; tune Attention Center thresholds against real data.</span></li>
+          <li><strong>Handover</strong><span>Deployment to agreed hosting, walkthrough, and documentation for day-to-day use.</span></li>
+        </ol>
+      </section>
+
+      <!-- 15 COMMERCIAL -->
+      <section class="section" id="commercial">
+        <div class="section-head"><span class="section-num">15</span><h2>Commercial Terms</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Item</th><th>Terms</th></tr></thead>
+            <tbody>
+              <tr><td>Setup fee</td><td><em>To be confirmed</em></td></tr>
+              <tr><td>Monthly maintenance</td><td><em>To be confirmed</em></td></tr>
+              <tr><td>Revision rounds included</td><td><em>To be confirmed</em></td></tr>
+              <tr><td>Ownership</td><td>The underlying dashboard engine and template remain the property of Anabhidev. UPC Renewables Indonesia receives a license to use the deployed instance.</td></tr>
+              <tr><td>Support scope</td><td>Maintenance covers Microsoft Graph API changes, token/credential updates, and bug fixes. New feature requests are scoped and quoted separately.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      </div>
+
+      <footer class="doc-footer">
+        <span>© Anabhidev — this document is confidential and intended solely for the named recipient.</span>
+        <span>Not for public distribution.</span>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Hamburger / mobile sidebar ---------- */
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var hamburger = document.getElementById('hamburgerBtn');
+
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  hamburger.addEventListener('click', function(){
+    var isOpen = sidebar.classList.contains('open');
+    if (isOpen) { closeSidebar(); } else { openSidebar(); }
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  /* close mobile sidebar after choosing a section */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  navLinks.forEach(function(link){
+    link.addEventListener('click', function(){
+      if (window.matchMedia('(max-width: 880px)').matches) { closeSidebar(); }
+    });
+  });
+
+  /* ---------- Active nav highlight on scroll (IntersectionObserver) ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section[id]'));
+  var topbarTitle = document.getElementById('topbarTitle');
+  var linkById = {};
+  navLinks.forEach(function(l){
+    var id = l.getAttribute('href').slice(1);
+    linkById[id] = l;
+  });
+
+  function setActive(id){
+    navLinks.forEach(function(l){ l.classList.remove('active'); });
+    var active = linkById[id];
+    if (active) {
+      active.classList.add('active');
+      var labelEl = active.querySelector('span:last-child');
+      if (labelEl && topbarTitle) { topbarTitle.textContent = labelEl.textContent; }
+    }
+  }
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var io = new IntersectionObserver(function(entries){
+      var visible = entries.filter(function(e){ return e.isIntersecting; });
+      if (visible.length) {
+        visible.sort(function(a,b){ return b.intersectionRatio - a.intersectionRatio; });
+        setActive(visible[0].target.id);
+      }
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] });
+    sections.forEach(function(s){ io.observe(s); });
+    if (sections[0]) { setActive(sections[0].id); }
+  }
+
+  /* ---------- Scope filter (V1 / V2 / V3) ---------- */
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('[data-scope-filter]'));
+  var scopeItems = Array.prototype.slice.call(document.querySelectorAll('[data-scope-item]'));
+
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('data-scope-filter');
+      filterBtns.forEach(function(b){
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      scopeItems.forEach(function(item){
+        var tier = item.getAttribute('data-scope-item');
+        var show = (target === 'all') || (tier === target);
+        item.classList.toggle('scope-hidden', !show);
+      });
+    });
+  });
+
+  /* ---------- Print / Save PDF ---------- */
+  var printBtn = document.getElementById('printBtn');
+  printBtn.addEventListener('click', function(){
+    window.print();
+  });
+
+})();
+</script>
+</body>
+</html>
