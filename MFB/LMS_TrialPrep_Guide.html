@@ -2,8 +2,25 @@
 <html lang="id">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFish_TrialPrep_Guide_v1.3.html
+     File        : MissFish_TrialPrep_Guide_v1.4.html
      Description : Panduan interaktif persiapan trial 10 orang.
+                   v1.4: halaman baru "SOP Bilingual Audio" (Trial) —
+                   penjelasan HR-friendly fitur v2.110 (SOP dua-kolom
+                   EN/ID kini terdeteksi otomatis dan dibacakan sesuai
+                   bahasa pilihan staff) plus detail teknis untuk IT
+                   dalam accordion tertutup, dan checklist testing
+                   khusus fitur ini. Item Pending "SOP dua kolom
+                   (ID/EN)" dihapus (sudah dikerjakan di v2.110);
+                   diganti catatan kandidat masa depan (kolom manual
+                   SOP/Non-SOP, ditunda sampai lihat hasil trial).
+                   Deploy Status diperbarui: v2.110 + Code v1.6
+                   ditambahkan ke daftar berkas yang perlu disalin.
+                   What's New: card v2.110 dan Code v1.6 ditambahkan.
+                   Pre-Trial Checklist: berkas terpasang & item
+                   fungsional untuk SOP Bilingual Audio ditambahkan.
+                   Toggle EN/ID di sidebar TETAP seperti v1.3 (bilingual
+                   apa adanya, tidak jadi terjemahan penuh) — hanya
+                   fungsi tampil/sembunyi status, bukan translasi.
                    v1.3: perbaikan bug — tombol EN/ID sebelumnya tidak punya fungsi
                    sama sekali (cuma markup CSS). Sekarang berfungsi
                    secara visual, dengan catatan jujur bahwa isi masih
@@ -16,11 +33,10 @@
                    invert, halaman Add Backup Admin baru, Pending Items
                    terbuka semua secara bawaan. Fungsi baru sejak v2.100,
                    cara ganti admin, tambah user, tambah video (untuk HR).
-                   Lebar mengikuti browser, tidak dikunci — sesuai standar
-                   Anabhi Dev untuk guide/dashboard interaktif.
+                   Lebar mengikuti browser, tidak dikunci.
      IT Department · Miss Fish Bali
-     Version     : 1.3
-     Generated   : 13 August 2026, 10:01:01 WITA
+     Version     : 1.4
+     Generated   : 13 August 2026, 12:06:36 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -207,6 +223,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
   <div class="sb-item" data-p="add-video"><span class="ic">④</span> Add a Video</div>
 
   <div class="sb-group">Trial</div>
+  <div class="sb-item" data-p="sop-bilingual"><span class="ic">🎧</span> SOP Bilingual Audio</div>
   <div class="sb-item" data-p="deploy-status"><span class="ic">📦</span> Deploy Status</div>
   <div class="sb-item" data-p="checklist"><span class="ic">✓</span> Pre-Trial Checklist</div>
 </nav>
@@ -216,13 +233,13 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
   <!-- ═══════════ OVERVIEW ═══════════ -->
   <section class="page on" id="p-overview">
     <img src="https://anabhidev.com/MFB/missfish-logo-white.webp" alt="Miss Fish Bali" style="width:150px;height:auto;display:block;margin-bottom:18px">
-    <div class="crumb">Miss Fish Bali LMS · v2.100 → v2.109</div>
+    <div class="crumb">Miss Fish Bali LMS · v2.100 → v2.110</div>
     <h1>Trial Preparation <em>Documents</em></h1>
-    <p class="lede">Panduan ini disiapkan untuk IT dan HR yang membantu menjalankan trial. Nomor versi (v2.100, v2.109) hanya untuk referensi internal IT — yang penting untuk HR dan tim trial adalah fungsi apa saja yang berubah, bukan angka versinya.</p>
+    <p class="lede">Panduan ini disiapkan untuk IT dan HR yang membantu menjalankan trial. Nomor versi (v2.100, v2.110) hanya untuk referensi internal IT — yang penting untuk HR dan tim trial adalah fungsi apa saja yang berubah, bukan angka versinya.</p>
 
     <div class="stats">
-      <div class="stat"><div class="n">10</div><div class="l">Versi HTML<br>(v2.100 → v2.109)</div></div>
-      <div class="stat"><div class="n">11</div><div class="l">Berkas GAS<br>berubah</div></div>
+      <div class="stat"><div class="n">11</div><div class="l">Versi HTML<br>(v2.100 → v2.110)</div></div>
+      <div class="stat"><div class="n">12</div><div class="l">Berkas GAS<br>berubah</div></div>
       <div class="stat"><div class="n">1</div><div class="l">Versi ditest penuh<br>(v2.100)</div></div>
       <div class="stat"><div class="n">0</div><div class="l">Regresi ditemukan<br>di tiap audit</div></div>
     </div>
@@ -406,6 +423,46 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
     </div>
   </section>
 
+  <!-- ═══════════ SOP BILINGUAL AUDIO (v2.110) ═══════════ -->
+  <section class="page" id="p-sop-bilingual">
+    <div class="crumb">Trial · Fitur Baru v2.110</div>
+    <h1>SOP Bilingual <em>Audio</em></h1>
+    <p class="lede">Fitur baru di v2.110: SOP dua kolom (Inggris di kiri, Indonesia di kanan) sekarang bisa dibacakan otomatis oleh audio — tinggal pilih bahasanya, tidak perlu setting apa pun dari admin.</p>
+
+    <h3>Apa yang berubah untuk staff</h3>
+    <p style="font-size:14px;color:var(--gray-600);max-width:78ch;margin-bottom:14px">
+      Sebelumnya (v2.109 ke bawah), kalau staff menekan tombol Audio di SOP dua-kolom, suaranya akan membaca teks Inggris dan Indonesia berselang-seling — kedengarannya rusak dan susah dimengerti. Sekarang, sistem <strong>mengenali sendiri</strong> kalau sebuah PDF memang SOP dua-kolom, dan menampilkan tombol pilihan bahasa <span class="field">EN</span> / <span class="field">ID</span> di bilah audio. Staff tinggal pilih, audio membaca <strong>satu bahasa penuh</strong> — tidak campur.
+    </p>
+
+    <div class="ok"><strong>Yang TIDAK berubah:</strong> semua modul PDF lain (materi training biasa, form, dsb) tetap berperilaku sama seperti sebelumnya — tombol Audio, transkrip, dan aturan LMS (kecepatan 1,00x, tidak bisa melompat maju, Wake Lock) semuanya persis sama. Fitur baru ini HANYA muncul kalau PDF-nya benar-benar terdeteksi sebagai SOP dua-kolom.</div>
+
+    <h3>Cara kerja (versi singkat)</h3>
+    <table>
+      <tr><th>Situasi</th><th>Yang terjadi</th></tr>
+      <tr><td>PDF SOP dua-kolom EN/ID</td><td>Label <strong>"🌐 Bilingual SOP"</strong> + tombol EN/ID muncul di bilah audio</td></tr>
+      <tr><td>PDF biasa (bukan SOP dua-kolom)</td><td>Tombol Audio berperilaku sama seperti v2.109 — tidak ada yang berubah</td></tr>
+      <tr><td>HP tidak punya suara Bahasa Indonesia</td><td>Tombol ID otomatis nonaktif, audio memaksa bahasa Inggris (teks + suaranya sekaligus)</td></tr>
+      <tr><td>HP tidak punya suara Bahasa Inggris</td><td>Tombol EN otomatis nonaktif, audio memaksa Bahasa Indonesia</td></tr>
+      <tr><td>Ganti bahasa sambil mendengarkan</td><td>Lanjut dari bagian yang sama, tidak mengulang dari awal dokumen</td></tr>
+    </table>
+
+    <div class="warn"><strong>Catatan penting:</strong> bagian atas SOP (judul, nomor kebijakan, tanggal, kolom tanda tangan) TIDAK ikut dibacakan detail — audio langsung ke isi SOP-nya (bagian "1. PURPOSE" / "1. TUJUAN") setelah menyebut judul dan departemen secara singkat. Ini disengaja, supaya tidak membosankan didengar berulang tiap kali modul dibuka.</div>
+
+    <h3>Yang perlu ditest sebelum trial resmi</h3>
+    <div class="check"><input type="checkbox" id="sb1"><label for="sb1">Buka modul PDF SOP asli (2 kolom) → label "🌐 Bilingual SOP" dan tombol EN/ID muncul di bilah audio</label></div>
+    <div class="check"><input type="checkbox" id="sb2"><label for="sb2">Tekan Play — audio mulai dari judul singkat SOP, lalu langsung ke isi bagian "1." (bukan membacakan nomor kebijakan/tanggal/tanda tangan)</label></div>
+    <div class="check"><input type="checkbox" id="sb3"><label for="sb3">Tekan tombol ID sambil audio jalan → suara ganti ke Bahasa Indonesia, lanjut dari bagian yang sama (bukan restart dari awal)</label></div>
+    <div class="check"><input type="checkbox" id="sb4"><label for="sb4">Tekan tombol EN lagi → suara balik ke Inggris, tetap lanjut dari bagian yang sama</label></div>
+    <div class="check"><input type="checkbox" id="sb5"><label for="sb5">Buka panel transkrip (tombol "Text") → EN dan ID tampil berdampingan, bukan cuma satu bahasa</label></div>
+    <div class="check"><input type="checkbox" id="sb6"><label for="sb6">Buka modul PDF biasa (bukan SOP) → label "Bilingual SOP" TIDAK muncul, audio tetap bisa dipakai seperti biasa</label></div>
+    <div class="check"><input type="checkbox" id="sb7"><label for="sb7">Coba di HP Android DAN iPhone kalau memungkinkan — ketersediaan suara Bahasa Indonesia berbeda-beda per perangkat</label></div>
+
+    <div class="danger" style="margin-top:20px"><strong>Kalau ada SOP yang salah terdeteksi</strong> (misal: label "Bilingual SOP" tidak muncul padahal SOP-nya 2 kolom, atau sebaliknya muncul padahal bukan SOP dua-kolom) — jangan diperbaiki manual dulu, catat nama modul/PDF-nya dan sampaikan ke saya. Ada rem darurat teknis (<span class="field">AUD_SOP_DETECT</span>) yang bisa langsung mematikan fitur ini kembali ke perilaku v2.109 kalau ternyata bermasalah luas, tanpa perlu ubah file lain.</div>
+
+    <h3 style="margin-top:28px">Detail teknis (untuk IT)</h3>
+    <div id="sopTechAcc"></div>
+  </section>
+
   <!-- ═══════════ DEPLOY STATUS ═══════════ -->
   <section class="page" id="p-deploy-status">
     <div class="crumb">Trial · Berkas yang Perlu Disalin</div>
@@ -442,17 +499,31 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
       <tr><td class="f">MissFishLMS_v2.109.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
     </table>
 
+    <h3>v2.110 — SOP Bilingual Read-Aloud (HTML saja, tanpa GAS)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">MissFishLMS_v2.110.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+    <p style="margin-top:-6px;font-size:12.5px;color:var(--gray-500)">Detail lengkap fitur ini ada di halaman <strong>SOP Bilingual Audio</strong> di sidebar — baca dulu sebelum testing.</p>
+
+    <h3>Code v1.6 — perbaikan header saja (tanpa perubahan logic)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">Code_v1.6.gs</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+    <p style="margin-top:-6px;font-size:12.5px;color:var(--gray-500)">Bukan bagian dari v2.110 — perbaikan terpisah, kebetulan dikerjakan bersamaan. Cuma isi baris "Generated" yang tadinya placeholder <span class="field">__TS__</span>, tidak ada logic yang berubah.</p>
+
     <div class="danger">
       <strong>Cukup salin yang TERBARU dari tiap jenis berkas</strong> — jangan menyalin bertahap dari v2.106 lalu v2.107 lalu v2.108 satu per satu. Tiap versi HTML dan GAS baru sudah memuat SEMUA perubahan dari versi sebelumnya.
       <p style="margin-top:8px;margin-bottom:0">Artinya kakak cukup pasang <strong>lima berkas ini saja</strong>:</p>
     </div>
 
-    <div class="code">Code_v1.5.gs         ← paling baru
+    <div class="code">Code_v1.6.gs         ← paling baru
 Database_v1.2.gs    ← paling baru
 ActivityLog_v1.5.gs
 CourseManager_v1.8.gs
 Quiz_v1.4.gs
-MissFishLMS_v2.109.html  ← paling baru, satu-satunya HTML yang dipasang</div>
+MissFishLMS_v2.110.html  ← paling baru, satu-satunya HTML yang dipasang</div>
 
     <div class="ok"><strong>Urutan pasang di GAS:</strong> Code → Database → ActivityLog → CourseManager → Quiz → MissFishLMS.html. Setelah semua tersalin, jalankan <span class="field">setupReleaseLogSheet()</span> sekali dari editor.</div>
   </section>
@@ -464,8 +535,8 @@ MissFishLMS_v2.109.html  ← paling baru, satu-satunya HTML yang dipasang</div>
     <p class="lede">Ceklis ini tidak tersimpan — sekadar alat bantu saat kakak menyiapkan trial.</p>
 
     <h3>Berkas yang harus sudah terpasang</h3>
-    <div class="check"><input type="checkbox" id="c1"><label for="c1">MissFishLMS_v2.109.html</label></div>
-    <div class="check"><input type="checkbox" id="c2"><label for="c2">Code_v1.5.gs</label></div>
+    <div class="check"><input type="checkbox" id="c1"><label for="c1">MissFishLMS_v2.110.html</label></div>
+    <div class="check"><input type="checkbox" id="c2"><label for="c2">Code_v1.6.gs</label></div>
     <div class="check"><input type="checkbox" id="c3"><label for="c3">Database_v1.2.gs</label></div>
     <div class="check"><input type="checkbox" id="c4"><label for="c4">ActivityLog_v1.5.gs</label></div>
     <div class="check"><input type="checkbox" id="c5"><label for="c5">CourseManager_v1.8.gs</label></div>
@@ -490,6 +561,11 @@ MissFishLMS_v2.109.html  ← paling baru, satu-satunya HTML yang dipasang</div>
     <div class="check"><input type="checkbox" id="c18"><label for="c18">Tombol Audio merah — dengarkan, cek transkrip berurutan (bukan berselang bahasa)</label></div>
     <div class="check"><input type="checkbox" id="c19"><label for="c19">Assign course lintas departemen → muncul dialog konfirmasi</label></div>
     <div class="check"><input type="checkbox" id="c20"><label for="c20">Panel Release Log di Settings — badge Tested muncul</label></div>
+
+    <h3>SOP Bilingual Read-Aloud (v2.110) — lihat halaman detail di sidebar untuk langkah lengkap</h3>
+    <div class="check"><input type="checkbox" id="c21"><label for="c21">Buka modul PDF SOP asli (2 kolom EN/ID) → label "🌐 Bilingual SOP" muncul di bilah audio</label></div>
+    <div class="check"><input type="checkbox" id="c22"><label for="c22">Toggle EN/ID berfungsi — audio ganti bahasa, bukan cuma tampilan</label></div>
+    <div class="check"><input type="checkbox" id="c23"><label for="c23">Buka modul PDF biasa (bukan SOP) → label "Bilingual SOP" TIDAK muncul, audio tetap jalan seperti biasa</label></div>
   </section>
 
 </main>
@@ -518,6 +594,8 @@ var FEATURES = [
   { v:'2.107', t:'new', title:'Per-request memo cache', desc:'Spreadsheet yang sama tidak lagi dibuka berulang dalam satu eksekusi — diukur 7x jadi 1x untuk generateCertificate().' },
   { v:'2.108', t:'fix', title:'Release Log per-file schema', desc:'Satu baris per BERKAS yang berubah, bukan per rilis — lebih mudah dicari "kapan file X terakhir berubah".' },
   { v:'2.109', t:'new', title:'Simplified voice picker', desc:'Pemilih suara di bilah audio diperas jadi satu baris: nama suara terpilih + tombol Test + tombol Change. Daftar 50 bahasa masih ada, tersembunyi sampai Change ditekan.' },
+  { v:'2.110', t:'new', title:'SOP Bilingual Read-Aloud', desc:'SOP dua kolom (EN/ID) kini terdeteksi otomatis dan audio membaca bahasa yang dipilih staff — bukan campur EN+ID berselang. Detail lengkap ada di halaman "SOP Bilingual Audio" di sidebar.' },
+  { v:'Code 1.6', t:'fix', title:'Header Code.gs diperbaiki', desc:'Baris "Generated" yang tadinya placeholder kosong (__TS__) sekarang berisi timestamp asli. Tidak ada logic yang berubah.' },
 ];
 
 function renderFn(list){
@@ -573,8 +651,8 @@ var PENDING = [
     body:'Sama seperti HoD — kode ada, belum pernah dites dengan akun Observer/GM sungguhan.' },
   { tag:'MED', color:'amber', title:'CacheService belum dipasang',
     body:'Ditunda sengaja: 10 orang trial tidak akan membuat sistem lambat. Setelah pencatat waktu (perfLogIfSlow_) mengumpulkan data dari trial, cache dipasang di tempat yang TERBUKTI mahal — bukan ditebak.' },
-  { tag:'LOW', color:'green', title:'SOP dua kolom (ID/EN) untuk read-aloud',
-    body:'Kalau ada SOP dengan kolom Indonesia dan Inggris berdampingan, audio bisa membaca kedua bahasa berselang-seling. Perlu contoh SOP asli sebelum diperbaiki.' },
+  { tag:'LOW', color:'green', title:'Penanda SOP/Non-SOP manual (kandidat v2.111)',
+    body:'v2.110 mendeteksi SOP bilingual otomatis dari isi PDF-nya sendiri (tanpa setting apa pun). Sempat dipikirkan tambahan kolom manual di Add Module untuk override manual — sengaja DITUNDA sampai setelah trial: risiko flag manual yang salah pakai (menyalakan mode SOP padahal PDF-nya bukan 2 kolom) lebih berbahaya daripada tanpa flag sama sekali, dan datanya baru terlihat kalau ada kasus nyata selama trial. Kalau deteksi otomatis 100% benar selama trial, kolom ini tidak akan pernah dibutuhkan.' },
 ];
 
 function renderPending(){
@@ -587,6 +665,46 @@ function renderPending(){
 }
 function toggleAcc(i){ document.getElementById('acc'+i).classList.toggle('open'); }
 renderPending();
+
+/* v2.110 — accordion detail teknis terpisah dari PENDING, prefix ID
+   'sopacc' supaya tidak bertabrakan index dengan toggleAcc() di atas. */
+var SOP_TECH = [
+  { tag:'1', color:'gray', title:'Gerbang 1 — deteksi pola header SOP',
+    body:'Sistem membaca teks halaman 1 dan mencari frasa "STANDARD OPERATING PROCEDURES" ditambah minimal 2 dari 4 label (POLICY NO, EFFECTIVE DATE, REVISION NO, LAST REVISION DATE). Kalau tidak ketemu, PDF dianggap bukan SOP dan berhenti di sini — tidak lanjut ke gerbang berikutnya.' },
+  { tag:'2', color:'gray', title:'Gerbang 2 — deteksi celah dua kolom',
+    body:'Sistem membaca posisi horizontal (koordinat x) setiap kata di halaman isi. Kalau memang ada dua kolom, akan ada celah kosong yang jelas di tengah — diuji lewat perbandingan celah tersebut dengan celah normal antar-kata (celah kolom asli terbukti puluhan kali lebih besar dari celah antar-kata biasa saat diuji dengan PDF SOP asli). Kalau tidak ada celah yang cukup jelas, dianggap satu kolom biasa.' },
+  { tag:'3', color:'gray', title:'Gerbang 3 — verifikasi benar dwibahasa',
+    body:'Dua kolom belum tentu EN/ID (bisa saja kebetulan 2 kolom untuk alasan lain). Sistem membandingkan: (a) apakah penomoran section di kolom kiri dan kanan sama persis (1., 2., 3.1, dst), dan (b) apakah kata-kata penanda bahasa Inggris (the, of, shall, must...) dominan di satu sisi dan kata penanda Indonesia (yang, dan, wajib, harus...) dominan di sisi lain. Kalau kedua syarat ini tidak terpenuhi, dianggap bukan SOP bilingual — mundur ke mode biasa.' },
+  { tag:'✓', color:'green', title:'Kalau lolos ketiganya',
+    body:'Section EN dan ID dibangun berpasangan (index sejajar 1:1) untuk seluruh halaman isi dokumen. Kalau jumlah section EN dan ID ternyata TIDAK sama (ada kasus yang tidak terduga), sistem membatalkan diri dan mundur ke mode biasa — lebih aman daripada memaksa section yang tidak benar-benar sejajar.' },
+  { tag:'🔊', color:'amber', title:'Voice-matrix — teks dan suara tidak pernah campur',
+    body:'Ganti bahasa mengganti TEKS yang dibaca dan SUARA (voice) sekaligus, tidak pernah salah satu saja. Kalau device tidak punya voice Bahasa Indonesia terpasang, tombol ID otomatis nonaktif dan sistem memaksa mode Inggris penuh (teks Inggris + suara Inggris). Berlaku sebaliknya kalau tidak ada voice Inggris. Kalau device tidak punya voice apa pun untuk kedua bahasa, sistem jatuh ke mode Inggris sebagai pilihan akhir.' },
+  { tag:'📍', color:'amber', title:'Unit pelacakan: section, bukan kalimat',
+    body:'Highlight, penanda posisi terjauh (anti-lompat), dan auto-balik halaman semuanya berbasis SECTION (contoh: "3.1 DEPARTMENT HEADS" sebagai satu unit), bukan per-kalimat kecil seperti mode biasa. Karena EN dan ID dijamin sejajar per-index oleh gerbang 3, "ganti bahasa lanjut dari section yang sama" cukup dilakukan dengan mempertahankan posisi index yang sama di array bahasa lain — tidak perlu pemetaan section terpisah.' },
+  { tag:'🛑', color:'red', title:'Rem darurat — AUD_SOP_DETECT',
+    body:'Ada satu konstanta di bagian atas file HTML (AUD_SOP_DETECT) yang mengendalikan seluruh fitur ini. Diset ke false, seluruh deteksi berhenti sepenuhnya dan SEMUA PDF (termasuk SOP asli) langsung berperilaku seperti v2.109 — tanpa perlu mengubah baris lain. Berguna kalau saat trial ternyata ada masalah luas yang perlu waktu untuk diperbaiki, tapi trial tidak boleh tertunda.' },
+  { tag:'ℹ', color:'gray', title:'Tidak ada perubahan GAS atau sheet',
+    body:'Seluruh fitur ini murni di sisi HTML (client-side). Tidak ada kolom baru di sheet, tidak ada perubahan skema data, tidak ada fungsi GAS yang disentuh. PDF non-SOP di sheet Modules yang sudah ada TIDAK memerlukan perlakuan khusus apa pun.' },
+];
+
+function renderSopTech(){
+  var el = document.getElementById('sopTechAcc');
+  if (!el) return;
+  var tagStyle = {
+    gray : 'background:var(--gray-100);color:var(--gray-600)',
+    green: 'background:var(--green-soft);color:var(--green)',
+    amber: 'background:var(--amber-soft);color:var(--amber)',
+    red  : 'background:var(--red-soft);color:var(--red)'
+  };
+  el.innerHTML = SOP_TECH.map(function(p,i){
+    return '<div class="acc" id="sopacc'+i+'"><div class="acc-head" onclick="toggleSopAcc('+i+')">'+
+      '<span class="acc-tag" style="'+(tagStyle[p.color]||tagStyle.gray)+'">'+p.tag+'</span>'+
+      '<span class="acc-title">'+p.title+'</span><span class="acc-chev">▾</span></div>'+
+      '<div class="acc-body"><p style="margin-bottom:0">'+p.body+'</p></div></div>';
+  }).join('');
+}
+function toggleSopAcc(i){ document.getElementById('sopacc'+i).classList.toggle('open'); }
+renderSopTech();
 
 /* Navigasi sidebar */
 Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(item){
