@@ -2,28 +2,35 @@
 <html lang="id">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFishLMS_StaffManual_v1.1.html
+     File        : MissFishLMS_StaffManual_v1.2.html
      Description : Manual book sederhana untuk staff peserta trial —
                    panduan bergambar/berlangkah dari sudut pandang
                    staff: login, dashboard, buka course, nonton video,
                    baca PDF (termasuk fitur Audio + SOP Bilingual
                    v2.110), kerjakan quiz, lihat sertifikat, dan
-                   kontak bantuan. Bilingual sungguhan (toggle EN/ID
-                   menukar teks lewat atribut data-en/data-id, pola
-                   sama dengan MissFishLMS_CourseGuide v2.1) — istilah
-                   teknis (Button, Dashboard, Login, dll) TETAP
-                   Inggris di kedua bahasa, sesuai gaya komunikasi
-                   yang dipakai di seluruh dokumen Miss Fish Bali LMS.
-                   Sidebar multi-page (pola sama dengan
-                   MissFish_TrialPrep_Guide), bukan satu halaman
-                   panjang di-scroll — dipilih karena staff mengakses
-                   dari HP dan potongan halaman lebih kecil lebih
-                   nyaman dibaca di layar sempit. Lebar mengikuti
-                   browser, tidak dikunci. Project baru, versi mulai
-                   dari 1.1.
+                   kontak bantuan.
+                   v1.2: navigasi diubah total — dari model ganti
+                   tampilan (satu halaman aktif, sisanya sembunyi)
+                   jadi SATU HALAMAN PANJANG dengan semua 8 section
+                   berurutan, discroll. Klik item sidebar = scroll ke
+                   section itu (bukan lagi ganti tampilan), sidebar
+                   ter-highlight otomatis sesuai posisi scroll (pola
+                   sama dengan MissFishLMS_CourseGuide v2.1). Hamburger
+                   menu mobile dipindah dari kiri ke kanan — logo Miss
+                   Fish di sidebar sebelumnya tertutup hamburger saat
+                   sidebar dibuka di HP. Label sidebar "Dashboard &
+                   Your Courses" dipersingkat jadi "Dashboard &
+                   Courses" agar tidak menjadi 2 baris saat aktif.
+                   Video watch threshold diperbaiki dari ~95% jadi
+                   100% (konsisten dengan aturan LMS yang berlaku).
+                   Box "Slow internet?" dihapus. Logo sidebar
+                   diperbesar 50%. Tombol EN/ID dikecilkan (sebelumnya
+                   full-width, kini compact).
+                   v1.1: rilis awal — 8 halaman, bilingual sungguhan
+                   (data-en/data-id), sidebar multi-page.
      IT Department · Miss Fish Bali
-     Version     : 1.1
-     Generated   : 13 August 2026, 15:59:25 WITA
+     Version     : 1.2
+     Generated   : 13 August 2026, 17:09:18 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -85,8 +92,7 @@ a{color:var(--gold)}
 .sb-item.on{background:var(--gold-soft);border-left-color:var(--gold);color:var(--gold);font-weight:600}
 .sb-item .ic{width:16px;text-align:center;flex-shrink:0}
 
-.page{display:none}
-.page.on{display:block}
+.page{display:block;padding-top:6px;scroll-margin-top:20px}
 
 .crumb{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--gold);margin-bottom:10px}
@@ -133,7 +139,7 @@ td.f{font-family:monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
 .badge.gold{background:var(--gold-soft);color:var(--gold)}
 
 /* ── MOBILE ── */
-.hamburger{display:none;position:fixed;top:14px;left:14px;z-index:30;width:40px;height:40px;
+.hamburger{display:none;position:fixed;top:14px;right:14px;z-index:30;width:40px;height:40px;
   background:var(--black);border-radius:10px;align-items:center;justify-content:center;
   color:#fff;font-size:18px;cursor:pointer}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:15}
@@ -170,7 +176,7 @@ td.f{font-family:monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
   <!-- SIDEBAR_ITEMS -->
   <div class="sb-group" data-en="Getting Started" data-id="Mulai">Getting Started</div>
   <div class="sb-item on" data-p="login"><span class="ic">🔑</span> <span data-en="First Login" data-id="Login Pertama Kali">First Login</span></div>
-  <div class="sb-item" data-p="dashboard"><span class="ic">🏠</span> <span data-en="Dashboard & Your Courses" data-id="Dashboard & Course Kamu">Dashboard & Your Courses</span></div>
+  <div class="sb-item" data-p="dashboard"><span class="ic">🏠</span> <span data-en="Dashboard & Courses" data-id="Dashboard & Course">Dashboard & Courses</span></div>
   <div class="sb-item" data-p="open-course"><span class="ic">📂</span> <span data-en="Opening a Course" data-id="Buka Course">Opening a Course</span></div>
 
   <div class="sb-group" data-en="Modules" data-id="Modul">Modules</div>
@@ -188,7 +194,7 @@ td.f{font-family:monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
   <!-- PAGES -->
 
   <!-- ═══════════ FIRST LOGIN ═══════════ -->
-  <section class="page on" id="p-login">
+  <section class="page" id="p-login">
     <div class="crumb" data-en="Step 1 of 8" data-id="Langkah 1 dari 8">Step 1 of 8</div>
     <h1 data-en="Your First <em>Login</em>" data-id="<em>Login</em> Pertama Kali">Your First <em>Login</em></h1>
     <p class="lede" data-en="Your IT or HR team will give you an Employee ID and a temporary password. Use these to log in for the first time." data-id="Tim IT atau HR kamu akan memberikan Employee ID dan password sementara. Gunakan ini untuk Login pertama kali.">Your IT or HR team will give you an Employee ID and a temporary password. Use these to log in for the first time.</p>
@@ -452,16 +458,28 @@ td.f{font-family:monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
 </div>
 
 <script>
-/* ── SIDEBAR NAVIGATION ── */
+/* ── SIDEBAR NAVIGATION — v1.2: scroll ke section, bukan lagi
+   ganti tampilan (semua section tampil sekaligus, discroll). ── */
+var SM_SECTIONS = ['login','dashboard','open-course','video','pdf','quiz','certificate','help'];
+
 Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(item){
   item.addEventListener('click', function(){
-    Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(x){ x.classList.remove('on'); });
-    Array.prototype.forEach.call(document.querySelectorAll('.page'), function(x){ x.classList.remove('on'); });
-    item.classList.add('on');
     var target = document.getElementById('p-' + item.getAttribute('data-p'));
-    if (target) target.classList.add('on');
-    window.scrollTo(0, 0);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     closeSidebarMobile();
+  });
+});
+
+/* Highlight otomatis sidebar sesuai section yang sedang terlihat saat scroll */
+window.addEventListener('scroll', function(){
+  var scrollY = window.scrollY + 120;
+  var activeId = SM_SECTIONS[0];
+  SM_SECTIONS.forEach(function(id){
+    var el = document.getElementById('p-' + id);
+    if (el && el.offsetTop <= scrollY) activeId = id;
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(item){
+    item.classList.toggle('on', item.getAttribute('data-p') === activeId);
   });
 });
 
