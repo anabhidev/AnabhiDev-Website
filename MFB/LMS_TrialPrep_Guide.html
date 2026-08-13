@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<!-- ================================================================
+     Miss Fish Bali LMS
+     File        : MissFish_TrialPrep_Guide_v1.2.html
+     Description : Panduan interaktif persiapan trial 10 orang.
+                   v1.2: logo isi halaman diganti varian -white 150px, halaman
+                   Deploy Status baru (daftar berkas sejak v2.105 yang
+                   perlu disalin ke GAS).
+                   v1.1: perbaikan lebar terkunci di halaman Pending
+                   (aturan p{} global menembus .acc-body), logo tanpa
+                   invert, halaman Add Backup Admin baru, Pending Items
+                   terbuka semua secara bawaan. Fungsi baru sejak v2.100,
+                   cara ganti admin, tambah user, tambah video (untuk HR).
+                   Lebar mengikuti browser, tidak dikunci — sesuai standar
+                   Anabhi Dev untuk guide/dashboard interaktif.
+     IT Department · Miss Fish Bali
+     Version     : 1.2
+     Generated   : 13 August 2026, 09:40:52 WITA
+     ================================================================ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trial Prep Guide — Miss Fish Bali LMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0B0B0C; --white:#FFFFFF;
+  --gold:#C9A065; --gold-soft:rgba(201,160,101,.12);
+  --gray-50:#FAFAF9; --gray-100:#F1EFEA; --gray-300:#D8D3C8;
+  --gray-400:#A8A196; --gray-500:#78716A; --gray-600:#4A453F;
+  --red:#DC2626; --red-soft:rgba(220,38,38,.09);
+  --green:#16A34A; --green-soft:rgba(22,163,74,.09);
+  --amber:#D97706; --amber-soft:rgba(217,119,6,.09);
+  --blue:#2563EB; --blue-soft:rgba(37,99,235,.09);
+  --sidebar-w: 240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
+body{
+  background:var(--gray-50);color:var(--black);
+  font-family:'Inter',-apple-system,sans-serif;font-size:15px;line-height:1.6;
+}
+
+/* ══ Sidebar — lebar tetap, TIDAK ikut aturan max-width:none (itu untuk .main) ══ */
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:var(--black);color:var(--white);overflow-y:auto;z-index:50;
+  transform:translateX(0);transition:transform .25s;
+}
+.sb-brand{display:flex;align-items:center;gap:11px;padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand img{height:26px}
+.sb-brand span{font-family:Georgia,serif;font-size:15px;font-weight:600;letter-spacing:.01em}
+.sb-lang{display:flex;gap:5px;padding:14px 20px 0}
+.sb-lang button{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.6);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.05em;
+  padding:6px 0;border-radius:6px;cursor:pointer}
+.sb-lang button.on{background:var(--gold);border-color:var(--gold);color:var(--black)}
+.sb-group{padding:20px 20px 6px;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.35)}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13.5px;
+  color:rgba(255,255,255,.72);cursor:pointer;border-left:2.5px solid transparent;transition:.15s}
+.sb-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.sb-item.on{background:var(--gold-soft);border-left-color:var(--gold);color:var(--gold);font-weight:600}
+.sb-item .ic{width:16px;text-align:center;flex-shrink:0}
+
+.sb-toggle{display:none;position:fixed;top:14px;left:14px;z-index:60;
+  width:38px;height:38px;background:var(--black);border-radius:9px;border:none;color:#fff;
+  font-size:16px;cursor:pointer;align-items:center;justify-content:center}
+
+/* ══ .main — LEBAR TIDAK DIKUNCI, dibatasi hanya lewat padding.
+   Ini standar dari anabhidev-website-sop-checklist untuk halaman
+   guide/dashboard: max-width:none, bukan angka px tetap. ══ */
+.main{margin-left:var(--sidebar-w);max-width:none;padding:36px 44px 90px}
+.page{display:none}
+.page.on{display:block}
+
+.crumb{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin-bottom:14px}
+h1 em{color:var(--gold);font-style:italic}
+.lede{font-size:15px;color:var(--gray-600);max-width:78ch;margin-bottom:26px}
+h2{font-family:Georgia,serif;font-weight:400;font-size:22px;margin:38px 0 12px}
+h3{font-size:15.5px;font-weight:700;margin:22px 0 8px}
+p{color:var(--gray-600);margin-bottom:12px;max-width:82ch}
+/* v1.1 — .acc-body dan .card p TIDAK boleh ikut dibatasi 82ch di atas.
+   Itulah sebab halaman Pending Items terlihat terkunci padahal
+   .main sudah max-width:none — aturan p{} global menembus ke dalam
+   kartu yang seharusnya melebar penuh mengikuti wadahnya. */
+.acc-body p, .card p{max-width:none}
+p strong{color:var(--black);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--gray-300);border:1px solid var(--gray-300);margin-bottom:8px}
+.stat{background:#fff;padding:16px 16px}
+.stat .n{font-family:Georgia,serif;font-size:28px;line-height:1}
+.stat .l{font-size:11.5px;color:var(--gray-500);margin-top:4px}
+
+/* ── Kartu fitur ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--gray-300);border-radius:12px;padding:18px;border-left:3px solid var(--gray-300)}
+.card.new{border-left-color:var(--green)}
+.card.fix{border-left-color:var(--blue)}
+.card .badge{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;display:inline-block;margin-bottom:8px}
+.card.new .badge{background:var(--green-soft);color:var(--green)}
+.card.fix .badge{background:var(--blue-soft);color:var(--blue)}
+.card .v{font-size:10.5px;color:var(--gray-400);font-family:monospace;margin-left:6px}
+.card h4{font-size:14.5px;font-weight:700;margin-bottom:6px}
+.card p{font-size:13px;margin-bottom:0}
+
+/* ── Langkah ── */
+.steps{border-top:1px solid var(--gray-300)}
+.step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--gray-300)}
+.snum{font-family:Georgia,serif;font-size:20px;color:var(--gold);flex-shrink:0;width:32px}
+.stxt h4{font-size:14.5px;font-weight:700;margin-bottom:4px}
+.stxt p{font-size:13.5px;margin-bottom:6px}
+.code{font-family:'SF Mono',Consolas,monospace;font-size:12.5px;background:var(--black);color:#E5E5E0;
+  padding:11px 13px;border-radius:8px;margin:8px 0;overflow-x:auto;white-space:pre-wrap;line-height:1.6}
+.field{font-family:monospace;background:var(--gray-100);padding:1px 6px;border-radius:4px;font-size:12.5px}
+
+/* ── Peringatan ── */
+.warn{background:var(--amber-soft);border:1px solid rgba(217,119,6,.25);border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;padding:13px 16px;margin:14px 0;font-size:13.5px}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(220,38,38,.25);border-left:3px solid var(--red);
+  border-radius:0 8px 8px 0;padding:13px 16px;margin:14px 0;font-size:13.5px}
+.danger strong{color:var(--red)}
+.ok{background:var(--green-soft);border:1px solid rgba(22,163,74,.25);border-left:3px solid var(--green);
+  border-radius:0 8px 8px 0;padding:13px 16px;margin:14px 0;font-size:13.5px}
+.ok strong{color:var(--green)}
+
+/* ── Tabel ── */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--gray-500);padding:9px 12px;border-bottom:2px solid var(--gray-300)}
+td{padding:10px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)}
+td.f{color:var(--black);font-weight:600;font-family:monospace;font-size:12.5px}
+tr:hover td{background:var(--gray-50)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.dot.done{background:var(--green)} .dot.pending{background:var(--amber)} .dot.risk{background:var(--red)}
+
+/* ── Akordeon pending ── */
+.acc{border:1px solid var(--gray-300);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.acc-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:#fff}
+.acc-head:hover{background:var(--gray-50)}
+.acc-title{flex:1;font-size:14px;font-weight:700}
+.acc-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.03em}
+.acc-chev{color:var(--gray-400);transition:transform .2s}
+.acc.open .acc-chev{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 16px 16px;border-top:1px solid var(--gray-100)}
+.acc.open .acc-body{display:block;padding-top:12px}
+
+/* ── Checklist ── */
+.check{display:flex;align-items:flex-start;gap:10px;padding:8px 0}
+.check input{margin-top:3px;accent-color:var(--gold);width:16px;height:16px;flex-shrink:0}
+.check label{font-size:13.5px;color:var(--gray-600)}
+
+/* ── Search bar untuk fungsi baru ── */
+.searchbar{position:relative;margin-bottom:18px;max-width:420px}
+.searchbar input{width:100%;padding:10px 14px 10px 36px;border:1.5px solid var(--gray-300);
+  border-radius:9px;font-family:inherit;font-size:13.5px}
+.searchbar input:focus{outline:none;border-color:var(--gold)}
+.searchbar .ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray-400)}
+
+.hidden{display:none !important}
+
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
+  font-size:11.5px;color:var(--gray-400);display:flex;gap:20px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sb-toggle{display:flex}
+  .main{margin-left:0;padding:70px 20px 60px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<button class="sb-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Menu">☰</button>
+
+<nav class="sidebar">
+  <div class="sb-brand">
+    <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish">
+    <span>Trial Prep Guide</span>
+  </div>
+  <div class="sb-lang">
+    <button class="on">EN</button>
+    <button>ID</button>
+  </div>
+
+  <div class="sb-group">Overview</div>
+  <div class="sb-item on" data-p="overview"><span class="ic">◆</span> What's New</div>
+  <div class="sb-item" data-p="pending"><span class="ic">◇</span> Pending Items</div>
+
+  <div class="sb-group">Admin Tasks</div>
+  <div class="sb-item" data-p="admin-swap"><span class="ic">①</span> Change Admin ID</div>
+  <div class="sb-item" data-p="multi-admin"><span class="ic">②</span> Add Backup Admin</div>
+  <div class="sb-item" data-p="add-user"><span class="ic">③</span> Add New User</div>
+  <div class="sb-item" data-p="add-video"><span class="ic">④</span> Add a Video</div>
+
+  <div class="sb-group">Trial</div>
+  <div class="sb-item" data-p="deploy-status"><span class="ic">📦</span> Deploy Status</div>
+  <div class="sb-item" data-p="checklist"><span class="ic">✓</span> Pre-Trial Checklist</div>
+</nav>
+
+<main class="main">
+
+  <!-- ═══════════ OVERVIEW ═══════════ -->
+  <section class="page on" id="p-overview">
+    <img src="https://anabhidev.com/MFB/missfish-logo-white.webp" alt="Miss Fish Bali" style="width:150px;height:auto;display:block;margin-bottom:18px">
+    <div class="crumb">Miss Fish Bali LMS · v2.100 → v2.109</div>
+    <h1>Trial Preparation <em>Documents</em></h1>
+    <p class="lede">Panduan ini disiapkan untuk IT dan HR yang membantu menjalankan trial. Nomor versi (v2.100, v2.109) hanya untuk referensi internal IT — yang penting untuk HR dan tim trial adalah fungsi apa saja yang berubah, bukan angka versinya.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">10</div><div class="l">Versi HTML<br>(v2.100 → v2.109)</div></div>
+      <div class="stat"><div class="n">11</div><div class="l">Berkas GAS<br>berubah</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">Versi ditest penuh<br>(v2.100)</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">Regresi ditemukan<br>di tiap audit</div></div>
+    </div>
+
+    <div class="searchbar">
+      <span class="ic">🔍</span>
+      <input type="text" id="fnSearch" placeholder="Cari fungsi… (mis. audio, zoom, cache)" oninput="filterFn()">
+    </div>
+
+    <div class="grid" id="fnGrid"></div>
+  </section>
+
+  <!-- ═══════════ PENDING ═══════════ -->
+  <section class="page" id="p-pending">
+    <div class="crumb">Belum Selesai</div>
+    <h1>What's still <em>pending</em></h1>
+    <p class="lede">Diurutkan dari yang paling mendesak untuk trial, ke yang paling boleh ditunda.</p>
+
+    <div id="pendingList"></div>
+  </section>
+
+  <!-- ═══════════ ADMIN SWAP ═══════════ -->
+  <section class="page" id="p-admin-swap">
+    <div class="crumb">Admin Task · #1</div>
+    <h1>Ganti ID admin dari <em>MF0001</em></h1>
+    <p class="lede">MF0001 sekarang terdaftar sebagai IT Super Admin, tapi ID itu bukan milik kakak. Urutan di bawah WAJIB diikuti — jangan menurunkan MF0001 sebelum akun baru terbukti bisa login.</p>
+
+    <div class="danger"><strong>Sebelum mulai:</strong> File → Make a copy pada spreadsheet LMS. Ini jaring pengaman kakak kalau ada langkah yang meleset.</div>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Salin spreadsheet</h4>
+        <p>Buka Google Sheets LMS → File → Make a copy. Kerjakan semua langkah di bawah pada salinan ini dulu, bukan langsung di data asli — kecuali kakak sudah yakin.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Login sebagai MF0001</h4>
+        <p>Pastikan masih bisa masuk dengan akun lama sebelum menyentuh apa pun.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Buat akun admin baru untuk diri sendiri</h4>
+        <p>Menu <strong>Users → Add User</strong>. Isi ID employee kakak yang sebenarnya, role <span class="field">IT_ADMIN</span>.</p>
+        <div class="warn"><strong>Penting:</strong> jangan isi password langsung di sheet. Kolom password menyimpan hash SHA-256, bukan teks biasa — mengetik password di sheet akan membuat akun itu tidak bisa login sama sekali. Password default otomatis dibuat sistem saat Add User dari UI.</div>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Logout, coba login dengan ID baru</h4>
+        <p><strong>Berhenti di sini kalau gagal.</strong> Jangan lanjut ke langkah 5 sebelum akun baru terbukti bisa masuk dan punya akses admin penuh.</p>
+      </div></div>
+      <div class="step"><div class="snum">5</div><div class="stxt">
+        <h4>Ubah CONFIG.IT_ADMIN_ID di Code.gs</h4>
+        <p>Baris ini menentukan siapa "pemilik sistem" di beberapa fungsi (penerbit sertifikat, kontak error). Ganti nilainya jadi ID kakak:</p>
+        <div class="code">var CONFIG = {
+  ...
+  IT_ADMIN_ID : 'MF0001',   ← ganti ke ID kakak
+  ...
+};</div>
+      </div></div>
+      <div class="step"><div class="snum">6</div><div class="stxt">
+        <h4>Ubah role MF0001 ke peran yang sebenarnya</h4>
+        <p>Kalau MF0001 memang orang lain di perusahaan, edit user itu lewat menu Users — ganti role dan department sesuai jabatan aslinya. Jangan dihapus; menghapus user bisa merusak relasi data (Progress, Certificates) yang menunjuk ke ID itu.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ MULTI ADMIN ═══════════ -->
+  <section class="page" id="p-multi-admin">
+    <div class="crumb">Admin Task · #2</div>
+    <h1>Boleh punya <em>2-3 IT Super Admin</em></h1>
+    <p class="lede">Tidak ada batasan di kode — role <span class="field">IT_ADMIN</span> hanyalah nilai di satu kolom, bukan slot terbatas. Boleh dan disarankan punya cadangan, supaya lupa password satu orang tidak mengunci seluruh sistem.</p>
+
+    <div class="ok"><strong>Terverifikasi:</strong> tidak ada kode yang membatasi jumlah user dengan role IT_ADMIN. Bisa 1, 2, 3, atau lebih — sistem memperlakukan semuanya setara.</div>
+
+    <h3>Cara membuat admin cadangan</h3>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Users → Add User</h4>
+        <p>Isi data orang kedua (atau ketiga) yang dipercaya — biasanya rekan IT lain, atau Owner/GM kalau perlu jalur darurat.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Role = IT_ADMIN</h4>
+        <p>Sama seperti admin utama. Tidak ada perbedaan hak akses antar sesama IT_ADMIN.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Simpan kredensial di tempat aman terpisah</h4>
+        <p>Password manager, atau kertas dalam brankas kantor — bukan di chat WhatsApp. Ini akun cadangan, jadi harus benar-benar bisa diandalkan saat darurat.</p>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Uji login berkala</h4>
+        <p>Sesekali coba login dengan akun cadangan untuk memastikan masih berfungsi — bukan cuma dibuat lalu dilupakan.</p>
+      </div></div>
+    </div>
+
+    <div class="warn"><strong>Saran tambahan:</strong> kalau salah satu admin resign atau pindah divisi, ganti role akun itu ke non-admin (bukan dihapus) — supaya jejak riwayatnya tetap ada di Activity Log, tapi akses admin sudah tidak aktif.</div>
+  </section>
+
+  <!-- ═══════════ ADD USER ═══════════ -->
+  <section class="page" id="p-add-user">
+    <div class="crumb">Admin Task · #3</div>
+    <h1>Tambah user baru <em>untuk trial</em></h1>
+    <p class="lede">Semuanya lewat UI Add User — jangan mengetik langsung ke sheet Users.</p>
+
+    <div class="danger"><strong>Kenapa tidak boleh diketik di sheet:</strong> kolom password menyimpan hash SHA-256. Mengetik <span class="field">abc123</span> langsung ke sheet berarti sistem akan membandingkan hash dari <span class="field">abc123</span> dengan teks <span class="field">abc123</span> mentah — tidak akan pernah cocok. User itu tidak bisa login.</div>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Buka Users → Add User</h4>
+        <p>Isi field yang diminta:</p>
+        <table>
+          <tr><th>Field</th><th>Contoh</th></tr>
+          <tr><td class="f">user_id</td><td>MF0010</td></tr>
+          <tr><td class="f">username</td><td>rian.f</td></tr>
+          <tr><td class="f">email</td><td>rian@missfishbali.com</td></tr>
+          <tr><td class="f">full_name</td><td>Rian Febriana</td></tr>
+          <tr><td class="f">role</td><td>STAFF atau TRAINEE</td></tr>
+          <tr><td class="f">department</td><td>Kitchen, Bar, dll — atau General</td></tr>
+        </table>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Password default dibuat otomatis</h4>
+        <p>Sistem membuat password sementara dan menandai akun itu <span class="field">force_pw_change = TRUE</span>.</p>
+        <div class="warn"><strong>Catatan penting:</strong> tanda "wajib ganti password" ini sudah ada di data — tapi layar yang MEMAKSA staff mengganti password sebelum masuk ke halaman lain <strong>belum dibangun</strong> di sisi tampilan. Untuk trial, staff akan tetap bisa login dan langsung masuk ke dashboard tanpa diminta ganti password. Ini bukan bug baru — memang belum sempat dikerjakan.</div>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Assign course ke user baru</h4>
+        <p>Menu <strong>Manage Courses → pilih course → Assign</strong>. Bisa per-user, per-departemen, atau per-role.</p>
+        <div class="ok"><strong>Sudah ada sejak v2.102:</strong> kalau course-nya berdepartemen beda dari staff yang dituju, akan muncul dialog konfirmasi otomatis — bukan galat, cuma memastikan kakak sengaja.</div>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Bagikan kredensial ke 10 staff trial</h4>
+        <p>Employee ID + password sementara. Sampaikan bahwa ini versi trial, bukan sistem final — sesuai pesan yang sudah kakak siapkan ke WAG sebelumnya.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ADD VIDEO ═══════════ -->
+  <section class="page" id="p-add-video">
+    <div class="crumb">Admin Task · #4 · Bisa dibagikan ke HR</div>
+    <h1>Cara menambah <em>modul video</em></h1>
+    <p class="lede">Sistem menerima dua sumber: Google Drive atau YouTube. Halaman ini bisa dibagikan langsung ke tim HR.</p>
+
+    <h3>Dua pilihan sumber video</h3>
+    <table>
+      <tr><th>Sumber</th><th>Kapan dipakai</th><th>Setup wajib</th></tr>
+      <tr><td class="f">Google Drive</td><td>SOP internal, video training sensitif</td><td>Sharing: <strong>Anyone with the link → Viewer</strong></td></tr>
+      <tr><td class="f">YouTube</td><td>Video umum, sudah ada channel perusahaan</td><td>Visibility: <strong>Unlisted</strong> — lihat catatan di bawah</td></tr>
+    </table>
+
+    <div class="danger">
+      <strong>Wajib dibaca sebelum upload ke YouTube — istilah "Unlisted" vs "Unpublished":</strong>
+      <p style="margin-top:8px;margin-bottom:0">
+      YouTube TIDAK punya opsi bernama "Unpublished". Tiga pilihan visibility yang benar-benar ada: <strong>Public</strong>, <strong>Unlisted</strong>, dan <strong>Private</strong>.
+      </p>
+      <p style="margin-bottom:0">
+      Untuk video training internal: pilih <strong>Unlisted</strong>. Artinya video tidak muncul di pencarian YouTube maupun di halaman channel publik, tapi <strong>siapa pun yang punya link bisa menonton</strong> — termasuk tanpa login akun Google. Ini yang dibutuhkan supaya video bisa diputar embed di dalam LMS.
+      </p>
+      <p style="margin-bottom:0">
+      JANGAN pilih <strong>Private</strong> — video Private hanya bisa ditonton oleh akun Google yang secara spesifik diundang satu per satu oleh pemilik video. Video Private <strong>tidak akan bisa diputar</strong> di dalam LMS sama sekali, walau linknya benar.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Upload & atur visibility</h4>
+        <p>Drive: klik kanan file → Share → ubah ke "Anyone with the link". YouTube: saat upload, di kolom Visibility pilih <strong>Unlisted</strong> — bukan Private, bukan Public.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Buka Manage Courses → pilih course → Add Module</h4>
+        <p>Isi Title, pilih Type = <strong>Video</strong>.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Pilih Source Type</h4>
+        <p>Ada toggle <span class="field">GDRIVE</span> / <span class="field">YOUTUBE</span> di form. Sistem otomatis mengecek — kalau kakak paste link YouTube tapi Source Type masih GDRIVE, akan muncul pesan <em>"This looks like a YouTube URL. Please change Source Type to YouTube."</em></p>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Paste URL, isi durasi</h4>
+        <p>Cukup paste link biasa (share link Drive, atau URL video YouTube) — sistem yang mengekstrak ID-nya sendiri.</p>
+      </div></div>
+      <div class="step"><div class="snum">5</div><div class="stxt">
+        <h4>Atur ambang penyelesaian (opsional)</h4>
+        <p>Field <span class="field">min_watch_pct</span>, default 95%. Artinya staff harus menonton minimal 95% durasi video sebelum modul dianggap selesai. Video tidak bisa dipercepat, dan berpindah tab otomatis menjeda video.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DEPLOY STATUS ═══════════ -->
+  <section class="page" id="p-deploy-status">
+    <div class="crumb">Trial · Berkas yang Perlu Disalin</div>
+    <h1>Deploy <em>Status</em></h1>
+    <p class="lede">Terakhir kakak deploy sampai v2.105. Halaman ini mendaftar SEMUA berkas yang berubah sesudahnya — supaya jelas apa saja yang perlu disalin ulang sebelum trial, urut per versi.</p>
+
+    <div class="warn"><strong>Asumsi:</strong> daftar ini berpijak pada informasi kakak sendiri bahwa v2.105 adalah yang terakhir disalin ke GAS. Kalau ternyata ada versi lain yang sudah sempat disalin di antaranya, tolong koreksi — supaya urutan di bawah tetap akurat.</div>
+
+    <h3>v2.106 — perbaikan (HTML saja, tanpa GAS)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">MissFishLMS_v2.106.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+
+    <h3>v2.107 — performa (3 berkas, wajib bersamaan)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">Code_v1.4.gs</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+      <tr><td class="f">Database_v1.1.gs</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+      <tr><td class="f">MissFishLMS_v2.107.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+
+    <h3>v2.108 — Release Log per-berkas (2 berkas GAS + HTML)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">Code_v1.5.gs</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+      <tr><td class="f">Database_v1.2.gs</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+      <tr><td class="f">MissFishLMS_v2.108.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+
+    <h3>v2.109 — voice picker ringkas (HTML saja)</h3>
+    <table>
+      <tr><th>Berkas</th><th>Status</th></tr>
+      <tr><td class="f">MissFishLMS_v2.109.html</td><td><span class="dot pending"></span>Perlu disalin</td></tr>
+    </table>
+
+    <div class="danger">
+      <strong>Cukup salin yang TERBARU dari tiap jenis berkas</strong> — jangan menyalin bertahap dari v2.106 lalu v2.107 lalu v2.108 satu per satu. Tiap versi HTML dan GAS baru sudah memuat SEMUA perubahan dari versi sebelumnya.
+      <p style="margin-top:8px;margin-bottom:0">Artinya kakak cukup pasang <strong>lima berkas ini saja</strong>:</p>
+    </div>
+
+    <div class="code">Code_v1.5.gs         ← paling baru
+Database_v1.2.gs    ← paling baru
+ActivityLog_v1.5.gs
+CourseManager_v1.8.gs
+Quiz_v1.4.gs
+MissFishLMS_v2.109.html  ← paling baru, satu-satunya HTML yang dipasang</div>
+
+    <div class="ok"><strong>Urutan pasang di GAS:</strong> Code → Database → ActivityLog → CourseManager → Quiz → MissFishLMS.html. Setelah semua tersalin, jalankan <span class="field">setupReleaseLogSheet()</span> sekali dari editor.</div>
+  </section>
+
+  <!-- ═══════════ CHECKLIST ═══════════ -->
+  <section class="page" id="p-checklist">
+    <div class="crumb">Sebelum Trial</div>
+    <h1>Pre-trial <em>checklist</em></h1>
+    <p class="lede">Ceklis ini tidak tersimpan — sekadar alat bantu saat kakak menyiapkan trial.</p>
+
+    <h3>Berkas yang harus sudah terpasang</h3>
+    <div class="check"><input type="checkbox" id="c1"><label for="c1">MissFishLMS_v2.109.html</label></div>
+    <div class="check"><input type="checkbox" id="c2"><label for="c2">Code_v1.5.gs</label></div>
+    <div class="check"><input type="checkbox" id="c3"><label for="c3">Database_v1.2.gs</label></div>
+    <div class="check"><input type="checkbox" id="c4"><label for="c4">ActivityLog_v1.5.gs</label></div>
+    <div class="check"><input type="checkbox" id="c5"><label for="c5">CourseManager_v1.8.gs</label></div>
+    <div class="check"><input type="checkbox" id="c6"><label for="c6">Quiz_v1.4.gs</label></div>
+
+    <h3>Setup sekali jalan</h3>
+    <div class="check"><input type="checkbox" id="c7"><label for="c7"><span class="field">setupReleaseLogSheet()</span> dijalankan sekali dari editor GAS</label></div>
+    <div class="check"><input type="checkbox" id="c8"><label for="c8"><span class="field">setupDailyTrigger()</span> dijalankan sekali (AI Report harian)</label></div>
+    <div class="check"><input type="checkbox" id="c9"><label for="c9">TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID diisi di Script Properties</label></div>
+    <div class="check"><input type="checkbox" id="c10"><label for="c10">AI_EMAIL_RECIPIENTS diisi di sheet Settings</label></div>
+
+    <h3>Data</h3>
+    <div class="check"><input type="checkbox" id="c11"><label for="c11">Spreadsheet disalin (File → Make a copy) sebagai jaring pengaman</label></div>
+    <div class="check"><input type="checkbox" id="c12"><label for="c12">Data demo (Progress, Certificates, QuizAttempts) dibersihkan</label></div>
+    <div class="check"><input type="checkbox" id="c13"><label for="c13">Admin diganti dari MF0001 ke ID kakak sendiri</label></div>
+    <div class="check"><input type="checkbox" id="c14"><label for="c14">10 akun trial dibuat lewat UI Add User</label></div>
+
+    <h3>Fungsional — coba manual</h3>
+    <div class="check"><input type="checkbox" id="c15"><label for="c15">Login → course → video → PDF → quiz → sertifikat, end-to-end</label></div>
+    <div class="check"><input type="checkbox" id="c16"><label for="c16">Zoom PDF sampai 250-300%, teks tetap tajam</label></div>
+    <div class="check"><input type="checkbox" id="c17"><label for="c17">Tombol 1 page / 2 pages berpindah dengan benar</label></div>
+    <div class="check"><input type="checkbox" id="c18"><label for="c18">Tombol Audio merah — dengarkan, cek transkrip berurutan (bukan berselang bahasa)</label></div>
+    <div class="check"><input type="checkbox" id="c19"><label for="c19">Assign course lintas departemen → muncul dialog konfirmasi</label></div>
+    <div class="check"><input type="checkbox" id="c20"><label for="c20">Panel Release Log di Settings — badge Tested muncul</label></div>
+  </section>
+
+</main>
+
+<script>
+var FEATURES = [
+  { v:'2.100', t:'new', title:'Real video watch percentage', desc:'Persentase tontonan asli dikirim ke server, bukan angka tetap 100. Mengaktifkan penjaga min_watch_pct.' },
+  { v:'2.100', t:'new', title:'Auto-resume last position', desc:'Video melanjutkan dari posisi terakhir ditonton, bukan mulai dari awal.' },
+  { v:'2.101', t:'new', title:'Module list on mobile', desc:'Daftar modul course kini tampil di bawah video/PDF di HP — sebelumnya cuma ada di desktop.' },
+  { v:'2.101', t:'new', title:'Logo replaces mobile avatar', desc:'17 tempat inisial di header mobile diganti logo Miss Fish.' },
+  { v:'2.101', t:'new', title:'Deadline reminder banner', desc:'Muncul otomatis kalau ada course yang lewat tenggat atau mendekati 7 hari.' },
+  { v:'2.102', t:'fix', title:'Activity Log event types', desc:'7 aksi admin (tambah/edit/hapus course & modul) sebelumnya semua tercatat sebagai "COURSE_PUBLISHED". Sekarang tercatat dengan benar.' },
+  { v:'2.102', t:'new', title:'Cross-department confirmation', desc:'Assign course ke departemen berbeda memicu dialog konfirmasi — bukan larangan, sekadar memastikan kakak sengaja.' },
+  { v:'2.102', t:'new', title:'Telegram on quiz pass', desc:'Grup admin dapat notifikasi Telegram setiap ada staff yang lulus quiz.' },
+  { v:'2.103', t:'fix', title:'Flipbook: root cause fixed', desc:'StPageFlip.destroy() menghapus elemen yang diberikan kepadanya. Diperbaiki dengan host tetap + anak sekali pakai — dasar untuk semua fitur zoom setelahnya.' },
+  { v:'2.103', t:'new', title:'PDF zoom up to 300%', desc:'Zoom membangun ulang buku pada ukuran fisik lebih besar, bukan meregangkan gambar — teks tetap tajam.' },
+  { v:'2.103', t:'new', title:'1 page / 2 pages toggle', desc:'Bisa ganti mode tampilan PDF. HP selalu 1 halaman.' },
+  { v:'2.104', t:'new', title:'AI dashboard card — collapsible', desc:'Kartu AI bisa ditutup jadi 2 baris, plus penanda "Generated X ago" dan tombol Full Report.' },
+  { v:'2.105', t:'new', title:'PDF to Audio (read-aloud)', desc:'Tombol Audio merah di toolbar. Suara membacakan PDF, kalimat disorot, halaman ikut berbalik. Kecepatan dikunci 1.0x, tidak bisa lompat maju.' },
+  { v:'2.105', t:'new', title:'Wake Lock during audio', desc:'Layar tidak terkunci otomatis selama narasi berjalan.' },
+  { v:'2.106', t:'fix', title:'autoSize root cause', desc:'StPageFlip autoSize:true menimpa lebar yang dipasang — inilah sebab tombol 1/2 halaman tidak berpengaruh. Diperbaiki dengan autoSize:false.' },
+  { v:'2.106', t:'fix', title:'Voice list showed English only', desc:'Daftar suara sekarang menampilkan semua bahasa termasuk Indonesia — sebelumnya disaring keliru ke English saja.' },
+  { v:'2.106', t:'fix', title:'Last mobile avatar', desc:'Satu avatar terakhir di dashboard mobile (pola ID berbeda dari yang lain) akhirnya diganti logo.' },
+  { v:'2.107', t:'new', title:'Lazy-load PDF library', desc:'pdf.js + StPageFlip (±1.4MB) baru diunduh saat modul PDF pertama dibuka — bukan di setiap kunjungan, termasuk yang cuma menonton video.' },
+  { v:'2.107', t:'new', title:'Release Log panel', desc:'Riwayat rilis tampil di halaman Settings, 20 baris terakhir.' },
+  { v:'2.107', t:'new', title:'Per-request memo cache', desc:'Spreadsheet yang sama tidak lagi dibuka berulang dalam satu eksekusi — diukur 7x jadi 1x untuk generateCertificate().' },
+  { v:'2.108', t:'fix', title:'Release Log per-file schema', desc:'Satu baris per BERKAS yang berubah, bukan per rilis — lebih mudah dicari "kapan file X terakhir berubah".' },
+  { v:'2.109', t:'new', title:'Simplified voice picker', desc:'Pemilih suara di bilah audio diperas jadi satu baris: nama suara terpilih + tombol Test + tombol Change. Daftar 50 bahasa masih ada, tersembunyi sampai Change ditekan.' },
+];
+
+function renderFn(list){
+  var grid = document.getElementById('fnGrid');
+  grid.innerHTML = list.map(function(f){
+    return '<div class="card '+f.t+'">'+
+      '<span class="badge">'+(f.t==='new'?'New':'Fix')+'</span><span class="v">v'+f.v+'</span>'+
+      '<h4>'+f.title+'</h4><p>'+f.desc+'</p></div>';
+  }).join('');
+}
+function filterFn(){
+  var q = document.getElementById('fnSearch').value.toLowerCase();
+  renderFn(FEATURES.filter(function(f){
+    return f.title.toLowerCase().indexOf(q)>-1 || f.desc.toLowerCase().indexOf(q)>-1 || f.v.indexOf(q)>-1;
+  }));
+}
+renderFn(FEATURES);
+
+var PENDING = [
+  { tag:'HIGH', color:'red', title:'Force password change belum ada di client',
+    body:'Data force_pw_change sudah dikirim server, tapi tidak ada layar yang memaksa staff ganti password sebelum masuk dashboard. Untuk trial 10 orang terpercaya, risikonya kecil. Sebelum 110 staff masuk, ini wajib dibangun.' },
+  { tag:'HIGH', color:'red', title:'Versioned deployment belum dipakai',
+    body:'Staff sekarang memakai head deployment — begitu kakak simpan perubahan di editor, itu langsung terkena semua orang, termasuk saat kakak sedang di tengah mengedit. Ganti ke versioned deployment sebelum 110 staff masuk.' },
+  { tag:'MED', color:'amber', title:'HoD Dashboard belum pernah diuji end-to-end',
+    body:'Halaman dan fungsi backend-nya ada (getHoDReport, getHoDTeam, getHoDAssign), tapi belum pernah dicoba langsung dengan akun HoD sungguhan.' },
+  { tag:'MED', color:'amber', title:'Observer/Owner view belum pernah diuji',
+    body:'Sama seperti HoD — kode ada, belum pernah dites dengan akun Observer/GM sungguhan.' },
+  { tag:'MED', color:'amber', title:'CacheService belum dipasang',
+    body:'Ditunda sengaja: 10 orang trial tidak akan membuat sistem lambat. Setelah pencatat waktu (perfLogIfSlow_) mengumpulkan data dari trial, cache dipasang di tempat yang TERBUKTI mahal — bukan ditebak.' },
+  { tag:'LOW', color:'green', title:'SOP dua kolom (ID/EN) untuk read-aloud',
+    body:'Kalau ada SOP dengan kolom Indonesia dan Inggris berdampingan, audio bisa membaca kedua bahasa berselang-seling. Perlu contoh SOP asli sebelum diperbaiki.' },
+];
+
+function renderPending(){
+  document.getElementById('pendingList').innerHTML = PENDING.map(function(p,i){
+    return '<div class="acc open" id="acc'+i+'"><div class="acc-head" onclick="toggleAcc('+i+')">'+
+      '<span class="acc-tag" style="background:var(--'+p.color+'-soft);color:var(--'+p.color+')">'+p.tag+'</span>'+
+      '<span class="acc-title">'+p.title+'</span><span class="acc-chev">▾</span></div>'+
+      '<div class="acc-body"><p style="margin-bottom:0">'+p.body+'</p></div></div>';
+  }).join('');
+}
+function toggleAcc(i){ document.getElementById('acc'+i).classList.toggle('open'); }
+renderPending();
+
+/* Navigasi sidebar */
+Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(item){
+  item.addEventListener('click', function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(x){ x.classList.remove('on'); });
+    item.classList.add('on');
+    Array.prototype.forEach.call(document.querySelectorAll('.page'), function(p){ p.classList.remove('on'); });
+    document.getElementById('p-'+item.getAttribute('data-p')).classList.add('on');
+    document.querySelector('.sidebar').classList.remove('open');
+    window.scrollTo(0,0);
+  });
+});
+</script>
+</body>
+</html>
