@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<!-- ================================================================
+     Miss Fish Bali LMS
+     File        : MissFishLMS_StaffManual_v1.1.html
+     Description : Manual book sederhana untuk staff peserta trial —
+                   panduan bergambar/berlangkah dari sudut pandang
+                   staff: login, dashboard, buka course, nonton video,
+                   baca PDF (termasuk fitur Audio + SOP Bilingual
+                   v2.110), kerjakan quiz, lihat sertifikat, dan
+                   kontak bantuan. Bilingual sungguhan (toggle EN/ID
+                   menukar teks lewat atribut data-en/data-id, pola
+                   sama dengan MissFishLMS_CourseGuide v2.1) — istilah
+                   teknis (Button, Dashboard, Login, dll) TETAP
+                   Inggris di kedua bahasa, sesuai gaya komunikasi
+                   yang dipakai di seluruh dokumen Miss Fish Bali LMS.
+                   Sidebar multi-page (pola sama dengan
+                   MissFish_TrialPrep_Guide), bukan satu halaman
+                   panjang di-scroll — dipilih karena staff mengakses
+                   dari HP dan potongan halaman lebih kecil lebih
+                   nyaman dibaca di layar sempit. Lebar mengikuti
+                   browser, tidak dikunci. Project baru, versi mulai
+                   dari 1.1.
+     IT Department · Miss Fish Bali
+     Version     : 1.1
+     Generated   : 13 August 2026, 15:59:25 WITA
+     ================================================================ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Manual — Miss Fish Bali LMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0B0B0C; --white:#FFFFFF;
+  --gold:#C9A065; --gold-soft:rgba(201,160,101,.12);
+  --gray-50:#FAFAF9; --gray-100:#F1EFEA; --gray-300:#D8D3C8;
+  --gray-400:#A8A196; --gray-500:#78716A; --gray-600:#4A453F;
+  --red:#DC2626; --red-soft:rgba(220,38,38,.09);
+  --green:#16A34A; --green-soft:rgba(22,163,74,.09);
+  --amber:#D97706; --amber-soft:rgba(217,119,6,.09);
+  --blue:#2563EB; --blue-soft:rgba(37,99,235,.09);
+  --sidebar-w: 240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
+body{
+  background:var(--gray-50);color:var(--black);
+  font-family:'Inter',-apple-system,sans-serif;font-size:15px;line-height:1.6;
+}
+h1,h2,h3,h4{font-family:Georgia,serif;font-weight:700;line-height:1.25}
+h1{font-size:32px;margin-bottom:10px} h1 em{color:var(--gold);font-style:italic}
+h2{font-size:22px;margin:26px 0 12px}
+h3{font-size:17px;margin:22px 0 10px}
+h4{font-size:15px;margin-bottom:4px}
+p{margin-bottom:10px}
+a{color:var(--gold)}
+
+/* ── LAYOUT ── */
+.wrap{display:flex;min-height:100vh}
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;background:var(--black);color:#fff;
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:20;
+  transition:transform .25s ease;
+}
+.main{flex:1;margin-left:var(--sidebar-w);padding:32px 40px 80px;max-width:920px}
+
+.sb-brand{display:flex;align-items:center;gap:10px;padding:20px 20px 16px}
+.sb-brand img{width:26px;height:26px;object-fit:contain}
+.sb-brand span{font-family:Georgia,serif;font-weight:700;font-size:15px}
+
+.sb-lang{display:flex;gap:6px;padding:0 20px 16px}
+.sb-lang button{flex:1;padding:7px 0;border:1px solid rgba(255,255,255,.15);background:transparent;
+  color:rgba(255,255,255,.6);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;
+  font-family:inherit;letter-spacing:.03em}
+.sb-lang button.on{background:var(--gold);border-color:var(--gold);color:var(--black)}
+
+.sb-group{padding:20px 20px 6px;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.35)}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13.5px;
+  color:rgba(255,255,255,.75);cursor:pointer;border-left:3px solid transparent}
+.sb-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.sb-item.on{background:var(--gold-soft);border-left-color:var(--gold);color:var(--gold);font-weight:600}
+.sb-item .ic{width:16px;text-align:center;flex-shrink:0}
+
+.page{display:none}
+.page.on{display:block}
+
+.crumb{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px}
+.lede{font-size:15px;color:var(--gray-600);max-width:78ch;margin-bottom:26px}
+
+.steps{margin:18px 0}
+.step{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--gray-100)}
+.step:first-child{border-top:none}
+.snum{width:30px;height:30px;border-radius:50%;background:var(--gold-soft);color:var(--gold);
+  font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stxt{flex:1;padding-top:2px}
+.stxt h4{margin-bottom:5px}
+.stxt p{font-size:13.5px;color:var(--gray-600);margin-bottom:0}
+
+.warn{background:var(--amber-soft);border:1px solid rgba(217,119,6,.25);border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0;font-size:13.5px;color:var(--gray-600)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(220,38,38,.25);border-left:3px solid var(--red);
+  border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0;font-size:13.5px;color:var(--gray-600)}
+.danger strong{color:var(--red)}
+.ok{background:var(--green-soft);border:1px solid rgba(22,163,74,.25);border-left:3px solid var(--green);
+  border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0;font-size:13.5px;color:var(--gray-600)}
+.ok strong{color:var(--green)}
+.tip{background:var(--blue-soft);border:1px solid rgba(37,99,235,.25);border-left:3px solid var(--blue);
+  border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0;font-size:13.5px;color:var(--gray-600)}
+.tip strong{color:var(--blue)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--gray-400);padding:8px 10px;border-bottom:2px solid var(--gray-300)}
+td{padding:10px 10px;border-bottom:1px solid var(--gray-100);vertical-align:top}
+td.f{font-family:monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
+
+.field{font-family:monospace;background:var(--gray-100);padding:1px 6px;border-radius:4px;font-size:12.5px}
+
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--gray-100);border-radius:12px;padding:16px}
+.card .ic{font-size:22px;margin-bottom:8px}
+.card h4{margin-bottom:4px}
+.card p{font-size:12.5px;color:var(--gray-600);margin-bottom:0}
+
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:700}
+.badge.gold{background:var(--gold-soft);color:var(--gold)}
+
+/* ── MOBILE ── */
+.hamburger{display:none;position:fixed;top:14px;left:14px;z-index:30;width:40px;height:40px;
+  background:var(--black);border-radius:10px;align-items:center;justify-content:center;
+  color:#fff;font-size:18px;cursor:pointer}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:15}
+.overlay.show{display:block}
+
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:70px 18px 60px}
+  .hamburger{display:flex}
+  .card-grid{grid-template-columns:1fr}
+  h1{font-size:26px}
+  table{font-size:12.5px}
+  th,td{padding:8px 6px}
+}
+</style>
+</head>
+<body>
+
+<div class="hamburger" onclick="toggleSidebar()">☰</div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="wrap">
+<nav class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish">
+    <span data-en="Staff Manual" data-id="Manual Staff">Staff Manual</span>
+  </div>
+  <div class="sb-lang">
+    <button class="on" id="langEN" onclick="setLang('en')">EN</button>
+    <button id="langID" onclick="setLang('id')">ID</button>
+  </div>
+
+  <!-- SIDEBAR_ITEMS -->
+  <div class="sb-group" data-en="Getting Started" data-id="Mulai">Getting Started</div>
+  <div class="sb-item on" data-p="login"><span class="ic">🔑</span> <span data-en="First Login" data-id="Login Pertama Kali">First Login</span></div>
+  <div class="sb-item" data-p="dashboard"><span class="ic">🏠</span> <span data-en="Dashboard & Your Courses" data-id="Dashboard & Course Kamu">Dashboard & Your Courses</span></div>
+  <div class="sb-item" data-p="open-course"><span class="ic">📂</span> <span data-en="Opening a Course" data-id="Buka Course">Opening a Course</span></div>
+
+  <div class="sb-group" data-en="Modules" data-id="Modul">Modules</div>
+  <div class="sb-item" data-p="video"><span class="ic">🎬</span> <span data-en="Watching a Video" data-id="Nonton Video">Watching a Video</span></div>
+  <div class="sb-item" data-p="pdf"><span class="ic">📄</span> <span data-en="Reading a PDF" data-id="Baca PDF">Reading a PDF</span></div>
+  <div class="sb-item" data-p="quiz"><span class="ic">📝</span> <span data-en="Taking a Quiz" data-id="Kerjakan Quiz">Taking a Quiz</span></div>
+
+  <div class="sb-group" data-en="Finishing Up" data-id="Selesai">Finishing Up</div>
+  <div class="sb-item" data-p="certificate"><span class="ic">🏆</span> <span data-en="Your Certificate" data-id="Sertifikat Kamu">Your Certificate</span></div>
+  <div class="sb-item" data-p="help"><span class="ic">💬</span> <span data-en="Need Help?" data-id="Butuh Bantuan?">Need Help?</span></div>
+
+</nav>
+
+<main class="main">
+  <!-- PAGES -->
+
+  <!-- ═══════════ FIRST LOGIN ═══════════ -->
+  <section class="page on" id="p-login">
+    <div class="crumb" data-en="Step 1 of 8" data-id="Langkah 1 dari 8">Step 1 of 8</div>
+    <h1 data-en="Your First <em>Login</em>" data-id="<em>Login</em> Pertama Kali">Your First <em>Login</em></h1>
+    <p class="lede" data-en="Your IT or HR team will give you an Employee ID and a temporary password. Use these to log in for the first time." data-id="Tim IT atau HR kamu akan memberikan Employee ID dan password sementara. Gunakan ini untuk Login pertama kali.">Your IT or HR team will give you an Employee ID and a temporary password. Use these to log in for the first time.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4 data-en="Open the LMS link" data-id="Buka link LMS">Open the LMS link</h4>
+        <p data-en="Use the link shared by IT/HR — it works on both computer and phone browsers." data-id="Gunakan link yang dibagikan oleh IT/HR — bisa dibuka di browser komputer maupun HP.">Use the link shared by IT/HR — it works on both computer and phone browsers.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4 data-en="Enter your Employee ID and password" data-id="Isi Employee ID dan password kamu">Enter your Employee ID and password</h4>
+        <p data-en="Employee ID format looks like MF0042. Type it exactly as given to you." data-id="Format Employee ID seperti MF0042. Ketik persis seperti yang diberikan.">Employee ID format looks like MF0042. Type it exactly as given to you.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4 data-en="Tap the Sign In button" data-id="Tekan Button Sign In">Tap the Sign In button</h4>
+        <p data-en="You'll land directly on your Dashboard." data-id="Kamu akan langsung masuk ke Dashboard.">You'll land directly on your Dashboard.</p>
+      </div></div>
+    </div>
+
+    <div class="warn">
+      <strong data-en="About your password" data-id="Soal password kamu">About your password</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="The password IT/HR gave you is temporary. If you'd like to change it, go to your Profile menu (top right) → Change Password. Changing it is optional for now, not required to continue." data-id="Password yang diberikan IT/HR itu sementara. Kalau kamu mau menggantinya, buka menu Profile (kanan atas) → Change Password. Mengganti password ini masih OPSIONAL untuk sekarang, tidak wajib untuk lanjut.">The password IT/HR gave you is temporary. If you'd like to change it, go to your Profile menu (top right) → Change Password. Changing it is optional for now, not required to continue.</p>
+    </div>
+
+    <div class="tip">
+      <strong data-en="Trouble logging in?" data-id="Kesulitan Login?">Trouble logging in?</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="Double-check your Employee ID has no extra spaces, and that Caps Lock isn't accidentally on for your password. Still stuck? See the Need Help page in this manual." data-id="Cek ulang Employee ID kamu tidak ada spasi tambahan, dan Caps Lock tidak sengaja aktif saat mengetik password. Masih tidak bisa? Lihat halaman Need Help di manual ini.">Double-check your Employee ID has no extra spaces, and that Caps Lock isn't accidentally on for your password. Still stuck? See the Need Help page in this manual.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DASHBOARD ═══════════ -->
+  <section class="page" id="p-dashboard">
+    <div class="crumb" data-en="Step 2 of 8" data-id="Langkah 2 dari 8">Step 2 of 8</div>
+    <h1 data-en="Your <em>Dashboard</em>" data-id="<em>Dashboard</em> Kamu">Your Dashboard</h1>
+    <p class="lede" data-en="This is the first screen you see after Login. It shows a quick summary and the courses assigned to you." data-id="Ini halaman pertama yang kamu lihat setelah Login. Isinya ringkasan cepat dan course yang di-assign untuk kamu.">This is the first screen you see after Login. It shows a quick summary and the courses assigned to you.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="ic">👋</div>
+        <h4 data-en="Welcome message" data-id="Pesan sapaan">Welcome message</h4>
+        <p data-en="Shows your name and department at the top." data-id="Menampilkan nama dan departemen kamu di bagian atas.">Shows your name and department at the top.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📚</div>
+        <h4 data-en="My Courses" data-id="My Courses">My Courses</h4>
+        <p data-en="How many courses assigned to you, and how many you've finished." data-id="Berapa course yang di-assign ke kamu, dan berapa yang sudah selesai.">How many courses assigned to you, and how many you've finished.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🏆</div>
+        <h4 data-en="Certificates" data-id="Certificates">Certificates</h4>
+        <p data-en="Certificates you've earned so far." data-id="Sertifikat yang sudah kamu dapatkan sejauh ini.">Certificates you've earned so far.</p>
+      </div>
+    </div>
+
+    <h3 data-en="Finding your course" data-id="Cara mencari course kamu">Finding your course</h3>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4 data-en="Tap the My Courses menu" data-id="Tekan menu My Courses">Tap the My Courses menu</h4>
+        <p data-en="On phone, this is usually in the bottom navigation bar. On computer, it's in the left sidebar." data-id="Di HP, biasanya ada di navigasi bawah. Di komputer, ada di sidebar kiri.">On phone, this is usually in the bottom navigation bar. On computer, it's in the left sidebar.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4 data-en="You'll see a list of courses" data-id="Kamu akan melihat daftar course">You'll see a list of courses</h4>
+        <p data-en="Only courses assigned to you (or to your department) appear here — you won't see courses meant for other departments." data-id="Hanya course yang di-assign ke kamu (atau ke departemen kamu) yang muncul di sini — kamu tidak akan melihat course untuk departemen lain.">Only courses assigned to you (or to your department) appear here — you won't see courses meant for other departments.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4 data-en="Tap a course card to open it" data-id="Tekan card course untuk membukanya">Tap a course card to open it</h4>
+        <p data-en="Each card shows the course title and how much progress you've made." data-id="Tiap card menampilkan judul course dan seberapa jauh progress kamu.">Each card shows the course title and how much progress you've made.</p>
+      </div></div>
+    </div>
+
+    <div class="tip">
+      <strong data-en="Deadline reminder" data-id="Pengingat deadline">Deadline reminder</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="If a course is close to or past its deadline, a reminder banner appears automatically at the top of your Dashboard. You don't need to check manually." data-id="Kalau ada course yang mendekati atau melewati deadline, banner pengingat muncul otomatis di bagian atas Dashboard kamu. Tidak perlu cek manual.">If a course is close to or past its deadline, a reminder banner appears automatically at the top of your Dashboard. You don't need to check manually.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ OPENING A COURSE ═══════════ -->
+  <section class="page" id="p-open-course">
+    <div class="crumb" data-en="Step 3 of 8" data-id="Langkah 3 dari 8">Step 3 of 8</div>
+    <h1 data-en="Opening a <em>Course</em>" data-id="Buka <em>Course</em>">Opening a Course</h1>
+    <p class="lede" data-en="A course is made of one or more modules — video, PDF, or quiz. You go through them in order, from top to bottom." data-id="Sebuah course terdiri dari satu atau lebih modul — video, PDF, atau quiz. Kamu mengerjakannya berurutan, dari atas ke bawah.">A course is made of one or more modules — video, PDF, or quiz. You go through them in order, from top to bottom.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4 data-en="You'll see a list of modules" data-id="Kamu akan melihat daftar modul">You'll see a list of modules</h4>
+        <p data-en="Each one shows its type (Video / PDF / Quiz) and whether it's already done." data-id="Tiap modul menampilkan jenisnya (Video / PDF / Quiz) dan apakah sudah selesai.">Each one shows its type (Video / PDF / Quiz) and whether it's already done.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4 data-en="Tap the first module to start" data-id="Tekan modul pertama untuk mulai">Tap the first module to start</h4>
+        <p data-en="The first module is always open. The rest are locked until you finish the one before it." data-id="Modul pertama selalu terbuka. Sisanya terkunci sampai kamu menyelesaikan modul sebelumnya.">The first module is always open. The rest are locked until you finish the one before it.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4 data-en="Finish one, unlock the next" data-id="Selesaikan satu, modul berikutnya terbuka">Finish one, unlock the next</h4>
+        <p data-en="As soon as one module is marked complete, the next one unlocks automatically." data-id="Begitu satu modul ditandai selesai, modul berikutnya otomatis terbuka.">As soon as one module is marked complete, the next one unlocks automatically.</p>
+      </div></div>
+    </div>
+
+    <div class="warn">
+      <strong data-en="Why can't I skip ahead?" data-id="Kenapa tidak bisa loncat modul?">Why can't I skip ahead?</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="This is intentional — modules are locked in order on purpose, so training material is followed step by step, not skipped around." data-id="Ini disengaja — modul dikunci berurutan supaya materi training diikuti langkah demi langkah, tidak dilompat-lompat.">This is intentional — modules are locked in order on purpose, so training material is followed step by step, not skipped around.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ WATCHING A VIDEO ═══════════ -->
+  <section class="page" id="p-video">
+    <div class="crumb" data-en="Step 4 of 8" data-id="Langkah 4 dari 8">Step 4 of 8</div>
+    <h1 data-en="Watching a <em>Video</em>" data-id="Nonton <em>Video</em>">Watching a Video</h1>
+    <p class="lede" data-en="Video modules track how much you actually watch — not just whether you opened it." data-id="Modul Video melacak seberapa banyak yang benar-benar kamu tonton — bukan cuma apakah kamu membukanya.">Video modules track how much you actually watch — not just whether you opened it.</p>
+
+    <table>
+      <tr><th data-en="Rule" data-id="Aturan">Rule</th><th data-en="What it means" data-id="Artinya">What it means</th></tr>
+      <tr><td data-en="Must watch ~95%" data-id="Wajib tonton ~95%">Must watch ~95%</td><td data-en="You need to watch almost the whole video before it's marked complete. Jumping to the end won't work." data-id="Kamu harus menonton hampir seluruh video sebelum ditandai selesai. Melompat ke akhir tidak akan berhasil.">You need to watch almost the whole video before it's marked complete. Jumping to the end won't work.</td></tr>
+      <tr><td data-en="No speeding up" data-id="Tidak bisa dipercepat">No speeding up</td><td data-en="Playback speed is locked at normal speed — there's no 1.5x or 2x option." data-id="Kecepatan putar dikunci di kecepatan normal — tidak ada opsi 1,5x atau 2x.">Playback speed is locked at normal speed — there's no 1.5x or 2x option.</td></tr>
+      <tr><td data-en="Switching tabs pauses it" data-id="Pindah tab otomatis dijeda">Switching tabs pauses it</td><td data-en="If you switch to another app or browser tab, the video automatically pauses. Come back and tap Play to continue." data-id="Kalau kamu pindah ke app atau tab browser lain, video otomatis berhenti sejenak. Kembali dan tekan Play untuk lanjut.">If you switch to another app or browser tab, the video automatically pauses. Come back and tap Play to continue.</td></tr>
+      <tr><td data-en="Resumes where you left off" data-id="Lanjut dari posisi terakhir">Resumes where you left off</td><td data-en="Close the video and come back later — it picks up right where you stopped, not from the beginning." data-id="Tutup video dan buka lagi nanti — video akan lanjut dari posisi terakhir kamu berhenti, bukan dari awal.">Close the video and come back later — it picks up right where you stopped, not from the beginning.</td></tr>
+    </table>
+
+    <div class="tip">
+      <strong data-en="Slow internet?" data-id="Internet lambat?">Slow internet?</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="If the video keeps buffering, try switching from mobile data to WiFi, or ask IT/HR for a quiet spot with better signal during the trial." data-id="Kalau video sering buffering, coba pindah dari data seluler ke WiFi, atau minta IT/HR mencarikan tempat dengan sinyal lebih baik selama trial.">If the video keeps buffering, try switching from mobile data to WiFi, or ask IT/HR for a quiet spot with better signal during the trial.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ READING A PDF ═══════════ -->
+  <section class="page" id="p-pdf">
+    <div class="crumb" data-en="Step 5 of 8" data-id="Langkah 5 dari 8">Step 5 of 8</div>
+    <h1 data-en="Reading a <em>PDF</em>" data-id="Baca <em>PDF</em>">Reading a PDF</h1>
+    <p class="lede" data-en="PDF modules are used for SOPs, guides, and written materials. You read them right inside the LMS — no need to download anything." data-id="Modul PDF dipakai untuk SOP, panduan, dan materi tertulis. Kamu membacanya langsung di dalam LMS — tidak perlu download apa pun.">PDF modules are used for SOPs, guides, and written materials. You read them right inside the LMS — no need to download anything.</p>
+
+    <h3 data-en="Basic controls" data-id="Kontrol dasar">Basic controls</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="ic">🔍</div>
+        <h4 data-en="Zoom" data-id="Zoom">Zoom</h4>
+        <p data-en="Pinch to zoom on phone, or use the zoom buttons on computer. Text stays sharp even zoomed in." data-id="Cubit untuk zoom di HP, atau pakai button zoom di komputer. Teks tetap tajam walau di-zoom.">Pinch to zoom on phone, or use the zoom buttons on computer. Text stays sharp even zoomed in.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📖</div>
+        <h4 data-en="1 page / 2 pages" data-id="1 page / 2 pages">1 page / 2 pages</h4>
+        <p data-en="Switch between single-page view and a two-page spread (like a real book)." data-id="Ganti tampilan satu halaman atau dua halaman berdampingan (seperti buku sungguhan).">Switch between single-page view and a two-page spread (like a real book).</p>
+      </div>
+      <div class="card">
+        <div class="ic">➡️</div>
+        <h4 data-en="Flip pages" data-id="Balik halaman">Flip pages</h4>
+        <p data-en="Swipe, or tap the arrow buttons, to turn to the next page." data-id="Geser, atau tekan button panah, untuk pindah ke halaman berikutnya.">Swipe, or tap the arrow buttons, to turn to the next page.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <strong data-en="How a PDF module gets marked complete" data-id="Bagaimana modul PDF ditandai selesai">How a PDF module gets marked complete</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="You need to go through every page to the end — not just open the file. Opening it and closing it right away won't complete the module." data-id="Kamu perlu melewati setiap halaman sampai akhir — bukan cuma membuka filenya. Membuka lalu langsung menutup tidak akan menyelesaikan modul.">You need to go through every page to the end — not just open the file. Opening it and closing it right away won't complete the module.</p>
+    </div>
+
+    <h3 data-en="Listening instead of reading" data-id="Dengarkan alih-alih membaca">Listening instead of reading</h3>
+    <p class="lede" style="margin-bottom:14px" data-en="Some PDFs have an Audio button (usually shown in red) — tap it to have the document read out loud to you." data-id="Beberapa PDF punya button Audio (biasanya berwarna merah) — tekan untuk dokumen itu dibacakan otomatis.">Some PDFs have an Audio button (usually shown in red) — tap it to have the document read out loud to you.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4 data-en="Tap the red Audio button" data-id="Tekan button Audio berwarna merah">Tap the red Audio button</h4>
+        <p data-en="It will start reading from the beginning of the document, page by page." data-id="Dokumen akan mulai dibacakan dari awal, halaman demi halaman.">It will start reading from the beginning of the document, page by page.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4 data-en="Pages turn automatically" data-id="Halaman berpindah otomatis">Pages turn automatically</h4>
+        <p data-en="You don't need to flip pages yourself while listening — it follows along and turns the page for you." data-id="Kamu tidak perlu membalik halaman sendiri saat mendengarkan — sistem otomatis mengikuti dan membalik halaman untukmu.">You don't need to flip pages yourself while listening — it follows along and turns the page for you.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4 data-en="You can't skip ahead in the audio" data-id="Tidak bisa melompat maju di audio">You can't skip ahead in the audio</h4>
+        <p data-en="Same idea as video — the reading speed is fixed, and you can't jump forward. You can always tap the Text button to read along on screen instead." data-id="Sama seperti video — kecepatan bacanya tetap, dan tidak bisa melompat maju. Kamu selalu bisa menekan button Text untuk membaca sambil mendengarkan di layar.">Same idea as video — the reading speed is fixed, and you can't jump forward. You can always tap the Text button to read along on screen instead.</p>
+      </div></div>
+    </div>
+
+    <div class="ok">
+      <strong data-en="Bilingual SOP — new feature" data-id="Fitur baru — SOP Bilingual">Bilingual SOP — new feature</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="Some SOPs are written in two columns — English on the left, Indonesian on the right. For these documents, the audio bar shows an EN / ID toggle so you can choose which language to listen to. Switching language continues from the same part of the document — it doesn't restart from page 1." data-id="Beberapa SOP ditulis dua kolom — Inggris di kiri, Indonesia di kanan. Untuk dokumen seperti ini, bilah audio menampilkan toggle EN / ID supaya kamu bisa pilih bahasa yang mau didengar. Ganti bahasa akan lanjut dari bagian yang sama, tidak mengulang dari halaman 1.">Some SOPs are written in two columns — English on the left, Indonesian on the right. For these documents, the audio bar shows an EN / ID toggle so you can choose which language to listen to. Switching language continues from the same part of the document — it doesn't restart from page 1.</p>
+    </div>
+
+    <div class="tip">
+      <strong data-en="Toggle not showing up?" data-id="Toggle tidak muncul?">Toggle not showing up?</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="That's normal for most PDFs — the EN/ID toggle only appears for SOPs written in that specific two-column format. Regular PDFs still have Audio, just without the language choice." data-id="Itu normal untuk kebanyakan PDF — toggle EN/ID hanya muncul untuk SOP yang memang ditulis dalam format dua-kolom itu. PDF biasa tetap punya Audio, cuma tanpa pilihan bahasa.">That's normal for most PDFs — the EN/ID toggle only appears for SOPs written in that specific two-column format. Regular PDFs still have Audio, just without the language choice.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ TAKING A QUIZ ═══════════ -->
+  <section class="page" id="p-quiz">
+    <div class="crumb" data-en="Step 6 of 8" data-id="Langkah 6 dari 8">Step 6 of 8</div>
+    <h1 data-en="Taking a <em>Quiz</em>" data-id="Kerjakan <em>Quiz</em>">Taking a Quiz</h1>
+    <p class="lede" data-en="A quiz is usually the last module in a course. You need to pass it to complete the course and get your certificate (if the course has one)." data-id="Quiz biasanya modul terakhir dalam sebuah course. Kamu perlu lulus untuk menyelesaikan course dan mendapat sertifikat (kalau course-nya punya sertifikat).">A quiz is usually the last module in a course. You need to pass it to complete the course and get your certificate (if the course has one).</p>
+
+    <table>
+      <tr><th data-en="Rule" data-id="Aturan">Rule</th><th data-en="What it means" data-id="Artinya">What it means</th></tr>
+      <tr><td data-en="Questions are random" data-id="Soal diacak">Questions are random</td><td data-en="Each attempt pulls a random set of questions from a larger question bank — a retry won't show you the exact same questions." data-id="Setiap percobaan mengambil kombinasi soal acak dari bank soal yang lebih besar — mengulang tidak akan menampilkan soal yang sama persis.">Each attempt pulls a random set of questions from a larger question bank — a retry won't show you the exact same questions.</td></tr>
+      <tr><td data-en="1.5 minutes per question" data-id="1,5 menit per soal">1.5 minutes per question</td><td data-en="The timer is based on how many questions you get — more questions means more time. It submits automatically when time runs out." data-id="Timer berdasarkan berapa banyak soal yang kamu dapat — semakin banyak soal, semakin banyak waktu. Otomatis dikumpulkan saat waktu habis.">The timer is based on how many questions you get — more questions means more time. It submits automatically when time runs out.</td></tr>
+      <tr><td data-en="Limited attempts" data-id="Percobaan terbatas">Limited attempts</td><td data-en="You get a set number of tries (ask your HoD/HR if unsure how many for this course). Once you run out, you'll see a clear message that the limit is reached." data-id="Kamu punya jumlah percobaan tertentu (tanya HoD/HR kalau tidak yakin berapa untuk course ini). Kalau sudah habis, akan muncul pesan jelas bahwa batas sudah tercapai.">You get a set number of tries (ask your HoD/HR if unsure how many for this course). Once you run out, you'll see a clear message that the limit is reached.</td></tr>
+      <tr><td data-en="Minimum score to pass" data-id="Nilai minimum untuk lulus">Minimum score to pass</td><td data-en="Each course sets its own passing score. You'll see your score and pass/fail result right after submitting." data-id="Tiap course punya nilai kelulusan sendiri. Kamu akan lihat nilai dan hasil lulus/tidak segera setelah submit.">Each course sets its own passing score. You'll see your score and pass/fail result right after submitting.</td></tr>
+    </table>
+
+    <div class="warn">
+      <strong data-en="Before you start" data-id="Sebelum mulai">Before you start</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="Once the timer starts, it keeps running even if you close the tab or lose signal — so make sure you're ready and have a stable connection before tapping Start." data-id="Begitu timer mulai, waktu tetap berjalan walau kamu menutup tab atau sinyal hilang — jadi pastikan kamu sudah siap dan koneksi stabil sebelum menekan Start.">Once the timer starts, it keeps running even if you close the tab or lose signal — so make sure you're ready and have a stable connection before tapping Start.</p>
+    </div>
+
+    <div class="tip">
+      <strong data-en="Didn't pass?" data-id="Tidak lulus?">Didn't pass?</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="That's what retry attempts are for. Review the module content again before your next try — the explanation for each answer often shows after you submit." data-id="Itu gunanya percobaan ulang. Pelajari lagi materi modulnya sebelum coba lagi — penjelasan untuk tiap jawaban biasanya muncul setelah kamu submit.">That's what retry attempts are for. Review the module content again before your next try — the explanation for each answer often shows after you submit.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ YOUR CERTIFICATE ═══════════ -->
+  <section class="page" id="p-certificate">
+    <div class="crumb" data-en="Step 7 of 8" data-id="Langkah 7 dari 8">Step 7 of 8</div>
+    <h1 data-en="Your <em>Certificate</em>" data-id="<em>Certificate</em> Kamu">Your Certificate</h1>
+    <p class="lede" data-en="If a course offers a certificate, you'll receive it automatically the moment you pass the quiz — no need to request it from anyone." data-id="Kalau sebuah course menawarkan sertifikat, kamu akan mendapatkannya otomatis begitu lulus quiz — tidak perlu minta ke siapa pun.">If a course offers a certificate, you'll receive it automatically the moment you pass the quiz — no need to request it from anyone.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4 data-en="Pass the quiz" data-id="Lulus quiz">Pass the quiz</h4>
+        <p data-en="Your score needs to meet the course's minimum passing score." data-id="Nilai kamu perlu memenuhi nilai kelulusan minimum course tersebut.">Your score needs to meet the course's minimum passing score.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4 data-en="Certificate appears right away" data-id="Sertifikat langsung muncul">Certificate appears right away</h4>
+        <p data-en="It's generated instantly — go to the Certificates menu to see it." data-id="Sertifikat langsung dibuat — buka menu Certificates untuk melihatnya.">It's generated instantly — go to the Certificates menu to see it.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4 data-en="View or download it" data-id="Lihat atau download">View or download it</h4>
+        <p data-en="Your name, score, and the course title are filled in automatically." data-id="Nama, nilai, dan judul course kamu terisi otomatis.">Your name, score, and the course title are filled in automatically.</p>
+      </div></div>
+    </div>
+
+    <div class="warn">
+      <strong data-en="Certificates expire" data-id="Sertifikat punya masa berlaku">Certificates expire</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="Most certificates are valid for a set period (often 1 year). After that, the certificate is marked expired — it's not deleted, but it's no longer considered current. If a course needs regular re-certification, you'll need to retake it once your certificate expires." data-id="Kebanyakan sertifikat berlaku untuk periode tertentu (biasanya 1 tahun). Setelah itu, sertifikat ditandai expired — tidak dihapus, tapi tidak lagi dianggap berlaku. Kalau sebuah course butuh sertifikasi ulang berkala, kamu perlu mengulang course itu setelah sertifikatnya expired.">Most certificates are valid for a set period (often 1 year). After that, the certificate is marked expired — it's not deleted, but it's no longer considered current. If a course needs regular re-certification, you'll need to retake it once your certificate expires.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ NEED HELP ═══════════ -->
+  <section class="page" id="p-help">
+    <div class="crumb" data-en="Step 8 of 8" data-id="Langkah 8 dari 8">Step 8 of 8</div>
+    <h1 data-en="Need <em>Help?</em>" data-id="Butuh <em>Bantuan?</em>">Need Help?</h1>
+    <p class="lede" data-en="This is a trial period — it's completely normal to run into questions or something that doesn't work as expected. Here's who to reach out to." data-id="Ini masa trial — sangat normal kalau ada pertanyaan atau sesuatu yang tidak berjalan seperti seharusnya. Ini yang bisa kamu hubungi.">This is a trial period — it's completely normal to run into questions or something that doesn't work as expected. Here's who to reach out to.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="ic">👥</div>
+        <h4 data-en="Ask HR" data-id="Tanya HR">Ask HR</h4>
+        <p data-en="Best for: which courses you're assigned, deadlines, or how a certificate is used for your role." data-id="Paling cocok untuk: course apa yang di-assign ke kamu, deadline, atau bagaimana sertifikat dipakai untuk posisi kamu.">Best for: which courses you're assigned, deadlines, or how a certificate is used for your role.</p>
+      </div>
+      <div class="card">
+        <div class="ic">💻</div>
+        <h4 data-en="Ask IT" data-id="Tanya IT">Ask IT</h4>
+        <p data-en="Best for: can't log in, video/PDF won't load, the app feels stuck or broken." data-id="Paling cocok untuk: tidak bisa Login, video/PDF tidak mau muncul, app terasa macet atau rusak.">Best for: can't log in, video/PDF won't load, the app feels stuck or broken.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong data-en="Before you reach out" data-id="Sebelum menghubungi">Before you reach out</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="If something looks wrong, try closing and reopening the page first — that solves most small glitches. If it still doesn't work, tell HR/IT exactly what you were doing when it happened (which course, which module) — that helps them fix it faster." data-id="Kalau ada yang terlihat aneh, coba tutup dan buka lagi halamannya dulu — itu menyelesaikan kebanyakan gangguan kecil. Kalau masih tidak berhasil, sampaikan ke HR/IT persis apa yang kamu lakukan saat itu terjadi (course apa, modul apa) — itu membantu mereka memperbaiki lebih cepat.">If something looks wrong, try closing and reopening the page first — that solves most small glitches. If it still doesn't work, tell HR/IT exactly what you were doing when it happened (which course, which module) — that helps them fix it faster.</p>
+    </div>
+
+    <div class="ok">
+      <strong data-en="This is a trial, not the final system" data-id="Ini trial, bukan sistem final">This is a trial, not the final system</strong>
+      <p style="margin-top:8px;margin-bottom:0" data-en="A few things may still be rough around the edges — that's exactly what this trial is for. Your feedback helps make the real rollout smoother for everyone." data-id="Beberapa hal mungkin masih belum sempurna — itu memang tujuan trial ini. Masukan kamu membantu peluncuran sesungguhnya berjalan lebih mulus untuk semua orang.">A few things may still be rough around the edges — that's exactly what this trial is for. Your feedback helps make the real rollout smoother for everyone.</p>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+/* ── SIDEBAR NAVIGATION ── */
+Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(item){
+  item.addEventListener('click', function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.sb-item'), function(x){ x.classList.remove('on'); });
+    Array.prototype.forEach.call(document.querySelectorAll('.page'), function(x){ x.classList.remove('on'); });
+    item.classList.add('on');
+    var target = document.getElementById('p-' + item.getAttribute('data-p'));
+    if (target) target.classList.add('on');
+    window.scrollTo(0, 0);
+    closeSidebarMobile();
+  });
+});
+
+/* ── MOBILE SIDEBAR TOGGLE ── */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebarMobile(){
+  if (window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+
+/* ── BILINGUAL TOGGLE — translasi sungguhan ──
+   Pola sama dengan MissFishLMS_CourseGuide v2.1: setiap elemen
+   berisi atribut data-en/data-id, innerHTML ditukar sesuai bahasa
+   aktif. Istilah teknis (Button, Dashboard, Login, dll) SENGAJA
+   ditulis sama di kedua atribut — tidak diterjemahkan, sesuai gaya
+   komunikasi yang dipakai di seluruh dokumen Miss Fish Bali LMS. */
+function setLang(lang){
+  document.getElementById('langEN').classList.toggle('on', lang === 'en');
+  document.getElementById('langID').classList.toggle('on', lang === 'id');
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    var txt = el.getAttribute('data-' + lang);
+    if (txt !== null) el.innerHTML = txt;
+  });
+  try { sessionStorage.setItem('staffmanual_lang', lang); } catch(e){}
+}
+
+/* Terapkan bahasa yang tersimpan (kalau ada) saat halaman dibuka */
+(function(){
+  var saved = null;
+  try { saved = sessionStorage.getItem('staffmanual_lang'); } catch(e){}
+  if (saved === 'id') setLang('id');
+})();
+</script>
+</body>
+</html>
