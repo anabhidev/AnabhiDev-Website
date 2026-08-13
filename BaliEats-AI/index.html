@@ -78,7 +78,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .toggle-box{width:30px;height:30px;border:2px solid rgba(255,255,255,.6);border-radius:6px;display:flex;align-items:center;justify-content:center;}
 .sidebar.collapsed .toggle-box svg{transform:rotate(180deg);}
 /* MAIN */
-.main-content{margin-left:var(--sidebar-width);flex:1;background:var(--surface);transition:margin-left 0.3s;min-height:100vh;display:flex;flex-direction:column;}
+.main-content{margin-left:var(--sidebar-width);flex:1;background:var(--surface);transition:margin-left 0.3s;min-height:100vh;height:100vh;display:flex;flex-direction:column;}
 .main-content.expanded{margin-left:var(--sidebar-collapsed);}
 /* TOPBAR */
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
@@ -95,7 +95,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .loc-btn:hover{background:var(--emerald);color:var(--black);}.loc-btn:disabled{opacity:0.5;cursor:not-allowed;}
 .topbar-avatar{width:34px;height:34px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--emerald);font-size:11px;font-weight:800;cursor:pointer;}
 /* CHAT */
-.chat-container{flex:1;display:flex;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
+.chat-container{flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
 .chat-header{background:var(--black);border-radius:14px;padding:20px 24px;margin-bottom:16px;flex-shrink:0;max-height:200px;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease,margin-bottom 0.4s ease,padding 0.4s ease;opacity:1;}
 .chat-header.hidden{max-height:0;opacity:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none;}
 .gemini-status{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#22C55E;margin-bottom:10px;}
@@ -108,7 +108,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;flex-shrink:0;}
 .chip{padding:8px 14px;background:var(--white);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:#555;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .chip:hover{background:var(--emerald);color:#fff;border-color:var(--emerald);}
-.chat-messages{flex:1;overflow-y:auto;padding-right:4px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;}
+.chat-messages{flex:1;min-height:0;overflow-y:auto;padding-right:4px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;}
 .chat-messages::-webkit-scrollbar{width:4px;}.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 .msg{display:flex;gap:10px;align-items:flex-end;}.msg.user{flex-direction:row-reverse;}
 .msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
@@ -117,7 +117,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .msg.bot .msg-bubble{background:var(--white);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text-primary);}
 .msg.user .msg-bubble{background:var(--black);color:#fff;border-bottom-right-radius:4px;min-width:auto!important;width:fit-content!important;max-width:75%!important;}
 .msg-time{font-size:10px;color:var(--text-muted);margin-top:4px;}.msg.user .msg-time{text-align:right;}
-.msg-actions{display:flex;gap:6px;margin-top:6px;opacity:0;transition:opacity 0.2s;flex-wrap:wrap;}.msg:hover .msg-actions{opacity:1;}
+.msg-actions{display:flex;gap:6px;margin-top:6px;opacity:1;flex-wrap:wrap;}
 .msg-action-btn{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-muted);font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
 .msg-action-btn:hover{background:var(--black);color:var(--white);border-color:var(--black);}
 .msg-action-btn.copied{background:#22C55E;color:#fff;border-color:#22C55E;}
@@ -164,14 +164,14 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .mobile-loc-btn{background:transparent;border:none;font-size:18px;cursor:pointer;padding:2px;line-height:1;}
 .mobile-loc-btn:disabled{opacity:0.4;}
 .mobile-avatar{width:32px;height:32px;border-radius:50%;background:var(--emerald);display:flex;align-items:center;justify-content:center;color:var(--black);font-size:11px;font-weight:800;cursor:pointer;}
-.mobile-chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden;padding-bottom:calc(60px + max(0px,env(safe-area-inset-bottom)));}
+.mobile-chat-area{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding-bottom:calc(60px + max(0px,env(safe-area-inset-bottom)));}
 .mobile-chat-header{background:var(--black);margin:10px 12px 0;border-radius:12px;flex-shrink:0;overflow:hidden;max-height:160px;transition:max-height 0.4s ease,opacity 0.4s ease,margin 0.4s ease,padding 0.4s ease;opacity:1;padding:12px 16px;}
 .mobile-chat-header.hidden{max-height:0;opacity:0;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none;}
 .mobile-chat-header h3{color:#fff;font-size:14px;font-weight:700;margin-bottom:2px;}
 .mobile-chat-header p{color:rgba(255,255,255,.45);font-size:11px;}
 .mobile-suggestions{display:flex;gap:8px;padding:10px 12px 4px;overflow-x:auto;flex-shrink:0;}
 .mobile-suggestions::-webkit-scrollbar{display:none;}.mobile-suggestions .chip{flex-shrink:0;font-size:11px;padding:7px 12px;}
-.mobile-messages{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:12px;}
+.mobile-messages{flex:1;min-height:0;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:12px;}
 .mobile-messages::-webkit-scrollbar{display:none;}
 .mobile-messages .msg-bubble{max-width:88%;min-width:auto;word-break:break-word;}
 .mobile-messages .msg.user .msg-bubble{min-width:60px!important;width:fit-content!important;}
@@ -193,7 +193,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .loading-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.3);border-top-color:var(--emerald);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 /* INTEL */
-.intel-card{background:var(--black);border-radius:14px;margin-bottom:14px;flex-shrink:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease,margin 0.4s ease;max-height:600px;opacity:1;border:1px solid #222;}
+.intel-card{background:var(--black);border-radius:14px;margin-bottom:14px;flex-shrink:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease,margin 0.4s ease;max-height:2000px;opacity:1;border:1px solid #222;}
 .intel-card.collapsed{max-height:52px;}
 .intel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;}
 .intel-header-left{display:flex;align-items:center;gap:10px;}
@@ -231,8 +231,6 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .intel-mini-link:hover{color:var(--emerald);}
 .intel-mini-loading{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px;}
 /* REPORT */
-.report-page{display:none;flex:1;flex-direction:column;padding:24px 28px;overflow-y:auto;width:100%;}
-.report-page.active{display:flex;}
 .report-title{font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
 .report-subtitle{font-size:12px;color:var(--text-muted);}
 .report-refresh-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--black);color:var(--white);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:12px;}
@@ -337,6 +335,9 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 /* MOBILE DIET BTN */
 .mobile-diet-btn{background:transparent;border:none;font-size:17px;cursor:pointer;padding:2px;line-height:1;}
 
+:focus-visible{outline:2px solid var(--emerald);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}}
 /* CALENDAR PANEL */
 .calendar-panel{display:none;flex:1;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
 .calendar-panel.show{display:flex;}
@@ -373,6 +374,28 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .mobile-calendar-panel.show{display:flex;}
 .mobile-cal-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:8px;}
 .mobile-cal-list::-webkit-scrollbar{display:none;}
+
+/* LANGUAGE TOGGLE */
+.lang-toggle{display:flex;align-items:center;gap:2px;background:#F0F0EE;border-radius:8px;padding:2px;}
+.lang-btn{padding:6px 10px;border:none;background:transparent;border-radius:6px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#888;cursor:pointer;transition:all 0.15s;}
+.lang-btn.active{background:var(--black);color:var(--emerald);}
+.mobile-lang-btn{background:transparent;border:none;font-size:15px;cursor:pointer;padding:2px 4px;line-height:1;color:rgba(255,255,255,.7);font-weight:700;font-family:'Inter',sans-serif;}
+/* TTS BUTTON */
+.msg-action-btn.tts-active{background:var(--emerald);color:var(--black);border-color:var(--emerald);}
+
+/* FEEDBACK */
+.msg-action-btn.fb-active{background:var(--emerald);color:var(--black);border-color:var(--emerald);}
+.msg-action-btn.fb-active.fb-dislike{background:#EF4444;color:#fff;border-color:#EF4444;}
+.fb-note-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:600;align-items:center;justify-content:center;padding:20px;}
+.fb-note-modal-overlay.show{display:flex;}
+.fb-note-modal{background:var(--white);border-radius:16px;padding:20px;width:100%;max-width:380px;}
+.fb-note-title{font-size:14px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
+.fb-note-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px;}
+.fb-note-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;resize:vertical;min-height:70px;outline:none;margin-bottom:12px;}
+.fb-note-textarea:focus{border-color:var(--emerald);}
+.fb-note-actions{display:flex;gap:8px;}
+.fb-note-skip{flex:1;padding:10px;background:transparent;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#555;cursor:pointer;}
+.fb-note-send{flex:1;padding:10px;background:var(--black);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
 </style>
 <script type="application/ld+json">
 {
@@ -397,7 +420,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 <!-- NAME SCREEN -->
 <div id="name-screen">
   <div class="name-wrap">
-    <img class="name-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" onerror="this.style.display='none'">
+    <img class="name-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="180" height="101" onerror="this.style.display='none'">
     <div class="name-brand">BaliEats AI</div>
     <div class="name-tagline">Less searching, more tasting.</div>
     <div class="name-title-h">Halo! Siapa namamu? 👋</div>
@@ -419,7 +442,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 <div id="desktop-layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <img src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" onerror="this.style.display='none';document.getElementById('sb-logo-txt').style.display='block'">
+      <img src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="150" height="84" onerror="this.style.display='none';document.getElementById('sb-logo-txt').style.display='block'">
       <span id="sb-logo-txt" class="logo-text" style="display:none">BaliEats AI</span>
     </div>
     <nav class="sidebar-nav">
@@ -427,12 +450,6 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       <a class="nav-item active" onclick="setActive(this);showChat()">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
         <span class="nav-label">AI Chat</span>
-      </a>
-      <div class="nav-divider"></div>
-      <div class="nav-section-label">Intelligence</div>
-      <a class="nav-item" onclick="setActive(this);showReport()">
-        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        <span class="nav-label">AI Report</span>
       </a>
       <div class="nav-divider"></div>
       <div class="nav-section-label">Kategori</div>
@@ -513,7 +530,14 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       </div>
       <div class="topbar-right">
         <button class="loc-btn" id="loc-btn" onclick="getLocation()">📍 Sekitar Saya</button>
+        <div class="lang-toggle" id="lang-toggle">
+          <button class="lang-btn active" data-lang="auto" onclick="setLang(this,'auto')">Auto</button>
+          <button class="lang-btn" data-lang="id" onclick="setLang(this,'id')">ID</button>
+          <button class="lang-btn" data-lang="en" onclick="setLang(this,'en')">EN</button>
+        </div>
         <button class="diet-btn" id="diet-btn" onclick="openDietModal()">🏷️ Semua</button>
+        <button class="topbar-btn" onclick="copyFullConversation()" title="Salin percakapan">📋 Copy</button>
+        <button class="topbar-btn" onclick="exportFullConversation()" title="Export percakapan ke PDF">📄 Export</button>
         <button class="topbar-btn" onclick="clearChat()">↺ New Chat</button>
         <div class="topbar-avatar" id="d-avatar">BE</div>
       </div>
@@ -527,29 +551,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <h2 id="d-welcome-h2">Halo! Saya BaliEats AI 🌿</h2>
         <p>Asisten kuliner cerdas untuk eksplorasi makanan & minuman di Bali. Tanya apa saja — makanan tradisional, street food, seafood, nutrisi makanan, dan lainnya.</p>
       </div>
-      <div class="intel-mini" id="d-intel-mini">
-        <div class="intel-mini-header">
-          <div class="intel-mini-title">🤖 AI Intelligence</div>
-          <button class="intel-mini-link" onclick="setActive(document.querySelector('.nav-item[onclick*=showReport]'));showReport()">View Full Report →</button>
-        </div>
-        <div class="intel-mini-loading" id="d-mini-loading">
-          <div class="intel-spinner" style="width:12px;height:12px;border-width:1.5px;"></div> Analyzing...
-        </div>
-        <div id="d-mini-body" style="display:none;">
-          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="d-mini-summary"></span></div>
-          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="d-mini-critical"></span></div>
-          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="d-mini-watch"></span></div>
-        </div>
-        <div id="d-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
-      </div>
-      <div class="chat-suggestions" id="d-chips">
-        <div class="chip" onclick="sendChip(this)">Makanan khas Bali apa saja?</div>
-        <div class="chip" onclick="sendChip(this)">Rekomendasi seafood di Bali</div>
-        <div class="chip" onclick="sendChip(this)">Street food wajib coba di Bali</div>
-        <div class="chip" onclick="sendChip(this)">Minuman tradisional Bali</div>
-        <div class="chip" onclick="sendChip(this)">Vegetarian options in Ubud</div>
-        <div class="chip" onclick="sendChip(this)">Analisa foto makanan saya</div>
-      </div>
+      <div class="chat-suggestions" id="d-chips"></div>
       <div class="budget-row" id="d-budget-chips">
         <button class="budget-chip active" data-budget="semua" onclick="setBudget(this,'semua')">💰 Semua Budget</button>
         <button class="budget-chip" data-budget="hemat" onclick="setBudget(this,'hemat')">🟢 &lt; Rp50rb</button>
@@ -573,84 +575,6 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
     </div>
 
     <!-- AI REPORT PAGE -->
-    <div class="report-page" id="report-page">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-        <div>
-          <div class="report-title">📊 AI Intelligence Report</div>
-          <div class="report-subtitle" id="r-subtitle">Last 30 days · Powered by Gemini 3.5 Flash Lite</div>
-        </div>
-        <button class="report-refresh-btn" onclick="refreshReport()">🔄 Refresh Report</button>
-      </div>
-      <div class="date-filter-wrap">
-        <div class="date-filter-presets">
-          <button class="date-preset-btn active" onclick="applyPreset(this,'30d')">Last 30 Days</button>
-          <button class="date-preset-btn" onclick="applyPreset(this,'week')">This Week</button>
-          <button class="date-preset-btn" onclick="applyPreset(this,'month')">This Month</button>
-          <button class="date-preset-btn" onclick="applyPreset(this,'quarter')">This Quarter</button>
-          <button class="date-preset-btn" onclick="applyPreset(this,'year')">This Year</button>
-        </div>
-        <div class="date-filter-row">
-          <span class="date-filter-label">From</span>
-          <input type="date" class="date-input" id="r-date-from">
-          <span class="date-filter-label">To</span>
-          <input type="date" class="date-input" id="r-date-to">
-          <button class="date-apply-btn" onclick="applyDateRange()">Apply</button>
-        </div>
-      </div>
-      <div class="stats-grid" id="r-stats-grid" style="display:none;">
-        <div class="stat-card"><div class="stat-card-value" id="r-stat-total">—</div><div class="stat-card-label">Conversations</div><div class="stat-card-sub">Selected period</div></div>
-        <div class="stat-card"><div class="stat-card-value" id="r-stat-error">—</div><div class="stat-card-label">Error Rate</div><div class="stat-card-sub">% of queries</div></div>
-        <div class="stat-card"><div class="stat-card-value" id="r-stat-resp">—</div><div class="stat-card-label">Avg Response</div><div class="stat-card-sub">Seconds</div></div>
-        <div class="stat-card"><div class="stat-card-value" id="r-stat-hour">—</div><div class="stat-card-label">Busiest Hour</div><div class="stat-card-sub">Peak activity</div></div>
-      </div>
-      <div class="intel-card" id="r-intel-card">
-        <div class="intel-header" onclick="toggleIntel()">
-          <div class="intel-header-left"><div class="intel-icon">🤖</div><div class="intel-title">AI Intelligence — Analytics Summary</div></div>
-          <div class="intel-header-right">
-            <div class="intel-badge">GEMINI 3.5 FLASH LITE</div>
-            <div class="intel-toggle"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg></div>
-          </div>
-        </div>
-        <div class="intel-loading" id="r-intel-loading"><div class="intel-spinner"></div>Analyzing chat log data...</div>
-        <div class="intel-body" id="r-intel-body" style="display:none;">
-          <div class="intel-summary" id="r-intel-summary"></div>
-          <div class="intel-rows">
-            <div class="intel-row"><div class="intel-dot green"></div><div class="intel-row-text"><span class="intel-row-label green">Positive: </span><span id="r-intel-positive"></span></div></div>
-            <div class="intel-row"><div class="intel-dot red"></div><div class="intel-row-text"><span class="intel-row-label red">Critical: </span><span id="r-intel-critical"></span></div></div>
-            <div class="intel-row"><div class="intel-dot yellow"></div><div class="intel-row-text"><span class="intel-row-label yellow">Watch: </span><span id="r-intel-watch"></span></div></div>
-          </div>
-          <div class="intel-actions"><div class="intel-actions-label">Recommended Actions</div><div class="intel-actions-text" id="r-intel-actions"></div></div>
-          <div class="intel-disclaimer">⚠️ This analysis is AI-generated. Please verify before taking action.</div>
-        </div>
-        <div class="intel-error" id="r-intel-error" style="display:none;"></div>
-      </div>
-      <div id="r-hashtag-section" style="display:none;">
-        <div class="report-section-title">🏷️ Top Keywords</div>
-        <div class="hashtag-cloud" id="r-hashtag-cloud"></div>
-      </div>
-      <div id="r-questions-section" style="display:none;">
-        <div class="report-section-title">🔥 Top Questions</div>
-        <table class="questions-table"><thead><tr><th style="width:40px;">#</th><th>Question</th><th style="width:80px;text-align:center;">Count</th></tr></thead><tbody id="r-questions-body"></tbody></table>
-      </div>
-      <div id="r-kb-section" style="display:none;">
-        <div class="report-section-title">📚 Knowledge Base Usage</div>
-        <div class="kb-bars" id="r-kb-bars"></div>
-      </div>
-      <div id="r-faq-section" style="display:none;">
-        <div class="report-section-title">💡 FAQ Suggestions</div>
-        <div class="faq-list" id="r-faq-list"></div>
-      </div>
-      <div id="r-daily-section">
-        <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between;">
-          <span>📅 Recent Daily Reports</span>
-          <button class="date-apply-btn" onclick="loadDailyReports()" style="font-size:11px;padding:5px 12px;">🔄 Load</button>
-        </div>
-        <div id="r-daily-loading" style="font-size:12px;color:var(--text-muted);padding:12px 0;display:none;">Loading reports...</div>
-        <div class="daily-reports-list" id="r-daily-list"></div>
-        <div id="r-daily-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:12px 0;">No daily reports yet. Run <code>saveDailyReport()</code> from GAS editor.</div>
-      </div>
-    </div>
-
     <!-- CALENDAR PANEL DESKTOP -->
     <div id="d-cal" class="calendar-panel">
       <div class="cal-panel-header">
@@ -675,7 +599,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 <!-- MOBILE LAYOUT -->
 <div class="mobile-only" id="mobile-layout">
   <div class="mobile-topbar">
-    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" onerror="this.style.display='none';document.getElementById('mb-logo-txt').style.display='block'">
+    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="120" height="26" onerror="this.style.display='none';document.getElementById('mb-logo-txt').style.display='block'">
     <span id="mb-logo-txt" class="mobile-logo-txt" style="display:none">🌿</span>
     <div class="mobile-topbar-center">
       <div class="mobile-app-name">BaliEats AI</div>
@@ -683,6 +607,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
     </div>
     <div class="mobile-topbar-right">
       <button class="mobile-loc-btn" id="m-loc-btn" onclick="getLocation()">📍</button>
+      <button class="mobile-lang-btn" id="m-lang-btn" onclick="cycleLang()">Auto</button>
       <button class="mobile-diet-btn" id="m-diet-btn" onclick="openDietModal()">🏷️</button>
       <div class="mobile-avatar" id="m-avatar" onclick="doLogout()">BE</div>
     </div>
@@ -695,29 +620,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       <h3 id="m-welcome-h3">Halo! Saya BaliEats AI 🌿</h3>
       <p>Tanya apa saja tentang kuliner Bali.</p>
     </div>
-    <div class="intel-mini" style="margin:8px 12px 0;" id="m-intel-mini">
-      <div class="intel-mini-header">
-        <div class="intel-mini-title">🤖 AI Intelligence</div>
-        <button class="intel-mini-link" onclick="setMNav(document.querySelector('.mobile-nav-item[onclick*=report]'),'report')">View Report →</button>
-      </div>
-      <div class="intel-mini-loading" id="m-mini-loading">
-        <div class="intel-spinner" style="width:12px;height:12px;border-width:1.5px;"></div> Analyzing...
-      </div>
-      <div id="m-mini-body" style="display:none;">
-        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="m-mini-summary"></span></div>
-        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="m-mini-critical"></span></div>
-        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="m-mini-watch"></span></div>
-      </div>
-      <div id="m-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
-    </div>
-    <div class="mobile-suggestions" id="m-chips">
-      <div class="chip" onclick="sendChip(this)">Makanan khas Bali?</div>
-      <div class="chip" onclick="sendChip(this)">Seafood di Bali?</div>
-      <div class="chip" onclick="sendChip(this)">Street food Bali?</div>
-      <div class="chip" onclick="sendChip(this)">Minuman tradisional?</div>
-      <div class="chip" onclick="sendChip(this)">Vegetarian di Bali?</div>
-      <div class="chip" onclick="sendChip(this)">Analisa foto makanan</div>
-    </div>
+    <div class="mobile-suggestions" id="m-chips"></div>
     <div class="budget-row" style="padding:4px 12px;margin-bottom:0;" id="m-budget-chips">
       <button class="budget-chip active" data-budget="semua" onclick="setBudget(this,'semua')">💰 Semua</button>
       <button class="budget-chip" data-budget="hemat" onclick="setBudget(this,'hemat')">🟢 &lt;50rb</button>
@@ -763,10 +666,6 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
         Chat
       </div>
-      <div class="mobile-nav-item" onclick="setMNav(this,'report')">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        Report
-      </div>
       <div class="mobile-nav-item" onclick="setMNav(this,'area')">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Area
@@ -801,6 +700,19 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
   </div>
 </div>
 
+<!-- FEEDBACK NOTE MODAL -->
+<div class="fb-note-modal-overlay" id="fb-note-modal" onclick="if(event.target===this)skipFeedbackNote()">
+  <div class="fb-note-modal">
+    <div class="fb-note-title">Apa yang kurang? 🤔</div>
+    <div class="fb-note-sub">Opsional — bantu kami perbaiki jawaban BaliEats AI</div>
+    <textarea class="fb-note-textarea" id="fb-note-text" placeholder="Ceritakan apa yang kurang tepat..."></textarea>
+    <div class="fb-note-actions">
+      <button class="fb-note-skip" onclick="skipFeedbackNote()">Lewati</button>
+      <button class="fb-note-send" onclick="sendFeedbackNote()">Kirim</button>
+    </div>
+  </div>
+</div>
+
 <!-- DIET MODAL -->
 <div class="diet-modal-overlay" id="diet-modal" onclick="if(event.target===this)closeDietModal()">
   <div class="diet-modal">
@@ -829,14 +741,31 @@ function gasPost(action,params,onSuccess,onFailure){
 
 // ── DEVICE DETECTION ─────────────────────────────────────────
 function setDevice(){var w=window.outerWidth||document.documentElement.clientWidth;document.body.classList.toggle('is-mobile',w<=820);document.body.classList.toggle('is-desktop',w>820);}
-setDevice();window.addEventListener('resize',setDevice);
+setDevice();
+
+// Sync pesan yang sudah ada saat layout berganti (resize/rotasi), supaya tidak tertinggal di kontainer lama
+var lastMsgLayout=isMobileLayoutSafe();
+function isMobileLayoutSafe(){return document.body.classList.contains('is-mobile');}
+function syncMessagesToActiveLayout(){
+  var now=isMobileLayoutSafe();
+  if(now===lastMsgLayout)return;
+  var fromId=lastMsgLayout?'m-msgs':'d-msgs';
+  var toId=now?'m-msgs':'d-msgs';
+  var from=document.getElementById(fromId);var to=document.getElementById(toId);
+  if(from&&to){
+    Array.from(from.children).forEach(function(child){to.appendChild(child);});
+    to.scrollTop=to.scrollHeight;
+  }
+  lastMsgLayout=now;
+}
+window.addEventListener('resize',function(){setDevice();syncMessagesToActiveLayout();});
 
 // ── STATE ────────────────────────────────────────────────────
 var convHistory=[];var isLoading=false;var msgCount=0;var hdrHidden=false;
-var botTexts=new Map();var savedFavorites=[];var userName='';var userTitle='Kak';
-var cachedIntelData=null;var intelCollapsed=false;var sCol=false;
+var botTexts=new Map();var botQuestions=new Map();var savedFavorites=[];var userName='';var userTitle='Kak';
+var sCol=false;
 var currentImages=[];var idleTimer=null;var lastActivity=Date.now();
-var dietPref='semua';var budgetPref='semua';
+var dietPref='semua';var budgetPref='semua';var chatLang='auto';
 var IDLE_TIMEOUT=1*60*1000; // 1 menit — ubah ke 10-30 menit untuk produksi
 
 // ── NAME SCREEN ──────────────────────────────────────────────
@@ -871,7 +800,7 @@ window.addEventListener('load',function(){showNameScreen();});
 // ── DASHBOARD INIT ───────────────────────────────────────────
 function initDash(){
   updateGreeting();updateClock();setInterval(updateClock,1000);
-  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadIntelligence();
+  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadChatLang();loadIntelligence();renderChips();
   resetIdleTimer();requestNotifPermission();
   var displayName=getUserDisplayName();
   if(userName){
@@ -941,37 +870,43 @@ var SVG_STAR='<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-
 var SVG_COPY='<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
 var SVG_PDF='<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>';
 
+function isMobileLayout(){return document.body.classList.contains('is-mobile');}
+function activeMsgContainer(){return document.getElementById(isMobileLayout()?'m-msgs':'d-msgs');}
+
 function addBot(text,animate){
   var id='msg'+Date.now();botTexts.set(id,text);
-  var actions='<div class="msg-actions"><button class="msg-action-btn" id="sav-'+id+'" onclick="saveFavorite(\''+id+'\')">'+SVG_STAR+' Simpan</button><button class="msg-action-btn" onclick="copyMsg(this,\''+id+'\')">'+SVG_COPY+' Copy</button><button class="msg-action-btn" onclick="exportMsgPDF(this,\''+id+'\')">'+SVG_PDF+' PDF</button></div>';
+  var lastUserMsg='';
+  for(var hi=convHistory.length-1;hi>=0;hi--){if(convHistory[hi].role==='user'){lastUserMsg=convHistory[hi].text;break;}}
+  botQuestions.set(id,lastUserMsg);
+  var actions='<div class="msg-actions"><button class="msg-action-btn" id="fb-like-'+id+'" onclick="sendFeedback(\''+id+'\',\'like\')">\U0001f44d</button><button class="msg-action-btn" id="fb-dislike-'+id+'" onclick="sendFeedback(\''+id+'\',\'dislike\')">\U0001f44e</button><button class="msg-action-btn" id="sav-'+id+'" onclick="saveFavorite(\''+id+'\')">'+SVG_STAR+' Simpan</button><button class="msg-action-btn" onclick="copyMsg(this,\''+id+'\')">'+SVG_COPY+' Copy</button><button class="msg-action-btn" onclick="exportMsgPDF(this,\''+id+'\')">'+SVG_PDF+' PDF</button><button class="msg-action-btn" onclick="toggleReadAloud(this,\''+id+'\')">\U0001f50a Baca</button></div>';
   var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div><div class="msg-bubble" id="'+id+'-bubble"></div><div class="msg-time">'+getTime()+' \u00b7 BaliEats AI</div>'+actions+'</div></div>';
-  var dm=document.getElementById('d-msgs');var mm=document.getElementById('m-msgs');
-  if(dm){dm.insertAdjacentHTML('beforeend',html);dm.scrollTop=dm.scrollHeight;}
-  if(mm){mm.insertAdjacentHTML('beforeend',html);mm.scrollTop=mm.scrollHeight;}
+  var box=activeMsgContainer();
+  if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'bot',text:text});msgCount++;checkMsgCountHide();
-  if(animate){typeText(id+'-bubble',text,dm||mm);}
-  else{document.querySelectorAll('#'+id+'-bubble').forEach(function(el){el.innerHTML=fmt(text);});}
+  if(animate){typeText(id+'-bubble',text,box);}
+  else{var elB=document.getElementById(id+'-bubble');if(elB)elB.innerHTML=fmt(text);}
   return id;
 }
+function escLite(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 function typeText(bubbleId,text,scrollEl){
-  var els=document.querySelectorAll('#'+bubbleId);if(!els.length)return;
-  var rendered=fmt(text);var i=0;
-  function tick(){i+=15;if(i>=text.length){els.forEach(function(el){el.innerHTML=rendered;});if(scrollEl)scrollEl.scrollTop=scrollEl.scrollHeight;return;}
-    var partial=text.substring(0,i);els.forEach(function(el){el.innerHTML=fmt(partial)+'<span style="opacity:.4">\u258c</span>';});
-    if(scrollEl)scrollEl.scrollTop=scrollEl.scrollHeight;setTimeout(tick,8);}
+  var el=document.getElementById(bubbleId);if(!el)return;
+  var rendered=fmt(text);var i=0; // parser markdown LENGKAP hanya dihitung sekali di sini
+  function tick(){i+=30;if(i>=text.length){el.innerHTML=rendered;if(scrollEl)scrollEl.scrollTop=scrollEl.scrollHeight;return;}
+    el.innerHTML=escLite(text.substring(0,i))+'<span style="opacity:.4">\u258c</span>'; // escape ringan saja selama animasi, tanpa parser penuh
+    if(scrollEl)scrollEl.scrollTop=scrollEl.scrollHeight;setTimeout(tick,16);}
   tick();
 }
 function addUser(text){
   var html='<div class="msg user"><div class="msg-av">ME</div><div style="display:flex;flex-direction:column;align-items:flex-end;"><div class="msg-bubble">'+text+'</div><div class="msg-time">'+getTime()+'</div></div></div>';
-  var dm=document.getElementById('d-msgs');if(dm){dm.insertAdjacentHTML('beforeend',html);dm.scrollTop=dm.scrollHeight;}
-  var mm=document.getElementById('m-msgs');if(mm){mm.insertAdjacentHTML('beforeend',html);mm.scrollTop=mm.scrollHeight;}
+  var box=activeMsgContainer();
+  if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'user',text:text});msgCount++;checkMsgCountHide();
 }
 function addTyping(){
   var id='t'+Date.now();
   var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div>';
-  var dm=document.getElementById('d-msgs');if(dm){dm.insertAdjacentHTML('beforeend',html);dm.scrollTop=dm.scrollHeight;}
-  var mm=document.getElementById('m-msgs');if(mm){mm.insertAdjacentHTML('beforeend',html);mm.scrollTop=mm.scrollHeight;}
+  var box=activeMsgContainer();
+  if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   return id;
 }
 function rmTyping(id){document.querySelectorAll('#'+id).forEach(function(e){e.remove();});}
@@ -982,7 +917,7 @@ function setLoading(val){isLoading=val;var ds=document.getElementById('d-send');
 function processQuery(q){
   if(isLoading||!q.trim())return;
   resetIdleTimer();showChatView();addUser(q);hideChips();setLoading(true);
-  var fullQ=q;var dCtx=getDietContext();var bCtx=getBudgetContext();if(dCtx)fullQ+=' '+dCtx;if(bCtx)fullQ+=' '+bCtx;
+  var fullQ=withLang(q);var dCtx=getDietContext();var bCtx=getBudgetContext();if(dCtx)fullQ+=' '+dCtx;if(bCtx)fullQ+=' '+bCtx;
   var tid=addTyping();
   var tOut=setTimeout(function(){var el=document.querySelector('#'+tid+' .typing-indicator');if(el)el.innerHTML='<span style="font-size:11px;color:var(--text-muted);padding:0 4px;">Memproses, harap tunggu... \u23f3</span>';},10000);
   gasPost('askBaliEats',{q:fullQ,history:convHistory.slice(-10)},
@@ -1015,8 +950,7 @@ function clearChat(){
   convHistory=[];msgCount=0;hdrHidden=false;
   var dm=document.getElementById('d-msgs');if(dm)dm.innerHTML='';
   var mm=document.getElementById('m-msgs');if(mm)mm.innerHTML='';
-  var dc=document.getElementById('d-chips');if(dc)dc.style.display='';
-  var mc=document.getElementById('m-chips');if(mc)mc.style.display='';
+  renderChips();
   var dh=document.getElementById('d-chat-hdr');if(dh)dh.classList.remove('hidden');
   var mh=document.getElementById('m-chat-hdr');if(mh)mh.classList.remove('hidden');
   showChatView();
@@ -1029,37 +963,21 @@ function toggleSidebar(){sCol=!sCol;document.getElementById('sidebar').classList
 function setActive(el){document.querySelectorAll('.nav-item').forEach(function(i){i.classList.remove('active');});el.classList.add('active');}
 function setMNav(el,action){
   document.querySelectorAll('.mobile-nav-item').forEach(function(i){i.classList.remove('active');});el.classList.add('active');
-  if(action==='chat')showChatView();else if(action==='report')showReport();else if(action==='area')openAreaModal();else if(action==='favorit')showFavoritesPanel();else if(action==='kalender')showCalendarPanel();
+  if(action==='chat')showChatView();else if(action==='area')openAreaModal();else if(action==='favorit')showFavoritesPanel();else if(action==='kalender')showCalendarPanel();
 }
 function showChatView(){
   var cc=document.getElementById('chat-container');if(cc)cc.style.display='';
-  var rp=document.getElementById('report-page');if(rp)rp.classList.remove('active');
   var df=document.getElementById('d-fav');if(df)df.classList.remove('show');
   var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='';
   var mf=document.getElementById('m-fav');if(mf)mf.classList.remove('show');
 }
 function showChat(){showChatView();}
-function showReport(){
-  var cc=document.getElementById('chat-container');if(cc)cc.style.display='none';
-  var rp=document.getElementById('report-page');if(rp)rp.classList.add('active');
-  var df=document.getElementById('d-fav');if(df)df.classList.remove('show');
-  if(cachedIntelData)populateReportPage(cachedIntelData);
-}
 function showFavoritesPanel(){
   var cc=document.getElementById('chat-container');if(cc)cc.style.display='none';
   var df=document.getElementById('d-fav');if(df){df.classList.add('show');renderFavorites();}
-  var rp=document.getElementById('report-page');if(rp)rp.classList.remove('active');
   var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='none';
   var mf=document.getElementById('m-fav');if(mf){mf.classList.add('show');renderFavorites();}
 }
-function refreshReport(){
-  cachedIntelData=null;
-  var rb=document.getElementById('r-intel-body');if(rb)rb.style.display='none';
-  var rl=document.getElementById('r-intel-loading');if(rl)rl.style.display='flex';
-  var re=document.getElementById('r-intel-error');if(re)re.style.display='none';
-  loadIntelligence();
-}
-function toggleIntel(){intelCollapsed=!intelCollapsed;var c=document.getElementById('r-intel-card');if(c)c.classList.toggle('collapsed',intelCollapsed);}
 
 // ── COPY & PDF ───────────────────────────────────────────────
 function copyMsg(btn,msgId){
@@ -1113,74 +1031,6 @@ function doLogout(){
   setTimeout(function(){var ni2=document.getElementById('name-input');if(ni2)ni2.focus();},100);
 }
 
-// ── INTELLIGENCE ─────────────────────────────────────────────
-function loadIntelligence(){
-  gasPost('getAdminIntelligence',{},
-    function(jsonStr){
-      try{var data=JSON.parse(jsonStr);cachedIntelData=data;populateMiniCard(data);var rp=document.getElementById('report-page');if(rp&&rp.classList.contains('active'))populateReportPage(data);}
-      catch(e){['d','m'].forEach(function(p){var l=document.getElementById(p+'-mini-loading');var er=document.getElementById(p+'-mini-error');if(l)l.style.display='none';if(er){er.style.display='block';er.textContent='Failed to load.';}});}
-    },
-    function(err){['d','m'].forEach(function(p){var l=document.getElementById(p+'-mini-loading');var er=document.getElementById(p+'-mini-error');if(l)l.style.display='none';if(er){er.style.display='block';er.textContent='Failed to load intelligence.';}});console.error(err);}
-  );
-}
-function populateMiniCard(data){
-  ['d','m'].forEach(function(p){
-    var loading=document.getElementById(p+'-mini-loading');var body=document.getElementById(p+'-mini-body');var error=document.getElementById(p+'-mini-error');
-    if(!loading||!body)return;
-    if(data.error){loading.style.display='none';if(error){error.style.display='block';error.textContent=data.error;}return;}
-    loading.style.display='none';body.style.display='block';
-    var sum=(data.summary||'').split('.')[0]+'.';var crit=data.critical||'';var watch=data.watch||'';
-    var es=document.getElementById(p+'-mini-summary');if(es)es.textContent=sum;
-    var ec=document.getElementById(p+'-mini-critical');if(ec)ec.textContent=crit.length>80?crit.substring(0,80)+'...':crit;
-    var ew=document.getElementById(p+'-mini-watch');if(ew)ew.textContent=watch.length>80?watch.substring(0,80)+'...':watch;
-  });
-}
-function populateReportPage(data){
-  var rL=document.getElementById('r-intel-loading');var rB=document.getElementById('r-intel-body');var rE=document.getElementById('r-intel-error');
-  if(!rL||!rB)return;
-  if(data.error){rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='\u26a0\ufe0f '+data.error;}return;}
-  rL.style.display='none';rB.style.display='block';
-  var fields={'r-intel-summary':data.summary||'','r-intel-positive':data.positive||'','r-intel-critical':data.critical||'','r-intel-watch':data.watch||'','r-intel-actions':data.recommended_actions||''};
-  Object.entries(fields).forEach(function(pair){var el=document.getElementById(pair[0]);if(el)el.textContent=pair[1];});
-  var sg=document.getElementById('r-stats-grid');
-  if(sg&&data.totalConversations!==undefined){
-    sg.style.display='grid';
-    var st=document.getElementById('r-stat-total');if(st)st.textContent=data.totalConversations;
-    var se=document.getElementById('r-stat-error');if(se)se.textContent=data.errorRate+'%';
-    var sr=document.getElementById('r-stat-resp');if(sr)sr.textContent=data.avgResponseTime+'s';
-    var sh=document.getElementById('r-stat-hour');if(sh)sh.textContent=data.busiestHour?data.busiestHour.split(':')[0]+':00':'\u2014';
-  }
-  if(data.topQuestions&&data.topQuestions.length>0){
-    var qs=document.getElementById('r-questions-section');var tb=document.getElementById('r-questions-body');
-    if(qs)qs.style.display='block';
-    if(tb){tb.innerHTML='';data.topQuestions.forEach(function(item,idx){var tr=document.createElement('tr');tr.innerHTML='<td><span class="q-badge">'+(idx+1)+'</span></td><td>'+item.question+'</td><td style="text-align:center;"><span class="q-badge">'+item.count+'</span></td>';tb.appendChild(tr);});}
-  }
-  if(data.knowledgeUsage&&data.knowledgeUsage.length>0){
-    var ks=document.getElementById('r-kb-section');var kb=document.getElementById('r-kb-bars');
-    if(ks)ks.style.display='block';
-    if(kb){kb.innerHTML='';var mx=data.knowledgeUsage[0].count;data.knowledgeUsage.forEach(function(item){var pct=mx>0?Math.round((item.count/mx)*100):0;var row=document.createElement('div');row.className='kb-bar-row';row.innerHTML='<div class="kb-bar-label">'+item.sheet+'</div><div class="kb-bar-track"><div class="kb-bar-fill" style="width:'+pct+'%"></div></div><div class="kb-bar-count">'+item.count+'</div>';kb.appendChild(row);});}
-  }
-  if(data.faqSuggestions&&data.faqSuggestions.length>0){
-    var fs=document.getElementById('r-faq-section');var fl=document.getElementById('r-faq-list');
-    if(fs)fs.style.display='block';
-    if(fl){fl.innerHTML='';data.faqSuggestions.forEach(function(item,idx){var div=document.createElement('div');div.className='faq-item';div.innerHTML='<div class="faq-item-left"><div class="faq-item-q">'+item.question+'</div><div class="faq-item-freq">Asked '+item.frequency+' time(s)</div></div><button class="faq-approve-btn" id="faq-btn-'+idx+'" onclick="approveFAQItem(this,'+idx+')">\u2713 Add to FAQ</button>';fl.appendChild(div);});}
-  }
-  if(data.topKeywords&&data.topKeywords.length>0){
-    var hs=document.getElementById('r-hashtag-section');var hc=document.getElementById('r-hashtag-cloud');
-    if(hs)hs.style.display='block';
-    if(hc){hc.innerHTML='';data.topKeywords.forEach(function(item){var tag=document.createElement('div');tag.className='hashtag-item';tag.innerHTML='#'+item.word+'<span class="hashtag-count">'+item.count+'</span>';tag.onclick=function(){processQuery('Ceritakan tentang kuliner '+item.word+' di Bali');};hc.appendChild(tag);});}
-  }
-}
-function approveFAQItem(btn,idx){
-  if(!cachedIntelData||!cachedIntelData.faqSuggestions)return;
-  var item=cachedIntelData.faqSuggestions[idx];if(!item)return;
-  btn.textContent='Adding...';btn.disabled=true;
-  gasPost('approveFAQ',{question:item.question,answer:'Frequently asked — answer to be filled manually.',category:'General'},
-    function(result){try{var res=JSON.parse(result);if(res.success){btn.textContent='\u2705 Added!';btn.classList.add('approved');}else{btn.textContent='\u2717 Failed';btn.disabled=false;}}catch(e){btn.textContent='\u2717 Error';btn.disabled=false;}},
-    function(err){btn.textContent='\u2717 Error';btn.disabled=false;console.error(err);}
-  );
-}
-
 // ── IMAGE UPLOAD ─────────────────────────────────────────────
 function renderPreviews(){
   ['d','m'].forEach(function(p){
@@ -1214,8 +1064,8 @@ function addUserWithImages(text,images){
   var imgsHtml='';images.forEach(function(img){imgsHtml+='<img class="msg-bubble-img" src="'+img.dataUrl+'" alt="uploaded image">';});
   var label=images.length>1?'['+images.length+' Images] ':'[Image] ';
   var html='<div class="msg user"><div class="msg-av">ME</div><div style="display:flex;flex-direction:column;align-items:flex-end;"><div class="msg-bubble">'+imgsHtml+'<span>'+text+'</span></div><div class="msg-time">'+getTime()+'</div></div></div>';
-  var dm=document.getElementById('d-msgs');if(dm){dm.insertAdjacentHTML('beforeend',html);dm.scrollTop=dm.scrollHeight;}
-  var mm=document.getElementById('m-msgs');if(mm){mm.insertAdjacentHTML('beforeend',html);mm.scrollTop=mm.scrollHeight;}
+  var box=activeMsgContainer();
+  if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'user',text:label+text});msgCount++;checkMsgCountHide();
 }
 
@@ -1238,7 +1088,7 @@ var IDLE_MESSAGES=[
 ];
 function requestNotifPermission(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();}
 function sendBrowserNotif(msg){if(!('Notification' in window)||Notification.permission!=='granted'||document.visibilityState==='visible')return;try{new Notification('BaliEats AI',{body:msg,icon:'https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp'});}catch(e){}}
-function isIdleActive(){var ns=document.getElementById('name-screen');if(ns&&(ns.classList.contains('on')||ns.style.display==='flex'))return false;var rp=document.getElementById('report-page');if(rp&&rp.classList.contains('active'))return false;return true;}
+function isIdleActive(){var ns=document.getElementById('name-screen');if(ns&&(ns.classList.contains('on')||ns.style.display==='flex'))return false;return true;}
 function sendIdleMessage(){var msg=IDLE_MESSAGES[Math.floor(Math.random()*IDLE_MESSAGES.length)];addBot(msg);sendBrowserNotif(msg);}
 function resetIdleTimer(){
   lastActivity=Date.now();if(idleTimer)clearTimeout(idleTimer);
@@ -1346,7 +1196,6 @@ var calendarEvents=[];var calFilter='upcoming';var calLoaded=false;
 
 function showCalendarPanel(){
   var cc=document.getElementById('chat-container');if(cc)cc.style.display='none';
-  var rp=document.getElementById('report-page');if(rp)rp.classList.remove('active');
   var df=document.getElementById('d-fav');if(df)df.classList.remove('show');
   var dc=document.getElementById('d-cal');if(dc)dc.classList.add('show');
   var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='none';
@@ -1449,6 +1298,162 @@ function onCalEventClick(nama,makanan){
   setTimeout(function(){processQuery(q);},100);
 }
 
+
+// ── LANGUAGE TOGGLE ───────────────────────────────────────────────────────────
+function loadChatLang(){chatLang=localStorage.getItem('balieats_lang')||'auto';updateLangUI();}
+function setLang(btn,lang){
+  chatLang=lang;localStorage.setItem('balieats_lang',lang);updateLangUI();
+}
+function cycleLang(){
+  var order=['auto','id','en'];var idx=order.indexOf(chatLang);
+  chatLang=order[(idx+1)%order.length];localStorage.setItem('balieats_lang',chatLang);updateLangUI();
+}
+function updateLangUI(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===chatLang);});
+  var mlb=document.getElementById('m-lang-btn');if(mlb)mlb.textContent=chatLang==='auto'?'Auto':chatLang.toUpperCase();
+}
+function withLang(q){
+  if(chatLang==='id')return '[Answer in Bahasa Indonesia] '+q;
+  if(chatLang==='en')return '[Answer in English] '+q;
+  return q;
+}
+
+// ── TEXT-TO-SPEECH ───────────────────────────────────────────────────────────
+var ttsSupported='speechSynthesis' in window;
+var currentUtterance=null;var currentTTSBtn=null;
+function detectSpeechLang(text){
+  var idWords=/\b(yang|dan|adalah|dengan|untuk|dari|ini|itu|akan|saya|kamu|bisa|tidak|ada|juga|atau|kalau|nasi|makanan|bali)\b/i;
+  return idWords.test(text)?'id-ID':'en-US';
+}
+function toggleReadAloud(btn,msgId){
+  if(!ttsSupported){alert('Browser kamu tidak mendukung fitur baca nyaring.');return;}
+  if(currentUtterance&&currentTTSBtn===btn){
+    speechSynthesis.cancel();currentUtterance=null;currentTTSBtn=null;
+    btn.classList.remove('tts-active');btn.innerHTML='\U0001f50a Baca';
+    return;
+  }
+  if(currentUtterance){speechSynthesis.cancel();if(currentTTSBtn){currentTTSBtn.classList.remove('tts-active');currentTTSBtn.innerHTML='\U0001f50a Baca';}}
+  var raw=botTexts.get(msgId)||'';
+  var clean=raw.replace(/\*\*/g,'').replace(/\*/g,'').replace(/`/g,'').replace(/#{1,3}\s/g,'').replace(/[\u{1F300}-\u{1FAFF}]/gu,'');
+  if(!clean.trim())return;
+  var u=new SpeechSynthesisUtterance(clean);
+  u.lang=(chatLang==='id')?'id-ID':(chatLang==='en')?'en-US':detectSpeechLang(clean);
+  u.rate=0.95;
+  u.onend=function(){btn.classList.remove('tts-active');btn.innerHTML='\U0001f50a Baca';currentUtterance=null;currentTTSBtn=null;};
+  u.onerror=function(){btn.classList.remove('tts-active');btn.innerHTML='\U0001f50a Baca';currentUtterance=null;currentTTSBtn=null;};
+  currentUtterance=u;currentTTSBtn=btn;
+  btn.classList.add('tts-active');btn.innerHTML='\u23f9 Stop';
+  speechSynthesis.speak(u);
+}
+
+
+// ── SHORTCUT CHIPS PER JAM ───────────────────────────────────────────────────────────
+var chipsBreakfast=['Sarapan khas Bali apa saja?','Bubur Bali enak di mana?','Kopi pagi khas Bali'];
+var chipsLunch=['Nasi Campur Bali terbaik','Rekomendasi seafood siang ini','Warung makan siang murah'];
+var chipsSnack=['Jajanan sore khas Bali','Kopi & kue tradisional','Es Daluman dan minuman segar'];
+var chipsDinner=['Dinner romantis di Bali','Babi Guling wajib coba','Restoran untuk makan malam'];
+var chipsGeneral=['Makanan khas Bali apa saja?','Rekomendasi seafood di Bali','Street food wajib coba di Bali','Minuman tradisional Bali','Vegetarian options in Ubud','Analisa foto makanan saya'];
+
+function getTimeBasedChips(){
+  var h=new Date().getHours();
+  if(h>=5&&h<10)return chipsBreakfast.concat(['Analisa foto makanan saya']);
+  if(h>=10&&h<15)return chipsLunch.concat(['Analisa foto makanan saya']);
+  if(h>=15&&h<18)return chipsSnack.concat(['Analisa foto makanan saya']);
+  if(h>=18&&h<23)return chipsDinner.concat(['Analisa foto makanan saya']);
+  return chipsGeneral;
+}
+
+function renderChips(){
+  var chips=getTimeBasedChips();
+  var html=chips.map(function(c){return '<div class="chip" onclick="sendChip(this)">'+c+'</div>';}).join('');
+  var dc=document.getElementById('d-chips');if(dc){dc.innerHTML=html;dc.style.display='';}
+  var mc=document.getElementById('m-chips');if(mc){mc.innerHTML=html;mc.style.display='';}
+}
+
+// ── EXPORT PERCAKAPAN PENUH ────────────────────────────────────────────────────────
+function cleanForExport(text){
+  return String(text).replace(/\*\*/g,'').replace(/\*/g,'').replace(/`/g,'').replace(/#{1,3}\s/g,'').replace(/^[\-\u2022]\s/gm,'\u2022 ');
+}
+function exportFullConversation(){
+  if(convHistory.length===0){alert('Belum ada percakapan untuk diexport.');return;}
+  try{
+    var doc=new window.jspdf.jsPDF({orientation:'p',unit:'mm',format:'a4'});
+    var dn=getUserDisplayName();
+    doc.setFillColor(10,10,10);doc.rect(0,0,210,28,'F');
+    doc.setTextColor(16,185,129);doc.setFontSize(9);doc.setFont('helvetica','bold');
+    doc.text('BaliEats AI \u00b7 Less searching, more tasting.',14,11);
+    doc.setTextColor(255,255,255);doc.setFontSize(7);doc.setFont('helvetica','normal');
+    doc.text('Percakapan Lengkap'+(dn?' \u00b7 '+dn:'')+' \u00b7 Anabhi Dev',14,18);
+    doc.text(new Date().toLocaleString('id-ID'),14,23);
+    doc.setFontSize(10);var y=38;var pageH=280;
+    convHistory.forEach(function(msg){
+      var label=msg.role==='bot'?'BaliEats AI:':'Anda:';
+      var text=cleanForExport(msg.text);
+      doc.setFont('helvetica','bold');doc.setTextColor(msg.role==='bot'?16:10,msg.role==='bot'?129:10,msg.role==='bot'?92:10);
+      if(y+6>pageH){doc.addPage();y=20;}
+      doc.text(label,14,y);y+=5.5;
+      doc.setFont('helvetica','normal');doc.setTextColor(10,10,10);
+      var lines=doc.splitTextToSize(text,182);
+      lines.forEach(function(line){if(y+5.5>pageH){doc.addPage();y=20;}doc.text(line,14,y);y+=5.5;});
+      y+=4;
+    });
+    doc.setFontSize(7);doc.setTextColor(150,150,150);
+    doc.text('BaliEats AI \u00b7 Anabhi Dev \u00b7 '+new Date().getFullYear(),14,290);
+    doc.save('baliEats-percakapan-'+Date.now()+'.pdf');
+  }catch(e){console.error('Export error:',e);alert('Export PDF gagal. Pastikan koneksi internet aktif.');}
+}
+function copyFullConversation(){
+  if(convHistory.length===0){alert('Belum ada percakapan untuk disalin.');return;}
+  var text=convHistory.map(function(msg){return (msg.role==='bot'?'BaliEats AI: ':'Anda: ')+cleanForExport(msg.text);}).join('\n\n');
+  navigator.clipboard.writeText(text).then(function(){alert('Percakapan berhasil disalin!');})
+    .catch(function(){
+      var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');alert('Percakapan berhasil disalin!');}catch(e){alert('Gagal menyalin percakapan.');}
+      document.body.removeChild(ta);
+    });
+}
+
+
+// ── FEEDBACK ───────────────────────────────────────────────────────────
+var pendingFeedbackMsgId=null;
+function sendFeedback(msgId,rating){
+  var likeBtn=document.getElementById('fb-like-'+msgId);
+  var dislikeBtn=document.getElementById('fb-dislike-'+msgId);
+  if(!likeBtn||!dislikeBtn)return;
+  // Toggle off kalau klik ulang rating yang sama
+  var alreadyActive=(rating==='like'&&likeBtn.classList.contains('fb-active'))||(rating==='dislike'&&dislikeBtn.classList.contains('fb-active'));
+  likeBtn.classList.remove('fb-active');dislikeBtn.classList.remove('fb-active','fb-dislike');
+  if(alreadyActive)return;
+  if(rating==='like'){
+    likeBtn.classList.add('fb-active');
+    submitFeedback(msgId,'like','');
+  }else{
+    dislikeBtn.classList.add('fb-active','fb-dislike');
+    pendingFeedbackMsgId=msgId;
+    var ta=document.getElementById('fb-note-text');if(ta)ta.value='';
+    var m=document.getElementById('fb-note-modal');if(m)m.classList.add('show');
+  }
+}
+function skipFeedbackNote(){
+  if(pendingFeedbackMsgId)submitFeedback(pendingFeedbackMsgId,'dislike','');
+  var m=document.getElementById('fb-note-modal');if(m)m.classList.remove('show');
+  pendingFeedbackMsgId=null;
+}
+function sendFeedbackNote(){
+  var ta=document.getElementById('fb-note-text');var note=ta?ta.value.trim():'';
+  if(pendingFeedbackMsgId)submitFeedback(pendingFeedbackMsgId,'dislike',note);
+  var m=document.getElementById('fb-note-modal');if(m)m.classList.remove('show');
+  pendingFeedbackMsgId=null;
+}
+function submitFeedback(msgId,rating,note){
+  var question=botQuestions.get(msgId)||'';
+  var answer=botTexts.get(msgId)||'';
+  gasPost('logFeedback',{msgId:msgId,question:question,answer:answer,rating:rating,note:note},
+    function(){},
+    function(err){console.error('Feedback log error:',err);}
+  );
+}
+
 // ── GEOLOCATION ──────────────────────────────────────────────
 function getLocation(){
   if(!navigator.geolocation){closeAreaModal();addBot('Browser kamu tidak mendukung geolocation. Pilih area manual dari sidebar.');return;}
@@ -1478,74 +1483,6 @@ function openAreaModal(){var m=document.getElementById('area-modal');if(m)m.clas
 function closeAreaModal(){var m=document.getElementById('area-modal');if(m)m.classList.remove('show');}
 function pickArea(area){closeAreaModal();processQuery('Rekomendasikan kuliner dan makanan terbaik di '+area+', Bali. Sebutkan pilihan dari yang murah sampai menengah, termasuk warung lokal.');}
 
-// ── DATE FILTER ──────────────────────────────────────────────
-var currentDateFrom=null;var currentDateTo=null;
-function applyPreset(btn,preset){
-  document.querySelectorAll('.date-preset-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
-  var now=new Date();var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  var from,to;
-  if(preset==='30d'){from=new Date(today.getTime()-(30*24*60*60*1000));to=now;}
-  else if(preset==='week'){var day=today.getDay();from=new Date(today.getTime()-(day===0?6:day-1)*24*60*60*1000);to=now;}
-  else if(preset==='month'){from=new Date(today.getFullYear(),today.getMonth(),1);to=now;}
-  else if(preset==='quarter'){var q=Math.floor(today.getMonth()/3);from=new Date(today.getFullYear(),q*3,1);to=now;}
-  else if(preset==='year'){from=new Date(today.getFullYear(),0,1);to=now;}
-  var fmtD=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
-  var df=document.getElementById('r-date-from');var dt=document.getElementById('r-date-to');
-  if(df)df.value=fmtD(from);if(dt)dt.value=fmtD(to);
-  currentDateFrom=fmtD(from);currentDateTo=fmtD(to);
-  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+fmtD(from)+' \u2192 '+fmtD(to)+' \u00b7 Gemini 3.5 Flash Lite';
-  loadIntelligenceWithDates(currentDateFrom,currentDateTo);
-}
-function applyDateRange(){
-  var df=document.getElementById('r-date-from');var dt=document.getElementById('r-date-to');
-  if(!df||!dt||!df.value||!dt.value){alert('Please select both From and To dates.');return;}
-  if(df.value>dt.value){alert('From date must be before To date.');return;}
-  document.querySelectorAll('.date-preset-btn').forEach(function(b){b.classList.remove('active');});
-  currentDateFrom=df.value;currentDateTo=dt.value;
-  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+df.value+' \u2192 '+dt.value+' \u00b7 Gemini 3.5 Flash Lite';
-  loadIntelligenceWithDates(currentDateFrom,currentDateTo);
-}
-function loadIntelligenceWithDates(dateFrom,dateTo){
-  cachedIntelData=null;
-  ['r-intel-body','r-stats-grid','r-questions-section','r-kb-section','r-faq-section','r-hashtag-section'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
-  var rL=document.getElementById('r-intel-loading');if(rL)rL.style.display='flex';
-  var rE=document.getElementById('r-intel-error');if(rE)rE.style.display='none';
-  gasPost('getAdminIntelligence',{dateFrom:dateFrom,dateTo:dateTo},
-    function(jsonStr){try{var data=JSON.parse(jsonStr);cachedIntelData=data;populateMiniCard(data);populateReportPage(data);}catch(e){if(rL)rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='\u26a0\ufe0f Failed to parse data.';}}},
-    function(err){if(rL)rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='\u26a0\ufe0f Failed to load.';}console.error(err);}
-  );
-}
-
-// ── DAILY REPORTS ────────────────────────────────────────────
-function formatReportDate(dateStr){
-  try{var d;if(/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)){var p=dateStr.split('/');d=new Date(p[2],p[1]-1,p[0]);}else{d=new Date(dateStr);}
-    if(isNaN(d.getTime()))return dateStr;
-    var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
-  }catch(e){return dateStr;}
-}
-function loadDailyReports(){
-  var loading=document.getElementById('r-daily-loading');var list=document.getElementById('r-daily-list');var empty=document.getElementById('r-daily-empty');
-  if(loading)loading.style.display='block';if(list)list.innerHTML='';if(empty)empty.style.display='none';
-  gasPost('getDailyReports',{},
-    function(jsonStr){
-      if(loading)loading.style.display='none';
-      try{
-        var data=JSON.parse(jsonStr);
-        if(data.error){if(empty){empty.style.display='block';empty.textContent='\u26a0\ufe0f '+data.error;}return;}
-        if(!data.reports||data.reports.length===0){if(empty)empty.style.display='block';return;}
-        if(list){list.innerHTML='';data.reports.forEach(function(report,idx){
-          var sc=report.status==='All Clear'?'clear':report.status==='Warning'?'warning':'critical';
-          var item=document.createElement('div');item.className='daily-report-item';
-          item.innerHTML='<div class="daily-report-header" onclick="toggleDailyReport(this)"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Daily Report \u2014 '+formatReportDate(report.date)+'</div><div class="daily-report-summary">'+report.summary+'</div></div><div class="daily-report-status '+sc+'">'+report.status+'</div></div><div class="daily-report-detail" id="dr-detail-'+idx+'"><strong>\u2705 Positive:</strong> '+report.positive+'<br><br><strong>\u{1F534} Critical:</strong> '+report.critical+'</div>';
-          list.appendChild(item);});
-        }
-      }catch(e){if(empty){empty.style.display='block';empty.textContent='Error loading reports.';}}
-    },
-    function(err){if(loading)loading.style.display='none';if(empty){empty.style.display='block';empty.textContent='Failed to load daily reports.';}console.error(err);}
-  );
-}
-function toggleDailyReport(header){var item=header.closest('.daily-report-item');var detail=item?item.querySelector('.daily-report-detail'):null;if(detail)detail.classList.toggle('open');}
 </script>
 <script>
 if('serviceWorker' in navigator){

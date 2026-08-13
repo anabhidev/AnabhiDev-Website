@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#10B981">
+<meta name="robots" content="noindex, nofollow">
+<title>BaliEats AI — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0A0A0A;}
+:focus-visible{outline:2px solid #10B981;outline-offset:2px;}
+:root{
+  --black:#0A0A0A;--sidebar-bg:#111111;--surface:#F7F7F5;--white:#FFFFFF;
+  --text-primary:#0A0A0A;--text-muted:#999999;--emerald:#10B981;--emerald-dark:#059669;
+  --border:#E8E8E5;--sidebar-border:#222222;--sidebar-muted:rgba(255,255,255,0.55);
+  --sidebar-width:240px;
+}
+/* PIN SCREEN */
+#pin-screen{position:fixed;inset:0;background:#0A0A0A;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-height:100dvh;z-index:9000;}
+.pin-wrap{width:100%;max-width:320px;display:flex;flex-direction:column;align-items:center;}
+.pin-brand{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#10B981;margin-bottom:6px;text-align:center;}
+.pin-title{font-family:Georgia,serif;font-size:24px;font-weight:bold;color:#fff;margin-bottom:20px;text-align:center;}
+.pin-input{width:100%;padding:16px;background:#1E1E1E;border:1.5px solid #333;border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:24px;letter-spacing:8px;outline:none;text-align:center;margin-bottom:14px;transition:border-color 0.2s;}
+.pin-input:focus{border-color:#10B981;}
+.pin-input::placeholder{color:rgba(255,255,255,.25);letter-spacing:normal;font-size:14px;}
+.pin-btn{width:100%;padding:14px;background:#10B981;color:#0A0A0A;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all 0.2s;}
+.pin-btn:hover{background:#059669;}
+.pin-btn:disabled{background:#555;color:#999;cursor:not-allowed;}
+.pin-error{color:#EF4444;font-size:12px;margin-top:10px;text-align:center;min-height:16px;}
+.pin-back{margin-top:16px;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;text-decoration:underline;}
+/* LAYOUT */
+#admin-layout{display:none;min-height:100vh;width:100%;background:var(--surface);}
+#admin-layout.show{display:flex;}
+.sidebar{width:var(--sidebar-width);background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;}
+.sidebar-logo{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:2px;}
+.sidebar-logo-title{color:var(--emerald);font-size:16px;font-weight:800;}
+.sidebar-logo-sub{color:rgba(255,255,255,.4);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;border-left:2px solid transparent;color:rgba(255,255,255,.65);font-size:13px;font-weight:600;transition:all 0.2s;}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+.nav-item.active{background:rgba(16,185,129,.1);border-left-color:var(--emerald);color:#fff;}
+.nav-icon{width:18px;height:18px;flex-shrink:0;}
+.sidebar-bottom{padding:12px 0;border-top:1px solid var(--sidebar-border);}
+.main-content{margin-left:var(--sidebar-width);flex:1;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-title{font-size:18px;font-weight:800;color:var(--text-primary);}
+.content-area{flex:1;padding:24px 28px;overflow-y:auto;}
+/* PAGES */
+.admin-page{display:none;}
+.admin-page.active{display:block;}
+.report-title{font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
+.report-subtitle{font-size:12px;color:var(--text-muted);}
+.report-refresh-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--black);color:var(--white);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.report-refresh-btn:hover{background:#222;}
+.report-section-title{font-size:13px;font-weight:800;color:var(--text-primary);margin:20px 0 10px;}
+.date-filter-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+.date-filter-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.date-preset-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#555;cursor:pointer;}
+.date-preset-btn:hover,.date-preset-btn.active{background:var(--black);color:#fff;border-color:var(--black);}
+.date-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.date-filter-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;}
+.date-input{padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;outline:none;}
+.date-apply-btn{padding:7px 16px;background:var(--black);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.stat-card-value{font-size:28px;font-weight:800;color:var(--text-primary);}
+.stat-card-label{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);}
+.stat-card-sub{font-size:11px;color:var(--text-muted);margin-top:4px;}
+.intel-card{background:var(--black);border-radius:14px;margin-bottom:14px;overflow:hidden;border:1px solid #222;}
+.intel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;}
+.intel-header-left{display:flex;align-items:center;gap:10px;}
+.intel-icon{width:28px;height:28px;background:#1a1a1a;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.intel-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--emerald);}
+.intel-badge{font-size:9px;font-weight:700;color:rgba(255,255,255,.4);background:#1a1a1a;padding:3px 8px;border-radius:20px;border:1px solid #333;}
+.intel-body{padding:0 18px 16px;}
+.intel-summary{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px;}
+.intel-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.intel-row{display:flex;align-items:flex-start;gap:10px;}
+.intel-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.intel-dot.green{background:#22C55E;}.intel-dot.red{background:#EF4444;}.intel-dot.yellow{background:#F59E0B;}
+.intel-row-text{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;}
+.intel-row-label{font-size:10px;font-weight:700;text-transform:uppercase;margin-right:4px;}
+.intel-row-label.green{color:#22C55E;}.intel-row-label.red{color:#EF4444;}.intel-row-label.yellow{color:#F59E0B;}
+.intel-actions{border-left:2px solid var(--emerald);padding:8px 12px;background:rgba(16,185,129,0.06);border-radius:0 6px 6px 0;margin-bottom:12px;}
+.intel-actions-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--emerald);margin-bottom:6px;}
+.intel-actions-text{font-size:11px;color:rgba(255,255,255,.6);line-height:1.7;white-space:pre-line;}
+.intel-loading{padding:20px 18px;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.4);font-size:12px;}
+.intel-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--emerald);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.intel-error{padding:12px 18px;font-size:12px;color:rgba(255,255,255,.3);}
+.questions-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:4px;}
+.questions-table th{background:var(--black);color:var(--emerald);font-size:10px;font-weight:700;padding:10px 14px;text-align:left;}
+.questions-table td{padding:10px 14px;font-size:12px;color:var(--text-primary);border-bottom:1px solid var(--border);}
+.questions-table tr:last-child td{border-bottom:none;}
+.q-badge{display:inline-block;background:var(--black);color:var(--emerald);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;min-width:28px;text-align:center;}
+.kb-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:4px;}
+.kb-bar-row{display:flex;align-items:center;gap:10px;}
+.kb-bar-label{font-size:11px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kb-bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.kb-bar-fill{height:100%;background:var(--emerald);border-radius:4px;}
+.kb-bar-count{font-size:11px;font-weight:700;color:var(--text-muted);width:24px;text-align:right;}
+.hashtag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+.hashtag-item{padding:6px 14px;background:var(--black);color:var(--emerald);border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid #333;display:flex;align-items:center;gap:6px;}
+.hashtag-count{background:rgba(255,255,255,0.15);border-radius:10px;padding:1px 6px;font-size:10px;}
+.faq-list{display:flex;flex-direction:column;gap:8px;margin-bottom:4px;}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.faq-item-left{flex:1;}
+.faq-item-q{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:2px;}
+.faq-item-freq{font-size:10px;color:var(--text-muted);}
+.faq-approve-btn{padding:6px 14px;background:var(--black);color:var(--emerald);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.faq-approve-btn:hover{background:#333;}
+.faq-approve-btn.approved{background:#22C55E;color:#fff;cursor:default;}
+.faq-approve-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.daily-reports-list{display:flex;flex-direction:column;gap:8px;}
+.daily-report-item{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;}
+.daily-report-item:hover{border-color:#bbb;}
+.daily-report-header{display:flex;align-items:center;gap:12px;padding:12px 14px;}
+.daily-report-icon{width:36px;height:36px;border-radius:8px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.daily-report-info{flex:1;}
+.daily-report-date{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:2px;}
+.daily-report-summary{font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;}
+.daily-report-status{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0;}
+.daily-report-status.clear{background:#DCFCE7;color:#166534;}
+.daily-report-status.warning{background:#FEF9C3;color:#854D0E;}
+.daily-report-status.critical{background:#FEE2E2;color:#991B1B;}
+.daily-report-detail{display:none;padding:0 14px 12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-primary);line-height:1.6;}
+.daily-report-detail.open{display:block;}
+/* FEEDBACK PAGE */
+.fb-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.fb-dislike-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.fb-dislike-q{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.fb-dislike-a{font-size:11px;color:var(--text-muted);margin-bottom:6px;line-height:1.5;}
+.fb-dislike-note{font-size:11px;color:#991B1B;background:#FEE2E2;padding:6px 10px;border-radius:8px;margin-bottom:4px;}
+.fb-dislike-time{font-size:10px;color:var(--text-muted);}
+</style>
+</head>
+<body>
+
+<!-- PIN SCREEN -->
+<div id="pin-screen">
+  <div class="pin-wrap">
+    <div class="pin-brand">BaliEats AI</div>
+    <div class="pin-title">Admin Access</div>
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pin-input" id="pin-input" placeholder="\u2022 \u2022 \u2022 \u2022 \u2022 \u2022" autocomplete="off" onkeydown="if(event.key==='Enter')verifyPin()">
+    <button class="pin-btn" id="pin-btn" onclick="verifyPin()">Masuk</button>
+    <div class="pin-error" id="pin-error"></div>
+    <button class="pin-back" onclick="window.location.href='./'">\u2190 Kembali ke BaliEats AI</button>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div id="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-title">BaliEats AI</div>
+      <div class="sidebar-logo-sub">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" onclick="setPage(this,'report')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        AI Report
+      </a>
+      <a class="nav-item" onclick="setPage(this,'feedback')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 007.5 7.5h1.5a3.5 3.5 0 003.5-3.5v-6a1.5 1.5 0 00-3 0M11 5.5v-2a1.5 1.5 0 013 0v8.5m0-8.5v-2a1.5 1.5 0 013 0v8.5m0-8.5a1.5 1.5 0 013 0v8.5"/></svg>
+        Feedback
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a class="nav-item" onclick="window.location.href='./'">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        Kembali ke App
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">AI Intelligence Report</div>
+    </div>
+    <div class="content-area">
+
+      <!-- REPORT PAGE -->
+      <div class="admin-page active" id="page-report">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <div>
+            <div class="report-title">\U0001f4ca AI Intelligence Report</div>
+            <div class="report-subtitle" id="r-subtitle">Last 30 days \u00b7 Powered by Gemini 3.5 Flash Lite</div>
+          </div>
+          <button class="report-refresh-btn" onclick="refreshReport()">\U0001f504 Refresh Report</button>
+        </div>
+        <div class="date-filter-wrap">
+          <div class="date-filter-presets">
+            <button class="date-preset-btn active" onclick="applyPreset(this,'30d')">Last 30 Days</button>
+            <button class="date-preset-btn" onclick="applyPreset(this,'week')">This Week</button>
+            <button class="date-preset-btn" onclick="applyPreset(this,'month')">This Month</button>
+            <button class="date-preset-btn" onclick="applyPreset(this,'quarter')">This Quarter</button>
+            <button class="date-preset-btn" onclick="applyPreset(this,'year')">This Year</button>
+          </div>
+          <div class="date-filter-row">
+            <span class="date-filter-label">From</span>
+            <input type="date" class="date-input" id="r-date-from">
+            <span class="date-filter-label">To</span>
+            <input type="date" class="date-input" id="r-date-to">
+            <button class="date-apply-btn" onclick="applyDateRange()">Apply</button>
+          </div>
+        </div>
+        <div class="stats-grid" id="r-stats-grid" style="display:none;">
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-total">\u2014</div><div class="stat-card-label">Conversations</div><div class="stat-card-sub">Selected period</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-error">\u2014</div><div class="stat-card-label">Error Rate</div><div class="stat-card-sub">% of queries</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-resp">\u2014</div><div class="stat-card-label">Avg Response</div><div class="stat-card-sub">Seconds</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-hour">\u2014</div><div class="stat-card-label">Busiest Hour</div><div class="stat-card-sub">Peak activity</div></div>
+        </div>
+        <div class="intel-card" id="r-intel-card">
+          <div class="intel-header">
+            <div class="intel-header-left"><div class="intel-icon">\U0001f916</div><div class="intel-title">AI Intelligence \u2014 Analytics Summary</div></div>
+            <div class="intel-badge">GEMINI 3.5 FLASH LITE</div>
+          </div>
+          <div class="intel-loading" id="r-intel-loading"><div class="intel-spinner"></div>Analyzing chat log data...</div>
+          <div class="intel-body" id="r-intel-body" style="display:none;">
+            <div class="intel-summary" id="r-intel-summary"></div>
+            <div class="intel-rows">
+              <div class="intel-row"><div class="intel-dot green"></div><div class="intel-row-text"><span class="intel-row-label green">Positive: </span><span id="r-intel-positive"></span></div></div>
+              <div class="intel-row"><div class="intel-dot red"></div><div class="intel-row-text"><span class="intel-row-label red">Critical: </span><span id="r-intel-critical"></span></div></div>
+              <div class="intel-row"><div class="intel-dot yellow"></div><div class="intel-row-text"><span class="intel-row-label yellow">Watch: </span><span id="r-intel-watch"></span></div></div>
+            </div>
+            <div class="intel-actions"><div class="intel-actions-label">Recommended Actions</div><div class="intel-actions-text" id="r-intel-actions"></div></div>
+          </div>
+          <div class="intel-error" id="r-intel-error" style="display:none;"></div>
+        </div>
+        <div id="r-hashtag-section" style="display:none;">
+          <div class="report-section-title">\U0001f3f7\ufe0f Top Keywords</div>
+          <div class="hashtag-cloud" id="r-hashtag-cloud"></div>
+        </div>
+        <div id="r-questions-section" style="display:none;">
+          <div class="report-section-title">\U0001f525 Top Questions</div>
+          <table class="questions-table"><thead><tr><th style="width:40px;">#</th><th>Question</th><th style="width:80px;text-align:center;">Count</th></tr></thead><tbody id="r-questions-body"></tbody></table>
+        </div>
+        <div id="r-kb-section" style="display:none;">
+          <div class="report-section-title">\U0001f4da Knowledge Base Usage</div>
+          <div class="kb-bars" id="r-kb-bars"></div>
+        </div>
+        <div id="r-faq-section" style="display:none;">
+          <div class="report-section-title">\U0001f4a1 FAQ Suggestions</div>
+          <div style="margin-bottom:10px;"><button class="report-refresh-btn" onclick="generateFAQSuggestions()" id="faq-gen-btn">\u2728 Generate Suggestions Baru</button></div>
+          <div class="faq-list" id="r-faq-list"></div>
+        </div>
+        <div id="r-daily-section">
+          <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>\U0001f4c5 Recent Daily Reports</span>
+            <button class="date-apply-btn" onclick="loadDailyReports()" style="font-size:11px;padding:5px 12px;">\U0001f504 Load</button>
+          </div>
+          <div id="r-daily-loading" style="font-size:12px;color:var(--text-muted);padding:12px 0;display:none;">Loading reports...</div>
+          <div class="daily-reports-list" id="r-daily-list"></div>
+          <div id="r-daily-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:12px 0;">No daily reports yet. Run <code>saveDailyReport()</code> from GAS editor.</div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK PAGE -->
+      <div class="admin-page" id="page-feedback">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <div>
+            <div class="report-title">\U0001f44d\U0001f44e Feedback Summary</div>
+            <div class="report-subtitle">Rating dari pengguna BaliEats AI</div>
+          </div>
+          <button class="report-refresh-btn" onclick="loadFeedbackSummary()">\U0001f504 Refresh</button>
+        </div>
+        <div class="fb-stats-row" id="fb-stats-row" style="display:none;">
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-total">\u2014</div><div class="stat-card-label">Total Feedback</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-percent">\u2014</div><div class="stat-card-label">% Suka</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-dislikes">\u2014</div><div class="stat-card-label">Dislike</div></div>
+        </div>
+        <div id="fb-loading" style="font-size:12px;color:var(--text-muted);padding:20px 0;">Memuat feedback...</div>
+        <div id="fb-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:20px 0;">Belum ada feedback. Pastikan setupFeedbackSheet() sudah dijalankan dari GAS editor.</div>
+        <div id="fb-dislike-section" style="display:none;">
+          <div class="report-section-title">\U0001f534 Daftar Dislike Terbaru</div>
+          <div id="fb-dislike-list"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+var GAS_URL='https://script.google.com/macros/s/AKfycbxvI8NJdV0OnDvwA7l1bZz-YRzWvPP8ZjWQUj-g5HeIEmPUMht843fykuvd_UOHEurCeA/exec';
+function gasPost(action,params,onSuccess,onFailure){
+  var body=Object.assign({action:action},params||{});
+  var ctrl=new AbortController();
+  var tid=setTimeout(function(){ctrl.abort();},55000);
+  fetch(GAS_URL,{method:'POST',body:JSON.stringify(body),headers:{'Content-Type':'text/plain;charset=utf-8'},signal:ctrl.signal})
+    .then(function(r){clearTimeout(tid);return r.json();})
+    .then(function(json){if(json.ok){onSuccess(json.data);}else{onFailure(new Error(json.error||'Unknown error'));}})
+    .catch(function(err){clearTimeout(tid);onFailure(err);});
+}
+
+// ── PIN VERIFY (client-side gate, session-only) ────────────────
+var pinAttempts=0;var pinLockUntil=0;
+function verifyPin(){
+  var now=Date.now();
+  if(now<pinLockUntil){
+    var secLeft=Math.ceil((pinLockUntil-now)/1000);
+    showPinError('Terlalu banyak percobaan. Coba lagi dalam '+secLeft+' detik.');
+    return;
+  }
+  var input=document.getElementById('pin-input');
+  var pin=input?input.value.trim():'';
+  if(pin.length!==6){showPinError('PIN harus 6 digit.');return;}
+  var btn=document.getElementById('pin-btn');
+  if(btn){btn.disabled=true;btn.textContent='Memverifikasi...';}
+  gasPost('verifyAdminPin',{pin:pin},
+    function(result){
+      var data=JSON.parse(result);
+      if(btn){btn.disabled=false;btn.textContent='Masuk';}
+      if(data.ok){
+        pinAttempts=0;
+        document.getElementById('pin-screen').style.display='none';
+        document.getElementById('admin-layout').classList.add('show');
+        refreshReport();
+      }else{
+        pinAttempts++;
+        if(pinAttempts>=5){
+          pinLockUntil=Date.now()+60000;
+          showPinError('Terlalu banyak percobaan gagal. Coba lagi dalam 60 detik.');
+        }else{
+          showPinError(data.error||'PIN salah.');
+        }
+        if(input)input.value='';
+      }
+    },
+    function(err){
+      if(btn){btn.disabled=false;btn.textContent='Masuk';}
+      showPinError('Gagal terhubung ke server. Coba lagi.');
+      console.error(err);
+    }
+  );
+}
+function showPinError(msg){var el=document.getElementById('pin-error');if(el)el.textContent=msg;}
+window.addEventListener('load',function(){var pi=document.getElementById('pin-input');if(pi)pi.focus();});
+
+// ── PAGE NAVIGATION ──────────────────────────────────────────
+function setPage(el,page){
+  document.querySelectorAll('.nav-item').forEach(function(i){i.classList.remove('active');});
+  el.classList.add('active');
+  document.querySelectorAll('.admin-page').forEach(function(p){p.classList.remove('active');});
+  var target=document.getElementById('page-'+page);if(target)target.classList.add('active');
+  var titles={report:'AI Intelligence Report',feedback:'Feedback Summary'};
+  var pt=document.getElementById('page-title');if(pt)pt.textContent=titles[page]||'';
+  if(page==='feedback')loadFeedbackSummary();
+}
+
+// ── AI REPORT (reuse dari index.html) ────────────────────────
+var cachedIntelData=null;
+function refreshReport(){
+  var rb=document.getElementById('r-intel-body');if(rb)rb.style.display='none';
+  var rl=document.getElementById('r-intel-loading');if(rl)rl.style.display='flex';
+  var re=document.getElementById('r-intel-error');if(re)re.style.display='none';
+  loadIntelligence();
+}
+function loadIntelligence(){
+  gasPost('getAdminIntelligence',{},
+    function(jsonStr){try{var data=JSON.parse(jsonStr);cachedIntelData=data;populateReportPage(data);}catch(e){showReportError('Failed to parse data.');}},
+    function(err){showReportError('Failed to load intelligence.');console.error(err);}
+  );
+}
+function showReportError(msg){
+  var rl=document.getElementById('r-intel-loading');if(rl)rl.style.display='none';
+  var re=document.getElementById('r-intel-error');if(re){re.style.display='block';re.textContent='\u26a0\ufe0f '+msg;}
+}
+function populateReportPage(data){
+  var rL=document.getElementById('r-intel-loading');var rB=document.getElementById('r-intel-body');var rE=document.getElementById('r-intel-error');
+  if(!rL||!rB)return;
+  if(data.error){rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='\u26a0\ufe0f '+data.error;}return;}
+  rL.style.display='none';rB.style.display='block';
+  var fields={'r-intel-summary':data.summary||'','r-intel-positive':data.positive||'','r-intel-critical':data.critical||'','r-intel-watch':data.watch||'','r-intel-actions':data.recommended_actions||''};
+  Object.entries(fields).forEach(function(pair){var el=document.getElementById(pair[0]);if(el)el.textContent=pair[1];});
+  var sg=document.getElementById('r-stats-grid');
+  if(sg&&data.totalConversations!==undefined){
+    sg.style.display='grid';
+    var st=document.getElementById('r-stat-total');if(st)st.textContent=data.totalConversations;
+    var se=document.getElementById('r-stat-error');if(se)se.textContent=data.errorRate+'%';
+    var sr=document.getElementById('r-stat-resp');if(sr)sr.textContent=data.avgResponseTime+'s';
+    var sh=document.getElementById('r-stat-hour');if(sh)sh.textContent=data.busiestHour?data.busiestHour.split(':')[0]+':00':'\u2014';
+  }
+  if(data.topQuestions&&data.topQuestions.length>0){
+    var qs=document.getElementById('r-questions-section');var tb=document.getElementById('r-questions-body');
+    if(qs)qs.style.display='block';
+    if(tb){tb.innerHTML='';data.topQuestions.forEach(function(item,idx){var tr=document.createElement('tr');tr.innerHTML='<td><span class="q-badge">'+(idx+1)+'</span></td><td>'+item.question+'</td><td style="text-align:center;"><span class="q-badge">'+item.count+'</span></td>';tb.appendChild(tr);});}
+  }
+  if(data.knowledgeUsage&&data.knowledgeUsage.length>0){
+    var ks=document.getElementById('r-kb-section');var kb=document.getElementById('r-kb-bars');
+    if(ks)ks.style.display='block';
+    if(kb){kb.innerHTML='';var mx=data.knowledgeUsage[0].count;data.knowledgeUsage.forEach(function(item){var pct=mx>0?Math.round((item.count/mx)*100):0;var row=document.createElement('div');row.className='kb-bar-row';row.innerHTML='<div class="kb-bar-label">'+item.sheet+'</div><div class="kb-bar-track"><div class="kb-bar-fill" style="width:'+pct+'%"></div></div><div class="kb-bar-count">'+item.count+'</div>';kb.appendChild(row);});}
+  }
+  if(data.faqSuggestions&&data.faqSuggestions.length>0){
+    renderFAQList(data.faqSuggestions);
+  }
+  if(data.topKeywords&&data.topKeywords.length>0){
+    var hs=document.getElementById('r-hashtag-section');var hc=document.getElementById('r-hashtag-cloud');
+    if(hs)hs.style.display='block';
+    if(hc){hc.innerHTML='';data.topKeywords.forEach(function(item){var tag=document.createElement('div');tag.className='hashtag-item';tag.innerHTML='#'+item.word+'<span class="hashtag-count">'+item.count+'</span>';hc.appendChild(tag);});}
+  }
+}
+function renderFAQList(items){
+  var fs=document.getElementById('r-faq-section');var fl=document.getElementById('r-faq-list');
+  if(fs)fs.style.display='block';
+  if(fl){fl.innerHTML='';items.forEach(function(item,idx){var div=document.createElement('div');div.className='faq-item';div.innerHTML='<div class="faq-item-left"><div class="faq-item-q">'+item.question+'</div><div class="faq-item-freq">Asked '+item.frequency+' time(s)</div></div><button class="faq-approve-btn" id="faq-btn-'+idx+'" onclick="approveFAQItem(this,'+idx+')">\u2713 Add to FAQ</button>';fl.appendChild(div);});}
+}
+function approveFAQItem(btn,idx){
+  if(!cachedIntelData||!cachedIntelData.faqSuggestions)return;
+  var item=cachedIntelData.faqSuggestions[idx];if(!item)return;
+  btn.textContent='Adding...';btn.disabled=true;
+  gasPost('approveFAQ',{question:item.question,answer:'Frequently asked \u2014 answer to be filled manually.',category:'General'},
+    function(result){try{var res=JSON.parse(result);if(res.success){btn.textContent='\u2705 Added!';btn.classList.add('approved');}else{btn.textContent='\u2717 Failed';btn.disabled=false;}}catch(e){btn.textContent='\u2717 Error';btn.disabled=false;}},
+    function(err){btn.textContent='\u2717 Error';btn.disabled=false;console.error(err);}
+  );
+}
+function generateFAQSuggestions(){
+  var btn=document.getElementById('faq-gen-btn');
+  if(btn){btn.disabled=true;btn.textContent='\u23f3 Generating...';}
+  gasPost('suggestFAQ',{},
+    function(result){
+      if(btn){btn.disabled=false;btn.textContent='\u2728 Generate Suggestions Baru';}
+      try{
+        var items=JSON.parse(result);
+        if(items.error){alert('Gagal generate: '+items.error);return;}
+        if(!Array.isArray(items)||items.length===0){alert('Tidak ada suggestion baru saat ini.');return;}
+        if(!cachedIntelData)cachedIntelData={};
+        cachedIntelData.faqSuggestions=items;
+        renderFAQList(items);
+      }catch(e){alert('Gagal memproses hasil suggestion.');}
+    },
+    function(err){if(btn){btn.disabled=false;btn.textContent='\u2728 Generate Suggestions Baru';}alert('Gagal generate suggestion.');console.error(err);}
+  );
+}
+
+// ── DATE FILTER ──────────────────────────────────────────────
+var currentDateFrom=null;var currentDateTo=null;
+function applyPreset(btn,preset){
+  document.querySelectorAll('.date-preset-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var now=new Date();var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var from,to;
+  if(preset==='30d'){from=new Date(today.getTime()-(30*24*60*60*1000));to=now;}
+  else if(preset==='week'){var day=today.getDay();from=new Date(today.getTime()-(day===0?6:day-1)*24*60*60*1000);to=now;}
+  else if(preset==='month'){from=new Date(today.getFullYear(),today.getMonth(),1);to=now;}
+  else if(preset==='quarter'){var q=Math.floor(today.getMonth()/3);from=new Date(today.getFullYear(),q*3,1);to=now;}
+  else if(preset==='year'){from=new Date(today.getFullYear(),0,1);to=now;}
+  var fmtD=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+  var df=document.getElementById('r-date-from');var dt=document.getElementById('r-date-to');
+  if(df)df.value=fmtD(from);if(dt)dt.value=fmtD(to);
+  currentDateFrom=fmtD(from);currentDateTo=fmtD(to);
+  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+fmtD(from)+' \u2192 '+fmtD(to)+' \u00b7 Gemini 3.5 Flash Lite';
+  loadIntelligenceWithDates(currentDateFrom,currentDateTo);
+}
+function applyDateRange(){
+  var df=document.getElementById('r-date-from');var dt=document.getElementById('r-date-to');
+  if(!df||!dt||!df.value||!dt.value){alert('Please select both From and To dates.');return;}
+  if(df.value>dt.value){alert('From date must be before To date.');return;}
+  document.querySelectorAll('.date-preset-btn').forEach(function(b){b.classList.remove('active');});
+  currentDateFrom=df.value;currentDateTo=dt.value;
+  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+df.value+' \u2192 '+dt.value+' \u00b7 Gemini 3.5 Flash Lite';
+  loadIntelligenceWithDates(currentDateFrom,currentDateTo);
+}
+function loadIntelligenceWithDates(dateFrom,dateTo){
+  cachedIntelData=null;
+  ['r-intel-body','r-stats-grid','r-questions-section','r-kb-section','r-faq-section','r-hashtag-section'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  var rL=document.getElementById('r-intel-loading');if(rL)rL.style.display='flex';
+  var rE=document.getElementById('r-intel-error');if(rE)rE.style.display='none';
+  gasPost('getAdminIntelligence',{dateFrom:dateFrom,dateTo:dateTo},
+    function(jsonStr){try{var data=JSON.parse(jsonStr);cachedIntelData=data;populateReportPage(data);}catch(e){showReportError('Failed to parse data.');}},
+    function(err){showReportError('Failed to load.');console.error(err);}
+  );
+}
+
+// ── DAILY REPORTS ────────────────────────────────────────────
+function formatReportDate(dateStr){
+  try{var d;if(/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)){var p=dateStr.split('/');d=new Date(p[2],p[1]-1,p[0]);}else{d=new Date(dateStr);}
+    if(isNaN(d.getTime()))return dateStr;
+    var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  }catch(e){return dateStr;}
+}
+function loadDailyReports(){
+  var loading=document.getElementById('r-daily-loading');var list=document.getElementById('r-daily-list');var empty=document.getElementById('r-daily-empty');
+  if(loading)loading.style.display='block';if(list)list.innerHTML='';if(empty)empty.style.display='none';
+  gasPost('getDailyReports',{},
+    function(jsonStr){
+      if(loading)loading.style.display='none';
+      try{
+        var data=JSON.parse(jsonStr);
+        if(data.error){if(empty){empty.style.display='block';empty.textContent='\u26a0\ufe0f '+data.error;}return;}
+        if(!data.reports||data.reports.length===0){if(empty)empty.style.display='block';return;}
+        if(list){list.innerHTML='';data.reports.forEach(function(report,idx){
+          var sc=report.status==='All Clear'?'clear':report.status==='Warning'?'warning':'critical';
+          var item=document.createElement('div');item.className='daily-report-item';
+          item.innerHTML='<div class="daily-report-header" onclick="toggleDailyReport(this)"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Daily Report \u2014 '+formatReportDate(report.date)+'</div><div class="daily-report-summary">'+report.summary+'</div></div><div class="daily-report-status '+sc+'">'+report.status+'</div></div><div class="daily-report-detail"><strong>\u2705 Positive:</strong> '+report.positive+'<br><br><strong>\u{1F534} Critical:</strong> '+report.critical+'</div>';
+          list.appendChild(item);});
+        }
+      }catch(e){if(empty){empty.style.display='block';empty.textContent='Error loading reports.';}}
+    },
+    function(err){if(loading)loading.style.display='none';if(empty){empty.style.display='block';empty.textContent='Failed to load daily reports.';}console.error(err);}
+  );
+}
+function toggleDailyReport(header){var item=header.closest('.daily-report-item');var detail=item?item.querySelector('.daily-report-detail'):null;if(detail)detail.classList.toggle('open');}
+
+// ── FEEDBACK SUMMARY ─────────────────────────────────────────
+function loadFeedbackSummary(){
+  var loading=document.getElementById('fb-loading');var empty=document.getElementById('fb-empty');
+  var statsRow=document.getElementById('fb-stats-row');var dislikeSection=document.getElementById('fb-dislike-section');
+  if(loading)loading.style.display='block';if(empty)empty.style.display='none';
+  if(statsRow)statsRow.style.display='none';if(dislikeSection)dislikeSection.style.display='none';
+  gasPost('getFeedbackSummary',{},
+    function(jsonStr){
+      if(loading)loading.style.display='none';
+      try{
+        var data=JSON.parse(jsonStr);
+        if(data.error){if(empty){empty.style.display='block';empty.textContent='\u26a0\ufe0f '+data.error;}return;}
+        if(data.total===0){if(empty)empty.style.display='block';return;}
+        if(statsRow){
+          statsRow.style.display='grid';
+          var t=document.getElementById('fb-stat-total');if(t)t.textContent=data.total;
+          var p=document.getElementById('fb-stat-percent');if(p)p.textContent=data.likePercent+'%';
+          var d=document.getElementById('fb-stat-dislikes');if(d)d.textContent=data.dislikes;
+        }
+        if(data.dislikeItems&&data.dislikeItems.length>0){
+          if(dislikeSection)dislikeSection.style.display='block';
+          var listEl=document.getElementById('fb-dislike-list');
+          if(listEl){
+            listEl.innerHTML='';
+            data.dislikeItems.forEach(function(item){
+              var div=document.createElement('div');div.className='fb-dislike-item';
+              var noteHtml=item.note?'<div class="fb-dislike-note">\U0001f4dd '+escHtmlAdmin(item.note)+'</div>':'';
+              div.innerHTML='<div class="fb-dislike-q">Q: '+escHtmlAdmin(item.question)+'</div><div class="fb-dislike-a">A: '+escHtmlAdmin(item.answer)+'</div>'+noteHtml+'<div class="fb-dislike-time">'+item.timestamp+'</div>';
+              listEl.appendChild(div);
+            });
+          }
+        }
+      }catch(e){if(empty){empty.style.display='block';empty.textContent='Error loading feedback.';}}
+    },
+    function(err){if(loading)loading.style.display='none';if(empty){empty.style.display='block';empty.textContent='Failed to load feedback.';}console.error(err);}
+  );
+}
+function escHtmlAdmin(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+</script>
+</body>
+</html>
