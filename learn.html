@@ -87,7 +87,13 @@ ul{list-style:none}
 .skip:focus{left:0}
 
 /* NAV — same as homepage */
-.nav-outer{position:sticky;top:0;z-index:200;background:rgba(8,17,29,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-outer{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(8,17,29,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(232,220,200,.14);
+  --ink:#F4EFE5; --muted:rgba(232,220,200,.66); --accent:var(--gold); --accent-ink:#08111D; --edge:rgba(201,169,106,.55);
+}
+main{display:block;margin-top:82px}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:6px 0}
 .nav-logo{height:70px;width:auto}
 .nav-links{display:flex;align-items:center;gap:2px}
@@ -97,7 +103,8 @@ ul{list-style:none}
   color:var(--ink);padding:9px 14px;border-radius:var(--r-sm);transition:opacity .2s var(--ease);
   display:inline-flex;align-items:center;
 }
-.nav-links a:hover,.nav-links a.on{opacity:.72}
+.nav-links a:hover{opacity:.72}
+.nav-links a.on{color:var(--accent);opacity:1}
 .nav-right{display:flex;align-items:center;gap:12px}
 .lang{display:flex;border:1px solid var(--edge);border-radius:var(--r-sm);overflow:hidden}
 .lang button{
@@ -208,28 +215,32 @@ h1 em{font-style:normal;color:var(--accent)}
         </a>
         <nav aria-label="Main">
           <ul class="nav-links">
-            <li><a href="https://anabhidev.com/#about">About</a></li>
-            <li><a href="https://anabhidev.com/#products">Products</a></li>
-            <li><a href="https://anabhidev.com/#work">Websites</a></li>
-            <li><a href="https://anabhidev.com/#cases">Case Studies</a></li>
-            <li><a href="https://anabhidev.com/learn.html" class="on">Learn</a></li>
-            <li><a href="https://anabhidev.com/#contact">Contact</a></li>
+            <li><a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
+            <li><a href="https://anabhidev.com/learn.html" class="on" data-en="Learn" data-id="Belajar">Learn</a></li>
+            <li><a href="https://anabhidev.com/#contact" data-en="Contact" data-id="Kontak">Contact</a></li>
           </ul>
         </nav>
         <div class="nav-right">
-          <a class="nav-cta" href="https://anabhidev.com/#contact">Get in Touch</a>
+          <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="id" aria-pressed="false">ID</button>
+          </div>
+          <a class="nav-cta" href="https://anabhidev.com/#contact" data-en="Get in Touch" data-id="Hubungi Saya">Get in Touch</a>
           <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobmenu" aria-label="Menu">
             <span></span><span></span><span></span>
           </button>
         </div>
       </header>
       <nav class="mob" id="mobmenu" aria-label="Mobile">
-        <a href="https://anabhidev.com/#about">About</a>
-        <a href="https://anabhidev.com/#products">Products</a>
-        <a href="https://anabhidev.com/#work">Websites</a>
-        <a href="https://anabhidev.com/#cases">Case Studies</a>
-        <a href="https://anabhidev.com/learn.html">Learn</a>
-        <a href="https://anabhidev.com/#contact">Contact</a>
+        <a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a>
+        <a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a>
+        <a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a>
+        <a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a>
+        <a href="https://anabhidev.com/learn.html" data-en="Learn" data-id="Belajar">Learn</a>
+        <a href="https://anabhidev.com/#contact" data-en="Contact" data-id="Kontak">Contact</a>
       </nav>
     </div>
   </div>
@@ -237,8 +248,9 @@ h1 em{font-style:normal;color:var(--accent)}
   <div class="wrap">
     <section class="pagehead">
       <p class="eyebrow">Resources</p>
-      <h1>Guides worth <em>keeping.</em></h1>
-      <p class="lede">Practical notes on the AI tools and dev workflows I actually use — written from doing the work, not from theory.</p>
+      <p class="eyebrow" data-en="Resources" data-id="Sumber Daya">Resources</p>
+      <h1 data-en="Guides worth <em>keeping.</em>" data-id="Panduan yang <em>layak disimpan.</em>">Guides worth <em>keeping.</em></h1>
+      <p class="lede" data-en="Practical notes on the AI tools and dev workflows I actually use — written from doing the work, not from theory." data-id="Catatan praktis dari alat AI dan alur kerja dev yang benar-benar saya pakai — ditulis dari mengerjakan, bukan dari teori.">Practical notes on the AI tools and dev workflows I actually use — written from doing the work, not from theory.</p>
     </section>
 
     <section class="sec">
@@ -247,91 +259,91 @@ h1 em{font-style:normal;color:var(--accent)}
         <a class="card" href="https://anabhidev.com/tips/tips-001.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg></div>
-            <span class="card-tag">AI Tools</span>
+            <span class="card-tag" data-en="AI Tools" data-id="Alat AI">AI Tools</span>
           </div>
-          <h2>Claude AI — Token &amp; Efficiency</h2>
-          <p>Save tokens, write sharper prompts, and get more done with less — the habits that actually move the needle.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Claude AI — Token &amp; Efficiency" data-id="Claude AI — Token &amp; Efisiensi">Claude AI — Token &amp; Efficiency</h2>
+          <p data-en="Save tokens, write sharper prompts, and get more done with less — the habits that actually move the needle." data-id="Hemat token, tulis prompt yang lebih tajam, dan selesaikan lebih banyak dengan lebih sedikit — kebiasaan yang benar-benar berpengaruh.">Save tokens, write sharper prompts, and get more done with less — the habits that actually move the needle.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-002.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-4-1L3 21l2.1-4.9A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div>
-            <span class="card-tag">AI Tools</span>
+            <span class="card-tag" data-en="AI Tools" data-id="Alat AI">AI Tools</span>
           </div>
-          <h2>ChatGPT Master Guide</h2>
-          <p>From basic prompts to advanced workflows — everything I use to get more out of ChatGPT day to day.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="ChatGPT Master Guide" data-id="Panduan Master ChatGPT">ChatGPT Master Guide</h2>
+          <p data-en="From basic prompts to advanced workflows — everything I use to get more out of ChatGPT day to day." data-id="Dari prompt dasar sampai alur kerja lanjutan — semua yang saya pakai untuk memaksimalkan ChatGPT sehari-hari.">From basic prompts to advanced workflows — everything I use to get more out of ChatGPT day to day.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-003.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></div>
-            <span class="card-tag">AI Tools</span>
+            <span class="card-tag" data-en="AI Tools" data-id="Alat AI">AI Tools</span>
           </div>
-          <h2>Gemini + Google Workspace</h2>
-          <p>Smarter Docs, Sheets, and Gmail — practical ways Gemini fits into a real Workspace routine.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Gemini + Google Workspace" data-id="Gemini + Google Workspace">Gemini + Google Workspace</h2>
+          <p data-en="Smarter Docs, Sheets, and Gmail — practical ways Gemini fits into a real Workspace routine." data-id="Docs, Sheets, dan Gmail yang lebih pintar — cara Gemini benar-benar masuk ke rutinitas Workspace sehari-hari.">Smarter Docs, Sheets, and Gmail — practical ways Gemini fits into a real Workspace routine.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-004.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div>
-            <span class="card-tag">Vibes Coding</span>
+            <span class="card-tag" data-en="Vibes Coding" data-id="Vibes Coding">Vibes Coding</span>
           </div>
-          <h2>Google Apps Script</h2>
-          <p>Automate anything in Google Workspace with code — no server needed, just vibes and scripts.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Google Apps Script" data-id="Google Apps Script">Google Apps Script</h2>
+          <p data-en="Automate anything in Google Workspace with code — no server needed, just vibes and scripts." data-id="Otomasi apa saja di Google Workspace dengan kode — tanpa server, cukup vibes dan skrip.">Automate anything in Google Workspace with code — no server needed, just vibes and scripts.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-005.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="10" r="2.5"/><path d="M6 8.5V16M6 8.5c0 4 4.5 3 9.5 1.5"/></svg></div>
-            <span class="card-tag">Dev Workflow</span>
+            <span class="card-tag" data-en="Dev Workflow" data-id="Alur Kerja Dev">Dev Workflow</span>
           </div>
-          <h2>Git &amp; GitHub Tips</h2>
-          <p>Version control without the headache — the Git commands and GitHub workflow I actually rely on.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Git &amp; GitHub Tips" data-id="Tips Git &amp; GitHub">Git &amp; GitHub Tips</h2>
+          <p data-en="Version control without the headache — the Git commands and GitHub workflow I actually rely on." data-id="Version control tanpa pusing — perintah Git dan alur kerja GitHub yang benar-benar saya andalkan.">Version control without the headache — the Git commands and GitHub workflow I actually rely on.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-006.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 8l-2 8"/></svg></div>
-            <span class="card-tag">Dev Workflow</span>
+            <span class="card-tag" data-en="Dev Workflow" data-id="Alur Kerja Dev">Dev Workflow</span>
           </div>
-          <h2>Visual Studio Code Tips</h2>
-          <p>Work faster in VS Code — the shortcuts, extensions, and settings worth setting up on day one.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Visual Studio Code Tips" data-id="Tips Visual Studio Code">Visual Studio Code Tips</h2>
+          <p data-en="Work faster in VS Code — the shortcuts, extensions, and settings worth setting up on day one." data-id="Kerja lebih cepat di VS Code — shortcut, ekstensi, dan pengaturan yang layak disiapkan sejak hari pertama.">Work faster in VS Code — the shortcuts, extensions, and settings worth setting up on day one.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-007.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17V7a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 21h8"/></svg></div>
-            <span class="card-tag">Vibes Coding</span>
+            <span class="card-tag" data-en="Vibes Coding" data-id="Vibes Coding">Vibes Coding</span>
           </div>
-          <h2>Python for Automation</h2>
-          <p>Practical scripts for files, APIs, and everyday tasks — Python for people who just want things done.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Python for Automation" data-id="Python untuk Otomasi">Python for Automation</h2>
+          <p data-en="Practical scripts for files, APIs, and everyday tasks — Python for people who just want things done." data-id="Skrip praktis untuk file, API, dan tugas sehari-hari — Python untuk yang cuma ingin semuanya beres.">Practical scripts for files, APIs, and everyday tasks — Python for people who just want things done.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-008.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
-            <span class="card-tag">Vibes Coding</span>
+            <span class="card-tag" data-en="Vibes Coding" data-id="Vibes Coding">Vibes Coding</span>
           </div>
-          <h2>JavaScript / No-code</h2>
-          <p>From vanilla JS to no-code tools — build fast, ship faster, and automate without a framework.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="JavaScript / No-code" data-id="JavaScript / No-code">JavaScript / No-code</h2>
+          <p data-en="From vanilla JS to no-code tools — build fast, ship faster, and automate without a framework." data-id="Dari vanilla JS sampai tool no-code — bangun cepat, rilis lebih cepat, otomasi tanpa framework.">From vanilla JS to no-code tools — build fast, ship faster, and automate without a framework.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
         <a class="card" href="https://anabhidev.com/tips/tips-009.html" target="_blank" rel="noopener noreferrer">
           <div class="card-top">
             <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18M4 9h5"/></svg></div>
-            <span class="card-tag">Productivity</span>
+            <span class="card-tag" data-en="Productivity" data-id="Produktivitas">Productivity</span>
           </div>
-          <h2>Notion Tips</h2>
-          <p>Turn Notion into a second brain — the templates, databases, and workflows that actually stick.</p>
-          <span class="card-link">Read Guide →</span>
+          <h2 data-en="Notion Tips" data-id="Tips Notion">Notion Tips</h2>
+          <p data-en="Turn Notion into a second brain — the templates, databases, and workflows that actually stick." data-id="Jadikan Notion otak kedua — template, database, dan alur kerja yang benar-benar terpakai.">Turn Notion into a second brain — the templates, databases, and workflows that actually stick.</p>
+          <span class="card-link" data-en="Read Guide →" data-id="Baca Panduan →">Read Guide →</span>
         </a>
 
       </div>
@@ -363,35 +375,35 @@ h1 em{font-style:normal;color:var(--accent)}
           </div>
         </div>
         <div>
-          <h3>Navigate</h3>
+          <h3 data-en="Navigate" data-id="Navigasi">Navigate</h3>
           <ul>
-            <li><a href="https://anabhidev.com/#about">About</a></li>
-            <li><a href="https://anabhidev.com/#products">Products</a></li>
-            <li><a href="https://anabhidev.com/#work">Websites</a></li>
-            <li><a href="https://anabhidev.com/#cases">Case Studies</a></li>
+            <li><a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
           </ul>
         </div>
         <div>
-          <h3>Resources</h3>
+          <h3 data-en="Resources" data-id="Sumber">Resources</h3>
           <ul>
-            <li><a href="https://anabhidev.com/cv/">Full CV</a></li>
-            <li><a href="https://anabhidev.com/portfolio.html">Portfolio</a></li>
+            <li><a href="https://anabhidev.com/cv/" data-en="Full CV" data-id="CV Lengkap">Full CV</a></li>
+            <li><a href="https://anabhidev.com/portfolio.html" data-en="Portfolio" data-id="Portofolio">Portfolio</a></li>
             <li><a href="https://www.upwork.com/freelancers/anabhidev" target="_blank" rel="noopener noreferrer">Upwork</a></li>
             <li><a href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <h3 data-en="Contact" data-id="Kontak">Contact</h3>
           <ul>
-            <li><a href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" data-en="WhatsApp" data-id="WhatsApp">WhatsApp</a></li>
             <li><a href="mailto:hello@anabhidev.com">hello@anabhidev.com</a></li>
-            <li><a href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
+            <li><a href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer" data-en="LinkedIn Profile" data-id="Profil LinkedIn">LinkedIn Profile</a></li>
           </ul>
         </div>
       </div>
       <div class="foot-bot">
-        <div>© 2026 <em>Anabhi Dev</em>. All rights reserved.</div>
-        <div>Hand-coded in Bali.</div>
+        <div>© 2026 <em>Anabhi Dev</em>. <span data-en="All rights reserved." data-id="Hak cipta dilindungi.">All rights reserved.</span></div>
+        <div data-en="Hand-coded in Bali." data-id="Ditulis tangan di Bali.">Hand-coded in Bali.</div>
       </div>
     </div>
   </footer>
@@ -400,6 +412,27 @@ h1 em{font-style:normal;color:var(--accent)}
 
 <script>
 (function(){
+  var doc = document.documentElement;
+
+  function setLang(lang){
+    doc.lang = lang;
+    var nodes = document.querySelectorAll('[data-' + lang + ']');
+    for(var i=0;i<nodes.length;i++){
+      nodes[i].innerHTML = nodes[i].getAttribute('data-' + lang);
+    }
+    var btns = document.querySelectorAll('.lang button');
+    for(var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', String(btns[j].getAttribute('data-lang') === lang));
+    }
+  }
+  var langBox = document.querySelector('.lang');
+  if(langBox){
+    langBox.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-lang]');
+      if(b) setLang(b.getAttribute('data-lang'));
+    });
+  }
+
   var burger = document.getElementById('burger');
   var mob = document.getElementById('mobmenu');
   if(burger && mob){

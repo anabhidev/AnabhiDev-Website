@@ -87,7 +87,13 @@ ul{list-style:none}
 .skip:focus{left:0}
 
 /* NAV — same as homepage */
-.nav-outer{position:sticky;top:0;z-index:200;background:rgba(8,17,29,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-outer{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(8,17,29,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(232,220,200,.14);
+  --ink:#F4EFE5; --muted:rgba(232,220,200,.66); --accent:var(--gold); --accent-ink:#08111D; --edge:rgba(201,169,106,.55);
+}
+main{display:block;margin-top:82px}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:6px 0}
 .nav-logo{height:70px;width:auto}
 .nav-links{display:flex;align-items:center;gap:2px}
@@ -97,7 +103,8 @@ ul{list-style:none}
   color:var(--ink);padding:9px 14px;border-radius:var(--r-sm);transition:opacity .2s var(--ease);
   display:inline-flex;align-items:center;
 }
-.nav-links a:hover,.nav-links a.on{opacity:.72}
+.nav-links a:hover{opacity:.72}
+.nav-links a.on{color:var(--accent);opacity:1}
 .nav-right{display:flex;align-items:center;gap:12px}
 .lang{display:flex;border:1px solid var(--edge);border-radius:var(--r-sm);overflow:hidden}
 .lang button{
@@ -203,37 +210,41 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
         </a>
         <nav aria-label="Main">
           <ul class="nav-links">
-            <li><a href="https://anabhidev.com/#about">About</a></li>
-            <li><a href="https://anabhidev.com/#products">Products</a></li>
-            <li><a href="https://anabhidev.com/#work">Websites</a></li>
-            <li><a href="https://anabhidev.com/#cases">Case Studies</a></li>
-            <li><a href="https://anabhidev.com/learn.html">Learn</a></li>
-            <li><a href="https://anabhidev.com/#contact">Contact</a></li>
+            <li><a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
+            <li><a href="https://anabhidev.com/learn.html" data-en="Learn" data-id="Belajar">Learn</a></li>
+            <li><a href="https://anabhidev.com/#contact" data-en="Contact" data-id="Kontak">Contact</a></li>
           </ul>
         </nav>
         <div class="nav-right">
-          <a class="nav-cta" href="https://anabhidev.com/#contact">Get in Touch</a>
+          <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="id" aria-pressed="false">ID</button>
+          </div>
+          <a class="nav-cta" href="https://anabhidev.com/#contact" data-en="Get in Touch" data-id="Hubungi Saya">Get in Touch</a>
           <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobmenu" aria-label="Menu">
             <span></span><span></span><span></span>
           </button>
         </div>
       </header>
       <nav class="mob" id="mobmenu" aria-label="Mobile">
-        <a href="https://anabhidev.com/#about">About</a>
-        <a href="https://anabhidev.com/#products">Products</a>
-        <a href="https://anabhidev.com/#work">Websites</a>
-        <a href="https://anabhidev.com/#cases">Case Studies</a>
-        <a href="https://anabhidev.com/learn.html">Learn</a>
-        <a href="https://anabhidev.com/#contact">Contact</a>
+        <a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a>
+        <a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a>
+        <a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a>
+        <a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a>
+        <a href="https://anabhidev.com/learn.html" data-en="Learn" data-id="Belajar">Learn</a>
+        <a href="https://anabhidev.com/#contact" data-en="Contact" data-id="Kontak">Contact</a>
       </nav>
     </div>
   </div>
 
   <div class="wrap">
     <section class="pagehead">
-      <p class="eyebrow">Archive</p>
-      <h1>Every site I've <em>touched.</em></h1>
-      <p class="lede">Not a highlight reel — the full record. Client work, own products, experiments, templates, and a few drafts that never shipped. The four that matter most are on the <a href="https://anabhidev.com/#work" style="color:var(--accent);text-decoration:underline">homepage</a>; everything else lives here.</p>
+      <p class="eyebrow" data-en="Archive" data-id="Arsip">Archive</p>
+      <h1 data-en="Every site I've <em>touched.</em>" data-id="Semua situs yang pernah saya <em>sentuh.</em>">Every site I've <em>touched.</em></h1>
+      <p class="lede" data-en="Not a highlight reel — the full record. Client work, own products, experiments, templates, and a few drafts that never shipped. The four that matter most are on the <a href='https://anabhidev.com/#work' style='color:var(--accent);text-decoration:underline'>homepage</a>; everything else lives here." data-id="Bukan sekadar sorotan — ini catatan lengkapnya. Karya klien, produk sendiri, eksperimen, template, dan beberapa draft yang tidak pernah rilis. Empat yang paling penting ada di <a href='https://anabhidev.com/#work' style='color:var(--accent);text-decoration:underline'>homepage</a>; sisanya ada di sini.">Not a highlight reel — the full record. Client work, own products, experiments, templates, and a few drafts that never shipped. The four that matter most are on the <a href="https://anabhidev.com/#work" style="color:var(--accent);text-decoration:underline">homepage</a>; everything else lives here.</p>
     </section>
   </div>
 </div>
@@ -241,17 +252,17 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>My Website</h2>
-      <p class="group-note">The current build, and the one before it — kept as a record of progress.</p>
+      <h2 data-en="My Website" data-id="Website Saya">My Website</h2>
+      <p class="group-note" data-en="The current build, and the one before it — kept as a record of progress." data-id="Versi yang sekarang, dan versi sebelumnya — disimpan sebagai catatan perkembangan.">The current build, and the one before it — kept as a record of progress.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Dev — latest</div><div class="entry-note">Current homepage. Redesigned Aug 2026.</div></div>
-          <div class="entry-status live">Live</div>
+          <div><div class="entry-name" data-en="Anabhi Dev — latest" data-id="Anabhi Dev — terbaru">Anabhi Dev — latest</div><div class="entry-note" data-en="Current homepage. Redesigned Aug 2026." data-id="Homepage saat ini. Didesain ulang Agustus 2026.">Current homepage. Redesigned Aug 2026.</div></div>
+          <div class="entry-status live" data-en="Live" data-id="Live">Live</div>
           <div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/index-v1.html" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Dev — v1</div><div class="entry-note">The original build, kept for comparison.</div></div>
-          <div class="entry-status">Archived</div>
+          <div><div class="entry-name" data-en="Anabhi Dev — v1" data-id="Anabhi Dev — v1">Anabhi Dev — v1</div><div class="entry-note" data-en="The original build, kept for comparison." data-id="Versi awal, disimpan untuk perbandingan.">The original build, kept for comparison.</div></div>
+          <div class="entry-status" data-en="Archived" data-id="Arsip">Archived</div>
           <div class="entry-arrow">→</div>
         </a>
       </div>
@@ -262,24 +273,24 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Web Tour &amp; Travel</h2>
-      <p class="group-note">Four passes at a tour-booking concept, each one refining the last.</p>
+      <h2 data-en="Web Tour &amp; Travel" data-id="Web Tour &amp; Travel">Web Tour &amp; Travel</h2>
+      <p class="group-note" data-en="Four passes at a tour-booking concept, each one refining the last." data-id="Empat percobaan konsep booking tur, masing-masing menyempurnakan yang sebelumnya.">Four passes at a tour-booking concept, each one refining the last.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Tour-and-Travel/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Tour and Travel</div><div class="entry-note">First pass at the concept.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Tour and Travel" data-id="Tour and Travel">Tour and Travel</div><div class="entry-note" data-en="First pass at the concept." data-id="Percobaan pertama konsepnya.">First pass at the concept.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/AllNew-Tour-Web/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">All-New Tour Web</div><div class="entry-note">Layout overhaul on the same concept.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="All-New Tour Web" data-id="All-New Tour Web">All-New Tour Web</div><div class="entry-note" data-en="Layout overhaul on the same concept." data-id="Perombakan layout dari konsep yang sama.">Layout overhaul on the same concept.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Anabhi-Journey/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Journey</div><div class="entry-note">Rebrand of the tour concept.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Anabhi Journey" data-id="Anabhi Journey">Anabhi Journey</div><div class="entry-note" data-en="Rebrand of the tour concept." data-id="Rebrand dari konsep tur.">Rebrand of the tour concept.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Anabhi-Journey-V2/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Journey V2</div><div class="entry-note">Second revision, most recent of the four.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Anabhi Journey V2" data-id="Anabhi Journey V2">Anabhi Journey V2</div><div class="entry-note" data-en="Second revision, most recent of the four." data-id="Revisi kedua, yang paling baru dari empat versi.">Second revision, most recent of the four.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -289,20 +300,20 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Jagadita Consulting</h2>
-      <p class="group-note">Three iterations before the version now live at jagadita.com.</p>
+      <h2 data-en="Jagadita Consulting" data-id="Jagadita Consulting">Jagadita Consulting</h2>
+      <p class="group-note" data-en="Three iterations before the version now live at jagadita.com." data-id="Tiga iterasi sebelum versi yang sekarang aktif di jagadita.com.">Three iterations before the version now live at jagadita.com.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Jagadita/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Jagadita — v1</div><div class="entry-note">First draft.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Jagadita — v1" data-id="Jagadita — v1">Jagadita — v1</div><div class="entry-note" data-en="First draft." data-id="Draft pertama.">First draft.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Jagadita2/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Jagadita — v2</div><div class="entry-note">Second pass.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Jagadita — v2" data-id="Jagadita — v2">Jagadita — v2</div><div class="entry-note" data-en="Second pass." data-id="Percobaan kedua.">Second pass.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Jagadita3/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Jagadita — v3</div><div class="entry-note">Final draft, migrating to jagadita.com.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Jagadita — v3" data-id="Jagadita — v3">Jagadita — v3</div><div class="entry-note" data-en="Final draft, migrating to jagadita.com." data-id="Draft final, dipindahkan ke jagadita.com.">Final draft, migrating to jagadita.com.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -312,16 +323,16 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Online Shop</h2>
-      <p class="group-note">E-commerce concepts and a real client build.</p>
+      <h2 data-en="Online Shop" data-id="Online Shop">Online Shop</h2>
+      <p class="group-note" data-en="E-commerce concepts and a real client build." data-id="Konsep e-commerce dan satu proyek klien sungguhan.">E-commerce concepts and a real client build.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Online-Shop/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Online Shop</div><div class="entry-note">General e-commerce template concept.</div></div>
-          <div class="entry-status">Template</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Online Shop" data-id="Online Shop">Online Shop</div><div class="entry-note" data-en="General e-commerce template concept." data-id="Konsep template e-commerce umum.">General e-commerce template concept.</div></div>
+          <div class="entry-status" data-en="Template" data-id="Template">Template</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Kanaka-Gadget/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Kanaka Gadget Bali</div><div class="entry-note">MacBook, laptop and PC retailer in Denpasar.</div></div>
-          <div class="entry-status live">Live — client</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Kanaka Gadget Bali" data-id="Kanaka Gadget Bali">Kanaka Gadget Bali</div><div class="entry-note" data-en="MacBook, laptop and PC retailer in Denpasar." data-id="Toko MacBook, laptop, dan PC di Denpasar.">MacBook, laptop and PC retailer in Denpasar.</div></div>
+          <div class="entry-status live" data-en="Live — client" data-id="Live — klien">Live — client</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -331,20 +342,20 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Company Profile Templates</h2>
-      <p class="group-note">Reusable structures for generic business sites.</p>
+      <h2 data-en="Company Profile Templates" data-id="Template Company Profile">Company Profile Templates</h2>
+      <p class="group-note" data-en="Reusable structures for generic business sites." data-id="Struktur yang bisa dipakai ulang untuk situs bisnis umum.">Reusable structures for generic business sites.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/AnabhiDev-Studio/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Dev Studio</div><div class="entry-note">Studio-branded template variant.</div></div>
-          <div class="entry-status">Template</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Anabhi Dev Studio" data-id="Anabhi Dev Studio">Anabhi Dev Studio</div><div class="entry-note" data-en="Studio-branded template variant." data-id="Varian template berlabel studio.">Studio-branded template variant.</div></div>
+          <div class="entry-status" data-en="Template" data-id="Template">Template</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Compro/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Compro</div><div class="entry-note">Generic company-profile template.</div></div>
-          <div class="entry-status">Template</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Compro" data-id="Compro">Compro</div><div class="entry-note" data-en="Generic company-profile template." data-id="Template company profile umum.">Generic company-profile template.</div></div>
+          <div class="entry-status" data-en="Template" data-id="Template">Template</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/studio/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Studio</div><div class="entry-note">Minimal studio-page template.</div></div>
-          <div class="entry-status">Template</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Studio" data-id="Studio">Studio</div><div class="entry-note" data-en="Minimal studio-page template." data-id="Template halaman studio minimalis.">Minimal studio-page template.</div></div>
+          <div class="entry-status" data-en="Template" data-id="Template">Template</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -354,16 +365,16 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>3D Web Experiments</h2>
-      <p class="group-note">Real-time 3D rendering in the browser, tested for mid-range phones.</p>
+      <h2 data-en="3D Web Experiments" data-id="Eksperimen 3D Web">3D Web Experiments</h2>
+      <p class="group-note" data-en="Real-time 3D rendering in the browser, tested for mid-range phones." data-id="Rendering 3D real-time di browser, diuji untuk ponsel kelas menengah.">Real-time 3D rendering in the browser, tested for mid-range phones.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/3D/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">3D Background</div><div class="entry-note">First WebGL test.</div></div>
-          <div class="entry-status">Experiment</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="3D Background" data-id="3D Background">3D Background</div><div class="entry-note" data-en="First WebGL test." data-id="Uji coba WebGL pertama.">First WebGL test.</div></div>
+          <div class="entry-status" data-en="Experiment" data-id="Eksperimen">Experiment</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/MFB-3D/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">MFB 3D</div><div class="entry-note">Applied version for a hospitality context.</div></div>
-          <div class="entry-status">Experiment</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="MFB 3D" data-id="MFB 3D">MFB 3D</div><div class="entry-note" data-en="Applied version for a hospitality context." data-id="Versi terapan untuk konteks hospitality.">Applied version for a hospitality context.</div></div>
+          <div class="entry-status" data-en="Experiment" data-id="Eksperimen">Experiment</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -373,16 +384,16 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Name Cards</h2>
-      <p class="group-note">Digital business-card pages.</p>
+      <h2 data-en="Name Cards" data-id="Kartu Nama Digital">Name Cards</h2>
+      <p class="group-note" data-en="Digital business-card pages." data-id="Halaman kartu nama digital.">Digital business-card pages.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Name-Card/wibawa" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Name Card — Wibawa</div><div class="entry-note">Personal digital card.</div></div>
-          <div class="entry-status live">Live</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Name Card — Wibawa" data-id="Name Card — Wibawa">Name Card — Wibawa</div><div class="entry-note" data-en="Personal digital card." data-id="Kartu nama digital pribadi.">Personal digital card.</div></div>
+          <div class="entry-status live" data-en="Live" data-id="Live">Live</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/AnabhiDev-Name-Card/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Anabhi Dev Name Card</div><div class="entry-note">Brand-facing card template.</div></div>
-          <div class="entry-status">Template</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Anabhi Dev Name Card" data-id="Anabhi Dev Name Card">Anabhi Dev Name Card</div><div class="entry-note" data-en="Brand-facing card template." data-id="Template kartu nama untuk brand.">Brand-facing card template.</div></div>
+          <div class="entry-status" data-en="Template" data-id="Template">Template</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -392,16 +403,16 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Family</h2>
-      <p class="group-note">Personal pages built for celebrations at home.</p>
+      <h2 data-en="Family" data-id="Keluarga">Family</h2>
+      <p class="group-note" data-en="Personal pages built for celebrations at home." data-id="Halaman pribadi untuk perayaan di rumah.">Personal pages built for celebrations at home.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Birthday/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Birthday</div><div class="entry-note">First version.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Birthday" data-id="Birthday">Birthday</div><div class="entry-note" data-en="First version." data-id="Versi pertama.">First version.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
         <a class="entry" href="https://anabhidev.com/Birthday-Anabhi/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Birthday Anabhi</div><div class="entry-note">Revised version for my wife's birthday.</div></div>
-          <div class="entry-status">Iteration</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Birthday Anabhi" data-id="Birthday Anabhi">Birthday Anabhi</div><div class="entry-note" data-en="Revised version for my wife's birthday." data-id="Versi revisi untuk ulang tahun istri saya.">Revised version for my wife's birthday.</div></div>
+          <div class="entry-status" data-en="Iteration" data-id="Iterasi">Iteration</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -411,12 +422,12 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-light">
   <div class="wrap">
     <section class="sec">
-      <h2>Concepts</h2>
-      <p class="group-note">Drafts built ahead of a signed agreement. Kept private from search.</p>
+      <h2 data-en="Concepts" data-id="Konsep">Concepts</h2>
+      <p class="group-note" data-en="Drafts built ahead of a signed agreement. Kept private from search." data-id="Draft yang dibuat sebelum ada kesepakatan resmi. Disembunyikan dari pencarian.">Drafts built ahead of a signed agreement. Kept private from search.</p>
       <div class="entries">
         <a class="entry" href="https://anabhidev.com/Raja-Siomay/" target="_blank" rel="noopener noreferrer">
-          <div><div class="entry-name">Raja Siomay</div><div class="entry-note">Prospective client — no engagement confirmed yet.</div></div>
-          <div class="entry-status">Concept — not commissioned</div><div class="entry-arrow">→</div>
+          <div><div class="entry-name" data-en="Raja Siomay" data-id="Raja Siomay">Raja Siomay</div><div class="entry-note" data-en="Prospective client — no engagement confirmed yet." data-id="Calon klien — belum ada kesepakatan kerja.">Prospective client — no engagement confirmed yet.</div></div>
+          <div class="entry-status" data-en="Concept — not commissioned" data-id="Konsep — belum dikerjakan">Concept — not commissioned</div><div class="entry-arrow">→</div>
         </a>
       </div>
     </section>
@@ -426,8 +437,8 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 <div class="band-dark">
   <div class="wrap">
     <section class="sec" style="border-top:none">
-      <h2>Already on the homepage</h2>
-      <p class="group-note">INNerpeace Bali, Delanswit, and the current Jagadita site are featured in full on the <a href="https://anabhidev.com/#work" style="color:var(--accent)">Websites section</a> — not repeated here as thin entries.</p>
+      <h2 data-en="Already on the homepage" data-id="Sudah ada di homepage">Already on the homepage</h2>
+      <p class="group-note" data-en="INNerpeace Bali, Delanswit, and the current Jagadita site are featured in full on the &lt;a href='https://anabhidev.com/#work' style='color:var(--accent)'&gt;Websites section&lt;/a&gt; — not repeated here as thin entries." data-id="INNerpeace Bali, Delanswit, dan situs Jagadita yang sekarang sudah ditampilkan penuh di &lt;a href='https://anabhidev.com/#work' style='color:var(--accent)'&gt;bagian Websites&lt;/a&gt; — tidak diulang di sini sebagai entri tipis.">INNerpeace Bali, Delanswit, and the current Jagadita site are featured in full on the <a href="https://anabhidev.com/#work" style="color:var(--accent)">Websites section</a> — not repeated here as thin entries.</p>
     </section>
   </div>
 
@@ -436,8 +447,8 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
       <div class="foot-grid">
         <div>
           <div class="foot-mark">Anabhi <em>Dev</em></div>
-          <p class="foot-tag">Less Doing. More Living.</p>
-          <p class="foot-loc">Denpasar, Bali — Indonesia</p>
+          <p class="foot-tag" data-en="Less Doing. More Living." data-id="Less Doing. More Living.">Less Doing. More Living.</p>
+          <p class="foot-loc" data-en="Denpasar, Bali — Indonesia" data-id="Denpasar, Bali — Indonesia">Denpasar, Bali — Indonesia</p>
           <div class="socials">
             <a class="soc" href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-4-1L3 21l2.1-4.9A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg>
@@ -454,35 +465,35 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
           </div>
         </div>
         <div>
-          <h3>Navigate</h3>
+          <h3 data-en="Navigate" data-id="Navigasi">Navigate</h3>
           <ul>
-            <li><a href="https://anabhidev.com/#about">About</a></li>
-            <li><a href="https://anabhidev.com/#products">Products</a></li>
-            <li><a href="https://anabhidev.com/#work">Websites</a></li>
-            <li><a href="https://anabhidev.com/#cases">Case Studies</a></li>
+            <li><a href="https://anabhidev.com/#about" data-en="About" data-id="Tentang">About</a></li>
+            <li><a href="https://anabhidev.com/#products" data-en="Products" data-id="Produk">Products</a></li>
+            <li><a href="https://anabhidev.com/#work" data-en="Websites" data-id="Website">Websites</a></li>
+            <li><a href="https://anabhidev.com/#cases" data-en="Case Studies" data-id="Studi Kasus">Case Studies</a></li>
           </ul>
         </div>
         <div>
-          <h3>Resources</h3>
+          <h3 data-en="Resources" data-id="Sumber">Resources</h3>
           <ul>
-            <li><a href="https://anabhidev.com/cv/">Full CV</a></li>
-            <li><a href="https://anabhidev.com/learn.html">Guides</a></li>
+            <li><a href="https://anabhidev.com/cv/" data-en="Full CV" data-id="CV Lengkap">Full CV</a></li>
+            <li><a href="https://anabhidev.com/learn.html" data-en="Learn" data-id="Belajar">Learn</a></li>
             <li><a href="https://www.upwork.com/freelancers/anabhidev" target="_blank" rel="noopener noreferrer">Upwork</a></li>
             <li><a href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           </ul>
         </div>
         <div>
-          <h3>Contact</h3>
+          <h3 data-en="Contact" data-id="Kontak">Contact</h3>
           <ul>
-            <li><a href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://wa.me/6282267672828" target="_blank" rel="noopener noreferrer" data-en="WhatsApp" data-id="WhatsApp">WhatsApp</a></li>
             <li><a href="mailto:hello@anabhidev.com">hello@anabhidev.com</a></li>
-            <li><a href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
+            <li><a href="https://www.linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener noreferrer" data-en="LinkedIn Profile" data-id="Profil LinkedIn">LinkedIn Profile</a></li>
           </ul>
         </div>
       </div>
       <div class="foot-bot">
-        <div>© 2026 <em>Anabhi Dev</em>. All rights reserved.</div>
-        <div>Hand-coded in Bali.</div>
+        <div>© 2026 <em>Anabhi Dev</em>. <span data-en="All rights reserved." data-id="Hak cipta dilindungi.">All rights reserved.</span></div>
+        <div data-en="Hand-coded in Bali." data-id="Ditulis tangan di Bali.">Hand-coded in Bali.</div>
       </div>
     </div>
   </footer>
@@ -491,6 +502,27 @@ h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(
 
 <script>
 (function(){
+  var doc = document.documentElement;
+
+  function setLang(lang){
+    doc.lang = lang;
+    var nodes = document.querySelectorAll('[data-' + lang + ']');
+    for(var i=0;i<nodes.length;i++){
+      nodes[i].innerHTML = nodes[i].getAttribute('data-' + lang);
+    }
+    var btns = document.querySelectorAll('.lang button');
+    for(var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', String(btns[j].getAttribute('data-lang') === lang));
+    }
+  }
+  var langBox = document.querySelector('.lang');
+  if(langBox){
+    langBox.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-lang]');
+      if(b) setLang(b.getAttribute('data-lang'));
+    });
+  }
+
   var burger = document.getElementById('burger');
   var mob = document.getElementById('mobmenu');
   if(burger && mob){
