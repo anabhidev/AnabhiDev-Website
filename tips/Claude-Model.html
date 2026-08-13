@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Panduan Pilih Model Claude — Anabhi Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FAFBFF;color:#1B2A4A;overflow-x:hidden;max-width:100%;}
+
+:root{
+  --navy:#1B2A4A;
+  --navy-mid:#2D4270;
+  --navy-light:#EEF2FF;
+  --blue:#3B7BF5;
+  --blue-light:#6FA3FF;
+  --gold:#C9A05A;
+  --gold-light:#F0DEB4;
+  --white:#FFFFFF;
+  --off-white:#FAFBFF;
+  --gray:#64748B;
+  --gray-light:#F1F5F9;
+  --border:#DDE4F0;
+  --green:#16A34A;
+  --red:#DC2626;
+  --yellow:#D97706;
+  --haiku:#16A34A;
+  --sonnet:#3B7BF5;
+  --opus:#C9A05A;
+  --fable:#8B5CF6;
+}
+
+/* ── TOP NAV ── */
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  height:56px;display:flex;align-items:center;
+  padding:0 20px;
+}
+.topnav-inner{width:100%;display:flex;align-items:center;justify-content:space-between;}
+.topnav-logo{display:flex;align-items:center;gap:10px;width:230px;flex-shrink:0;}
+.topnav-logo img{height:30px;object-fit:contain;}
+.topnav-logo-text{font-size:15px;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:1px;text-transform:uppercase;}
+.topnav-title{font-size:16px;font-weight:700;color:rgba(255,255,255,0.85);}
+.hamburger{
+  display:none;width:32px;height:32px;border-radius:8px;
+  align-items:center;justify-content:center;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+}
+.hamburger svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;}
+
+/* ── LAYOUT SHELL ── */
+.shell{display:flex;padding-top:56px;min-height:100vh;width:100%;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:230px;flex-shrink:0;
+  background:var(--navy);
+  position:fixed;top:56px;left:0;bottom:0;
+  overflow-y:auto;padding:20px 0 40px;
+  border-right:1px solid rgba(255,255,255,0.06);
+  z-index:150;
+  transition:transform .25s ease;
+}
+.sidebar-label{font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0 20px;margin-bottom:10px;}
+.sidebar-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;font-size:14.5px;font-weight:700;
+  color:rgba(255,255,255,0.6);text-decoration:none;
+  border-left:3px solid transparent;cursor:pointer;
+  transition:all .15s;
+}
+.sidebar-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
+.sidebar-link:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.9);}
+.sidebar-link.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,160,90,0.08);}
+.sidebar-divider{height:1px;background:rgba(255,255,255,0.08);margin:16px 20px;}
+
+/* ── CONTENT AREA ── */
+.content{
+  flex:1;min-width:0;
+  margin-left:230px;
+  padding:0;
+}
+.content-inner{max-width:none;padding:0 40px 80px;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a3a6b 100%);
+  padding:56px 40px 44px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 25% 40%,rgba(59,123,245,0.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 85% 15%,rgba(201,160,90,0.08) 0%,transparent 50%);
+}
+.hero-grid{position:absolute;inset:0;opacity:0.04;background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);background-size:40px 40px;}
+.hero-inner{position:relative;z-index:2;max-width:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,160,90,0.15);border:1px solid rgba(201,160,90,0.3);padding:6px 14px;border-radius:20px;margin-bottom:20px;}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.hero-badge-text{font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.4vw,40px);color:#fff;line-height:1.2;margin-bottom:16px;white-space:normal;}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:18.5px;color:rgba(255,255,255,0.7);line-height:1.7;}
+
+/* ── SECTION ── */
+.section{padding:44px 0 0;}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.section-label-line{width:24px;height:2px;background:var(--blue);border-radius:1px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(20px,3vw,28px);color:var(--navy);line-height:1.2;margin-bottom:8px;}
+.section-desc{font-size:15.5px;color:var(--gray);line-height:1.7;margin-bottom:26px;max-width:780px;}
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:44px 0 0;}
+
+/* ── MODEL CARDS GRID ── */
+.model-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.model-card{
+  background:var(--white);border-radius:16px;border:1.5px solid var(--border);
+  padding:20px 18px;position:relative;overflow:hidden;
+}
+.model-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.model-card.haiku::before{background:var(--haiku);}
+.model-card.sonnet::before{background:var(--sonnet);}
+.model-card.opus::before{background:var(--opus);}
+.model-card.fable::before{background:var(--fable);}
+.model-card-icon{font-size:30px;margin-bottom:10px;}
+.model-card-name{font-size:17.5px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.model-card-tagline{font-size:13px;color:var(--gray);margin-bottom:14px;line-height:1.4;min-height:30px;}
+.model-card-meter{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.model-meter-row{display:flex;align-items:center;gap:8px;}
+.model-meter-label{font-size:11px;color:var(--gray);min-width:52px;font-weight:600;}
+.model-meter-track{flex:1;height:5px;background:var(--gray-light);border-radius:3px;overflow:hidden;}
+.model-meter-fill{height:100%;border-radius:3px;}
+.model-card.haiku .model-meter-fill{background:var(--haiku);}
+.model-card.sonnet .model-meter-fill{background:var(--sonnet);}
+.model-card.opus .model-meter-fill{background:var(--opus);}
+.model-card.fable .model-meter-fill{background:var(--fable);}
+.model-card-usecase{font-size:13.5px;color:var(--navy);line-height:1.6;padding-top:12px;border-top:1px solid var(--border);}
+.model-card-usecase strong{display:block;font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+
+/* ── LIFECYCLE FLOW ── */
+.lifecycle-track{display:flex;align-items:stretch;gap:0;margin-bottom:20px;}
+.lifecycle-stage{
+  flex:1;background:var(--white);border:1.5px solid var(--border);border-radius:14px;
+  padding:18px 16px;text-align:center;position:relative;
+}
+.lifecycle-stage.active{border-color:rgba(22,163,74,.3);background:#F0FDF4;}
+.lifecycle-stage.legacy{border-color:rgba(217,119,6,.3);background:#FFFBEB;}
+.lifecycle-stage.deprecated{border-color:rgba(220,38,38,.2);background:#FEF2F2;}
+.lifecycle-icon{font-size:25.5px;margin-bottom:8px;}
+.lifecycle-title{font-size:14.5px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.lifecycle-desc{font-size:13px;color:var(--gray);line-height:1.5;}
+.lifecycle-arrow{display:flex;align-items:center;padding:0 8px;color:var(--border);font-size:21px;flex-shrink:0;}
+
+/* ── EFFORT BARS ── */
+.effort-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.effort-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:16px;}
+.effort-card-name{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.effort-dots{display:flex;gap:3px;margin-bottom:10px;}
+.effort-dot{width:16px;height:5px;border-radius:3px;background:var(--gray-light);}
+.effort-dot.on{background:var(--blue);}
+.effort-desc{font-size:13.5px;color:var(--gray);line-height:1.6;}
+
+/* ── CASE MAPPING TABLE ── */
+.case-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.case-table th{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);background:var(--gray-light);}
+.case-table td{padding:13px 14px;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--navy);vertical-align:top;}
+.case-table tr:last-child td{border-bottom:none;}
+.case-table tr:hover td{background:var(--navy-light);}
+.case-model-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:13px;font-weight:700;white-space:nowrap;}
+.chip-haiku{background:rgba(22,163,74,.1);color:var(--haiku);}
+.chip-sonnet{background:rgba(59,123,245,.1);color:var(--sonnet);}
+.chip-opus{background:rgba(201,160,90,.15);color:var(--opus);}
+.case-reason{font-size:13.5px;color:var(--gray);line-height:1.55;}
+
+/* ── ESCALATE BOX ── */
+.escalate-box{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:16px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;}
+.escalate-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 50%,rgba(201,160,90,0.1) 0%,transparent 60%);pointer-events:none;}
+.escalate-label{font-size:10.5px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;position:relative;z-index:1;}
+.escalate-signals{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1;}
+.escalate-signal{display:flex;gap:10px;align-items:flex-start;}
+.escalate-signal-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.escalate-signal-text{font-size:15px;color:rgba(255,255,255,.85);line-height:1.6;}
+.escalate-signal-text strong{color:#fff;}
+
+/* ── DECISION HELPER ── */
+.decision-box{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.decision-q{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.decision-q-num{width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.decision-opts{display:flex;flex-direction:column;gap:0;margin-left:30px;margin-bottom:18px;}
+.decision-opt{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--gray-light);font-size:14px;color:var(--gray);}
+.decision-opt:last-child{border-bottom:none;}
+.decision-opt-arrow{color:var(--border);}
+.decision-opt-result{font-weight:700;}
+
+/* ── HAMBURGER OVERLAY (mobile) ── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:140;}
+.sidebar-overlay.show{display:block;}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:36px 20px;text-align:center;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-logo{height:36px;object-fit:contain;margin-bottom:10px;}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:14px;font-style:italic;}
+.footer-link{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:16px;}
+.footer-copy{font-size:11.5px;color:rgba(255,255,255,0.25);}
+.footer-gold{color:var(--gold);}
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px){
+  .topnav-logo{width:auto;}
+  .topnav-title{display:none;}
+  .sidebar{transform:translateX(-100%);width:240px;}
+  .sidebar.open{transform:translateX(0);}
+  .content{margin-left:0;}
+  .hamburger{display:flex;}
+  .model-grid{grid-template-columns:1fr 1fr;}
+  .effort-grid{grid-template-columns:1fr;}
+  .lifecycle-track{flex-direction:column;gap:10px;}
+  .lifecycle-arrow{transform:rotate(90deg);padding:0;align-self:center;}
+  .content-inner{padding:0 18px 60px;}
+  .hero{padding:36px 18px 32px;}
+  .case-table{font-size:13px;}
+  .case-table th,.case-table td{padding:9px 8px;}
+}
+@media (max-width:520px){
+  .model-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP NAV ── -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="hamburger" onclick="toggleSidebar()">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </div>
+      <div class="topnav-logo">
+        <img src="https://i.ibb.co.com/9HK92vXd/Chat-GPT-Image-May-27-2026-09-41-00-PM.png" alt="Anabhi Dev" onerror="this.style.display='none'">
+        <span class="topnav-logo-text">Anabhi Dev</span>
+      </div>
+    </div>
+    <span class="topnav-title">Panduan Pilih Model Claude</span>
+  </div>
+</nav>
+
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">Navigasi</div>
+    <a class="sidebar-link active" onclick="goTo('overview',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview 4 Model
+    </a>
+    <a class="sidebar-link" onclick="goTo('lifecycle',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/><path d="M12 7v5l3 3"/></svg>Model Lifecycle
+    </a>
+    <a class="sidebar-link" onclick="goTo('effort',this)">
+      <svg viewBox="0 0 24 24"><path d="M4 21V9M12 21V3M20 21v-6"/></svg>Effort Level
+    </a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Praktik</div>
+    <a class="sidebar-link" onclick="goTo('cases',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 5a2 2 0 002 2h2a2 2 0 002-2"/></svg>Contoh Kasus Nyata
+    </a>
+    <a class="sidebar-link" onclick="goTo('escalate',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Kapan Naik ke Opus
+    </a>
+    <a class="sidebar-link" onclick="goTo('decision',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z"/></svg>Quick Decision Helper
+    </a>
+  </aside>
+
+  <!-- ── CONTENT ── -->
+  <main class="content">
+
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-inner">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span class="hero-badge-text">Model Guide · Claude AI</span>
+        </div>
+        <h1 class="hero-title">Model Mana untuk <span>Task Apa?</span></h1>
+        <p class="hero-sub">Referensi cepat 4 tier model Claude — Haiku, Sonnet, Opus, Fable — kapan dipakai, kapan tidak, dan kapan naik/turun tier di tengah kerjaan.</p>
+      </div>
+    </section>
+
+    <div class="content-inner">
+
+      <!-- OVERVIEW 4 MODEL -->
+      <div class="section" id="overview">
+        <div class="section-label"><div class="section-label-line"></div>Overview</div>
+        <h2 class="section-title">4 Model, 4 Peran Berbeda</h2>
+        <p class="section-desc">Makin tinggi tier, makin capable — tapi juga makin boros kuota. Pilih berdasarkan berat task, bukan selalu pakai yang tertinggi.</p>
+
+        <div class="model-grid">
+          <div class="model-card haiku">
+            <div class="model-card-icon">⚡</div>
+            <div class="model-card-name">Haiku 4.5</div>
+            <div class="model-card-tagline">Tercepat & termurah — buat tugas simpel dan volume tinggi.</div>
+            <div class="model-card-meter">
+              <div class="model-meter-row"><span class="model-meter-label">Kecepatan</span><div class="model-meter-track"><div class="model-meter-fill" style="width:95%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Reasoning</span><div class="model-meter-track"><div class="model-meter-fill" style="width:35%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Kuota</span><div class="model-meter-track"><div class="model-meter-fill" style="width:15%"></div></div></div>
+            </div>
+            <div class="model-card-usecase"><strong>Contoh Task</strong>Summary chat panjang, compile/rangkum info, rename variabel, format ulang, fix typo</div>
+          </div>
+
+          <div class="model-card sonnet">
+            <div class="model-card-icon">📝</div>
+            <div class="model-card-name">Sonnet 5</div>
+            <div class="model-card-tagline">Seimbang — default harian untuk coding & eksekusi.</div>
+            <div class="model-card-meter">
+              <div class="model-meter-row"><span class="model-meter-label">Kecepatan</span><div class="model-meter-track"><div class="model-meter-fill" style="width:75%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Reasoning</span><div class="model-meter-track"><div class="model-meter-fill" style="width:70%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Kuota</span><div class="model-meter-track"><div class="model-meter-fill" style="width:45%"></div></div></div>
+            </div>
+            <div class="model-card-usecase"><strong>Contoh Task</strong>Coding dari spec jelas, HTML/CSS dari template standar, report berstruktur, GAS + Sheet</div>
+          </div>
+
+          <div class="model-card opus">
+            <div class="model-card-icon">🎼</div>
+            <div class="model-card-name">Opus 5</div>
+            <div class="model-card-tagline">Paling capable — simpan untuk keputusan besar & masalah rumit.</div>
+            <div class="model-card-meter">
+              <div class="model-meter-row"><span class="model-meter-label">Kecepatan</span><div class="model-meter-track"><div class="model-meter-fill" style="width:45%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Reasoning</span><div class="model-meter-track"><div class="model-meter-fill" style="width:95%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Kuota</span><div class="model-meter-track"><div class="model-meter-fill" style="width:85%"></div></div></div>
+            </div>
+            <div class="model-card-usecase"><strong>Contoh Task</strong>Arsitektur & struktur data di awal project, debug rumit lintas file, keputusan trade-off besar</div>
+          </div>
+
+          <div class="model-card fable">
+            <div class="model-card-icon">📖</div>
+            <div class="model-card-name">Fable 5</div>
+            <div class="model-card-tagline">Tier tertinggi — di plan Pro biasanya butuh usage credit terpisah.</div>
+            <div class="model-card-meter">
+              <div class="model-meter-row"><span class="model-meter-label">Kecepatan</span><div class="model-meter-track"><div class="model-meter-fill" style="width:35%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Reasoning</span><div class="model-meter-track"><div class="model-meter-fill" style="width:100%"></div></div></div>
+              <div class="model-meter-row"><span class="model-meter-label">Kuota</span><div class="model-meter-track"><div class="model-meter-fill" style="width:100%"></div></div></div>
+            </div>
+            <div class="model-card-usecase"><strong>Untuk Kamu</strong>Kemungkinan besar tidak perlu — scope project kamu (compro, shop, web app kantor) belum butuh tier ini</div>
+          </div>
+        </div>
+
+        <div class="escalate-box" style="background:linear-gradient(135deg,#2D4270,#1B2A4A);">
+          <div class="escalate-label">💡 Soal Sonnet 4.6 / Versi Legacy</div>
+          <div class="escalate-signal-text" style="position:relative;z-index:1;">
+            Sonnet 4.6 itu <strong>versi lama (Legacy) dari Sonnet 5</strong> — bukan pilihan "lebih hemat". Keduanya ada di menu model yang sama, sama-sama bagian dari kuota Pro standar, tidak ada bedanya di sisi kuota. Bedanya: Sonnet 5 sudah menggantikan 4.6 sebagai versi current, kemampuannya kemungkinan setara atau lebih baik. <strong>Tidak ada untung pakai versi legacy</strong> kecuali kamu punya alasan konsistensi khusus dengan project lama. Detail siklusnya lihat section <strong>Model Lifecycle</strong> di bawah.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- LIFECYCLE -->
+      <div class="section" id="lifecycle">
+        <div class="section-label"><div class="section-label-line"></div>Model Lifecycle</div>
+        <h2 class="section-title">Kenapa Versi Lama Sebaiknya Di-skip</h2>
+        <p class="section-desc">Setiap model punya siklus hidup. Memahami ini menjawab kenapa Sonnet 4.6 di-drop dari rotasi, dan kapan model yang biasa kamu pakai perlu di-cek ulang.</p>
+
+        <div class="lifecycle-track">
+          <div class="lifecycle-stage active">
+            <div class="lifecycle-icon">✅</div>
+            <div class="lifecycle-title">Active</div>
+            <div class="lifecycle-desc">Didukung penuh, direkomendasikan, terus di-update. Ini yang harus jadi pilihan default. Contoh: Sonnet 5, Opus 5.</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage legacy">
+            <div class="lifecycle-icon">🕰️</div>
+            <div class="lifecycle-title">Legacy</div>
+            <div class="lifecycle-desc">Masih bisa dipakai, tapi sudah tidak dapat update. Kandidat pensiun ke depannya. Contoh: Sonnet 4.6, Opus 4.8, 4.7.</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage deprecated">
+            <div class="lifecycle-icon">⛔</div>
+            <div class="lifecycle-title">Deprecated / Retired</div>
+            <div class="lifecycle-desc">Benar-benar berhenti berfungsi. Model ini akan hilang dari menu atau menolak request.</div>
+          </div>
+        </div>
+
+        <div class="escalate-box">
+          <div class="escalate-label">💡 Key Insight</div>
+          <div class="escalate-signals">
+            <div class="escalate-signal"><span class="escalate-signal-icon">🎯</span><span class="escalate-signal-text">Kalau model yang biasa dipakai terasa <strong>"kurang"</strong> dibanding sebelumnya — cek dulu, kemungkinan sudah masuk status Legacy dan ada versi lebih baru gratis di kuota yang sama.</span></div>
+            <div class="escalate-signal"><span class="escalate-signal-icon">🔄</span><span class="escalate-signal-text">Siklus ini terus berulang. Sonnet 5 sekarang Active — begitu Sonnet 6 rilis, pola yang sama berlaku: cek menu model, pindah ke versi current.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- EFFORT LEVEL -->
+      <div class="section" id="effort">
+        <div class="section-label"><div class="section-label-line"></div>Effort Level</div>
+        <h2 class="section-title">Bukan Cuma Model — Effort Juga Ngefek</h2>
+        <p class="section-desc">Effort (Low/Medium/High) mengatur seberapa dalam Claude "mikir" sebelum jawab. Model + effort itu dua tombol berbeda yang sama-sama pengaruhi kuota.</p>
+
+        <div class="effort-grid">
+          <div class="effort-card">
+            <div class="effort-card-name">🟢 Low</div>
+            <div class="effort-dots"><div class="effort-dot on"></div><div class="effort-dot"></div><div class="effort-dot"></div></div>
+            <div class="effort-desc">Jawaban cepat, minim "mikir". Pas untuk kerjaan receh: rename, format, fix typo, pertanyaan simpel yang jawabannya sudah jelas.</div>
+          </div>
+          <div class="effort-card">
+            <div class="effort-card-name">🔵 Medium</div>
+            <div class="effort-dots"><div class="effort-dot on"></div><div class="effort-dot on"></div><div class="effort-dot"></div></div>
+            <div class="effort-desc">Paling seimbang untuk kerja harian yang campuran. Default yang aman untuk hampir semua task coding & brainstorm ringan.</div>
+          </div>
+          <div class="effort-card">
+            <div class="effort-card-name">🟡 High</div>
+            <div class="effort-dots"><div class="effort-dot on"></div><div class="effort-dot on"></div><div class="effort-dot on"></div></div>
+            <div class="effort-desc">Mikir paling dalam, paling boros. Simpan untuk masalah yang jawabannya belum jelas bentuknya — bukan task rutin.</div>
+          </div>
+        </div>
+
+        <div class="escalate-box">
+          <div class="escalate-label">💡 Key Insight</div>
+          <div class="escalate-signal-text" style="position:relative;z-index:1;">
+            Toggle <strong>Thinking manual</strong> sebaiknya dimatikan di effort Medium ke atas — model sudah otomatis mikir kalau perlu (adaptive). Toggle manual bisa bikin dia mikir lebih dari yang dibutuhkan untuk task simpel, buang-buang kuota tanpa hasil lebih baik.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- CONTOH KASUS NYATA -->
+      <div class="section" id="cases">
+        <div class="section-label"><div class="section-label-line"></div>Praktik</div>
+        <h2 class="section-title">Dipetakan ke Kerjaan Kamu Sehari-hari</h2>
+        <p class="section-desc">Task yang sering muncul di workflow kamu, dipetakan ke model yang paling pas — bukan yang paling canggih.</p>
+
+        <div style="overflow-x:auto;">
+          <table class="case-table">
+            <thead>
+              <tr><th>Task</th><th>Model</th><th>Alasan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Summary chat yang sudah panjang</strong></td>
+                <td><span class="case-model-chip chip-haiku">⚡ Haiku 4.5</span></td>
+                <td class="case-reason">Cuma perlu compile & ringkas apa yang sudah dibahas — bukan reasoning baru. Sonnet di sini overkill.</td>
+              </tr>
+              <tr>
+                <td><strong>Cari-cari info / cross-check dari chat lama</strong></td>
+                <td><span class="case-model-chip chip-haiku">⚡ Haiku 4.5</span></td>
+                <td class="case-reason">Sama seperti summary — mencari & menyusun ulang info yang sudah ada, bukan menciptakan hal baru.</td>
+              </tr>
+              <tr>
+                <td><strong>Report text-only (tanpa HTML)</strong></td>
+                <td><span class="case-model-chip chip-haiku">⚡ Haiku 4.5</span></td>
+                <td class="case-reason">Kalau strukturnya simpel (poin-poin, ringkasan naratif) tanpa perlu presisi layout, Haiku cukup.</td>
+              </tr>
+              <tr>
+                <td><strong>HTML dari template/standar yang sudah ada</strong></td>
+                <td><span class="case-model-chip chip-sonnet">📝 Sonnet 5</span></td>
+                <td class="case-reason">Butuh presisi struktur HTML/CSS, konsistensi class & style dengan file existing — ini kekuatan Sonnet.</td>
+              </tr>
+              <tr>
+                <td><strong>HTML simple / report dengan sedikit styling</strong></td>
+                <td><span class="case-model-chip chip-haiku">⚡ Haiku 4.5</span></td>
+                <td class="case-reason">Kalau HTML-nya cuma layout dasar tanpa mengikuti design system spesifik, Haiku biasanya sudah cukup rapi.</td>
+              </tr>
+              <tr>
+                <td><strong>Coding fitur/modul baru dari spec jelas</strong></td>
+                <td><span class="case-model-chip chip-sonnet">📝 Sonnet 5</span></td>
+                <td class="case-reason">Eksekusi kode yang butuh logika benar dan konsisten dengan codebase — wilayah utama Sonnet.</td>
+              </tr>
+              <tr>
+                <td><strong>Brainstorm struktur data / arsitektur awal</strong></td>
+                <td><span class="case-model-chip chip-opus">🎼 Opus 5</span></td>
+                <td class="case-reason">Keputusan besar yang menentukan arah project — worth investasi kuota lebih di awal, biar tidak salah fondasi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-size:12.5px;color:var(--gray);font-style:italic;">Patokan kasar: kalau task-nya "susun ulang yang sudah ada" → Haiku. Kalau "buat yang baru dengan presisi" → Sonnet. Kalau "putuskan arahnya" → Opus.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- KAPAN NAIK KE OPUS -->
+      <div class="section" id="escalate">
+        <div class="section-label"><div class="section-label-line"></div>Escalation</div>
+        <h2 class="section-title">Kapan Naik Balik ke Opus</h2>
+        <p class="section-desc">Sonnet cukup untuk mayoritas kerjaan. Tapi ada sinyal jelas kapan waktunya naik tier lagi.</p>
+
+        <div class="escalate-box">
+          <div class="escalate-label">🔺 Sinyal Naik ke Opus</div>
+          <div class="escalate-signals">
+            <div class="escalate-signal"><span class="escalate-signal-icon">🔁</span><span class="escalate-signal-text">Sonnet <strong>stuck 2-3× di masalah yang sama</strong> — biasanya tanda masalahnya di desain/struktur, bukan di penulisan kode.</span></div>
+            <div class="escalate-signal"><span class="escalate-signal-icon">🐛</span><span class="escalate-signal-text">Bug yang <strong>lintas beberapa file</strong> dan sumbernya belum ketahuan sama sekali.</span></div>
+            <div class="escalate-signal"><span class="escalate-signal-icon">🧩</span><span class="escalate-signal-text">Butuh <strong>keputusan trade-off baru</strong> yang tidak terduga di tengah coding — misal ternyata struktur data awal tidak cukup untuk fitur baru.</span></div>
+          </div>
+        </div>
+
+        <div class="escalate-box" style="background:linear-gradient(135deg,#16A34A,#15803D);">
+          <div class="escalate-label" style="color:#DCFCE7;">✅ Bukan Sinyal Naik ke Opus</div>
+          <div class="escalate-signals">
+            <div class="escalate-signal"><span class="escalate-signal-icon">📄</span><span class="escalate-signal-text" style="color:rgba(255,255,255,.9);">Typo, error syntax kecil, atau bug yang penyebabnya sudah jelas — itu tetap wilayah Sonnet (atau Haiku).</span></div>
+            <div class="escalate-signal"><span class="escalate-signal-icon">📏</span><span class="escalate-signal-text" style="color:rgba(255,255,255,.9);">Project-nya "besar" secara volume (banyak modul) — kalau tiap modul digarap bertahap, tiap potongannya tetap sedang-sedang saja untuk Sonnet.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- QUICK DECISION HELPER -->
+      <div class="section" id="decision">
+        <div class="section-label"><div class="section-label-line"></div>Quick Decision</div>
+        <h2 class="section-title">Bingung Pilih? Ikuti Ini</h2>
+        <p class="section-desc">Tiga pertanyaan cepat untuk memutuskan model tanpa harus baca ulang semua tabel di atas.</p>
+
+        <div class="decision-box">
+          <div class="decision-q"><div class="decision-q-num">1</div>Apakah kamu sedang <em>memutuskan arah</em>, atau <em>menjalankan</em> yang sudah jelas?</div>
+          <div class="decision-opts">
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Belum jelas arahnya, masih banyak opsi <span style="margin-left:auto;color:var(--opus);" class="decision-opt-result">🎼 Opus 5</span></div>
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Sudah jelas, tinggal eksekusi <span style="margin-left:auto;color:var(--sonnet);" class="decision-opt-result">Lanjut ke Q2 ↓</span></div>
+          </div>
+
+          <div class="decision-q"><div class="decision-q-num">2</div>Apakah hasilnya perlu <em>presisi struktur</em> (kode, HTML mengikuti template, logika)?</div>
+          <div class="decision-opts">
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Ya, perlu presisi & konsistensi <span style="margin-left:auto;color:var(--sonnet);" class="decision-opt-result">📝 Sonnet 5</span></div>
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Tidak, cuma susun ulang info <span style="margin-left:auto;color:var(--gray);" class="decision-opt-result">Lanjut ke Q3 ↓</span></div>
+          </div>
+
+          <div class="decision-q"><div class="decision-q-num">3</div>Apakah ini rangkuman, pencarian info, atau kerjaan kecil (rename/format)?</div>
+          <div class="decision-opts">
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Ya <span style="margin-left:auto;color:var(--haiku);" class="decision-opt-result">⚡ Haiku 4.5</span></div>
+            <div class="decision-opt"><span class="decision-opt-arrow">→</span>Tidak yakin <span style="margin-left:auto;color:var(--sonnet);" class="decision-opt-result">📝 Sonnet 5 (aman default)</span></div>
+          </div>
+        </div>
+
+        <div class="escalate-box" style="background:linear-gradient(135deg,#2D4270,#1B2A4A);">
+          <div class="escalate-label">🎯 Aturan Simpel Kalau Masih Ragu</div>
+          <div class="escalate-signal-text" style="position:relative;z-index:1;">
+            Kalau ragu antara dua tier — <strong>pilih yang lebih rendah dulu</strong>. Kalau hasilnya kurang, naik satu tingkat. Ini lebih hemat daripada default ke tier tinggi "biar aman", karena kebanyakan task kamu (compro, shop sederhana, web app kantor) memang tidak butuh tier atas.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <img class="footer-logo"
+          src="https://i.ibb.co.com/8gcsB2QH/logo-removebg-preview.png"
+          alt="Anabhi Dev"
+          onerror="this.style.display='none'">
+        <div class="footer-tagline">Less Doing. More Living.</div>
+        <a class="footer-link" href="https://anabhidev.netlify.app/" target="_blank">🌐 anabhidev.netlify.app</a>
+        <div class="footer-copy">© 2026 <span class="footer-gold">Anabhi Dev</span> · Panduan Pilih Model Claude</div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+function goTo(id, el){
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+  if (window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+
+// scroll spy
+const sectionIds = ['overview','lifecycle','effort','cases','escalate','decision'];
+window.addEventListener('scroll', function(){
+  let current = 'overview';
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  document.querySelectorAll('.sidebar-link').forEach(function(link, i){
+    link.classList.toggle('active', sectionIds[i] === current);
+  });
+});
+</script>
+</body>
+</html>
