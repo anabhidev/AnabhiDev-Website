@@ -2,8 +2,33 @@
 <html lang="id">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFish_TrialPrep_Guide_v1.4.html
+     File        : MissFish_TrialPrep_Guide_v1.5.html
      Description : Panduan interaktif persiapan trial 10 orang.
+                   v1.5: sidebar Admin Tasks bertambah dari 4 jadi 5 item.
+                   Halaman baru "Add Courses" (cara membuat course dari
+                   nol — title, department, passing_score minimal 85%,
+                   max_attempts, sertifikat, deadline; syarat Publish:
+                   minimal 1 modul, dan minimal 30 soal aktif kalau ada
+                   modul Quiz). "Add a Video" di-rename jadi "Add Modules"
+                   dan diperluas: bagian Video dipertahankan, ditambah
+                   bagian PDF (aturan sharing Drive, link ke halaman SOP
+                   Bilingual Audio) dan Quiz (bank soal, timer 1,5 menit
+                   per soal). Halaman baru "Progress & Certificate" di
+                   kategori Trial — rumus progress, syarat sertifikat,
+                   DAN penjelasan baru soal masa berlaku sertifikat
+                   (cert_valid_months, status expired) yang belum pernah
+                   dijelaskan di dokumen manapun sebelumnya — plus preview
+                   visual sertifikat (dipindah dari MissFishLMS_CourseGuide
+                   v2.1, atribut data-en/data-id dilepas karena Guide ini
+                   tidak punya mekanisme swap bahasa lewat atribut —
+                   toggle EN/ID di sini tetap sebatas status seperti v1.3/
+                   v1.4, bukan translasi otomatis).
+                   Passing score 85% (bukan 75% seperti contoh lama di
+                   CourseGuide) dipakai di seluruh halaman baru karena
+                   itu angka yang benar-benar berlaku di kode sekarang
+                   (RULE_MIN_PASSING_SCORE, berlaku saat create MAUPUN
+                   edit course) — CourseGuide asalnya kemungkinan dibuat
+                   sebelum aturan minimum ini ada.
                    v1.4: halaman baru "SOP Bilingual Audio" (Trial) —
                    penjelasan HR-friendly fitur v2.110 (SOP dua-kolom
                    EN/ID kini terdeteksi otomatis dan dibacakan sesuai
@@ -35,8 +60,8 @@
                    cara ganti admin, tambah user, tambah video (untuk HR).
                    Lebar mengikuti browser, tidak dikunci.
      IT Department · Miss Fish Bali
-     Version     : 1.4
-     Generated   : 13 August 2026, 12:06:36 WITA
+     Version     : 1.5
+     Generated   : 13 August 2026, 15:55:12 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -220,10 +245,12 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
   <div class="sb-item" data-p="admin-swap"><span class="ic">①</span> Change Admin ID</div>
   <div class="sb-item" data-p="multi-admin"><span class="ic">②</span> Add Backup Admin</div>
   <div class="sb-item" data-p="add-user"><span class="ic">③</span> Add New User</div>
-  <div class="sb-item" data-p="add-video"><span class="ic">④</span> Add a Video</div>
+  <div class="sb-item" data-p="add-courses"><span class="ic">④</span> Add Courses</div>
+  <div class="sb-item" data-p="add-video"><span class="ic">⑤</span> Add Modules</div>
 
   <div class="sb-group">Trial</div>
   <div class="sb-item" data-p="sop-bilingual"><span class="ic">🎧</span> SOP Bilingual Audio</div>
+  <div class="sb-item" data-p="progress-cert"><span class="ic">🏆</span> Progress & Certificate</div>
   <div class="sb-item" data-p="deploy-status"><span class="ic">📦</span> Deploy Status</div>
   <div class="sb-item" data-p="checklist"><span class="ic">✓</span> Pre-Trial Checklist</div>
 </nav>
@@ -373,11 +400,64 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
     </div>
   </section>
 
-  <!-- ═══════════ ADD VIDEO ═══════════ -->
+  <!-- ═══════════ ADD COURSES ═══════════ -->
+  <section class="page" id="p-add-courses">
+    <div class="crumb">Admin Task · #4</div>
+    <h1>Cara membuat <em>course baru</em></h1>
+    <p class="lede">Course adalah "wadah" — dibuat dulu kosong, lalu diisi modul (video/PDF/quiz) satu-satu di halaman <strong>Add Modules</strong>. Course baru selalu berstatus <span class="field">Draft</span> dan TIDAK terlihat oleh staff sampai di-<span class="field">Publish</span> secara sengaja.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Buka Manage Courses → Add Course</h4>
+        <p>Isi field yang diminta:</p>
+        <table>
+          <tr><th>Field</th><th>Keterangan</th></tr>
+          <tr><td class="f">title</td><td>Wajib diisi — nama course</td></tr>
+          <tr><td class="f">description</td><td>Opsional</td></tr>
+          <tr><td class="f">department</td><td>Nama departemen, atau <span class="field">General</span> — kalau General, course ini otomatis terlihat semua departemen tanpa perlu assign manual satu-satu</td></tr>
+          <tr><td class="f">passing_score</td><td>Minimal <strong>85%</strong> — di bawah itu DITOLAK sistem. Kalau dikosongkan, otomatis terisi 85%</td></tr>
+          <tr><td class="f">max_attempts</td><td>Berapa kali staff boleh mencoba quiz. Default 5 kalau dikosongkan</td></tr>
+          <tr><td class="f">has_certificate</td><td>Ya/Tidak — apakah course ini menerbitkan sertifikat saat lulus</td></tr>
+          <tr><td class="f">cert_valid_months</td><td>Masa berlaku sertifikat dalam bulan. Default 12 kalau dikosongkan — lihat halaman <strong>Progress & Certificate</strong> untuk detail masa berlaku</td></tr>
+          <tr><td class="f">deadline_days</td><td>Berapa hari staff punya waktu menyelesaikan course sejak di-assign. Default 30</td></tr>
+        </table>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Course tersimpan sebagai Draft</h4>
+        <p>Belum ada modul sama sekali di titik ini, dan staff belum bisa melihat course ini di mana pun.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Tambahkan SEMUA modul dulu, baru Publish</h4>
+        <p>Buka halaman <strong>Add Modules</strong> untuk menambahkan video/PDF/quiz. Urutan ini penting — lihat catatan di bawah.</p>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Publish</h4>
+        <p>Tombol Publish baru bisa berhasil kalau syarat berikut terpenuhi:</p>
+      </div></div>
+    </div>
+
+    <div class="danger">
+      <strong>Kenapa harus isi modul dulu sebelum Publish:</strong>
+      <p style="margin-top:8px;margin-bottom:0">Modul HANYA bisa dihapus selama course masih berstatus Draft. Setelah Published, modul jadi jauh lebih sulit diubah/dihapus. Jadi susun dulu semua modul dengan benar SEBELUM menekan Publish — jangan publish dulu baru berpikir mau isi apa.</p>
+    </div>
+
+    <div class="warn">
+      <strong>Syarat wajib sebelum Publish berhasil:</strong>
+      <p style="margin-top:8px;margin-bottom:0">1) Course harus punya <strong>minimal 1 modul</strong> apa pun jenisnya.<br>2) Kalau course punya modul <span class="field">QUIZ</span>, bank soalnya harus punya <strong>minimal 30 soal aktif</strong> — kalau kurang, sistem menolak dengan pesan jelas berapa soal yang masih kurang. Ini supaya pengacakan soal antar-attempt benar-benar berarti, bukan staff ketemu soal yang sama berulang.</p>
+    </div>
+
+    <div class="ok"><strong>Course berstatus Archived</strong> tidak bisa langsung di-Publish lagi — perlu dikembalikan ke Draft dulu (fitur ini ada di Manage Courses, bukan di halaman ini).</div>
+  </section>
+
+  <!-- ═══════════ ADD MODULES ═══════════ -->
+  <!-- ═══════════ ADD MODULES ═══════════ -->
   <section class="page" id="p-add-video">
-    <div class="crumb">Admin Task · #4 · Bisa dibagikan ke HR</div>
-    <h1>Cara menambah <em>modul video</em></h1>
-    <p class="lede">Sistem menerima dua sumber: Google Drive atau YouTube. Halaman ini bisa dibagikan langsung ke tim HR.</p>
+    <div class="crumb">Admin Task · #5 · Bisa dibagikan ke HR</div>
+    <h1>Cara menambah <em>modul course</em></h1>
+    <p class="lede">Ada 3 jenis modul: Video, PDF, dan Quiz. Sebuah course boleh punya modul campuran (misal: video dulu, lalu PDF, ditutup quiz). Halaman ini bisa dibagikan langsung ke tim HR.</p>
+
+    <h3>Modul Video</h3>
+    <p class="lede" style="margin-bottom:14px">Sistem menerima dua sumber: Google Drive atau YouTube.</p>
 
     <h3>Dua pilihan sumber video</h3>
     <table>
@@ -421,6 +501,46 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
         <p>Field <span class="field">min_watch_pct</span>, default 95%. Artinya staff harus menonton minimal 95% durasi video sebelum modul dianggap selesai. Video tidak bisa dipercepat, dan berpindah tab otomatis menjeda video.</p>
       </div></div>
     </div>
+
+    <h3 style="margin-top:32px">Modul PDF</h3>
+    <p class="lede" style="margin-bottom:14px">Untuk SOP, panduan tertulis, dan materi referensi. File tertanam langsung dari Google Drive — staff membaca di dalam LMS tanpa perlu pindah halaman.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Upload PDF ke Google Drive, atur sharing</h4>
+        <p>Klik kanan file → Share → ubah ke <strong>"Anyone with the link"</strong>. Sama seperti aturan video Drive — tanpa ini, PDF tidak akan bisa tampil di LMS.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Buka Manage Courses → pilih course → Add Module</h4>
+        <p>Isi Title, pilih Type = <strong>PDF</strong>, paste share link Drive-nya.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Penyelesaian modul dihitung dari navigasi halaman</h4>
+        <p>Staff harus melewati (klik Next Page) sampai halaman terakhir sebelum modul dianggap selesai — bukan cuma membuka PDF-nya sekilas.</p>
+      </div></div>
+    </div>
+
+    <div class="ok"><strong>Fitur baru v2.110:</strong> kalau PDF-nya SOP dua-kolom (Inggris/Indonesia berdampingan), sistem otomatis mendeteksi dan menampilkan tombol dengar dengan pilihan bahasa. Tidak perlu setting apa pun — lihat halaman <strong>SOP Bilingual Audio</strong> di sidebar untuk detail lengkap dan cara testingnya.</div>
+
+    <h3 style="margin-top:32px">Modul Quiz</h3>
+    <p class="lede" style="margin-bottom:14px">Gerbang terakhir sebuah course. Soal diambil acak dari bank soal course tersebut, jadi tiap percobaan staff mendapat kombinasi soal yang berbeda.</p>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Isi bank soal course dulu — minimal 30 soal aktif</h4>
+        <p>Lewat menu Question Bank per-course. Rekomendasi realistis: <strong>50–100 soal</strong> supaya variasi antar-percobaan benar-benar terasa acak (30 hanya syarat MINIMUM sistem, bukan target ideal). Bisa dibuat manual satu-satu, atau pakai Gemini di Google Sheets untuk generate banyak soal sekaligus lalu diimpor.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Buka Manage Courses → pilih course → Add Module</h4>
+        <p>Isi Title, pilih Type = <strong>Quiz</strong>. Jumlah soal per-attempt dan passing score mengikuti setting course (lihat halaman <strong>Add Courses</strong>) — tidak diatur ulang per-modul.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Timer otomatis mengikuti jumlah soal</h4>
+        <p>1,5 menit per soal — kalau attempt menampilkan 10 soal, staff punya 15 menit. Sistem auto-submit begitu waktu habis, tidak perlu staff menekan tombol apa pun.</p>
+      </div></div>
+    </div>
+
+    <div class="danger"><strong>Ingat dari halaman Add Courses:</strong> Publish akan DITOLAK kalau course punya modul Quiz tapi bank soal aktifnya belum sampai 30. Isi bank soal SEBELUM mencoba Publish, bukan sesudahnya.</div>
   </section>
 
   <!-- ═══════════ SOP BILINGUAL AUDIO (v2.110) ═══════════ -->
@@ -461,6 +581,154 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
 
     <h3 style="margin-top:28px">Detail teknis (untuk IT)</h3>
     <div id="sopTechAcc"></div>
+  </section>
+
+  <!-- ═══════════ PROGRESS & CERTIFICATE ═══════════ -->
+  <section class="page" id="p-progress-cert">
+    <div class="crumb">Trial · Cara Kerja Sistem</div>
+    <h1>Progress & <em>Certificate</em></h1>
+    <p class="lede">Sistem menghitung kemajuan course secara otomatis, dan menerbitkan sertifikat otomatis begitu staff lulus quiz — tidak ada langkah manual dari admin.</p>
+
+    <h3>Cara progress dihitung</h3>
+    <div class="ok">
+      <strong>Progress % = Modul Selesai ÷ Total Modul × 100.</strong> Setiap modul cuma punya 2 keadaan: selesai atau belum — tidak ada nilai parsial per modul.
+      <table style="margin-top:12px">
+        <tr><th>Jenis Modul</th><th>Kapan dianggap selesai</th></tr>
+        <tr><td class="f">Video</td><td>Sudah ditonton minimal <span class="field">min_watch_pct</span> (default 95%) dari durasi</td></tr>
+        <tr><td class="f">PDF</td><td>Semua halaman sudah dilewati (Next Page sampai akhir)</td></tr>
+        <tr><td class="f">Quiz</td><td>Sudah lulus (nilai ≥ passing_score course)</td></tr>
+      </table>
+    </div>
+
+    <h3 style="margin-top:24px">Syarat sertifikat terbit</h3>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Course punya has_certificate = Ya</h4>
+        <p>Diatur saat course dibuat/diedit — lihat halaman <strong>Add Courses</strong>.</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Staff lulus quiz</h4>
+        <p>Nilai ≥ passing_score course tersebut (minimal 85%, lihat halaman Add Courses).</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Sertifikat langsung terbit otomatis</h4>
+        <p>Tidak ada approval manual dari admin — begitu quiz lulus, cert_id langsung dibuat dan tercatat.</p>
+      </div></div>
+    </div>
+
+    <div class="warn">
+      <strong>Sertifikat punya masa berlaku — bukan selamanya.</strong>
+      <p style="margin-top:8px;margin-bottom:0">Diatur lewat <span class="field">cert_valid_months</span> saat course dibuat (default 12 bulan). Setelah lewat masa berlaku, status sertifikat berubah jadi <strong>expired</strong> di sistem — sertifikatnya tidak terhapus, tetap bisa dilihat sebagai riwayat, tapi tidak lagi dianggap berlaku. Kalau ada SOP yang butuh sertifikasi ulang berkala (misal keamanan pangan tahunan), staff perlu mengulang course itu setelah sertifikatnya expired untuk mendapat yang baru.</p>
+    </div>
+
+    <h3 style="margin-top:28px">Tampilan sertifikat</h3>
+    <p class="lede" style="margin-bottom:14px">Ini contoh sertifikat yang dilihat/didownload staff setelah lulus. Nama, nilai, dan tanggal terisi otomatis dari data staff yang sebenarnya.</p>
+
+<!-- Certificate Preview — White Design A4 Landscape v1.5 -->
+    <div style="background:#f0ede8;border-radius:16px;padding:24px">
+      <div style="background:#fff;width:100%;border-radius:4px;border:1.5px solid #e8e4dc;position:relative;overflow:visible;padding:32px 32px 48px;box-shadow:0 8px 40px rgba(0,0,0,0.12)">
+
+        <!-- Gold corner ornaments -->
+        <div style="position:absolute;top:20px;left:20px;width:32px;height:32px;border-top:2px solid var(--gold);border-left:2px solid var(--gold)"></div>
+        <div style="position:absolute;top:20px;right:20px;width:32px;height:32px;border-top:2px solid var(--gold);border-right:2px solid var(--gold)"></div>
+        <div style="position:absolute;bottom:20px;left:20px;width:32px;height:32px;border-bottom:2px solid var(--gold);border-left:2px solid var(--gold)"></div>
+        <div style="position:absolute;bottom:20px;right:20px;width:32px;height:32px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold)"></div>
+
+        <!-- Watermark -->
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0.04;overflow:hidden">
+          <img src="https://anabhidev.com/MFB/missfish-logo.webp" style="width:55%;height:auto">
+        </div>
+
+        <!-- Header row -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;position:relative">
+          <div>
+            <div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--black)">Miss Fish Bali</div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-top:2px">Learning Management System</div>
+          </div>
+          <div style="text-align:right;font-size:10.5px;color:#888;line-height:1.8">
+            <div>Certificate No: <strong style="color:var(--black)">MF-2026-SOS-0001</strong></div>
+            <div>Issue Date: <strong style="color:var(--black)">1 Aug 2026</strong></div>
+            <div>Valid For: <strong style="color:var(--black)">1 Year</strong></div>
+          </div>
+        </div>
+
+        <!-- Center logo -->
+        <div style="text-align:center;margin-top:-24px;margin-bottom:2px;position:relative">
+          <img src="https://anabhidev.com/MFB/missfish-logo-white.webp" style="height:136px;width:auto">
+        </div>
+
+        <!-- Certificate of Completion -->
+        <div style="text-align:center;display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px;position:relative">
+          <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold))"></div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);white-space:nowrap">CERTIFICATE OF COMPLETION</div>
+          <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold))"></div>
+        </div>
+
+        <!-- Main body -->
+        <div style="text-align:center;position:relative">
+          <div style="font-family:Georgia,serif;font-size:22px;color:var(--black);margin-bottom:2px">This is to certify that</div>
+          <div style="font-family:Georgia,serif;font-size:19px;font-style:italic;color:var(--gold);margin-bottom:10px">with distinction</div>
+          <div style="font-size:11px;color:#888;margin-bottom:4px">has successfully completed</div>
+
+          <!-- Employee name -->
+          <div style="font-family:Georgia,serif;font-size:34px;font-weight:700;color:var(--black);margin-bottom:6px;border-bottom:2px solid var(--black);display:inline-block;padding-bottom:3px">I Gede Agus Wibawa</div>
+
+          <div style="font-size:12px;color:#888;margin:6px 0 10px">IT Department · Miss Fish Bali</div>
+
+          <div style="font-size:12px;color:#666;margin-bottom:5px">has successfully completed the course</div>
+          <div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:var(--black);margin-bottom:12px">Sequence of Service</div>
+
+          <!-- Score badge -->
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1.5px solid var(--gold);border-radius:999px;margin-bottom:20px">
+            <span style="font-size:13px">🏆</span>
+            <span style="font-size:12px;font-weight:700;color:var(--gold)">Final Score: 92% · Passed with Distinction</span>
+          </div>
+
+          <!-- Signatures row -->
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;padding-top:16px;border-top:1px solid #f0ede8">
+
+            <!-- Left signature: Bayu Pramesti -->
+            <div style="text-align:center;flex:1">
+              <!-- Digital signature SVG -->
+              <svg width="140" height="44" viewBox="0 0 140 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 4px">
+                <path d="M8 36 C20 10, 30 38, 42 24 C50 14, 52 34, 62 28 C70 22, 72 38, 84 30 C92 24, 96 36, 108 32 C116 28, 118 36, 130 34" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24 38 C32 34, 40 40, 50 36" stroke="#1a1a1a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div style="height:1px;background:var(--black);margin:0 20px 6px"></div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--black)">BAYU PRAMESTI</div>
+              <div style="font-size:10px;color:#888">Training Manager</div>
+            </div>
+
+            <!-- Center emblem -->
+            <div style="flex:0 0 auto;padding:0 20px">
+              <div style="width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:#fff">
+                <div style="font-size:20px">🏅</div>
+                <div style="font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.3">MISS FISH<br>CERTIFIED</div>
+              </div>
+            </div>
+
+            <!-- Right signature: Agung Satria -->
+            <div style="text-align:center;flex:1">
+              <!-- Digital signature SVG -->
+              <svg width="140" height="44" viewBox="0 0 140 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 4px">
+                <path d="M6 30 C16 8, 28 36, 40 20 C48 8, 54 32, 68 26 C78 20, 82 34, 96 28 C106 22, 112 32, 126 30 C132 28, 134 32, 136 30" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 36 C28 30, 38 38, 52 34 C58 32, 62 36, 70 34" stroke="#1a1a1a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div style="height:1px;background:var(--black);margin:0 20px 6px"></div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--black)">AGUNG SATRIA</div>
+              <div style="font-size:10px;color:#888">General Manager</div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div style="margin-top:14px;padding-top:10px;border-top:1px solid #f0ede8;font-size:9.5px;color:#aaa">This certificate is digitally generated by Miss Fish Bali LMS · Certificate ID: MF-2026-SOS-0001</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
   </section>
 
   <!-- ═══════════ DEPLOY STATUS ═══════════ -->
