@@ -2,8 +2,12 @@
 <html lang="id">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFish_TrialPrep_Guide_v1.2.html
+     File        : MissFish_TrialPrep_Guide_v1.3.html
      Description : Panduan interaktif persiapan trial 10 orang.
+                   v1.3: perbaikan bug — tombol EN/ID sebelumnya tidak punya fungsi
+                   sama sekali (cuma markup CSS). Sekarang berfungsi
+                   secara visual, dengan catatan jujur bahwa isi masih
+                   satu bahasa.
                    v1.2: logo isi halaman diganti varian -white 150px, halaman
                    Deploy Status baru (daftar berkas sejak v2.105 yang
                    perlu disalin ke GAS).
@@ -15,8 +19,8 @@
                    Lebar mengikuti browser, tidak dikunci — sesuai standar
                    Anabhi Dev untuk guide/dashboard interaktif.
      IT Department · Miss Fish Bali
-     Version     : 1.2
-     Generated   : 13 August 2026, 09:40:52 WITA
+     Version     : 1.3
+     Generated   : 13 August 2026, 10:01:01 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -188,8 +192,8 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
     <span>Trial Prep Guide</span>
   </div>
   <div class="sb-lang">
-    <button class="on">EN</button>
-    <button>ID</button>
+    <button class="on" id="langEN" onclick="setLang('EN')">EN</button>
+    <button id="langID" onclick="setLang('ID')">ID</button>
   </div>
 
   <div class="sb-group">Overview</div>
@@ -531,6 +535,32 @@ function filterFn(){
   }));
 }
 renderFn(FEATURES);
+
+/* v1.3 — tombol EN/ID sebelumnya cuma markup CSS tanpa fungsi apa
+   pun; diklik tidak melakukan apa-apa. Sekarang tombolnya bekerja
+   secara visual, TAPI seluruh isi halaman masih satu bahasa
+   (Indonesia campur istilah teknis Inggris, sesuai gaya bahasa yang
+   dipakai di seluruh dokumen ini). Menekan ID/EN mengganti status
+   tombol yang aktif, dan menampilkan catatan jujur di bagian atas
+   supaya tidak terlihat seperti isinya berubah padahal tidak. */
+function setLang(lang){
+  document.getElementById('langEN').classList.toggle('on', lang==='EN');
+  document.getElementById('langID').classList.toggle('on', lang==='ID');
+  try { sessionStorage.setItem('trialguide_lang', lang); } catch(e){}
+
+  var note = document.getElementById('langNote');
+  if (!note) {
+    note = document.createElement('div');
+    note.id = 'langNote';
+    note.style.cssText = 'background:var(--amber-soft);border:1px solid rgba(217,119,6,.25);' +
+      'border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:11px 15px;' +
+      'margin-bottom:18px;font-size:13px;color:var(--gray-600)';
+    document.querySelector('.main').insertBefore(note, document.querySelector('.main').firstChild);
+  }
+  note.innerHTML = lang === 'EN'
+    ? '<strong>Note:</strong> this guide is currently written in Indonesian only (mixed with English technical terms). A full English version has not been built yet.'
+    : '<strong>Catatan:</strong> tombol bahasa aktif sesuai pilihan kakak. Seluruh isi guide ini memang satu bahasa (Indonesia campur istilah teknis Inggris) — belum ada versi terjemahan penuh.';
+}
 
 var PENDING = [
   { tag:'HIGH', color:'red', title:'Force password change belum ada di client',
