@@ -2,8 +2,19 @@
 <html lang="id">
 <!-- ================================================================
      Miss Fish Bali LMS
-     File        : MissFish_TrialPrep_Guide_v1.5.html
+     File        : MissFish_TrialPrep_Guide_v1.6.html
      Description : Panduan interaktif persiapan trial 10 orang.
+                   v1.6: halaman baru "Dual Accounts (IT/HR/TM)" di
+                   Admin Tasks (#6) — cara membuat 2 baris user
+                   (Admin + Employee) untuk 1 orang staff yang juga
+                   mengelola LMS, sesuai kebutuhan yang muncul di MOM
+                   demo HR. Prasyarat eksplisit: Admin Task #1 (Change
+                   Admin ID) wajib selesai dulu — MF0001 harus
+                   diselamatkan/diturunkan sebelum dual-account setup
+                   dikerjakan, supaya tidak ambigu akun admin mana
+                   yang sebenarnya aktif. Murni panduan operasional,
+                   tidak ada perubahan kode — sistem sudah mendukung
+                   ini karena Employee ID cuma perlu unik per baris.
                    v1.5: sidebar Admin Tasks bertambah dari 4 jadi 5 item.
                    Halaman baru "Add Courses" (cara membuat course dari
                    nol — title, department, passing_score minimal 85%,
@@ -60,8 +71,8 @@
                    cara ganti admin, tambah user, tambah video (untuk HR).
                    Lebar mengikuti browser, tidak dikunci.
      IT Department · Miss Fish Bali
-     Version     : 1.5
-     Generated   : 13 August 2026, 15:55:12 WITA
+     Version     : 1.6
+     Generated   : 14 August 2026, 17:25:40 WITA
      ================================================================ -->
 <head>
 <meta charset="UTF-8">
@@ -247,6 +258,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
   <div class="sb-item" data-p="add-user"><span class="ic">③</span> Add New User</div>
   <div class="sb-item" data-p="add-courses"><span class="ic">④</span> Add Courses</div>
   <div class="sb-item" data-p="add-video"><span class="ic">⑤</span> Add Modules</div>
+  <div class="sb-item" data-p="dual-accounts"><span class="ic">⑥</span> Dual Accounts (IT/HR/TM)</div>
 
   <div class="sb-group">Trial</div>
   <div class="sb-item" data-p="sop-bilingual"><span class="ic">🎧</span> SOP Bilingual Audio</div>
@@ -541,6 +553,48 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--gray-300);
     </div>
 
     <div class="danger"><strong>Ingat dari halaman Add Courses:</strong> Publish akan DITOLAK kalau course punya modul Quiz tapi bank soal aktifnya belum sampai 30. Isi bank soal SEBELUM mencoba Publish, bukan sesudahnya.</div>
+  </section>
+
+  <!-- ═══════════ DUAL ACCOUNTS (IT/HR/TM) ═══════════ -->
+  <section class="page" id="p-dual-accounts">
+    <div class="crumb">Admin Task · #6</div>
+    <h1>2 akun untuk <em>1 orang</em> (IT / HR / Training Manager)</h1>
+    <p class="lede">Staff yang juga mengelola LMS (IT, HR, Training Manager) butuh 2 identitas terpisah: satu untuk dirinya sebagai peserta training biasa, satu lagi untuk mengelola sistem. Ini murni keputusan operasional — sistem sudah mendukungnya tanpa perubahan kode apa pun.</p>
+
+    <div class="danger">
+      <strong>Prasyarat — WAJIB selesai dulu:</strong>
+      <p style="margin-top:8px;margin-bottom:0">Halaman ini TIDAK BOLEH dikerjakan sebelum <strong>Admin Task #1 — Change Admin ID</strong> selesai. MF0001 adalah ID staff lain (bukan ID kakak) dan harus diselamatkan (diturunkan ke role aslinya) lebih dulu. Mengerjakan dual-account setup sebelum itu berisiko membingungkan mana akun admin yang sebenarnya aktif.</p>
+    </div>
+
+    <h3>Kenapa cukup 2 baris user biasa</h3>
+    <p style="font-size:14px;color:var(--gray-600);max-width:78ch;margin-bottom:14px">Employee ID di sheet <span class="field">Users</span> hanya perlu unik per baris — tidak ada aturan "1 orang manusia = 1 ID". Jadi 1 orang staff IT/HR/TM bisa punya 2 baris data, masing-masing dengan ID, password, dan role berbeda, tanpa menyentuh kode LMS sama sekali.</p>
+
+    <table>
+      <tr><th>Akun</th><th>Contoh ID</th><th>Role</th><th>Dipakai untuk</th></tr>
+      <tr><td class="f">Admin</td><td class="f">MF0001</td><td><span class="field">IT_ADMIN</span> / <span class="field">HRM</span> / <span class="field">TM</span></td><td>Login mengelola sistem — Manage Users, Manage Courses, Reports, dst. TIDAK PERNAH dipakai ikut training sebagai peserta.</td></tr>
+      <tr><td class="f">Employee</td><td class="f">MF0042</td><td><span class="field">STAFF</span></td><td>Login sehari-hari orang yang sama untuk ikut course, kerjakan quiz, dapat sertifikat — progress-nya tercatat sebagai staff biasa, terpisah dari aktivitas admin.</td></tr>
+    </table>
+
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">
+        <h4>Pastikan Admin Task #1 sudah selesai</h4>
+        <p>Akun admin kakak sendiri sudah aktif dan terbukti bisa login, MF0001 lama sudah diturunkan ke role aslinya (bukan dihapus).</p>
+      </div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">
+        <h4>Buat baris Employee baru lewat Add New User</h4>
+        <p>Menu <strong>Users → Add User</strong>. Isi nama yang sama dengan akun admin kakak, tapi Employee ID baru (format MFxxxx berikutnya yang belum dipakai), role <span class="field">STAFF</span>, department sesuai jabatan asli.</p>
+      </div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">
+        <h4>Simpan kedua kredensial secara terpisah</h4>
+        <p>Login admin dan login employee punya password masing-masing sendiri — tidak otomatis sama. Catat keduanya di tempat aman, jangan sampai tertukar.</p>
+      </div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">
+        <h4>Uji coba: login sebagai employee, cek course muncul normal</h4>
+        <p>Course yang di-assign ke department atau ke ID employee ini harus tampil di <strong>My Courses</strong> seperti staff lain — kalau tidak muncul, cek department pada baris Employee sudah benar.</p>
+      </div></div>
+    </div>
+
+    <div class="ok"><strong>Berlaku untuk siapa saja</strong> yang perlu 2 peran sekaligus — tidak terbatas IT/HR/TM. Pola yang sama bisa dipakai kalau nanti ada kebutuhan serupa untuk role lain.</div>
   </section>
 
   <!-- ═══════════ SOP BILINGUAL AUDIO (v2.110) ═══════════ -->
