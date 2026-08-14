@@ -95,7 +95,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .loc-btn:hover{background:var(--emerald);color:var(--black);}.loc-btn:disabled{opacity:0.5;cursor:not-allowed;}
 .topbar-avatar{width:34px;height:34px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--emerald);font-size:11px;font-weight:800;cursor:pointer;}
 /* CHAT */
-.chat-container{flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
+.chat-container{flex:1;min-height:0;display:flex;flex-direction:column;padding:24px clamp(16px,4vw,48px);overflow:hidden;width:100%;box-sizing:border-box;}
 .chat-header{background:var(--black);border-radius:14px;padding:20px 24px;margin-bottom:16px;flex-shrink:0;max-height:200px;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease,margin-bottom 0.4s ease,padding 0.4s ease;opacity:1;}
 .chat-header.hidden{max-height:0;opacity:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none;}
 .gemini-status{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#22C55E;margin-bottom:10px;}
@@ -111,11 +111,14 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .chat-messages{flex:1;min-height:0;overflow-y:auto;padding-right:4px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;}
 .chat-messages::-webkit-scrollbar{width:4px;}.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 .msg{display:flex;gap:10px;align-items:flex-end;}.msg.user{flex-direction:row-reverse;}
+.msg-wrap{display:flex;flex-direction:column;max-width:min(75%,640px);min-width:0;}
+.msg.user .msg-wrap{align-items:flex-end;}
+.msg.bot .msg-wrap{align-items:flex-start;}
 .msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
 .msg.bot .msg-av{background:var(--black);color:var(--emerald);}.msg.user .msg-av{background:var(--emerald);color:var(--black);}
-.msg-bubble{max-width:75%;min-width:auto;padding:12px 16px;border-radius:16px;font-size:13px;line-height:1.65;word-break:break-word;}
+.msg-bubble{width:100%;min-width:auto;padding:12px 16px;border-radius:16px;font-size:13px;line-height:1.65;word-break:break-word;box-sizing:border-box;}
 .msg.bot .msg-bubble{background:var(--white);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text-primary);}
-.msg.user .msg-bubble{background:var(--black);color:#fff;border-bottom-right-radius:4px;min-width:auto!important;width:fit-content!important;max-width:75%!important;}
+.msg.user .msg-bubble{background:var(--black);color:#fff;border-bottom-right-radius:4px;width:fit-content;max-width:100%;}
 .msg-time{font-size:10px;color:var(--text-muted);margin-top:4px;}.msg.user .msg-time{text-align:right;}
 .msg-actions{display:flex;gap:6px;margin-top:6px;opacity:1;flex-wrap:wrap;}
 .msg-action-btn{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-muted);font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
@@ -149,7 +152,8 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .img-preview-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;border:2px solid var(--emerald);flex-shrink:0;}
 .img-preview-name{font-size:10px;color:var(--text-muted);max-width:90px;flex-shrink:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .img-preview-remove{width:18px;height:18px;border-radius:50%;background:#EF4444;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex-shrink:0;}
-.msg-bubble-img{max-width:100%;border-radius:10px;margin-bottom:6px;display:block;border:1px solid rgba(255,255,255,.2);}
+.msg-bubble-imgs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.msg-bubble-img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.2);flex-shrink:0;}
 .followup-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);clear:both;width:100%;}
 .followup-chip{padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:16px;font-size:11px;font-weight:600;color:#555;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:inline-block;}
 .followup-chip:hover{background:var(--emerald);color:#fff;border-color:var(--emerald);}
@@ -173,8 +177,9 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .mobile-suggestions::-webkit-scrollbar{display:none;}.mobile-suggestions .chip{flex-shrink:0;font-size:11px;padding:7px 12px;}
 .mobile-messages{flex:1;min-height:0;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:12px;}
 .mobile-messages::-webkit-scrollbar{display:none;}
-.mobile-messages .msg-bubble{max-width:88%;min-width:auto;word-break:break-word;}
-.mobile-messages .msg.user .msg-bubble{min-width:60px!important;width:fit-content!important;}
+.mobile-messages .msg-wrap{max-width:88%;}
+.mobile-messages .msg-bubble{min-width:auto;word-break:break-word;}
+.mobile-messages .msg.user .msg-bubble{min-width:60px;width:fit-content;max-width:100%;}
 .mobile-input-wrap{flex-shrink:0;background:var(--white);border-top:1px solid var(--border);padding:10px 12px;}
 .mobile-input-row{display:flex;gap:8px;align-items:flex-end;}
 .mobile-input{flex:1;padding:11px 14px;background:#F7F7F5;border:1.5px solid var(--border);border-radius:22px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text-primary);outline:none;resize:none;transition:border-color 0.2s;max-height:100px;line-height:1.4;}
@@ -293,7 +298,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .area-modal-item.loc-item{color:var(--emerald);}
 .area-modal-close{display:block;width:100%;padding:13px;background:rgba(255,255,255,.06);border:none;border-radius:12px;color:var(--sidebar-muted);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;}
 /* FAVORITES */
-.fav-panel{display:none;flex:1;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
+.fav-panel{display:none;flex:1;flex-direction:column;padding:24px clamp(16px,4vw,48px);overflow:hidden;width:100%;box-sizing:border-box;}
 .fav-panel.show{display:flex;}
 .fav-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;}
 .fav-panel-title{font-size:16px;font-weight:800;color:var(--text-primary);}
@@ -339,7 +344,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}}
 /* CALENDAR PANEL */
-.calendar-panel{display:none;flex:1;flex-direction:column;padding:24px 28px;overflow:hidden;max-width:860px;width:100%;margin:0 auto;align-self:stretch;}
+.calendar-panel{display:none;flex:1;flex-direction:column;padding:24px clamp(16px,4vw,48px);overflow:hidden;width:100%;box-sizing:border-box;}
 .calendar-panel.show{display:flex;}
 .cal-panel-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;flex-shrink:0;}
 .cal-panel-title{font-size:16px;font-weight:800;color:var(--text-primary);}
@@ -800,7 +805,7 @@ window.addEventListener('load',function(){showNameScreen();});
 // ── DASHBOARD INIT ───────────────────────────────────────────
 function initDash(){
   updateGreeting();updateClock();setInterval(updateClock,1000);
-  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadChatLang();loadIntelligence();renderChips();
+  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadChatLang();renderChips();
   resetIdleTimer();requestNotifPermission();
   var displayName=getUserDisplayName();
   if(userName){
@@ -878,8 +883,8 @@ function addBot(text,animate){
   var lastUserMsg='';
   for(var hi=convHistory.length-1;hi>=0;hi--){if(convHistory[hi].role==='user'){lastUserMsg=convHistory[hi].text;break;}}
   botQuestions.set(id,lastUserMsg);
-  var actions='<div class="msg-actions"><button class="msg-action-btn" id="fb-like-'+id+'" onclick="sendFeedback(\''+id+'\',\'like\')">\U0001f44d</button><button class="msg-action-btn" id="fb-dislike-'+id+'" onclick="sendFeedback(\''+id+'\',\'dislike\')">\U0001f44e</button><button class="msg-action-btn" id="sav-'+id+'" onclick="saveFavorite(\''+id+'\')">'+SVG_STAR+' Simpan</button><button class="msg-action-btn" onclick="copyMsg(this,\''+id+'\')">'+SVG_COPY+' Copy</button><button class="msg-action-btn" onclick="exportMsgPDF(this,\''+id+'\')">'+SVG_PDF+' PDF</button><button class="msg-action-btn" onclick="toggleReadAloud(this,\''+id+'\')">\U0001f50a Baca</button></div>';
-  var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div><div class="msg-bubble" id="'+id+'-bubble"></div><div class="msg-time">'+getTime()+' \u00b7 BaliEats AI</div>'+actions+'</div></div>';
+  var actions='<div class="msg-actions"><button class="msg-action-btn" id="fb-like-'+id+'" onclick="sendFeedback(\''+id+'\',\'like\')">👍</button><button class="msg-action-btn" id="fb-dislike-'+id+'" onclick="sendFeedback(\''+id+'\',\'dislike\')">👎</button><button class="msg-action-btn" id="sav-'+id+'" onclick="saveFavorite(\''+id+'\')">'+SVG_STAR+' Simpan</button><button class="msg-action-btn" onclick="copyMsg(this,\''+id+'\')">'+SVG_COPY+' Copy</button><button class="msg-action-btn" onclick="exportMsgPDF(this,\''+id+'\')">'+SVG_PDF+' PDF</button><button class="msg-action-btn" onclick="toggleReadAloud(this,\''+id+'\')">🔊 Baca</button></div>';
+  var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div class="msg-wrap"><div class="msg-bubble" id="'+id+'-bubble"></div><div class="msg-time">'+getTime()+' \u00b7 BaliEats AI</div>'+actions+'</div></div>';
   var box=activeMsgContainer();
   if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'bot',text:text});msgCount++;checkMsgCountHide();
@@ -897,14 +902,14 @@ function typeText(bubbleId,text,scrollEl){
   tick();
 }
 function addUser(text){
-  var html='<div class="msg user"><div class="msg-av">ME</div><div style="display:flex;flex-direction:column;align-items:flex-end;"><div class="msg-bubble">'+text+'</div><div class="msg-time">'+getTime()+'</div></div></div>';
+  var html='<div class="msg user"><div class="msg-av">ME</div><div class="msg-wrap"><div class="msg-bubble">'+text+'</div><div class="msg-time">'+getTime()+'</div></div></div>';
   var box=activeMsgContainer();
   if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'user',text:text});msgCount++;checkMsgCountHide();
 }
 function addTyping(){
   var id='t'+Date.now();
-  var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div>';
+  var html='<div class="msg bot" id="'+id+'"><div class="msg-av">AI</div><div class="msg-wrap"><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div></div>';
   var box=activeMsgContainer();
   if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   return id;
@@ -993,7 +998,7 @@ function copyMsg(btn,msgId){
 }
 function exportMsgPDF(btn,msgId){
   var el=document.querySelector('#'+msgId+'-bubble');if(!el)return;
-  var text=el.innerText||el.textContent;
+  var text=cleanForExport(el.innerText||el.textContent);
   try{
     var doc=new window.jspdf.jsPDF({orientation:'p',unit:'mm',format:'a4'});
     doc.setFillColor(10,10,10);doc.rect(0,0,210,28,'F');
@@ -1061,9 +1066,9 @@ function onFileSelect(event,prefix){
 function removeImageAt(idx){currentImages.splice(idx,1);renderPreviews();}
 function clearAllImages(){currentImages=[];['d','m'].forEach(function(p){var w=document.getElementById(p+'-img-preview');var b=document.getElementById(p+'-attach-btn');var f=document.getElementById(p+'-file-input');if(w){w.innerHTML='';w.classList.remove('show');}if(b)b.classList.remove('has-image');if(f)f.value='';});}
 function addUserWithImages(text,images){
-  var imgsHtml='';images.forEach(function(img){imgsHtml+='<img class="msg-bubble-img" src="'+img.dataUrl+'" alt="uploaded image">';});
+  var imgsHtml='<div class="msg-bubble-imgs">';images.forEach(function(img){imgsHtml+='<img class="msg-bubble-img" src="'+img.dataUrl+'" alt="uploaded image">';});imgsHtml+='</div>';
   var label=images.length>1?'['+images.length+' Images] ':'[Image] ';
-  var html='<div class="msg user"><div class="msg-av">ME</div><div style="display:flex;flex-direction:column;align-items:flex-end;"><div class="msg-bubble">'+imgsHtml+'<span>'+text+'</span></div><div class="msg-time">'+getTime()+'</div></div></div>';
+  var html='<div class="msg user"><div class="msg-av">ME</div><div class="msg-wrap"><div class="msg-bubble">'+imgsHtml+'<span>'+text+'</span></div><div class="msg-time">'+getTime()+'</div></div></div>';
   var box=activeMsgContainer();
   if(box){box.insertAdjacentHTML('beforeend',html);box.scrollTop=box.scrollHeight;}
   convHistory.push({role:'user',text:label+text});msgCount++;checkMsgCountHide();
@@ -1372,7 +1377,14 @@ function renderChips(){
 
 // ── EXPORT PERCAKAPAN PENUH ────────────────────────────────────────────────────────
 function cleanForExport(text){
-  return String(text).replace(/\*\*/g,'').replace(/\*/g,'').replace(/`/g,'').replace(/#{1,3}\s/g,'').replace(/^[\-\u2022]\s/gm,'\u2022 ');
+  return String(text)
+    .replace(/\*\*/g,'').replace(/\*/g,'').replace(/`/g,'').replace(/#{1,3}\s/g,'').replace(/^[\-\u2022]\s/gm,'\u2022 ')
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu,'')
+    .replace(/[\u{2600}-\u{27BF}]/gu,'')
+    .replace(/[\u{2190}-\u{21FF}]/gu,'')
+    .replace(/[\u{2B00}-\u{2BFF}]/gu,'')
+    .replace(/\uFE0F/g,'')
+    .replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
 }
 function exportFullConversation(){
   if(convHistory.length===0){alert('Belum ada percakapan untuk diexport.');return;}
