@@ -3,8 +3,8 @@
 AnabhiDev - BaliEats-AI — BaliEats AI (Bali Culinary AI Assistant)
 HTML/CSS/JS · Cloudflare Pages · Gemini API (via Google Apps Script)
 Development · Anabhi Dev
-Version   : 2.2
-Generated : 15 August 2026, 10:34:05 WITA
+Version   : 2.3
+Generated : 15 August 2026, 20:49:12 WITA
 ================================================================
 -->
 <!DOCTYPE html>
@@ -50,7 +50,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
   --sidebar-width:240px;--sidebar-collapsed:64px;
 }
 /* NAME SCREEN */
-#name-screen{position:fixed;inset:0;background:#0A0A0A;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:max(48px,env(safe-area-inset-top) + 24px) 24px max(24px,env(safe-area-inset-bottom));z-index:8889;transition:opacity 0.4s;min-height:100dvh;overflow-y:auto;}
+#name-screen{position:fixed;inset:0;background:#0A0A0A;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:max(80px,env(safe-area-inset-top) + 24px) 24px max(24px,env(safe-area-inset-bottom));z-index:8889;transition:opacity 0.4s;min-height:100dvh;overflow-y:auto;}
 #name-screen.on{display:flex;}#name-screen.off{opacity:0;pointer-events:none;}
 .name-wrap{width:100%;max-width:360px;display:flex;flex-direction:column;align-items:center;}
 .name-logo{width:clamp(168px,65vw,252px);height:auto;margin-bottom:14px;object-fit:contain;}
@@ -107,14 +107,14 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .chat-container{flex:1;min-height:0;display:flex;flex-direction:column;padding:24px clamp(16px,4vw,48px);overflow:hidden;width:100%;box-sizing:border-box;}
 .chat-header{background:var(--black);border-radius:14px;padding:20px 24px;margin-bottom:16px;flex-shrink:0;max-height:200px;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease,margin-bottom 0.4s ease,padding 0.4s ease;opacity:1;}
 .chat-header.hidden{max-height:0;opacity:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none;}
-.gemini-status{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#22C55E;margin-bottom:10px;}
+.gemini-status{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px;}
 .gemini-dot{width:6px;height:6px;background:#22C55E;border-radius:50%;animation:pulse 2s infinite;}
 .chat-badge{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--emerald);margin-bottom:6px;}
 .ai-dot{width:7px;height:7px;background:var(--emerald);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.75);}}
 .chat-header h2{color:#fff;font-size:16px;font-weight:700;margin-bottom:4px;}
 .chat-header p{color:rgba(255,255,255,.5);font-size:12px;line-height:1.5;}
-.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;flex-shrink:0;}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;flex-shrink:0;}
 .chip{padding:8px 14px;background:var(--white);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:#555;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .chip:hover{background:var(--emerald);color:#fff;border-color:var(--emerald);}
 .chat-messages{flex:1;min-height:0;overflow-y:auto;padding-right:4px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;}
@@ -168,8 +168,8 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .followup-chip:hover{background:var(--emerald);color:#fff;border-color:var(--emerald);}
 /* MOBILE */
 .mobile-only{width:100%;min-height:100dvh;height:100dvh;flex-direction:column;background:var(--surface);overflow:hidden;}
-.mobile-topbar{background:var(--sidebar-bg);padding:max(12px,env(safe-area-inset-top)) 12px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px;overflow-x:hidden;}
-.mobile-logo{height:20px;object-fit:contain;flex-shrink:0;}.mobile-logo-txt{color:var(--emerald);font-size:16px;font-weight:800;flex-shrink:0;}
+.mobile-topbar{background:var(--sidebar-bg);padding:max(12px,env(safe-area-inset-top)) 12px 12px 6px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px;overflow-x:hidden;}
+.mobile-logo{height:30px;object-fit:contain;flex-shrink:0;}.mobile-logo-txt{color:var(--emerald);font-size:16px;font-weight:800;flex-shrink:0;}
 .mobile-topbar-center{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
 .mobile-app-name{font-size:11px;font-weight:700;color:#fff;letter-spacing:0.5px;text-align:center;white-space:nowrap;}
 .mobile-tagline{display:none;}
@@ -182,7 +182,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .mobile-chat-header.hidden{max-height:0;opacity:0;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none;}
 .mobile-chat-header h3{color:#fff;font-size:14px;font-weight:700;margin-bottom:2px;}
 .mobile-chat-header p{color:rgba(255,255,255,.45);font-size:11px;}
-.mobile-suggestions{display:flex;gap:8px;padding:10px 12px 4px;overflow-x:auto;flex-shrink:0;margin-bottom:10px;}
+.mobile-suggestions{display:flex;gap:8px;padding:10px 12px 4px;overflow-x:auto;flex-shrink:0;}
 .mobile-suggestions::-webkit-scrollbar{display:none;}.mobile-suggestions .chip{flex-shrink:0;font-size:11px;padding:7px 12px;}
 .mobile-messages{flex:1;min-height:0;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:12px;}
 .mobile-messages::-webkit-scrollbar{display:none;}
@@ -235,7 +235,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .intel-error{padding:12px 18px;font-size:12px;color:rgba(255,255,255,.3);}
 .mobile-intel-card{background:var(--black);border-radius:12px;margin:8px 12px 0;flex-shrink:0;overflow:hidden;border:1px solid #222;transition:max-height 0.4s ease;max-height:500px;}
 .mobile-intel-card.collapsed{max-height:48px;}
-.intel-mini{background:var(--black);border-radius:10px;padding:0;margin-bottom:14px;flex-shrink:0;border:1px solid #222;overflow:hidden;transition:max-height 0.3s ease;max-height:400px;}
+.intel-mini{background:var(--black);border-radius:10px;padding:0;margin-bottom:14px;flex-shrink:0;border:1px solid #222;overflow:hidden;transition:max-height 0.3s ease;max-height:900px;}
 .intel-mini.collapsed{max-height:44px;}
 .intel-mini-inner{padding:12px 16px;}
 .intel-mini-row{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.6);line-height:1.6;}
@@ -248,6 +248,11 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .intel-mini-link{font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;}
 .intel-mini-link:hover{color:var(--emerald);}
 .intel-mini-loading{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px;padding:0 16px 12px;}
+.intel-mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 16px 0;padding-top:10px;border-top:1px solid #222;}
+.intel-mini-stat{text-align:center;}
+.intel-mini-stat-val{font-size:13px;font-weight:800;color:#fff;}
+.intel-mini-stat-label{font-size:8px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+.intel-mini-actions{margin:10px 16px 12px;padding:8px 10px;background:rgba(16,185,129,0.08);border-left:2px solid var(--emerald);border-radius:0 6px 6px 0;font-size:10px;color:rgba(255,255,255,.6);line-height:1.6;white-space:pre-line;}
 /* REPORT */
 .report-title{font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
 .report-subtitle{font-size:12px;color:var(--text-muted);}
@@ -345,7 +350,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .diet-option.diet-selected{background:rgba(16,185,129,.15);color:var(--emerald);}
 .diet-modal-close{display:block;width:100%;padding:13px;background:rgba(255,255,255,.06);border:none;border-radius:12px;color:var(--sidebar-muted);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;}
 /* BUDGET CHIPS */
-.budget-row{display:flex;gap:6px;margin-bottom:14px;flex-shrink:0;overflow-x:auto;padding-bottom:2px;}
+.budget-row{display:flex;gap:6px;flex-shrink:0;overflow-x:auto;padding-bottom:2px;}
 .budget-row::-webkit-scrollbar{display:none;}
 .budget-chip{padding:5px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:16px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#555;cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0;}
 .budget-chip:hover{background:var(--black);color:#fff;border-color:var(--black);}
@@ -588,8 +593,11 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         </div>
         <div class="intel-mini-inner" id="d-mini-body" style="display:none;">
           <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="d-mini-summary"></span></div>
+          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#22C55E;"></div><span class="intel-mini-label" style="color:#22C55E;">Positive: </span><span id="d-mini-positive"></span></div>
           <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="d-mini-critical"></span></div>
           <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="d-mini-watch"></span></div>
+          <div class="intel-mini-stats" id="d-mini-stats"></div>
+          <div class="intel-mini-actions" id="d-mini-actions"></div>
         </div>
         <div class="intel-mini-inner" id="d-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
       </div>
@@ -642,7 +650,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 <!-- MOBILE LAYOUT -->
 <div class="mobile-only" id="mobile-layout">
   <div class="mobile-topbar">
-    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="120" height="26" onerror="this.style.display='none';document.getElementById('mb-logo-txt').style.display='block'">
+    <img class="mobile-logo" src="https://anabhidev.com/BaliEats-AI/baliEats-logo-landscape.webp" alt="BaliEats AI" width="180" height="39" onerror="this.style.display='none';document.getElementById('mb-logo-txt').style.display='block'">
     <span id="mb-logo-txt" class="mobile-logo-txt" style="display:none">🌿</span>
     <div class="mobile-topbar-center">
       <div class="mobile-app-name">BaliEats AI</div>
@@ -673,14 +681,17 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       </div>
       <div class="intel-mini-inner" id="m-mini-body" style="display:none;">
         <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="m-mini-summary"></span></div>
+        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#22C55E;"></div><span class="intel-mini-label" style="color:#22C55E;">Positive: </span><span id="m-mini-positive"></span></div>
         <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="m-mini-critical"></span></div>
         <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="m-mini-watch"></span></div>
+        <div class="intel-mini-stats" id="m-mini-stats"></div>
+        <div class="intel-mini-actions" id="m-mini-actions"></div>
       </div>
       <div class="intel-mini-inner" id="m-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
     </div>
     <div class="mobile-messages" id="m-msgs">
       <div class="mobile-suggestions" id="m-chips"></div>
-      <div class="budget-row" style="padding:4px 12px;margin-bottom:10px;" id="m-budget-chips">
+      <div class="budget-row" style="padding:4px 12px;" id="m-budget-chips">
         <button class="budget-chip active" data-budget="semua" onclick="setBudget(this,'semua')">💰 Semua</button>
         <button class="budget-chip" data-budget="hemat" onclick="setBudget(this,'hemat')">🟢 &lt;50rb</button>
         <button class="budget-chip" data-budget="sedang" onclick="setBudget(this,'sedang')">🟡 50-150rb</button>
@@ -845,13 +856,22 @@ function showNameScreen(){
 }
 function submitName(){
   var ni=document.getElementById('name-input');var btn=document.getElementById('name-btn');
-  var val=ni?ni.value.trim():'';
+  var raw=ni?ni.value.trim():'';
+  var val=sanitizeUserName(raw);
   if(!val){if(ni){ni.style.borderColor='#EF4444';setTimeout(function(){ni.style.borderColor='';},1000);}return;}
   userName=val;
   localStorage.setItem('balieats_user',JSON.stringify({name:userName,title:userTitle}));
   if(btn){btn.disabled=true;btn.textContent='Selamat datang! \u{1F389}';}
   var ns=document.getElementById('name-screen');
   if(ns){ns.classList.add('off');setTimeout(function(){ns.style.display='none';initDash();},400);}
+}
+// Bersihkan nama: hanya huruf (termasuk aksen) dan spasi, spasi tunggal, tanpa tanda baca/angka/emoji
+function sanitizeUserName(s){
+  return String(s)
+    .replace(/[^\p{L}\s]/gu,'')
+    .replace(/\s+/g,' ')
+    .trim()
+    .substring(0,30);
 }
 function getUserDisplayName(){return userName?userTitle+' '+userName:'';}
 window.addEventListener('load',function(){showNameScreen();});
@@ -983,6 +1003,11 @@ function typeText(bubbleId,text,scrollEl){
     if(scrollEl)scrollEl.scrollTop=scrollEl.scrollHeight;setTimeout(tick,16);}
   tick();
 }
+// Pesan error ramah, dibedakan antara timeout (AbortError) vs error lain
+function getFriendlyErrorMessage(err){
+  if(err&&err.name==='AbortError')return 'Server lagi lambat merespons, coba lagi sebentar ya \u{1F64F}';
+  return 'Server lagi ramai, coba lagi dalam beberapa saat ya \u{1F64F}';
+}
 function addUser(text){
   var id='u'+Date.now();
   var html='<div class="msg user"><div class="msg-av">ME</div><div class="msg-wrap"><div class="msg-bubble" id="'+id+'-bubble">'+text+'</div><div class="msg-time">'+getTime()+'</div><div class="msg-actions"><button class="msg-action-btn" onclick="copyMsg(this,\''+id+'\')">'+SVG_COPY+' Copy</button></div></div></div>';
@@ -1010,7 +1035,7 @@ function processQuery(q){
   var tOut=setTimeout(function(){var el=document.querySelector('#'+tid+' .typing-indicator');if(el)el.innerHTML='<span style="font-size:11px;color:var(--text-muted);padding:0 4px;">Memproses, harap tunggu... \u23f3</span>';},10000);
   gasPost('askBaliEats',{q:fullQ,history:convHistory.slice(-10)},
     function(answer){clearTimeout(tOut);rmTyping(tid);var bid=addBot(answer||'Maaf, tidak ada respon. Silakan coba lagi.',true);addFollowUpSuggestions(bid,q);setLoading(false);},
-    function(err){clearTimeout(tOut);rmTyping(tid);addBot('Maaf, terjadi kesalahan. Silakan coba lagi.');setLoading(false);console.error(err);}
+    function(err){clearTimeout(tOut);rmTyping(tid);addBot(getFriendlyErrorMessage(err));setLoading(false);console.error(err);}
   );
 }
 function processQueryWithImage(q){
@@ -1023,7 +1048,7 @@ function processQueryWithImage(q){
   var payload=imgs.map(function(img){return{base64:img.base64,mimeType:img.mimeType};});
   gasPost('askBaliEatsWithImage',{q:q,images:payload,history:convHistory.slice(-4)},
     function(answer){clearTimeout(tOut);rmTyping(tid);addBot(answer||'Sorry, no response.',true);setLoading(false);},
-    function(err){clearTimeout(tOut);rmTyping(tid);addBot('Maaf, terjadi kesalahan. Silakan coba lagi.');setLoading(false);console.error(err);}
+    function(err){clearTimeout(tOut);rmTyping(tid);addBot(getFriendlyErrorMessage(err));setLoading(false);console.error(err);}
   );
 }
 function dSend(){var i=document.getElementById('d-input');var q=i.value.trim();if(!q)return;var parsed=tryParseNumberedInput(q);if(parsed){processQuery(parsed);i.value='';i.style.height='';return;}currentImages.length>0?processQueryWithImage(q):processQuery(q);i.value='';i.style.height='';}
@@ -1059,6 +1084,8 @@ function showChatView(){
   var df=document.getElementById('d-fav');if(df)df.classList.remove('show');
   var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='';
   var mf=document.getElementById('m-fav');if(mf)mf.classList.remove('show');
+  var dc=document.getElementById('d-cal');if(dc)dc.classList.remove('show');
+  var mc=document.getElementById('m-cal');if(mc)mc.classList.remove('show');
 }
 function showChat(){showChatView();}
 function showFavoritesPanel(){
@@ -1066,6 +1093,8 @@ function showFavoritesPanel(){
   var df=document.getElementById('d-fav');if(df){df.classList.add('show');renderFavorites();}
   var mca=document.getElementById('mobile-chat-area');if(mca)mca.style.display='none';
   var mf=document.getElementById('m-fav');if(mf){mf.classList.add('show');renderFavorites();}
+  var dc=document.getElementById('d-cal');if(dc)dc.classList.remove('show');
+  var mc=document.getElementById('m-cal');if(mc)mc.classList.remove('show');
 }
 
 // ── COPY & PDF ───────────────────────────────────────────────
@@ -1623,6 +1652,8 @@ function renderChips(){
   var html=chips.map(function(c){return '<div class="chip" onclick="sendChip(this)">'+c+'</div>';}).join('');
   var dc=document.getElementById('d-chips');if(dc){dc.innerHTML=html;dc.style.display='';}
   var mc=document.getElementById('m-chips');if(mc){mc.innerHTML=html;mc.style.display='';}
+  var db=document.getElementById('d-budget-chips');if(db)db.style.display='';
+  var mb=document.getElementById('m-budget-chips');if(mb)mb.style.display='';
 }
 
 // ── EXPORT PERCAKAPAN PENUH ────────────────────────────────────────────────────────
@@ -1785,10 +1816,20 @@ function populateMiniCard(data){
     if(!loading||!body)return;
     if(data.error){loading.style.display='none';if(error){error.style.display='block';error.textContent=data.error;}return;}
     loading.style.display='none';body.style.display='block';
-    var sum=(data.summary||'').split('.')[0]+'.';var crit=data.critical||'';var watch=data.watch||'';
-    var es=document.getElementById(p+'-mini-summary');if(es)es.textContent=sum;
-    var ec=document.getElementById(p+'-mini-critical');if(ec)ec.textContent=crit.length>80?crit.substring(0,80)+'...':crit;
-    var ew=document.getElementById(p+'-mini-watch');if(ew)ew.textContent=watch.length>80?watch.substring(0,80)+'...':watch;
+    var es=document.getElementById(p+'-mini-summary');if(es)es.textContent=data.summary||'';
+    var ep=document.getElementById(p+'-mini-positive');if(ep)ep.textContent=data.positive||'';
+    var ec=document.getElementById(p+'-mini-critical');if(ec)ec.textContent=data.critical||'';
+    var ew=document.getElementById(p+'-mini-watch');if(ew)ew.textContent=data.watch||'';
+    var stats=document.getElementById(p+'-mini-stats');
+    if(stats&&data.totalConversations!==undefined){
+      stats.innerHTML=
+        '<div class="intel-mini-stat"><div class="intel-mini-stat-val">'+data.totalConversations+'</div><div class="intel-mini-stat-label">Percakapan</div></div>'+
+        '<div class="intel-mini-stat"><div class="intel-mini-stat-val">'+data.errorRate+'%</div><div class="intel-mini-stat-label">Error Rate</div></div>'+
+        '<div class="intel-mini-stat"><div class="intel-mini-stat-val">'+data.avgResponseTime+'s</div><div class="intel-mini-stat-label">Avg Respons</div></div>'+
+        '<div class="intel-mini-stat"><div class="intel-mini-stat-val">'+(data.busiestHour?data.busiestHour.split(':')[0]+':00':'\u2014')+'</div><div class="intel-mini-stat-label">Jam Sibuk</div></div>';
+    }
+    var actions=document.getElementById(p+'-mini-actions');
+    if(actions)actions.textContent=data.recommended_actions?'\U0001F4A1 '+data.recommended_actions:'';
   });
 }
 
