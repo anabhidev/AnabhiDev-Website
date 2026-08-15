@@ -226,15 +226,19 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .intel-error{padding:12px 18px;font-size:12px;color:rgba(255,255,255,.3);}
 .mobile-intel-card{background:var(--black);border-radius:12px;margin:8px 12px 0;flex-shrink:0;overflow:hidden;border:1px solid #222;transition:max-height 0.4s ease;max-height:500px;}
 .mobile-intel-card.collapsed{max-height:48px;}
-.intel-mini{background:var(--black);border-radius:10px;padding:12px 16px;margin-bottom:14px;flex-shrink:0;border:1px solid #222;}
+.intel-mini{background:var(--black);border-radius:10px;padding:0;margin-bottom:14px;flex-shrink:0;border:1px solid #222;overflow:hidden;transition:max-height 0.3s ease;max-height:400px;}
+.intel-mini.collapsed{max-height:44px;}
+.intel-mini-inner{padding:12px 16px;}
 .intel-mini-row{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.6);line-height:1.6;}
 .intel-mini-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .intel-mini-label{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;}
-.intel-mini-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.intel-mini-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;}
 .intel-mini-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--emerald);display:flex;align-items:center;gap:6px;}
+.intel-mini-toggle{color:rgba(255,255,255,.4);font-size:10px;transition:transform 0.3s;}
+.intel-mini.collapsed .intel-mini-toggle{transform:rotate(-90deg);}
 .intel-mini-link{font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;}
 .intel-mini-link:hover{color:var(--emerald);}
-.intel-mini-loading{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px;}
+.intel-mini-loading{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px;padding:0 16px 12px;}
 /* REPORT */
 .report-title{font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:4px;}
 .report-subtitle{font-size:12px;color:var(--text-muted);}
@@ -344,6 +348,15 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}}
 /* CALENDAR PANEL */
+/* NUMBERED MENU CARD */
+.numbered-menu-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px 16px;max-width:100%;}
+.numbered-menu-title{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:10px;}
+.numbered-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;transition:background 0.15s;margin-bottom:4px;}
+.numbered-opt:hover{background:var(--surface);}
+.numbered-badge{width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--emerald);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.numbered-opt-text{font-size:12px;color:var(--text-primary);line-height:1.4;}
+.numbered-opt-custom .numbered-badge{background:var(--emerald);color:var(--black);}
+.numbered-menu-hint{font-size:10px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5;}
 .calendar-panel{display:none;flex:1;flex-direction:column;padding:24px clamp(16px,4vw,48px);overflow:hidden;width:100%;box-sizing:border-box;}
 .calendar-panel.show{display:flex;}
 .cal-panel-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;flex-shrink:0;}
@@ -458,45 +471,45 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       </a>
       <div class="nav-divider"></div>
       <div class="nav-section-label">Kategori</div>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan makanan tradisional khas Bali yang wajib dicoba')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('makanan-tradisional')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
         <span class="nav-label">Makanan Tradisional</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan street food dan jajanan pinggir jalan terbaik di Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('street-food')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         <span class="nav-label">Street Food</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner seafood terbaik di Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('seafood')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12c-1 4-5 7-9 7S3 16 3 12c0-1 .5-3 2-5 0 0 1 2 3 2s3-2 4-4c1 2 2 4 4 4s3-2 3-2c1.5 2 2 4 2 5z"/></svg>
         <span class="nav-label">Seafood</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan makanan vegetarian dan vegan di Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('vegetarian')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3s0 8 3 11 8 3 8 3M5 3c3 0 8 1 11 5M5 3L3 21"/></svg>
         <span class="nav-label">Vegetarian</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan minuman tradisional dan kopi khas Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('minuman')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"/></svg>
         <span class="nav-label">Minuman</span>
       </a>
       <div class="nav-divider"></div>
       <div class="nav-section-label">By Area</div>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner terbaik di Ubud, Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('ubud')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="nav-label">📍 Ubud</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner terbaik di Canggu, Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('canggu')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="nav-label">📍 Canggu</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner terbaik di Seminyak, Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('seminyak')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="nav-label">📍 Seminyak</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner seafood terbaik di Jimbaran, Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('jimbaran')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="nav-label">📍 Jimbaran</span>
       </a>
-      <a class="nav-item" onclick="setActive(this);showChat();processQuery('Rekomendasikan kuliner lokal terbaik di Denpasar, Bali')">
+      <a class="nav-item" onclick="setActive(this);showNumberedMenu('denpasar')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <span class="nav-label">📍 Denpasar</span>
       </a>
@@ -555,6 +568,21 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
         <div class="chat-badge"><div class="ai-dot"></div>BALIEATS AI · LESS SEARCHING, MORE TASTING.</div>
         <h2 id="d-welcome-h2">Halo! Saya BaliEats AI 🌿</h2>
         <p>Asisten kuliner cerdas untuk eksplorasi makanan & minuman di Bali. Tanya apa saja — makanan tradisional, street food, seafood, nutrisi makanan, dan lainnya.</p>
+      </div>
+      <div class="intel-mini collapsed" id="d-intel-mini">
+        <div class="intel-mini-header" onclick="toggleIntelMini()">
+          <div class="intel-mini-title">🤖 AI Intelligence</div>
+          <div class="intel-mini-toggle">▼</div>
+        </div>
+        <div class="intel-mini-loading" id="d-mini-loading" style="display:none;">
+          <div class="intel-spinner" style="width:12px;height:12px;border-width:1.5px;"></div> Analyzing...
+        </div>
+        <div class="intel-mini-inner" id="d-mini-body" style="display:none;">
+          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="d-mini-summary"></span></div>
+          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="d-mini-critical"></span></div>
+          <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="d-mini-watch"></span></div>
+        </div>
+        <div class="intel-mini-inner" id="d-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
       </div>
       <div class="chat-suggestions" id="d-chips"></div>
       <div class="budget-row" id="d-budget-chips">
@@ -624,6 +652,21 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
       <div class="chat-badge"><div class="ai-dot"></div>BaliEats AI</div>
       <h3 id="m-welcome-h3">Halo! Saya BaliEats AI 🌿</h3>
       <p>Tanya apa saja tentang kuliner Bali.</p>
+    </div>
+    <div class="intel-mini collapsed" id="m-intel-mini" style="margin:8px 12px 0;">
+      <div class="intel-mini-header" onclick="toggleIntelMini()">
+        <div class="intel-mini-title">🤖 AI Intelligence</div>
+        <div class="intel-mini-toggle">▼</div>
+      </div>
+      <div class="intel-mini-loading" id="m-mini-loading" style="display:none;">
+        <div class="intel-spinner" style="width:12px;height:12px;border-width:1.5px;"></div> Analyzing...
+      </div>
+      <div class="intel-mini-inner" id="m-mini-body" style="display:none;">
+        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#6B7280;"></div><span id="m-mini-summary"></span></div>
+        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#EF4444;"></div><span class="intel-mini-label" style="color:#EF4444;">Critical: </span><span id="m-mini-critical"></span></div>
+        <div class="intel-mini-row"><div class="intel-mini-dot" style="background:#F59E0B;"></div><span class="intel-mini-label" style="color:#F59E0B;">Watch: </span><span id="m-mini-watch"></span></div>
+      </div>
+      <div class="intel-mini-inner" id="m-mini-error" style="display:none;font-size:10px;color:rgba(255,255,255,.3);"></div>
     </div>
     <div class="mobile-suggestions" id="m-chips"></div>
     <div class="budget-row" style="padding:4px 12px;margin-bottom:0;" id="m-budget-chips">
@@ -771,7 +814,7 @@ var botTexts=new Map();var botQuestions=new Map();var savedFavorites=[];var user
 var sCol=false;
 var currentImages=[];var idleTimer=null;var lastActivity=Date.now();
 var dietPref='semua';var budgetPref='semua';var chatLang='auto';
-var IDLE_TIMEOUT=1*60*1000; // 1 menit — ubah ke 10-30 menit untuk produksi
+var IDLE_TIMEOUT=30*60*1000; // Durasi idle sebelum bot menyapa otomatis. Format: [menit]*60*1000. Contoh ubah ke 15 menit: 15*60*1000
 
 // ── NAME SCREEN ──────────────────────────────────────────────
 function selectTitle(btn,title){
@@ -805,7 +848,7 @@ window.addEventListener('load',function(){showNameScreen();});
 // ── DASHBOARD INIT ───────────────────────────────────────────
 function initDash(){
   updateGreeting();updateClock();setInterval(updateClock,1000);
-  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadChatLang();renderChips();
+  setupScrollHide();loadFavorites();loadDietPref();loadBudgetPref();loadChatLang();loadIntelligence();renderChips();
   resetIdleTimer();requestNotifPermission();
   var displayName=getUserDisplayName();
   if(userName){
@@ -943,8 +986,8 @@ function processQueryWithImage(q){
     function(err){clearTimeout(tOut);rmTyping(tid);addBot('Maaf, terjadi kesalahan. Silakan coba lagi.');setLoading(false);console.error(err);}
   );
 }
-function dSend(){var i=document.getElementById('d-input');var q=i.value.trim();if(!q)return;currentImages.length>0?processQueryWithImage(q):processQuery(q);i.value='';i.style.height='';}
-function mSend(){var i=document.getElementById('m-input');var q=i.value.trim();if(!q)return;currentImages.length>0?processQueryWithImage(q):processQuery(q);i.value='';i.style.height='';}
+function dSend(){var i=document.getElementById('d-input');var q=i.value.trim();if(!q)return;var parsed=tryParseNumberedInput(q);if(parsed){processQuery(parsed);i.value='';i.style.height='';return;}currentImages.length>0?processQueryWithImage(q):processQuery(q);i.value='';i.style.height='';}
+function mSend(){var i=document.getElementById('m-input');var q=i.value.trim();if(!q)return;var parsed=tryParseNumberedInput(q);if(parsed){processQuery(parsed);i.value='';i.style.height='';return;}currentImages.length>0?processQueryWithImage(q):processQuery(q);i.value='';i.style.height='';}
 function sendChip(el){processQuery(el.textContent.trim());}
 function dKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();dSend();}}
 function mKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();mSend();}}
@@ -997,16 +1040,14 @@ function copyMsg(btn,msgId){
   });
 }
 function exportMsgPDF(btn,msgId){
-  var el=document.querySelector('#'+msgId+'-bubble');if(!el)return;
-  var text=cleanForExport(el.innerText||el.textContent);
+  var raw=botTexts.get(msgId);if(!raw)return;
   try{
     var doc=new window.jspdf.jsPDF({orientation:'p',unit:'mm',format:'a4'});
     doc.setFillColor(10,10,10);doc.rect(0,0,210,28,'F');
     doc.setTextColor(16,185,129);doc.setFontSize(9);doc.setFont('helvetica','bold');doc.text('BaliEats AI \u00b7 Less searching, more tasting.',14,11);
     doc.setTextColor(255,255,255);doc.setFontSize(7);doc.setFont('helvetica','normal');doc.text('Kuliner Bali AI Assistant \u00b7 Anabhi Dev',14,18);doc.text(new Date().toLocaleString('id-ID'),14,23);
-    doc.setTextColor(10,10,10);doc.setFontSize(10);doc.setFont('helvetica','normal');
-    var lines=doc.splitTextToSize(text,182);var y=38;
-    lines.forEach(function(line){if(y+5.5>280){doc.addPage();y=20;}doc.text(line,14,y);y+=5.5;});
+    doc.setTextColor(10,10,10);doc.setFontSize(10);
+    renderMarkdownToPDF(doc,raw,14,38,182,280,5.5);
     doc.setFontSize(7);doc.setTextColor(150,150,150);doc.text('BaliEats AI \u00b7 Anabhi Dev \u00b7 '+new Date().getFullYear(),14,290);
     doc.save('baliEats-'+Date.now()+'.pdf');
     btn.textContent='\u2713 Downloaded!';setTimeout(function(){btn.innerHTML=SVG_PDF+' PDF';},2000);
@@ -1078,23 +1119,17 @@ function addUserWithImages(text,images){
 setInterval(function(){gasPost('ping',{},function(){},function(){});},2*60*1000);
 
 // ── IDLE ─────────────────────────────────────────────────────
-var IDLE_MESSAGES=[
-  'Masih di sana? \u{1F44B} Ada yang bisa saya bantu soal kuliner Bali?',
-  'Lagi cari makan apa? Saya siap rekomendasikan! \u{1F33F}',
-  'Tau ga? Nasi goreng Bali beda karena pakai bumbu base genep! Tanya saya. \u{1F373}',
-  'Seafood segar di Jimbaran? Saya tau beberapa tempat recommended! \u{1F41F}',
-  'Kalau ke Ubud, jangan lupa coba Bebek Betutu \u2014 dimasak 8 jam! \u{1F986}',
-  'Minuman tradisional Bali: Loloh, Jamu Bali, dan Es Daluman. Mau tahu? \u{1F95E}',
-  'Street food Bali wajib coba: Sate Lilit, Lawar, dan Tipat Cantok! \u{1F6F5}',
-  'Ada foto makanan yang ingin diketahui nutrisinya? Upload saja! \u{1F4F8}',
-  'Vegetarian di Bali? Ubud adalah surganya! Tanya saya. \u{1F33F}',
-  'Kopi khas Bali: Kopi Tubruk dan Arabika Kintamani. \u2615',
-  'Pernah coba Nasi Jinggo? Nasi bungkus khas Bali yang murah dan enak! \u{1F35A}',
-];
 function requestNotifPermission(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();}
 function sendBrowserNotif(msg){if(!('Notification' in window)||Notification.permission!=='granted'||document.visibilityState==='visible')return;try{new Notification('BaliEats AI',{body:msg,icon:'https://anabhidev.com/BaliEats-AI/baliEats-logo-square.webp'});}catch(e){}}
 function isIdleActive(){var ns=document.getElementById('name-screen');if(ns&&(ns.classList.contains('on')||ns.style.display==='flex'))return false;return true;}
-function sendIdleMessage(){var msg=IDLE_MESSAGES[Math.floor(Math.random()*IDLE_MESSAGES.length)];addBot(msg);sendBrowserNotif(msg);}
+// Idle message di-generate AI setiap kali trigger (bukan dari daftar statis) — supaya selalu variatif.
+var IDLE_PROMPT='Buat 1 pesan sapaan singkat (1-2 kalimat, casual, pakai 1 emoji) untuk menyapa user yang sedang idle/diam di chat BaliEats AI. Bisa berupa fun fact kuliner Bali, ajakan bertanya, atau pertanyaan ringan seputar makanan. Jangan pakai tanda kutip di jawaban, langsung teks pesannya saja.';
+function sendIdleMessage(){
+  gasPost('askBaliEats',{q:IDLE_PROMPT,history:[]},
+    function(answer){ var msg=(answer||'').trim().replace(/^["\u201c]|["\u201d]$/g,''); if(!msg)return; addBot(msg); sendBrowserNotif(msg); },
+    function(err){ console.error('Idle message error:',err); }
+  );
+}
 function resetIdleTimer(){
   lastActivity=Date.now();if(idleTimer)clearTimeout(idleTimer);
   idleTimer=setTimeout(function(){if(!isIdleActive()){resetIdleTimer();return;}sendIdleMessage();resetIdleTimer();},IDLE_TIMEOUT);
@@ -1195,6 +1230,178 @@ function updateBudgetUI(){
 }
 function getBudgetContext(){return BUDGET_LABELS[budgetPref]||'';}
 
+
+
+// ── NUMBERED MENU (Kategori & By Area) ───────────────────────────────────────────────────────────
+// Tiap key = id nav item. fixed = pertanyaan default (nomor 1). pool = 5 variasi untuk dipilih 2 random (nomor 2-3).
+var NUMBERED_MENU={
+  'makanan-tradisional':{
+    label:'Makanan Tradisional',
+    fixed:'Rekomendasikan makanan tradisional khas Bali yang wajib dicoba',
+    pool:[
+      'Apa bedanya lawar merah dan lawar putih?',
+      'Makanan tradisional Bali apa yang cocok untuk acara keluarga?',
+      'Ceritakan sejarah babi guling di Bali',
+      'Makanan tradisional Bali yang jarang diketahui turis apa saja?',
+      'Rekomendasikan menu tradisional Bali yang tidak pedas'
+    ]
+  },
+  'street-food':{
+    label:'Street Food',
+    fixed:'Rekomendasikan street food dan jajanan pinggir jalan terbaik di Bali',
+    pool:[
+      'Street food Bali apa yang paling murah tapi enak?',
+      'Jajanan pasar khas Bali yang wajib dicoba apa saja?',
+      'Dimana tempat street food terenak untuk malam hari di Bali?',
+      'Street food Bali yang cocok untuk sarapan apa saja?',
+      'Ceritakan tentang jajanan gorengan khas Bali'
+    ]
+  },
+  'seafood':{
+    label:'Seafood',
+    fixed:'Rekomendasikan kuliner seafood terbaik di Bali',
+    pool:[
+      'Seafood segar paling murah di Bali dimana?',
+      'Cara masak ikan bakar khas Bali seperti apa?',
+      'Rekomendasi seafood untuk makan malam romantis di Bali',
+      'Apa menu seafood khas Jimbaran yang terkenal?',
+      'Seafood Bali yang cocok untuk yang tidak suka amis apa saja?'
+    ]
+  },
+  'vegetarian':{
+    label:'Vegetarian',
+    fixed:'Rekomendasikan makanan vegetarian dan vegan di Bali',
+    pool:[
+      'Makanan vegetarian tradisional Bali apa saja?',
+      'Dimana tempat makan vegan terbaik di Ubud?',
+      'Apakah lawar bisa dibuat versi vegetarian?',
+      'Menu vegetarian Bali yang tinggi protein apa saja?',
+      'Rekomendasikan smoothie bowl dan healthy food di Bali'
+    ]
+  },
+  'minuman':{
+    label:'Minuman',
+    fixed:'Rekomendasikan minuman tradisional dan kopi khas Bali',
+    pool:[
+      'Apa itu Loloh dan manfaatnya untuk kesehatan?',
+      'Rekomendasikan kedai kopi lokal terbaik di Bali',
+      'Minuman tradisional Bali untuk cuaca panas apa saja?',
+      'Ceritakan tentang arak Bali dan cara menikmatinya',
+      'Minuman khas Bali yang cocok untuk oleh-oleh apa saja?'
+    ]
+  },
+  'ubud':{
+    label:'Ubud',
+    fixed:'Rekomendasikan kuliner terbaik di Ubud, Bali',
+    pool:[
+      'Restoran romantis dengan pemandangan sawah di Ubud dimana?',
+      'Warung lokal murah meriah di Ubud dimana saja?',
+      'Kuliner vegetarian terbaik di Ubud apa saja?',
+      'Cafe estetik untuk kerja santai di Ubud dimana?',
+      'Rekomendasi kuliner malam hari di Ubud apa saja?'
+    ]
+  },
+  'canggu':{
+    label:'Canggu',
+    fixed:'Rekomendasikan kuliner terbaik di Canggu, Bali',
+    pool:[
+      'Beach club dengan makanan enak di Canggu dimana?',
+      'Brunch spot hits di Canggu dimana saja?',
+      'Warung lokal murah di tengah Canggu yang ramai turis dimana?',
+      'Rekomendasi healthy food dan smoothie bowl di Canggu',
+      'Tempat nongkrong sunset dengan menu enak di Canggu dimana?'
+    ]
+  },
+  'seminyak':{
+    label:'Seminyak',
+    fixed:'Rekomendasikan kuliner terbaik di Seminyak, Bali',
+    pool:[
+      'Restoran fine dining terbaik di Seminyak apa saja?',
+      'Beach club populer dengan makanan enak di Seminyak dimana?',
+      'Rekomendasi bar dan cocktail terbaik di Seminyak',
+      'Warung lokal enak di sekitar Seminyak dimana?',
+      'Tempat makan romantis untuk dinner di Seminyak dimana?'
+    ]
+  },
+  'jimbaran':{
+    label:'Jimbaran',
+    fixed:'Rekomendasikan kuliner seafood terbaik di Jimbaran, Bali',
+    pool:[
+      'Restoran seafood dengan pemandangan pantai di Jimbaran dimana?',
+      'Harga seafood di Jimbaran biasanya berapa per kilo?',
+      'Warung seafood murah di Jimbaran dimana saja?',
+      'Waktu terbaik makan seafood sunset di Jimbaran kapan?',
+      'Rekomendasi seafood untuk keluarga besar di Jimbaran'
+    ]
+  },
+  'denpasar':{
+    label:'Denpasar',
+    fixed:'Rekomendasikan kuliner lokal terbaik di Denpasar, Bali',
+    pool:[
+      'Kuliner legendaris yang sudah puluhan tahun di Denpasar apa saja?',
+      'Rekomendasi nasi campur khas Denpasar dimana?',
+      'Tempat makan malam yang buka sampai larut di Denpasar dimana?',
+      'Kuliner halal terbaik di Denpasar dimana saja?',
+      'Pasar kuliner tradisional di Denpasar yang wajib dikunjungi apa saja?'
+    ]
+  }
+};
+
+var activeNumberedMenu=null; // key nav item terakhir yang kartunya sedang aktif, untuk parsing input angka user
+var lastNumberedOptions=null; // 3 opsi {fixed, random1, random2} yang benar-benar ditampilkan di kartu aktif
+
+function shuffleArray(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function showNumberedMenu(menuKey){
+  var menu=NUMBERED_MENU[menuKey];if(!menu)return;
+  activeNumberedMenu=menuKey;
+  var randomTwo=shuffleArray(menu.pool).slice(0,2);
+  var options=[menu.fixed,randomTwo[0],randomTwo[1]];
+  lastNumberedOptions=options;
+  var id='nm'+Date.now();
+  var optsHtml=options.map(function(opt,idx){
+    return '<div class="numbered-opt" onclick="pickNumberedOption('+(idx+1)+')"><span class="numbered-badge">'+(idx+1)+'</span><span class="numbered-opt-text">'+escHtml(opt)+'</span></div>';
+  }).join('');
+  optsHtml+='<div class="numbered-opt numbered-opt-custom" onclick="focusCustomNumbered()"><span class="numbered-badge">4</span><span class="numbered-opt-text">✏️ Tanya sendiri...</span></div>';
+  var html='<div class="numbered-menu-card"><div class="numbered-menu-title">Apa yang ingin kamu tahu soal '+escHtml(menu.label)+'? '+numberedMenuIcon(menuKey)+'</div>'+optsHtml+'<div class="numbered-menu-hint">Tap tombolnya, atau ketik nomornya di chat — misal <b>2</b>, atau <b>2 dan 3</b> untuk gabung.</div></div>';
+  showChatView();
+  var box=activeMsgContainer();
+  if(box){box.insertAdjacentHTML('beforeend','<div class="msg bot"><div class="msg-av">AI</div><div class="msg-wrap">'+html+'</div></div>');box.scrollTop=box.scrollHeight;}
+  hideChips();
+}
+function numberedMenuIcon(menuKey){
+  var icons={'makanan-tradisional':'🍴','street-food':'🍜','seafood':'🐟','vegetarian':'🥗','minuman':'☕','ubud':'🌿','canggu':'🏄','seminyak':'✨','jimbaran':'🐟','denpasar':'🏙️'};
+  return icons[menuKey]||'🍴';
+}
+function pickNumberedOption(num){
+  var menu=NUMBERED_MENU[activeNumberedMenu];if(!menu)return;
+  var q=(lastNumberedOptions&&lastNumberedOptions[num-1])?lastNumberedOptions[num-1]:menu.fixed;
+  activeNumberedMenu=null;
+  processQuery(q);
+}
+function focusCustomNumbered(){
+  activeNumberedMenu=null;
+  var input=document.getElementById(isMobileLayout()?'m-input':'d-input');
+  if(input)input.focus();
+}
+// Parse input angka dari chat box (dipanggil dari dSend/mSend sebelum processQuery biasa)
+function tryParseNumberedInput(q){
+  if(!activeNumberedMenu)return null;
+  var menu=NUMBERED_MENU[activeNumberedMenu];if(!menu)return null;
+  var nums=q.match(/[1-4]/g);
+  if(!nums||nums.length===0)return null;
+  var uniqueNums=Array.from(new Set(nums)).filter(function(n){return n>='1'&&n<='4';}).slice(0,4);
+  if(uniqueNums.length===0)return null;
+  var questions=[];
+  uniqueNums.forEach(function(n){
+    if(n==='1')questions.push(menu.fixed);
+    else if(n==='4'){ focusCustomNumbered(); return; }
+    else if(lastNumberedOptions&&lastNumberedOptions[parseInt(n)-1])questions.push(lastNumberedOptions[parseInt(n)-1]);
+  });
+  if(questions.length===0)return null;
+  activeNumberedMenu=null;
+  return questions.join('. Dan juga: ');
+}
 
 // ── CALENDAR KULINER ───────────────────────────────────────────────────────────
 var calendarEvents=[];var calFilter='upcoming';var calLoaded=false;
@@ -1376,6 +1583,56 @@ function renderChips(){
 }
 
 // ── EXPORT PERCAKAPAN PENUH ────────────────────────────────────────────────────────
+
+// ── MARKDOWN-AWARE PDF RENDERER ──────────────────────────────────────────────────────
+// Parse satu baris teks jadi array segmen {text, bold, italic} berdasarkan **bold** dan *italic*
+function parseMarkdownSegments(line){
+  var segments=[];
+  var regex=/\*\*(.+?)\*\*|\*(.+?)\*/g;
+  var lastIndex=0;var match;
+  while((match=regex.exec(line))!==null){
+    if(match.index>lastIndex){segments.push({text:line.substring(lastIndex,match.index),bold:false,italic:false});}
+    if(match[1]!==undefined){segments.push({text:match[1],bold:true,italic:false});}
+    else{segments.push({text:match[2],bold:false,italic:true});}
+    lastIndex=regex.lastIndex;
+  }
+  if(lastIndex<line.length){segments.push({text:line.substring(lastIndex),bold:false,italic:false});}
+  if(segments.length===0)segments.push({text:line,bold:false,italic:false});
+  return segments;
+}
+// Bersihkan heading/list-marker/emoji dari SATU baris (tanpa hapus ** dan * karena itu dipakai parser bold/italic)
+function cleanLineForPDF(line){
+  return line.replace(/^#{1,3}\s/,'').replace(/^[\-\u2022]\s/,'\u2022 ')
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu,'').replace(/[\u{2600}-\u{27BF}]/gu,'')
+    .replace(/[\u{2190}-\u{21FF}]/gu,'').replace(/[\u{2B00}-\u{2BFF}]/gu,'')
+    .replace(/\uFE0F/g,'');
+}
+// Render satu blok teks markdown ke jsPDF doc, mulai dari (x,y), wrap otomatis di maxWidth. Return y akhir.
+function renderMarkdownToPDF(doc,text,x,y,maxWidth,pageH,lineH){
+  var rawLines=String(text).split('\n');
+  rawLines.forEach(function(rawLine){
+    var cleanLine=cleanLineForPDF(rawLine);
+    if(cleanLine.trim()===''){ y+=lineH*0.6; return; }
+    var segments=parseMarkdownSegments(cleanLine);
+    var cursorX=x;
+    segments.forEach(function(seg){
+      var words=seg.text.split(' ');
+      words.forEach(function(word,wi){
+        if(word==='')return;
+        var piece=word+(wi<words.length-1?' ':'');
+        doc.setFont('helvetica',seg.bold?'bold':(seg.italic?'italic':'normal'));
+        var pieceWidth=doc.getTextWidth(piece);
+        if(cursorX+pieceWidth>x+maxWidth){ if(y+lineH>pageH){doc.addPage();y=20;} cursorX=x; y+=lineH; }
+        if(y+lineH>pageH){doc.addPage();y=20;cursorX=x;}
+        doc.text(piece,cursorX,y);
+        cursorX+=pieceWidth;
+      });
+    });
+    y+=lineH;
+  });
+  return y;
+}
+
 function cleanForExport(text){
   return String(text)
     .replace(/\*\*/g,'').replace(/\*/g,'').replace(/`/g,'').replace(/#{1,3}\s/g,'').replace(/^[\-\u2022]\s/gm,'\u2022 ')
@@ -1400,13 +1657,11 @@ function exportFullConversation(){
     doc.setFontSize(10);var y=38;var pageH=280;
     convHistory.forEach(function(msg){
       var label=msg.role==='bot'?'BaliEats AI:':'Anda:';
-      var text=cleanForExport(msg.text);
       doc.setFont('helvetica','bold');doc.setTextColor(msg.role==='bot'?16:10,msg.role==='bot'?129:10,msg.role==='bot'?92:10);
       if(y+6>pageH){doc.addPage();y=20;}
       doc.text(label,14,y);y+=5.5;
-      doc.setFont('helvetica','normal');doc.setTextColor(10,10,10);
-      var lines=doc.splitTextToSize(text,182);
-      lines.forEach(function(line){if(y+5.5>pageH){doc.addPage();y=20;}doc.text(line,14,y);y+=5.5;});
+      doc.setTextColor(10,10,10);
+      y=renderMarkdownToPDF(doc,msg.text,14,y,182,pageH,5.5);
       y+=4;
     });
     doc.setFontSize(7);doc.setTextColor(150,150,150);
@@ -1464,6 +1719,34 @@ function submitFeedback(msgId,rating,note){
     function(){},
     function(err){console.error('Feedback log error:',err);}
   );
+}
+
+
+// ── AI INTELLIGENCE MINI CARD ───────────────────────────────────────────────────────────
+function toggleIntelMini(){
+  ['d-intel-mini','m-intel-mini'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('collapsed');});
+}
+function loadIntelligence(){
+  ['d','m'].forEach(function(p){var l=document.getElementById(p+'-mini-loading');if(l)l.style.display='flex';});
+  gasPost('getAdminIntelligence',{},
+    function(jsonStr){
+      try{var data=JSON.parse(jsonStr);populateMiniCard(data);}
+      catch(e){['d','m'].forEach(function(p){var l=document.getElementById(p+'-mini-loading');var er=document.getElementById(p+'-mini-error');if(l)l.style.display='none';if(er){er.style.display='block';er.textContent='Failed to load.';}});}
+    },
+    function(err){['d','m'].forEach(function(p){var l=document.getElementById(p+'-mini-loading');var er=document.getElementById(p+'-mini-error');if(l)l.style.display='none';if(er){er.style.display='block';er.textContent='Failed to load intelligence.';}});console.error(err);}
+  );
+}
+function populateMiniCard(data){
+  ['d','m'].forEach(function(p){
+    var loading=document.getElementById(p+'-mini-loading');var body=document.getElementById(p+'-mini-body');var error=document.getElementById(p+'-mini-error');
+    if(!loading||!body)return;
+    if(data.error){loading.style.display='none';if(error){error.style.display='block';error.textContent=data.error;}return;}
+    loading.style.display='none';body.style.display='block';
+    var sum=(data.summary||'').split('.')[0]+'.';var crit=data.critical||'';var watch=data.watch||'';
+    var es=document.getElementById(p+'-mini-summary');if(es)es.textContent=sum;
+    var ec=document.getElementById(p+'-mini-critical');if(ec)ec.textContent=crit.length>80?crit.substring(0,80)+'...':crit;
+    var ew=document.getElementById(p+'-mini-watch');if(ew)ew.textContent=watch.length>80?watch.substring(0,80)+'...':watch;
+  });
 }
 
 // ── GEOLOCATION ──────────────────────────────────────────────
