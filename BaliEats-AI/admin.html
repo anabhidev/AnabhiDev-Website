@@ -3,8 +3,8 @@
 AnabhiDev - BaliEats-AI — Admin Panel (AI Report & Feedback)
 HTML/CSS/JS · Cloudflare Pages · Gemini API (via Google Apps Script)
 Development · Anabhi Dev
-Version   : 2.1
-Generated : 15 August 2026, 09:40:22 WITA
+Version   : 2.2
+Generated : 15 August 2026, 10:34:05 WITA
 ================================================================
 -->
 <!DOCTYPE html>
@@ -134,6 +134,8 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
 .daily-report-status.clear{background:#DCFCE7;color:#166534;}
 .daily-report-status.warning{background:#FEF9C3;color:#854D0E;}
 .daily-report-status.critical{background:#FEE2E2;color:#991B1B;}
+.daily-today-card{border:1.5px solid var(--emerald)!important;position:relative;margin-bottom:16px;}
+.daily-today-badge{position:absolute;top:-9px;left:14px;background:var(--emerald);color:var(--black);font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 10px;border-radius:20px;}
 .daily-report-detail{display:none;padding:0 14px 12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-primary);line-height:1.6;}
 .daily-report-detail.open{display:block;}
 /* FEEDBACK PAGE */
@@ -192,6 +194,10 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
       <a class="nav-item" onclick="setPage(this,'feedback')">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 007.5 7.5h1.5a3.5 3.5 0 003.5-3.5v-6a1.5 1.5 0 00-3 0M11 5.5v-2a1.5 1.5 0 013 0v8.5m0-8.5v-2a1.5 1.5 0 013 0v8.5m0-8.5a1.5 1.5 0 013 0v8.5"/></svg>
         Feedback
+      </a>
+      <a class="nav-item" onclick="setPage(this,'daily')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Daily Report
       </a>
     </nav>
     <div class="sidebar-bottom">
@@ -273,15 +279,6 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
           <div style="margin-bottom:10px;"><button class="report-refresh-btn" onclick="generateFAQSuggestions()" id="faq-gen-btn">✨ Generate Suggestions Baru</button></div>
           <div class="faq-list" id="r-faq-list"></div>
         </div>
-        <div id="r-daily-section">
-          <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between;">
-            <span>📅 Recent Daily Reports</span>
-            <button class="date-apply-btn" onclick="loadDailyReports()" style="font-size:11px;padding:5px 12px;">🔄 Load</button>
-          </div>
-          <div id="r-daily-loading" style="font-size:12px;color:var(--text-muted);padding:12px 0;display:none;">Loading reports...</div>
-          <div class="daily-reports-list" id="r-daily-list"></div>
-          <div id="r-daily-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:12px 0;">No daily reports yet. Run <code>saveDailyReport()</code> from GAS editor.</div>
-        </div>
       </div>
 
       <!-- FEEDBACK PAGE -->
@@ -304,6 +301,22 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
           <div class="report-section-title">🔴 Daftar Dislike Terbaru</div>
           <div id="fb-dislike-list"></div>
         </div>
+      </div>
+
+      <!-- DAILY REPORT PAGE -->
+      <div class="admin-page" id="page-daily">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <div>
+            <div class="report-title">📅 Daily Report</div>
+            <div class="report-subtitle">Auto-generated tiap hari jam 04:00 WITA · Powered by Gemini 3.5 Flash Lite</div>
+          </div>
+          <button class="report-refresh-btn" onclick="loadDailyReports()">🔄 Refresh</button>
+        </div>
+        <div id="daily-today-wrap"></div>
+        <div class="report-section-title">Recent Reports</div>
+        <div id="r-daily-loading" style="font-size:12px;color:var(--text-muted);padding:12px 0;display:none;">Loading reports...</div>
+        <div class="daily-reports-list" id="r-daily-list"></div>
+        <div id="r-daily-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:12px 0;">Belum ada daily report tersimpan. Trigger otomatis akan mulai mengisi mulai besok jam 04:00 WITA — atau jalankan <code>saveDailyReport()</code> manual dari GAS editor.</div>
       </div>
 
     </div>
@@ -373,9 +386,10 @@ function setPage(el,page){
   el.classList.add('active');
   document.querySelectorAll('.admin-page').forEach(function(p){p.classList.remove('active');});
   var target=document.getElementById('page-'+page);if(target)target.classList.add('active');
-  var titles={report:'AI Intelligence Report',feedback:'Feedback Summary'};
+  var titles={report:'AI Intelligence Report',feedback:'Feedback Summary',daily:'Daily Report'};
   var pt=document.getElementById('page-title');if(pt)pt.textContent=titles[page]||'';
   if(page==='feedback')loadFeedbackSummary();
+  if(page==='daily'){loadTodayReport();loadDailyReports();}
 }
 
 // ── AI REPORT (reuse dari index.html) ────────────────────────
@@ -532,6 +546,32 @@ function loadDailyReports(){
   );
 }
 function toggleDailyReport(header){var item=header.closest('.daily-report-item');var detail=item?item.querySelector('.daily-report-detail'):null;if(detail)detail.classList.toggle('open');}
+
+// ── TODAY REPORT (real-time, generate on-the-fly) ──────────────
+function loadTodayReport(){
+  var wrap=document.getElementById('daily-today-wrap');if(!wrap)return;
+  wrap.innerHTML='<div class="daily-report-item daily-today-card"><div class="daily-report-header"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Menganalisa hari ini...</div></div></div></div>';
+  var now=new Date();
+  var todayStr=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  gasPost('getAdminIntelligence',{dateFrom:todayStr,dateTo:todayStr},
+    function(jsonStr){
+      try{
+        var data=JSON.parse(jsonStr);
+        if(data.error){wrap.innerHTML='<div class="daily-report-item daily-today-card"><div class="daily-today-badge">TODAY</div><div class="daily-report-header"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Belum ada percakapan hari ini</div></div></div></div>';return;}
+        var status=computeStatusFromCritical(data.critical);
+        var sc=status==='All Clear'?'clear':status==='Warning'?'warning':'critical';
+        wrap.innerHTML='<div class="daily-report-item daily-today-card"><div class="daily-today-badge">TODAY</div><div class="daily-report-header" onclick="toggleDailyReport(this)"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Daily Report — '+formatReportDate(todayStr)+'</div><div class="daily-report-summary">'+(data.summary||'')+'</div></div><div class="daily-report-status '+sc+'">'+status+'</div></div><div class="daily-report-detail"><strong>\u2705 Positive:</strong> '+(data.positive||'')+'<br><br><strong>\u{1F534} Critical:</strong> '+(data.critical||'')+'<br><br><strong>\u{1F441}\uFE0F Watch:</strong> '+(data.watch||'')+'</div></div>';
+      }catch(e){wrap.innerHTML='';}
+    },
+    function(err){wrap.innerHTML='';console.error('loadTodayReport error:',err);}
+  );
+}
+function computeStatusFromCritical(t){
+  t=(t||'').toLowerCase();
+  if(!t||t.includes('tidak ada isu kritis')||t.includes('no critical'))return 'All Clear';
+  if(t.includes('kritis')||t.includes('critical')||t.includes('urgent')||t.includes('segera'))return 'Critical';
+  return 'Warning';
+}
 
 // ── FEEDBACK SUMMARY ─────────────────────────────────────────
 function loadFeedbackSummary(){
