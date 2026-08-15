@@ -1,3 +1,12 @@
+<!--
+================================================================
+AnabhiDev - BaliEats-AI — Admin Panel (AI Report & Feedback)
+HTML/CSS/JS · Cloudflare Pages · Gemini API (via Google Apps Script)
+Development · Anabhi Dev
+Version   : 2.1
+Generated : 15 August 2026, 09:40:22 WITA
+================================================================
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -134,6 +143,24 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
 .fb-dislike-a{font-size:11px;color:var(--text-muted);margin-bottom:6px;line-height:1.5;}
 .fb-dislike-note{font-size:11px;color:#991B1B;background:#FEE2E2;padding:6px 10px;border-radius:8px;margin-bottom:4px;}
 .fb-dislike-time{font-size:10px;color:var(--text-muted);}
+/* MOBILE RESPONSIVE */
+@media (max-width:820px){
+  #admin-layout.show{flex-direction:column;}
+  .sidebar{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--sidebar-border);flex-direction:row;align-items:center;flex-wrap:wrap;padding:10px 12px;gap:8px;}
+  .sidebar-logo{padding:0;border-bottom:none;flex-direction:row;align-items:baseline;gap:6px;}
+  .sidebar-nav{flex:1;flex-direction:row;padding:0;overflow-x:auto;}
+  .nav-item{padding:8px 12px;border-left:none;border-bottom:2px solid transparent;white-space:nowrap;}
+  .nav-item.active{border-left:none;border-bottom-color:var(--emerald);}
+  .sidebar-bottom{padding:0;border-top:none;}
+  .main-content{margin-left:0;}
+  .topbar{padding:12px 16px;}
+  .content-area{padding:16px;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .fb-stats-row{grid-template-columns:1fr;}
+  .questions-table{font-size:11px;}
+  .questions-table th,.questions-table td{padding:8px;}
+  .date-filter-presets{overflow-x:auto;flex-wrap:nowrap;}
+}
 </style>
 </head>
 <body>
@@ -146,7 +173,7 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
     <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pin-input" id="pin-input" placeholder="• • • • • •" autocomplete="off" onkeydown="if(event.key==='Enter')verifyPin()">
     <button class="pin-btn" id="pin-btn" onclick="verifyPin()">Masuk</button>
     <div class="pin-error" id="pin-error"></div>
-    <button class="pin-back" onclick="window.location.href='./'">← Kembali ke BaliEats AI</button>
+    <button class="pin-back" onclick="window.location.href='https://anabhidev.com/BaliEats-AI/'">← Kembali ke BaliEats AI</button>
   </div>
 </div>
 
@@ -168,7 +195,7 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
       </a>
     </nav>
     <div class="sidebar-bottom">
-      <a class="nav-item" onclick="window.location.href='./'">
+      <a class="nav-item" onclick="window.location.href='https://anabhidev.com/BaliEats-AI/'">
         <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
         Kembali ke App
       </a>
@@ -185,10 +212,10 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
       <div class="admin-page active" id="page-report">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
           <div>
-            <div class="report-title">\U0001f4ca AI Intelligence Report</div>
-            <div class="report-subtitle" id="r-subtitle">Last 30 days \u00b7 Powered by Gemini 3.5 Flash Lite</div>
+            <div class="report-title">📊 AI Intelligence Report</div>
+            <div class="report-subtitle" id="r-subtitle">Last 30 days · Powered by Gemini 3.5 Flash Lite</div>
           </div>
-          <button class="report-refresh-btn" onclick="refreshReport()">\U0001f504 Refresh Report</button>
+          <button class="report-refresh-btn" onclick="refreshReport()">🔄 Refresh Report</button>
         </div>
         <div class="date-filter-wrap">
           <div class="date-filter-presets">
@@ -207,14 +234,14 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
           </div>
         </div>
         <div class="stats-grid" id="r-stats-grid" style="display:none;">
-          <div class="stat-card"><div class="stat-card-value" id="r-stat-total">\u2014</div><div class="stat-card-label">Conversations</div><div class="stat-card-sub">Selected period</div></div>
-          <div class="stat-card"><div class="stat-card-value" id="r-stat-error">\u2014</div><div class="stat-card-label">Error Rate</div><div class="stat-card-sub">% of queries</div></div>
-          <div class="stat-card"><div class="stat-card-value" id="r-stat-resp">\u2014</div><div class="stat-card-label">Avg Response</div><div class="stat-card-sub">Seconds</div></div>
-          <div class="stat-card"><div class="stat-card-value" id="r-stat-hour">\u2014</div><div class="stat-card-label">Busiest Hour</div><div class="stat-card-sub">Peak activity</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-total">—</div><div class="stat-card-label">Conversations</div><div class="stat-card-sub">Selected period</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-error">—</div><div class="stat-card-label">Error Rate</div><div class="stat-card-sub">% of queries</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-resp">—</div><div class="stat-card-label">Avg Response</div><div class="stat-card-sub">Seconds</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="r-stat-hour">—</div><div class="stat-card-label">Busiest Hour</div><div class="stat-card-sub">Peak activity</div></div>
         </div>
         <div class="intel-card" id="r-intel-card">
           <div class="intel-header">
-            <div class="intel-header-left"><div class="intel-icon">\U0001f916</div><div class="intel-title">AI Intelligence \u2014 Analytics Summary</div></div>
+            <div class="intel-header-left"><div class="intel-icon">🤖</div><div class="intel-title">AI Intelligence — Analytics Summary</div></div>
             <div class="intel-badge">GEMINI 3.5 FLASH LITE</div>
           </div>
           <div class="intel-loading" id="r-intel-loading"><div class="intel-spinner"></div>Analyzing chat log data...</div>
@@ -230,26 +257,26 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
           <div class="intel-error" id="r-intel-error" style="display:none;"></div>
         </div>
         <div id="r-hashtag-section" style="display:none;">
-          <div class="report-section-title">\U0001f3f7\ufe0f Top Keywords</div>
+          <div class="report-section-title">🏷️ Top Keywords</div>
           <div class="hashtag-cloud" id="r-hashtag-cloud"></div>
         </div>
         <div id="r-questions-section" style="display:none;">
-          <div class="report-section-title">\U0001f525 Top Questions</div>
+          <div class="report-section-title">🔥 Top Questions</div>
           <table class="questions-table"><thead><tr><th style="width:40px;">#</th><th>Question</th><th style="width:80px;text-align:center;">Count</th></tr></thead><tbody id="r-questions-body"></tbody></table>
         </div>
         <div id="r-kb-section" style="display:none;">
-          <div class="report-section-title">\U0001f4da Knowledge Base Usage</div>
+          <div class="report-section-title">📚 Knowledge Base Usage</div>
           <div class="kb-bars" id="r-kb-bars"></div>
         </div>
         <div id="r-faq-section" style="display:none;">
-          <div class="report-section-title">\U0001f4a1 FAQ Suggestions</div>
-          <div style="margin-bottom:10px;"><button class="report-refresh-btn" onclick="generateFAQSuggestions()" id="faq-gen-btn">\u2728 Generate Suggestions Baru</button></div>
+          <div class="report-section-title">💡 FAQ Suggestions</div>
+          <div style="margin-bottom:10px;"><button class="report-refresh-btn" onclick="generateFAQSuggestions()" id="faq-gen-btn">✨ Generate Suggestions Baru</button></div>
           <div class="faq-list" id="r-faq-list"></div>
         </div>
         <div id="r-daily-section">
           <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between;">
-            <span>\U0001f4c5 Recent Daily Reports</span>
-            <button class="date-apply-btn" onclick="loadDailyReports()" style="font-size:11px;padding:5px 12px;">\U0001f504 Load</button>
+            <span>📅 Recent Daily Reports</span>
+            <button class="date-apply-btn" onclick="loadDailyReports()" style="font-size:11px;padding:5px 12px;">🔄 Load</button>
           </div>
           <div id="r-daily-loading" style="font-size:12px;color:var(--text-muted);padding:12px 0;display:none;">Loading reports...</div>
           <div class="daily-reports-list" id="r-daily-list"></div>
@@ -261,20 +288,20 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
       <div class="admin-page" id="page-feedback">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
           <div>
-            <div class="report-title">\U0001f44d\U0001f44e Feedback Summary</div>
+            <div class="report-title">👍👎 Feedback Summary</div>
             <div class="report-subtitle">Rating dari pengguna BaliEats AI</div>
           </div>
-          <button class="report-refresh-btn" onclick="loadFeedbackSummary()">\U0001f504 Refresh</button>
+          <button class="report-refresh-btn" onclick="loadFeedbackSummary()">🔄 Refresh</button>
         </div>
         <div class="fb-stats-row" id="fb-stats-row" style="display:none;">
-          <div class="stat-card"><div class="stat-card-value" id="fb-stat-total">\u2014</div><div class="stat-card-label">Total Feedback</div></div>
-          <div class="stat-card"><div class="stat-card-value" id="fb-stat-percent">\u2014</div><div class="stat-card-label">% Suka</div></div>
-          <div class="stat-card"><div class="stat-card-value" id="fb-stat-dislikes">\u2014</div><div class="stat-card-label">Dislike</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-total">—</div><div class="stat-card-label">Total Feedback</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-percent">—</div><div class="stat-card-label">% Suka</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="fb-stat-dislikes">—</div><div class="stat-card-label">Dislike</div></div>
         </div>
         <div id="fb-loading" style="font-size:12px;color:var(--text-muted);padding:20px 0;">Memuat feedback...</div>
         <div id="fb-empty" style="display:none;font-size:12px;color:var(--text-muted);padding:20px 0;">Belum ada feedback. Pastikan setupFeedbackSheet() sudah dijalankan dari GAS editor.</div>
         <div id="fb-dislike-section" style="display:none;">
-          <div class="report-section-title">\U0001f534 Daftar Dislike Terbaru</div>
+          <div class="report-section-title">🔴 Daftar Dislike Terbaru</div>
           <div id="fb-dislike-list"></div>
         </div>
       </div>
@@ -367,12 +394,12 @@ function loadIntelligence(){
 }
 function showReportError(msg){
   var rl=document.getElementById('r-intel-loading');if(rl)rl.style.display='none';
-  var re=document.getElementById('r-intel-error');if(re){re.style.display='block';re.textContent='\u26a0\ufe0f '+msg;}
+  var re=document.getElementById('r-intel-error');if(re){re.style.display='block';re.textContent='⚠️ '+msg;}
 }
 function populateReportPage(data){
   var rL=document.getElementById('r-intel-loading');var rB=document.getElementById('r-intel-body');var rE=document.getElementById('r-intel-error');
   if(!rL||!rB)return;
-  if(data.error){rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='\u26a0\ufe0f '+data.error;}return;}
+  if(data.error){rL.style.display='none';if(rE){rE.style.display='block';rE.textContent='⚠️ '+data.error;}return;}
   rL.style.display='none';rB.style.display='block';
   var fields={'r-intel-summary':data.summary||'','r-intel-positive':data.positive||'','r-intel-critical':data.critical||'','r-intel-watch':data.watch||'','r-intel-actions':data.recommended_actions||''};
   Object.entries(fields).forEach(function(pair){var el=document.getElementById(pair[0]);if(el)el.textContent=pair[1];});
@@ -382,7 +409,7 @@ function populateReportPage(data){
     var st=document.getElementById('r-stat-total');if(st)st.textContent=data.totalConversations;
     var se=document.getElementById('r-stat-error');if(se)se.textContent=data.errorRate+'%';
     var sr=document.getElementById('r-stat-resp');if(sr)sr.textContent=data.avgResponseTime+'s';
-    var sh=document.getElementById('r-stat-hour');if(sh)sh.textContent=data.busiestHour?data.busiestHour.split(':')[0]+':00':'\u2014';
+    var sh=document.getElementById('r-stat-hour');if(sh)sh.textContent=data.busiestHour?data.busiestHour.split(':')[0]+':00':'—';
   }
   if(data.topQuestions&&data.topQuestions.length>0){
     var qs=document.getElementById('r-questions-section');var tb=document.getElementById('r-questions-body');
@@ -406,23 +433,23 @@ function populateReportPage(data){
 function renderFAQList(items){
   var fs=document.getElementById('r-faq-section');var fl=document.getElementById('r-faq-list');
   if(fs)fs.style.display='block';
-  if(fl){fl.innerHTML='';items.forEach(function(item,idx){var div=document.createElement('div');div.className='faq-item';div.innerHTML='<div class="faq-item-left"><div class="faq-item-q">'+item.question+'</div><div class="faq-item-freq">Asked '+item.frequency+' time(s)</div></div><button class="faq-approve-btn" id="faq-btn-'+idx+'" onclick="approveFAQItem(this,'+idx+')">\u2713 Add to FAQ</button>';fl.appendChild(div);});}
+  if(fl){fl.innerHTML='';items.forEach(function(item,idx){var div=document.createElement('div');div.className='faq-item';div.innerHTML='<div class="faq-item-left"><div class="faq-item-q">'+item.question+'</div><div class="faq-item-freq">Asked '+item.frequency+' time(s)</div></div><button class="faq-approve-btn" id="faq-btn-'+idx+'" onclick="approveFAQItem(this,'+idx+')">✓ Add to FAQ</button>';fl.appendChild(div);});}
 }
 function approveFAQItem(btn,idx){
   if(!cachedIntelData||!cachedIntelData.faqSuggestions)return;
   var item=cachedIntelData.faqSuggestions[idx];if(!item)return;
   btn.textContent='Adding...';btn.disabled=true;
-  gasPost('approveFAQ',{question:item.question,answer:'Frequently asked \u2014 answer to be filled manually.',category:'General'},
-    function(result){try{var res=JSON.parse(result);if(res.success){btn.textContent='\u2705 Added!';btn.classList.add('approved');}else{btn.textContent='\u2717 Failed';btn.disabled=false;}}catch(e){btn.textContent='\u2717 Error';btn.disabled=false;}},
-    function(err){btn.textContent='\u2717 Error';btn.disabled=false;console.error(err);}
+  gasPost('approveFAQ',{question:item.question,answer:'Frequently asked — answer to be filled manually.',category:'General'},
+    function(result){try{var res=JSON.parse(result);if(res.success){btn.textContent='✅ Added!';btn.classList.add('approved');}else{btn.textContent='✗ Failed';btn.disabled=false;}}catch(e){btn.textContent='✗ Error';btn.disabled=false;}},
+    function(err){btn.textContent='✗ Error';btn.disabled=false;console.error(err);}
   );
 }
 function generateFAQSuggestions(){
   var btn=document.getElementById('faq-gen-btn');
-  if(btn){btn.disabled=true;btn.textContent='\u23f3 Generating...';}
+  if(btn){btn.disabled=true;btn.textContent='⏳ Generating...';}
   gasPost('suggestFAQ',{},
     function(result){
-      if(btn){btn.disabled=false;btn.textContent='\u2728 Generate Suggestions Baru';}
+      if(btn){btn.disabled=false;btn.textContent='✨ Generate Suggestions Baru';}
       try{
         var items=JSON.parse(result);
         if(items.error){alert('Gagal generate: '+items.error);return;}
@@ -432,7 +459,7 @@ function generateFAQSuggestions(){
         renderFAQList(items);
       }catch(e){alert('Gagal memproses hasil suggestion.');}
     },
-    function(err){if(btn){btn.disabled=false;btn.textContent='\u2728 Generate Suggestions Baru';}alert('Gagal generate suggestion.');console.error(err);}
+    function(err){if(btn){btn.disabled=false;btn.textContent='✨ Generate Suggestions Baru';}alert('Gagal generate suggestion.');console.error(err);}
   );
 }
 
@@ -452,7 +479,7 @@ function applyPreset(btn,preset){
   var df=document.getElementById('r-date-from');var dt=document.getElementById('r-date-to');
   if(df)df.value=fmtD(from);if(dt)dt.value=fmtD(to);
   currentDateFrom=fmtD(from);currentDateTo=fmtD(to);
-  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+fmtD(from)+' \u2192 '+fmtD(to)+' \u00b7 Gemini 3.5 Flash Lite';
+  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+fmtD(from)+' → '+fmtD(to)+' · Gemini 3.5 Flash Lite';
   loadIntelligenceWithDates(currentDateFrom,currentDateTo);
 }
 function applyDateRange(){
@@ -461,7 +488,7 @@ function applyDateRange(){
   if(df.value>dt.value){alert('From date must be before To date.');return;}
   document.querySelectorAll('.date-preset-btn').forEach(function(b){b.classList.remove('active');});
   currentDateFrom=df.value;currentDateTo=dt.value;
-  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+df.value+' \u2192 '+dt.value+' \u00b7 Gemini 3.5 Flash Lite';
+  var sub=document.getElementById('r-subtitle');if(sub)sub.textContent='Filtered: '+df.value+' → '+dt.value+' · Gemini 3.5 Flash Lite';
   loadIntelligenceWithDates(currentDateFrom,currentDateTo);
 }
 function loadIntelligenceWithDates(dateFrom,dateTo){
@@ -491,12 +518,12 @@ function loadDailyReports(){
       if(loading)loading.style.display='none';
       try{
         var data=JSON.parse(jsonStr);
-        if(data.error){if(empty){empty.style.display='block';empty.textContent='\u26a0\ufe0f '+data.error;}return;}
+        if(data.error){if(empty){empty.style.display='block';empty.textContent='⚠️ '+data.error;}return;}
         if(!data.reports||data.reports.length===0){if(empty)empty.style.display='block';return;}
         if(list){list.innerHTML='';data.reports.forEach(function(report,idx){
           var sc=report.status==='All Clear'?'clear':report.status==='Warning'?'warning':'critical';
           var item=document.createElement('div');item.className='daily-report-item';
-          item.innerHTML='<div class="daily-report-header" onclick="toggleDailyReport(this)"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Daily Report \u2014 '+formatReportDate(report.date)+'</div><div class="daily-report-summary">'+report.summary+'</div></div><div class="daily-report-status '+sc+'">'+report.status+'</div></div><div class="daily-report-detail"><strong>\u2705 Positive:</strong> '+report.positive+'<br><br><strong>\u{1F534} Critical:</strong> '+report.critical+'</div>';
+          item.innerHTML='<div class="daily-report-header" onclick="toggleDailyReport(this)"><div class="daily-report-icon">\u{1F916}</div><div class="daily-report-info"><div class="daily-report-date">Daily Report — '+formatReportDate(report.date)+'</div><div class="daily-report-summary">'+report.summary+'</div></div><div class="daily-report-status '+sc+'">'+report.status+'</div></div><div class="daily-report-detail"><strong>✅ Positive:</strong> '+report.positive+'<br><br><strong>\u{1F534} Critical:</strong> '+report.critical+'</div>';
           list.appendChild(item);});
         }
       }catch(e){if(empty){empty.style.display='block';empty.textContent='Error loading reports.';}}
@@ -517,7 +544,7 @@ function loadFeedbackSummary(){
       if(loading)loading.style.display='none';
       try{
         var data=JSON.parse(jsonStr);
-        if(data.error){if(empty){empty.style.display='block';empty.textContent='\u26a0\ufe0f '+data.error;}return;}
+        if(data.error){if(empty){empty.style.display='block';empty.textContent='⚠️ '+data.error;}return;}
         if(data.total===0){if(empty)empty.style.display='block';return;}
         if(statsRow){
           statsRow.style.display='grid';
@@ -532,7 +559,7 @@ function loadFeedbackSummary(){
             listEl.innerHTML='';
             data.dislikeItems.forEach(function(item){
               var div=document.createElement('div');div.className='fb-dislike-item';
-              var noteHtml=item.note?'<div class="fb-dislike-note">\U0001f4dd '+escHtmlAdmin(item.note)+'</div>':'';
+              var noteHtml=item.note?'<div class="fb-dislike-note">📝 '+escHtmlAdmin(item.note)+'</div>':'';
               div.innerHTML='<div class="fb-dislike-q">Q: '+escHtmlAdmin(item.question)+'</div><div class="fb-dislike-a">A: '+escHtmlAdmin(item.answer)+'</div>'+noteHtml+'<div class="fb-dislike-time">'+item.timestamp+'</div>';
               listEl.appendChild(div);
             });
