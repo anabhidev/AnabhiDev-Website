@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!-- ================================================================
-     AD-HOL-MB — HoL History of Life · Master Brief Build 1
+     AnabhiDev-HOL-MB — HoL History of Life · Master Brief Build 1
      HTML · CSS · Vanilla JS (ES Modules)
      Development · Anabhi Dev
-     Version   : 1.1
-     Generated : 16 August 2026, 21:20:03
+     Version   : 1.2
+     Generated : 16 August 2026, 22:06:25
      ================================================================ -->
 <html lang="id">
 <head>
@@ -160,11 +160,21 @@ a{color:var(--navy-500);text-underline-offset:3px}
   border-radius:9px;
   background:var(--navy-600);
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);
-  font-size:15px;
-  color:#fff;
+  overflow:hidden;
   border:1px solid #23456b;
 }
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+
+.hero-logo{
+  width:clamp(120px,14vw,160px);
+  height:clamp(120px,14vw,160px);
+  flex-shrink:0;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hero-logo img{width:100%;height:100%;object-fit:contain;display:block}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap}
 .brand-text strong{display:block;font-size:14px;color:#fff;line-height:1.3}
 .brand-text span{display:block;font-size:10px;letter-spacing:.06em;color:#7e98b5}
 
@@ -216,9 +226,14 @@ a{color:var(--navy-500);text-underline-offset:3px}
   margin-left:var(--sidebar-w);
   margin-top:var(--header-h);
   width:calc(100% - var(--sidebar-w));
-  padding:40px 44px 100px;
+  max-width:none;
+  padding:40px clamp(24px,3.5vw,64px) 100px;
 }
-.wrap{max-width:1120px}
+/* Sesuai SOP Anabhi Dev — Bagian I.1 & Blueprint B:
+   guide/dashboard memanfaatkan lebar layar penuh, dibatasi PADDING,
+   bukan max-width tetap dalam px. Paragraf tetap dibatasi lewat p{max-width:78ch}
+   supaya baris teks panjang tetap nyaman dibaca tanpa membatasi kartu/tabel/grid. */
+.wrap{max-width:none;width:100%}
 
 .hero{margin-bottom:44px}
 .eyebrow{
@@ -470,7 +485,7 @@ footer{
 
 <aside id="sidebar" aria-label="Daftar isi brief">
   <div class="brand">
-    <div class="brand-mark" aria-hidden="true">HoL</div>
+    <div class="brand-mark"><img src="https://anabhidev.com/HoL/HoL-Logo.webp" alt="HoL — History of Life"></div>
     <div class="brand-text">
       <strong>Master Brief</strong>
       <span>BUILD 1 · FOUNDATION</span>
@@ -501,10 +516,10 @@ footer{
   <a class="nav-item" href="#s15"><span class="nav-num">15</span>Acceptance Criteria</a>
   <a class="nav-item" href="#s16"><span class="nav-num">16</span>Definition of Done</a>
   <a class="nav-item" href="#s17"><span class="nav-num">17</span>Handoff ke Build 2</a>
-  <a class="nav-item" href="#s18"><span class="nav-num">18</span>Keputusan Terbuka</a>
+  <a class="nav-item" href="#s18"><span class="nav-num">18</span>Keputusan Final v1.2</a>
 
   <div class="nav-foot">
-    AD-HOL-MB · v1.1<br>
+    AnabhiDev-HOL-MB · v1.2<br>
     Development · Anabhi Dev<br>
     16 August 2026
   </div>
@@ -527,13 +542,18 @@ footer{
 <div class="wrap">
 
   <div class="hero">
-    <div class="eyebrow">Master Brief · Untuk dikerjakan Claude Sonnet 5</div>
-    <h1>HoL Build 1 — <em>Foundation</em></h1>
-    <p class="lead">
-      Instruksi lengkap dan final untuk membangun fondasi HoL: shell aplikasi, input manual,
-      Today &amp; Overdue, riwayat, dan lapisan data yang bisa ditukar ke Supabase tanpa
-      menyentuh satu baris kode antarmuka. Tanpa AI. Tanpa database. Tanpa notifikasi.
-    </p>
+    <div class="hero-top">
+      <div style="flex:1;min-width:280px">
+        <div class="eyebrow">Master Brief · Untuk dikerjakan Claude Sonnet 5</div>
+        <h1>HoL Build 1 — <em>Foundation</em></h1>
+        <p class="lead">
+          Instruksi lengkap dan final untuk membangun fondasi HoL: shell aplikasi, input manual,
+          Today &amp; Overdue, riwayat, dan lapisan data yang bisa ditukar ke Supabase tanpa
+          menyentuh satu baris kode antarmuka. Tanpa AI. Tanpa database. Tanpa notifikasi.
+        </p>
+      </div>
+      <div class="hero-logo"><img src="https://anabhidev.com/HoL/HoL-Logo.webp" alt="HoL — History of Life"></div>
+    </div>
   </div>
 
   <div class="callout">
@@ -619,7 +639,9 @@ footer{
         <tr><td>Grafik &amp; report</td><td><span class="pill no">Jangan</span></td><td>Build 2</td></tr>
         <tr><td>Telegram &amp; email</td><td><span class="pill no">Jangan</span></td><td>Build 5 — kanal sekunder</td></tr>
         <tr><td>Upload foto</td><td><span class="pill no">Jangan</span></td><td>Siapkan kolom, jangan implementasi</td></tr>
-        <tr><td>Dark mode</td><td><span class="pill later">Tunggu</span></td><td>Lihat bagian 18</td></tr>
+        <tr><td>Bottom navigation 5 tab (mobile)</td><td><span class="pill yes">Kerjakan</span></td><td>Keputusan final — bagian 10.1</td></tr>
+        <tr><td>Dark &amp; Light mode (keduanya)</td><td><span class="pill yes">Kerjakan</span></td><td>Keputusan final — bagian 10.4</td></tr>
+        <tr><td>Layar PIN (tampilan + alur, tanpa verifikasi server)</td><td><span class="pill yes">Kerjakan</span></td><td>Verifikasi sungguhan menyusul Build 3 — bagian 10.5</td></tr>
       </tbody>
     </table>
     </div>
@@ -714,6 +736,8 @@ footer{
     ui/
       router.js
       dom.js                <span class="c">// helper el(), escapeHtml(), on()</span>
+      theme.js              <span class="c">// toggle + persist [data-theme], baca prefers-color-scheme</span>
+      pin.js                <span class="c">// layar #pin, keypad, dots — verifikasi sementara di klien</span>
       views/
         today.js
         log.js
@@ -726,7 +750,8 @@ footer{
         empty-state.js
         toast.js
         confirm-dialog.js
-        drawer.js</pre>
+        drawer.js
+        bottom-nav.js       <span class="c">// 5 tab, hanya tampil di bawah 1024px</span></pre>
 
     <div class="callout warn">
       <strong>Karena di-host di subpath <code>/HoL/</code>:</strong> semua rujukan aset wajib
@@ -1016,15 +1041,75 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
   <section id="s10">
     <div class="sec-head"><div class="sec-num">10</div><h2>Layout &amp; Navigasi</h2></div>
 
+    <p>
+      Aturan lebar berikut mengikuti <code>anabhidev-website-sop-checklist</code> Bagian I
+      kategori 1, dan Blueprint B <em>Interactive Guide / Dokumentasi / Knowledge Base</em>:
+      konten jenis dashboard memanfaatkan lebar layar penuh lewat padding, bukan dibatasi
+      angka px tetap seperti halaman artikel.
+    </p>
+
     <h3>Desktop — 1024 px ke atas</h3>
     <ul>
-      <li>Sidebar tetap di kiri, lebar 264&nbsp;px, latar <code>navy-900</code>.</li>
+      <li>Sidebar tetap di kiri, lebar 264&nbsp;px, latar <code>navy-900</code> (mode terang) / token gelap (mode gelap — lihat bagian 10.3).</li>
       <li>Header lengket di atas, tinggi 64&nbsp;px, menempati sisa lebar di kanan sidebar.</li>
       <li>Judul di header: <strong>History of Life</strong> — bukan hanya “HoL”.</li>
-      <li>Konten utama memakai <code>calc(100% - 264px)</code> dengan pembatas isi maksimum 1120&nbsp;px agar baris teks tidak terlalu panjang, tetapi kartu dan daftar tetap boleh melebar penuh.</li>
+      <li><strong>Konten utama memakai <code>calc(100% - 264px)</code> dengan <code>max-width:none</code>.</strong> Lebar dibatasi <em>hanya</em> lewat padding kiri‑kanan (<code>clamp(24px,3.5vw,64px)</code>), sehingga kartu, tabel, dan grid memanfaatkan seluruh lebar layar yang tersedia — di layar ultrawide sekalipun. Paragraf tetap dibatasi <code>78ch</code> secara terpisah supaya teks panjang tetap nyaman dibaca.</li>
+      <li><strong>Wajib:</strong> jangan memberi <code>max-width</code> berupa angka px tetap pada kontainer pembungkus konten (setara <code>.wrap</code> / <code>.main</code>). Ini bug yang secara eksplisit ditandai <em>“jangan dijadikan patokan”</em> di SOP kakak sendiri — jangan diulang.</li>
     </ul>
 
-    <h3>Mobile — di bawah 1024 px</h3>
+    <h3>10.1 Bottom Navigation — mobile, keputusan final</h3>
+    <p>
+      Untuk aplikasi HoL (bukan dokumen brief ini), navigasi mobile memakai
+      <strong>bottom navigation lima tab</strong>, mengikuti pola IT Daily Activity System
+      milik kakak sendiri — bukan laci saja.
+    </p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>#</th><th>Tab</th><th>Rute</th><th>Ikon (garis, 22px)</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Input</td><td><code>#/input</code></td><td>pensil</td></tr>
+        <tr><td>2</td><td>Today</td><td><code>#/today</code></td><td>matahari / kalender-hari-ini</td></tr>
+        <tr><td>3</td><td>Dasbor</td><td><code>#/dashboard</code></td><td>batang grafik <span class="pill later">Build 2</span></td></tr>
+        <tr><td>4</td><td>Log</td><td><code>#/log</code></td><td>daftar</td></tr>
+        <tr><td>5</td><td>Riwayat</td><td><code>#/history</code></td><td>jam berputar</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+      <strong>Insight warna tab aktif — hijau, dengan satu catatan.</strong> Kakak bertanya
+      apakah hijau logo cocok untuk tab aktif. Jawabannya <strong>ya, tapi dengan penyesuaian
+      kecil</strong> agar tidak bertabrakan dengan aturan bagian 8: hijau di HoL dikunci untuk
+      arti “selesai / positif”. Kalau warna yang sama juga dipakai untuk “tab sedang aktif”,
+      otak pengguna bisa membaca ikon Today yang menyala hijau sebagai sinyal
+      “aktivitas ini selesai” — padahal itu cuma penanda navigasi.
+      <br><br>
+      Solusinya bukan ganti warna, tapi <strong>pisahkan nada</strong>: tab aktif memakai hijau
+      yang sama tapi lebih gelap dan tanpa saturasi berlebih —
+      <code>--green-nav:#2f8f6c</code> (turunan gelap dari <code>--green:#42b883</code>) untuk
+      ikon dan label, dengan garis indikator tipis 2px di atas tab yang memakai warna yang sama.
+      Sementara warna “selesai” di kartu aktivitas tetap murni <code>--green:#42b883</code>.
+      Dua nada dari keluarga yang sama, tapi mata tetap bisa membedakan konteks navigasi dari
+      konteks status.
+    </div>
+
+    <h3>10.2 Bentuk &amp; perilaku bottom nav</h3>
+    <ul>
+      <li>Tinggi 60&nbsp;px + <code>env(safe-area-inset-bottom)</code>, <code>position:fixed</code>, latar surface, garis atas 1px.</li>
+      <li>Lima tab sama lebar (<code>flex:1</code>), ikon 22px di atas label 10.5px.</li>
+      <li>Tab aktif: ikon dan label <code>--green-nav</code>, garis indikator 2px di tepi atas tab tersebut. Tab tidak aktif: <code>--muted</code>.</li>
+      <li>Status juga disampaikan lewat <code>aria-current="page"</code> pada tab aktif — jangan hanya mengandalkan warna, konsisten dengan aturan bagian 13.</li>
+      <li>Konten halaman diberi <code>padding-bottom</code> setinggi bottom nav supaya kartu terakhir tidak tertutup.</li>
+      <li>Bottom nav <strong>hanya tampil di bawah 1024&nbsp;px</strong>. Di desktop, kelima tujuan yang sama tetap ada sebagai item di sidebar kiri — jangan sampai ada rute yang hanya bisa dicapai lewat satu breakpoint.</li>
+    </ul>
+
+    <h3>10.3 Sidebar &amp; laci — mobile, di bawah 1024 px</h3>
+    <p>
+      Laci tetap dipertahankan sebagai jalan ke <strong>Settings</strong> dan ke bagian yang
+      tidak masuk lima tab utama (Export/Import, tentang aplikasi). Bottom nav untuk gerak
+      harian, laci untuk hal sekunder.
+    </p>
     <ul>
       <li>Sidebar berubah jadi laci yang <strong>meluncur dari kanan</strong>, lebar <code>min(300px, 86vw)</code>.</li>
       <li><strong>Tombol hamburger berada di sisi kanan navbar</strong>, sejajar ibu jari. Judul <strong>History of Life</strong> di kiri.</li>
@@ -1033,18 +1118,81 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
       <li><code>aria-expanded</code> pada tombol wajib diperbarui setiap kali status berubah.</li>
     </ul>
 
+    <h3>10.4 Dark &amp; Light Mode — keputusan final: keduanya, sekaligus</h3>
+    <p>
+      Kakak memilih membangun keduanya sekarang daripada dua kali kerja nanti. Ini keputusan
+      yang masuk akal <strong>kalau</strong> dikerjakan lewat token, bukan lewat kelas duplikat.
+    </p>
+    <ul>
+      <li>Seluruh warna direferensikan lewat <em>custom property</em> di <code>:root</code> dan ditimpa di <code>[data-theme="dark"]</code>. Tidak ada satu pun warna literal (hex) langsung di selektor komponen — semua lewat variabel, sesuai SOP kategori 12.</li>
+      <li>Preferensi tersimpan di <code>localStorage</code> terpisah dari data aktivitas (<code>hol.theme</code>), dan <em>default awal</em> mengikuti <code>prefers-color-scheme</code> sistem, bisa ditimpa manual lewat toggle di header — pola yang sama seperti PRD kakak sendiri (tombol 🌙 Theme).</li>
+      <li><strong>Setiap warna wajib diuji dua kali</strong> — kontras teks-atas-latar di mode terang <em>dan</em> mode gelap, keduanya ≥ 4,5:1. Ini yang dimaksud “menggandakan pengujian kontras” di analisis sebelumnya; bukan pekerjaan tambahan yang boleh dilewati.</li>
+      <li><strong>Warna tombol di mode gelap wajib disesuaikan</strong>, bukan sekadar dibalik. Hijau <code>#42b883</code> di atas latar gelap nyaris tak berubah kontrasnya dan aman dipakai apa adanya. Tapi amber <code>#e89a38</code> dan emas <code>#c99b52</code> di atas latar gelap perlu sedikit dinaikkan terangnya (<code>--amber-dark:#f0ad5c</code>, <code>--gold-dark:#dcb679</code>) supaya tidak tenggelam. Teks di atas tombol berwarna tetap gelap pekat di kedua mode, bukan putih.</li>
+      <li>Token dasar mode gelap: <code>--canvas-dark:#0b1420</code>, <code>--surface-dark:#111c2b</code>, <code>--ink-dark:#e7edf5</code>, <code>--border-dark:#223349</code>. Sidebar dan header di mode gelap boleh memakai navy yang sama seperti mode terang (sidebar sudah gelap secara alami) — yang berubah adalah <em>canvas</em> dan <em>surface</em> di area konten.</li>
+    </ul>
+
+    <h3>10.5 PIN Login — keputusan final: dipakai, sesuai referensi MF-AIA</h3>
+    <p>
+      Kakak minta tampilan disamakan persis dengan layar PIN <code>MF-AIA_v2_19.html</code> —
+      logo, tipografi, dan struktur identik, <strong>hanya warna aksen yang berbeda</strong>
+      (emas Miss Fish → hijau/navy HoL). Berikut spesifikasi persisnya, diambil langsung dari
+      berkas referensi supaya Sonnet tidak menebak ulang apa yang sudah ada.
+    </p>
+
     <div class="callout warn">
-      <strong>Catatan untuk aplikasi HoL (bukan dokumen ini).</strong> Untuk sebuah aplikasi
-      yang dipakai berkali-kali setiap hari, laci saja biasanya kurang. Navigasi bawah dengan
-      empat tab dan satu tombol tambah yang menonjol biasanya lebih baik. Ini termasuk
-      keputusan terbuka di bagian 18 — jangan diputuskan sepihak oleh Sonnet.
+      <strong>Build 1 vs Build 3 — di mana PIN benar-benar dikerjakan.</strong>
+      Layar dan interaksi PIN (<code>#pin</code>, keypad, dots, shake saat salah) dibangun di
+      <strong>Build 1</strong> sebagai lapisan UI murni. Tapi <strong>verifikasi PIN yang
+      sungguhan</strong> — memeriksa PIN terhadap hash yang tersimpan — baru bisa berjalan di
+      <strong>Build 3</strong>, begitu Supabase Edge Function tersedia. Ini bukan penundaan
+      tanpa alasan: PIN yang divalidasi di JavaScript sisi klien bisa dibaca siapa pun lewat
+      DevTools, jadi Build 1 memakai <em>mode pengembangan</em> — PIN dicocokkan ke satu nilai
+      di <code>CONFIG</code> hanya supaya alur UI bisa diuji — dan ditandai jelas di kode
+      sebagai belum aman, bukan diam-diam dianggap sudah final.
     </div>
+
+    <h4 style="margin-top:20px">Struktur &amp; token — disalin dari <code>MF-AIA_v2_19.html</code></h4>
+    <ul>
+      <li>Kontainer <code>#pin</code>: <code>position:fixed;inset:0</code>, latar hitam pekat, tersembunyi lewat <code>display:none</code> dan dimunculkan lewat kelas <code>.on</code> saat halaman selesai dimuat — persis pola di <code>GAS-PIN-Login-Guide.md</code> yang kakak lampirkan.</li>
+      <li>Logo: <code>&lt;img&gt;</code> asli HoL, lebar <code>clamp(140px,60vw,200px)</code>, dengan <code>onerror="this.style.display='none'"</code> supaya layar tidak rusak kalau logo gagal muat.</li>
+      <li>Brand text di atas judul: <code>HOL · HISTORY OF LIFE</code>, huruf besar, tracking 4px, 11px, warna aksen.</li>
+      <li>Judul <code>Welcome back</code>: Georgia bold, <code>clamp(30px,9vw,40px)</code>, putih.</li>
+      <li>Enam titik PIN: 14px, lingkaran, terisi putih saat diketik, merah <code>#EF4444</code> + animasi <em>shake</em> saat salah — sama persis kode animasi di referensi.</li>
+      <li>Keypad 3×4: tombol 1–9, <code>CLEAR</code>, 0, hapus (⌫), radius 14px, latar <code>#1E1E1E</code> di atas hitam.</li>
+      <li>Dukungan keyboard fisik untuk desktop (angka, Backspace, Escape) — sudah ada di referensi, jangan dihapus.</li>
+    </ul>
+
+    <h4 style="margin-top:20px">Yang berbeda dari referensi — hanya warna aksen</h4>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Token</th><th>MF-AIA (referensi)</th><th>HoL</th></tr></thead>
+      <tbody>
+        <tr><td><code>--gold</code> / warna aksen PIN</td><td><code>#C9A05A</code></td><td><code>#42b883</code> (hijau HoL) untuk brand text dan fokus input; titik terisi tetap putih seperti referensi</td></tr>
+        <tr><td>Judul “Welcome back”</td><td>sama</td><td>sama persis — jangan diubah</td></tr>
+        <tr><td>Brand text</td><td><code>MF-AIA · Miss Fish AI Assistant</code></td><td><code>HOL · HISTORY OF LIFE</code></td></tr>
+        <tr><td>Logo</td><td>Miss Fish landscape</td><td><code>https://anabhidev.com/HoL/HoL-Logo.webp</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h4 style="margin-top:20px">Penyimpanan PIN — sesuai instruksi kakak: Supabase Vault, bukan Sheets</h4>
+    <p>
+      <code>GAS-PIN-Login-Guide.md</code> menyimpan PIN mentah di Google Sheets — itu cocok
+      untuk GAS, <strong>tidak untuk HoL</strong>. HoL memakai Supabase, jadi mengikuti pola
+      yang sudah terbukti jalan di <code>MFB-IT_v1_8.ts</code> milik kakak sendiri:
+    </p>
+    <ol class="steps">
+      <li><b>PIN tidak pernah disimpan mentah.</b> Yang tersimpan adalah <em>hash</em>-nya saja, sebagai secret <code>PIN_HASH</code> di Supabase Edge Function Secrets — persis seperti di <code>MFB-IT_v1_8.ts</code>.</li>
+      <li><b>Verifikasi terjadi di server</b> (Edge Function <code>action:"login"</code>), bukan di JavaScript browser. Klien mengirim PIN yang diketik, server yang mencocokkan ke hash.</li>
+      <li><b>Sesi diwakili token</b>, bukan menyimpan status login lewat variabel biasa. Referensi kakak memakai masa berlaku 3 hari (<code>SESSION_DAYS</code>) yang ditandatangani <code>SESSION_SECRET</code> — pola yang sama bisa dipakai HoL.</li>
+      <li><b>Build 1 belum punya server</b>, jadi PIN sementara dicocokkan ke <code>CONFIG.DEV_PIN</code> di sisi klien, dengan komentar tebal di kode: <code>// SEMENTARA — bukan keamanan sungguhan, diganti Edge Function di Build 3</code>. Ini konsisten dengan analisis awal kakak yang sudah menyebut PIN sisi klien sebagai rasa aman palsu.</li>
+    </ol>
 
     <h3>Titik uji lebar layar</h3>
     <p>
       Uji pada 320, 360, 390, 768, 1024, 1280, dan 1920&nbsp;px. Angka 320&nbsp;px bukan
       formalitas: di lebar itulah kartu dengan beberapa pil metadata biasanya mulai memaksa
-      halaman menggulir menyamping.
+      halaman menggulir menyamping. Uji juga setiap titik ini di <strong>kedua mode</strong>.
     </p>
   </section>
 
@@ -1197,7 +1345,7 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
 
     <h3>Header wajib di setiap berkas</h3>
 <pre class="code"><span class="c">// ================================================================
-// AD-HOL — HoL History of Life
+// AnabhiDev-HOL — HoL History of Life
 // HTML · CSS · Vanilla JS (ES Modules) · localStorage
 // Development · Anabhi Dev
 // Version   : 1.1
@@ -1208,8 +1356,9 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
       <li>Tanggal diambil nyata saat berkas dibuat. Dilarang menyalin dari berkas sebelumnya.</li>
       <li>Format: <code>16 August 2026, 21:20:03</code> — nama bulan Inggris penuh, tanggal satu digit tanpa nol di depan.</li>
       <li>Baris teknologi menyebut yang benar-benar dipakai di berkas itu. Jangan menyebut Supabase atau Gemini di Build 1.</li>
-      <li>Nama berkas yang dikirim ke pengguna: <code>AD-HOL_v1.2.html</code>. Nama di dalam project: <code>index.html</code>. Versi tetap tercatat di header.</li>
-      <li>Versi naik setiap ada perubahan, sekecil apa pun. Build 1 dimulai dari <strong>1.1</strong>.</li>
+      <li>Prefix project: <strong><code>AnabhiDev-HOL</code></strong> (bukan <code>AD-HOL</code> — standar penamaan direvisi kakak dari <code>AD-</code> menjadi <code>AnabhiDev-</code>).</li>
+      <li>Nama berkas yang dikirim ke pengguna: <code>AnabhiDev-HOL_v1.2.html</code>. Nama di dalam project: <code>index.html</code>. Versi tetap tercatat di header.</li>
+      <li>Versi naik setiap ada perubahan, sekecil apa pun. Build 1 dimulai dari <strong>1.1</strong> (project baru, terpisah dari versi dokumen brief ini).</li>
       <li>Kredit: <code>Development · Anabhi Dev</code>. Tanpa nama lain.</li>
     </ul>
 
@@ -1227,6 +1376,16 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
   UNDO_MS     : 6000,
   SAVE_DEBOUNCE_MS : 300,
   MIN_DATA_FOR_INSIGHT : 15,      <span class="c">// dipakai Build 2, taruh sekarang</span>
+
+  THEME_KEY   : <span class="s">'hol.theme'</span>,      <span class="c">// terpisah dari data aktivitas — 'light' | 'dark'</span>
+
+  <span class="c">// ── PIN — SEMENTARA, BUKAN KEAMANAN SUNGGUHAN ──
+  // Build 1 mencocokkan PIN di klien hanya supaya alur UI (dots, shake,
+  // keypad) bisa diuji end-to-end. Nilai ini terbaca siapa pun lewat DevTools.
+  // Build 3 MENGHAPUS baris ini sepenuhnya — verifikasi pindah ke Supabase
+  // Edge Function terhadap PIN_HASH di Secrets, pola sama seperti MFB-IT_v1_8.ts</span>
+  DEV_PIN     : <span class="s">'123456'</span>,         <span class="c">// ⚠ dihapus di Build 3, jangan dianggap final</span>
+  SESSION_KEY : <span class="s">'hol.session.dev'</span>, <span class="c">// sesi dev lokal saja, tanpa masa berlaku sungguhan</span>
 };
 
 <span class="c">// GEMINI_MODEL ditambahkan di Build 4 sebagai konstanta di objek ini.
@@ -1240,7 +1399,7 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
 
     <p>Khusus Build 1. Verifikasi satu per satu dengan benar-benar mencobanya, bukan dengan membaca kode.</p>
 
-    <div class="counter"><b id="ac-count">0</b> dari <span id="ac-total">20</span> terverifikasi</div>
+    <div class="counter"><b id="ac-count">0</b> dari <span id="ac-total">26</span> terverifikasi</div>
 
     <ul class="checklist" id="ac-list">
       <li><input type="checkbox"><span>Aktivitas baru bisa dibuat hanya dengan mengisi judul, tanggal, dan kategori.</span></li>
@@ -1263,6 +1422,12 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
       <li><input type="checkbox"><span>Laci mobile terbuka dari kanan, tertutup oleh Esc dan sentuhan lapisan gelap, serta mengembalikan fokus.</span></li>
       <li><input type="checkbox"><span>Aktivitas dibuat pukul 23.30 WITA tetap terhitung sebagai hari yang sama.</span></li>
       <li><input type="checkbox"><span>Konsol bersih: tidak ada error dan tidak ada sisa log.</span></li>
+      <li><input type="checkbox"><span>Di layar 1920 px, konten memanfaatkan lebar penuh — tidak ada ruang kosong besar di kanan akibat <code>max-width</code> tetap.</span></li>
+      <li><input type="checkbox"><span>Bottom navigation 5 tab tampil di bawah 1024 px, tersembunyi di atasnya; kelima tujuan tetap tercapai lewat sidebar di desktop.</span></li>
+      <li><input type="checkbox"><span>Tab aktif di bottom nav memakai <code>aria-current="page"</code>, bukan hanya warna.</span></li>
+      <li><input type="checkbox"><span>Toggle tema berfungsi, tersimpan di <code>localStorage</code> terpisah dari data aktivitas, dan bertahan setelah reload.</span></li>
+      <li><input type="checkbox"><span>Kontras teks-atas-latar ≥ 4,5:1 sudah diuji di kedua mode — terang dan gelap.</span></li>
+      <li><input type="checkbox"><span>PIN benar membuka aplikasi; PIN salah memicu shake merah dan tidak menyimpan status login; layar PIN dan komentar kode menandai jelas bahwa verifikasi masih sementara di klien.</span></li>
     </ul>
   </section>
 
@@ -1319,51 +1484,52 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
 
   <!-- 18 -->
   <section id="s18">
-    <div class="sec-head"><div class="sec-num">18</div><h2>Keputusan Terbuka</h2></div>
+    <div class="sec-head"><div class="sec-num">18</div><h2>Keputusan Final v1.2</h2></div>
 
     <p>
-      Empat hal berikut sengaja belum diputuskan. Sonnet tidak boleh memutuskannya sendiri —
-      tanyakan lebih dulu, karena keempatnya mengubah struktur kode, bukan sekadar tampilan.
+      Empat hal yang di v1.1 masih terbuka, sudah diputuskan kakak. Sonnet <strong>tidak perlu
+      dan tidak boleh</strong> menanyakan ulang keempatnya — kerjakan langsung sesuai tabel ini.
     </p>
 
     <div class="tbl-scroll">
     <table>
-      <thead><tr><th>Pertanyaan</th><th>Pilihan</th><th>Pertimbangan</th></tr></thead>
+      <thead><tr><th>Area</th><th>Keputusan final</th><th>Rujukan detail di brief ini</th></tr></thead>
       <tbody>
         <tr>
-          <td>Navigasi mobile aplikasi HoL</td>
-          <td>Laci saja &nbsp;·&nbsp; Tab bawah + tombol tambah</td>
-          <td>Tab bawah lebih cepat untuk pemakaian harian, tetapi memakan tinggi layar dan menambah pekerjaan tata letak</td>
+          <td>Navigasi mobile</td>
+          <td><strong>Bottom navigation 5 tab</strong>: Input · Today · Dasbor · Log · Riwayat. Warna aktif hijau gelap <code>--green-nav</code> (turunan dari hijau HoL, dipisah nadanya dari hijau status “selesai”)</td>
+          <td>Bagian 10.1–10.2</td>
         </tr>
         <tr>
           <td>Huruf editorial</td>
-          <td>Georgia (0 KB) &nbsp;·&nbsp; Fraunces / Newsreader (±30 KB)</td>
-          <td>Web font lebih khas, tetapi menyentuh LCP dan menambah satu ronde jaringan</td>
+          <td><strong>Georgia</strong>, tetap seperti rekomendasi awal — nol byte, render instan, tidak menyentuh LCP</td>
+          <td>Bagian 9</td>
         </tr>
         <tr>
-          <td>Dark mode</td>
-          <td>Build 1 &nbsp;·&nbsp; Ditunda</td>
-          <td>Menambah kira-kira 20% pekerjaan CSS dan menggandakan pengujian kontras</td>
+          <td>Dark / Light mode</td>
+          <td><strong>Keduanya dikerjakan sekaligus di Build 1</strong>, lewat token <code>[data-theme]</code>. Warna tombol (amber, emas) disesuaikan terangnya khusus untuk mode gelap, bukan sekadar dibalik</td>
+          <td>Bagian 10.4</td>
         </tr>
         <tr>
-          <td>Kunci masuk sederhana</td>
-          <td>Tanpa kunci &nbsp;·&nbsp; PIN ringan</td>
-          <td>PIN sisi klien bukan keamanan sungguhan dan bisa memberi rasa aman palsu. Keamanan nyata baru datang bersama Auth di Build 3</td>
+          <td>Kunci masuk</td>
+          <td><strong>PIN</strong>, tampilan mengikuti <code>MF-AIA_v2_19.html</code> persis (logo, font, struktur), warna aksen diganti hijau/navy HoL. Build 1: PIN dicocokkan sementara di klien, ditandai jelas belum aman. Build 3: PIN_HASH tersimpan di Supabase Secrets, verifikasi di Edge Function — pola sama seperti <code>MFB-IT_v1_8.ts</code></td>
+          <td>Bagian 10.5</td>
         </tr>
       </tbody>
     </table>
     </div>
 
-    <div class="callout stop">
-      <strong>Untuk Sonnet:</strong> kalau keempat pertanyaan di atas belum dijawab saat
-      pekerjaan dimulai, tanyakan dalam satu pesan singkat sebelum menulis kode — bukan
-      di tengah pengerjaan, dan bukan dengan menebak sendiri.
+    <div class="callout">
+      Keempat keputusan ini mengubah struktur kode Build 1 (menambah komponen bottom nav,
+      theme toggle, dan layar PIN), tetapi <strong>tidak mengubah tujuh aturan tidak bisa
+      ditawar di bagian 3</strong> — akses data tetap seluruhnya lewat adapter, dan PIN
+      Build 1 tetap tidak boleh menyentuh logika verifikasi sungguhan.
     </div>
   </section>
 
   <footer>
-    AD-HOL-MB · Master Brief Build 1 · Version 1.1<br>
-    Development · Anabhi Dev · 16 August 2026, 21:20:03 WITA<br>
+    AnabhiDev-HOL-MB · Master Brief Build 1 · Version 1.2<br>
+    Development · Anabhi Dev · 16 August 2026, 22:06:25 WITA<br>
     Dokumen ini adalah acuan pelaksanaan. Bila bertentangan dengan PRD, bagian yang lebih
     spesifik untuk Build 1 yang berlaku, dan pertentangannya harus disebutkan lebih dulu.
   </footer>
@@ -1373,7 +1539,7 @@ stats()                      <span class="c">// Promise&lt;{ total, by_status, o
 
 <script type="text/plain" id="brief-text">
 MASTER BRIEF — HoL Build 1 (Foundation)
-Development · Anabhi Dev · AD-HOL-MB v1.1
+Development · Anabhi Dev · AnabhiDev-HOL-MB v1.2
 
 PERAN
 Kamu adalah senior frontend engineer. Bangun aplikasi web sungguhan, bukan mockup.
@@ -1399,15 +1565,17 @@ KERJAKAN
 - Empty / loading / error state (tiga varian empty berbeda)
 - Export dan import JSON
 - Demo data seeder berlabel jelas
+- Bottom navigation 5 tab di mobile (Input, Today, Dasbor, Log, Riwayat)
+- Dark & Light mode sekaligus, lewat token [data-theme]
+- Layar PIN (tampilan + alur lengkap), verifikasi SEMENTARA di klien
 
 JANGAN KERJAKAN
 - Parsing Gemini atau input kalimat bebas (Build 4) — tapi SIAPKAN slot UI nonaktif
   berlabel jujur "Tulis dengan kalimat biasa — segera hadir", tidak bisa diklik
-- Supabase, Auth, RLS (Build 3)
+- Supabase, Auth, RLS (Build 3) — TERMASUK verifikasi PIN sungguhan via PIN_HASH
 - Grafik dan report (Build 2)
 - Telegram dan email (Build 5)
 - Upload foto (siapkan kolom photo_url, jangan implementasi)
-- Dark mode (tunggu keputusan)
 
 TUJUH ATURAN YANG TIDAK BISA DITAWAR
 1. Semua akses data lewat Data Adapter. Tidak ada localStorage.getItem/setItem
@@ -1429,10 +1597,11 @@ STRUKTUR FILE
   js/config.js, app.js
   js/domain/time.js, activity.js
   js/store/adapter.js, local.js, index.js
-  js/ui/router.js, dom.js
+  js/ui/router.js, dom.js, theme.js, pin.js
   js/ui/views/today.js, log.js, activity-form.js, settings.js
   js/ui/components/activity-card.js, status-pill.js, filter-bar.js,
-                   empty-state.js, toast.js, confirm-dialog.js, drawer.js
+                   empty-state.js, toast.js, confirm-dialog.js, drawer.js,
+                   bottom-nav.js
 
 KONTRAK DATA ADAPTER (semua async, tanpa sentuhan DOM)
   ready()
@@ -1513,12 +1682,55 @@ TIPOGRAFI
 
 LAYOUT
   Desktop >=1024px: sidebar kiri 264px, header sticky 64px, konten
-    calc(100% - 264px), pembatas isi 1120px
-  Mobile <1024px: laci meluncur DARI KANAN, lebar min(300px, 86vw)
-    Tombol hamburger DI SISI KANAN navbar. Judul "History of Life" di kiri.
-    Lapisan gelap, Esc menutup, perangkap fokus, kembalikan fokus saat ditutup,
-    perbarui aria-expanded, kunci gulir badan tanpa lompatan.
-  Uji pada 320 / 360 / 390 / 768 / 1024 / 1280 / 1920 px
+    calc(100% - 264px), max-width:NONE — lebar dibatasi PADDING clamp(24px,3.5vw,64px)
+    saja, bukan angka px tetap. Ini sesuai SOP kakak Bagian I kat.1 dan Blueprint B:
+    guide/dashboard memanfaatkan lebar layar penuh. JANGAN beri max-width px tetap
+    pada .wrap/.main — bug ini eksplisit ditandai "jangan dijadikan patokan" di SOP.
+  Mobile <1024px:
+    - Laci meluncur DARI KANAN, lebar min(300px, 86vw), untuk Settings & hal sekunder.
+      Tombol hamburger DI SISI KANAN navbar. Judul "History of Life" di kiri.
+      Lapisan gelap, Esc menutup, perangkap fokus, kembalikan fokus saat ditutup,
+      perbarui aria-expanded, kunci gulir badan tanpa lompatan.
+    - Bottom navigation 5 tab (FIXED KEPUTUSAN, bukan opsi): Input, Today, Dasbor,
+      Log, Riwayat. Tinggi 60px + env(safe-area-inset-bottom). Tab aktif pakai warna
+      --green-nav (turunan gelap dari --green:#42b883, BUKAN hijau yang sama persis
+      dengan warna status "selesai" — supaya makna navigasi dan makna status tidak
+      tertukar). aria-current="page" pada tab aktif, jangan andalkan warna saja.
+      Hanya tampil di bawah 1024px; di desktop kelima tujuan yang sama ada di sidebar.
+  Uji pada 320 / 360 / 390 / 768 / 1024 / 1280 / 1920 px — DI KEDUA MODE (terang & gelap)
+
+DARK & LIGHT MODE — keduanya dikerjakan sekaligus (keputusan final, bukan opsi)
+  Semua warna lewat custom property, ditimpa di [data-theme="dark"]. TIDAK ADA hex
+  literal langsung di selektor komponen.
+  Preferensi tersimpan di localStorage key 'hol.theme' (TERPISAH dari data aktivitas),
+  default mengikuti prefers-color-scheme, bisa ditimpa toggle manual di header.
+  Kontras teks-atas-latar >= 4.5:1 WAJIB diuji di KEDUA mode, bukan cuma salah satu.
+  Warna tombol amber (#e89a38) dan gold (#c99b52) dinaikkan terangnya khusus di mode
+  gelap (--amber-dark:#f0ad5c, --gold-dark:#dcb679) — bukan sekadar dibalik. Hijau
+  (#42b883) aman dipakai apa adanya di kedua mode. Teks di atas tombol tetap gelap
+  pekat di kedua mode, bukan putih.
+  Token dasar gelap: --canvas-dark:#0b1420, --surface-dark:#111c2b,
+  --ink-dark:#e7edf5, --border-dark:#223349. Sidebar/header boleh tetap navy di
+  kedua mode (sudah gelap secara alami) — yang berubah canvas & surface area konten.
+
+PIN LOGIN — keputusan final: dipakai, tampilan identik MF-AIA_v2_19.html
+  Struktur, font, dan komponen DISALIN PERSIS dari referensi MF-AIA_v2_19.html yang
+  sudah diupload: #pin fixed inset:0 latar hitam, logo <img> dengan onerror fallback,
+  brand text uppercase tracking 4px, judul "Welcome back" Georgia bold, 6 dot PIN,
+  shake animation saat salah, keypad 3x4 (1-9, CLEAR, 0, hapus), dukungan keyboard
+  fisik. HANYA warna aksen yang beda: emas Miss Fish (#C9A05A) -> hijau HoL (#42b883)
+  untuk brand text dan fokus; titik terisi tetap putih seperti referensi.
+  Brand text: "HOL · HISTORY OF LIFE". Logo: https://anabhidev.com/HoL/HoL-Logo.webp
+
+  PENTING — pembagian kerja Build 1 vs Build 3:
+  Build 1 = HANYA tampilan & alur UI PIN. PIN dicocokkan ke CONFIG.DEV_PIN di klien
+  SEMENTARA, ditandai jelas di kode sebagai belum aman (siapa pun bisa baca lewat
+  DevTools). Build 3 MENGHAPUS pencocokan klien ini sepenuhnya — verifikasi pindah
+  ke Supabase Edge Function terhadap PIN_HASH tersimpan di Secrets, sesi lewat token
+  bertanda tangan SESSION_SECRET — pola ini SUDAH ADA dan TERBUKTI JALAN di referensi
+  MFB-IT_v1_8.ts milik kakak sendiri (action:"login", SESSION_DAYS, dst). Jangan
+  simpan PIN mentah di mana pun, termasuk di Build 1 — CONFIG.DEV_PIN eksplisit
+  dikomentari sebagai sementara dan dihapus total saat Build 3.
 
 RENDERING
   Satu objek state. Event delegation di kontainer, bukan listener per kartu.
@@ -1544,6 +1756,7 @@ DELAPAN BAGIAN TERSULIT — kerjakan dengan perhatian ekstra
 8. Import JSON tahan versi — periksa schema_version, tolak versi lebih tinggi.
 
 JEBAKAN YANG WAJIB DICEGAH
+  max-width angka px tetap pada .wrap/.main — SOP kakak eksplisit menandai bug ini
   overflow-x:hidden pada selektor gabungan html,body (bukan body saja)
   minmax(0,1fr) bukan 1fr pada grid
   min-width:0 pada anak flex yang berisi teks
@@ -1551,23 +1764,27 @@ JEBAKAN YANG WAJIB DICEGAH
   jangan pakai tabel untuk daftar aktivitas di mobile — pakai kartu
   jangan outline:none tanpa pengganti; pakai :focus-visible
   status tidak boleh dibedakan hanya lewat warna atau emoji
-  kontras #64748b di atas #f5f7fa harus >= 4.5:1
+  kontras #64748b di atas #f5f7fa harus >= 4.5:1 (DAN versi mode gelapnya)
   awali kunci localStorage dengan hol.
   bersihkan seluruh console.log sebelum selesai
+  jangan simpan PIN mentah di mana pun, termasuk di Build 1
 
 STANDAR CODING (wajib)
   Header di setiap berkas:
     // ================================================================
-    // AD-HOL — HoL History of Life
+    // AnabhiDev-HOL — HoL History of Life
     // HTML · CSS · Vanilla JS (ES Modules) · localStorage
     // Development · Anabhi Dev
     // Version   : 1.1
     // Generated : [tanggal jam NYATA saat berkas dibuat, WITA]
     // ================================================================
+  Prefix project: AnabhiDev-HOL (BUKAN AD-HOL — standar direvisi kakak dari AD- ke
+    AnabhiDev-, berlaku untuk seluruh project termasuk HoL).
   Format waktu: 16 August 2026, 21:20:03 (bulan Inggris penuh, tanggal tanpa nol depan)
   Dilarang menyalin timestamp dari berkas sebelumnya.
-  Nama berkas yang dikirim: AD-HOL_v1.2.html — nama di dalam project: index.html
-  Versi naik setiap perubahan sekecil apa pun. Build 1 dimulai dari 1.1.
+  Nama berkas yang dikirim: AnabhiDev-HOL_v1.2.html — nama di dalam project: index.html
+  Versi naik setiap perubahan sekecil apa pun. Build 1 dimulai dari 1.1 (project baru,
+    terpisah dari versi dokumen brief ini yang sudah di v1.2).
   Kredit: Development · Anabhi Dev
 
   js/config.js:
@@ -1581,6 +1798,12 @@ STANDAR CODING (wajib)
       UNDO_MS: 6000,
       SAVE_DEBOUNCE_MS: 300,
       MIN_DATA_FOR_INSIGHT: 15,
+      THEME_KEY: 'hol.theme',          // terpisah dari data aktivitas
+      // PIN SEMENTARA — BUKAN KEAMANAN SUNGGUHAN. Terbaca lewat DevTools.
+      // Build 3 MENGHAPUS baris ini, verifikasi pindah ke Supabase Edge Function
+      // terhadap PIN_HASH di Secrets (pola sama seperti MFB-IT_v1_8.ts).
+      DEV_PIN: '123456',               // dihapus total di Build 3
+      SESSION_KEY: 'hol.session.dev',  // sesi dev lokal, tanpa masa berlaku sungguhan
     };
   GEMINI_MODEL ditambahkan di Build 4 sebagai konstanta di objek ini.
   Nama model dilarang ditanam di tengah kode. API key tidak pernah ada di frontend.
@@ -1606,23 +1829,33 @@ ACCEPTANCE CRITERIA BUILD 1 — verifikasi dengan mencoba, bukan membaca kode
   [ ] Laci mobile buka dari kanan, tutup dengan Esc dan lapisan, fokus kembali
   [ ] Aktivitas dibuat 23.30 WITA tetap terhitung hari yang sama
   [ ] Konsol bersih tanpa error dan tanpa sisa log
+  [ ] Di 1920px, konten memanfaatkan lebar penuh — tanpa ruang kosong besar kanan
+  [ ] Bottom nav 5 tab tampil <1024px, tersembunyi >=1024px, 5 tujuan tetap ada di sidebar desktop
+  [ ] Tab aktif bottom nav pakai aria-current="page", bukan hanya warna
+  [ ] Toggle tema tersimpan terpisah, bertahan setelah reload, kontras >=4.5:1 di KEDUA mode
+  [ ] PIN benar membuka aplikasi, PIN salah shake merah, kode menandai jelas "sementara"
 
-EMPAT KEPUTUSAN TERBUKA — TANYAKAN DULU SEBELUM MENULIS KODE
-1. Navigasi mobile: laci saja, atau tab bawah + tombol tambah?
-2. Huruf editorial: Georgia (0 KB) atau Fraunces/Newsreader (±30 KB)?
-3. Dark mode: dikerjakan di Build 1 atau ditunda?
-4. Kunci masuk sederhana: tanpa kunci, atau PIN ringan?
-Tanyakan keempatnya dalam SATU pesan singkat sebelum mulai. Jangan menebak.
+KEPUTUSAN FINAL v1.2 — SUDAH DIPUTUSKAN, JANGAN TANYA ULANG
+1. Navigasi mobile: bottom nav 5 tab (Input, Today, Dasbor, Log, Riwayat) + laci
+   untuk Settings & hal sekunder. LIHAT bagian LAYOUT di atas.
+2. Huruf editorial: Georgia. Tetap seperti rekomendasi awal.
+3. Dark & Light mode: KEDUANYA dikerjakan sekaligus di Build 1. LIHAT bagian
+   DARK & LIGHT MODE di atas.
+4. Kunci masuk: PIN, tampilan identik MF-AIA_v2_19.html, warna aksen hijau HoL.
+   Build 1 tampilan+alur saja, verifikasi sementara di klien. LIHAT bagian
+   PIN LOGIN di atas.
 
 CARA BEKERJA
 Jangan menghasilkan seluruh aplikasi dalam satu balasan raksasa. Kerjakan bertahap:
-  (a) index.html + tokens.css + app.css + shell dan navigasi
-  (b) config.js + domain/time.js + domain/activity.js + store (adapter, local, index)
-  (c) contract.test.js dan buktikan lolos
-  (d) views/today.js + activity-card
-  (e) activity-form.js dengan progressive disclosure
-  (f) log.js dengan pencarian dan filter
-  (g) settings.js: export, import, demo data, uji kontrak
+  (a) index.html + tokens.css (termasuk token [data-theme="dark"]) + app.css +
+      shell, sidebar, header, bottom-nav.js, theme.js (toggle + persist)
+  (b) pin.js — layar PIN identik referensi MF-AIA, verifikasi ke CONFIG.DEV_PIN
+  (c) config.js + domain/time.js + domain/activity.js + store (adapter, local, index)
+  (d) contract.test.js dan buktikan lolos
+  (e) views/today.js + activity-card
+  (f) activity-form.js dengan progressive disclosure
+  (g) log.js dengan pencarian dan filter
+  (h) settings.js: export, import, demo data, uji kontrak
 Setelah setiap tahap, berhenti dan laporkan singkat apa yang selesai dan apa berikutnya.
 </script>
 
