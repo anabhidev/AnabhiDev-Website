@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HoL — History of Life. Interactive Product Requirements Document.">
+<title>HoL — History of Life | Product Requirements Document</title>
+
+<style>
+:root{
+  --navy:#071a33;
+  --navy-2:#0b2444;
+  --navy-3:#102f55;
+  --blue:#2563eb;
+  --blue-soft:#eaf2ff;
+  --green:#42b883;
+  --green-soft:#eaf8f1;
+  --gold:#c99b52;
+  --red:#dc4c4c;
+  --orange:#e89a38;
+
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#152238;
+  --muted:#64748b;
+  --border:#dce3eb;
+
+  --sidebar-w:270px;
+  --header-h:68px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  max-width:100vw;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  font-size:14px;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+a{
+  color:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+#header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:var(--header-h);
+  z-index:100;
+  background:var(--navy);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px 0 calc(var(--sidebar-w) + 24px);
+}
+
+.header-title{
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+.header-title span{
+  color:#8fb1d8;
+  font-weight:500;
+  margin-left:8px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.header-btn{
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  border-radius:8px;
+  padding:7px 11px;
+  cursor:pointer;
+}
+
+.header-btn:hover{
+  background:rgba(255,255,255,.12);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+#sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:var(--sidebar-w);
+  z-index:200;
+  background:#061426;
+  color:#dce8f5;
+  border-right:1px solid #16304e;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.sidebar-brand{
+  height:var(--header-h);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 16px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-brand img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+}
+
+.sidebar-brand-text strong{
+  display:block;
+  font-size:14px;
+  color:#fff;
+}
+
+.sidebar-brand-text span{
+  display:block;
+  color:#7e98b5;
+  font-size:10px;
+  letter-spacing:.04em;
+}
+
+.sidebar-group{
+  padding:20px 12px 6px;
+  color:#7189a4;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.sidebar-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:40px;
+  margin:2px 8px;
+  padding:8px 10px;
+  border-radius:7px;
+  text-decoration:none;
+  color:#b9c9da;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.sidebar-item:hover{
+  background:#0d2745;
+  color:#fff;
+}
+
+.sidebar-item.active{
+  background:#102f55;
+  color:#fff;
+  border-left:3px solid var(--green);
+  padding-left:7px;
+}
+
+.sidebar-num{
+  width:25px;
+  color:#6683a3;
+  font-size:11px;
+}
+
+.sidebar-bottom{
+  padding:20px 16px 24px;
+  color:#627c9a;
+  font-size:10px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+#menu-btn{
+  display:none;
+  position:fixed;
+  left:12px;
+  top:15px;
+  z-index:300;
+  width:38px;
+  height:38px;
+  border-radius:8px;
+  border:1px solid #294665;
+  background:#102f55;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+#main{
+  margin-left:var(--sidebar-w);
+  margin-top:var(--header-h);
+  min-height:calc(100vh - var(--header-h));
+  width:calc(100% - var(--sidebar-w));
+  max-width:none;
+  padding:42px 44px 90px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:32px;
+  align-items:center;
+  margin-bottom:38px;
+}
+
+.eyebrow{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:48px;
+  line-height:1.05;
+  color:var(--navy);
+  margin-bottom:14px;
+}
+
+.hero h1 span{
+  color:var(--gold);
+  font-style:italic;
+  font-weight:400;
+}
+
+.hero-description{
+  max-width:850px;
+  color:var(--muted);
+  font-size:16px;
+}
+
+.hero-logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:220px;
+}
+
+.hero-logo img{
+  width:180px;
+  max-width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+  scroll-margin-top:90px;
+  margin-bottom:52px;
+}
+
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:13px;
+  margin-bottom:22px;
+}
+
+.section-number{
+  flex:0 0 auto;
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  background:linear-gradient(135deg,var(--navy-2),var(--blue));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+
+.section-title{
+  flex:1;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  color:var(--navy);
+}
+
+.section-badge{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.grid.two{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(12,31,55,.035);
+}
+
+.card h3{
+  font-size:15px;
+  color:var(--navy);
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+}
+
+.card.accent{
+  border-top:3px solid var(--green);
+}
+
+.card.blue{
+  border-top:3px solid var(--blue);
+}
+
+.card.gold{
+  border-top:3px solid var(--gold);
+}
+
+.icon{
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+  overflow-x:auto;
+  max-width:100%;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,
+td{
+  padding:13px 15px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+
+th{
+  background:#f8fafc;
+  color:var(--navy);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+td{
+  color:var(--muted);
+}
+
+tr:last-child td{
+  border-bottom:0;
+}
+
+/* =========================
+   ROADMAP
+========================= */
+
+.filter-bar{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.filter-btn{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--muted);
+  border-radius:20px;
+  padding:7px 13px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.filter-btn.active{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+
+.roadmap-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+
+.roadmap-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+  transition:.15s;
+}
+
+.roadmap-card.hidden{
+  display:none;
+}
+
+.version{
+  display:inline-flex;
+  padding:3px 8px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.v1{
+  background:var(--green-soft);
+  color:#168451;
+}
+
+.v2{
+  background:#fff5dd;
+  color:#a66a00;
+}
+
+.v3{
+  background:var(--blue-soft);
+  color:#2458b7;
+}
+
+.roadmap-card h3{
+  font-size:15px;
+  margin-bottom:7px;
+  color:var(--navy);
+}
+
+.roadmap-card p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* =========================
+   FLOW
+========================= */
+
+.flow{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;
+  align-items:stretch;
+}
+
+.flow-step{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:15px 10px;
+  text-align:center;
+}
+
+.flow-step strong{
+  display:block;
+  font-size:12px;
+  color:var(--navy);
+  margin-bottom:4px;
+}
+
+.flow-step span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* =========================
+   REQUIREMENTS
+========================= */
+
+.requirement{
+  display:grid;
+  grid-template-columns:95px minmax(0,1fr) 90px;
+  gap:14px;
+  align-items:start;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:9px;
+}
+
+.req-id{
+  font-size:11px;
+  font-weight:700;
+  color:var(--blue);
+}
+
+.req-title{
+  color:var(--navy);
+  font-weight:700;
+  font-size:13px;
+}
+
+.req-desc{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.priority{
+  justify-self:end;
+  font-size:10px;
+  font-weight:700;
+  border-radius:20px;
+  padding:4px 8px;
+}
+
+.must{
+  color:#a33131;
+  background:#fdecec;
+}
+
+.should{
+  color:#9a6700;
+  background:#fff5dd;
+}
+
+.could{
+  color:#2458b7;
+  background:#eaf2ff;
+}
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.check{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.check:last-child{
+  border-bottom:0;
+}
+
+.check input{
+  margin-top:4px;
+  accent-color:var(--green);
+}
+
+.check label{
+  color:var(--muted);
+  cursor:pointer;
+}
+
+.check.done label{
+  text-decoration:line-through;
+  opacity:.55;
+}
+
+.progress{
+  height:6px;
+  background:#e6ebf1;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:12px;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--green),#67d39e);
+  transition:.25s;
+}
+
+/* =========================
+   CALLOUT
+========================= */
+
+.callout{
+  border-left:4px solid var(--green);
+  background:var(--green-soft);
+  padding:17px 19px;
+  border-radius:0 10px 10px 0;
+  color:#275b45;
+  margin:18px 0;
+}
+
+.callout strong{
+  color:#174f37;
+}
+
+.warning{
+  border-left-color:var(--orange);
+  background:#fff7e8;
+  color:#76551d;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  margin-left:var(--sidebar-w);
+  padding:25px 44px 40px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:11px;
+}
+
+.footer-brand{
+  color:var(--navy);
+  font-weight:700;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1000px){
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .hero-logo{
+    justify-content:flex-start;
+    min-height:0;
+  }
+
+  .grid,
+  .roadmap-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .flow{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:768px){
+  :root{
+    --sidebar-w:0px;
+  }
+
+  #sidebar{
+    transform:translateX(-100%);
+    transition:transform .25s ease;
+    width:280px;
+  }
+
+  #sidebar.open{
+    transform:translateX(0);
+  }
+
+  #menu-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  #header{
+    padding:0 14px 0 62px;
+  }
+
+  .header-title span{
+    display:none;
+  }
+
+  .header-actions{
+    display:none;
+  }
+
+  #main{
+    margin-left:0;
+    width:100%;
+    max-width:100vw;
+    padding:30px 16px 60px;
+  }
+
+  footer{
+    margin-left:0;
+    padding:22px 16px 35px;
+  }
+
+  h1{
+    font-size:36px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .grid,
+  .grid.two,
+  .roadmap-grid{
+    grid-template-columns:1fr;
+  }
+
+  .flow{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .requirement{
+    grid-template-columns:1fr;
+  }
+
+  .priority{
+    justify-self:start;
+  }
+
+  .section-title{
+    font-size:19px;
+  }
+
+  .table-wrap{
+    max-width:100%;
+  }
+}
+
+@media(max-width:420px){
+  .flow{
+    grid-template-columns:1fr;
+  }
+
+  h1{
+    font-size:32px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button
+  id="menu-btn"
+  aria-label="Buka menu navigasi"
+  aria-expanded="false"
+  onclick="toggleSidebar()">
+  ☰
+</button>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<nav id="sidebar" aria-label="PRD navigation">
+
+  <div class="sidebar-brand">
+    <img
+      src="https://anabhidev.com/HoL/HoL-Logo.webp"
+      alt="HoL — History of Life"
+      width="48"
+      height="48">
+    <div class="sidebar-brand-text">
+      <strong>HoL</strong>
+      <span>History of Life</span>
+    </div>
+  </div>
+
+  <div class="sidebar-group">Overview</div>
+
+  <a class="sidebar-item active" href="#sec-summary">
+    <span class="sidebar-num">01</span>
+    <span>Executive Summary</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-vision">
+    <span class="sidebar-num">02</span>
+    <span>Product Vision</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-problem">
+    <span class="sidebar-num">03</span>
+    <span>Problem & Opportunity</span>
+  </a>
+
+  <div class="sidebar-group">Product</div>
+
+  <a class="sidebar-item" href="#sec-category">
+    <span class="sidebar-num">04</span>
+    <span>Categories</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-lifecycle">
+    <span class="sidebar-num">05</span>
+    <span>Activity Lifecycle</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-home">
+    <span class="sidebar-num">06</span>
+    <span>Home Experience</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-ai">
+    <span class="sidebar-num">07</span>
+    <span>AI Parsing</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-history">
+    <span class="sidebar-num">08</span>
+    <span>History</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-report">
+    <span class="sidebar-num">09</span>
+    <span>Reports & Analytics</span>
+  </a>
+
+  <div class="sidebar-group">Specification</div>
+
+  <a class="sidebar-item" href="#sec-data">
+    <span class="sidebar-num">10</span>
+    <span>Data Model</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-requirements">
+    <span class="sidebar-num">11</span>
+    <span>Functional Requirements</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-roadmap">
+    <span class="sidebar-num">12</span>
+    <span>Scope & Roadmap</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-tech">
+    <span class="sidebar-num">13</span>
+    <span>Technical Architecture</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-privacy">
+    <span class="sidebar-num">14</span>
+    <span>Privacy & Security</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-qa">
+    <span class="sidebar-num">15</span>
+    <span>QA & Acceptance</span>
+  </a>
+
+  <a class="sidebar-item" href="#sec-checklist">
+    <span class="sidebar-num">16</span>
+    <span>Development Checklist</span>
+  </a>
+
+  <div class="sidebar-bottom">
+    HoL Product Requirements Document<br>
+    Interactive PRD · v1.0
+  </div>
+
+</nav>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header id="header">
+  <div class="header-title">
+    HoL <span>History of Life · Interactive PRD</span>
+  </div>
+
+  <div class="header-actions">
+    <button class="header-btn" onclick="toggleTheme()" id="themeBtn">
+      🌙 Theme
+    </button>
+    <button class="header-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      ↑ Top
+    </button>
+  </div>
+</header>
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main id="main">
+
+<section class="hero" id="sec-summary">
+
+  <div>
+    <div class="eyebrow">Product Requirements Document · v1.0</div>
+
+    <h1>
+      HoL — <span>History of Life</span>
+    </h1>
+
+    <p class="hero-description">
+      Aplikasi personal life & activity system untuk mencatat apa yang ingin
+      dilakukan, apa yang sedang dikerjakan, dan apa yang sudah dilakukan —
+      kemudian mengubah seluruh aktivitas tersebut menjadi sejarah kehidupan
+      yang dapat dicari, dipahami, dan dianalisis.
+    </p>
+
+    <div class="callout">
+      <strong>Core idea:</strong>
+      Plan your life. Remember what you did. Understand your life.
+    </div>
+  </div>
+
+  <div class="hero-logo">
+    <img
+      src="https://anabhidev.com/HoL/HoL-Logo.webp"
+      alt="HoL History of Life logo"
+      width="180"
+      height="180">
+  </div>
+
+</section>
+
+<!-- 02 -->
+
+<section class="section" id="sec-vision">
+
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <h2 class="section-title">Product Vision</h2>
+  </div>
+
+  <div class="grid">
+    <article class="card accent">
+      <div class="icon">🧠</div>
+      <h3>External Memory</h3>
+      <p>
+        HoL membantu user mengingat apa yang ingin dilakukan dan apa yang
+        sebelumnya belum selesai.
+      </p>
+    </article>
+
+    <article class="card blue">
+      <div class="icon">🤖</div>
+      <h3>Natural AI Capture</h3>
+      <p>
+        User cukup menulis atau menceritakan aktivitas secara natural.
+        Gemini membantu merapikan informasi.
+      </p>
+    </article>
+
+    <article class="card gold">
+      <div class="icon">📊</div>
+      <h3>Life Analytics</h3>
+      <p>
+        Aktivitas sehari-hari tidak hilang setelah selesai. Semuanya menjadi
+        data yang dapat divisualisasikan dalam report.
+      </p>
+    </article>
+  </div>
+
+</section>
+
+<!-- 03 -->
+
+<section class="section" id="sec-problem">
+
+  <div class="section-header">
+    <div class="section-number">03</div>
+    <h2 class="section-title">Problem & Opportunity</h2>
+  </div>
+
+  <div class="grid two">
+
+    <article class="card">
+      <h3>Masalah utama</h3>
+      <p>
+        User sering memiliki banyak hal yang ingin dilakukan tetapi lupa,
+        tertunda, atau tidak pernah dicatat. Setelah aktivitas dilakukan,
+        sebagian besar aktivitas tersebut juga hilang tanpa jejak yang
+        mudah dicari kembali.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Opportunity</h3>
+      <p>
+        Menggabungkan task planning, activity logging, personal history,
+        AI parsing, dan visual analytics dalam satu sistem yang tetap
+        sangat sederhana pada saat input.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout">
+    <strong>HoL bukan sekadar to-do list.</strong>
+    To-do yang selesai menjadi history. History yang terkumpul menjadi
+    report. Report membantu user memahami pola kehidupannya.
+  </div>
+
+</section>
+
+<!-- 04 -->
+
+<section class="section" id="sec-category">
+
+  <div class="section-header">
+    <div class="section-number">04</div>
+    <h2 class="section-title">Category Architecture</h2>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <div class="icon">👤</div>
+      <h3>Personal</h3>
+      <p>
+        Health & Medicine, Food & Drink, Personal Care, Vehicle,
+        Shopping, Home, Finance, Exercise, Hobby, Personal Goals.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">💼</div>
+      <h3>Work</h3>
+      <p>
+        Meeting, Task/Project, Client, Training, Seminar,
+        Administration, Work Travel.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">💻</div>
+      <h3>Vibe Coding</h3>
+      <p>
+        Project, Coding, Research, Testing, Bug Fix, Deployment,
+        Idea, Learning.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">👨‍👩‍👧</div>
+      <h3>Family</h3>
+      <p>
+        Family Activity, Family Health, Family Shopping,
+        Family Finance, Family Home, Family Event, Family Travel.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">📚</div>
+      <h3>Learning</h3>
+      <p>
+        Reading, Course, Research, Practice, Skill,
+        Event/Seminar.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">✈️</div>
+      <h3>Travel & Social</h3>
+      <p>
+        Travel, Friends, Event, Dining, Visit,
+        Out of Town.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout">
+    <strong>Design principle:</strong>
+    Home dan Finance tidak menjadi kategori utama. Keduanya dapat menjadi
+    subkategori dalam Personal atau Family sesuai konteks aktivitas.
+  </div>
+
+</section>
+
+<!-- 05 -->
+
+<section class="section" id="sec-lifecycle">
+
+  <div class="section-header">
+    <div class="section-number">05</div>
+    <h2 class="section-title">Activity Lifecycle</h2>
+  </div>
+
+  <div class="flow">
+
+    <div class="flow-step">
+      <strong>01 · Input</strong>
+      <span>User menulis natural language.</span>
+    </div>
+
+    <div class="flow-step">
+      <strong>02 · Parse</strong>
+      <span>Gemini mengurai informasi.</span>
+    </div>
+
+    <div class="flow-step">
+      <strong>03 · Review</strong>
+      <span>User memeriksa dan mengedit.</span>
+    </div>
+
+    <div class="flow-step">
+      <strong>04 · Save</strong>
+      <span>User sendiri yang mengonfirmasi.</span>
+    </div>
+
+    <div class="flow-step">
+      <strong>05 · Track</strong>
+      <span>Planned → In Progress → Done.</span>
+    </div>
+
+    <div class="flow-step">
+      <strong>06 · History</strong>
+      <span>Activity menjadi bagian dari life history.</span>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    AI <strong>tidak boleh auto-save</strong>.
+    Semua hasil parsing harus dapat diperiksa dan dikoreksi user sebelum
+    data masuk ke sistem.
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Planned</h3>
+      <p>Aktivitas direncanakan untuk waktu tertentu.</p>
+    </article>
+
+    <article class="card">
+      <h3>In Progress</h3>
+      <p>Aktivitas sedang dikerjakan.</p>
+    </article>
+
+    <article class="card">
+      <h3>Done</h3>
+      <p>Aktivitas selesai dan menjadi bagian dari history.</p>
+    </article>
+
+    <article class="card">
+      <h3>Skipped</h3>
+      <p>Aktivitas dilewati tanpa dianggap selesai.</p>
+    </article>
+
+    <article class="card">
+      <h3>Cancelled</h3>
+      <p>Aktivitas dibatalkan secara eksplisit.</p>
+    </article>
+  </div>
+
+</section>
+
+<!-- 06 -->
+
+<section class="section" id="sec-home">
+
+  <div class="section-header">
+    <div class="section-number">06</div>
+    <h2 class="section-title">Home Experience</h2>
+  </div>
+
+  <div class="grid">
+
+    <article class="card accent">
+      <h3>Quick AI Input</h3>
+      <p>
+        Area paling cepat untuk menulis aktivitas secara natural.
+        Contoh: "Besok jam 9 service motor di Tabanan."
+      </p>
+    </article>
+
+    <article class="card blue">
+      <h3>Today</h3>
+      <p>
+        Aktivitas hari ini dengan status Planned, In Progress,
+        dan Done.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Overdue</h3>
+      <p>
+        Aktivitas sebelumnya yang belum selesai sehingga user tidak lupa.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Upcoming</h3>
+      <p>
+        Aktivitas yang akan datang sehingga user dapat melihat agenda
+        tanpa membuka kalender eksternal.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout">
+    <strong>Home = Memory + Action.</strong>
+    User membuka HoL terutama untuk mengetahui apa yang perlu dilakukan,
+    apa yang tertunda, dan apa yang baru selesai.
+  </div>
+
+</section>
+
+<!-- 07 -->
+
+<section class="section" id="sec-ai">
+
+  <div class="section-header">
+    <div class="section-number">07</div>
+    <h2 class="section-title">AI Parsing & Review</h2>
+  </div>
+
+  <div class="card">
+
+    <h3>Example input</h3>
+
+    <div class="callout">
+      "Besok jam 9 service motor di Tabanan, sekalian ganti oli.
+      Siang lanjut bikin report HoL."
+    </div>
+
+    <h3>Expected parsing</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Category</th>
+            <th>Date/Time</th>
+            <th>Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Service motor</td>
+            <td>Personal / Vehicle</td>
+            <td>Besok 09:00</td>
+            <td>Tabanan</td>
+          </tr>
+          <tr>
+            <td>Ganti oli</td>
+            <td>Personal / Vehicle</td>
+            <td>Besok 09:00</td>
+            <td>Tabanan</td>
+          </tr>
+          <tr>
+            <td>Lanjut membuat report HoL</td>
+            <td>Vibe Coding / Project</td>
+            <td>Besok siang</td>
+            <td>HoL</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid two">
+
+    <article class="card">
+      <h3>AI responsibilities</h3>
+      <p>
+        Mengidentifikasi activity, category, subcategory, date, time,
+        location, cost, duration, hashtag, dan informasi lain yang
+        memang tersedia dalam kalimat.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>User responsibilities</h3>
+      <p>
+        Memeriksa hasil parsing, melakukan koreksi atau penambahan,
+        kemudian secara eksplisit menekan tombol Save.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- 08 -->
+
+<section class="section" id="sec-history">
+
+  <div class="section-header">
+    <div class="section-number">08</div>
+    <h2 class="section-title">History</h2>
+  </div>
+
+  <div class="grid two">
+
+    <article class="card">
+      <h3>Planned Date</h3>
+      <p>
+        Tanggal/waktu ketika aktivitas direncanakan untuk dilakukan.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Completed Date</h3>
+      <p>
+        Tanggal/waktu aktual ketika aktivitas ditandai selesai.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout">
+    Pemisahan Planned Date dan Completed Date memungkinkan HoL
+    menghitung aktivitas tepat waktu, terlambat, masih pending,
+    atau tidak dikerjakan.
+  </div>
+
+</section>
+
+<!-- 09 -->
+
+<section class="section" id="sec-report">
+
+  <div class="section-header">
+    <div class="section-number">09</div>
+    <h2 class="section-title">Reports & Analytics</h2>
+    <span class="section-badge">CORE FEATURE</span>
+  </div>
+
+  <div class="grid">
+
+    <article class="card accent">
+      <div class="icon">📊</div>
+      <h3>Activity Trend</h3>
+      <p>
+        Grafik jumlah aktivitas per hari, minggu, bulan, dan tahun.
+      </p>
+    </article>
+
+    <article class="card blue">
+      <div class="icon">📈</div>
+      <h3>Planned vs Done</h3>
+      <p>
+        Membandingkan aktivitas yang direncanakan dengan aktivitas
+        yang benar-benar selesai.
+      </p>
+    </article>
+
+    <article class="card gold">
+      <div class="icon">🟩</div>
+      <h3>Life Heatmap</h3>
+      <p>
+        Visualisasi intensitas aktivitas dari waktu ke waktu.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🥧</div>
+      <h3>Category Distribution</h3>
+      <p>
+        Proporsi Personal, Work, Vibe Coding, Family,
+        Learning, dan Travel & Social.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">💰</div>
+      <h3>Cost Report</h3>
+      <p>
+        Ringkasan biaya dari aktivitas yang memiliki data biaya.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">⚠️</div>
+      <h3>Overdue Report</h3>
+      <p>
+        Aktivitas yang direncanakan tetapi belum selesai.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">📍</div>
+      <h3>Location Activity</h3>
+      <p>
+        Ringkasan aktivitas berdasarkan lokasi ketika lokasi tersedia.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🕐</div>
+      <h3>Frequency</h3>
+      <p>
+        Seberapa sering aktivitas tertentu dilakukan.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🧠</div>
+      <h3>AI Life Insights</h3>
+      <p>
+        Insight berbasis pola data aktivitas yang sudah terkumpul.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout">
+    <strong>Report adalah first-class feature.</strong>
+    HoL bukan hanya membantu user menyelesaikan aktivitas hari ini,
+    tetapi juga membantu user memahami kehidupannya dalam perspektif
+    minggu, bulan, dan tahun.
+  </div>
+
+  <div class="card">
+    <h3>Example Monthly Report</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Planned</th>
+            <th>Done</th>
+            <th>Completion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Personal</td>
+            <td>35</td>
+            <td>31</td>
+            <td>89%</td>
+          </tr>
+          <tr>
+            <td>Work</td>
+            <td>42</td>
+            <td>36</td>
+            <td>86%</td>
+          </tr>
+          <tr>
+            <td>Vibe Coding</td>
+            <td>25</td>
+            <td>14</td>
+            <td>56%</td>
+          </tr>
+          <tr>
+            <td>Family</td>
+            <td>18</td>
+            <td>17</td>
+            <td>94%</td>
+          </tr>
+          <tr>
+            <td>Learning</td>
+            <td>10</td>
+            <td>6</td>
+            <td>60%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- 10 -->
+
+<section class="section" id="sec-data">
+
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <h2 class="section-title">Activity Data Model</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Required</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Activity</td>
+          <td>YES</td>
+          <td>Deskripsi utama aktivitas.</td>
+        </tr>
+
+        <tr>
+          <td>Category</td>
+          <td>YES</td>
+          <td>Kategori utama hasil AI/user correction.</td>
+        </tr>
+
+        <tr>
+          <td>Date</td>
+          <td>YES</td>
+          <td>Tanggal aktivitas.</td>
+        </tr>
+
+        <tr>
+          <td>Status</td>
+          <td>YES</td>
+          <td>Planned, In Progress, Done, Skipped, Cancelled.</td>
+        </tr>
+
+        <tr>
+          <td>Planned Date</td>
+          <td>YES</td>
+          <td>Tanggal/waktu yang direncanakan.</td>
+        </tr>
+
+        <tr>
+          <td>Completed Date</td>
+          <td>Conditional</td>
+          <td>Diisi ketika aktivitas selesai.</td>
+        </tr>
+
+        <tr>
+          <td>Subcategory</td>
+          <td>Optional</td>
+          <td>Detail kategori.</td>
+        </tr>
+
+        <tr>
+          <td>Hashtags</td>
+          <td>Optional</td>
+          <td>AI-generated dan dapat diedit user.</td>
+        </tr>
+
+        <tr>
+          <td>Location</td>
+          <td>Optional</td>
+          <td>Lokasi aktivitas jika tersedia.</td>
+        </tr>
+
+        <tr>
+          <td>Cost</td>
+          <td>Optional</td>
+          <td>Biaya aktivitas jika ada.</td>
+        </tr>
+
+        <tr>
+          <td>Duration</td>
+          <td>Optional</td>
+          <td>Durasi aktivitas jika relevan.</td>
+        </tr>
+
+        <tr>
+          <td>Photo</td>
+          <td>Optional</td>
+          <td>Dokumentasi visual.</td>
+        </tr>
+
+        <tr>
+          <td>Notes</td>
+          <td>Optional</td>
+          <td>Catatan tambahan.</td>
+        </tr>
+
+        <tr>
+          <td>Link / Document</td>
+          <td>Optional</td>
+          <td>Referensi eksternal atau dokumen.</td>
+        </tr>
+
+        <tr>
+          <td>Rating / Mood</td>
+          <td>Optional</td>
+          <td>Data refleksi pribadi.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Rule:</strong> user tidak boleh dipaksa mengisi seluruh metadata.
+    Prinsip input HoL adalah "catat cepat dulu, perkaya kemudian".
+  </div>
+
+</section>
+
+<!-- 11 -->
+
+<section class="section" id="sec-requirements">
+
+  <div class="section-header">
+    <div class="section-number">11</div>
+    <h2 class="section-title">Functional Requirements</h2>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-001</div>
+    <div>
+      <div class="req-title">Natural Language Input</div>
+      <div class="req-desc">
+        User dapat memasukkan aktivitas menggunakan kalimat bebas.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-002</div>
+    <div>
+      <div class="req-title">Gemini Parsing</div>
+      <div class="req-desc">
+        Sistem mengirim input ke Gemini untuk menghasilkan struktur activity.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-003</div>
+    <div>
+      <div class="req-title">AI Review Screen</div>
+      <div class="req-desc">
+        Hasil parsing harus ditampilkan sebelum penyimpanan.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-004</div>
+    <div>
+      <div class="req-title">Manual Correction</div>
+      <div class="req-desc">
+        User dapat mengubah hasil AI sebelum save.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-005</div>
+    <div>
+      <div class="req-title">Explicit Save</div>
+      <div class="req-desc">
+        Hanya user yang mengonfirmasi penyimpanan.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-006</div>
+    <div>
+      <div class="req-title">Activity Status</div>
+      <div class="req-desc">
+        Planned, In Progress, Done, Skipped, Cancelled.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-007</div>
+    <div>
+      <div class="req-title">Overdue Detection</div>
+      <div class="req-desc">
+        Aktivitas yang melewati planned date tanpa Done ditampilkan sebagai overdue.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-008</div>
+    <div>
+      <div class="req-title">History Search</div>
+      <div class="req-desc">
+        User dapat mencari aktivitas lama berdasarkan text, category, date, dan hashtag.
+      </div>
+    </div>
+    <span class="priority should">SHOULD</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-009</div>
+    <div>
+      <div class="req-title">Reports</div>
+      <div class="req-desc">
+        Sistem menyediakan report grafik untuk periode yang dipilih.
+      </div>
+    </div>
+    <span class="priority must">MUST</span>
+  </div>
+
+  <div class="requirement">
+    <div class="req-id">FR-010</div>
+    <div>
+      <div class="req-title">AI Insights</div>
+      <div class="req-desc">
+        Sistem dapat menghasilkan insight berdasarkan pola aktivitas.
+      </div>
+    </div>
+    <span class="priority should">SHOULD</span>
+  </div>
+
+</section>
+
+<!-- 12 -->
+
+<section class="section" id="sec-roadmap">
+
+  <div class="section-header">
+    <div class="section-number">12</div>
+    <h2 class="section-title">Scope & Roadmap</h2>
+  </div>
+
+  <div class="filter-bar" role="group" aria-label="Filter roadmap">
+    <button class="filter-btn active" onclick="filterRoadmap('all',this)">All</button>
+    <button class="filter-btn" onclick="filterRoadmap('v1',this)">V1 — Foundation</button>
+    <button class="filter-btn" onclick="filterRoadmap('v2',this)">V2 — Expansion</button>
+    <button class="filter-btn" onclick="filterRoadmap('v3',this)">V3 — Intelligence</button>
+  </div>
+
+  <div class="roadmap-grid">
+
+    <article class="roadmap-card" data-version="v1">
+      <span class="version v1">V1</span>
+      <h3>AI Activity Capture</h3>
+      <p>
+        Natural language input, Gemini parsing, review/edit,
+        explicit save, category, status, date.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v1">
+      <span class="version v1">V1</span>
+      <h3>Today Dashboard</h3>
+      <p>
+        Today, overdue, upcoming, quick input,
+        activity status.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v1">
+      <span class="version v1">V1</span>
+      <h3>Basic History</h3>
+      <p>
+        Completed activity history with search/filter foundation.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v1">
+      <span class="version v1">V1</span>
+      <h3>Core Reports</h3>
+      <p>
+        Daily, weekly, monthly activity counts and
+        planned vs done.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v2">
+      <span class="version v2">V2</span>
+      <h3>Rich Activity Metadata</h3>
+      <p>
+        Photos, locations, cost, duration, notes,
+        links/documents, rating/mood.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v2">
+      <span class="version v2">V2</span>
+      <h3>Advanced Reports</h3>
+      <p>
+        Heatmap, category distribution, cost reports,
+        frequency and location analytics.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v2">
+      <span class="version v2">V2</span>
+      <h3>Hashtag Intelligence</h3>
+      <p>
+        AI-generated hashtags, editable tags,
+        tag-based history exploration.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v3">
+      <span class="version v3">V3</span>
+      <h3>AI Life Insights</h3>
+      <p>
+        AI identifies meaningful patterns and changes
+        across longer periods.
+      </p>
+    </article>
+
+    <article class="roadmap-card" data-version="v3">
+      <span class="version v3">V3</span>
+      <h3>Year in Review</h3>
+      <p>
+        Narrative and visual summary of the user's
+        year of activities.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- 13 -->
+
+<section class="section" id="sec-tech">
+
+  <div class="section-header">
+    <div class="section-number">13</div>
+    <h2 class="section-title">Technical Architecture</h2>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <h3>Frontend</h3>
+      <p>
+        Responsive web application optimized for desktop and mobile,
+        with no horizontal overflow.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>AI Layer</h3>
+      <p>
+        Gemini API digunakan untuk natural-language activity parsing
+        dan tahap berikutnya untuk life insights.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Persistence</h3>
+      <p>
+        Activity data harus tersimpan secara persistent agar history
+        dan report dapat dibangun dari waktu ke waktu.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Reporting Layer</h3>
+      <p>
+        Data activity menjadi sumber grafik, aggregation,
+        trend analysis, dan AI insights.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="callout warning">
+    <strong>Security requirement:</strong>
+    Gemini API key tidak boleh diekspos di client-side production
+    jika arsitektur production menggunakan backend. Request AI
+    sebaiknya melewati secure server-side layer.
+  </div>
+
+</section>
+
+<!-- 14 -->
+
+<section class="section" id="sec-privacy">
+
+  <div class="section-header">
+    <div class="section-number">14</div>
+    <h2 class="section-title">Privacy & Security</h2>
+  </div>
+
+  <div class="grid two">
+
+    <article class="card">
+      <h3>Personal Data</h3>
+      <p>
+        HoL dapat menyimpan data kehidupan pribadi seperti aktivitas,
+        lokasi, biaya, foto, catatan, dan mood. Data harus diperlakukan
+        sebagai data pribadi.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>AI Data Handling</h3>
+      <p>
+        Input yang dikirim ke Gemini harus dikendalikan dengan jelas,
+        dan arsitektur production tidak boleh menaruh secret API key
+        secara terbuka di browser.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Authentication</h3>
+      <p>
+        Jika HoL menjadi produk multi-user, authentication dan
+        user-level data isolation menjadi requirement production.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Database Security</h3>
+      <p>
+        Jika menggunakan Supabase atau database exposed API,
+        access policy/RLS harus diterapkan sesuai model data.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- 15 -->
+
+<section class="section" id="sec-qa">
+
+  <div class="section-header">
+    <div class="section-number">15</div>
+    <h2 class="section-title">QA & Acceptance Criteria</h2>
+  </div>
+
+  <div class="card">
+
+    <div class="check">
+      <input type="checkbox" id="qa1" onchange="updateChecklist()">
+      <label for="qa1">
+        User dapat memasukkan aktivitas menggunakan natural language.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa2" onchange="updateChecklist()">
+      <label for="qa2">
+        AI menampilkan hasil parsing sebelum save.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa3" onchange="updateChecklist()">
+      <label for="qa3">
+        User dapat mengoreksi hasil AI sebelum menyimpan.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa4" onchange="updateChecklist()">
+      <label for="qa4">
+        User harus melakukan explicit Save.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa5" onchange="updateChecklist()">
+      <label for="qa5">
+        Aktivitas yang overdue terlihat jelas.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa6" onchange="updateChecklist()">
+      <label for="qa6">
+        Planned Date dan Completed Date dapat dibedakan.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa7" onchange="updateChecklist()">
+      <label for="qa7">
+        Report menampilkan Planned vs Done.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa8" onchange="updateChecklist()">
+      <label for="qa8">
+        Grafik/report dapat digunakan untuk periode berbeda.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa9" onchange="updateChecklist()">
+      <label for="qa9">
+        Mobile tidak memiliki horizontal scroll.
+      </label>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="qa10" onchange="updateChecklist()">
+      <label for="qa10">
+        Sidebar berubah menjadi mobile menu pada viewport kecil.
+      </label>
+    </div>
+
+    <div class="progress">
+      <div class="progress-fill" id="qaProgress"></div>
+    </div>
+
+    <p id="qaText" style="margin-top:10px;color:#64748b;font-size:12px;">
+      0/10 acceptance checks
+    </p>
+
+  </div>
+
+</section>
+
+<!-- 16 -->
+
+<section class="section" id="sec-checklist">
+
+  <div class="section-header">
+    <div class="section-number">16</div>
+    <h2 class="section-title">Development Checklist</h2>
+  </div>
+
+  <div class="grid two">
+
+    <article class="card">
+      <h3>Product</h3>
+
+      <div class="check">
+        <input type="checkbox" id="dev1" onchange="updateDevChecklist()">
+        <label for="dev1">Categories and subcategories implemented.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev2" onchange="updateDevChecklist()">
+        <label for="dev2">Activity lifecycle implemented.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev3" onchange="updateDevChecklist()">
+        <label for="dev3">Overdue logic implemented.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev4" onchange="updateDevChecklist()">
+        <label for="dev4">Reports implemented.</label>
+      </div>
+
+    </article>
+
+    <article class="card">
+      <h3>AI</h3>
+
+      <div class="check">
+        <input type="checkbox" id="dev5" onchange="updateDevChecklist()">
+        <label for="dev5">Gemini parsing prompt defined.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev6" onchange="updateDevChecklist()">
+        <label for="dev6">Parsing output schema defined.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev7" onchange="updateDevChecklist()">
+        <label for="dev7">Review/edit step implemented.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev8" onchange="updateDevChecklist()">
+        <label for="dev8">Explicit save confirmation implemented.</label>
+      </div>
+
+    </article>
+
+    <article class="card">
+      <h3>Responsive & Accessibility</h3>
+
+      <div class="check">
+        <input type="checkbox" id="dev9" onchange="updateDevChecklist()">
+        <label for="dev9">No horizontal overflow on html and body.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev10" onchange="updateDevChecklist()">
+        <label for="dev10">Mobile hamburger navigation.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev11" onchange="updateDevChecklist()">
+        <label for="dev11">Keyboard-accessible interactive elements.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev12" onchange="updateDevChecklist()">
+        <label for="dev12">ARIA states updated dynamically.</label>
+      </div>
+
+    </article>
+
+    <article class="card">
+      <h3>Production</h3>
+
+      <div class="check">
+        <input type="checkbox" id="dev13" onchange="updateDevChecklist()">
+        <label for="dev13">API secrets protected server-side.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev14" onchange="updateDevChecklist()">
+        <label for="dev14">Database access policy verified.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev15" onchange="updateDevChecklist()">
+        <label for="dev15">Cross-browser testing completed.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="dev16" onchange="updateDevChecklist()">
+        <label for="dev16">Final mobile QA completed.</label>
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    HoL — History of Life · Interactive Product Requirements Document
+  </div>
+  <div>
+    Product concept and requirements prepared from the agreed HoL brainstorming session.
+  </div>
+</footer>
+
+<script>
+/* =========================
+   SIDEBAR
+========================= */
+
+function toggleSidebar(){
+  const sidebar=document.getElementById("sidebar");
+  const btn=document.getElementById("menu-btn");
+
+  const open=sidebar.classList.toggle("open");
+
+  btn.setAttribute("aria-expanded",open ? "true" : "false");
+}
+
+document.querySelectorAll(".sidebar-item").forEach(item=>{
+  item.addEventListener("click",()=>{
+    if(window.innerWidth<=768){
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("menu-btn").setAttribute("aria-expanded","false");
+    }
+  });
+});
+
+/* =========================
+   ACTIVE SIDEBAR
+========================= */
+
+const sections=[...document.querySelectorAll(".section")];
+const navItems=[...document.querySelectorAll(".sidebar-item")];
+
+window.addEventListener("scroll",()=>{
+  const position=window.scrollY+120;
+  let current="";
+
+  sections.forEach(section=>{
+    if(section.offsetTop<=position){
+      current=section.id;
+    }
+  });
+
+  navItems.forEach(item=>{
+    item.classList.toggle(
+      "active",
+      item.getAttribute("href")==="#"+current
+    );
+  });
+},{passive:true});
+
+/* =========================
+   ROADMAP FILTER
+========================= */
+
+function filterRoadmap(version,button){
+
+  document.querySelectorAll(".filter-btn").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  document.querySelectorAll(".roadmap-card").forEach(card=>{
+
+    if(version==="all"){
+      card.classList.remove("hidden");
+      return;
+    }
+
+    card.classList.toggle(
+      "hidden",
+      card.dataset.version!==version
+    );
+  });
+}
+
+/* =========================
+   THEME
+========================= */
+
+function toggleTheme(){
+
+  const light=document.body.classList.toggle("light-mode");
+
+  if(light){
+
+    document.documentElement.style.setProperty("--bg","#edf1f5");
+    document.documentElement.style.setProperty("--card","#ffffff");
+    document.documentElement.style.setProperty("--text","#152238");
+    document.documentElement.style.setProperty("--muted","#64748b");
+    document.getElementById("themeBtn").textContent="☀️ Light";
+
+  }else{
+
+    document.documentElement.style.setProperty("--bg","#f5f7fa");
+    document.documentElement.style.setProperty("--card","#ffffff");
+    document.documentElement.style.setProperty("--text","#152238");
+    document.documentElement.style.setProperty("--muted","#64748b");
+    document.getElementById("themeBtn").textContent="🌙 Theme";
+
+  }
+}
+
+/* =========================
+   QA CHECKLIST PERSISTENCE
+========================= */
+
+const QA_KEY="hol-prd-qa";
+const DEV_KEY="hol-prd-dev";
+
+function loadChecks(key,ids){
+
+  try{
+    const data=JSON.parse(localStorage.getItem(key)||"{}");
+
+    ids.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && data[id]){
+        el.checked=true;
+        el.closest(".check")?.classList.add("done");
+      }
+    });
+
+  }catch(e){}
+}
+
+function saveChecks(key,ids){
+
+  const data={};
+
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) data[id]=el.checked;
+  });
+
+  try{
+    localStorage.setItem(key,JSON.stringify(data));
+  }catch(e){}
+}
+
+function updateChecklist(){
+
+  const ids=[
+    "qa1","qa2","qa3","qa4","qa5",
+    "qa6","qa7","qa8","qa9","qa10"
+  ];
+
+  let done=0;
+
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+
+    if(el.checked){
+      done++;
+      el.closest(".check")?.classList.add("done");
+    }else{
+      el.closest(".check")?.classList.remove("done");
+    }
+  });
+
+  const pct=Math.round(done/ids.length*100);
+
+  document.getElementById("qaProgress").style.width=pct+"%";
+  document.getElementById("qaText").textContent=
+    done+"/"+ids.length+" acceptance checks";
+
+  saveChecks(QA_KEY,ids);
+}
+
+function updateDevChecklist(){
+
+  const ids=[
+    "dev1","dev2","dev3","dev4",
+    "dev5","dev6","dev7","dev8",
+    "dev9","dev10","dev11","dev12",
+    "dev13","dev14","dev15","dev16"
+  ];
+
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+
+    if(el.checked){
+      el.closest(".check")?.classList.add("done");
+    }else{
+      el.closest(".check")?.classList.remove("done");
+    }
+  });
+
+  saveChecks(DEV_KEY,ids);
+}
+
+/* =========================
+   INIT
+========================= */
+
+window.addEventListener("DOMContentLoaded",()=>{
+
+  loadChecks(
+    QA_KEY,
+    ["qa1","qa2","qa3","qa4","qa5","qa6","qa7","qa8","qa9","qa10"]
+  );
+
+  loadChecks(
+    DEV_KEY,
+    [
+      "dev1","dev2","dev3","dev4",
+      "dev5","dev6","dev7","dev8",
+      "dev9","dev10","dev11","dev12",
+      "dev13","dev14","dev15","dev16"
+    ]
+  );
+
+  updateChecklist();
+  updateDevChecklist();
+
+});
+</script>
+
+</body>
+</html>
