@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<!-- ================================================================
+     AD-HOL-MB — HoL History of Life · Master Brief Build 1
+     HTML · CSS · Vanilla JS (ES Modules)
+     Development · Anabhi Dev
+     Version   : 1.1
+     Generated : 16 August 2026, 21:20:03
+     ================================================================ -->
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>HoL — Master Brief Build 1 · Anabhi Dev</title>
+<style>
+:root{
+  --navy-900:#061426;
+  --navy-800:#071a33;
+  --navy-700:#0b2444;
+  --navy-600:#102f55;
+  --navy-500:#1c4a7a;
+
+  --ink:#152238;
+  --muted:#64748b;
+  --canvas:#f5f7fa;
+  --surface:#ffffff;
+  --border:#dce3eb;
+
+  --green:#42b883;
+  --green-soft:#eaf8f1;
+  --gold:#c99b52;
+  --amber:#e89a38;
+  --amber-soft:#fdf3e4;
+  --red:#dc4c4c;
+  --red-soft:#fdecec;
+
+  --sidebar-w:288px;
+  --header-h:64px;
+
+  --r-card:10px;
+  --r-ctl:8px;
+  --shadow:0 1px 2px rgba(7,26,51,.06), 0 4px 16px rgba(7,26,51,.04);
+
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --display:Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
+  width:100%;
+  max-width:100vw;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:var(--ui);
+  background:var(--canvas);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-text-size-adjust:100%;
+}
+
+button,input{font:inherit}
+a{color:var(--navy-500);text-underline-offset:3px}
+
+:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:2px;
+  border-radius:4px;
+}
+
+/* ================= HEADER ================= */
+#header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:var(--header-h);
+  z-index:100;
+  background:var(--navy-800);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 20px 0 calc(var(--sidebar-w) + 28px);
+}
+.hdr-title{
+  font-family:var(--display);
+  font-size:18px;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.hdr-title em{color:var(--gold);font-style:italic}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+.hdr-badge{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#8fb1d8;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  padding:4px 10px;
+  white-space:nowrap;
+}
+
+.copy-btn{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  border-radius:var(--r-ctl);
+  padding:8px 13px;
+  font-size:13px;
+  cursor:pointer;
+  transition:background .15s ease-out;
+  white-space:nowrap;
+}
+.copy-btn:hover{background:rgba(255,255,255,.14)}
+.copy-btn.ok{background:var(--green);border-color:var(--green)}
+
+#menu-btn{
+  display:none;
+  width:42px;height:42px;
+  align-items:center;justify-content:center;
+  border-radius:var(--r-ctl);
+  border:1px solid #2a4a6d;
+  background:var(--navy-600);
+  color:#fff;
+  cursor:pointer;
+  flex-shrink:0;
+}
+#menu-btn svg{width:20px;height:20px}
+
+/* ================= SIDEBAR ================= */
+#sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:var(--sidebar-w);
+  z-index:200;
+  background:var(--navy-900);
+  color:#dce8f5;
+  border-right:1px solid #16304e;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.brand{
+  min-height:var(--header-h);
+  display:flex;align-items:center;gap:11px;
+  padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.brand-mark{
+  width:40px;height:40px;flex-shrink:0;
+  border-radius:9px;
+  background:var(--navy-600);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);
+  font-size:15px;
+  color:#fff;
+  border:1px solid #23456b;
+}
+.brand-text strong{display:block;font-size:14px;color:#fff;line-height:1.3}
+.brand-text span{display:block;font-size:10px;letter-spacing:.06em;color:#7e98b5}
+
+.nav-group{
+  padding:20px 14px 6px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#6b84a0;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  min-height:42px;
+  margin:2px 8px;
+  padding:8px 10px;
+  border-radius:7px;
+  color:#b9c9da;
+  text-decoration:none;
+  font-size:14px;
+  line-height:1.35;
+  transition:background .15s ease-out,color .15s ease-out;
+}
+.nav-item:hover{background:#0d2745;color:#fff}
+.nav-item.active{
+  background:var(--navy-600);
+  color:#fff;
+  box-shadow:inset 3px 0 0 var(--green);
+}
+.nav-num{
+  width:24px;flex-shrink:0;
+  font-family:var(--mono);
+  font-size:11px;
+  color:#6683a3;
+}
+.nav-item.active .nav-num{color:#9fc8ac}
+.nav-foot{padding:22px 16px 30px;font-size:11px;color:#5c7691;line-height:1.6}
+
+#overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(6,20,38,.55);
+  z-index:150;
+  backdrop-filter:blur(2px);
+}
+
+/* ================= MAIN ================= */
+#main{
+  margin-left:var(--sidebar-w);
+  margin-top:var(--header-h);
+  width:calc(100% - var(--sidebar-w));
+  padding:40px 44px 100px;
+}
+.wrap{max-width:1120px}
+
+.hero{margin-bottom:44px}
+.eyebrow{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+h1{
+  font-family:var(--display);
+  font-size:clamp(30px,4.4vw,46px);
+  line-height:1.08;
+  color:var(--navy-800);
+  margin-bottom:16px;
+  font-weight:400;
+}
+h1 em{color:var(--gold);font-style:italic}
+.lead{font-size:16px;color:#3d5068;max-width:70ch}
+
+.callout{
+  border-left:3px solid var(--green);
+  background:var(--green-soft);
+  border-radius:0 var(--r-card) var(--r-card) 0;
+  padding:16px 20px;
+  margin:22px 0;
+  font-size:15px;
+}
+.callout.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+.callout.stop{border-left-color:var(--red);background:var(--red-soft)}
+.callout strong{color:var(--navy-800)}
+
+section{margin-bottom:52px;scroll-margin-top:calc(var(--header-h) + 16px)}
+.sec-head{
+  display:flex;align-items:center;gap:14px;
+  padding-bottom:14px;
+  margin-bottom:22px;
+  border-bottom:1px solid var(--border);
+}
+.sec-num{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:9px;
+  background:var(--navy-800);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);
+  font-size:13px;
+}
+h2{
+  font-family:var(--display);
+  font-size:clamp(21px,2.6vw,27px);
+  font-weight:400;
+  color:var(--navy-800);
+  line-height:1.2;
+}
+h3{
+  font-size:15px;
+  font-weight:700;
+  color:var(--navy-800);
+  margin:26px 0 10px;
+  letter-spacing:.01em;
+}
+p{margin-bottom:12px;max-width:78ch}
+ul,ol{margin:0 0 14px 20px;max-width:78ch}
+li{margin-bottom:7px}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-card);
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.card h4{font-size:14px;color:var(--navy-800);margin-bottom:7px}
+.card p:last-child{margin-bottom:0}
+.card .tiny{font-size:13px;color:var(--muted)}
+
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:16px;border-radius:var(--r-card)}
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+  background:var(--surface);
+  font-size:13.5px;
+}
+th,td{
+  text-align:left;
+  padding:11px 14px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+th{
+  background:#eef2f7;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#4d6180;
+  font-weight:700;
+  white-space:nowrap;
+}
+tr:last-child td{border-bottom:none}
+td code{font-family:var(--mono);font-size:12.5px;color:var(--navy-600);white-space:nowrap}
+
+.pill{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:3px 8px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.pill.yes{background:var(--green-soft);color:#1f7a52}
+.pill.no{background:var(--red-soft);color:#a72f2f}
+.pill.later{background:#eef2f7;color:#4d6180}
+.pill.hard{background:var(--amber-soft);color:#8a5a10}
+
+pre.code{
+  background:var(--navy-900);
+  color:#d6e4f2;
+  border-radius:var(--r-card);
+  padding:18px 20px;
+  overflow-x:auto;
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.65;
+  margin:0 0 16px;
+  -webkit-overflow-scrolling:touch;
+}
+pre.code .c{color:#6d8aa8}
+pre.code .k{color:#7fc4a0}
+pre.code .s{color:#d8b26a}
+
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,132px),1fr));gap:10px;margin-bottom:16px}
+.sw{border:1px solid var(--border);border-radius:var(--r-ctl);overflow:hidden;background:var(--surface)}
+.sw i{display:block;height:48px}
+.sw b{display:block;font-size:11.5px;padding:7px 9px 2px;color:var(--navy-800)}
+.sw span{display:block;font-family:var(--mono);font-size:10.5px;padding:0 9px 8px;color:var(--muted)}
+
+.checklist{list-style:none;margin:0}
+.checklist li{
+  display:flex;align-items:flex-start;gap:11px;
+  padding:11px 14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-ctl);
+  margin-bottom:7px;
+  font-size:14px;
+  cursor:pointer;
+}
+.checklist li:hover{border-color:#b9c8d8}
+.checklist input{
+  width:19px;height:19px;
+  margin-top:2px;
+  flex-shrink:0;
+  accent-color:var(--green);
+  cursor:pointer;
+}
+.checklist li.done{background:var(--green-soft);border-color:#bfe3d1}
+.checklist li.done span{text-decoration:line-through;color:#4e7a64}
+
+.counter{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--navy-800);
+  color:#fff;
+  border-radius:999px;
+  padding:7px 16px;
+  font-size:13px;
+  margin-bottom:16px;
+}
+.counter b{font-family:var(--mono);color:var(--green)}
+
+.steps{counter-reset:st;list-style:none;margin:0}
+.steps li{
+  counter-increment:st;
+  position:relative;
+  padding-left:42px;
+  margin-bottom:16px;
+}
+.steps li::before{
+  content:counter(st);
+  position:absolute;left:0;top:1px;
+  width:28px;height:28px;
+  border-radius:8px;
+  background:var(--navy-600);
+  color:#fff;
+  font-family:var(--mono);
+  font-size:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.steps b{display:block;color:var(--navy-800);margin-bottom:2px}
+
+footer{
+  margin-top:56px;
+  padding-top:22px;
+  border-top:1px solid var(--border);
+  font-size:12.5px;
+  color:var(--muted);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1023px){
+  #sidebar{
+    left:auto;
+    right:0;
+    transform:translateX(100%);
+    transition:transform .22s ease-out;
+    width:min(300px,86vw);
+    border-right:none;
+    border-left:1px solid #16304e;
+  }
+  #sidebar.open{transform:translateX(0)}
+  #overlay.show{display:block}
+
+  #header{padding:0 12px 0 18px}
+  #menu-btn{display:flex}
+  .hdr-badge{display:none}
+  .copy-btn{padding:8px 11px;font-size:12px}
+
+  #main{
+    margin-left:0;
+    width:100%;
+    padding:28px 18px 80px;
+  }
+  .hdr-title{font-size:16px}
+}
+
+@media (max-width:600px){
+  body{font-size:14.5px}
+  #main{padding:24px 14px 72px}
+  .card{padding:16px 16px}
+  .hdr-title{font-size:15px}
+  .copy-btn span{display:none}
+  .sec-head{gap:11px}
+  .sec-num{width:32px;height:32px;font-size:12px}
+  pre.code{font-size:11.5px;padding:14px 15px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<aside id="sidebar" aria-label="Daftar isi brief">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">HoL</div>
+    <div class="brand-text">
+      <strong>Master Brief</strong>
+      <span>BUILD 1 · FOUNDATION</span>
+    </div>
+  </div>
+
+  <div class="nav-group">Brief</div>
+  <a class="nav-item" href="#s1"><span class="nav-num">01</span>Ringkasan Build 1</a>
+  <a class="nav-item" href="#s2"><span class="nav-num">02</span>Scope — Kerjakan &amp; Jangan</a>
+  <a class="nav-item" href="#s3"><span class="nav-num">03</span>Aturan Tidak Bisa Ditawar</a>
+
+  <div class="nav-group">Arsitektur</div>
+  <a class="nav-item" href="#s4"><span class="nav-num">04</span>Struktur File</a>
+  <a class="nav-item" href="#s5"><span class="nav-num">05</span>Kontrak Data Adapter</a>
+  <a class="nav-item" href="#s6"><span class="nav-num">06</span>Schema Aktivitas v1</a>
+  <a class="nav-item" href="#s7"><span class="nav-num">07</span>State &amp; Rendering</a>
+
+  <div class="nav-group">Desain</div>
+  <a class="nav-item" href="#s8"><span class="nav-num">08</span>Design Token</a>
+  <a class="nav-item" href="#s9"><span class="nav-num">09</span>Tipografi</a>
+  <a class="nav-item" href="#s10"><span class="nav-num">10</span>Layout &amp; Navigasi</a>
+  <a class="nav-item" href="#s11"><span class="nav-num">11</span>Komponen UI</a>
+
+  <div class="nav-group">Eksekusi</div>
+  <a class="nav-item" href="#s12"><span class="nav-num">12</span>Bagian Tersulit</a>
+  <a class="nav-item" href="#s13"><span class="nav-num">13</span>Jebakan &amp; Pencegahan</a>
+  <a class="nav-item" href="#s14"><span class="nav-num">14</span>Standar Coding</a>
+  <a class="nav-item" href="#s15"><span class="nav-num">15</span>Acceptance Criteria</a>
+  <a class="nav-item" href="#s16"><span class="nav-num">16</span>Definition of Done</a>
+  <a class="nav-item" href="#s17"><span class="nav-num">17</span>Handoff ke Build 2</a>
+  <a class="nav-item" href="#s18"><span class="nav-num">18</span>Keputusan Terbuka</a>
+
+  <div class="nav-foot">
+    AD-HOL-MB · v1.1<br>
+    Development · Anabhi Dev<br>
+    16 August 2026
+  </div>
+</aside>
+
+<div id="overlay" hidden></div>
+
+<header id="header">
+  <div class="hdr-title">History of <em>Life</em></div>
+  <div class="hdr-right">
+    <span class="hdr-badge">Master Brief · Build 1</span>
+    <button class="copy-btn" id="copy-btn" type="button">📋 <span>Salin untuk Sonnet</span></button>
+    <button id="menu-btn" type="button" aria-label="Buka daftar isi" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Master Brief · Untuk dikerjakan Claude Sonnet 5</div>
+    <h1>HoL Build 1 — <em>Foundation</em></h1>
+    <p class="lead">
+      Instruksi lengkap dan final untuk membangun fondasi HoL: shell aplikasi, input manual,
+      Today &amp; Overdue, riwayat, dan lapisan data yang bisa ditukar ke Supabase tanpa
+      menyentuh satu baris kode antarmuka. Tanpa AI. Tanpa database. Tanpa notifikasi.
+    </p>
+  </div>
+
+  <div class="callout">
+    <strong>Cara memakai dokumen ini.</strong> Buka percakapan baru dengan Sonnet 5, tekan
+    <em>Salin untuk Sonnet</em> di kanan atas, tempel isinya, lalu lampirkan
+    <code>Standar_Coding_Anabhi_Dev.md</code> dan logo HoL. Jangan lampirkan PRD lengkap,
+    Notification Addendum, atau SOP Checklist di Build 1 — konteks yang tidak relevan
+    menurunkan kualitas hasil, bukan menaikkannya.
+  </div>
+
+  <!-- 01 -->
+  <section id="s1">
+    <div class="sec-head"><div class="sec-num">01</div><h2>Ringkasan Build 1</h2></div>
+
+    <p>
+      Build 1 punya satu tujuan tunggal: <strong>HoL bisa dipakai mencatat hidup pada hari
+      yang sama saat ia selesai dibangun.</strong> Bukan demo, bukan mockup — aplikasi
+      sungguhan yang datanya bertahan setelah browser ditutup.
+    </p>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Kenapa tanpa AI dulu</h4>
+        <p class="tiny">
+          Parsing Gemini adalah fitur unggulan, tapi bukan fondasi. Kalau schema dan
+          alur simpan belum matang, hasil parsing tidak punya tempat yang benar untuk
+          mendarat. AI dibangun di Build 4, di atas struktur yang sudah terbukti.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Kenapa tanpa Supabase dulu</h4>
+        <p class="tiny">
+          Menyiapkan Auth, RLS, dan migrasi di hari pertama berarti berjam-jam sebelum
+          layar pertama muncul. Dengan Data Adapter, pindah ke Supabase di Build 3 hanya
+          mengganti satu implementasi — bukan menulis ulang.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Kenapa report ditunda</h4>
+        <p class="tiny">
+          Report butuh data nyata. Grafik dari data kosong tidak mengajari apa pun.
+          Yang penting sekarang adalah <em>merekam field yang benar</em> supaya Build 2
+          punya bahan. Itu urusan schema, bukan urusan chart.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Ukuran keberhasilan</h4>
+        <p class="tiny">
+          Bukan jumlah fitur. Build 1 berhasil kalau setelah lima hari pemakaian nyata,
+          mencatat aktivitas terasa lebih cepat daripada menulisnya di Notes.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>Target hosting:</strong> <code>anabhidev.com/HoL/index.html</code> — sebuah
+      <em>subpath</em>, bukan root domain. Ini punya konsekuensi teknis nyata yang dibahas
+      di bagian 12 dan 13. Semua path aset wajib relatif.
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s2">
+    <div class="sec-head"><div class="sec-num">02</div><h2>Scope — Kerjakan &amp; Jangan</h2></div>
+
+    <p>Daftar ini bersifat mengikat. Menambah di luar kolom kiri bukan bonus, melainkan penambah risiko.</p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Area</th><th>Build 1</th><th>Keterangan</th></tr></thead>
+      <tbody>
+        <tr><td>Shell aplikasi (sidebar, header, routing)</td><td><span class="pill yes">Kerjakan</span></td><td>Router berbasis hash, tanpa library</td></tr>
+        <tr><td>Tampilan Today: Terlambat / Hari ini / Akan datang</td><td><span class="pill yes">Kerjakan</span></td><td>Layar utama aplikasi</td></tr>
+        <tr><td>Form tambah aktivitas manual</td><td><span class="pill yes">Kerjakan</span></td><td>Progressive disclosure</td></tr>
+        <tr><td>Ubah status, edit, hapus (soft delete)</td><td><span class="pill yes">Kerjakan</span></td><td>Termasuk aksi Tunda</td></tr>
+        <tr><td>Riwayat + pencarian + filter</td><td><span class="pill yes">Kerjakan</span></td><td>Filter dijalankan di dalam adapter</td></tr>
+        <tr><td>Data Adapter + implementasi localStorage</td><td><span class="pill yes">Kerjakan</span></td><td>Inti arsitektur Build 1</td></tr>
+        <tr><td>Empty / loading / error state</td><td><span class="pill yes">Kerjakan</span></td><td>Tiga varian empty state berbeda</td></tr>
+        <tr><td>Export &amp; import JSON</td><td><span class="pill yes">Kerjakan</span></td><td>Fitur kepercayaan, bukan pelengkap</td></tr>
+        <tr><td>Demo data seeder</td><td><span class="pill yes">Kerjakan</span></td><td>Berlabel jelas, satu klik hapus</td></tr>
+        <tr><td>Parsing Gemini / input kalimat bebas</td><td><span class="pill no">Jangan</span></td><td>Build 4 — sediakan slot UI nonaktif</td></tr>
+        <tr><td>Supabase, Auth, RLS</td><td><span class="pill no">Jangan</span></td><td>Build 3</td></tr>
+        <tr><td>Grafik &amp; report</td><td><span class="pill no">Jangan</span></td><td>Build 2</td></tr>
+        <tr><td>Telegram &amp; email</td><td><span class="pill no">Jangan</span></td><td>Build 5 — kanal sekunder</td></tr>
+        <tr><td>Upload foto</td><td><span class="pill no">Jangan</span></td><td>Siapkan kolom, jangan implementasi</td></tr>
+        <tr><td>Dark mode</td><td><span class="pill later">Tunggu</span></td><td>Lihat bagian 18</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Slot yang wajib disiapkan sekarang, walau belum berfungsi</h3>
+    <p>
+      Di layar Today, letakkan area input kalimat bebas dalam keadaan nonaktif dengan
+      label jujur seperti <em>“Tulis dengan kalimat biasa — segera hadir”</em>. Tujuannya
+      bukan hiasan: begitu Build 4 tiba, tata letak tidak perlu dibongkar ulang, dan
+      hierarki visual sudah menempatkan AI di posisi yang benar sejak awal. Slot ini
+      tidak boleh bisa diklik dan tidak boleh terlihat seperti tombol rusak.
+    </p>
+  </section>
+
+  <!-- 03 -->
+  <section id="s3">
+    <div class="sec-head"><div class="sec-num">03</div><h2>Aturan Tidak Bisa Ditawar</h2></div>
+
+    <p>Tujuh aturan berikut menentukan apakah Build 3 dan Build 4 nanti berjalan mulus atau berubah jadi penulisan ulang.</p>
+
+    <ol class="steps">
+      <li>
+        <b>Semua akses data lewat Data Adapter.</b>
+        Tidak boleh ada satu pun <code>localStorage.getItem</code> atau
+        <code>localStorage.setItem</code> di luar berkas <code>js/store/local.js</code>.
+        Ini aturan yang paling sering dilanggar tanpa sadar, dan pelanggarannya baru
+        terasa saat Build 3 — ketika sudah terlambat.
+      </li>
+      <li>
+        <b>Filter, urutan, dan pencarian dijalankan di dalam adapter.</b>
+        Antarmuka mengirim objek filter, adapter mengembalikan hasil yang sudah jadi.
+        Kalau antarmuka menerima seluruh data lalu memfilter sendiri, migrasi ke Supabase
+        berarti menulis ulang setiap tampilan.
+      </li>
+      <li>
+        <b>Waktu disimpan sebagai ISO 8601 UTC, dihitung dan ditampilkan di Asia/Makassar.</b>
+        Seluruh urusan waktu melalui satu modul. Tidak ada <code>new Date()</code> liar
+        yang tersebar di berkas tampilan.
+      </li>
+      <li>
+        <b>Overdue tidak pernah disimpan.</b> Ia selalu diturunkan saat render dari
+        <code>planned_at</code>, <code>is_all_day</code>, dan <code>status</code>.
+        Status yang tersimpan hanya lima: planned, in_progress, done, skipped, cancelled.
+      </li>
+      <li>
+        <b>Nama field memakai snake_case, identik dengan nama kolom Postgres nanti.</b>
+        Nol lapisan pemetaan di Build 3. Ini keputusan lima detik yang menghemat berjam-jam.
+      </li>
+      <li>
+        <b>Tidak ada angka statistik yang ditulis langsung di markup.</b>
+        Setiap angka dihitung dari data tersimpan, atau tidak ditampilkan sama sekali.
+      </li>
+      <li>
+        <b>Tanpa framework dan tanpa langkah build.</b>
+        Vanilla JS dengan ES Modules, dimuat lewat <code>&lt;script type="module"&gt;</code>.
+        Tidak ada React, tidak ada bundler, tidak ada pustaka chart di Build 1.
+      </li>
+    </ol>
+
+    <div class="callout stop">
+      <strong>Untuk Sonnet:</strong> kalau salah satu aturan di atas terasa menghambat saat
+      mengerjakan, jangan diam-diam melanggarnya. Hentikan pekerjaan, jelaskan hambatannya,
+      dan tunggu keputusan. Melanggar aturan arsitektur secara senyap adalah kegagalan yang
+      paling mahal, karena baru ketahuan berminggu-minggu kemudian.
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="s4">
+    <div class="sec-head"><div class="sec-num">04</div><h2>Struktur File</h2></div>
+
+<pre class="code"><span class="c">// Struktur akhir yang di-deploy ke anabhidev.com/HoL/</span>
+
+/HoL/
+  index.html                <span class="c">// satu-satunya halaman</span>
+  assets/
+    HoL-Logo.webp
+    favicon.png
+  css/
+    tokens.css              <span class="c">// hanya variabel, tanpa selektor komponen</span>
+    app.css
+  js/
+    config.js               <span class="c">// objek CONFIG tunggal</span>
+    app.js                  <span class="c">// entry point</span>
+    domain/
+      time.js               <span class="c">// SELURUH urusan zona waktu ada di sini</span>
+      activity.js           <span class="c">// validasi, derive status, slug canonical_key</span>
+    store/
+      adapter.js            <span class="c">// kontrak + AdapterError</span>
+      local.js              <span class="c">// implementasi localStorage (Build 1)</span>
+      index.js              <span class="c">// memilih implementasi dari CONFIG.DATA_SOURCE</span>
+    ui/
+      router.js
+      dom.js                <span class="c">// helper el(), escapeHtml(), on()</span>
+      views/
+        today.js
+        log.js
+        activity-form.js
+        settings.js
+      components/
+        activity-card.js
+        status-pill.js
+        filter-bar.js
+        empty-state.js
+        toast.js
+        confirm-dialog.js
+        drawer.js</pre>
+
+    <div class="callout warn">
+      <strong>Karena di-host di subpath <code>/HoL/</code>:</strong> semua rujukan aset wajib
+      relatif — <code>css/app.css</code> dan <code>assets/HoL-Logo.webp</code>, bukan
+      <code>/css/app.css</code>. Path absolut akan menunjuk ke root domain dan seluruh
+      tampilan akan hilang saat di-deploy, padahal terlihat normal saat dites lokal.
+      Ini kegagalan deploy yang paling sering terjadi dan paling membingungkan.
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s5">
+    <div class="sec-head"><div class="sec-num">05</div><h2>Kontrak Data Adapter</h2></div>
+
+    <p>
+      Ini bagian terpenting di seluruh Build 1. Kontrak ini adalah satu-satunya alasan
+      Build 3 nanti bisa selesai dalam satu akhir pekan alih-alih tiga.
+    </p>
+
+<pre class="code"><span class="c">// js/store/adapter.js — kontrak, bukan implementasi</span>
+
+<span class="k">export class</span> AdapterError <span class="k">extends</span> Error {
+  <span class="c">// code: 'NOT_FOUND' | 'VALIDATION' | 'STORAGE_FULL' | 'UNAVAILABLE'</span>
+  constructor(code, message, details) { ... }
+}
+
+<span class="c">/**
+ * Setiap implementasi WAJIB menyediakan seluruh method di bawah.
+ * Semua method async. Semua mengembalikan objek biasa, bukan instance class.
+ * Adapter tidak boleh menyentuh DOM sama sekali.
+ */</span>
+
+ready()                      <span class="c">// Promise&lt;void&gt; — siapkan storage, migrasi schema</span>
+
+list(filter)                 <span class="c">// Promise&lt;Activity[]&gt;</span>
+  <span class="c">// filter = {
+  //   from, to,            ISO string, rentang planned_at (inklusif)
+  //   status,              array status, kosong = semua
+  //   category,            array kategori
+  //   tags,                array tag, logika AND
+  //   q,                   pencarian teks pada title + notes
+  //   include_deleted,     default false
+  //   sort,                'planned_at' | 'created_at' | 'updated_at'
+  //   order,               'asc' | 'desc'
+  //   limit, offset
+  // }</span>
+
+count(filter)                <span class="c">// Promise&lt;number&gt; — filter sama persis dengan list()</span>
+get(id)                      <span class="c">// Promise&lt;Activity | null&gt;</span>
+create(draft)                <span class="c">// Promise&lt;Activity&gt; — adapter yang membuat id &amp; timestamp</span>
+update(id, patch)            <span class="c">// Promise&lt;Activity&gt; — patch parsial, bukan replace</span>
+remove(id)                   <span class="c">// Promise&lt;void&gt; — soft delete, isi deleted_at</span>
+restore(id)                  <span class="c">// Promise&lt;Activity&gt;</span>
+purgeDeleted(beforeIso)      <span class="c">// Promise&lt;number&gt; — hapus permanen</span>
+
+exportAll()                  <span class="c">// Promise&lt;{ schema_version, exported_at, activities }&gt;</span>
+importAll(payload, mode)     <span class="c">// mode: 'replace' | 'merge'</span>
+                             <span class="c">// Promise&lt;{ inserted, updated, skipped, errors }&gt;</span>
+
+stats()                      <span class="c">// Promise&lt;{ total, by_status, oldest, newest }&gt;
+                             // dipakai Settings; Build 2 memperluasnya</span></pre>
+
+    <h3>Aturan implementasi</h3>
+    <ul>
+      <li><code>id</code> dibuat adapter memakai <code>crypto.randomUUID()</code> — jangan pakai timestamp atau penghitung, karena akan bentrok saat merge import.</li>
+      <li><code>created_at</code> dan <code>updated_at</code> diisi adapter, bukan oleh pemanggil. Pemanggil tidak boleh bisa memalsukannya.</li>
+      <li>Validasi terjadi di <code>domain/activity.js</code> dan dipanggil adapter sebelum menulis. Gagal validasi melempar <code>AdapterError('VALIDATION', ...)</code> dengan <code>details</code> berisi field mana yang bermasalah.</li>
+      <li>Implementasi localStorage menyimpan seluruh koleksi dalam <em>satu</em> key, memuatnya sekali ke memori saat <code>ready()</code>, dan menulis kembali dengan debounce 300&nbsp;ms. Membaca dan mem-parse seluruh basis data pada setiap ketikan pencarian akan membuat aplikasi terasa berat.</li>
+      <li>Tangani <code>QuotaExceededError</code> secara eksplisit menjadi <code>AdapterError('STORAGE_FULL', ...)</code>, dengan pesan yang menyarankan export lalu hapus data lama.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Uji kontraknya, bukan implementasinya.</strong> Tulis satu berkas kecil
+      <code>js/store/contract.test.js</code> berisi urutan langkah: create → get → list
+      berfilter → update → remove → list (harus hilang) → restore → export → import ke
+      penyimpanan kosong → bandingkan. Jalankan manual dari konsol lewat sebuah tombol
+      tersembunyi di Settings. Di Build 3, berkas yang sama dijalankan terhadap adapter
+      Supabase. Kalau lulus, migrasi selesai. Ini investasi tiga puluh menit yang
+      menghemat satu akhir pekan penuh.
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="s6">
+    <div class="sec-head"><div class="sec-num">06</div><h2>Schema Aktivitas v1</h2></div>
+
+    <p>
+      Beberapa kolom di bawah tidak dipakai sama sekali di Build 1. Kolom-kolom itu tetap
+      wajib ada, karena kalau tidak dicatat sejak hari pertama, pertanyaan yang ingin
+      dijawab HoL tidak akan pernah bisa dijawab — dan datanya tidak bisa direkonstruksi
+      ke belakang.
+    </p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Kolom</th><th>Tipe</th><th>Wajib</th><th>Alasan keberadaannya</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>uuid</td><td><span class="pill yes">Ya</span></td><td>Dibuat adapter</td></tr>
+        <tr><td><code>title</code></td><td>text</td><td><span class="pill yes">Ya</span></td><td>Satu-satunya field yang benar-benar dipaksakan</td></tr>
+        <tr><td><code>notes</code></td><td>text</td><td>—</td><td>Catatan bebas</td></tr>
+        <tr><td><code>category</code></td><td>enum</td><td><span class="pill yes">Ya</span></td><td>Enam kategori utama dari PRD</td></tr>
+        <tr><td><code>subcategory</code></td><td>text</td><td>—</td><td>Teks bebas, bukan enum — agar bisa berkembang</td></tr>
+        <tr><td><code>status</code></td><td>enum</td><td><span class="pill yes">Ya</span></td><td>planned · in_progress · done · skipped · cancelled</td></tr>
+        <tr><td><code>planned_at</code></td><td>timestamptz</td><td>—</td><td>Boleh kosong: aktivitas masa lalu yang langsung dicatat sebagai selesai</td></tr>
+        <tr><td><code>is_all_day</code></td><td>boolean</td><td><span class="pill yes">Ya</span></td><td>Membedakan “besok” dari “besok jam 9”. Menentukan kapan sesuatu jadi terlambat</td></tr>
+        <tr><td><code>completed_at</code></td><td>timestamptz</td><td>—</td><td>Diisi otomatis saat status berubah jadi done</td></tr>
+        <tr><td><code>original_planned_at</code></td><td>timestamptz</td><td>—</td><td><strong>Analitik.</strong> Diisi sekali saat penundaan pertama. Tanpa ini, “aktivitas mana yang berulang saya tunda” mustahil dijawab</td></tr>
+        <tr><td><code>postpone_count</code></td><td>integer</td><td><span class="pill yes">Ya</span></td><td><strong>Analitik.</strong> Default 0, naik setiap penundaan</td></tr>
+        <tr><td><code>canonical_key</code></td><td>text</td><td>—</td><td><strong>Analitik.</strong> Build 1 mengisinya dengan slug sederhana dari judul. Build 4 diganti hasil AI. Ini yang membuat “Service motor”, “servis motor”, dan “motor diservis” bisa dihitung sebagai satu hal</td></tr>
+        <tr><td><code>tags</code></td><td>text[]</td><td>—</td><td>Tanpa tanda pagar saat disimpan; pagar hanya urusan tampilan</td></tr>
+        <tr><td><code>location</code></td><td>text</td><td>—</td><td>Teks bebas</td></tr>
+        <tr><td><code>cost</code></td><td>numeric</td><td>—</td><td>Angka murni, tanpa format</td></tr>
+        <tr><td><code>currency</code></td><td>text</td><td>—</td><td>Default IDR</td></tr>
+        <tr><td><code>duration_minutes</code></td><td>integer</td><td>—</td><td>Selalu menit, tidak pernah teks</td></tr>
+        <tr><td><code>link_url</code></td><td>text</td><td>—</td><td>Divalidasi sebagai URL bila diisi</td></tr>
+        <tr><td><code>rating</code></td><td>integer</td><td>—</td><td>1–5</td></tr>
+        <tr><td><code>mood</code></td><td>text</td><td>—</td><td>Daftar tertutup kecil, bukan teks bebas</td></tr>
+        <tr><td><code>photo_url</code></td><td>text</td><td>—</td><td>Kolom disiapkan, tidak diimplementasi di Build 1</td></tr>
+        <tr><td><code>source</code></td><td>enum</td><td><span class="pill yes">Ya</span></td><td><strong>Analitik.</strong> Build 1 selalu <code>manual</code>. Nanti mengukur kanal mana yang benar-benar dipakai</td></tr>
+        <tr><td><code>ai_raw</code></td><td>json</td><td>—</td><td><strong>Analitik.</strong> Kosong di Build 1</td></tr>
+        <tr><td><code>user_edited_fields</code></td><td>text[]</td><td>—</td><td><strong>Analitik.</strong> Build 4 mencatat field mana yang dikoreksi user — bahan memperbaiki prompt AI berbasis bukti</td></tr>
+        <tr><td><code>created_at</code> · <code>updated_at</code></td><td>timestamptz</td><td><span class="pill yes">Ya</span></td><td>Diisi adapter</td></tr>
+        <tr><td><code>deleted_at</code></td><td>timestamptz</td><td>—</td><td>Soft delete. Catatan kehidupan tidak boleh hilang karena salah tekan</td></tr>
+        <tr><td><code>schema_version</code></td><td>integer</td><td><span class="pill yes">Ya</span></td><td>Disimpan di tingkat koleksi, bukan per baris. Wajib ada di berkas export</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Aturan turunan status</h3>
+    <ul>
+      <li><strong>Terlambat (all-day):</strong> <code>planned_at</code> jatuh sebelum hari ini di WITA, dan status masih planned atau in_progress.</li>
+      <li><strong>Terlambat (berjam):</strong> waktu <code>planned_at</code> sudah lewat dari sekarang, dan status masih planned atau in_progress.</li>
+      <li><strong>skipped</strong> dan <strong>cancelled</strong> tidak pernah terlambat. Keduanya sudah merupakan keputusan sadar.</li>
+      <li>Saat status jadi <code>done</code>, isi <code>completed_at</code>. Saat dibatalkan dari done, kosongkan kembali.</li>
+      <li>Saat pengguna menunda: kalau <code>original_planned_at</code> masih kosong, salin nilai <code>planned_at</code> lama ke sana lebih dulu. Baru kemudian ubah <code>planned_at</code> dan naikkan <code>postpone_count</code>. Urutan ini penting.</li>
+    </ul>
+  </section>
+
+  <!-- 07 -->
+  <section id="s7">
+    <div class="sec-head"><div class="sec-num">07</div><h2>State &amp; Rendering</h2></div>
+
+    <p>Tanpa framework, disiplin harus datang dari aturan yang eksplisit.</p>
+
+    <h3>Satu sumber kebenaran</h3>
+<pre class="code"><span class="k">const</span> state = {
+  route     : <span class="s">'today'</span>,     <span class="c">// today | log | activity | settings</span>
+  filters   : { ... },     <span class="c">// dikirim apa adanya ke adapter.list()</span>
+  items     : [],          <span class="c">// hasil terakhir dari adapter</span>
+  editing   : null,        <span class="c">// id yang sedang diedit</span>
+  loading   : <span class="k">false</span>,
+  error     : null,
+  toast     : null,
+};</pre>
+
+    <h3>Aturan render</h3>
+    <ul>
+      <li><strong>Event delegation, bukan listener per kartu.</strong> Satu pendengar di kontainer daftar, membaca <code>data-action</code> dan <code>data-id</code> dari elemen terdekat. Dengan ratusan kartu, listener per kartu merusak INP dan membocorkan memori.</li>
+      <li><strong>Jangan render ulang seluruh daftar untuk satu perubahan status.</strong> Perbarui simpul kartu yang bersangkutan saja. Selain soal kecepatan, render ulang penuh membuat posisi gulir melompat — dan itu terasa murah saat dipakai.</li>
+      <li><strong>Setiap teks dari pengguna wajib melewati <code>escapeHtml()</code>.</strong> Judul aktivitas, catatan, lokasi, tag. Walaupun ini aplikasi satu pengguna, celah XSS adalah hal pertama yang dilihat klien teknis saat menilai portofolio.</li>
+      <li><strong>Tiga keadaan wajib untuk setiap tampilan:</strong> sedang memuat, kosong, dan gagal. Keadaan gagal harus menyebutkan apa yang terjadi dan apa yang bisa dilakukan — bukan sekadar “Terjadi kesalahan”.</li>
+      <li><strong>Router berbasis hash</strong> (<code>#/today</code>, <code>#/log</code>, <code>#/a/&lt;id&gt;</code>). History API tidak dipakai karena akan bermasalah pada hosting statis di subpath tanpa aturan rewrite.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Bahasa antarmuka.</strong> Gunakan Bahasa Indonesia untuk seluruh label yang
+      dilihat pengguna, dan bahasa Inggris untuk nama kode, field, serta komentar. Tombol
+      diberi nama sesuai apa yang terjadi: <em>Simpan</em>, <em>Tandai selesai</em>,
+      <em>Tunda</em>, <em>Hapus</em>. Nama aksi tidak berubah di sepanjang alur — tombol
+      <em>Simpan</em> menghasilkan notifikasi <em>Tersimpan</em>, bukan <em>Berhasil</em>.
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="s8">
+    <div class="sec-head"><div class="sec-num">08</div><h2>Design Token</h2></div>
+
+    <p>
+      Kesan mahal datang dari menahan diri, bukan dari menambah. Palet ini sengaja sempit,
+      dan setiap warna punya satu tugas. Warna yang dipakai untuk dua hal berbeda akan
+      kehilangan artinya, dan tampilan langsung terasa generik.
+    </p>
+
+    <div class="swatches">
+      <div class="sw"><i style="background:#061426"></i><b>navy-900</b><span>#061426 · sidebar</span></div>
+      <div class="sw"><i style="background:#071a33"></i><b>navy-800</b><span>#071a33 · header</span></div>
+      <div class="sw"><i style="background:#102f55"></i><b>navy-600</b><span>#102f55 · aktif</span></div>
+      <div class="sw"><i style="background:#152238"></i><b>ink</b><span>#152238 · teks</span></div>
+      <div class="sw"><i style="background:#64748b"></i><b>muted</b><span>#64748b · sekunder</span></div>
+      <div class="sw"><i style="background:#f5f7fa;box-shadow:inset 0 0 0 1px #dce3eb"></i><b>canvas</b><span>#f5f7fa · latar</span></div>
+      <div class="sw"><i style="background:#ffffff;box-shadow:inset 0 0 0 1px #dce3eb"></i><b>surface</b><span>#ffffff · kartu</span></div>
+      <div class="sw"><i style="background:#dce3eb"></i><b>border</b><span>#dce3eb</span></div>
+      <div class="sw"><i style="background:#42b883"></i><b>green</b><span>#42b883 · selesai</span></div>
+      <div class="sw"><i style="background:#e89a38"></i><b>amber</b><span>#e89a38 · terlambat</span></div>
+      <div class="sw"><i style="background:#c99b52"></i><b>gold</b><span>#c99b52 · editorial</span></div>
+      <div class="sw"><i style="background:#dc4c4c"></i><b>red</b><span>#dc4c4c · hapus</span></div>
+    </div>
+
+    <h3>Aturan pemakaian warna</h3>
+    <ul>
+      <li><strong>Hijau dikunci hanya untuk selesai dan hal positif.</strong> Begitu hijau muncul sebagai warna tombol biasa atau warna kategori, maknanya hilang.</li>
+      <li><strong>Amber untuk terlambat, bukan merah.</strong> Merah berarti bahaya atau kesalahan. Aktivitas yang tertunda bukan kesalahan — HoL adalah pendamping, bukan atasan. Merah hanya untuk aksi merusak.</li>
+      <li><strong>Emas dipakai sangat hemat:</strong> label kecil di atas judul dan aksen editorial. Bukan warna tombol.</li>
+      <li><strong>Nol gradien. Satu tingkat bayangan saja.</strong></li>
+    </ul>
+
+    <h3>Warna kategori — tangga nada, bukan pelangi</h3>
+    <p>
+      Enam kategori jangan diberi enam warna berbeda dari roda warna. Itu justru yang
+      membuat dasbor terlihat murah dan melelahkan. Gunakan satu tangga dari navy ke teal,
+      dan sisakan hijau murni khusus untuk metrik penyelesaian di Build 2.
+    </p>
+
+    <div class="swatches">
+      <div class="sw"><i style="background:#102f55"></i><b>Personal</b><span>#102f55</span></div>
+      <div class="sw"><i style="background:#1c4a7a"></i><b>Work</b><span>#1c4a7a</span></div>
+      <div class="sw"><i style="background:#2b6ca3"></i><b>Vibe Coding</b><span>#2b6ca3</span></div>
+      <div class="sw"><i style="background:#3c8bab"></i><b>Family</b><span>#3c8bab</span></div>
+      <div class="sw"><i style="background:#4da3a3"></i><b>Learning</b><span>#4da3a3</span></div>
+      <div class="sw"><i style="background:#63b8a0"></i><b>Travel &amp; Social</b><span>#63b8a0</span></div>
+    </div>
+
+    <h3>Ukuran &amp; ruang</h3>
+    <ul>
+      <li>Skala jarak: 4 · 8 · 12 · 16 · 24 · 32 · 44. Tidak ada nilai di luar skala.</li>
+      <li>Radius: 10&nbsp;px kartu, 8&nbsp;px kontrol, 999&nbsp;px pil.</li>
+      <li>Bayangan tunggal: <code>0 1px 2px rgba(7,26,51,.06), 0 4px 16px rgba(7,26,51,.04)</code>.</li>
+      <li>Garis: 1&nbsp;px <code>#dce3eb</code>. Tidak ada garis abu-abu gelap.</li>
+      <li>Gerak: 150–200&nbsp;ms, <code>ease-out</code>, hanya pada opacity dan transform. Tanpa efek memantul. Hormati <code>prefers-reduced-motion</code>.</li>
+    </ul>
+  </section>
+
+  <!-- 09 -->
+  <section id="s9">
+    <div class="sec-head"><div class="sec-num">09</div><h2>Tipografi</h2></div>
+
+    <p>
+      Ini pembeda terbesar antara HoL dan aplikasi tugas korporat mana pun. Dua jenis huruf,
+      dengan pembagian tugas yang tegas.
+    </p>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Georgia — editorial</h4>
+        <p class="tiny">
+          Judul halaman, judul report, dan angka besar. Serif memberi rasa jurnal pribadi,
+          bukan papan tugas. Inilah nada emosional yang diminta PRD:
+          <em>“ternyata bulan lalu saya ngapain aja ya?”</em>
+        </p>
+      </div>
+      <div class="card">
+        <h4>System UI stack — antarmuka</h4>
+        <p class="tiny">
+          Label, tombol, isi kartu, form. Nol permintaan jaringan, render instan,
+          dan terasa asli di setiap perangkat.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Keputusan: tanpa web font di Build 1.</strong> Georgia tersedia di hampir semua
+      perangkat dan berbiaya nol byte. Memuat Fraunces atau Newsreader dari Google Fonts
+      menambah sekitar 30&nbsp;KB plus satu ronde koneksi, dan itu langsung menyentuh LCP —
+      metrik yang paling terasa saat halaman dibuka di jaringan seluler. Kalau nanti terbukti
+      Georgia kurang khas, penggantinya cukup satu baris di <code>tokens.css</code>.
+    </div>
+
+    <h3>Skala</h3>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Peran</th><th>Huruf</th><th>Desktop</th><th>Mobile</th><th>Catatan</th></tr></thead>
+      <tbody>
+        <tr><td>Judul halaman</td><td>Georgia</td><td>34–40 px</td><td>26 px</td><td>weight 400, bukan bold</td></tr>
+        <tr><td>Judul bagian</td><td>Georgia</td><td>22 px</td><td>19 px</td><td>weight 400</td></tr>
+        <tr><td>Label kecil di atas judul</td><td>System</td><td>11 px</td><td>11 px</td><td>tracking .15em, huruf besar</td></tr>
+        <tr><td>Isi</td><td>System</td><td>15 px</td><td>14.5 px</td><td>line-height 1.7</td></tr>
+        <tr><td>Judul kartu aktivitas</td><td>System</td><td>15 px</td><td>15 px</td><td>weight 600</td></tr>
+        <tr><td>Metadata kartu</td><td>System</td><td>13 px</td><td>12.5 px</td><td>warna muted</td></tr>
+        <tr><td>Angka statistik</td><td>Georgia</td><td>28–34 px</td><td>24 px</td><td><code>tabular-nums</code> wajib</td></tr>
+        <tr><td>Input form</td><td>System</td><td>15 px</td><td><strong>16 px</strong></td><td>di bawah 16 px, iOS akan memperbesar layar otomatis</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <div class="sec-head"><div class="sec-num">10</div><h2>Layout &amp; Navigasi</h2></div>
+
+    <h3>Desktop — 1024 px ke atas</h3>
+    <ul>
+      <li>Sidebar tetap di kiri, lebar 264&nbsp;px, latar <code>navy-900</code>.</li>
+      <li>Header lengket di atas, tinggi 64&nbsp;px, menempati sisa lebar di kanan sidebar.</li>
+      <li>Judul di header: <strong>History of Life</strong> — bukan hanya “HoL”.</li>
+      <li>Konten utama memakai <code>calc(100% - 264px)</code> dengan pembatas isi maksimum 1120&nbsp;px agar baris teks tidak terlalu panjang, tetapi kartu dan daftar tetap boleh melebar penuh.</li>
+    </ul>
+
+    <h3>Mobile — di bawah 1024 px</h3>
+    <ul>
+      <li>Sidebar berubah jadi laci yang <strong>meluncur dari kanan</strong>, lebar <code>min(300px, 86vw)</code>.</li>
+      <li><strong>Tombol hamburger berada di sisi kanan navbar</strong>, sejajar ibu jari. Judul <strong>History of Life</strong> di kiri.</li>
+      <li>Lapisan gelap di belakang laci; menyentuhnya menutup laci. Tombol Esc juga menutup.</li>
+      <li>Saat laci terbuka: kunci gulir badan halaman, pasang perangkap fokus di dalam laci, dan kembalikan fokus ke tombol hamburger saat ditutup.</li>
+      <li><code>aria-expanded</code> pada tombol wajib diperbarui setiap kali status berubah.</li>
+    </ul>
+
+    <div class="callout warn">
+      <strong>Catatan untuk aplikasi HoL (bukan dokumen ini).</strong> Untuk sebuah aplikasi
+      yang dipakai berkali-kali setiap hari, laci saja biasanya kurang. Navigasi bawah dengan
+      empat tab dan satu tombol tambah yang menonjol biasanya lebih baik. Ini termasuk
+      keputusan terbuka di bagian 18 — jangan diputuskan sepihak oleh Sonnet.
+    </div>
+
+    <h3>Titik uji lebar layar</h3>
+    <p>
+      Uji pada 320, 360, 390, 768, 1024, 1280, dan 1920&nbsp;px. Angka 320&nbsp;px bukan
+      formalitas: di lebar itulah kartu dengan beberapa pil metadata biasanya mulai memaksa
+      halaman menggulir menyamping.
+    </p>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <div class="sec-head"><div class="sec-num">11</div><h2>Komponen UI</h2></div>
+
+    <p>Setiap komponen wajib punya keadaan: normal, hover, focus-visible, disabled, dan loading bila relevan.</p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Komponen</th><th>Varian wajib</th><th>Catatan penting</th></tr></thead>
+      <tbody>
+        <tr><td>Kartu aktivitas</td><td>planned · in progress · done · terlambat · dibatalkan</td><td>Terlambat ditandai garis kiri amber, bukan latar merah penuh</td></tr>
+        <tr><td>Pil status</td><td>5 status</td><td>Wajib ada teks, bukan hanya warna atau emoji</td></tr>
+        <tr><td>Titik kategori</td><td>6 kategori</td><td>Warna dari tangga nada, disertai nama saat ada ruang</td></tr>
+        <tr><td>Form tambah cepat</td><td>ringkas · diperluas</td><td>Awalnya hanya judul + tanggal + kategori. Sisanya di balik “Detail lainnya”</td></tr>
+        <tr><td>Bilah filter</td><td>aktif · kosong</td><td>Menampilkan jumlah filter aktif dan satu tombol bersihkan</td></tr>
+        <tr><td>Empty state</td><td><strong>tiga varian berbeda</strong></td><td>Belum ada data sama sekali · hari ini kosong · filter tidak menemukan apa pun. Ketiganya butuh kalimat dan ajakan yang berbeda</td></tr>
+        <tr><td>Toast</td><td>sukses · gagal</td><td>Toast hapus wajib punya tombol “Urungkan” selama 6 detik</td></tr>
+        <tr><td>Dialog konfirmasi</td><td>normal · merusak</td><td>Hanya untuk hapus permanen dan hapus semua data</td></tr>
+        <tr><td>Laci navigasi</td><td>tertutup · terbuka</td><td>Lihat aturan aksesibilitas di bagian 10</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Bentuk kartu aktivitas</h3>
+<pre class="code">┌────────────────────────────────────────────────┐
+│ ● Personal · Vehicle          [Terlambat]      │  <span class="c">← titik kategori + pil status</span>
+│ Service motor                                  │  <span class="c">← judul, 15px/600</span>
+│ Direncanakan 15 Agt · Tabanan · Rp 250.000     │  <span class="c">← metadata, boleh terpotong</span>
+│ #motor #service                                │  <span class="c">← tag, disembunyikan bila sempit</span>
+│ ────────────────────────────────────────────── │
+│ [Tandai selesai]  [Tunda]  [⋯]                 │  <span class="c">← aksi utama paling kiri</span>
+└────────────────────────────────────────────────┘</pre>
+
+    <p>
+      Baris metadata memakai pemisah titik tengah dan wajib memakai <code>min-width:0</code>
+      pada wadah fleksibelnya, jika tidak, judul panjang akan mendorong kartu melewati
+      lebar layar. Ini penyebab gulir menyamping yang paling sering terjadi.
+    </p>
+  </section>
+
+  <!-- 12 -->
+  <section id="s12">
+    <div class="sec-head"><div class="sec-num">12</div><h2>Bagian Tersulit</h2></div>
+
+    <p>
+      Delapan hal berikut adalah tempat pekerjaan ini paling mungkin gagal secara halus —
+      terlihat jalan, padahal salah. Kerjakan dengan perhatian lebih, dan uji secara khusus.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <b>Logika zona waktu <span class="pill hard">Tersulit</span></b>
+        <code>Date</code> di JavaScript bekerja dalam zona waktu perangkat. Kalau perangkat
+        diatur ke UTC — atau kakak sedang bepergian — batas “hari ini” bergeser, dan aktivitas
+        bisa tiba-tiba dianggap terlambat padahal belum. Solusinya: seluruh perhitungan tanggal
+        melewati <code>domain/time.js</code>, dan komponen tanggal diambil lewat
+        <code>Intl.DateTimeFormat</code> dengan <code>timeZone: 'Asia/Makassar'</code>, bukan
+        lewat <code>getDate()</code> mentah. Fungsi wajib: <code>nowWita()</code>,
+        <code>dayKey(date)</code>, <code>startOfDayWita(date)</code>,
+        <code>isOverdue(activity, now)</code>, <code>formatRelative(date)</code>.
+        <br><strong>Uji:</strong> ubah zona waktu sistem ke UTC lalu ke Asia/Jayapura. Daftar
+        “Hari ini” harus berisi aktivitas yang persis sama.
+      </li>
+      <li>
+        <b>Dua aturan terlambat yang berbeda <span class="pill hard">Halus</span></b>
+        Aktivitas sehari-penuh baru terlambat setelah hari itu berakhir di WITA. Aktivitas
+        berjam terlambat begitu jamnya lewat. Menyamakan keduanya menghasilkan pemberitahuan
+        palsu sepanjang hari, dan itu persis yang membuat orang berhenti memakai aplikasi
+        semacam ini.
+      </li>
+      <li>
+        <b>Progressive disclosure tanpa kehilangan isian</b>
+        Saat pengguna membuka lalu menutup bagian “Detail lainnya”, nilai yang sudah diketik
+        tidak boleh hilang. Artinya bagian itu disembunyikan lewat CSS, bukan dilepas dari DOM
+        — dan validasi hanya berlaku untuk field wajib, tidak untuk field opsional yang
+        kebetulan sedang tersembunyi.
+      </li>
+      <li>
+        <b>Filter tetap berada di dalam adapter <span class="pill hard">Godaan besar</span></b>
+        Menyaring array di tampilan terasa jauh lebih mudah dan akan sangat menggoda. Kalau itu
+        terjadi, Build 3 berubah dari “ganti satu berkas” menjadi “tulis ulang semua tampilan”.
+      </li>
+      <li>
+        <b>Laci navigasi yang benar-benar aksesibel</b>
+        Perangkap fokus, <code>aria-expanded</code>, menyembunyikan konten belakang dari pembaca
+        layar, mengunci gulir badan tanpa membuat halaman melompat, dan mengembalikan fokus saat
+        ditutup. Hampir semua implementasi berhenti di setengah jalan, dan sisanya baru terasa
+        saat dipakai dengan keyboard.
+      </li>
+      <li>
+        <b>Batas dan sifat sinkron localStorage</b>
+        Kapasitasnya sekitar 5&nbsp;MB dan setiap operasinya memblokir. Muat sekali ke memori
+        saat <code>ready()</code>, tulis kembali dengan debounce, dan tangani
+        <code>QuotaExceededError</code> dengan pesan yang menyarankan export lalu bersihkan
+        data lama.
+      </li>
+      <li>
+        <b>Deploy di subpath <code>/HoL/</code></b>
+        Semua path relatif. Sebelum deploy, cari seluruh berkas untuk pola <code>src="/</code>
+        dan <code>href="/</code> — hasilnya harus nol.
+      </li>
+      <li>
+        <b>Import JSON yang tahan versi</b>
+        Berkas export wajib memuat <code>schema_version</code>. Saat import, periksa versinya;
+        kalau lebih tinggi dari yang dikenali aplikasi, tolak dengan pesan jelas alih-alih
+        memaksa membaca. Aturan ini hanya berbiaya sepuluh menit sekarang, dan menyelamatkan
+        data kakak nanti.
+      </li>
+    </ol>
+  </section>
+
+  <!-- 13 -->
+  <section id="s13">
+    <div class="sec-head"><div class="sec-num">13</div><h2>Jebakan &amp; Pencegahan</h2></div>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Jebakan</th><th>Gejala</th><th>Pencegahan</th></tr></thead>
+      <tbody>
+        <tr><td>Gulir menyamping di mobile</td><td>Halaman bisa digeser ke kanan</td><td><code>overflow-x:hidden</code> pada selektor gabungan <code>html,body</code> — bukan <code>body</code> saja</td></tr>
+        <tr><td>Grid memaksa melebar</td><td>Kolom tidak mau menyusut</td><td><code>minmax(0,1fr)</code>, bukan <code>1fr</code></td></tr>
+        <tr><td>Flex item tidak mau menyusut</td><td>Judul panjang mendorong kartu keluar layar</td><td><code>min-width:0</code> pada anak flex yang berisi teks</td></tr>
+        <tr><td>Tabel di layar sempit</td><td>Perlu digeser menyamping</td><td>Jangan pakai tabel untuk data aktivitas — pakai daftar kartu</td></tr>
+        <tr><td>Tinggi layar mobile</td><td>Bagian bawah tertutup bilah browser</td><td><code>100dvh</code>, bukan <code>100vh</code></td></tr>
+        <tr><td>iOS memperbesar layar saat mengetik</td><td>Tampilan melompat saat fokus ke input</td><td>Ukuran huruf input minimal 16&nbsp;px</td></tr>
+        <tr><td>Fokus keyboard tak terlihat</td><td>Tidak jelas elemen mana yang aktif</td><td>Jangan <code>outline:none</code> tanpa pengganti; pakai <code>:focus-visible</code></td></tr>
+        <tr><td>Status hanya dibedakan warna</td><td>Sulit dibaca sebagian pengguna</td><td>Warna selalu didampingi teks atau ikon</td></tr>
+        <tr><td>Kontras kurang</td><td>Teks sekunder samar di layar terang</td><td>Uji <code>#64748b</code> di atas <code>#f5f7fa</code> — harus ≥ 4,5:1</td></tr>
+        <tr><td>Animasi mengganggu</td><td>Terasa berlebihan</td><td>Hormati <code>prefers-reduced-motion</code></td></tr>
+        <tr><td>Kunci localStorage tanpa awalan</td><td>Bentrok dengan aplikasi lain di domain yang sama</td><td>Awali dengan <code>hol.</code> dan sertakan versi</td></tr>
+        <tr><td>Sisa <code>console.log</code></td><td>Konsol berisik saat dinilai orang lain</td><td>Bersihkan sebelum deploy</td></tr>
+        <tr><td>Tanggal disimpan sebagai teks lokal</td><td>Urutan kacau, perbandingan salah</td><td>Selalu ISO 8601 UTC di penyimpanan</td></tr>
+        <tr><td>Judul dokumen generik</td><td>Tab browser tidak informatif</td><td><code>&lt;title&gt;</code> menyebut HoL dan tampilan aktif</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section id="s14">
+    <div class="sec-head"><div class="sec-num">14</div><h2>Standar Coding</h2></div>
+
+    <p>
+      Berlaku penuh sesuai <code>Standar_Coding_Anabhi_Dev.md</code>. Ringkasan yang wajib
+      dipatuhi Sonnet:
+    </p>
+
+    <h3>Header wajib di setiap berkas</h3>
+<pre class="code"><span class="c">// ================================================================
+// AD-HOL — HoL History of Life
+// HTML · CSS · Vanilla JS (ES Modules) · localStorage
+// Development · Anabhi Dev
+// Version   : 1.1
+// Generated : [tanggal dan jam nyata saat berkas dibuat, WITA]
+// ================================================================</span></pre>
+
+    <ul>
+      <li>Tanggal diambil nyata saat berkas dibuat. Dilarang menyalin dari berkas sebelumnya.</li>
+      <li>Format: <code>16 August 2026, 21:20:03</code> — nama bulan Inggris penuh, tanggal satu digit tanpa nol di depan.</li>
+      <li>Baris teknologi menyebut yang benar-benar dipakai di berkas itu. Jangan menyebut Supabase atau Gemini di Build 1.</li>
+      <li>Nama berkas yang dikirim ke pengguna: <code>AD-HOL_v1.2.html</code>. Nama di dalam project: <code>index.html</code>. Versi tetap tercatat di header.</li>
+      <li>Versi naik setiap ada perubahan, sekecil apa pun. Build 1 dimulai dari <strong>1.1</strong>.</li>
+      <li>Kredit: <code>Development · Anabhi Dev</code>. Tanpa nama lain.</li>
+    </ul>
+
+    <h3>Blok CONFIG</h3>
+<pre class="code"><span class="c">// js/config.js</span>
+<span class="k">export const</span> CONFIG = {
+  APP_TITLE   : <span class="s">'HoL — History of Life'</span>,
+  APP_VERSION : <span class="s">'1.1'</span>,
+  TZ          : <span class="s">'Asia/Makassar'</span>,
+
+  DATA_SOURCE : <span class="s">'local'</span>,          <span class="c">// 'local' | 'supabase' ← satu baris untuk Build 3</span>
+  STORAGE_KEY : <span class="s">'hol.activities.v1'</span>,
+  SCHEMA_VER  : 1,
+
+  UNDO_MS     : 6000,
+  SAVE_DEBOUNCE_MS : 300,
+  MIN_DATA_FOR_INSIGHT : 15,      <span class="c">// dipakai Build 2, taruh sekarang</span>
+};
+
+<span class="c">// GEMINI_MODEL ditambahkan di Build 4 sebagai konstanta di objek ini.
+// Nama model DILARANG ditanam di tengah kode.
+// API key TIDAK PERNAH ada di berkas frontend.</span></pre>
+  </section>
+
+  <!-- 15 -->
+  <section id="s15">
+    <div class="sec-head"><div class="sec-num">15</div><h2>Acceptance Criteria</h2></div>
+
+    <p>Khusus Build 1. Verifikasi satu per satu dengan benar-benar mencobanya, bukan dengan membaca kode.</p>
+
+    <div class="counter"><b id="ac-count">0</b> dari <span id="ac-total">20</span> terverifikasi</div>
+
+    <ul class="checklist" id="ac-list">
+      <li><input type="checkbox"><span>Aktivitas baru bisa dibuat hanya dengan mengisi judul, tanggal, dan kategori.</span></li>
+      <li><input type="checkbox"><span>Seluruh field opsional bisa dibiarkan kosong tanpa memicu peringatan.</span></li>
+      <li><input type="checkbox"><span>Aktivitas tanpa jam dan aktivitas berjam ditampilkan berbeda.</span></li>
+      <li><input type="checkbox"><span>Aktivitas yang lewat tanggal dan belum selesai muncul di bagian Terlambat.</span></li>
+      <li><input type="checkbox"><span>Aktivitas berstatus skipped atau cancelled tidak pernah muncul sebagai terlambat.</span></li>
+      <li><input type="checkbox"><span>Menandai selesai mengisi <code>completed_at</code>; membatalkannya mengosongkannya kembali.</span></li>
+      <li><input type="checkbox"><span>Menunda menaikkan <code>postpone_count</code> dan mengisi <code>original_planned_at</code> hanya pada penundaan pertama.</span></li>
+      <li><input type="checkbox"><span>Menghapus bersifat soft delete dan bisa diurungkan lewat toast dalam 6 detik.</span></li>
+      <li><input type="checkbox"><span>Pencarian teks menemukan kata di judul maupun catatan.</span></li>
+      <li><input type="checkbox"><span>Filter kategori, status, dan rentang tanggal bisa digabungkan.</span></li>
+      <li><input type="checkbox"><span>Tidak ada kode <code>localStorage</code> di luar <code>js/store/local.js</code>.</span></li>
+      <li><input type="checkbox"><span>Uji kontrak adapter berjalan lolos dari Settings.</span></li>
+      <li><input type="checkbox"><span>Export JSON menghasilkan berkas ber-<code>schema_version</code>, dan bisa di-import kembali dengan hasil identik.</span></li>
+      <li><input type="checkbox"><span>Demo data bisa ditambahkan dan dihapus, dan tidak pernah tercampur diam-diam dengan data nyata.</span></li>
+      <li><input type="checkbox"><span>Tiga empty state berbeda muncul di situasi yang tepat.</span></li>
+      <li><input type="checkbox"><span>Data bertahan setelah browser ditutup dan dibuka kembali.</span></li>
+      <li><input type="checkbox"><span>Pada lebar 320 px tidak ada gulir menyamping sama sekali.</span></li>
+      <li><input type="checkbox"><span>Laci mobile terbuka dari kanan, tertutup oleh Esc dan sentuhan lapisan gelap, serta mengembalikan fokus.</span></li>
+      <li><input type="checkbox"><span>Aktivitas dibuat pukul 23.30 WITA tetap terhitung sebagai hari yang sama.</span></li>
+      <li><input type="checkbox"><span>Konsol bersih: tidak ada error dan tidak ada sisa log.</span></li>
+    </ul>
+  </section>
+
+  <!-- 16 -->
+  <section id="s16">
+    <div class="sec-head"><div class="sec-num">16</div><h2>Definition of Done</h2></div>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Dipakai sungguhan</h4>
+        <p class="tiny">Minimal lima hari pemakaian nyata oleh kakak sendiri, bukan hanya diuji sekali jalan.</p>
+      </div>
+      <div class="card">
+        <h4>Lighthouse mobile</h4>
+        <p class="tiny">Performance dan Accessibility masing-masing minimal 90, diukur pada halaman yang sudah di-deploy.</p>
+      </div>
+      <div class="card">
+        <h4>Perjalanan data utuh</h4>
+        <p class="tiny">Export lalu import ke penyimpanan kosong menghasilkan isi yang identik, tanpa kehilangan satu field pun.</p>
+      </div>
+      <div class="card">
+        <h4>Tidak ada tombol mati</h4>
+        <p class="tiny">Setiap kontrol yang terlihat bisa ditekan memang melakukan sesuatu. Yang belum siap ditandai jelas sebagai belum tersedia.</p>
+      </div>
+      <div class="card">
+        <h4>Sudah tayang</h4>
+        <p class="tiny">Sudah berjalan di <code>anabhidev.com/HoL/index.html</code>, bukan hanya di komputer lokal.</p>
+      </div>
+      <div class="card">
+        <h4>Bahan portofolio siap</h4>
+        <p class="tiny">Tiga tangkapan layar bersih: Today di desktop, Today di mobile, dan riwayat dengan filter aktif.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section id="s17">
+    <div class="sec-head"><div class="sec-num">17</div><h2>Handoff ke Build 2</h2></div>
+
+    <p>Build 2 membangun report. Yang dibutuhkannya dari Build 1:</p>
+    <ul>
+      <li><code>adapter.list()</code> yang menerima rentang tanggal dan mengembalikan hasil terurut — ini yang akan dipakai setiap grafik.</li>
+      <li>Field analitik terisi konsisten: <code>completed_at</code>, <code>postpone_count</code>, <code>original_planned_at</code>, <code>canonical_key</code>, <code>source</code>.</li>
+      <li>Data nyata minimal dua minggu. <strong>Jangan mulai Build 2 sebelum ini terpenuhi</strong> — grafik dari data tipis akan mendorong keputusan desain yang salah, dan harus dibongkar ulang begitu data sungguhan masuk.</li>
+      <li>Fungsi <code>domain/time.js</code> yang sudah teruji, karena setiap pengelompokan periode akan bergantung padanya.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Urutan berikutnya:</strong> Build 2 report → Build 3 Supabase, Auth, RLS →
+      Build 4 Gemini parsing dengan layar tinjau → Build 5 Telegram sebagai kanal input
+      sekunder → Build 6 pemolesan, SOP checklist, dan halaman studi kasus.
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section id="s18">
+    <div class="sec-head"><div class="sec-num">18</div><h2>Keputusan Terbuka</h2></div>
+
+    <p>
+      Empat hal berikut sengaja belum diputuskan. Sonnet tidak boleh memutuskannya sendiri —
+      tanyakan lebih dulu, karena keempatnya mengubah struktur kode, bukan sekadar tampilan.
+    </p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Pertanyaan</th><th>Pilihan</th><th>Pertimbangan</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Navigasi mobile aplikasi HoL</td>
+          <td>Laci saja &nbsp;·&nbsp; Tab bawah + tombol tambah</td>
+          <td>Tab bawah lebih cepat untuk pemakaian harian, tetapi memakan tinggi layar dan menambah pekerjaan tata letak</td>
+        </tr>
+        <tr>
+          <td>Huruf editorial</td>
+          <td>Georgia (0 KB) &nbsp;·&nbsp; Fraunces / Newsreader (±30 KB)</td>
+          <td>Web font lebih khas, tetapi menyentuh LCP dan menambah satu ronde jaringan</td>
+        </tr>
+        <tr>
+          <td>Dark mode</td>
+          <td>Build 1 &nbsp;·&nbsp; Ditunda</td>
+          <td>Menambah kira-kira 20% pekerjaan CSS dan menggandakan pengujian kontras</td>
+        </tr>
+        <tr>
+          <td>Kunci masuk sederhana</td>
+          <td>Tanpa kunci &nbsp;·&nbsp; PIN ringan</td>
+          <td>PIN sisi klien bukan keamanan sungguhan dan bisa memberi rasa aman palsu. Keamanan nyata baru datang bersama Auth di Build 3</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout stop">
+      <strong>Untuk Sonnet:</strong> kalau keempat pertanyaan di atas belum dijawab saat
+      pekerjaan dimulai, tanyakan dalam satu pesan singkat sebelum menulis kode — bukan
+      di tengah pengerjaan, dan bukan dengan menebak sendiri.
+    </div>
+  </section>
+
+  <footer>
+    AD-HOL-MB · Master Brief Build 1 · Version 1.1<br>
+    Development · Anabhi Dev · 16 August 2026, 21:20:03 WITA<br>
+    Dokumen ini adalah acuan pelaksanaan. Bila bertentangan dengan PRD, bagian yang lebih
+    spesifik untuk Build 1 yang berlaku, dan pertentangannya harus disebutkan lebih dulu.
+  </footer>
+
+</div>
+</main>
+
+<script type="text/plain" id="brief-text">
+MASTER BRIEF — HoL Build 1 (Foundation)
+Development · Anabhi Dev · AD-HOL-MB v1.1
+
+PERAN
+Kamu adalah senior frontend engineer. Bangun aplikasi web sungguhan, bukan mockup.
+Ikuti brief ini persis. Jangan menambah fitur di luar scope. Jangan mengganti keputusan
+arsitektur secara sepihak — kalau ada hambatan, berhenti dan tanyakan.
+
+TUJUAN BUILD 1
+HoL bisa dipakai mencatat aktivitas hidup pada hari yang sama saat selesai dibangun.
+Data bertahan setelah browser ditutup. Tanpa AI, tanpa Supabase, tanpa notifikasi.
+Target hosting: anabhidev.com/HoL/index.html (SUBPATH — semua path aset wajib relatif).
+
+STACK
+HTML + CSS + Vanilla JS dengan ES Modules. Tanpa framework, tanpa bundler, tanpa
+pustaka eksternal. Dimuat lewat <script type="module">.
+
+KERJAKAN
+- Shell aplikasi: sidebar desktop, header sticky, router berbasis hash
+- Tampilan Today: Terlambat / Hari ini / Akan datang
+- Form tambah aktivitas manual dengan progressive disclosure
+- Ubah status, edit, tunda, hapus (soft delete + urungkan 6 detik)
+- Riwayat dengan pencarian dan filter
+- Data Adapter + implementasi localStorage
+- Empty / loading / error state (tiga varian empty berbeda)
+- Export dan import JSON
+- Demo data seeder berlabel jelas
+
+JANGAN KERJAKAN
+- Parsing Gemini atau input kalimat bebas (Build 4) — tapi SIAPKAN slot UI nonaktif
+  berlabel jujur "Tulis dengan kalimat biasa — segera hadir", tidak bisa diklik
+- Supabase, Auth, RLS (Build 3)
+- Grafik dan report (Build 2)
+- Telegram dan email (Build 5)
+- Upload foto (siapkan kolom photo_url, jangan implementasi)
+- Dark mode (tunggu keputusan)
+
+TUJUH ATURAN YANG TIDAK BISA DITAWAR
+1. Semua akses data lewat Data Adapter. Tidak ada localStorage.getItem/setItem
+   di luar js/store/local.js.
+2. Filter, urutan, dan pencarian dijalankan DI DALAM adapter, bukan di tampilan.
+   UI mengirim objek filter, adapter mengembalikan hasil jadi.
+3. Waktu disimpan ISO 8601 UTC, dihitung dan ditampilkan di Asia/Makassar.
+   Seluruh urusan waktu lewat satu modul js/domain/time.js.
+4. Overdue TIDAK PERNAH disimpan. Selalu diturunkan saat render.
+5. Nama field snake_case, identik dengan nama kolom Postgres nanti.
+6. Tidak ada angka statistik yang ditulis langsung di markup.
+7. Tanpa framework dan tanpa langkah build.
+
+STRUKTUR FILE
+/HoL/
+  index.html
+  assets/HoL-Logo.webp, favicon.png
+  css/tokens.css, app.css
+  js/config.js, app.js
+  js/domain/time.js, activity.js
+  js/store/adapter.js, local.js, index.js
+  js/ui/router.js, dom.js
+  js/ui/views/today.js, log.js, activity-form.js, settings.js
+  js/ui/components/activity-card.js, status-pill.js, filter-bar.js,
+                   empty-state.js, toast.js, confirm-dialog.js, drawer.js
+
+KONTRAK DATA ADAPTER (semua async, tanpa sentuhan DOM)
+  ready()
+  list(filter)      filter = { from, to, status[], category[], tags[], q,
+                               include_deleted, sort, order, limit, offset }
+  count(filter)
+  get(id)
+  create(draft)     adapter yang membuat id (crypto.randomUUID) dan timestamp
+  update(id, patch) patch parsial
+  remove(id)        soft delete
+  restore(id)
+  purgeDeleted(beforeIso)
+  exportAll()       -> { schema_version, exported_at, activities }
+  importAll(payload, mode)   mode: 'replace' | 'merge'
+  stats()
+
+  Error: class AdapterError { code, message, details }
+  code: NOT_FOUND | VALIDATION | STORAGE_FULL | UNAVAILABLE
+
+  Implementasi localStorage: satu key, muat sekali ke memori saat ready(),
+  tulis kembali dengan debounce 300ms, tangani QuotaExceededError.
+
+  Buat js/store/contract.test.js: create -> get -> list berfilter -> update ->
+  remove -> list -> restore -> export -> import ke storage kosong -> bandingkan.
+  Bisa dijalankan dari tombol tersembunyi di Settings.
+
+SCHEMA AKTIVITAS v1 (snake_case)
+  id uuid*, title text*, notes text, category enum*, subcategory text,
+  status enum* (planned|in_progress|done|skipped|cancelled),
+  planned_at timestamptz, is_all_day boolean*, completed_at timestamptz,
+  original_planned_at timestamptz, postpone_count integer*,
+  canonical_key text, tags text[], location text, cost numeric, currency text,
+  duration_minutes integer, link_url text, rating integer, mood text,
+  photo_url text, source enum* (manual|ai_web|ai_telegram), ai_raw json,
+  user_edited_fields text[], created_at*, updated_at*, deleted_at,
+  schema_version integer* (di tingkat koleksi)
+
+  Kategori: Personal, Work, Vibe Coding, Family, Learning, Travel & Social
+
+  Kolom analitik (original_planned_at, postpone_count, canonical_key, source,
+  ai_raw, user_edited_fields) belum dipakai di Build 1 tetapi WAJIB ada —
+  kalau tidak dicatat sejak awal, datanya tidak bisa direkonstruksi.
+
+  Build 1 mengisi canonical_key dengan slug sederhana dari judul.
+
+ATURAN TURUNAN STATUS
+- Terlambat all-day: planned_at sebelum hari ini di WITA, status planned/in_progress
+- Terlambat berjam: waktu planned_at sudah lewat, status planned/in_progress
+- skipped dan cancelled tidak pernah terlambat
+- status -> done mengisi completed_at; dibatalkan mengosongkannya
+- Menunda: isi original_planned_at HANYA jika masih kosong, LALU ubah planned_at,
+  lalu naikkan postpone_count. Urutan ini penting.
+
+DESIGN TOKEN
+  navy-900 #061426 (sidebar) · navy-800 #071a33 (header) · navy-600 #102f55 (aktif)
+  ink #152238 · muted #64748b · canvas #f5f7fa · surface #ffffff · border #dce3eb
+  green #42b883 (HANYA selesai/positif) · amber #e89a38 (terlambat)
+  gold #c99b52 (aksen editorial, hemat) · red #dc4c4c (aksi merusak saja)
+
+  Kategori sebagai tangga nada, bukan pelangi:
+  Personal #102f55, Work #1c4a7a, Vibe Coding #2b6ca3,
+  Family #3c8bab, Learning #4da3a3, Travel & Social #63b8a0
+
+  Radius 10px kartu / 8px kontrol / 999px pil
+  Bayangan tunggal: 0 1px 2px rgba(7,26,51,.06), 0 4px 16px rgba(7,26,51,.04)
+  Skala jarak 4/8/12/16/24/32/44. Nol gradien.
+  Gerak 150-200ms ease-out, hanya opacity dan transform.
+  Hormati prefers-reduced-motion.
+
+  Terlambat memakai amber, BUKAN merah. HoL pendamping, bukan atasan.
+
+TIPOGRAFI
+  Georgia untuk judul dan angka besar (rasa jurnal pribadi, bukan papan tugas)
+  System UI stack untuk antarmuka
+  Tanpa web font di Build 1 (alasan LCP)
+  Angka statistik wajib font-variant-numeric: tabular-nums
+  Input di mobile minimal 16px, kalau tidak iOS akan memperbesar layar otomatis
+
+LAYOUT
+  Desktop >=1024px: sidebar kiri 264px, header sticky 64px, konten
+    calc(100% - 264px), pembatas isi 1120px
+  Mobile <1024px: laci meluncur DARI KANAN, lebar min(300px, 86vw)
+    Tombol hamburger DI SISI KANAN navbar. Judul "History of Life" di kiri.
+    Lapisan gelap, Esc menutup, perangkap fokus, kembalikan fokus saat ditutup,
+    perbarui aria-expanded, kunci gulir badan tanpa lompatan.
+  Uji pada 320 / 360 / 390 / 768 / 1024 / 1280 / 1920 px
+
+RENDERING
+  Satu objek state. Event delegation di kontainer, bukan listener per kartu.
+  Jangan render ulang seluruh daftar untuk satu perubahan status — patch simpulnya.
+  Setiap teks pengguna melewati escapeHtml().
+  Router hash: #/today, #/log, #/a/<id>, #/settings
+  Bahasa antarmuka: Indonesia. Nama kode dan komentar: Inggris.
+  Nama tombol konsisten sepanjang alur: "Simpan" menghasilkan toast "Tersimpan".
+
+DELAPAN BAGIAN TERSULIT — kerjakan dengan perhatian ekstra
+1. Zona waktu. Jangan pakai getDate() mentah; ambil komponen tanggal lewat
+   Intl.DateTimeFormat dengan timeZone 'Asia/Makassar'. Uji dengan mengubah
+   zona waktu sistem ke UTC dan Asia/Jayapura — hasil "Hari ini" harus sama.
+2. Dua aturan terlambat yang berbeda (all-day vs berjam). Menyamakannya
+   menghasilkan penanda palsu sepanjang hari.
+3. Progressive disclosure tanpa kehilangan isian — sembunyikan lewat CSS,
+   jangan lepas dari DOM. Validasi hanya untuk field wajib.
+4. Filter tetap di dalam adapter. Menyaring di tampilan akan sangat menggoda,
+   dan akibatnya Build 3 berubah jadi penulisan ulang.
+5. Laci mobile yang benar-benar aksesibel (perangkap fokus, aria, kunci gulir).
+6. localStorage sekitar 5MB dan sinkron — muat sekali, tulis dengan debounce.
+7. Subpath /HoL/ — cari seluruh berkas untuk src="/ dan href="/ , hasilnya nol.
+8. Import JSON tahan versi — periksa schema_version, tolak versi lebih tinggi.
+
+JEBAKAN YANG WAJIB DICEGAH
+  overflow-x:hidden pada selektor gabungan html,body (bukan body saja)
+  minmax(0,1fr) bukan 1fr pada grid
+  min-width:0 pada anak flex yang berisi teks
+  100dvh bukan 100vh
+  jangan pakai tabel untuk daftar aktivitas di mobile — pakai kartu
+  jangan outline:none tanpa pengganti; pakai :focus-visible
+  status tidak boleh dibedakan hanya lewat warna atau emoji
+  kontras #64748b di atas #f5f7fa harus >= 4.5:1
+  awali kunci localStorage dengan hol.
+  bersihkan seluruh console.log sebelum selesai
+
+STANDAR CODING (wajib)
+  Header di setiap berkas:
+    // ================================================================
+    // AD-HOL — HoL History of Life
+    // HTML · CSS · Vanilla JS (ES Modules) · localStorage
+    // Development · Anabhi Dev
+    // Version   : 1.1
+    // Generated : [tanggal jam NYATA saat berkas dibuat, WITA]
+    // ================================================================
+  Format waktu: 16 August 2026, 21:20:03 (bulan Inggris penuh, tanggal tanpa nol depan)
+  Dilarang menyalin timestamp dari berkas sebelumnya.
+  Nama berkas yang dikirim: AD-HOL_v1.2.html — nama di dalam project: index.html
+  Versi naik setiap perubahan sekecil apa pun. Build 1 dimulai dari 1.1.
+  Kredit: Development · Anabhi Dev
+
+  js/config.js:
+    export const CONFIG = {
+      APP_TITLE: 'HoL — History of Life',
+      APP_VERSION: '1.1',
+      TZ: 'Asia/Makassar',
+      DATA_SOURCE: 'local',            // 'local' | 'supabase' <- satu baris untuk Build 3
+      STORAGE_KEY: 'hol.activities.v1',
+      SCHEMA_VER: 1,
+      UNDO_MS: 6000,
+      SAVE_DEBOUNCE_MS: 300,
+      MIN_DATA_FOR_INSIGHT: 15,
+    };
+  GEMINI_MODEL ditambahkan di Build 4 sebagai konstanta di objek ini.
+  Nama model dilarang ditanam di tengah kode. API key tidak pernah ada di frontend.
+
+ACCEPTANCE CRITERIA BUILD 1 — verifikasi dengan mencoba, bukan membaca kode
+  [ ] Aktivitas baru cukup judul + tanggal + kategori
+  [ ] Seluruh field opsional boleh kosong
+  [ ] Aktivitas tanpa jam dan berjam tampil berbeda
+  [ ] Aktivitas lewat tanggal dan belum selesai muncul di Terlambat
+  [ ] skipped dan cancelled tidak pernah terlambat
+  [ ] Tandai selesai mengisi completed_at; dibatalkan mengosongkannya
+  [ ] Menunda menaikkan postpone_count dan mengisi original_planned_at sekali saja
+  [ ] Hapus bersifat soft delete dan bisa diurungkan 6 detik
+  [ ] Pencarian menemukan kata di judul dan catatan
+  [ ] Filter kategori, status, rentang tanggal bisa digabungkan
+  [ ] Tidak ada localStorage di luar js/store/local.js
+  [ ] Uji kontrak adapter lolos dari Settings
+  [ ] Export JSON ber-schema_version dan bisa di-import kembali identik
+  [ ] Demo data bisa ditambah dan dihapus, tidak tercampur data nyata
+  [ ] Tiga empty state berbeda muncul di situasi yang tepat
+  [ ] Data bertahan setelah browser ditutup
+  [ ] Pada 320px tidak ada gulir menyamping
+  [ ] Laci mobile buka dari kanan, tutup dengan Esc dan lapisan, fokus kembali
+  [ ] Aktivitas dibuat 23.30 WITA tetap terhitung hari yang sama
+  [ ] Konsol bersih tanpa error dan tanpa sisa log
+
+EMPAT KEPUTUSAN TERBUKA — TANYAKAN DULU SEBELUM MENULIS KODE
+1. Navigasi mobile: laci saja, atau tab bawah + tombol tambah?
+2. Huruf editorial: Georgia (0 KB) atau Fraunces/Newsreader (±30 KB)?
+3. Dark mode: dikerjakan di Build 1 atau ditunda?
+4. Kunci masuk sederhana: tanpa kunci, atau PIN ringan?
+Tanyakan keempatnya dalam SATU pesan singkat sebelum mulai. Jangan menebak.
+
+CARA BEKERJA
+Jangan menghasilkan seluruh aplikasi dalam satu balasan raksasa. Kerjakan bertahap:
+  (a) index.html + tokens.css + app.css + shell dan navigasi
+  (b) config.js + domain/time.js + domain/activity.js + store (adapter, local, index)
+  (c) contract.test.js dan buktikan lolos
+  (d) views/today.js + activity-card
+  (e) activity-form.js dengan progressive disclosure
+  (f) log.js dengan pencarian dan filter
+  (g) settings.js: export, import, demo data, uji kontrak
+Setelah setiap tahap, berhenti dan laporkan singkat apa yang selesai dan apa berikutnya.
+</script>
+
+<script>
+(function(){
+  'use strict';
+
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('overlay');
+  var menuBtn = document.getElementById('menu-btn');
+  var lastFocus = null;
+
+  function openNav(){
+    sidebar.classList.add('open');
+    overlay.hidden = false;
+    overlay.classList.add('show');
+    menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    var first = sidebar.querySelector('.nav-item');
+    if (first) first.focus();
+  }
+
+  function closeNav(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    overlay.hidden = true;
+    menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  function isOpen(){ return sidebar.classList.contains('open'); }
+
+  menuBtn.addEventListener('click', function(){
+    isOpen() ? closeNav() : openNav();
+  });
+  overlay.addEventListener('click', closeNav);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && isOpen()) closeNav();
+    if (e.key === 'Tab' && isOpen() && window.innerWidth < 1024) {
+      var f = sidebar.querySelectorAll('a[href], button');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length-1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  sidebar.addEventListener('click', function(e){
+    if (e.target.closest('.nav-item') && window.innerWidth < 1024) closeNav();
+  });
+
+  window.addEventListener('resize', function(){
+    if (window.innerWidth >= 1024 && isOpen()) closeNav();
+  });
+
+  /* scrollspy */
+  var items = Array.prototype.slice.call(sidebar.querySelectorAll('.nav-item'));
+  var sections = items
+    .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        items.forEach(function(a){
+          a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id);
+        });
+      });
+    }, { rootMargin: '-72px 0px -70% 0px', threshold: 0 });
+    sections.forEach(function(s){ io.observe(s); });
+  }
+
+  /* acceptance counter */
+  var list = document.getElementById('ac-list');
+  var out  = document.getElementById('ac-count');
+  document.getElementById('ac-total').textContent =
+    list.querySelectorAll('input').length;
+
+  list.addEventListener('change', function(e){
+    if (e.target.type !== 'checkbox') return;
+    e.target.closest('li').classList.toggle('done', e.target.checked);
+    out.textContent = list.querySelectorAll('input:checked').length;
+  });
+  list.addEventListener('click', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    var li = e.target.closest('li');
+    if (!li) return;
+    var cb = li.querySelector('input');
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+
+  /* copy brief */
+  var copyBtn = document.getElementById('copy-btn');
+  copyBtn.addEventListener('click', function(){
+    var text = document.getElementById('brief-text').textContent.trim();
+    var done = function(ok){
+      copyBtn.classList.toggle('ok', ok);
+      var label = copyBtn.querySelector('span');
+      var prev = label ? label.textContent : '';
+      copyBtn.firstChild.nodeValue = ok ? '✓ ' : '⚠ ';
+      if (label) label.textContent = ok ? 'Tersalin' : 'Gagal menyalin';
+      setTimeout(function(){
+        copyBtn.classList.remove('ok');
+        copyBtn.firstChild.nodeValue = '📋 ';
+        if (label) label.textContent = prev || 'Salin untuk Sonnet';
+      }, 2200);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      document.body.removeChild(ta);
+      done(ok);
+    }
+  });
+})();
+</script>
+</body>
+</html>
