@@ -1,9 +1,9 @@
 <!--
 AnabhiDev-DELLA — Della Spa Website Proposal
-Teknologi: HTML5, CSS3 (custom properties, grid, clamp), Vanilla JavaScript (IntersectionObserver), Google Fonts (Cormorant Garamond, Jost)
+Teknologi: HTML5, CSS3 (custom properties, grid, clamp), Vanilla JavaScript (IntersectionObserver, requestAnimationFrame), Google Fonts (Cormorant Garamond, Plus Jakarta Sans)
 Development · Anabhi Dev
-Version: 1.1
-Generated: 17 August 2026, 14:44:02 WITA
+Version: 1.5
+Generated: 17 August 2026, 19:01:34 WITA
 -->
 <!DOCTYPE html>
 <html lang="id">
@@ -36,7 +36,7 @@ Generated: 17 August 2026, 14:44:02 WITA
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 
 <link rel="preload" as="image" href="https://anabhidev.com/projects/Della-Spa/logo.webp" fetchpriority="high">
 
@@ -63,6 +63,7 @@ input, textarea { font: inherit; }
   --canvas:        #FBF5F0;
   --surface:       #FFFDFC;
   --surface-soft:  #F5E7DC;
+  --hero-warm:     #F5E3D4;
 
   --ink:           #282321;
   --body:          #5F5550;
@@ -96,6 +97,7 @@ input, textarea { font: inherit; }
   --canvas:        #1C1715;
   --surface:       #241D1A;
   --surface-soft:  #2C2320;
+  --hero-warm:     #332720;
 
   --ink:           #F4EAE2;
   --body:          #DCCCC2;
@@ -127,7 +129,7 @@ input, textarea { font: inherit; }
 
 :root {
   --font-display: 'Cormorant Garamond', Cormorant, Georgia, 'Times New Roman', serif;
-  --font-ui: 'Jost', Futura, 'Century Gothic', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
 
   --space-section: clamp(76px, 9vw, 148px);
   --space-block: clamp(28px, 3.2vw, 52px);
@@ -173,7 +175,7 @@ h1, h2, h3 {
 
 .eyebrow {
   font-family: var(--font-ui);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
   letter-spacing: .20em;
   text-transform: uppercase;
@@ -234,12 +236,14 @@ h1, h2, h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 10px;
   padding: 15px 28px;
   border-radius: var(--r-pill);
   font-family: var(--font-ui);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
+  line-height: 1;
   letter-spacing: .04em;
   transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
   white-space: nowrap;
@@ -255,12 +259,43 @@ h1, h2, h3 {
   background: transparent;
 }
 .btn-outline:hover { border-color: var(--accent-text); transform: translateY(-2px); }
-.btn-full { width: 100%; }
+.btn-full {
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-size: 17px;
+  font-weight: 700;
+}
 
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; position: relative; }
+.table-wrap.compare-wrap { -webkit-overflow-scrolling: touch; }
+.table-scroll-hint {
+  display: none;
+  font-size: 11px;
+  color: var(--gold-text);
+  margin-bottom: 10px;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 700px) {
+  .table-scroll-hint { display: flex; }
+  .table-wrap.compare-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 28px;
+    background: linear-gradient(90deg, transparent, var(--canvas));
+    pointer-events: none;
+  }
+  .section[data-tone="dark"] .table-wrap.compare-wrap::after {
+    background: linear-gradient(90deg, transparent, var(--sb-bottom));
+  }
+}
 table { border-collapse: collapse; width: 100%; min-width: 560px; }
 th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 14px; }
-th { font-family: var(--font-ui); font-weight: 500; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); }
+th { font-family: var(--font-ui); font-weight: 600; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); }
+table.compare-table { table-layout: fixed; }
+table.compare-table th:not(:first-child), table.compare-table td:not(:first-child) { width: 110px; text-align: center; font-variant-numeric: tabular-nums; }
 td.check { color: var(--success); font-size: 16px; text-align: center; }
 td.dash { color: var(--muted); text-align: center; }
 
@@ -335,7 +370,7 @@ td.dash { color: var(--muted); text-align: center; }
 
 .nav-group {
   font-family: var(--font-ui);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 10px;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -382,8 +417,8 @@ td.dash { color: var(--muted); text-align: center; }
   line-height: 1.7;
   color: var(--sb-muted);
 }
-.sidebar-anabhi { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
-.sidebar-anabhi img { width: 20px; height: 20px; border-radius: 50%; }
+.sidebar-anabhi { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 16px; text-align: center; }
+.sidebar-anabhi img { width: 82px; height: 82px; object-fit: contain; }
 
 .theme-toggle-desktop {
   display: flex;
@@ -395,6 +430,7 @@ td.dash { color: var(--muted); text-align: center; }
   border-radius: 8px;
   border: 1px solid var(--sb-rule);
   font-size: 12px;
+  font-weight: 500;
   color: var(--sb-muted);
   min-height: 44px;
 }
@@ -459,12 +495,53 @@ td.dash { color: var(--muted); text-align: center; }
    MAIN
    ============================================================ */
 .main { margin-left: var(--sidebar-w); }
+
+/* ============================================================
+   ALTERNATING SECTION TONE — selang-seling terang/gelap
+   Override token lokal di dalam section bertanda [data-tone="dark"],
+   terpisah dari toggle mode terang/gelap global ([data-theme]).
+   ============================================================ */
+.section[data-tone="dark"] {
+  background: var(--sb-bottom);
+  color: var(--sb-text);
+}
+.section[data-tone="dark"] {
+  --canvas: var(--sb-bottom);
+  --surface: #3A2E28;
+  --surface-soft: #4A3A33;
+  --ink: var(--sb-text);
+  --body: var(--sb-muted);
+  --muted: #C4AFA3;
+  --accent-text: #E8C7B4;
+  --gold-text: #E3BE8B;
+  --border: rgba(255,248,242,.14);
+  --rule: rgba(255,248,242,.18);
+  --success: #9CB897;
+}
+.section[data-tone="dark"] .price-card:not(.featured),
+.section[data-tone="dark"] .asset-card,
+.section[data-tone="dark"] .cap-card,
+.section[data-tone="dark"] .rate-row,
+.section[data-tone="dark"] .mockup,
+.section[data-tone="dark"] .perf-stat,
+.section[data-tone="dark"] .funnel-step,
+.section[data-tone="dark"] .own-panel,
+.section[data-tone="dark"] .approval-box {
+  background: var(--surface);
+}
+.section[data-tone="dark"] .btn-outline { border-color: rgba(255,248,242,.32); color: var(--sb-text); }
+.section[data-tone="dark"] .btn-outline:hover { border-color: var(--gold-line); }
+.section[data-tone="dark"] .btn-solid { background: #F0DDCB; color: #282321; }
+.section[data-tone="dark"] .btn-solid:hover { background: #FBF0E5; }
+.section[data-tone="dark"] .own-panel,
+.section[data-tone="dark"] .approval-box { background: rgba(255,248,242,.05); }
+.section[data-tone="dark"] ::selection { background: rgba(255,226,173,.35); }
 .section {
   padding: var(--space-section) var(--gutter);
   max-width: 100vw;
 }
-.section-inner { padding-right: clamp(0px, 20vw, 340px); }
-.section-inner-wide { padding-right: clamp(0px, 8vw, 100px); }
+.section-inner { padding-right: clamp(0px, 4vw, 60px); }
+.section-inner-wide { padding-right: clamp(0px, 2vw, 32px); }
 
 .section-head { margin-bottom: var(--space-block); }
 .section-head h2 { font-size: clamp(30px, 4.2vw, 54px); line-height: 1.08; letter-spacing: -.01em; margin-top: 10px; }
@@ -484,6 +561,28 @@ td.dash { color: var(--muted); text-align: center; }
   color: var(--gold-line);
   letter-spacing: .05em;
 }
+
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(230px,1fr)); gap: 20px; }
+.portfolio-card {
+  display: block;
+  cursor: pointer;
+}
+.portfolio-card .asset-num {
+  font-family: var(--font-ui); font-weight: 600; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--gold-text);
+  display: flex; align-items: center; gap: 6px;
+}
+.portfolio-card .asset-num::after {
+  content: "↗"; margin-left: auto; font-size: 13px; opacity: .6;
+  transition: transform .25s var(--ease), opacity .25s var(--ease);
+}
+.portfolio-card:hover .asset-num::after { opacity: 1; transform: translate(2px,-2px); }
+.portfolio-card h3 {
+  font-family: var(--font-ui); font-weight: 700; font-size: 17px;
+  color: var(--ink); margin: 12px 0 5px;
+}
+.portfolio-card p { font-size: 13px; color: var(--body); }
+.portfolio-card:hover { border-color: var(--gold-line); }
 
 /* Journey diagram */
 .journey {
@@ -532,13 +631,65 @@ td.dash { color: var(--muted); text-align: center; }
   gap: 8px;
 }
 .swatch .chip { width: 96px; height: 96px; border-radius: var(--r-card); border: 1px solid var(--border); }
-.swatch .name { font-size: 12px; font-weight: 500; color: var(--ink); }
+.swatch .name { font-size: 12px; font-weight: 600; color: var(--ink); }
 .swatch .hex { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .direction-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 24px; }
 .direction-item { padding-left: 18px; border-left: 2px solid var(--gold-line); }
 .direction-item h3 { font-size: 19px; margin-bottom: 6px; }
 .direction-item p { font-size: 14px; color: var(--body); }
+
+/* Hero — two column, logo + headline left, journey card right */
+.hero-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(30px, 5vw, 60px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(217,182,157,.85), transparent 42%),
+    radial-gradient(circle at 75% 100%, rgba(232,199,180,.7), transparent 46%),
+    linear-gradient(135deg, var(--hero-warm) 0%, var(--surface-soft) 45%, var(--canvas) 100%);
+}
+.hero-wrap::after {
+  content: "";
+  position: absolute;
+  right: -110px; bottom: -160px;
+  width: 380px; height: 380px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  box-shadow: 0 0 0 32px rgba(118,94,84,.03), 0 0 0 64px rgba(118,94,84,.02);
+  pointer-events: none;
+}
+.hero-grid {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(260px,.85fr);
+  gap: 44px;
+  align-items: center;
+}
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero-logo-sm { width: 118px; height: 118px; margin-bottom: 22px; }
+.hero-logo-sm img { width: 118px; height: 118px; border-radius: 50%; box-shadow: 0 0 0 1px var(--border); }
+.hero-h1 { font-size: clamp(40px,6vw,76px); line-height: .98; letter-spacing: -.015em; margin-top: 12px; }
+
+.journey-card {
+  position: relative; z-index: 2;
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+.journey-card-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-text); }
+.journey-card-title { font-family: var(--font-display); font-size: 27px; line-height: 1.1; margin: 8px 0 18px; color: var(--ink); }
+.mini-flow { display: grid; gap: 8px; }
+.mini-flow-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-radius: 10px; background: var(--surface-soft);
+  font-size: 13px; font-weight: 600; color: var(--ink);
+}
+.mini-flow-row span { font-size: 10px; font-weight: 600; letter-spacing: .08em; color: var(--accent-text); }
 
 /* Browser mockup */
 .mockup {
@@ -600,18 +751,30 @@ td.dash { color: var(--muted); text-align: center; }
 .menu-panel { display: none; }
 .menu-panel.active { display: block; }
 .rate-group-title {
-  font-family: var(--font-ui); font-weight: 500; font-size: 11px; letter-spacing: .12em;
+  font-family: var(--font-ui); font-weight: 600; font-size: 11px; letter-spacing: .12em;
   text-transform: uppercase; color: var(--gold-text); margin: 22px 0 10px;
+  grid-column: 1 / -1;
 }
-.rate-group-title:first-child { margin-top: 0; }
+.rate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 640px) { .rate-grid { grid-template-columns: 1fr; } }
 .rate-row {
-  display: flex; align-items: baseline; gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
 }
-.rate-row .name { flex: 0 1 auto; min-width: 0; font-size: 15px; color: var(--ink); }
-.rate-row .dots { flex: 1 1 auto; border-bottom: 1px dotted var(--rule); transform: translateY(-4px); min-width: 24px; }
-.rate-row .price { flex: 0 0 auto; font-family: var(--font-display); font-size: 17px; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.rate-row:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--gold-line); }
+.rate-row .name { flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600; color: var(--ink); }
+.rate-row .price {
+  flex: 0 0 auto; font-family: var(--font-ui); font-weight: 700; font-size: 15px;
+  color: var(--accent-text); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
 
 /* ============================================================
    PRICING — Investment section
@@ -620,31 +783,51 @@ td.dash { color: var(--muted); text-align: center; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
   gap: clamp(14px, 1.6vw, 22px);
-  align-items: start;
+  align-items: stretch;
 }
 .price-card {
   position: relative;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 30px 28px;
+  padding: 32px 30px;
   border: 1px solid var(--border);
-  border-radius: var(--r-card);
+  border-radius: 18px;
   background: var(--surface);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .price-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+.price-card h3, .price-card .price-tagline, .price-card .price, .price-card .price-meta small,
+.price-card .feature-list li, .price-card .price-kicker, .price-card .price-best-for {
+  color: inherit;
+}
 .price-card.featured {
-  border-color: var(--gold-line);
+  background: linear-gradient(165deg, #FDF8F2 0%, #F5E7DC 100%);
+  border: 2px solid #C9A574;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  color: #282321;
+  overflow: visible;
 }
+.price-card.featured .price-kicker { color: #755939; }
+.price-card.featured .price-tagline { color: #5F5550; }
+.price-card.featured .price-best-for { color: #755939; }
+.price-card.featured .price-meta small { color: #665C56; }
+.price-card.featured .feature-list li { color: #4A423E; }
+.price-card.featured .feature-list li::before { color: #3F6440; }
+.price-card.featured .feature-list .group { color: #755939; }
+.price-card.featured .btn-solid { background: #765E54; color: #FFF8F2; }
+.price-card.featured .btn-solid:hover { background: #57443D; }
 .badge-rec {
-  display: inline-flex; align-items: center; gap: 7px;
+  position: absolute;
+  top: -14px; right: 24px;
+  display: inline-flex; align-items: center; gap: 5px;
   padding: 7px 14px; border-radius: var(--r-pill);
-  background: var(--accent-text); color: var(--sb-text);
-  font: 500 12px/1 var(--font-ui); letter-spacing: .12em; text-transform: uppercase;
-  margin-bottom: 18px; width: fit-content;
+  background: #4A7048; color: #FFFFFF;
+  font: 700 10px/1 var(--font-ui); letter-spacing: .05em; text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
 }
-.price-kicker { color: var(--accent-text); font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.price-kicker { color: var(--accent-text); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .price-card h3 { margin: 8px 0 4px; font-size: clamp(26px,3vw,34px); }
 .price-tagline { color: var(--body); font-size: 13px; min-height: 40px; }
 .price-best-for { font-size: 12px; color: var(--gold-text); margin-top: 6px; font-style: italic; font-family: var(--font-display); }
@@ -657,15 +840,16 @@ td.dash { color: var(--muted); text-align: center; }
 }
 .price-meta { display:flex; flex-direction:column; gap:2px; margin-bottom: 6px; }
 .price-meta small { color: var(--muted); font-size: 12px; }
-.feature-list { display: grid; gap: 9px; margin: 18px 0 22px; }
+.feature-list { display: grid; gap: 9px; margin: 18px 0 22px; align-content: start; }
 .feature-list li { position: relative; padding-left: 20px; color: var(--body); font-size: 14px; }
 .feature-list li::before { content: "✓"; position: absolute; left: 0; color: var(--success); }
 .feature-list .group {
   margin-top: 10px; padding-top: 4px;
-  color: var(--accent-text); font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent-text); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
 }
 .feature-list .group:first-child { margin-top: 0; }
-.price-card .btn { margin-top: clamp(20px,2.4vw,32px); }
+.price-card .btn { margin-top: auto; }
+.price-card:not(.featured) .feature-list { flex: 1 0 auto; }
 
 @media (min-width: 1180px) {
   .price-card.featured .feature-list { columns: 2; column-gap: 26px; }
@@ -783,8 +967,8 @@ td.dash { color: var(--muted); text-align: center; }
 .approval-box p { color: var(--sb-muted); font-size: 14px; max-width: 52ch; margin: 0 auto 24px; }
 .approval-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 .approval-box .btn-outline { border-color: rgba(255,248,242,.3); color: var(--sb-text); }
-.approval-anabhi { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--sb-rule); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 12px; color: var(--sb-muted); }
-.approval-anabhi img { width: 22px; height: 22px; border-radius: 50%; }
+.approval-anabhi { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--sb-rule); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-size: 12px; color: var(--sb-muted); }
+.approval-anabhi img { width: 192px; height: 192px; object-fit: contain; }
 
 @media print {
   .sidebar, .mobile-header, #overlay, #progressBar, .print-fab { display: none !important; }
@@ -898,7 +1082,7 @@ footer.doc-footer {
     Della Spa · Ungasan, Bali<br>
     Website Development Proposal<br>
     <div class="sidebar-anabhi">
-      <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="20" height="20" loading="lazy">
+      <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="82" height="82" loading="lazy">
       Development · Anabhi Dev
     </div>
     <div class="theme-toggle-desktop">
@@ -912,25 +1096,40 @@ footer.doc-footer {
 
 <!-- ================= 01 · OVERVIEW ================= -->
 <section class="section hero-section" id="s01">
-  <div class="section-inner-wide" style="display:grid; grid-template-columns: 150px 1fr; gap:40px; align-items:start;">
-    <span class="hero-mark halo reveal">
-      <img src="https://anabhidev.com/projects/Della-Spa/logo.webp" alt="Della Spa — Beauty Spa Treatment" width="150" height="150" fetchpriority="high" decoding="async" style="border-radius:50%; box-shadow:0 0 0 1px var(--border);">
-    </span>
-    <div>
-      <p class="eyebrow reveal">Website Development Proposal · Della Spa</p>
-      <h1 class="reveal" style="font-size:clamp(44px,7vw,92px); line-height:.96; letter-spacing:-.015em; margin-top:14px;">Della Spa.</h1>
-      <p class="lead reveal" style="margin-top:22px; max-width:58ch;">
-        Sebuah website yang membawa pengalaman Della Spa dari ruang treatment ke dunia digital —
-        elegan, calming, mobile-friendly, mudah ditemukan Google, dan memudahkan customer
-        melakukan booking.
-      </p>
-      <div class="reveal" style="display:flex; flex-wrap:wrap; gap:14px; margin-top:32px;">
-        <a href="#s08" class="btn btn-solid">Lihat Investment →</a>
-        <a href="#s05" class="btn btn-outline">Lihat Konsep Website</a>
+  <div class="section-inner-wide">
+    <div class="hero-wrap reveal">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-logo-sm halo">
+            <img src="https://anabhidev.com/projects/Della-Spa/logo.webp" alt="Della Spa — Beauty Spa Treatment" width="118" height="118" fetchpriority="high" decoding="async">
+          </span>
+          <p class="eyebrow">Website Development Proposal · Ungasan, Bali</p>
+          <h1 class="hero-h1">Della Spa.</h1>
+          <p class="lead" style="margin-top:20px; max-width:56ch;">
+            Sebuah website yang membawa pengalaman Della Spa dari ruang treatment ke dunia digital —
+            elegan, calming, mobile-friendly, mudah ditemukan Google, dan memudahkan customer
+            melakukan booking.
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:30px;">
+            <a href="#s08" class="btn btn-solid">Lihat Investment →</a>
+            <a href="#s05" class="btn btn-outline">Lihat Konsep Website</a>
+          </div>
+          <p style="margin-top:32px; font-size:12px; color:var(--muted); letter-spacing:.03em;">
+            Prepared for Della Spa · Ungasan, Bali · 17 Agustus 2026 · Berlaku 14 hari
+          </p>
+        </div>
+
+        <div class="journey-card">
+          <div class="journey-card-label">The Conversion Journey</div>
+          <div class="journey-card-title">From discovery<br>to booking.</div>
+          <div class="mini-flow">
+            <div class="mini-flow-row">Google / Maps <span>DISCOVER</span></div>
+            <div class="mini-flow-row">Website <span>EXPLORE</span></div>
+            <div class="mini-flow-row">Treatments + Price <span>TRUST</span></div>
+            <div class="mini-flow-row">WhatsApp <span>BOOK</span></div>
+          </div>
+        </div>
       </div>
-      <p class="reveal" style="margin-top:36px; font-size:12px; color:var(--muted); letter-spacing:.03em;">
-        Prepared for Della Spa · Ungasan, Bali · 17 Agustus 2026 · Berlaku 14 hari
-      </p>
     </div>
   </div>
 </section>
@@ -938,7 +1137,7 @@ footer.doc-footer {
 <div class="section-inner-wide" style="padding:0 var(--gutter);"><hr class="rule-gold" style="margin:0;"></div>
 
 <!-- ================= 02 · WHAT DELLA ALREADY HAS ================= -->
-<section class="section" id="s02">
+<section class="section" id="s02" data-tone="dark">
   <div class="section-inner">
     <span class="section-num reveal">02</span>
     <div class="section-head">
@@ -969,12 +1168,12 @@ footer.doc-footer {
       <div class="asset-card">
         <span class="asset-num">04</span>
         <h3 style="font-size:22px; margin:14px 0 8px;">Physical Location</h3>
-        <p style="font-size:14px; color:var(--body);">Jl. Karma Kandara, Ungasan, Badung, Bali — dengan Google Maps presence.</p>
+        <p style="font-size:14px; color:var(--body);">Jl. Karma Kandara No.41, Ungasan, Kuta Selatan, Badung, Bali — buka setiap hari hingga pukul 21.00, dengan Google Maps presence.</p>
       </div>
       <div class="asset-card">
         <span class="asset-num">05</span>
         <h3 style="font-size:22px; margin:14px 0 8px;">Customer Trust</h3>
-        <p style="font-size:14px; color:var(--body);">Google review presence dengan rating 4.8 dari 10 reviews pada materi yang diberikan.</p>
+        <p style="font-size:14px; color:var(--body);">Google review presence dengan rating 4.8 dari 10 reviews — pelanggan menyebut pelayanan ramah dan harga yang sepadan dengan pengalamannya.</p>
       </div>
       <div class="asset-card">
         <span class="asset-num">06</span>
@@ -1035,7 +1234,7 @@ footer.doc-footer {
 </section>
 
 <!-- ================= 04 · BRAND DIRECTION ================= -->
-<section class="section" id="s04">
+<section class="section" id="s04" data-tone="dark">
   <div class="section-inner">
     <span class="section-num reveal">04</span>
     <div class="section-head">
@@ -1109,7 +1308,7 @@ footer.doc-footer {
 </section>
 
 <!-- ================= 06 · WEBSITE STRUCTURE ================= -->
-<section class="section" id="s06">
+<section class="section" id="s06" data-tone="dark">
   <div class="section-inner">
     <span class="section-num reveal">06</span>
     <div class="section-head">
@@ -1157,46 +1356,54 @@ footer.doc-footer {
       </div>
 
       <div class="menu-panel active" data-panel="massage">
-        <div class="rate-row"><span class="name">Balinese Massage</span><span class="dots"></span><span class="price">300k / Hour</span></div>
-        <div class="rate-row"><span class="name">Swedish Massage</span><span class="dots"></span><span class="price">300k / Hour</span></div>
-        <div class="rate-row"><span class="name">Shiatsu Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Strong Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Aroma Therapy Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Hot Stone Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Sunburn Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Foot Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
-        <div class="rate-row"><span class="name">Back Massage</span><span class="dots"></span><span class="price">350k / Hour</span></div>
+        <div class="rate-grid">
+        <div class="rate-row"><span class="name">Balinese Massage</span><span class="price">300k / Hour</span></div>
+        <div class="rate-row"><span class="name">Swedish Massage</span><span class="price">300k / Hour</span></div>
+        <div class="rate-row"><span class="name">Shiatsu Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Strong Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Aroma Therapy Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Hot Stone Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Sunburn Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Foot Massage</span><span class="price">350k / Hour</span></div>
+        <div class="rate-row"><span class="name">Back Massage</span><span class="price">350k / Hour</span></div>
+        </div>
       </div>
 
       <div class="menu-panel" data-panel="nail">
+        <div class="rate-grid">
         <div class="rate-group-title">Pedicure</div>
-        <div class="rate-row"><span class="name">Pedicure without polish</span><span class="dots"></span><span class="price">250k</span></div>
-        <div class="rate-row"><span class="name">Pedicure with normal polish</span><span class="dots"></span><span class="price">350k</span></div>
-        <div class="rate-row"><span class="name">Pedicure with gel polish</span><span class="dots"></span><span class="price">400k</span></div>
+        <div class="rate-row"><span class="name">Pedicure without polish</span><span class="price">250k</span></div>
+        <div class="rate-row"><span class="name">Pedicure with normal polish</span><span class="price">350k</span></div>
+        <div class="rate-row"><span class="name">Pedicure with gel polish</span><span class="price">400k</span></div>
         <div class="rate-group-title">Manicure</div>
-        <div class="rate-row"><span class="name">Manicure without polish</span><span class="dots"></span><span class="price">250k</span></div>
-        <div class="rate-row"><span class="name">Manicure with normal polish</span><span class="dots"></span><span class="price">350k</span></div>
-        <div class="rate-row"><span class="name">Manicure with gel polish</span><span class="dots"></span><span class="price">400k</span></div>
+        <div class="rate-row"><span class="name">Manicure without polish</span><span class="price">250k</span></div>
+        <div class="rate-row"><span class="name">Manicure with normal polish</span><span class="price">350k</span></div>
+        <div class="rate-row"><span class="name">Manicure with gel polish</span><span class="price">400k</span></div>
+        </div>
       </div>
 
       <div class="menu-panel" data-panel="facial">
-        <div class="rate-row"><span class="name">Traditional Facial</span><span class="dots"></span><span class="price">250k</span></div>
-        <div class="rate-row"><span class="name">Biokos Aloevera Facial</span><span class="dots"></span><span class="price">300k</span></div>
-        <div class="rate-row"><span class="name">Biokos Seaweed Facial</span><span class="dots"></span><span class="price">300k</span></div>
-        <div class="rate-row"><span class="name">Body Scrub</span><span class="dots"></span><span class="price">250k</span></div>
-        <div class="rate-row"><span class="name">Ear Candle</span><span class="dots"></span><span class="price">200k</span></div>
+        <div class="rate-grid">
+        <div class="rate-row"><span class="name">Traditional Facial</span><span class="price">250k</span></div>
+        <div class="rate-row"><span class="name">Biokos Aloevera Facial</span><span class="price">300k</span></div>
+        <div class="rate-row"><span class="name">Biokos Seaweed Facial</span><span class="price">300k</span></div>
+        <div class="rate-row"><span class="name">Body Scrub</span><span class="price">250k</span></div>
+        <div class="rate-row"><span class="name">Ear Candle</span><span class="price">200k</span></div>
+        </div>
       </div>
 
       <div class="menu-panel" data-panel="package">
-        <div class="rate-row"><span class="name">Package 1 — Balinese Massage + Body Scrub + Body Masker</span><span class="dots"></span><span class="price">600k / 2 Hours</span></div>
-        <div class="rate-row"><span class="name">Package 2 — Balinese Massage + Body Scrub + Traditional Facial</span><span class="dots"></span><span class="price">600k / 2 Hours</span></div>
+        <div class="rate-grid">
+        <div class="rate-row"><span class="name">Package 1 — Balinese Massage + Body Scrub + Body Masker</span><span class="price">600k / 2 Hours</span></div>
+        <div class="rate-row"><span class="name">Package 2 — Balinese Massage + Body Scrub + Traditional Facial</span><span class="price">600k / 2 Hours</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ================= 08 · INVESTMENT ================= -->
-<section class="section" id="s08">
+<section class="section" id="s08" data-tone="dark">
   <div class="section-inner-wide">
     <span class="section-num reveal">08</span>
     <div class="section-head">
@@ -1225,8 +1432,8 @@ footer.doc-footer {
           <li class="group">Website</li>
           <li>Responsive website</li>
           <li>Custom Della Spa visual direction</li>
-          <li>Up to 5 main pages</li>
-          <li>Home · Treatments · About · Gallery · Contact</li>
+          <li>Up to 3 main pages</li>
+          <li>Home · Treatments · Contact</li>
           <li>WhatsApp booking CTA</li>
           <li>Google Maps integration</li>
           <li class="group">Foundation</li>
@@ -1251,7 +1458,7 @@ footer.doc-footer {
         <ul class="feature-list">
           <li class="group">Website</li>
           <li>Semua fitur Starter</li>
-          <li>Up to 8 pages</li>
+          <li>Up to 5 pages</li>
           <li>Dedicated Treatments page</li>
           <li>Packages &amp; interactive pricelist</li>
           <li>FAQ section</li>
@@ -1270,8 +1477,8 @@ footer.doc-footer {
       </div>
 
       <!-- Growth — recommended -->
-      <div class="price-card featured halo">
-        <span class="badge-rec">★ Most Recommended for Della</span>
+      <div class="price-card featured">
+        <span class="badge-rec">★ Most Recommended</span>
         <span class="price-kicker">Growth · Discovery</span>
         <h3>Get Found.</h3>
         <p class="price-tagline">Website sebagai digital growth asset: search, analytics, GEO, tracking dan production quality.</p>
@@ -1298,8 +1505,6 @@ footer.doc-footer {
           <li>llms.txt · AI discovery readiness</li>
           <li class="group">Analytics</li>
           <li>Google Analytics 4</li>
-          <li>Google Tag Manager</li>
-          <li>Conversion event foundation</li>
           <li>WhatsApp / call / map click tracking</li>
           <li class="group">Performance + QA</li>
           <li>Core Web Vitals target</li>
@@ -1316,29 +1521,31 @@ footer.doc-footer {
       <h3>Sekali bayar, milik Della selamanya.</h3>
       <div class="own-panel-grid">
         <div><strong>Kepemilikan</strong><span>Setelah pelunasan, seluruh source code dan aset website menjadi milik Della Spa sepenuhnya — diserahkan lengkap, tidak dikunci ke vendor.</span></div>
-        <div><strong>Tanpa langganan</strong><span>Tidak ada biaya bulanan ke Anabhi Dev. Website statis dapat di-hosting di Cloudflare Pages / Netlify tier gratis.</span></div>
-        <div><strong>Yang tetap berulang</strong><span>Hanya biaya domain per tahun, dibayar langsung ke registrar pilihan Della. <em>[NEED CONFIRM: nominal &amp; registrar]</em></span></div>
+        <div><strong>Tanpa langganan</strong><span>Tidak ada biaya bulanan ke Anabhi Dev untuk pengembangan website ini.</span></div>
+        <div><strong>Yang tetap berulang</strong><span>Domain tahun pertama sudah termasuk dalam paket. Mulai tahun kedua, perpanjangan domain ±US$15/tahun ditanggung Della Spa.</span></div>
       </div>
       <p class="note">"Development dibayar sekali. Website-nya milik Della. Yang berulang hanya domain."</p>
     </div>
 
-    <div class="reveal table-wrap" style="margin-top:var(--space-block);">
-      <table>
+    <div class="reveal" style="margin-top:var(--space-block);">
+      <p class="table-scroll-hint">← Geser untuk lihat semua paket →</p>
+      <div class="table-wrap compare-wrap">
+      <table class="compare-table">
         <thead>
           <tr><th>Fitur</th><th>Starter</th><th>Professional</th><th>Growth</th></tr>
         </thead>
         <tbody>
-          <tr><td>Jumlah halaman</td><td>5</td><td>8</td><td>10</td></tr>
+          <tr><td>Jumlah halaman</td><td>3</td><td>5</td><td>10</td></tr>
           <tr><td>WhatsApp booking flow</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
           <tr><td>FAQ &amp; trust section</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
           <tr><td>Google Search Console &amp; Sitemap</td><td class="dash">—</td><td>Basic</td><td class="check">✓</td></tr>
           <tr><td>Structured data / Schema</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
           <tr><td>GEO / AI discoverability</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
-          <tr><td>Google Analytics 4 + GTM</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
-          <tr><td>Conversion tracking</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
-          <tr><td>Core Web Vitals target</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
+          <tr><td>Bisa lihat berapa orang klik WhatsApp/Telepon/Maps (Google Analytics)</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
+          <tr><td>Website ditarget cepat &amp; tidak lemot</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </section>
@@ -1370,7 +1577,7 @@ footer.doc-footer {
       <div class="cap-card">
         <h3>Measurable</h3>
         <p>Website tidak berhenti pada visitor count — conversion actions bisa mulai diukur.</p>
-        <div class="cap-tags"><span>GA4</span><span>GTM</span><span>Event tracking</span></div>
+        <div class="cap-tags"><span>Google Analytics</span><span>Klik WhatsApp</span><span>Klik Maps</span></div>
       </div>
       <div class="cap-card">
         <h3>Production Ready</h3>
@@ -1381,13 +1588,13 @@ footer.doc-footer {
 
     <hr class="rule-gold">
 
-    <h3 class="reveal" style="font-size:22px; margin-bottom:16px;">Analytics Funnel — mengukur aksi yang penting</h3>
+    <h3 class="reveal" style="font-size:22px; margin-bottom:16px;">Yang Bisa Diukur Setelah Website Live</h3>
     <div class="funnel reveal">
-      <span class="funnel-step">page_view</span><span class="funnel-arrow">→</span>
-      <span class="funnel-step">view_treatment</span><span class="funnel-arrow">→</span>
-      <span class="funnel-step">view_package</span><span class="funnel-arrow">→</span>
-      <span class="funnel-step">click_whatsapp</span><span class="funnel-arrow">→</span>
-      <span class="funnel-step">click_map / click_call</span>
+      <span class="funnel-step">Pengunjung buka website</span><span class="funnel-arrow">→</span>
+      <span class="funnel-step">Lihat halaman Treatment</span><span class="funnel-arrow">→</span>
+      <span class="funnel-step">Lihat Package</span><span class="funnel-arrow">→</span>
+      <span class="funnel-step">Klik WhatsApp</span><span class="funnel-arrow">→</span>
+      <span class="funnel-step">Klik Maps / Telepon</span>
     </div>
 
     <hr class="rule-gold">
@@ -1395,11 +1602,11 @@ footer.doc-footer {
     <h3 class="reveal" style="font-size:22px; margin-bottom:16px;">Anabhi Dev Performance Standard</h3>
     <p class="lead reveal" style="margin-bottom:22px;">Fast is not a feature. It is a standard.</p>
     <div class="perf-grid reveal">
-      <div class="perf-stat"><div class="num">95+</div><div class="lbl">Desktop Performance</div></div>
-      <div class="perf-stat"><div class="num">80–90+</div><div class="lbl">Mobile (target realistis)</div></div>
-      <div class="perf-stat"><div class="num">100</div><div class="lbl">Accessibility target</div></div>
-      <div class="perf-stat"><div class="num">100</div><div class="lbl">Best Practices target</div></div>
-      <div class="perf-stat"><div class="num">100</div><div class="lbl">SEO target</div></div>
+      <div class="perf-stat"><div class="num" data-count="95" data-suffix="+">0</div><div class="lbl">Desktop Performance</div></div>
+      <div class="perf-stat"><div class="num" data-count="90" data-prefix="80–" data-suffix="+">0</div><div class="lbl">Mobile (target realistis)</div></div>
+      <div class="perf-stat"><div class="num" data-count="100">0</div><div class="lbl">Accessibility target</div></div>
+      <div class="perf-stat"><div class="num" data-count="100">0</div><div class="lbl">Best Practices target</div></div>
+      <div class="perf-stat"><div class="num" data-count="100">0</div><div class="lbl">SEO target</div></div>
     </div>
 
     <div class="disclaimer-box reveal">
@@ -1412,7 +1619,7 @@ footer.doc-footer {
 </section>
 
 <!-- ================= 10 · BOOKING EXPERIENCE ================= -->
-<section class="section" id="s10">
+<section class="section" id="s10" data-tone="dark">
   <div class="section-inner-wide">
     <span class="section-num reveal">10</span>
     <div class="section-head">
@@ -1475,28 +1682,23 @@ footer.doc-footer {
       </p>
     </div>
 
-    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:20px;">
-      <div class="asset-card"><span class="asset-num">Portfolio</span><h3 style="font-size:17px;margin:10px 0 4px;">Anabhi Dev Portfolio</h3><p style="font-size:13px;color:var(--body);">Portfolio utama developer.</p></div>
-      <div class="asset-card"><span class="asset-num">Developer</span><h3 style="font-size:17px;margin:10px 0 4px;">My Website — Latest</h3><p style="font-size:13px;color:var(--body);">Latest version website Anabhi Dev.</p></div>
-      <div class="asset-card"><span class="asset-num">Tour &amp; Travel</span><h3 style="font-size:17px;margin:10px 0 4px;">Tour &amp; Travel Collection</h3><p style="font-size:13px;color:var(--body);">Several travel website concepts.</p></div>
-      <div class="asset-card"><span class="asset-num">Tour &amp; Travel</span><h3 style="font-size:17px;margin:10px 0 4px;">Anabhi Journey</h3><p style="font-size:13px;color:var(--body);">Travel website experience.</p></div>
-      <div class="asset-card"><span class="asset-num">Company Profile</span><h3 style="font-size:17px;margin:10px 0 4px;">Jagadita New</h3><p style="font-size:13px;color:var(--body);">Latest design direction.</p></div>
-      <div class="asset-card"><span class="asset-num">Online Shop</span><h3 style="font-size:17px;margin:10px 0 4px;">E-Commerce Collection</h3><p style="font-size:13px;color:var(--body);">Online shop and product experience.</p></div>
-      <div class="asset-card"><span class="asset-num">Gadget Store</span><h3 style="font-size:17px;margin:10px 0 4px;">Kanaka Gadget</h3><p style="font-size:13px;color:var(--body);">Online shop and gadget concept.</p></div>
-      <div class="asset-card"><span class="asset-num">Company Profile</span><h3 style="font-size:17px;margin:10px 0 4px;">Anabhi Dev Studio</h3><p style="font-size:13px;color:var(--body);">Company profile concept.</p></div>
-      <div class="asset-card"><span class="asset-num">Interactive</span><h3 style="font-size:17px;margin:10px 0 4px;">Raja Siomay</h3><p style="font-size:13px;color:var(--body);">Interactive concept for customer project.</p></div>
-      <div class="asset-card"><span class="asset-num">Experimental</span><h3 style="font-size:17px;margin:10px 0 4px;">3D Web Experiments</h3><p style="font-size:13px;color:var(--body);">Interactive visual experiments.</p></div>
-      <div class="asset-card"><span class="asset-num">Interactive Card</span><h3 style="font-size:17px;margin:10px 0 4px;">Digital Name Card</h3><p style="font-size:13px;color:var(--body);">Digital name card experience.</p></div>
-      <div class="asset-card"><span class="asset-num">Villa</span><h3 style="font-size:17px;margin:10px 0 4px;">Inner Peace Bali</h3><p style="font-size:13px;color:var(--body);">Hospitality / villa website experience.</p></div>
+    <div class="reveal portfolio-grid">
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/" target="_blank" rel="noopener"><span class="asset-num">Developer</span><h3>My Website</h3><p>Latest version website Anabhi Dev.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/Tour-and-Travel/" target="_blank" rel="noopener"><span class="asset-num">Tour &amp; Travel</span><h3>Web Tour</h3><p>Travel website concepts.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/JagaditaNew/" target="_blank" rel="noopener"><span class="asset-num">Company Profile</span><h3>Jagadita New</h3><p>Latest design direction.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/Online-Shop/" target="_blank" rel="noopener"><span class="asset-num">Online Shop</span><h3>Online Shop</h3><p>Online shop and product experience.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/AnabhiDev-Studio/" target="_blank" rel="noopener"><span class="asset-num">Company Profile</span><h3>Anabhi Dev Studio</h3><p>Company profile template.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/Raja-Siomay/" target="_blank" rel="noopener"><span class="asset-num">Interactive</span><h3>Raja Siomay</h3><p>Concept for a real customer project.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/3D/" target="_blank" rel="noopener"><span class="asset-num">Experimental</span><h3>3D Web Experiments</h3><p>Interactive visual experiments.</p></a>
+      <a class="asset-card portfolio-card" href="https://anabhidev.com/Name-Card/wibawa" target="_blank" rel="noopener"><span class="asset-num">Interactive Card</span><h3>Digital Name Card</h3><p>Digital name card experience.</p></a>
+      <a class="asset-card portfolio-card" href="https://delanswit.netlify.app/" target="_blank" rel="noopener"><span class="asset-num">Online Shop</span><h3>Delanswit</h3><p>Website usaha keluarga.</p></a>
+      <a class="asset-card portfolio-card" href="https://innerpeacebali.com/" target="_blank" rel="noopener"><span class="asset-num">Villa</span><h3>Inner Peace Bali</h3><p>Hospitality / villa website experience.</p></a>
     </div>
-    <p class="reveal" style="margin-top:20px; font-size:12px; color:var(--muted);">
-      Catatan: URL langsung tiap project akan dilampirkan terpisah <em>[NEED CONFIRM]</em> — tidak dicantumkan di sini untuk menghindari link yang tidak diverifikasi.
-    </p>
   </div>
 </section>
 
 <!-- ================= 12 · PROCESS, TERMS & NEXT STEP ================= -->
-<section class="section" id="s12">
+<section class="section" id="s12" data-tone="dark">
   <div class="section-inner">
     <span class="section-num reveal">12</span>
     <div class="section-head">
@@ -1518,7 +1720,7 @@ footer.doc-footer {
       <li>Jumlah putaran revisi desain <span class="confirm-note">&nbsp;[NEED CONFIRM]</span></li>
       <li>Fotografi profesional — foto disediakan oleh Della Spa</li>
       <li>Copywriting / penulisan konten panjang dari nol <span class="confirm-note">&nbsp;[NEED CONFIRM: termasuk atau add-on]</span></li>
-      <li>Biaya domain &amp; perpanjangan tahunan — ditanggung Della Spa</li>
+      <li>Domain tahun pertama sudah termasuk. Perpanjangan mulai tahun kedua (±US$15/tahun) ditanggung Della Spa</li>
       <li>Sistem booking real-time dengan kalender / pembayaran online (booking tetap melalui WhatsApp)</li>
       <li>Pengelolaan konten rutin setelah launch</li>
     </ul>
@@ -1572,11 +1774,22 @@ footer.doc-footer {
       dampak terbesar terhadap konversi booking dari seluruh add-on di atas.
     </p>
 
+    <div class="reveal" style="margin-top:18px; padding:20px 24px; border-left:2px solid var(--gold-line); background:var(--surface-soft); border-radius:0 var(--r-card) var(--r-card) 0;">
+      <p style="font-size:13px; color:var(--muted); max-width:66ch;">
+        <strong style="color:var(--ink);">Temuan dari Google Business Della Spa:</strong>
+        salah satu review pelanggan menyebut Della juga pernah melayani <em>home service / in-villa</em>.
+        Kalau ini memang layanan resmi yang ingin ditawarkan, sebaiknya dikonfirmasi dulu ke Della —
+        karena kalau benar, ini bisa jadi halaman/fitur tersendiri (dengan area cakupan dan biaya
+        tambahan yang jelas) yang berpotensi menarik tamu villa di sekitar Ungasan tanpa mereka perlu
+        datang ke lokasi spa. <em class="confirm-note">[NEED CONFIRM ke Della]</em>
+      </p>
+    </div>
+
     <!-- FAQ -->
     <hr class="rule-gold">
     <h3 class="reveal" style="font-size:22px; margin-bottom:16px;">FAQ</h3>
     <div class="reveal" style="display:grid; gap:16px;">
-      <div><strong style="font-size:14px;">Apakah harga di atas termasuk domain &amp; hosting?</strong><p style="font-size:13px; color:var(--body); margin-top:4px;">Hosting statis dapat menggunakan tier gratis (Cloudflare Pages / Netlify). Domain adalah biaya tahunan terpisah yang dibayar langsung oleh Della Spa ke registrar.</p></div>
+      <div><strong style="font-size:14px;">Apakah harga di atas termasuk domain?</strong><p style="font-size:13px; color:var(--body); margin-top:4px;">Domain tahun pertama sudah termasuk dalam paket. Mulai tahun kedua, perpanjangan domain (±US$15/tahun) ditanggung Della Spa.</p></div>
       <div><strong style="font-size:14px;">Apakah bisa upgrade paket setelah website jadi?</strong><p style="font-size:13px; color:var(--body); margin-top:4px;">Bisa. Upgrade dari Professional ke Growth dapat dilakukan dengan menambahkan selisih fitur yang belum tercakup.</p></div>
       <div><strong style="font-size:14px;">Bagaimana jika materi (foto, pricelist) belum siap?</strong><p style="font-size:13px; color:var(--body); margin-top:4px;">Timeline pengerjaan mulai dihitung sejak materi lengkap diterima, supaya estimasi hari tetap akurat.</p></div>
     </div>
@@ -1585,13 +1798,12 @@ footer.doc-footer {
     <div class="approval-box reveal">
       <p class="eyebrow" style="justify-content:center; color:var(--sb-muted);">Langkah Selanjutnya</p>
       <h3 style="margin-top:14px;">Siap melanjutkan?</h3>
-      <p>Konfirmasi paket pilihan Della Spa langsung melalui WhatsApp, atau simpan proposal ini sebagai PDF untuk didiskusikan terlebih dahulu.</p>
+      <p>Konfirmasi paket pilihan Della Spa langsung melalui WhatsApp.</p>
       <div class="approval-actions">
         <a href="#" id="confirmGrowth" class="btn btn-solid">Konfirmasi Paket Growth via WhatsApp</a>
-        <button id="savePdfBtn" class="btn btn-outline">Simpan sebagai PDF</button>
       </div>
       <div class="approval-anabhi">
-        <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="22" height="22" loading="lazy">
+        <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="192" height="192" loading="lazy">
         Development · Anabhi Dev
       </div>
     </div>
@@ -1600,7 +1812,7 @@ footer.doc-footer {
 
 <footer class="doc-footer">
   Proposal ini disiapkan khusus untuk Della Spa dan bersifat rahasia. Seluruh harga dan cakupan
-  fitur dapat berubah sesuai kesepakatan akhir. Development · Anabhi Dev · Versi 1.1.
+  fitur dapat berubah sesuai kesepakatan akhir. Development · Anabhi Dev · Versi 1.5.
 </footer>
 
 </main>
@@ -1724,6 +1936,42 @@ footer.doc-footer {
     revealEls.forEach(function(el){ el.classList.add('is-visible'); });
   }
 
+  /* ============= COUNTING NUMBERS (Performance stats) ============= */
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var countEls = document.querySelectorAll('.num[data-count]');
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var prefix = el.getAttribute('data-prefix') || '';
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (prefersReducedMotion) { el.textContent = prefix + target + suffix; return; }
+    var duration = 1100;
+    var startTime = null;
+    function step(ts){
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = prefix + current + suffix;
+      if (progress < 1) window.requestAnimationFrame(step);
+    }
+    window.requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && countEls.length) {
+    var countObs = new IntersectionObserver(function(entries, obs){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .4 });
+    countEls.forEach(function(el){ countObs.observe(el); });
+  } else {
+    countEls.forEach(function(el){
+      el.textContent = (el.getAttribute('data-prefix')||'') + el.getAttribute('data-count') + (el.getAttribute('data-suffix')||'');
+    });
+  }
+
   /* ============= MENU TABS (Sample Menu) ============= */
   var tabs = document.querySelectorAll('.menu-tab');
   var panels = document.querySelectorAll('.menu-panel');
@@ -1739,11 +1987,12 @@ footer.doc-footer {
   });
 
   /* ============= WHATSAPP CTA ============= */
-  var WA_NUMBER = ''; /* [NEED CONFIRM] — nomor WhatsApp resmi Della Spa, contoh format: 628xxxxxxxxxx */
+  var WA_DELLA = '6281236109511';   /* Nomor WhatsApp resmi Della Spa — untuk booking customer */
+  var WA_ANABHIDEV = '6282267672828'; /* Nomor WhatsApp Anabhi Dev — untuk konfirmasi paket proposal */
 
-  function buildWaLink(message){
-    if (!WA_NUMBER) return null;
-    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message);
+  function buildWaLink(number, message){
+    if (!number) return null;
+    return 'https://wa.me/' + number + '?text=' + encodeURIComponent(message);
   }
 
   var simulateBtn = document.getElementById('simulateBooking');
@@ -1751,9 +2000,9 @@ footer.doc-footer {
     simulateBtn.addEventListener('click', function(e){
       e.preventDefault();
       var msg = "Halo Della Spa 👋 Saya ingin booking treatment.\n\nTreatment: Balinese Massage\nJumlah orang: 2\nTanggal: [tanggal]\nWaktu: [waktu]\n\nMohon info ketersediaannya. Terima kasih.";
-      var link = buildWaLink(msg);
+      var link = buildWaLink(WA_DELLA, msg);
       if (link) { window.open(link, '_blank'); }
-      else { alert('Nomor WhatsApp Della Spa belum dikonfirmasi. Tambahkan nomor di variabel WA_NUMBER pada file ini.'); }
+      else { alert('Nomor WhatsApp Della Spa belum dikonfirmasi.'); }
     });
   }
 
@@ -1762,17 +2011,15 @@ footer.doc-footer {
     confirmBtn.addEventListener('click', function(e){
       e.preventDefault();
       var msg = "Halo Anabhi Dev, kami dari Della Spa ingin melanjutkan dengan paket Growth (Rp4.000.000).";
-      var link = buildWaLink(msg);
+      var link = buildWaLink(WA_ANABHIDEV, msg);
       if (link) { window.open(link, '_blank'); }
-      else { alert('Nomor WhatsApp Anabhi Dev belum dikonfirmasi. Tambahkan nomor di variabel WA_NUMBER pada file ini.'); }
+      else { alert('Nomor WhatsApp Anabhi Dev belum dikonfirmasi.'); }
     });
   }
 
   /* ============= PDF SAVE ============= */
   var printFab = document.getElementById('printFab');
-  var savePdfBtn = document.getElementById('savePdfBtn');
   if (printFab) printFab.addEventListener('click', function(){ window.print(); });
-  if (savePdfBtn) savePdfBtn.addEventListener('click', function(){ window.print(); });
 
 })();
 </script>
