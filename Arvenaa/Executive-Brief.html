@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071A2E">
+<meta name="description" content="ARVENAA Executive Brief — What We Are Building">
+<title>ARVENAA · Executive Brief v1.0</title>
+<style>
+:root{--navy-950:#071a2e;--navy:#174a73;--blue:#2585d8;--teal:#27b9b0;--soft:#eaf4fa;--bg:#f4f7fa;--surface:#fff;--surface-2:#eef3f7;--text:#122235;--muted:#607287;--border:#d9e2ea;--green-bg:#dff5ec;--green:#126747;--shadow:0 14px 36px rgba(8,32,55,.09);--header-h:60px;--sidebar-w:258px}
+[data-theme=dark]{--bg:#081522;--surface:#0d2033;--surface-2:#122a40;--text:#edf5fb;--muted:#9fb2c4;--border:#254057;--soft:#12304a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65;overflow-x:hidden}button{font:inherit;cursor:pointer}img{max-width:100%;height:auto}a{color:inherit}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar-w);background:var(--navy-950);color:#fff;z-index:100;overflow:auto;border-right:1px solid rgba(255,255,255,.08)}
+.brand{padding:18px;border-bottom:1px solid rgba(255,255,255,.09)}.brand-row{display:flex;align-items:center;gap:10px}.brand-logo{width:38px;height:38px;object-fit:contain}.brand-name{font-weight:850;letter-spacing:.14em;font-size:14px}.brand-sub{font-size:9px;color:#91abc0;letter-spacing:.12em;text-transform:uppercase}.nav{padding:16px 11px 28px}.nav-group{margin:0 7px 17px}.nav-label{color:#6f91ad;font-size:9px;letter-spacing:.16em;font-weight:850;margin:0 0 7px}.nav a{display:flex;align-items:center;gap:9px;min-height:35px;padding:7px 9px;color:#c7d7e5;text-decoration:none;border-radius:9px;font-size:12.5px}.nav a:hover,.nav a.active{background:#123555;color:#fff}.nav-num{color:#68b4ec;font-size:9px;font-family:ui-monospace,monospace;min-width:18px}
+.header{position:fixed;top:0;left:var(--sidebar-w);right:0;height:var(--header-h);z-index:90;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px 0 20px;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}.header-title{font-size:13px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.header-actions{display:flex;align-items:center;gap:8px}.icon-btn{width:40px;height:40px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px}.mobile-menu{display:none}
+.main{margin-left:var(--sidebar-w);padding-top:var(--header-h);min-height:100dvh}.content{width:100%;padding:30px clamp(16px,3.5vw,58px) 72px}
+.hero{background:radial-gradient(circle at 90% 20%,rgba(39,185,176,.18),transparent 30%),radial-gradient(circle at 65% 100%,rgba(37,133,216,.17),transparent 35%),linear-gradient(135deg,#f9fcff,#eaf4fa);border:1px solid var(--border);border-radius:24px;padding:clamp(28px,4vw,52px);box-shadow:var(--shadow);margin-bottom:42px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,.75fr);gap:36px;align-items:center}.hero-logo{display:block;width:min(520px,100%);margin:0 0 14px}.eyebrow{color:var(--blue);font-weight:850;font-size:10px;letter-spacing:.16em;text-transform:uppercase}h1,h2,h3{line-height:1.15;letter-spacing:-.025em}h1{font-size:clamp(38px,5.4vw,68px);margin:10px 0 12px}h2{font-size:clamp(27px,3.6vw,40px);margin:0 0 16px}h3{font-size:19px;margin:0 0 9px}.lead{font-size:clamp(17px,2vw,22px);color:var(--muted);max-width:920px}.quote{font-size:clamp(23px,3vw,34px);font-weight:850;color:var(--navy);padding:15px 0}.badges{display:flex;flex-wrap:wrap;gap:8px}.badge{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;font-size:10px;font-weight:850}.badge.green{background:var(--green-bg);color:var(--green)}.badge.blue{background:#dceefb;color:#175e96}.badge.gray{background:var(--surface-2);color:var(--muted)}
+.position{background:rgba(255,255,255,.74);border:1px solid rgba(205,221,231,.9);border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(8,32,55,.06)}.position h3{font-size:21px;font-family:Georgia,serif}.position p{font-size:14px;color:var(--muted)}.position-item{display:flex;gap:11px;background:rgba(255,255,255,.7);border:1px solid var(--border);border-radius:14px;padding:13px;margin-top:10px}.dot{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:var(--green-bg);color:var(--green);font-weight:900;flex:0 0 29px}.position-item strong{font-size:12px;display:block}.position-item span{font-size:12px;color:var(--muted)}
+section{scroll-margin-top:78px;margin-bottom:64px}.section-head{display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid var(--border);padding-bottom:13px;margin-bottom:20px}.section-num{width:36px;height:36px;display:grid;place-items:center;background:var(--navy);color:#fff;border-radius:10px;font-size:12px;font-weight:850;flex:0 0 36px}.kicker{color:var(--blue);font-size:9px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;margin-bottom:3px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 5px 18px rgba(8,32,55,.04)}.card.wide{grid-column:span 2}.card.full{grid-column:1/-1}.muted{color:var(--muted)}.callout{padding:16px 18px;border-left:4px solid var(--teal);background:var(--soft);border-radius:0 13px 13px 0;margin:16px 0}.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.flow-item{min-width:170px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px}.flow-item b{display:block;margin-bottom:4px}.arrow{color:var(--teal);font-weight:900}.mini-list{display:grid;gap:10px}.mini{display:flex;gap:10px;align-items:flex-start}.mini-dot{width:22px;height:22px;border-radius:50%;background:var(--green-bg);color:var(--green);display:grid;place-items:center;font-size:11px;font-weight:900;flex:0 0 22px}.big-number{font-size:2.15rem;font-weight:900;color:var(--navy);line-height:1.05}.footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font-size:11px}
+.overlay{display:none}
+@media(max-width:980px){.sidebar{width:min(84vw,320px);transform:translateX(-105%);transition:transform .25s}.drawer-open .sidebar{transform:translateX(0)}.header{left:0}.mobile-menu{display:block}.drawer-open .overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:95}.main{margin-left:0}.hero-grid{grid-template-columns:1fr}.position{max-width:700px}.grid,.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.card.wide{grid-column:span 2}}
+@media(max-width:600px){.content{padding:18px 12px 56px}.header{padding:0 10px}.header-title{font-size:12px}.hero{padding:24px 18px;border-radius:18px}.grid,.grid.two{grid-template-columns:1fr}.card,.card.wide,.card.full{grid-column:1/-1}.flow{display:block}.flow-item{margin:7px 0}.arrow{display:block;text-align:center;margin:4px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten utama</a>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Navigasi">
+  <div class="brand"><div class="brand-row">
+    <img class="brand-logo" src="http://anabhidev.com/Arvenaa/logo.webp" alt="ARVENAA">
+    <div><div class="brand-name">ARVENAA</div><div class="brand-sub">EXECUTIVE BRIEF · v1.0</div></div>
+  </div></div>
+  <nav class="nav">
+    <div class="nav-group"><div class="nav-label">ABOUT</div>
+      <a href="#s1"><span class="nav-num">01</span>What We Are Building</a>
+      <a href="#s2"><span class="nav-num">02</span>The Problem</a>
+      <a href="#s3"><span class="nav-num">03</span>The Idea</a>
+    </div>
+    <div class="nav-group"><div class="nav-label">EXAMPLE</div>
+      <a href="#s4"><span class="nav-num">04</span>How It Works</a>
+      <a href="#s5"><span class="nav-num">05</span>Who It Helps</a>
+    </div>
+    <div class="nav-group"><div class="nav-label">VISION</div>
+      <a href="#s6"><span class="nav-num">06</span>The Bigger Vision</a>
+      <a href="#s7"><span class="nav-num">07</span>Why ARVENAA</a>
+      <a href="#s8"><span class="nav-num">08</span>The Journey Ahead</a>
+    </div>
+  </nav>
+</aside>
+
+<header class="header">
+  <div class="header-title">ARVENAA · Executive Brief</div>
+  <div class="header-actions">
+    <button class="icon-btn" id="themeBtn" aria-label="Ganti tema">◐</button>
+    <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main id="main" class="main">
+<div class="content">
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Executive Brief · What We Are Building</div>
+      <img class="hero-logo" src="http://anabhidev.com/Arvenaa/logo.webp" alt="ARVENAA — Less Managing. More Hospitality.">
+      <p class="lead"><strong>ARVENAA</strong> adalah AI Operations Copilot untuk membantu bisnis hospitality mengurangi pekerjaan operasional manual dan mengambil keputusan lebih cepat.</p>
+      <div class="quote">Less Managing. More Hospitality.</div>
+      <div class="badges"><span class="badge green">● BRAND LOCKED</span><span class="badge blue">AI OPERATIONS</span><span class="badge blue">WEB APP / PWA</span><span class="badge gray">EXECUTIVE BRIEF</span></div>
+    </div>
+    <aside class="position">
+      <h3>Current Position</h3>
+      <p>ARVENAA sedang dibangun sebagai operating intelligence layer untuk hospitality, dimulai dari satu masalah operasional yang sangat jelas.</p>
+      <div class="position-item"><div class="dot">✓</div><div><strong>Brand</strong><span>ARVENAA</span></div></div>
+      <div class="position-item"><div class="dot">✓</div><div><strong>Promise</strong><span>Less Managing. More Hospitality.</span></div></div>
+      <div class="position-item"><div class="dot">✓</div><div><strong>Starting Wedge</strong><span>Stock + Purchasing Intelligence</span></div></div>
+      <div class="position-item"><div class="dot">→</div><div><strong>Long-term Direction</strong><span>AI Operations Copilot for Hospitality</span></div></div>
+    </aside>
+  </div>
+</section>
+
+<section id="s1"><div class="section-head"><div class="section-num">01</div><div><div class="kicker">The Big Idea</div><h2>What We Are Building</h2></div></div>
+<div class="grid two"><div class="card wide"><h3>ARVENAA is an operational assistant for hospitality.</h3><p>Restaurant dan hotel sudah memiliki banyak sistem dan laporan. Masalahnya, manager tetap harus mengumpulkan informasi, membandingkan data, mencari masalah, lalu menentukan apa yang harus dilakukan.</p><p>ARVENAA mengubah informasi operasional menjadi <strong>insight yang jelas dan tindakan berikutnya.</strong></p></div><div class="card"><div class="big-number">Data → Action</div><p class="muted">Bukan sekadar data → dashboard.</p></div></div></section>
+
+<section id="s2"><div class="section-head"><div class="section-num">02</div><div><div class="kicker">The Problem</div><h2>Hospitality Has Too Much Information, Not Enough Clarity</h2></div></div>
+<div class="grid"><div class="card"><h3>POS</h3><p>Sales dan transaksi berjalan setiap hari.</p></div><div class="card"><h3>Excel / Sheets</h3><p>Stock, purchasing dan berbagai laporan sering masih dikerjakan manual.</p></div><div class="card"><h3>WhatsApp</h3><p>Supplier, staff dan operational communication tersebar di banyak percakapan.</p></div><div class="card"><h3>Supplier</h3><p>Harga, lead time dan ketersediaan perlu terus dipantau.</p></div><div class="card"><h3>Manager</h3><p>Akhirnya manager menjadi orang yang menyatukan semuanya.</p></div><div class="card"><h3>The real problem</h3><p><strong>Data tersedia, tetapi waktu manager habis untuk mengubah data menjadi keputusan.</strong></p></div></div>
+<div class="callout">ARVENAA tidak ingin menambah satu dashboard lagi. ARVENAA ingin mengurangi pekerjaan yang membuat manager harus membuka banyak dashboard.</div></section>
+
+<section id="s3"><div class="section-head"><div class="section-num">03</div><div><div class="kicker">The Idea</div><h2>How ARVENAA Thinks</h2></div></div>
+<div class="flow"><div class="flow-item"><b>What happened?</b><span class="muted">Memahami kondisi operasional.</span></div><div class="arrow">→</div><div class="flow-item"><b>Why does it matter?</b><span class="muted">Menjelaskan dampaknya.</span></div><div class="arrow">→</div><div class="flow-item"><b>What's next?</b><span class="muted">Memprediksi risiko atau kebutuhan.</span></div><div class="arrow">→</div><div class="flow-item"><b>What should I do?</b><span class="muted">Memberikan next best action.</span></div></div>
+<div class="callout"><strong>Simple idea:</strong> manager tidak perlu menjadi analis data. ARVENAA melakukan pekerjaan analisis awal dan mengembalikan perhatian manager ke keputusan yang benar-benar penting.</div></section>
+
+<section id="s4"><div class="section-head"><div class="section-num">04</div><div><div class="kicker">A Simple Example</div><h2>From Data to Action</h2></div></div>
+<div class="grid two"><div class="card"><h3>Today</h3><div class="mini-list"><div class="mini"><span class="mini-dot">1</span><div>Manager mengecek stock.</div></div><div class="mini"><span class="mini-dot">2</span><div>Membandingkan dengan consumption.</div></div><div class="mini"><span class="mini-dot">3</span><div>Mengecek purchasing dan supplier.</div></div><div class="mini"><span class="mini-dot">4</span><div>Menghitung berapa yang harus dibeli.</div></div></div></div>
+<div class="card"><h3>With ARVENAA</h3><p><strong>⚠️ Chicken breast kemungkinan habis besok.</strong></p><p class="muted">Current stock tidak cukup untuk projected consumption dan upcoming demand.</p><p><strong>Recommended action: Purchase 18 kg.</strong></p><div class="badges"><span class="badge green">REVIEW</span><span class="badge blue">APPROVE</span></div></div></div>
+<div class="grid" style="margin-top:15px"><div class="card"><h3>Cost Alert</h3><p>“Purchasing cost minggu ini 12% lebih tinggi dari pola normal.”</p></div><div class="card"><h3>Waste Alert</h3><p>“Food waste meningkat 17% dibanding baseline.”</p></div><div class="card"><h3>Demand Alert</h3><p>“Weekend demand diperkirakan meningkat 22%.”</p></div></div></section>
+
+<section id="s5"><div class="section-head"><div class="section-num">05</div><div><div class="kicker">Who It Helps</div><h2>Built for Hospitality Managers</h2></div></div>
+<div class="grid"><div class="card"><h3>Restaurant Manager</h3><p>Lebih sedikit waktu untuk checking dan reporting, lebih banyak waktu untuk service dan team.</p></div><div class="card"><h3>Hotel / F&amp;B Manager</h3><p>Lebih cepat melihat operational issues sebelum menjadi masalah besar.</p></div><div class="card"><h3>Owner / Operator</h3><p>Gambaran yang lebih jelas tanpa harus membaca semua laporan secara manual.</p></div><div class="card"><h3>Hospitality Group</h3><p>Potensi melihat pola dan masalah lintas outlet atau property.</p></div><div class="card wide"><h3>The human benefit</h3><p>ARVENAA bekerja di belakang layar agar hospitality leaders bisa lebih banyak fokus pada <strong>guest experience, people, quality, dan business.</strong></p></div></div></section>
+
+<section id="s6"><div class="section-head"><div class="section-num">06</div><div><div class="kicker">The Bigger Vision</div><h2>Start Small. Become the Operations Copilot.</h2></div></div>
+<div class="flow"><div class="flow-item"><b>Stock</b><span class="muted">Know what is running out.</span></div><div class="arrow">→</div><div class="flow-item"><b>Purchasing</b><span class="muted">Know what to buy.</span></div><div class="arrow">→</div><div class="flow-item"><b>Operations</b><span class="muted">Know what needs attention.</span></div><div class="arrow">→</div><div class="flow-item"><b>Copilot</b><span class="muted">Know what to do next.</span></div></div>
+<div class="callout">ARVENAA tidak dimulai dengan mencoba mengelola semua aspek hospitality. Kita mulai dari satu operational wedge yang jelas, membangun trust dan data, lalu berkembang.</div></section>
+
+<section id="s7"><div class="section-head"><div class="section-num">07</div><div><div class="kicker">Why ARVENAA</div><h2>Why We Have a Right to Build This</h2></div></div>
+<div class="grid two"><div class="card wide"><h3>Hospitality + Technology + AI</h3><p>ARVENAA lahir dari pemahaman langsung terhadap operational reality hospitality dan pengalaman technology implementation di industri tersebut. Founder advantage kita bukan hanya kemampuan membuat software, tetapi memahami bagaimana software tersebut harus bekerja di dunia nyata.</p></div><div class="card"><h3>Our intersection</h3><div class="mini-list"><div class="mini"><span class="mini-dot">✓</span><div>Hospitality domain knowledge</div></div><div class="mini"><span class="mini-dot">✓</span><div>Technology &amp; automation</div></div><div class="mini"><span class="mini-dot">✓</span><div>AI &amp; operational data</div></div></div></div></div>
+<div class="quote">We don't want to build “AI everywhere.”<br>We want AI that takes meaningful action.</div></section>
+
+<section id="s8"><div class="section-head"><div class="section-num">08</div><div><div class="kicker">The Journey Ahead</div><h2>From One Problem to a Hospitality Platform</h2></div></div>
+<div class="flow"><div class="flow-item"><b>01 · One Problem</b><span class="muted">Start with Stock + Purchasing Intelligence.</span></div><div class="arrow">→</div><div class="flow-item"><b>02 · Intelligence</b><span class="muted">Turn operational data into useful insight.</span></div><div class="arrow">→</div><div class="flow-item"><b>03 · Copilot</b><span class="muted">Help managers decide and act.</span></div><div class="arrow">→</div><div class="flow-item"><b>04 · Agents</b><span class="muted">Automate bounded actions with control.</span></div><div class="arrow">→</div><div class="flow-item"><b>05 · Platform</b><span class="muted">Become an operational intelligence layer for hospitality.</span></div></div>
+<div class="card full" style="margin-top:15px"><h3>Our north star</h3><p><strong>Make hospitality managers do less managing and more hospitality.</strong> Every feature must earn its place by removing manual work, reducing cost, reducing mistakes, or helping people make better decisions.</p></div></section>
+
+<footer class="footer"><div><strong>ARVENAA</strong> · Less Managing. More Hospitality.</div><div>Executive Brief · v1.0 · 18 August 2026</div></footer>
+
+</div></main>
+
+<script>
+const body=document.body,menuBtn=document.getElementById('menuBtn'),overlay=document.getElementById('overlay'),themeBtn=document.getElementById('themeBtn'),links=[...document.querySelectorAll('.nav a')],sections=[...document.querySelectorAll('section[id]')];
+function closeDrawer(){body.classList.remove('drawer-open');menuBtn.setAttribute('aria-expanded','false')}
+menuBtn.addEventListener('click',()=>{body.classList.toggle('drawer-open');menuBtn.setAttribute('aria-expanded',body.classList.contains('drawer-open')?'true':'false')});
+overlay.addEventListener('click',closeDrawer);links.forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=980)closeDrawer()}));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+const saved=localStorage.getItem('arvenaa-theme');if(saved)document.documentElement.dataset.theme=saved;
+themeBtn.addEventListener('click',()=>{const n=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=n;localStorage.setItem('arvenaa-theme',n);document.querySelector('meta[name="theme-color"]').content=n==='dark'?'#081522':'#071A2E'});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-20% 0px -65% 0px'});sections.forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
