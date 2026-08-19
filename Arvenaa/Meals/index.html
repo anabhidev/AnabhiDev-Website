@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<!--
+================================================================
+AnabhiDev-AM — ARVENAA Meals · Interactive Product Brief
+HTML5 · CSS Custom Properties · Vanilla JS · Remote WebP Assets
+Development · Anabhi Dev
+Version   : 2.1
+Generated : 19 August 2026, 16:55:00
+================================================================
+Catatan versi:
+Mayor naik ke 2.x karena rombak total arsitektur — dua lineage
+terpisah (AnabhiDev-AM v1.1–v1.4 dan ARVENAA-Meals v1.5–v1.7)
+digabung menjadi satu file kanonik. Minor reset ke 1.
+================================================================
+-->
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARVENAA Meals — Interactive Product Brief v2.2 | Anabhi Dev</title>
+<meta name="description" content="ARVENAA Meals — AI Office Food Coordinator. Less Thinking. More Eating. Interactive product brief untuk Emergent Building Indonesia.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f4f7fa" id="metaTheme">
+
+<!--
+  Anti-FOUC (SOP kategori 13). Script ini WAJIB inline dan jalan
+  sebelum <body> di-render. Trade-off dengan CSP nol-inline sudah
+  disadari: untuk file preview tunggal, FOUC lebih merusak UX.
+  Di production dengan CSP ketat, pakai nonce/sha256 untuk blok ini.
+-->
+<script>
+(function(){
+  var root = document.documentElement, key = 'anabhidev-am-theme', t = 'light';
+  try {
+    var saved = localStorage.getItem(key);
+    t = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch(e){}
+  root.setAttribute('data-theme', t);
+})();
+</script>
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS — satu sumber kebenaran per warna, per mode
+   ============================================================ */
+:root, [data-theme="light"]{
+  --paper:#f4f7fa;
+  --card:#ffffff;
+  --ink:#112a43;
+  --muted:#5c7086;
+  --line:#dce5ec;
+  --navy:#173752;
+  --navy-deep:#0e2e48;
+  --teal:#056268;          /* varian gelap: kontras 6.7:1 di atas putih */
+  --teal-soft:#e9f8f8;
+  --teal-soft-ink:#05585d;
+  --accent:#8a6a1f;        /* gold varian gelap untuk teks di atas terang */
+  --answer-bg:#f3f8fa;
+  --answer-ink:#2c4a61;
+  --shadow:0 18px 50px rgba(20,55,80,.12);
+  --shadow-soft:0 8px 25px rgba(20,55,80,.05);
+  --rail-ink:#dce8f0;
+  --rail-num:#8db6ce;
+  --rail-kicker:#a9c3d5;
+  --rail-foot:#9db7c8;
+}
+[data-theme="dark"]{
+  --paper:#0b1829;
+  --card:#142c3e;
+  --ink:#e8eef7;
+  --muted:#a9bdcb;
+  --line:#2a4659;
+  --navy:#0b2438;
+  --navy-deep:#071a2b;
+  --teal:#5be0df;          /* varian terang: kontras 8.9:1 di atas --card */
+  --teal-soft:#10313f;
+  --teal-soft-ink:#7fe9e7;
+  --accent:#e8c468;        /* gold varian terang untuk teks di atas gelap */
+  --answer-bg:#102638;
+  --answer-ink:#cfe0ec;
+  --shadow:0 18px 50px rgba(0,0,0,.42);
+  --shadow-soft:0 8px 25px rgba(0,0,0,.28);
+  --rail-ink:#dce8f0;
+  --rail-num:#8db6ce;
+  --rail-kicker:#a9c3d5;
+  --rail-foot:#9db7c8;
+}
+/* Hero gradient selalu gelap di kedua mode, jadi warna di atasnya konstan */
+:root{
+  --gold-on-hero:#ffb21b;
+  --cyan-on-hero:#5ce3de;
+}
+
+/* ============================================================
+   2. RESET + OVERFLOW LOCK (SOP kategori 1)
+   ============================================================ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html, body{
+  overflow-x:hidden;
+  max-width:100%;          /* 100% — BUKAN 100vw (scrollbar Windows/Linux) */
+}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  transition:background-color .18s ease, color .18s ease;
+}
+button{font:inherit}
+img, svg, video, canvas, iframe{max-width:100%;height:auto}
+pre, code{overflow-x:auto;max-width:100%}
+.grid-safe > *{min-width:0}
+
+/* Fokus terlihat — jangan andalkan default browser */
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:6px}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *, *::before, *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+/* ============================================================
+   3. TOPBAR — SOP kategori 14
+   Hamburger KANAN → judul KIRI. Theme toggle menempel di kanan,
+   sisi yang sama dengan hamburger (thumb zone).
+   ============================================================ */
+.topbar{
+  height:58px;background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 14px;position:fixed;z-index:60;top:0;left:0;right:0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.hdr-title{
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:13.5px;font-weight:750;letter-spacing:.1px;
+}
+.hdr-title .ver{opacity:.6;font-weight:600}
+.top-actions{display:flex;gap:8px;flex:0 0 auto}
+.iconbtn{
+  height:44px;min-width:44px;                /* touch target 44×44 */
+  border:1px solid rgba(255,255,255,.22);
+  background:transparent;color:#fff;border-radius:11px;cursor:pointer;
+  display:grid;place-items:center;font-size:15px;line-height:1;
+}
+.iconbtn:hover{background:rgba(255,255,255,.09)}
+#menuBtn{display:none}
+
+/* ============================================================
+   4. SHELL + SIDEBAR
+   ============================================================ */
+.shell{display:grid;grid-template-columns:248px minmax(0,1fr);padding-top:58px}
+.sidebar{
+  position:fixed;top:58px;bottom:0;width:248px;
+  background:var(--navy);color:#fff;overflow-y:auto;
+  padding:18px 14px 24px;z-index:50;
+}
+/* Logo sidebar: di bawah navbar, kotak putih lega (permintaan user) */
+.logo-box{
+  height:112px;background:#fff;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;margin-bottom:16px;
+}
+.logo-box img{
+  width:100%;height:100%;object-fit:contain;object-position:center;
+  padding:10px;display:block;
+}
+.kicker{
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--rail-kicker);font-weight:800;margin:12px 8px 8px;
+}
+.nav{display:flex;flex-direction:column;gap:3px}
+.nav a{
+  display:flex;gap:10px;align-items:center;text-decoration:none;
+  color:var(--rail-ink);border:1px solid transparent;border-radius:10px;
+  padding:11px 10px;font-size:12px;font-weight:650;min-height:44px;
+}
+.nav a:hover,.nav a.active{
+  background:rgba(20,174,179,.16);border-color:rgba(91,224,223,.28);color:#fff;
+}
+.nav .num{font-size:10px;color:var(--rail-num);width:26px;flex:0 0 26px}
+.sidebar-foot{
+  border-top:1px solid rgba(255,255,255,.1);margin-top:18px;
+  padding:16px 10px;color:var(--rail-foot);font-size:11px;line-height:1.65;
+}
+.sidebar-foot strong{color:#fff;display:block;margin-bottom:2px}
+
+.drawer-scrim{
+  position:fixed;inset:58px 0 0 0;background:rgba(7,25,39,.55);
+  z-index:45;display:none;
+}
+.drawer-scrim.show{display:block}
+
+/* ============================================================
+   5. MAIN — ATURAN WIDTH MANDATORY (SOP kategori 1)
+   TIDAK ADA max-width px/ch di container maupun elemen teks.
+   Lebar hanya dibatasi padding clamp() pada #main.
+   ============================================================ */
+#main{
+  grid-column:2;min-width:0;
+  padding:40px clamp(24px, 6vw, 180px) 0;
+}
+.section{margin:0 0 34px;scroll-margin-top:80px}
+
+/* ============================================================
+   6. HERO — desain v1.7 dipertahankan
+   ============================================================ */
+.hero{
+  min-height:610px;border-radius:24px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#185a84 0%,#1d7198 52%,#177f9b 100%);
+  box-shadow:var(--shadow);color:#fff;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:30px;padding:66px;
+}
+.hero::after{
+  content:"";position:absolute;width:500px;height:500px;
+  border:1px solid rgba(255,255,255,.11);border-radius:50%;
+  right:-150px;bottom:-260px;
+  box-shadow:0 0 0 45px rgba(255,255,255,.025), 0 0 0 90px rgba(255,255,255,.02);
+  pointer-events:none;
+}
+.hero-copy{position:relative;z-index:2;align-self:center;min-width:0}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);
+  padding:9px 13px;border-radius:999px;font-size:11px;font-weight:750;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold-on-hero)}
+.product-mark{
+  font-size:11px;font-weight:900;letter-spacing:1.7px;
+  color:#9cf2ed;margin-left:10px;
+}
+.hero h1{
+  font-size:clamp(44px,6vw,82px);line-height:.95;
+  margin:34px 0 24px;letter-spacing:-3px;
+}
+.hero h1 span{display:block;color:var(--cyan-on-hero)}
+.hero h2{font-size:clamp(20px,2.4vw,28px);margin:0 0 18px;letter-spacing:-.7px}
+.hero .lead{font-size:17px;line-height:1.75;color:rgba(255,255,255,.9)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 16px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{
+  border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.09);
+  border-radius:999px;padding:7px 11px;font-size:10px;font-weight:700;
+}
+.hero-art{
+  position:relative;z-index:2;min-width:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-logo-frame{
+  width:min(100%,390px);aspect-ratio:1122/1243;background:#fff;
+  border-radius:20px;padding:16px;overflow:hidden;
+  box-shadow:0 20px 45px rgba(0,0,0,.18);
+}
+.hero-logo-frame img{
+  width:100%;height:100%;object-fit:contain;object-position:center;display:block;
+}
+
+/* ============================================================
+   7. KOMPONEN UMUM
+   ============================================================ */
+.eyebrow{
+  display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;
+}
+.eyebrow .no{
+  background:var(--navy);color:#fff;border-radius:10px;
+  padding:6px 11px;font-size:11px;font-weight:900;letter-spacing:.5px;
+}
+.eyebrow .lbl{
+  font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+  font-weight:900;color:var(--teal);
+}
+.section-title{font-size:clamp(26px,3.4vw,36px);letter-spacing:-1.4px;margin:0 0 10px;line-height:1.12}
+.section-sub{color:var(--muted);line-height:1.75;margin:0 0 22px;font-size:14.5px}
+
+.btn{
+  border:1px solid var(--line);background:var(--card);color:var(--navy);
+  padding:12px 16px;border-radius:11px;font-weight:800;font-size:12.5px;
+  cursor:pointer;min-height:44px;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.btn:hover{border-color:var(--teal)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.hero .btn{background:#fff;color:var(--navy-deep);border-color:#fff}
+.hero .btn.primary{background:var(--navy-deep);border-color:var(--navy-deep);color:#fff}
+
+.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:22px;box-shadow:var(--shadow-soft);min-width:0;
+}
+.card h3{margin:0 0 9px;font-size:16.5px;line-height:1.35}
+.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.75}
+
+.note{
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
+  border-radius:14px;padding:18px 20px;margin-top:18px;
+  font-size:13px;line-height:1.75;color:var(--muted);
+}
+.note strong{color:var(--ink)}
+
+/* Gambar ilustrasi */
+.figure{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:14px;box-shadow:var(--shadow-soft);margin-bottom:18px;
+}
+.figure img{width:100%;height:auto;display:block;border-radius:10px}
+.figure figcaption{
+  margin-top:12px;font-size:12px;color:var(--muted);line-height:1.65;text-align:center;
+}
+
+/* Problem list */
+.problem-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.problem{
+  display:flex;gap:13px;background:var(--card);border:1px solid var(--line);
+  border-radius:15px;padding:16px;min-width:0;
+}
+.problem .badge{
+  flex:0 0 34px;height:34px;border-radius:10px;
+  background:var(--teal-soft);color:var(--teal-soft-ink);
+  display:grid;place-items:center;font-weight:900;font-size:12px;
+}
+.problem strong{display:block;font-size:13.5px;margin-bottom:5px}
+.problem span{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* Flow 5 langkah */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.step{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:18px;min-width:0;
+}
+.step-num{font-size:10.5px;color:var(--teal);font-weight:900;letter-spacing:.6px}
+.step h3{font-size:14px;margin:10px 0 6px;line-height:1.3}
+.step p{font-size:11.5px;line-height:1.65;color:var(--muted);margin:0}
+
+/* Demo / panel interaktif */
+.demo{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:24px;box-shadow:var(--shadow);
+}
+.demo-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.panel-label{
+  font-size:10px;letter-spacing:1.4px;text-transform:uppercase;
+  font-weight:900;color:var(--teal);margin-bottom:10px;
+}
+.input, select.input{
+  border:1px solid var(--line);border-radius:12px;padding:12px 13px;width:100%;
+  outline:none;background:var(--card);color:var(--ink);min-height:44px;
+}
+.input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(16,174,179,.16)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:999px;padding:9px 13px;font-size:12px;font-weight:700;
+  cursor:pointer;min-height:44px;
+}
+.chip:hover{border-color:var(--teal);color:var(--teal)}
+.results{display:grid;gap:9px;margin-top:12px}
+.restaurant{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  padding:13px;border:1px solid var(--line);border-radius:12px;min-width:0;
+}
+.restaurant .meta{min-width:0}
+.restaurant b{font-size:12.5px;display:block}
+.restaurant small{color:var(--muted);font-size:11.5px}
+.restaurant button{
+  border:0;background:var(--teal-soft);color:var(--teal-soft-ink);
+  border-radius:9px;padding:11px 13px;font-weight:800;cursor:pointer;
+  font-size:11px;min-height:44px;flex:0 0 auto;
+}
+.restaurant.picked{border-color:var(--teal);box-shadow:0 0 0 2px rgba(16,174,179,.14)}
+.ai-answer{
+  background:var(--answer-bg);border:1px solid var(--line);border-radius:13px;
+  padding:16px;margin-top:14px;color:var(--answer-ink);font-size:13px;line-height:1.75;
+}
+.ai-answer strong{color:var(--ink)}
+
+/* Kalkulator */
+.calc-field{display:grid;gap:6px;margin-bottom:12px}
+.calc-field label{font-size:11.5px;font-weight:700;color:var(--muted)}
+.calc-out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
+.calc-cell{
+  border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--paper);
+}
+.calc-cell span{font-size:10.5px;color:var(--muted);display:block;margin-bottom:4px}
+.calc-cell b{font-size:16px;letter-spacing:-.4px}
+.calc-cell.hi{background:var(--navy);border-color:var(--navy)}
+.calc-cell.hi span{color:#b9cedc}
+.calc-cell.hi b{color:#fff}
+.split-list{display:grid;gap:7px;margin-top:12px}
+.split-row{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;
+}
+.pay{font-size:10.5px;font-weight:800;border-radius:999px;padding:4px 9px}
+.pay.paid{background:var(--teal-soft);color:var(--teal-soft-ink)}
+.pay.due{background:rgba(200,120,20,.14);color:var(--accent)}
+
+/* Tabel order */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:460px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+th{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:800}
+
+/* Metrik */
+.impact{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.metric{background:var(--navy);color:#fff;border-radius:16px;padding:20px;min-width:0}
+.metric b{font-size:clamp(22px,2.6vw,30px);display:block;letter-spacing:-1px;margin-bottom:6px}
+.metric span{font-size:11px;color:#b9cedc;line-height:1.55;display:block}
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.ba-col{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.ba-col h3{margin:0 0 12px;font-size:14.5px}
+.ba-col ul{margin:0;padding-left:18px}
+.ba-col li{font-size:12.5px;color:var(--muted);line-height:1.8}
+.ba-col.after{border-color:var(--teal)}
+
+/* Arsitektur */
+.arch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.arch-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.arch-card.primary{border-color:var(--teal);box-shadow:0 0 0 2px rgba(16,174,179,.1)}
+.arch-card h3{margin:0 0 8px;font-size:15px}
+.arch-card p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.7}
+.arch-card .tagline{
+  font-size:10px;letter-spacing:1.3px;text-transform:uppercase;
+  font-weight:900;color:var(--teal);display:block;margin-bottom:7px;
+}
+
+/* Memory */
+.mem-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.mem{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.mem .ic{font-size:20px;display:block;margin-bottom:8px}
+.mem strong{display:block;font-size:13px;margin-bottom:4px}
+.mem span{font-size:11.5px;color:var(--muted);line-height:1.6}
+
+/* Timeline */
+.timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phase{
+  font-size:10px;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--teal);font-weight:900;display:block;margin-bottom:8px;
+}
+
+/* Placeholder yang harus diisi user */
+.fill{
+  background:rgba(200,150,30,.13);border:1px dashed var(--accent);
+  color:var(--accent);border-radius:7px;padding:2px 8px;
+  font-size:.86em;font-weight:800;white-space:nowrap;
+}
+
+/* CTA */
+.cta{
+  background:linear-gradient(135deg,#185a84 0%,#1d7198 52%,#177f9b 100%);
+  border-radius:22px;padding:clamp(28px,4vw,48px);color:#fff;box-shadow:var(--shadow);
+}
+.cta h2{margin:0 0 12px;font-size:clamp(24px,3.2vw,34px);letter-spacing:-1.2px}
+.cta p{margin:0 0 20px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.9)}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(24px);
+  background:var(--navy-deep);color:#fff;border-radius:12px;padding:13px 18px;
+  font-size:13px;font-weight:700;z-index:120;opacity:0;pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;box-shadow:0 16px 40px rgba(0,0,0,.3);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Modal */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(7,25,39,.6);z-index:110;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:100%;background:var(--card);border-radius:20px;padding:25px;
+  box-shadow:0 30px 90px rgba(0,0,0,.35);max-height:86dvh;overflow-y:auto;
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+.modal-head h3{margin:0;font-size:18px}
+.close{
+  border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  border-radius:10px;width:44px;height:44px;cursor:pointer;flex:0 0 auto;font-size:16px;
+}
+
+/* Footer */
+footer{
+  background:var(--navy);color:#c4d4df;
+  padding:34px clamp(24px, 6vw, 180px) 34px calc(248px + clamp(24px, 6vw, 180px));
+  margin-top:60px;
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-size:11.5px;line-height:1.7;
+}
+footer strong{color:#fff}
+
+/* ============================================================
+   8. RESPONSIVE
+   ============================================================ */
+@media (max-width:1050px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  #menuBtn{display:grid}
+  .sidebar{
+    left:auto;right:0;height:calc(100dvh - 58px);
+    transform:translateX(100%);transition:transform .22s ease;
+    box-shadow:-14px 0 40px rgba(0,0,0,.28);
+  }
+  .sidebar.open{transform:translateX(0)}
+  #main{grid-column:1;padding-top:28px}
+  footer{padding:34px clamp(24px, 6vw, 180px)}
+  .hero{grid-template-columns:minmax(0,1fr);min-height:auto;padding:42px}
+  .hero-art{order:-1}
+  .hero-logo-frame{width:min(100%,300px)}
+  .card-grid,.arch,.impact,.flow,.timeline,.mem-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:700px){
+  .hero{padding:28px;border-radius:18px}
+  .hero h1{letter-spacing:-2px}
+  .hero .lead{font-size:14.5px}
+  .card-grid,.problem-list,.demo-row,.arch,.impact,.flow,.timeline,.mem-grid,.calc-out,.ba{
+    grid-template-columns:minmax(0,1fr)
+  }
+  .sidebar{width:min(88vw,300px)}
+  footer{flex-direction:column}
+}
+@media print{
+  .topbar,.sidebar,.drawer-scrim,.actions,.modal-backdrop,.toast,.cta{display:none !important}
+  .shell{display:block;padding-top:0}
+  #main{padding:0}
+  .section{break-inside:avoid}
+  .hero{box-shadow:none}
+  footer{margin-top:20px;padding:20px 0;padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="sr-only">Lompat ke konten utama</a>
+
+<div class="app">
+
+  <!-- ===================== TOPBAR ===================== -->
+  <header class="topbar">
+    <div class="hdr-title">ARVENAA Meals · Interactive Product Brief <span class="ver">v2.2</span></div>
+    <div class="top-actions">
+      <button class="iconbtn" id="themeBtn" type="button" aria-label="Ganti tema terang / gelap" title="Ganti tema">☾</button>
+      <button class="iconbtn" type="button" onclick="window.print()" aria-label="Cetak atau simpan sebagai PDF" title="Print / Save PDF">↗</button>
+      <button class="iconbtn" id="menuBtn" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="sidebar">☰</button>
+    </div>
+  </header>
+
+  <div class="drawer-scrim" id="scrim"></div>
+
+  <div class="shell">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-box">
+        <img src="https://anabhidev.com/Arvenaa/Meals/img/logo.webp"
+             alt="ARVENAA Meals" width="512" height="180" loading="eager">
+      </div>
+      <div class="kicker">Product Brief</div>
+      <nav class="nav" aria-label="Navigasi bagian">
+        <a href="#overview" class="active"><span class="num">01</span>Overview</a>
+        <a href="#why"><span class="num">01A</span>Why Meals</a>
+        <a href="#problem"><span class="num">02</span>The Problem</a>
+        <a href="#solution"><span class="num">03</span>The Solution</a>
+        <a href="#ai"><span class="num">04</span>AI Coordinator</a>
+        <a href="#orders"><span class="num">05</span>Group Orders</a>
+        <a href="#settle"><span class="num">06</span>Split &amp; Settle</a>
+        <a href="#memory"><span class="num">07</span>AI Memory</a>
+        <a href="#impact"><span class="num">08</span>Business Impact</a>
+        <a href="#ecosystem"><span class="num">09</span>ARVENAA Ecosystem</a>
+        <a href="#emergent"><span class="num">10</span>Built with Emergent</a>
+        <a href="#roadmap"><span class="num">11</span>Roadmap</a>
+        <a href="#submission"><span class="num">12</span>Submission Fit</a>
+      </nav>
+      <div class="sidebar-foot">
+        <strong>ARVENAA</strong>
+        Workplace Operations Platform
+        <br><br>
+        Development · Anabhi Dev
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN ===================== -->
+    <main id="main">
+
+      <!-- 01 · OVERVIEW -->
+      <section class="section" id="overview">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="pill"><span class="dot"></span> AI Office Food Coordinator</span>
+            <span class="product-mark">ARVENAA MEALS</span>
+            <h1>Less Thinking.<span>More Eating.</span></h1>
+            <h2>“Makan apa hari ini?”</h2>
+            <p class="lead">
+              Pertanyaan kantor paling sederhana yang entah kenapa butuh 30 menit untuk dijawab.
+              ARVENAA Meals mengubah kekacauan <em>deciding, ordering, splitting,</em> dan <em>settling</em>
+              makan tim harian menjadi satu workflow yang rapi.
+            </p>
+            <div class="actions">
+              <button class="btn primary" type="button" onclick="openModal()">Coba AI demo</button>
+              <a class="btn" href="#impact">Lihat dampaknya</a>
+            </div>
+            <div class="tags">
+              <span class="tag">Breakfast · Lunch · Dinner</span>
+              <span class="tag">Coffee · Drinks · Snacks</span>
+              <span class="tag">Order · Split · Settle</span>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="hero-logo-frame">
+              <img src="https://anabhidev.com/Arvenaa/Meals/img/logo-hero.webp"
+                   alt="ARVENAA Meals — Less Thinking. More Eating."
+                   width="1122" height="1243" fetchpriority="high">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 01A · WHY MEALS -->
+      <section class="section" id="why">
+        <div class="eyebrow"><span class="no">01A</span><span class="lbl">Why Meals</span></div>
+        <h2 class="section-title">Kenapa ARVENAA Operations AI mulai dari Meals?</h2>
+        <p class="section-sub">
+          Masalah nyata yang bersembunyi di depan mata. ARVENAA Meals diposisikan sebagai satu
+          <strong>module</strong> di dalam <strong>ARVENAA Operations AI</strong>, karena urusan makan karyawan
+          bukan aktivitas sampingan. Di kantor, makan siang, kopi, snack, dan makan shift adalah
+          <em>recurring operational moment</em> — memakan waktu, menciptakan pekerjaan koordinasi,
+          dan sering meninggalkan jejak pembayaran yang berantakan.
+        </p>
+
+        <figure class="figure">
+          <img src="https://anabhidev.com/Arvenaa/Meals/img/makanapa-2.webp"
+               alt="Ilustrasi: satu orang kewalahan menerima pesan dari group chat, DM, private chat, dan payment chat hanya untuk mengurus makan siang tim"
+               width="1536" height="1024" loading="lazy">
+          <figcaption>
+            Bukan makan siangnya yang rumit — tapi semua hal di sekelilingnya.
+            <em>It's not lunch that's complicated. It's everything around it.</em>
+          </figcaption>
+        </figure>
+
+        <div class="card-grid grid-safe">
+          <article class="card">
+            <h3>Everyday problem</h3>
+            <p>“Makan apa?” terjadi setiap hari — sarapan, makan siang, makan malam, kopi, minuman, snack.
+              Paling terasa di tim besar dan operasional berbasis <em>shift</em>.</p>
+          </article>
+          <article class="card">
+            <h3>Human-centered AI</h3>
+            <p>AI-nya tidak berusaha menggantikan orang. Dia mengambil alih keputusan-keputusan kecil
+              dan koordinasi berulang yang sebenarnya tidak ada yang mau urus.</p>
+          </article>
+          <article class="card">
+            <h3>Operations first</h3>
+            <p>Satu kali makan bisa jadi <em>mini workflow</em>: kumpulkan preferensi, pilih tempat,
+              konsolidasi pesanan, bagi biaya, lacak pembayaran, simpan riwayat.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Kenapa ini penting untuk submission.</strong>
+          Cerita terkuatnya bukan “kami bikin aplikasi pesan makanan lagi”, tapi:
+          <em>kami menemukan satu masalah kerja yang kecil, universal, dan berulang — lalu memakai AI
+          untuk menghapus beban koordinasi di sekitarnya.</em> Meals jadi bukti nyata (proof-of-concept)
+          untuk visi ARVENAA Operations AI yang lebih besar.
+        </div>
+      </section>
+
+      <!-- 02 · THE PROBLEM -->
+      <section class="section" id="problem">
+        <div class="eyebrow"><span class="no">02</span><span class="lbl">The Problem</span></div>
+        <h2 class="section-title">Masalahnya terlihat sepele — padahal tidak.</h2>
+        <p class="section-sub">
+          Satu permintaan makan siang bisa memicu rantai <em>operational friction</em>.
+          Yang menyakitkan bukan memilih makanannya, tapi semua yang terjadi di sekitar pilihan itu.
+        </p>
+
+        <figure class="figure">
+          <img src="https://anabhidev.com/Arvenaa/Meals/img/makanapa-1.webp"
+               alt="Ilustrasi lima sumber kekacauan: decision chaos, chat chaos, order chaos, split bill chaos, dan payment chasing"
+               width="1536" height="1024" loading="lazy">
+          <figcaption>
+            Lima titik gesekan yang berulang tiap hari: keputusan, obrolan, pesanan, pembagian tagihan, penagihan.
+          </figcaption>
+        </figure>
+
+        <div class="problem-list grid-safe">
+          <div class="problem"><span class="badge">01</span><div>
+            <strong>Decision fatigue</strong>
+            <span>Waktu habis untuk berdebat mau makan apa — dan percakapan yang sama terulang besok.</span>
+          </div></div>
+          <div class="problem"><span class="badge">02</span><div>
+            <strong>Fragmented ordering</strong>
+            <span>Cari tempat, lihat menu, dan pesan tersebar di beberapa platform dan beberapa chat.</span>
+          </div></div>
+          <div class="problem"><span class="badge">03</span><div>
+            <strong>Manual collection</strong>
+            <span>Satu orang jadi koordinator dadakan: mencatat nama, pesanan, dan revisinya satu per satu.</span>
+          </div></div>
+          <div class="problem"><span class="badge">04</span><div>
+            <strong>Messy settlement</strong>
+            <span>Diskon, <em>service fee</em>, ongkir, dan pembayaran individu dihitung manual — rawan salah.</span>
+          </div></div>
+          <div class="problem"><span class="badge">05</span><div>
+            <strong>Unclear history</strong>
+            <span>Setelah sebulan, tidak ada yang tahu persis siapa pesan apa, habis berapa, dan siapa yang belum bayar.</span>
+          </div></div>
+          <div class="problem"><span class="badge">06</span><div>
+            <strong>Shift complexity</strong>
+            <span>Tim pagi, siang, dan malam punya jam makan dan pola pemesanan yang berbeda.</span>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- 03 · THE SOLUTION -->
+      <section class="section" id="solution">
+        <div class="eyebrow"><span class="no">03</span><span class="lbl">The Solution</span></div>
+        <h2 class="section-title">Satu koordinator. Satu workflow.</h2>
+        <p class="section-sub">
+          Dari niat sampai tagihan lunas. ARVENAA Meals menggabungkan <em>AI-assisted discovery</em>
+          dengan administrasi kantor yang praktis — dari “mie yuk” sampai laporan makan bulanan yang rapi.
+        </p>
+        <div class="flow grid-safe">
+          <div class="step"><span class="step-num">01 · ASK</span>
+            <h3>What are we eating?</h3>
+            <p>Mulai dengan bahasa sehari-hari: “mie yuk”, “yang pedes”, “kopi buat lima orang”, “cari makan di bawah Rp35k”.</p></div>
+          <div class="step"><span class="step-num">02 · RECOMMEND</span>
+            <h3>AI narrows the choice</h3>
+            <p>Menyarankan tempat dan arah menu berdasarkan permintaan, budget, waktu, dan konteks tim.</p></div>
+          <div class="step"><span class="step-num">03 · ORDER</span>
+            <h3>Build the group order</h3>
+            <p>Peserta menambahkan pesanannya sendiri, koordinator tetap memegang satu tampilan terkonsolidasi.</p></div>
+          <div class="step"><span class="step-num">04 · SPLIT</span>
+            <h3>Calculate fairly</h3>
+            <p>Alokasi makanan, diskon, dan biaya bersama dihitung supaya angka yang harus dibayar tiap orang jelas.</p></div>
+          <div class="step"><span class="step-num">05 · SETTLE</span>
+            <h3>Close the loop</h3>
+            <p>Lacak status <em>paid/unpaid</em> dan simpan pesanan sebagai riwayat operasional.</p></div>
+        </div>
+      </section>
+
+      <!-- 04 · AI COORDINATOR -->
+      <section class="section" id="ai">
+        <div class="eyebrow"><span class="no">04</span><span class="lbl">AI Coordinator</span></div>
+        <h2 class="section-title">Tinggal bilang lagi pengen apa.</h2>
+        <p class="section-sub">
+          <em>Human-centered operational AI.</em> Agent ringan yang memahami percakapan kantor,
+          bukan memaksa semua orang mengisi form kaku lebih dulu.
+        </p>
+
+        <div class="demo">
+          <div class="demo-row grid-safe">
+            <div>
+              <div class="panel-label">Coba sebuah skenario</div>
+              <label class="sr-only" for="foodInput">Ketik permintaan makan</label>
+              <input class="input" id="foodInput" type="text"
+                     placeholder="Contoh: mie yuk · kopi jam 3 · di bawah 30k · 12 orang shift sore">
+              <div class="chips">
+                <button class="chip" type="button" data-q="Mie yuk.">“Mie yuk.”</button>
+                <button class="chip" type="button" data-q="Coffee run jam 3.">“Coffee run jam 3.”</button>
+                <button class="chip" type="button" data-q="Cari makan di bawah 30K.">“Cari makan di bawah 30K.”</button>
+                <button class="chip" type="button" data-q="Ada 12 orang shift sore.">“Ada 12 orang shift sore.”</button>
+              </div>
+              <div class="actions" style="margin:6px 0 0">
+                <button class="btn primary" type="button" id="askBtn">Tanya ARVENAA AI</button>
+                <button class="btn" type="button" id="resetAi">Reset</button>
+              </div>
+            </div>
+            <div>
+              <div class="panel-label">Yang dipahami AI</div>
+              <div class="ai-answer" id="aiAnswer">
+                Ketik permintaan atau pilih salah satu contoh di sebelah kiri untuk melihat bagaimana
+                AI mengubah percakapan biasa menjadi keputusan yang bisa ditindaklanjuti.
+              </div>
+              <div class="results" id="results" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Catatan demo.</strong> Data restoran di brief ini fiktif dan hanya untuk ilustrasi alur.
+          Versi aplikasi di Emergent menggunakan logika rekomendasi yang sesungguhnya.
+        </div>
+      </section>
+
+      <!-- 05 · GROUP ORDERS -->
+      <section class="section" id="orders">
+        <div class="eyebrow"><span class="no">05</span><span class="lbl">Group Orders</span></div>
+        <h2 class="section-title">Group order tanpa kekacauan group chat.</h2>
+        <p class="section-sub">
+          Koordinator jadi <em>single source of truth</em> untuk satu pesanan kantor. Karyawan bisa ikut,
+          mengubah pesanannya, dan melihat total berjalan — tanpa perlu bertanya “udah dicatet belum?”.
+        </p>
+
+        <div class="card-grid grid-safe">
+          <article class="card">
+            <h3>Participants</h3>
+            <p>Tambahkan orang berdasarkan nama, departemen, atau shift. Daftar siapa yang benar-benar ikut pesan jadi eksplisit.</p>
+          </article>
+          <article class="card">
+            <h3>Items</h3>
+            <p>Catat makanan, kopi, minuman, snack, martabak, atau pembelian bersama lain dalam satu keranjang pesanan.</p>
+          </article>
+          <article class="card">
+            <h3>Order snapshot</h3>
+            <p>Simpan restoran, waktu, subtotal, diskon, ongkir/service fee, total, dan status pelunasan dalam satu rekaman.</p>
+          </article>
+        </div>
+
+        <div class="demo" style="margin-top:16px">
+          <div class="panel-label">Contoh pesanan · data fiktif</div>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Contoh daftar pesanan kelompok makan siang</caption>
+              <thead>
+                <tr><th scope="col">Karyawan</th><th scope="col">Pesanan</th><th scope="col">Jumlah</th><th scope="col">Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>A. Putra</td><td>Mie ayam + es teh</td><td>Rp32.000</td><td><span class="pay paid">Paid</span></td></tr>
+                <tr><td>B. Sari</td><td>Nasi ayam geprek</td><td>Rp30.000</td><td><span class="pay paid">Paid</span></td></tr>
+                <tr><td>C. Wibawa</td><td>Bakso + lemon tea</td><td>Rp34.000</td><td><span class="pay due">Pending</span></td></tr>
+                <tr><td>D. Rahmi</td><td>Salad + kopi susu</td><td>Rp38.000</td><td><span class="pay due">Pending</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 · SPLIT & SETTLE -->
+      <section class="section" id="settle">
+        <div class="eyebrow"><span class="no">06</span><span class="lbl">Split &amp; Settle</span></div>
+        <h2 class="section-title">Biar hitungannya jalan di belakang layar.</h2>
+        <p class="section-sub">
+          <em>Financial workflow</em>-nya sengaja dibuat sederhana: hitung, jelaskan, lacak, tutup.
+          Tujuan jangka panjangnya adalah rekaman bersih yang bisa tersambung ke sistem kantor.
+        </p>
+
+        <div class="demo">
+          <div class="demo-row grid-safe">
+            <div>
+              <div class="panel-label">Live calculator</div>
+              <p style="font-size:12.5px;color:var(--muted);line-height:1.7;margin:0 0 14px">
+                Ubah angkanya untuk melihat pembagian biaya berubah otomatis.
+              </p>
+              <div class="calc-field">
+                <label for="cSubtotal">Subtotal makanan (Rp)</label>
+                <input class="input" id="cSubtotal" type="number" inputmode="numeric" min="0" step="1000" value="356000">
+              </div>
+              <div class="calc-field">
+                <label for="cDiscount">Diskon (Rp)</label>
+                <input class="input" id="cDiscount" type="number" inputmode="numeric" min="0" step="1000" value="50000">
+              </div>
+              <div class="calc-field">
+                <label for="cFees">Service + delivery fee (Rp)</label>
+                <input class="input" id="cFees" type="number" inputmode="numeric" min="0" step="1000" value="42000">
+              </div>
+              <div class="calc-field">
+                <label for="cPeople">Jumlah orang</label>
+                <input class="input" id="cPeople" type="number" inputmode="numeric" min="1" max="60" step="1" value="12">
+              </div>
+            </div>
+            <div>
+              <div class="panel-label">Hasil pembagian</div>
+              <div class="calc-out">
+                <div class="calc-cell"><span>Subtotal</span><b id="oSubtotal">Rp356.000</b></div>
+                <div class="calc-cell"><span>Diskon</span><b id="oDiscount">−Rp50.000</b></div>
+                <div class="calc-cell"><span>Fees</span><b id="oFees">Rp42.000</b></div>
+                <div class="calc-cell hi"><span>Total order</span><b id="oTotal">Rp348.000</b></div>
+                <div class="calc-cell hi"><span>Per orang</span><b id="oPer">Rp29.000</b></div>
+                <div class="calc-cell"><span>Belum lunas</span><b id="oDue">Rp87.000</b></div>
+              </div>
+              <div class="split-list" id="splitList" aria-live="polite"></div>
+              <div class="actions" style="margin:14px 0 0">
+                <button class="btn primary" type="button" id="reminderBtn">Kirim pengingat pembayaran</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid grid-safe" style="margin-top:16px">
+          <article class="card">
+            <h3>Fair split</h3>
+            <p>Makanan individu mengikuti pesanan masing-masing. Diskon dan biaya bersama dialokasikan dengan aturan yang ditetapkan di awal.</p>
+          </article>
+          <article class="card">
+            <h3>Payment status</h3>
+            <p>Status <em>paid</em>, <em>pending</em>, dan <em>overdue</em> membuat sisa tagihan terlihat — bukan terkubur di thread chat.</p>
+          </article>
+          <article class="card">
+            <h3>Monthly report</h3>
+            <p>Frekuensi pemesanan, pengeluaran per karyawan/tim, tagihan belum lunas, dan pola makan yang berulang.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 07 · AI MEMORY -->
+      <section class="section" id="memory">
+        <div class="eyebrow"><span class="no">07</span><span class="lbl">AI Memory</span></div>
+        <h2 class="section-title">AI yang hafal ritme timnya.</h2>
+        <p class="section-sub">
+          <em>Context, not generic chat.</em> “Ada 12 orang shift sore hari ini.”
+          ARVENAA bisa menggabungkan pola tim, konteks shift, preferensi budget, dan pilihan sebelumnya
+          supaya rekomendasi berikutnya lebih berguna — bukan sekadar daftar restoran acak.
+        </p>
+        <div class="mem-grid grid-safe">
+          <div class="mem"><span class="ic" aria-hidden="true">☕</span>
+            <strong>Friday coffee run</strong>
+            <span>Biasanya 8–12 orang · sekitar pukul 15:00</span></div>
+          <div class="mem"><span class="ic" aria-hidden="true">🍱</span>
+            <strong>Makan malam shift sore</strong>
+            <span>Budget tipikal · Rp35K per orang</span></div>
+          <div class="mem"><span class="ic" aria-hidden="true">🥗</span>
+            <strong>Makan siang Senin</strong>
+            <span>Tim cenderung memilih menu yang lebih ringan</span></div>
+          <div class="mem"><span class="ic" aria-hidden="true">📍</span>
+            <strong>Batasan yang sering muncul</strong>
+            <span>Group order dijaga tetap sederhana dan dekat kantor</span></div>
+        </div>
+      </section>
+
+      <!-- 08 · BUSINESS IMPACT -->
+      <section class="section" id="impact">
+        <div class="eyebrow"><span class="no">08</span><span class="lbl">Business Impact</span></div>
+        <h2 class="section-title">Koordinasi berkurang. Waktu kerja bertambah.</h2>
+        <p class="section-sub">
+          Gesekan kecil, tapi nilainya terukur dan berulang. Nilai pertama yang didapat sederhana:
+          merebut kembali perhatian yang selama ini hilang di koordinasi harian.
+        </p>
+
+        <div class="impact grid-safe">
+          <div class="metric">
+            <b><span class="fill">[ISI]</span></b>
+            <span>Waktu keputusan — dari <span class="fill">[ISI]</span> menit menjadi <span class="fill">[ISI]</span> menit</span>
+          </div>
+          <div class="metric">
+            <b><span class="fill">[ISI]</span></b>
+            <span>Group order yang berjalan selama periode uji coba</span>
+          </div>
+          <div class="metric">
+            <b><span class="fill">[ISI]</span></b>
+            <span>Orang yang benar-benar memakai (team adoption)</span>
+          </div>
+          <div class="metric">
+            <b><span class="fill">[ISI]</span></b>
+            <span>Tagihan yang tadinya tercecer, sekarang terlacak</span>
+          </div>
+        </div>
+
+        <div class="ba grid-safe">
+          <div class="ba-col">
+            <h3>✕ Sebelum ARVENAA Meals</h3>
+            <ul>
+              <li>Keputusan terkubur di WhatsApp.</li>
+              <li>Pesanan disalin ulang secara manual.</li>
+              <li>Diskon dan fee dihitung pakai kalkulator HP.</li>
+              <li>Satu orang berubah jadi kasir kantor.</li>
+              <li>Tidak ada riwayat yang bisa dibuka bulan depan.</li>
+            </ul>
+          </div>
+          <div class="ba-col after">
+            <h3>✓ Dengan ARVENAA Meals</h3>
+            <ul>
+              <li>AI menyempitkan pilihan pakai konteks tim.</li>
+              <li>Satu group order bersama.</li>
+              <li>Alokasi biaya otomatis, diskon dan fee ikut terhitung.</li>
+              <li>Status pembayaran selalu terlihat.</li>
+              <li>Riwayat tersimpan dan bisa dilaporkan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Kejujuran angka.</strong> Kotak <span class="fill">[ISI]</span> di atas sengaja dibiarkan kosong
+          sampai ARVENAA Meals benar-benar dipakai. Syarat &amp; ketentuan Building Indonesia bagian 8.8 menyebut
+          <em>misrepresentation of business impact</em> sebagai alasan diskualifikasi — dan hadiah bisa ditarik kembali
+          walau sudah dibayarkan. Angka kecil yang jujur (“dipakai 6 orang selama 5 hari, 11 group order”)
+          jauh lebih kuat di mata juri daripada persentase besar yang tidak bisa dibuktikan.
+        </div>
+      </section>
+
+      <!-- 09 · ARVENAA ECOSYSTEM -->
+      <section class="section" id="ecosystem">
+        <div class="eyebrow"><span class="no">09</span><span class="lbl">ARVENAA Ecosystem</span></div>
+        <h2 class="section-title">Satu platform. Banyak operasi kerja.</h2>
+        <p class="section-sub">
+          ARVENAA Meals bukan aplikasi pesan-antar yang berdiri sendiri. Dia satu module fokus di dalam
+          <strong>ARVENAA Operations AI</strong> — ekosistem AI operasional yang dirancang untuk membuat
+          alur kerja <em>hospitality</em> dan perkantoran sehari-hari jadi lebih sederhana dan terhubung.
+        </p>
+        <div class="arch grid-safe">
+          <article class="arch-card">
+            <span class="tagline">Parent platform</span>
+            <h3>ARVENAA Operations AI</h3>
+            <p>Lapisan <em>operational intelligence</em> yang menghubungkan orang, alur kerja, data, dan AI di lingkungan kerja.</p>
+          </article>
+          <article class="arch-card primary">
+            <span class="tagline">This product</span>
+            <h3>ARVENAA Meals</h3>
+            <p>AI Office Food Coordinator: <em>recommend → order → split → settle → report</em>, dengan gesekan sekecil mungkin.</p>
+          </article>
+          <article class="arch-card">
+            <span class="tagline">Future connection</span>
+            <h3>ARVENAA HRIS</h3>
+            <p><em>Human Resources Information System</em>: identitas karyawan, departemen, shift, kelayakan tunjangan makan,
+              dan — bila kebijakan perusahaan mengizinkan — alur potongan payroll.</p>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Food is part of the operation.</strong>
+          Orang bekerja lebih baik ketika kebutuhan dasar di tempat kerja tertangani dengan rapi.
+          Meals memberi ARVENAA pintu masuk yang praktis ke <em>employee experience</em>, operasi shift,
+          dan produktivitas harian.
+        </div>
+      </section>
+
+      <!-- 10 · BUILT WITH EMERGENT -->
+      <section class="section" id="emergent">
+        <div class="eyebrow"><span class="no">10</span><span class="lbl">Built with Emergent</span></div>
+        <h2 class="section-title">Dibangun di Emergent — dan bagaimana caranya.</h2>
+        <p class="section-sub">
+          Rubrik Building Indonesia memberi bobot <strong>15%</strong> untuk <em>Use of Emergent</em>:
+          bukan sekadar “apakah pakai Emergent” (itu syarat wajib), tapi <em>depth and craft</em> —
+          seberapa dalam dan serapi apa platformnya dipakai. Bagian ini yang menjawabnya.
+        </p>
+
+        <div class="card-grid grid-safe">
+          <article class="card">
+            <h3>Prompt strategy</h3>
+            <p>Pendekatan yang dipakai: <span class="fill">[ISI: mulai dari satu prompt workflow utuh, lalu dipecah per modul?]</span>
+              Berapa prompt besar dan berapa iterasi kecil: <span class="fill">[ISI]</span>.</p>
+          </article>
+          <article class="card">
+            <h3>Iterasi</h3>
+            <p>Jumlah iterasi sampai alur inti jalan: <span class="fill">[ISI]</span>.
+              Perubahan terbesar yang terjadi karena masukan agent: <span class="fill">[ISI]</span>.</p>
+          </article>
+          <article class="card">
+            <h3>Fitur Emergent yang dipakai</h3>
+            <p>Agent design → code → deploy, one-click publish, integrations:
+              <span class="fill">[ISI: sebutkan yang benar-benar dipakai]</span>.
+              Jangan sebut fitur yang tidak dipakai.</p>
+          </article>
+          <article class="card">
+            <h3>Keputusan teknis</h3>
+            <p>Hal yang sengaja <em>tidak</em> dibangun di MVP dan alasannya:
+              <span class="fill">[ISI]</span>. Menunjukkan disiplin scope biasanya dinilai lebih tinggi
+              daripada menumpuk fitur.</p>
+          </article>
+          <article class="card">
+            <h3>Keamanan &amp; data</h3>
+            <p>Tidak ada API key atau kredensial hidup di dalam aplikasi publik. Data peserta di demo memakai
+              nama fiktif. Tidak ada data karyawan, keuangan, atau rahasia perusahaan yang diunggah.</p>
+          </article>
+          <article class="card">
+            <h3>Kepatuhan PDP</h3>
+            <p>Data pribadi yang dikumpulkan dijaga seminimal mungkin dan ditangani sesuai
+              <strong>UU No. 27 Tahun 2022</strong> tentang Pelindungan Data Pribadi.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Cara mengisi bagian ini.</strong> Isi setelah aplikasinya benar-benar dibangun,
+          dengan fakta yang bisa kamu tunjukkan. Screenshot percakapan dengan agent, jumlah iterasi yang nyata,
+          dan satu contoh keputusan yang berubah karena feedback agent lebih meyakinkan daripada
+          kalimat umum seperti “dibangun sepenuhnya dengan Emergent”.
+        </div>
+      </section>
+
+      <!-- 11 · ROADMAP -->
+      <section class="section" id="roadmap">
+        <div class="eyebrow"><span class="no">11</span><span class="lbl">Roadmap</span></div>
+        <h2 class="section-title">Mulai dari makan. Tumbuh jadi operasi kerja.</h2>
+        <p class="section-sub">
+          Mulai sempit dan relevan. Melebar hanya setelah <em>core loop</em>-nya terbukti jalan.
+        </p>
+        <div class="timeline grid-safe">
+          <article class="card">
+            <span class="phase">Phase 01 · MVP — Now</span>
+            <h3>Decide &amp; Order</h3>
+            <p>Rekomendasi AI, pencarian restoran/menu, pembuatan group order, dan ringkasan pesanan.</p>
+          </article>
+          <article class="card">
+            <span class="phase">Phase 02 · Control</span>
+            <h3>Split &amp; Settle</h3>
+            <p>Total per orang, biaya bersama, alokasi diskon, status pembayaran, dan laporan bulanan.</p>
+          </article>
+          <article class="card">
+            <span class="phase">Phase 03 · Context</span>
+            <h3>HRIS connection</h3>
+            <p>Konteks karyawan/departemen/shift dan alur potongan makan yang disetujui perusahaan.</p>
+          </article>
+          <article class="card">
+            <span class="phase">Phase 04 · Intelligence</span>
+            <h3>Operations AI</h3>
+            <p>Pola makan, kecerdasan budget, saran berulang, dan <em>insight</em> lintas module di tempat kerja.</p>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Scope discipline.</strong> Build untuk kontes tetap fokus pada masalah koordinasi makan.
+          HRIS, subsidi, payroll, dan platform ARVENAA yang lebih luas adalah peluang di roadmap —
+          bukan syarat tersembunyi MVP.
+        </div>
+      </section>
+
+      <!-- 12 · SUBMISSION FIT -->
+      <section class="section" id="submission">
+        <div class="eyebrow"><span class="no">12</span><span class="lbl">Submission Fit</span></div>
+        <h2 class="section-title">Kenapa ini cocok untuk Emergent Building Indonesia.</h2>
+        <p class="section-sub">
+          Emergent meminta satu hal: <em>“Pick one real problem slowing down your business.”</em>
+          ARVENAA Meals berangkat dari momen kantor Indonesia yang sangat biasa, lalu memperlakukannya
+          sebagai masalah operasional yang nyata — cukup kecil untuk dipahami dan didemokan dalam hitungan detik,
+          tapi cukup terstruktur untuk tumbuh menjadi sistem kerja yang berguna.
+        </p>
+        <div class="card-grid grid-safe">
+          <article class="card">
+            <h3>Universal</h3>
+            <p>Sarapan, makan siang, makan malam, kopi, dan snack adalah kebutuhan berulang di hampir semua kantor
+              dan tempat kerja berbasis shift.</p>
+          </article>
+          <article class="card">
+            <h3>Very Indonesian</h3>
+            <p>“Makan apa?” adalah percakapan harian yang sudah akrab. Produknya berangkat dari kebiasaan
+              yang sudah ada — bukan meminta orang belajar kebiasaan baru.</p>
+          </article>
+          <article class="card">
+            <h3>Highly demoable</h3>
+            <p>Satu kalimat seperti “mie yuk” langsung memperlihatkan AI-nya bekerja: memahami maksud,
+              menyarankan pilihan, membuat pesanan, dan menghitung pembagian.</p>
+          </article>
+        </div>
+
+        <div class="cta" style="margin-top:22px">
+          <h2>Kalau ini terasa seperti masalah di kantormu juga —</h2>
+          <p>
+            Bantu ARVENAA Meals masuk ke tahap penilaian. Di Building Indonesia, hanya
+            <strong>200 submission dengan upvote terbanyak</strong> yang dinilai jurinya.
+            Satu upvote butuh akun Emergent gratis, dan cuma perlu beberapa detik.
+          </p>
+          <div class="actions" style="margin:0">
+            <a class="btn primary" href="[ISI: link showcase submission]" rel="noopener">Upvote di Emergent</a>
+            <a class="btn" href="#overview">Baca dari awal</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <div>
+      <strong>ARVENAA Meals · Interactive Product Brief</strong>
+      Version 2.2 · 19 August 2026 · WITA
+    </div>
+    <div>
+      <strong>Development · Anabhi Dev</strong>
+      Interactive concept brief · Data demo fiktif · Tanpa koneksi pembayaran produksi
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== MODAL AI DEMO ===================== -->
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">ARVENAA AI Coordinator</h3>
+      <button class="close" type="button" id="modalClose" aria-label="Tutup dialog">✕</button>
+    </div>
+    <p style="color:var(--muted);font-size:13px;line-height:1.7">
+      Tulis permintaan seperti kamu menulis di group chat kantor.
+    </p>
+    <label class="sr-only" for="modalInput">Permintaan makan</label>
+    <input class="input" id="modalInput" type="text" placeholder="Contoh: mie yuk buat 12 orang, di bawah 35k">
+    <div class="actions" style="margin:14px 0 0">
+      <button class="btn primary" type="button" id="modalAsk">Proses permintaan</button>
+    </div>
+    <div class="ai-answer" id="modalAnswer">Menunggu permintaan…</div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   ARVENAA Meals — Interactive Product Brief v2.2
+   Development · Anabhi Dev
+   ============================================================ */
+(function(){
+  'use strict';
+
+  var $  = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+
+  /* ---------- 1. THEME (SOP kategori 13) ---------- */
+  var THEME_KEY   = 'anabhidev-am-theme';
+  var THEME_COLOR = { light:'#f4f7fa', dark:'#0b1829' };
+  var root        = document.documentElement;
+  var themeBtn    = $('#themeBtn');
+  var metaTheme   = $('#metaTheme');
+
+  function paintTheme(t){
+    root.setAttribute('data-theme', t);
+    if (metaTheme) metaTheme.setAttribute('content', THEME_COLOR[t]);
+    if (themeBtn){
+      themeBtn.textContent = (t === 'dark') ? '☀' : '☾';
+      themeBtn.setAttribute('aria-label', t === 'dark' ? 'Ganti ke tema terang' : 'Ganti ke tema gelap');
+    }
+  }
+  paintTheme(root.getAttribute('data-theme') || 'light');
+
+  themeBtn.addEventListener('click', function(){
+    var next = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+    paintTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch(e){}
+  });
+
+  /* Ikuti perubahan preferensi OS selama user belum memilih manual */
+  if (window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onSchemeChange = function(e){
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch(err){}
+      if (!saved) paintTheme(e.matches ? 'dark' : 'light');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onSchemeChange);
+    else if (mq.addListener) mq.addListener(onSchemeChange);
+  }
+
+  /* ---------- 2. DRAWER MOBILE (SOP kategori 14) ---------- */
+  var menuBtn = $('#menuBtn');
+  var sidebar = $('#sidebar');
+  var scrim   = $('#scrim');
+
+  function openDrawer(){
+    sidebar.classList.add('open');
+    scrim.classList.add('show');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.setAttribute('aria-label', 'Tutup menu navigasi');
+    var first = $('.nav a', sidebar);
+    if (first) first.focus();
+  }
+  function closeDrawer(returnFocus){
+    sidebar.classList.remove('open');
+    scrim.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Buka menu navigasi');
+    if (returnFocus !== false) menuBtn.focus();  /* fokus kembali ke hamburger */
+  }
+  menuBtn.addEventListener('click', function(){
+    if (sidebar.classList.contains('open')) closeDrawer();
+    else openDrawer();
+  });
+  scrim.addEventListener('click', function(){ closeDrawer(); });
+  $$('.nav a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.matchMedia('(max-width:1050px)').matches) closeDrawer(false);
+    });
+  });
+
+  /* ---------- 3. SCROLLSPY ---------- */
+  var navLinks = $$('.nav a');
+  var sections = navLinks
+        .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+        .filter(Boolean);
+
+  if ('IntersectionObserver' in window && sections.length){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        navLinks.forEach(function(a){
+          a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id);
+        });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---------- 4. TOAST ---------- */
+  var toastEl = $('#toast'), toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- 5. AI COORDINATOR (responsif terhadap input) ---------- */
+  var MENUS = {
+    noodle:[
+      ['Mie Nusantara','Mie ayam · noodle bowls','Rp25–35k'],
+      ['Warung Kantor','Mie goreng · nasi · quick bites','Rp20–32k'],
+      ['Bakso Corner','Bakso · mie · minuman','Rp24–36k']
+    ],
+    coffee:[
+      ['Kopi Lantai Dua','Kopi susu · americano · pastry','Rp18–28k'],
+      ['Teras Roastery','Manual brew · cold brew · snack','Rp22–34k'],
+      ['Warung Kopi Sebelah','Kopi tubruk · gorengan','Rp8–15k']
+    ],
+    budget:[
+      ['Warung Bu Ratna','Nasi campur · lauk pilihan','Rp15–25k'],
+      ['Ayam Geprek Simpang','Geprek · nasi · es teh','Rp18–28k'],
+      ['Warung Kantor','Mie goreng · nasi · quick bites','Rp20–29k']
+    ],
+    group:[
+      ['Rumah Makan Padang Jaya','Paket nasi bungkus · cocok rombongan','Rp22–30k'],
+      ['Catering Dapur Ibu','Paket kotak · minimal 10 porsi','Rp25–35k'],
+      ['Bakmi Senja','Paket mie + minum · pengantaran terjadwal','Rp28–38k']
+    ]
+  };
+
+  function parseIntent(qRaw){
+    var q = (qRaw || '').toLowerCase();
+    var intent = { kind:'noodle', label:'noodle-based meal', budget:null, people:null, time:null };
+
+    if (/kopi|coffee|espresso|latte|americano|ngopi/.test(q)){
+      intent.kind = 'coffee'; intent.label = 'coffee run';
+    } else if (/mie|mi |bakmi|noodle|ramen|bakso/.test(q)){
+      intent.kind = 'noodle'; intent.label = 'noodle-based meal';
+    } else if (/murah|hemat|budget|di bawah|dibawah|maks|max/.test(q)){
+      intent.kind = 'budget'; intent.label = 'budget-conscious lunch';
+    }
+
+    var m = q.match(/(\d+)\s*(k|rb|ribu|000)/);
+    if (m) intent.budget = parseInt(m[1], 10) * 1000;
+
+    var p = q.match(/(\d+)\s*(orang|pax|people|porsi)/);
+    if (p){
+      intent.people = parseInt(p[1], 10);
+      if (intent.people >= 8 && intent.kind !== 'coffee'){
+        intent.kind = 'group'; intent.label = 'group order untuk tim besar';
+      }
+    }
+
+    var t = q.match(/jam\s*(\d{1,2})/);
+    if (t) intent.time = t[1] + ':00';
+    if (/shift sore|sore/.test(q) && !intent.time) intent.time = '16:00–17:00';
+    if (/pagi|sarapan/.test(q) && !intent.time)    intent.time = '07:00–08:00';
+
+    return intent;
+  }
+
+  function rupiah(n){
+    return 'Rp' + Math.round(n).toLocaleString('id-ID');
+  }
+
+  function intentHTML(it, q){
+    var bits = [];
+    bits.push('<strong>Yang dipahami AI:</strong> ' + it.label);
+    if (it.budget) bits.push('budget sekitar ' + rupiah(it.budget) + '/orang');
+    if (it.people) bits.push(it.people + ' orang');
+    if (it.time)   bits.push('sekitar pukul ' + it.time);
+
+    var next = it.people
+      ? 'buat group order untuk ' + it.people + ' orang, kumpulkan pesanan tiap peserta, lalu hitung subtotal + biaya bersama − diskon menjadi angka per orang.'
+      : 'tampilkan 3 tempat yang cocok, biarkan tiap peserta menambahkan pesanannya, lalu hitung pembagian biayanya.';
+
+    return bits.join(' · ') +
+      '<br><br><strong>Langkah berikutnya:</strong> ' + next +
+      '<br><br><strong>Nanti:</strong> buka kanal pemesanan yang dipilih dan simpan rekaman pesanan di dalam ARVENAA Meals.';
+  }
+
+  function renderResults(container, it){
+    var list = MENUS[it.kind] || MENUS.noodle;
+    container.innerHTML = list.map(function(r, i){
+      return '<div class="restaurant" data-i="' + i + '">' +
+               '<div class="meta"><b>' + r[0] + '</b><small>' + r[1] + ' · ' + r[2] + '</small></div>' +
+               '<button type="button" data-name="' + r[0] + '">Pilih</button>' +
+             '</div>';
+    }).join('');
+  }
+
+  var foodInput = $('#foodInput');
+  var aiAnswer  = $('#aiAnswer');
+  var resultsEl = $('#results');
+
+  function runDemo(){
+    var q = (foodInput.value || '').trim();
+    if (!q){
+      aiAnswer.innerHTML = 'Tulis dulu permintaannya, atau pilih salah satu contoh di sebelah kiri.';
+      resultsEl.innerHTML = '';
+      foodInput.focus();
+      return;
+    }
+    var it = parseIntent(q);
+    aiAnswer.innerHTML = 'ARVENAA AI membaca: <em>“' + escapeHTML(q) + '”</em>…';
+    resultsEl.innerHTML = '';
+    setTimeout(function(){
+      aiAnswer.innerHTML = intentHTML(it, q);
+      renderResults(resultsEl, it);
+    }, 320);
+  }
+
+  function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g, function(m){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m];
+    });
+  }
+
+  $('#askBtn').addEventListener('click', runDemo);
+  foodInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') runDemo(); });
+  $('#resetAi').addEventListener('click', function(){
+    foodInput.value = '';
+    resultsEl.innerHTML = '';
+    aiAnswer.innerHTML = 'Ketik permintaan atau pilih salah satu contoh di sebelah kiri untuk melihat bagaimana AI mengubah percakapan biasa menjadi keputusan yang bisa ditindaklanjuti.';
+  });
+  $$('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      foodInput.value = c.getAttribute('data-q');
+      runDemo();
+    });
+  });
+  /* Pilih restoran — tanpa alert(), state langsung terlihat di halaman */
+  resultsEl.addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-name]');
+    if (!btn) return;
+    $$('.restaurant', resultsEl).forEach(function(r){ r.classList.remove('picked'); });
+    btn.closest('.restaurant').classList.add('picked');
+    toast(btn.getAttribute('data-name') + ' dipilih — group order siap dibuat.');
+  });
+
+  /* ---------- 6. MODAL ---------- */
+  var modal = $('#modal'), lastFocus = null;
+  window.openModal = function(){
+    lastFocus = document.activeElement;
+    modal.classList.add('show');
+    $('#modalInput').focus();
+  };
+  function closeModal(){
+    modal.classList.remove('show');
+    if (lastFocus) lastFocus.focus();
+  }
+  $('#modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+  $('#modalAsk').addEventListener('click', function(){
+    var q = ($('#modalInput').value || '').trim();
+    if (!q){ $('#modalAnswer').innerHTML = 'Tulis dulu permintaannya.'; return; }
+    $('#modalAnswer').innerHTML = intentHTML(parseIntent(q), q);
+  });
+  $('#modalInput').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('#modalAsk').click(); });
+
+  /* ---------- 7. ESC global ---------- */
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (modal.classList.contains('show')) { closeModal(); return; }
+    if (sidebar.classList.contains('open')) closeDrawer();
+  });
+
+  /* ---------- 8. KALKULATOR SPLIT & SETTLE ---------- */
+  var NAMES = ['A. Putra','B. Sari','C. Wibawa','D. Rahmi','E. Hakim','F. Lestari',
+               'G. Anom','H. Maulida','I. Prasetyo','J. Kirana','K. Bagus','L. Ayu',
+               'M. Dewi','N. Surya','O. Widya','P. Adi'];
+
+  var fSub = $('#cSubtotal'), fDis = $('#cDiscount'), fFee = $('#cFees'), fPpl = $('#cPeople');
+
+  function num(el, fallback){
+    var v = parseFloat(el.value);
+    return (isNaN(v) || v < 0) ? fallback : v;
+  }
+
+  function recalc(){
+    var sub    = num(fSub, 0);
+    var dis    = num(fDis, 0);
+    var fee    = num(fFee, 0);
+    var people = Math.max(1, Math.min(60, Math.round(num(fPpl, 1))));
+
+    if (dis > sub) dis = sub;                 /* diskon tidak boleh melebihi subtotal */
+    var total = sub - dis + fee;
+    var per   = total / people;
+
+    $('#oSubtotal').textContent = rupiah(sub);
+    $('#oDiscount').textContent = '−' + rupiah(dis);
+    $('#oFees').textContent     = rupiah(fee);
+    $('#oTotal').textContent    = rupiah(total);
+    $('#oPer').textContent      = rupiah(per);
+
+    /* Simulasi: 3 orang terakhir dianggap belum bayar */
+    var unpaid = Math.min(3, people);
+    $('#oDue').textContent = rupiah(per * unpaid);
+
+    var shown = Math.min(people, 6);
+    var rows = '';
+    for (var i = 0; i < shown; i++){
+      var isPaid = i < (shown - Math.min(unpaid, shown));
+      rows += '<div class="split-row"><span>' + NAMES[i % NAMES.length] + '</span>' +
+              '<span><strong>' + rupiah(per) + '</strong> ' +
+              '<span class="pay ' + (isPaid ? 'paid">Paid' : 'due">Pending') + '</span></span></div>';
+    }
+    if (people > shown){
+      rows += '<div class="split-row"><span>+ ' + (people - shown) + ' orang lainnya</span>' +
+              '<span><strong>' + rupiah(per) + '</strong> / orang</span></div>';
+    }
+    $('#splitList').innerHTML = rows;
+  }
+
+  [fSub, fDis, fFee, fPpl].forEach(function(el){
+    el.addEventListener('input', recalc);
+    el.addEventListener('change', recalc);
+  });
+  recalc();
+
+  $('#reminderBtn').addEventListener('click', function(){
+    toast('Pengingat pembayaran terkirim ke peserta yang belum lunas.');
+  });
+
+})();
+</script>
+</body>
+</html>
