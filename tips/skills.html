@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<!--
+================================================================
+AnabhiDev-SCP — Skills, Connectors & Plugins Guide
+HTML5 · CSS Custom Properties · Vanilla JS (ES2020)
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 19 August 2026, 22:02:08
+================================================================
+-->
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills, Connectors & Plugins Guide | Anabhi Dev</title>
+<meta name="description" content="Panduan interaktif memahami Skills, Connectors, dan Plugins di Claude — cara kerja, perbedaan, dan katalog lengkap semua item bawaan Anthropic.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F5F7FA" id="metaTheme">
+
+<!-- Anti-FOUC: theme dibaca sebelum body render. Inline disengaja (SOP kategori 13) -->
+<script>
+(function () {
+  var t = 'light';
+  try {
+    var s = localStorage.getItem('anabhidev-scp-theme');
+    t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch (e) { t = 'light'; }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap"></noscript>
+
+<style>
+/* ==== Blok CSS starter wajib (SOP kategori 1) ==== */
+html, body { overflow-x: hidden; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ==== Token warna — satu sumber kebenaran per mode (SOP kategori 13) ==== */
+:root, [data-theme="light"] {
+  --bg:        #F5F7FA;
+  --surface:   #FFFFFF;
+  --surface-2: #ECF1F6;
+  --line:      #D3DDE7;
+  --ink:       #10243A;
+  --muted:     #55677C;
+  --accent:    #8A6410;
+  --accent-bg: #FBF1DA;
+  --signal:    #0C6357;
+  --signal-bg: #DCF0EC;
+  --alert:     #A32218;
+  --alert-bg:  #FBE4E1;
+  --purple:    #5B3E9E;
+  --purple-bg: #EEE8FA;
+  --rail:      #0E1D2E;
+  --rail-ink:  #E6EDF5;
+  --rail-mute: #90A2B6;
+  --shadow:    0 1px 2px rgba(16,36,58,.06), 0 8px 24px rgba(16,36,58,.06);
+  --header-h:  60px;
+}
+[data-theme="dark"] {
+  --bg:        #0A1420;
+  --surface:   #111E2C;
+  --surface-2: #17283A;
+  --line:      #26394D;
+  --ink:       #E6EDF5;
+  --muted:     #9BADC0;
+  --accent:    #F0C45A;
+  --accent-bg: #2C2415;
+  --signal:    #55D6C2;
+  --signal-bg: #10322E;
+  --alert:     #FF8B7E;
+  --alert-bg:  #331B18;
+  --purple:    #B79CF0;
+  --purple-bg: #251C3D;
+  --rail:      #07101A;
+  --rail-ink:  #E6EDF5;
+  --rail-mute: #7D91A6;
+  --shadow:    0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: "Space Grotesk", Inter, system-ui, sans-serif; line-height: 1.2; }
+a { color: var(--signal); }
+img, svg, video, canvas, iframe { max-width: 100%; height: auto; }
+pre, code { overflow-x: auto; max-width: 100%; }
+.grid > *, .row > * { min-width: 0; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ==== Header mobile ==== */
+.hdr {
+  position: fixed; inset: 0 0 auto 0; height: var(--header-h); z-index: 60;
+  display: none; align-items: center; gap: 10px;
+  padding: 0 14px;
+  background: var(--rail); color: var(--rail-ink);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.hdr-title {
+  flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .01em;
+}
+.icon-btn {
+  width: 44px; height: 44px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid rgba(255,255,255,.18); border-radius: 10px;
+  color: inherit; cursor: pointer;
+}
+.icon-btn:hover { background: rgba(255,255,255,.08); }
+.icon-btn svg { width: 20px; height: 20px; }
+[data-theme="light"] .ico-sun, [data-theme="dark"] .ico-moon { display: none; }
+
+/* ==== Sidebar ==== */
+.rail {
+  position: fixed; top: 0; left: 0; width: 292px; height: 100vh; height: 100dvh; z-index: 70;
+  background: var(--rail); color: var(--rail-ink);
+  display: flex; flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,.07);
+}
+.rail-head { padding: 22px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.rail-brand { display: flex; align-items: center; gap: 10px; }
+.rail-brand img { display: block; }
+.rail-brand span { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15px; }
+.rail-sub { margin: 10px 0 0; font-size: 11.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--rail-mute); }
+.rail-search { padding: 12px 16px 0; }
+.rail-search input {
+  width: 100%; padding: 9px 12px; border-radius: 9px; border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color: var(--rail-ink); font-size: 13.5px; font-family: inherit;
+}
+.rail-search input::placeholder { color: var(--rail-mute); }
+.rail-search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.rail-nav { flex: 1; overflow-y: auto; padding: 12px 12px 20px; }
+.rail-nav ol { list-style: none; margin: 0; padding: 0; counter-reset: nav; }
+.rail-nav a {
+  display: flex; gap: 12px; align-items: baseline;
+  padding: 9px 12px; border-radius: 9px;
+  color: var(--rail-mute); text-decoration: none; font-size: 14.5px; line-height: 1.35;
+  border-left: 2px solid transparent;
+}
+.rail-nav a:hover { background: rgba(255,255,255,.06); color: var(--rail-ink); }
+.rail-nav a.on { background: rgba(255,255,255,.09); color: var(--rail-ink); border-left-color: var(--accent); }
+.rail-num { font-size: 11px; letter-spacing: .08em; color: var(--accent); flex: none; }
+.rail-foot { padding: 14px 20px 18px; border-top: 1px solid rgba(255,255,255,.08); font-size: 11.5px; color: var(--rail-mute); }
+.rail-close { display: none; }
+
+.overlay {
+  position: fixed; inset: 0; z-index: 65; background: rgba(4,10,18,.6);
+  opacity: 0; visibility: hidden; transition: opacity .22s ease;
+}
+body.nav-open .overlay { opacity: 1; visibility: visible; }
+
+/* ==== Konten utama ==== */
+#main { margin-left: 292px; padding: 0 clamp(24px, 6vw, 180px) 100px; }
+section[id] { scroll-margin-top: calc(var(--header-h) + 16px); padding: 46px 0 8px; border-top: 1px solid var(--line); }
+section[id]:first-of-type { border-top: 0; }
+h2 { font-size: clamp(23px, 2.6vw, 31px); margin: 0 0 6px; }
+h3 { font-size: clamp(17px, 1.6vw, 20px); margin: 30px 0 8px; }
+h4 { font-size: 15.5px; margin: 20px 0 6px; }
+p, li { font-size: clamp(15px, 1.05vw, 16.5px); }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 7px; }
+strong { font-weight: 600; }
+.eyebrow {
+  display: inline-block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-bottom: 8px;
+}
+.lead { font-size: clamp(16px, 1.25vw, 18.5px); color: var(--muted); margin-bottom: 22px; }
+
+/* ==== Hero ==== */
+.hero { padding: 52px 0 40px; }
+.hero-logo { display: block; margin-bottom: 22px; }
+[data-theme="light"] .logo-dk, [data-theme="dark"] .logo-lt { display: none; }
+.hero h1 { font-size: clamp(30px, 4.6vw, 52px); margin: 0 0 14px; letter-spacing: -.015em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.chip {
+  font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; font-weight: 600;
+  padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--muted);
+}
+
+/* ==== Kartu & callout ==== */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 13px;
+  padding: 18px 20px; box-shadow: var(--shadow);
+}
+.grid { display: grid; gap: 14px; }
+@media (min-width: 780px) { .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } }
+.card h3, .card h4 { font-size: 15.5px; margin: 0 0 6px; }
+.card p:last-child, .card ul:last-child, .card ol:last-child { margin-bottom: 0; }
+
+.note {
+  border-left: 3px solid var(--signal); background: var(--signal-bg);
+  border-radius: 0 11px 11px 0; padding: 15px 18px; margin: 18px 0;
+}
+.note.warn { border-left-color: var(--alert); background: var(--alert-bg); }
+.note.key { border-left-color: var(--accent); background: var(--accent-bg); }
+.note.info { border-left-color: var(--purple); background: var(--purple-bg); }
+.note > :last-child { margin-bottom: 0; }
+.note b { font-weight: 600; }
+
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 10px 13px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tbody tr:hover { background: var(--surface-2); }
+.tbl-card { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; overflow: hidden; box-shadow: var(--shadow); margin: 18px 0; }
+
+/* ==== Badge sumber data (jujur soal asal info — bukan asumsi) ==== */
+.src { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; padding: 3px 8px; border-radius: 999px; }
+.src.shot { background: var(--signal-bg); color: var(--signal); }
+.src.ref  { background: var(--purple-bg); color: var(--purple); }
+
+/* ==== Filter bar (search di konten, bukan cuma sidebar) ==== */
+.filterbar {
+  position: sticky; top: 0; z-index: 5; background: var(--bg);
+  padding: 14px 0; margin-bottom: 8px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+}
+.filterbar input {
+  flex: 1 1 220px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font-size: 14.5px; font-family: inherit;
+}
+.filterbar input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.filter-count { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.filter-empty { display: none; padding: 24px; text-align: center; color: var(--muted); font-size: 14px; }
+.filter-empty.show { display: block; }
+
+/* ==== Item catalog: skill / plugin card dengan expand ==== */
+.item-grid { display: grid; gap: 12px; margin: 18px 0; }
+@media (min-width: 700px) { .item-grid.cols2 { grid-template-columns: 1fr 1fr; } }
+.item {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 15px 17px; box-shadow: var(--shadow);
+}
+.item[hidden] { display: none; }
+.item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; cursor: pointer; }
+.item-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15px; margin: 0; }
+.item-name code { font-family: inherit; font-weight: 700; }
+.item-trigger {
+  flex: none; font-size: 10.5px; font-weight: 600; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+}
+.item-trigger.auto   { background: var(--signal-bg); color: var(--signal); }
+.item-trigger.manual { background: var(--accent-bg); color: var(--accent); }
+.item-summary { font-size: 13.5px; color: var(--muted); margin: 6px 0 0; }
+.item-toggle {
+  width: 26px; height: 26px; flex: none; border-radius: 7px; border: 1px solid var(--line);
+  background: var(--surface-2); color: var(--muted); display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 15px; line-height: 1; font-family: inherit;
+}
+.item.open .item-toggle { transform: rotate(45deg); }
+.item-body { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; }
+.item.open .item-body { display: block; }
+.item-body p:last-child { margin-bottom: 0; }
+.item-body dl { margin: 0; }
+.item-body dt { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-top: 10px; }
+.item-body dt:first-child { margin-top: 0; }
+.item-body dd { margin: 3px 0 0; }
+
+/* ==== Sub-group heading di dalam section besar (Legal dsb) ==== */
+.subgroup { margin: 30px 0 4px; }
+.subgroup h4 { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.subgroup h4::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+footer.pg { margin-left: 292px; background: var(--rail); color: var(--rail-mute); padding: 32px clamp(24px, 6vw, 180px); }
+footer.pg p { font-size: 13px; margin: 0 0 6px; }
+footer.pg b { color: var(--rail-ink); font-weight: 600; }
+
+/* ==== Mobile ==== */
+@media (max-width: 1024px) {
+  .hdr { display: flex; }
+  #main, footer.pg { margin-left: 0; }
+  #main { padding-top: var(--header-h); }
+  .rail {
+    left: auto; right: 0; width: min(320px, 88vw);
+    transform: translateX(102%); transition: transform .26s ease;
+    border-right: 0; border-left: 1px solid rgba(255,255,255,.07);
+  }
+  body.nav-open .rail { transform: translateX(0); }
+  .rail-close { display: inline-flex; }
+  .rail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .hero { padding-top: 34px; }
+  .item-grid.cols2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <span class="hdr-title">Skills, Connectors & Plugins</span>
+  <button class="icon-btn" id="themeBtnM" type="button" aria-label="Ganti tema terang/gelap">
+    <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  </button>
+  <button class="icon-btn" id="navBtn" type="button" aria-label="Buka daftar isi" aria-expanded="false" aria-controls="rail">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<nav class="rail" id="rail" aria-label="Daftar isi">
+  <div class="rail-head">
+    <div>
+      <div class="rail-brand">
+        <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="40" height="22" loading="eager">
+        <span>Anabhi Dev</span>
+      </div>
+      <p class="rail-sub">Skills · Connectors · Plugins</p>
+    </div>
+    <button class="icon-btn rail-close" id="navClose" type="button" aria-label="Tutup daftar isi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="rail-search">
+    <input type="search" id="globalSearch" placeholder="Cari skill, plugin…" aria-label="Cari skill atau plugin">
+  </div>
+  <div class="rail-nav">
+    <ol>
+      <li><a href="#s01"><span class="rail-num">01</span> Tiga konsep, satu directory</a></li>
+      <li><a href="#s02"><span class="rail-num">02</span> Skills — cara kerja &amp; katalog</a></li>
+      <li><a href="#s03"><span class="rail-num">03</span> Connectors — cara kerja</a></li>
+      <li><a href="#s04"><span class="rail-num">04</span> Plugins — cara kerja</a></li>
+      <li><a href="#s05"><span class="rail-num">05</span> Katalog Plugin — kategori besar</a></li>
+      <li><a href="#s06"><span class="rail-num">06</span> Katalog Plugin — Legal (lengkap)</a></li>
+      <li><a href="#s07"><span class="rail-num">07</span> Plugin individual &amp; integrasi</a></li>
+      <li><a href="#s08"><span class="rail-num">08</span> Jadi, apa yang perlu Kakak lakukan?</a></li>
+    </ol>
+  </div>
+  <div class="rail-foot">
+    <p style="margin:0 0 4px">Development · Anabhi Dev</p>
+    <p style="margin:0">Generated 19 August 2026, 22:02:08 WITA</p>
+  </div>
+</nav>
+
+<main id="main">
+
+  <div class="hero">
+    <img class="hero-logo logo-lt" src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="150" height="83" loading="eager">
+    <img class="hero-logo logo-dk" src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="150" height="83" loading="eager">
+    <p class="eyebrow">Panduan Interaktif · Claude Directory</p>
+    <h1>Skills, Connectors, Plugins —<br><em>apa bedanya, dan kapan jalan sendiri.</em></h1>
+    <p class="lead">Kakak sudah nge-<em>add</em> banyak plugin dan lihat belasan skill di directory Claude, tapi masih belum jelas mana yang otomatis jalan, mana yang harus dipanggil manual. Dokumen ini menjawab itu — plus katalog lengkap semua skill dan plugin yang muncul di screenshot Kakak, dengan penjelasan fungsi masing-masing.</p>
+    <div class="hero-meta">
+      <span class="chip">12 Skills bawaan Anthropic</span>
+      <span class="chip">15 kategori Plugin besar</span>
+      <span class="chip">1 directory, 3 konsep berbeda</span>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <section id="s01">
+    <p class="eyebrow">01 · Peta konsep</p>
+    <h2>Tiga konsep, satu directory</h2>
+    <p class="lead">Ketiganya muncul berdampingan di menu <strong>Directory</strong> Claude (ikon <code>+</code> di kotak chat, atau menu <em>Customize</em>), tapi fungsinya beda sama sekali. Ringkasan paling padat: <strong>Skill = pengetahuan/instruksi</strong>, <strong>Connector = akses ke akun luar</strong>, <strong>Plugin = paket berisi Skill + Connector + command</strong>.</p>
+
+    <div class="tbl-card">
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspek</th><th>Skill</th><th>Connector</th><th>Plugin</th></tr></thead>
+        <tbody>
+          <tr><td><b>Isinya apa</b></td><td>File instruksi (<code>SKILL.md</code>) — panduan cara mengerjakan sesuatu dengan benar</td><td>Koneksi API ke layanan luar (Google Drive, Office 365, dll)</td><td>Paket: beberapa Skill + Connector + command <code>/perintah</code> jadi satu</td></tr>
+          <tr><td><b>Butuh login?</b></td><td class="no">Tidak</td><td class="yes">Ya, wajib OAuth/akun</td><td>Tergantung isi paketnya — kalau ada connector di dalamnya, ya</td></tr>
+          <tr><td><b>Cara aktif</b></td><td>Auto-terdeteksi ATAU ketik <code>/nama-skill</code></td><td>Harus dipilih Claude sebagai tool saat relevan, dan sudah ter-<em>connect</em></td><td>Setelah di-<em>add</em>, isi paketnya (skill/command) mengikuti aturan skill masing-masing</td></tr>
+          <tr><td><b>Analogi</b></td><td>Buku panduan SOP di meja kerja</td><td>Kartu akses ke gedung/aplikasi lain</td><td>Toolbox berisi beberapa alat + kartu akses sekaligus</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="note key">
+      <p><b>Jawaban langsung untuk pertanyaan Kakak:</b> "Kalau nggak dipanggil pakai <code>/</code>, skill itu jalan nggak?" — <strong>Tergantung skill-nya.</strong> Sebagian besar skill Anthropic didesain untuk <strong>auto-trigger</strong>: begitu Kakak minta sesuatu yang cocok (misal "buatkan slide"), Claude otomatis baca skill <code>pptx</code> tanpa Kakak ketik apa pun. Tapi ada juga skill yang memang dibuat khusus untuk dipanggil manual lewat <code>/nama-skill</code> (biasanya task spesifik seperti <code>/morning</code>). Ketik <code>/</code> di kotak chat itu cara <em>memanggil paksa</em> — bukan satu-satunya cara skill bisa jalan.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s02">
+    <p class="eyebrow">02 · Skills</p>
+    <h2>Skills — cara kerja &amp; katalog</h2>
+    <p class="lead">Skill adalah instruksi tertulis yang Claude baca supaya tahu <em>standar terbaik</em> untuk mengerjakan sesuatu — mirip SOP internal seperti dokumen <code>Standar_Coding_Anabhi_Dev.md</code> milik Kakak sendiri, tapi ini versinya Anthropic.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3><span class="item-trigger auto" style="margin-right:6px">AUTO</span> Terpicu otomatis</h3>
+        <p>Claude mendeteksi maksud Kakak dari kalimat yang diketik, lalu membaca skill yang cocok <strong>tanpa Kakak minta secara eksplisit</strong>. Contoh: Kakak minta "buatkan laporan Word", Claude otomatis baca skill <code>docx</code> supaya format dan struktur file-nya benar — Kakak tidak perlu tahu skill itu ada.</p>
+      </div>
+      <div class="card">
+        <h3><span class="item-trigger manual" style="margin-right:6px">MANUAL</span> Dipanggil eksplisit</h3>
+        <p>Sebagian skill memang task-spesifik dan hanya jalan kalau dipanggil langsung lewat <code>/nama-skill</code> di kotak chat — biasanya untuk workflow personal yang tidak bisa ditebak dari konteks percakapan biasa, misalnya <code>/morning</code> untuk render ringkasan pagi.</p>
+      </div>
+    </div>
+
+    <p>Dari 12 skill bawaan Anthropic yang muncul di directory Kakak (screenshot 1–3), berikut fungsi masing-masing:</p>
+
+    <div class="filterbar">
+      <input type="search" id="skillFilter" placeholder="Filter skill di bawah…" aria-label="Filter daftar skill">
+      <span class="filter-count" id="skillCount"></span>
+    </div>
+    <div class="item-grid cols2" id="skillGrid">
+
+      <div class="item" data-name="canvas-design">
+        <div class="item-top">
+          <div>
+            <p class="item-name">canvas-design</p>
+            <p class="item-summary">Membuat karya visual (poster, desain statis) dalam format .png/.pdf dengan prinsip design yang matang.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Menghasilkan poster, artwork, atau desain statis lain menggunakan prinsip desain visual yang terstruktur — bukan sekadar generate gambar acak.</dd>
+            <dt>Kapan terpicu</dt><dd>Otomatis saat Kakak minta "buatkan poster", "desain untuk...", atau sejenisnya.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Bisa dipakai untuk draft awal materi visual promosi nasi goreng — tapi untuk logo/branding final tetap sebaiknya dikerjakan desainer profesional (lihat section 08).</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="brand-guidelines">
+        <div class="item-top">
+          <div>
+            <p class="item-name">brand-guidelines</p>
+            <p class="item-summary">Menerapkan warna dan tipografi resmi brand Anthropic ke artifact apa pun.</p>
+          </div>
+          <span class="item-trigger manual">MANUAL/AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Mengaplikasikan palet warna dan font resmi Anthropic ke dokumen, slide, atau halaman yang dibuat — dipakai kalau Kakak secara spesifik minta gaya visual ala Anthropic.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat konteksnya menyebut brand/style guideline resmi.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Tidak relevan langsung untuk brand Anabhi Dev atau nasi goreng Kakak — ini brand milik Anthropic sendiri, bukan template brand generik.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="doc-coauthoring">
+        <div class="item-top">
+          <div>
+            <p class="item-name">doc-coauthoring</p>
+            <p class="item-summary">Workflow terstruktur untuk menulis dokumentasi, proposal, spec teknis, atau decision doc bersama-sama.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Membantu proses menulis dokumen panjang secara iteratif — transfer konteks, revisi bertahap, verifikasi apakah dokumen sudah "berfungsi" untuk pembacanya.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat Kakak minta bantuan menulis dokumentasi, proposal, atau spec teknis.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Berguna untuk menulis proposal project Upwork atau spec teknis sebelum development.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="internal-comms">
+        <div class="item-top">
+          <div>
+            <p class="item-name">internal-comms</p>
+            <p class="item-summary">Menulis komunikasi internal kantor — status report, update leadership, FAQ, incident report.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Kumpulan format/template untuk komunikasi gaya korporat.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat diminta menulis status report, update tim, atau komunikasi internal perusahaan.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Sesuai preferensi Kakak, akun ini untuk keperluan pribadi/sampingan — skill ini kemungkinan besar tidak akan sering terpakai di sini.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="learn">
+        <div class="item-top">
+          <div>
+            <p class="item-name">learn</p>
+            <p class="item-summary">Mode belajar — penjelasan konseptual, quiz, flashcard, bukan sekadar jawaban tugas.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Dipakai saat Kakak ingin memahami <em>cara kerja/kenapa</em> sesuatu bekerja — bukan cuma minta task diselesaikan.</dd>
+            <dt>Kapan terpicu</dt><dd>Pertanyaan seperti "jelaskan React dari dasar", "kenapa RLS penting di Supabase", ELI5, quiz me.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd><strong>Sangat relevan</strong> — Kakak sedang belajar React, GitHub, dan stack baru. Skill ini pas dipakai saat mode belajar konsep, bukan saat minta Claude langsung coding-kan.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="mcp-builder">
+        <div class="item-top">
+          <div>
+            <p class="item-name">mcp-builder</p>
+            <p class="item-summary">Panduan membuat MCP server (Model Context Protocol) berkualitas untuk integrasi API eksternal.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Best practice membangun MCP server dengan Python (FastMCP) atau Node/TypeScript.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat Kakak minta bantuan membangun MCP server sendiri untuk integrasi API tertentu.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Skill tingkat lanjut — baru relevan kalau nanti Kakak butuh bikin integrasi custom, belum prioritas di tahap belajar sekarang.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="morning">
+        <div class="item-top">
+          <div>
+            <p class="item-name">morning</p>
+            <p class="item-summary">Render ringkasan pagi (jadwal, tugas) jadi artifact HTML yang rapi, atau jadikan task berulang harian.</p>
+          </div>
+          <span class="item-trigger manual">MANUAL</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Menampilkan "morning brief" — hanya jalan kalau diminta eksplisit, bukan auto-terpicu dari pertanyaan biasa soal jadwal.</dd>
+            <dt>Kapan terpicu</dt><dd>Hanya saat Kakak eksplisit minta "jalankan morning brief" atau ketik <code>/morning</code>.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Contoh nyata skill yang <strong>tidak</strong> auto-trigger — pertanyaan biasa soal jadwal tidak akan memicu ini.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="skill-creator">
+        <div class="item-top">
+          <div>
+            <p class="item-name">skill-creator</p>
+            <p class="item-summary">Membuat skill baru dari nol, memperbaiki skill yang ada, dan mengukur performanya.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Meta-skill — dipakai kalau Kakak ingin membuat SOP/instruksi khusus milik Kakak sendiri jadi skill yang bisa dipanggil ulang.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat diminta membuat, edit, atau evaluasi skill baru.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Berpotensi menarik jangka panjang — file <code>Standar_Coding_Anabhi_Dev.md</code> dan SOP Kakak bisa dijadikan skill custom supaya otomatis terbaca di setiap project, tapi ini keputusan terpisah, tidak diajukan di sini.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="slack-gif-creator">
+        <div class="item-top">
+          <div>
+            <p class="item-name">slack-gif-creator</p>
+            <p class="item-summary">Membuat GIF animasi yang dioptimalkan untuk Slack.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Constraint teknis khusus format GIF Slack (ukuran file, dimensi, dsb).</dd>
+            <dt>Kapan terpicu</dt><dd>Saat diminta bikin GIF animasi untuk Slack.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Kemungkinan kecil terpakai kecuali Kakak butuh konten Slack — tidak relevan dengan dua rencana income Kakak.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="theme-factory">
+        <div class="item-top">
+          <div>
+            <p class="item-name">theme-factory</p>
+            <p class="item-summary">10 preset tema warna/font siap pakai untuk artifact (slide, dokumen, landing page HTML).</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Toolkit styling cepat — bisa pilih dari 10 tema jadi, atau generate tema baru sesuai kebutuhan.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat membuat artifact yang butuh tema visual konsisten.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Bisa relevan untuk cepat prototyping tampilan landing page klien Upwork sebelum styling manual final.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="algorithmic-art">
+        <div class="item-top">
+          <div>
+            <p class="item-name">algorithmic-art</p>
+            <p class="item-summary">Seni generatif dengan p5.js — flow field, particle system, random seed yang bisa dieksplorasi.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Membuat karya seni algoritmik original (bukan meniru karya seniman lain, demi menghindari isu hak cipta).</dd>
+            <dt>Kapan terpicu</dt><dd>Saat diminta bikin generative art / algorithmic art.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd>Niche, tapi bisa jadi elemen visual unik untuk portfolio Upwork kalau ingin menonjol dari kandidat lain.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="item" data-name="web-artifacts-builder">
+        <div class="item-top">
+          <div>
+            <p class="item-name">web-artifacts-builder</p>
+            <p class="item-summary">Suite untuk membangun artifact HTML kompleks pakai React + Tailwind CSS + shadcn/ui.</p>
+          </div>
+          <span class="item-trigger auto">AUTO</span>
+        </div>
+        <div class="item-body">
+          <dl>
+            <dt>Fungsi</dt><dd>Dipakai untuk artifact multi-komponen yang butuh state management/routing — <strong>bukan</strong> untuk HTML/JSX satu file sederhana.</dd>
+            <dt>Kapan terpicu</dt><dd>Saat kompleksitas UI butuh React, bukan vanilla JS.</dd>
+            <dt>Relevan untuk Kakak?</dt><dd><strong>Penting dicatat:</strong> dokumen HTML yang sedang Kakak baca ini <em>sengaja tidak</em> memakai skill ini — karena standar Anabhi Dev (SOP Kakak) memakai vanilla HTML/CSS/JS single-file, bukan React. Skill ini baru relevan kalau nanti Kakak mulai belajar React sungguhan untuk project Upwork.</dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+    <p class="filter-empty" id="skillEmpty">Tidak ada skill yang cocok dengan pencarian.</p>
+  </section>
+
+  <!-- 03 -->
+  <section id="s03">
+    <p class="eyebrow">03 · Connectors</p>
+    <h2>Connectors — cara kerja</h2>
+    <p class="lead">Ini yang paling gampang dipahami karena Kakak sudah pernah pakai langsung (Office 365 untuk analisa email). Connector adalah jembatan resmi antara Claude dan akun/layanan pihak ketiga.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Cara kerja</h3>
+        <p>Connector pakai protokol OAuth — Kakak login lewat halaman resmi penyedia layanan (Microsoft, Google, dsb), lalu memberi izin akses terbatas ke Claude. Claude tidak pernah melihat password Kakak; yang diberikan hanya token akses dengan scope tertentu (misal: hanya baca email, tidak bisa hapus).</p>
+      </div>
+      <div class="card">
+        <h3>Kapan dipakai</h3>
+        <p>Connector baru benar-benar dipanggil kalau permintaan Kakak memang butuh data dari sana — "cek email terbaru dari klien X" akan memicu connector Office 365/Gmail; pertanyaan umum tidak akan menyentuhnya sama sekali walau sudah ter-<em>connect</em>.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Contoh Kakak:</b> connector Office 365 yang sudah Kakak pakai untuk analisa email adalah contoh persis pola ini — Kakak login sekali lewat Microsoft, lalu setiap kali minta Claude "lihat email soal...", connector itu yang dipanggil di belakang layar.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="s04">
+    <p class="eyebrow">04 · Plugins</p>
+    <h2>Plugins — cara kerja</h2>
+    <p class="lead">Ini pertanyaan Kakak yang paling penting: "saya sudah <em>add</em> banyak plugin dari Anthropic, pakainya harus dipanggil?" — jawabannya butuh sedikit nuansa.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Apa yang terjadi saat "Add"</h3>
+        <p>Meng-<em>add</em> plugin itu <strong>mengaktifkan ketersediaan</strong> — bukan mengaktifkan pemakaian terus-menerus. Plugin berisi kombinasi skill, command <code>/perintah</code>, dan kadang connector, yang dikelompokkan per kategori kerja (Design, Legal, Finance, dll). Setelah di-<em>add</em>, isi paketnya jadi <em>bisa</em> dipakai Claude — tapi tetap mengikuti aturan skill masing-masing di dalamnya.</p>
+      </div>
+      <div class="card">
+        <h3>Skill di dalam plugin</h3>
+        <p>Sama seperti skill standalone di section 02: sebagian skill di dalam plugin auto-terpicu dari konteks percakapan, sebagian lagi (biasanya yang lebih task-spesifik) baru jalan kalau dipanggil lewat command <code>/nama-plugin:nama-skill</code>.</p>
+      </div>
+    </div>
+
+    <div class="note key">
+      <p><b>Implikasi praktis untuk Kakak:</b> nge-<em>add</em> 15+ kategori plugin sekaligus itu <strong>aman</strong> — tidak membuat Claude otomatis "memakai" semuanya di setiap percakapan. Yang terjadi hanyalah lebih banyak skill/command yang <em>tersedia</em> untuk dipakai kalau relevan. Beban yang perlu dipikirkan bukan "berapa banyak yang di-add", tapi "seberapa relevan isinya" — karena directory yang penuh item tak relevan (misal Kakak sudah add semua plugin Legal padahal bukan pengacara) hanya bikin daftar susah di-scan, bukan bikin Claude lambat atau salah jalan.</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s05">
+    <span class="src shot">DARI SCREENSHOT KAKAK</span>
+    <p class="eyebrow" style="margin-top:12px">05 · Katalog Plugin</p>
+    <h2>Plugin — kategori besar</h2>
+    <p class="lead">15 kategori plugin bawaan Anthropic yang muncul di directory Kakak (screenshot 5–7), masing-masing berisi beberapa skill + command siap pakai untuk satu bidang kerja.</p>
+
+    <div class="filterbar">
+      <input type="search" id="pluginFilter" placeholder="Filter kategori plugin…" aria-label="Filter daftar kategori plugin">
+      <span class="filter-count" id="pluginCount"></span>
+    </div>
+    <div class="item-grid cols2" id="pluginGrid">
+
+      <div class="item" data-name="productivity">
+        <div class="item-top">
+          <div><p class="item-name">Productivity</p><p class="item-summary">Kelola tugas, rencanakan hari, bangun memory konteks kerja penting. Sinkron dengan working memory.</p></div>
+          <span class="item-trigger auto">4 skill</span>
+        </div>
+        <div class="item-body"><p>Cocok untuk task management harian lewat file TASKS.md bersama — relevan kalau Kakak mau kelola to-do project sampingan secara terstruktur di Claude.</p></div>
+      </div>
+
+      <div class="item" data-name="design">
+        <div class="item-top">
+          <div><p class="item-name">Design</p><p class="item-summary">Percepat workflow desain — critique, design system, UX writing, accessibility audit, research synthesis, dev handoff.</p></div>
+          <span class="item-trigger auto">7 skill</span>
+        </div>
+        <div class="item-body"><p>Isinya (dari screenshot 4): <code>accessibility-review</code>, <code>design-critique</code>, <code>design-handoff</code>, <code>design-system</code>, <code>research-synthesis</code>, <code>user-research</code>, <code>ux-copy</code>. <strong>Relevan untuk Kakak</strong> — bisa dipakai minta feedback struktural atas UI project web klien sebelum dikirim.</p></div>
+      </div>
+
+      <div class="item" data-name="marketing">
+        <div class="item-top">
+          <div><p class="item-name">Marketing</p><p class="item-summary">Buat konten, rencanakan campaign, analisis performa lintas channel marketing. Jaga konsistensi brand.</p></div>
+          <span class="item-trigger auto">skill</span>
+        </div>
+        <div class="item-body"><p><strong>Relevan langsung</strong> untuk rencana branding nasi goreng Kakak — draft campaign plan, konten promosi, dan brand review bisa lewat sini.</p></div>
+      </div>
+
+      <div class="item" data-name="engineering">
+        <div class="item-top">
+          <div><p class="item-name">Engineering</p><p class="item-summary">Streamline workflow engineering — standup, code review, architecture decision, incident response.</p></div>
+          <span class="item-trigger auto">10 skill</span>
+        </div>
+        <div class="item-body"><p><strong>Sangat relevan</strong> untuk rencana income coding Kakak — ada <code>code-review</code>, <code>debug</code>, <code>system-design</code>, <code>architecture</code>, <code>testing-strategy</code>, <code>tech-debt</code>, <code>documentation</code>, <code>deploy-checklist</code>, <code>incident-response</code>, <code>standup</code>.</p></div>
+      </div>
+
+      <div class="item" data-name="data">
+        <div class="item-top">
+          <div><p class="item-name">Data</p><p class="item-summary">Tulis SQL, eksplorasi dataset, hasilkan insight lebih cepat. Bangun visualisasi dan dashboard.</p></div>
+          <span class="item-trigger auto">10 skill</span>
+        </div>
+        <div class="item-body"><p>Berisi <code>write-query</code>, <code>sql-queries</code>, <code>analyze</code>, <code>explore-data</code>, <code>build-dashboard</code>, <code>data-visualization</code>, <code>statistical-analysis</code>, <code>validate-data</code>, dll — berguna kalau project klien Upwork butuh integrasi database/Supabase.</p></div>
+      </div>
+
+      <div class="item" data-name="finance">
+        <div class="item-top">
+          <div><p class="item-name">Finance</p><p class="item-summary">Streamline workflow finance &amp; accounting — journal entry, rekonsiliasi, hingga laporan keuangan.</p></div>
+          <span class="item-trigger auto">8 skill</span>
+        </div>
+        <div class="item-body"><p>Fokus akuntansi korporat (SOX testing, audit support) — kurang relevan untuk kebutuhan pribadi/UMKM Kakak, kecuali nanti butuh laporan keuangan formal usaha nasi goreng.</p></div>
+      </div>
+
+      <div class="item" data-name="product-management">
+        <div class="item-top">
+          <div><p class="item-name">Product Management</p><p class="item-summary">Tulis feature spec, rencanakan roadmap, sintesis user research.</p></div>
+          <span class="item-trigger auto">9 skill</span>
+        </div>
+        <div class="item-body"><p>Berguna kalau Kakak mengelola project client sebagai "produk" — menulis spec sebelum development dimulai (skill <code>write-spec</code>).</p></div>
+      </div>
+
+      <div class="item" data-name="pdf-viewer">
+        <div class="item-top">
+          <div><p class="item-name">PDF Viewer</p><p class="item-summary">Lihat, anotasi, dan tanda tangani PDF secara interaktif langsung di chat.</p></div>
+          <span class="item-trigger auto">5 skill</span>
+        </div>
+        <div class="item-body"><p>Berguna untuk review kontrak/proposal klien Upwork dalam format PDF tanpa pindah aplikasi.</p></div>
+      </div>
+
+      <div class="item" data-name="operations">
+        <div class="item-top">
+          <div><p class="item-name">Operations</p><p class="item-summary">Optimalkan operasi bisnis — vendor management, dokumentasi proses, change management, capacity planning.</p></div>
+          <span class="item-trigger auto">9 skill</span>
+        </div>
+        <div class="item-body"><p>Berisi <code>runbook</code>, <code>process-doc</code>, <code>risk-assessment</code>, <code>vendor-review</code> — relevan untuk mendokumentasikan proses operasional usaha nasi goreng (SOP dapur, supplier, dll).</p></div>
+      </div>
+
+      <div class="item" data-name="legal">
+        <div class="item-top">
+          <div><p class="item-name">Legal</p><p class="item-summary">Percepat review kontrak, triase NDA, dan workflow compliance untuk tim legal in-house.</p></div>
+          <span class="item-trigger auto">9 skill</span>
+        </div>
+        <div class="item-body"><p>Kategori ini punya <strong>banyak sub-plugin turunan</strong> (Commercial Legal, Corporate Legal, dst) — lihat detail lengkapnya di <a href="#s06">section 06</a>.</p></div>
+      </div>
+
+      <div class="item" data-name="enterprise-search">
+        <div class="item-top">
+          <div><p class="item-name">Enterprise Search</p><p class="item-summary">Cari lintas semua tools perusahaan sekaligus — email, chat, dokumen, wiki.</p></div>
+          <span class="item-trigger auto">5 skill</span>
+        </div>
+        <div class="item-body"><p>Berguna untuk konteks kerja kantor Kakak (bukan project sampingan) — bisa search lintas Slack/Drive/email sekaligus kalau semua ter-<em>connect</em>.</p></div>
+      </div>
+
+      <div class="item" data-name="small-business">
+        <div class="item-top">
+          <div><p class="item-name">Small Business</p><p class="item-summary">Workflow siap pakai untuk UMKM — payroll planning, tutup bulan, ringkasan mingguan, strategi growth.</p></div>
+          <span class="item-trigger auto">31 skill</span>
+        </div>
+        <div class="item-body"><p><strong>Paling relevan untuk usaha nasi goreng Kakak.</strong> Kategori terbesar (31 item) — berisi <code>cash-flow-snapshot</code>, <code>month-end-prep</code>, <code>customer-pulse</code>, <code>content-strategy</code>, <code>invoice-chase</code>, <code>price-check</code>, <code>job-post-builder</code>, dan puluhan lainnya. Kebanyakan terhubung ke connector seperti QuickBooks/PayPal/HubSpot — sebagian besar fiturnya baru optimal kalau connector terkait sudah tersambung.</p></div>
+      </div>
+
+      <div class="item" data-name="human-resources">
+        <div class="item-top">
+          <div><p class="item-name">Human Resources</p><p class="item-summary">Streamline people ops — recruiting, onboarding, performance review, analisis kompensasi.</p></div>
+          <span class="item-trigger auto">9 skill</span>
+        </div>
+        <div class="item-body"><p>Relevan kalau usaha nasi goreng Kakak berkembang dan mulai perlu merekrut karyawan (skill <code>onboarding</code>, <code>draft-offer</code>).</p></div>
+      </div>
+
+      <div class="item" data-name="customer-support">
+        <div class="item-top">
+          <div><p class="item-name">Customer Support</p><p class="item-summary">Triase tiket, draft respons, eskalasi isu, bangun knowledge base.</p></div>
+          <span class="item-trigger auto">5 skill</span>
+        </div>
+        <div class="item-body"><p>Berguna untuk menangani komplain pelanggan nasi goreng atau klien Upwork secara terstruktur.</p></div>
+      </div>
+
+      <div class="item" data-name="bio-research">
+        <div class="item-top">
+          <div><p class="item-name">Bio Research</p><p class="item-summary">Terhubung ke tools &amp; database riset preklinis — pencarian literatur, analisis genomik, target prioritization.</p></div>
+          <span class="item-trigger auto">6 skill</span>
+        </div>
+        <div class="item-body"><p>Tidak relevan dengan dua rencana income Kakak (coding &amp; kuliner) — ini untuk riset bioteknologi/farmasi.</p></div>
+      </div>
+
+    </div>
+    <p class="filter-empty" id="pluginEmpty">Tidak ada kategori yang cocok dengan pencarian.</p>
+  </section>
+
+  <!-- 06 -->
+  <section id="s06">
+    <p class="eyebrow">06 · Katalog Plugin — Legal</p>
+    <h2>Legal — kategori dengan sub-plugin terbanyak</h2>
+    <p class="lead">Kategori "Legal" yang muncul di section 05 ternyata pecah jadi <strong>belasan sub-plugin spesifik per bidang hukum</strong>. Sebagian terlihat langsung di screenshot Kakak (9 &amp; 10); sisanya saya tambahkan dari data referensi supaya daftarnya lengkap — <strong>ditandai jelas per sumber</strong>, tidak dicampur begitu saja.</p>
+
+    <div class="note info">
+      <p><b>Legenda sumber:</b> <span class="src shot">DARI SCREENSHOT</span> = terlihat langsung di gambar yang Kakak kirim. <span class="src ref">PELENGKAP</span> = tidak terlihat di screenshot Kakak (kemungkinan besar terpotong scroll), ditambahkan dari data referensi supaya daftar Legal utuh.</p>
+    </div>
+
+    <div class="subgroup"><h4>Terlihat di screenshot Kakak</h4></div>
+    <div class="filterbar">
+      <input type="search" id="legalFilter" placeholder="Filter sub-plugin Legal…" aria-label="Filter daftar plugin legal">
+      <span class="filter-count" id="legalCount"></span>
+    </div>
+    <div class="item-grid cols2" id="legalGrid">
+
+      <div class="item" data-name="commercial legal">
+        <div class="item-top">
+          <div><p class="item-name">Commercial Legal</p><p class="item-summary">Review vendor agreement, NDA, dan langganan SaaS terhadap playbook sisi jual/beli.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk lawyer in-house yang menangani kontrak komersial sehari-hari — triase NDA, review MSA vendor, tracking renewal kontrak.</p></div>
+      </div>
+
+      <div class="item" data-name="corporate legal">
+        <div class="item-top">
+          <div><p class="item-name">Corporate Legal</p><p class="item-summary">Jalankan diligence M&amp;A skala besar dengan cited tabular review, susun disclosure schedule dan closing checklist.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk transaksi merger &amp; akuisisi — dari due diligence data room sampai board minutes.</p></div>
+      </div>
+
+      <div class="item" data-name="ai governance legal">
+        <div class="item-top">
+          <div><p class="item-name">AI Governance Legal</p><p class="item-summary">Triase use case AI yang diusulkan terhadap registry, jalankan impact assessment lintas regulasi yang berlaku.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk perusahaan yang perlu memastikan penggunaan AI internal mereka sendiri patuh regulasi (mis. EU AI Act).</p></div>
+      </div>
+
+      <div class="item" data-name="ip legal">
+        <div class="item-top">
+          <div><p class="item-name">IP Legal</p><p class="item-summary">Jalankan first-pass trademark clearance dan freedom-to-operate triage, skrining invention disclosure.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk urusan kekayaan intelektual — paten, merek dagang, hak cipta.</p></div>
+      </div>
+
+      <div class="item" data-name="product legal">
+        <div class="item-top">
+          <div><p class="item-name">Product Legal</p><p class="item-summary">Review peluncuran produk terhadap kalibrasi risiko, jawab pertanyaan "apakah ini masalah?" dalam hitungan menit.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk in-house counsel yang mendukung tim produk sebelum fitur baru diluncurkan.</p></div>
+      </div>
+
+      <div class="item" data-name="regulatory legal">
+        <div class="item-top">
+          <div><p class="item-name">Regulatory Legal</p><p class="item-summary">Pantau feed regulasi, bandingkan aturan baru terhadap policy library, lacak deadline komentar publik.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk memantau perubahan regulasi industri secara berkelanjutan.</p></div>
+      </div>
+
+      <div class="item" data-name="privacy legal">
+        <div class="item-top">
+          <div><p class="item-name">Privacy Legal</p><p class="item-summary">Triase aktivitas pemrosesan data, hasilkan PIA (Privacy Impact Assessment), review DPA.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk kepatuhan data privasi (GDPR dan sejenisnya).</p></div>
+      </div>
+
+      <div class="item" data-name="employment legal">
+        <div class="item-top">
+          <div><p class="item-name">Employment Legal</p><p class="item-summary">Review perekrutan dan pemutusan hubungan kerja untuk kepatuhan lintas yurisdiksi.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Untuk perusahaan dengan karyawan di banyak negara bagian/negara berbeda.</p></div>
+      </div>
+
+      <div class="item" data-name="investment banking">
+        <div class="item-top">
+          <div><p class="item-name">Investment Banking</p><p class="item-summary">Tools produktivitas investment banking — client &amp; market insight, pembuatan deck, analisis finansial, dokumen transaksi.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Bukan murni "Legal" tapi muncul berdampingan di directory yang sama — untuk banker menyusun CIM, pitch deck, merger model.</p></div>
+      </div>
+
+      <div class="item" data-name="claude for microsoft 365">
+        <div class="item-top">
+          <div><p class="item-name">Claude for Microsoft 365 Install</p><p class="item-summary">Provisioning akses cloud langsung (Vertex AI, Bedrock, atau LLM gateway) untuk add-in Claude Microsoft 365.</p></div>
+          <span class="src shot">SHOT</span>
+        </div>
+        <div class="item-body"><p>Ini plugin instalasi/setup, bukan skill kerja — untuk admin IT yang mengatur akses Claude di lingkungan Microsoft 365 enterprise.</p></div>
+      </div>
+
+    </div>
+
+    <div class="subgroup"><h4>Pelengkap referensi — tidak terlihat di screenshot Kakak</h4></div>
+    <div class="item-grid cols2">
+
+      <div class="item" data-name="litigation legal">
+        <div class="item-top">
+          <div><p class="item-name">Litigation Legal</p><p class="item-summary">Triase gugatan, bangun element chart/claim chart, kelola portfolio matter litigasi.</p></div>
+          <span class="src ref">REF</span>
+        </div>
+        <div class="item-body"><p>Untuk tim litigasi — dari intake matter baru sampai deposisi dan brief.</p></div>
+      </div>
+
+      <div class="item" data-name="legal clinic">
+        <div class="item-top">
+          <div><p class="item-name">Legal Clinic</p><p class="item-summary">Alat bantu untuk klinik hukum kampus — intake klien, memo IRAC, tracking deadline kasus mahasiswa.</p></div>
+          <span class="src ref">REF</span>
+        </div>
+        <div class="item-body"><p>Konteks pendidikan hukum, dipakai profesor supervisi mahasiswa klinik hukum.</p></div>
+      </div>
+
+      <div class="item" data-name="law student">
+        <div class="item-top">
+          <div><p class="item-name">Law Student</p><p class="item-summary">Bar prep, case brief, flashcard, Socratic drilling untuk mahasiswa hukum.</p></div>
+          <span class="src ref">REF</span>
+        </div>
+        <div class="item-body"><p>Alat belajar personal untuk mahasiswa hukum, bukan alat kerja praktisi.</p></div>
+      </div>
+
+    </div>
+
+    <div class="note warn">
+      <p><b>Catatan jujur:</b> tidak satupun sub-plugin Legal di atas relevan dengan dua rencana income Kakak (coding &amp; kuliner). Kategori ini dibangun untuk praktisi hukum profesional (in-house counsel, firma hukum, mahasiswa hukum) — kalau Kakak sudah nge-<em>add</em> semuanya, itu tidak masalah secara teknis (lihat section 04), tapi juga tidak akan pernah terpakai kecuali Kakak memang butuh review kontrak sesekali.</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="s07">
+    <span class="src shot">DARI SCREENSHOT KAKAK</span>
+    <p class="eyebrow" style="margin-top:12px">07 · Plugin individual &amp; integrasi</p>
+    <h2>Bukan kategori besar — satu plugin per layanan spesifik</h2>
+    <p class="lead">Berbeda dari section 05 &amp; 06 (kategori berisi banyak skill), daftar di screenshot 11 ini adalah <strong>plugin per layanan tunggal</strong> — masing-masing biasanya cuma berisi 1 connector + cara pakainya untuk satu platform spesifik.</p>
+
+    <div class="grid g3">
+      <div class="card"><h4>HubSpot</h4><p>CRM &amp; marketing automation.</p></div>
+      <div class="card"><h4>Google BigQuery</h4><p>Data warehouse Google Cloud.</p></div>
+      <div class="card"><h4>Salesforce</h4><p>CRM enterprise.</p></div>
+      <div class="card"><h4>Sentry</h4><p>Error tracking untuk aplikasi.</p></div>
+      <div class="card"><h4>Asana</h4><p>Project &amp; task management.</p></div>
+      <div class="card"><h4>Grafana</h4><p>Monitoring &amp; dashboard observability.</p></div>
+      <div class="card"><h4>PagerDuty</h4><p>Incident alerting on-call.</p></div>
+      <div class="card"><h4>Snowflake</h4><p>Data warehouse cloud.</p></div>
+      <div class="card"><h4>Amazon Redshift</h4><p>Data warehouse AWS.</p></div>
+      <div class="card"><h4>Claude for Healthcare</h4><p>Kategori khusus healthcare (11 item) — mengelompokkan Pubmed, Icd10 codes, Cms coverage, Npi registry di bawahnya.</p></div>
+      <div class="card"><h4>Pubmed</h4><p>Pencarian literatur medis.</p></div>
+      <div class="card"><h4>Icd10 codes</h4><p>Kode diagnosis medis standar.</p></div>
+      <div class="card"><h4>Cms coverage</h4><p>Kebijakan cakupan asuransi kesehatan AS.</p></div>
+      <div class="card"><h4>Npi registry</h4><p>Registry penyedia layanan kesehatan AS.</p></div>
+    </div>
+
+    <div class="note">
+      <p><b>Untuk Kakak:</b> dari daftar ini, yang paling relevan dengan rencana coding untuk klien Upwork adalah <strong>Sentry</strong> (kalau nanti maintenance aplikasi klien butuh error tracking) dan <strong>Asana</strong> (kalau klien pakai itu untuk manage project). Sisanya (BigQuery, Snowflake, Redshift, Salesforce, HubSpot, Grafana, PagerDuty) itu tools skala enterprise yang jarang dibutuhkan solo developer di tahap awal. Grup healthcare (Pubmed dkk) sama sekali di luar dua rencana income Kakak.</p>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="s08">
+    <p class="eyebrow">08 · Kesimpulan</p>
+    <h2>Jadi, apa yang perlu Kakak lakukan?</h2>
+    <p class="lead">Tidak ada tindakan wajib — semua plugin yang sudah di-<em>add</em> aman dibiarkan seperti sekarang (lihat section 04). Tapi kalau Kakak ingin directory lebih rapi dan cepat di-scan:</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Kategori paling relevan untuk dipertahankan</h3>
+        <ul>
+          <li><strong>Engineering</strong> &amp; <strong>Design</strong> — langsung dipakai untuk project Upwork</li>
+          <li><strong>Small Business</strong> — paling relevan untuk usaha nasi goreng</li>
+          <li><strong>Marketing</strong> — untuk branding &amp; promosi kuliner</li>
+          <li><strong>Data</strong> — kalau project klien pakai Supabase/database</li>
+          <li>Skill <code>learn</code> — untuk fase belajar React/GitHub sekarang</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Kategori yang boleh di-<em>remove</em> kalau mau lebih rapi</h3>
+        <ul>
+          <li>Seluruh sub-plugin <strong>Legal</strong> (10 item, section 06) — kecuali Kakak memang sering butuh review kontrak</li>
+          <li><strong>Bio Research</strong>, <strong>Investment Banking</strong>, <strong>Human Resources</strong> — di luar dua rencana income</li>
+          <li>Grup <strong>Healthcare</strong> (Pubmed, Icd10 codes, Cms coverage, Npi registry)</li>
+          <li>Skill <code>internal-comms</code>, <code>slack-gif-creator</code> — gaya kerja korporat, bukan project pribadi</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note key">
+      <p><b>Prinsip yang perlu diingat:</b> nge-<em>remove</em> plugin bukan soal "biar Claude lebih pintar" (jumlah plugin yang di-add tidak memengaruhi kualitas jawaban Claude di luar konteks itu) — murni soal kenyamanan Kakak sendiri saat scroll directory. Kalau daftar panjang tidak mengganggu, tidak perlu diapa-apakan sama sekali.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pg">
+  <p><b>Development · Anabhi Dev</b></p>
+  <p>Generated 19 August 2026, 22:02:08 WITA · Dokumen referensi pribadi, bukan untuk publikasi.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  /* ---------- Theme toggle ---------- */
+  var root = document.documentElement;
+  var themeKey = 'anabhidev-scp-theme';
+  var metaTheme = document.getElementById('metaTheme');
+  function applyThemeColor() {
+    var t = root.getAttribute('data-theme');
+    metaTheme.setAttribute('content', t === 'dark' ? '#0A1420' : '#F5F7FA');
+  }
+  applyThemeColor();
+  function toggleTheme() {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store.set(themeKey, next);
+    applyThemeColor();
+  }
+  var themeBtnM = document.getElementById('themeBtnM');
+  if (themeBtnM) { themeBtnM.addEventListener('click', toggleTheme); }
+
+  /* ---------- Mobile nav drawer ---------- */
+  var navBtn = document.getElementById('navBtn');
+  var navClose = document.getElementById('navClose');
+  var overlay = document.getElementById('overlay');
+  function openNav() {
+    document.body.classList.add('nav-open');
+    navBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeNav() {
+    document.body.classList.remove('nav-open');
+    navBtn.setAttribute('aria-expanded', 'false');
+  }
+  if (navBtn) { navBtn.addEventListener('click', openNav); }
+  if (navClose) { navClose.addEventListener('click', closeNav); }
+  if (overlay) { overlay.addEventListener('click', closeNav); }
+  Array.prototype.slice.call(document.querySelectorAll('.rail-nav a')).forEach(function (a) {
+    a.addEventListener('click', closeNav);
+  });
+
+  /* ---------- Scrollspy sidebar ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.rail-nav a'));
+  function setActive(id) {
+    navLinks.forEach(function (a) {
+      a.classList.toggle('on', a.getAttribute('href') === '#' + id);
+    });
+  }
+  if ('IntersectionObserver' in window && sections.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { setActive(e.target.id); }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  /* ---------- Expand/collapse card (skill & plugin) ---------- */
+  function bindToggle(grid) {
+    if (!grid) { return; }
+    grid.addEventListener('click', function (e) {
+      var top = e.target.closest ? e.target.closest('.item-top') : null;
+      if (!top) { return; }
+      var item = top.closest('.item');
+      item.classList.toggle('open');
+    });
+  }
+  bindToggle(document.getElementById('skillGrid'));
+  bindToggle(document.getElementById('pluginGrid'));
+  bindToggle(document.getElementById('legalGrid'));
+
+  /* ---------- Filter/search per section ---------- */
+  function bindFilter(inputId, gridId, countId, emptyId) {
+    var input = document.getElementById(inputId);
+    var grid = document.getElementById(gridId);
+    var count = document.getElementById(countId);
+    var empty = document.getElementById(emptyId);
+    if (!input || !grid) { return; }
+    var items = Array.prototype.slice.call(grid.querySelectorAll('.item'));
+    function run(q) {
+      q = q.trim().toLowerCase();
+      var shown = 0;
+      items.forEach(function (it) {
+        var hay = (it.getAttribute('data-name') + ' ' + it.textContent).toLowerCase();
+        var match = hay.indexOf(q) !== -1;
+        it.hidden = !match;
+        if (match) { shown++; }
+      });
+      if (count) { count.textContent = shown + ' dari ' + items.length; }
+      if (empty) { empty.classList.toggle('show', shown === 0); }
+    }
+    input.addEventListener('input', function () { run(input.value); });
+    run('');
+  }
+  bindFilter('skillFilter', 'skillGrid', 'skillCount', 'skillEmpty');
+  bindFilter('pluginFilter', 'pluginGrid', 'pluginCount', 'pluginEmpty');
+  bindFilter('legalFilter', 'legalGrid', 'legalCount', null);
+
+  /* ---------- Global search (sidebar) — gabungkan semua filter + scroll ke section relevan ---------- */
+  var globalSearch = document.getElementById('globalSearch');
+  if (globalSearch) {
+    globalSearch.addEventListener('input', function () {
+      var q = globalSearch.value.trim();
+      var skillInput = document.getElementById('skillFilter');
+      var pluginInput = document.getElementById('pluginFilter');
+      var legalInput = document.getElementById('legalFilter');
+      [skillInput, pluginInput, legalInput].forEach(function (inp) {
+        if (inp) { inp.value = q; inp.dispatchEvent(new Event('input')); }
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
