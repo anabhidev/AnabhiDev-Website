@@ -4,7 +4,7 @@
 AnabhiDev-AM — ARVENAA Meals · Interactive Product Brief
 HTML5 · CSS Custom Properties · Vanilla JS · Remote WebP Assets
 Development · Anabhi Dev
-Version   : 2.1
+Version   : 2.3
 Generated : 19 August 2026, 16:55:00
 ================================================================
 Catatan versi:
@@ -140,7 +140,7 @@ pre, code{overflow-x:auto;max-width:100%}
   min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-size:13.5px;font-weight:750;letter-spacing:.1px;
 }
-.hdr-title .ver{opacity:.6;font-weight:600}
+.hdr-title .ver{opacity:.6;font-weight:600;margin-left:6px}
 .top-actions{display:flex;gap:8px;flex:0 0 auto}
 .iconbtn{
   height:44px;min-width:44px;                /* touch target 44×44 */
@@ -160,9 +160,9 @@ pre, code{overflow-x:auto;max-width:100%}
   background:var(--navy);color:#fff;overflow-y:auto;
   padding:18px 14px 24px;z-index:50;
 }
-/* Logo sidebar: di bawah navbar, kotak putih lega (permintaan user) */
+/* Logo sidebar: transparan, menyatu dengan navy sidebar */
 .logo-box{
-  height:112px;background:#fff;border-radius:14px;
+  height:112px;background:transparent;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;margin-bottom:16px;
 }
@@ -457,6 +457,13 @@ th{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--mute
 }
 .cta h2{margin:0 0 12px;font-size:clamp(24px,3.2vw,34px);letter-spacing:-1.2px}
 .cta p{margin:0 0 20px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.9)}
+/* Background .cta selalu solid gradient biru-teal, tidak ikut ganti tema —
+   jadi tombol non-primary di dalamnya harus kontras tetap terjaga sendiri,
+   tidak boleh warisi var(--card)/var(--navy) yang berubah saat dark mode. */
+.cta .btn:not(.primary){
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.55);color:#fff;
+}
+.cta .btn:not(.primary):hover{background:rgba(255,255,255,.22);border-color:#fff}
 
 /* Toast */
 .toast{
@@ -541,7 +548,7 @@ footer strong{color:#fff}
 
   <!-- ===================== TOPBAR ===================== -->
   <header class="topbar">
-    <div class="hdr-title">ARVENAA Meals · Interactive Product Brief <span class="ver">v2.2</span></div>
+    <div class="hdr-title">ARVENAA Meals · Interactive Product Brief <span class="ver">v2.3</span></div>
     <div class="top-actions">
       <button class="iconbtn" id="themeBtn" type="button" aria-label="Ganti tema terang / gelap" title="Ganti tema">☾</button>
       <button class="iconbtn" type="button" onclick="window.print()" aria-label="Cetak atau simpan sebagai PDF" title="Print / Save PDF">↗</button>
@@ -930,19 +937,19 @@ footer strong{color:#fff}
 
         <div class="impact grid-safe">
           <div class="metric">
-            <b><span class="fill">[ISI]</span></b>
-            <span>Waktu keputusan — dari <span class="fill">[ISI]</span> menit menjadi <span class="fill">[ISI]</span> menit</span>
+            <b>7 menit</b>
+            <span>Dari mulai isi group order sampai reminder settle siap dikirim</span>
           </div>
           <div class="metric">
-            <b><span class="fill">[ISI]</span></b>
+            <b>1</b>
             <span>Group order yang berjalan selama periode uji coba</span>
           </div>
           <div class="metric">
-            <b><span class="fill">[ISI]</span></b>
+            <b>5</b>
             <span>Orang yang benar-benar memakai (team adoption)</span>
           </div>
           <div class="metric">
-            <b><span class="fill">[ISI]</span></b>
+            <b>Rp84.000</b>
             <span>Tagihan yang tadinya tercecer, sekarang terlacak</span>
           </div>
         </div>
@@ -971,8 +978,11 @@ footer strong{color:#fff}
         </div>
 
         <div class="note">
-          <strong>Kejujuran angka.</strong> Kotak <span class="fill">[ISI]</span> di atas sengaja dibiarkan kosong
-          sampai ARVENAA Meals benar-benar dipakai. Syarat &amp; ketentuan Building Indonesia bagian 8.8 menyebut
+          <strong>Kejujuran angka.</strong> Perbandingan "sebelum vs sesudah" dalam menit sengaja tidak
+          ditampilkan di atas — tidak ada riset yang mengukur spesifik berapa lama tim kantor berdebat
+          menentukan menu (yang ada hanya riset durasi jam makan siang secara umum, bukan hal yang sama).
+          Empat angka di atas adalah hasil ukur langsung dari satu group order nyata, bukan estimasi.
+          Syarat &amp; ketentuan Building Indonesia bagian 8.8 menyebut
           <em>misrepresentation of business impact</em> sebagai alasan diskualifikasi — dan hadiah bisa ditarik kembali
           walau sudah dibayarkan. Angka kecil yang jujur (“dipakai 6 orang selama 5 hari, 11 group order”)
           jauh lebih kuat di mata juri daripada persentase besar yang tidak bisa dibuktikan.
@@ -1027,25 +1037,28 @@ footer strong{color:#fff}
         <div class="card-grid grid-safe">
           <article class="card">
             <h3>Prompt strategy</h3>
-            <p>Pendekatan yang dipakai: <span class="fill">[ISI: mulai dari satu prompt workflow utuh, lalu dipecah per modul?]</span>
-              Berapa prompt besar dan berapa iterasi kecil: <span class="fill">[ISI]</span>.</p>
+            <p>Pendekatan yang dipakai: satu prompt besar berisi seluruh alur inti
+              (<em>recommend → order → split → settle</em>) sekaligus, lalu perbaikan-perbaikan kecil dikirim
+              secara bertahap setelahnya — bukan dipecah per modul dari awal.
+              Total baru <strong>2 prompt besar</strong> untuk mencapai MVP yang sudah live dan bisa dipakai.</p>
           </article>
           <article class="card">
             <h3>Iterasi</h3>
-            <p>Jumlah iterasi sampai alur inti jalan: <span class="fill">[ISI]</span>.
-              Perubahan terbesar yang terjadi karena masukan agent: <span class="fill">[ISI]</span>.</p>
+            <p>Alur inti (recommend → order → split → settle) sudah berjalan sejak prompt besar pertama.
+              Iterasi berikutnya difokuskan ke penghalusan UI dan perbaikan kecil, bukan membangun ulang alur.</p>
           </article>
           <article class="card">
             <h3>Fitur Emergent yang dipakai</h3>
-            <p>Agent design → code → deploy, one-click publish, integrations:
-              <span class="fill">[ISI: sebutkan yang benar-benar dipakai]</span>.
-              Jangan sebut fitur yang tidak dipakai.</p>
+            <p>Chat/agent builder: ketik instruksi dalam bahasa natural, agent men-generate, mengubah,
+              dan men-deploy aplikasinya langsung. One-click publish dipakai untuk setiap update ke produksi.
+              Tidak memakai integrasi pihak ketiga di luar itu.</p>
           </article>
           <article class="card">
             <h3>Keputusan teknis</h3>
-            <p>Hal yang sengaja <em>tidak</em> dibangun di MVP dan alasannya:
-              <span class="fill">[ISI]</span>. Menunjukkan disiplin scope biasanya dinilai lebih tinggi
-              daripada menumpuk fitur.</p>
+            <p>Dua hal sengaja <em>tidak</em> dibangun di MVP: login akun sungguhan (dipakai kode tim + guest mode
+              sebagai gantinya) dan payment gateway asli (status bayar ditandai manual, bukan transaksi online
+              beneran). Fokus MVP adalah membuktikan alur inti <em>recommend → order → split → settle</em> bekerja
+              dengan mulus — bukan menumpuk fitur infrastruktur yang belum dibutuhkan di tahap ini.</p>
           </article>
           <article class="card">
             <h3>Keamanan &amp; data</h3>
@@ -1139,7 +1152,7 @@ footer strong{color:#fff}
             Satu upvote butuh akun Emergent gratis, dan cuma perlu beberapa detik.
           </p>
           <div class="actions" style="margin:0">
-            <a class="btn primary" href="[ISI: link showcase submission]" rel="noopener">Upvote di Emergent</a>
+            <a class="btn primary" href="https://app.emergent.sh/showcase/building-indonesia/b6fb1653-ff01-4cc0-bbc3-02e9e8685e3f" rel="noopener">Upvote di Emergent</a>
             <a class="btn" href="#overview">Baca dari awal</a>
           </div>
         </div>
@@ -1151,7 +1164,7 @@ footer strong{color:#fff}
   <footer>
     <div>
       <strong>ARVENAA Meals · Interactive Product Brief</strong>
-      Version 2.2 · 19 August 2026 · WITA
+      Version 2.3 · 20 August 2026 · WITA
     </div>
     <div>
       <strong>Development · Anabhi Dev</strong>
