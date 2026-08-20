@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ================================================================
+     Miss Fish Bali LMS
+     File        : MissFish_QuizImport_Mockup_v1.0.html
+     Description : Mockup fungsional Import Soal Quiz dari Google
+                   Spreadsheet. Berdiri sendiri — tanpa GAS, tanpa
+                   server. Parser CSV, pencocokan header, dan seluruh
+                   aturan validasi berjalan SUNGGUHAN di browser
+                   (bukan simulasi tampilan), sehingga logikanya bisa
+                   dipindahkan apa adanya ke QuizImport.gs nanti.
+                   Skema mengikuti sheet QuizQuestions LMS: question_id,
+                   course_id, order_num, question_text, option_a-d,
+                   correct_option, explanation, difficulty, is_active.
+     HtmlService · Google Apps Script · Google Sheets
+     IT Department · Miss Fish Bali
+     Version     : 1.0
+     Generated   : 20 August 2026, 10:35:34 WITA
+     ================================================================ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Import from Spreadsheet — Miss Fish Bali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0B0B0C; --surface:#151517; --surface2:#1D1D21; --surface3:#242429;
+  --ink:#FFFFFF; --dim:#B4B4BC; --faint:#7C7C86;
+  --gold:#D4AF6A; --gold-soft:rgba(212,175,106,.14);
+  --line:#26262B; --line2:#3C3C44;
+  --green:#3DD68C; --green-soft:rgba(61,214,140,.13);
+  --red:#F87171;   --red-soft:rgba(248,113,113,.13);
+  --amber:#FBBF24; --amber-soft:rgba(251,191,36,.13);
+  --blue:#60A5FA;  --blue-soft:rgba(96,165,250,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:15px;line-height:1.6;padding:0 18px 80px;
+  -webkit-tap-highlight-color:transparent;
+}
+.wrap{max-width:1180px;margin:0 auto}
+
+/* ── Masthead ── */
+header.mast{padding:38px 0 26px;border-bottom:1.5px solid var(--gold);text-align:center}
+.mast img{height:112px;width:auto;display:block;margin:0 auto 20px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(26px,5.2vw,40px);line-height:1.14;letter-spacing:-.015em;margin-bottom:12px}
+.dek{font-size:14px;color:var(--dim);max-width:64ch;margin:0 auto}
+.mockup-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--amber);background:var(--amber-soft);
+  border:1px solid rgba(251,191,36,.3);border-radius:999px;padding:5px 14px}
+
+/* ── Step blocks ── */
+.step{margin-top:30px;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.step.off{opacity:.42;pointer-events:none}
+.step-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surface2)}
+.step-num{width:26px;height:26px;flex-shrink:0;border-radius:8px;background:var(--gold);color:#111;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.step-title{font-size:14.5px;font-weight:700;letter-spacing:.01em}
+.step-sub{font-size:12.5px;color:var(--faint);margin-left:auto;text-align:right}
+.step-body{padding:18px}
+
+/* ── Source ── */
+.src-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.src-tab{border:1.5px solid var(--line2);background:transparent;color:var(--dim);border-radius:10px;
+  padding:9px 15px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.src-tab:hover{border-color:var(--gold);color:var(--ink)}
+.src-tab.on{background:var(--gold);border-color:var(--gold);color:#111}
+.src-pane{display:none}
+.src-pane.on{display:block}
+
+.field-lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.inp{width:100%;background:var(--surface2);border:1.5px solid var(--line2);border-radius:10px;
+  padding:12px 14px;color:var(--ink);font-family:inherit;font-size:13.5px;outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--gold)}
+.inp::placeholder{color:#5A5A63}
+select.inp{cursor:pointer}
+
+.drop{margin-top:4px;border:1.5px dashed var(--line2);border-radius:12px;padding:30px 18px;text-align:center;
+  transition:border-color .15s,background .15s;cursor:pointer}
+.drop.hot{border-color:var(--gold);background:var(--gold-soft)}
+.drop-ico{font-size:30px;margin-bottom:8px}
+.drop-t{font-size:14px;font-weight:600;margin-bottom:4px}
+.drop-s{font-size:12.5px;color:var(--faint)}
+
+.row-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border:none;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:13.5px;
+  font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn-gold{background:var(--gold);color:#111}
+.btn-gold:hover{background:#E0BC78}
+.btn-ghost{background:transparent;color:var(--dim);border:1.5px solid var(--line2)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--ink)}
+.btn-danger{background:var(--red);color:#111}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.hint{margin-top:14px;font-size:12.5px;color:var(--faint);line-height:1.65}
+.hint b{color:var(--dim);font-weight:600}
+
+/* ── Notice ── */
+.notice{border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6;margin-top:14px;border:1px solid}
+.notice.info{background:var(--blue-soft);border-color:rgba(96,165,250,.3);color:#CFE3FF}
+.notice.warn{background:var(--amber-soft);border-color:rgba(251,191,36,.3);color:#FFE9B8}
+.notice.bad{background:var(--red-soft);border-color:rgba(248,113,113,.3);color:#FFD5D5}
+.notice.ok{background:var(--green-soft);border-color:rgba(61,214,140,.3);color:#C7F5DF}
+
+/* ── Header mapping ── */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.map-item{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--surface2)}
+.map-col{font-size:12.5px;font-weight:600;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:3px}
+.map-st{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.st-req{color:var(--green)} .st-opt{color:var(--blue)} .st-miss{color:var(--red)} .st-extra{color:var(--faint)}
+
+/* ── Stats ── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:16px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface2);text-align:center}
+.stat-n{font-family:Georgia,serif;font-size:27px;line-height:1.1;margin-bottom:3px}
+.stat-l{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+
+/* ── Filter chips ── */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1.5px solid var(--line2);background:transparent;color:var(--dim);border-radius:999px;
+  padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#111}
+
+/* ── Table ── */
+.tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:460px;background:var(--surface2)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:920px}
+thead th{position:sticky;top:0;background:var(--surface3);text-align:left;padding:11px 12px;
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
+  border-bottom:1px solid var(--line);white-space:nowrap;z-index:2}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--dim)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.r-err{background:rgba(248,113,113,.05)}
+tbody tr.r-warn{background:rgba(251,191,36,.04)}
+tbody tr.r-new{background:rgba(61,214,140,.05)}
+.q-txt{color:var(--ink);font-weight:500;max-width:290px}
+.opt{font-size:11.5px;color:var(--faint);max-width:150px}
+.opt.correct{color:var(--green);font-weight:600}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}
+
+.badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  border-radius:999px;padding:3px 9px;white-space:nowrap}
+.b-ok{background:var(--green-soft);color:var(--green)}
+.b-warn{background:var(--amber-soft);color:var(--amber)}
+.b-err{background:var(--red-soft);color:var(--red)}
+.b-skip{background:rgba(124,124,134,.15);color:var(--faint)}
+.b-new{background:var(--gold-soft);color:var(--gold)}
+.b-off{background:rgba(124,124,134,.15);color:var(--faint);text-decoration:line-through}
+
+.issues{font-size:11.5px;color:var(--red);line-height:1.5;max-width:230px}
+.issues.w{color:var(--amber)}
+
+/* ── Mode cards ── */
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.mode{border:1.5px solid var(--line2);border-radius:12px;padding:16px;background:var(--surface2);cursor:pointer;transition:all .15s}
+.mode:hover{border-color:var(--gold)}
+.mode.on{border-color:var(--gold);background:var(--gold-soft)}
+.mode-t{font-size:14px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.mode-d{font-size:12.5px;color:var(--faint);line-height:1.6}
+.mode-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--line2);flex-shrink:0}
+.mode.on .mode-radio{border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 3px var(--surface2)}
+
+.check-row{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:13px;border:1px solid var(--line);
+  border-radius:10px;background:var(--surface2);cursor:pointer}
+.check-row input{margin-top:3px;accent-color:var(--gold);width:16px;height:16px;cursor:pointer}
+.check-t{font-size:13px;font-weight:600}
+.check-d{font-size:12px;color:var(--faint);line-height:1.55;margin-top:2px}
+
+/* ── DB panel ── */
+.db-tabs{display:flex;gap:8px;margin-bottom:14px}
+.db-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.db-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.sheet-name{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--gold);
+  background:var(--gold-soft);border:1px solid rgba(212,175,106,.3);border-radius:6px;padding:2px 8px}
+
+/* ── Log ── */
+.log{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.85;
+  background:#08080A;border:1px solid var(--line);border-radius:10px;padding:14px;max-height:220px;overflow:auto;color:var(--dim)}
+.log .t{color:var(--faint)}
+.log .g{color:var(--green)} .log .r{color:var(--red)} .log .a{color:var(--amber)} .log .b{color:var(--blue)}
+
+footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);text-align:center;
+  font-size:12px;color:var(--faint);line-height:1.8}
+
+@media(max-width:640px){
+  body{padding:0 13px 60px}
+  .mast img{height:84px}
+  .step-body{padding:14px}
+  .step-sub{display:none}
+  .stat-n{font-size:23px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali">
+    <div class="eyebrow">LMS · Course Management</div>
+    <h1>Import Quiz Questions<br>from Spreadsheet</h1>
+    <p class="dek">Heads of Department prepare questions in a Google Spreadsheet, then import them into the
+      course in one step — no more copying questions one by one. Every row is checked before anything is saved.</p>
+    <div class="mockup-tag">⚑ Mockup · Not connected to live database</div>
+  </header>
+
+  <!-- ══════════ STEP 1 — SOURCE ══════════ -->
+  <section class="step" id="s1">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-title">Choose Source</div>
+      <div class="step-sub" id="s1-sub">Select a course, then load your questions</div>
+    </div>
+    <div class="step-body">
+
+      <div class="field-lbl">Target Course</div>
+      <select class="inp" id="courseSel" style="margin-bottom:18px">
+        <option value="CRS0001">CRS0001 — Kitchen Training 001 (Kitchen)</option>
+        <option value="CRS0002">CRS0002 — IT Testing Certificate (IT)</option>
+        <option value="CRS0003">CRS0003 — General Learning (General)</option>
+      </select>
+
+      <div class="src-tabs">
+        <button class="src-tab on" data-pane="p-link">🔗 Spreadsheet Link</button>
+        <button class="src-tab" data-pane="p-file">📄 Upload CSV</button>
+        <button class="src-tab" data-pane="p-demo">🎲 Load Sample Data</button>
+      </div>
+
+      <!-- LINK -->
+      <div class="src-pane on" id="p-link">
+        <div class="field-lbl">Google Spreadsheet URL</div>
+        <input class="inp" id="linkInp" placeholder="https://docs.google.com/spreadsheets/d/1AbC.../edit">
+        <div class="row-btn">
+          <button class="btn btn-gold" id="btnFetch">⤓ Fetch Questions</button>
+          <button class="btn btn-ghost" id="btnTpl">⬇ Download Template</button>
+        </div>
+        <div class="notice info">
+          <b>In this mockup</b>, fetching is simulated — the link format is validated, then sample data is loaded.
+          In the live LMS this step reads the sheet directly through Apps Script.
+          To test with your own data, use the <b>Upload CSV</b> tab.
+        </div>
+      </div>
+
+      <!-- FILE -->
+      <div class="src-pane" id="p-file">
+        <div class="drop" id="drop">
+          <div class="drop-ico">📄</div>
+          <div class="drop-t">Drop your CSV file here</div>
+          <div class="drop-s">or tap to browse · File → Download → CSV from Google Sheets</div>
+        </div>
+        <input type="file" id="fileInp" accept=".csv,.tsv,.txt" style="display:none">
+        <div class="row-btn">
+          <button class="btn btn-ghost" id="btnTpl2">⬇ Download Template</button>
+        </div>
+        <div class="hint">
+          This runs a <b>real CSV parse and validation</b> — exactly the same rules the live import will use.
+          Export your test sheet as CSV and drop it here to see precisely what would pass or fail.
+        </div>
+      </div>
+
+      <!-- DEMO -->
+      <div class="src-pane" id="p-demo">
+        <div class="hint" style="margin-top:0;margin-bottom:14px">
+          Loads 14 sample questions that deliberately contain <b>every kind of problem</b> the validator
+          catches — missing options, invalid answer keys, duplicates, unknown difficulty, blank rows.
+          Use this to see how each rule behaves.
+        </div>
+        <div class="row-btn" style="margin-top:0">
+          <button class="btn btn-gold" id="btnDemo">🎲 Load Sample (with errors)</button>
+          <button class="btn btn-ghost" id="btnDemoClean">✓ Load Clean Sample</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ STEP 2 — COLUMN MAPPING ══════════ -->
+  <section class="step off" id="s2">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-title">Column Detection</div>
+      <div class="step-sub">Columns are matched by header name, not position</div>
+    </div>
+    <div class="step-body" id="s2body"></div>
+  </section>
+
+  <!-- ══════════ STEP 3+4 — VALIDATION & PREVIEW ══════════ -->
+  <section class="step off" id="s3">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-title">Validation &amp; Preview</div>
+      <div class="step-sub">Nothing is saved yet — review before importing</div>
+    </div>
+    <div class="step-body">
+      <div class="stat-row" id="statRow"></div>
+      <div id="valNotice"></div>
+      <div class="chips" id="chips" style="margin-top:16px"></div>
+      <div class="tbl-wrap"><table id="prevTbl"></table></div>
+      <div class="row-btn">
+        <button class="btn btn-ghost" id="btnErrCsv">⬇ Download Error Report</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ STEP 5 — MODE ══════════ -->
+  <section class="step off" id="s4">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-title">Import Mode</div>
+      <div class="step-sub">How should existing questions be treated?</div>
+    </div>
+    <div class="step-body">
+      <div class="mode-grid">
+        <div class="mode on" data-mode="append">
+          <div class="mode-t"><div class="mode-radio"></div>➕ Append</div>
+          <div class="mode-d">Add the valid rows as new questions. Everything already in the course stays
+            exactly as it is. Safest option — recommended for adding to an existing question bank.</div>
+        </div>
+        <div class="mode" data-mode="replace">
+          <div class="mode-t"><div class="mode-radio"></div>♻ Replace All</div>
+          <div class="mode-d">Retire every existing question in this course, then add the new ones.
+            Use when the whole question set is being rewritten.</div>
+        </div>
+      </div>
+
+      <label class="check-row" id="attemptRow">
+        <input type="checkbox" id="hasAttempts" checked>
+        <div>
+          <div class="check-t">This course already has quiz attempts</div>
+          <div class="check-d">When ticked, Replace will <b>deactivate</b> old questions
+            (<span class="mono">is_active = FALSE</span>) instead of deleting them — so past staff attempts keep
+            pointing at a question that still exists. Untick to see hard delete behaviour.</div>
+        </div>
+      </label>
+
+      <label class="check-row">
+        <input type="checkbox" id="skipDupes" checked>
+        <div>
+          <div class="check-t">Skip duplicate questions</div>
+          <div class="check-d">Rows whose question text already exists in this course — or repeats within the
+            file itself — will not be imported.</div>
+        </div>
+      </label>
+
+      <div id="modeNotice"></div>
+
+      <div class="row-btn">
+        <button class="btn btn-gold" id="btnImport">✓ Run Import</button>
+        <button class="btn btn-ghost" id="btnReset">↺ Start Over</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ STEP 6 — RESULT ══════════ -->
+  <section class="step off" id="s5">
+    <div class="step-head">
+      <div class="step-num">5</div>
+      <div class="step-title">Result &amp; Database Preview</div>
+      <div class="step-sub">What the QuizQuestions sheet would look like</div>
+    </div>
+    <div class="step-body">
+      <div id="resNotice"></div>
+      <div class="stat-row" id="resStats" style="margin-top:16px"></div>
+
+      <div class="db-head" style="margin-top:20px">
+        <div class="db-title">🗄 Database Preview <span class="sheet-name">QuizQuestions</span></div>
+        <div class="db-tabs">
+          <button class="chip on" id="tabAfter">After Import</button>
+          <button class="chip" id="tabBefore">Before Import</button>
+        </div>
+      </div>
+      <div class="tbl-wrap"><table id="dbTbl"></table></div>
+
+      <div class="db-title" style="margin:22px 0 10px">📜 Activity Log</div>
+      <div class="log" id="logBox"></div>
+    </div>
+  </section>
+
+  <footer>
+    Miss Fish Bali LMS · Quiz Import Mockup v1.0<br>
+    IT Department · Standalone prototype — no data leaves this page
+  </footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   SCHEMA — mengikuti sheet QuizQuestions di LMS Database
+   0=question_id 1=course_id 2=order_num 3=question_text
+   4=option_a 5=option_b 6=option_c 7=option_d
+   8=correct_option 9=explanation 10=difficulty 11=is_active
+   Kolom yang WAJIB diisi HoD hanya yang di REQUIRED + OPTIONAL.
+   Sisanya (question_id, course_id, order_num, is_active)
+   di-generate sistem — HoD tidak perlu tahu.
+══════════════════════════════════════════════════════════ */
+var REQUIRED = ['question_text','option_a','option_b','option_c','option_d','correct_option'];
+var OPTIONAL = ['explanation','difficulty'];
+var SYSTEM   = ['question_id','course_id','order_num','is_active'];
+var DIFFS    = ['EASY','MEDIUM','HARD'];
+
+/* ── Dummy database: isi sheet QuizQuestions saat ini ── */
+var DB = [
+  ['QST001','CRS0001',1,'Apa suhu yang tepat untuk menyimpan makanan dingin?','0-4°C','5-10°C','10-15°C','-18°C','A','Suhu chiller yang aman 0-4°C.','EASY',true],
+  ['QST002','CRS0001',2,'Apa yang dimaksud dengan kontaminasi silang?','Memasak makanan terlalu lama','Perpindahan bakteri antar bahan','Menyimpan makanan di freezer','Mencuci tangan','B','Kontaminasi silang terjadi saat bakteri berpindah.','EASY',true],
+  ['QST003','CRS0001',3,'Berapa lama minimal waktu mencuci tangan?','5 detik','10 detik','20 detik','1 menit','C','Mencuci tangan minimal 20 detik.','EASY',true],
+  ['QST004','CRS0002',1,'Apa kepanjangan dari IP dalam IP Address?','Internet Protocol','Internal Process','Input Path','Instant Ping','A','IP = Internet Protocol.','EASY',true]
+];
+
+var state = {
+  rows:[], headers:[], mapping:{}, results:[], mode:'append',
+  filter:'all', dbBefore:[], dbAfter:[], imported:false, srcLabel:''
+};
+
+/* ══════════ CSV PARSER (RFC4180-ish, tahan koma & kutip) ══════════ */
+function parseDelimited(text){
+  text = text.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  var delim = (text.split('\n')[0].split('\t').length > text.split('\n')[0].split(',').length) ? '\t' : ',';
+  var rows=[], cur=[], val='', q=false, i=0;
+  while(i < text.length){
+    var c = text[i];
+    if(q){
+      if(c === '"'){
+        if(text[i+1] === '"'){ val+='"'; i+=2; continue; }
+        q=false; i++; continue;
+      }
+      val+=c; i++; continue;
+    }
+    if(c === '"'){ q=true; i++; continue; }
+    if(c === delim){ cur.push(val); val=''; i++; continue; }
+    if(c === '\n'){ cur.push(val); rows.push(cur); cur=[]; val=''; i++; continue; }
+    val+=c; i++;
+  }
+  cur.push(val); rows.push(cur);
+  return rows.filter(function(r){ return r.length>1 || (r[0]||'').trim()!==''; });
+}
+
+/* ══════════ HEADER MAPPING — by name, bukan posisi ══════════ */
+function norm(s){ return String(s||'').trim().toLowerCase().replace(/[\s\-]+/g,'_'); }
+var ALIASES = {
+  question_text:['question','pertanyaan','soal','question_text'],
+  option_a:['a','opsi_a','pilihan_a','option_a','jawaban_a'],
+  option_b:['b','opsi_b','pilihan_b','option_b','jawaban_b'],
+  option_c:['c','opsi_c','pilihan_c','option_c','jawaban_c'],
+  option_d:['d','opsi_d','pilihan_d','option_d','jawaban_d'],
+  correct_option:['correct','answer','kunci','kunci_jawaban','jawaban_benar','correct_option'],
+  explanation:['explain','penjelasan','keterangan','explanation'],
+  difficulty:['level','tingkat','kesulitan','difficulty']
+};
+function buildMapping(headers){
+  var map = {};
+  headers.forEach(function(h, idx){
+    var n = norm(h);
+    Object.keys(ALIASES).forEach(function(field){
+      if(map[field] !== undefined) return;
+      if(n === field || ALIASES[field].indexOf(n) >= 0) map[field] = idx;
+    });
+  });
+  return map;
+}
+
+/* ══════════ VALIDATION ══════════ */
+function validate(rows, mapping, courseId){
+  var existing = DB.filter(function(r){ return r[1]===courseId && r[11]; })
+                   .map(function(r){ return String(r[3]).trim().toLowerCase(); });
+  var seen = {};
+  var out = [];
+  rows.forEach(function(r, i){
+    var g = function(f){ return mapping[f]!==undefined ? String(r[mapping[f]]||'').trim() : ''; };
+    var rec = {
+      line:i+2, raw:r,
+      question:g('question_text'),
+      a:g('option_a'), b:g('option_b'), c:g('option_c'), d:g('option_d'),
+      correct:g('correct_option').toUpperCase(),
+      explanation:g('explanation'),
+      difficulty:g('difficulty').toUpperCase(),
+      errors:[], warns:[], status:'ok'
+    };
+
+    var allEmpty = !rec.question && !rec.a && !rec.b && !rec.c && !rec.d && !rec.correct;
+    if(allEmpty){ rec.status='skip'; rec.warns.push('Blank row — ignored'); out.push(rec); return; }
+
+    if(!rec.question) rec.errors.push('Question text is empty');
+    else if(rec.question.length > 500) rec.errors.push('Question longer than 500 characters');
+
+    ['a','b','c','d'].forEach(function(k){
+      if(!rec[k]) rec.errors.push('Option ' + k.toUpperCase() + ' is empty');
+    });
+
+    if(!rec.correct) rec.errors.push('Answer key is empty');
+    else if(['A','B','C','D'].indexOf(rec.correct) < 0)
+      rec.errors.push('Answer key "' + rec.correct + '" must be A, B, C or D');
+
+    if(rec.difficulty && DIFFS.indexOf(rec.difficulty) < 0){
+      rec.warns.push('Unknown difficulty "' + rec.difficulty + '" → set to MEDIUM');
+      rec.difficulty = 'MEDIUM';
+    }
+    if(!rec.difficulty){ rec.difficulty = 'MEDIUM'; }
+    if(!rec.explanation) rec.warns.push('No explanation given');
+
+    var key = rec.question.toLowerCase();
+    if(key){
+      if(existing.indexOf(key) >= 0){ rec.warns.push('Already exists in this course'); rec.dupe=true; }
+      else if(seen[key]){ rec.warns.push('Duplicated inside this file (row ' + seen[key] + ')'); rec.dupe=true; }
+      else seen[key] = rec.line;
+    }
+
+    rec.status = rec.errors.length ? 'err' : (rec.warns.length ? 'warn' : 'ok');
+    out.push(rec);
+  });
+  return out;
+}
+
+/* ══════════ UI HELPERS ══════════ */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function clip(s,n){ s=String(s||''); return s.length>n ? s.slice(0,n)+'…' : s; }
+function openStep(id){ $(id).classList.remove('off'); }
+function shutStep(id){ $(id).classList.add('off'); }
+function log(msg, cls){
+  var t = new Date().toTimeString().slice(0,8);
+  $('logBox').innerHTML += '<div><span class="t">' + t + '</span>  <span class="' + (cls||'') + '">' + esc(msg) + '</span></div>';
+  $('logBox').scrollTop = $('logBox').scrollHeight;
+}
+function dl(name, content){
+  var b = new Blob([content], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+/* ══════════ STEP 2 RENDER ══════════ */
+function renderMapping(){
+  var m = state.mapping, h = state.headers, html = '', missing = [];
+  html += '<div class="map-grid">';
+  REQUIRED.concat(OPTIONAL).forEach(function(f){
+    var found = m[f] !== undefined;
+    var req = REQUIRED.indexOf(f) >= 0;
+    if(req && !found) missing.push(f);
+    html += '<div class="map-item"><div class="map-col">' + f + '</div>' +
+      '<div class="map-st ' + (found ? (req?'st-req':'st-opt') : (req?'st-miss':'st-extra')) + '">' +
+      (found ? '✓ column ' + String.fromCharCode(65+m[f]) + ' · "' + esc(clip(h[m[f]],18)) + '"'
+             : (req ? '✕ not found' : '– not provided')) + '</div></div>';
+  });
+  var used = Object.keys(m).map(function(k){ return m[k]; });
+  h.forEach(function(col, i){
+    if(used.indexOf(i) >= 0) return;
+    if(!String(col||'').trim()) return;
+    html += '<div class="map-item"><div class="map-col">' + esc(clip(col,20)) + '</div>' +
+      '<div class="map-st st-extra">– extra column, ignored</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="hint">System-generated columns are filled automatically and must <b>not</b> be in the ' +
+    'spreadsheet: <span class="mono">' + SYSTEM.join('</span>, <span class="mono">') + '</span>.</div>';
+
+  if(missing.length){
+    html += '<div class="notice bad">✕ <b>Import blocked.</b> Required column' + (missing.length>1?'s':'') +
+      ' missing: <span class="mono">' + missing.join('</span>, <span class="mono">') + '</span>. ' +
+      'Fix the header row in your spreadsheet and try again.</div>';
+  } else {
+    html += '<div class="notice ok">✓ All required columns found. Column order does not matter — ' +
+      'matching is done by header name.</div>';
+  }
+  $('s2body').innerHTML = html;
+  return missing.length === 0;
+}
+
+/* ══════════ STEP 3 RENDER ══════════ */
+function renderPreview(){
+  var R = state.results;
+  var nOk   = R.filter(function(r){ return r.status==='ok'; }).length;
+  var nWarn = R.filter(function(r){ return r.status==='warn'; }).length;
+  var nErr  = R.filter(function(r){ return r.status==='err'; }).length;
+  var nSkip = R.filter(function(r){ return r.status==='skip'; }).length;
+
+  $('statRow').innerHTML =
+    '<div class="stat"><div class="stat-n">' + R.length + '</div><div class="stat-l">Rows Read</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--green)">' + nOk + '</div><div class="stat-l">Valid</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--amber)">' + nWarn + '</div><div class="stat-l">Warnings</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--red)">' + nErr + '</div><div class="stat-l">Errors</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--faint)">' + nSkip + '</div><div class="stat-l">Blank</div></div>';
+
+  var importable = nOk + nWarn;
+  $('valNotice').innerHTML = nErr
+    ? '<div class="notice warn">⚠ <b>' + nErr + ' row' + (nErr>1?'s':'') + ' will be skipped</b> because of errors. ' +
+      'The remaining <b>' + importable + '</b> can still be imported — errors never block the good rows.</div>'
+    : '<div class="notice ok">✓ Every row passed validation. <b>' + importable + '</b> question' +
+      (importable!==1?'s':'') + ' ready to import.</div>';
+
+  $('chips').innerHTML =
+    ['all|All ('+R.length+')','ok|✓ Valid ('+nOk+')','warn|⚠ Warnings ('+nWarn+')','err|✕ Errors ('+nErr+')']
+    .map(function(c){
+      var p=c.split('|');
+      return '<button class="chip' + (state.filter===p[0]?' on':'') + '" data-f="' + p[0] + '">' + p[1] + '</button>';
+    }).join('');
+
+  var list = R.filter(function(r){ return state.filter==='all' ? true : r.status===state.filter; });
+  var html = '<thead><tr><th>Row</th><th>Status</th><th>Question</th><th>A</th><th>B</th><th>C</th><th>D</th>' +
+             '<th>Key</th><th>Diff</th><th>Issues</th></tr></thead><tbody>';
+  if(!list.length){
+    html += '<tr><td colspan="10" style="text-align:center;padding:26px;color:var(--faint)">No rows in this filter.</td></tr>';
+  }
+  list.forEach(function(r){
+    var badge = r.status==='ok' ? '<span class="badge b-ok">OK</span>'
+              : r.status==='warn' ? '<span class="badge b-warn">WARN</span>'
+              : r.status==='err' ? '<span class="badge b-err">ERROR</span>'
+              : '<span class="badge b-skip">BLANK</span>';
+    var iss = r.errors.concat(r.warns);
+    html += '<tr class="' + (r.status==='err'?'r-err':r.status==='warn'?'r-warn':'') + '">' +
+      '<td class="mono">' + r.line + '</td>' +
+      '<td>' + badge + '</td>' +
+      '<td class="q-txt">' + esc(clip(r.question,90) || '—') + '</td>' +
+      ['a','b','c','d'].map(function(k){
+        return '<td class="opt' + (r.correct===k.toUpperCase()?' correct':'') + '">' + esc(clip(r[k],28) || '—') + '</td>';
+      }).join('') +
+      '<td class="mono" style="color:' + (r.errors.length?'var(--red)':'var(--green)') + '">' + esc(r.correct||'—') + '</td>' +
+      '<td class="mono">' + esc(r.difficulty||'—') + '</td>' +
+      '<td class="issues' + (r.errors.length?'':' w') + '">' + (iss.length ? esc(iss.join(' · ')) : '—') + '</td>' +
+      '</tr>';
+  });
+  $('prevTbl').innerHTML = html + '</tbody>';
+}
+
+/* ══════════ IMPORT ══════════ */
+function nextQstNum(){
+  var max = 0;
+  DB.forEach(function(r){
+    var n = parseInt(String(r[0]).replace(/\D/g,''),10);
+    if(n > max) max = n;
+  });
+  return max + 1;
+}
+function runImport(){
+  var courseId = $('courseSel').value;
+  var skipDupes = $('skipDupes').checked;
+  var hasAttempts = $('hasAttempts').checked;
+  var mode = state.mode;
+
+  state.dbBefore = DB.map(function(r){ return r.slice(); });
+
+  var candidates = state.results.filter(function(r){
+    if(r.status === 'err' || r.status === 'skip') return false;
+    if(skipDupes && r.dupe) return false;
+    return true;
+  });
+
+  log('Import started · course=' + courseId + ' · mode=' + mode.toUpperCase(), 'b');
+
+  var retired = 0, removed = 0;
+  if(mode === 'replace'){
+    if(hasAttempts){
+      DB.forEach(function(r){ if(r[1]===courseId && r[11]){ r[11]=false; retired++; } });
+      log('Replace: ' + retired + ' existing question(s) deactivated (is_active = FALSE)', 'a');
+    } else {
+      var before = DB.length;
+      for(var i=DB.length-1;i>=0;i--){ if(DB[i][1]===courseId){ DB.splice(i,1); } }
+      removed = before - DB.length;
+      log('Replace: ' + removed + ' existing question(s) permanently deleted', 'r');
+    }
+  }
+
+  var order = 0;
+  DB.forEach(function(r){ if(r[1]===courseId && r[11] && r[2]>order) order = r[2]; });
+  var seq = nextQstNum();
+  var added = 0;
+
+  candidates.forEach(function(r){
+    order++;
+    var id = 'QST' + String(seq).padStart(3,'0');
+    DB.push([id, courseId, order, r.question, r.a, r.b, r.c, r.d, r.correct, r.explanation, r.difficulty, true]);
+    r.newId = id;
+    seq++; added++;
+  });
+
+  state.dbAfter = DB.map(function(r){ return r.slice(); });
+  state.imported = true;
+
+  var errN  = state.results.filter(function(r){ return r.status==='err'; }).length;
+  var dupN  = state.results.filter(function(r){ return r.dupe; }).length;
+  var skipN = state.results.filter(function(r){ return r.status==='skip'; }).length;
+
+  log(added + ' question(s) inserted · IDs ' + (added ? (candidates[0].newId + ' → ' + candidates[added-1].newId) : '—'), 'g');
+  if(errN)  log(errN + ' row(s) skipped — validation errors', 'r');
+  if(skipDupes && dupN) log(dupN + ' row(s) skipped — duplicates', 'a');
+  if(skipN) log(skipN + ' blank row(s) ignored', '');
+  log('Import finished. Sheet QuizQuestions now holds ' + DB.length + ' row(s).', 'g');
+
+  $('resNotice').innerHTML = '<div class="notice ok">✓ <b>Import complete.</b> ' + added +
+    ' question' + (added!==1?'s':'') + ' added to <span class="mono">' + courseId + '</span>' +
+    (retired ? ' · ' + retired + ' old question(s) deactivated' : '') +
+    (removed ? ' · ' + removed + ' old question(s) deleted' : '') + '.</div>';
+
+  $('resStats').innerHTML =
+    '<div class="stat"><div class="stat-n" style="color:var(--green)">' + added + '</div><div class="stat-l">Imported</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--red)">' + errN + '</div><div class="stat-l">Errors</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:var(--amber)">' + (skipDupes?dupN:0) + '</div><div class="stat-l">Dupes Skipped</div></div>' +
+    '<div class="stat"><div class="stat-n" style="color:' + (retired||removed?'var(--amber)':'var(--faint)') + '">' + (retired+removed) + '</div><div class="stat-l">Retired</div></div>' +
+    '<div class="stat"><div class="stat-n">' + DB.length + '</div><div class="stat-l">Total in Sheet</div></div>';
+
+  renderDb('after');
+  openStep('s5');
+  $('s5').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ══════════ DB TABLE ══════════ */
+function renderDb(which){
+  var rows = which === 'before' ? state.dbBefore : state.dbAfter;
+  var beforeIds = state.dbBefore.map(function(r){ return r[0]; });
+  var beforeAct = {};
+  state.dbBefore.forEach(function(r){ beforeAct[r[0]] = r[11]; });
+
+  var html = '<thead><tr><th>question_id</th><th>course_id</th><th>order</th><th>question_text</th>' +
+    '<th>A</th><th>B</th><th>C</th><th>D</th><th>key</th><th>difficulty</th><th>is_active</th></tr></thead><tbody>';
+  if(!rows.length){
+    html += '<tr><td colspan="11" style="text-align:center;padding:26px;color:var(--faint)">Sheet is empty.</td></tr>';
+  }
+  rows.forEach(function(r){
+    var isNew = which === 'after' && beforeIds.indexOf(r[0]) < 0;
+    var turnedOff = which === 'after' && beforeAct[r[0]] === true && r[11] === false;
+    html += '<tr class="' + (isNew ? 'r-new' : '') + '">' +
+      '<td class="mono" style="color:var(--ink)">' + esc(r[0]) + (isNew ? ' <span class="badge b-new">NEW</span>' : '') + '</td>' +
+      '<td class="mono">' + esc(r[1]) + '</td>' +
+      '<td class="mono">' + esc(r[2]) + '</td>' +
+      '<td class="q-txt">' + esc(clip(r[3],70)) + '</td>' +
+      '<td class="opt' + (r[8]==='A'?' correct':'') + '">' + esc(clip(r[4],20)) + '</td>' +
+      '<td class="opt' + (r[8]==='B'?' correct':'') + '">' + esc(clip(r[5],20)) + '</td>' +
+      '<td class="opt' + (r[8]==='C'?' correct':'') + '">' + esc(clip(r[6],20)) + '</td>' +
+      '<td class="opt' + (r[8]==='D'?' correct':'') + '">' + esc(clip(r[7],20)) + '</td>' +
+      '<td class="mono" style="color:var(--green)">' + esc(r[8]) + '</td>' +
+      '<td class="mono">' + esc(r[10]) + '</td>' +
+      '<td>' + (r[11] ? '<span class="badge b-ok">TRUE</span>'
+                      : '<span class="badge ' + (turnedOff?'b-off':'b-skip') + '">FALSE</span>') + '</td>' +
+      '</tr>';
+  });
+  $('dbTbl').innerHTML = html + '</tbody>';
+  $('tabAfter').classList.toggle('on', which === 'after');
+  $('tabBefore').classList.toggle('on', which === 'before');
+}
+
+/* ══════════ LOAD PIPELINE ══════════ */
+function loadData(text, label){
+  state.srcLabel = label;
+  var rows = parseDelimited(text);
+  if(rows.length < 2){
+    alert('This file has no data rows — only a header (or nothing at all).');
+    return;
+  }
+  state.headers = rows[0];
+  state.rows = rows.slice(1);
+  state.mapping = buildMapping(state.headers);
+  state.filter = 'all';
+  state.imported = false;
+
+  $('s1-sub').textContent = label + ' · ' + state.rows.length + ' row(s)';
+  openStep('s2');
+  var ok = renderMapping();
+  if(!ok){ shutStep('s3'); shutStep('s4'); shutStep('s5'); $('s2').scrollIntoView({behavior:'smooth'}); return; }
+
+  state.results = validate(state.rows, state.mapping, $('courseSel').value);
+  renderPreview();
+  openStep('s3'); openStep('s4'); shutStep('s5');
+  updateModeNotice();
+  $('s2').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function updateModeNotice(){
+  var courseId = $('courseSel').value;
+  var n = DB.filter(function(r){ return r[1]===courseId && r[11]; }).length;
+  if(state.mode === 'replace'){
+    $('modeNotice').innerHTML = '<div class="notice warn">⚠ <b>Replace All selected.</b> The ' + n +
+      ' question' + (n!==1?'s':'') + ' currently active in <span class="mono">' + courseId + '</span> will be ' +
+      ($('hasAttempts').checked ? 'deactivated' : '<b>permanently deleted</b>') + ' before the new ones are added.</div>';
+  } else {
+    $('modeNotice').innerHTML = '<div class="notice info">➕ <b>Append selected.</b> The ' + n +
+      ' question' + (n!==1?'s':'') + ' already in <span class="mono">' + courseId + '</span> stay untouched.</div>';
+  }
+}
+
+/* ══════════ SAMPLE DATA ══════════ */
+var TPL_HEAD = 'question_text,option_a,option_b,option_c,option_d,correct_option,explanation,difficulty';
+var SAMPLE_DIRTY = TPL_HEAD + '\n' +
+'"Apa suhu ideal untuk freezer?","0°C","-5°C","-10°C","-18°C atau lebih rendah",D,"Freezer harus -18°C atau lebih dingin.",EASY\n' +
+'"Talenan biru digunakan untuk apa?","Daging matang","Daging unggas","Seafood / ikan mentah","Roti dan kue",C,"Talenan biru khusus seafood mentah.",EASY\n' +
+'"Apa yang harus dilakukan jika menemukan makanan kedaluwarsa?","Mencicipinya dulu","Membuangnya segera","Memasaknya lebih lama","Memberi label baru",B,"Makanan kedaluwarsa harus langsung dibuang.",EASY\n' +
+'"Berapa lama minimal waktu mencuci tangan?","5 detik","10 detik","20 detik","1 menit",C,"Duplikat dari bank soal.",EASY\n' +
+'"Apa tujuan sistem FIFO dalam penyimpanan?","First In First Out","Fast In Fast Out","Food In Food Out","First In Final Out",A,"FIFO memastikan stok lama dipakai lebih dulu.",MEDIUM\n' +
+'"Suhu Danger Zone untuk makanan adalah?","-18°C hingga 0°C","0°C hingga 4°C","5°C hingga 60°C","60°C hingga 100°C",E,"Kunci jawaban salah — bukan A sampai D.",MEDIUM\n' +
+'"Apa fungsi utama proses chilling?","Membunuh semua bakteri","Memperlambat pertumbuhan bakteri","","Mempercepat pembusukan",B,"Opsi C sengaja dikosongkan.",EASY\n' +
+'"","Hijau","Merah","Kuning","Putih",B,"Pertanyaan sengaja dikosongkan.",EASY\n' +
+'"Kapan sarung tangan sekali pakai harus diganti?","Setiap 4 jam","Hanya saat robek","Setiap hari sekali","Setelah selesai satu tugas atau saat kotor",D,"",HARD\n' +
+'"Apa warna talenan untuk sayuran dan buah?","Biru","Hijau","Coklat","Kuning",B,"Talenan hijau untuk produk segar.",GAMPANG\n' +
+'"Apa yang dimaksud dengan HACCP?","Hazard Analysis Critical Control Point","Hygiene And Clean Control Process","Health And Cook Control Plan","Hazard Assessment Control Check",A,"HACCP adalah sistem keamanan pangan.",MEDIUM\n' +
+',,,,,,,\n' +
+'"Berapa suhu internal minimum untuk daging unggas matang?","63°C","74°C","85°C","100°C",B,"Daging unggas aman di 74°C.",MEDIUM\n' +
+'"Apa tujuan sistem FIFO dalam penyimpanan?","First In First Out","Fast In Fast Out","Food In Food Out","First In Final Out",A,"Duplikat di dalam file ini sendiri.",MEDIUM\n';
+
+var SAMPLE_CLEAN = TPL_HEAD + '\n' +
+'"Apa suhu ideal untuk freezer?","0°C","-5°C","-10°C","-18°C atau lebih rendah",D,"Freezer harus -18°C atau lebih dingin.",EASY\n' +
+'"Talenan biru digunakan untuk apa?","Daging matang","Daging unggas","Seafood / ikan mentah","Roti dan kue",C,"Talenan biru khusus seafood mentah.",EASY\n' +
+'"Apa tujuan sistem FIFO dalam penyimpanan?","First In First Out","Fast In Fast Out","Food In Food Out","First In Final Out",A,"FIFO memastikan stok lama dipakai lebih dulu.",MEDIUM\n' +
+'"Apa yang dimaksud dengan HACCP?","Hazard Analysis Critical Control Point","Hygiene And Clean Control Process","Health And Cook Control Plan","Hazard Assessment Control Check",A,"HACCP adalah sistem keamanan pangan.",MEDIUM\n' +
+'"Berapa suhu internal minimum untuk daging unggas matang?","63°C","74°C","85°C","100°C",B,"Daging unggas aman di 74°C.",HARD\n';
+
+var TEMPLATE = TPL_HEAD + '\n' +
+'"Contoh: Apa suhu chiller yang aman?","0-4°C","5-10°C","10-15°C","-18°C",A,"Chiller aman di 0-4°C.",EASY\n' +
+'"Contoh: Berapa lama mencuci tangan?","5 detik","10 detik","20 detik","1 menit",C,"Minimal 20 detik.",EASY\n';
+
+/* ══════════ EVENTS ══════════ */
+document.querySelectorAll('.src-tab').forEach(function(t){
+  t.onclick = function(){
+    document.querySelectorAll('.src-tab').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('.src-pane').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on');
+    $(t.dataset.pane).classList.add('on');
+  };
+});
+
+$('btnFetch').onclick = function(){
+  var url = $('linkInp').value.trim();
+  if(!/docs\.google\.com\/spreadsheets\/d\//.test(url)){
+    alert('That does not look like a Google Spreadsheet link.\n\nExpected format:\nhttps://docs.google.com/spreadsheets/d/…');
+    return;
+  }
+  var id = (url.match(/\/d\/([a-zA-Z0-9\-_]+)/) || [])[1] || 'unknown';
+  this.disabled = true; this.textContent = '⏳ Fetching…';
+  var btn = this;
+  setTimeout(function(){
+    btn.disabled = false; btn.textContent = '⤓ Fetch Questions';
+    loadData(SAMPLE_DIRTY, 'Spreadsheet ' + id.slice(0,10) + '… (simulated)');
+  }, 900);
+};
+
+$('btnDemo').onclick      = function(){ loadData(SAMPLE_DIRTY, 'Sample data (with errors)'); };
+$('btnDemoClean').onclick = function(){ loadData(SAMPLE_CLEAN, 'Clean sample data'); };
+$('btnTpl').onclick  = function(){ dl('MissFish_QuizTemplate.csv', TEMPLATE); };
+$('btnTpl2').onclick = function(){ dl('MissFish_QuizTemplate.csv', TEMPLATE); };
+
+var drop = $('drop'), fileInp = $('fileInp');
+drop.onclick = function(){ fileInp.click(); };
+['dragenter','dragover'].forEach(function(e){
+  drop.addEventListener(e, function(ev){ ev.preventDefault(); drop.classList.add('hot'); });
+});
+['dragleave','drop'].forEach(function(e){
+  drop.addEventListener(e, function(ev){ ev.preventDefault(); drop.classList.remove('hot'); });
+});
+drop.addEventListener('drop', function(ev){
+  var f = ev.dataTransfer.files[0]; if(f) readFile(f);
+});
+fileInp.onchange = function(){ if(this.files[0]) readFile(this.files[0]); };
+function readFile(f){
+  var rd = new FileReader();
+  rd.onload = function(){ loadData(rd.result, f.name); };
+  rd.readAsText(f, 'UTF-8');
+}
+
+$('chips').onclick = function(e){
+  if(!e.target.dataset.f) return;
+  state.filter = e.target.dataset.f;
+  renderPreview();
+};
+
+document.querySelectorAll('.mode').forEach(function(m){
+  m.onclick = function(){
+    document.querySelectorAll('.mode').forEach(function(x){ x.classList.remove('on'); });
+    m.classList.add('on');
+    state.mode = m.dataset.mode;
+    updateModeNotice();
+  };
+});
+$('hasAttempts').onchange = updateModeNotice;
+$('courseSel').onchange = function(){
+  if(state.rows.length){
+    state.results = validate(state.rows, state.mapping, $('courseSel').value);
+    renderPreview();
+  }
+  updateModeNotice();
+};
+
+$('btnImport').onclick = runImport;
+$('btnReset').onclick = function(){ location.reload(); };
+$('tabAfter').onclick  = function(){ renderDb('after'); };
+$('tabBefore').onclick = function(){ renderDb('before'); };
+
+$('btnErrCsv').onclick = function(){
+  var bad = state.results.filter(function(r){ return r.errors.length || r.warns.length; });
+  if(!bad.length){ alert('Nothing to report — every row is clean.'); return; }
+  var csv = 'row,status,question_text,issues\n' + bad.map(function(r){
+    return [r.line, r.status, '"' + String(r.question).replace(/"/g,'""') + '"',
+            '"' + r.errors.concat(r.warns).join(' | ').replace(/"/g,'""') + '"'].join(',');
+  }).join('\n');
+  dl('QuizImport_ErrorReport.csv', csv);
+};
+
+/* init */
+state.dbBefore = DB.map(function(r){ return r.slice(); });
+state.dbAfter  = DB.map(function(r){ return r.slice(); });
+log('Mockup ready · QuizQuestions sheet loaded with ' + DB.length + ' existing row(s)', 'b');
+updateModeNotice();
+</script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<!-- ================================================================
+     Miss Fish Bali LMS
+     File        : MissFish_QuizImportGuide_v1.0.html
+     Description : Panduan interaktif cara pakai mockup Quiz Import
+                   (bilingual ID/EN satu-teks, tanpa toggle). Berisi
+                   penjelasan apa itu mockup, 5 langkah bernomor, 3
+                   skenario wajib dicoba, FAQ, dan tombol ke link
+                   mockup. Dark/light toggle, sidebar jump-nav.
+     HtmlService · Static HTML
+     IT Department · Miss Fish Bali
+     Version     : 1.0
+     Generated   : 20 August 2026, 11:02:22 WITA
+     ================================================================ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Use — Quiz Import Mockup | Miss Fish Bali LMS</title>
+<meta name="theme-color" content="#0B0B0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"></noscript>
+<script>
+/* Anti-FOUC: baca theme sebelum body render. Inline sesuai SOP —
+   file preview lokal, bukan production dengan CSP ketat. */
+(function(){
+  var saved = localStorage.getItem('qig-theme');
+  var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+<style>
+/* ══ Overflow lock — wajib html DAN body ══ */
+html,body{overflow-x:hidden;max-width:100%}
+
+:root, [data-theme="light"]{
+  --bg:#FAFAF9; --bg2:#F1EFEA; --surface:#FFFFFF; --surface2:#F7F6F3;
+  --ink:#0B0B0C; --dim:#4A453F; --faint:#78716A; --line:#E4E1D9; --line2:#D8D3C8;
+  --gold:#9C7A2E; --gold-soft:rgba(156,122,46,.10); --gold-ink:#0B0B0C;
+  --sidebar-bg:#0B0B0C; --sidebar-ink:#FFFFFF;
+  --green:#16A34A; --green-soft:rgba(22,163,74,.09);
+  --red:#DC2626; --red-soft:rgba(220,38,38,.09);
+  --amber:#B45309; --amber-soft:rgba(180,83,9,.10);
+  --blue:#2563EB; --blue-soft:rgba(37,99,235,.09);
+  --shadow:0 2px 14px rgba(0,0,0,.06);
+}
+[data-theme="dark"]{
+  --bg:#0B0B0C; --bg2:#141416; --surface:#17171A; --surface2:#1D1D21;
+  --ink:#F5F4F2; --dim:#C9C6C0; --faint:#8A867E; --line:#28282C; --line2:#38383E;
+  --gold:#E8C468; --gold-soft:rgba(232,196,104,.13); --gold-ink:#0B0B0C;
+  --sidebar-bg:#08080A; --sidebar-ink:#FFFFFF;
+  --green:#3DD68C; --green-soft:rgba(61,214,140,.13);
+  --red:#F87171; --red-soft:rgba(248,113,113,.13);
+  --amber:#FBBF24; --amber-soft:rgba(251,191,36,.13);
+  --blue:#60A5FA; --blue-soft:rgba(96,165,250,.13);
+  --shadow:0 2px 14px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:15.5px;line-height:1.65;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.grid>*,.row>*,.flex>*{min-width:0}
+pre,code{overflow-x:auto;max-width:100%}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+img,svg,video{max-width:100%;height:auto}
+
+/* ══ Sidebar — lebar tetap, cermin ke kategori 14 SOP ══
+   Desktop: sidebar kiri. Mobile: hamburger KANAN + judul KIRI
+   (cermin, supaya drawer yang slide dari kanan tidak menutup judul). */
+:root{--sidebar-w:252px; --header-h:60px}
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:var(--sidebar-bg);color:var(--sidebar-ink);overflow-y:auto;z-index:50;
+  transform:translateX(0);transition:transform .25s;border-right:1px solid rgba(255,255,255,.06);
+}
+.sb-brand{display:flex;align-items:center;gap:11px;padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand img{height:26px;width:auto;display:block}
+.sb-brand span{font-family:Georgia,serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;color:#fff}
+.sb-theme{display:flex;gap:8px;padding:16px 20px 4px}
+.sb-theme button{flex:1;min-height:36px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.65);font-family:inherit;font-size:12px;font-weight:700;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
+.sb-theme button.on{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.sb-group{padding:22px 20px 8px;font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.sb-item{display:flex;align-items:center;gap:10px;min-height:44px;padding:9px 20px;font-size:13.5px;
+  color:rgba(255,255,255,.72);cursor:pointer;border-left:2.5px solid transparent;transition:.15s;text-decoration:none}
+.sb-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.sb-item .ic{width:18px;text-align:center;flex-shrink:0}
+.sb-cta{margin:18px 20px;padding:20px}
+.sb-cta a{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;
+  background:var(--gold);color:var(--gold-ink);border-radius:10px;font-size:13px;font-weight:700;
+  text-decoration:none;padding:0 14px}
+
+.hdr-mobile{display:none}
+.sb-toggle{display:none;position:fixed;top:12px;right:14px;z-index:60;
+  width:44px;height:44px;background:var(--sidebar-bg);border-radius:10px;border:none;color:#fff;
+  font-size:17px;cursor:pointer;align-items:center;justify-content:center}
+.sb-toggle[aria-expanded="true"]{background:var(--gold);color:var(--gold-ink)}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:45}
+.overlay.on{display:block}
+
+/* ══ Main — LEBAR TIDAK DIKUNCI, dibatasi hanya lewat padding responsif ══ */
+#main{margin-left:var(--sidebar-w);padding:44px clamp(24px,6vw,180px) 100px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.mockup-flag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber);
+  border-radius:999px;padding:5px 14px;margin-bottom:18px}
+
+header.hero{padding-bottom:34px;border-bottom:1px solid var(--line);margin-bottom:36px}
+.hero-logo{height:64px;width:auto;display:block;margin-bottom:22px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(28px,4.6vw,42px);line-height:1.15;letter-spacing:-.01em;margin-bottom:14px}
+.dek{color:var(--dim);font-size:15.5px;line-height:1.7;margin-bottom:26px}
+.lang-note{font-size:12.5px;color:var(--faint);font-style:italic}
+
+.btn{display:inline-flex;align-items:center;gap:9px;min-height:48px;border-radius:11px;padding:0 24px;
+  font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:.15s}
+.btn-gold{background:var(--gold);color:var(--gold-ink)}
+.btn-gold:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line2)}
+.btn-ghost:hover{border-color:var(--gold)}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+
+section[id]{scroll-margin-top:calc(var(--header-h) + 16px);margin-bottom:52px}
+.sec-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex-shrink:0;
+  border-radius:10px;background:var(--gold-soft);color:var(--gold);font-family:Georgia,serif;font-size:16px;font-weight:700}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+h2{font-family:Georgia,serif;font-weight:400;font-size:24px}
+h3{font-size:15.5px;font-weight:700;margin:20px 0 8px}
+p{color:var(--dim);margin-bottom:12px}
+ul,ol{color:var(--dim);margin:0 0 14px 22px}
+li{margin-bottom:7px}
+.lede{color:var(--dim);margin-bottom:22px}
+strong{color:var(--ink)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface2);
+  border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
+.step-card{display:flex;gap:16px;margin-bottom:16px}
+.step-num{flex-shrink:0;width:30px;height:30px;border-radius:9px;background:var(--gold);color:var(--gold-ink);
+  font-family:Georgia,serif;font-weight:700;font-size:14.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.step-body{flex:1}
+.step-t{font-weight:700;font-size:14.5px;margin-bottom:5px}
+.step-d{color:var(--dim);font-size:14px;line-height:1.65}
+.tip{margin-top:8px;display:flex;gap:8px;align-items:flex-start;background:var(--blue-soft);border:1px solid rgba(37,99,235,.2);
+  border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--dim)}
+.tip b{color:var(--ink)}
+
+.scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:20px 0}
+.scenario{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.scenario .n{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:7px}
+.scenario .t{font-weight:700;font-size:14px;margin-bottom:6px}
+.scenario .d{font-size:13px;color:var(--dim);line-height:1.6}
+.scenario .expect{margin-top:9px;font-size:12px;color:var(--green);font-weight:600;display:flex;gap:6px;align-items:flex-start}
+
+.faq{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px;background:var(--surface)}
+.faq summary{cursor:pointer;padding:16px 20px;font-weight:700;font-size:14px;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';font-size:20px;color:var(--gold);font-weight:400;flex-shrink:0}
+.faq[open] summary::after{content:'−'}
+.faq-body{padding:0 20px 18px;color:var(--dim);font-size:13.5px;line-height:1.7}
+
+.badge{display:inline-block;font-size:10.5px;font-weight:700;border-radius:999px;padding:3px 10px;letter-spacing:.03em}
+.b-ok{background:var(--green-soft);color:var(--green)}
+.b-warn{background:var(--amber-soft);color:var(--amber)}
+.b-err{background:var(--red-soft);color:var(--red)}
+
+footer{border-top:1px solid var(--line);padding-top:24px;margin-top:20px;font-size:12.5px;color:var(--faint);line-height:1.8}
+
+/* ══ Mobile ══ */
+@media(max-width:900px){
+  .sidebar{transform:translateX(100%);width:min(80vw,320px)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar{left:auto;right:0}
+  #main{margin-left:0;padding:calc(var(--header-h) + 22px) clamp(18px,5vw,40px) 80px}
+  .sb-toggle{display:flex}
+  .hdr-mobile{display:flex;position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:40;
+    align-items:center;padding:0 64px 0 18px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .hdr-mobile-title{font-family:Georgia,serif;font-size:15px;font-weight:600;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .step-card{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr-mobile">
+  <div class="hdr-mobile-title">Quiz Import Guide</div>
+</div>
+<button class="sb-toggle" id="sbToggle" aria-expanded="false" aria-controls="sidebar" aria-label="Open menu">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali">
+    <span>LMS Guide</span>
+  </div>
+  <div class="sb-theme">
+    <button data-theme="light" id="btnLight">☀ Light</button>
+    <button data-theme="dark" id="btnDark">🌙 Dark</button>
+  </div>
+  <div class="sb-group">Panduan · Guide</div>
+  <a class="sb-item" href="#apa-itu"><span class="ic">◆</span> Apa Itu Mockup Ini</a>
+  <a class="sb-item" href="#langkah"><span class="ic">①</span> 5 Langkah Pakai</a>
+  <a class="sb-item" href="#skenario"><span class="ic">▶</span> 3 Skenario Wajib Dicoba</a>
+  <a class="sb-item" href="#faq"><span class="ic">?</span> FAQ</a>
+  <div class="sb-cta">
+    <a href="http://anabhidev.com/MFB/LMS-Quiz-Mockup.html" target="_blank" rel="noopener">🔗 Open Mockup</a>
+  </div>
+</nav>
+
+<div id="main">
+
+  <header class="hero">
+    <img class="hero-logo" src="https://anabhidev.com/MFB/missfish-logo-white.webp" alt="Miss Fish Bali">
+    <div class="eyebrow">LMS · Course Management</div>
+    <div class="mockup-flag">⚑ Panduan Mockup · Guide for Mockup</div>
+    <h1>Cara Pakai Mockup<br>Quiz Import</h1>
+    <p class="dek">
+      Panduan singkat ini menjelaskan cara mencoba <strong>mockup (simulasi/prototipe)</strong> fitur Import Soal Quiz
+      dari Google Spreadsheet, sebelum fitur ini benar-benar dibangun di LMS.<br>
+      <em>This short guide explains how to try the Quiz Import <strong>mockup (simulation/prototype)</strong>
+      before the feature is actually built into the LMS.</em>
+    </p>
+    <div class="btn-row">
+      <a class="btn btn-gold" href="http://anabhidev.com/MFB/LMS-Quiz-Mockup.html" target="_blank" rel="noopener">
+        ↗ Buka Mockup — Open the Mockup
+      </a>
+      <a class="btn btn-ghost" href="#langkah">↓ Lihat Langkahnya — See the Steps</a>
+    </div>
+  </header>
+
+  <!-- ══════════ APA ITU MOCKUP ══════════ -->
+  <section id="apa-itu">
+    <div class="sec-head"><div class="sec-num">◆</div><h2>Apa Itu Mockup Ini?</h2></div>
+    <p class="lede">What is this mockup?</p>
+
+    <div class="card" style="margin-bottom:18px">
+      <p><strong>Mockup</strong> adalah simulasi/prototipe yang <strong>benar-benar berjalan</strong> — bukan sekadar
+        gambar atau screenshot. Semua tombol bisa diklik, semua validasi soal quiz benar-benar diperiksa,
+        semua yang terjadi di layar itu <em>real</em>. Bedanya dengan LMS asli hanya satu:
+        <strong>data-nya masih dummy (contoh), belum tersambung ke database LMS yang sesungguhnya.</strong></p>
+      <p><em>A mockup is a simulation/prototype that actually runs — not a picture or screenshot. Every button
+        works, every quiz question is genuinely validated. The only difference from the real LMS: the data is
+        still dummy (sample), not yet connected to the actual LMS database.</em></p>
+    </div>
+
+    <h3>Kenapa dibuat sebagai mockup dulu? — Why build a mockup first?</h3>
+    <p>Supaya alur dan aturan pemeriksaan soal (validasi) bisa dicoba dan disepakati bersama <strong>SEBELUM</strong>
+      masuk ke sistem LMS yang asli — supaya tidak ada data quiz staff yang rusak saat fitur ini nanti benar-benar
+      dipakai.</p>
+    <p><em>So the flow and question-checking rules (validation) can be tried and agreed upon
+      <strong>BEFORE</strong> going into the real LMS system — to make sure no real staff quiz data gets damaged
+      once this feature is actually used.</em></p>
+
+    <h3>Apa yang bisa dicoba — What you can try</h3>
+    <ul>
+      <li><strong>Upload file CSV</strong> — parsing (pembacaan) datanya <strong>sungguhan</strong>, bukan simulasi. /
+        <em>CSV upload — the parsing is genuinely real, not simulated.</em></li>
+      <li><strong>Pemeriksaan otomatis (validation)</strong> — soal kosong, kunci jawaban salah, soal duplikat,
+        semuanya benar-benar dideteksi. / <em>Automatic validation — blank questions, wrong answer keys,
+        duplicate questions are all genuinely detected.</em></li>
+      <li><strong>Preview database sebelum-sesudah</strong> — melihat persis apa yang akan tersimpan.
+        / <em>Before/after database preview — see exactly what would be saved.</em></li>
+    </ul>
+
+    <h3>Apa yang BELUM terjadi — What does NOT happen yet</h3>
+    <ul>
+      <li>Tidak ada data yang benar-benar tersimpan ke LMS. / <em>No data is actually saved to the LMS.</em></li>
+      <li>Link Google Spreadsheet sungguhan belum bisa dibaca langsung (baru simulasi).
+        / <em>A real Google Spreadsheet link cannot be read directly yet (simulated only).</em></li>
+      <li>Semua yang terjadi di mockup <strong>hilang setiap refresh halaman</strong> — memang seperti itu.
+        / <em>Everything in the mockup <strong>resets on every page refresh</strong> — that is expected.</em></li>
+    </ul>
+  </section>
+
+  <!-- ══════════ 5 LANGKAH ══════════ -->
+  <section id="langkah">
+    <div class="sec-head"><div class="sec-num">①</div><h2>5 Langkah Pakai Mockup</h2></div>
+    <p class="lede">5 Steps to Use the Mockup</p>
+
+    <div class="step-card card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-t">Pilih Course &amp; Sumber Data — Choose Course &amp; Source</div>
+        <div class="step-d">
+          Di bagian atas, pilih <strong>Target Course</strong> dari dropdown. Lalu pilih salah satu dari 3 tab:
+          <span class="mono">🔗 Spreadsheet Link</span>, <span class="mono">📄 Upload CSV</span>, atau
+          <span class="mono">🎲 Load Sample Data</span>.<br>
+          <em>At the top, choose a Target Course from the dropdown. Then pick one of 3 tabs: Spreadsheet Link,
+          Upload CSV, or Load Sample Data.</em>
+        </div>
+        <div class="tip">💡 <span><b>Untuk mencoba paling cepat:</b> klik tab <span class="mono">🎲 Load Sample Data</span>
+          lalu tombol <span class="mono">Load Sample (with errors)</span>. / <em>Fastest way to try: click the
+          Load Sample Data tab, then the "Load Sample (with errors)" button.</em></span></div>
+      </div>
+    </div>
+
+    <div class="step-card card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-t">Cek Column Detection — Check Column Detection</div>
+        <div class="step-d">
+          Sistem otomatis mencocokkan nama kolom di file dengan skema database (bukan berdasarkan urutan kolom).
+          Kalau ada kolom wajib yang hilang, akan muncul pemberitahuan merah dan langkah berikutnya terkunci.<br>
+          <em>The system automatically matches column names in the file to the database schema (not by column
+          order). If a required column is missing, a red notice appears and the next step stays locked.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-t">Lihat Validation &amp; Preview</div>
+        <div class="step-d">
+          Setiap baris soal ditandai <span class="badge b-ok">OK</span>, <span class="badge b-warn">WARN</span>,
+          atau <span class="badge b-err">ERROR</span>. Klik chip filter di atas tabel untuk melihat baris tertentu
+          saja. Kolom <strong>Issues</strong> menjelaskan tepatnya apa yang salah di baris itu.<br>
+          <em>Every question row is marked OK, WARN, or ERROR. Click the filter chips above the table to see only
+          certain rows. The Issues column explains exactly what is wrong with that row.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card card">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-t">Pilih Import Mode</div>
+        <div class="step-d">
+          <strong>Append</strong> menambahkan soal baru tanpa mengubah yang lama. <strong>Replace All</strong>
+          mengganti seluruh soal course itu — centang/hilangkan <span class="mono">"course ini sudah ada
+          attempts"</span> untuk melihat bedanya (dinonaktifkan vs dihapus permanen).<br>
+          <em>Append adds new questions without touching old ones. Replace All replaces the whole question set —
+          tick/untick "this course already has attempts" to see the difference (deactivated vs permanently
+          deleted).</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card card">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-t">Klik Run Import &amp; Lihat Hasilnya</div>
+        <div class="step-d">
+          Setelah <span class="mono">✓ Run Import</span> diklik, panel <strong>Database Preview</strong> menampilkan
+          tab <strong>Before</strong> dan <strong>After</strong> — persis seperti apa isi sheet QuizQuestions
+          sebelum dan sesudah. Ada juga <strong>Activity Log</strong> di bagian bawah.<br>
+          <em>After clicking Run Import, the Database Preview panel shows Before and After tabs — exactly what the
+          QuizQuestions sheet looks like before and after. There is also an Activity Log below.</em>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 3 SKENARIO ══════════ -->
+  <section id="skenario">
+    <div class="sec-head"><div class="sec-num">▶</div><h2>3 Skenario Wajib Dicoba</h2></div>
+    <p class="lede">3 Scenarios You Should Try</p>
+
+    <div class="scenario-grid">
+      <div class="scenario">
+        <span class="n">Skenario 1</span>
+        <div class="t">🎲 Load Sample (with errors)</div>
+        <div class="d">Muat 14 soal contoh yang sengaja berisi semua jenis masalah — kosong, kunci jawaban salah,
+          duplikat, dll. / <em>Load 14 sample questions deliberately containing every kind of problem — blanks,
+          wrong answer keys, duplicates, etc.</em></div>
+        <div class="expect">✓ Yang diharapkan: <span>3 error, 4 warning, 6 valid, 1 baris kosong diabaikan.
+          / Expect: 3 errors, 4 warnings, 6 valid, 1 blank row ignored.</span></div>
+      </div>
+      <div class="scenario">
+        <span class="n">Skenario 2</span>
+        <div class="t">♻ Replace All + Attempts</div>
+        <div class="d">Pilih mode Replace All, centang "course ini sudah ada attempts", lalu Run Import.
+          / <em>Choose Replace All mode, tick "this course already has attempts", then Run Import.</em></div>
+        <div class="expect">✓ Yang diharapkan: <span>soal lama muncul di tab Before dengan status TRUE, di tab
+          After statusnya jadi FALSE (dicoret) — bukan hilang. / Expect: old questions appear TRUE in the Before
+          tab, FALSE (struck through) in After — not gone.</span></div>
+      </div>
+      <div class="scenario">
+        <span class="n">Skenario 3</span>
+        <div class="t">⬇ Download Error Report</div>
+        <div class="d">Setelah preview muncul, klik "Download Error Report" di bagian bawah tabel.
+          / <em>After the preview appears, click "Download Error Report" at the bottom of the table.</em></div>
+        <div class="expect">✓ Yang diharapkan: <span>file CSV berisi daftar baris bermasalah beserta alasannya,
+          siap dikirim balik ke HoD. / Expect: a CSV file listing problem rows and their reasons, ready to send
+          back to the HoD.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FAQ ══════════ -->
+  <section id="faq">
+    <div class="sec-head"><div class="sec-num">?</div><h2>FAQ</h2></div>
+    <p class="lede">Frequently Asked Questions</p>
+
+    <details class="faq">
+      <summary>Apakah ini mengubah data LMS yang asli? — Does this change the real LMS data?</summary>
+      <div class="faq-body">Tidak. Mockup ini berdiri sendiri (standalone), tidak tersambung ke server atau
+        database LMS mana pun. Semua "database" yang terlihat di mockup adalah data contoh yang hanya ada di
+        browser kakak saat ini. / <em>No. This mockup is standalone — it is not connected to any LMS server or
+        database. Any "database" seen in the mockup is sample data that only exists in your browser right
+        now.</em></div>
+    </details>
+
+    <details class="faq">
+      <summary>Kenapa ada tulisan "Mockup" di bagian atas halaman? — Why does it say "Mockup" at the top?</summary>
+      <div class="faq-body">Supaya jelas bagi siapa pun yang membukanya bahwa ini masih tahap simulasi/uji coba,
+        bukan fitur yang sudah aktif di LMS. / <em>So anyone opening it understands this is still a
+        simulation/testing stage, not a feature that is already live in the LMS.</em></div>
+    </details>
+
+    <details class="faq">
+      <summary>Kalau saya refresh halaman mockup, apa yang terjadi? — What happens if I refresh the mockup page?</summary>
+      <div class="faq-body">Semua yang sudah dicoba (soal yang di-import, perubahan database dummy) akan
+        kembali ke kondisi awal. Ini normal — mockup memang tidak menyimpan apa pun secara permanen.
+        / <em>Everything tried so far (imported questions, dummy database changes) resets to the starting state.
+        This is normal — the mockup is not meant to save anything permanently.</em></div>
+    </details>
+
+    <details class="faq">
+      <summary>Bolehkah saya coba upload spreadsheet asli dari course saya? — Can I try uploading my actual course spreadsheet?</summary>
+      <div class="faq-body">Boleh, dan justru dianjurkan. Export dulu jadi CSV (Google Sheets → File → Download →
+        Comma Separated Values), lalu drag file itu ke tab <span class="mono">📄 Upload CSV</span> di mockup.
+        Hasilnya akan menunjukkan persis mana soal yang lolos dan mana yang perlu diperbaiki.
+        / <em>Yes, and it is encouraged. Export it as CSV first (Google Sheets → File → Download → Comma
+        Separated Values), then drag that file into the "Upload CSV" tab in the mockup. The result will show
+        exactly which questions pass and which need fixing.</em></div>
+    </details>
+
+    <details class="faq">
+      <summary>Setelah mockup ini disetujui, kapan fitur aslinya jadi? — After this mockup is approved, when will the real feature be ready?</summary>
+      <div class="faq-body">Fitur asli dikembangkan setelah alur dan aturan validasi di mockup ini disepakati
+        bersama. Perkiraan dan jadwal pengembangan akan diinformasikan terpisah oleh IT Department.
+        / <em>The real feature will be developed once the flow and validation rules in this mockup are agreed
+        upon together. Development estimates and schedule will be communicated separately by the IT
+        Department.</em></div>
+    </details>
+  </section>
+
+  <footer>
+    Miss Fish Bali LMS · Quiz Import Guide v1.0<br>
+    IT Department · Miss Fish Bali
+  </footer>
+
+</div>
+
+<script>
+var sidebar = document.getElementById('sidebar');
+var overlay = document.getElementById('overlay');
+var toggle  = document.getElementById('sbToggle');
+
+function closeDrawer(){
+  sidebar.classList.remove('open');
+  overlay.classList.remove('on');
+  toggle.setAttribute('aria-expanded','false');
+  toggle.focus();
+}
+function openDrawer(){
+  sidebar.classList.add('open');
+  overlay.classList.add('on');
+  toggle.setAttribute('aria-expanded','true');
+}
+toggle.addEventListener('click', function(){
+  var isOpen = sidebar.classList.contains('open');
+  isOpen ? closeDrawer() : openDrawer();
+});
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+});
+document.querySelectorAll('.sb-item').forEach(function(a){
+  a.addEventListener('click', function(){ if(window.innerWidth <= 900) closeDrawer(); });
+});
+
+/* Theme toggle */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('qig-theme', t);
+  document.getElementById('btnLight').classList.toggle('on', t==='light');
+  document.getElementById('btnDark').classList.toggle('on', t==='dark');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', t==='dark' ? '#0B0B0C' : '#FAFAF9');
+}
+document.getElementById('btnLight').onclick = function(){ applyTheme('light'); };
+document.getElementById('btnDark').onclick  = function(){ applyTheme('dark'); };
+applyTheme(document.documentElement.getAttribute('data-theme'));
+</script>
+</body>
+</html>
