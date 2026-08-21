@@ -3,49 +3,60 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.8
-Generated : 21 August 2026, 21:23:09
+Version   : 2.9
+Generated : 21 August 2026, 23:48:24
 ================================================================
-PERUBAHAN DARI v2.7 (Phase 3+4 gabung — PWA & Dasbor)
+PERUBAHAN DARI v2.8 (bugfix dari laporan pemakaian nyata)
 
-  PWA (Phase 4):
-  - Bisa "Add to Home Screen" — dapat ikon sendiri, buka layar
-    penuh tanpa address bar Chrome. Ikon dibuat dari logo Miss
-    Fish (file MF_1-1_cr.png & MF_Transparant.png).
-  - manifest.json + sw.js (Service Worker) ditambahkan sebagai
-    file terpisah (WAJIB diupload bersama, lihat CARA PASANG).
-  - Mekanisme deteksi update: kalau ada versi baru ter-upload,
-    muncul banner kuning di atas "Versi baru tersedia — Muat
-    ulang". Tanpa ini, PWA berisiko membuat Wibawa "terkunci" di
-    versi lama tanpa sadar — sudah ditangani sejak awal.
-  - Ikon maskable (untuk Android adaptive icon) sementara memakai
-    simbol "S" gold saja (bukan logo lengkap MISS FISH) — supaya
-    proporsinya pas di safe zone Android. Bisa diganti kalau
-    Wibawa lebih suka versi lain.
+  1. Header membesar setelah toggle dark mode — DIPERBAIKI
+     Toggle sebelumnya bikin header jadi 2 baris (toggle di atas
+     jam), menambah tinggi header. Sekarang toggle sejajar dengan
+     jam (1 baris), tinggi header kembali seperti semula di kedua
+     mode. Sudah diverifikasi dengan screenshot langsung.
 
-  DASBOR (Phase 3):
-  - Tab "Dasbor" di bottom nav sekarang AKTIF (sebelumnya "segera
-    hadir"). Menampilkan ringkasan visual bulan berjalan:
-    - KPI: Total task & % Selesai
-    - Donut chart: distribusi Status
-    - Bar chart: Top 5 Tag terbanyak
-    - Bar chart: distribusi Prioritas (Low/Med/High/Ctrl)
-  - TIDAK ADA action Edge Function baru — Dasbor memakai ulang
-    action 'get-report' yang sudah ada (server sudah menghitung
-    ringkasan per status/prioritas/tag sejak v1.9).
-  - Library baru: Chart.js 4.5.1 (CDN cdnjs, domain sama seperti
-    xlsx yang sudah dipakai — TIDAK perlu ubah _headers CSP).
-  - Tab "Log" TETAP "segera hadir" — belum dikerjakan, di luar
-    scope Phase 3+4 ini.
+  2. Dasbor: teks tidak terbaca di dark mode — DIPERBAIKI
+     Angka KPI (Total task, % Selesai) dan judul chart (Status
+     Task, Top 5 Tag, Distribusi Prioritas) sebelumnya memakai
+     warna navy gelap yang TIDAK ikut berubah di dark mode,
+     sehingga nyaris tak terbaca di atas card yang sudah gelap.
+     Ditambahkan variabel CSS baru "--heading" khusus untuk teks
+     judul yang PERLU ikut kontras di dark mode (beda dari --navy
+     yang tetap dipakai untuk elemen warna brand solid seperti
+     header & tombol utama). Turut diperbaiki: tombol "Unduh
+     Excel", judul & tombol "Backup Data", checkbox terpilih di
+     dropdown Jenis Pekerjaan/Jenis Hari/Status. Sudah diverifikasi
+     dengan screenshot dark mode langsung, bukan hanya baca kode.
 
-CARA PASANG (PENTING — ada file BARU, bukan cuma index.html)
+  3. Dasbor: bar chart "Top 5 Tag" — DIUBAH
+     Sebelumnya horizontal (batang ke samping), sekarang vertikal
+     (batang naik ke atas), sesuai preferensi tampilan.
+
+CARA PASANG
+  Tidak ada file baru dan tidak ada perubahan Edge Function untuk
+  bugfix di atas. Cukup upload berkas ini menimpa index.html yang
+  sudah ada (manifest.json, sw.js, dan folder icons/ TIDAK perlu
+  diunggah ulang untuk bugfix ini).
+
+  Namun kalau ini pemasangan PERTAMA KALI Phase 3+4 (PWA & Dasbor),
+  tetap perlu urutan lengkap:
   1. Upload folder icons/ (6 file) ke /itm-daily/icons/
   2. Upload manifest.json ke /itm-daily/manifest.json
   3. Upload sw.js ke /itm-daily/sw.js
   4. Upload berkas ini menimpa /itm-daily/index.html
-  Urutan folder/file pendukung (1-3) sebaiknya SEBELUM index.html
-  (4), supaya saat index.html baru dibuka, semua rujukannya
-  (ikon, manifest, SW) sudah tersedia di server.
+
+RINGKASAN FITUR PHASE 3+4 (PWA & Dasbor, dari v2.8)
+  PWA:
+  - Bisa "Add to Home Screen" — dapat ikon sendiri, buka layar
+    penuh tanpa address bar Chrome.
+  - Mekanisme deteksi update: banner kuning "Versi baru tersedia
+    — Muat ulang" akan muncul otomatis kalau ada versi baru.
+
+  DASBOR:
+  - Tab "Dasbor" aktif — ringkasan visual bulan berjalan: KPI
+    (Total task & % Selesai), donut chart Status, bar chart Top 5
+    Tag, bar chart Distribusi Prioritas.
+  - Reuse action 'get-report' — tidak ada Edge Function baru.
+  - Tab "Log" TETAP "segera hadir" — belum dikerjakan.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -82,6 +93,7 @@ CARA PASANG (PENTING — ada file BARU, bukan cuma index.html)
   --field:   #F4F6F8;
   --red:     #C0392B;
   --amber:   #B7791F;
+  --heading: #0B1B2E;
   --nav-h:   64px;
   --app-w:   520px;
 
@@ -108,6 +120,13 @@ body.dark-mode {
   --muted:   #6E7A88;
   --line:    #2A3340;
   --field:   #1E2530;
+  /* --heading BEDA dari --navy: --navy tetap gelap (dipakai untuk
+     background/border elemen brand solid seperti header & tombol
+     primer, itu benar tetap sama). --heading dipakai KHUSUS untuk
+     teks judul di atas permukaan card/field yang IKUT berubah warna
+     di dark mode -- kalau teks itu tetap pakai --navy (gelap), teks
+     jadi nyaris tak terbaca di atas card yang sudah ikut gelap juga. */
+  --heading: #E8ECF1;
 }
 /* Transisi halus saat toggle, biar tidak "kedip" mendadak */
 body, .header, .nav, .toast { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
@@ -192,12 +211,12 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 /* Kolom kanan diberi lebar tetap yang SAMA dengan estimasi kolom kiri
    sehingga judul di tengah benar-benar berada di titik tengah header,
    bukan sekadar di tengah sisa ruang yang kebetulan tidak simetris. */
-.hd-side { flex: 0 0 28%; max-width: 130px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.hd-side { flex: 0 0 28%; max-width: 130px; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 4px; }
 
 .theme-toggle {
-  border: none; background: none; cursor: pointer; padding: 6px;
-  min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center;
-  border-radius: 8px; color: rgba(255,255,255,.65); transition: background .15s, color .15s;
+  border: none; background: none; cursor: pointer; padding: 4px;
+  min-width: 28px; min-height: 28px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; color: rgba(255,255,255,.65); transition: background .15s, color .15s; flex-shrink: 0;
 }
 .theme-toggle:active { background: rgba(255,255,255,.08); }
 .theme-icon-moon { display: none; }
@@ -262,8 +281,8 @@ body.dark-mode .theme-icon-moon { display: block; }
   min-height: 44px; font-size: 15px; color: var(--ink);
 }
 .option-item:active { background: var(--field); }
-.option-item.selected { color: var(--navy); font-weight: 600; }
-.option-check { color: var(--navy); font-weight: 700; opacity: 0; }
+.option-item.selected { color: var(--heading); font-weight: 600; }
+.option-check { color: var(--heading); font-weight: 700; opacity: 0; }
 .option-item.selected .option-check { opacity: 1; }
 
 .scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--sp-4) var(--sp-4) calc(var(--nav-h) + var(--sp-7)); }
@@ -334,7 +353,7 @@ body.dark-mode .theme-icon-moon { display: block; }
   font-weight: 600; cursor: pointer; min-height: 44px; display: flex; align-items: center; justify-content: center;
 }
 .report-load-btn { background: var(--navy); color: #fff; border: none; }
-.report-export-btn { background: var(--field); color: var(--navy); border: 1px solid var(--line); }
+.report-export-btn { background: var(--field); color: var(--heading); border: 1px solid var(--line); }
 .report-official-btn {
   margin-bottom: var(--sp-4); padding: var(--sp-2) var(--sp-3); border-radius: 10px; text-align: center;
   font-size: 12.5px; color: var(--mid); cursor: pointer; min-height: 38px;
@@ -346,12 +365,12 @@ body.dark-mode .theme-icon-moon { display: block; }
 /* ── BACKUP (Phase 2A) ── */
 .backup-section { margin-top: var(--sp-6); }
 .backup-divider { height: 1px; background: var(--line); margin-bottom: var(--sp-4); }
-.backup-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: var(--sp-1); }
+.backup-title { font-size: 13px; font-weight: 700; color: var(--heading); margin-bottom: var(--sp-1); }
 .backup-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: var(--sp-3); }
 .backup-btn {
   padding: var(--sp-3); border-radius: 12px; text-align: center; font-size: 14px;
   font-weight: 600; cursor: pointer; min-height: 44px; display: flex; align-items: center; justify-content: center;
-  background: var(--card); color: var(--navy); border: 1.5px solid var(--brass);
+  background: var(--card); color: var(--heading); border: 1.5px solid var(--brass);
 }
 .backup-btn:active { background: var(--field); }
 .backup-btn.busy { opacity: .6; pointer-events: none; }
@@ -361,7 +380,7 @@ body.dark-mode .theme-icon-moon { display: block; }
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: var(--sp-4) var(--sp-3); text-align: center;
 }
-.summary-num { font-size: 24px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+.summary-num { font-size: 24px; font-weight: 700; color: var(--heading); line-height: 1; margin-bottom: 4px; }
 .summary-label { font-size: 11px; color: var(--muted); }
 .summary-full { grid-column: 1 / -1; }
 .summary-full .summary-num { font-size: 20px; }
@@ -371,7 +390,7 @@ body.dark-mode .theme-icon-moon { display: block; }
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: var(--sp-4); margin-bottom: var(--sp-3);
 }
-.dash-chart-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: var(--sp-3); }
+.dash-chart-title { font-size: 13px; font-weight: 700; color: var(--heading); margin-bottom: var(--sp-3); }
 .dash-chart-wrap { position: relative; height: 220px; }
 
 /* ── RIWAYAT ── */
@@ -857,7 +876,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.8',
+  APP_VERSION:       '2.9',
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -1780,9 +1799,9 @@ function renderDashTagChart(tagFrequency) {
     type: 'bar',
     data: { labels, datasets: [{ data, backgroundColor: '#C9A84C', borderRadius: 6 }] },
     options: {
-      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { x: { ticks: { precision: 0 } } },
+      scales: { y: { ticks: { precision: 0 } } },
     },
   });
 }
