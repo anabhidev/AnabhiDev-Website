@@ -3,21 +3,33 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.4
-Generated : 21 August 2026, 10:31:54
+Version   : 2.7
+Generated : 21 August 2026, 21:09:10
 ================================================================
-PERUBAHAN DARI v2.3 (Phase 2A)
-  - Tab Laporan: tombol baru "Unduh Semua Data" — backup penuh
-    4 tabel (daily_activity, activity_log, master_tag, app_config),
-    TERMASUK baris yang sudah dihapus (soft-delete/is_archived),
-    diunduh sebagai JSON + Excel sekaligus (2 file, 1 klik).
-    Terpisah dari export Laporan yang sudah ada (itu tetap sama
-    persis, hanya untuk rentang tanggal & tanpa data terhapus).
+PERUBAHAN DARI v2.6 (Phase 2 lanjutan — TUNTAS)
+  - Tab Laporan: tombol BARU "Unduh Laporan Resmi" — export Excel
+    format Day / Date / Task / Remark (4 kolom), meniru gaya
+    laporan bulanan lama. Satu tanggal dengan beberapa task akan
+    menampilkan Day & Date HANYA di baris pertama; baris berikutnya
+    untuk tanggal yang sama dikosongkan di kolom itu (persis
+    contoh referensi). Diurutkan otomatis berdasarkan tanggal.
+  - TIDAK termasuk: logo dan garis kotak/border. Keputusan sadar —
+    library Excel gratis yang dipakai tidak mendukung cell
+    styling (border/warna sel), dan user memilih menambahkan
+    logo + garis secara manual sendiri di Excel setelah unduh,
+    daripada menambah dependency pihak ketiga.
+  - Export Excel LAMA (9 kolom detail teknis, "Unduh Excel") TIDAK
+    berubah sama sekali — tetap ada sebagai pilihan terpisah untuk
+    kebutuhan data lengkap/teknis.
 
 CARA PASANG
-  WAJIB deploy MFB-IT_v1.10.ts dulu ke Edge Function sebelum
-  mengunggah berkas ini — tombol backup memanggil action
-  "export-all" yang hanya ada mulai v1.10.
+  Tidak ada perubahan Edge Function di versi ini — cukup upload
+  berkas ini menimpa index.html.
+
+STATUS: Semua item Phase 2 lanjutan (priority 1 baris, bottom nav
+tebal, dark mode, tampilan tabel Riwayat/Laporan, CORS fix, export
+laporan resmi) SUDAH SELESAI dan teruji. Item berikutnya (Dasbor,
+PWA) menunggu keputusan phase terpisah.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -51,6 +63,25 @@ CARA PASANG
              'Inter', 'Segoe UI', Roboto, sans-serif;
   --font-pin: Georgia, 'Times New Roman', serif;
 }
+
+/* ── DARK MODE ──────────────────────────────────────────────
+   Kebalikan skema warna (opsi 1). Warna brand (--navy, --navy2,
+   --brass, --red, --amber) SENGAJA TIDAK diubah — itu identitas
+   brand, tetap sama di kedua mode. Yang berubah hanya latar,
+   permukaan card/field, dan warna teks — supaya semua komponen
+   yang sudah pakai var(--ink)/var(--card)/dst otomatis ikut
+   berubah tanpa perlu menyentuh CSS rule lain satu per satu. */
+body.dark-mode {
+  --bg:      #0A0E14;
+  --card:    #161C26;
+  --ink:     #E8ECF1;
+  --mid:     #A9B4C0;
+  --muted:   #6E7A88;
+  --line:    #2A3340;
+  --field:   #1E2530;
+}
+/* Transisi halus saat toggle, biar tidak "kedip" mendadak */
+body, .header, .nav, .toast { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
 
 *, *::before, *::after {
   box-sizing: border-box; margin: 0; padding: 0;
@@ -132,7 +163,18 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 /* Kolom kanan diberi lebar tetap yang SAMA dengan estimasi kolom kiri
    sehingga judul di tengah benar-benar berada di titik tengah header,
    bukan sekadar di tengah sisa ruang yang kebetulan tidak simetris. */
-.hd-side { flex: 0 0 28%; max-width: 130px; }
+.hd-side { flex: 0 0 28%; max-width: 130px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+
+.theme-toggle {
+  border: none; background: none; cursor: pointer; padding: 6px;
+  min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; color: rgba(255,255,255,.65); transition: background .15s, color .15s;
+}
+.theme-toggle:active { background: rgba(255,255,255,.08); }
+.theme-icon-moon { display: none; }
+body.dark-mode .theme-icon-sun { display: none; }
+body.dark-mode .theme-icon-moon { display: block; }
+.theme-toggle:hover { color: #fff; }
 
 .hd-title {
   flex: 1 1 auto; text-align: center; line-height: 1.25;
@@ -264,6 +306,13 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 }
 .report-load-btn { background: var(--navy); color: #fff; border: none; }
 .report-export-btn { background: var(--field); color: var(--navy); border: 1px solid var(--line); }
+.report-official-btn {
+  margin-bottom: var(--sp-4); padding: var(--sp-2) var(--sp-3); border-radius: 10px; text-align: center;
+  font-size: 12.5px; color: var(--mid); cursor: pointer; min-height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px dashed var(--line);
+}
+.report-official-btn:active { background: var(--field); }
 
 /* ── BACKUP (Phase 2A) ── */
 .backup-section { margin-top: var(--sp-6); }
@@ -301,6 +350,42 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .riwayat-task { font-size: 15px; color: var(--ink); line-height: 1.45; margin-bottom: var(--sp-2); }
 .riwayat-meta { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
 .riwayat-chip { font-size: 11px; padding: 3px var(--sp-2); border-radius: 8px; background: var(--field); color: var(--mid); }
+
+/* ── TAMPILAN WORKSHEET (tabel) — dipakai Riwayat & Laporan ──
+   Kartu (di atas) diganti tabel supaya banyak baris lebih gampang
+   dipindai matanya, mirip Excel/Sheets. Wrapper di-scroll horizontal
+   karena kolomnya lebih banyak dari lebar layar HP; kolom Tanggal
+   & Task tetap kelihatan duluan tanpa geser, kolom lain di sebelah
+   kanan (ID, Work Type, Status) digeser kalau perlu. */
+.ws-wrap {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--card);
+}
+.ws-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 12.5px; }
+.ws-table thead th {
+  position: sticky; top: 0; background: var(--field); color: var(--mid);
+  font-weight: 700; text-align: left; padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+.ws-table tbody td {
+  padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line);
+  color: var(--ink); vertical-align: top;
+}
+.ws-table tbody tr:last-child td { border-bottom: none; }
+.ws-table tbody tr.ws-row-clickable { cursor: pointer; transition: background .12s; }
+.ws-table tbody tr.ws-row-clickable:active { background: var(--field); }
+.ws-col-date  { white-space: nowrap; color: var(--muted); }
+.ws-col-id    { white-space: nowrap; color: var(--muted); font-size: 11.5px; }
+.ws-col-task  { min-width: 200px; max-width: 280px; line-height: 1.4; }
+.ws-col-chip  { white-space: nowrap; }
+.ws-chip {
+  display: inline-block; font-size: 10.5px; font-weight: 600; padding: 2px 7px;
+  border-radius: 6px; background: var(--field); color: var(--mid); white-space: nowrap;
+}
+.ws-chip.critical { background: rgba(192,57,43,.14); color: var(--red); }
+.ws-chip.high     { background: rgba(183,121,31,.14); color: var(--amber); }
+.ws-chip.done     { background: rgba(46,125,91,.14); color: #2E7D5B; }
+.ws-hint { font-size: 11px; color: var(--muted); text-align: center; padding: var(--sp-2) 0 0; }
 .riwayat-chip.critical { background: rgba(192,57,43,.12); color: var(--red); }
 .riwayat-chip.high     { background: rgba(183,121,31,.12); color: var(--amber); }
 .riwayat-chip.done     { background: rgba(46,125,91,.12); color: #2E7D5B; }
@@ -349,12 +434,12 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .tag.on { background: var(--brass); border-color: var(--brass); color: #fff; font-weight: 600; }
 .tag-add { font-size: 13px; padding: var(--sp-2) var(--sp-3); border-radius: 10px; background: transparent; border: 1px dashed var(--line); color: var(--muted); cursor: pointer; min-height: 36px; display: flex; align-items: center; }
 
-.prio { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+.prio { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-2); }
 .pb {
-  padding: var(--sp-3) var(--sp-2); border-radius: 12px; text-align: center;
-  background: var(--field); border: 1px solid var(--line); font-size: 14px; color: var(--mid);
+  padding: var(--sp-3) 4px; border-radius: 12px; text-align: center;
+  background: var(--field); border: 1px solid var(--line); font-size: 13px; color: var(--mid);
   cursor: pointer; transition: all .16s; user-select: none; min-height: 44px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center; white-space: nowrap;
 }
 .pb:active { transform: scale(.97); }
 .pb.on { color: #fff; font-weight: 600; border-color: transparent; }
@@ -367,6 +452,7 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .switch-label { font-size: 15px; color: var(--ink); }
 .switch { width: 46px; height: 27px; border-radius: 100px; background: #CDD5DD; position: relative; flex-shrink: 0; transition: background .2s; }
 .switch.on { background: var(--navy); }
+body.dark-mode .switch { background: #3A4454; }
 .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
 .switch.on::after { transform: translateX(19px); }
 
@@ -405,10 +491,10 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
   padding: var(--sp-2) var(--sp-1) calc(var(--sp-2) + env(safe-area-inset-bottom));
   display: grid; grid-template-columns: repeat(5, 1fr);
 }
-.nb { border: none; background: none; text-align: center; font-size: 9.5px; color: var(--muted); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
-.nb svg { display: block; margin: 0 auto 3px; opacity: .5; width: 18px; height: 18px; }
-.nb.on { color: var(--navy); font-weight: 600; }
-.nb.on svg { opacity: 1; }
+.nb { border: none; background: none; text-align: center; font-size: 10.5px; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
+.nb svg { display: block; margin: 0 auto 3px; opacity: .72; width: 23px; height: 23px; stroke-width: 2.1; }
+.nb.on { color: var(--navy); font-weight: 700; }
+.nb.on svg { opacity: 1; stroke-width: 2.3; }
 
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--nav-h) + var(--sp-6)); transform: translate(-50%, 18px); z-index: 9500;
@@ -473,6 +559,10 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
     <div class="hd-title"><span>IT Daily</span><span>Activity</span></div>
 
     <div class="hd-side">
+      <button class="theme-toggle" id="themeToggle" aria-label="Ganti mode gelap/terang" type="button">
+        <svg class="theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8l1.8-1.8M18 6l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
       <div class="hd-meta" id="sesTrigger">
         <div class="hd-time">
           <span class="hd-dot" id="sesDot"></span>
@@ -559,9 +649,9 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
           <label class="label">Prioritas</label>
           <div class="prio" id="prioGrid">
             <div class="pb" data-p="Low">Low</div>
-            <div class="pb" data-p="Medium">Medium</div>
+            <div class="pb" data-p="Medium">Med</div>
             <div class="pb" data-p="High">High</div>
-            <div class="pb" data-p="Critical">Critical</div>
+            <div class="pb" data-p="Critical">Ctrl</div>
           </div>
         </div>
 
@@ -622,6 +712,7 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
         <div class="report-load-btn" id="reportLoadBtn">Tampilkan</div>
         <div class="report-export-btn" id="reportExportBtn">Unduh Excel</div>
       </div>
+      <div class="report-official-btn" id="reportOfficialBtn">Unduh Laporan Resmi (Day / Date / Task / Remark)</div>
 
       <div id="reportSummary"></div>
       <div id="reportList"></div>
@@ -637,23 +728,23 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 
   <nav class="nav">
     <button class="nb on" data-tab="input">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="currentColor" stroke-linecap="round"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-linejoin="round"/></svg>
       Input
     </button>
     <button class="nb" data-tab="report">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-linecap="round"/></svg>
       Laporan
     </button>
     <button class="nb" data-tab="dash">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="4" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="10" y="9" width="4" height="11" rx="1" stroke="currentColor" stroke-width="2"/><rect x="16" y="5" width="4" height="15" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="4" height="7" rx="1" stroke="currentColor"/><rect x="10" y="9" width="4" height="11" rx="1" stroke="currentColor"/><rect x="16" y="5" width="4" height="15" rx="1" stroke="currentColor"/></svg>
       Dasbor
     </button>
     <button class="nb" data-tab="log">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-linecap="round"/></svg>
       Log
     </button>
     <button class="nb" data-tab="riwayat">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3" stroke="currentColor" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor"/></svg>
       Riwayat
     </button>
   </nav>
@@ -677,7 +768,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.4',
+  APP_VERSION:       '2.7',
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -695,6 +786,20 @@ const Store = (() => {
 })();
 const KEY_TOKEN = 'mfbit_session';
 const KEY_LOGIN_AT = 'mfbit_login_at';
+const KEY_THEME = 'mfbit_theme';
+
+// Terapkan tema tersimpan SESEGERA MUNGKIN (sebelum konten lain dieksekusi)
+// supaya tidak ada "kedipan" sesaat warna terang sebelum dark mode diterapkan.
+(function applyStoredTheme() {
+  if (Store.get(KEY_THEME) === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+})();
+
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  Store.set(KEY_THEME, isDark ? 'dark' : 'light');
+}
 
 const ACTIVITY_TYPES = [
   { db:'Working Day',    id:'Hari kerja'     },
@@ -767,6 +872,21 @@ function formatTanggalPanjang(iso) {
   const dt=new Date(y,m-1,d);
   return HARI[dt.getDay()]+', '+d+' '+BULANFULL[m-1]+' '+y;
 }
+
+// Versi bahasa Inggris — dipakai khusus untuk export Laporan resmi
+// (formatnya mengikuti contoh laporan bulanan lama: "Friday" dan
+// "21 November 2025", bukan bahasa Indonesia).
+const DAY_NAME_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTH_NAME_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function dayNameEN(iso) {
+  const [y,m,d] = iso.split('-').map(Number);
+  return DAY_NAME_EN[new Date(y, m-1, d).getDay()];
+}
+function dateLongEN(iso) {
+  const [y,m,d] = iso.split('-').map(Number);
+  return d + ' ' + MONTH_NAME_EN[m-1] + ' ' + y;
+}
+
 function trackEdit() { state.editCount++; }
 
 function openSheet(title, bodyHtml) {
@@ -1238,6 +1358,12 @@ function applyParseResult(result) {
 const RIWAYAT_ACTIVITY_LABEL = Object.fromEntries(ACTIVITY_TYPES.map(a => [a.db, a.id]));
 const RIWAYAT_STATUS_LABEL = Object.fromEntries(STATUS_TYPES.map(s => [s.db, s.id]));
 
+// Label singkat untuk tombol priority (form input & panel Ubah di Riwayat)
+// supaya 4 pilihan muat dalam 1 baris di layar HP. Value yang DISIMPAN
+// ke database tetap nama penuh (Low/Medium/High/Critical) — ini HANYA
+// teks yang ditampilkan ke mata, lihat data-p di HTML untuk nilai asli.
+const PRIORITY_SHORT_LABEL = { Low: 'Low', Medium: 'Med', High: 'High', Critical: 'Ctrl' };
+
 function chipClassForPriority(p) {
   if (p === 'Critical') return 'riwayat-chip critical';
   if (p === 'High') return 'riwayat-chip high';
@@ -1246,6 +1372,64 @@ function chipClassForPriority(p) {
 function chipClassForStatus(s) {
   if (s === 'Done') return 'riwayat-chip done';
   return 'riwayat-chip';
+}
+
+// ── TAMPILAN WORKSHEET (tabel), dipakai bersama oleh Riwayat & Laporan ──
+function wsChipClassPriority(p) {
+  if (p === 'Critical') return 'ws-chip critical';
+  if (p === 'High') return 'ws-chip high';
+  return 'ws-chip';
+}
+function wsChipClassStatus(s) {
+  if (s === 'Done') return 'ws-chip done';
+  return 'ws-chip';
+}
+
+// escapeHtml — task ditulis bebas oleh user/AI, bisa berisi karakter
+// yang berarti khusus di HTML (< > &). Tanpa ini, task berisi tanda
+// seperti "kabel < 5m" bisa merusak tampilan tabel.
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Render tabel worksheet dari array item. `onRowClick(idx)` opsional —
+// kalau diisi, tiap baris bisa diketuk (dipakai Riwayat); kalau
+// dikosongkan, baris tidak bisa diklik (dipakai Laporan, karena
+// item Laporan hanya untuk dilihat/diekspor, bukan untuk diedit).
+function renderWorksheetTable(containerEl, items, onRowClick) {
+  if (!items || items.length === 0) {
+    containerEl.innerHTML = '';
+    return;
+  }
+
+  const rows = items.map((it, idx) => {
+    const tanggal = formatTanggalPendek(it.task_date);
+    const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
+    const taskText = it.task ? escapeHtml(it.task) : '<span style="color:var(--muted)">—</span>';
+    const clickable = typeof onRowClick === 'function';
+    return '<tr' + (clickable ? ' class="ws-row-clickable" data-idx="' + idx + '"' : '') + '>'
+      + '<td class="ws-col-date">' + tanggal + '</td>'
+      + '<td class="ws-col-task">' + taskText + '</td>'
+      + '<td class="ws-col-chip">' + (it.priority ? '<span class="' + wsChipClassPriority(it.priority) + '">' + (PRIORITY_SHORT_LABEL[it.priority] || it.priority) + '</span>' : '') + '</td>'
+      + '<td class="ws-col-chip">' + (statLabel ? '<span class="' + wsChipClassStatus(it.status) + '">' + escapeHtml(statLabel) + '</span>' : '') + '</td>'
+      + '<td class="ws-col-chip">' + (it.work_type ? '<span class="ws-chip">' + escapeHtml(it.work_type) + '</span>' : '') + '</td>'
+      + '<td class="ws-col-id">' + escapeHtml(it.task_id || '') + '</td>'
+      + '</tr>';
+  }).join('');
+
+  containerEl.innerHTML =
+    '<div class="ws-wrap"><table class="ws-table">'
+    + '<thead><tr><th>Tanggal</th><th>Task</th><th>Prioritas</th><th>Status</th><th>Jenis</th><th>ID</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody>'
+    + '</table></div>'
+    + (typeof onRowClick === 'function' ? '<div class="ws-hint">Ketuk baris untuk ubah / hapus. Geser tabel untuk lihat kolom lain.</div>' : '<div class="ws-hint">Geser tabel ke samping untuk lihat kolom lain.</div>');
+
+  if (typeof onRowClick === 'function') {
+    containerEl.querySelectorAll('.ws-row-clickable').forEach(tr => {
+      tr.addEventListener('click', () => onRowClick(Number(tr.dataset.idx)));
+    });
+  }
 }
 
 let riwayatCache = [];
@@ -1269,25 +1453,7 @@ async function loadRiwayat() {
       return;
     }
 
-    box.innerHTML = items.map((it, idx) => {
-      const tanggal = formatTanggalPendek(it.task_date);
-      const actLabel = RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || '';
-      const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
-      const taskText = it.task ? it.task : '<span style="color:var(--muted)">(' + actLabel + ')</span>';
-      return '<div class="riwayat-item" data-idx="' + idx + '">'
-        + '<div class="riwayat-top"><span class="riwayat-id">' + it.task_id + '</span>'
-        + '<span class="riwayat-date">' + tanggal + '</span></div>'
-        + '<div class="riwayat-task">' + taskText + '</div>'
-        + '<div class="riwayat-meta">'
-        + (it.priority ? '<span class="' + chipClassForPriority(it.priority) + '">' + it.priority + '</span>' : '')
-        + (statLabel ? '<span class="' + chipClassForStatus(it.status) + '">' + statLabel + '</span>' : '')
-        + (it.work_type ? '<span class="riwayat-chip">' + it.work_type + '</span>' : '')
-        + '</div></div>';
-    }).join('');
-
-    box.querySelectorAll('.riwayat-item').forEach(el => {
-      el.addEventListener('click', () => openRiwayatDetail(Number(el.dataset.idx)));
-    });
+    renderWorksheetTable(box, items, (idx) => openRiwayatDetail(idx));
 
   } catch (e) {
     box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Riwayat gagal dimuat.') + '</div>';
@@ -1305,7 +1471,7 @@ function openRiwayatDetail(idx) {
     + '<div class="field"><label class="label">Prioritas</label>'
     + '<div class="prio" id="rwEditPrio">'
     + ['Low','Medium','High','Critical'].map(p =>
-        '<div class="pb' + (p === it.priority ? ' on' : '') + '" data-p="' + p + '">' + p + '</div>').join('')
+        '<div class="pb' + (p === it.priority ? ' on' : '') + '" data-p="' + p + '">' + PRIORITY_SHORT_LABEL[p] + '</div>').join('')
     + '</div></div>'
     + '<div class="field"><label class="label">Status</label>'
     + '<div class="picker-row" id="rwEditStatusRow"><span class="picker-value" id="rwEditStatusVal">'
@@ -1455,24 +1621,7 @@ function renderReportSummary(s) {
 }
 
 function renderReportList(items) {
-  if (!items || items.length === 0) {
-    $('reportList').innerHTML = '';
-    return;
-  }
-  $('reportList').innerHTML = items.map(it => {
-    const tanggal = formatTanggalPendek(it.task_date);
-    const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
-    const taskText = it.task || '<span style="color:var(--muted)">—</span>';
-    return '<div class="riwayat-item" style="cursor:default">'
-      + '<div class="riwayat-top"><span class="riwayat-id">' + it.task_id + '</span>'
-      + '<span class="riwayat-date">' + tanggal + '</span></div>'
-      + '<div class="riwayat-task">' + taskText + '</div>'
-      + '<div class="riwayat-meta">'
-      + (it.priority ? '<span class="' + chipClassForPriority(it.priority) + '">' + it.priority + '</span>' : '')
-      + (statLabel ? '<span class="' + chipClassForStatus(it.status) + '">' + statLabel + '</span>' : '')
-      + (it.work_type ? '<span class="riwayat-chip">' + it.work_type + '</span>' : '')
-      + '</div></div>';
-  }).join('');
+  renderWorksheetTable($('reportList'), items, null);
 }
 
 function exportReportToExcel() {
@@ -1509,6 +1658,62 @@ function exportReportToExcel() {
   const filename = 'MFB-IT_Report_' + (range ? range.start + '_to_' + range.end : todayISO()) + '.xlsx';
   XLSX.writeFile(wb, filename);
   toast('Excel diunduh', 'good');
+}
+
+// ── EXPORT LAPORAN — FORMAT RESMI (grouping per tanggal) ──────
+// Berbeda dari exportReportToExcel di atas (yang detail, 9 kolom,
+// 1 baris = 1 task): export ini meniru format laporan bulanan lama
+// (Day / Date / Task / Remark) — SATU tanggal bisa mencakup BEBERAPA
+// baris task, dan kolom Day+Date HANYA diisi di baris PERTAMA dari
+// tanggal itu; baris-baris task berikutnya untuk tanggal yang sama
+// dikosongkan di kolom Day & Date (persis contoh referensi).
+//
+// TIDAK ADA border/warna sel — library Excel yang dipakai (versi
+// gratis) tidak mendukung itu. Logo & garis kotak sengaja dilewati
+// sesuai keputusan: user akan menambahkannya sendiri secara manual
+// di Excel/Sheets setelah file diunduh.
+function exportReportOfficial() {
+  if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
+    toast('Tampilkan laporan dulu sebelum mengunduh.', 'err');
+    return;
+  }
+  if (typeof XLSX === 'undefined') {
+    toast('Modul Excel belum termuat. Periksa koneksi lalu coba lagi.', 'err');
+    return;
+  }
+
+  // Urutkan berdasarkan tanggal ASC dulu — data dari server tidak
+  // dijamin sudah terurut, dan grouping ini WAJIB berbasis tanggal
+  // berurutan supaya baris kosong benar-benar mengelompok, bukan
+  // tersebar (kalau tidak diurutkan, tanggal yang sama tapi terpisah
+  // baris lain akan dianggap grup terpisah, sehingga Day/Date
+  // muncul berulang untuk tanggal yang sama — salah).
+  const items = [...reportCache.items].sort((a, b) => a.task_date.localeCompare(b.task_date));
+
+  const rows = [];
+  let lastDate = null;
+  for (const it of items) {
+    const isNewDate = it.task_date !== lastDate;
+    rows.push({
+      'Day':    isNewDate ? dayNameEN(it.task_date)  : '',
+      'Date':   isNewDate ? dateLongEN(it.task_date) : '',
+      'Task':   it.task || '',
+      'Remark': it.remark || '',
+    });
+    lastDate = it.task_date;
+  }
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 12 }, { wch: 20 }, { wch: 55 }, { wch: 30 },
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'IT Monthly Report');
+
+  const range = currentReportRange();
+  const filename = 'MFB-IT_MonthlyReport_' + (range ? range.start + '_to_' + range.end : todayISO()) + '.xlsx';
+  XLSX.writeFile(wb, filename);
+  toast('Laporan resmi diunduh — tambahkan logo & garis kotak secara manual di Excel', 'good');
 }
 
 // ── BACKUP SEMUA DATA (Phase 2A) ──────────────────────────────
@@ -1601,6 +1806,7 @@ function wireEvents() {
   $('scroll').addEventListener('scroll', e => { $('header').classList.toggle('lifted', e.target.scrollTop > 4); }, { passive: true });
 
   $('sesTrigger').addEventListener('click', openSessionSheet);
+  $('themeToggle').addEventListener('click', toggleTheme);
 
   setupActivityPicker(); setupWorkTypePicker(); setupStatusPicker();
 
@@ -1611,6 +1817,7 @@ function wireEvents() {
   $('reportEnd').addEventListener('change', e => { if (e.target.value) $('reportEndText').textContent = formatTanggalPendek(e.target.value); });
   $('reportLoadBtn').addEventListener('click', loadReport);
   $('reportExportBtn').addEventListener('click', exportReportToExcel);
+  $('reportOfficialBtn').addEventListener('click', exportReportOfficial);
   $('backupBtn').addEventListener('click', exportAllData);
 }
 
