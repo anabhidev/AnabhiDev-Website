@@ -129,9 +129,13 @@
     if (!items.length) return;
 
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      items.forEach(function (el) { el.classList.add('is-in'); });
+      // Tidak menambah kelas reveal-on sama sekali → CSS default
+      // berlaku (terlihat). Ini juga jalur aman kalau JS berhenti
+      // di tengah eksekusi sebelum baris ini tercapai.
       return;
     }
+
+    document.documentElement.classList.add('reveal-on');
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
