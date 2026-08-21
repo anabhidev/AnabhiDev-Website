@@ -1,0 +1,700 @@
+/* ================================================================
+   AnabhiDev-DELLAWEB — Della Spa Production Website
+   CSS3 · Custom Properties · Grid · clamp() · Google Fonts
+   Development · Anabhi Dev
+   Version   : 1.5
+   Generated : 21 August 2026, 00:52:14
+   ----------------------------------------------------------------
+   Single palette (light only). Dark mode tidak dipakai —
+   keputusan klien 20 Agustus 2026 (company profile, bukan web app).
+   ================================================================ */
+
+
+/* ================================================================
+   1. DESIGN TOKENS — satu sumber kebenaran untuk seluruh warna.
+   DILARANG menulis hex code di luar blok ini.
+   ================================================================ */
+:root,
+[data-theme="light"] {
+
+  /* Ramp taupe diturunkan dari isi lingkaran logo #BDA894 */
+  --taupe-50:  #FAF7F4;
+  --taupe-100: #F2ECE6;
+  --taupe-200: #E5DBD1;
+  --taupe-300: #D3C4B6;
+  --taupe-400: #BDA894;
+  --taupe-500: #A38D7B;
+  --taupe-600: #85705F;   /* HANYA teks besar / UI — 4.39:1 */
+  --taupe-700: #6B5849;
+  --taupe-800: #4A3D33;
+  --espresso:  #2A1D14;   /* diturunkan dari stroke logo */
+
+  --canvas:       var(--taupe-50);
+  --surface:      #FFFFFF;
+  --surface-soft: var(--taupe-100);
+  --surface-tint: var(--taupe-200);
+  --surface-deep: var(--taupe-800);
+
+  --ink:           var(--espresso);   /* 15.32:1 */
+  --body-strong:   #4A3D33;           /*  9.81:1 */
+  --body:          #57483C;           /*  8.21:1 */
+  --muted:         #6B5849;           /*  6.31:1 */
+  --on-dark:       #F5EEE8;
+  --on-dark-muted: #C4B2A3;
+
+  --brand:      #6B5849;   /* teks putih di atasnya 6.74:1 */
+  --brand-hover:#57483C;   /* 8.76:1 */
+  --brand-soft: var(--taupe-400);
+  --gold-text:  #7D5F35;   /* 5.53:1 — boleh untuk teks */
+  --gold-line:  #B99465;   /* 2.63:1 — ORNAMEN SAJA */
+
+  --rule:   rgba(42, 29, 20, .14);
+  --rule-2: rgba(42, 29, 20, .08);
+  --focus:  var(--brand);
+
+  --shadow-sm: 0 1px 2px rgba(42,29,20,.05);
+  --shadow:    0 1px 2px rgba(42,29,20,.05), 0 10px 30px rgba(42,29,20,.07);
+  --shadow-lg: 0 2px 4px rgba(42,29,20,.06), 0 22px 50px rgba(42,29,20,.11);
+
+  --sp-1:4px;  --sp-2:8px;  --sp-3:12px; --sp-4:16px; --sp-5:32px;
+  --sp-6:48px; --sp-7:64px; --sp-8:80px; --sp-9:96px; --sp-10:128px;
+
+  --r-sm:6px; --r-md:12px; --r-lg:20px; --r-pill:999px;
+
+  --dur-fast:160ms; --dur-base:260ms; --dur-slow:520ms; --dur-hero:900ms;
+  --ease: cubic-bezier(.22,.61,.36,1);
+
+  /* ---- TIPOGRAFI ----
+     Untuk ganti display font: ubah --font-display saja.
+     Alternatif yang sudah diuji: "Marcellus", "Prata", "Tenor Sans" */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-ui:      "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Skala dinaikkan dari v1.2 — kontras ukuran yang terlalu rendah
+     adalah penyebab utama halaman terasa datar */
+  --fs-hero:    clamp(2.9rem, 8.5vw, 5.4rem);
+  --fs-h1:      clamp(2.2rem, 5.6vw, 3.6rem);
+  --fs-h2:      clamp(1.9rem, 4.4vw, 3rem);
+  --fs-h3:      clamp(1.2rem, 2.4vw, 1.5rem);
+  --fs-stat:    clamp(2.4rem, 6vw, 3.6rem);
+  --fs-lead:    clamp(1.05rem, 2vw, 1.25rem);
+  --fs-body:    1rem;
+  --fs-sm:      .875rem;
+  --fs-xs:      .8125rem;
+  --fs-eyebrow: .75rem;
+  --fs-price:   clamp(1.1rem, 2.2vw, 1.35rem);
+
+  --header-h: 72px;
+  --gutter:   clamp(20px, 5vw, 72px);
+  --sec-pad:  clamp(72px, 10vw, 144px);
+
+  --z-float:90; --z-header:100; --z-overlay:200; --z-drawer:210; --z-consent:250;
+
+  color-scheme: light;   /* cegah browser auto-darken form & scrollbar */
+}
+
+
+/* ================================================================
+   2. RESET
+   ================================================================ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; scroll-padding-top:calc(var(--header-h) + 16px); }
+html, body { overflow-x:hidden; max-width:100%; }   /* SOP §1 — html DAN body */
+
+body {
+  background: var(--canvas);
+  color: var(--body);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* Tekstur kertas — menghilangkan kesan "layar putih kosong".
+   SVG inline, nol request tambahan, tidak menghalangi klik. */
+body::before {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body > * { position: relative; z-index: 1; }
+
+img, svg, video { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+ul, ol { list-style:none; }
+button { font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+input, textarea, select { font:inherit; color:inherit; }
+table { border-collapse:collapse; width:100%; }
+
+
+/* ================================================================
+   3. BLOK STARTER WAJIB (SOP §1)
+   ================================================================ */
+:focus-visible { outline:2px solid var(--focus); outline-offset:2px; border-radius:3px; }
+
+.sr-only {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+.skip-link {
+  position:absolute; left:var(--sp-4); top:-100px; z-index:999;
+  padding:12px 20px; border-radius:var(--r-sm);
+  background:var(--brand); color:#fff; font-weight:600;
+  transition:top var(--dur-fast) var(--ease);
+}
+.skip-link:focus-visible { top:var(--sp-4); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after {
+    animation-duration:.01ms !important; transition-duration:.01ms !important;
+  }
+}
+
+/* Penanda konten dummy. Nyalakan blok ini saat QA pra-launch. */
+/* [data-dummy]{outline:2px dashed #C08A00;background:rgba(255,214,0,.10)} */
+
+
+/* ================================================================
+   4. TIPOGRAFI
+   line-height display sengaja rapat (1.04–1.1) — Cormorant/Marcellus
+   mengambang kalau diberi 1.15
+   ================================================================ */
+h1,h2,h3,h4,h5,h6 { color:var(--ink); font-weight:400; }
+
+h1 { font-family:var(--font-display); font-weight:400; font-size:var(--fs-h1);
+     line-height:1.05; letter-spacing:-.018em; }
+h2 { font-family:var(--font-display); font-weight:400; font-size:var(--fs-h2);
+     line-height:1.08; letter-spacing:-.012em; }
+h3 { font-family:var(--font-ui); font-weight:600; font-size:var(--fs-h3); line-height:1.3; }
+h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-height:1.35; }
+
+.lead { font-size:var(--fs-lead); color:var(--body); line-height:1.7; }
+
+.eyebrow {
+  display:block; font-family:var(--font-ui);
+  font-size:var(--fs-eyebrow); font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--gold-text);
+}
+
+/* Nomor section — 01 — 02 — 03, konsisten dengan proposal v1.5 */
+.sec-num {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:var(--fs-eyebrow); font-weight:600; letter-spacing:.22em;
+  color:var(--gold-text);
+}
+.sec-num::after { content:""; width:28px; height:1px; background:var(--gold-line); }
+
+.script { font-family:var(--font-display); font-style:italic; font-weight:400; color:var(--gold-text); }
+.small { font-size:var(--fs-sm); }
+.xs { font-size:var(--fs-xs); }
+.muted { color:var(--muted); }
+
+.price {
+  font-family:var(--font-ui); font-weight:600; font-size:var(--fs-price);
+  line-height:1; color:var(--gold-text);
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.price .unit { font-size:var(--fs-sm); font-weight:500; color:var(--muted); }
+
+/* Angka besar — nilainya WAJIB tertulis final di HTML (SOP §2) */
+.stat { display:grid; gap:4px; }
+.stat b {
+  font-family:var(--font-display); font-weight:400; font-size:var(--fs-stat);
+  line-height:1; color:var(--ink); font-variant-numeric:tabular-nums;
+}
+
+
+/* ================================================================
+   5. LAYOUT & ATURAN WIDTH — MANDATORY (SOP §1 v1.2)
+   Lebar dikendalikan padding. max-width angka tetap HANYA di @media.
+   ================================================================ */
+.wrap { width:100%; padding-inline:var(--gutter); margin-inline:auto; }
+
+@media (min-width:1440px) { .wrap { max-width:1320px; } }
+
+.section { padding-block:var(--sec-pad); position:relative; max-width:100vw; overflow:hidden; }
+.section--soft { background:var(--surface-soft); }
+.section--tint { background:var(--surface-tint); }
+.section--deep { background:var(--surface-deep); color:var(--on-dark-muted); }
+.section--deep h1,.section--deep h2,.section--deep h3 { color:var(--on-dark); }
+.section--flush { padding-block:0; }
+
+/* Wash gradien hangat — latar tidak pernah warna rata */
+.section--wash::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 50% 0%,
+             rgba(189,168,148,.20) 0%, transparent 70%);
+}
+.section--wash-b::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 15% 100%,
+             rgba(255,226,173,.22) 0%, transparent 68%);
+}
+
+/* Kolom baca lewat grid track, BUKAN max-width pada <p> */
+.prose { display:grid; grid-template-columns:minmax(0,68ch); justify-content:center; gap:var(--sp-4); }
+.prose--left { justify-content:start; }
+
+.sec-head { display:grid; gap:var(--sp-4); margin-bottom:var(--sp-7); }
+.sec-head--center { justify-items:center; text-align:center; }
+.sec-head--center .sec-head-body { display:grid; grid-template-columns:minmax(0,58ch); }
+
+.rule-orn { display:block; width:72px; height:1px; background:var(--gold-line); position:relative; }
+.rule-orn::after {
+  content:""; position:absolute; left:50%; top:-2.5px;
+  width:6px; height:6px; border-radius:50%; background:var(--gold-line);
+  transform:translateX(-50%);
+}
+
+.grid { display:grid; gap:var(--sp-5); }
+.grid > * { min-width:0; }
+.grid-2 { grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); }
+.grid-3 { grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
+.grid-4 { grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); }
+
+.row { display:flex; flex-wrap:wrap; gap:var(--sp-3); }
+.row > * { min-width:0; }
+.table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.stack { display:grid; gap:var(--sp-4); }
+.center { text-align:center; }
+
+
+/* ================================================================
+   6. HEADER — sticky, tinggi tetap (tidak menyusut = CLS 0)
+   SOP §14: judul KIRI, hamburger KANAN
+   ================================================================ */
+.hdr {
+  position:sticky; top:0; z-index:var(--z-header); height:var(--header-h);
+  background:color-mix(in srgb, var(--canvas) 86%, transparent);
+  backdrop-filter:blur(14px) saturate(1.5);
+  -webkit-backdrop-filter:blur(14px) saturate(1.5);
+  border-bottom:1px solid var(--rule-2);
+}
+.hdr-inner { height:100%; display:flex; align-items:center; justify-content:space-between; gap:var(--sp-4); }
+
+.hdr-brand { display:flex; align-items:center; gap:10px; min-width:0; }
+.hdr-brand img { width:40px; height:40px; }
+.hdr-title {
+  min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  font-family:var(--font-display); font-size:1.3rem; color:var(--ink);
+  letter-spacing:.06em; line-height:1.1;
+}
+.hdr-title small {
+  display:block; font-family:var(--font-ui); font-size:.5625rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted); line-height:1.4;
+}
+
+.nav { display:flex; align-items:center; gap:clamp(14px,2vw,30px); }
+.nav a {
+  position:relative; font-size:var(--fs-sm); font-weight:500; color:var(--body);
+  padding-block:6px; transition:color var(--dur-fast) var(--ease);
+}
+.nav a::after {
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--gold-line); transform:scaleX(0); transform-origin:left;
+  transition:transform var(--dur-base) var(--ease);
+}
+.nav a:hover { color:var(--ink); }
+.nav a:hover::after, .nav a[aria-current="page"]::after { transform:scaleX(1); }
+.nav a[aria-current="page"] { color:var(--ink); font-weight:600; }
+
+.hdr-actions { display:flex; align-items:center; gap:var(--sp-2); }
+
+.burger { display:none; width:44px; height:44px; align-items:center; justify-content:center; border-radius:var(--r-sm); }
+.burger span { display:block; width:20px; height:1.5px; background:var(--ink); position:relative; transition:background var(--dur-fast) var(--ease); }
+.burger span::before, .burger span::after {
+  content:""; position:absolute; left:0; width:20px; height:1.5px; background:var(--ink);
+  transition:transform var(--dur-base) var(--ease);
+}
+.burger span::before { top:-6px; } .burger span::after { top:6px; }
+.burger[aria-expanded="true"] span { background:transparent; }
+.burger[aria-expanded="true"] span::before { transform:translateY(6px) rotate(45deg); }
+.burger[aria-expanded="true"] span::after  { transform:translateY(-6px) rotate(-45deg); }
+
+
+/* ================================================================
+   7. DRAWER MOBILE — slide dari KANAN
+   ================================================================ */
+.overlay {
+  position:fixed; inset:0; z-index:var(--z-overlay);
+  background:rgba(42,29,20,.45); opacity:0; visibility:hidden;
+  transition:opacity var(--dur-base) var(--ease), visibility var(--dur-base);
+}
+.overlay.is-open { opacity:1; visibility:visible; }
+
+.drawer {
+  position:fixed; top:0; right:0; z-index:var(--z-drawer);
+  width:min(84vw,340px); height:100dvh;          /* dvh, bukan vh */
+  background:var(--surface); border-left:1px solid var(--rule);
+  box-shadow:var(--shadow-lg);
+  padding:var(--sp-5) var(--sp-5) var(--sp-6);
+  display:flex; flex-direction:column; gap:var(--sp-5); overflow-y:auto;
+  transform:translateX(100%); transition:transform var(--dur-base) var(--ease);
+}
+.drawer.is-open { transform:translateX(0); }
+
+.drawer-nav { display:grid; gap:var(--sp-1); }
+.drawer-nav a {
+  display:block; padding:14px 12px; border-radius:var(--r-sm);
+  font-size:1.05rem; color:var(--body-strong); border-bottom:1px solid var(--rule-2);
+  transition:background var(--dur-fast) var(--ease);
+}
+.drawer-nav a:hover { background:var(--surface-soft); }
+.drawer-nav a[aria-current="page"] { color:var(--ink); font-weight:600; }
+.drawer-foot { margin-top:auto; display:grid; gap:var(--sp-3); }
+
+
+/* ================================================================
+   8. TOMBOL — padding SIMETRIS, jarak antar elemen pakai margin
+   ================================================================ */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:48px; padding:14px 30px; border-radius:var(--r-pill);
+  font-size:var(--fs-sm); font-weight:600; letter-spacing:.03em; text-align:center;
+  transition:background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+             transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+             border-color var(--dur-fast) var(--ease);
+}
+.btn:hover { transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+
+.btn--primary { background:var(--brand); color:#fff; box-shadow:var(--shadow-sm); }
+.btn--primary:hover { background:var(--brand-hover); box-shadow:var(--shadow); }
+
+.btn--outline { border:1px solid var(--rule); color:var(--ink); background:transparent; }
+.btn--outline:hover { border-color:var(--gold-line); background:var(--surface); }
+
+.btn--light { border:1px solid rgba(255,248,242,.5); color:#FFF8F2; background:rgba(255,248,242,.06); }
+.btn--light:hover { background:rgba(255,248,242,.14); border-color:rgba(255,248,242,.8); }
+
+.btn--onDark { background:var(--brand-soft); color:var(--espresso); }
+.btn--onDark:hover { background:var(--taupe-300); }
+
+.btn--ghost { padding:10px 4px; min-height:40px; color:var(--brand); border-radius:var(--r-sm); }
+.btn--ghost:hover { color:var(--brand-hover); }
+
+.btn--sm { min-height:40px; padding:10px 20px; font-size:var(--fs-xs); }
+.btn--block { width:100%; }
+
+
+/* ================================================================
+   9. PERLAKUAN FOTO
+   Foto stock cenderung dingin. Lapisan hangat menyatukannya
+   dengan palette taupe supaya tidak terlihat seperti tempelan.
+   ================================================================ */
+.ph { position:relative; overflow:hidden; background:var(--surface-tint); }
+.ph img { width:100%; height:100%; object-fit:cover; }
+.ph--warm img { filter:sepia(.18) saturate(.88) contrast(1.03); }
+.ph--warm::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:var(--taupe-400); mix-blend-mode:multiply; opacity:.13;
+}
+.ph--4x3{aspect-ratio:4/3} .ph--1x1{aspect-ratio:1/1}
+.ph--3x4{aspect-ratio:3/4} .ph--4x5{aspect-ratio:4/5} .ph--16x9{aspect-ratio:16/9}
+
+/* Bingkai emas asimetris — foto digeser, hairline emas di belakangnya */
+.framed { position:relative; }
+.framed::before {
+  content:""; position:absolute; z-index:0;
+  inset:24px -24px -24px 24px;
+  border:1px solid var(--gold-line); border-radius:var(--r-md);
+  pointer-events:none;
+}
+.framed > * { position:relative; z-index:1; border-radius:var(--r-md); }
+@media (max-width:700px){ .framed::before{ inset:16px -16px -16px 16px; } }
+
+
+/* ================================================================
+   10. HERO
+   ================================================================ */
+.hero {
+  position:relative; min-height:min(92dvh,820px);
+  display:grid; align-items:center; padding-block:var(--sp-10);
+  isolation:isolate; max-width:100vw; overflow:hidden;
+}
+.hero-media { position:absolute; inset:0; z-index:-2; }
+.hero-media img {
+  width:100%; height:100%; object-fit:cover;
+  filter:sepia(.22) saturate(.82);
+  opacity:0; transition:opacity var(--dur-hero) var(--ease);
+}
+.hero-media img.is-active { opacity:1; }
+
+/* Scrim wajib — tanpa ini teks di atas foto gagal kontras */
+.hero::before {
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,226,173,.30) 0%, transparent 60%),
+    linear-gradient(rgba(42,29,20,.66), rgba(42,29,20,.46) 45%, rgba(42,29,20,.72));
+}
+
+.hero-inner { display:grid; justify-items:center; text-align:center; gap:var(--sp-4); }
+.hero-logo { width:150px; height:150px; }
+.hero h1 { font-size:var(--fs-hero); color:#FFF8F2; font-weight:400; letter-spacing:-.02em; line-height:1.02; }
+.hero .eyebrow { color:var(--taupe-300); }
+.hero .lead { color:#EFE3D9; display:grid; grid-template-columns:minmax(0,50ch); justify-content:center; }
+.hero-cta { display:flex; flex-wrap:wrap; gap:var(--sp-3); justify-content:center; margin-top:var(--sp-3); }
+.hero-meta {
+  display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4);
+  justify-content:center; align-items:center; margin-top:var(--sp-5);
+  font-size:var(--fs-sm); color:#E4D6CB;
+}
+.hero-meta > span { display:inline-flex; align-items:center; gap:7px; }
+.hero-dot { width:3px; height:3px; border-radius:50%; background:var(--gold-line); }
+
+.halo { position:relative; display:grid; place-items:center; }
+.halo::before {
+  content:""; position:absolute; z-index:-1; width:260%; aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,226,173,.45) 0%, rgba(189,168,148,.18) 42%, transparent 72%);
+}
+
+
+/* ================================================================
+   11. TRIPTYCH — 3 pintu masuk
+   ================================================================ */
+.tri { position:relative; display:block; border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm); }
+.tri .ph { aspect-ratio:4/5; }
+.tri .ph img { transition:transform var(--dur-slow) var(--ease); }
+.tri:hover .ph img { transform:scale(1.04); }
+.tri-body {
+  position:absolute; left:var(--sp-4); right:var(--sp-4); bottom:var(--sp-4);
+  background:color-mix(in srgb, var(--surface) 95%, transparent);
+  backdrop-filter:blur(8px); padding:var(--sp-4); border-radius:var(--r-sm);
+  display:grid; gap:6px; transition:transform var(--dur-base) var(--ease);
+}
+.tri:hover .tri-body { transform:translateY(-5px); }
+.tri-body h3 { font-size:1.0625rem; }
+
+
+/* ================================================================
+   12. KARTU
+   ================================================================ */
+.card {
+  position:relative; background:var(--surface);
+  border:1px solid var(--rule-2); border-radius:var(--r-md); overflow:hidden;
+  display:flex; flex-direction:column;
+  transition:box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+}
+/* Hairline emas muncul di dalam tepi kartu saat hover — bukan sekadar shadow naik */
+.card::after {
+  content:""; position:absolute; inset:0; border-radius:var(--r-md); pointer-events:none;
+  box-shadow:inset 0 0 0 1px transparent;
+  transition:box-shadow var(--dur-base) var(--ease);
+}
+.card:hover { box-shadow:var(--shadow-lg); transform:translateY(-3px); }
+.card:hover::after { box-shadow:inset 0 0 0 1px var(--gold-line); }
+.card .ph img { transition:transform var(--dur-slow) var(--ease); }
+.card:hover .ph img { transform:scale(1.05); }
+
+.card-body { padding:var(--sp-5) var(--sp-4) var(--sp-4); display:grid; gap:8px; align-content:start; flex:1; }
+.card-desc {
+  font-size:var(--fs-sm); color:var(--muted);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.card-foot {
+  display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);
+  padding:var(--sp-3) var(--sp-4); border-top:1px solid var(--rule-2); margin-top:auto;
+}
+.card-meta { font-size:var(--fs-xs); color:var(--muted); letter-spacing:.1em; }
+
+
+/* ================================================================
+   13. BARIS HARGA — dotted leader dibuat dengan border,
+   BUKAN karakter titik berulang (merusak screen reader & copy-paste)
+   ================================================================ */
+.plist { display:grid; }
+.prow {
+  display:grid; grid-template-columns:1fr auto; align-items:baseline;
+  gap:0 var(--sp-3); padding-block:var(--sp-4);
+  border-bottom:1px solid var(--rule-2);
+  transition:background var(--dur-fast) var(--ease);
+}
+.prow:hover { background:var(--surface-soft); }
+.prow-main { display:flex; align-items:baseline; gap:var(--sp-2); min-width:0; }
+.prow-name { font-weight:600; color:var(--ink); white-space:nowrap; }
+.prow-lead { flex:1; min-width:12px; border-bottom:1px dotted var(--gold-line); transform:translateY(-4px); }
+.prow-desc { grid-column:1/-1; font-size:var(--fs-sm); color:var(--muted); margin-top:4px; }
+.prow-cta { grid-column:1/-1; margin-top:var(--sp-2); }
+@media (min-width:720px){
+  .prow { grid-template-columns:1fr auto auto; }
+  .prow-cta { grid-column:auto; margin-top:0; opacity:0; transition:opacity var(--dur-fast) var(--ease); }
+  .prow:hover .prow-cta, .prow:focus-within .prow-cta { opacity:1; }
+  .prow-desc { grid-column:1/2; }
+}
+
+
+/* ================================================================
+   14. TABS — center di desktop, kiri + scroll di mobile
+   Di mobile TIDAK boleh center: item pertama bisa terdorong
+   keluar area terlihat tanpa pengunjung sadar.
+   ================================================================ */
+.tabs {
+  display:flex; gap:var(--sp-2); overflow-x:auto; scroll-snap-type:x proximity;
+  padding-bottom:var(--sp-3); border-bottom:1px solid var(--rule);
+  margin-bottom:var(--sp-6);
+  -ms-overflow-style:none; scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar { display:none; }
+@media (min-width:720px){ .tabs { justify-content:center; } }
+
+.tab {
+  scroll-snap-align:start; white-space:nowrap; min-height:44px; padding:11px 22px;
+  border-radius:var(--r-pill); font-size:var(--fs-sm); font-weight:500; color:var(--muted);
+  transition:background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.tab:hover { color:var(--ink); background:var(--surface-soft); }
+.tab[aria-selected="true"] { background:var(--brand); color:#fff; font-weight:600; }
+.tabpanel[hidden] { display:none; }
+
+
+/* ================================================================
+   15. ACCORDION FAQ — <details> native, isi tetap ada di HTML
+   grid-template-rows 0fr→1fr, BUKAN max-height
+   ================================================================ */
+.faq { display:grid; }
+.faq details { border-bottom:1px solid var(--rule-2); }
+.faq summary {
+  list-style:none; cursor:pointer; display:flex; align-items:center;
+  justify-content:space-between; gap:var(--sp-4);
+  padding-block:var(--sp-4); min-height:44px; font-weight:600; color:var(--ink);
+}
+.faq summary::-webkit-details-marker { display:none; }
+.faq summary::after {
+  content:""; flex:none; width:10px; height:10px;
+  border-right:1.5px solid var(--gold-line); border-bottom:1.5px solid var(--gold-line);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform var(--dur-base) var(--ease);
+}
+.faq details[open] summary::after { transform:rotate(-135deg) translateY(-2px); }
+.faq-body > div { overflow:hidden; padding-bottom:var(--sp-4); color:var(--body); }
+
+
+/* ================================================================
+   16. TESTIMONI · STAT · INFO · MAP
+   ================================================================ */
+.quote { display:grid; gap:var(--sp-4); }
+.quote blockquote {
+  font-family:var(--font-display); font-size:clamp(1.35rem,3vw,1.85rem);
+  line-height:1.35; color:var(--ink); font-style:italic;
+}
+.quote blockquote::before { content:"\201C"; color:var(--gold-line); margin-right:2px; }
+.quote blockquote::after  { content:"\201D"; color:var(--gold-line); }
+.quote cite { font-style:normal; font-size:var(--fs-sm); color:var(--muted); }
+.quote cite b { color:var(--ink); font-weight:600; }
+
+.stats { display:grid; gap:var(--sp-5); grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr)); }
+.stats .stat { text-align:center; }
+.stats .stat span { font-size:var(--fs-xs); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+
+.trust {
+  display:flex; flex-wrap:wrap; gap:var(--sp-4) var(--sp-7);
+  align-items:center; justify-content:center; padding-block:var(--sp-5);
+  border-block:1px solid var(--rule-2);
+}
+.trust-item { display:flex; align-items:center; gap:10px; font-size:var(--fs-sm); }
+.trust-item strong { color:var(--ink); font-size:1.05rem; }
+.stars { color:var(--gold-text); letter-spacing:.12em; }
+
+.info-grid { display:grid; gap:var(--sp-6); }
+@media (min-width:760px){ .info-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.info-card { display:grid; gap:10px; align-content:start; }
+.info-card h3 { font-size:1rem; letter-spacing:.02em; }
+
+.map-facade {
+  position:relative; aspect-ratio:16/9; border-radius:var(--r-md); overflow:hidden;
+  background:var(--surface-tint); display:grid; place-items:center; border:1px solid var(--rule);
+}
+.map-facade-btn { display:grid; gap:var(--sp-3); justify-items:center; text-align:center; padding:var(--sp-5); }
+.map-facade iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+@media (max-width:600px){ .map-facade { aspect-ratio:4/3; } }
+
+
+/* ================================================================
+   17. FOOTER
+   ================================================================ */
+.ftr { background:var(--surface-deep); color:var(--on-dark-muted); padding-block:var(--sp-9) var(--sp-5); }
+.ftr a { color:var(--on-dark-muted); transition:color var(--dur-fast) var(--ease); }
+.ftr a:hover { color:var(--on-dark); }
+.ftr-top { display:grid; gap:var(--sp-6); }
+@media (min-width:860px){ .ftr-top { grid-template-columns:1.4fr 1fr 1fr; } }
+.ftr h3 { color:var(--on-dark); font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:var(--sp-4); }
+.ftr-brand img { width:56px; height:56px; }
+.ftr-links { display:grid; gap:11px; font-size:var(--fs-sm); }
+.ftr-bottom {
+  margin-top:var(--sp-8); padding-top:var(--sp-4);
+  border-top:1px solid rgba(245,238,232,.14);
+  display:flex; flex-wrap:wrap; gap:var(--sp-3); justify-content:space-between; font-size:var(--fs-xs);
+}
+
+
+/* ================================================================
+   18. FLOATING WHATSAPP & COOKIE CONSENT
+   ================================================================ */
+.wa-float {
+  position:fixed; right:var(--sp-4); z-index:var(--z-float);
+  bottom:calc(var(--sp-4) + env(safe-area-inset-bottom));
+  width:56px; height:56px; border-radius:50%; display:grid; place-items:center;
+  background:var(--brand); color:#fff; box-shadow:var(--shadow-lg);
+  opacity:0; visibility:hidden; transform:translateY(10px);
+  transition:opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility var(--dur-base);
+}
+.wa-float.is-visible { opacity:1; visibility:visible; transform:translateY(0); }
+.wa-float:hover { background:var(--brand-hover); }
+
+/* Ruang sudah dicadangkan lewat transform, jadi CLS = 0 */
+.consent {
+  position:fixed; left:var(--sp-4); right:var(--sp-4); z-index:var(--z-consent);
+  bottom:calc(var(--sp-4) + env(safe-area-inset-bottom));
+  background:var(--surface); border:1px solid var(--rule); border-radius:var(--r-md);
+  box-shadow:var(--shadow-lg); padding:var(--sp-4);
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3);
+  transform:translateY(140%); transition:transform var(--dur-base) var(--ease);
+}
+.consent.is-open { transform:translateY(0); }
+.consent p { flex:1; min-width:220px; font-size:var(--fs-xs); color:var(--body); }
+@media (min-width:720px){ .consent { left:auto; right:var(--sp-5); width:min(520px,90vw); } }
+
+
+/* ================================================================
+   19. BREADCRUMB & REVEAL
+   ================================================================ */
+.crumb { display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:var(--fs-xs); color:var(--muted); }
+.crumb li { display:flex; align-items:center; }
+.crumb li + li::before { content:"/"; margin-right:8px; color:var(--gold-line); }
+.crumb [aria-current="page"] { color:var(--ink); }
+
+.reveal { opacity:0; transform:translateY(14px); }
+.reveal.is-in {
+  opacity:1; transform:translateY(0);
+  transition:opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+}
+@media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; } }
+
+
+/* ================================================================
+   20. BREAKPOINT
+   ================================================================ */
+@media (max-width:900px){
+  .nav { display:none; }
+  .burger { display:inline-flex; }
+  .hdr-actions .btn--primary { display:none; }   /* CTA pindah ke drawer */
+}
+@media (max-width:480px){
+  .hdr-title small { display:none; }
+  .hero-logo { width:112px; height:112px; }
+}
+
+
+/* ================================================================
+   21. PRINT — pelanggan sering mencetak pricelist
+   ================================================================ */
+@media print {
+  .hdr,.drawer,.overlay,.wa-float,.consent,.hero-media,.btn { display:none !important; }
+  body { background:#fff; color:#000; }
+  body::before { display:none; }
+  .section { padding-block:16px; }
+}
