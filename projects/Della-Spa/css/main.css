@@ -67,7 +67,7 @@
   /* ---- TIPOGRAFI ----
      Untuk ganti display font: ubah --font-display saja.
      Alternatif yang sudah diuji: "Marcellus", "Prata", "Tenor Sans" */
-  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-display: "Marcellus", Georgia, "Times New Roman", serif;
   --font-ui:      "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Skala dinaikkan dari v1.2 — kontras ukuran yang terlalu rendah
@@ -590,6 +590,18 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .stats .stat { text-align:center; }
 .stats .stat span { font-size:var(--fs-xs); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
 
+/* Varian 2x2 tetap — untuk 4 stat, tidak menyisakan baris ganjil
+   di lebar mana pun (auto-fit bisa jatuh ke 1 kolom di layar sempit
+   dan menyisakan item ke-4 sendirian). Item kiri align kiri,
+   kanan align kiri juga terhadap kolomnya sendiri — bukan center
+   independen — supaya "7" sejajar tepat di bawah "20+". */
+.stats--2x2 {
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  justify-content: start;
+  gap: var(--sp-6) var(--sp-8);
+}
+.stats--2x2 .stat { text-align: left; }
+
 .trust {
   display:flex; flex-wrap:wrap; gap:var(--sp-4) var(--sp-7);
   align-items:center; justify-content:center; padding-block:var(--sp-5);
@@ -667,12 +679,16 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .crumb li + li::before { content:"/"; margin-right:8px; color:var(--gold-line); }
 .crumb [aria-current="page"] { color:var(--ink); }
 
-.reveal { opacity:0; transform:translateY(14px); }
-.reveal.is-in {
+/* Fail-safe: .reveal TIDAK tersembunyi secara default.
+   Hanya tersembunyi kalau <html> sudah dapat kelas "reveal-on"
+   dari JS (lihat main.js). Kalau JS gagal load, konten tetap
+   terlihat — bukan tersembunyi permanen. */
+.reveal-on .reveal { opacity:0; transform:translateY(14px); }
+.reveal-on .reveal.is-in {
   opacity:1; transform:translateY(0);
   transition:opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
 }
-@media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; } }
+@media (prefers-reduced-motion: reduce){ .reveal-on .reveal { opacity:1; transform:none; } }
 
 
 /* ================================================================
