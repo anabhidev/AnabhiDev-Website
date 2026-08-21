@@ -3,29 +3,21 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.2
-Generated : 10 August 2026, 20:55:10
+Version   : 2.4
+Generated : 21 August 2026, 10:31:54
 ================================================================
-PERUBAHAN DARI v2.1
-  - Layout: kartu pertama tidak lagi kepotong di HP — penengahan
-    vertikal dibatasi hanya untuk layar yang benar-benar tinggi
-    tanpa mengganggu scroll natural.
-  - Header: "IT Daily Activity" kini benar-benar di tengah —
-    kolom kiri dan kanan diberi lebar tetap yang sama.
-  - Bottom nav: 5 tombol (+ Riwayat), latar navy transparan,
-    ikon disesuaikan.
-  - Tag terpilih: latar solid, kontras jelas, senada gaya
-    tombol Prioritas.
-  - AI Parse: tombol "Uraikan dengan AI" kini benar-benar
-    memanggil Edge Function, hasilnya mengisi form otomatis.
-  - Riwayat: tab baru menampilkan task 7 hari terakhir.
-  - Peringatan keluar: bila form terisi namun belum disimpan,
-    menutup tab akan memicu konfirmasi bawaan peramban.
+PERUBAHAN DARI v2.3 (Phase 2A)
+  - Tab Laporan: tombol baru "Unduh Semua Data" — backup penuh
+    4 tabel (daily_activity, activity_log, master_tag, app_config),
+    TERMASUK baris yang sudah dihapus (soft-delete/is_archived),
+    diunduh sebagai JSON + Excel sekaligus (2 file, 1 klik).
+    Terpisah dari export Laporan yang sudah ada (itu tetap sama
+    persis, hanya untuk rentang tanggal & tanpa data terhapus).
 
 CARA PASANG
-  Edge Function WAJIB diperbarui dulu ke MFB-IT_v1.8.ts sebelum
-  mengunggah berkas ini — AI Parse dan Riwayat memanggil action
-  baru yang hanya ada di v1.8.
+  WAJIB deploy MFB-IT_v1.10.ts dulu ke Edge Function sebelum
+  mengunggah berkas ini — tombol backup memanggil action
+  "export-all" yang hanya ada mulai v1.10.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -221,13 +213,13 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 .ai-box {
   width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
   padding: var(--sp-3) var(--sp-4); font-size: 15px; line-height: 1.55; color: var(--ink);
-  resize: none; height: 76px; outline: none; transition: border-color .18s;
+  resize: none; height: 92px; outline: none; transition: border-color .18s;
 }
 .ai-box::placeholder { color: #A9B4BF; }
 .ai-box:focus { border-color: var(--brass); }
 .ai-btn {
-  width: 100%; margin-top: var(--sp-3); border: 1px solid var(--line);
-  background: var(--field); color: var(--navy);
+  width: 100%; margin-top: var(--sp-3); border: 1px solid rgba(201,168,76,.4);
+  background: rgba(201,168,76,.10); color: #8A6D1E;
   border-radius: 12px; padding: var(--sp-3); min-height: 44px;
   font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .1s, opacity .15s;
   position: relative; overflow: hidden;
@@ -239,7 +231,62 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 }
 .ai-btn.busy .ai-btn-txt { opacity: 0; }
 .ai-btn.busy .ai-btn-load { opacity: 1; }
-.ai-btn.busy .dot3 { background: var(--navy); }
+.ai-btn.busy .dot3 { background: #8A6D1E; }
+
+.ai-summary {
+  margin-top: var(--sp-3); padding: var(--sp-3);
+  background: rgba(201,168,76,.08); border-radius: 10px;
+  font-size: 12.5px; color: #7A5F1A; line-height: 1.6;
+  display: none;
+}
+.ai-summary.show { display: block; }
+.ai-summary b { font-weight: 600; }
+
+/* ── RIWAYAT — item bisa diketuk ── */
+.riwayat-item { cursor: pointer; transition: background .15s; }
+.riwayat-item:active { background: var(--field); }
+
+/* ── LAPORAN ── */
+.report-filter { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+.report-mode-tab {
+  flex: 1; text-align: center; padding: var(--sp-2) var(--sp-2); border-radius: 10px;
+  background: var(--field); border: 1px solid var(--line); font-size: 13px; color: var(--mid);
+  cursor: pointer; min-height: 40px; display: flex; align-items: center; justify-content: center;
+}
+.report-mode-tab.on { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+.report-range-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+.report-range-row .date-row { flex: 1; }
+.report-month-row { margin-bottom: var(--sp-3); }
+.report-btn-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.report-load-btn, .report-export-btn {
+  flex: 1; padding: var(--sp-3); border-radius: 12px; text-align: center; font-size: 14px;
+  font-weight: 600; cursor: pointer; min-height: 44px; display: flex; align-items: center; justify-content: center;
+}
+.report-load-btn { background: var(--navy); color: #fff; border: none; }
+.report-export-btn { background: var(--field); color: var(--navy); border: 1px solid var(--line); }
+
+/* ── BACKUP (Phase 2A) ── */
+.backup-section { margin-top: var(--sp-6); }
+.backup-divider { height: 1px; background: var(--line); margin-bottom: var(--sp-4); }
+.backup-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: var(--sp-1); }
+.backup-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: var(--sp-3); }
+.backup-btn {
+  padding: var(--sp-3); border-radius: 12px; text-align: center; font-size: 14px;
+  font-weight: 600; cursor: pointer; min-height: 44px; display: flex; align-items: center; justify-content: center;
+  background: var(--card); color: var(--navy); border: 1.5px solid var(--brass);
+}
+.backup-btn:active { background: var(--field); }
+.backup-btn.busy { opacity: .6; pointer-events: none; }
+
+.summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.summary-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: var(--sp-4) var(--sp-3); text-align: center;
+}
+.summary-num { font-size: 24px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+.summary-label { font-size: 11px; color: var(--muted); }
+.summary-full { grid-column: 1 / -1; }
+.summary-full .summary-num { font-size: 20px; }
 
 /* ── RIWAYAT ── */
 .riwayat-head { margin-bottom: var(--sp-3); }
@@ -444,11 +491,12 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
           <div class="ai-title">&#10022; Tulis bebas</div>
         </div>
         <textarea class="ai-box" id="aiInput"
-          placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer kitchen, sempat putus pas prep dinner, urgent belum kelar."></textarea>
+          placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer, urgent."></textarea>
         <button class="ai-btn" id="aiBtn">
           <span class="ai-btn-txt">Uraikan dengan AI</span>
           <span class="ai-btn-load"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span></span>
         </button>
+        <div class="ai-summary" id="aiSummary"></div>
       </div>
 
       <div class="card">
@@ -458,7 +506,7 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
           <label class="label" for="taskDate">Tanggal</label>
           <div class="date-row">
             <span class="date-text" id="dateText">—</span>
-            <span style="opacity:.4">&#128197;</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.4;flex-shrink:0"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <input type="date" id="taskDate">
           </div>
         </div>
@@ -546,6 +594,45 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
         <div class="riwayat-empty">Memuat riwayat…</div>
       </div>
     </div>
+
+    <div class="scroll-inner hidden" id="viewLaporan">
+      <div class="card-title">Laporan</div>
+
+      <div class="report-filter">
+        <div class="report-mode-tab on" data-mode="month" id="modeMonth">Per bulan</div>
+        <div class="report-mode-tab" data-mode="range" id="modeRange">Rentang tanggal</div>
+      </div>
+
+      <div class="report-month-row" id="reportMonthRow">
+        <input type="month" class="input" id="reportMonth">
+      </div>
+
+      <div class="report-range-row hidden" id="reportRangeRow">
+        <div class="date-row">
+          <span class="date-text" id="reportStartText">Mulai</span>
+          <input type="date" id="reportStart">
+        </div>
+        <div class="date-row">
+          <span class="date-text" id="reportEndText">Selesai</span>
+          <input type="date" id="reportEnd">
+        </div>
+      </div>
+
+      <div class="report-btn-row">
+        <div class="report-load-btn" id="reportLoadBtn">Tampilkan</div>
+        <div class="report-export-btn" id="reportExportBtn">Unduh Excel</div>
+      </div>
+
+      <div id="reportSummary"></div>
+      <div id="reportList"></div>
+
+      <div class="backup-section">
+        <div class="backup-divider"></div>
+        <div class="backup-title">Backup Data</div>
+        <div class="backup-desc">Unduh seluruh data (termasuk yang sudah dihapus) dalam format JSON dan Excel — untuk disimpan sendiri di Google Drive.</div>
+        <div class="backup-btn" id="backupBtn">Unduh Semua Data</div>
+      </div>
+    </div>
   </div>
 
   <nav class="nav">
@@ -582,6 +669,7 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" data-cfasync="false"></script>
 <script data-cfasync="false">
 const CONFIG = {
   SUPABASE_URL:      'https://hiwtsreqeizvmjcrxjxd.supabase.co',
@@ -589,7 +677,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.1',
+  APP_VERSION:       '2.4',
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -641,9 +729,11 @@ function switchView(view) {
   state.currentView = view;
   $('viewInput').classList.toggle('hidden', view !== 'input');
   $('viewRiwayat').classList.toggle('hidden', view !== 'riwayat');
+  $('viewLaporan').classList.toggle('hidden', view !== 'laporan');
   document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.tab === view));
   $('scroll').scrollTop = 0;
   if (view === 'riwayat') loadRiwayat();
+  if (view === 'laporan') initReportDefaults();
 }
 
 // Form dianggap "kotor" bila ada isian yang belum disimpan —
@@ -862,7 +952,10 @@ async function submitPin() {
       setTimeout(()=>$('pinDots').classList.remove('shake'), 420);
       $('pinMsg').textContent = r.error || 'PIN belum cocok.';
       $('pinMsg').className = 'pin-msg err';
-      setTimeout(()=>{ pinBuffer=''; paintDots(); pinBusy=false; }, 700);
+      // Saat terkunci, jeda lebih panjang agar pesan sempat terbaca —
+      // dan tombol PIN tetap non-aktif sedikit lebih lama.
+      const jeda = r.locked ? 1600 : 700;
+      setTimeout(()=>{ pinBuffer=''; paintDots(); pinBusy=false; }, jeda);
       return;
     }
     state.token = r.sessionToken;
@@ -870,7 +963,10 @@ async function submitPin() {
     Store.set(KEY_TOKEN, r.sessionToken);
     Store.set(KEY_LOGIN_AT, String(state.loginAt));
     $('pinMsg').textContent = ''; pinBusy = false;
-    hidePin(); startApp();
+    hidePin();
+    // login v1.9 sudah membawa tags + taskToday sekaligus —
+    // startApp menerimanya langsung, tidak perlu panggilan kedua.
+    startApp({ tags: r.tags, taskToday: r.taskToday });
   } catch (e) {
     $('pinMsg').textContent = e.message || 'Tidak bisa menghubungi server.';
     $('pinMsg').className = 'pin-msg err';
@@ -1016,7 +1112,7 @@ function resetForm() {
   buildTags(); buildPriority();
 }
 
-async function startApp() {
+async function startApp(preloaded) {
   const iso = todayISO();
   $('taskDate').value = iso;
   $('dateText').textContent = formatTanggalPanjang(iso);
@@ -1024,6 +1120,17 @@ async function startApp() {
   applyActivityMode();
   buildPriority();
   tickClock();
+
+  // Bila login (v1.9) sudah membawa tags & taskToday, langsung pakai —
+  // ini jalur normal, tanpa panggilan tambahan ke server.
+  // Bila kosong (mis. sesi dipulihkan dari localStorage setelah refresh,
+  // tanpa lewat proses login), baru ambil lewat get-tags sebagai cadangan.
+  if (preloaded && Array.isArray(preloaded.tags)) {
+    state.tags = preloaded.tags;
+    if (typeof preloaded.taskToday === 'number') state.taskToday = preloaded.taskToday;
+    buildTags();
+    return;
+  }
 
   try {
     const r = await callApi({ action:'get-tags', sessionToken: state.token });
@@ -1053,6 +1160,7 @@ async function doAiParse() {
   }
 
   btn.classList.add('busy'); btn.disabled = true;
+  $('aiSummary').classList.remove('show');
 
   try {
     const r = await callApi({ action: 'parse-task', sessionToken: state.token, text });
@@ -1063,13 +1171,26 @@ async function doAiParse() {
     }
 
     applyParseResult(r.result);
-    toast('Form terisi dari hasil AI ✦', 'good');
+    toast('Form terisi dari hasil AI', 'good');
 
   } catch (e) {
     if (state.token) toast(e.message || 'AI belum bisa memproses. Isi manual dulu ya.', 'err');
   } finally {
     btn.classList.remove('busy'); btn.disabled = false;
   }
+}
+
+function renderAiSummary(result) {
+  const box = $('aiSummary');
+  const parts = [];
+  if (result.workType) parts.push('<b>' + result.workType + '</b>');
+  if (Array.isArray(result.tags) && result.tags.length) parts.push(result.tags.join(', '));
+  if (result.priority) parts.push('<b>' + result.priority + '</b>');
+  if (result.status) parts.push(result.status);
+
+  if (parts.length === 0) { box.classList.remove('show'); return; }
+  box.innerHTML = parts.join(' &middot; ');
+  box.classList.add('show');
 }
 
 function applyParseResult(result) {
@@ -1107,6 +1228,7 @@ function applyParseResult(result) {
 
   if (result.remark) $('remarkInput').value = result.remark;
 
+  renderAiSummary(result);
   $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1126,6 +1248,8 @@ function chipClassForStatus(s) {
   return 'riwayat-chip';
 }
 
+let riwayatCache = [];
+
 async function loadRiwayat() {
   const box = $('riwayatList');
   box.innerHTML = '<div class="riwayat-empty">Memuat riwayat…</div>';
@@ -1138,17 +1262,19 @@ async function loadRiwayat() {
     }
 
     const items = r.items || [];
+    riwayatCache = items;
+
     if (items.length === 0) {
       box.innerHTML = '<div class="riwayat-empty">Belum ada aktivitas dalam 7 hari terakhir.</div>';
       return;
     }
 
-    box.innerHTML = items.map(it => {
+    box.innerHTML = items.map((it, idx) => {
       const tanggal = formatTanggalPendek(it.task_date);
       const actLabel = RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || '';
       const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
       const taskText = it.task ? it.task : '<span style="color:var(--muted)">(' + actLabel + ')</span>';
-      return '<div class="riwayat-item">'
+      return '<div class="riwayat-item" data-idx="' + idx + '">'
         + '<div class="riwayat-top"><span class="riwayat-id">' + it.task_id + '</span>'
         + '<span class="riwayat-date">' + tanggal + '</span></div>'
         + '<div class="riwayat-task">' + taskText + '</div>'
@@ -1159,8 +1285,295 @@ async function loadRiwayat() {
         + '</div></div>';
     }).join('');
 
+    box.querySelectorAll('.riwayat-item').forEach(el => {
+      el.addEventListener('click', () => openRiwayatDetail(Number(el.dataset.idx)));
+    });
+
   } catch (e) {
     box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Riwayat gagal dimuat.') + '</div>';
+  }
+}
+
+// ── SHEET: DETAIL / UBAH / HAPUS SATU TASK DI RIWAYAT ────────
+function openRiwayatDetail(idx) {
+  const it = riwayatCache[idx];
+  if (!it) return;
+
+  const html = '<div style="padding:0 20px">'
+    + '<div class="field"><label class="label">Deskripsi</label>'
+    + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + (it.task || '') + '</textarea></div>'
+    + '<div class="field"><label class="label">Prioritas</label>'
+    + '<div class="prio" id="rwEditPrio">'
+    + ['Low','Medium','High','Critical'].map(p =>
+        '<div class="pb' + (p === it.priority ? ' on' : '') + '" data-p="' + p + '">' + p + '</div>').join('')
+    + '</div></div>'
+    + '<div class="field"><label class="label">Status</label>'
+    + '<div class="picker-row" id="rwEditStatusRow"><span class="picker-value" id="rwEditStatusVal">'
+    + (RIWAYAT_STATUS_LABEL[it.status] || it.status || '') + '</span><span class="picker-chevron">&#8250;</span></div></div>'
+    + '<button class="btn-logout" id="rwSaveBtn" style="color:var(--navy);margin-bottom:10px">Simpan perubahan</button>'
+    + '<button class="btn-logout" id="rwDeleteBtn">Hapus task ini</button>'
+    + '</div>';
+
+  openSheet(it.task_id, html);
+
+  let editPriority = it.priority;
+  let editStatus = it.status;
+
+  $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(el => {
+    el.addEventListener('click', () => {
+      editPriority = el.dataset.p;
+      $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(x => x.classList.toggle('on', x.dataset.p === editPriority));
+    });
+  });
+
+  $('rwEditStatusRow').addEventListener('click', () => {
+    openOptionSheet('Status', STATUS_TYPES, editStatus, (db) => {
+      editStatus = db;
+      // openOptionSheet mengganti isi #sheetBody sepenuhnya, jadi detail
+      // task ini perlu dibuka ulang agar nilai status yang baru terlihat.
+      openRiwayatDetail(idx);
+      const found = STATUS_TYPES.find(s => s.db === db);
+      setTimeout(() => { $('rwEditStatusVal').textContent = found.id; }, 0);
+    });
+  });
+
+  $('rwSaveBtn').addEventListener('click', async () => {
+    const newTask = $('rwEditTask').value.trim();
+    try {
+      const r = await callApi({
+        action: 'update-task', sessionToken: state.token, id: it.id,
+        task: newTask, priority: editPriority, status: editStatus,
+      });
+      if (!r.ok) { toast(r.error || 'Gagal menyimpan perubahan.', 'err'); return; }
+      toast('Perubahan tersimpan', 'good');
+      closeSheet();
+      loadRiwayat();
+    } catch (e) { toast(e.message || 'Gagal menyimpan perubahan.', 'err'); }
+  });
+
+  $('rwDeleteBtn').addEventListener('click', async () => {
+    if (!confirm('Hapus task ini? Task tidak akan tampil lagi di Riwayat maupun Laporan.')) return;
+    try {
+      const r = await callApi({ action: 'delete-task', sessionToken: state.token, id: it.id });
+      if (!r.ok) { toast(r.error || 'Gagal menghapus.', 'err'); return; }
+      toast('Task dihapus', 'good');
+      closeSheet();
+      loadRiwayat();
+    } catch (e) { toast(e.message || 'Gagal menghapus.', 'err'); }
+  });
+}
+
+/* ══════════════════════════════════════════════
+   LAPORAN
+══════════════════════════════════════════════ */
+let reportMode = 'month'; // 'month' | 'range'
+let reportCache = null;
+
+function initReportDefaults() {
+  if ($('reportMonth').value) return; // sudah pernah diisi, jangan timpa
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  $('reportMonth').value = y + '-' + m;
+
+  const iso = todayISO();
+  $('reportEnd').value = iso;
+  $('reportEndText').textContent = formatTanggalPendek(iso);
+  const d = new Date(iso);
+  d.setDate(1);
+  const startIso = d.toISOString().slice(0, 10);
+  $('reportStart').value = startIso;
+  $('reportStartText').textContent = formatTanggalPendek(startIso);
+}
+
+function setReportMode(mode) {
+  reportMode = mode;
+  $('modeMonth').classList.toggle('on', mode === 'month');
+  $('modeRange').classList.toggle('on', mode === 'range');
+  $('reportMonthRow').classList.toggle('hidden', mode !== 'month');
+  $('reportRangeRow').classList.toggle('hidden', mode !== 'range');
+}
+
+function currentReportRange() {
+  if (reportMode === 'month') {
+    const val = $('reportMonth').value; // "YYYY-MM"
+    if (!val) return null;
+    const [y, m] = val.split('-').map(Number);
+    const start = y + '-' + String(m).padStart(2, '0') + '-01';
+    const lastDay = new Date(y, m, 0).getDate();
+    const end = y + '-' + String(m).padStart(2, '0') + '-' + String(lastDay).padStart(2, '0');
+    return { start, end };
+  }
+  const start = $('reportStart').value;
+  const end = $('reportEnd').value;
+  if (!start || !end) return null;
+  return { start, end };
+}
+
+async function loadReport() {
+  const range = currentReportRange();
+  if (!range) { toast('Pilih rentang tanggal dulu.', 'err'); return; }
+
+  $('reportSummary').innerHTML = '<div class="riwayat-empty">Memuat laporan…</div>';
+  $('reportList').innerHTML = '';
+
+  try {
+    const r = await callApi({
+      action: 'get-report', sessionToken: state.token,
+      startDate: range.start, endDate: range.end,
+    });
+
+    if (!r.ok) {
+      $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (r.error || 'Laporan gagal dimuat.') + '</div>';
+      return;
+    }
+
+    reportCache = r;
+    renderReportSummary(r.summary);
+    renderReportList(r.items);
+
+  } catch (e) {
+    $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Laporan gagal dimuat.') + '</div>';
+  }
+}
+
+function renderReportSummary(s) {
+  const doneCount = s.byStatus['Done'] || 0;
+  const criticalCount = s.byPriority['Critical'] || 0;
+
+  let html = '<div class="summary-grid">'
+    + '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + doneCount + '</div><div class="summary-label">Selesai</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + criticalCount + '</div><div class="summary-label">Critical</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + (s.topTag ? s.topTag.count : 0) + '</div><div class="summary-label">' + (s.topTag ? s.topTag.tag : 'Tag terbanyak') + '</div></div>';
+
+  if (s.total === 0) {
+    html += '<div class="summary-card summary-full"><div class="summary-label">Tidak ada aktivitas pada rentang ini</div></div>';
+  }
+  html += '</div>';
+  $('reportSummary').innerHTML = html;
+}
+
+function renderReportList(items) {
+  if (!items || items.length === 0) {
+    $('reportList').innerHTML = '';
+    return;
+  }
+  $('reportList').innerHTML = items.map(it => {
+    const tanggal = formatTanggalPendek(it.task_date);
+    const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
+    const taskText = it.task || '<span style="color:var(--muted)">—</span>';
+    return '<div class="riwayat-item" style="cursor:default">'
+      + '<div class="riwayat-top"><span class="riwayat-id">' + it.task_id + '</span>'
+      + '<span class="riwayat-date">' + tanggal + '</span></div>'
+      + '<div class="riwayat-task">' + taskText + '</div>'
+      + '<div class="riwayat-meta">'
+      + (it.priority ? '<span class="' + chipClassForPriority(it.priority) + '">' + it.priority + '</span>' : '')
+      + (statLabel ? '<span class="' + chipClassForStatus(it.status) + '">' + statLabel + '</span>' : '')
+      + (it.work_type ? '<span class="riwayat-chip">' + it.work_type + '</span>' : '')
+      + '</div></div>';
+  }).join('');
+}
+
+function exportReportToExcel() {
+  if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
+    toast('Tampilkan laporan dulu sebelum mengunduh.', 'err');
+    return;
+  }
+  if (typeof XLSX === 'undefined') {
+    toast('Modul Excel belum termuat. Periksa koneksi lalu coba lagi.', 'err');
+    return;
+  }
+
+  const rows = reportCache.items.map(it => ({
+    'Task ID': it.task_id,
+    'Date': it.task_date,
+    'Activity Type': it.activity_type,
+    'Work Type': it.work_type,
+    'Task': it.task,
+    'Tags': it.tags_raw,
+    'Priority': it.priority,
+    'Status': it.status,
+    'Remark': it.remark || '',
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 16 },
+    { wch: 40 }, { wch: 24 }, { wch: 10 }, { wch: 14 }, { wch: 30 },
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'MFB-IT Report');
+
+  const range = currentReportRange();
+  const filename = 'MFB-IT_Report_' + (range ? range.start + '_to_' + range.end : todayISO()) + '.xlsx';
+  XLSX.writeFile(wb, filename);
+  toast('Excel diunduh', 'good');
+}
+
+// ── BACKUP SEMUA DATA (Phase 2A) ──────────────────────────────
+// Mengunduh JSON (untuk restore/arsip mesin) + Excel (untuk dibaca
+// manusia), sekaligus, dari SATU panggilan ke action "export-all".
+// Berbeda dari exportReportToExcel: ini mengambil SEMUA baris di
+// 4 tabel, termasuk yang sudah soft-delete, tanpa filter tanggal.
+function downloadBlob(content, mime, filename) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function exportAllData() {
+  const btn = $('backupBtn');
+  const labelAsal = btn.textContent;
+  btn.classList.add('busy');
+  btn.textContent = 'Menyiapkan…';
+
+  try {
+    const r = await callApi({ action: 'export-all', sessionToken: state.token });
+    if (!r.ok) {
+      toast(r.error || 'Gagal mengambil data backup.', 'err');
+      return;
+    }
+
+    const stamp = todayISO();
+    const meta = r.meta;
+    const tables = r.tables;
+
+    // 1) JSON — utuh, untuk restore/arsip
+    const jsonContent = JSON.stringify({ meta, tables }, null, 2);
+    downloadBlob(jsonContent, 'application/json', 'MFB-IT_backup_' + stamp + '.json');
+
+    // 2) Excel — 4 sheet terpisah, untuk dibaca manusia
+    if (typeof XLSX === 'undefined') {
+      toast('JSON berhasil diunduh. Modul Excel belum termuat, coba lagi untuk file Excel.', 'err');
+      return;
+    }
+
+    const wb = XLSX.utils.book_new();
+    const sheetOrder = [
+      ['daily_activity', 'Daily Activity'],
+      ['activity_log',   'Activity Log'],
+      ['master_tag',     'Master Tag'],
+      ['app_config',     'App Config'],
+    ];
+    for (const [key, sheetName] of sheetOrder) {
+      const rows = tables[key] || [];
+      const ws = rows.length
+        ? XLSX.utils.json_to_sheet(rows)
+        : XLSX.utils.aoa_to_sheet([['(tidak ada data)']]);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    }
+    XLSX.writeFile(wb, 'MFB-IT_backup_' + stamp + '.xlsx');
+
+    toast('Backup diunduh: JSON + Excel (' + meta.rowCounts.daily_activity + ' task)', 'good');
+  } catch (e) {
+    toast(e.message || 'Backup gagal diunduh.', 'err');
+  } finally {
+    btn.classList.remove('busy');
+    btn.textContent = labelAsal;
   }
 }
 
@@ -1181,7 +1594,7 @@ function wireEvents() {
   $('aiBtn').addEventListener('click', doAiParse);
 
   document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.tab === 'input' || b.dataset.tab === 'riwayat') { switchView(b.dataset.tab); return; }
+    if (b.dataset.tab === 'input' || b.dataset.tab === 'riwayat' || b.dataset.tab === 'report') { switchView(b.dataset.tab === 'report' ? 'laporan' : b.dataset.tab); return; }
     toast('Halaman ini segera hadir.', '');
   }));
 
@@ -1190,11 +1603,35 @@ function wireEvents() {
   $('sesTrigger').addEventListener('click', openSessionSheet);
 
   setupActivityPicker(); setupWorkTypePicker(); setupStatusPicker();
+
+  // Laporan
+  $('modeMonth').addEventListener('click', () => setReportMode('month'));
+  $('modeRange').addEventListener('click', () => setReportMode('range'));
+  $('reportStart').addEventListener('change', e => { if (e.target.value) $('reportStartText').textContent = formatTanggalPendek(e.target.value); });
+  $('reportEnd').addEventListener('change', e => { if (e.target.value) $('reportEndText').textContent = formatTanggalPendek(e.target.value); });
+  $('reportLoadBtn').addEventListener('click', loadReport);
+  $('reportExportBtn').addEventListener('click', exportReportToExcel);
+  $('backupBtn').addEventListener('click', exportAllData);
+}
+
+// "Bangunkan" Edge Function begitu halaman dibuka — dikirim diam-diam
+// sambil pengguna masih mengetik PIN, sehingga saat PIN selesai
+// diketik, server (yang bisa saja masih "tidur" pada kunjungan
+// pertama setelah lama tidak dipakai) sudah lebih siap merespons.
+// Kegagalan di sini diabaikan sepenuhnya — ini hanya percepatan,
+// bukan bagian dari alur yang wajib berhasil.
+function wakeUpServer() {
+  fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.SUPABASE_ANON_KEY },
+    body: JSON.stringify({ action: '__warmup__' }),
+  }).catch(() => {});
 }
 
 function init() {
   wireEvents();
   setInterval(tickClock, 1000);
+  wakeUpServer();
 
   const saved = Store.get(KEY_TOKEN);
   const savedLoginAt = Store.get(KEY_LOGIN_AT);
