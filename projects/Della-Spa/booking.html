@@ -1,0 +1,310 @@
+<!--
+AnabhiDev-DELLAWEB — Della Spa Production Website
+HTML5 · CSS3 · Vanilla JavaScript · Google Fonts · JSON-LD
+Development · Anabhi Dev
+Version   : 1.5
+Generated : 21 August 2026, 03:04:12
+
+Halaman: Booking (07 dari 10)
+Bukan form — pemilih treatment yang menyusun pesan WhatsApp.
+Tidak ada data yang disimpan di mana pun.
+Daftar <select> disalin dari treatments.html, harus tetap sinkron
+manual bila pricelist berubah (keduanya sumbernya sama: menu resmi).
+-->
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Booking Treatment via WhatsApp — Della Spa Ungasan</title>
+<meta name="description" content="Pilih treatment, jumlah orang, dan waktu — pesan WhatsApp tersusun otomatis untuk booking di Della Spa Ungasan.">
+
+<link rel="canonical" href="https://dellaspabali.com/booking.html">
+<meta name="theme-color" content="#FAF7F4">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Della Spa">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://dellaspabali.com/booking.html">
+<meta property="og:title" content="Booking Treatment via WhatsApp — Della Spa Ungasan">
+<meta property="og:description" content="Pilih treatment, pesan WhatsApp tersusun otomatis.">
+<meta property="og:image" content="https://dellaspabali.com/assets/og/della-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/main.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dellaspabali.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Booking", "item": "https://dellaspabali.com/booking.html" }
+      ] },
+    { "@type": "HowTo", "name": "Cara Booking Treatment di Della Spa",
+      "step": [
+        { "@type": "HowToStep", "name": "Pilih treatment", "text": "Pilih treatment dan jumlah orang di halaman booking." },
+        { "@type": "HowToStep", "name": "Kirim pesan", "text": "Tekan tombol kirim — pesan WhatsApp tersusun otomatis." },
+        { "@type": "HowToStep", "name": "Konfirmasi jam", "text": "Della Spa membalas dengan konfirmasi ketersediaan jam." }
+      ] }
+  ]
+}
+</script>
+
+<style>
+  /* Khusus halaman ini: form sederhana, bukan komponen berulang */
+  .bk-form { display:grid; gap:var(--sp-5); max-width:none; }
+  .bk-field { display:grid; gap:8px; }
+  .bk-field label { font-size:var(--fs-sm); font-weight:600; color:var(--ink); }
+  .bk-field select, .bk-field input[type="text"] {
+    min-height:52px; padding:12px 16px; border-radius:var(--r-sm);
+    border:1px solid var(--rule); background:var(--surface); color:var(--ink);
+    font-size:1rem; width:100%;
+  }
+  .bk-field select:focus, .bk-field input:focus { border-color:var(--brand); }
+  .bk-steps { counter-reset:bk; display:grid; gap:var(--sp-4); }
+  .bk-step { display:flex; gap:var(--sp-3); align-items:flex-start; }
+  .bk-step::before {
+    counter-increment:bk; content:counter(bk);
+    flex:none; width:32px; height:32px; border-radius:50%;
+    display:grid; place-items:center; background:var(--taupe-400); color:var(--espresso);
+    font-family:var(--font-ui); font-weight:600; font-size:.9375rem;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Lompat ke konten utama</a>
+
+<header class="hdr">
+  <div class="wrap hdr-inner">
+    <a class="hdr-brand" href="index.html" aria-label="Della Spa — beranda">
+      <img src="https://anabhidev.com/projects/Della-Spa/assets/della-mark.webp" alt="Della Spa" width="40" height="40">
+      <span class="hdr-title">DELLA SPA<small>Beauty Spa Treatment</small></span>
+    </a>
+
+    <!-- NAV:START -->
+<nav class="nav" data-nav aria-label="Navigasi utama">
+  <a href="index.html">Home</a>
+  <a href="treatments.html">Treatments</a>
+  <a href="packages.html">Packages</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<!-- NAV:END -->
+
+    <div class="hdr-actions">
+      <a class="btn btn--primary btn--sm" data-wa data-loc="header" href="#">Booking</a>
+      <button class="burger" data-burger type="button" aria-expanded="false" aria-controls="drawer" aria-label="Buka menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" data-overlay></div>
+
+<aside class="drawer" id="drawer" data-drawer aria-label="Menu navigasi">
+  <div class="hdr-brand">
+    <img src="https://anabhidev.com/projects/Della-Spa/assets/della-mark.webp" alt="Della Spa" width="40" height="40">
+    <span class="hdr-title">DELLA SPA</span>
+  </div>
+
+  <!-- NAV:START -->
+<nav class="drawer-nav" data-nav aria-label="Navigasi mobile">
+  <a href="index.html">Home</a>
+  <a href="treatments.html">Treatments</a>
+  <a href="packages.html">Packages</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<!-- NAV:END -->
+
+  <div class="drawer-foot">
+    <a class="btn btn--primary btn--block" data-wa data-loc="drawer" href="#">Booking via WhatsApp</a>
+    <p class="small muted">Buka setiap hari<br>10.00 – 21.00 WITA</p>
+  </div>
+</aside>
+
+
+<main id="main">
+
+<section class="section" style="padding-block:var(--sp-8) var(--sp-6)">
+  <div class="wrap">
+    <nav aria-label="Breadcrumb">
+      <ol class="crumb">
+        <li><a href="index.html">Home</a></li>
+        <li aria-current="page">Booking</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<section class="section section--wash" style="padding-block:0 var(--sec-pad)">
+  <div class="wrap">
+    <div class="grid grid-2" style="gap:var(--sp-8); align-items:start">
+
+      <div class="stack">
+        <span class="sec-num">01</span>
+        <h1>Booking Treatment</h1>
+        <span class="rule-orn"></span>
+        <p class="lead" style="margin-top:var(--sp-2)">Pilih treatment yang diinginkan — pesan WhatsApp tersusun otomatis, tinggal dikirim.</p>
+
+        <div class="bk-steps" style="margin-top:var(--sp-6)">
+          <div class="bk-step"><p>Pilih treatment dan jumlah orang di formulir.</p></div>
+          <div class="bk-step"><p>Tekan tombol <strong>Kirim ke WhatsApp</strong>.</p></div>
+          <div class="bk-step"><p>Della Spa membalas dengan konfirmasi jam yang tersedia.</p></div>
+        </div>
+      </div>
+
+      <form class="bk-form card" style="padding:var(--sp-6) var(--sp-5)" id="bk-form">
+        <div class="bk-field">
+          <label for="bk-treatment">Treatment</label>
+          <select id="bk-treatment" name="treatment">
+            <optgroup label="Body Massage">
+              <option value="Balinese Massage (300k/jam)">Balinese Massage — 300k/jam</option>
+              <option value="Swedish Massage (300k/jam)">Swedish Massage — 300k/jam</option>
+              <option value="Shiatsu Massage (350k/jam)">Shiatsu Massage — 350k/jam</option>
+              <option value="Strong Massage (350k/jam)">Strong Massage — 350k/jam</option>
+              <option value="Aroma Therapy Massage (350k/jam)">Aroma Therapy Massage — 350k/jam</option>
+              <option value="Hot Stone Massage (350k/jam)">Hot Stone Massage — 350k/jam</option>
+              <option value="Sunburn Massage (350k/jam)">Sunburn Massage — 350k/jam</option>
+              <option value="Foot Massage (350k/jam)">Foot Massage — 350k/jam</option>
+              <option value="Back Massage (350k/jam)">Back Massage — 350k/jam</option>
+            </optgroup>
+            <optgroup label="Nail">
+              <option value="Pedicure without Polish (250k)">Pedicure without Polish — 250k</option>
+              <option value="Manicure without Polish (250k)">Manicure without Polish — 250k</option>
+              <option value="Pedicure with Normal Polish (350k)">Pedicure with Normal Polish — 350k</option>
+              <option value="Manicure with Normal Polish (350k)">Manicure with Normal Polish — 350k</option>
+              <option value="Pedicure with Gel Polish (400k)">Pedicure with Gel Polish — 400k</option>
+              <option value="Manicure with Gel Polish (400k)">Manicure with Gel Polish — 400k</option>
+            </optgroup>
+            <optgroup label="Facial & Body">
+              <option value="Traditional Facial (250k)">Traditional Facial — 250k</option>
+              <option value="Biokos Aloevera Facial (300k)">Biokos Aloevera Facial — 300k</option>
+              <option value="Biokos Seaweed Facial (300k)">Biokos Seaweed Facial — 300k</option>
+              <option value="Body Scrub (250k)">Body Scrub — 250k</option>
+              <option value="Ear Candle (200k)">Ear Candle — 200k</option>
+            </optgroup>
+            <optgroup label="Package">
+              <option value="Package 1 (600k/2 jam)">Package 1 — 600k / 2 jam</option>
+              <option value="Package 2 (600k/2 jam)">Package 2 — 600k / 2 jam</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="bk-field">
+          <label for="bk-pax">Jumlah Orang</label>
+          <select id="bk-pax" name="pax">
+            <option value="1 orang">1 orang</option>
+            <option value="2 orang">2 orang</option>
+            <option value="3 orang">3 orang</option>
+            <option value="4+ orang">4+ orang</option>
+          </select>
+        </div>
+
+        <div class="bk-field">
+          <label for="bk-time">Perkiraan Waktu (opsional)</label>
+          <input type="text" id="bk-time" name="time" placeholder="Contoh: hari ini sore, atau besok jam 14.00">
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">Kirim ke WhatsApp</button>
+        <p class="xs muted" style="text-align:center">Tidak ada data yang disimpan. Anda akan diarahkan ke WhatsApp.</p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div>
+        <div class="ftr-brand">
+          <img src="https://anabhidev.com/projects/Della-Spa/assets/della-light.webp" alt="Della Spa" width="56" height="56">
+        </div>
+        <p class="small" style="margin-top:var(--sp-4)">Beauty spa treatment di Ungasan, Bali. Balinese massage, facial, nail, body scrub, dan paket treatment dua jam.</p>
+      </div>
+      <div>
+        <h3>Halaman</h3>
+        <div class="ftr-links">
+          <a href="treatments.html">Treatment &amp; Harga</a>
+          <a href="packages.html">Paket Treatment</a>
+          <a href="gallery.html">Galeri</a>
+          <a href="about.html">Tentang Kami</a>
+          <a href="faq.html">Pertanyaan Umum</a>
+          <a href="booking.html">Booking</a>
+          <a href="balinese-massage-ungasan.html">Balinese Massage Ungasan</a>
+          <a href="spa-ungasan-uluwatu.html">Spa Ungasan &amp; Uluwatu</a>
+        </div>
+      </div>
+      <div>
+        <h3>Kontak</h3>
+        <div class="ftr-links">
+          <p>Jl. Karma Kandara No.41,<br>Ungasan, Kec. Kuta Selatan,<br>Kabupaten Badung, Bali</p>
+          <a href="tel:+6281236109511" data-loc="footer">0812-3610-9511</a>
+          <p>Setiap hari 10.00 – 21.00 WITA</p>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span>© 2026 Della Spa. Seluruh hak cipta dilindungi. · <a href="privacy.html">Kebijakan Privasi</a></span>
+      <span>Development · Anabhi Dev</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" data-wa-float data-wa data-loc="float" href="#" aria-label="Booking via WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.05-1.03.24-3.47-.72-2.92-1.15-4.77-4.13-4.91-4.32-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36h.55c.18 0 .41-.03.64.49.25.58.83 2 .9 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.29.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.17-.19.69-.81.87-1.09.19-.29.37-.24.62-.14.25.09 1.6.76 1.87.9.28.14.46.21.53.33.07.12.07.67-.18 1.36Z"/></svg>
+</a>
+
+<div class="consent" data-consent role="region" aria-label="Persetujuan cookie">
+  <p>Kami memakai cookie analitik untuk memahami halaman mana yang paling membantu pengunjung. <a href="privacy.html" style="text-decoration:underline">Kebijakan Privasi</a></p>
+  <button class="btn btn--outline btn--sm" data-consent-action="deny" type="button">Tolak</button>
+  <button class="btn btn--primary btn--sm" data-consent-action="accept" type="button">Setuju</button>
+</div>
+
+<script src="js/main.js" defer></script>
+<script>
+  // Halaman ini punya penyusun pesan sendiri (bukan tombol data-wa
+  // statis) karena butuh 3 nilai dari form: treatment, pax, waktu.
+  (function () {
+    var form = document.getElementById('bk-form');
+    if (!form || !window.DellaWA) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var treatment = document.getElementById('bk-treatment').value;
+      var pax = document.getElementById('bk-pax').value;
+      var time = document.getElementById('bk-time').value.trim();
+
+      var link = window.DellaWA.build({
+        'Treatment': treatment,
+        'Jumlah': pax,
+        'Perkiraan Waktu': time || undefined
+      });
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'booking_submit', { treatment: treatment, pax: pax });
+      }
+      window.open(link, '_blank', 'noopener');
+    });
+  })();
+</script>
+</body>
+</html>
