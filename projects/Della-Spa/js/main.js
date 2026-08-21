@@ -1,0 +1,364 @@
+// ================================================================
+// AnabhiDev-DELLAWEB — Della Spa Production Website
+// Vanilla JavaScript · IntersectionObserver · requestAnimationFrame · GA4 gtag.js
+// Development · Anabhi Dev
+// Version   : 1.5
+// Generated : 21 August 2026, 01:04:37
+// ----------------------------------------------------------------
+// Satu file untuk 10 halaman. Setiap modul mengecek dulu apakah
+// elemennya ada, jadi aman dipanggil di halaman mana pun.
+// ================================================================
+
+(function () {
+  'use strict';
+
+  var CONFIG = {
+    WA_NUMBER   : '6281236109511',
+    WA_GREETING : 'Halo Della Spa 👋 Saya ingin booking treatment.',
+    GA4_ID      : 'G-XXXXXXXXXX',   // PLACEHOLDER — ganti sebelum launch
+    FADE_DELAY  : 1200,             // jeda setelah window.load sebelum ambil gambar 2 & 3
+    FADE_EVERY  : 6500,
+    WA_SHOW_AT  : 400,
+    MAP_MARGIN  : '300px'           // peta dimuat saat tinggal 300px lagi masuk layar
+  };
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+
+  // ==============================================================
+  // 1. NAV — tandai halaman aktif.
+  // Markup nav 100% identik di 10 file supaya sync-nav aman;
+  // status aktif ditentukan di sini, bukan di-hardcode per halaman.
+  // ==============================================================
+  function markActiveNav() {
+    var here = location.pathname.split('/').pop() || 'index.html';
+    $$('[data-nav] a').forEach(function (a) {
+      var href = (a.getAttribute('href') || '').split('/').pop();
+      if (href && href === here) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
+
+  // ==============================================================
+  // 2. DRAWER MOBILE
+  // ==============================================================
+  function initDrawer() {
+    var burger = $('[data-burger]'), drawer = $('[data-drawer]'), overlay = $('[data-overlay]');
+    if (!burger || !drawer || !overlay) return;
+
+    function open() {
+      drawer.classList.add('is-open');
+      overlay.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      var first = $('a, button', drawer);
+      if (first) first.focus();
+    }
+
+    function close() {
+      drawer.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      burger.focus();                      // fokus dikembalikan, tidak hilang
+    }
+
+    burger.addEventListener('click', function () {
+      burger.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) close();
+    });
+
+    // Fokus tidak boleh lolos keluar drawer
+    drawer.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var items = $$('a, button', drawer).filter(function (el) { return el.offsetParent !== null; });
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    $$('a', drawer).forEach(function (a) { a.addEventListener('click', close); });
+  }
+
+
+  // ==============================================================
+  // 3. TABS
+  // ==============================================================
+  function initTabs() {
+    $$('[role="tablist"]').forEach(function (list) {
+      var tabs = $$('[role="tab"]', list);
+
+      function select(tab) {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.setAttribute('tabindex', on ? '0' : '-1');
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !on;
+        });
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab); });
+        tab.addEventListener('keydown', function (e) {
+          var next = null;
+          if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+          if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
+          if (e.key === 'Home')       next = tabs[0];
+          if (e.key === 'End')        next = tabs[tabs.length - 1];
+          if (next) { e.preventDefault(); select(next); next.focus(); }
+        });
+      });
+    });
+  }
+
+
+  // ==============================================================
+  // 4. SCROLL REVEAL — sekali jalan lalu unobserve
+  // ==============================================================
+  function initReveal() {
+    var items = $$('.reveal');
+    if (!items.length) return;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var delay = Math.min(parseInt(el.dataset.revealIndex || 0, 10), 5) * 70;
+        setTimeout(function () { el.classList.add('is-in'); }, delay);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+
+  // ==============================================================
+  // 5. HERO CROSS-FADE TERTUNDA
+  // Gambar 1 = elemen LCP. Gambar 2 & 3 baru diambil setelah
+  // window.load + jeda, jadi tidak ikut menghitung LCP.
+  // ==============================================================
+  function initHeroFade() {
+    var media = $('[data-hero-media]');
+    if (!media) return;
+
+    var slides = $$('img', media);
+    if (slides.length) slides[0].classList.add('is-active');
+    if (slides.length < 2 || reduceMotion) return;
+
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        slides.slice(1).forEach(function (img) {
+          if (img.dataset.src && !img.src) img.src = img.dataset.src;
+        });
+
+        var i = 0, timer = null;
+
+        function step() {
+          if (document.hidden) return;
+          slides[i].classList.remove('is-active');
+          i = (i + 1) % slides.length;
+          slides[i].classList.add('is-active');
+        }
+        function start() { if (!timer) timer = setInterval(step, CONFIG.FADE_EVERY); }
+        function stop()  { clearInterval(timer); timer = null; }
+
+        start();
+        document.addEventListener('visibilitychange', function () {
+          document.hidden ? stop() : start();     // hemat baterai & INP
+        });
+      }, CONFIG.FADE_DELAY);
+    });
+  }
+
+
+  // ==============================================================
+  // 6. TOMBOL WHATSAPP MENGAMBANG — scroll di-throttle pakai rAF
+  // ==============================================================
+  function initWaFloat() {
+    var wa = $('[data-wa-float]');
+    if (!wa) return;
+    var ticking = false;
+
+    function update() {
+      wa.classList.toggle('is-visible', window.scrollY > CONFIG.WA_SHOW_AT);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  }
+
+
+  // ==============================================================
+  // 7. PENYUSUN PESAN WHATSAPP
+  // Tidak ada form, tidak ada data yang disimpan di mana pun.
+  // ==============================================================
+  function buildWaLink(fields) {
+    var lines = [CONFIG.WA_GREETING];
+    Object.keys(fields).forEach(function (k) {
+      if (fields[k]) lines.push(k + ': ' + fields[k]);
+    });
+    return 'https://wa.me/' + CONFIG.WA_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  }
+
+  function initWaLinks() {
+    $$('[data-wa]').forEach(function (el) {
+      el.setAttribute('href', buildWaLink({
+        'Treatment': el.dataset.treatment || '',
+        'Harga'    : el.dataset.price || ''
+      }));
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener');
+    });
+  }
+
+
+  // ==============================================================
+  // 8. PETA — dimuat otomatis saat mendekati layar.
+  // Bagi pengunjung terasa selalu ada; biayanya nol untuk orang
+  // yang tidak pernah scroll sampai bawah.
+  // ==============================================================
+  function initMap() {
+    var facade = $('[data-map-facade]');
+    if (!facade) return;
+
+    var loaded = false;
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      var src = facade.dataset.mapSrc;
+      if (!src) return;
+      var frame = document.createElement('iframe');
+      frame.src = src;
+      frame.loading = 'lazy';
+      frame.title = 'Peta lokasi Della Spa, Jl. Karma Kandara No.41, Ungasan, Bali';
+      frame.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+      frame.setAttribute('allowfullscreen', '');
+      facade.innerHTML = '';
+      facade.appendChild(frame);
+      track('map_load', {});
+    }
+
+    var btn = $('button', facade);
+    if (btn) btn.addEventListener('click', load);   // fallback kalau JS observer gagal
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { load(); io.disconnect(); }
+      }, { rootMargin: CONFIG.MAP_MARGIN });
+      io.observe(facade);
+    }
+  }
+
+
+  // ==============================================================
+  // 9. COOKIE CONSENT
+  // GA4 berbasis cookie, jadi gtag baru menyala setelah disetujui.
+  // Pilihan disimpan di localStorage — bukan cookie, bukan data pribadi.
+  // ==============================================================
+  function initConsent() {
+    var bar = $('[data-consent]');
+    if (!bar) return;
+
+    var KEY = 'della-consent';
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+
+    if (saved === 'granted') { loadGA(); return; }
+    if (saved === 'denied') return;
+
+    setTimeout(function () { bar.classList.add('is-open'); }, 900);
+
+    $$('[data-consent-action]', bar).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var ok = btn.dataset.consentAction === 'accept';
+        try { localStorage.setItem(KEY, ok ? 'granted' : 'denied'); } catch (e) {}
+        bar.classList.remove('is-open');
+        if (ok) loadGA();
+      });
+    });
+  }
+
+  function loadGA() {
+    if (CONFIG.GA4_ID.indexOf('XXXX') > -1) return;   // placeholder: jangan muat
+    if (window.gtag) return;
+
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + CONFIG.GA4_ID;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', CONFIG.GA4_ID, { anonymize_ip: true });
+  }
+
+
+  // ==============================================================
+  // 10. EVENT TRACKING — aman dipanggil meski gtag tidak ada
+  // ==============================================================
+  function track(name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+
+  function initTracking() {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var where = a.dataset.loc || 'unknown';
+
+      if (href.indexOf('wa.me') > -1) {
+        track('wa_click', { location: where, treatment: a.dataset.treatment || '' });
+      } else if (href.indexOf('tel:') === 0) {
+        track('call_click', { location: where });
+      } else if (href.indexOf('google.com/maps') > -1 || href.indexOf('maps.app') > -1) {
+        track('map_click', { location: where });
+      }
+    });
+
+    $$('[role="tab"]').forEach(function (t) {
+      t.addEventListener('click', function () {
+        track('price_tab', { category: t.textContent.trim() });
+      });
+    });
+  }
+
+
+  // ==============================================================
+  function init() {
+    markActiveNav();
+    initDrawer();
+    initTabs();
+    initReveal();
+    initHeroFade();
+    initWaFloat();
+    initWaLinks();
+    initMap();
+    initConsent();
+    initTracking();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+  window.DellaWA = { build: buildWaLink, number: CONFIG.WA_NUMBER };
+
+})();
