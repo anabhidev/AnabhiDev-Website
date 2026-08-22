@@ -3,8 +3,8 @@
 AnabhiDev - BaliEats-AI — BaliEats AI (Bali Culinary AI Assistant)
 HTML/CSS/JS · Cloudflare Pages · Gemini API (via Google Apps Script)
 Development · Anabhi Dev
-Version   : 2.4
-Generated : 16 August 2026, 08:00:00 WITA
+Version   : 2.5
+Generated : 22 August 2026, 22:58:17 WITA
 ================================================================
 -->
 <!DOCTYPE html>
@@ -70,8 +70,8 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 #desktop-layout{min-height:100vh;width:100%;background:var(--surface);}
 .sidebar{width:var(--sidebar-width);background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:width 0.3s;overflow:hidden;}
 .sidebar.collapsed{width:var(--sidebar-collapsed);}
-.sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:center;align-items:center;min-height:80px;gap:8px;}
-.sidebar-logo img{width:100%;max-width:140px;object-fit:contain;transition:all 0.3s;}
+.sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:center;align-items:center;min-height:130px;gap:8px;}
+.sidebar-logo img{width:100%;max-width:168px;object-fit:contain;transition:all 0.3s;}
 .sidebar-logo .logo-text{color:var(--emerald);font-size:14px;font-weight:800;letter-spacing:0.5px;white-space:nowrap;}
 .sidebar.collapsed .sidebar-logo img{width:32px;max-width:32px;}.sidebar.collapsed .logo-text{display:none;}
 .sidebar-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0;}.sidebar-nav::-webkit-scrollbar{display:none;}
@@ -169,8 +169,8 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .followup-chip:hover{background:var(--emerald);color:#fff;border-color:var(--emerald);}
 /* MOBILE */
 .mobile-only{width:100%;min-height:100dvh;height:100dvh;flex-direction:column;background:var(--surface);overflow:hidden;}
-.mobile-topbar{background:var(--sidebar-bg);padding:max(12px,env(safe-area-inset-top)) 12px 12px 6px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px;overflow-x:hidden;}
-.mobile-logo{height:30px;object-fit:contain;flex-shrink:0;}.mobile-logo-txt{color:var(--emerald);font-size:16px;font-weight:800;flex-shrink:0;}
+.mobile-topbar{background:var(--sidebar-bg);padding:max(3px,env(safe-area-inset-top)) 12px 3px 6px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px;overflow-x:hidden;}
+.mobile-logo{height:48px;object-fit:contain;flex-shrink:0;}.mobile-logo-txt{color:var(--emerald);font-size:16px;font-weight:800;flex-shrink:0;}
 .mobile-topbar-center{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
 .mobile-app-name{font-size:12px;font-weight:700;color:#fff;letter-spacing:0.5px;text-align:center;white-space:nowrap;}
 .mobile-tagline{display:none;}
@@ -239,6 +239,7 @@ body.is-desktop #desktop-layout{display:flex;}body.is-mobile .mobile-only{displa
 .intel-mini{background:var(--black);border-radius:10px;padding:0;margin-bottom:14px;flex-shrink:0;border:1px solid #222;overflow:hidden;transition:max-height 0.3s ease;max-height:900px;}
 .intel-mini.collapsed{max-height:44px;}
 .intel-mini.scroll-hidden{max-height:0!important;opacity:0;margin-bottom:0!important;border-width:0!important;pointer-events:none;}
+.chip-row-hidden{max-height:0!important;opacity:0!important;overflow:hidden!important;margin:0!important;padding-top:0!important;padding-bottom:0!important;pointer-events:none;transition:max-height 0.25s ease,opacity 0.2s ease;}
 .intel-mini-inner{padding:12px 16px;}
 .intel-mini-row{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;}
 .intel-mini-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
@@ -895,7 +896,10 @@ function initDash(){
     var mh=document.getElementById('m-welcome-h3');if(mh)mh.textContent='Halo, '+displayName+'! \u{1F33F}';
   }
   var greet=displayName?'Halo, **'+displayName+'**! ':'Halo! ';
-  addBot(greet+'Saya **BaliEats AI** \u{1F33F}\n\n*"Less searching, more tasting."*\n\nSaya bisa membantu kamu:\n\u2022 Rekomendasi makanan & minuman khas Bali\n\u2022 Info street food dan warung tersembunyi\n\u2022 Kuliner per area: Ubud, Canggu, Seminyak, Jimbaran, dll\n\u2022 Analisa foto makanan: identifikasi, nutrisi, info kesehatan\n\u2022 Jawab dalam Bahasa Indonesia, Inggris, Bali, Jawa, Mandarin\n\nMau makan apa hari ini? \u{1F60B}');
+  var greetFullPoints='\u2022 Rekomendasi makanan & minuman khas Bali\n\u2022 Info street food dan warung tersembunyi\n\u2022 Kuliner per area: Ubud, Canggu, Seminyak, Jimbaran, dll\n\u2022 Analisa foto makanan: identifikasi, nutrisi, info kesehatan\n\u2022 Jawab dalam Bahasa Indonesia, Inggris, Bali, Jawa, Mandarin';
+  var greetShortPoints='\u2022 Rekomendasi makanan & minuman khas Bali\n\u2022 Info street food dan warung tersembunyi\n\u2022 Analisa foto makanan: identifikasi, nutrisi, info kesehatan';
+  var greetPoints=isMobileLayout()?greetShortPoints:greetFullPoints;
+  addBot(greet+'Saya **BaliEats AI** \u{1F33F}\n\n*"Less searching, more tasting."*\n\nSaya bisa membantu kamu:\n'+greetPoints+'\n\nMau makan apa hari ini? \u{1F60B}');
 }
 
 // ── SCROLL HIDE ──────────────────────────────────────────────
@@ -905,10 +909,10 @@ function setupScrollHide(){
   function hideHdrs(){if(hdrHidden)return;hdrHidden=true;var dh=document.getElementById('d-chat-hdr');if(dh)dh.classList.add('hidden');var mh=document.getElementById('m-chat-hdr');if(mh)mh.classList.add('hidden');}
   function hideChipsPermanent(){
     if(chipsHiddenPermanently)return;chipsHiddenPermanently=true;
-    var dc=document.getElementById('d-chips');if(dc)dc.style.display='none';
-    var mc=document.getElementById('m-chips');if(mc)mc.style.display='none';
-    var db=document.getElementById('d-budget-chips');if(db)db.style.display='none';
-    var mb=document.getElementById('m-budget-chips');if(mb)mb.style.display='none';
+    var dc=document.getElementById('d-chips');if(dc)dc.classList.add('chip-row-hidden');
+    var mc=document.getElementById('m-chips');if(mc)mc.classList.add('chip-row-hidden');
+    var db=document.getElementById('d-budget-chips');if(db)db.classList.add('chip-row-hidden');
+    var mb=document.getElementById('m-budget-chips');if(mb)mb.classList.add('chip-row-hidden');
   }
   function toggleIntelOnScroll(container,lastScrollRef){
     var current=container.scrollTop;
@@ -1026,7 +1030,7 @@ function addTyping(){
   return id;
 }
 function rmTyping(id){document.querySelectorAll('#'+id).forEach(function(e){e.remove();});}
-function hideChips(){var dc=document.getElementById('d-chips');if(dc)dc.style.display='none';var mc=document.getElementById('m-chips');if(mc)mc.style.display='none';}
+function hideChips(){var dc=document.getElementById('d-chips');if(dc)dc.classList.add('chip-row-hidden');var mc=document.getElementById('m-chips');if(mc)mc.classList.add('chip-row-hidden');}
 function setLoading(val){isLoading=val;var ds=document.getElementById('d-send');if(ds)ds.disabled=val;var ms=document.getElementById('m-send');if(ms)ms.disabled=val;}
 
 // ── PROCESS QUERY ────────────────────────────────────────────
@@ -1139,8 +1143,10 @@ function doLogout(){
   var dm=document.getElementById('d-msgs');if(dm)dm.querySelectorAll('.msg').forEach(function(el){el.remove();});
   var mm=document.getElementById('m-msgs');if(mm)mm.querySelectorAll('.msg').forEach(function(el){el.remove();});
   chipsHiddenPermanently=false;
-  var dc=document.getElementById('d-chips');if(dc)dc.style.display='';
-  var mc=document.getElementById('m-chips');if(mc)mc.style.display='';
+  var dc=document.getElementById('d-chips');if(dc)dc.classList.remove('chip-row-hidden');
+  var mc=document.getElementById('m-chips');if(mc)mc.classList.remove('chip-row-hidden');
+  var db=document.getElementById('d-budget-chips');if(db)db.classList.remove('chip-row-hidden');
+  var mb=document.getElementById('m-budget-chips');if(mb)mb.classList.remove('chip-row-hidden');
   showChatView();
   var ni=document.getElementById('name-input');if(ni)ni.value='';
   var nb=document.getElementById('name-btn');if(nb){nb.disabled=false;nb.textContent='Mulai \u2192';}
@@ -1653,10 +1659,10 @@ function renderChips(){
   if(chipsHiddenPermanently)return;
   var chips=getTimeBasedChips();
   var html=chips.map(function(c){return '<div class="chip" onclick="sendChip(this)">'+c+'</div>';}).join('');
-  var dc=document.getElementById('d-chips');if(dc){dc.innerHTML=html;dc.style.display='';}
-  var mc=document.getElementById('m-chips');if(mc){mc.innerHTML=html;mc.style.display='';}
-  var db=document.getElementById('d-budget-chips');if(db)db.style.display='';
-  var mb=document.getElementById('m-budget-chips');if(mb)mb.style.display='';
+  var dc=document.getElementById('d-chips');if(dc){dc.innerHTML=html;dc.classList.remove('chip-row-hidden');}
+  var mc=document.getElementById('m-chips');if(mc){mc.innerHTML=html;mc.classList.remove('chip-row-hidden');}
+  var db=document.getElementById('d-budget-chips');if(db)db.classList.remove('chip-row-hidden');
+  var mb=document.getElementById('m-budget-chips');if(mb)mb.classList.remove('chip-row-hidden');
 }
 
 // ── EXPORT PERCAKAPAN PENUH ────────────────────────────────────────────────────────
