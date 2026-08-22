@@ -288,9 +288,10 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
   letter-spacing:.2em; text-transform:uppercase; color:var(--muted); line-height:1.4;
 }
 
-.nav { display:flex; align-items:center; gap:clamp(14px,2vw,30px); }
+.nav { display:flex; align-items:center; gap:clamp(14px,1.8vw,26px); }
 .nav a {
-  position:relative; font-size:var(--fs-sm); font-weight:500; color:var(--body);
+  position:relative; font-size:.8125rem; font-weight:600; color:var(--body);
+  text-transform:uppercase; letter-spacing:.08em;
   padding-block:6px; transition:color var(--dur-fast) var(--ease);
 }
 .nav a::after {
@@ -338,9 +339,14 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .drawer.is-open { transform:translateX(0); }
 
 .drawer-nav { display:grid; gap:var(--sp-1); }
+/* Sengaja TIDAK kapital seperti nav desktop — di ukuran 1.05rem,
+   kapital+tracking lebar untuk daftar vertikal panjang justru
+   lebih sulit dipindai mata. Kalau kakak mau tetap kapital di
+   sini juga, tinggal tambah text-transform:uppercase. */
 .drawer-nav a {
   display:block; padding:14px 12px; border-radius:var(--r-sm);
-  font-size:1.05rem; color:var(--body-strong); border-bottom:1px solid var(--rule-2);
+  font-size:1.05rem; font-weight:500; color:var(--body-strong);
+  border-bottom:1px solid var(--rule-2);
   transition:background var(--dur-fast) var(--ease);
 }
 .drawer-nav a:hover { background:var(--surface-soft); }
@@ -501,6 +507,18 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 }
 .card-meta { font-size:var(--fs-xs); color:var(--muted); letter-spacing:.1em; }
 
+/* Badge untuk konten dummy yang bisa disalahartikan sebagai fakta
+   bisnis (mis. paket contoh yang belum ditawarkan resmi). Beda
+   dari [data-dummy] biasa: ini WAJIB terlihat pengunjung, bukan
+   hanya penanda internal untuk developer. */
+.badge-dummy {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 12px; border-radius:var(--r-pill);
+  background:#FBEBD8; color:#8A5A1F; border:1px solid #E8C9A0;
+  font-size:.6875rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+}
+.badge-dummy::before { content:"●"; font-size:.55rem; color:#C08A00; }
+
 
 /* ================================================================
    13. BARIS HARGA — dotted leader dibuat dengan border,
@@ -639,8 +657,12 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .ftr-bottom {
   margin-top:var(--sp-8); padding-top:var(--sp-4);
   border-top:1px solid rgba(245,238,232,.14);
-  display:flex; flex-wrap:wrap; gap:var(--sp-3); justify-content:space-between; font-size:var(--fs-xs);
+  text-align:center; font-size:var(--fs-xs);
 }
+.ftr-bottom p { margin:0; }
+.ftr-credit { color:var(--on-dark-muted); }
+.ftr-credit a { color:var(--on-dark-muted); text-decoration:underline; text-underline-offset:2px; }
+.ftr-credit a:hover { color:var(--on-dark); }
 
 
 /* ================================================================
@@ -678,6 +700,13 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .crumb li { display:flex; align-items:center; }
 .crumb li + li::before { content:"/"; margin-right:8px; color:var(--gold-line); }
 .crumb [aria-current="page"] { color:var(--ink); }
+
+/* Varian untuk section--deep. WAJIB dipakai bersamaan — --muted
+   dan --ink default hanya 1.55:1 / 1.56:1 di atas --surface-deep,
+   gagal total kalau tidak di-override. */
+.crumb--onDark { color:var(--on-dark-muted); }               /* 5.11:1 */
+.crumb--onDark li + li::before { color:var(--gold-line); }
+.crumb--onDark [aria-current="page"] { color:var(--on-dark); } /* 9.11:1 */
 
 /* Fail-safe: .reveal TIDAK tersembunyi secara default.
    Hanya tersembunyi kalau <html> sudah dapat kelas "reveal-on"
