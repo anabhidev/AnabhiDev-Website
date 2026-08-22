@@ -3,9 +3,111 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.9
-Generated : 21 August 2026, 23:48:24
+Version   : 2.11
+Generated : 22 August 2026, 15:47:33
 ================================================================
+PERUBAHAN DARI v2.10 (auto-parse, full English UI, Dashboard baru)
+
+  1. Padding tombol Simpan/Save vs bottom nav diperbesar
+     Keluhan: tombol "Simpan aktivitas" (kini "Save activity") masih
+     mepet ke bottom nav, khususnya di mode Day Off. Ditambahkan
+     margin-top pada .submit + padding-bottom .scroll diperbesar
+     (32px → 40px). WAJIB dipasangkan dengan v1.12.ts (lihat poin 3).
+
+  2. Warna nav aktif dipertegas di kedua mode
+     Sebelumnya var(--navy) untuk kedua mode: nyaris tak terbaca di
+     dark mode, kurang tegas di light mode. Sekarang: light mode
+     #12181F (hex literal, kontras 13.97:1), dark mode putih bersih
+     #FFFFFF (kontras 18.45:1) — dihitung, bukan tebakan.
+
+  3. AUTO-PARSE tanggal + jenis hari dari teks bebas (BUTUH v1.12.ts)
+     Sebelumnya AI Parse hanya mengisi task/tag/priority/status/
+     remark — tanggal & jenis hari (Working Day/Day Off) HARUS diisi
+     manual meski disebut jelas di kalimat ("libur tanggal 16").
+     Sekarang Gemini juga mendeteksi:
+       - taskDate (format tanggal disebut, "kemarin", "besok", dst)
+       - activityType (kata "libur"/"cuti"/"sakit"/"izin" → Day Off)
+       - offWorking (tetap ada pekerjaan meski hari libur, atau tidak)
+     Hasil deteksi divalidasi ulang di client sebelum diterapkan
+     (pertahanan berlapis, server juga sudah validasi).
+
+  4. Full translasi UI ke Bahasa Inggris
+     SEMUA teks yang tampil ke user (label, placeholder, tombol,
+     toast, pesan error, judul kartu, nama hari/bulan, bottom nav,
+     PIN screen, dialog konfirmasi) — termasuk pesan error yang
+     berasal dari server (lihat v1.12.ts). Ditemukan & diperbaiki 6
+     bug translasi yang lolos scan pertama (MONTH_NAME_ID di label
+     bulan Dashboard, "Selesai" di 2 tempat, dsb) lewat scan ulang
+     sistematis regex + manual per fungsi.
+
+  5. Dashboard: 6 stat card (2 kolom x 3 baris) dengan collapse
+     4 card selalu tampil: Total task, Done, Open (belum selesai),
+     Oldest open (task terbuka tertua dalam hari). 2 card di balik
+     "Show more": Days filled (hari terisi vs hari yang sudah
+     berlalu bulan ini), Day streak (hari berturut-turut ada entry).
+     Semua dihitung 100% di client dari data "items" yang SUDAH
+     dikembalikan action get-report — TIDAK perlu endpoint baru.
+     Logic sudah diuji dengan beberapa skenario data (lihat catatan
+     computeExtraStats).
+
+  6. Dashboard: 2 chart baru
+     - "Daily Activity": bar chart 1 batang per hari sepanjang bulan
+       berjalan, langsung memperlihatkan hari yang bolong.
+     - "Work Type": bar chart horizontal dari s.byWorkType — data
+       yang SUDAH dihitung server sejak lama tapi belum pernah
+       ditampilkan di UI mana pun sampai sekarang.
+
+WAJIB PASANGAN: File ini HARUS di-deploy BERSAMA MFB-IT_v1.12.ts
+(Edge Function). Auto-parse tanggal/jenis hari TIDAK akan berfungsi
+kalau Edge Function masih versi lama (v1.11), karena field
+taskDate/activityType/offWorking baru ada di respons v1.12.
+Urutan deploy: Edge Function (v1.12.ts) DULU, baru webapp (HTML ini).
+
+PERUBAHAN DARI v2.9 (Phase 1 — bugfix & polish visual)
+
+  1. Logo header 34→44px — TIDAK menambah tinggi header
+     .hd-meta (jam kanan) sudah min-height:44px, jadi ruang untuk
+     logo lebih besar sudah tersedia gratis tanpa header membesar.
+
+  2. Mode "Hari Libur" kepotong bottom nav — DIPERBAIKI
+     Total padding dipangkas ~70px (.ai-box 92→68px, .card padding
+     20→16px, hint dipersingkat jadi 1 baris, .field margin 16→12px,
+     .scroll padding-top 16→12px). Berlaku ke semua tab karena
+     perubahan di rule bersama, bukan cuma mode Libur.
+
+  3. 4 warna dark-mode-aware yang lolos dari perbaikan v2.8 —
+     DIPERBAIKI. Tombol "Uraikan dengan AI" (kontras lama 2.95:1,
+     gagal AA) & ringkasan hasil AI sekarang pakai variabel baru
+     --ai-accent-text/--ai-accent-text-soft khusus dark mode (warna
+     tetap keluarga brass/gold, lolos 8+:1). .picker-row:active &
+     .btn-logout:active tidak lagi kedip putih di dark mode.
+
+  4. Layar PIN — redistribusi jarak vertikal
+     Sebelumnya ~75px kosong nganggur di atas logo, ~370px kosong
+     di bawah keypad (dari layar 1400px). Padding-top dikurangi
+     sedikit, jarak antar-blok (logo/brand/sub) dilebarkan — konten
+     menyebar lebih rata ke bawah tanpa center-vertical penuh
+     (sesuai permintaan, supaya tidak "mengambang di tengah").
+
+  5. Tag jadi collapsible
+     Default: tampilkan tag yang SUDAH terpilih + "+ tag baru" +
+     "Semua tag (N) ▾". Tap untuk buka grid lengkap ("Ringkas ▴"
+     untuk menutup lagi). Skalabel — grid tidak jebol walau tag
+     bertambah jadi 30+.
+
+  6. Strip "Hari ini" di tab Input (baru)
+     1 baris tipis warna navy di atas kartu "Tulis bebas":
+     "N aktivitas tercatat" atau "Belum ada catatan" bila 0. Dari
+     data taskToday yang sudah dikirim server saat login — tidak
+     ada request tambahan. Update otomatis begitu submit berhasil.
+
+  7. Bug: daftar tag hilang diam-diam — DIPERBAIKI
+     Sebelumnya kalau get-tags gagal, tag langsung kosong tanpa
+     retry/toast (biang tampilan mirip "tag disembunyikan" yang
+     dilaporkan). Sekarang: retry 1x, fallback ke cache
+     localStorage kalau masih gagal, toast hanya muncul kalau
+     benar-benar tidak ada data.
+
 PERUBAHAN DARI v2.8 (bugfix dari laporan pemakaian nyata)
 
   1. Header membesar setelah toggle dark mode — DIPERBAIKI
@@ -127,6 +229,16 @@ body.dark-mode {
      di dark mode -- kalau teks itu tetap pakai --navy (gelap), teks
      jadi nyaris tak terbaca di atas card yang sudah ikut gelap juga. */
   --heading: #E8ECF1;
+  /* v2.10 — teks di atas .ai-btn & .ai-summary (dua-duanya berlatar
+     rgba(201,168,76,.10)) tidak ikut daftar var(--heading) karena
+     latarnya bukan --card polos, melainkan tint brass transparan.
+     Warna lama #8A6D1E (dipakai tetap di light mode) kalau dipaksa
+     jalan di dark mode cuma dapat kontras 2.95:1 — gagal AA 4.5:1.
+     #E6C878 dipilih khusus untuk dark mode: masih dalam keluarga
+     brass/gold (bukan warna asing), diukur kontras 8.87:1 terhadap
+     latar gelap tersebut. */
+  --ai-accent-text: #E6C878;
+  --ai-accent-text-soft: #DDBE72;
 }
 /* Transisi halus saat toggle, biar tidak "kedip" mendadak */
 body, .header, .nav, .toast { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
@@ -147,21 +259,31 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
+/* v2.10 — redistribusi jarak, BUKAN geser semua ke bawah. Sebelumnya
+   padding-top clamp(20,6vh,54) terlalu kecil dibanding sisa ruang
+   kosong di bawah keypad (dari screenshot: ~75px kosong di atas
+   logo, ~370px kosong di bawah keypad, dari total 1400px tinggi
+   layar). Sengaja TIDAK dipakai justify-content:center (diminta
+   eksplisit) — jarak antar-blok (logo/brand/judul/dots) dilebarkan
+   sedikit supaya konten "menyebar" turun secara alami, bukan
+   nge-block rata di tengah. */
 #pinScreen {
   position: fixed; inset: 0; z-index: 9000;
   background: var(--navy);
   display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-  padding: calc(env(safe-area-inset-top) + clamp(20px, 6vh, 54px)) 24px max(20px, env(safe-area-inset-bottom));
+  padding: calc(env(safe-area-inset-top) + clamp(14px, 4vh, 40px)) 24px max(20px, env(safe-area-inset-bottom));
   overflow-y: auto; transition: opacity .4s ease;
 }
 #pinScreen.hide { opacity: 0; pointer-events: none; }
 
 .pin-wrap { width: 100%; max-width: 360px; display: flex; flex-direction: column; align-items: center; }
-.pin-logo { width: clamp(140px, 60vw, 200px); height: auto; object-fit: contain; margin-bottom: var(--sp-4); }
+/* v2.10 — margin-bawah dilebarkan 16→28px, bagian dari redistribusi
+   jarak PIN screen (lihat catatan #pinScreen). */
+.pin-logo { width: clamp(140px, 60vw, 200px); height: auto; object-fit: contain; margin-bottom: 28px; }
 .pin-logo-fb { font-family: var(--font-pin); font-weight: bold; font-size: 44px; color: var(--brass); margin-bottom: var(--sp-4); display: none; }
-.pin-brand { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--brass); margin-bottom: var(--sp-5); text-align: center; }
+.pin-brand { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--brass); margin-bottom: 28px; text-align: center; }
 .pin-title { font-family: var(--font-pin); font-size: clamp(30px, 9vw, 40px); font-weight: bold; color: #fff; margin-bottom: var(--sp-1); text-align: center; line-height: 1.1; }
-.pin-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: var(--sp-7); text-align: center; }
+.pin-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: 44px; text-align: center; }
 
 .pin-dots { display: flex; gap: 14px; margin-bottom: var(--sp-7); }
 .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); transition: all .18s; }
@@ -204,7 +326,10 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 }
 .header.lifted { box-shadow: 0 6px 22px rgba(11,27,46,.28); }
 
-.hd-logo { flex: 0 0 28%; max-width: 130px; height: 34px; display: flex; align-items: center; }
+/* v2.10 — tinggi dinaikkan 34→44px. Tinggi header TIDAK berubah:
+   .hd-meta (jam kanan) sudah min-height:44px, jadi logo cuma
+   dinaikkan sampai batas yang sudah ditentukan elemen lain. */
+.hd-logo { flex: 0 0 28%; max-width: 130px; height: 44px; display: flex; align-items: center; }
 .hd-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
 .hd-logo-fb { font-family: var(--font-pin); font-weight: bold; color: var(--brass); font-size: 16px; }
 
@@ -273,6 +398,9 @@ body.dark-mode .theme-icon-moon { display: block; }
   color: var(--red); font-size: 15px; font-weight: 600; text-align: center; cursor: pointer;
 }
 .btn-logout:active { background: #EFE3E1; }
+/* v2.10 fix — #EFE3E1 (merah muda pucat) kedip putih di atas latar
+   gelap. var(--field) dark mode = #1E2530 (gelap, senada tema). */
+body.dark-mode .btn-logout:active { background: var(--field); }
 
 .option-list { padding: 0 var(--sp-3) var(--sp-3); }
 .option-item {
@@ -285,12 +413,31 @@ body.dark-mode .theme-icon-moon { display: block; }
 .option-check { color: var(--heading); font-weight: 700; opacity: 0; }
 .option-item.selected .option-check { opacity: 1; }
 
-.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--sp-4) var(--sp-4) calc(var(--nav-h) + var(--sp-7)); }
+/* v2.10 — padding-top 16→12px, berlaku ke semua tab */
+/* v2.11 — padding-bottom ditambah (sp-7=32px → sp-8 setara 40px lewat
+   calc manual, lihat --sp-7 di :root) supaya total jarak konten
+   terakhir ke bottom nav lebih lega, khususnya saat konten pendek
+   (mode Libur non-kerja). */
+.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px var(--sp-4) calc(var(--nav-h) + 40px); }
 .scroll-inner { min-height: 100%; display: flex; flex-direction: column; }
 /* Penengahan HANYA aktif bila konten muat penuh tanpa perlu scroll —
    dicek lewat JS (lihat centerIfFits), bukan lewat media query, karena
    tinggi konten berubah-ubah tergantung mode Hari Kerja / Libur. */
 .scroll-inner.centered { justify-content: center; flex: 1; }
+
+/* v2.10 — strip "Hari ini". Navy senada header, bukan kartu putih
+   besar (disengaja tipis, ±30px). Warna brand solid (var(--navy))
+   sengaja TIDAK ikut dark-mode-aware sesuai pola elemen header lain
+   di app ini (lihat catatan --heading vs --navy di :root). */
+.today-strip {
+  background: var(--navy); border-radius: 12px;
+  padding: 8px 14px; margin-bottom: var(--sp-3);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
+  font-size: 12.5px;
+}
+.today-strip-label { color: rgba(255,255,255,.65); }
+.today-strip-value { color: #fff; font-weight: 600; }
+.today-strip-value.empty { color: var(--brass); }
 
 .ai {
   background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
@@ -303,7 +450,11 @@ body.dark-mode .theme-icon-moon { display: block; }
 .ai-box {
   width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
   padding: var(--sp-3) var(--sp-4); font-size: 15px; line-height: 1.55; color: var(--ink);
-  resize: none; height: 92px; outline: none; transition: border-color .18s;
+  /* v2.10 — 92→68px. Dipangkas supaya mode "Hari Libur" muat penuh
+     tanpa scroll. 3 baris teks (line-height 1.55, font 15px) masih
+     lega di tinggi ini. Berlaku di semua tab (Input/Riwayat/dst)
+     yang memakai class ini — sengaja, bukan efek samping. */
+  resize: none; height: 68px; outline: none; transition: border-color .18s;
 }
 .ai-box::placeholder { color: #A9B4BF; }
 .ai-box:focus { border-color: var(--brass); }
@@ -314,6 +465,8 @@ body.dark-mode .theme-icon-moon { display: block; }
   font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .1s, opacity .15s;
   position: relative; overflow: hidden;
 }
+/* v2.10 fix — lihat catatan --ai-accent-text di :root */
+body.dark-mode .ai-btn { color: var(--ai-accent-text); }
 .ai-btn:active { transform: scale(.985); opacity: .85; }
 .ai-btn .ai-btn-txt, .ai-btn .ai-btn-load { transition: opacity .2s; }
 .ai-btn .ai-btn-load {
@@ -329,6 +482,8 @@ body.dark-mode .theme-icon-moon { display: block; }
   font-size: 12.5px; color: #7A5F1A; line-height: 1.6;
   display: none;
 }
+/* v2.10 fix — lihat catatan --ai-accent-text di :root */
+body.dark-mode .ai-summary { color: var(--ai-accent-text-soft); }
 .ai-summary.show { display: block; }
 .ai-summary b { font-weight: 600; }
 
@@ -385,6 +540,19 @@ body.dark-mode .theme-icon-moon { display: block; }
 .summary-full { grid-column: 1 / -1; }
 .summary-full .summary-num { font-size: 20px; }
 
+/* v2.11 — tombol collapse/expand 4 stat card tambahan di Dashboard.
+   var(--brass) polos gagal AA di light mode (2.29:1 di atas kartu
+   putih — sama kasusnya dengan .ai-btn yang diperbaiki di v2.10).
+   Pakai warna yang sama persis dengan .ai-btn/.ai-summary supaya
+   konsisten, dan sudah lolos kontras di kedua mode (lihat catatan
+   --ai-accent-text di :root). */
+.dash-kpi-toggle {
+  text-align: center; font-size: 12.5px; font-weight: 600; color: #8A6D1E;
+  padding: var(--sp-2); margin-bottom: var(--sp-2); cursor: pointer; user-select: none;
+}
+.dash-kpi-toggle:active { opacity: .7; }
+body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
+
 /* ── DASBOR ── */
 .dash-chart-card {
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
@@ -392,6 +560,10 @@ body.dark-mode .theme-icon-moon { display: block; }
 }
 .dash-chart-title { font-size: 13px; font-weight: 700; color: var(--heading); margin-bottom: var(--sp-3); }
 .dash-chart-wrap { position: relative; height: 220px; }
+/* v2.11 — chart "Daily Activity" punya sampai 31 batang (1 per hari),
+   butuh tinggi lebih pendek dari chart 5-kategori biar tidak terlihat
+   gepeng/lebar berlebihan di layar sempit HP. */
+.dash-chart-wrap.dash-chart-wide { height: 160px; }
 
 /* ── RIWAYAT ── */
 .riwayat-head { margin-bottom: var(--sp-3); }
@@ -448,11 +620,14 @@ body.dark-mode .theme-icon-moon { display: block; }
 
 .card {
   background: var(--card); border: 1px solid var(--line); border-radius: 16px;
-  padding: var(--sp-5) var(--sp-4); margin-bottom: var(--sp-3);
+  /* v2.10 — padding vertikal 20→16px, berlaku ke semua .card di
+     seluruh app (Input/Riwayat/Laporan/Dasbor). */
+  padding: 16px var(--sp-4); margin-bottom: var(--sp-3);
   box-shadow: 0 1px 2px rgba(11,27,46,.03);
 }
 .card-title { font-size: 13px; font-weight: 600; color: var(--mid); margin-bottom: var(--sp-4); }
-.field { margin-bottom: var(--sp-4); }
+/* v2.10 — 16→12px, berlaku ke semua .field di seluruh app */
+.field { margin-bottom: 12px; }
 .field:last-child { margin-bottom: 0; }
 .label { font-size: 13px; color: var(--mid); margin-bottom: var(--sp-2); display: block; }
 
@@ -477,6 +652,8 @@ body.dark-mode .theme-icon-moon { display: block; }
   padding: var(--sp-3) var(--sp-4); min-height: 44px; cursor: pointer;
 }
 .picker-row:active { background: #EAEDF1; }
+/* v2.10 fix — sama kasusnya dengan .btn-logout:active */
+body.dark-mode .picker-row:active { background: var(--line); }
 .picker-value { font-size: 16px; color: var(--ink); }
 .picker-chevron { color: var(--muted); font-size: 15px; }
 
@@ -514,10 +691,17 @@ body.dark-mode .switch { background: #3A4454; }
 
 .hint { font-size: 12.5px; color: var(--muted); margin-top: var(--sp-2); line-height: 1.5; }
 
+/* v2.11 — margin-top ditambah supaya ada jarak jelas dari kartu
+   di atasnya, DAN dari bottom nav di bawahnya (keluhan: tombol
+   terlalu mepet ke nav khususnya di mode Libur). Padding-bottom
+   .scroll sudah calc(nav-h + sp-7 [32px]) tapi dirasa masih mepet
+   secara visual karena tombol langsung menempel kartu di atasnya
+   tanpa jarak sendiri. */
 .submit {
   width: 100%; border: none; background: var(--navy); color: #fff;
   border-radius: 14px; padding: var(--sp-4); min-height: 52px;
   font-size: 16px; font-weight: 600; cursor: pointer;
+  margin-top: var(--sp-2);
   box-shadow: 0 4px 14px rgba(11,27,46,.20); transition: transform .1s, opacity .15s;
   position: relative; overflow: hidden;
 }
@@ -549,8 +733,17 @@ body.dark-mode .switch { background: #3A4454; }
 }
 .nb { border: none; background: none; text-align: center; font-size: 10.5px; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
 .nb svg { display: block; margin: 0 auto 3px; opacity: .72; width: 23px; height: 23px; stroke-width: 2.1; }
-.nb.on { color: var(--navy); font-weight: 700; }
+/* v2.11 — warna nav aktif dipertegas. Sebelumnya var(--navy) untuk
+   kedua mode: di light mode terasa kurang tegas di atas latar
+   translucent-nya .nav (image: tab "Report" aktif tapi tidak
+   kelihatan bold-nya). Di dark mode, var(--navy) yang gelap nyaris
+   tak terbaca sama sekali di atas nav gelap (keluhan langsung).
+   Sengaja pakai hex literal (bukan var(--ink), yang nilainya
+   berbeda per mode) supaya aturan ini eksplisit dan tidak
+   bergantung urutan cascade var(--ink) di :root vs body.dark-mode. */
+.nb.on { color: #12181F; font-weight: 700; }
 .nb.on svg { opacity: 1; stroke-width: 2.3; }
+body.dark-mode .nb.on { color: #FFFFFF; }
 
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--nav-h) + var(--sp-6)); transform: translate(-50%, 18px); z-index: 9500;
@@ -586,8 +779,8 @@ body.dark-mode .switch { background: #3A4454; }
 <body>
 
 <div class="update-banner" id="updateBanner">
-  <span class="update-banner-text">Versi baru tersedia</span>
-  <span class="update-banner-btn" id="updateBannerBtn">Muat ulang</span>
+  <span class="update-banner-text">New version available</span>
+  <span class="update-banner-btn" id="updateBannerBtn">Reload</span>
 </div>
 
 <div id="pinScreen">
@@ -598,8 +791,8 @@ body.dark-mode .switch { background: #3A4454; }
     <div class="pin-logo-fb" id="pinLogoFb">Miss Fish</div>
 
     <div class="pin-brand">MFB-IT · Daily Activity</div>
-    <div class="pin-title">Selamat datang</div>
-    <div class="pin-sub">Masukkan PIN untuk melanjutkan.</div>
+    <div class="pin-title">Welcome</div>
+    <div class="pin-sub">Enter your PIN to continue.</div>
 
     <div class="pin-dots" id="pinDots">
       <div class="pin-dot"></div><div class="pin-dot"></div>
@@ -616,7 +809,7 @@ body.dark-mode .switch { background: #3A4454; }
       <button class="pin-key" data-k="7">7</button>
       <button class="pin-key" data-k="8">8</button>
       <button class="pin-key" data-k="9">9</button>
-      <button class="pin-key ghost" data-k="clear">Hapus</button>
+      <button class="pin-key ghost" data-k="clear">Clear</button>
       <button class="pin-key" data-k="0">0</button>
       <button class="pin-key ghost" data-k="del">&#9003;</button>
     </div>
@@ -655,24 +848,30 @@ body.dark-mode .switch { background: #3A4454; }
   <div class="scroll" id="scroll">
     <div class="scroll-inner" id="viewInput">
 
+      <!-- v2.10 — strip "Hari ini", 1 baris tipis di atas kartu
+           "Tulis bebas". Diisi via JS (renderTodayStrip) dari
+           state.taskToday yang sudah dikirim server saat login,
+           jadi tidak butuh request tambahan. -->
+      <div class="today-strip" id="todayStrip"></div>
+
       <div class="ai">
         <div class="ai-head">
-          <div class="ai-title">&#10022; Tulis bebas</div>
+          <div class="ai-title">&#10022; Free write</div>
         </div>
         <textarea class="ai-box" id="aiInput"
-          placeholder="Ceritakan pekerjaanmu apa adanya. Contoh: ganti kabel LAN printer, urgent."></textarea>
+          placeholder="Describe your work as-is. Example: replaced printer LAN cable, urgent."></textarea>
         <button class="ai-btn" id="aiBtn">
-          <span class="ai-btn-txt">Uraikan dengan AI</span>
+          <span class="ai-btn-txt">Parse with AI</span>
           <span class="ai-btn-load"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span></span>
         </button>
         <div class="ai-summary" id="aiSummary"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">Kapan &amp; apa</div>
+        <div class="card-title">When &amp; what</div>
 
         <div class="field">
-          <label class="label" for="taskDate">Tanggal</label>
+          <label class="label" for="taskDate">Date</label>
           <div class="date-row">
             <span class="date-text" id="dateText">—</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.4;flex-shrink:0"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -681,23 +880,26 @@ body.dark-mode .switch { background: #3A4454; }
         </div>
 
         <div class="field">
-          <label class="label">Jenis hari</label>
+          <label class="label">Day type</label>
           <div class="picker-row" id="rowActivity">
-            <span class="picker-value" id="valActivity">Hari kerja</span>
+            <span class="picker-value" id="valActivity">Working Day</span>
             <span class="picker-chevron">&#8250;</span>
           </div>
         </div>
 
         <div class="field hidden" id="offBox">
           <div class="switch-row" id="offToggle">
-            <span class="switch-label">Tetap ada pekerjaan?</span>
+            <span class="switch-label">Still working today?</span>
             <span class="switch" id="offSwitch"></span>
           </div>
-          <div class="hint">Nyalakan bila kamu tetap menangani sesuatu di hari libur.</div>
+          <!-- v2.10 — dipersingkat dari kalimat lebih panjang supaya
+               muat 1 baris di lebar app standar (~488px konten, font
+               12.5px). v2.11 — diterjemahkan ke Inggris. -->
+          <div class="hint">Turn on if you're still working today.</div>
         </div>
 
         <div class="field" id="workTypeBox">
-          <label class="label">Jenis pekerjaan</label>
+          <label class="label">Work type</label>
           <div class="picker-row" id="rowWorkType">
             <span class="picker-value" id="valWorkType">Task</span>
             <span class="picker-chevron">&#8250;</span>
@@ -706,26 +908,26 @@ body.dark-mode .switch { background: #3A4454; }
       </div>
 
       <div class="card" id="workCard">
-        <div class="card-title">Pekerjaan</div>
+        <div class="card-title">Work</div>
 
         <div class="field">
-          <label class="label" for="taskDesc">Apa yang dikerjakan</label>
-          <textarea class="textarea" id="taskDesc" placeholder="Tulis sejelasnya, biar mudah dibaca lagi nanti."></textarea>
+          <label class="label" for="taskDesc">What did you work on</label>
+          <textarea class="textarea" id="taskDesc" placeholder="Write it clearly, so it's easy to read again later."></textarea>
         </div>
 
         <div class="field">
-          <label class="label">Tag</label>
+          <label class="label">Tags</label>
           <div class="tags" id="tagGrid">
-            <span class="tag-add" style="opacity:.6">Memuat tag…</span>
+            <span class="tag-add" style="opacity:.6">Loading tags…</span>
           </div>
         </div>
       </div>
 
       <div class="card" id="metaCard">
-        <div class="card-title">Prioritas &amp; status</div>
+        <div class="card-title">Priority &amp; status</div>
 
         <div class="field">
-          <label class="label">Prioritas</label>
+          <label class="label">Priority</label>
           <div class="prio" id="prioGrid">
             <div class="pb" data-p="Low">Low</div>
             <div class="pb" data-p="Medium">Med</div>
@@ -743,33 +945,33 @@ body.dark-mode .switch { background: #3A4454; }
         </div>
 
         <div class="field">
-          <label class="label" for="remarkInput">Catatan <span style="opacity:.6">— boleh dikosongkan</span></label>
-          <input class="input" id="remarkInput" placeholder="Misal: menunggu sparepart dari vendor">
+          <label class="label" for="remarkInput">Remark <span style="opacity:.6">— optional</span></label>
+          <input class="input" id="remarkInput" placeholder="E.g.: waiting for spare parts from vendor">
         </div>
       </div>
 
       <button class="submit" id="submitBtn">
-        <span class="lbl-txt">Simpan aktivitas</span>
+        <span class="lbl-txt">Save activity</span>
         <span class="lbl-load"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span></span>
-        <span class="lbl-ok">&#10003; Tersimpan</span>
+        <span class="lbl-ok">&#10003; Saved</span>
       </button>
     </div>
 
     <div class="scroll-inner hidden" id="viewRiwayat">
       <div class="riwayat-head">
-        <div class="card-title" style="margin-bottom:0">Riwayat 7 hari terakhir</div>
+        <div class="card-title" style="margin-bottom:0">History — last 7 days</div>
       </div>
       <div id="riwayatList">
-        <div class="riwayat-empty">Memuat riwayat…</div>
+        <div class="riwayat-empty">Loading history…</div>
       </div>
     </div>
 
     <div class="scroll-inner hidden" id="viewLaporan">
-      <div class="card-title">Laporan</div>
+      <div class="card-title">Report</div>
 
       <div class="report-filter">
-        <div class="report-mode-tab on" data-mode="month" id="modeMonth">Per bulan</div>
-        <div class="report-mode-tab" data-mode="range" id="modeRange">Rentang tanggal</div>
+        <div class="report-mode-tab on" data-mode="month" id="modeMonth">By month</div>
+        <div class="report-mode-tab" data-mode="range" id="modeRange">Date range</div>
       </div>
 
       <div class="report-month-row" id="reportMonthRow">
@@ -778,20 +980,20 @@ body.dark-mode .switch { background: #3A4454; }
 
       <div class="report-range-row hidden" id="reportRangeRow">
         <div class="date-row">
-          <span class="date-text" id="reportStartText">Mulai</span>
+          <span class="date-text" id="reportStartText">Start</span>
           <input type="date" id="reportStart">
         </div>
         <div class="date-row">
-          <span class="date-text" id="reportEndText">Selesai</span>
+          <span class="date-text" id="reportEndText">End</span>
           <input type="date" id="reportEnd">
         </div>
       </div>
 
       <div class="report-btn-row">
-        <div class="report-load-btn" id="reportLoadBtn">Tampilkan</div>
-        <div class="report-export-btn" id="reportExportBtn">Unduh Excel</div>
+        <div class="report-load-btn" id="reportLoadBtn">Show</div>
+        <div class="report-export-btn" id="reportExportBtn">Download Excel</div>
       </div>
-      <div class="report-official-btn" id="reportOfficialBtn">Unduh Laporan Resmi (Day / Date / Task / Remark)</div>
+      <div class="report-official-btn" id="reportOfficialBtn">Download Official Report (Day / Date / Task / Remark)</div>
 
       <div id="reportSummary"></div>
       <div id="reportList"></div>
@@ -799,35 +1001,51 @@ body.dark-mode .switch { background: #3A4454; }
       <div class="backup-section">
         <div class="backup-divider"></div>
         <div class="backup-title">Backup Data</div>
-        <div class="backup-desc">Unduh seluruh data (termasuk yang sudah dihapus) dalam format JSON dan Excel — untuk disimpan sendiri di Google Drive.</div>
-        <div class="backup-btn" id="backupBtn">Unduh Semua Data</div>
+        <div class="backup-desc">Download all data (including deleted items) as JSON and Excel — to keep in your own Google Drive.</div>
+        <div class="backup-btn" id="backupBtn">Download All Data</div>
       </div>
     </div>
 
     <div class="scroll-inner hidden" id="viewDash">
-      <div class="card-title">Dasbor — <span id="dashMonthLabel">bulan ini</span></div>
+      <div class="card-title">Dashboard — <span id="dashMonthLabel">this month</span></div>
 
-      <div class="summary-grid" id="dashKpi">
-        <div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Total task</div></div>
-        <div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Selesai</div></div>
+      <!-- v2.11 — dashKpi sekarang wrapper polos (bukan .summary-grid
+           langsung); JS renderDashboard() yang membangun grid + toggle
+           di dalamnya, supaya bisa punya 2 grid terpisah (selalu
+           tampil vs collapsible). -->
+      <div id="dashKpi">
+        <div class="summary-grid">
+          <div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Total task</div></div>
+          <div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Done</div></div>
+        </div>
       </div>
 
-      <div id="dashEmpty" class="riwayat-empty hidden">Belum ada aktivitas bulan ini.</div>
+      <div id="dashEmpty" class="riwayat-empty hidden">No activity this month yet.</div>
 
       <div id="dashCharts" class="hidden">
         <div class="dash-chart-card">
-          <div class="dash-chart-title">Status Task</div>
+          <div class="dash-chart-title">Daily Activity</div>
+          <div class="dash-chart-wrap dash-chart-wide"><canvas id="dashDailyChart"></canvas></div>
+        </div>
+
+        <div class="dash-chart-card">
+          <div class="dash-chart-title">Task Status</div>
           <div class="dash-chart-wrap"><canvas id="dashStatusChart"></canvas></div>
         </div>
 
         <div class="dash-chart-card">
-          <div class="dash-chart-title">Top 5 Tag</div>
+          <div class="dash-chart-title">Top 5 Tags</div>
           <div class="dash-chart-wrap"><canvas id="dashTagChart"></canvas></div>
         </div>
 
         <div class="dash-chart-card">
-          <div class="dash-chart-title">Distribusi Prioritas</div>
+          <div class="dash-chart-title">Priority Distribution</div>
           <div class="dash-chart-wrap"><canvas id="dashPriorityChart"></canvas></div>
+        </div>
+
+        <div class="dash-chart-card">
+          <div class="dash-chart-title">Work Type</div>
+          <div class="dash-chart-wrap"><canvas id="dashWorkTypeChart"></canvas></div>
         </div>
       </div>
     </div>
@@ -840,11 +1058,11 @@ body.dark-mode .switch { background: #3A4454; }
     </button>
     <button class="nb" data-tab="report">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-linecap="round"/></svg>
-      Laporan
+      Report
     </button>
     <button class="nb" data-tab="dash">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="13" width="4" height="7" rx="1" stroke="currentColor"/><rect x="10" y="9" width="4" height="11" rx="1" stroke="currentColor"/><rect x="16" y="5" width="4" height="15" rx="1" stroke="currentColor"/></svg>
-      Dasbor
+      Dashboard
     </button>
     <button class="nb" data-tab="log">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-linecap="round"/></svg>
@@ -852,7 +1070,7 @@ body.dark-mode .switch { background: #3A4454; }
     </button>
     <button class="nb" data-tab="riwayat">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3" stroke="currentColor" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor"/></svg>
-      Riwayat
+      History
     </button>
   </nav>
 </div>
@@ -910,11 +1128,11 @@ function toggleTheme() {
 }
 
 const ACTIVITY_TYPES = [
-  { db:'Working Day',    id:'Hari kerja'     },
-  { db:'Day Off',        id:'Libur'          },
-  { db:'Public Holiday', id:'Libur Nasional' },
-  { db:'Annual Leave',   id:'Cuti Tahunan'   },
-  { db:'Sick Leave',     id:'Sakit'          },
+  { db:'Working Day',    id:'Working Day'    },
+  { db:'Day Off',        id:'Day Off'        },
+  { db:'Public Holiday', id:'Public Holiday' },
+  { db:'Annual Leave',   id:'Annual Leave'   },
+  { db:'Sick Leave',     id:'Sick Leave'     },
   { db:'Extra Off (EO)', id:'Extra Off'      },
   { db:'PDO',            id:'PDO'            },
 ];
@@ -927,13 +1145,14 @@ const STATUS_TYPES = [
   { db:'Cancelled',      id:'Cancelled'      },
 ];
 
-const BULAN3 = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const BULAN3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 const state = {
   token: null, loginAt: null,
   activityType: 'Working Day', workType: 'Task', priority: 'Medium',
   status: 'On Progress', offWorking: false,
   tags: [], selected: new Set(),
+  tagsExpanded: false, // v2.10 — tag collapsible, default ringkas
   editCount: 0, openedAt: Date.now(), submitCount: 0, taskToday: 0,
   currentView: 'input',
 };
@@ -975,17 +1194,14 @@ function formatTanggalPendek(iso) {
   const [y,m,d] = iso.split('-').map(Number);
   return String(d).padStart(2,'0') + ' ' + BULAN3[m-1] + ' ' + y;
 }
+// v2.11 — formatTanggalPanjang sekarang memakai nama hari/bulan
+// Inggris (dayNameEN/dateLongEN, sudah ada sebelumnya khusus untuk
+// export Laporan resmi). Fungsi dipertahankan namanya (dipakai di
+// banyak tempat) supaya tidak perlu ubah semua pemanggilnya.
 function formatTanggalPanjang(iso) {
-  const HARI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-  const BULANFULL=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-  const [y,m,d]=iso.split('-').map(Number);
-  const dt=new Date(y,m-1,d);
-  return HARI[dt.getDay()]+', '+d+' '+BULANFULL[m-1]+' '+y;
+  return dayNameEN(iso) + ', ' + dateLongEN(iso);
 }
 
-// Versi bahasa Inggris — dipakai khusus untuk export Laporan resmi
-// (formatnya mengikuti contoh laporan bulanan lama: "Friday" dan
-// "21 November 2025", bukan bahasa Indonesia).
 const DAY_NAME_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTH_NAME_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function dayNameEN(iso) {
@@ -1043,25 +1259,25 @@ function updateSessionDot() {
 }
 
 function formatSisaWaktu(ms) {
-  if (ms <= 0) return 'Sudah berakhir';
+  if (ms <= 0) return 'Already ended';
   const jam = Math.floor(ms / (60*60*1000));
   const hari = Math.floor(jam / 24);
   const sisaJam = jam % 24;
-  if (hari > 0) return hari + ' hari ' + sisaJam + ' jam lagi';
-  return sisaJam + ' jam lagi';
+  if (hari > 0) return hari + ' day' + (hari > 1 ? 's' : '') + ' ' + sisaJam + ' hr left';
+  return sisaJam + ' hr left';
 }
 
 function openSessionSheet() {
   const sisa = sisaWaktuSesi();
   const html = '<div class="session-info">'
-    + '<div class="session-row"><span class="session-label">Status sesi</span>'
-    + '<span class="session-value">' + (sisa > 0 ? 'Aktif' : 'Berakhir') + '</span></div>'
-    + '<div class="session-row"><span class="session-label">Berlaku hingga</span>'
+    + '<div class="session-row"><span class="session-label">Session status</span>'
+    + '<span class="session-value">' + (sisa > 0 ? 'Active' : 'Ended') + '</span></div>'
+    + '<div class="session-row"><span class="session-label">Valid until</span>'
     + '<span class="session-value">' + (sisa !== null ? formatSisaWaktu(sisa) : '—') + '</span></div>'
     + '</div>'
-    + '<div style="padding:0 20px"><button class="btn-logout" id="btnLogoutInline">Keluar</button></div>';
+    + '<div style="padding:0 20px"><button class="btn-logout" id="btnLogoutInline">Log out</button></div>';
 
-  openSheet('Sesi', html);
+  openSheet('Session', html);
   $('btnLogoutInline').addEventListener('click', doLogout);
 }
 
@@ -1098,8 +1314,8 @@ async function callApi(payload) {
   if (res.status === 401 && payload.action !== 'login') {
     Store.del(KEY_TOKEN); Store.del(KEY_LOGIN_AT);
     state.token = null;
-    showPin('Sesi berakhir. Masukkan PIN lagi.');
-    throw new Error(data.error || 'Sesi berakhir.');
+    showPin('Session ended. Please enter PIN again.');
+    throw new Error(data.error || 'Session ended.');
   }
   return data;
 }
@@ -1180,7 +1396,7 @@ async function submitPin() {
       paintDots(true);
       $('pinDots').classList.add('shake');
       setTimeout(()=>$('pinDots').classList.remove('shake'), 420);
-      $('pinMsg').textContent = r.error || 'PIN belum cocok.';
+      $('pinMsg').textContent = r.error || 'Incorrect PIN.';
       $('pinMsg').className = 'pin-msg err';
       // Saat terkunci, jeda lebih panjang agar pesan sempat terbaca —
       // dan tombol PIN tetap non-aktif sedikit lebih lama.
@@ -1206,7 +1422,7 @@ async function submitPin() {
 
 function setupActivityPicker() {
   $('rowActivity').addEventListener('click', () => {
-    openOptionSheet('Jenis hari', ACTIVITY_TYPES, state.activityType, (db) => {
+    openOptionSheet('Day type', ACTIVITY_TYPES, state.activityType, (db) => {
       state.activityType = db;
       const found = ACTIVITY_TYPES.find(a => a.db === db);
       $('valActivity').textContent = found.id;
@@ -1218,7 +1434,7 @@ function setupActivityPicker() {
 function setupWorkTypePicker() {
   $('rowWorkType').addEventListener('click', () => {
     const opts = WORK_TYPES.map(w => ({ db: w, id: w }));
-    openOptionSheet('Jenis pekerjaan', opts, state.workType, (db) => {
+    openOptionSheet('Work type', opts, state.workType, (db) => {
       state.workType = db; $('valWorkType').textContent = db; trackEdit();
     });
   });
@@ -1242,25 +1458,55 @@ function applyActivityMode() {
   $('metaCard').classList.toggle('hidden', !showWork);
 }
 
+// v2.10 — tag collapsible. Default: tampilkan HANYA tag yang sudah
+// terpilih + tombol "+ tag baru" + tombol "Semua tag (N)" untuk buka
+// grid lengkap. Sekali di-expand, tetap terbuka sampai form direset
+// (tagsExpanded tidak di-reset di sini, sengaja — supaya tidak
+// menutup sendiri tiap kali user pilih/batal tag).
 function buildTags() {
   const box = $('tagGrid'); box.innerHTML = '';
-  state.tags.forEach(t => {
+  const total = state.tags.length;
+  const showAll = state.tagsExpanded || total === 0;
+
+  const renderChip = (t) => {
     const el = document.createElement('div');
     el.className = 'tag' + (state.selected.has(t) ? ' on' : '');
     el.textContent = t;
     el.onclick = () => { state.selected.has(t) ? state.selected.delete(t) : state.selected.add(t); trackEdit(); buildTags(); };
     box.appendChild(el);
-  });
+  };
+
+  if (showAll) {
+    state.tags.forEach(renderChip);
+  } else {
+    // Hanya tag yang sudah dipilih user
+    state.tags.filter(t => state.selected.has(t)).forEach(renderChip);
+  }
+
   const add = document.createElement('div');
   add.className = 'tag-add'; add.textContent = '+ tag baru';
   add.onclick = () => {
-    const v = prompt('Nama tag baru:');
+    const v = prompt('New tag name:');
     if (!v) return;
     const clean = v.trim(); if (!clean) return;
     if (!state.tags.some(t => t.toLowerCase() === clean.toLowerCase())) state.tags.push(clean);
     state.selected.add(clean); trackEdit(); buildTags();
   };
   box.appendChild(add);
+
+  if (!showAll && total > 0) {
+    const toggle = document.createElement('div');
+    toggle.className = 'tag-add';
+    toggle.textContent = 'Semua tag (' + total + ') \u25BE';
+    toggle.onclick = () => { state.tagsExpanded = true; buildTags(); };
+    box.appendChild(toggle);
+  } else if (showAll && total > 0 && state.tagsExpanded) {
+    const toggle = document.createElement('div');
+    toggle.className = 'tag-add';
+    toggle.textContent = 'Ringkas \u25B4';
+    toggle.onclick = () => { state.tagsExpanded = false; buildTags(); };
+    box.appendChild(toggle);
+  }
 }
 function buildPriority() {
   document.querySelectorAll('#prioGrid .pb').forEach(el => {
@@ -1290,7 +1536,7 @@ async function doSubmit() {
   const task = $('taskDesc').value.trim();
 
   if (needWork && !task) {
-    toast('Isi dulu pekerjaannya.', 'err');
+    toast('Fill in the work first.', 'err');
     $('taskDesc').focus();
     return;
   }
@@ -1312,23 +1558,24 @@ async function doSubmit() {
     });
 
     if (!r.ok) {
-      toast(r.error || 'Belum terkirim. Isianmu masih tersimpan, coba lagi.', 'err');
+      toast(r.error || 'Not submitted yet. Your entry is still saved, try again.', 'err');
       btn.classList.remove('busy'); btn.disabled = false;
       return;
     }
 
     state.submitCount++;
     if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+    renderTodayStrip(); // v2.10 — strip "Hari ini" ikut update tanpa reload
 
     btn.classList.remove('busy'); btn.classList.add('done');
     setTimeout(() => { btn.classList.remove('done'); btn.disabled = false; }, 1100);
 
-    toast('Tersimpan · ' + r.taskIdFormatted, 'good');
+    toast('Saved · ' + r.taskIdFormatted, 'good');
     resetForm();
     $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (e) {
-    if (state.token) toast(e.message || 'Belum terkirim. Isianmu masih tersimpan, coba lagi.', 'err');
+    if (state.token) toast(e.message || 'Not submitted yet. Your entry is still saved, try again.', 'err');
     btn.classList.remove('busy'); btn.disabled = false;
   }
 }
@@ -1336,6 +1583,7 @@ async function doSubmit() {
 function resetForm() {
   $('taskDesc').value = ''; $('remarkInput').value = ''; $('aiInput').value = '';
   state.selected.clear();
+  state.tagsExpanded = false; // v2.10 — kembali ringkas tiap entry baru
   state.priority = 'Medium'; state.status = 'On Progress';
   state.editCount = 0; state.openedAt = Date.now();
   $('valStatus').textContent = 'On Progress';
@@ -1358,21 +1606,73 @@ async function startApp(preloaded) {
   if (preloaded && Array.isArray(preloaded.tags)) {
     state.tags = preloaded.tags;
     if (typeof preloaded.taskToday === 'number') state.taskToday = preloaded.taskToday;
+    cacheTags(state.tags); // v2.10 — simpan cadangan lokal
     buildTags();
+    renderTodayStrip();
     return;
   }
 
-  try {
-    const r = await callApi({ action:'get-tags', sessionToken: state.token });
-    if (r.ok) {
-      state.tags = r.tags || [];
-      if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+  await loadTagsWithFallback(); // v2.10 — dulu inline di sini, lihat catatan di fungsinya
+  renderTodayStrip();
+}
+
+// v2.10 — dipisah dari startApp supaya bisa dipanggil ulang saat retry.
+// Fix bug: sebelumnya kalau get-tags gagal, state.tags langsung di-set
+// [] tanpa retry dan tanpa fallback, jadi grid tag mendadak kosong
+// tanpa penjelasan (ini yang bikin tampilan mirip screenshot "tag
+// disembunyikan" — padahal itu kegagalan diam-diam, bukan fitur).
+// Sekarang: retry sekali, lalu fallback ke cache localStorage kalau
+// masih gagal, dan toast HANYA muncul kalau benar-benar tidak ada
+// data sama sekali (bukan tiap kegagalan jaringan sekali gagal).
+async function loadTagsWithFallback() {
+  let r = await callApi({ action:'get-tags', sessionToken: state.token }).catch(() => null);
+  if (!r || !r.ok) {
+    // retry sekali setelah jeda singkat — banyak kegagalan get-tags
+    // di lapangan bersifat sesaat (sinyal HP baru buka dari sleep)
+    await new Promise(res => setTimeout(res, 700));
+    r = await callApi({ action:'get-tags', sessionToken: state.token }).catch(() => null);
+  }
+
+  if (r && r.ok) {
+    state.tags = r.tags || [];
+    if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+    cacheTags(state.tags);
+  } else {
+    const cached = readCachedTags();
+    if (cached.length > 0) {
+      state.tags = cached;
+      toast('Tags from local cache — connection failed briefly.', 'err');
     } else {
       state.tags = [];
-      toast('Daftar tag gagal dimuat.', 'err');
+      toast('Failed to load tags. Try reopening the app.', 'err');
     }
-  } catch (e) { state.tags = []; }
+  }
   buildTags();
+}
+
+function cacheTags(tags) {
+  try { localStorage.setItem('mfbit_tags_cache', JSON.stringify(tags)); } catch (e) {}
+}
+function readCachedTags() {
+  try {
+    const raw = localStorage.getItem('mfbit_tags_cache');
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) { return []; }
+}
+
+// v2.10 — strip "Hari ini" di atas kartu Tulis bebas.
+function renderTodayStrip() {
+  const el = $('todayStrip');
+  if (!el) return;
+  const n = state.taskToday || 0;
+  if (n > 0) {
+    el.innerHTML = '<span class="today-strip-label">Hari ini</span>'
+      + '<span class="today-strip-value">' + n + ' aktivitas tercatat</span>';
+  } else {
+    el.innerHTML = '<span class="today-strip-label">Hari ini</span>'
+      + '<span class="today-strip-value empty">Belum ada catatan &#9997;&#65039;</span>';
+  }
 }
 
 /* ══════════════════════════════════════════════
@@ -1384,7 +1684,7 @@ async function doAiParse() {
 
   const text = $('aiInput').value.trim();
   if (!text) {
-    toast('Tulis dulu ceritanya, baru bisa diuraikan.', 'err');
+    toast('Write your note first before it can be parsed.', 'err');
     $('aiInput').focus();
     return;
   }
@@ -1396,15 +1696,15 @@ async function doAiParse() {
     const r = await callApi({ action: 'parse-task', sessionToken: state.token, text });
 
     if (!r.ok) {
-      toast(r.error || 'AI belum bisa memproses. Isi manual dulu ya.', 'err');
+      toast(r.error || 'AI could not process this. Please fill the form manually.', 'err');
       return;
     }
 
     applyParseResult(r.result);
-    toast('Form terisi dari hasil AI', 'good');
+    toast('Form filled from AI result', 'good');
 
   } catch (e) {
-    if (state.token) toast(e.message || 'AI belum bisa memproses. Isi manual dulu ya.', 'err');
+    if (state.token) toast(e.message || 'AI could not process this. Please fill the form manually.', 'err');
   } finally {
     btn.classList.remove('busy'); btn.disabled = false;
   }
@@ -1413,7 +1713,15 @@ async function doAiParse() {
 function renderAiSummary(result) {
   const box = $('aiSummary');
   const parts = [];
-  if (result.workType) parts.push('<b>' + result.workType + '</b>');
+  // v2.11 — tampilkan tanggal terdeteksi di ringkasan, supaya user
+  // sadar kalau tanggal form berubah otomatis (bukan diam-diam).
+  if (result.taskDate && /^\d{4}-\d{2}-\d{2}$/.test(result.taskDate)) {
+    parts.push('<b>' + formatTanggalPanjang(result.taskDate) + '</b>');
+  }
+  if (result.activityType === 'Day Off') parts.push('<b>Day Off</b>');
+  // workType hanya relevan kalau bukan Day Off (server set "Task" sebagai
+  // default harmless untuk Day Off, tapi itu tidak perlu ditampilkan).
+  if (result.workType && result.activityType !== 'Day Off') parts.push('<b>' + result.workType + '</b>');
   if (Array.isArray(result.tags) && result.tags.length) parts.push(result.tags.join(', '));
   if (result.priority) parts.push('<b>' + result.priority + '</b>');
   if (result.status) parts.push(result.status);
@@ -1424,12 +1732,35 @@ function renderAiSummary(result) {
 }
 
 function applyParseResult(result) {
+  // v2.11 — auto-parse tanggal & jenis hari dari teks bebas.
+  // Urutan penting: taskDate & activityType diproses SEBELUM
+  // applyActivityMode() dipanggil, supaya UI (offBox, workTypeBox,
+  // dst) langsung konsisten dengan hasil deteksi AI dalam satu kali
+  // render, bukan render dua kali dengan state antara yang salah.
+  if (result.taskDate) {
+    // Server sudah validasi format YYYY-MM-DD sebelum sampai sini,
+    // tapi tetap dicek ulang di client — pertahanan berlapis, bukan
+    // percaya penuh ke satu sisi saja.
+    const isValidIso = /^\d{4}-\d{2}-\d{2}$/.test(result.taskDate);
+    if (isValidIso) {
+      $('taskDate').value = result.taskDate;
+      $('dateText').textContent = formatTanggalPanjang(result.taskDate);
+      trackEdit();
+    }
+  }
+
   if (result.activityType) {
     state.activityType = result.activityType;
     const found = ACTIVITY_TYPES.find(a => a.db === result.activityType);
     if (found) $('valActivity').textContent = found.id;
-    applyActivityMode();
   }
+
+  if (typeof result.offWorking === 'boolean') {
+    state.offWorking = result.offWorking;
+    $('offSwitch').classList.toggle('on', state.offWorking);
+  }
+
+  applyActivityMode(); // dipanggil sekali, setelah activityType & offWorking siap
 
   if (result.workType && WORK_TYPES.includes(result.workType)) {
     state.workType = result.workType;
@@ -1530,10 +1861,10 @@ function renderWorksheetTable(containerEl, items, onRowClick) {
 
   containerEl.innerHTML =
     '<div class="ws-wrap"><table class="ws-table">'
-    + '<thead><tr><th>Tanggal</th><th>Task</th><th>Prioritas</th><th>Status</th><th>Jenis</th><th>ID</th></tr></thead>'
+    + '<thead><tr><th>Date</th><th>Task</th><th>Priority</th><th>Status</th><th>Type</th><th>ID</th></tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table></div>'
-    + (typeof onRowClick === 'function' ? '<div class="ws-hint">Ketuk baris untuk ubah / hapus. Geser tabel untuk lihat kolom lain.</div>' : '<div class="ws-hint">Geser tabel ke samping untuk lihat kolom lain.</div>');
+    + (typeof onRowClick === 'function' ? '<div class="ws-hint">Tap a row to edit / delete. Swipe the table to see more columns.</div>' : '<div class="ws-hint">Swipe the table sideways to see more columns.</div>');
 
   if (typeof onRowClick === 'function') {
     containerEl.querySelectorAll('.ws-row-clickable').forEach(tr => {
@@ -1546,12 +1877,12 @@ let riwayatCache = [];
 
 async function loadRiwayat() {
   const box = $('riwayatList');
-  box.innerHTML = '<div class="riwayat-empty">Memuat riwayat…</div>';
+  box.innerHTML = '<div class="riwayat-empty">Loading history…</div>';
 
   try {
     const r = await callApi({ action: 'get-history', sessionToken: state.token });
     if (!r.ok) {
-      box.innerHTML = '<div class="riwayat-empty">' + (r.error || 'Riwayat gagal dimuat.') + '</div>';
+      box.innerHTML = '<div class="riwayat-empty">' + (r.error || 'Failed to load history.') + '</div>';
       return;
     }
 
@@ -1559,14 +1890,14 @@ async function loadRiwayat() {
     riwayatCache = items;
 
     if (items.length === 0) {
-      box.innerHTML = '<div class="riwayat-empty">Belum ada aktivitas dalam 7 hari terakhir.</div>';
+      box.innerHTML = '<div class="riwayat-empty">No activity in the last 7 days.</div>';
       return;
     }
 
     renderWorksheetTable(box, items, (idx) => openRiwayatDetail(idx));
 
   } catch (e) {
-    box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Riwayat gagal dimuat.') + '</div>';
+    box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Failed to load history.') + '</div>';
   }
 }
 
@@ -1576,9 +1907,9 @@ function openRiwayatDetail(idx) {
   if (!it) return;
 
   const html = '<div style="padding:0 20px">'
-    + '<div class="field"><label class="label">Deskripsi</label>'
+    + '<div class="field"><label class="label">Description</label>'
     + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + (it.task || '') + '</textarea></div>'
-    + '<div class="field"><label class="label">Prioritas</label>'
+    + '<div class="field"><label class="label">Priority</label>'
     + '<div class="prio" id="rwEditPrio">'
     + ['Low','Medium','High','Critical'].map(p =>
         '<div class="pb' + (p === it.priority ? ' on' : '') + '" data-p="' + p + '">' + PRIORITY_SHORT_LABEL[p] + '</div>').join('')
@@ -1586,8 +1917,8 @@ function openRiwayatDetail(idx) {
     + '<div class="field"><label class="label">Status</label>'
     + '<div class="picker-row" id="rwEditStatusRow"><span class="picker-value" id="rwEditStatusVal">'
     + (RIWAYAT_STATUS_LABEL[it.status] || it.status || '') + '</span><span class="picker-chevron">&#8250;</span></div></div>'
-    + '<button class="btn-logout" id="rwSaveBtn" style="color:var(--navy);margin-bottom:10px">Simpan perubahan</button>'
-    + '<button class="btn-logout" id="rwDeleteBtn">Hapus task ini</button>'
+    + '<button class="btn-logout" id="rwSaveBtn" style="color:var(--navy);margin-bottom:10px">Save changes</button>'
+    + '<button class="btn-logout" id="rwDeleteBtn">Delete this task</button>'
     + '</div>';
 
   openSheet(it.task_id, html);
@@ -1620,22 +1951,22 @@ function openRiwayatDetail(idx) {
         action: 'update-task', sessionToken: state.token, id: it.id,
         task: newTask, priority: editPriority, status: editStatus,
       });
-      if (!r.ok) { toast(r.error || 'Gagal menyimpan perubahan.', 'err'); return; }
-      toast('Perubahan tersimpan', 'good');
+      if (!r.ok) { toast(r.error || 'Failed to save changes.', 'err'); return; }
+      toast('Changes saved', 'good');
       closeSheet();
       loadRiwayat();
-    } catch (e) { toast(e.message || 'Gagal menyimpan perubahan.', 'err'); }
+    } catch (e) { toast(e.message || 'Failed to save changes.', 'err'); }
   });
 
   $('rwDeleteBtn').addEventListener('click', async () => {
-    if (!confirm('Hapus task ini? Task tidak akan tampil lagi di Riwayat maupun Laporan.')) return;
+    if (!confirm('Delete this task? It will no longer appear in History or Report.')) return;
     try {
       const r = await callApi({ action: 'delete-task', sessionToken: state.token, id: it.id });
-      if (!r.ok) { toast(r.error || 'Gagal menghapus.', 'err'); return; }
-      toast('Task dihapus', 'good');
+      if (!r.ok) { toast(r.error || 'Failed to delete.', 'err'); return; }
+      toast('Task deleted', 'good');
       closeSheet();
       loadRiwayat();
-    } catch (e) { toast(e.message || 'Gagal menghapus.', 'err'); }
+    } catch (e) { toast(e.message || 'Failed to delete.', 'err'); }
   });
 }
 
@@ -1697,7 +2028,7 @@ function currentReportRange() {
 // membersihkan canvas lama; kalau dibiarkan, tiap kali Dasbor
 // dibuka ulang grafik lama menumpuk di memori dan bisa tampil
 // dobel/rusak.
-let dashCharts = { status: null, tag: null, priority: null };
+let dashCharts = { status: null, tag: null, priority: null, daily: null, workType: null };
 
 function currentMonthRange() {
   const now = new Date();
@@ -1711,10 +2042,14 @@ function currentMonthRange() {
 
 async function loadDashboard() {
   const range = currentMonthRange();
-  const MONTH_NAME_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-  $('dashMonthLabel').textContent = MONTH_NAME_ID[range.m - 1] + ' ' + range.y;
+  // v2.11 — MONTH_NAME_ID (Indonesia) diganti pakai MONTH_NAME_EN yang
+  // sudah didefinisikan global (lihat formatTanggalPanjang). Sebelumnya
+  // dashMonthLabel tetap menampilkan nama bulan Indonesia meskipun label
+  // statis di sekitarnya sudah diterjemahkan — inkonsistensi yang lolos
+  // scan pertama karena variabel lokal ini bernama beda dari yang dicari.
+  $('dashMonthLabel').textContent = MONTH_NAME_EN[range.m - 1] + ' ' + range.y;
 
-  $('dashKpi').innerHTML = '<div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Memuat…</div></div>';
+  $('dashKpi').innerHTML = '<div class="summary-card"><div class="summary-num">—</div><div class="summary-label">Loading…</div></div>';
   $('dashEmpty').classList.add('hidden');
   $('dashCharts').classList.add('hidden');
 
@@ -1725,18 +2060,73 @@ async function loadDashboard() {
     });
 
     if (!r.ok) {
-      $('dashKpi').innerHTML = '<div class="riwayat-empty">' + (r.error || 'Dasbor gagal dimuat.') + '</div>';
+      $('dashKpi').innerHTML = '<div class="riwayat-empty">' + (r.error || 'Failed to load dashboard.') + '</div>';
       return;
     }
 
-    renderDashboard(r.summary);
+    renderDashboard(r.summary, r.items || [], range);
 
   } catch (e) {
-    $('dashKpi').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Dasbor gagal dimuat.') + '</div>';
+    $('dashKpi').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Failed to load dashboard.') + '</div>';
   }
 }
 
-function renderDashboard(s) {
+// v2.11 — 4 metrik baru dihitung 100% di client dari "items" yang
+// SUDAH dikembalikan action get-report (task_date, status per baris).
+// TIDAK perlu endpoint/perubahan Edge Function baru untuk ini.
+function computeExtraStats(items, range) {
+  const OPEN_STATUSES = ['On Progress', 'Pending', 'Waiting Vendor'];
+  const today = todayISO();
+
+  // 1) Belum selesai — hitung status yang masih terbuka
+  const openItems = items.filter(it => OPEN_STATUSES.includes(it.status));
+  const openCount = openItems.length;
+
+  // 2) Task tertua belum selesai — task_date paling lama dari openItems
+  let oldestDays = null;
+  if (openItems.length > 0) {
+    const oldestDate = openItems.reduce((min, it) =>
+      it.task_date < min ? it.task_date : min, openItems[0].task_date);
+    const d1 = new Date(oldestDate + 'T00:00:00');
+    const d2 = new Date(today + 'T00:00:00');
+    oldestDays = Math.round((d2 - d1) / 86400000);
+  }
+
+  // 3) Hari terisi — hari unik yang punya entry, dibagi hari yang SUDAH
+  //    berlalu sejak awal bulan sampai HARI INI (bukan sampai akhir
+  //    bulan — supaya hari yang belum terjadi tidak dihitung sebagai
+  //    "bolong").
+  const uniqueDates = new Set(items.map(it => it.task_date));
+  const isCurrentMonth = today >= range.start && today <= range.end;
+  const lastRelevantDay = isCurrentMonth ? today : range.end;
+  const d1 = new Date(range.start + 'T00:00:00');
+  const d2 = new Date(lastRelevantDay + 'T00:00:00');
+  const daysPassed = Math.round((d2 - d1) / 86400000) + 1;
+  const filledDays = uniqueDates.size;
+
+  // 4) Streak — hari berturut-turut ada entry, dihitung mundur dari
+  //    HARI INI. Kalau hari ini belum diisi, mulai hitung dari kemarin
+  //    (supaya belum sempat isi hari ini tidak langsung memutus streak
+  //    yang sedang berjalan).
+  let streak = 0;
+  let cursor = new Date(today + 'T00:00:00');
+  if (!uniqueDates.has(today)) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  while (true) {
+    const iso = cursor.toLocaleDateString('en-CA');
+    if (uniqueDates.has(iso)) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return { openCount, oldestDays, filledDays, daysPassed, streak };
+}
+
+function renderDashboard(s, items, range) {
   if (!s || s.total === 0) {
     $('dashKpi').innerHTML = '';
     $('dashEmpty').classList.remove('hidden');
@@ -1749,13 +2139,41 @@ function renderDashboard(s) {
 
   const doneCount = s.byStatus['Done'] || 0;
   const donePct = s.total > 0 ? Math.round((doneCount / s.total) * 100) : 0;
+  const extra = computeExtraStats(items, range);
+
+  // v2.11 — 6 stat card, 2 kolom x 3 baris (simetris). Default hanya 2
+  // baris pertama (4 card) yang tampil; sisanya di balik tombol
+  // "Show more" supaya Dashboard tidak langsung panjang saat dibuka.
+  const filledPct = extra.daysPassed > 0 ? Math.round((extra.filledDays / extra.daysPassed) * 100) : 0;
+  const oldestLabel = extra.oldestDays === null ? '—' : (extra.oldestDays === 0 ? 'Today' : extra.oldestDays + 'd');
+
+  const cardsAlwaysVisible =
+      '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + donePct + '%</div><div class="summary-label">Done</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + extra.openCount + '</div><div class="summary-label">Open</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + oldestLabel + '</div><div class="summary-label">Oldest open</div></div>';
+
+  const cardsCollapsible =
+      '<div class="summary-card"><div class="summary-num">' + extra.filledDays + '/' + extra.daysPassed + '</div><div class="summary-label">Days filled (' + filledPct + '%)</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + extra.streak + '</div><div class="summary-label">Day' + (extra.streak !== 1 ? 's' : '') + ' streak</div></div>';
+
   $('dashKpi').innerHTML =
-    '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + donePct + '%</div><div class="summary-label">Selesai</div></div>';
+    '<div class="summary-grid">' + cardsAlwaysVisible + '</div>'
+    + '<div class="summary-grid hidden" id="dashKpiMore">' + cardsCollapsible + '</div>'
+    + '<div class="dash-kpi-toggle" id="dashKpiToggle">Show more &#9662;</div>';
+
+  $('dashKpiToggle').addEventListener('click', () => {
+    const more = $('dashKpiMore');
+    const isHidden = more.classList.contains('hidden');
+    more.classList.toggle('hidden', !isHidden);
+    $('dashKpiToggle').innerHTML = isHidden ? 'Show less &#9652;' : 'Show more &#9662;';
+  });
 
   renderDashStatusChart(s.byStatus);
   renderDashTagChart(s.tagFrequency);
   renderDashPriorityChart(s.byPriority);
+  renderDashDailyChart(items, range);
+  renderDashWorkTypeChart(s.byWorkType);
 }
 
 // Palet warna konsisten dengan chip yang sudah dipakai di Riwayat/
@@ -1825,11 +2243,70 @@ function renderDashPriorityChart(byPriority) {
   });
 }
 
+// v2.11 — chart baru: Aktivitas per hari. Dihitung dari "items" mentah
+// (bukan dari summary yang sudah teragregasi server), karena summary
+// tidak punya breakdown per tanggal. Sumbu-X mencakup SETIAP tanggal
+// dalam rentang (termasuk yang 0 entry), supaya hari yang bolong
+// terlihat jelas sebagai jarak kosong, bukan cuma hilang dari chart.
+function renderDashDailyChart(items, range) {
+  const counts = {};
+  items.forEach(it => { counts[it.task_date] = (counts[it.task_date] || 0) + 1; });
+
+  const labels = [];
+  const data = [];
+  const cursor = new Date(range.start + 'T00:00:00');
+  const end = new Date(range.end + 'T00:00:00');
+  while (cursor <= end) {
+    const iso = cursor.toLocaleDateString('en-CA');
+    labels.push(String(cursor.getDate())); // cukup tanggalnya saja (1-31), bulan sudah di judul kartu
+    data.push(counts[iso] || 0);
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  if (dashCharts.daily) dashCharts.daily.destroy();
+  if (typeof Chart === 'undefined') return;
+
+  dashCharts.daily = new Chart($('dashDailyChart'), {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: '#0B1B2E', borderRadius: 3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { precision: 0 } },
+        x: { ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
+      },
+    },
+  });
+}
+
+// v2.11 — chart baru: Jenis Pekerjaan. Memakai s.byWorkType yang
+// SUDAH dihitung server sejak awal tapi belum pernah dipakai di UI
+// mana pun sampai sekarang.
+function renderDashWorkTypeChart(byWorkType) {
+  const sorted = Object.entries(byWorkType || {}).sort((a, b) => b[1] - a[1]);
+  const labels = sorted.map(e => e[0]);
+  const data = sorted.map(e => e[1]);
+
+  if (dashCharts.workType) dashCharts.workType.destroy();
+  if (typeof Chart === 'undefined') return;
+
+  dashCharts.workType = new Chart($('dashWorkTypeChart'), {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: '#5B7A9D', borderRadius: 6 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { x: { ticks: { precision: 0 } } },
+    },
+  });
+}
+
 async function loadReport() {
   const range = currentReportRange();
-  if (!range) { toast('Pilih rentang tanggal dulu.', 'err'); return; }
+  if (!range) { toast('Pick a date range first.', 'err'); return; }
 
-  $('reportSummary').innerHTML = '<div class="riwayat-empty">Memuat laporan…</div>';
+  $('reportSummary').innerHTML = '<div class="riwayat-empty">Loading report…</div>';
   $('reportList').innerHTML = '';
 
   try {
@@ -1839,7 +2316,7 @@ async function loadReport() {
     });
 
     if (!r.ok) {
-      $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (r.error || 'Laporan gagal dimuat.') + '</div>';
+      $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (r.error || 'Failed to load report.') + '</div>';
       return;
     }
 
@@ -1848,7 +2325,7 @@ async function loadReport() {
     renderReportList(r.items);
 
   } catch (e) {
-    $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Laporan gagal dimuat.') + '</div>';
+    $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Failed to load report.') + '</div>';
   }
 }
 
@@ -1858,12 +2335,12 @@ function renderReportSummary(s) {
 
   let html = '<div class="summary-grid">'
     + '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + doneCount + '</div><div class="summary-label">Selesai</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + doneCount + '</div><div class="summary-label">Done</div></div>'
     + '<div class="summary-card"><div class="summary-num">' + criticalCount + '</div><div class="summary-label">Critical</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + (s.topTag ? s.topTag.count : 0) + '</div><div class="summary-label">' + (s.topTag ? s.topTag.tag : 'Tag terbanyak') + '</div></div>';
+    + '<div class="summary-card"><div class="summary-num">' + (s.topTag ? s.topTag.count : 0) + '</div><div class="summary-label">' + (s.topTag ? s.topTag.tag : 'Top tag') + '</div></div>';
 
   if (s.total === 0) {
-    html += '<div class="summary-card summary-full"><div class="summary-label">Tidak ada aktivitas pada rentang ini</div></div>';
+    html += '<div class="summary-card summary-full"><div class="summary-label">No activity in this range</div></div>';
   }
   html += '</div>';
   $('reportSummary').innerHTML = html;
@@ -1875,11 +2352,11 @@ function renderReportList(items) {
 
 function exportReportToExcel() {
   if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
-    toast('Tampilkan laporan dulu sebelum mengunduh.', 'err');
+    toast('Show the report first before downloading.', 'err');
     return;
   }
   if (typeof XLSX === 'undefined') {
-    toast('Modul Excel belum termuat. Periksa koneksi lalu coba lagi.', 'err');
+    toast('Excel module not loaded yet. Check your connection and try again.', 'err');
     return;
   }
 
@@ -1906,7 +2383,7 @@ function exportReportToExcel() {
   const range = currentReportRange();
   const filename = 'MFB-IT_Report_' + (range ? range.start + '_to_' + range.end : todayISO()) + '.xlsx';
   XLSX.writeFile(wb, filename);
-  toast('Excel diunduh', 'good');
+  toast('Excel downloaded', 'good');
 }
 
 // ── EXPORT LAPORAN — FORMAT RESMI (grouping per tanggal) ──────
@@ -1923,11 +2400,11 @@ function exportReportToExcel() {
 // di Excel/Sheets setelah file diunduh.
 function exportReportOfficial() {
   if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
-    toast('Tampilkan laporan dulu sebelum mengunduh.', 'err');
+    toast('Show the report first before downloading.', 'err');
     return;
   }
   if (typeof XLSX === 'undefined') {
-    toast('Modul Excel belum termuat. Periksa koneksi lalu coba lagi.', 'err');
+    toast('Excel module not loaded yet. Check your connection and try again.', 'err');
     return;
   }
 
@@ -1962,7 +2439,7 @@ function exportReportOfficial() {
   const range = currentReportRange();
   const filename = 'MFB-IT_MonthlyReport_' + (range ? range.start + '_to_' + range.end : todayISO()) + '.xlsx';
   XLSX.writeFile(wb, filename);
-  toast('Laporan resmi diunduh — tambahkan logo & garis kotak secara manual di Excel', 'good');
+  toast('Official report downloaded — add logo & border manually in Excel', 'good');
 }
 
 // ── BACKUP SEMUA DATA (Phase 2A) ──────────────────────────────
@@ -1983,12 +2460,12 @@ async function exportAllData() {
   const btn = $('backupBtn');
   const labelAsal = btn.textContent;
   btn.classList.add('busy');
-  btn.textContent = 'Menyiapkan…';
+  btn.textContent = 'Preparing…';
 
   try {
     const r = await callApi({ action: 'export-all', sessionToken: state.token });
     if (!r.ok) {
-      toast(r.error || 'Gagal mengambil data backup.', 'err');
+      toast(r.error || 'Failed to fetch backup data.', 'err');
       return;
     }
 
@@ -2002,7 +2479,7 @@ async function exportAllData() {
 
     // 2) Excel — 4 sheet terpisah, untuk dibaca manusia
     if (typeof XLSX === 'undefined') {
-      toast('JSON berhasil diunduh. Modul Excel belum termuat, coba lagi untuk file Excel.', 'err');
+      toast('JSON downloaded successfully. Excel module not loaded yet, try again for the Excel file.', 'err');
       return;
     }
 
@@ -2017,14 +2494,14 @@ async function exportAllData() {
       const rows = tables[key] || [];
       const ws = rows.length
         ? XLSX.utils.json_to_sheet(rows)
-        : XLSX.utils.aoa_to_sheet([['(tidak ada data)']]);
+        : XLSX.utils.aoa_to_sheet([['(no data)']]);
       XLSX.utils.book_append_sheet(wb, ws, sheetName);
     }
     XLSX.writeFile(wb, 'MFB-IT_backup_' + stamp + '.xlsx');
 
-    toast('Backup diunduh: JSON + Excel (' + meta.rowCounts.daily_activity + ' task)', 'good');
+    toast('Backup downloaded: JSON + Excel (' + meta.rowCounts.daily_activity + ' tasks)', 'good');
   } catch (e) {
-    toast(e.message || 'Backup gagal diunduh.', 'err');
+    toast(e.message || 'Failed to download backup.', 'err');
   } finally {
     btn.classList.remove('busy');
     btn.textContent = labelAsal;
@@ -2052,7 +2529,7 @@ function wireEvents() {
       switchView(b.dataset.tab === 'report' ? 'laporan' : b.dataset.tab);
       return;
     }
-    toast('Halaman ini segera hadir.', '');
+    toast('This page is coming soon.', '');
   }));
 
   $('scroll').addEventListener('scroll', e => { $('header').classList.toggle('lifted', e.target.scrollTop > 4); }, { passive: true });
