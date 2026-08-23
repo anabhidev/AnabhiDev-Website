@@ -2,8 +2,8 @@
 // AnabhiDev-DELLAWEB — Della Spa Production Website
 // Vanilla JavaScript · IntersectionObserver · requestAnimationFrame · GA4 gtag.js
 // Development · Anabhi Dev
-// Version   : 1.5
-// Generated : 21 August 2026, 01:04:37
+// Version   : 1.7
+// Generated : 24 August 2026, 06:59:56
 // ----------------------------------------------------------------
 // Satu file untuk 10 halaman. Setiap modul mengecek dulu apakah
 // elemennya ada, jadi aman dipanggil di halaman mana pun.
@@ -347,6 +347,70 @@
 
 
   // ==============================================================
+  // 11. TOGGLE BAHASA EN/ID
+  // Default EN (keputusan klien: mayoritas turis asing). Pilihan
+  // disimpan di localStorage supaya konsisten antar halaman saat
+  // pengunjung berpindah — bukan reset ke EN tiap ganti halaman.
+  //
+  // <title> dan meta description/OG tidak bisa disembunyikan lewat
+  // atribut `hidden` (bukan elemen visual berpasangan) — nilainya
+  // dibaca dari data-title-en/data-title-id dkk yang ditulis di
+  // <html>, satu sumber per halaman, dekat root supaya gampang
+  // ditemukan saat audit.
+  // ==============================================================
+  function applyLang(lang) {
+    var html = document.documentElement;
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang);
+
+    $$('[data-lang-en]').forEach(function (el) { el.hidden = (lang !== 'en'); });
+    $$('[data-lang-id]').forEach(function (el) { el.hidden = (lang !== 'id'); });
+
+    // Placeholder <input> tidak bisa disembunyikan lewat `hidden`
+    // (bukan elemen visual berpasangan) — di-swap langsung via atribut.
+    var phKey = 'placeholder' + (lang === 'id' ? 'Id' : 'En');
+    $$('[data-placeholder-en]').forEach(function (el) {
+      if (el.dataset[phKey]) el.setAttribute('placeholder', el.dataset[phKey]);
+    });
+
+    var titleKey = 'title' + (lang === 'id' ? 'Id' : 'En');
+    var descKey  = 'desc'  + (lang === 'id' ? 'Id' : 'En');
+    if (html.dataset[titleKey]) document.title = html.dataset[titleKey];
+    if (html.dataset[descKey]) {
+      var descTag = $('meta[name="description"]');
+      if (descTag) descTag.setAttribute('content', html.dataset[descKey]);
+    }
+
+    $$('[data-lang-toggle] button').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+    });
+  }
+
+  function initLangToggle() {
+    var toggles = $$('[data-lang-toggle]');
+    if (!toggles.length) return;
+
+    var KEY = 'della-lang';
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    var lang = (saved === 'id' || saved === 'en') ? saved : 'en';   // default EN
+
+    applyLang(lang);
+
+    toggles.forEach(function (group) {
+      $$('button', group).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var next = btn.dataset.lang;
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+          applyLang(next);
+          track('lang_switch', { language: next });
+        });
+      });
+    });
+  }
+
+
+  // ==============================================================
   function init() {
     markActiveNav();
     initDrawer();
@@ -358,6 +422,7 @@
     initMap();
     initConsent();
     initTracking();
+    initLangToggle();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

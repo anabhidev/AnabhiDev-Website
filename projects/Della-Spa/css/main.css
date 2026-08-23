@@ -2,8 +2,8 @@
    AnabhiDev-DELLAWEB — Della Spa Production Website
    CSS3 · Custom Properties · Grid · clamp() · Google Fonts
    Development · Anabhi Dev
-   Version   : 1.5
-   Generated : 21 August 2026, 00:52:14
+   Version   : 1.7
+   Generated : 23 August 2026, 22:53:36
    ----------------------------------------------------------------
    Single palette (light only). Dark mode tidak dipakai —
    keputusan klien 20 Agustus 2026 (company profile, bukan web app).
@@ -470,6 +470,101 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 
 
 /* ================================================================
+   10b. HERO — VARIAN C (Full + Split gabungan)
+   Referensi struktural: hero anabhidev.com — latar solid gelap
+   (BUKAN foto full-bleed berputar), teks kiri, foto kanan dalam
+   kartu rounded + badge floating. Beda dari anabhidev: di sini
+   ditambah 1 foto tekstur sangat redup di background supaya
+   tidak terasa flat, dan warna latar pakai --surface-deep
+   (bukan hitam pekat) supaya konsisten dengan palette taupe.
+   ================================================================ */
+.hero-c {
+  /* main{margin-top:var(--header-h)} sudah mengompensasi header fixed —
+     JANGAN tambah var(--header-h) lagi di sini (dobel jarak). */
+  position:relative; overflow:hidden; isolation:isolate;
+  background:var(--surface-deep);
+  padding-block:var(--sp-8) var(--sp-9);
+}
+
+/* Tekstur foto redup — BUKAN elemen LCP, hanya dekorasi.
+   Opacity sangat rendah supaya tidak mengganggu kontras teks;
+   filter grayscale+kontras rendah supaya tidak "bersaing" secara
+   warna dengan foto kartu kanan yang jadi fokus utama. */
+.hero-c-texture {
+  position:absolute; inset:0; z-index:0; opacity:.07; pointer-events:none;
+}
+.hero-c-texture img {
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(.9) brightness(1.4);
+}
+/* Scrim tambahan di atas tekstur — jaga kontras teks tetap aman.
+   Radial dari kiri-atas (bukan linear kiri→kanan) supaya tetap
+   masuk akal secara visual walau grid berubah jadi 1 kolom di
+   mobile (lihat @media 920px) — tidak bergantung pada asumsi
+   "kiri = teks, kanan = foto" yang cuma berlaku di desktop. */
+.hero-c::before {
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 80% 70% at 20% 30%,
+             var(--surface-deep) 0%, rgba(42,29,20,.55) 55%, transparent 85%);
+}
+
+.hero-c-grid {
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(32px,5vw,80px);
+  align-items:center;
+}
+@media (max-width:920px) { .hero-c-grid { grid-template-columns:1fr; gap:44px; } }
+
+.hero-c-eyebrow {
+  display:inline-flex; align-items:center; gap:12px; margin-bottom:20px;
+  color:var(--taupe-300);
+}
+.hero-c-eyebrow::before { content:""; width:30px; height:1px; background:var(--gold-line); }
+
+.hero-c h1 {
+  font-family:var(--font-display); font-weight:400; color:#FFF8F2;
+  font-size:clamp(2.6rem,6vw,4.4rem); line-height:1.04; letter-spacing:-.018em;
+}
+.hero-c .lead {
+  margin-top:22px; font-size:var(--fs-lead); color:#EFE3D9;
+  /* Grid track, BUKAN max-width langsung (SOP §1 mandatory) —
+     pola sama dengan .hero .lead / .prose di tempat lain file ini. */
+  display:grid; grid-template-columns:minmax(0,46ch);
+}
+.hero-c-cta { display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:32px; }
+.hero-c-meta {
+  display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4);
+  margin-top:34px; font-size:var(--fs-sm); color:#C4B2A3;
+}
+.hero-c-meta > span { display:inline-flex; align-items:center; gap:7px; }
+.hero-c-meta .stars { color:var(--gold-text); letter-spacing:.1em; }
+
+/* Kartu foto kanan — foto MENGISI PENUH, bukan mengambang kecil
+   di tengah gradien seperti Varian B. Border tipis translucent
+   mirip anabhidev, bukan shadow berat. */
+.hero-c-visual { position:relative; }
+.hero-c-frame {
+  position:relative; aspect-ratio:4/5; border-radius:var(--r-lg); overflow:hidden;
+  border:1px solid rgba(245,238,232,.16);
+  box-shadow:0 30px 70px rgba(0,0,0,.35);
+}
+.hero-c-frame img {
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:sepia(.15) saturate(.9);
+}
+.hero-c-badge {
+  position:absolute; left:20px; bottom:20px; z-index:2;
+  background:var(--surface-deep); border:1px solid rgba(245,238,232,.18);
+  border-radius:14px; padding:14px 18px;
+  display:flex; align-items:center; gap:10px;
+  box-shadow:0 14px 34px rgba(0,0,0,.3);
+}
+.hero-c-badge b { font-size:1.1rem; color:var(--on-dark); font-family:var(--font-ui); }
+.hero-c-badge span { display:block; font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; color:var(--on-dark-muted); }
+@media (max-width:920px) { .hero-c-badge { left:14px; bottom:14px; } }
+
+
+/* ================================================================
    11. TRIPTYCH — 3 pintu masuk
    ================================================================ */
 .tri { position:relative; display:block; border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm); }
@@ -722,7 +817,7 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .ftr-top { display:grid; gap:var(--sp-6); }
 @media (min-width:860px){ .ftr-top { grid-template-columns:1.4fr 1fr 1fr; } }
 .ftr h3 { color:var(--on-dark); font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:var(--sp-4); }
-.ftr-brand img { width:56px; height:56px; }
+.ftr-brand img { width:72px; height:72px; }
 .ftr-links { display:grid; gap:11px; font-size:var(--fs-sm); }
 .ftr-bottom {
   margin-top:var(--sp-8); padding-top:var(--sp-4);
@@ -761,6 +856,43 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .consent.is-open { transform:translateY(0); }
 .consent p { flex:1; min-width:220px; font-size:var(--fs-xs); color:var(--body); }
 @media (min-width:720px){ .consent { left:auto; right:var(--sp-5); width:min(520px,90vw); } }
+
+
+/* ================================================================
+   18b. TOGGLE BAHASA EN/ID
+   Setiap teks yang beda per bahasa ditulis 2x berdampingan di HTML
+   dengan atribut [data-lang-en] / [data-lang-id]. Yang TIDAK aktif
+   disembunyikan lewat atribut HTML native `hidden` (bukan class
+   custom) — computed default `display:none`, jadi tanpa JS pun teks
+   ganda tidak akan pernah tampil dobel. JS main.js men-toggle atribut
+   `hidden` ini saat tombol ditekan, plus swap <title>/meta lewat
+   dataset di <html>. Default HTML: EN tanpa `hidden`, ID dengan
+   `hidden` — keputusan klien: EN yang tampil pertama kali dibuka.
+   Reasoning teknis dipilihnya `hidden` dibanding attribute selector
+   custom (mis. [data-lang="en"] [data-lang-id]{display:none}):
+   `hidden` native lebih murah dicek (tidak perlu re-query CSS cascade
+   berdasarkan state di elemen leluhur jauh di <html>), dan aman kalau
+   suatu saat elemin dipindah/di-nest ulang.
+   ================================================================ */
+.lang-toggle {
+  display:inline-flex; border:1px solid var(--rule); border-radius:var(--r-pill);
+  overflow:hidden; flex:none;
+}
+.lang-toggle button {
+  font-family:var(--font-ui); font-size:.75rem; font-weight:600;
+  letter-spacing:.04em; padding:8px 14px; color:var(--muted);
+  transition:background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.lang-toggle button[aria-pressed="true"] { background:var(--brand-soft); color:var(--espresso); }
+.lang-toggle button:not([aria-pressed="true"]):hover { background:var(--surface-soft); color:var(--ink); }
+
+/* Varian untuk dipakai di atas latar gelap (drawer mobile TIDAK
+   perlu — toggle cuma tampil di header desktop & drawer top,
+   lihat markup). Disiapkan kalau nanti toggle mau dipindah ke
+   footer/drawer yang berlatar gelap. */
+.lang-toggle--onDark { border-color:rgba(245,238,232,.24); }
+.lang-toggle--onDark button { color:var(--on-dark-muted); }
+.lang-toggle--onDark button[aria-pressed="true"] { background:var(--taupe-400); color:var(--espresso); }
 
 
 /* ================================================================

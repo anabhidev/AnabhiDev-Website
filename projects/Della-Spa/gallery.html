@@ -2,33 +2,38 @@
 AnabhiDev-DELLAWEB — Della Spa Production Website
 HTML5 · CSS3 · Vanilla JavaScript · Google Fonts · JSON-LD · Unsplash
 Development · Anabhi Dev
-Version   : 1.5
-Generated : 22 August 2026, 14:24:33
+Version   : 1.7
+Generated : 23 August 2026, 23:04:21
 
 Halaman: Gallery (06 dari 10)
 SEMUA foto di halaman ini adalah placeholder Unsplash (detail/ambience,
 BUKAN foto ruangan spa lain yang diklaim sebagai interior Della).
 Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
+Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
 -->
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="en" data-theme="light" data-lang="en"
+      data-title-en="Ambience &amp; Treatment Gallery — Della Spa Ungasan"
+      data-title-id="Galeri Suasana &amp; Treatment — Della Spa Ungasan"
+      data-desc-en="Ambience and treatment detail gallery of Della Spa in Ungasan, Bali. Interior photos will be updated with authentic Della Spa photos."
+      data-desc-id="Galeri suasana dan detail treatment Della Spa di Ungasan, Bali. Foto interior akan diperbarui dengan foto asli Della Spa.">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>Galeri Suasana &amp; Treatment — Della Spa Ungasan</title>
-<meta name="description" content="Galeri suasana dan detail treatment Della Spa di Ungasan, Bali. Foto interior akan diperbarui dengan foto asli Della Spa.">
+<title>Ambience &amp; Treatment Gallery — Della Spa Ungasan</title>
+<meta name="description" content="Ambience and treatment detail gallery of Della Spa in Ungasan, Bali. Interior photos will be updated with authentic Della Spa photos.">
 
-<link rel="canonical" href="https://dellaspabali.com/gallery.html">
+<link rel="canonical" href="https://www.dellaspamelasti.com/gallery.html">
 <meta name="theme-color" content="#FAF7F4">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Della Spa">
-<meta property="og:locale" content="id_ID">
-<meta property="og:url" content="https://dellaspabali.com/gallery.html">
-<meta property="og:title" content="Galeri — Della Spa Ungasan, Bali">
-<meta property="og:description" content="Suasana dan detail treatment Della Spa.">
-<meta property="og:image" content="https://dellaspabali.com/assets/og/della-og.jpg">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://www.dellaspamelasti.com/gallery.html">
+<meta property="og:title" content="Gallery — Della Spa Ungasan, Bali">
+<meta property="og:description" content="Ambience and treatment details at Della Spa.">
+<meta property="og:image" content="https://www.dellaspamelasti.com/assets/og/della-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -51,15 +56,45 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 <link rel="stylesheet" href="css/main.css">
 
 <style>
+  /* Grid dense masonry-like (SOP: gallery.html wajib CSS Grid,
+     bukan `columns`). Kenapa bukan CSS Grid Masonry native
+     (grid-template-rows: masonry): baru didukung Firefox, belum
+     universal Chrome/Safari per Agustus 2026 — pendekatan
+     grid-auto-rows kecil + row-span per figure jauh lebih aman.
+
+     Row-span dihitung dari aspect ratio yang SUDAH ADA di setiap
+     figure (class .ph--4x5/.ph--1x1/dst di dalamnya) via selector
+     :has() — figure sendiri tidak perlu attribute/class baru,
+     markup HTML tidak perlu diubah sama sekali. */
   .masonry {
-    columns: 1; column-gap: var(--sp-4);
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-flow: dense;
+    grid-auto-rows: 10px;
+    align-content: start;
+    gap: var(--sp-4);
   }
-  @media (min-width:640px){ .masonry{ columns:2; } }
-  @media (min-width:980px){ .masonry{ columns:3; } }
+  @media (min-width:640px){ .masonry{ grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width:980px){ .masonry{ grid-template-columns: repeat(3, 1fr); } }
+
   .masonry figure {
-    break-inside: avoid; margin-bottom: var(--sp-4);
     border-radius: var(--r-md); overflow: hidden; position: relative;
+    grid-row-end: span 53;   /* fallback kalau :has() tidak didukung, dihitung dari 4x5 (paling umum) */
   }
+  /* Span dihitung dari lebar kolom desktop 3-kolom (~380px) —
+     tinggi foto (lebar × rasio) + tinggi figcaption (~42px) + 3%
+     buffer, dibagi grid-auto-rows (10px). Di breakpoint 1-2 kolom
+     lebar kolom lebih besar dari basis hitungan ini; overflow:hidden
+     pada figure jadi fallback aman kalau ada sedikit crop di ujung
+     foto pada lebar tertentu — jauh lebih aman daripada foto/caption
+     overflow keluar figure dan menabrak card lain (efek masonry
+     murni CSS tanpa JS memang tidak akan 100% presisi di semua
+     breakpoint — ini trade-off yang disadari, bukan oversight). */
+  .masonry figure:has(.ph--16x9) { grid-row-end: span 26; }  /* landscape, pendek */
+  .masonry figure:has(.ph--1x1)  { grid-row-end: span 44; }  /* persegi */
+  .masonry figure:has(.ph--4x5)  { grid-row-end: span 53; }  /* portrait sedang */
+  .masonry figure:has(.ph--3x4)  { grid-row-end: span 57; }  /* portrait lebih tinggi */
+
   .masonry figcaption {
     padding: 10px 14px; font-size: var(--fs-xs); color: var(--muted);
     background: var(--surface);
@@ -71,8 +106,8 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "BreadcrumbList", "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dellaspabali.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Gallery", "item": "https://dellaspabali.com/gallery.html" }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dellaspamelasti.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Gallery", "item": "https://www.dellaspamelasti.com/gallery.html" }
       ] }
   ]
 }
@@ -84,13 +119,13 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 
 <header class="hdr">
   <div class="wrap hdr-inner">
-    <a class="hdr-brand" href="index.html" aria-label="Della Spa — beranda">
+    <a class="hdr-brand" href="index.html" aria-label="Della Spa — home">
       <img src="https://anabhidev.com/projects/Della-Spa/assets/della-mark.webp" alt="Della Spa" width="40" height="40">
       <span class="hdr-title">DELLA SPA<small>Beauty Spa Treatment</small></span>
     </a>
 
     <!-- NAV:START -->
-<nav class="nav" data-nav aria-label="Navigasi utama">
+<nav class="nav" data-nav aria-label="Main navigation">
   <a href="index.html">Home</a>
   <a href="treatments.html">Treatments</a>
   <a href="packages.html">Packages</a>
@@ -102,22 +137,26 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 <!-- NAV:END -->
 
     <div class="hdr-actions">
+      <div class="lang-toggle" data-lang-toggle role="group" aria-label="Language / Bahasa">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="id" aria-pressed="false">ID</button>
+      </div>
       <a class="btn btn--primary btn--sm" data-wa data-loc="header" href="#">Booking</a>
-      <button class="burger" data-burger type="button" aria-expanded="false" aria-controls="drawer" aria-label="Buka menu"><span></span></button>
+      <button class="burger" data-burger type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span></button>
     </div>
   </div>
 </header>
 
 <div class="overlay" data-overlay></div>
 
-<aside class="drawer" id="drawer" data-drawer aria-label="Menu navigasi">
+<aside class="drawer" id="drawer" data-drawer aria-label="Navigation menu">
   <div class="hdr-brand">
     <img src="https://anabhidev.com/projects/Della-Spa/assets/della-mark.webp" alt="Della Spa" width="40" height="40">
     <span class="hdr-title">DELLA SPA</span>
   </div>
 
   <!-- NAV:START -->
-<nav class="drawer-nav" data-nav aria-label="Navigasi mobile">
+<nav class="drawer-nav" data-nav aria-label="Mobile navigation">
   <a href="index.html">Home</a>
   <a href="treatments.html">Treatments</a>
   <a href="packages.html">Packages</a>
@@ -130,7 +169,9 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 
   <div class="drawer-foot">
     <a class="btn btn--primary btn--block" data-wa data-loc="drawer" href="#">Booking via WhatsApp</a>
-    <p class="small muted">Buka setiap hari<br>10.00 – 21.00 WITA</p>
+    <p class="small muted">
+      <span data-lang-en>Open daily</span><span data-lang-id hidden>Buka setiap hari</span><br>10.00 – 21.00 WITA
+    </p>
   </div>
 </aside>
 
@@ -141,9 +182,14 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
   <div class="wrap">
     <div class="sec-head sec-head--center" style="margin-top:0">
       <span class="sec-num" style="color:var(--gold-text)">01</span>
-      <h1>Galeri</h1>
+      <h1><span data-lang-en>Gallery</span><span data-lang-id hidden>Galeri</span></h1>
       <span class="rule-orn"></span>
-      <div class="sec-head-body"><p style="color:var(--on-dark-muted)">Suasana dan detail treatment Della Spa. Foto interior asli akan menyusul.</p></div>
+      <div class="sec-head-body">
+        <p style="color:var(--on-dark-muted)">
+          <span data-lang-en>Ambience and treatment details at Della Spa. Authentic interior photos will follow.</span>
+          <span data-lang-id hidden>Suasana dan detail treatment Della Spa. Foto interior asli akan menyusul.</span>
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -154,80 +200,83 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 
     <!-- DUMMY: seluruh galeri di bawah ini foto placeholder Unsplash,
          BUKAN foto asli interior Della Spa. Ganti begitu foto tersedia. -->
-    <p class="xs muted center" style="margin-bottom:var(--sp-6)" data-dummy>Foto di bawah adalah gambaran suasana sementara. Foto asli Della Spa akan segera menggantikan galeri ini.</p>
+    <p class="xs muted center" style="margin-bottom:var(--sp-6)" data-dummy>
+      <span data-lang-en>Photos below are a temporary impression of the ambience. Authentic Della Spa photos will replace this gallery soon.</span>
+      <span data-lang-id hidden>Foto di bawah adalah gambaran suasana sementara. Foto asli Della Spa akan segera menggantikan galeri ini.</span>
+    </p>
 
     <div class="masonry">
 
       <figure class="reveal" data-reveal-index="0">
         <div class="ph ph--4x5 ph--warm">
           <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=800&q=78&auto=format&fit=crop"
-               alt="Tumpukan batu bernuansa hangat" width="800" height="1000" loading="eager" fetchpriority="high">
+               alt="Pile of warm-toned stones" width="800" height="1000" loading="eager" fetchpriority="high">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="1">
         <div class="ph ph--1x1 ph--warm">
           <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=800&q=78&auto=format&fit=crop"
-               alt="Batu hangat tertata di punggung" width="800" height="800" loading="lazy">
+               alt="Warm stones arranged on a back" width="800" height="800" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="2">
         <div class="ph ph--3x4 ph--warm">
           <img src="https://images.unsplash.com/photo-1620000190821-abd8f262b86f?w=800&q=78&auto=format&fit=crop"
-               alt="Handuk putih tergantung rapi" width="800" height="1067" loading="lazy">
+               alt="White towels hanging neatly" width="800" height="1067" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="0">
         <div class="ph ph--16x9 ph--warm">
           <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=800&q=78&auto=format&fit=crop"
-               alt="Interior hangat dengan dinding batu" width="800" height="450" loading="lazy">
+               alt="Warm-toned interior with stone wall" width="800" height="450" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="1">
         <div class="ph ph--4x5 ph--warm">
           <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=800&q=78&auto=format&fit=crop"
-               alt="Batu pijat tertata di permukaan terang" width="800" height="1000" loading="lazy">
+               alt="Massage stones on a light surface" width="800" height="1000" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="2">
         <div class="ph ph--1x1 ph--warm">
           <img src="https://images.unsplash.com/photo-1761470575018-135c213340eb?w=800&q=78&auto=format&fit=crop"
-               alt="Ruang uap dengan lilin dan pencahayaan lembut" width="800" height="800" loading="lazy">
+               alt="Steam room with candles and soft lighting" width="800" height="800" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="0">
         <div class="ph ph--3x4 ph--warm">
           <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=800&q=78&auto=format&fit=crop"
-               alt="Tumpukan batu bernuansa hangat" width="800" height="1067" loading="lazy">
+               alt="Pile of warm-toned stones" width="800" height="1067" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="1">
         <div class="ph ph--4x5 ph--warm">
           <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=800&q=78&auto=format&fit=crop"
-               alt="Batu hangat tertata di punggung" width="800" height="1000" loading="lazy">
+               alt="Warm stones arranged on a back" width="800" height="1000" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
       <figure class="reveal" data-reveal-index="2">
         <div class="ph ph--16x9 ph--warm">
           <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=900&q=78&auto=format&fit=crop"
-               alt="Batu pijat tertata di permukaan terang" width="900" height="506" loading="lazy">
+               alt="Massage stones on a light surface" width="900" height="506" loading="lazy">
         </div>
-        <figcaption data-dummy>Placeholder — foto asli menyusul</figcaption>
+        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
       </figure>
 
     </div>
@@ -237,7 +286,7 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
 
 <section class="section section--tint">
   <div class="wrap center">
-    <h2>Datang dan rasakan langsung</h2>
+    <h2><span data-lang-en>Come and experience it yourself</span><span data-lang-id hidden>Datang dan rasakan langsung</span></h2>
     <div class="row" style="justify-content:center; margin-top:var(--sp-5)">
       <a class="btn btn--primary" data-wa data-loc="gallery-cta" href="#">Booking via WhatsApp</a>
     </div>
@@ -252,34 +301,41 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
     <div class="ftr-top">
       <div>
         <div class="ftr-brand">
-          <img src="https://anabhidev.com/projects/Della-Spa/assets/della-light.webp" alt="Della Spa" width="56" height="56">
+          <img src="https://anabhidev.com/projects/Della-Spa/assets/della-light.webp" alt="Della Spa" width="72" height="72">
         </div>
-        <p class="small" style="margin-top:var(--sp-4)">Beauty spa treatment di Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</p>
+        <p class="small" style="margin-top:var(--sp-4)">
+          <span data-lang-en>Beauty spa treatment in Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
+          <span data-lang-id hidden>Beauty spa treatment di Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
+        </p>
       </div>
       <div>
-        <h3>Halaman</h3>
+        <h3><span data-lang-en>Pages</span><span data-lang-id hidden>Halaman</span></h3>
         <div class="ftr-links">
-          <a href="treatments.html">Treatment &amp; Harga</a>
-          <a href="packages.html">Paket Treatment</a>
-          <a href="gallery.html">Galeri</a>
-          <a href="about.html">Tentang Kami</a>
-          <a href="faq.html">Pertanyaan Umum</a>
+          <a href="treatments.html"><span data-lang-en>Treatments &amp; Prices</span><span data-lang-id hidden>Treatment &amp; Harga</span></a>
+          <a href="packages.html"><span data-lang-en>Treatment Packages</span><span data-lang-id hidden>Paket Treatment</span></a>
+          <a href="gallery.html"><span data-lang-en>Gallery</span><span data-lang-id hidden>Galeri</span></a>
+          <a href="about.html"><span data-lang-en>About Us</span><span data-lang-id hidden>Tentang Kami</span></a>
+          <a href="faq.html"><span data-lang-en>FAQ</span><span data-lang-id hidden>Pertanyaan Umum</span></a>
           <a href="booking.html">Booking</a>
           <a href="balinese-massage-ungasan.html">Balinese Massage Ungasan</a>
           <a href="spa-ungasan-uluwatu.html">Spa Ungasan &amp; Uluwatu</a>
         </div>
       </div>
       <div>
-        <h3>Kontak</h3>
+        <h3><span data-lang-en>Contact</span><span data-lang-id hidden>Kontak</span></h3>
         <div class="ftr-links">
           <p>Jl. Karma Kandara No.41,<br>Ungasan, Kec. Kuta Selatan,<br>Kabupaten Badung, Bali</p>
           <a href="tel:+6281236109511" data-loc="footer">0812-3610-9511</a>
-          <p>Setiap hari 10.00 – 21.00 WITA</p>
+          <p><span data-lang-en>Every day 10.00 – 21.00 WITA</span><span data-lang-id hidden>Setiap hari 10.00 – 21.00 WITA</span></p>
         </div>
       </div>
     </div>
     <div class="ftr-bottom">
-      <p>&copy; 2026 Della Spa. Seluruh hak cipta dilindungi. &middot; <a href="privacy.html">Kebijakan Privasi</a></p>
+      <p>
+        &copy; 2026 Della Spa.
+        <span data-lang-en>All rights reserved.</span><span data-lang-id hidden>Seluruh hak cipta dilindungi.</span>
+        &middot; <a href="privacy.html"><span data-lang-en>Privacy Policy</span><span data-lang-id hidden>Kebijakan Privasi</span></a>
+      </p>
       <p class="ftr-credit" style="margin-top:6px">Development &middot; <a href="https://anabhidev.com" target="_blank" rel="noopener">Anabhi Dev</a></p>
     </div>
   </div>
@@ -289,10 +345,20 @@ Ditandai data-dummy — wajib diganti begitu foto asli Della tersedia.
   <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.05-1.03.24-3.47-.72-2.92-1.15-4.77-4.13-4.91-4.32-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36h.55c.18 0 .41-.03.64.49.25.58.83 2 .9 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.29.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.17-.19.69-.81.87-1.09.19-.29.37-.24.62-.14.25.09 1.6.76 1.87.9.28.14.46.21.53.33.07.12.07.67-.18 1.36Z"/></svg>
 </a>
 
-<div class="consent" data-consent role="region" aria-label="Persetujuan cookie">
-  <p>Kami memakai cookie analitik untuk memahami halaman mana yang paling membantu pengunjung. <a href="privacy.html" style="text-decoration:underline">Kebijakan Privasi</a></p>
-  <button class="btn btn--outline btn--sm" data-consent-action="deny" type="button">Tolak</button>
-  <button class="btn btn--primary btn--sm" data-consent-action="accept" type="button">Setuju</button>
+<div class="consent" data-consent role="region" aria-label="Cookie consent">
+  <p>
+    <span data-lang-en>We use analytics cookies to understand which pages visitors find most helpful.</span>
+    <span data-lang-id hidden>Kami memakai cookie analitik untuk memahami halaman mana yang paling membantu pengunjung.</span>
+    <a href="privacy.html" style="text-decoration:underline">
+      <span data-lang-en>Privacy Policy</span><span data-lang-id hidden>Kebijakan Privasi</span>
+    </a>
+  </p>
+  <button class="btn btn--outline btn--sm" data-consent-action="deny" type="button">
+    <span data-lang-en>Decline</span><span data-lang-id hidden>Tolak</span>
+  </button>
+  <button class="btn btn--primary btn--sm" data-consent-action="accept" type="button">
+    <span data-lang-en>Accept</span><span data-lang-id hidden>Setuju</span>
+  </button>
 </div>
 
 <script src="js/main.js" defer></script>
