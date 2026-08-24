@@ -51,55 +51,10 @@ Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 
 <link rel="preload" as="image" fetchpriority="high"
-      href="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=800&q=75&auto=format&fit=crop">
+      href="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=900&q=75&auto=format&fit=crop">
 
 <link rel="stylesheet" href="css/main.css">
 
-<style>
-  /* Grid dense masonry-like (SOP: gallery.html wajib CSS Grid,
-     bukan `columns`). Kenapa bukan CSS Grid Masonry native
-     (grid-template-rows: masonry): baru didukung Firefox, belum
-     universal Chrome/Safari per Agustus 2026 — pendekatan
-     grid-auto-rows kecil + row-span per figure jauh lebih aman.
-
-     Row-span dihitung dari aspect ratio yang SUDAH ADA di setiap
-     figure (class .ph--4x5/.ph--1x1/dst di dalamnya) via selector
-     :has() — figure sendiri tidak perlu attribute/class baru,
-     markup HTML tidak perlu diubah sama sekali. */
-  .masonry {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-auto-flow: dense;
-    grid-auto-rows: 10px;
-    align-content: start;
-    gap: var(--sp-4);
-  }
-  @media (min-width:640px){ .masonry{ grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width:980px){ .masonry{ grid-template-columns: repeat(3, 1fr); } }
-
-  .masonry figure {
-    border-radius: var(--r-md); overflow: hidden; position: relative;
-    grid-row-end: span 53;   /* fallback kalau :has() tidak didukung, dihitung dari 4x5 (paling umum) */
-  }
-  /* Span dihitung dari lebar kolom desktop 3-kolom (~380px) —
-     tinggi foto (lebar × rasio) + tinggi figcaption (~42px) + 3%
-     buffer, dibagi grid-auto-rows (10px). Di breakpoint 1-2 kolom
-     lebar kolom lebih besar dari basis hitungan ini; overflow:hidden
-     pada figure jadi fallback aman kalau ada sedikit crop di ujung
-     foto pada lebar tertentu — jauh lebih aman daripada foto/caption
-     overflow keluar figure dan menabrak card lain (efek masonry
-     murni CSS tanpa JS memang tidak akan 100% presisi di semua
-     breakpoint — ini trade-off yang disadari, bukan oversight). */
-  .masonry figure:has(.ph--16x9) { grid-row-end: span 26; }  /* landscape, pendek */
-  .masonry figure:has(.ph--1x1)  { grid-row-end: span 44; }  /* persegi */
-  .masonry figure:has(.ph--4x5)  { grid-row-end: span 53; }  /* portrait sedang */
-  .masonry figure:has(.ph--3x4)  { grid-row-end: span 57; }  /* portrait lebih tinggi */
-
-  .masonry figcaption {
-    padding: 10px 14px; font-size: var(--fs-xs); color: var(--muted);
-    background: var(--surface);
-  }
-</style>
 
 <script type="application/ld+json">
 {
@@ -178,7 +133,7 @@ Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
 
 <main id="main">
 
-<section class="section section--deep section--wash" style="padding-block:var(--sp-6) var(--sp-7)">
+<section class="section section--deep section--wash page-head">
   <div class="wrap">
     <div class="sec-head sec-head--center" style="margin-top:0">
       <span class="sec-num" style="color:var(--gold-text)">01</span>
@@ -200,84 +155,97 @@ Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
 
     <!-- DUMMY: seluruh galeri di bawah ini foto placeholder Unsplash,
          BUKAN foto asli interior Della Spa. Ganti begitu foto tersedia. -->
-    <p class="xs muted center" style="margin-bottom:var(--sp-6)" data-dummy>
+    <p class="xs muted center" style="margin-bottom:var(--sp-5)" data-dummy>
       <span data-lang-en>Photos below are a temporary impression of the ambience. Authentic Della Spa photos will replace this gallery soon.</span>
       <span data-lang-id hidden>Foto di bawah adalah gambaran suasana sementara. Foto asli Della Spa akan segera menggantikan galeri ini.</span>
     </p>
 
-    <div class="masonry">
+    <!-- Filter kategori — ACC kakak: dibuat sekarang meski foto masih
+         placeholder (bukan ditunda sampai foto asli masuk). Toggle
+         murni via data-attr, nol JS untuk hide/show itu sendiri
+         (lihat initGalleryFilter di js/main.js). -->
+    <div class="gal-filters" role="group" aria-label="Filter galeri">
+      <button type="button" class="gal-filter-btn" data-gal-filter="all" aria-pressed="true">
+        <span data-lang-en>All</span><span data-lang-id hidden>Semua</span>
+      </button>
+      <button type="button" class="gal-filter-btn" data-gal-filter="space" aria-pressed="false">
+        <span data-lang-en>Space</span><span data-lang-id hidden>Ruangan</span>
+      </button>
+      <button type="button" class="gal-filter-btn" data-gal-filter="treatment" aria-pressed="false">
+        <span data-lang-en>Treatments</span><span data-lang-id hidden>Treatment</span>
+      </button>
+      <button type="button" class="gal-filter-btn" data-gal-filter="detail" aria-pressed="false">
+        <span data-lang-en>Details</span><span data-lang-id hidden>Detail</span>
+      </button>
+    </div>
 
-      <figure class="reveal" data-reveal-index="0">
-        <div class="ph ph--4x5 ph--warm">
-          <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=800&q=78&auto=format&fit=crop"
-               alt="Pile of warm-toned stones" width="800" height="1000" loading="eager" fetchpriority="high">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+    <div class="gal-mosaic" data-gal-mosaic>
 
-      <figure class="reveal" data-reveal-index="1">
-        <div class="ph ph--1x1 ph--warm">
-          <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=800&q=78&auto=format&fit=crop"
-               alt="Warm stones arranged on a back" width="800" height="800" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--hero reveal" data-reveal-index="0" data-gal-cat="space" data-dummy>
+        <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=900&q=75&auto=format&fit=crop"
+             alt="Pile of warm-toned stones" width="900" height="600" loading="eager" fetchpriority="high">
+        <div class="gal-item-cap"><span data-lang-en>Treatment Room</span><span data-lang-id hidden>Ruang Perawatan</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="2">
-        <div class="ph ph--3x4 ph--warm">
-          <img src="https://images.unsplash.com/photo-1620000190821-abd8f262b86f?w=800&q=78&auto=format&fit=crop"
-               alt="White towels hanging neatly" width="800" height="1067" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--tall reveal" data-reveal-index="1" data-gal-cat="detail" data-dummy>
+        <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=700&q=75&auto=format&fit=crop"
+             alt="Warm stones arranged on a back" width="700" height="900" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Hot Stone Detail</span><span data-lang-id hidden>Detail Hot Stone</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="0">
-        <div class="ph ph--16x9 ph--warm">
-          <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=800&q=78&auto=format&fit=crop"
-               alt="Warm-toned interior with stone wall" width="800" height="450" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--sq reveal" data-reveal-index="2" data-gal-cat="detail" data-dummy>
+        <img src="https://images.unsplash.com/photo-1620000190821-abd8f262b86f?w=700&q=75&auto=format&fit=crop"
+             alt="White towels hanging neatly" width="700" height="700" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Fresh Towels</span><span data-lang-id hidden>Handuk Bersih</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="1">
-        <div class="ph ph--4x5 ph--warm">
-          <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=800&q=78&auto=format&fit=crop"
-               alt="Massage stones on a light surface" width="800" height="1000" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--sq reveal" data-reveal-index="0" data-gal-cat="space" data-dummy>
+        <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=700&q=75&auto=format&fit=crop"
+             alt="Warm-toned interior with stone wall" width="700" height="700" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Interior</span><span data-lang-id hidden>Interior</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="2">
-        <div class="ph ph--1x1 ph--warm">
-          <img src="https://images.unsplash.com/photo-1761470575018-135c213340eb?w=800&q=78&auto=format&fit=crop"
-               alt="Steam room with candles and soft lighting" width="800" height="800" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--wide reveal" data-reveal-index="1" data-gal-cat="treatment" data-dummy>
+        <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=900&q=75&auto=format&fit=crop"
+             alt="Massage stones on a light surface" width="900" height="600" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Massage Setup</span><span data-lang-id hidden>Persiapan Massage</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="0">
-        <div class="ph ph--3x4 ph--warm">
-          <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=800&q=78&auto=format&fit=crop"
-               alt="Pile of warm-toned stones" width="800" height="1067" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--tall reveal" data-reveal-index="2" data-gal-cat="space" data-dummy>
+        <img src="https://images.unsplash.com/photo-1761470575018-135c213340eb?w=700&q=75&auto=format&fit=crop"
+             alt="Steam room with candles and soft lighting" width="700" height="900" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Ambience</span><span data-lang-id hidden>Suasana</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="1">
-        <div class="ph ph--4x5 ph--warm">
-          <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=800&q=78&auto=format&fit=crop"
-               alt="Warm stones arranged on a back" width="800" height="1000" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--hero reveal" data-reveal-index="0" data-gal-cat="treatment" data-dummy>
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=75&auto=format&fit=crop"
+             alt="Terapis menuangkan minyak aromaterapi saat perawatan massage" width="900" height="600" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Aromatherapy Massage</span><span data-lang-id hidden>Massage Aromaterapi</span></div>
+      </div>
 
-      <figure class="reveal" data-reveal-index="2">
-        <div class="ph ph--16x9 ph--warm">
-          <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=900&q=78&auto=format&fit=crop"
-               alt="Massage stones on a light surface" width="900" height="506" loading="lazy">
-        </div>
-        <figcaption data-dummy><span data-lang-en>Placeholder — authentic photo to follow</span><span data-lang-id hidden>Placeholder — foto asli menyusul</span></figcaption>
-      </figure>
+      <div class="gal-item gal-item--tall reveal" data-reveal-index="1" data-gal-cat="detail" data-dummy>
+        <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=700&q=75&auto=format&fit=crop"
+             alt="Pile of warm-toned stones" width="700" height="900" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Hot Stone</span><span data-lang-id hidden>Hot Stone</span></div>
+      </div>
+
+      <div class="gal-item gal-item--sq reveal" data-reveal-index="2" data-gal-cat="space" data-dummy>
+        <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=700&q=75&auto=format&fit=crop"
+             alt="Warm stones arranged on a back" width="700" height="700" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Treatment Corner</span><span data-lang-id hidden>Sudut Perawatan</span></div>
+      </div>
+
+      <div class="gal-item gal-item--sq reveal" data-reveal-index="0" data-gal-cat="detail" data-dummy>
+        <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=900&q=75&auto=format&fit=crop"
+             alt="Massage stones on a light surface" width="900" height="900" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Stone Detail</span><span data-lang-id hidden>Detail Batu</span></div>
+      </div>
+
+      <div class="gal-item gal-item--wide reveal" data-reveal-index="1" data-gal-cat="space" data-dummy>
+        <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=900&q=75&auto=format&fit=crop"
+             alt="Warm-toned interior with stone wall" width="900" height="600" loading="lazy">
+        <div class="gal-item-cap"><span data-lang-en>Interior Detail</span><span data-lang-id hidden>Detail Interior</span></div>
+      </div>
 
     </div>
   </div>
@@ -295,6 +263,14 @@ Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
 
 </main>
 
+<!-- Lightbox — <dialog> native, dukungan browser universal per
+     Agustus 2026, nol library. Isi <img> diisi JS saat tile diklik
+     (lihat initGalleryLightbox di js/main.js). -->
+<dialog class="gal-lightbox" data-gal-lightbox aria-label="Gallery photo viewer">
+  <button type="button" class="gal-lightbox-close" data-gal-lightbox-close aria-label="Close">✕</button>
+  <img class="gal-lightbox-img" data-gal-lightbox-img src="" alt="">
+</dialog>
+
 
 <footer class="ftr">
   <div class="wrap">
@@ -307,14 +283,24 @@ Toggle EN/ID: pola data-lang-en / data-lang-id, default EN.
           <span data-lang-en>Beauty spa treatment in Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
           <span data-lang-id hidden>Beauty spa treatment di Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
         </p>
+        <p class="small" style="margin-top:var(--sp-3)">
+          <span class="status-pill" data-status-pill data-status-fallback>
+            <span data-lang-en>Open daily 10.00–21.00 WITA</span><span data-lang-id hidden>Buka setiap hari 10.00–21.00 WITA</span>
+          </span>
+        </p>
       </div>
       <div>
-        <h3><span data-lang-en>Pages</span><span data-lang-id hidden>Halaman</span></h3>
+        <h3><span data-lang-en>Explore</span><span data-lang-id hidden>Jelajahi</span></h3>
         <div class="ftr-links">
           <a href="treatments.html"><span data-lang-en>Treatments &amp; Prices</span><span data-lang-id hidden>Treatment &amp; Harga</span></a>
           <a href="packages.html"><span data-lang-en>Treatment Packages</span><span data-lang-id hidden>Paket Treatment</span></a>
           <a href="gallery.html"><span data-lang-en>Gallery</span><span data-lang-id hidden>Galeri</span></a>
           <a href="about.html"><span data-lang-en>About Us</span><span data-lang-id hidden>Tentang Kami</span></a>
+        </div>
+      </div>
+      <div>
+        <h3><span data-lang-en>Visit</span><span data-lang-id hidden>Kunjungi</span></h3>
+        <div class="ftr-links">
           <a href="faq.html"><span data-lang-en>FAQ</span><span data-lang-id hidden>Pertanyaan Umum</span></a>
           <a href="booking.html">Booking</a>
           <a href="balinese-massage-ungasan.html">Balinese Massage Ungasan</a>

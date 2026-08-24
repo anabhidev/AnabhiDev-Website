@@ -411,6 +411,139 @@
 
 
   // ==============================================================
+  // STATUS PILL — "Open now / Closed", dihitung dari jam WITA
+  // (Asia/Makassar), BUKAN jam device pengunjung. Turis dari
+  // Australia/Eropa device-nya beda zona waktu — kalau pakai jam
+  // lokal browser, status bisa salah total.
+  //
+  // FALLBACK WAJIB: elemen [data-status-pill] sudah punya teks jam
+  // buka biasa (bukan klaim Open/Closed) tertulis statis di HTML
+  // lewat [data-status-fallback]. Kalau Intl.DateTimeFormat gagal
+  // (browser sangat lawas) atau terjadi error apa pun, fungsi ini
+  // berhenti tanpa mengubah apa pun — teks fallback tetap tampil
+  // apa adanya. Tidak pernah menampilkan status yang salah.
+  function initStatusPill() {
+    var pills = $$('[data-status-pill]');
+    if (!pills.length) return;
+
+    var hourWITA;
+    try {
+      var fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Makassar', hour: 'numeric', hour12: false
+      });
+      hourWITA = parseInt(fmt.format(new Date()), 10);
+    } catch (e) {
+      return; // gagal hitung jam WITA — biarkan fallback HTML apa adanya
+    }
+    if (isNaN(hourWITA)) return;
+
+    var isOpen = hourWITA >= 10 && hourWITA < 21;
+    var stateClass = isOpen ? 'status-pill--open' : 'status-pill--closed';
+    var textEn = isOpen ? 'Open now' : 'Closed now';
+    var textId = isOpen ? 'Buka sekarang' : 'Tutup sekarang';
+
+    pills.forEach(function (pill) {
+      pill.classList.remove('status-pill--open', 'status-pill--closed');
+      pill.classList.add(stateClass);
+      pill.innerHTML =
+        '<span data-lang-en>' + textEn + '</span>' +
+        '<span data-lang-id hidden>' + textId + '</span>';
+      pill.removeAttribute('data-status-fallback');
+    });
+
+    // Elemen baru dari innerHTML di atas butuh sinkronisasi ulang
+    // dengan toggle bahasa aktif saat ini (kalau pengunjung sudah
+    // pernah pilih ID sebelum halaman ini reload/dimuat).
+    var currentLang = document.documentElement.getAttribute('data-lang') || 'en';
+    applyLang(currentLang);
+  }
+
+
+  // ==============================================================
+  // GALLERY — filter kategori + lightbox (gallery.html saja, fungsi
+  // ini no-op otomatis di halaman lain karena elemen tidak ada).
+  function initGalleryFilter() {
+    var mosaic = $('[data-gal-mosaic]');
+    var btns = $$('[data-gal-filter]');
+    if (!mosaic || !btns.length) return;
+
+    var items = $$('.gal-item', mosaic);
+
+    function applyFilter(cat) {
+      items.forEach(function (item) {
+        var show = (cat === 'all') || (item.dataset.galCat === cat);
+        item.style.display = show ? '' : 'none';
+      });
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.galFilter === cat ? 'true' : 'false');
+      });
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyFilter(b.dataset.galFilter);
+        track('gallery_filter', { category: b.dataset.galFilter });
+      });
+    });
+  }
+
+  function initGalleryLightbox() {
+    var dialog = $('[data-gal-lightbox]');
+    var mosaic = $('[data-gal-mosaic]');
+    if (!dialog || !mosaic) return;
+
+    var imgEl = $('[data-gal-lightbox-img]', dialog);
+    var closeBtn = $('[data-gal-lightbox-close]', dialog);
+    var tiles = $$('.gal-item', mosaic);
+    var current = -1;
+
+    function openAt(i) {
+      if (i < 0 || i >= tiles.length) return;
+      current = i;
+      var srcImg = $('img', tiles[i]);
+      if (!srcImg) return;
+      // Resolusi lebih besar untuk lightbox — ganti param w= saja,
+      // bukan hardcode URL baru, supaya tetap sinkron dengan foto tile.
+      imgEl.src = srcImg.src.replace(/w=\d+/, 'w=1600').replace(/q=\d+/, 'q=82');
+      imgEl.alt = srcImg.alt;
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      track('gallery_lightbox_open', { index: i });
+    }
+
+    tiles.forEach(function (tile, i) {
+      tile.style.cursor = 'zoom-in';
+      tile.setAttribute('tabindex', '0');
+      tile.setAttribute('role', 'button');
+      tile.addEventListener('click', function () { openAt(i); });
+      tile.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAt(i); }
+      });
+    });
+
+    function close() { if (dialog.open) dialog.close(); }
+    if (closeBtn) closeBtn.addEventListener('click', close);
+
+    // Klik di area backdrop (di luar <img>) menutup dialog.
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) close();
+    });
+
+    dialog.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') return; // <dialog> native sudah menangani Esc
+      var visible = tiles.filter(function (t) { return t.style.display !== 'none'; });
+      var idx = visible.indexOf(tiles[current]);
+      if (e.key === 'ArrowRight' && idx > -1) {
+        var next = visible[(idx + 1) % visible.length];
+        openAt(tiles.indexOf(next));
+      } else if (e.key === 'ArrowLeft' && idx > -1) {
+        var prev = visible[(idx - 1 + visible.length) % visible.length];
+        openAt(tiles.indexOf(prev));
+      }
+    });
+  }
+
+
+  // ==============================================================
   function init() {
     markActiveNav();
     initDrawer();
@@ -423,6 +556,9 @@
     initConsent();
     initTracking();
     initLangToggle();
+    initStatusPill();
+    initGalleryFilter();
+    initGalleryLightbox();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

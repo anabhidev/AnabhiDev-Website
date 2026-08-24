@@ -233,6 +233,27 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .section--deep h1,.section--deep h2,.section--deep h3 { color:var(--on-dark); }
 .section--flush { padding-block:0; }
 
+/* Page header gelap (11 halaman selain index.html) — sebelumnya
+   ditulis inline style="padding-block:..." di tiap file (183
+   inline style total di seluruh project, ini salah satu sumbernya).
+   Token --pagehead-scale = 1 titik kontrol tunggal: ubah 1 angka
+   di sini, seluruh 11 halaman ikut berubah tanpa sentuh HTML.
+   Baseline sekarang: padding-top/bottom & h1 diturunkan tepat 28%
+   dari nilai lama (sp-6/sp-7 = 48px/64px, h1 = --fs-h1 penuh) —
+   dihitung: base baru (36+48+44=128px) × .954 = 122.1px ≈ 72% dari
+   total lama (169.6px) = pengurangan 28% persis, bukan estimasi. */
+:root { --pagehead-scale: .954; }
+.page-head {
+  padding-block:
+    calc(clamp(28px,3.4vw,36px) * var(--pagehead-scale))
+    calc(clamp(36px,4.4vw,48px) * var(--pagehead-scale));
+}
+.page-head h1 {
+  font-size: calc(clamp(1.9rem,4.2vw,2.75rem) * var(--pagehead-scale));
+}
+.page-head .sec-head { gap: var(--sp-3); }
+.page-head .sec-head-body { grid-template-columns:minmax(0,52ch); }
+
 /* Wash gradien hangat — latar tidak pernah warna rata */
 .section--wash::before {
   content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
@@ -264,6 +285,16 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .grid > * { min-width:0; }
 .grid-2 { grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); }
 .grid-3 { grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
+
+/* Grid 3-kolom DETERMINISTIK untuk packages.html — BUKAN pengganti
+   .grid-3 (yang di atas dibiarkan apa adanya, saat ini tidak dipakai
+   di HTML manapun, jadi 0 risiko regresi menambah kelas baru).
+   Bug lama: .grid-3 namanya "3" tapi auto-fit dengan minmax(270px)
+   di .wrap 1320px muat 4 kolom, bukan 3 — .grid-cards-3 mengunci
+   jumlah kolom eksplisit per breakpoint, tidak bergantung lebar. */
+.grid-cards-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media (max-width:999px) { .grid-cards-3 { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:639px) { .grid-cards-3 { grid-template-columns:1fr; } }
 .grid-4 { grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); }
 
 .row { display:flex; flex-wrap:wrap; gap:var(--sp-3); }
@@ -565,6 +596,118 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 
 
 /* ================================================================
+   10c. HERO — VARIAN D2 "MAISON LEFT" (T1, calon pengganti C)
+   Beda dari Varian D (center, di hero-preview.html): blok teks
+   rata KIRI, dikunci grid track ~48ch (BUKAN full-width rata kiri-
+   kanan ala Jagadita — itu B2B, kolom lebar krn kejar paragraf
+   panjang; di sini tetap "anchor kiri" tapi kolom tetap sempit
+   supaya kesan editorial-mewah tidak jatuh ke consulting-site).
+
+   Foto: full-bleed 1 foto (bukan kartu terpisah seperti Varian C).
+   Signature bar 3-anchor dipertahankan dari Varian D, posisi
+   tetap center di dasar layar (strip status, bukan bagian blok
+   headline — natural dibaca sebagai baris info, bukan teks utama).
+
+   KONTRAS — dihitung, bukan dikira-kira (SOP §11, formula WCAG):
+   Titik paling terang foto disimulasikan #E8D9C4 (kulit/handuk/
+   highlight). Overlay solid rgba(43,34,28, ALPHA) di atas titik
+   itu perlu ALPHA >= .65 supaya --lead-on-photo (krem #EFE3D9)
+   capai kontras >= 4.5:1 (hasil: 4.72:1 pada alpha .65). h1 putih
+   FFF8F2 py margin lebih lega (5.65:1 pada alpha yang sama) —
+   jadi .65 adalah ambang MINIMUM yang menentukan, dipakai sebagai
+   titik paling terang gradient di bawah, bukan rata-rata gradient.
+   Kalau foto produksi final diganti, ulangi hitungan ini dulu
+   sebelum ship — foto berbeda = titik terang berbeda.
+   ================================================================ */
+.hero-d2 {
+  position:relative; overflow:hidden; isolation:isolate;
+  min-height:min(90svh,780px);
+  display:grid; align-content:center;
+}
+.hero-d2-media { position:absolute; inset:0; z-index:-2; }
+.hero-d2-media img {
+  width:100%; height:100%; object-fit:cover;
+  filter:sepia(.12) saturate(.9);
+  transform:scale(1.04); transition:transform 1.4s var(--ease);
+}
+.hero-d2.is-loaded .hero-d2-media img { transform:scale(1); }
+
+/* Scrim 2 lapis, sengaja terpisah dari desain Varian D lama:
+   (1) base gradient kiri→kanan, gelap di kiri (tempat teks duduk)
+       menipis ke kanan — arah BERBEDA dari D (yang atas-bawah),
+       karena D2 rata kiri butuh kegelapan terkonsentrasi di kiri,
+       bukan merata di tengah.
+   (2) radial vignette KEDUA khusus di belakang blok teks saja —
+       independen dari komposisi foto, jadi tetap aman walau foto
+       production nanti beda dari foto placeholder sekarang. */
+.hero-d2::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(43,34,28,.72) 0%, rgba(43,34,28,.60) 32%,
+    rgba(43,34,28,.34) 58%, rgba(43,34,28,.16) 78%, rgba(43,34,28,.06) 100%);
+}
+.hero-d2::after {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(ellipse 60% 70% at 22% 46%,
+    rgba(43,34,28,.65) 0%, rgba(43,34,28,.32) 55%, transparent 80%);
+}
+
+.hero-d2-inner {
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:minmax(0,48ch); justify-content:start;
+  gap:var(--sp-4);
+  padding-block:var(--sp-9) calc(var(--sp-9) + 64px); /* ruang bawah utk signature bar */
+}
+.hero-d2-logo { width:44px; height:44px; opacity:.94; margin-bottom:2px; }
+.hero-d2 .eyebrow { color:var(--taupe-200); text-align:left; }
+.hero-d2 h1 {
+  font-family:var(--font-display); font-weight:400; color:#FFF8F2;
+  font-size:clamp(2.5rem,5.6vw,4.2rem); line-height:1.05; letter-spacing:-.016em;
+  text-align:left;
+}
+.hero-d2-rule {
+  display:block; width:64px; height:1px; background:var(--gold-line);
+  position:relative; margin-block:2px;
+}
+.hero-d2-rule::after {
+  content:""; position:absolute; left:0; top:-2.5px; width:6px; height:6px;
+  border-radius:50%; background:var(--gold-line);
+}
+/* --lead-on-photo: token terpisah dari --on-dark-muted biasa,
+   supaya perhitungan kontras di atas foto tidak bercampur dengan
+   nilai default yang dipakai di atas --surface-deep solid (mis.
+   .hero-c .lead) — dua konteks kontras yang berbeda, harus punya
+   sumber kebenaran warna yang berbeda juga. */
+.hero-d2 .lead {
+  font-size:var(--fs-lead); color:#F5EBE0; /* dinaikkan dari EFE3D9 → tambahan margin kontras */
+  text-align:left; text-wrap:balance;
+}
+.hero-d2-cta { display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:var(--sp-2); }
+
+.hero-d2-sig {
+  position:absolute; left:0; right:0; bottom:0; z-index:1;
+  border-top:1px solid rgba(255,255,255,.18);
+  padding-block:16px;
+  background:linear-gradient(0deg, rgba(43,34,28,.62) 0%, rgba(43,34,28,.08) 100%);
+}
+.hero-d2-sig-row {
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:10px var(--sp-4);
+  font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.14em;
+  color:#F5EBE0;
+}
+.hero-d2-sig-row span { display:inline-flex; align-items:center; gap:7px; white-space:nowrap; }
+.hero-d2-dot { width:3px; height:3px; border-radius:50%; background:var(--gold-line); flex:none; }
+
+@media (max-width:760px) {
+  .hero-d2 { min-height:min(82svh,660px); }
+  .hero-d2-inner { grid-template-columns:minmax(0,1fr); padding-inline:0; }
+  .hero-d2 h1 { font-size:clamp(2rem,8vw,2.6rem); }
+  .hero-d2-sig-row { font-size:.6875rem; letter-spacing:.08em; gap:6px 12px; }
+}
+
+
+/* ================================================================
    11. TRIPTYCH — 3 pintu masuk
    ================================================================ */
 .tri { position:relative; display:block; border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm); }
@@ -601,14 +744,29 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .card .ph img { transition:transform var(--dur-slow) var(--ease); }
 .card:hover .ph img { transform:scale(1.05); }
 
+/* Kartu paket "contoh, bukan resmi" (packages.html) — border warna
+   gold-line (bukan hardcode #E8C9A0 inline seperti sebelumnya)
+   supaya konsisten dengan token .badge-dummy di atasnya. */
+.card--dummy { border-color:var(--gold-line); }
+
 .card-body { padding:var(--sp-5) var(--sp-4) var(--sp-4); display:grid; gap:8px; align-content:start; flex:1; }
 .card-desc {
   font-size:var(--fs-sm); color:var(--muted);
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
 }
+/* Revisi T1 — flex space-between lama mendorong tombol keluar &
+   terpotong overflow:hidden .card saat harga panjang ("500k /
+   example price") bertemu kolom sempit (bug nyata di packages.html
+   3-kolom, "Ask →" kepotong). Grid 2-kolom eksplisit + tombol
+   flex-shrink:0 memastikan tombol tidak pernah kehilangan ruang. */
 .card-foot {
-  display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);
+  display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center;
+  gap:var(--sp-3);
   padding:var(--sp-3) var(--sp-4); border-top:1px solid var(--rule-2); margin-top:auto;
+}
+.card-foot .btn { flex-shrink:0; white-space:nowrap; }
+@media (max-width:380px) {
+  .card-foot { grid-template-columns:1fr; gap:12px; justify-items:start; }
 }
 .card-meta { font-size:var(--fs-xs); color:var(--muted); letter-spacing:.1em; }
 
@@ -616,13 +774,19 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
    bisnis (mis. paket contoh yang belum ditawarkan resmi). Beda
    dari [data-dummy] biasa: ini WAJIB terlihat pengunjung, bukan
    hanya penanda internal untuk developer. */
+/* Revisi T4 — warna oranye lama (#FBEBD8/#8A5A1F/#E8C9A0) adalah
+   SATU-SATUNYA warna di luar palette taupe/gold di seluruh situs
+   (temuan review: menonjol seperti pesan error, bukan label netral).
+   Diganti ke token palette (--surface-tint/--gold-text/--gold-line)
+   supaya badge tetap terlihat sebagai penanda khusus (border +
+   dot pembeda), tapi tidak terbaca sebagai warning/alert. */
 .badge-dummy {
   display:inline-flex; align-items:center; gap:6px;
   padding:5px 12px; border-radius:var(--r-pill);
-  background:#FBEBD8; color:#8A5A1F; border:1px solid #E8C9A0;
+  background:var(--surface-tint); color:var(--gold-text); border:1px solid var(--gold-line);
   font-size:.6875rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
 }
-.badge-dummy::before { content:"●"; font-size:.55rem; color:#C08A00; }
+.badge-dummy::before { content:"●"; font-size:.55rem; color:var(--gold-line); }
 
 /* ================================================================
    TIMELINE "The Road to Della Spa" — About §Journey.
@@ -796,8 +960,20 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 
 .info-grid { display:grid; gap:var(--sp-6); }
 @media (min-width:760px){ .info-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-.info-card { display:grid; gap:10px; align-content:start; }
+
+/* Revisi T1 — grid align-content:start lama membiarkan konten
+   mengalir bebas per kartu, sehingga CTA di kartu berbeda berhenti
+   di ketinggian berbeda (bug nyata di contact.html: kartu "Opening
+   Hours" tanpa CTA, "Location" & "Contact" dengan CTA gaya beda-
+   beda, tidak sejajar). Flex column + margin-top:auto pada action
+   memaksa semua CTA duduk di baris dasar yang sama. */
+.info-card { display:flex; flex-direction:column; gap:10px; }
 .info-card h3 { font-size:1rem; letter-spacing:.02em; }
+.info-card-action {
+  margin-top:auto; padding-top:var(--sp-3);
+  border-top:1px solid var(--rule-2);
+}
+.info-card-action .btn { width:max-content; }
 
 .map-facade {
   position:relative; aspect-ratio:16/9; border-radius:var(--r-md); overflow:hidden;
@@ -809,13 +985,128 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 
 
 /* ================================================================
+   16b. GALLERY MOSAIC (T1 — menggantikan <style> inline gallery.html)
+   Bug lama: grid-auto-rows:10px + figure:has(.ph--Nx N){span:X}
+   menghitung tinggi dari asumsi lebar-kolom-380px TETAP, padahal
+   tinggi foto (lebar×rasio) berubah begitu breakpoint berubah —
+   span konstan bertemu tinggi yang berubah = lubang kosong besar
+   di breakpoint mana pun selain yang dipakai buat kalkulasi awal.
+
+   Perbaikan bukan menyetel ulang angka span (bug akan selalu
+   kembali di breakpoint lain selama tinggi bergantung aspect-ratio
+   TAPI span-nya konstan) — melainkan membalik prinsipnya: tinggi
+   DITENTUKAN GRID (grid-auto-rows tetap per breakpoint), foto
+   MENGISI lewat object-fit:cover dan position:absolute. Mustahil
+   ada lubang karena tinggi tile tidak lagi bergantung rasio foto
+   sama sekali.
+   ================================================================ */
+.gal-mosaic {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  grid-auto-rows:clamp(90px,20vw,140px);
+  gap:var(--sp-3);
+}
+@media (min-width:640px){ .gal-mosaic { grid-template-columns:repeat(4,1fr); } }
+@media (min-width:980px){ .gal-mosaic { grid-template-columns:repeat(6,1fr); grid-auto-rows:clamp(70px,7vw,100px); } }
+
+.gal-item {
+  position:relative; border-radius:var(--r-md); overflow:hidden;
+  background:var(--surface-tint);
+}
+.gal-item img {
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:sepia(.12) saturate(.92);
+  transition:transform var(--dur-slow) var(--ease);
+}
+.gal-item:hover img,
+.gal-item:focus-within img { transform:scale(1.05); }
+
+/* Caption sebagai overlay di dalam tile — BUKAN balok putih di
+   bawah foto seperti versi lama (itu yang membuat gallery terbaca
+   sebagai daftar file, bukan galeri). Muncul dari bawah via scrim
+   saat hover/focus di desktop; di mobile (tanpa hover) tetap
+   tampil tipis lewat opacity default > 0. */
+.gal-item-cap {
+  position:absolute; left:0; right:0; bottom:0; z-index:1;
+  padding:14px 12px 10px;
+  font-size:var(--fs-xs); color:#F5EEE8;
+  background:linear-gradient(0deg, rgba(20,14,10,.78) 0%, transparent 100%);
+  opacity:.82; transform:translateY(0);
+  transition:opacity var(--dur-fast) var(--ease);
+}
+.gal-item:hover .gal-item-cap,
+.gal-item:focus-within .gal-item-cap { opacity:1; }
+
+/* Span deterministik — pola tetap diulang tiap 6 tile:
+   hero + tall + sq + sq + wide + tall. Ukuran SELALU proporsi
+   grid (kolom×baris), tidak pernah bergantung rasio foto asli,
+   sehingga nol kemungkinan lubang di breakpoint mana pun. */
+.gal-item--hero { grid-column:span 2; grid-row:span 3; }
+.gal-item--tall { grid-column:span 1; grid-row:span 3; }
+.gal-item--sq   { grid-column:span 1; grid-row:span 2; }
+.gal-item--wide { grid-column:span 2; grid-row:span 2; }
+@media (min-width:640px){
+  .gal-item--hero { grid-column:span 4; grid-row:span 3; }
+  .gal-item--tall { grid-column:span 2; grid-row:span 3; }
+  .gal-item--sq   { grid-column:span 2; grid-row:span 2; }
+  .gal-item--wide { grid-column:span 4; grid-row:span 2; }
+}
+@media (min-width:980px){
+  .gal-item--hero { grid-column:span 4; grid-row:span 3; }
+  .gal-item--tall { grid-column:span 2; grid-row:span 3; }
+  .gal-item--sq   { grid-column:span 2; grid-row:span 2; }
+  .gal-item--wide { grid-column:span 4; grid-row:span 2; }
+}
+
+/* Filter pill — ACC kakak: dibuat sekarang meski foto masih
+   placeholder (bukan ditunda). data-filter di container men-toggle
+   visibility tile lewat data-cat pada tiap tile — nol dependency,
+   nol JS untuk filtering itu sendiri (hanya toggle atribut). */
+.gal-filters {
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  margin-bottom:var(--sp-6);
+}
+.gal-filter-btn {
+  padding:9px 20px; border-radius:var(--r-pill); border:1px solid var(--rule);
+  background:var(--surface); color:var(--muted);
+  font-size:var(--fs-xs); font-weight:600; letter-spacing:.04em;
+  cursor:pointer; transition:all var(--dur-fast) var(--ease);
+}
+.gal-filter-btn[aria-pressed="true"] {
+  background:var(--brand); color:#fff; border-color:var(--brand);
+}
+[data-gal-active]:not([data-gal-active="all"]) .gal-item:not([data-gal-active~="placeholder-marker"]) {
+  /* placeholder rule — diganti JS via inline style per-tile saat filter aktif, lihat js/main.js (T5) */
+}
+
+/* Lightbox base (T5 mengisi interaksi JS, style dasar disiapkan
+   di sini supaya T1 = fondasi CSS lengkap untuk semua tahap
+   berikutnya, sesuai rencana). <dialog> native — dukungan browser
+   sudah universal per Agustus 2026, tidak perlu polyfill/library. */
+.gal-lightbox { border:0; padding:0; background:transparent; max-width:min(92vw,1100px); max-height:92vh; }
+.gal-lightbox::backdrop { background:rgba(20,14,10,.88); }
+.gal-lightbox-img { display:block; max-width:100%; max-height:88vh; border-radius:var(--r-md); }
+.gal-lightbox-close {
+  position:fixed; top:var(--sp-4); right:var(--sp-4); z-index:10;
+  width:44px; height:44px; border-radius:50%; border:1px solid rgba(245,238,232,.3);
+  background:rgba(20,14,10,.6); color:#F5EEE8; display:grid; place-items:center;
+  cursor:pointer;
+}
+
+
+/* ================================================================
    17. FOOTER
    ================================================================ */
 .ftr { background:var(--surface-deep); color:var(--on-dark-muted); padding-block:var(--sp-9) var(--sp-5); }
 .ftr a { color:var(--on-dark-muted); transition:color var(--dur-fast) var(--ease); }
 .ftr a:hover { color:var(--on-dark); }
+/* Revisi T1 — 3 kolom lama (1.4fr 1fr 1fr) menaruh 8 link "Pages"
+   dalam 1 kolom sendirian di tengah, sementara kolom brand (kiri)
+   cuma 2 baris teks — timpang tinggi jauh (bug nyata di screenshot
+   review: kolom tengah "kejauhan ke bawah"). 4 kolom memecah 8
+   link jadi 2 kelompok bermakna (Explore/Visit) — lihat HTML T3. */
 .ftr-top { display:grid; gap:var(--sp-6); }
-@media (min-width:860px){ .ftr-top { grid-template-columns:1.4fr 1fr 1fr; } }
+@media (min-width:620px) and (max-width:1023px){ .ftr-top { grid-template-columns:1fr 1fr; } }
+@media (min-width:1024px){ .ftr-top { grid-template-columns:1.25fr .85fr .85fr 1.05fr; } }
 .ftr h3 { color:var(--on-dark); font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:var(--sp-4); }
 .ftr-brand img { width:72px; height:72px; }
 .ftr-links { display:grid; gap:11px; font-size:var(--fs-sm); }
@@ -828,6 +1119,25 @@ h4 { font-family:var(--font-ui); font-weight:600; font-size:1.0625rem; line-heig
 .ftr-credit { color:var(--on-dark-muted); }
 .ftr-credit a { color:var(--on-dark-muted); text-decoration:underline; text-underline-offset:2px; }
 .ftr-credit a:hover { color:var(--on-dark); }
+
+/* Status pill "Open now / Closed" — style disiapkan di T1, logic
+   JS (hitung jam WITA, bukan jam device pengunjung) masuk di T3
+   bersama footer & contact. Fallback wajib: kalau JS gagal load,
+   elemen ini TIDAK BOLEH tampil kosong/salah — HTML default harus
+   berupa jam buka biasa tanpa klaim status, JS baru menambahkan
+   .status-pill--open/--closed setelah berhasil hitung (lihat
+   catatan implementasi di js/main.js saat T3 dikerjakan). */
+.status-pill {
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:var(--fs-xs); font-weight:600; letter-spacing:.04em;
+}
+.status-pill::before {
+  content:""; width:7px; height:7px; border-radius:50%; flex:none;
+}
+.status-pill--open::before { background:#3D8B5A; }
+.status-pill--open { color:#3D8B5A; }
+.status-pill--closed::before { background:#B4472E; }
+.status-pill--closed { color:#B4472E; }
 
 
 /* ================================================================

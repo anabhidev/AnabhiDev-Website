@@ -53,7 +53,7 @@ Audit bahasa: grep -o "data-lang-en" file | wc -l HARUS SAMA dengan
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 
 <link rel="preload" as="image" fetchpriority="high"
-      href="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=900&q=78&auto=format&fit=crop">
+      href="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=75&auto=format&fit=crop">
 
 <link rel="stylesheet" href="css/main.css">
 
@@ -206,62 +206,60 @@ Audit bahasa: grep -o "data-lang-en" file | wc -l HARUS SAMA dengan
 <main id="main">
 
 <!-- ============================================================
-     HERO — Varian C (Full + Split gabungan)
-     Referensi struktural: hero anabhidev.com. Latar solid gelap
-     (--surface-deep), BUKAN foto full-bleed. Teks kiri, foto
-     kanan dalam kartu penuh + badge rating floating. Tekstur foto
-     sangat redup (opacity 7%) di background kiri sebagai lapisan
-     dekoratif — bukan elemen LCP, loading="lazy".
-     Foto kartu kanan ADALAH elemen LCP (fetchpriority="high").
+     HERO — Varian D2 "Maison Left" (menggantikan Varian C, T7)
+     Foto full-bleed 1 lapis (bukan kartu terpisah). Teks rata kiri,
+     dikunci grid track ~48ch (bukan full-width ala consulting-site).
+     Scrim 2 lapis dihitung WCOG utk kontras >=4.5:1 di titik foto
+     paling terang (lihat catatan §10c css/main.css). Signature bar
+     3-anchor (jam · jarak Melasti · harga) di dasar layar.
+     Foto ADALAH elemen LCP (fetchpriority="high", sinkron dgn
+     <link rel="preload"> di <head>).
+
+     CATATAN FOTO (sementara, untuk keperluan presentasi/testing):
+     foto saat ini dari Unsplash (oil massage, punggung terbuka).
+     Akan diganti foto asli Della Spa oleh tim terpisah — TIDAK
+     untuk publikasi Meta/Instagram Ads sebelum diganti (risiko
+     flag moderasi otomatis untuk foto kulit punggung polos).
      ============================================================ -->
-<section class="hero-c">
-  <div class="hero-c-texture" aria-hidden="true">
-    <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=1200&q=60&auto=format&fit=crop"
-         alt="" width="1200" height="800" loading="lazy">
+<section class="hero-d2">
+  <div class="hero-d2-media" data-hero-media-d2>
+    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=75&auto=format&fit=crop"
+         alt="Terapis menuangkan minyak aromaterapi hangat saat perawatan massage"
+         width="1920" height="1281" fetchpriority="high">
   </div>
 
-  <div class="wrap hero-c-grid">
+  <div class="wrap hero-d2-inner">
+    <img class="hero-d2-logo" src="https://anabhidev.com/projects/Della-Spa/assets/della-fill.webp"
+         alt="Della Spa" width="44" height="44">
+    <span class="eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
+    <h1>
+      <span data-lang-en>A moment just for you</span>
+      <span data-lang-id hidden>Waktu sejenak untuk diri sendiri</span>
+    </h1>
+    <span class="hero-d2-rule" aria-hidden="true"></span>
+    <p class="lead">
+      <span data-lang-en>Massage, facial, nail, and body treatment — unhurried, at your own pace.</span>
+      <span data-lang-id hidden>Massage, facial, nail, dan body treatment — dikerjakan perlahan, tanpa terburu-buru.</span>
+    </p>
 
-    <div>
-      <span class="hero-c-eyebrow eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
-      <h1>
-        <span data-lang-en>A moment<br>just for you</span>
-        <span data-lang-id hidden>Waktu sejenak<br>untuk diri sendiri</span>
-      </h1>
-      <p class="lead">
-        <span data-lang-en>Massage, facial, nail, and body treatment on Jl. Karma Kandara — unhurried, at your own pace.</span>
-        <span data-lang-id hidden>Massage, facial, nail, dan body treatment di Jl. Karma Kandara — dikerjakan perlahan, tanpa terburu-buru.</span>
-      </p>
-
-      <div class="hero-c-cta">
-        <a class="btn btn--primary" data-wa data-loc="hero" href="#">
-          <span data-lang-en>Book via WhatsApp</span><span data-lang-id hidden>Booking via WhatsApp</span>
-        </a>
-        <a class="btn btn--light" href="treatments.html">
-          <span data-lang-en>View Treatments &amp; Prices</span><span data-lang-id hidden>Lihat Treatment &amp; Harga</span>
-        </a>
-      </div>
-
-      <p class="hero-c-meta">
-        <span class="stars">★★★★★</span>
-        <span>4.8 · 11 Google reviews</span>
-        <span>·</span>
-        <span><span data-lang-en>Open daily 10.00 – 21.00</span><span data-lang-id hidden>Buka setiap hari 10.00 – 21.00</span></span>
-      </p>
+    <div class="hero-d2-cta">
+      <a class="btn btn--primary" data-wa data-loc="hero" href="#">
+        <span data-lang-en>Book via WhatsApp</span><span data-lang-id hidden>Booking via WhatsApp</span>
+      </a>
+      <a class="btn btn--light" href="treatments.html">
+        <span data-lang-en>View Treatments &amp; Prices</span><span data-lang-id hidden>Lihat Treatment &amp; Harga</span>
+      </a>
     </div>
+  </div>
 
-    <div class="hero-c-visual">
-      <div class="hero-c-frame">
-        <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=900&q=78&auto=format&fit=crop"
-             alt="Warm-toned Della Spa interior with stone wall and copper bathtub"
-             width="900" height="1125" fetchpriority="high">
-      </div>
-      <div class="hero-c-badge">
-        <span style="font-size:1.3rem;color:var(--gold-line)">★</span>
-        <span><b>4.8</b><span data-lang-en>11 Google reviews</span><span data-lang-id hidden>11 ulasan Google</span></span>
-      </div>
+  <div class="hero-d2-sig">
+    <div class="wrap hero-d2-sig-row">
+      <span><span data-lang-en>Open daily</span><span data-lang-id hidden>Buka setiap hari</span> · 10.00–21.00</span>
+      <span class="hero-d2-dot" aria-hidden="true"></span>
+      <span><span data-lang-en>5 minutes from Melasti Beach</span><span data-lang-id hidden>5 menit dari Pantai Melasti</span></span>
+      <span class="hero-d2-dot" aria-hidden="true"></span>
+      <span><span data-lang-en>From 300k / hour</span><span data-lang-id hidden>Mulai 300k / jam</span></span>
     </div>
-
   </div>
 </section>
 
@@ -611,15 +609,26 @@ Audit bahasa: grep -o "data-lang-en" file | wc -l HARUS SAMA dengan
           <span data-lang-en>Beauty spa treatment in Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
           <span data-lang-id hidden>Beauty spa treatment di Ungasan, Bali.<br>Massage, facial, nail &amp; body scrub.</span>
         </p>
+        <p class="small" style="margin-top:var(--sp-3)">
+          <span class="status-pill" data-status-pill data-status-fallback>
+            <span data-lang-en>Open daily 10.00–21.00 WITA</span><span data-lang-id hidden>Buka setiap hari 10.00–21.00 WITA</span>
+          </span>
+        </p>
       </div>
 
       <div>
-        <h3><span data-lang-en>Pages</span><span data-lang-id hidden>Halaman</span></h3>
+        <h3><span data-lang-en>Explore</span><span data-lang-id hidden>Jelajahi</span></h3>
         <div class="ftr-links">
           <a href="treatments.html"><span data-lang-en>Treatments &amp; Prices</span><span data-lang-id hidden>Treatment &amp; Harga</span></a>
           <a href="packages.html"><span data-lang-en>Treatment Packages</span><span data-lang-id hidden>Paket Treatment</span></a>
           <a href="gallery.html"><span data-lang-en>Gallery</span><span data-lang-id hidden>Galeri</span></a>
           <a href="about.html"><span data-lang-en>About Us</span><span data-lang-id hidden>Tentang Kami</span></a>
+        </div>
+      </div>
+
+      <div>
+        <h3><span data-lang-en>Visit</span><span data-lang-id hidden>Kunjungi</span></h3>
+        <div class="ftr-links">
           <a href="faq.html"><span data-lang-en>FAQ</span><span data-lang-id hidden>Pertanyaan Umum</span></a>
           <a href="booking.html">Booking</a>
           <a href="balinese-massage-ungasan.html">Balinese Massage Ungasan</a>

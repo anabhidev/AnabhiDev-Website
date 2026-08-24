@@ -2,32 +2,46 @@
 AnabhiDev-DELLAWEB — Della Spa Production Website
 HTML5 · CSS3 · Vanilla JavaScript · Google Fonts · Unsplash
 Development · Anabhi Dev
-Version   : 1.6
-Generated : 23 August 2026, 08:01:22
+Version   : 2.0
+Generated : 24 August 2026, 17:05:24
 
-HERO PREVIEW — file internal, BUKAN bagian dari 10 halaman production.
-Tujuan: membandingkan hero Full-bleed (perbaikan dari yang sekarang)
-vs hero Split (ala anabhidev.com) dalam satu layar, tanpa reload.
+HERO PREVIEW — file internal, BUKAN bagian dari 12 halaman production.
+Tujuan: membandingkan 6 varian hero dalam satu layar, tanpa reload —
+A & B (versi lama), C (replika hero index.html produksi saat ini
+sebagai baseline pembanding adil), D/E/F (3 arah baru).
 
 Cara pakai: buka file ini langsung di browser (butuh internet untuk
-Google Fonts + Unsplash). Klik tombol Full / Split di atas.
+Google Fonts + Unsplash). Klik salah satu dari 6 tombol di atas.
+
+Catatan isi (v2.0):
+- Rating (4.8 · 11 Google reviews) DIHAPUS dari hero D, E, F — sesuai
+  keputusan: rating itu data dinamis, tidak cocok jadi anchor hero.
+  Rating tetap ada di A/B/C (tidak diubah, untuk pembanding historis).
+- D & E menampilkan harga "Mulai 300k / jam" di dalam hero.
+- Jarak ke pantai: "5 menit dari Pantai Melasti" — terverifikasi
+  langsung oleh owner (BUKAN 10 menit seperti draf sebelumnya yang
+  keliru mengutip contact.html; contact.html sendiri juga perlu
+  dikoreksi di tahap berikutnya, lihat T4).
+- File ini TANPA toggle EN/ID (murni alat kerja internal, bukan
+  halaman yang dilihat pengunjung) — konten tetap Bahasa Indonesia
+  seperti draf sebelumnya.
 
 ⚠️ HAPUS FILE INI sebelum deploy ke production Della Spa.
-Setelah kakak pilih, saya terapkan pemenangnya ke index.html asli.
+Setelah kakak pilih, saya terapkan pemenangnya ke index.html asli (T7).
 -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hero Preview — Della Spa | Anabhi Dev</title>
+<title>Hero Preview v2 — Della Spa | Anabhi Dev</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#FAF7F4">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 
 <style>
 /* ================================================================
@@ -37,19 +51,22 @@ Setelah kakak pilih, saya terapkan pemenangnya ke index.html asli.
 :root {
   --taupe-50:#FAF7F4; --taupe-100:#F2ECE6; --taupe-200:#E5DBD1; --taupe-300:#D3C4B6;
   --taupe-400:#BDA894; --taupe-700:#6B5849; --taupe-800:#4A3D33; --espresso:#2A1D14;
-  --canvas:var(--taupe-50); --surface:#FFFFFF; --surface-tint:var(--taupe-200);
+  --surface-deep:#2A1D14;
+  --canvas:var(--taupe-50); --surface:#FFFFFF; --surface-soft:var(--taupe-100); --surface-tint:var(--taupe-200);
   --ink:var(--espresso); --body:#57483C; --muted:#6B5849;
   --on-dark:#F5EEE8; --on-dark-muted:#C4B2A3;
   --brand:#6B5849; --brand-hover:#57483C; --gold-text:#7D5F35; --gold-line:#B99465;
-  --rule:rgba(42,29,20,.14);
+  --rule:rgba(42,29,20,.14); --rule-2:rgba(42,29,20,.09);
   --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:32px; --sp-6:48px; --sp-7:64px; --sp-8:80px; --sp-9:96px;
-  --r-md:12px; --r-pill:999px;
-  --dur-base:260ms; --dur-hero:900ms; --ease:cubic-bezier(.22,.61,.36,1);
+  --r-md:12px; --r-lg:20px; --r-pill:999px;
+  --dur-fast:160ms; --dur-base:260ms; --dur-hero:900ms; --ease:cubic-bezier(.22,.61,.36,1);
   --font-display:"Marcellus", Georgia, serif;
   --font-ui:"Plus Jakarta Sans", system-ui, sans-serif;
   --fs-hero: clamp(2.9rem, 8.5vw, 5.4rem);
   --fs-lead: clamp(1.05rem, 2vw, 1.25rem);
   --fs-eyebrow: .75rem;
+  --fs-xs: .8125rem; --fs-sm: .875rem;
+  --gutter-l: clamp(20px,5vw,72px);
   color-scheme: light;
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -60,7 +77,7 @@ body{
 }
 img{ max-width:100%; display:block; }
 a{ color:inherit; text-decoration:none; }
-.wrap{ width:100%; padding-inline:clamp(20px,5vw,72px); margin-inline:auto; }
+.wrap{ width:100%; padding-inline:var(--gutter-l); margin-inline:auto; }
 @media (min-width:1440px){ .wrap{ max-width:1320px; } }
 
 .eyebrow{
@@ -72,6 +89,7 @@ a{ color:inherit; text-decoration:none; }
   min-height:48px; padding:14px 30px; border-radius:var(--r-pill);
   font-size:.875rem; font-weight:600; letter-spacing:.03em;
   transition:background var(--dur-base) var(--ease), transform 160ms var(--ease);
+  white-space:nowrap;
 }
 .btn:hover{ transform:translateY(-1px); }
 .btn--primary{ background:var(--brand); color:#fff; }
@@ -80,6 +98,8 @@ a{ color:inherit; text-decoration:none; }
 .btn--outline:hover{ border-color:var(--gold-line); background:var(--surface); }
 .btn--light{ border:1px solid rgba(255,248,242,.5); color:#FFF8F2; background:rgba(255,248,242,.06); }
 .btn--light:hover{ background:rgba(255,248,242,.14); }
+.btn--ink{ border:1px solid var(--espresso); color:var(--espresso); background:transparent; }
+.btn--ink:hover{ background:var(--espresso); color:#FFF8F2; }
 
 /* ================================================================
    PANEL KONTROL — bukan bagian hero, cuma alat bantu preview
@@ -93,20 +113,19 @@ a{ color:inherit; text-decoration:none; }
   display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
   gap:var(--sp-3);
 }
-.pv-label{ font-size:.8125rem; color:var(--on-dark-muted); }
-.pv-toggle{ display:inline-flex; border:1px solid rgba(245,238,232,.3); border-radius:var(--r-pill); overflow:hidden; }
+.pv-label{ font-size:.8125rem; color:var(--on-dark-muted); white-space:nowrap; }
+.pv-toggle{ display:inline-flex; flex-wrap:wrap; border:1px solid rgba(245,238,232,.3); border-radius:var(--r-pill); overflow:hidden; }
 .pv-toggle button{
   font-family:var(--font-ui); font-size:.8125rem; font-weight:600;
-  padding:9px 22px; background:transparent; color:var(--on-dark-muted);
+  padding:9px 18px; background:transparent; color:var(--on-dark-muted);
   border:0; cursor:pointer; transition:all 200ms var(--ease);
 }
 .pv-toggle button[aria-pressed="true"]{ background:var(--taupe-400); color:var(--espresso); }
-.pv-note{ font-size:.75rem; color:var(--on-dark-muted); max-width:52ch; }
+.pv-note{ font-size:.75rem; color:var(--on-dark-muted); }
+.pv-note-wrap{ display:grid; grid-template-columns:minmax(0,52ch); }
 
 /* ================================================================
-   VARIAN A — FULL-BLEED (perbaikan dari hero index.html sekarang)
-   Perbaikan dari versi lama: foto ke-2/ke-3 diganti yang lebih
-   tajam & hangat (bukan gelap-blur generik), scrim disempurnakan.
+   VARIAN A — FULL-BLEED (dipertahankan persis, tidak diubah)
    ================================================================ */
 .hero-full{
   position:relative; min-height:min(92dvh,820px);
@@ -146,10 +165,7 @@ a{ color:inherit; text-decoration:none; }
 .hero-dot{ width:3px; height:3px; border-radius:50%; background:var(--gold-line); }
 
 /* ================================================================
-   VARIAN B — SPLIT (ala anabhidev.com)
-   Teks kiri di atas --canvas bersih (kontras otomatis sempurna,
-   tanpa scrim rumit). Kanan: logo besar dalam frame rounded
-   dengan halo backlit — placeholder sampai foto interior asli ada.
+   VARIAN B — SPLIT (dipertahankan persis, tidak diubah)
    ================================================================ */
 .hero-split{
   padding-block:clamp(56px,8vw,110px);
@@ -172,7 +188,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .hero-split .lead{
   margin-top:20px; font-size:var(--fs-lead); color:var(--body);
-  max-width:46ch;
+  display:grid; grid-template-columns:minmax(0,46ch);
 }
 .hero-split-cta{ display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:32px; }
 .hero-split-meta{
@@ -204,36 +220,319 @@ a{ color:inherit; text-decoration:none; }
 @media (max-width:920px){ .hero-split-badge{ left:16px; } }
 
 /* ================================================================
+   VARIAN C — replika hero index.html PRODUKSI saat ini.
+   Class sengaja diberi awalan hero-c- (sama seperti main.css) supaya
+   siapa pun yang membandingkan CSS tahu ini bukan reka-reka baru.
+   ================================================================ */
+.hero-c{
+  position:relative; overflow:hidden; isolation:isolate;
+  background:var(--surface-deep);
+  padding-block:var(--sp-8) var(--sp-9);
+}
+.hero-c-texture{ position:absolute; inset:0; z-index:0; opacity:.07; pointer-events:none; }
+.hero-c-texture img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(.9) brightness(1.4);
+}
+.hero-c::before{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 80% 70% at 20% 30%,
+             var(--surface-deep) 0%, rgba(42,29,20,.55) 55%, transparent 85%);
+}
+.hero-c-grid{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(32px,5vw,80px);
+  align-items:center;
+}
+@media (max-width:920px){ .hero-c-grid{ grid-template-columns:1fr; gap:44px; } }
+.hero-c-eyebrow{ display:inline-flex; align-items:center; gap:12px; margin-bottom:20px; color:var(--taupe-300); }
+.hero-c-eyebrow::before{ content:""; width:30px; height:1px; background:var(--gold-line); }
+.hero-c h1{
+  font-family:var(--font-display); font-weight:400; color:#FFF8F2;
+  font-size:clamp(2.6rem,6vw,4.4rem); line-height:1.04; letter-spacing:-.018em;
+}
+.hero-c .lead{
+  margin-top:22px; font-size:var(--fs-lead); color:#EFE3D9;
+  display:grid; grid-template-columns:minmax(0,46ch);
+}
+.hero-c-cta{ display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:32px; }
+.hero-c-meta{
+  display:flex; flex-wrap:wrap; gap:var(--sp-2) var(--sp-4);
+  margin-top:34px; font-size:var(--fs-sm); color:#C4B2A3;
+}
+.hero-c-meta>span{ display:inline-flex; align-items:center; gap:7px; }
+.hero-c-meta .stars{ color:var(--gold-text); letter-spacing:.1em; }
+.hero-c-visual{ position:relative; }
+.hero-c-frame{
+  position:relative; aspect-ratio:4/5; border-radius:var(--r-lg); overflow:hidden;
+  border:1px solid rgba(245,238,232,.16);
+  box-shadow:0 30px 70px rgba(0,0,0,.35);
+}
+.hero-c-frame img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:sepia(.15) saturate(.9);
+}
+.hero-c-badge{
+  position:absolute; left:20px; bottom:20px; z-index:2;
+  background:var(--surface-deep); border:1px solid rgba(245,238,232,.18);
+  border-radius:14px; padding:14px 18px;
+  display:flex; align-items:center; gap:10px;
+  box-shadow:0 14px 34px rgba(0,0,0,.3);
+}
+.hero-c-badge b{ font-size:1.1rem; color:var(--on-dark); font-family:var(--font-ui); }
+.hero-c-badge span{ display:block; font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; color:var(--on-dark-muted); }
+@media (max-width:920px){ .hero-c-badge{ left:14px; bottom:14px; } }
+
+/* ================================================================
+   VARIAN D — "MAISON" (Editorial Center)
+   Konsep: satu foto besar, satu pesan, banyak ruang kosong.
+   Kemewahan lewat keheningan, bukan lewat jumlah elemen — pola
+   yang dipakai Gourmand/resort mewah, BUKAN pola consulting-site
+   (headline kiri + foto kanan) seperti Varian C.
+   Rating SENGAJA TIDAK ADA di sini (lihat catatan di atas file).
+   ================================================================ */
+.hero-d{
+  position:relative; min-height:min(88svh,760px);
+  display:grid; align-content:center; justify-items:center; text-align:center;
+  isolation:isolate; overflow:hidden;
+}
+.hero-d-media{ position:absolute; inset:0; z-index:-2; }
+.hero-d-media img{
+  width:100%; height:100%; object-fit:cover;
+  filter:sepia(.16) saturate(.86);
+  transform:scale(1.04); transition:transform 1.4s var(--ease);
+}
+.hero-d.is-loaded .hero-d-media img{ transform:scale(1); }
+.hero-d::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  /* Gelap di atas (kompensasi header) → terang di tengah (foto bernapas)
+     → gelap di bawah (signature bar tetap terbaca). Bukan linear rata. */
+  background:linear-gradient(180deg,
+    rgba(43,34,28,.58) 0%, rgba(43,34,28,.32) 42%,
+    rgba(43,34,28,.30) 62%, rgba(43,34,28,.74) 100%);
+}
+.hero-d-inner{
+  position:relative; z-index:1; display:grid; justify-items:center; gap:var(--sp-4);
+  padding-inline:var(--sp-4);
+}
+.hero-d-logo{ width:44px; height:44px; opacity:.92; margin-bottom:2px; }
+.hero-d .eyebrow{ color:var(--taupe-200); }
+.hero-d h1{
+  font-family:var(--font-display); font-weight:400; color:#FFF8F2;
+  /* Wajib 1 baris di desktop — beda dari Varian C yang 2 baris.
+     clamp lebih rendah dari .hero-full supaya baris "Waktu sejenak
+     untuk diri sendiri" muat tanpa wrap di ≥760px. */
+  font-size:clamp(2.1rem,5.4vw,3.7rem); line-height:1.08; letter-spacing:-.015em;
+  white-space:normal;
+}
+.hero-d-rule{
+  display:block; width:72px; height:1px; background:var(--gold-line);
+  position:relative; margin-block:4px;
+}
+.hero-d-rule::after{
+  content:""; position:absolute; left:50%; top:-2.5px; width:6px; height:6px;
+  border-radius:50%; background:var(--gold-line); transform:translateX(-50%);
+}
+.hero-d .lead{
+  font-size:var(--fs-lead); color:#EFE3D9;
+  display:grid; grid-template-columns:minmax(0,42ch); justify-content:center;
+}
+.hero-d-cta{ display:flex; flex-wrap:wrap; gap:var(--sp-3); justify-content:center; margin-top:var(--sp-2); }
+
+/* Signature bar — strip tipis menempel di dasar hero, 3 anchor
+   dipisah titik emas. Ini yang menggantikan rating sebagai
+   pembuka kepercayaan: jam, jarak, harga — 3 hal yang benar-benar
+   ditanyakan turis dalam 5 detik pertama. */
+.hero-d-sig{
+  position:absolute; left:0; right:0; bottom:0; z-index:1;
+  border-top:1px solid rgba(255,255,255,.18);
+  padding-block:16px;
+  background:linear-gradient(0deg, rgba(43,34,28,.55) 0%, transparent 100%);
+}
+.hero-d-sig-row{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:10px var(--sp-4);
+  font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.14em;
+  color:#EFE3D9;
+}
+.hero-d-sig-row span{ display:inline-flex; align-items:center; gap:7px; white-space:nowrap; }
+.hero-d-dot{ width:3px; height:3px; border-radius:50%; background:var(--gold-line); flex:none; }
+@media (max-width:600px){
+  .hero-d{ min-height:min(80svh,640px); }
+  .hero-d h1{ font-size:clamp(1.9rem,8vw,2.5rem); }
+  .hero-d-sig-row{ font-size:.6875rem; letter-spacing:.08em; gap:6px 12px; }
+}
+
+/* ================================================================
+   VARIAN E — "ATELIER" (Split krem/foto, tanpa kartu)
+   Kebalikan struktural Varian C: kolom kiri KREM TERANG (bukan
+   gelap), foto kanan BLEED PENUH ke tepi viewport (bukan kartu
+   rounded dengan tilt). Kategori warna ini lebih tepat untuk
+   beauty spa dibanding latar gelap ala consulting-site.
+   ================================================================ */
+.hero-e{
+  background:var(--surface-soft);
+  min-height:min(86svh,720px);
+  display:grid;
+}
+.hero-e-grid{
+  display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:stretch; min-height:inherit;
+}
+@media (max-width:920px){
+  .hero-e-grid{ grid-template-columns:1fr; }
+}
+.hero-e-copy{
+  display:grid; align-content:center; gap:var(--sp-2);
+  padding:var(--sp-8) var(--gutter-l);
+}
+.hero-e-eyebrow{ display:inline-flex; align-items:center; gap:12px; }
+.hero-e-eyebrow::before{ content:""; width:28px; height:1px; background:var(--gold-line); }
+.hero-e h1{
+  font-family:var(--font-display); font-weight:400; color:var(--ink);
+  font-size:clamp(2.6rem,5.6vw,4.4rem); line-height:1.05; letter-spacing:-.016em;
+  margin-top:8px;
+}
+.hero-e h1 em{ font-style:italic; color:var(--gold-text); }
+.hero-e .lead{
+  margin-top:18px; font-size:var(--fs-lead); color:var(--body);
+  display:grid; grid-template-columns:minmax(0,40ch);
+}
+.hero-e-cta{ display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:28px; }
+.hero-e-divider{ height:1px; background:var(--rule); margin-block:32px; max-width:280px; }
+.hero-e-mini{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px;
+  max-width:340px;
+}
+.hero-e-mini dt{
+  font-size:.6875rem; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--muted); margin-bottom:4px;
+}
+.hero-e-mini dd{ font-size:var(--fs-sm); color:var(--ink); font-weight:600; }
+.hero-e-rating{
+  margin-top:24px; font-size:var(--fs-xs); color:var(--muted);
+  display:flex; align-items:center; gap:8px;
+}
+.hero-e-rating .stars{ color:var(--gold-line); letter-spacing:.08em; font-size:.8125rem; }
+
+.hero-e-visual{ position:relative; min-height:340px; overflow:hidden; }
+.hero-e-visual img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:sepia(.14) saturate(.92);
+}
+@media (max-width:920px){ .hero-e-visual{ min-height:260px; } }
+
+/* ================================================================
+   VARIAN F — "GATEWAY" (Hero + Triptych menyatu)
+   Kiri: pesan singkat. Kanan: 3 panel treatment tinggi-penuh yang
+   melebar saat hover/focus — sekaligus navigasi, sekaligus hero.
+   Latar solid tanpa tekstur foto (panel foto jadi satu-satunya
+   kejutan visual, beda dari Varian C yang punya tekstur 7%).
+   ================================================================ */
+.hero-f{
+  background:var(--surface-deep);
+  padding-block:var(--sp-8) 0;
+}
+.hero-f-top{ padding-inline:var(--gutter-l); margin-bottom:var(--sp-6); }
+.hero-f-top .eyebrow{ color:var(--taupe-300); }
+.hero-f h1{
+  font-family:var(--font-display); font-weight:400; color:#FFF8F2;
+  font-size:clamp(2.1rem,4.6vw,3.4rem); line-height:1.08; letter-spacing:-.015em;
+  margin-top:14px;
+  display:grid; grid-template-columns:minmax(0,26ch);
+}
+.hero-f-top .lead{
+  margin-top:14px; font-size:var(--fs-sm); color:#C4B2A3;
+  display:grid; grid-template-columns:minmax(0,52ch);
+}
+
+.hero-f-panels{
+  display:flex; height:min(58svh,480px); min-height:340px;
+}
+.hero-f-panel{
+  position:relative; flex:1; overflow:hidden; isolation:isolate;
+  transition:flex var(--dur-base) var(--ease);
+  border-left:1px solid rgba(245,238,232,.1);
+}
+.hero-f-panel:first-child{ border-left:0; }
+.hero-f-panel img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:sepia(.18) saturate(.85);
+}
+.hero-f-panel::after{
+  content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg, rgba(20,14,10,.78) 0%, rgba(20,14,10,.15) 55%, rgba(20,14,10,.42) 100%);
+  transition:background var(--dur-base) var(--ease);
+}
+.hero-f-panel:hover,
+.hero-f-panel:focus-within{ flex:1.5; }
+.hero-f-panel:hover::after,
+.hero-f-panel:focus-within::after{
+  background:linear-gradient(0deg, rgba(20,14,10,.55) 0%, rgba(20,14,10,0) 55%, rgba(20,14,10,.2) 100%);
+}
+.hero-f-panel a{
+  position:absolute; inset:0; z-index:2; display:grid; align-content:end; gap:6px;
+  padding:24px 18px;
+}
+.hero-f-panel a:focus-visible{ outline:2px solid var(--gold-line); outline-offset:-4px; }
+.hero-f-panel-label{
+  font-family:var(--font-display); color:#FFF8F2; font-size:1.15rem;
+  white-space:nowrap;
+}
+.hero-f-panel-price{
+  font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--taupe-300);
+}
+@media (max-width:760px){
+  .hero-f-panels{ flex-direction:column; height:auto; }
+  .hero-f-panel{ height:180px; flex:none; border-left:0; border-top:1px solid rgba(245,238,232,.1); }
+  .hero-f-panel:first-child{ border-top:0; }
+  .hero-f-panel:hover,
+  .hero-f-panel:focus-within{ flex:none; }
+}
+
+/* ================================================================
    PANEL PENJELASAN — hanya di file preview ini
    ================================================================ */
 .pv-explain{ background:var(--surface); padding-block:var(--sp-7); border-top:1px solid var(--rule); }
 .pv-explain .wrap{ display:grid; gap:var(--sp-5); grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); }
+.pv-card{ border:1px solid var(--rule-2); border-radius:var(--r-md); padding:var(--sp-5); }
 .pv-card h3{ font-family:var(--font-ui); font-size:1rem; font-weight:600; color:var(--ink); margin-bottom:8px; }
 .pv-card p{ font-size:.875rem; color:var(--muted); }
 .pv-card ul{ margin-top:10px; padding-left:18px; font-size:.875rem; color:var(--muted); }
 .pv-card li{ margin-bottom:4px; }
+.pv-card li.plus{ color:#3D6B4A; }
+.pv-card li.minus{ color:#8A5A1F; }
 
-/* Toggle visibility */
-[data-hero-variant="full"] .hero-split{ display:none; }
-[data-hero-variant="split"] .hero-full{ display:none; }
+/* Toggle visibility — 6 varian, mutually exclusive lewat data-attr di <body> */
+.hero-full,.hero-split,.hero-c,.hero-d,.hero-e,.hero-f{ display:none; }
+[data-hero-variant="full"]  .hero-full{ display:grid; }
+[data-hero-variant="split"] .hero-split{ display:block; }
+[data-hero-variant="c"]     .hero-c{ display:block; }
+[data-hero-variant="d"]     .hero-d{ display:grid; }
+[data-hero-variant="e"]     .hero-e{ display:grid; }
+[data-hero-variant="f"]     .hero-f{ display:block; }
 </style>
 </head>
-<body data-hero-variant="split">
+<body data-hero-variant="c">
 
 <div class="pv-bar">
   <div class="wrap pv-bar-inner">
-    <span class="pv-label">Preview Hero — Della Spa (internal, hapus sebelum deploy)</span>
+    <span class="pv-label">Preview Hero v2 — Della Spa (internal, hapus sebelum deploy)</span>
     <div class="pv-toggle" role="group" aria-label="Pilih varian hero">
-      <button type="button" data-variant="full" aria-pressed="false">Full-bleed</button>
-      <button type="button" data-variant="split" aria-pressed="true">Split</button>
+      <button type="button" data-variant="full" aria-pressed="false">A · Full-bleed</button>
+      <button type="button" data-variant="split" aria-pressed="false">B · Split</button>
+      <button type="button" data-variant="c" aria-pressed="true">C · Produksi</button>
+      <button type="button" data-variant="d" aria-pressed="false">D · Maison</button>
+      <button type="button" data-variant="e" aria-pressed="false">E · Atelier</button>
+      <button type="button" data-variant="f" aria-pressed="false">F · Gateway</button>
     </div>
-    <span class="pv-note">Klik untuk berpindah tanpa reload. Konten &amp; token warna identik dengan index.html produksi.</span>
+    <span class="pv-note pv-note-wrap">Klik untuk berpindah tanpa reload. C = replika persis hero index.html produksi saat ini, dipakai sebagai baseline pembanding.</span>
   </div>
 </div>
 
 
 <!-- ============================================================
-     VARIAN A — FULL-BLEED
+     VARIAN A — FULL-BLEED (tidak diubah dari versi sebelumnya)
      ============================================================ -->
 <section class="hero-full">
   <div class="hero-full-media" data-hero-media>
@@ -267,11 +566,10 @@ a{ color:inherit; text-decoration:none; }
 
 
 <!-- ============================================================
-     VARIAN B — SPLIT
+     VARIAN B — SPLIT (tidak diubah dari versi sebelumnya)
      ============================================================ -->
 <section class="hero-split">
   <div class="wrap hero-split-grid">
-
     <div>
       <span class="hero-split-eyebrow eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
       <h1>Waktu sejenak untuk diri sendiri</h1>
@@ -298,7 +596,154 @@ a{ color:inherit; text-decoration:none; }
         <span><b>4,8</b><span>11 ulasan Google</span></span>
       </div>
     </div>
+  </div>
+</section>
 
+
+<!-- ============================================================
+     VARIAN C — replika hero PRODUKSI index.html saat ini
+     ============================================================ -->
+<section class="hero-c">
+  <div class="hero-c-texture" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=1200&q=60&auto=format&fit=crop"
+         alt="" width="1200" height="800" loading="lazy">
+  </div>
+
+  <div class="wrap hero-c-grid">
+    <div>
+      <span class="hero-c-eyebrow eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
+      <h1>Waktu sejenak<br>untuk diri sendiri</h1>
+      <p class="lead">Massage, facial, nail, dan body treatment di Jl. Karma Kandara — dikerjakan perlahan, tanpa terburu-buru.</p>
+      <div class="hero-c-cta">
+        <a class="btn btn--primary" href="#">Booking via WhatsApp</a>
+        <a class="btn btn--light" href="#">Lihat Treatment &amp; Harga</a>
+      </div>
+      <p class="hero-c-meta">
+        <span class="stars">★★★★★</span>
+        <span>4,8 · 11 ulasan Google</span>
+        <span>·</span>
+        <span>Buka setiap hari 10.00 – 21.00</span>
+      </p>
+    </div>
+
+    <div class="hero-c-visual">
+      <div class="hero-c-frame">
+        <img src="https://images.unsplash.com/photo-1781795035627-fa93f2863bba?w=900&q=78&auto=format&fit=crop"
+             alt="Interior Della Spa bernuansa hangat dengan dinding batu dan bathtub tembaga"
+             width="900" height="1125" fetchpriority="high">
+      </div>
+      <div class="hero-c-badge">
+        <span style="font-size:1.3rem;color:var(--gold-line)">★</span>
+        <span><b>4,8</b><span>11 ulasan Google</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIAN D — "MAISON" (Editorial Center)
+     ============================================================ -->
+<section class="hero-d" data-hero-d>
+  <div class="hero-d-media" data-hero-media-d>
+    <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=1920&q=72&auto=format&fit=crop"
+         alt="Ruang perawatan spa dengan cahaya hangat menyamping"
+         width="1920" height="1280" fetchpriority="high">
+  </div>
+
+  <div class="wrap hero-d-inner">
+    <img class="hero-d-logo" src="https://anabhidev.com/projects/Della-Spa/assets/della-fill.webp"
+         alt="Della Spa" width="44" height="44">
+    <span class="eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
+    <h1>Waktu sejenak untuk diri sendiri</h1>
+    <span class="hero-d-rule" aria-hidden="true"></span>
+    <p class="lead">Massage, facial, nail, dan body treatment — dikerjakan perlahan, tanpa terburu-buru.</p>
+    <div class="hero-d-cta">
+      <a class="btn btn--primary" href="#">Booking via WhatsApp</a>
+      <a class="btn btn--light" href="#">Lihat Treatment &amp; Harga</a>
+    </div>
+  </div>
+
+  <div class="hero-d-sig">
+    <div class="wrap hero-d-sig-row">
+      <span>Buka setiap hari · 10.00–21.00</span>
+      <span class="hero-d-dot" aria-hidden="true"></span>
+      <span>5 menit dari Pantai Melasti</span>
+      <span class="hero-d-dot" aria-hidden="true"></span>
+      <span>Mulai 300k / jam</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIAN E — "ATELIER" (Split krem, tanpa kartu)
+     ============================================================ -->
+<section class="hero-e">
+  <div class="hero-e-grid">
+    <div class="hero-e-copy">
+      <span class="hero-e-eyebrow eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
+      <h1>Waktu sejenak <em>untuk diri sendiri</em></h1>
+      <p class="lead">Massage, facial, nail, dan body treatment di Jl. Karma Kandara — dikerjakan perlahan, tanpa terburu-buru.</p>
+      <div class="hero-e-cta">
+        <a class="btn btn--primary" href="#">Booking via WhatsApp</a>
+        <a class="btn btn--ink" href="#">Lihat Treatment &amp; Harga</a>
+      </div>
+
+      <div class="hero-e-divider" aria-hidden="true"></div>
+
+      <dl class="hero-e-mini">
+        <div><dt>Jam Buka</dt><dd>10.00 – 21.00 WITA</dd></div>
+        <div><dt>Lokasi</dt><dd>5 menit dari Pantai Melasti</dd></div>
+        <div><dt>Harga</dt><dd>Mulai 300k / jam</dd></div>
+        <div><dt>Rating</dt><dd>4,8 dari 11 ulasan</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero-e-visual">
+      <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=1200&q=78&auto=format&fit=crop"
+           alt="Detail perawatan spa dengan handuk dan bunga frangipani"
+           width="1200" height="1500" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIAN F — "GATEWAY" (Hero + Triptych menyatu)
+     ============================================================ -->
+<section class="hero-f">
+  <div class="hero-f-top">
+    <span class="eyebrow">Beauty Spa Treatment · Ungasan, Bali</span>
+    <h1>Waktu sejenak untuk diri sendiri</h1>
+    <p class="lead">Massage, facial, nail, dan body treatment di Jl. Karma Kandara — dikerjakan perlahan, tanpa terburu-buru. Pilih perawatan di bawah untuk mulai.</p>
+  </div>
+
+  <div class="hero-f-panels">
+    <div class="hero-f-panel">
+      <img src="https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?w=900&q=70&auto=format&fit=crop"
+           alt="" aria-hidden="true" width="900" height="1200" fetchpriority="high">
+      <a href="#">
+        <span class="hero-f-panel-label">Body Massage</span>
+        <span class="hero-f-panel-price">Mulai 300k</span>
+      </a>
+    </div>
+    <div class="hero-f-panel">
+      <img src="https://images.unsplash.com/photo-1591020330942-e9c3bce82096?w=900&q=70&auto=format&fit=crop"
+           alt="" aria-hidden="true" width="900" height="1200" loading="lazy">
+      <a href="#">
+        <span class="hero-f-panel-label">Facial &amp; Body</span>
+        <span class="hero-f-panel-price">Mulai 250k</span>
+      </a>
+    </div>
+    <div class="hero-f-panel">
+      <img src="https://images.unsplash.com/photo-1631277877896-4ce2b6770da5?w=900&q=70&auto=format&fit=crop"
+           alt="" aria-hidden="true" width="900" height="1200" loading="lazy">
+      <a href="#">
+        <span class="hero-f-panel-label">Nail</span>
+        <span class="hero-f-panel-price">Mulai 250k</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -313,10 +758,10 @@ a{ color:inherit; text-decoration:none; }
       <h3>A · Full-bleed</h3>
       <p>Foto suasana penuh, teks mengambang di tengah dengan scrim gelap.</p>
       <ul>
-        <li>+ Terasa lapang &amp; sinematik</li>
-        <li>+ Cross-fade ke 2 foto lain setelah load (tidak mempengaruhi LCP)</li>
-        <li>− Perlu scrim + kontras dihitung manual</li>
-        <li>− Foto stock generik dulu, belum foto interior Della</li>
+        <li class="plus">+ Terasa lapang &amp; sinematik</li>
+        <li class="plus">+ Cross-fade ke 2 foto lain setelah load (tidak memengaruhi LCP)</li>
+        <li class="minus">− Perlu scrim + kontras dihitung manual</li>
+        <li class="minus">− Foto stock generik, belum foto interior Della</li>
       </ul>
     </div>
 
@@ -324,10 +769,53 @@ a{ color:inherit; text-decoration:none; }
       <h3>B · Split</h3>
       <p>Teks kiri di atas kanvas bersih, visual kanan dalam frame dengan halo backlit.</p>
       <ul>
-        <li>+ Kontras otomatis sempurna, tanpa scrim</li>
-        <li>+ LCP lebih ringan (tanpa foto full-bleed besar)</li>
-        <li>+ Placeholder logo besar bisa langsung diganti foto interior nanti</li>
-        <li>− Butuh 1 elemen visual kuat di kolom kanan (foto asli akan lebih baik dari logo)</li>
+        <li class="plus">+ Kontras otomatis sempurna, tanpa scrim</li>
+        <li class="plus">+ LCP paling ringan dari A/B/C (tanpa foto full-bleed besar)</li>
+        <li class="minus">− Kolom kanan cuma logo — butuh 1 elemen visual kuat</li>
+      </ul>
+    </div>
+
+    <div class="pv-card">
+      <h3>C · Produksi (baseline)</h3>
+      <p>Latar solid gelap, teks kiri, foto kanan dalam kartu rounded + badge rating floating. Struktur ala anabhidev.com / Jagadita — pola consulting-site.</p>
+      <ul>
+        <li class="plus">+ Sudah live, sudah teruji di 5 breakpoint</li>
+        <li class="minus">− Struktur "kompetensi" (consulting), bukan "sensasi &amp; tempat" (spa)</li>
+        <li class="minus">− 7 elemen bersaing di 1 layar: eyebrow, h1 2 baris, lead, 2 CTA, meta bintang, badge floating, tekstur</li>
+        <li class="minus">− Rating 11 ulasan tampil 2×, menonjolkan skala kecil di layar pertama</li>
+      </ul>
+    </div>
+
+    <div class="pv-card">
+      <h3>D · Maison</h3>
+      <p>1 foto full-bleed, 1 baris headline di tengah, ruang kosong besar. Kemewahan lewat keheningan — pola resort/beauty brand mewah (Aman, Six Senses).</p>
+      <ul>
+        <li class="plus">+ Paling "mahal" secara kesan visual dari 4 varian baru</li>
+        <li class="plus">+ Signature bar menjawab 3 pertanyaan turis: jam, jarak, harga</li>
+        <li class="minus">− Paling bergantung pada 1 foto sempurna — foto stock paling cepat ketahuan di sini</li>
+        <li class="minus">− Kontras teks di atas foto wajib dihitung WCAG per foto (SOP §11), bukan dikira-kira</li>
+      </ul>
+    </div>
+
+    <div class="pv-card">
+      <h3>E · Atelier</h3>
+      <p>Kolom kiri krem terang (bukan gelap), foto kanan bleed penuh tanpa kartu/radius/tilt. Kategori warna lebih tepat untuk beauty spa dibanding latar gelap ala consulting.</p>
+      <ul>
+        <li class="plus">+ LCP paling ringan dari 3 varian baru (foto portrait sempit)</li>
+        <li class="plus">+ Kontras teks paling aman — teks di atas warna solid, bukan di atas foto</li>
+        <li class="plus">+ Paling toleran terhadap foto stock yang belum sempurna</li>
+        <li class="minus">− Bisa terasa kurang dramatis di layar besar dibanding D/F</li>
+      </ul>
+    </div>
+
+    <div class="pv-card">
+      <h3>F · Gateway</h3>
+      <p>Hero sekaligus navigasi — 3 panel treatment melebar saat hover. Signature pattern resort mewah (Como, Alila) untuk langsung menjawab "kalian menawarkan apa?".</p>
+      <ul>
+        <li class="plus">+ CRO tertinggi — menghapus 1 lapis keputusan (bisa hapus section triptych di bawahnya)</li>
+        <li class="plus">+ Bekerja tanpa hover di mobile (grid, bukan hover-dependent)</li>
+        <li class="minus">− Paling mahal secara foto — butuh 3 foto konsisten kualitasnya, foto campur-campur akan terlihat tidak nyambung</li>
+        <li class="minus">− LCP paling berat dari 6 varian (3 foto), wajib prioritas ketat panel 1 vs 2&amp;3</li>
       </ul>
     </div>
 
@@ -351,7 +839,7 @@ a{ color:inherit; text-decoration:none; }
     b.addEventListener('click', function(){ setVariant(b.dataset.variant); });
   });
 
-  // Cross-fade sederhana untuk varian Full (preview saja)
+  // Cross-fade sederhana untuk Varian A (preview saja)
   var media = document.querySelector('[data-hero-media]');
   if (media) {
     var slides = media.querySelectorAll('img');
@@ -368,6 +856,14 @@ a{ color:inherit; text-decoration:none; }
           slides[i].classList.add('is-active');
         }, 5000);
       }, 1000);
+    });
+  }
+
+  // Reveal foto Varian D setelah load (untuk transform:scale settle)
+  var heroD = document.querySelector('[data-hero-d]');
+  if (heroD) {
+    window.addEventListener('load', function(){
+      requestAnimationFrame(function(){ heroD.classList.add('is-loaded'); });
     });
   }
 })();
