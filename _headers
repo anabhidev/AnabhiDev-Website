@@ -1,60 +1,30 @@
-# ================================================================
-# Miss Fish Bali — anabhidev.com
-# File        : _headers
-# Description : Cloudflare Pages response headers.
-#               Digabung dari versi sebelumnya (Microsoft auth,
-#               Google Analytics, PDF.js/StPageFlip) DITAMBAH
-#               dukungan Supabase untuk MFB-IT.
-# IT Department · Miss Fish Bali
-# Version     : 1.2
-# Generated   : 10 August 2026, 16:17:35 WITA
-# ================================================================
-#
-# YANG DIUBAH DARI v1.1 — HANYA SATU BARIS:
-#
-#   connect-src  + https://*.supabase.co
-#
-# Alasan: webapp MFB-IT (Miss Fish IT Daily Activity) memanggil
-# Edge Function di Supabase lewat fetch(). Tanpa domain ini
-# terdaftar di connect-src, permintaan ditolak oleh CSP —
-# meskipun kode webapp-nya sendiri benar.
-#
-# TIDAK ADA yang dihapus. Semua aturan v1.1 (Microsoft auth,
-# Google Analytics, PDF.js, jsdelivr, dst) tetap utuh.
-#
-# img-src sudah berisi "https:" secara umum — jadi logo dari
-# anabhidev.com/MFB/ dan domain HTTPS lain otomatis tercakup,
-# tidak perlu ditambah baris terpisah.
-# ================================================================
-
 /*
-  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(self), microphone=(), camera=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
 
-/*.webp
+/css/*
   Cache-Control: public, max-age=31536000, immutable
 
-/*.png
+/js/*
   Cache-Control: public, max-age=31536000, immutable
 
-/*.ico
+/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# ── Alternatif kalau nanti ingin lebih ketat ──────────────────────
-# Longgarkan HANYA folder mockup, sisa situs tetap seperti semula.
-# Caranya: kembalikan script-src di blok /* ke bentuk asli (tanpa
-# blob: dan tanpa jsdelivr), lalu hidupkan blok di bawah ini.
-# Aturan yang lebih spesifik ditaruh SETELAH aturan umum.
-#
-# /MFB-PDFAudio/*
-#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
-#
-# Kalau caramu itu ditempuh, tambahkan juga blok khusus untuk MFB-IT
-# supaya tetap bisa memanggil Supabase meski aturan umum diperketat:
-#
-# /itm-daily/*
-#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+# Foto tim sering diganti tanpa ganti nama file — kalau dibiarkan
+# "immutable" seperti aturan di atas, browser/CDN akan mengabaikan
+# foto baru selama 1 tahun penuh walau file di server sudah diganti.
+# Aturan yang lebih spesifik ini DITARUH SETELAH aturan umum supaya
+# menang untuk 3 file ini secara khusus, sisanya (logo, favicon)
+# tetap pakai cache agresif di atas.
+/assets/satria.webp
+  Cache-Control: public, max-age=300, must-revalidate
+
+/assets/viveka.webp
+  Cache-Control: public, max-age=300, must-revalidate
+
+/assets/wibawa.webp
+  Cache-Control: public, max-age=300, must-revalidate
