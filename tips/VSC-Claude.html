@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<!--
+================================================================
+AnabhiDev-CCD — Claude Code Dual-Account Setup Guide
+HTML5 · CSS Custom Properties · Vanilla JS (localStorage)
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 27 August 2026, 08:12:41
+================================================================
+Catatan versi:
+Panduan interaktif untuk memisahkan akun Claude Code kantor & pribadi
+di Windows, mencakup panel sidebar extension DAN terminal CLI.
+Mengikuti kerangka struktural & design token AnabhiDev-SOP_v1.3.html.
+================================================================
+-->
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AnabhiDev-CCD — Setup Dua Akun Claude Code | v1.1</title>
+<meta name="description" content="Panduan lengkap memisahkan akun Claude Code kantor & pribadi di Windows — panel extension dan terminal CLI. Internal guide Anabhi Dev.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B1829" id="metaTheme">
+
+<script>
+(function(){
+  var root = document.documentElement, key = 'anabhidev-ccd-theme', t = 'dark';
+  try {
+    var saved = localStorage.getItem(key);
+    t = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch(e){}
+  root.setAttribute('data-theme', t);
+})();
+</script>
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS — identik dengan AnabhiDev-SOP_v1.3
+   ============================================================ */
+:root, [data-theme="dark"]{
+  --bg:#0B1829;
+  --sidebar-bg:#0D2035;
+  --card-bg:#152840;
+  --card-hover:#1a3050;
+  --blue:#2E9FF2;
+  --blue-light:#7FD4FF;
+  --blue-dim:#1a5a8a;
+  --text:#FFFFFF;
+  --text-muted:#8899AA;
+  --text-sub:#aabccc;
+  --border:#1e3a55;
+  --green:#22c55e;
+  --green-nav:#16a34a;
+  --red:#ef4444;
+  --red-light:#fca5a5;
+  --gold-badge:#fcd34d;
+  --gold:#E8C468;
+  --sidebar-w:248px;
+  --topbar-h:58px;
+
+  --main-bg: var(--bg);
+  --main-card-bg: var(--card-bg);
+  --main-card-hover: var(--card-hover);
+  --main-text: var(--text);
+  --main-text-muted: var(--text-muted);
+  --main-text-sub: var(--text-sub);
+  --main-border: var(--border);
+  --main-accent: var(--blue-light);
+  --code-bg: rgba(46,159,242,0.14);
+  --pre-bg:#08121f;
+}
+[data-theme="light"]{
+  --main-bg:#F6F8FB;
+  --main-card-bg:#FFFFFF;
+  --main-card-hover:#EEF3F9;
+  --main-text:#0B1829;
+  --main-text-muted:#5B6B7C;
+  --main-text-sub:#34455A;
+  --main-border:#DCE4EC;
+  --gold:#8a6a1f;
+  --gold-badge:#8a6a1f;
+  --main-accent:#0B6FC9;
+  --red-light:#c0362f;
+  --code-bg: rgba(11,111,201,0.10);
+  --pre-bg:#0d1b2c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html{ scroll-behavior:smooth; }
+html, body{ overflow-x:hidden; max-width:100%; }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:var(--main-bg);
+  color:var(--main-text);
+  min-height:100vh;
+  font-size:14px;
+  line-height:1.6;
+  -webkit-text-size-adjust:100%;
+  transition:background .2s ease;
+}
+button, input{ font:inherit; }
+
+:focus-visible{
+  outline:2px solid var(--main-accent);
+  outline-offset:2px;
+  border-radius:4px;
+}
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+.grid-safe > *{ min-width:0; }
+
+/* ============================================================
+   2. TOPBAR
+   ============================================================ */
+.topbar{
+  height:var(--topbar-h); background:var(--sidebar-bg); color:#fff;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:0 14px; position:fixed; z-index:60; top:0; left:0; right:0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.hdr-title{
+  min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  font-size:13.5px; font-weight:750; letter-spacing:.1px;
+}
+.hdr-title .ver{ opacity:.6; font-weight:600; margin-left:6px; }
+.top-actions{ display:flex; gap:8px; flex:0 0 auto; }
+.iconbtn{
+  height:44px; min-width:44px;
+  border:1px solid rgba(255,255,255,.22);
+  background:transparent; color:#fff; border-radius:11px; cursor:pointer;
+  display:grid; place-items:center; font-size:15px; line-height:1;
+}
+.iconbtn:hover{ background:rgba(255,255,255,.09); }
+#menuBtn{ display:none; }
+
+/* ============================================================
+   3. SHELL + SIDEBAR
+   ============================================================ */
+.shell{ display:grid; grid-template-columns:var(--sidebar-w) minmax(0,1fr); padding-top:var(--topbar-h); }
+.sidebar{
+  position:fixed; top:var(--topbar-h); bottom:0; width:var(--sidebar-w);
+  background:var(--sidebar-bg); color:#fff; overflow-y:auto;
+  padding:18px 14px 24px; z-index:50;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+.logo-box{
+  height:112px; background:transparent; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; margin-bottom:14px;
+}
+.logo-box img{
+  width:100%; height:100%; object-fit:contain; object-position:center;
+  padding:10px; display:block;
+}
+.sidebar-group-label{
+  font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:#a9c3d5; padding:14px 8px 6px;
+}
+.sidebar-item{
+  display:block; text-decoration:none; color:#dce8f0;
+  border:1px solid transparent; border-radius:10px;
+  padding:10px 10px; font-size:12.5px; font-weight:600;
+  min-height:44px; transition:background .15s,border-color .15s,color .15s;
+}
+.sidebar-item:hover, .sidebar-item.active{
+  background:rgba(46,159,242,.16); border-color:rgba(127,212,255,.28); color:#fff;
+}
+.sidebar-item .si-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.sidebar-item .si-name{ flex:1; line-height:1.3; min-width:0; }
+.sidebar-foot{
+  border-top:1px solid rgba(255,255,255,.1); margin-top:16px;
+  padding:14px 10px; color:#9db7c8; font-size:10.5px; line-height:1.6;
+}
+.sidebar-foot strong{ color:#fff; display:block; margin-bottom:2px; }
+
+.drawer-scrim{
+  position:fixed; inset:var(--topbar-h) 0 0 0; background:rgba(7,25,39,.55);
+  z-index:45; display:none;
+}
+.drawer-scrim.show{ display:block; }
+
+/* ============================================================
+   4. MAIN
+   ============================================================ */
+#main{
+  grid-column:2; min-width:0;
+  padding:40px clamp(24px, 6vw, 180px) 0;
+}
+.section{ margin:0 0 40px; scroll-margin-top:calc(var(--topbar-h) + 16px); }
+
+.section-header{
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:18px; padding-bottom:12px;
+  border-bottom:1px solid var(--main-border);
+}
+.section-num{
+  width:32px; height:32px; border-radius:8px;
+  background:linear-gradient(135deg,var(--blue-dim),var(--blue));
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:700; color:#fff; flex-shrink:0;
+}
+.section-num.plain{ background:var(--main-card-bg); color:var(--main-accent); font-size:16px; border:1px solid var(--main-border); }
+.section-title{ font-size:17px; font-weight:700; color:var(--main-text); flex:1; min-width:0; }
+.section-title .badge-b-sub{ font-size:11px; font-weight:600; color:var(--main-text-muted); margin-left:6px; }
+
+.sub-group{
+  font-size:12px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--main-accent);
+  margin:22px 0 10px;
+  border-left:2px solid var(--blue);
+  padding-left:8px;
+}
+
+/* ============================================================
+   5. HERO
+   ============================================================ */
+.hero{
+  min-height:380px; border-radius:24px; overflow:hidden; position:relative;
+  background:linear-gradient(135deg,#0e3a5c 0%,#134a72 52%,#0f5a78 100%);
+  box-shadow:0 18px 50px rgba(6,20,38,.28); color:#fff;
+  display:grid; grid-template-columns:1.15fr .85fr; gap:30px; padding:56px;
+  margin-bottom:8px;
+}
+.hero::after{
+  content:""; position:absolute; width:420px; height:420px;
+  border:1px solid rgba(255,255,255,.11); border-radius:50%;
+  right:-140px; bottom:-220px;
+  box-shadow:0 0 0 40px rgba(255,255,255,.025), 0 0 0 80px rgba(255,255,255,.02);
+  pointer-events:none;
+}
+.hero-copy{ position:relative; z-index:2; align-self:center; min-width:0; }
+.hero .pill{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1);
+  padding:8px 13px; border-radius:999px; font-size:11px; font-weight:750;
+}
+.hero .dot{ width:7px; height:7px; border-radius:50%; background:#ffb21b; }
+.hero h1{
+  font-size:clamp(28px,4vw,42px); line-height:1.1;
+  margin:22px 0 10px; letter-spacing:-1px; font-weight:800;
+}
+.hero .lead{ font-size:15px; line-height:1.75; color:rgba(255,255,255,.88); max-width:64ch; }
+.hero .hero-meta{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+.hero .tag{
+  border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.09);
+  border-radius:999px; padding:6px 11px; font-size:10.5px; font-weight:700;
+}
+.hero-art{
+  position:relative; z-index:2; min-width:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero-logo-frame{
+  width:min(100%,220px); aspect-ratio:1/1; background:#fff;
+  border-radius:20px; padding:22px; overflow:hidden;
+  box-shadow:0 20px 45px rgba(0,0,0,.18);
+}
+.hero-logo-frame img{
+  width:100%; height:100%; object-fit:contain; object-position:center; display:block;
+}
+
+/* ============================================================
+   6. PROSE / CARD BLOCKS
+   ============================================================ */
+.prose-card{
+  background:var(--main-card-bg); border:1px solid var(--main-border);
+  border-radius:10px; padding:20px 22px; margin-bottom:12px;
+}
+.prose-card h3{ font-size:14px; font-weight:700; color:var(--main-accent); margin-bottom:8px; }
+.prose-card p, .prose-card li{ font-size:13px; color:var(--main-text-sub); line-height:1.7; }
+.prose-card ul, .prose-card ol{ padding-left:18px; margin-top:6px; }
+.prose-card li{ margin-bottom:4px; }
+.prose-card strong{ color:var(--main-text); }
+
+.finding-item{
+  display:flex; gap:12px; align-items:flex-start;
+  background:var(--main-card-bg); border:1px solid var(--main-border);
+  border-radius:8px; padding:12px 16px; margin-bottom:8px;
+}
+.finding-num{
+  width:22px; height:22px; border-radius:50%;
+  background:var(--blue-dim); color:var(--blue-light);
+  font-size:11px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+[data-theme="light"] .finding-num{ background:var(--main-accent); color:#fff; }
+.finding-text{ font-size:13px; color:var(--main-text-sub); line-height:1.6; }
+.finding-text strong{ color:var(--main-text); }
+
+/* tables */
+.table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin:10px 0 16px; border-radius:8px; }
+.tools-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.tools-table th{
+  text-align:left; padding:8px 12px; white-space:nowrap;
+  background:var(--code-bg); color:var(--main-accent); font-weight:600;
+  border-bottom:1px solid var(--main-border);
+  font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+}
+.tools-table td{ padding:9px 12px; border-bottom:1px solid var(--main-border); vertical-align:top; color:var(--main-text-sub); line-height:1.5; }
+.tools-table tr:last-child td{ border-bottom:none; }
+.tools-table strong{ color:var(--main-text); }
+.tools-table a{ color:var(--main-accent); text-decoration:none; }
+.tools-table a:hover{ text-decoration:underline; }
+.tools-table code{
+  font-family:'SF Mono','Fira Code',Consolas,monospace;
+  background:var(--code-bg); color:var(--main-accent);
+  padding:1px 5px; border-radius:3px; font-size:11.5px;
+}
+
+.note-block{
+  background:var(--code-bg);
+  border-left:3px solid var(--blue);
+  border-radius:0 6px 6px 0;
+  padding:10px 14px; margin:12px 0;
+  font-size:12.5px; color:var(--main-text-muted); line-height:1.6;
+}
+.note-block.warn{ background:rgba(245,158,11,.09); border-left-color:var(--gold); }
+.note-block.danger{ background:rgba(239,68,68,.09); border-left-color:var(--red); }
+.note-block strong{ color:var(--main-text); }
+
+pre.code-block{
+  display:block; background:var(--pre-bg); border:1px solid var(--main-border); border-radius:8px;
+  padding:12px 14px; margin:10px 0; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  max-width:100%; width:100%; position:relative;
+}
+pre.code-block code{
+  font-family:'SF Mono','Fira Code',Consolas,monospace; font-size:11.5px;
+  color:#cde6ff; background:none !important; padding:0 !important; white-space:pre;
+}
+[data-theme="light"] pre.code-block code{ color:#dbe9f7; }
+code{
+  font-family:'SF Mono','Fira Code',Consolas,monospace;
+  background:var(--code-bg); color:var(--main-accent);
+  padding:1px 5px; border-radius:3px; font-size:12px;
+}
+
+.copy-btn{
+  position:absolute; top:8px; right:8px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+  color:#cde6ff; border-radius:6px; padding:5px 9px; font-size:10.5px;
+  cursor:pointer; font-weight:600;
+}
+.copy-btn:hover{ background:rgba(255,255,255,.15); }
+.copy-btn.copied{ background:rgba(34,197,94,.25); border-color:rgba(34,197,94,.4); color:#bbf7d0; }
+
+/* ============================================================
+   7. STEP CARDS (pengganti check-item, untuk panduan berurut)
+   ============================================================ */
+.step-card{
+  background:var(--main-card-bg); border:1px solid var(--main-border);
+  border-radius:10px; padding:16px 18px; margin-bottom:10px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.step-num{
+  width:28px; height:28px; border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-dim),var(--blue));
+  color:#fff; font-size:12.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+.step-body{ flex:1; min-width:0; }
+.step-title{ font-size:13.5px; font-weight:700; color:var(--main-text); margin-bottom:4px; }
+.step-desc{ font-size:12.5px; color:var(--main-text-sub); line-height:1.65; }
+.step-desc p{ margin-bottom:6px; }
+.step-desc p:last-child{ margin-bottom:0; }
+
+/* ============================================================
+   8. PILL TABS (untuk switch skenario)
+   ============================================================ */
+.tabbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.tabbtn{
+  background:var(--main-card-bg); border:1px solid var(--main-border);
+  color:var(--main-text-sub); border-radius:999px; padding:9px 16px;
+  font-size:12px; font-weight:700; cursor:pointer; min-height:40px;
+}
+.tabbtn.active{
+  background:var(--blue); border-color:var(--blue); color:#fff;
+}
+.tabpanel{ display:none; }
+.tabpanel.active{ display:block; }
+
+/* badges */
+.badge{
+  display:inline-block; font-size:10px; font-weight:700;
+  padding:2px 8px; border-radius:5px; margin-left:6px; vertical-align:middle;
+}
+.badge-yes{ background:rgba(34,197,94,.14); color:#16a34a; border:1px solid rgba(34,197,94,.32); }
+[data-theme="dark"] .badge-yes{ color:#4ade80; }
+.badge-no{ background:rgba(239,68,68,.15); color:var(--red-light); border:1px solid rgba(239,68,68,.32); }
+.badge-rec{ background:rgba(46,159,242,.15); color:var(--main-accent); border:1px solid rgba(46,159,242,.32); }
+.badge-warn{ background:rgba(245,158,11,.15); color:var(--gold-badge); border:1px solid rgba(245,158,11,.32); }
+
+/* ── FOOTER ── */
+footer{
+  margin-left:0; grid-column:2;
+  border-top:1px solid var(--main-border);
+  padding:28px clamp(24px, 6vw, 180px) 40px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:12px;
+}
+.footer-brand{ font-size:13px; color:var(--main-text-muted); }
+.footer-brand strong{ color:var(--main-text); }
+.footer-brand span{ color:var(--main-accent); }
+
+::-webkit-scrollbar{ width:6px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:var(--main-border); border-radius:3px; }
+
+/* ============================================================
+   9. RESPONSIVE
+   ============================================================ */
+@media (max-width:1050px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+  #menuBtn{ display:grid; }
+  .sidebar{
+    left:auto; right:0; height:calc(100dvh - var(--topbar-h));
+    transform:translateX(100%); transition:transform .22s ease;
+    box-shadow:-14px 0 40px rgba(0,0,0,.28);
+    width:min(300px,86vw);
+  }
+  .sidebar.open{ transform:translateX(0); }
+  #main{ grid-column:1; padding-top:28px; }
+  footer{ grid-column:1; padding:28px clamp(24px, 6vw, 180px) 34px; }
+  .hero{ grid-template-columns:minmax(0,1fr); min-height:auto; padding:36px; }
+  .hero-art{ order:-1; }
+  .hero-logo-frame{ width:min(100%,180px); }
+  .hdr-title{ font-size:12.5px; }
+}
+@media (max-width:700px){
+  .hero{ padding:26px; border-radius:18px; }
+  .hero h1{ letter-spacing:-.5px; }
+  .hero .lead{ font-size:13.5px; }
+  footer{ flex-direction:column; align-items:flex-start; }
+  .top-actions{ gap:6px; }
+  .iconbtn{ min-width:40px; height:40px; }
+  .step-card{ flex-direction:column; gap:8px; }
+  .tabbtn{ flex:1; text-align:center; padding:9px 10px; }
+}
+@media print{
+  .topbar,.sidebar,.drawer-scrim,.top-actions{ display:none !important; }
+  .shell{ display:block; padding-top:0; }
+  #main{ padding:0; grid-column:auto; }
+  .section{ break-inside:avoid; }
+  .hero{ box-shadow:none; }
+  footer{ margin-top:20px; padding:20px 0; grid-column:auto; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="sr-only">Lompat ke konten utama</a>
+
+<div class="app">
+
+  <!-- ===================== TOPBAR ===================== -->
+  <header class="topbar">
+    <span class="hdr-title">AnabhiDev-CCD · Setup Dua Akun Claude Code <span class="ver">v1.1</span></span>
+    <div class="top-actions">
+      <button class="iconbtn" id="themeBtn" type="button" aria-label="Ganti tema terang / gelap" title="Ganti tema">☾</button>
+      <button class="iconbtn" type="button" onclick="window.print()" aria-label="Cetak atau simpan sebagai PDF" title="Print / Save PDF">↗</button>
+      <button class="iconbtn" id="menuBtn" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="sidebar">☰</button>
+    </div>
+  </header>
+
+  <div class="drawer-scrim" id="scrim"></div>
+
+  <div class="shell">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-box">
+        <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager">
+      </div>
+
+      <div class="sidebar-group-label">Ringkasan</div>
+      <a class="nav-link sidebar-item" href="#sec-kenapa">
+        <div class="si-row"><span class="si-name">Kenapa Akun Kesedot</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-skenario">
+        <div class="si-row"><span class="si-name">3 Skenario Pemakaian</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-installer">
+        <div class="si-row"><span class="si-name">Installer vs Portable vs Insiders</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-rekomendasi">
+        <div class="si-row"><span class="si-name">Rekomendasi Final</span></div>
+      </a>
+
+      <div class="sidebar-group-label">Setup — Panel Sidebar</div>
+      <a class="nav-link sidebar-item" href="#sec-insiders-install">
+        <div class="si-row"><span class="si-name">1. Install VS Code Insiders</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-insiders-login">
+        <div class="si-row"><span class="si-name">2. Login Akun di Insiders</span></div>
+      </a>
+
+      <div class="sidebar-group-label">Setup — Terminal CLI (opsional)</div>
+      <a class="nav-link sidebar-item" href="#sec-cli-setup">
+        <div class="si-row"><span class="si-name">3. CLAUDE_CONFIG_DIR</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-cli-login">
+        <div class="si-row"><span class="si-name">4. Login via Terminal</span></div>
+      </a>
+
+      <div class="sidebar-group-label">Penutup</div>
+      <a class="nav-link sidebar-item" href="#sec-verifikasi">
+        <div class="si-row"><span class="si-name">Verifikasi Akhir</span></div>
+      </a>
+      <a class="nav-link sidebar-item" href="#sec-trouble">
+        <div class="si-row"><span class="si-name">Troubleshooting</span></div>
+      </a>
+
+      <div class="sidebar-foot">
+        <strong>Anabhi Dev</strong>
+        Less Doing. More Living.
+        <br><br>
+        Development · Anabhi Dev
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN ===================== -->
+    <main id="main">
+
+      <!-- HERO -->
+      <section class="section" id="overview">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="pill"><span class="dot"></span> Internal Guide · Windows</span>
+            <h1>Setup Dua Akun<br>Claude Code</h1>
+            <p class="lead">
+              Panduan memisahkan akun kantor &amp; akun pribadi di Claude Code — supaya kuota
+              nggak ketuker lagi seperti kejadian kemarin. Mencakup panel sidebar extension
+              <strong>dan</strong> terminal CLI, karena keduanya butuh solusi yang berbeda.
+            </p>
+            <div class="hero-meta">
+              <span class="tag">VS Code + VS Code Insiders</span>
+              <span class="tag">CLAUDE_CONFIG_DIR</span>
+              <span class="tag">v1.1 · 27 August 2026</span>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="hero-logo-frame">
+              <img src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="512" height="512" loading="eager">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KENAPA KESEDOT -->
+      <section class="section" id="sec-kenapa">
+        <div class="section-header">
+          <div class="section-num plain">🔍</div>
+          <h2 class="section-title">Kenapa Akun Bisa Kesedot</h2>
+        </div>
+        <div class="prose-card">
+          <p>Kejadian kemarin — buka 2 VS Code, satu akun kantor satu akun pribadi, terus akun kantor
+          ikut ketuker jadi akun pribadi — itu <strong>bukan bug</strong>. Ini konsekuensi langsung dari
+          cara Claude Code menyimpan data login.</p>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">1</div>
+          <div class="finding-text"><strong>Satu folder config = satu identitas.</strong> Secara default, Claude Code
+          menyimpan kredensial, riwayat sesi, plugin, dan pengaturan di satu folder yang sama:
+          <code>%USERPROFILE%\.claude</code>. Tidak peduli berapa window VS Code yang kamu buka —
+          semuanya baca dari folder yang sama itu.</div>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">2</div>
+          <div class="finding-text"><strong>Login baru = menimpa, bukan menambah.</strong> Waktu kamu login akun pribadi
+          di VS Code kedua, dia menulis ulang isi folder <code>.claude</code> itu. VS Code pertama yang
+          masih terbuka otomatis ikut baca identitas baru — makanya kuota pribadi yang kepakai
+          padahal kamu kerja di project kantor.</div>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">3</div>
+          <div class="finding-text"><strong>Panel sidebar dan terminal itu dua hal berbeda.</strong> Panel chat visual
+          (yang kamu screenshot kemarin) ternyata <strong>punya CLI bawaan sendiri</strong> di dalam
+          extension-nya — bukan langsung pakai command <code>claude</code> yang di terminal. Ini penting,
+          karena solusi yang bekerja untuk terminal <strong>belum tentu bekerja untuk panel</strong>. Detail
+          di bagian <a href="#sec-skenario">3 Skenario</a> di bawah.</div>
+        </div>
+      </section>
+
+      <!-- 3 SKENARIO -->
+      <section class="section" id="sec-skenario">
+        <div class="section-header">
+          <div class="section-num plain">🎛️</div>
+          <h2 class="section-title">3 Skenario Pemakaian Claude Code</h2>
+        </div>
+        <div class="prose-card">
+          <p>Cara kamu pakai Claude Code menentukan solusi mana yang relevan. Cek dulu kamu yang mana —
+          kemarin kamu pakai <strong>panel sidebar</strong> (screenshot yang dikirim), jadi fokus utama
+          panduan ini ada di skenario 1.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table class="tools-table">
+            <thead>
+              <tr>
+                <th>Skenario</th>
+                <th>Cara pakai</th>
+                <th>Bisa dipisah pakai <code>CLAUDE_CONFIG_DIR</code>?</th>
+                <th>Solusi yang bekerja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Panel Sidebar</strong><br><span class="badge badge-warn">Kasus kamu kemarin</span></td>
+                <td>Klik ikon Claude Code di sidebar VS Code, chat muncul di panel samping (seperti screenshot kamu)</td>
+                <td><span class="badge badge-no">TIDAK</span> — panel selalu baca akun default, tidak mewarisi environment variable apa pun</td>
+                <td>Aplikasi terpisah — <strong>VS Code Insiders</strong> untuk akun kedua</td>
+              </tr>
+              <tr>
+                <td><strong>2. Terminal CLI</strong></td>
+                <td>Buka Terminal di VS Code, ketik <code>claude</code> langsung dari command line</td>
+                <td><span class="badge badge-yes">YA</span> — env var terbaca normal di sesi terminal</td>
+                <td><code>CLAUDE_CONFIG_DIR</code> + function PowerShell</td>
+              </tr>
+              <tr>
+                <td><strong>3. Kombinasi</strong></td>
+                <td>Pakai panel untuk kerjaan visual, sesekali buka terminal untuk fitur CLI-only (mis. <code>--add-dir</code>, MCP config)</td>
+                <td>Sebagian — tergantung yang mana yang lagi dipakai</td>
+                <td>Kombinasi keduanya: VS Code Insiders (utama) + <code>CLAUDE_CONFIG_DIR</code> di terminal-nya (cadangan)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-block warn">
+          <strong>Kenapa panel nggak bisa dipisah pakai env var?</strong> Karena extension Claude Code
+          "membundel" salinan CLI-nya sendiri untuk menggerakkan panel chat. Salinan ini tidak membaca
+          environment variable dari sesi terminal manapun — dia selalu jalan dengan konfigurasi akun
+          default milik VS Code yang menjalankannya. Satu-satunya cara memisahkannya adalah menjalankan
+          di <strong>aplikasi/instalasi VS Code yang benar-benar terpisah.</strong>
+        </div>
+      </section>
+
+      <!-- INSTALLER VS PORTABLE VS INSIDERS -->
+      <section class="section" id="sec-installer">
+        <div class="section-header">
+          <div class="section-num plain">📦</div>
+          <h2 class="section-title">Installer vs System Installer vs .zip (Portable) vs Insiders</h2>
+        </div>
+        <div class="prose-card">
+          <p>Soal pertanyaan kamu "yang mana yang portable" — jawabannya: <strong>di halaman download resmi
+          VS Code, opsi <code>.zip</code> itulah versi portable-nya.</strong> Tidak ada tombol bertuliskan
+          "Portable" secara eksplisit. Berikut breakdown semua opsi yang ada:</p>
+        </div>
+
+        <div class="table-wrap">
+          <table class="tools-table">
+            <thead>
+              <tr>
+                <th>Opsi</th>
+                <th>Kelebihan</th>
+                <th>Kekurangan</th>
+                <th>Cocok untuk kasus kamu?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>User Installer</strong></td>
+                <td>Install standar, tidak butuh admin, auto-update jalan normal</td>
+                <td>Data tersimpan di <code>%APPDATA%</code> — satu install = satu identitas, tidak otomatis terpisah</td>
+                <td><span class="badge badge-no">Tidak cukup sendirian</span> — ini yang kamu pakai sekarang untuk kantor</td>
+              </tr>
+              <tr>
+                <td><strong>System Installer</strong></td>
+                <td>Sama seperti User Installer, tapi ter-install untuk semua user di komputer (butuh admin)</td>
+                <td>Sama seperti User Installer — tetap satu identitas per instalasi</td>
+                <td><span class="badge badge-no">Tidak relevan</span> untuk kasus dual-account single-user</td>
+              </tr>
+              <tr>
+                <td><strong>.zip (Portable)</strong></td>
+                <td>Extract ke folder manapun, semua data (extension, settings, kredensial) nempel di folder itu sendiri — gampang dipindah/backup. 100% gratis, tidak perlu install ulang apa pun</td>
+                <td><strong>Tidak auto-update</strong> — update manual dengan ganti isi <code>.exe</code>, sisakan folder <code>data</code>. Perlu bikin folder <code>data</code> manual dulu</td>
+                <td><span class="badge badge-rec">Bisa dipakai</span> — alternatif kalau nggak mau install apa pun tambahan</td>
+              </tr>
+              <tr>
+                <td><strong>VS Code Insiders</strong></td>
+                <td>Installer resmi Microsoft, terpisah otomatis dari VS Code Stable (icon, folder data, extension, kredensial semua beda) sejak awal — <strong>tanpa langkah manual apa pun</strong>. Auto-update tetap jalan normal</td>
+                <td>Ini "preview build" — dapat fitur terbaru duluan, jarang ada masalah stabilitas tapi bukan versi paling teruji</td>
+                <td><span class="badge badge-yes">Direkomendasikan</span> — paling simpel & paling minim risiko salah setup</td>
+              </tr>
+              <tr>
+                <td><strong>CLI (Command Line)</strong></td>
+                <td>Untuk automasi/scripting, bukan untuk penggunaan editor sehari-hari</td>
+                <td>Bukan aplikasi ber-UI — tidak relevan untuk kasus kamu</td>
+                <td><span class="badge badge-no">Tidak relevan</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose-card">
+          <h3>Link download resmi</h3>
+          <ul>
+            <li><strong>VS Code (Stable, sudah kamu pakai)</strong> — <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">code.visualstudio.com/download</a></li>
+            <li><strong>VS Code Insiders</strong> — <a href="https://code.visualstudio.com/insiders/" target="_blank" rel="noopener">code.visualstudio.com/insiders</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REKOMENDASI FINAL -->
+      <section class="section" id="sec-rekomendasi">
+        <div class="section-header">
+          <div class="section-num plain">✅</div>
+          <h2 class="section-title">Rekomendasi Final</h2>
+        </div>
+        <div class="prose-card">
+          <p>Karena kamu pakainya lewat <strong>panel sidebar</strong>, solusi yang benar-benar bekerja
+          adalah aplikasi terpisah — bukan env var. Rekomendasinya:</p>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">🏢</div>
+          <div class="finding-text"><strong>VS Code (Stable) — akun kantor.</strong> Tetap seperti sekarang, tidak disentuh sama sekali. Login akun kantor tetap di situ.</div>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">🏠</div>
+          <div class="finding-text"><strong>VS Code Insiders — akun pribadi.</strong> Install baru, login akun pribadi di situ. Karena Insiders 100% terpisah datanya dari Stable sejak awal (bukan hasil konfigurasi manual), panel sidebar Claude Code di masing-masing aplikasi akan otomatis baca akun yang berbeda.</div>
+        </div>
+        <div class="note-block">
+          <strong>Bonus opsional:</strong> kalau nanti kamu juga sering pakai <strong>terminal CLI</strong>
+          (bukan cuma panel), kita tambahkan <code>CLAUDE_CONFIG_DIR</code> di kedua aplikasi itu juga —
+          supaya kalau suatu saat buka terminal di VS Code Insiders, otomatis tetap kebaca akun pribadi,
+          bukan malah nyasar baca folder <code>.claude</code> default. Langkahnya ada di bagian
+          <a href="#sec-cli-setup">Setup Terminal CLI</a> di bawah — sifatnya tambahan, tidak wajib
+          kalau kamu memang cuma pakai panel.
+        </div>
+      </section>
+
+      <!-- SETUP: INSTALL INSIDERS -->
+      <section class="section" id="sec-insiders-install">
+        <div class="section-header">
+          <div class="section-num">1</div>
+          <h2 class="section-title">Install VS Code Insiders</h2>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Download installer</div>
+            <div class="step-desc">
+              <p>Buka <a href="https://code.visualstudio.com/insiders/" target="_blank" rel="noopener" style="color:var(--main-accent)">code.visualstudio.com/insiders</a>
+              di browser. Pilih <strong>Windows</strong> (User Installer, x64) — sama seperti waktu kamu download
+              VS Code biasa.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Jalankan installer</div>
+            <div class="step-desc">
+              <p>Klik dua kali file <code>.exe</code> yang barusan didownload. Next-next seperti install
+              software biasa. Tidak perlu ubah lokasi instalasi default.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Buka VS Code Insiders</div>
+            <div class="step-desc">
+              <p>Setelah selesai install, cari <strong>"Visual Studio Code Insiders"</strong> di Start Menu
+              (ikon hijau, beda dari VS Code biasa yang biru). Buka.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Install extension Claude Code</div>
+            <div class="step-desc">
+              <p>Di VS Code Insiders yang baru dibuka: klik ikon Extensions di sidebar kiri
+              (atau <code>Ctrl+Shift+X</code>) → cari <strong>"Claude Code"</strong> → Install.
+              Ini instalasi baru, terpisah total dari extension yang ada di VS Code kantor kamu.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-block">
+          Sampai step ini, belum ada risiko apa pun ke VS Code kantor kamu — kita baru install aplikasi
+          baru yang kosong.
+        </div>
+      </section>
+
+      <!-- SETUP: LOGIN -->
+      <section class="section" id="sec-insiders-login">
+        <div class="section-header">
+          <div class="section-num">2</div>
+          <h2 class="section-title">Login Akun Pribadi di Insiders</h2>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Buka panel Claude Code</div>
+            <div class="step-desc">
+              <p>Di VS Code Insiders, klik ikon Claude Code di sidebar kiri (ikon bintang/spark, sama
+              seperti di VS Code kantor kamu).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Login dengan akun pribadi</div>
+            <div class="step-desc">
+              <p>Panel akan minta login. Browser terbuka otomatis → pilih/masukkan
+              <strong>akun pribadi kamu</strong> (bukan akun kantor). Selesaikan proses OAuth di browser,
+              lalu kembali ke VS Code Insiders.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Selesai — cek sekilas</div>
+            <div class="step-desc">
+              <p>Panel Claude Code di VS Code Insiders sekarang terikat ke akun pribadi. Panel Claude Code
+              di VS Code kantor (yang lama) tetap terikat ke akun kantor — <strong>keduanya boleh terbuka
+              bersamaan</strong>, tidak akan saling menimpa lagi karena masing-masing aplikasi punya folder
+              data sendiri-sendiri.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-block warn">
+          <strong>Kalau nanti perlu ganti akun lagi</strong> (misal mau login ulang atau ganti ke akun
+          lain), lakukan <em>hanya</em> di dalam aplikasi VS Code yang bersangkutan. Jangan login akun
+          baru di VS Code Insiders sambil berharap itu mengubah akun di VS Code Stable — itu justru
+          skenario yang ingin kita hindari.
+        </div>
+      </section>
+
+      <!-- SETUP: CLI CLAUDE_CONFIG_DIR (opsional) -->
+      <section class="section" id="sec-cli-setup">
+        <div class="section-header">
+          <div class="section-num">3</div>
+          <h2 class="section-title">CLAUDE_CONFIG_DIR untuk Terminal <span class="badge-b-sub">(Opsional)</span></h2>
+        </div>
+        <div class="prose-card">
+          <p>Bagian ini <strong>hanya perlu</strong> kalau kamu juga sering buka <em>terminal</em> di VS Code
+          dan ketik <code>claude</code> langsung (bukan cuma klik panel). Kalau kamu 100% pakai panel saja,
+          bagian 1–2 di atas sudah cukup — boleh lewati bagian ini.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Cek Claude Code CLI terdeteksi</div>
+            <div class="step-desc">
+              <p>Buka <strong>PowerShell</strong> (bisa dari Start Menu, atau dari terminal terintegrasi di
+              VS Code manapun).</p>
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>claude --version</code></pre>
+              <p>Kalau muncul nomor versi, lanjut ke step berikutnya.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Buat folder config baru khusus akun pribadi</div>
+            <div class="step-desc">
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>New-Item -ItemType Directory -Force "$HOME\.claude-personal"</code></pre>
+              <p>Akun kantor tetap di folder default <code>%USERPROFILE%\.claude</code> — tidak disentuh
+              sama sekali, jadi session, skills, dan plugin kantor kamu aman.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Buka PowerShell profile</div>
+            <div class="step-desc">
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>notepad $PROFILE</code></pre>
+              <p>Kalau muncul dialog "file belum ada", pilih <strong>Yes</strong> untuk membuatnya.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Tambahkan function <code>claude-personal</code></div>
+            <div class="step-desc">
+              <p>Di Notepad yang terbuka, tempel baris berikut, lalu simpan (Ctrl+S) dan tutup:</p>
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>function claude-personal {
+    $env:CLAUDE_CONFIG_DIR = "$HOME\.claude-personal"
+    claude @args
+}</code></pre>
+              <p>Tutup PowerShell yang lama, lalu buka PowerShell baru supaya function ini aktif.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-block danger">
+          <strong>Batasan penting yang perlu kamu tahu:</strong> Claude Code di Windows tidak hanya
+          menyimpan data di folder <code>.claude\</code>, tapi juga menulis sebagian state ke file
+          <code>%USERPROFILE%\.claude.json</code> — file ini <strong>di luar</strong> folder yang di-set
+          oleh <code>CLAUDE_CONFIG_DIR</code>. Kalau dua sesi terminal jalan bersamaan dari home directory
+          Windows yang sama, ada kemungkinan kecil state ini tetap "nyenggol" satu sama lain. Untuk kredensial
+          login sendiri, ini aman — tapi kalau kamu mau isolasi 100% total tanpa risiko sama sekali,
+          jalankan <code>claude-personal</code> selalu dari <strong>terminal di VS Code Insiders</strong>
+          (bukan dari terminal di VS Code Stable), supaya dua-duanya juga terpisah secara aplikasi.
+        </div>
+      </section>
+
+      <!-- SETUP: LOGIN CLI -->
+      <section class="section" id="sec-cli-login">
+        <div class="section-header">
+          <div class="section-num">4</div>
+          <h2 class="section-title">Login via Terminal</h2>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Jalankan function yang baru dibuat</div>
+            <div class="step-desc">
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>claude-personal</code></pre>
+              <p>Claude Code akan mendeteksi folder <code>.claude-personal</code> masih kosong dan meminta
+              login dari awal.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Login dengan akun pribadi</div>
+            <div class="step-desc">
+              <p>Browser terbuka otomatis → login dengan akun pribadi kamu, sama seperti biasa.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Selesai — kredensial tersimpan permanen</div>
+            <div class="step-desc">
+              <p>Mulai sekarang, cukup ketik <code>claude-personal</code> tiap kali mau pakai akun pribadi
+              di terminal. Tidak perlu login ulang lagi. Ketik <code>claude</code> biasa (tanpa embel-embel)
+              untuk tetap pakai akun kantor seperti biasa.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VERIFIKASI -->
+      <section class="section" id="sec-verifikasi">
+        <div class="section-header">
+          <div class="section-num plain">🔎</div>
+          <h2 class="section-title">Verifikasi Akhir</h2>
+        </div>
+        <div class="prose-card">
+          <p>Sebelum kamu percaya setup ini beres, cek dulu dengan langkah berikut:</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Buka kedua aplikasi bersamaan</div>
+            <div class="step-desc">
+              <p>VS Code (Stable) untuk project kantor, VS Code Insiders untuk project pribadi. Buka
+              dua-duanya di layar yang sama.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Cek status akun di masing-masing panel</div>
+            <div class="step-desc">
+              <p>Di kolom chat panel Claude Code, ketik:</p>
+              <pre class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>/status</code></pre>
+              <p>Lakukan di kedua aplikasi. Pastikan email/akun yang tertampil <strong>berbeda</strong> antara
+              VS Code (kantor) dan VS Code Insiders (pribadi).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Test generate barengan</div>
+            <div class="step-desc">
+              <p>Coba minta Claude generate sesuatu yang kecil di kedua panel <strong>secara bersamaan</strong>
+              (simulasi kejadian kemarin). Cek lagi <code>/status</code> di masing-masing setelahnya — kalau
+              akunnya tetap konsisten (tidak ketuker), setup berhasil.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section class="section" id="sec-trouble">
+        <div class="section-header">
+          <div class="section-num plain">🛠️</div>
+          <h2 class="section-title">Troubleshooting</h2>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-num">?</div>
+          <div class="finding-text"><strong>Panel di VS Code Insiders minta login ulang terus-menerus.</strong>
+          Kemungkinan kredensial belum tersimpan dengan benar. Coba <code>/logout</code> lalu <code>/login</code>
+          ulang di panel tersebut. Pastikan tidak ada proses VS Code Insiders lain yang masih berjalan di
+          background saat login (cek Task Manager).</div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-num">?</div>
+          <div class="finding-text"><strong>Akun tetap ketuker walau sudah pakai VS Code Insiders.</strong>
+          Pastikan kamu benar-benar membuka <strong>aplikasi Insiders</strong> (ikon hijau), bukan window
+          VS Code Stable yang kedua (ikon biru). Dua window dari aplikasi yang sama tetap berbagi satu
+          folder data — yang memisahkan adalah <em>aplikasinya</em>, bukan jumlah window-nya.</div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-num">?</div>
+          <div class="finding-text"><strong>Terminal <code>claude-personal</code> tidak dikenali sebagai
+          command.</strong> Pastikan sudah menutup <strong>semua</strong> jendela PowerShell lama dan buka
+          yang baru setelah mengedit <code>$PROFILE</code>. Kalau masih gagal, cek isi profile dengan
+          <code>notepad $PROFILE</code> — pastikan function-nya benar-benar tersimpan.</div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-num">?</div>
+          <div class="finding-text"><strong>Mau pindah ke .zip Portable, bukan Insiders.</strong> Bisa —
+          download <code>.zip</code> dari halaman download resmi, extract ke folder pilihan kamu (misal
+          <code>D:\VSCode-Personal</code>), lalu buat folder kosong bernama persis <code>data</code> tepat
+          di sebelah <code>Code.exe</code>. Setelah itu install extension Claude Code seperti biasa dan
+          login — semua data otomatis kesimpan di folder <code>data</code> itu, terpisah dari instalasi
+          VS Code manapun.</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-brand">
+      <strong>AnabhiDev-CCD · Setup Dua Akun Claude Code</strong><br>
+      Version 1.1 · 27 August 2026 · WITA
+    </div>
+    <div class="footer-brand">
+      <strong>Development · <span>Anabhi Dev</span></strong><br>
+      Internal Guide · Windows Setup
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   AnabhiDev-CCD v1.1 — Interactive Guide
+   Development · Anabhi Dev
+   ============================================================ */
+(function(){
+  'use strict';
+
+  var $  = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+
+  /* ---------- THEME ---------- */
+  var THEME_KEY = 'anabhidev-ccd-theme';
+  var THEME_COLORS = { dark: '#0B1829', light: '#F6F8FB' };
+  var root = document.documentElement;
+  var themeBtn = $('#themeBtn');
+  var metaTheme = $('#metaTheme');
+
+  function paintTheme(t){
+    root.setAttribute('data-theme', t);
+    if (metaTheme) metaTheme.setAttribute('content', THEME_COLORS[t]);
+    if (themeBtn){
+      themeBtn.textContent = (t === 'dark') ? '☀' : '☾';
+      themeBtn.setAttribute('aria-label', t === 'dark' ? 'Ganti ke tema terang' : 'Ganti ke tema gelap');
+    }
+  }
+  paintTheme(root.getAttribute('data-theme') || 'dark');
+
+  if (themeBtn){
+    themeBtn.addEventListener('click', function(){
+      var next = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+      paintTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch(e){}
+    });
+  }
+  if (window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onSchemeChange = function(e){
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch(err){}
+      if (!saved) paintTheme(e.matches ? 'dark' : 'light');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onSchemeChange);
+    else if (mq.addListener) mq.addListener(onSchemeChange);
+  }
+
+  /* ---------- DRAWER MOBILE ---------- */
+  var menuBtn = $('#menuBtn');
+  var sidebar = $('#sidebar');
+  var scrim   = $('#scrim');
+
+  function openDrawer(){
+    sidebar.classList.add('open');
+    scrim.classList.add('show');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.setAttribute('aria-label', 'Tutup menu navigasi');
+    var first = $('.nav-link', sidebar);
+    if (first) first.focus();
+  }
+  function closeDrawer(returnFocus){
+    sidebar.classList.remove('open');
+    scrim.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Buka menu navigasi');
+    if (returnFocus !== false) menuBtn.focus();
+  }
+  if (menuBtn){
+    menuBtn.addEventListener('click', function(){
+      if (sidebar.classList.contains('open')) closeDrawer();
+      else openDrawer();
+    });
+  }
+  if (scrim) scrim.addEventListener('click', function(){ closeDrawer(); });
+  $$('.nav-link').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.matchMedia('(max-width:1050px)').matches) closeDrawer(false);
+    });
+  });
+
+  /* ---------- ESC global ---------- */
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (sidebar && sidebar.classList.contains('open')) closeDrawer();
+  });
+
+  /* ---------- SCROLLSPY ---------- */
+  var navLinks = $$('.nav-link[href^="#"]');
+  var sections = navLinks
+    .map(function(a){ return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && sections.length){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        navLinks.forEach(function(a){
+          a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id);
+        });
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---------- COPY CODE ---------- */
+  window.copyCode = function(btn){
+    var code = btn.parentElement.querySelector('code');
+    if (!code) return;
+    var text = code.textContent;
+    var done = function(){
+      var orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function(){
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){
+        fallbackCopy(text); done();
+      });
+    } else {
+      fallbackCopy(text); done();
+    }
+  };
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
