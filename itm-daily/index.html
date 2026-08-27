@@ -3,171 +3,97 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.11
-Generated : 22 August 2026, 15:47:33
+Version   : 2.12
+Generated : 27 August 2026, 19:41:12
 ================================================================
-PERUBAHAN DARI v2.10 (auto-parse, full English UI, Dashboard baru)
 
-  1. Padding tombol Simpan/Save vs bottom nav diperbesar
-     Keluhan: tombol "Simpan aktivitas" (kini "Save activity") masih
-     mepet ke bottom nav, khususnya di mode Day Off. Ditambahkan
-     margin-top pada .submit + padding-bottom .scroll diperbesar
-     (32px → 40px). WAJIB dipasangkan dengan v1.12.ts (lihat poin 3).
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
 
-  2. Warna nav aktif dipertegas di kedua mode
-     Sebelumnya var(--navy) untuk kedua mode: nyaris tak terbaca di
-     dark mode, kurang tegas di light mode. Sekarang: light mode
-     #12181F (hex literal, kontras 13.97:1), dark mode putih bersih
-     #FFFFFF (kontras 18.45:1) — dihitung, bukan tebakan.
+PASANGAN WAJIB
+  Edge Function v1.13 (MFB-IT_v1.13.ts). Urutan deploy:
+  Edge Function DULU, baru HTML. Lihat STATUS.md.
 
-  3. AUTO-PARSE tanggal + jenis hari dari teks bebas (BUTUH v1.12.ts)
-     Sebelumnya AI Parse hanya mengisi task/tag/priority/status/
-     remark — tanggal & jenis hari (Working Day/Day Off) HARUS diisi
-     manual meski disebut jelas di kalimat ("libur tanggal 16").
-     Sekarang Gemini juga mendeteksi:
-       - taskDate (format tanggal disebut, "kemarin", "besok", dst)
-       - activityType (kata "libur"/"cuti"/"sakit"/"izin" → Day Off)
-       - offWorking (tetap ada pekerjaan meski hari libur, atau tidak)
-     Hasil deteksi divalidasi ulang di client sebelum diterapkan
-     (pertahanan berlapis, server juga sudah validasi).
+PERUBAHAN DARI v2.11
+================================================================
 
-  4. Full translasi UI ke Bahasa Inggris
-     SEMUA teks yang tampil ke user (label, placeholder, tombol,
-     toast, pesan error, judul kartu, nama hari/bulan, bottom nav,
-     PIN screen, dialog konfirmasi) — termasuk pesan error yang
-     berasal dari server (lihat v1.12.ts). Ditemukan & diperbaiki 6
-     bug translasi yang lolos scan pertama (MONTH_NAME_ID di label
-     bulan Dashboard, "Selesai" di 2 tempat, dsb) lewat scan ulang
-     sistematis regex + manual per fungsi.
+A. BUG YANG DIPERBAIKI (ditemukan saat audit 27 Agustus 2026)
+  1. Bottom nav "Report" tidak pernah tampak aktif.
+     Penyebab: tombol memakai data-tab="report", tetapi switchView
+     dipanggil dengan 'laporan', lalu dibandingkan mentah
+     (b.dataset.tab === view) sehingga selalu false. Ini penyebab
+     sebenarnya keluhan "Laporan tidak hitam bold" — bukan masalah
+     kontras warna seperti dugaan sebelumnya.
+     Perbaikan: pemetaan view -> tab key sebelum dibandingkan.
+  2. Jam di header terbaca "19.38:37" (campur titik & titik dua).
+     Penyebab: toLocaleTimeString('id-ID') memakai titik sebagai
+     pemisah jam-menit, sementara kode menambahkan ':' untuk detik.
+     Perbaikan: locale 'en-GB' (menghasilkan titik dua).
 
-  5. Dashboard: 6 stat card (2 kolom x 3 baris) dengan collapse
-     4 card selalu tampil: Total task, Done, Open (belum selesai),
-     Oldest open (task terbuka tertua dalam hari). 2 card di balik
-     "Show more": Days filled (hari terisi vs hari yang sudah
-     berlalu bulan ini), Day streak (hari berturut-turut ada entry).
-     Semua dihitung 100% di client dari data "items" yang SUDAH
-     dikembalikan action get-report — TIDAK perlu endpoint baru.
-     Logic sudah diuji dengan beberapa skenario data (lihat catatan
-     computeExtraStats).
+B. SISA TRANSLASI INGGRIS yang lolos dari v2.11
+  Semuanya string yang TERLIHAT/TERBACA pengguna, bukan komentar:
+  3. Atribut lang pada tag html: id -> en
+  4. aria-label tombol tema (Indonesia)    -> Inggris
+  5. Label tambah tag (Indonesia)          -> "+ new tag"
+  6. Label lihat semua tag (Indonesia)     -> "All tags (N)"
+  7. Label ringkas tag (Indonesia)         -> "Collapse"
+  8. Pesan error jaringan di callApi       -> Inggris (tampil di toast)
+  9. Pesan error respons non-JSON          -> Inggris (tampil di toast)
+ 10. clientMeta browser/os (Indonesia)     -> "Other" (tersimpan di DB)
 
-  6. Dashboard: 2 chart baru
-     - "Daily Activity": bar chart 1 batang per hari sepanjang bulan
-       berjalan, langsung memperlihatkan hari yang bolong.
-     - "Work Type": bar chart horizontal dari s.byWorkType — data
-       yang SUDAH dihitung server sejak lama tapi belum pernah
-       ditampilkan di UI mana pun sampai sekarang.
+C. KEPATUHAN STANDAR (Standar_Coding_MissFishBali_v1.2 + SOP v1.6)
+ 11. CONFIG.APP_VERSION disamakan dengan header file (dulu '2.9'
+     padahal header 2.11) — SC bagian 5.
+ 12. Dark mode kini mengikuti tema OS lewat prefers-color-scheme
+     pada kunjungan pertama; pilihan manual pengguna tetap menang
+     dan disimpan. Atribut data-theme ikut ditulis di <html> agar
+     selaras SOP kategori 13. Kelas .dark-mode DIPERTAHANKAN —
+     seluruh 15 selector lama tidak diubah (perubahan menambah,
+     bukan mengganti — SOP 8.7).
+ 13. Scrollbar custom tipis untuk area scrollable (SOP 13 MANDATORY).
+ 14. aria-current="page" pada tab bottom nav aktif (SOP 16).
+ 15. aria-expanded pada toggle collapse tag & KPI dasbor (SOP 8/14).
+ 16. Skip link + kelas .sr-only (SOP 8/14).
+ 17. min-height 100vh -> 100dvh pada wrapper desktop (SOP 1).
+ 18. min-width:0 pada anak grid/flex (SOP 1 — pencegahan overflow).
+ 19. meta description + robots noindex,nofollow (SOP 2). App ini
+     ber-PIN dan internal, jadi noindex memang yang benar.
 
-WAJIB PASANGAN: File ini HARUS di-deploy BERSAMA MFB-IT_v1.12.ts
-(Edge Function). Auto-parse tanggal/jenis hari TIDAK akan berfungsi
-kalau Edge Function masih versi lama (v1.11), karena field
-taskDate/activityType/offWorking baru ada di respons v1.12.
-Urutan deploy: Edge Function (v1.12.ts) DULU, baru webapp (HTML ini).
+D. FITUR BARU (semuanya sisi klien, nol perubahan database)
+ 20. ANTREAN OFFLINE. Bila submit gagal karena jaringan, entri
+     disimpan di localStorage dan dikirim otomatis begitu koneksi
+     kembali (atau saat tombol antrean ditekan). Dibuat karena
+     server room / area belakang sinyalnya lemah.
+ 21. INPUT SUARA. Tombol mikrofon mengisi kotak teks bebas lewat
+     Web Speech API, lalu bisa langsung diuraikan AI. Memakai
+     pipeline AI yang sudah ada — tidak ada endpoint baru.
+     Tombol otomatis disembunyikan bila peramban tidak mendukung.
+ 22. TEMPLATE TASK BERULANG. Simpan isian yang sering dipakai
+     (mis. "Cek backup harian"), pakai ulang dengan satu ketukan.
+     Disimpan di localStorage, maksimal 8 template.
+ 23. PERINGATAN DUPLIKAT. Sebelum menyimpan, bila ada task dengan
+     teks sangat mirip pada tanggal yang sama, muncul konfirmasi
+     dulu — bukan penolakan.
+ 24. CARI DI SELURUH RIWAYAT (butuh Edge Function v1.13). Tab
+     History dapat kotak pencarian; tanpa kata kunci tetap
+     menampilkan 7 hari terakhir seperti sebelumnya.
 
-PERUBAHAN DARI v2.9 (Phase 1 — bugfix & polish visual)
-
-  1. Logo header 34→44px — TIDAK menambah tinggi header
-     .hd-meta (jam kanan) sudah min-height:44px, jadi ruang untuk
-     logo lebih besar sudah tersedia gratis tanpa header membesar.
-
-  2. Mode "Hari Libur" kepotong bottom nav — DIPERBAIKI
-     Total padding dipangkas ~70px (.ai-box 92→68px, .card padding
-     20→16px, hint dipersingkat jadi 1 baris, .field margin 16→12px,
-     .scroll padding-top 16→12px). Berlaku ke semua tab karena
-     perubahan di rule bersama, bukan cuma mode Libur.
-
-  3. 4 warna dark-mode-aware yang lolos dari perbaikan v2.8 —
-     DIPERBAIKI. Tombol "Uraikan dengan AI" (kontras lama 2.95:1,
-     gagal AA) & ringkasan hasil AI sekarang pakai variabel baru
-     --ai-accent-text/--ai-accent-text-soft khusus dark mode (warna
-     tetap keluarga brass/gold, lolos 8+:1). .picker-row:active &
-     .btn-logout:active tidak lagi kedip putih di dark mode.
-
-  4. Layar PIN — redistribusi jarak vertikal
-     Sebelumnya ~75px kosong nganggur di atas logo, ~370px kosong
-     di bawah keypad (dari layar 1400px). Padding-top dikurangi
-     sedikit, jarak antar-blok (logo/brand/sub) dilebarkan — konten
-     menyebar lebih rata ke bawah tanpa center-vertical penuh
-     (sesuai permintaan, supaya tidak "mengambang di tengah").
-
-  5. Tag jadi collapsible
-     Default: tampilkan tag yang SUDAH terpilih + "+ tag baru" +
-     "Semua tag (N) ▾". Tap untuk buka grid lengkap ("Ringkas ▴"
-     untuk menutup lagi). Skalabel — grid tidak jebol walau tag
-     bertambah jadi 30+.
-
-  6. Strip "Hari ini" di tab Input (baru)
-     1 baris tipis warna navy di atas kartu "Tulis bebas":
-     "N aktivitas tercatat" atau "Belum ada catatan" bila 0. Dari
-     data taskToday yang sudah dikirim server saat login — tidak
-     ada request tambahan. Update otomatis begitu submit berhasil.
-
-  7. Bug: daftar tag hilang diam-diam — DIPERBAIKI
-     Sebelumnya kalau get-tags gagal, tag langsung kosong tanpa
-     retry/toast (biang tampilan mirip "tag disembunyikan" yang
-     dilaporkan). Sekarang: retry 1x, fallback ke cache
-     localStorage kalau masih gagal, toast hanya muncul kalau
-     benar-benar tidak ada data.
-
-PERUBAHAN DARI v2.8 (bugfix dari laporan pemakaian nyata)
-
-  1. Header membesar setelah toggle dark mode — DIPERBAIKI
-     Toggle sebelumnya bikin header jadi 2 baris (toggle di atas
-     jam), menambah tinggi header. Sekarang toggle sejajar dengan
-     jam (1 baris), tinggi header kembali seperti semula di kedua
-     mode. Sudah diverifikasi dengan screenshot langsung.
-
-  2. Dasbor: teks tidak terbaca di dark mode — DIPERBAIKI
-     Angka KPI (Total task, % Selesai) dan judul chart (Status
-     Task, Top 5 Tag, Distribusi Prioritas) sebelumnya memakai
-     warna navy gelap yang TIDAK ikut berubah di dark mode,
-     sehingga nyaris tak terbaca di atas card yang sudah gelap.
-     Ditambahkan variabel CSS baru "--heading" khusus untuk teks
-     judul yang PERLU ikut kontras di dark mode (beda dari --navy
-     yang tetap dipakai untuk elemen warna brand solid seperti
-     header & tombol utama). Turut diperbaiki: tombol "Unduh
-     Excel", judul & tombol "Backup Data", checkbox terpilih di
-     dropdown Jenis Pekerjaan/Jenis Hari/Status. Sudah diverifikasi
-     dengan screenshot dark mode langsung, bukan hanya baca kode.
-
-  3. Dasbor: bar chart "Top 5 Tag" — DIUBAH
-     Sebelumnya horizontal (batang ke samping), sekarang vertikal
-     (batang naik ke atas), sesuai preferensi tampilan.
-
-CARA PASANG
-  Tidak ada file baru dan tidak ada perubahan Edge Function untuk
-  bugfix di atas. Cukup upload berkas ini menimpa index.html yang
-  sudah ada (manifest.json, sw.js, dan folder icons/ TIDAK perlu
-  diunggah ulang untuk bugfix ini).
-
-  Namun kalau ini pemasangan PERTAMA KALI Phase 3+4 (PWA & Dasbor),
-  tetap perlu urutan lengkap:
-  1. Upload folder icons/ (6 file) ke /itm-daily/icons/
-  2. Upload manifest.json ke /itm-daily/manifest.json
-  3. Upload sw.js ke /itm-daily/sw.js
-  4. Upload berkas ini menimpa /itm-daily/index.html
-
-RINGKASAN FITUR PHASE 3+4 (PWA & Dasbor, dari v2.8)
-  PWA:
-  - Bisa "Add to Home Screen" — dapat ikon sendiri, buka layar
-    penuh tanpa address bar Chrome.
-  - Mekanisme deteksi update: banner kuning "Versi baru tersedia
-    — Muat ulang" akan muncul otomatis kalau ada versi baru.
-
-  DASBOR:
-  - Tab "Dasbor" aktif — ringkasan visual bulan berjalan: KPI
-    (Total task & % Selesai), donut chart Status, bar chart Top 5
-    Tag, bar chart Distribusi Prioritas.
-  - Reuse action 'get-report' — tidak ada Edge Function baru.
-  - Tab "Log" TETAP "segera hadir" — belum dikerjakan.
+E. TIDAK MASUK VERSI INI (butuh perubahan schema database)
+  Registry aset/perangkat, lampiran foto (Supabase Storage), dan
+  follow-up vendor. Ketiganya perlu tabel/bucket baru + langkah
+  manual di dashboard Supabase, jadi dipisah ke paket berikutnya
+  (MFB-IT_v1.6.sql) supaya rollback-nya jelas per paket.
 ================================================================
 -->
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0B1B2E">
 <title>Miss Fish — IT Daily Activity</title>
+<meta name="description" content="Internal daily activity log for the IT Department of Miss Fish Bali. PIN protected.">
+<!-- App internal ber-PIN: sengaja TIDAK diindeks mesin pencari. -->
+<meta name="robots" content="noindex, nofollow">
 
 <!-- ── PWA: manifest, ikon, dukungan iOS ────────────────────
      Semua path RELATIF terhadap index.html (folder /itm-daily/),
@@ -259,6 +185,71 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
+/* ══════════════════════════════════════════════
+   v2.12 — KEPATUHAN STANDAR (blok baru, murni menambah)
+   Semua aturan di bawah ini tidak menimpa selector lama
+   mana pun; ini penambahan sesuai SOP 8.7.
+   ══════════════════════════════════════════════ */
+
+/* SOP kategori 8 — teks khusus screen reader. Dipakai skip link
+   dan label tersembunyi lain. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* SOP kategori 8/14 — skip link: tersembunyi sampai mendapat fokus
+   keyboard, lalu muncul di kiri atas. Tanpa ini pengguna keyboard
+   harus melewati seluruh header sebelum mencapai isi halaman. */
+.skip-link {
+  position: absolute; left: var(--sp-3); top: -60px; z-index: 9999;
+  padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  background: var(--navy); color: #FFFFFF; text-decoration: none;
+  transition: top .18s ease;
+}
+.skip-link:focus { top: var(--sp-3); }
+
+/* SOP kategori 13 (MANDATORY) — scrollbar custom tipis untuk setiap
+   area scrollable yang terlihat. Tanpa ini tampilan sepenuhnya
+   bergantung scrollbar default peramban (tebal & abu-abu di
+   Windows/Linux) begitu isinya cukup panjang untuk memicu scroll. */
+.scroll, .sheet, #pinScreen, .ws-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.scroll::-webkit-scrollbar,
+.sheet::-webkit-scrollbar,
+#pinScreen::-webkit-scrollbar,
+.ws-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll::-webkit-scrollbar-track,
+.sheet::-webkit-scrollbar-track,
+#pinScreen::-webkit-scrollbar-track,
+.ws-wrap::-webkit-scrollbar-track { background: transparent; }
+.scroll::-webkit-scrollbar-thumb,
+.sheet::-webkit-scrollbar-thumb,
+#pinScreen::-webkit-scrollbar-thumb,
+.ws-wrap::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+/* Di dark mode --line terlalu gelap untuk terlihat; pakai abu netral. */
+body.dark-mode .scroll::-webkit-scrollbar-thumb,
+body.dark-mode .sheet::-webkit-scrollbar-thumb,
+body.dark-mode .ws-wrap::-webkit-scrollbar-thumb { background: #46536A; }
+body.dark-mode .scroll,
+body.dark-mode .sheet,
+body.dark-mode .ws-wrap { scrollbar-color: #46536A transparent; }
+
+/* SOP kategori 1 — anak grid/flex default-nya min-width:auto, artinya
+   menolak mengecil di bawah lebar konten intrinsiknya. Satu kata
+   panjang tanpa spasi (nama file, ID task) cukup untuk melebarkan
+   seluruh grid dan memicu scroll horizontal. Pencegahan, bukan
+   perbaikan bug yang sudah terjadi. */
+.summary-grid > *, .prio > *, .tags > *, .report-filter > *,
+.report-range-row > *, .report-btn-row > *, .riwayat-head > *,
+.switch-row > *, .session-row > * { min-width: 0; }
+/* Tabel worksheet sudah punya pembungkus scroll sendiri; dipastikan
+   di sini supaya tidak pernah melebarkan induknya. */
+.ws-wrap { max-width: 100%; }
+img, svg, canvas { max-width: 100%; }
+
 /* v2.10 — redistribusi jarak, BUKAN geser semua ke bawah. Sebelumnya
    padding-top clamp(20,6vh,54) terlalu kecil dibanding sisa ruang
    kosong di bawah keypad (dari screenshot: ~75px kosong di atas
@@ -312,7 +303,9 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; colo
 }
 #app.on { display: flex; }
 @media (min-width: 620px) {
-  body { background: #DCE2E8; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  /* v2.12 — SOP kategori 1: 100dvh mengikuti tinggi viewport yang benar-benar
+     terlihat. 100vh dibiarkan sebagai baris pertama = fallback peramban lama. */
+  body { background: #DCE2E8; display: flex; align-items: center; justify-content: center; min-height: 100vh; min-height: 100dvh; }
   #app { box-shadow: 0 0 0 1px rgba(11,27,46,.07), 0 24px 64px rgba(11,27,46,.16); border-radius: 20px; overflow: hidden; height: min(100dvh, 880px); }
 }
 
@@ -438,6 +431,68 @@ body.dark-mode .btn-logout:active { background: var(--field); }
 .today-strip-label { color: rgba(255,255,255,.65); }
 .today-strip-value { color: #fff; font-weight: 600; }
 .today-strip-value.empty { color: var(--brass); }
+
+/* ══════════════════════════════════════════════
+   v2.12 — CSS fitur baru
+   ══════════════════════════════════════════════ */
+
+/* Bar antrean offline. Bentuknya MENIRU .today-strip (navy solid +
+   teks putih) karena pasangan warna itu sudah terukur: putih di atas
+   navy = 17,35:1 dan brass di atas navy = 7,59:1 — dua-duanya lolos
+   AA jauh, dan tidak berubah di dark mode karena --navy memang tidak
+   ikut berubah. Nol warna baru yang perlu diukur ulang. */
+.queue-bar {
+  background: var(--navy); border-radius: 12px;
+  padding: 8px 14px; margin-bottom: var(--sp-3);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
+  font-size: 12.5px;
+}
+.queue-bar-text { color: rgba(255,255,255,.80); }
+.queue-bar-btn {
+  color: var(--brass); font-weight: 700; cursor: pointer;
+  background: transparent; border: 0; padding: 6px 4px;
+  font-size: 12.5px; min-height: 32px;
+}
+.queue-bar-btn:active { opacity: .6; }
+.queue-bar-btn[disabled] { opacity: .45; cursor: default; }
+
+/* Tombol mikrofon di kepala kartu Free write. 36px sudah memenuhi
+   SOP 8 (AA = 24px); tidak dibuat 44px supaya tidak mendorong tinggi
+   baris judul kartu. */
+.mic-btn {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; border: 1px solid var(--line);
+  background: transparent; color: var(--mid); cursor: pointer;
+}
+.mic-btn:active { background: var(--field); }
+.mic-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+/* Sedang merekam: merah + denyut halus, supaya jelas mikrofon aktif. */
+.mic-btn.rec { color: var(--red); border-color: var(--red); animation: micPulse 1.2s ease-in-out infinite; }
+@keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+/* Chip template. Memakai ukuran & radius yang sama dengan .tag-add
+   supaya terasa satu keluarga, tapi garis penuh (bukan dashed) untuk
+   membedakan "template siap pakai" dari "tambah tag baru". */
+.tpl-chip {
+  font-size: 13px; padding: var(--sp-2) var(--sp-3); border-radius: 10px;
+  background: var(--field); border: 1px solid var(--line); color: var(--ink);
+  cursor: pointer; min-height: 36px; display: flex; align-items: center; gap: 8px;
+}
+.tpl-chip:active { opacity: .7; }
+.tpl-chip:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.tpl-chip-name { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Tombol hapus di dalam chip. Diberi area sentuh sendiri supaya tidak
+   tertekan tanpa sengaja saat maksudnya memakai template. */
+.tpl-chip-del {
+  color: var(--muted); font-weight: 700; line-height: 1;
+  padding: 4px 2px 4px 4px; margin: -4px -2px -4px 0;
+}
+.tpl-chip-del:active { color: var(--red); }
+
+/* Kotak pencarian riwayat. Memakai kelas .input yang sudah ada untuk
+   tampilannya; hanya butuh jarak bawah. */
+.riwayat-search { margin-bottom: var(--sp-3); }
 
 .ai {
   background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
@@ -778,6 +833,12 @@ body.dark-mode .nb.on { color: #FFFFFF; }
 </head>
 <body>
 
+<!-- v2.12 — SOP kategori 8/14: skip link WAJIB jadi elemen pertama di body.
+     Tidak terlihat sampai mendapat fokus keyboard (Tab pertama). Tanpa ini,
+     pengguna keyboard/screen reader harus melewati seluruh header setiap
+     kali sebelum mencapai isi halaman. -->
+<a class="skip-link" href="#scroll">Skip to main content</a>
+
 <div class="update-banner" id="updateBanner">
   <span class="update-banner-text">New version available</span>
   <span class="update-banner-btn" id="updateBannerBtn">Reload</span>
@@ -831,7 +892,7 @@ body.dark-mode .nb.on { color: #FFFFFF; }
     <div class="hd-title"><span>IT Daily</span><span>Activity</span></div>
 
     <div class="hd-side">
-      <button class="theme-toggle" id="themeToggle" aria-label="Ganti mode gelap/terang" type="button">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" type="button">
         <svg class="theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8l1.8-1.8M18 6l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <svg class="theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       </button>
@@ -845,7 +906,10 @@ body.dark-mode .nb.on { color: #FFFFFF; }
     </div>
   </div>
 
-  <div class="scroll" id="scroll">
+  <!-- v2.12 — tabindex="-1" supaya skip link benar-benar MEMINDAHKAN fokus
+       ke sini. Tanpa itu, sebagian peramban hanya menggeser tampilan
+       sementara fokus keyboard tetap tertinggal di header. -->
+  <div class="scroll" id="scroll" tabindex="-1">
     <div class="scroll-inner" id="viewInput">
 
       <!-- v2.10 — strip "Hari ini", 1 baris tipis di atas kartu
@@ -854,9 +918,25 @@ body.dark-mode .nb.on { color: #FFFFFF; }
            jadi tidak butuh request tambahan. -->
       <div class="today-strip" id="todayStrip"></div>
 
+      <!-- v2.12 — bar antrean offline. Disembunyikan selama antrean kosong,
+           jadi pada pemakaian normal tidak menambah apa pun ke layar.
+           role="status" supaya screen reader mengumumkan perubahannya
+           tanpa memindahkan fokus pengguna. -->
+      <div class="queue-bar hidden" id="queueBar" role="status" aria-live="polite">
+        <span class="queue-bar-text" id="queueBarText"></span>
+        <button class="queue-bar-btn" id="queueBarBtn" type="button">Send now</button>
+      </div>
+
       <div class="ai">
         <div class="ai-head">
           <div class="ai-title">&#10022; Free write</div>
+          <!-- v2.12 — input suara. Tombol ini DISEMBUNYIKAN oleh JS bila
+               peramban tidak mendukung Web Speech API, jadi tidak pernah
+               ada tombol yang ditekan lalu tidak terjadi apa-apa. -->
+          <button class="mic-btn hidden" id="micBtn" type="button"
+                  aria-label="Dictate with voice" title="Dictate with voice">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
         </div>
         <textarea class="ai-box" id="aiInput"
           placeholder="Describe your work as-is. Example: replaced printer LAN cable, urgent."></textarea>
@@ -915,10 +995,27 @@ body.dark-mode .nb.on { color: #FFFFFF; }
           <textarea class="textarea" id="taskDesc" placeholder="Write it clearly, so it's easy to read again later."></textarea>
         </div>
 
+        <!-- v2.12 — template task berulang. Seluruh isian disimpan lokal
+             (localStorage), tidak pernah dikirim ke server. Baris ini
+             disembunyikan JS selama belum ada template tersimpan. -->
+        <div class="field hidden" id="tplBox">
+          <label class="label">Templates</label>
+          <div class="tags" id="tplGrid"></div>
+        </div>
+
         <div class="field">
           <label class="label">Tags</label>
           <div class="tags" id="tagGrid">
             <span class="tag-add" style="opacity:.6">Loading tags…</span>
+          </div>
+        </div>
+
+        <!-- Tombol simpan template diletakkan PALING BAWAH kartu Work,
+             karena baru masuk akal ditekan setelah isian di atasnya
+             selesai diisi. -->
+        <div class="field" style="margin-bottom:0">
+          <div class="tags">
+            <span class="tag-add" id="tplSaveBtn" role="button" tabindex="0">&#43; save as template</span>
           </div>
         </div>
       </div>
@@ -959,7 +1056,17 @@ body.dark-mode .nb.on { color: #FFFFFF; }
 
     <div class="scroll-inner hidden" id="viewRiwayat">
       <div class="riwayat-head">
-        <div class="card-title" style="margin-bottom:0">History — last 7 days</div>
+        <div class="card-title" style="margin-bottom:0" id="riwayatTitle">History — last 7 days</div>
+      </div>
+
+      <!-- v2.12 — pencarian seluruh riwayat (butuh Edge Function v1.13).
+           Kotak kosong = perilaku lama, yaitu 7 hari terakhir. Kotak ini
+           disembunyikan JS bila server masih versi lama, supaya tidak
+           ada fitur yang tampak tersedia tapi tidak berfungsi. -->
+      <div class="riwayat-search hidden" id="riwayatSearchBox">
+        <label class="sr-only" for="riwayatSearch">Search all history</label>
+        <input class="input" id="riwayatSearch" type="search" enterkeyhint="search"
+               placeholder="Search all history — task, tag, remark">
       </div>
       <div id="riwayatList">
         <div class="riwayat-empty">Loading history…</div>
@@ -1094,7 +1201,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.9',
+  APP_VERSION:       '2.12', // v2.12 — WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -1113,17 +1220,54 @@ const Store = (() => {
 const KEY_TOKEN = 'mfbit_session';
 const KEY_LOGIN_AT = 'mfbit_login_at';
 const KEY_THEME = 'mfbit_theme';
+// v2.12 — kunci baru. Semuanya HANYA lokal di HP masing-masing;
+// tidak ada satu pun yang dikirim ke server.
+const KEY_QUEUE  = 'mfbit_queue';      // antrean submit saat offline
+const KEY_TPL    = 'mfbit_templates';  // template task berulang
+const KEY_RECENT = 'mfbit_recent';     // jejak submit, untuk deteksi duplikat
 
-// Terapkan tema tersimpan SESEGERA MUNGKIN (sebelum konten lain dieksekusi)
-// supaya tidak ada "kedipan" sesaat warna terang sebelum dark mode diterapkan.
-(function applyStoredTheme() {
-  if (Store.get(KEY_THEME) === 'dark') {
-    document.body.classList.add('dark-mode');
-  }
+// Terapkan tema SESEGERA MUNGKIN (sebelum konten lain dieksekusi) supaya
+// tidak ada "kedipan" sesaat warna terang sebelum dark mode diterapkan.
+//
+// v2.12 — SOP kategori 13: urutan penentuan tema sekarang
+//   1. pilihan manual pengguna (localStorage) — SELALU menang, dan
+//   2. kalau belum pernah memilih, ikuti tema sistem operasi.
+// Sebelumnya langkah 2 tidak ada, jadi pengguna yang HP-nya dark mode
+// tetap disambut layar terang sampai menekan tombol tema sendiri.
+//
+// Kelas .dark-mode DIPERTAHANKAN sebagai penggerak seluruh CSS lama
+// (15 selector). Atribut data-theme di <html> ditambahkan agar selaras
+// SOP, sekaligus jadi pegangan kalau nanti CSS dipindah ke token
+// [data-theme] — perubahan menambah, bukan mengganti (SOP 8.7).
+function prefersDarkOS() {
+  try { return window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  catch (e) { return false; } // peramban tanpa matchMedia — anggap terang
+}
+
+function applyTheme(isDark) {
+  document.body.classList.toggle('dark-mode', isDark);
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+}
+
+(function applyInitialTheme() {
+  const saved = Store.get(KEY_THEME);
+  const isDark = saved ? (saved === 'dark') : prefersDarkOS();
+  applyTheme(isDark);
 })();
 
+// Kalau pengguna BELUM pernah memilih manual, ikuti perubahan tema OS
+// secara langsung (mis. jadwal otomatis gelap saat malam di HP).
+// Begitu ia memilih manual, listener ini tidak berpengaruh lagi karena
+// nilai tersimpan diprioritaskan.
+try {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!Store.get(KEY_THEME)) applyTheme(e.matches);
+  });
+} catch (e) { /* peramban lama: abaikan, tema awal sudah benar */ }
+
 function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark-mode');
+  const isDark = !document.body.classList.contains('dark-mode');
+  applyTheme(isDark);
   Store.set(KEY_THEME, isDark ? 'dark' : 'light');
 }
 
@@ -1163,9 +1307,26 @@ function switchView(view) {
   $('viewRiwayat').classList.toggle('hidden', view !== 'riwayat');
   $('viewLaporan').classList.toggle('hidden', view !== 'laporan');
   $('viewDash').classList.toggle('hidden', view !== 'dash');
-  document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.tab === view));
+  // v2.12 — BUG FIX: data-tab tombol memakai 'report', sedangkan nama view
+  // internal adalah 'laporan'. Membandingkan keduanya mentah membuat tab
+  // Report TIDAK PERNAH mendapat kelas .on. Dipetakan dulu di sini.
+  const tabKey = view === 'laporan' ? 'report' : view;
+  document.querySelectorAll('.nb').forEach(b => {
+    const isOn = b.dataset.tab === tabKey;
+    b.classList.toggle('on', isOn);
+    // SOP kategori 16 — status aktif harus terbaca screen reader,
+    // bukan hanya terlihat lewat warna.
+    if (isOn) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
   $('scroll').scrollTop = 0;
-  if (view === 'riwayat') loadRiwayat();
+  // v2.12 — kalau kotak pencarian sedang berisi, jangan timpa hasilnya
+  // dengan daftar 7 hari setiap kali pengguna pindah tab lalu kembali.
+  if (view === 'riwayat') {
+    const sq = $('riwayatSearch') ? $('riwayatSearch').value.trim() : '';
+    if (sq.length >= 2) runRiwayatSearch(sq);
+    else loadRiwayat();
+  }
   if (view === 'laporan') initReportDefaults();
   if (view === 'dash') loadDashboard();
 }
@@ -1299,7 +1460,7 @@ async function callApi(payload) {
     });
   } catch (e) {
     console.error('[MFB-IT] fetch gagal:', e);
-    const err = new Error('Tidak sampai ke server. Kemungkinan koneksi terputus, atau permintaan diblokir kebijakan keamanan situs (CORS/CSP). Buka Console peramban untuk rincian.');
+    const err = new Error('Could not reach the server. The connection may be down, or the request was blocked by the site security policy (CORS/CSP). Open the browser Console for details.');
     err.network = true;
     throw err;
   }
@@ -1308,7 +1469,7 @@ async function callApi(payload) {
   try { data = await res.json(); }
   catch (e) {
     console.error('[MFB-IT] jawaban bukan JSON. Status:', res.status);
-    throw new Error('Server menjawab ' + res.status + ', tetapi isinya tidak terbaca.');
+    throw new Error('Server replied ' + res.status + ', but the content could not be read.');
   }
 
   if (res.status === 401 && payload.action !== 'login') {
@@ -1322,14 +1483,14 @@ async function callApi(payload) {
 
 function clientMeta() {
   const ua = navigator.userAgent;
-  let browser='Lainnya';
+  let browser='Other';
   if (/Edg\//.test(ua)) browser='Edge';
   else if (/OPR\//.test(ua)) browser='Opera';
   else if (/Chrome\//.test(ua)) browser='Chrome';
   else if (/Firefox\//.test(ua)) browser='Firefox';
   else if (/Safari\//.test(ua)) browser='Safari';
 
-  let os='Lainnya';
+  let os='Other';
   if (/Android/.test(ua)) os='Android';
   else if (/iPhone|iPad|iPod/.test(ua)) os='iOS';
   else if (/Windows/.test(ua)) os='Windows';
@@ -1389,7 +1550,7 @@ function pinPress(k) {
 }
 async function submitPin() {
   pinBusy = true;
-  $('pinMsg').textContent = 'Memeriksa…'; $('pinMsg').className = 'pin-msg busy';
+  $('pinMsg').textContent = 'Checking…'; $('pinMsg').className = 'pin-msg busy';
   try {
     const r = await callApi({ action:'login', pin: pinBuffer });
     if (!r.ok) {
@@ -1412,9 +1573,13 @@ async function submitPin() {
     hidePin();
     // login v1.9 sudah membawa tags + taskToday sekaligus —
     // startApp menerimanya langsung, tidak perlu panggilan kedua.
+    // v2.12 — r.serverVersion baru ada di Edge Function v1.13+. Kalau
+    // server masih lama nilainya undefined, dan fitur yang bergantung
+    // padanya cukup disembunyikan (SOP 8.8).
+    applyServerCapabilities(r.serverVersion);
     startApp({ tags: r.tags, taskToday: r.taskToday });
   } catch (e) {
-    $('pinMsg').textContent = e.message || 'Tidak bisa menghubungi server.';
+    $('pinMsg').textContent = e.message || 'Could not reach the server.';
     $('pinMsg').className = 'pin-msg err';
     setTimeout(()=>{ pinBuffer=''; paintDots(); pinBusy=false; }, 1200);
   }
@@ -1484,7 +1649,7 @@ function buildTags() {
   }
 
   const add = document.createElement('div');
-  add.className = 'tag-add'; add.textContent = '+ tag baru';
+  add.className = 'tag-add'; add.textContent = '+ new tag';
   add.onclick = () => {
     const v = prompt('New tag name:');
     if (!v) return;
@@ -1494,17 +1659,30 @@ function buildTags() {
   };
   box.appendChild(add);
 
+  // v2.12 — SOP 8/14: kedua toggle di bawah kini mengumumkan status
+  // buka/tutup daftar tag, dan bisa dicapai/ditekan lewat keyboard.
+  const wireToggle = (el, expanded, onFlip) => {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    el.setAttribute('aria-controls', 'tagGrid');
+    el.onclick = onFlip;
+    el.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onFlip(); }
+    };
+  };
+
   if (!showAll && total > 0) {
     const toggle = document.createElement('div');
     toggle.className = 'tag-add';
-    toggle.textContent = 'Semua tag (' + total + ') \u25BE';
-    toggle.onclick = () => { state.tagsExpanded = true; buildTags(); };
+    toggle.textContent = 'All tags (' + total + ') \u25BE';
+    wireToggle(toggle, false, () => { state.tagsExpanded = true; buildTags(); });
     box.appendChild(toggle);
   } else if (showAll && total > 0 && state.tagsExpanded) {
     const toggle = document.createElement('div');
     toggle.className = 'tag-add';
-    toggle.textContent = 'Ringkas \u25B4';
-    toggle.onclick = () => { state.tagsExpanded = false; buildTags(); };
+    toggle.textContent = 'Collapse \u25B4';
+    wireToggle(toggle, true, () => { state.tagsExpanded = false; buildTags(); });
     box.appendChild(toggle);
   }
 }
@@ -1517,8 +1695,11 @@ function buildPriority() {
 
 function tickClock() {
   const now = new Date();
-  const jamMenit = now.toLocaleTimeString('id-ID', { timeZone: CONFIG.TIMEZONE, hour:'2-digit', minute:'2-digit', hour12:false });
-  const detik = now.toLocaleTimeString('id-ID', { timeZone: CONFIG.TIMEZONE, second:'2-digit' }).padStart(2,'0');
+  // v2.12 — BUG FIX: locale 'id-ID' memakai TITIK sebagai pemisah jam-menit
+  // ("19.38"), sementara baris di bawah menambahkan ':' untuk detik —
+  // hasilnya terbaca "19.38:37". 'en-GB' menghasilkan titik dua.
+  const jamMenit = now.toLocaleTimeString('en-GB', { timeZone: CONFIG.TIMEZONE, hour:'2-digit', minute:'2-digit', hour12:false });
+  const detik = now.toLocaleTimeString('en-GB', { timeZone: CONFIG.TIMEZONE, second:'2-digit' }).padStart(2,'0');
   $('clockMain').textContent = jamMenit;
   $('clockSec').textContent = ':' + detik;
 
@@ -1541,21 +1722,36 @@ async function doSubmit() {
     return;
   }
 
+  const taskDate = $('taskDate').value || todayISO();
+
+  // v2.12 — PERINGATAN DUPLIKAT. Bukan penolakan: kadang memang ada dua
+  // pekerjaan mirip di hari yang sama. Ini hanya jeda konfirmasi supaya
+  // entri kembar karena tombol tertekan dua kali tidak lolos tanpa sadar.
+  if (needWork && task && isProbableDuplicate(taskDate, task)) {
+    const lanjut = confirm('A very similar task is already recorded on this date.' + String.fromCharCode(10) + String.fromCharCode(10) + 'Save it anyway?');
+    if (!lanjut) return;
+  }
+
+  // Payload dipisah ke variabel supaya bisa DIPAKAI ULANG oleh antrean
+  // offline di blok catch — sebelumnya dibangun inline di dalam callApi,
+  // jadi isinya hilang begitu panggilan gagal.
+  const payload = {
+    action: 'submit', sessionToken: state.token,
+    taskDate: taskDate,
+    activityType: state.activityType,
+    workType: needWork ? state.workType : '',
+    task: needWork ? task : '',
+    tags: needWork ? Array.from(state.selected) : [],
+    priority: needWork ? state.priority : '',
+    status: needWork ? state.status : '',
+    remark: $('remarkInput').value.trim(),
+    meta: clientMeta(),
+  };
+
   btn.classList.add('busy'); btn.disabled = true;
 
   try {
-    const r = await callApi({
-      action: 'submit', sessionToken: state.token,
-      taskDate: $('taskDate').value || todayISO(),
-      activityType: state.activityType,
-      workType: needWork ? state.workType : '',
-      task: needWork ? task : '',
-      tags: needWork ? Array.from(state.selected) : [],
-      priority: needWork ? state.priority : '',
-      status: needWork ? state.status : '',
-      remark: $('remarkInput').value.trim(),
-      meta: clientMeta(),
-    });
+    const r = await callApi(payload);
 
     if (!r.ok) {
       toast(r.error || 'Not submitted yet. Your entry is still saved, try again.', 'err');
@@ -1566,6 +1762,7 @@ async function doSubmit() {
     state.submitCount++;
     if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
     renderTodayStrip(); // v2.10 — strip "Hari ini" ikut update tanpa reload
+    rememberSubmitted(taskDate, task); // v2.12 — bahan deteksi duplikat
 
     btn.classList.remove('busy'); btn.classList.add('done');
     setTimeout(() => { btn.classList.remove('done'); btn.disabled = false; }, 1100);
@@ -1575,7 +1772,19 @@ async function doSubmit() {
     $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (e) {
-    if (state.token) toast(e.message || 'Not submitted yet. Your entry is still saved, try again.', 'err');
+    // v2.12 — ANTREAN OFFLINE. Hanya kegagalan JARINGAN yang diantrekan
+    // (e.network di-set callApi). Kegagalan lain — sesi kedaluwarsa,
+    // data ditolak server — TIDAK diantrekan, karena mengirim ulang
+    // hal yang sama pasti gagal lagi dan cuma menumpuk sampah.
+    if (e && e.network) {
+      enqueueSubmit(payload);
+      rememberSubmitted(taskDate, task);
+      toast('No connection — saved on this phone, will send automatically.', 'good');
+      resetForm();
+      $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (state.token) {
+      toast(e.message || 'Not submitted yet. Your entry is still saved, try again.', 'err');
+    }
     btn.classList.remove('busy'); btn.disabled = false;
   }
 }
@@ -1594,6 +1803,12 @@ async function startApp(preloaded) {
   const iso = todayISO();
   $('taskDate').value = iso;
   $('dateText').textContent = formatTanggalPanjang(iso);
+
+  // v2.12 — begitu ada sesi yang sah, coba kirim antrean yang tertunda.
+  // Sengaja TIDAK di-await: kegagalannya tidak boleh menahan tampilnya
+  // form, dan kalau masih offline antreannya tetap utuh.
+  renderQueueBar();
+  flushQueue(false);
 
   applyActivityMode();
   buildPriority();
@@ -1636,6 +1851,10 @@ async function loadTagsWithFallback() {
   if (r && r.ok) {
     state.tags = r.tags || [];
     if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+    // v2.12 — jalur ini dipakai saat sesi dipulihkan setelah refresh,
+    // jadi kemampuan server juga perlu dibaca di sini, bukan hanya
+    // di jalur login.
+    applyServerCapabilities(r.serverVersion);
     cacheTags(state.tags);
   } else {
     const cached = readCachedTags();
@@ -1666,12 +1885,15 @@ function renderTodayStrip() {
   const el = $('todayStrip');
   if (!el) return;
   const n = state.taskToday || 0;
+  // v2.12 — ketiga teks di bawah masih Bahasa Indonesia di v2.11 dan
+  // TAMPIL langsung di tab Input. Lolos dari scan translasi sebelumnya
+  // karena berada di dalam innerHTML, bukan sebagai teks statis di markup.
   if (n > 0) {
-    el.innerHTML = '<span class="today-strip-label">Hari ini</span>'
-      + '<span class="today-strip-value">' + n + ' aktivitas tercatat</span>';
+    el.innerHTML = '<span class="today-strip-label">Today</span>'
+      + '<span class="today-strip-value">' + n + (n === 1 ? ' activity logged' : ' activities logged') + '</span>';
   } else {
-    el.innerHTML = '<span class="today-strip-label">Hari ini</span>'
-      + '<span class="today-strip-value empty">Belum ada catatan &#9997;&#65039;</span>';
+    el.innerHTML = '<span class="today-strip-label">Today</span>'
+      + '<span class="today-strip-value empty">Nothing logged yet &#9997;&#65039;</span>';
   }
 }
 
@@ -2160,13 +2382,25 @@ function renderDashboard(s, items, range) {
   $('dashKpi').innerHTML =
     '<div class="summary-grid">' + cardsAlwaysVisible + '</div>'
     + '<div class="summary-grid hidden" id="dashKpiMore">' + cardsCollapsible + '</div>'
-    + '<div class="dash-kpi-toggle" id="dashKpiToggle">Show more &#9662;</div>';
+    // v2.12 — SOP 8/14: toggle ini harus mengumumkan status buka/tutup ke
+    // screen reader. role=button + tabindex supaya juga bisa dicapai keyboard
+    // (elemennya div, bukan <button>, mengikuti gaya elemen lain di file ini).
+    + '<div class="dash-kpi-toggle" id="dashKpiToggle" role="button" tabindex="0"'
+    + ' aria-expanded="false" aria-controls="dashKpiMore">Show more &#9662;</div>';
 
-  $('dashKpiToggle').addEventListener('click', () => {
+  const kpiToggle = $('dashKpiToggle');
+  const flipKpi = () => {
     const more = $('dashKpiMore');
     const isHidden = more.classList.contains('hidden');
     more.classList.toggle('hidden', !isHidden);
-    $('dashKpiToggle').innerHTML = isHidden ? 'Show less &#9652;' : 'Show more &#9662;';
+    kpiToggle.innerHTML = isHidden ? 'Show less &#9652;' : 'Show more &#9662;';
+    // isHidden = kondisi SEBELUM dibalik, jadi setelah dibalik status
+    // terbuka = isHidden. Ditulis eksplisit supaya tidak salah baca.
+    kpiToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+  };
+  kpiToggle.addEventListener('click', flipKpi);
+  kpiToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipKpi(); }
   });
 
   renderDashStatusChart(s.byStatus);
@@ -2508,6 +2742,440 @@ async function exportAllData() {
   }
 }
 
+/* ══════════════════════════════════════════════
+   v2.12 — FITUR BARU
+   Semua fungsi di bawah ini penambahan; tidak ada fungsi lama
+   yang diubah namanya atau dihapus (SOP 8.7).
+   ══════════════════════════════════════════════ */
+
+// ── Kemampuan server ────────────────────────────────────────
+// Diisi dari respons login / get-tags (Edge Function v1.13+).
+// Kalau server masih versi lama, nilainya tetap kosong dan fitur
+// yang bergantung padanya cukup DISEMBUNYIKAN — tidak error.
+let serverVersion = '';
+
+// Membandingkan versi bergaya "MAYOR.MINOR" dengan MINOR sebagai
+// BILANGAN BULAT (jadi 1.13 lebih baru dari 1.9 — bukan dibaca
+// sebagai desimal). Ini mengikuti Standar Coding bagian 5.
+function serverAtLeast(major, minor) {
+  const m = String(serverVersion || '').match(/^(\d+)\.(\d+)$/);
+  if (!m) return false; // format tak dikenali -> anggap belum didukung
+  const vMajor = Number(m[1]), vMinor = Number(m[2]);
+  if (vMajor !== major) return vMajor > major;
+  return vMinor >= minor;
+}
+
+function applyServerCapabilities(version) {
+  serverVersion = version || '';
+  // Pencarian seluruh riwayat butuh action "search-tasks" (v1.13).
+  const canSearch = serverAtLeast(1, 13);
+  const box = $('riwayatSearchBox');
+  if (box) box.classList.toggle('hidden', !canSearch);
+}
+
+// ── FITUR: ANTREAN OFFLINE ──────────────────────────────────
+// Server room, area belakang, dan basement sinyalnya lemah. Sebelum
+// ini, submit yang gagal karena jaringan hanya memunculkan toast dan
+// isian tetap di form — kalau app tertutup, catatan itu hilang.
+let queueBusy = false; // cegah dua proses pengiriman berjalan bersamaan
+
+function readQueue() {
+  try {
+    const raw = Store.get(KEY_QUEUE);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function writeQueue(list) {
+  // Dibatasi 50 entri: jauh di atas pemakaian normal, tapi mencegah
+  // localStorage membengkak kalau ada masalah jaringan panjang.
+  try { Store.set(KEY_QUEUE, JSON.stringify(list.slice(0, 50))); } catch (e) {}
+}
+
+function enqueueSubmit(payload) {
+  const list = readQueue();
+  // sessionToken TIDAK disimpan — token bisa kedaluwarsa sebelum
+  // antrean terkirim, jadi diisi ulang dengan token yang berlaku
+  // saat pengiriman. Menyimpannya juga berarti menyimpan kredensial
+  // di localStorage lebih lama dari yang perlu.
+  const clean = Object.assign({}, payload);
+  delete clean.sessionToken;
+  list.push({ payload: clean, savedAt: Date.now() });
+  writeQueue(list);
+  renderQueueBar();
+}
+
+function renderQueueBar() {
+  const bar = $('queueBar');
+  if (!bar) return;
+  const n = readQueue().length;
+  bar.classList.toggle('hidden', n === 0);
+  if (n === 0) return;
+  $('queueBarText').textContent = n === 1
+    ? '1 entry waiting to be sent'
+    : n + ' entries waiting to be sent';
+}
+
+// manual = true bila dipicu tombol "Send now"; hanya mempengaruhi
+// apakah hasilnya diberitahukan lewat toast atau diam-diam saja.
+async function flushQueue(manual) {
+  if (queueBusy) return;
+  let list = readQueue();
+  if (list.length === 0) { renderQueueBar(); return; }
+  if (!state.token) return; // belum login — coba lagi nanti
+
+  queueBusy = true;
+  const btn = $('queueBarBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  let sent = 0, dropped = 0;
+  try {
+    while (list.length > 0) {
+      const first = list[0];
+      const payload = Object.assign({}, first.payload, { sessionToken: state.token });
+      let r;
+      try {
+        r = await callApi(payload);
+      } catch (e) {
+        // Masih tidak ada jaringan (atau sesi habis). Berhenti dan
+        // simpan sisanya apa adanya — jangan buang data pengguna.
+        break;
+      }
+      if (r && r.ok) {
+        sent++;
+        if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
+      } else {
+        // Server menjawab tapi menolak entri ini (mis. data tidak
+        // valid). Mengirim ulang isi yang sama pasti ditolak lagi,
+        // jadi entri dibuang supaya antrean tidak macet selamanya.
+        dropped++;
+      }
+      list.shift();
+      writeQueue(list);
+    }
+  } finally {
+    queueBusy = false;
+    if (btn) { btn.disabled = false; btn.textContent = 'Send now'; }
+    renderQueueBar();
+    renderTodayStrip();
+  }
+
+  if (sent > 0) toast(sent + (sent === 1 ? ' queued entry sent' : ' queued entries sent'), 'good');
+  if (dropped > 0) toast(dropped + ' queued entry could not be sent and was discarded.', 'err');
+  if (manual && sent === 0 && dropped === 0) toast('Still no connection. Will keep trying.', 'err');
+}
+
+// ── FITUR: DETEKSI DUPLIKAT ─────────────────────────────────
+// Membandingkan teks yang sudah dinormalkan (huruf kecil, tanda baca
+// dibuang) pada TANGGAL YANG SAMA. Sengaja tidak memakai kemiripan
+// sebagian: ambang seperti itu gampang salah tuduh untuk task pendek
+// seperti "cek CCTV".
+function normalizeTaskText(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function readRecent() {
+  try {
+    const raw = Store.get(KEY_RECENT);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function rememberSubmitted(date, task) {
+  const norm = normalizeTaskText(task);
+  if (!norm) return;
+  const list = readRecent();
+  list.unshift({ d: date, t: norm });
+  try { Store.set(KEY_RECENT, JSON.stringify(list.slice(0, 60))); } catch (e) {}
+}
+
+function isProbableDuplicate(date, task) {
+  const norm = normalizeTaskText(task);
+  if (!norm) return false;
+
+  // Sumber 1 — jejak submit dari HP ini sendiri (termasuk yang masih
+  // dalam antrean offline, karena rememberSubmitted juga dipanggil di
+  // jalur antrean).
+  if (readRecent().some(r => r.d === date && r.t === norm)) return true;
+
+  // Sumber 2 — riwayat yang sudah pernah dimuat di tab History pada
+  // sesi ini. Kalau belum pernah dibuka, riwayatCache kosong dan
+  // pemeriksaan ini dilewati begitu saja.
+  try {
+    if (Array.isArray(riwayatCache) && riwayatCache.some(it =>
+        it && it.task_date === date && normalizeTaskText(it.task) === norm)) return true;
+  } catch (e) { /* riwayatCache belum terisi — abaikan */ }
+
+  return false;
+}
+
+// ── FITUR: TEMPLATE TASK BERULANG ───────────────────────────
+// Pekerjaan rutin ("cek backup harian", "cek CCTV") sebelumnya harus
+// diketik ulang setiap hari. Template disimpan LOKAL saja.
+const TPL_MAX = 8;
+
+function readTemplates() {
+  try {
+    const raw = Store.get(KEY_TPL);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function writeTemplates(list) {
+  try { Store.set(KEY_TPL, JSON.stringify(list.slice(0, TPL_MAX))); } catch (e) {}
+}
+
+function saveCurrentAsTemplate() {
+  const task = $('taskDesc').value.trim();
+  if (!task) {
+    toast('Fill in the work first, then save it as a template.', 'err');
+    $('taskDesc').focus();
+    return;
+  }
+  const list = readTemplates();
+  if (list.length >= TPL_MAX) {
+    toast('Template limit reached (' + TPL_MAX + '). Delete one first.', 'err');
+    return;
+  }
+  // Nama default diambil dari awal teks pekerjaan supaya pengguna
+  // cukup menekan OK tanpa mengarang nama baru.
+  const suggested = task.length > 28 ? task.slice(0, 28) : task;
+  const name = prompt('Template name:', suggested);
+  if (name === null) return;
+  const clean = name.trim();
+  if (!clean) return;
+
+  list.push({
+    name: clean,
+    activityType: state.activityType,
+    offWorking: state.offWorking,
+    workType: state.workType,
+    task: task,
+    tags: Array.from(state.selected),
+    priority: state.priority,
+    status: state.status,
+    remark: $('remarkInput').value.trim(),
+  });
+  writeTemplates(list);
+  renderTemplates();
+  toast('Template saved', 'good');
+}
+
+function applyTemplate(i) {
+  const t = readTemplates()[i];
+  if (!t) return;
+
+  // Urutan sama seperti applyParseResult: jenis hari & toggle libur
+  // ditetapkan LEBIH DULU, lalu applyActivityMode() dipanggil sekali,
+  // supaya tidak ada render perantara dengan tampilan yang salah.
+  if (t.activityType) state.activityType = t.activityType;
+  const found = ACTIVITY_TYPES.find(a => a.db === state.activityType);
+  if (found) $('valActivity').textContent = found.id;
+  if (typeof t.offWorking === 'boolean') {
+    state.offWorking = t.offWorking;
+    $('offSwitch').classList.toggle('on', state.offWorking);
+  }
+  applyActivityMode();
+
+  if (t.workType && WORK_TYPES.includes(t.workType)) {
+    state.workType = t.workType;
+    $('valWorkType').textContent = t.workType;
+  }
+  $('taskDesc').value = t.task || '';
+  $('remarkInput').value = t.remark || '';
+
+  if (Array.isArray(t.tags)) {
+    state.selected.clear();
+    t.tags.forEach(tag => {
+      const c = String(tag).trim();
+      if (!c) return;
+      if (!state.tags.some(x => x.toLowerCase() === c.toLowerCase())) state.tags.push(c);
+      state.selected.add(c);
+    });
+    buildTags();
+  }
+
+  if (t.priority && ['Low','Medium','High','Critical'].includes(t.priority)) {
+    state.priority = t.priority; buildPriority();
+  }
+  const st = STATUS_TYPES.find(s => s.db === t.status);
+  if (st) { state.status = st.db; $('valStatus').textContent = st.id; }
+
+  trackEdit();
+  toast('Template applied · ' + t.name, 'good');
+}
+
+function deleteTemplate(i) {
+  const list = readTemplates();
+  const t = list[i];
+  if (!t) return;
+  if (!confirm('Delete template "' + t.name + '"?')) return;
+  list.splice(i, 1);
+  writeTemplates(list);
+  renderTemplates();
+}
+
+function renderTemplates() {
+  const box = $('tplGrid');
+  const wrap = $('tplBox');
+  if (!box || !wrap) return;
+  const list = readTemplates();
+  wrap.classList.toggle('hidden', list.length === 0);
+  box.innerHTML = '';
+
+  list.forEach((t, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'tpl-chip';
+    chip.setAttribute('role', 'button');
+    chip.setAttribute('tabindex', '0');
+
+    const label = document.createElement('span');
+    label.className = 'tpl-chip-name';
+    label.textContent = t.name;
+    chip.appendChild(label);
+
+    const del = document.createElement('span');
+    del.className = 'tpl-chip-del';
+    del.textContent = '\u00D7';
+    del.setAttribute('role', 'button');
+    del.setAttribute('tabindex', '0');
+    del.setAttribute('aria-label', 'Delete template ' + t.name);
+    // stopPropagation supaya menekan tanda silang tidak sekaligus
+    // menerapkan template-nya.
+    del.onclick = (e) => { e.stopPropagation(); deleteTemplate(i); };
+    del.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); deleteTemplate(i); }
+    };
+    chip.appendChild(del);
+
+    chip.onclick = () => applyTemplate(i);
+    chip.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); applyTemplate(i); }
+    };
+    box.appendChild(chip);
+  });
+}
+
+// ── FITUR: INPUT SUARA ──────────────────────────────────────
+// Mengisi kotak Free write lewat Web Speech API, lalu pengguna bisa
+// menekan "Parse with AI" seperti biasa — memakai pipeline AI yang
+// sudah ada, tanpa endpoint baru.
+let recog = null, recogOn = false;
+
+function setupVoiceInput() {
+  const btn = $('micBtn');
+  if (!btn) return;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  // Tidak didukung (mis. Firefox Android): tombol tetap tersembunyi.
+  // Lebih baik tidak ada tombol daripada ada tombol yang diam.
+  if (!SR) return;
+
+  btn.classList.remove('hidden');
+
+  const stop = () => {
+    recogOn = false;
+    btn.classList.remove('rec');
+    btn.setAttribute('aria-label', 'Dictate with voice');
+    try { if (recog) recog.stop(); } catch (e) {}
+  };
+
+  btn.addEventListener('click', () => {
+    if (recogOn) { stop(); return; }
+
+    try {
+      recog = new SR();
+    } catch (e) {
+      toast('Voice input is not available on this browser.', 'err');
+      return;
+    }
+
+    // Bahasa Indonesia: yang didiktekan memang campur Indonesia-Inggris,
+    // dan pengenalan id-ID menangani itu lebih baik daripada en-US untuk
+    // kalimat berbahasa Indonesia. Hasilnya tetap diuraikan AI ke Inggris.
+    recog.lang = 'id-ID';
+    recog.interimResults = false;
+    recog.continuous = false;
+
+    recog.onresult = (ev) => {
+      let text = '';
+      for (let i = 0; i < ev.results.length; i++) text += ev.results[i][0].transcript;
+      text = text.trim();
+      if (!text) return;
+      const box = $('aiInput');
+      // Ditambahkan, bukan menimpa — supaya bisa didiktekan bertahap.
+      box.value = box.value.trim() ? (box.value.trim() + ' ' + text) : text;
+      trackEdit();
+    };
+
+    recog.onerror = (ev) => {
+      stop();
+      const code = ev && ev.error ? ev.error : '';
+      if (code === 'not-allowed' || code === 'service-not-allowed') {
+        toast('Microphone permission is blocked. Allow it in browser settings.', 'err');
+      } else if (code === 'no-speech') {
+        toast('No speech detected. Try again.', 'err');
+      } else {
+        toast('Voice input failed. Type it instead.', 'err');
+      }
+    };
+
+    recog.onend = () => stop();
+
+    try {
+      recog.start();
+      recogOn = true;
+      btn.classList.add('rec');
+      btn.setAttribute('aria-label', 'Stop dictation');
+    } catch (e) {
+      stop();
+      toast('Could not start the microphone.', 'err');
+    }
+  });
+}
+
+// ── FITUR: CARI DI SELURUH RIWAYAT ──────────────────────────
+// get-history hanya 7 hari. Pencarian ini menembus seluruh data lewat
+// action "search-tasks" (Edge Function v1.13+).
+let riwayatSearchTimer = null;
+
+async function runRiwayatSearch(q) {
+  const box = $('riwayatList');
+  const title = $('riwayatTitle');
+
+  const query = String(q || '').trim();
+  if (query.length < 2) {
+    // Kotak dikosongkan -> kembali ke perilaku lama (7 hari terakhir).
+    if (title) title.textContent = 'History — last 7 days';
+    loadRiwayat();
+    return;
+  }
+
+  box.innerHTML = '<div class="riwayat-empty">Searching…</div>';
+  try {
+    const r = await callApi({ action: 'search-tasks', sessionToken: state.token, query: query });
+    if (!r.ok) {
+      box.innerHTML = '<div class="riwayat-empty">' + (r.error || 'Search failed.') + '</div>';
+      return;
+    }
+    const items = r.items || [];
+    // Dipakai bersama tab riwayat biasa: sheet detail/ubah/hapus membaca
+    // riwayatCache lewat indeks, jadi cache HARUS ikut diganti di sini.
+    riwayatCache = items;
+
+    if (title) title.textContent = 'History — ' + items.length + (items.length === 1 ? ' result' : ' results');
+    if (items.length === 0) {
+      box.innerHTML = '<div class="riwayat-empty">Nothing found for \u201C' + query + '\u201D.</div>';
+      return;
+    }
+    renderWorksheetTable(box, items, (idx) => openRiwayatDetail(idx));
+  } catch (e) {
+    box.innerHTML = '<div class="riwayat-empty">' + (e.message || 'Search failed.') + '</div>';
+  }
+}
+
 function wireEvents() {
   $('pinPad').addEventListener('click', e => { const b=e.target.closest('.pin-key'); if (b) pinPress(b.dataset.k); });
   document.addEventListener('keydown', e => {
@@ -2536,6 +3204,39 @@ function wireEvents() {
 
   $('sesTrigger').addEventListener('click', openSessionSheet);
   $('themeToggle').addEventListener('click', toggleTheme);
+
+  // ── v2.12 — fitur baru ──────────────────────────────────
+
+  // Antrean offline: tombol kirim manual + pemicu otomatis saat
+  // koneksi kembali. Event "online" tidak selalu akurat di semua
+  // peramban, jadi tombol manual tetap disediakan sebagai jalan
+  // keluar, bukan sekadar pelengkap.
+  $('queueBarBtn').addEventListener('click', () => flushQueue(true));
+  window.addEventListener('online', () => flushQueue(false));
+
+  // Template task berulang.
+  $('tplSaveBtn').addEventListener('click', saveCurrentAsTemplate);
+  $('tplSaveBtn').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); saveCurrentAsTemplate(); }
+  });
+
+  // Input suara. Fungsi ini sendiri yang memutuskan tombolnya
+  // ditampilkan atau tidak, tergantung dukungan peramban.
+  setupVoiceInput();
+
+  // Pencarian riwayat. Diberi jeda 450 ms supaya tidak mengirim
+  // satu permintaan per ketukan huruf.
+  $('riwayatSearch').addEventListener('input', (e) => {
+    const q = e.target.value;
+    if (riwayatSearchTimer) clearTimeout(riwayatSearchTimer);
+    riwayatSearchTimer = setTimeout(() => runRiwayatSearch(q), 450);
+  });
+  // Enter langsung mencari tanpa menunggu jeda.
+  $('riwayatSearch').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (riwayatSearchTimer) clearTimeout(riwayatSearchTimer);
+    runRiwayatSearch(e.target.value);
+  });
 
   setupActivityPicker(); setupWorkTypePicker(); setupStatusPicker();
 
@@ -2620,6 +3321,12 @@ function init() {
   setInterval(tickClock, 1000);
   wakeUpServer();
   registerServiceWorker();
+
+  // v2.12 — tampilkan kondisi awal fitur lokal. Keduanya membaca
+  // localStorage saja, jadi aman dipanggil sebelum login: kalau
+  // kosong, tidak ada apa pun yang muncul di layar.
+  renderQueueBar();
+  renderTemplates();
 
   const saved = Store.get(KEY_TOKEN);
   const savedLoginAt = Store.get(KEY_LOGIN_AT);
