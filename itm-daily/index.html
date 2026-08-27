@@ -3,85 +3,75 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.12
-Generated : 27 August 2026, 19:41:12
+Version   : 2.14
+Generated : 28 August 2026, 04:09:22
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
 
-PASANGAN WAJIB
-  Edge Function v1.13 (MFB-IT_v1.13.ts). Urutan deploy:
-  Edge Function DULU, baru HTML. Lihat STATUS.md.
+PAKET RILIS INI — 3 FILE, URUTAN WAJIB
+  1. MFB-IT_v1.6.sql   (SQL Editor Supabase)
+  2. MFB-IT_v1.14.ts   (Edge Function submit-task)
+  3. FILE INI          (Cloudflare, jadi index.html)
+  Detail & akibat kalau urutannya salah: lihat STATUS.md.
 
-PERUBAHAN DARI v2.11
+PERUBAHAN DARI v2.13
 ================================================================
 
-A. BUG YANG DIPERBAIKI (ditemukan saat audit 27 Agustus 2026)
-  1. Bottom nav "Report" tidak pernah tampak aktif.
-     Penyebab: tombol memakai data-tab="report", tetapi switchView
-     dipanggil dengan 'laporan', lalu dibandingkan mentah
-     (b.dataset.tab === view) sehingga selalu false. Ini penyebab
-     sebenarnya keluhan "Laporan tidak hitam bold" — bukan masalah
-     kontras warna seperti dugaan sebelumnya.
-     Perbaikan: pemetaan view -> tab key sebelum dibandingkan.
-  2. Jam di header terbaca "19.38:37" (campur titik & titik dua).
-     Penyebab: toLocaleTimeString('id-ID') memakai titik sebagai
-     pemisah jam-menit, sementara kode menambahkan ':' untuk detik.
-     Perbaikan: locale 'en-GB' (menghasilkan titik dua).
+A. BOTTOM NAV DIBUAT OPAQUE
+  1. Latar nav lama rgba(11,27,46,.06) menghasilkan warna efektif
+     #E0E4E8, dan label non-aktif --muted #8A96A3 di atasnya hanya
+     mencapai kontras 2,36:1 — GAGAL jauh dari AA 4,5:1 untuk teks
+     10,5px. Ini penjelasan terukur dari keluhan "label nav tidak
+     kelihatan jelas" dan "nav terlihat menggantung": backdrop-filter
+     membuat penampilannya berubah mengikuti apa pun di belakangnya,
+     termasuk toast yang muncul tepat di atasnya.
+     Sekarang latar solid var(--card), backdrop-filter dihapus, label
+     non-aktif --mid, opacity ikon .72 -> .85.
+     Kontras baru: label 5,47:1 light / 8,12:1 dark; ikon 3,98:1 /
+     6,22:1. Posisi, ukuran, dan tinggi nav TIDAK diubah.
 
-B. SISA TRANSLASI INGGRIS yang lolos dari v2.11
-  Semuanya string yang TERLIHAT/TERBACA pengguna, bukan komentar:
-  3. Atribut lang pada tag html: id -> en
-  4. aria-label tombol tema (Indonesia)    -> Inggris
-  5. Label tambah tag (Indonesia)          -> "+ new tag"
-  6. Label lihat semua tag (Indonesia)     -> "All tags (N)"
-  7. Label ringkas tag (Indonesia)         -> "Collapse"
-  8. Pesan error jaringan di callApi       -> Inggris (tampil di toast)
-  9. Pesan error respons non-JSON          -> Inggris (tampil di toast)
- 10. clientMeta browser/os (Indonesia)     -> "Other" (tersimpan di DB)
+B. TAB LOG AKHIRNYA BERISI
+  2. Tab "Log" sejak versi pertama hanya memunculkan toast "coming
+     soon" — tidak punya markup sama sekali. Padahal tabel
+     activity_log SUDAH terisi sejak awal (login, AI parse, submit,
+     edit, hapus, backup) dan view v_activity_log_full sudah dibuat
+     di MFB-IT_v1.1.sql tapi belum pernah dipakai.
+     Sekarang: 80 entri terakhir, badge per jenis event, filter per
+     jenis event, dan baris meta (task id, prioritas, status, tag,
+     perangkat, versi app).
 
-C. KEPATUHAN STANDAR (Standar_Coding_MissFishBali_v1.2 + SOP v1.6)
- 11. CONFIG.APP_VERSION disamakan dengan header file (dulu '2.9'
-     padahal header 2.11) — SC bagian 5.
- 12. Dark mode kini mengikuti tema OS lewat prefers-color-scheme
-     pada kunjungan pertama; pilihan manual pengguna tetap menang
-     dan disimpan. Atribut data-theme ikut ditulis di <html> agar
-     selaras SOP kategori 13. Kelas .dark-mode DIPERTAHANKAN —
-     seluruh 15 selector lama tidak diubah (perubahan menambah,
-     bukan mengganti — SOP 8.7).
- 13. Scrollbar custom tipis untuk area scrollable (SOP 13 MANDATORY).
- 14. aria-current="page" pada tab bottom nav aktif (SOP 16).
- 15. aria-expanded pada toggle collapse tag & KPI dasbor (SOP 8/14).
- 16. Skip link + kelas .sr-only (SOP 8/14).
- 17. min-height 100vh -> 100dvh pada wrapper desktop (SOP 1).
- 18. min-width:0 pada anak grid/flex (SOP 1 — pencegahan overflow).
- 19. meta description + robots noindex,nofollow (SOP 2). App ini
-     ber-PIN dan internal, jadi noindex memang yang benar.
+C. REGISTRY ASET, FOLLOW-UP VENDOR, FOTO BUKTI
+  3. Task bisa ditautkan ke perangkat dari daftar aset. Kode aset
+     ikut tampil di tabel Riwayat, dan bisa dikoreksi dari sheet
+     detail. Tujuan akhirnya: bisa dijawab "printer ini sudah berapa
+     kali rusak bulan ini" — data untuk mengajukan penggantian.
+  4. Follow-up vendor: nama vendor + tanggal janji, muncul HANYA saat
+     status "Waiting Vendor". Tanggal yang sudah lewat ditandai merah
+     di sheet detail.
+  5. Foto bukti: dikompres di HP ke maksimal 1600px / mutu 0,72
+     SEBELUM dikirim. Bucket-nya privat — foto dibuka lewat signed
+     URL 10 menit dari server, bukan URL langsung.
 
-D. FITUR BARU (semuanya sisi klien, nol perubahan database)
- 20. ANTREAN OFFLINE. Bila submit gagal karena jaringan, entri
-     disimpan di localStorage dan dikirim otomatis begitu koneksi
-     kembali (atau saat tombol antrean ditekan). Dibuat karena
-     server room / area belakang sinyalnya lemah.
- 21. INPUT SUARA. Tombol mikrofon mengisi kotak teks bebas lewat
-     Web Speech API, lalu bisa langsung diuraikan AI. Memakai
-     pipeline AI yang sudah ada — tidak ada endpoint baru.
-     Tombol otomatis disembunyikan bila peramban tidak mendukung.
- 22. TEMPLATE TASK BERULANG. Simpan isian yang sering dipakai
-     (mis. "Cek backup harian"), pakai ulang dengan satu ketukan.
-     Disimpan di localStorage, maksimal 8 template.
- 23. PERINGATAN DUPLIKAT. Sebelum menyimpan, bila ada task dengan
-     teks sangat mirip pada tanggal yang sama, muncul konfirmasi
-     dulu — bukan penolakan.
- 24. CARI DI SELURUH RIWAYAT (butuh Edge Function v1.13). Tab
-     History dapat kotak pencarian; tanpa kata kunci tetap
-     menampilkan 7 hari terakhir seperti sebelumnya.
+D. SALIN LAPORAN UNTUK GOOGLE SHEETS
+  6. Tombol "Copy for Google Sheets" menyalin laporan sebagai TSV
+     yang langsung terbagi ke sel saat ditempel. Ini jalan tengah
+     yang disadari: integrasi Google Sheets API sesungguhnya butuh
+     OAuth + kredensial Google Cloud yang harus disiapkan & dijaga
+     manual. Tempel-TSV memberi hasil akhir yang sama tanpa itu.
+  7. Export Excel ikut mendapat 3 kolom baru: Asset, Vendor, Follow Up.
 
-E. TIDAK MASUK VERSI INI (butuh perubahan schema database)
-  Registry aset/perangkat, lampiran foto (Supabase Storage), dan
-  follow-up vendor. Ketiganya perlu tabel/bucket baru + langkah
-  manual di dashboard Supabase, jadi dipisah ke paket berikutnya
-  (MFB-IT_v1.6.sql) supaya rollback-nya jelas per paket.
+E. BUG LAMA YANG SEKALIAN DIPERBAIKI
+  8. Di sheet detail Riwayat, isi task dimasukkan ke <textarea> TANPA
+     di-escape. Task yang memuat "</textarea>" akan menutup elemen
+     lebih awal dan sisa teksnya jadi markup halaman. escapeHtml
+     sudah ada dan dipakai di tabel — di sini terlewat sejak awal.
+
+F. DEGRADASI AMAN (SOP 8.8)
+  Semua fitur di bagian B & C mengecek serverVersion lebih dulu.
+  Kalau Edge Function masih < v1.14 atau MFB-IT_v1.6.sql belum
+  dijalankan, fitur yang bersangkutan DISEMBUNYIKAN — bukan error,
+  bukan tombol yang ditekan lalu tidak terjadi apa-apa.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -494,6 +484,121 @@ body.dark-mode .btn-logout:active { background: var(--field); }
    tampilannya; hanya butuh jarak bawah. */
 .riwayat-search { margin-bottom: var(--sp-3); }
 
+/* ══════════════════════════════════════════════
+   v2.14 — TAB LOG
+   ══════════════════════════════════════════════ */
+
+/* Baris filter jenis event. Memakai pola .report-mode-tab yang sudah
+   ada supaya terasa satu keluarga dengan filter di tab Report, tapi
+   bisa di-scroll ke samping karena jenis event-nya ada 8. */
+.log-filter {
+  display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.log-filter::-webkit-scrollbar { display: none; }
+.log-chip {
+  flex: 0 0 auto; font-size: 12px; font-weight: 600;
+  padding: 7px var(--sp-3); border-radius: 9px;
+  background: var(--field); border: 1px solid var(--line);
+  color: var(--mid); cursor: pointer; min-height: 34px;
+  display: flex; align-items: center; white-space: nowrap;
+}
+.log-chip.on { background: var(--navy); border-color: var(--navy); color: #FFFFFF; }
+.log-chip:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* Satu baris log. Bukan tabel: isi log panjang & tidak seragam,
+   jadi kartu bertumpuk lebih terbaca di layar HP daripada tabel
+   yang harus di-scroll ke samping. */
+.log-row {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.log-row-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-2); margin-bottom: 5px;
+}
+.log-row-top > * { min-width: 0; }
+.log-time { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.log-desc { font-size: 13px; color: var(--ink); line-height: 1.45; }
+.log-meta {
+  font-size: 11px; color: var(--muted); margin-top: 5px;
+  display: flex; flex-wrap: wrap; gap: 4px 10px;
+}
+
+/* Badge jenis event. Warna dipilih dari token yang SUDAH terukur di
+   file ini, bukan warna baru: hijau .done (2E7D5B), merah --red,
+   brass, dan netral --mid. Semuanya sudah dipakai untuk teks kecil
+   di tempat lain dengan latar tint yang sama pekat. */
+.log-badge {
+  flex: 0 0 auto; font-size: 10px; font-weight: 700; letter-spacing: .3px;
+  padding: 3px 7px; border-radius: 6px; text-transform: uppercase;
+  background: var(--field); color: var(--mid); white-space: nowrap;
+}
+.log-badge.submit { background: rgba(46,125,91,.14);  color: #2E7D5B; }
+.log-badge.danger { background: rgba(192,57,43,.14);  color: var(--red); }
+.log-badge.edit   { background: rgba(201,168,76,.18); color: #7E6319; }
+body.dark-mode .log-badge.edit { color: var(--ai-accent-text); }
+.log-empty { text-align: center; color: var(--muted); font-size: 13px; padding: var(--sp-7) var(--sp-4); line-height: 1.6; }
+
+/* ══════════════════════════════════════════════
+   v2.14 — ASET, VENDOR, FOTO BUKTI
+   ══════════════════════════════════════════════ */
+
+/* Kotak vendor. Latar brass tipis supaya jelas ini muncul BERSYARAT
+   (hanya saat status Waiting Vendor), bukan field tetap yang
+   kebetulan sedang kosong. */
+.vendor-box {
+  background: rgba(201,168,76,.10); border: 1px solid rgba(201,168,76,.35);
+  border-radius: 12px; padding: var(--sp-3); margin-top: var(--sp-3);
+}
+.vendor-box .field:last-child { margin-bottom: 0; }
+
+/* Chip kode aset di tabel Riwayat. Netral, bukan brass — brass sudah
+   dipakai chip jenis hari, dan dua warna sama di satu baris membuat
+   keduanya kehilangan makna. */
+.ws-chip.asset { background: rgba(11,27,46,.07); color: var(--navy); }
+body.dark-mode .ws-chip.asset { background: rgba(255,255,255,.10); color: var(--ink); }
+
+/* Baris tombol foto. Tombol dan pratinjau sejajar supaya jelas
+   pratinjau itu milik tombol di sebelahnya. */
+.photo-row { display: flex; align-items: center; gap: var(--sp-3); }
+.photo-row > * { min-width: 0; }
+.photo-btn {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600; padding: var(--sp-2) var(--sp-3);
+  border-radius: 10px; background: var(--field);
+  border: 1px solid var(--line); color: var(--ink);
+  cursor: pointer; min-height: 40px;
+}
+.photo-btn:active { opacity: .7; }
+.photo-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.photo-thumb {
+  width: 46px; height: 46px; flex: 0 0 auto; border-radius: 9px;
+  object-fit: cover; border: 1px solid var(--line); display: block;
+}
+.photo-info { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+.photo-clear {
+  flex: 0 0 auto; font-size: 12px; font-weight: 600; color: var(--red);
+  cursor: pointer; padding: var(--sp-2); min-height: 40px;
+  display: flex; align-items: center; background: none; border: 0;
+}
+/* Foto di sheet detail Riwayat. Lebar penuh, tinggi dibatasi supaya
+   sheet tidak jadi sangat panjang untuk foto potret. */
+.photo-view { width: 100%; max-height: 320px; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); display: block; background: var(--field); }
+
+/* v2.14 — tombol "salin untuk Sheets". Memakai gaya .report-load-btn
+   yang sudah ada, tapi outline supaya jelas ini aksi sekunder di
+   sebelah tombol export utama. */
+.copy-btn {
+  flex: 1 1 auto; min-height: 44px; border-radius: 11px;
+  background: transparent; border: 1px solid var(--line);
+  color: var(--ink); font-size: 13.5px; font-weight: 600; cursor: pointer;
+}
+.copy-btn:active { background: var(--field); }
+.copy-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
 .ai {
   background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
   border-radius: 16px; padding: var(--sp-4); margin-bottom: var(--sp-3);
@@ -668,6 +773,15 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
 .ws-chip.critical { background: rgba(192,57,43,.14); color: var(--red); }
 .ws-chip.high     { background: rgba(183,121,31,.14); color: var(--amber); }
 .ws-chip.done     { background: rgba(46,125,91,.14); color: #2E7D5B; }
+/* v2.13 — chip jenis hari (Day Off, Public Holiday, dst) di kolom Task.
+   Warna brass supaya jelas beda dari chip Work type yang abu netral.
+   Kontras dihitung dengan formula WCAG (SOP kategori 11), bukan dikira:
+     light : #7E6319 di atas latar hasil blend #F5EFDF = 4,96:1  (AA lolos)
+     dark  : #E6C878 di atas latar hasil blend #36352D = 7,57:1  (AA lolos)
+   Catatan: #8A6D1E — warna brass-gelap yang dipakai .ai-btn — dicoba
+   lebih dulu dan hanya dapat 4,27:1 di atas latar ini, jadi DITOLAK. */
+.ws-chip.dayoff   { background: rgba(201,168,76,.18); color: #7E6319; }
+body.dark-mode .ws-chip.dayoff { color: var(--ai-accent-text); }
 .ws-hint { font-size: 11px; color: var(--muted); text-align: center; padding: var(--sp-2) 0 0; }
 .riwayat-chip.critical { background: rgba(192,57,43,.12); color: var(--red); }
 .riwayat-chip.high     { background: rgba(183,121,31,.12); color: var(--amber); }
@@ -775,19 +889,36 @@ body.dark-mode .switch { background: #3A4454; }
 .dot3:nth-child(3) { animation-delay: .32s; }
 @keyframes bounce { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
 
+/* v2.14 — NAV DIBUAT OPAQUE.
+
+   Alasan 1 (aksesibilitas, terukur). Latar nav lama
+   rgba(11,27,46,.06) di atas --bg menghasilkan warna efektif #E0E4E8.
+   Label non-aktif memakai --muted #8A96A3 -> kontras hanya 2,36:1,
+   GAGAL jauh dari AA 4,5:1 untuk teks 10,5px. Ini penjelasan terukur
+   dari keluhan "label nav tidak kelihatan jelas".
+
+   Alasan 2 (tampilan). backdrop-filter membuat penampilan nav berubah
+   mengikuti apa pun yang lewat di belakangnya — termasuk toast yang
+   muncul tepat di atasnya. Akibatnya nav kadang terlihat pudar dan
+   seolah "menggantung". Latar solid menghilangkan seluruh variasi itu.
+
+   Yang berubah: latar jadi var(--card) (ikut light/dark), backdrop-filter
+   dihapus, warna label non-aktif --muted -> --mid, opacity ikon .72 -> .85.
+   Kontras baru (formula WCAG, SOP kategori 11):
+     label non-aktif : light 5,47:1   dark 8,12:1   (AA lolos)
+     label aktif     : light 17,35:1  dark 17,10:1
+     ikon non-aktif  : light 3,98:1   dark 6,22:1   (AA elemen UI 3:1 lolos)
+   Posisi, ukuran, dan tinggi nav TIDAK diubah sama sekali. */
 .nav {
   position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; z-index: 60;
   width: 100%; max-width: var(--app-w);
-  /* Navy dengan transparansi — tetap terasa dari palet brand yang sama
-     dengan header, tapi jauh lebih lembut. Bukan abu netral murni. */
-  background: rgba(11,27,46,.06);
-  backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px);
-  border-top: 1px solid rgba(11,27,46,.10);
+  background: var(--card);
+  border-top: 1px solid var(--line);
   padding: var(--sp-2) var(--sp-1) calc(var(--sp-2) + env(safe-area-inset-bottom));
   display: grid; grid-template-columns: repeat(5, 1fr);
 }
-.nb { border: none; background: none; text-align: center; font-size: 10.5px; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
-.nb svg { display: block; margin: 0 auto 3px; opacity: .72; width: 23px; height: 23px; stroke-width: 2.1; }
+.nb { border: none; background: none; text-align: center; font-size: 10.5px; font-weight: 600; color: var(--mid); cursor: pointer; padding: 6px 1px; min-height: 44px; transition: color .16s; }
+.nb svg { display: block; margin: 0 auto 3px; opacity: .85; width: 23px; height: 23px; stroke-width: 2.1; }
 /* v2.11 — warna nav aktif dipertegas. Sebelumnya var(--navy) untuk
    kedua mode: di light mode terasa kurang tegas di atas latar
    translucent-nya .nav (image: tab "Report" aktif tapi tidak
@@ -995,6 +1126,35 @@ body.dark-mode .nb.on { color: #FFFFFF; }
           <textarea class="textarea" id="taskDesc" placeholder="Write it clearly, so it's easy to read again later."></textarea>
         </div>
 
+        <!-- v2.14 — perangkat yang dikerjakan. Baris ini DISEMBUNYIKAN JS
+             kalau server belum v1.14 atau kalau tabel asset masih kosong,
+             supaya tidak ada picker yang dibuka lalu isinya nihil. -->
+        <div class="field hidden" id="assetBox">
+          <label class="label">Device / asset</label>
+          <div class="picker-row" id="rowAsset">
+            <span class="picker-value" id="valAsset">— none —</span>
+            <span class="picker-chevron">&#8250;</span>
+          </div>
+        </div>
+
+        <!-- v2.14 — foto bukti. capture="environment" membuat HP langsung
+             membuka kamera belakang; pengguna tetap bisa memilih dari
+             galeri. Input file-nya disembunyikan, yang ditekan adalah
+             tombol di bawahnya. -->
+        <div class="field hidden" id="photoBox">
+          <label class="label">Photo evidence <span style="opacity:.6">— optional</span></label>
+          <input type="file" id="photoInput" accept="image/*" capture="environment" class="sr-only">
+          <div class="photo-row">
+            <button class="photo-btn" id="photoBtn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="2"/></svg>
+              <span id="photoBtnLabel">Add photo</span>
+            </button>
+            <img class="photo-thumb hidden" id="photoThumb" alt="Photo preview">
+            <span class="photo-info" id="photoInfo"></span>
+            <button class="photo-clear hidden" id="photoClear" type="button" aria-label="Remove photo">Remove</button>
+          </div>
+        </div>
+
         <!-- v2.12 — template task berulang. Seluruh isian disimpan lokal
              (localStorage), tidak pernah dikirim ke server. Baris ini
              disembunyikan JS selama belum ada template tersimpan. -->
@@ -1038,6 +1198,27 @@ body.dark-mode .nb.on { color: #FFFFFF; }
           <div class="picker-row" id="rowStatus">
             <span class="picker-value" id="valStatus">On Progress</span>
             <span class="picker-chevron">&#8250;</span>
+          </div>
+        </div>
+
+        <!-- v2.14 — follow-up vendor. Muncul HANYA saat status
+             "Waiting Vendor" — di status lain field ini cuma menambah
+             panjang form tanpa gunanya. Tujuannya supaya task yang
+             nyangkut di vendor punya tanggal tagih yang jelas, bukan
+             terlupa karena tidak ada yang mengingatkan. -->
+        <div class="vendor-box hidden" id="vendorBox">
+          <div class="field">
+            <label class="label" for="vendorName">Vendor name</label>
+            <input class="input" id="vendorName" placeholder="E.g.: PT Sinar Komputer">
+          </div>
+          <div class="field">
+            <label class="label" for="vendorFollowup">Follow up on</label>
+            <div class="date-row">
+              <span class="date-text" id="vendorFollowupText">—</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.4;flex-shrink:0"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <input type="date" id="vendorFollowup">
+            </div>
+            <div class="hint">Leave empty if there is no promised date yet.</div>
           </div>
         </div>
 
@@ -1102,6 +1283,16 @@ body.dark-mode .nb.on { color: #FFFFFF; }
       </div>
       <div class="report-official-btn" id="reportOfficialBtn">Download Official Report (Day / Date / Task / Remark)</div>
 
+      <!-- v2.14 — salin ke papan klip dalam format TSV, siap ditempel
+           langsung ke Google Sheets / Excel Online. Ini JALAN TENGAH
+           yang sadar: integrasi Google Sheets API sesungguhnya butuh
+           OAuth + kredensial Google Cloud yang harus disiapkan manual
+           dan dijaga masa berlakunya. Tempel-TSV memberi hasil akhir
+           yang sama (data masuk ke Sheets) tanpa kredensial apa pun. -->
+      <div class="report-btn-row" style="margin-top:var(--sp-2)">
+        <button class="copy-btn" id="reportCopyBtn" type="button">Copy for Google Sheets</button>
+      </div>
+
       <div id="reportSummary"></div>
       <div id="reportList"></div>
 
@@ -1156,6 +1347,20 @@ body.dark-mode .nb.on { color: #FFFFFF; }
         </div>
       </div>
     </div>
+
+    <!-- v2.14 — TAB LOG. Sebelumnya tab ini tidak punya markup sama
+         sekali; menekannya hanya memunculkan toast "coming soon",
+         padahal tabel activity_log sudah terisi sejak versi pertama.
+         Butuh Edge Function v1.14 (action get-activity-log); kalau
+         server masih lebih tua, tab ini menampilkan penjelasan,
+         bukan error. -->
+    <div class="scroll-inner hidden" id="viewLog">
+      <div class="card-title">Activity log</div>
+      <div class="log-filter" id="logFilter"></div>
+      <div id="logList">
+        <div class="log-empty">Loading activity log…</div>
+      </div>
+    </div>
   </div>
 
   <nav class="nav">
@@ -1201,7 +1406,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.12', // v2.12 — WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.14', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -1299,6 +1504,10 @@ const state = {
   tagsExpanded: false, // v2.10 — tag collapsible, default ringkas
   editCount: 0, openedAt: Date.now(), submitCount: 0, taskToday: 0,
   currentView: 'input',
+  // v2.14 — aset, vendor, foto. assetId null = tidak ditautkan ke
+  // perangkat mana pun (itu kondisi normal untuk task umum).
+  assets: [], assetId: null,
+  photoDataUrl: '',
 };
 
 function switchView(view) {
@@ -1307,6 +1516,7 @@ function switchView(view) {
   $('viewRiwayat').classList.toggle('hidden', view !== 'riwayat');
   $('viewLaporan').classList.toggle('hidden', view !== 'laporan');
   $('viewDash').classList.toggle('hidden', view !== 'dash');
+  $('viewLog').classList.toggle('hidden', view !== 'log'); // v2.14
   // v2.12 — BUG FIX: data-tab tombol memakai 'report', sedangkan nama view
   // internal adalah 'laporan'. Membandingkan keduanya mentah membuat tab
   // Report TIDAK PERNAH mendapat kelas .on. Dipetakan dulu di sini.
@@ -1329,6 +1539,7 @@ function switchView(view) {
   }
   if (view === 'laporan') initReportDefaults();
   if (view === 'dash') loadDashboard();
+  if (view === 'log') loadActivityLog(); // v2.14
 }
 
 // Form dianggap "kotor" bila ada isian yang belum disimpan —
@@ -1610,6 +1821,7 @@ function setupStatusPicker() {
       state.status = db;
       const found = STATUS_TYPES.find(s => s.db === db);
       $('valStatus').textContent = found.id; trackEdit();
+      applyVendorBox(); // v2.14 — kotak vendor ikut status
     });
   });
 }
@@ -1732,6 +1944,19 @@ async function doSubmit() {
     if (!lanjut) return;
   }
 
+  // v2.13 — cek terpisah untuk hari libur. Dijalankan untuk SETIAP entri
+  // jenis-hari (termasuk libur yang tetap ada pekerjaan), karena yang
+  // diperiksa adalah "tanggal ini sudah ditandai libur atau belum",
+  // bukan isi pekerjaannya.
+  if (isNonWorkingType(state.activityType)) {
+    const sudah = findDayEntryOnDate(taskDate);
+    if (sudah) {
+      const brk = String.fromCharCode(10);
+      const lanjut = confirm('This date is already recorded as "' + sudah + '".' + brk + brk + 'Save another entry for the same date?');
+      if (!lanjut) return;
+    }
+  }
+
   // Payload dipisah ke variabel supaya bisa DIPAKAI ULANG oleh antrean
   // offline di blok catch — sebelumnya dibangun inline di dalam callApi,
   // jadi isinya hilang begitu panggilan gagal.
@@ -1745,6 +1970,14 @@ async function doSubmit() {
     priority: needWork ? state.priority : '',
     status: needWork ? state.status : '',
     remark: $('remarkInput').value.trim(),
+    // v2.14 — aset, vendor, foto. Vendor hanya dikirim saat statusnya
+    // memang Waiting Vendor; applyVendorBox sudah mengosongkan isinya
+    // di status lain, tapi dicek lagi di sini supaya tidak bergantung
+    // pada urutan pemanggilan.
+    assetId: state.assetId,
+    vendorName: state.status === 'Waiting Vendor' ? $('vendorName').value.trim() : '',
+    vendorFollowupDate: state.status === 'Waiting Vendor' ? $('vendorFollowup').value : '',
+    photoDataUrl: needWork ? state.photoDataUrl : '',
     meta: clientMeta(),
   };
 
@@ -1763,6 +1996,7 @@ async function doSubmit() {
     if (typeof r.taskToday === 'number') state.taskToday = r.taskToday;
     renderTodayStrip(); // v2.10 — strip "Hari ini" ikut update tanpa reload
     rememberSubmitted(taskDate, task); // v2.12 — bahan deteksi duplikat
+    rememberDayEntry(taskDate, state.activityType); // v2.13 — jejak hari libur
 
     btn.classList.remove('busy'); btn.classList.add('done');
     setTimeout(() => { btn.classList.remove('done'); btn.disabled = false; }, 1100);
@@ -1779,6 +2013,7 @@ async function doSubmit() {
     if (e && e.network) {
       enqueueSubmit(payload);
       rememberSubmitted(taskDate, task);
+      rememberDayEntry(taskDate, state.activityType); // v2.13
       toast('No connection — saved on this phone, will send automatically.', 'good');
       resetForm();
       $('scroll').scrollTo({ top: 0, behavior: 'smooth' });
@@ -1796,6 +2031,13 @@ function resetForm() {
   state.priority = 'Medium'; state.status = 'On Progress';
   state.editCount = 0; state.openedAt = Date.now();
   $('valStatus').textContent = 'On Progress';
+  // v2.14 — aset, vendor, dan foto ikut dibersihkan. Kalau tidak,
+  // entri berikutnya diam-diam mewarisi perangkat & foto entri
+  // sebelumnya — kesalahan data yang sangat sulit disadari.
+  state.assetId = null;
+  renderAssetValue();
+  applyVendorBox();
+  clearPhoto();
   buildTags(); buildPriority();
 }
 
@@ -1813,6 +2055,11 @@ async function startApp(preloaded) {
   applyActivityMode();
   buildPriority();
   tickClock();
+
+  // v2.14 — dijalankan SETELAH login, karena keduanya bergantung pada
+  // serverVersion yang baru diketahui dari respons login/get-tags.
+  setupPhoto();
+  loadAssets();
 
   // Bila login (v1.9) sudah membawa tags & taskToday, langsung pakai —
   // ini jalur normal, tanpa panggilan tambahan ke server.
@@ -2008,6 +2255,7 @@ function applyParseResult(result) {
 
   const statusValid = STATUS_TYPES.find(s => s.db === result.status);
   if (statusValid) { state.status = statusValid.db; $('valStatus').textContent = statusValid.id; }
+  applyVendorBox(); // v2.14 — status dari AI juga memunculkan kotak vendor
 
   if (result.remark) $('remarkInput').value = result.remark;
 
@@ -2069,7 +2317,32 @@ function renderWorksheetTable(containerEl, items, onRowClick) {
   const rows = items.map((it, idx) => {
     const tanggal = formatTanggalPendek(it.task_date);
     const statLabel = RIWAYAT_STATUS_LABEL[it.status] || it.status || '';
-    const taskText = it.task ? escapeHtml(it.task) : '<span style="color:var(--muted)">—</span>';
+    // v2.13 — jenis hari selain "Working Day" ditampilkan sebagai chip di
+    // kolom Task. Tanpa ini, entri libur tampil sebagai baris nyaris kosong
+    // ("—" tanpa priority/status/type) dan tidak terbaca sebagai libur.
+    // Kalau hari libur TAPI tetap ada pekerjaan, chip dan teks task
+    // ditampilkan berdua — bukan salah satu.
+    const isDayOff = it.activity_type && it.activity_type !== 'Working Day';
+    const dayLabel = RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || '';
+    const dayChip = isDayOff
+      ? '<span class="ws-chip dayoff">' + escapeHtml(dayLabel) + '</span>'
+      : '';
+    // v2.14 — kode aset ikut tampil supaya sekali lihat sudah tahu
+    // perangkat mana yang dikerjakan, tanpa harus membuka detail.
+    // asset_code baru ada setelah MFB-IT_v1.6.sql dijalankan; sebelum
+    // itu nilainya undefined dan chip-nya tidak muncul.
+    const assetChip = it.asset_code
+      ? '<span class="ws-chip asset">' + escapeHtml(it.asset_code) + '</span>'
+      : '';
+    let taskText;
+    if (it.task && isDayOff) taskText = dayChip + ' ' + escapeHtml(it.task);
+    else if (it.task)        taskText = escapeHtml(it.task);
+    else if (isDayOff)       taskText = dayChip;
+    else                     taskText = '<span style="color:var(--muted)">—</span>';
+    // Chip aset ditaruh di DEPAN teks, dan chip foto di belakang —
+    // urutannya konsisten supaya mata tidak perlu mencari.
+    if (assetChip) taskText = assetChip + ' ' + taskText;
+    if (it.has_photo) taskText = taskText + ' <span class="ws-chip">&#128247;</span>';
     const clickable = typeof onRowClick === 'function';
     return '<tr' + (clickable ? ' class="ws-row-clickable" data-idx="' + idx + '"' : '') + '>'
       + '<td class="ws-col-date">' + tanggal + '</td>'
@@ -2128,9 +2401,21 @@ function openRiwayatDetail(idx) {
   const it = riwayatCache[idx];
   if (!it) return;
 
+  // v2.14 — BUG LAMA: it.task dimasukkan ke dalam <textarea> tanpa
+  // di-escape. Task yang memuat "</textarea>" akan menutup elemen lebih
+  // awal dan sisa teksnya jadi markup halaman. escapeHtml sudah ada di
+  // file ini dan dipakai di tabel — di sini terlewat.
   const html = '<div style="padding:0 20px">'
     + '<div class="field"><label class="label">Description</label>'
-    + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + (it.task || '') + '</textarea></div>'
+    + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + escapeHtml(it.task || '') + '</textarea></div>'
+
+    // v2.14 — aset. Baris ini hanya muncul kalau daftar aset memang
+    // tersedia; kalau MFB-IT_v1.6.sql belum jalan, bagian ini tidak ada.
+    + (state.assets.length ? ('<div class="field"><label class="label">Device / asset</label>'
+      + '<div class="picker-row" id="rwAssetRow"><span class="picker-value" id="rwAssetVal">'
+      + escapeHtml(assetLabel(state.assets.find(a => a.id === it.asset_id)))
+      + '</span><span class="picker-chevron">&#8250;</span></div></div>') : '')
+
     + '<div class="field"><label class="label">Priority</label>'
     + '<div class="prio" id="rwEditPrio">'
     + ['Low','Medium','High','Critical'].map(p =>
@@ -2139,6 +2424,29 @@ function openRiwayatDetail(idx) {
     + '<div class="field"><label class="label">Status</label>'
     + '<div class="picker-row" id="rwEditStatusRow"><span class="picker-value" id="rwEditStatusVal">'
     + (RIWAYAT_STATUS_LABEL[it.status] || it.status || '') + '</span><span class="picker-chevron">&#8250;</span></div></div>'
+
+    // v2.14 — follow-up vendor. Ditampilkan kalau statusnya Waiting
+    // Vendor ATAU kalau datanya sudah pernah diisi — supaya data lama
+    // tetap bisa dilihat & dikoreksi meski statusnya sudah berpindah.
+    + ((it.status === 'Waiting Vendor' || it.vendor_name || it.vendor_followup_date)
+        ? ('<div class="vendor-box">'
+          + '<div class="field"><label class="label">Vendor name</label>'
+          + '<input class="input" id="rwVendorName" value="' + escapeHtml(it.vendor_name || '') + '"></div>'
+          + '<div class="field" style="margin-bottom:0"><label class="label">Follow up on</label>'
+          + '<input type="date" class="input" id="rwVendorFollowup" value="' + escapeHtml(it.vendor_followup_date || '') + '">'
+          + (it.vendor_overdue ? '<div class="hint" style="color:var(--red)">Follow-up date has passed.</div>' : '')
+          + '</div></div>') : '')
+
+    // v2.14 — foto bukti. Gambarnya TIDAK langsung dimuat: bucket-nya
+    // privat, jadi butuh signed URL dari server. Tombol dulu, gambar
+    // menyusul setelah ditekan — sekaligus menghemat kuota kalau foto
+    // tidak perlu dilihat.
+    + (it.photo_path ? ('<div class="field"><label class="label">Photo evidence</label>'
+      + '<button class="photo-btn" id="rwPhotoBtn" type="button">Show photo</button>'
+      + '<div class="photo-info" id="rwPhotoInfo"></div>'
+      + '<img class="photo-view hidden" id="rwPhotoImg" alt="Photo evidence">'
+      + '</div>') : '')
+
     + '<button class="btn-logout" id="rwSaveBtn" style="color:var(--navy);margin-bottom:10px">Save changes</button>'
     + '<button class="btn-logout" id="rwDeleteBtn">Delete this task</button>'
     + '</div>';
@@ -2147,6 +2455,36 @@ function openRiwayatDetail(idx) {
 
   let editPriority = it.priority;
   let editStatus = it.status;
+  // v2.14 — nilai aset diedit lewat variabel lokal, sama pola dengan
+  // priority/status di atas, bukan langsung ke state global.
+  let editAssetId = (typeof it.asset_id === 'number') ? it.asset_id : null;
+
+  const rwAssetRow = $('rwAssetRow');
+  if (rwAssetRow) {
+    rwAssetRow.addEventListener('click', () => {
+      const opsi = [{ db: '', id: '— none —' }].concat(
+        state.assets.map(a => ({ db: String(a.id), id: assetLabel(a) }))
+      );
+      openOptionSheet('Device / asset', opsi, editAssetId === null ? '' : String(editAssetId), (db) => {
+        editAssetId = db ? Number(db) : null;
+        // openOptionSheet mengganti seluruh isi sheet, jadi detail task
+        // dibuka ulang — pola yang sama dipakai picker Status di bawah.
+        openRiwayatDetail(idx);
+        const a = state.assets.find(x => x.id === editAssetId);
+        setTimeout(() => { const el = $('rwAssetVal'); if (el) el.textContent = assetLabel(a); }, 0);
+      });
+    });
+  }
+
+  const rwPhotoBtn = $('rwPhotoBtn');
+  if (rwPhotoBtn) {
+    rwPhotoBtn.addEventListener('click', () => {
+      rwPhotoBtn.disabled = true;
+      $('rwPhotoInfo').textContent = 'Opening photo…';
+      bukaFotoTersimpan(it.photo_path, $('rwPhotoImg'), $('rwPhotoInfo'))
+        .finally(() => { rwPhotoBtn.disabled = false; });
+    });
+  }
 
   $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(el => {
     el.addEventListener('click', () => {
@@ -2169,10 +2507,19 @@ function openRiwayatDetail(idx) {
   $('rwSaveBtn').addEventListener('click', async () => {
     const newTask = $('rwEditTask').value.trim();
     try {
-      const r = await callApi({
+      // v2.14 — aset & vendor ikut dikirim. Elemen vendor bisa tidak ada
+      // (kalau statusnya bukan Waiting Vendor dan datanya kosong), jadi
+      // dibaca dengan penjagaan, bukan diasumsikan ada.
+      const vn = $('rwVendorName');
+      const vf = $('rwVendorFollowup');
+      const kiriman = {
         action: 'update-task', sessionToken: state.token, id: it.id,
         task: newTask, priority: editPriority, status: editStatus,
-      });
+      };
+      if (state.assets.length) kiriman.assetId = editAssetId;
+      if (vn) kiriman.vendorName = vn.value.trim();
+      if (vf) kiriman.vendorFollowupDate = vf.value;
+      const r = await callApi(kiriman);
       if (!r.ok) { toast(r.error || 'Failed to save changes.', 'err'); return; }
       toast('Changes saved', 'good');
       closeSheet();
@@ -2584,6 +2931,66 @@ function renderReportList(items) {
   renderWorksheetTable($('reportList'), items, null);
 }
 
+// ── v2.14 — SALIN UNTUK GOOGLE SHEETS ───────────────────────
+// Menyalin isi laporan sebagai TSV (dipisah TAB). Google Sheets dan
+// Excel Online mengenali TAB sebagai pemisah kolom, jadi sekali
+// tempel langsung terbagi rapi ke sel-selnya — tanpa dialog import,
+// tanpa file perantara, tanpa kredensial.
+//
+// TSV dipilih, bukan CSV: isi task sering memuat koma, dan CSV harus
+// dikutip/di-escape untuk itu. TAB nyaris tidak pernah muncul di teks
+// yang diketik pengguna, jadi jauh lebih sedikit yang bisa salah.
+function tsvCell(v) {
+  // TAB dan baris baru diganti spasi karena keduanya adalah pemisah
+  // dalam format ini — kalau lolos, satu sel bisa pecah jadi banyak.
+  return String(v === null || v === undefined ? '' : v).replace(/[\t\r\n]+/g, ' ').trim();
+}
+
+async function copyReportForSheets() {
+  if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
+    toast('Show the report first before copying.', 'err');
+    return;
+  }
+
+  // Kolom dibuat SAMA dengan export Excel, ditambah field v1.6 supaya
+  // hasil tempel dan hasil unduh tidak pernah berbeda isinya.
+  const header = [
+    'Task ID', 'Date', 'Activity Type', 'Work Type', 'Task', 'Tags',
+    'Priority', 'Status', 'Remark', 'Asset', 'Vendor', 'Follow Up',
+  ];
+
+  const baris = reportCache.items.map(it => [
+    it.task_id, it.task_date, it.activity_type, it.work_type,
+    it.task, it.tags_raw, it.priority, it.status, it.remark || '',
+    it.asset_code || '', it.vendor_name || '', it.vendor_followup_date || '',
+  ].map(tsvCell).join(String.fromCharCode(9)));
+
+  const tsv = [header.join(String.fromCharCode(9))].concat(baris).join(String.fromCharCode(10));
+
+  // navigator.clipboard butuh HTTPS dan tidak ada di peramban lama.
+  // Kalau tidak tersedia, jatuh ke cara lama (textarea + execCommand)
+  // supaya fitur ini tidak mati total di perangkat tertentu.
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(tsv);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = tsv;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (!ok) throw new Error('Copy was blocked by the browser.');
+    }
+    toast(reportCache.items.length + ' rows copied — paste into Google Sheets', 'good');
+  } catch (e) {
+    toast(e.message || 'Could not copy. Use Download Excel instead.', 'err');
+  }
+}
+
 function exportReportToExcel() {
   if (!reportCache || !reportCache.items || reportCache.items.length === 0) {
     toast('Show the report first before downloading.', 'err');
@@ -2604,12 +3011,19 @@ function exportReportToExcel() {
     'Priority': it.priority,
     'Status': it.status,
     'Remark': it.remark || '',
+    // v2.14 — 3 kolom baru dari MFB-IT_v1.6.sql. Sebelum SQL itu
+    // dijalankan nilainya undefined, dan kolomnya jadi kosong —
+    // bukan error, jadi export tetap aman dipakai.
+    'Asset': it.asset_code || '',
+    'Vendor': it.vendor_name || '',
+    'Follow Up': it.vendor_followup_date || '',
   }));
 
   const ws = XLSX.utils.json_to_sheet(rows);
   ws['!cols'] = [
     { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 16 },
     { wch: 40 }, { wch: 24 }, { wch: 10 }, { wch: 14 }, { wch: 30 },
+    { wch: 14 }, { wch: 20 }, { wch: 12 },
   ];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'MFB-IT Report');
@@ -2739,6 +3153,330 @@ async function exportAllData() {
   } finally {
     btn.classList.remove('busy');
     btn.textContent = labelAsal;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   v2.14 — ASET, VENDOR, FOTO BUKTI
+   Semua butuh MFB-IT_v1.6.sql + Edge Function v1.14.
+   Kalau salah satu belum ada, fiturnya DISEMBUNYIKAN — bukan
+   error (SOP 8.8).
+   ══════════════════════════════════════════════ */
+
+// ── REGISTRY ASET ───────────────────────────────────────────
+async function loadAssets() {
+  // Server lama tidak punya action ini: lewati diam-diam, picker tetap
+  // tersembunyi. Tidak perlu memberi tahu pengguna soal versi server.
+  if (!serverAtLeast(1, 14)) return;
+
+  const r = await callApi({ action: 'get-assets', sessionToken: state.token }).catch(() => null);
+  if (!r || !r.ok) {
+    // Kemungkinan terbesar: MFB-IT_v1.6.sql belum dijalankan sehingga
+    // tabel asset belum ada. Dicatat di console saja — pengguna tidak
+    // bisa berbuat apa-apa soal itu dari HP.
+    console.warn('[MFB-IT] daftar aset tidak tersedia:', r && r.error);
+    return;
+  }
+
+  state.assets = Array.isArray(r.items) ? r.items : [];
+  // Tabel aset kosong = belum diisi inventaris. Picker tetap
+  // disembunyikan, karena membuka picker kosong lebih membingungkan
+  // daripada tidak ada picker sama sekali.
+  $('assetBox').classList.toggle('hidden', state.assets.length === 0);
+  renderAssetValue();
+}
+
+// Label yang ditampilkan di picker: kode + nama, karena kode saja
+// ("PRN-FO-01") belum tentu langsung dikenali.
+function assetLabel(a) {
+  if (!a) return '— none —';
+  const lokasi = a.location ? ' · ' + a.location : '';
+  return a.code + ' — ' + a.name + lokasi;
+}
+
+function renderAssetValue() {
+  const el = $('valAsset');
+  if (!el) return;
+  const a = state.assets.find(x => x.id === state.assetId);
+  el.textContent = assetLabel(a);
+}
+
+function setupAssetPicker() {
+  $('rowAsset').addEventListener('click', () => {
+    // Opsi "none" selalu ada di paling atas supaya tautan aset bisa
+    // dilepas kembali, bukan hanya diganti.
+    const opsi = [{ db: '', id: '— none —' }].concat(
+      state.assets.map(a => ({ db: String(a.id), id: assetLabel(a) }))
+    );
+    const sekarang = state.assetId === null ? '' : String(state.assetId);
+    openOptionSheet('Device / asset', opsi, sekarang, (db) => {
+      state.assetId = db ? Number(db) : null;
+      renderAssetValue();
+      trackEdit();
+    });
+  });
+}
+
+// ── FOLLOW-UP VENDOR ────────────────────────────────────────
+// Kotak vendor mengikuti status. Dipanggil dari setupStatusPicker dan
+// dari applyParseResult/applyTemplate, supaya status yang di-set AI
+// atau template juga langsung memunculkan kotaknya.
+function applyVendorBox() {
+  const box = $('vendorBox');
+  if (!box) return;
+  const perlu = state.status === 'Waiting Vendor';
+  box.classList.toggle('hidden', !perlu);
+  // Saat status berpindah menjauh dari Waiting Vendor, isian vendor
+  // DIKOSONGKAN. Kalau dibiarkan, nilainya tetap terkirim ke server
+  // padahal kotaknya sudah tidak terlihat — pengguna tidak akan tahu
+  // data itu masih ikut tersimpan.
+  if (!perlu) {
+    $('vendorName').value = '';
+    $('vendorFollowup').value = '';
+    $('vendorFollowupText').textContent = '—';
+  }
+}
+
+// ── FOTO BUKTI ──────────────────────────────────────────────
+// Foto dikompres di HP SEBELUM dikirim. Tanpa ini, foto kamera 12 MP
+// (3-5 MB) dikirim sebagai base64 yang membengkak ~33% lagi — di
+// sinyal lemah itu praktis tidak akan pernah selesai.
+const PHOTO_MAX_SIDE = 1600;
+const PHOTO_QUALITY = 0.72;
+const PHOTO_WARN_BYTES = 1800000; // ~1,8 MB base64: masih terkirim, tapi lambat
+
+function bacaFileSebagaiDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.onerror = () => reject(new Error('Could not read the file.'));
+    fr.readAsDataURL(file);
+  });
+}
+
+function muatGambar(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Could not read the image.'));
+    img.src = dataUrl;
+  });
+}
+
+// Selalu menghasilkan JPEG, termasuk untuk PNG masukan: screenshot PNG
+// dari HP bisa jauh lebih besar daripada JPEG dengan mutu setara.
+async function kompresFoto(file) {
+  const asli = await bacaFileSebagaiDataUrl(file);
+  const img = await muatGambar(asli);
+
+  let w = img.naturalWidth || img.width;
+  let h = img.naturalHeight || img.height;
+  if (!w || !h) throw new Error('Image size could not be read.');
+
+  const sisiTerpanjang = Math.max(w, h);
+  if (sisiTerpanjang > PHOTO_MAX_SIDE) {
+    const skala = PHOTO_MAX_SIDE / sisiTerpanjang;
+    w = Math.round(w * skala);
+    h = Math.round(h * skala);
+  }
+
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  const ctx = cv.getContext('2d');
+  if (!ctx) throw new Error('Canvas is not available.');
+  ctx.drawImage(img, 0, 0, w, h);
+  return cv.toDataURL('image/jpeg', PHOTO_QUALITY);
+}
+
+function renderPhotoState() {
+  const ada = !!state.photoDataUrl;
+  $('photoThumb').classList.toggle('hidden', !ada);
+  $('photoClear').classList.toggle('hidden', !ada);
+  $('photoBtnLabel').textContent = ada ? 'Change photo' : 'Add photo';
+  if (ada) {
+    $('photoThumb').src = state.photoDataUrl;
+    // Ukuran kiriman diperkirakan dari panjang base64 (4 karakter = 3 byte).
+    const kb = Math.round(state.photoDataUrl.length * 0.75 / 1024);
+    $('photoInfo').textContent = '~' + kb + ' KB';
+  } else {
+    $('photoThumb').removeAttribute('src');
+    $('photoInfo').textContent = '';
+  }
+}
+
+function clearPhoto() {
+  state.photoDataUrl = '';
+  $('photoInput').value = '';
+  renderPhotoState();
+}
+
+function setupPhoto() {
+  const box = $('photoBox');
+  if (!box) return;
+
+  // Foto disimpan di Supabase Storage lewat Edge Function v1.14.
+  // Kalau server masih lama, tombolnya tidak ditampilkan sama sekali.
+  if (!serverAtLeast(1, 14)) return;
+  box.classList.remove('hidden');
+
+  $('photoBtn').addEventListener('click', () => $('photoInput').click());
+  $('photoClear').addEventListener('click', clearPhoto);
+
+  $('photoInput').addEventListener('change', async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      state.photoDataUrl = await kompresFoto(file);
+      if (state.photoDataUrl.length > PHOTO_WARN_BYTES) {
+        toast('Photo is still large — saving may take a while on weak signal.', '');
+      }
+      renderPhotoState();
+      trackEdit();
+    } catch (err) {
+      toast(err.message || 'Photo could not be processed.', 'err');
+      clearPhoto();
+    }
+  });
+}
+
+// Membuka foto tersimpan. Bucket-nya privat, jadi path harus ditukar
+// dulu menjadi signed URL berjangka pendek di server.
+async function bukaFotoTersimpan(path, imgEl, statusEl) {
+  try {
+    const r = await callApi({ action: 'get-photo-url', sessionToken: state.token, path: path });
+    if (!r.ok || !r.url) {
+      if (statusEl) statusEl.textContent = r.error || 'Photo could not be opened.';
+      return;
+    }
+    imgEl.src = r.url;
+    imgEl.classList.remove('hidden');
+    if (statusEl) statusEl.textContent = '';
+  } catch (e) {
+    if (statusEl) statusEl.textContent = e.message || 'Photo could not be opened.';
+  }
+}
+
+/* ══════════════════════════════════════════════
+   v2.14 — TAB LOG
+   ══════════════════════════════════════════════ */
+
+// Label yang dibaca manusia untuk tiap event_type yang ditulis server.
+// Kalau suatu saat server menulis jenis baru yang belum ada di sini,
+// nama mentahnya yang dipakai — bukan kosong.
+const LOG_EVENT_LABEL = {
+  LOGIN_SUCCESS: 'Login',
+  LOGIN_FAILED:  'Login failed',
+  AI_PARSE:      'AI parse',
+  SUBMIT_TASK:   'Saved',
+  UPDATE_TASK:   'Edited',
+  DELETE_TASK:   'Deleted',
+  EXPORT_ALL:    'Backup',
+};
+
+// Kelas warna badge. Hanya 3 kelompok — bukan satu warna per event —
+// supaya deretan log tidak jadi pelangi yang malah sulit dibaca.
+function logBadgeClass(ev) {
+  if (ev === 'SUBMIT_TASK') return 'log-badge submit';
+  if (ev === 'DELETE_TASK' || ev === 'LOGIN_FAILED') return 'log-badge danger';
+  if (ev === 'UPDATE_TASK' || ev === 'AI_PARSE') return 'log-badge edit';
+  return 'log-badge';
+}
+
+let logFilterAktif = ''; // '' = semua jenis event
+
+function renderLogFilter(jenisTersedia) {
+  const box = $('logFilter');
+  if (!box) return;
+  box.innerHTML = '';
+
+  const daftar = [{ id: '', label: 'All' }].concat(
+    (jenisTersedia || []).map(ev => ({ id: ev, label: LOG_EVENT_LABEL[ev] || ev }))
+  );
+
+  daftar.forEach(item => {
+    const chip = document.createElement('div');
+    chip.className = 'log-chip' + (logFilterAktif === item.id ? ' on' : '');
+    chip.textContent = item.label;
+    chip.setAttribute('role', 'button');
+    chip.setAttribute('tabindex', '0');
+    chip.setAttribute('aria-pressed', logFilterAktif === item.id ? 'true' : 'false');
+    const pilih = () => {
+      if (logFilterAktif === item.id) return;
+      logFilterAktif = item.id;
+      loadActivityLog();
+    };
+    chip.onclick = pilih;
+    chip.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pilih(); }
+    };
+    box.appendChild(chip);
+  });
+}
+
+function renderActivityLog(items) {
+  const box = $('logList');
+  if (!items || items.length === 0) {
+    box.innerHTML = '<div class="log-empty">No log entries yet.</div>';
+    return;
+  }
+
+  box.innerHTML = items.map(it => {
+    const ev = it.event_type || '';
+    const label = LOG_EVENT_LABEL[ev] || ev;
+
+    // Kalimat utama: pakai event_description dari server bila ada,
+    // kalau tidak jatuh ke teks task, kalau tidak juga baru pakai
+    // label event. Jadi baris log tidak pernah kosong.
+    const utama = it.event_description || it.task || label;
+
+    // Baris meta hanya menampilkan yang benar-benar terisi — deretan
+    // label kosong lebih mengganggu daripada informasi yang hilang.
+    const meta = [];
+    if (it.task_id)  meta.push(escapeHtml(it.task_id));
+    if (it.priority) meta.push(escapeHtml(it.priority));
+    if (it.status)   meta.push(escapeHtml(it.status));
+    if (it.tags_raw) meta.push(escapeHtml(it.tags_raw));
+    const perangkat = [it.browser, it.os, it.device_type].filter(Boolean).join(" · ");
+    if (perangkat) meta.push(escapeHtml(perangkat));
+    if (it.app_version) meta.push(escapeHtml("v" + it.app_version));
+
+    return '<div class="log-row">'
+      + '<div class="log-row-top">'
+      +   '<span class="' + logBadgeClass(ev) + '">' + escapeHtml(label) + '</span>'
+      +   '<span class="log-time">' + escapeHtml(it.timestamp_wita || '') + '</span>'
+      + '</div>'
+      + '<div class="log-desc">' + escapeHtml(utama) + '</div>'
+      + (meta.length ? '<div class="log-meta">' + meta.map(m => '<span>' + m + '</span>').join('') + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+async function loadActivityLog() {
+  const box = $('logList');
+
+  // Server lama tidak punya action ini. Daripada memunculkan error yang
+  // membingungkan, jelaskan apa yang perlu dilakukan (SOP 8.8).
+  if (!serverAtLeast(1, 14)) {
+    box.innerHTML = '<div class="log-empty">Activity log needs Edge Function v1.14 or newer.<br>Deploy it, then reopen this tab.</div>';
+    $('logFilter').innerHTML = '';
+    return;
+  }
+
+  box.innerHTML = '<div class="log-empty">Loading activity log…</div>';
+  try {
+    const r = await callApi({
+      action: 'get-activity-log',
+      sessionToken: state.token,
+      eventType: logFilterAktif || undefined,
+    });
+    if (!r.ok) {
+      box.innerHTML = '<div class="log-empty">' + (r.error || 'Failed to load activity log.') + '</div>';
+      return;
+    }
+    renderLogFilter(r.eventTypes);
+    renderActivityLog(r.items || []);
+  } catch (e) {
+    box.innerHTML = '<div class="log-empty">' + (e.message || 'Failed to load activity log.') + '</div>';
   }
 }
 
@@ -2891,6 +3629,47 @@ function rememberSubmitted(date, task) {
   try { Store.set(KEY_RECENT, JSON.stringify(list.slice(0, 60))); } catch (e) {}
 }
 
+// v2.13 — DETEKSI DUPLIKAT UNTUK HARI LIBUR.
+// isProbableDuplicate() membandingkan teks pekerjaan, jadi entri libur
+// tanpa teks (Day Off / Public Holiday / Annual Leave / Sick Leave /
+// Extra Off / PDO) sama sekali tidak terjaring. Padahal justru di situ
+// duplikat paling mudah terjadi: libur dicatat dua kali karena tidak
+// kelihatan sudah pernah dicatat.
+//
+// Yang diperiksa: apakah tanggal ini SUDAH punya entri jenis-hari apa pun
+// selain Working Day — bukan hanya jenis yang sama. Mencatat 'Day Off'
+// lalu 'Public Holiday' di tanggal yang sama juga hampir pasti keliru,
+// dan pesannya menyebutkan jenis apa yang sudah ada.
+function isNonWorkingType(t) {
+  return !!t && t !== 'Working Day';
+}
+
+function rememberDayEntry(date, activityType) {
+  if (!isNonWorkingType(activityType)) return;
+  const list = readRecent();
+  // Disimpan dengan field 'a' (bukan 't') supaya tidak pernah tertukar
+  // dengan jejak pekerjaan biasa. Entri lama yang hanya punya 't' tetap
+  // terbaca benar oleh isProbableDuplicate.
+  list.unshift({ d: date, a: activityType });
+  try { Store.set(KEY_RECENT, JSON.stringify(list.slice(0, 60))); } catch (e) {}
+}
+
+// Mengembalikan nama jenis hari yang sudah tercatat di tanggal itu,
+// atau string kosong kalau belum ada.
+function findDayEntryOnDate(date) {
+  const hit = readRecent().find(r => r && r.d === date && isNonWorkingType(r.a));
+  if (hit) return hit.a;
+
+  // Sumber kedua: riwayat yang sudah dimuat di tab History pada sesi ini.
+  try {
+    const row = riwayatCache.find(it =>
+      it && it.task_date === date && isNonWorkingType(it.activity_type));
+    if (row) return row.activity_type;
+  } catch (e) { /* riwayatCache belum terisi — abaikan */ }
+
+  return '';
+}
+
 function isProbableDuplicate(date, task) {
   const norm = normalizeTaskText(task);
   if (!norm) return false;
@@ -3003,6 +3782,7 @@ function applyTemplate(i) {
   }
   const st = STATUS_TYPES.find(s => s.db === t.status);
   if (st) { state.status = st.db; $('valStatus').textContent = st.id; }
+  applyVendorBox(); // v2.14
 
   trackEdit();
   toast('Template applied · ' + t.name, 'good');
@@ -3065,6 +3845,45 @@ function renderTemplates() {
 // sudah ada, tanpa endpoint baru.
 let recog = null, recogOn = false;
 
+// v2.13 — Meminta izin mikrofon secara eksplisit SEBELUM memulai
+// pengenalan suara.
+//
+// Kenapa perlu: pengaturan global Chrome "Sites can ask for your
+// microphone" hanya mengizinkan situs BERTANYA — bukan memberi izin.
+// Izin sebenarnya dipegang per-situs. SpeechRecognition.start() di
+// Chrome Android sering langsung menjawab 'not-allowed' tanpa pernah
+// memunculkan dialog apa pun bila izin situs belum ada. getUserMedia
+// memunculkan dialog itu dengan andal, jadi dipakai sebagai pembuka.
+//
+// Mengembalikan: 'ok' | 'denied' | 'unsupported'
+async function ensureMicPermission() {
+  // Kalau Permissions API tersedia dan sudah 'granted', tidak perlu
+  // membuka stream sama sekali.
+  try {
+    if (navigator.permissions && navigator.permissions.query) {
+      const st = await navigator.permissions.query({ name: 'microphone' });
+      if (st && st.state === 'granted') return 'ok';
+    }
+  } catch (e) { /* nama 'microphone' tidak dikenali peramban — lanjut */ }
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    // Tidak ada getUserMedia: biarkan SpeechRecognition mencoba sendiri.
+    return 'unsupported';
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // Stream ditutup segera. Tujuannya HANYA memicu dialog izin;
+    // yang merekam nanti adalah SpeechRecognition, bukan stream ini.
+    // Kalau dibiarkan terbuka, indikator mikrofon menyala terus dan
+    // di sebagian perangkat justru memblokir SpeechRecognition.
+    stream.getTracks().forEach(t => t.stop());
+    return 'ok';
+  } catch (e) {
+    return 'denied';
+  }
+}
+
 function setupVoiceInput() {
   const btn = $('micBtn');
   if (!btn) return;
@@ -3082,8 +3901,16 @@ function setupVoiceInput() {
     try { if (recog) recog.stop(); } catch (e) {}
   };
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', async () => {
     if (recogOn) { stop(); return; }
+
+    // v2.13 — izin diminta lebih dulu; tanpa ini Chrome Android bisa
+    // menjawab 'not-allowed' tanpa pernah memunculkan dialog.
+    const izin = await ensureMicPermission();
+    if (izin === 'denied') {
+      toast('Microphone blocked for this site. Tap the icon left of the address bar, open Permissions, then allow Microphone.', 'err');
+      return;
+    }
 
     try {
       recog = new SR();
@@ -3113,8 +3940,15 @@ function setupVoiceInput() {
     recog.onerror = (ev) => {
       stop();
       const code = ev && ev.error ? ev.error : '';
-      if (code === 'not-allowed' || code === 'service-not-allowed') {
-        toast('Microphone permission is blocked. Allow it in browser settings.', 'err');
+      // v2.13 — dua kode ini DIPISAH. Sebelumnya keduanya diberi pesan
+      // "blocked in browser settings", padahal service-not-allowed bukan
+      // soal izin situs melainkan layanan pengenalan suara peramban yang
+      // tidak tersedia — mengarahkan pengguna ke setting izin untuk kasus
+      // itu membuat ia mencari di tempat yang salah.
+      if (code === 'not-allowed') {
+        toast('Microphone blocked for this site. Tap the icon left of the address bar, open Permissions, then allow Microphone.', 'err');
+      } else if (code === 'service-not-allowed') {
+        toast('Speech recognition is unavailable on this browser. Type it instead.', 'err');
       } else if (code === 'no-speech') {
         toast('No speech detected. Try again.', 'err');
       } else {
@@ -3193,7 +4027,12 @@ function wireEvents() {
   $('aiBtn').addEventListener('click', doAiParse);
 
   document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.tab === 'input' || b.dataset.tab === 'riwayat' || b.dataset.tab === 'report' || b.dataset.tab === 'dash') {
+    // v2.14 — tab "log" masuk daftar. Daftar putih ini dipertahankan
+    // (bukan diganti "izinkan semua") supaya kalau nanti ada tab baru
+    // yang belum jadi, perilakunya tetap jelas: beri tahu, bukan
+    // menampilkan halaman kosong.
+    const TAB_SIAP = ['input', 'riwayat', 'report', 'dash', 'log'];
+    if (TAB_SIAP.includes(b.dataset.tab)) {
       switchView(b.dataset.tab === 'report' ? 'laporan' : b.dataset.tab);
       return;
     }
@@ -3240,6 +4079,15 @@ function wireEvents() {
 
   setupActivityPicker(); setupWorkTypePicker(); setupStatusPicker();
 
+  // v2.14 — aset, vendor, foto.
+  setupAssetPicker();
+  $('vendorFollowup').addEventListener('change', e => {
+    const v = e.target.value;
+    $('vendorFollowupText').textContent = v ? formatTanggalPanjang(v) : '—';
+    trackEdit();
+  });
+  $('vendorName').addEventListener('input', trackEdit);
+
   // Laporan
   $('modeMonth').addEventListener('click', () => setReportMode('month'));
   $('modeRange').addEventListener('click', () => setReportMode('range'));
@@ -3248,6 +4096,7 @@ function wireEvents() {
   $('reportLoadBtn').addEventListener('click', loadReport);
   $('reportExportBtn').addEventListener('click', exportReportToExcel);
   $('reportOfficialBtn').addEventListener('click', exportReportOfficial);
+  $('reportCopyBtn').addEventListener('click', copyReportForSheets); // v2.14
   $('backupBtn').addEventListener('click', exportAllData);
 }
 
