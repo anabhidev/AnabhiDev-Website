@@ -79,17 +79,6 @@ body {
   100% { opacity: 1; }
 }
 
-/* Luxury Touch: Cinematic Grain Overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.035;
-}
-
 h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
 ul, ol { margin: 0; padding: 0; }
 li { list-style: none; }
@@ -362,24 +351,10 @@ p { max-width: var(--w-measure); }
 .js-on .reveal {
   opacity: 0;
   transform: translateY(22px);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  transition: opacity var(--t-reveal) cubic-bezier(0.22, 1, 0.36, 1),
-              transform var(--t-reveal) cubic-bezier(0.22, 1, 0.36, 1),
-              clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity var(--t-reveal) var(--ease-out),
+              transform var(--t-reveal) var(--ease-out);
 }
 .js-on .reveal.is-in { opacity: 1; transform: none; }
-
-/* Gambar-gambar dengan clip path sweep (Mewah) */
-.js-on .cuisine.reveal,
-.js-on .gallery__item.reveal {
-  opacity: 1; /* Jangan sembunyikan sepenuhnya, pakai wipe */
-  transform: none;
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-}
-.js-on .cuisine.reveal.is-in,
-.js-on .gallery__item.reveal.is-in {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
 
 @media (prefers-reduced-motion: reduce) {
   .js-on .reveal { opacity: 1; transform: none; }

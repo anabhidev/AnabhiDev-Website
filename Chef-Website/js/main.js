@@ -16,37 +16,8 @@
   var doc = document;
 
   /* ==============================================================
-     0. LUXURY FEATURES (Lenis & Magnetic Buttons)
+     0. LUXURY FEATURES (Magnetic Buttons)
      ============================================================== */
-  // Initialize Lenis Smooth Scrolling if present
-  if (typeof window.Lenis !== 'undefined') {
-    var lenis = new window.Lenis({
-      duration: 1.2,
-      easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-      smooth: true,
-      mouseMultiplier: 1,
-      touchMultiplier: 2
-    });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Parallax on Hero Text for 3D depth
-    var heroInner = doc.querySelector('.hero__inner');
-    if (heroInner) {
-      lenis.on('scroll', function(e) {
-        var scrollY = e.animatedScroll;
-        heroInner.style.transform = 'translate3d(0, ' + (scrollY * 0.25) + 'px, 0)';
-        heroInner.style.opacity = 1 - (scrollY / 600);
-      });
-    }
-
-    // Patch drawer close to allow lenis to resume scroll if needed,
-    // though lenis handles overflow hidden on body fairly well in v1.
-  }
-
   // Magnetic Buttons (Desktop Only)
   if (window.matchMedia('(min-width: 981px)').matches) {
     var magnetBtns = doc.querySelectorAll('.btn--primary, .btn--ghost, .btn--outline-dark');
