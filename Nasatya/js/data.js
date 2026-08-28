@@ -1,4 +1,12 @@
-﻿const PRODUCTS = [
+// ================================================================
+// AnabhiDev-WEB — Nasatya Website (Product Data Model)
+// JavaScript ES6 · JSON Data Model
+// Development · Anabhi Dev
+// Version   : 1.7
+// Generated : 28 August 2026, 16:45:00
+// ================================================================
+
+const PRODUCTS = [
   {
     id:'therapy', name:'Nāsatyā Therapy', subtitle:'Minyak Therapy Multifungsi — P3K Serbaguna',
     category:'cat-basic', categoryLabel:'Basic Oil', color:'#4C8C56',

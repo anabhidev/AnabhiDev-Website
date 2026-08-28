@@ -1,10 +1,10 @@
-/*
-AnabhiDev-WEB — Nasatya Website
-HTML5 · CSS3 · Vanilla JS
-Development · Anabhi Dev
-Version   : 1.3
-Generated : 28 August 2026, 09:45:00
-*/
+// ================================================================
+// AnabhiDev-WEB — Nasatya Website (Main Interactive Logic)
+// JavaScript ES6 · DOM Manipulation · IntersectionObserver
+// Development · Anabhi Dev
+// Version   : 1.7
+// Generated : 28 August 2026, 16:45:00
+// ================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ── Menu Mobile ── */
