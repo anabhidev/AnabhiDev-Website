@@ -166,6 +166,14 @@ p { max-width: var(--w-measure); }
   background: var(--c-gold);
   margin: var(--sp-lg) 0;
 }
+.js-on .rule {
+  max-width: 0;
+  transition: max-width 1s var(--ease-out) 0.3s;
+}
+.js-on .reveal.is-in .rule, .js-on .rule.is-in,
+.js-on .sec-head.is-in .rule {
+  max-width: 56px;
+}
 .rule--center { margin-left: auto; margin-right: auto; }
 
 /* Utilities */
@@ -354,10 +362,24 @@ p { max-width: var(--w-measure); }
 .js-on .reveal {
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity var(--t-reveal) var(--ease-out),
-              transform var(--t-reveal) var(--ease-out);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition: opacity var(--t-reveal) cubic-bezier(0.22, 1, 0.36, 1),
+              transform var(--t-reveal) cubic-bezier(0.22, 1, 0.36, 1),
+              clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .js-on .reveal.is-in { opacity: 1; transform: none; }
+
+/* Gambar-gambar dengan clip path sweep (Mewah) */
+.js-on .cuisine.reveal,
+.js-on .gallery__item.reveal {
+  opacity: 1; /* Jangan sembunyikan sepenuhnya, pakai wipe */
+  transform: none;
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+.js-on .cuisine.reveal.is-in,
+.js-on .gallery__item.reveal.is-in {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .js-on .reveal { opacity: 1; transform: none; }
