@@ -232,14 +232,14 @@
       'nav.menu': 'Menu',
       'nav.consulting': 'Konsultasi',
       'nav.gallery': 'Galeri',
-      'nav.book': 'Pesan Pengalaman Anda',
+      'nav.book': 'Reservasi Sekarang',
 
       // ---- Index: Hero ----
       'hero.eyebrow': 'Chef Privat · Bali',
       'hero.title': 'Santapan Privat,<br>Dirancang Khusus Untuk Anda',
       'hero.lead': 'Chef profesional, menu eksklusif, dan malam istimewa yang disesuaikan dengan vila, tamu, dan momen berharga Anda — disajikan langsung di tempat Anda menginap.',
       'hero.micro': 'Villa Dining <span aria-hidden="true">·</span> Private BBQ <span aria-hidden="true">·</span> Katering <span aria-hidden="true">·</span> Kelas Memasak <span aria-hidden="true">·</span> Acara Spesial',
-      'hero.cta_book': 'Pesan Pengalaman Anda',
+      'hero.cta_book': 'Reservasi Sekarang',
       'hero.cta_services': 'Lihat Layanan Kami',
 
       // ---- Index: Pengalaman ----
