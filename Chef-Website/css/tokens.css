@@ -1,0 +1,185 @@
+/* ================================================================
+   AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+   HTML5 · Vanilla CSS · Vanilla JavaScript
+   Development · Anabhi Dev
+   Version   : 1.1
+   Generated : 28 August 2026, 00:59:18
+   ----------------------------------------------------------------
+   Design token — SATU-SATUNYA sumber kebenaran untuk warna, tipografi,
+   spacing, dan durasi. Dilarang menulis hex code langsung di file CSS
+   lain; selalu lewat var() dari sini.
+   Sumber nilai: "Chef Website - PRD-DESIGN.md" bagian 6, 7, 8, 18, 29.
+   ================================================================ */
+
+:root {
+
+  /* ---- 1. WARNA — palet PRD bagian 6.1 -------------------------- */
+  /* Rasio target: 55-65% gelap, 25-35% ivory, 5-10% emas.
+     Emas itu aksen, bukan warna isian. Jangan dipakai untuk teks body
+     atau blok besar. */
+
+  --c-obsidian     : #0B0B0A;   /* background gelap utama            */
+  --c-charcoal     : #151412;   /* section gelap sekunder            */
+  --c-warm-black   : #1D1A16;   /* card / overlay                    */
+  --c-ivory        : #F3EFE7;   /* background section terang         */
+  --c-soft-ivory   : #E9E2D5;   /* background terang sekunder        */
+  --c-gold         : #C9A35A;   /* aksen utama / CTA                 */
+  --c-gold-light   : #E3C47A;   /* hover / highlight                 */
+  --c-gold-muted   : #8D7140;   /* border / detail halus             */
+  --c-white        : #F8F7F3;   /* teks utama di atas gelap          */
+  --c-warm-gray    : #B9B3AA;   /* teks sekunder di atas gelap       */
+  --c-dark-text    : #1A1815;   /* teks di atas background terang    */
+
+  /* Turunan — teks sekunder di atas ivory.
+     #6B655C di atas #F3EFE7 = 5.03:1 (lolos WCAG AA 4.5:1).
+     Jangan dibikin lebih terang dari ini. */
+  --c-dark-text-2  : #6B655C;
+
+  /* ---- Kontras terukur (dihitung, bukan dikira) -----------------
+     Dipakai sebagai pagar saat memilih kombinasi warna:
+
+       #F8F7F3 di atas #0B0B0A  = 18.37:1  teks utama band gelap
+       #B9B3AA di atas #0B0B0A  =  9.46:1  teks sekunder band gelap
+       #C9A35A di atas #0B0B0A  =  8.32:1  emas di band gelap
+       #C9A35A di atas #151412  =  7.78:1  emas di charcoal
+       #E3C47A di atas #0B0B0A  = 11.67:1  emas terang / hover
+       #1A1815 di atas #C9A35A  =  7.48:1  teks gelap di tombol emas
+       #1A1815 di atas #F3EFE7  = 15.45:1  teks utama band terang
+       #6B655C di atas #F3EFE7  =  5.03:1  teks sekunder band terang
+       #8D7140 di atas #0B0B0A  =  4.28:1  HANYA border/detail, bukan teks
+       #C9A35A di atas #F3EFE7  =  2.06:1  ❌ GAGAL
+
+     🔴 ATURAN: emas DILARANG jadi teks di atas band ivory (2.06:1).
+     Ini persis yang diperingatkan PRD bagian 20. Di band terang, emas
+     hanya boleh untuk garis, ikon dekoratif, atau background tombol
+     yang teksnya gelap. Untuk eyebrow di band terang pakai
+     --c-dark-text-2, bukan --c-gold. */
+
+  /* Garis pemisah. rgba supaya menyatu di band gelap maupun terang. */
+  --c-line-dark    : rgba(201, 163,  90, 0.22);  /* emas 22% */
+  --c-line-light   : rgba( 26,  24,  21, 0.12);
+
+  /* Scrim hero — gradient dari kiri, bukan overlay hitam rata.
+     PRD bagian 17.5: jangan ubah setiap foto jadi kotak hitam. */
+  --scrim-hero     : linear-gradient(
+                       100deg,
+                       rgba(11, 11, 10, 0.92)   0%,
+                       rgba(11, 11, 10, 0.78)  32%,
+                       rgba(11, 11, 10, 0.38)  62%,
+                       rgba(11, 11, 10, 0.15) 100%
+                     );
+  /* Scrim kartu — supaya label di atas foto tetap terbaca. */
+  --scrim-card     : linear-gradient(
+                       180deg,
+                       rgba(11, 11, 10, 0.00)  40%,
+                       rgba(11, 11, 10, 0.82) 100%
+                     );
+
+  /* Fokus keyboard. Emas kurang kontras di band ivory,
+     jadi dipakai warna yang aman di kedua band. */
+  --c-focus        : #E3C47A;
+
+
+  /* ---- 2. TIPOGRAFI — PRD bagian 7 ------------------------------ */
+  /* Maksimal 2 keluarga font. Serif editorial untuk heading,
+     sans untuk UI dan body. */
+
+  --font-display : "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-body    : "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+
+  /* Skala fluid. clamp() supaya ikut lebar browser tanpa breakpoint
+     tambahan — sekaligus mencegah heading raksasa memicu overflow
+     horizontal di layar 320px. */
+  --fs-h1     : clamp(2.35rem, 1.30rem + 4.6vw,  4.75rem);
+  --fs-h2     : clamp(1.90rem, 1.25rem + 2.7vw,  3.25rem);
+  --fs-h3     : clamp(1.30rem, 1.08rem + 0.9vw,  1.85rem);
+  --fs-h4     : clamp(1.06rem, 0.98rem + 0.35vw, 1.25rem);
+  --fs-body   : clamp(0.98rem, 0.94rem + 0.18vw, 1.06rem);
+  --fs-lead   : clamp(1.06rem, 0.98rem + 0.36vw, 1.24rem);
+  --fs-small  : 0.875rem;
+  --fs-eyebrow: 0.72rem;
+
+  --lh-tight  : 1.08;   /* heading display   */
+  --lh-heading: 1.22;   /* heading kecil     */
+  --lh-body   : 1.68;   /* paragraf          */
+
+  --ls-eyebrow: 0.24em; /* eyebrow uppercase */
+  --ls-button : 0.10em;
+  --ls-display: -0.01em;
+
+  --fw-light  : 300;
+  --fw-normal : 400;
+  --fw-medium : 500;
+  --fw-semi   : 600;
+  --fw-bold   : 700;
+
+
+  /* ---- 3. SPACING — PRD bagian 8.2 ------------------------------ */
+  /* Padding vertikal section ikut lebar layar, jadi tidak perlu
+     override per breakpoint. */
+
+  --sp-section-lg : clamp(4.5rem, 3.0rem + 6.4vw, 10rem);   /* 72 -> 160px */
+  --sp-section-md : clamp(3.5rem, 2.6rem + 3.9vw, 6.9rem);  /* 56 -> 110px */
+  --sp-section-sm : clamp(2.5rem, 2.0rem + 2.2vw, 4.5rem);  /* 40 ->  72px */
+
+  --sp-2xs : 0.25rem;
+  --sp-xs  : 0.5rem;
+  --sp-sm  : 0.75rem;
+  --sp-md  : 1rem;
+  --sp-lg  : 1.5rem;
+  --sp-xl  : 2rem;
+  --sp-2xl : 3rem;
+  --sp-3xl : 4rem;
+
+  /* Padding kiri-kanan container. clamp() menggantikan media query. */
+  --sp-gutter : clamp(1.25rem, 0.7rem + 2.6vw, 2.75rem);
+
+
+  /* ---- 4. LAYOUT ------------------------------------------------ */
+  /* Blueprint A (marketing/company profile) memang boleh pakai
+     max-width tetap. Larangan max-width di SOP kategori 1 berlaku
+     untuk Blueprint B/E (guide & dashboard), bukan halaman ini. */
+
+  --w-content : 1280px;  /* container utama       */
+  --w-narrow  : 980px;   /* section yang lebih rapat */
+  --w-measure : 68ch;    /* panjang baris teks nyaman */
+
+  --header-h        : 84px;  /* tinggi header saat di atas hero */
+  --header-h-scroll : 66px;  /* tinggi header setelah scroll    */
+
+
+  /* ---- 5. BENTUK & BAYANGAN — PRD bagian 29 --------------------- */
+  /* Radius kecil saja. Pill-shape terasa murah untuk brand ini. */
+
+  --r-xs  : 2px;
+  --r-sm  : 4px;
+  --r-md  : 8px;
+  --r-lg  : 12px;
+  --r-pill: 999px;   /* khusus badge/dot, bukan tombol */
+
+  --btn-h   : 52px;
+  --btn-h-sm: 46px;  /* batas minimum tap target mobile */
+
+  --shadow-card : 0 18px 46px -22px rgba(0, 0, 0, 0.85);
+  --shadow-lift : 0 26px 60px -24px rgba(0, 0, 0, 0.9);
+  --shadow-light: 0 16px 40px -26px rgba(26, 24, 21, 0.45);
+
+
+  /* ---- 6. MOTION — PRD bagian 18.2 ------------------------------ */
+  /* Rentang 300-700ms. Gerakan halus, bukan gaya landing page startup. */
+
+  --t-fast   : 220ms;
+  --t-base   : 380ms;
+  --t-slow   : 620ms;
+  --t-reveal : 900ms;
+
+  --ease-out  : cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0.05, 0.36, 1);
+
+  --z-header : 100;
+  --z-drawer : 200;
+  --z-scrim  : 190;
+  --z-float  : 150;   /* tombol WhatsApp mengambang */
+  --z-light  : 300;   /* lightbox galeri            */
+}

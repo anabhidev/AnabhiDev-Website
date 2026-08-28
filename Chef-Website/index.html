@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<!-- ================================================================
+     AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+     HTML5 · Vanilla CSS · Vanilla JavaScript
+     Development · Anabhi Dev
+     Version   : 1.3
+     Generated : 28 August 2026, 09:55:00
+     ----------------------------------------------------------------
+     CATATAN PENTING SEBELUM DEPLOY:
+     Cari dan ganti seluruh teks "PLACEHOLDER_DOMAIN" di semua file
+     dengan domain final (contoh: https://baliprivatechef.com).
+     Selama masih placeholder, canonical & og:url BELUM valid.
+     ================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Menandai bahwa JS aktif, dijalankan sebelum body dirender.
+     Tanpa ini, elemen .reveal sempat tampil lalu mendadak
+     disembunyikan saat script defer selesai — kedip yang terlihat.
+     Kalau JS mati, kelas ini tidak pernah ada dan seluruh konten
+     tetap terlihat. -->
+<script>document.documentElement.className += ' js-on';</script>
+
+<!-- ---- Identitas halaman ---------------------------------------- -->
+<title>Private Chef Bali | Villa Dining &amp; Culinary Experiences</title>
+<meta name="description" content="A private chef in Bali for villa dining, BBQ, catering and special events — plus culinary and restaurant consulting for hospitality businesses.">
+<link rel="canonical" href="PLACEHOLDER_DOMAIN/">
+<!-- meta keywords sengaja TIDAK dipasang: Google sudah lama tidak
+     memakainya sebagai sinyal ranking (SOP kategori 2). -->
+
+<!-- ---- Favicon: identitas klien (keputusan user 28-08-2026) ------ -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260828c">
+<meta name="theme-color" content="#0B0B0A">
+
+<!-- ---- Open Graph / Twitter ------------------------------------- -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Private Chef">
+<meta property="og:title" content="Private Chef Bali | Villa Dining &amp; Culinary Experiences">
+<meta property="og:description" content="Private dining crafted around your villa, your guests and your occasion — in Bali.">
+<meta property="og:url" content="PLACEHOLDER_DOMAIN/">
+<meta property="og:locale" content="en_ID">
+<meta property="og:locale:alternate" content="id_ID">
+<!-- og:image menunggu foto asli klien. Sengaja dikosongkan daripada
+     memakai stock photo yang nanti jadi wajah brand di WhatsApp/social. -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Private Chef Bali | Villa Dining &amp; Culinary Experiences">
+<meta name="twitter:description" content="Private dining crafted around your villa, your guests and your occasion — in Bali.">
+
+<!-- ---- Font: pola non-render-blocking penuh (SOP kategori 1) ----- -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Manrope:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Manrope:wght@400..700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Manrope:wght@400..700&display=swap"></noscript>
+
+<!-- ---- Preload gambar LCP (hero) -------------------------------- -->
+<link rel="preload" as="image" fetchpriority="high"
+      href="https://images.unsplash.com/photo-1647318350386-f65367466b01?w=1600&q=75">
+
+<!-- ---- CSS sendiri: wajib version query -------------------------- -->
+<link rel="stylesheet" href="css/tokens.css?v=20260828d">
+<link rel="stylesheet" href="css/base.css?v=20260828d">
+<link rel="stylesheet" href="css/components.css?v=20260828d">
+
+<!-- ---- Structured data ------------------------------------------
+     @graph 4 tipe. Sengaja TIDAK memakai LocalBusiness/Restaurant:
+     keduanya menuntut address & geo yang belum dikonfirmasi klien, dan
+     mengarangnya melanggar PRD bagian 25. ProfessionalService + Person
+     adalah tipe paling spesifik yang bisa dipertanggungjawabkan sekarang.
+     Person juga tipe yang paling dicari AI search untuk pertanyaan
+     "siapa private chef di Bali" (SOP kategori 2 & 3).
+     Tambahkan address/geo/telephone begitu data aslinya masuk.
+     --------------------------------------------------------------- -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "PLACEHOLDER_DOMAIN/#website",
+      "url": "PLACEHOLDER_DOMAIN/",
+      "name": "Bali Private Chef",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Person",
+      "@id": "PLACEHOLDER_DOMAIN/#chef",
+      "jobTitle": "Private Chef & Culinary Consultant",
+      "knowsAbout": [
+        "Private dining",
+        "Balinese cuisine",
+        "Indonesian cuisine",
+        "Menu development",
+        "Restaurant consulting"
+      ],
+      "areaServed": { "@type": "Place", "name": "Bali, Indonesia" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "PLACEHOLDER_DOMAIN/#service",
+      "name": "Bali Private Chef",
+      "description": "Private chef services for villas and private events in Bali, and culinary consulting for restaurants and hospitality operators.",
+      "areaServed": { "@type": "Place", "name": "Bali, Indonesia" },
+      "provider": { "@id": "PLACEHOLDER_DOMAIN/#chef" }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "PLACEHOLDER_DOMAIN/#services",
+      "name": "Services",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "On Villa Dining" },
+        { "@type": "ListItem", "position": 2, "name": "Private BBQ" },
+        { "@type": "ListItem", "position": 3, "name": "Catering" },
+        { "@type": "ListItem", "position": 4, "name": "Cooking Class" },
+        { "@type": "ListItem", "position": 5, "name": "Special Events" },
+        { "@type": "ListItem", "position": 6, "name": "Culinary Consulting" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- Skip link wajib — elemen pertama di body, sebelum header. -->
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================================================================
+     HEADER
+     Mobile: logo kiri, hamburger kanan — SOP kategori 14 mensyaratkan
+     judul dan hamburger di sisi berlawanan supaya drawer yang terbuka
+     tidak menutupi logo.
+     ================================================================ -->
+<header class="hdr" id="hdr">
+  <div class="hdr__inner container">
+
+    <a class="hdr__brand" href="index.html" aria-label="Bali Private Chef — home">
+      <img class="hdr__mark" src="assets/favicon.svg?v=20260828b" alt="" width="34" height="34" aria-hidden="true">
+      <span class="hdr__name">
+        <span class="hdr__name-top">Bali</span>
+        <span class="hdr__name-main">Private Chef</span>
+        <span class="hdr__name-sub">Culinary Experience</span>
+      </span>
+    </a>
+
+    <nav class="hdr__nav" id="nav" aria-label="Main">
+      <ul class="hdr__list">
+        <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+        <li><a href="#services" data-i18n="nav.services">Services</a></li>
+        <li><a href="menu.html" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="consulting.html" data-i18n="nav.consulting">Consulting</a></li>
+        <li><a href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
+      </ul>
+      <div class="hdr__actions">
+        <div class="lang-toggle" role="group" aria-label="Language selector">
+          <button type="button" class="lang-toggle__btn is-active" data-lang-btn="en" aria-pressed="true">EN</button>
+          <span class="lang-toggle__divider" aria-hidden="true">/</span>
+          <button type="button" class="lang-toggle__btn" data-lang-btn="id" aria-pressed="false">ID</button>
+        </div>
+        <a class="btn btn--primary btn--sm hdr__cta" href="#booking" data-i18n="nav.book">Book your experience</a>
+      </div>
+    </nav>
+
+    <button class="hdr__burger" id="burger" type="button"
+            aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <span class="hdr__burger-bar"></span>
+      <span class="hdr__burger-bar"></span>
+      <span class="hdr__burger-bar"></span>
+    </button>
+
+  </div>
+</header>
+<div class="scrim" id="scrim" hidden></div>
+
+
+<main id="main">
+
+<!-- ================================================================
+     01 — HERO
+     Foto: Pantai Lima Beach, Pererenan, Badung, Bali (lokasi
+     terverifikasi di metadata Unsplash). Sisi kiri gelap secara alami,
+     jadi scrim cukup gradient miring, bukan kotak hitam penuh.
+     ================================================================ -->
+<section class="hero" id="hero">
+  <img class="hero__img"
+       src="https://images.unsplash.com/photo-1647318350386-f65367466b01?w=1600&q=75"
+       alt="Dusk over the ocean at Pantai Lima, Bali, with warm lamps lighting a cliffside terrace"
+       width="1600" height="1066" fetchpriority="high" decoding="async">
+  <div class="hero__scrim"></div>
+
+  <div class="hero__inner container">
+    <p class="eyebrow" data-i18n="hero.eyebrow">Private chef · Bali</p>
+    <h1 class="hero__title" data-i18n="hero.title">Private dining,<br>crafted just for you</h1>
+    <p class="hero__lead" data-i18n="hero.lead">
+      A chef, a menu and an evening built around your villa, your guests
+      and the occasion — prepared and served where you are staying.
+    </p>
+
+    <p class="hero__micro" data-i18n="hero.micro">
+      Villa Dining <span aria-hidden="true">·</span> Private BBQ
+      <span aria-hidden="true">·</span> Catering
+      <span aria-hidden="true">·</span> Cooking Class
+      <span aria-hidden="true">·</span> Special Events
+    </p>
+
+    <p class="hero__actions">
+      <a class="btn btn--primary" href="#booking" data-i18n="hero.cta_book">Book your experience</a>
+      <a class="btn btn--ghost" href="#services" data-i18n="hero.cta_services">View our services</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     02 — BRAND INTRO
+     ================================================================ -->
+<section class="section band-light" id="experience">
+  <div class="container">
+    <div class="split split--wide-right">
+
+      <div class="split__media reveal">
+        <figure class="figure">
+          <img src="https://images.unsplash.com/photo-1667992403195-d2241a40ca2d?w=900&q=75"
+               alt="A private terrace in Bali set with a wooden dining table overlooking the mountains"
+               width="900" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <div class="reveal">
+        <p class="eyebrow eyebrow--light" data-i18n="exp.eyebrow">The private chef experience</p>
+        <h2 data-i18n="exp.title">A dining experience shaped around you.</h2>
+        <hr class="rule">
+        <p data-i18n="exp.p1">
+          Restaurant-level cooking, brought into a private space. The menu is
+          planned with you beforehand — around what you like, what you avoid,
+          how many of you there are, and what the evening is for.
+        </p>
+        <p data-i18n="exp.p2">
+          No fixed covers, no set seating time. The kitchen comes to your villa
+          and leaves it as it was found.
+        </p>
+        <p class="mt-lg">
+          <a class="link-arrow" href="#booking">
+            <span data-i18n="exp.link">Plan your evening</span>
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+              <path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     03 — SIGNATURE SERVICES
+     ================================================================ -->
+<section class="section band-soft" id="services">
+  <div class="container">
+
+    <div class="sec-head sec-head--center reveal">
+      <p class="eyebrow eyebrow--light" data-i18n="services.eyebrow">What we offer</p>
+      <h2 data-i18n="services.title">Our services</h2>
+      <hr class="rule rule--center">
+      <p data-i18n="services.lead">
+        Six ways the chef works in Bali. Each one is quoted per occasion —
+        tell us the date, the location and the number of guests.
+      </p>
+    </div>
+
+    <ul class="grid grid--3 cards">
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1667992403195-d2241a40ca2d?w=800&q=75"
+               alt="Wooden dining table on an open terrace with a mountain view in Bali"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s1_title">On Villa Dining</h3>
+          <p class="card__text" data-i18n="services.s1_desc">
+            The chef cooks and serves in your villa. Menu agreed in advance,
+            kitchen left clean.
+          </p>
+        </div>
+      </li>
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1736492090527-65f0368154f7?w=800&q=75"
+               alt="Open flames on a beachside grill in Bali at dusk"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s2_title">Private BBQ</h3>
+          <p class="card__text" data-i18n="services.s2_desc">
+            Grill-led menus built around the day's catch, meats and
+            house-made sauces.
+          </p>
+        </div>
+      </li>
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=75"
+               alt="Catering buffet table lined with covered serving dishes"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s3_title">Catering</h3>
+          <p class="card__text" data-i18n="services.s3_desc">
+            Larger groups — villa parties, corporate gatherings, celebrations
+            and weddings.
+          </p>
+        </div>
+      </li>
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1683624328172-88fb24625ec1?w=800&q=75"
+               alt="A small group preparing food together at a kitchen counter"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s4_title">Cooking Class</h3>
+          <p class="card__text" data-i18n="services.s4_desc">
+            Hands-on sessions in your own kitchen, working through a menu
+            you get to keep.
+          </p>
+        </div>
+      </li>
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1562050344-f7ad946cee35?w=800&q=75"
+               alt="Long dining table laid with candles, glassware and white plates"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s5_title">Special Events</h3>
+          <p class="card__text" data-i18n="services.s5_desc">
+            Proposals, anniversaries, birthdays and dinners that need the
+            table to feel like the occasion.
+          </p>
+        </div>
+      </li>
+
+      <li class="card reveal">
+        <div class="card__media">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=75"
+               alt="Professional mixologist preparing a cocktail"
+               width="800" height="533" loading="lazy" decoding="async">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title" data-i18n="services.s6_title">Wine &amp; Mixology</h3>
+          <p class="card__text" data-i18n="services.s6_desc">
+            Curated wine pairings and bespoke cocktails to elevate your private dining experience.
+          </p>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     04 — CHEF STORY
+     Tiga pilar di bawah ini adalah placeholder strategis dari PRD
+     bagian 11. Wajib diganti kata-kata terverifikasi dari chef.
+     ================================================================ -->
+<section class="section band-dark" id="chef">
+  <div class="container">
+    <div class="split split--wide-left">
+
+      <div class="split__media reveal">
+        <figure class="figure figure--dark">
+          <img src="https://images.unsplash.com/photo-1776353744117-9e8595e8092c?w=900&q=75"
+               alt="A chef finishing a dish in a dimly lit professional kitchen"
+               width="900" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="chef.eyebrow">Meet your chef</p>
+        <h2 data-i18n="chef.title">Cooking that stays personal.</h2>
+        <hr class="rule">
+        <p class="lead" data-i18n="chef.lead">
+          <!-- PLACEHOLDER: biografi chef belum tersedia. Jangan mengarang
+               tahun pengalaman, dapur tempat bekerja, atau penghargaan. -->
+          Chef biography to be supplied by the client.
+        </p>
+
+        <ul class="pillars">
+          <li class="pillar">
+            <h3 class="pillar__title" data-i18n="chef.p1_title">Fresh &amp; local ingredients</h3>
+            <p class="pillar__text" data-i18n="chef.p1_desc">Bought for the menu, not held in stock.</p>
+          </li>
+          <li class="pillar">
+            <h3 class="pillar__title" data-i18n="chef.p2_title">Personalised menu</h3>
+            <p class="pillar__text" data-i18n="chef.p2_desc">Agreed with you before the date, not on arrival.</p>
+          </li>
+          <li class="pillar">
+            <h3 class="pillar__title" data-i18n="chef.p3_title">Professional &amp; discreet</h3>
+            <p class="pillar__text" data-i18n="chef.p3_desc">On time, self-contained, and out of your way.</p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     05 — CONSULTING HIGHLIGHT (B2B)
+     Ditahan singkat di Home supaya tidak memotong cerita B2C.
+     ================================================================ -->
+<section class="section--md band-charcoal" id="consulting">
+  <div class="container">
+    <div class="split">
+
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="consulting_teaser.eyebrow">For restaurants &amp; hospitality</p>
+        <h2 data-i18n="consulting_teaser.title">Culinary expertise beyond the dining table.</h2>
+        <hr class="rule">
+        <p class="lead" data-i18n="consulting_teaser.lead">
+          The same kitchen experience, applied to businesses — concept
+          direction, menu development, kitchen standards and team training.
+        </p>
+        <p class="mt-lg">
+          <a class="btn btn--ghost" href="consulting.html" data-i18n="consulting_teaser.link">Explore consulting</a>
+        </p>
+      </div>
+
+      <div class="split__media reveal">
+        <figure class="figure figure--dark">
+          <img src="https://images.unsplash.com/photo-1575691386840-d355059d6341?w=900&q=75"
+               alt="Chefs working beside large pots on a professional kitchen line"
+               width="900" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     06 — GALLERY
+     ================================================================ -->
+<section class="section band-dark" id="gallery">
+  <div class="container">
+
+    <div class="sec-head sec-head--center reveal">
+      <p class="eyebrow" data-i18n="gallery.eyebrow">Moments &amp; tables</p>
+      <h2 data-i18n="gallery.title">Gallery</h2>
+      <hr class="rule rule--center">
+      <p data-i18n="gallery.lead">A selection from private villas, intimate dinners and events across Bali.</p>
+    </div>
+
+    <ul class="gallery" id="galleryGrid">
+      <li class="gallery__item gallery__item--wide">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1728050829052-2d1514f1d168?w=1600&q=75"
+                data-caption="Private villa and pool, Bali">
+          <img src="https://images.unsplash.com/photo-1728050829052-2d1514f1d168?w=800&q=75"
+               alt="A Bali villa with a private pool surrounded by palms" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+      <li class="gallery__item">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1728048756938-de1ccee0ab15?w=1600&q=75"
+                data-caption="Villa garden and pool, Seminyak">
+          <img src="https://images.unsplash.com/photo-1728048756938-de1ccee0ab15?w=800&q=75"
+               alt="Villa terrace and pool framed by tropical planting in Seminyak" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+      <li class="gallery__item">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=75"
+                data-caption="Private dining setup">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=75"
+               alt="A beautifully set table for a private dinner" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+      <li class="gallery__item">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1594805938422-b330ad42a7bb?w=1600&q=75"
+                data-caption="Plated detail">
+          <img src="https://images.unsplash.com/photo-1594805938422-b330ad42a7bb?w=800&q=75"
+               alt="A single rose plated on white ceramic" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+      <li class="gallery__item gallery__item--wide">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1669545192473-f4d88714fe2f?w=1600&q=75"
+                data-caption="Sunset at Tanah Lot">
+          <img src="https://images.unsplash.com/photo-1669545192473-f4d88714fe2f?w=800&q=75"
+               alt="Sunset over the sea at Tanah Lot, Bali" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+      <li class="gallery__item">
+        <button type="button" class="gallery__btn"
+                data-full="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=75"
+                data-caption="Villa interior, Bali">
+          <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=75"
+               alt="A villa bedroom in Bali opening onto a private garden" width="800" height="533"
+               loading="lazy" decoding="async">
+        </button>
+      </li>
+    </ul>
+
+    <div class="ta-center mt-xl">
+      <!-- PLACEHOLDER: semua foto di atas masih stock. Ganti dengan
+           dokumentasi asli sebelum live — lihat assets/img/SUMBER-FOTO.md -->
+      <span class="note">Photography placeholder — to be replaced with the chef's own work.</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================================================================
+     07 — WHY CHOOSE US
+     ================================================================ -->
+<section class="section--md band-charcoal" id="why">
+  <div class="container">
+
+    <div class="sec-head sec-head--center reveal">
+      <p class="eyebrow" data-i18n="expect.eyebrow">The standard</p>
+      <h2 data-i18n="expect.title">What you can expect</h2>
+      <hr class="rule rule--center">
+      <p data-i18n="expect.lead">Every booking is handled with the same attention to detail, from the first conversation to the final clean-up.</p>
+    </div>
+
+    <ul class="grid grid--3 values">
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">01</span>
+        <h3 class="value__title" data-i18n="expect.v1_title">Fresh ingredients</h3>
+        <p class="value__text" data-i18n="expect.v1_desc">Bought for your menu, close to the date.</p>
+      </li>
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">02</span>
+        <h3 class="value__title" data-i18n="expect.v2_title">Professional chef</h3>
+        <p class="value__text" data-i18n="expect.v2_desc">Trained kitchen discipline, in a private setting.</p>
+      </li>
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">03</span>
+        <h3 class="value__title" data-i18n="expect.v3_title">Personalised menu</h3>
+        <p class="value__text" data-i18n="expect.v3_desc">Dietary needs and preferences handled in advance.</p>
+      </li>
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">04</span>
+        <h3 class="value__title" data-i18n="expect.v4_title">We come to you</h3>
+        <p class="value__text" data-i18n="expect.v4_desc">Your villa, your table, your timing.</p>
+      </li>
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">05</span>
+        <h3 class="value__title" data-i18n="expect.v5_title">Attention to detail</h3>
+        <p class="value__text" data-i18n="expect.v5_desc">Set-up, service and clean-up all included.</p>
+      </li>
+      <li class="value reveal">
+        <span class="value__mark" aria-hidden="true">06</span>
+        <h3 class="value__title" data-i18n="expect.v6_title">Impeccable service</h3>
+        <p class="value__text" data-i18n="expect.v6_desc">Unobtrusive and professional presence in your space.</p>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+
+<!-- ================================================================
+     08 — MENU COLLECTION
+     ================================================================ -->
+<section class="section band-light" id="menu">
+  <div class="container">
+
+    <div class="sec-head sec-head--center reveal">
+      <p class="eyebrow eyebrow--light" data-i18n="cuisines.eyebrow">Our menu</p>
+      <h2 data-i18n="cuisines.title">Cuisine collection</h2>
+      <hr class="rule rule--center">
+      <p data-i18n="cuisines.lead">
+        A starting point, not a fixed card. Menus are built per booking —
+        tell the chef what you are in the mood for.
+      </p>
+    </div>
+
+    <ul class="grid grid--3 cuisines">
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1520689656391-66b6dd7f0ec6?w=600&q=75"
+             alt="Grilled skewers and noodles served with side dishes" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c1">Balinese</h3>
+      </li>
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1539755530862-00f623c00f52?w=600&q=75"
+             alt="A spread of Indonesian dishes laid across a table" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c2">Indonesian</h3>
+      </li>
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=600&q=75"
+             alt="A seafood ramen platter" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c3">Asian</h3>
+      </li>
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=600&q=75"
+             alt="Sliced medium-rare steak plated on white ceramic" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c4">Western</h3>
+      </li>
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1519351635902-7c60d09cb2ed?w=600&q=75"
+             alt="Cooked lobster and seafood grill" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c5">Seafood &amp; BBQ</h3>
+      </li>
+      <li class="cuisine reveal">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=75"
+             alt="A fresh wholesome salad" width="600" height="400"
+             loading="lazy" decoding="async">
+        <h3 class="cuisine__label" data-i18n="cuisines.c6">Vegetarian &amp; Vegan</h3>
+      </li>
+    </ul>
+
+    <div class="ta-center mt-xl">
+      <a class="btn btn--outline-dark" href="menu.html" data-i18n="cuisines.btn_view">View menu &amp; experiences</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================================================================
+     09 — BOOKING
+     ================================================================ -->
+<section class="section section--md band-dark" id="booking">
+  <div class="container">
+    <div class="split split--wide-left">
+
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="booking.eyebrow">Book</p>
+        <h2 data-i18n="booking.title">Tell us about your occasion.</h2>
+        <hr class="rule">
+        <p class="lead" data-i18n="booking.lead">
+          Share the date, where you are staying and how many of you there are.
+          The chef replies on WhatsApp with availability and a menu direction.
+        </p>
+
+        <ul class="contact-list" id="contactList">
+          <li class="contact-list__item" data-contact="wa" hidden>
+            <span class="contact-list__label">WhatsApp</span>
+            <a class="contact-list__value" id="cWa" href="#">—</a>
+          </li>
+          <li class="contact-list__item" data-contact="email" hidden>
+            <span class="contact-list__label">Email</span>
+            <a class="contact-list__value" id="cEmail" href="#">—</a>
+          </li>
+          <li class="contact-list__item" data-contact="ig" hidden>
+            <span class="contact-list__label">Instagram</span>
+            <a class="contact-list__value" id="cIg" href="#" rel="noopener">—</a>
+          </li>
+          <li class="contact-list__item" data-contact="area" hidden>
+            <span class="contact-list__label">Service area</span>
+            <span class="contact-list__value" id="cArea">—</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <form class="form" id="bookingForm" novalidate>
+
+          <!-- Honeypot. Tidak terlihat manusia, sering diisi bot. -->
+          <div class="hp" aria-hidden="true">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label class="field__label" for="fName"><span data-i18n="booking.label_name">Your name</span> <span class="req">*</span></label>
+              <input class="field__input" type="text" id="fName" name="name"
+                     autocomplete="name" required>
+              <p class="field__err" data-err-for="fName" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="fPhone"><span data-i18n="booking.label_phone">WhatsApp number</span> <span class="req">*</span></label>
+              <input class="field__input" type="tel" id="fPhone" name="phone"
+                     autocomplete="tel" inputmode="tel" required>
+              <p class="field__err" data-err-for="fPhone" hidden></p>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label class="field__label" for="fVilla"><span data-i18n="booking.label_location">Villa or area in Bali</span> <span class="req">*</span></label>
+              <input class="field__input" type="text" id="fVilla" name="villa"
+                     data-i18n-placeholder="booking.placeholder_location" placeholder="e.g. Seminyak, Canggu, Uluwatu, Ubud"
+                     autocomplete="off" required>
+              <p class="field__err" data-err-for="fVilla" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="fDate"><span data-i18n="booking.label_date">Date</span> <span class="req">*</span></label>
+              <input class="field__input" type="date" id="fDate" name="date" required>
+              <p class="field__err" data-err-for="fDate" hidden></p>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label class="field__label" for="fGuests"><span data-i18n="booking.label_guests">Number of guests</span> <span class="req">*</span></label>
+              <input class="field__input" type="number" id="fGuests" name="guests"
+                     min="1" max="150" step="1" inputmode="numeric" required>
+              <p class="field__err" data-err-for="fGuests" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="fService"><span data-i18n="booking.label_service">Service</span> <span class="req">*</span></label>
+              <select class="field__input" id="fService" name="service" required>
+                <option value="">Choose a service</option>
+              </select>
+              <p class="field__err" data-err-for="fService" hidden></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="fEmail"><span data-i18n="booking.label_email">Email</span> <span class="opt" data-i18n="booking.opt">(optional)</span></label>
+            <input class="field__input" type="email" id="fEmail" name="email"
+                   autocomplete="email" inputmode="email">
+            <p class="field__err" data-err-for="fEmail" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="fNotes">
+              <span data-i18n="booking.label_notes">Occasion, dietary needs or special requests</span> <span class="opt" data-i18n="booking.opt">(optional)</span>
+            </label>
+            <textarea class="field__input field__input--area" id="fNotes" name="notes"
+                      rows="4" maxlength="1000"></textarea>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit" id="formSubmit" data-i18n="booking.submit">
+            Send booking request
+          </button>
+
+          <p class="form__note" id="formNote" data-i18n="booking.note">
+            Opens WhatsApp with your details filled in. Nothing is stored on this site.
+          </p>
+
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="ftr">
+  <div class="container">
+
+    <div class="ftr__grid">
+
+      <div class="ftr__col">
+        <a class="ftr__brand" href="index.html" aria-label="Bali Private Chef — home">
+          <img src="assets/favicon.svg?v=20260828b" alt="" width="38" height="38" aria-hidden="true">
+          <span>
+            <span class="ftr__name">Bali Private Chef</span>
+            <span class="ftr__tag">Culinary Experience</span>
+          </span>
+        </a>
+        <p class="ftr__blurb" data-i18n="footer.tagline">
+          Private dining, catering and culinary consulting in Bali.
+        </p>
+      </div>
+
+      <nav class="ftr__col" aria-label="Footer">
+        <h3 class="ftr__head" data-i18n="footer.explore">Explore</h3>
+        <ul class="ftr__list">
+          <li><a href="#experience" data-i18n="footer.link_exp">Experience</a></li>
+          <li><a href="#services" data-i18n="footer.link_services">Services</a></li>
+          <li><a href="#gallery" data-i18n="footer.link_gallery">Gallery</a></li>
+          <li><a href="#booking" data-i18n="footer.link_book">Book</a></li>
+        </ul>
+      </nav>
+
+      <div class="ftr__col">
+        <h3 class="ftr__head" data-i18n="footer.services">Services</h3>
+        <ul class="ftr__list">
+          <li><a href="#services" data-i18n="footer.link_villa">Villa dining</a></li>
+          <li><a href="#services" data-i18n="footer.link_bbq">Private BBQ</a></li>
+          <li><a href="menu.html" data-i18n="footer.link_menu">Menu &amp; experiences</a></li>
+          <li><a href="consulting.html" data-i18n="footer.link_consulting">Culinary consulting</a></li>
+        </ul>
+      </div>
+
+      <div class="ftr__col">
+        <h3 class="ftr__head" data-i18n="footer.contact">Contact</h3>
+        <ul class="ftr__list" id="ftrContact">
+          <li data-contact="wa" hidden><a id="fWa" href="#">WhatsApp</a></li>
+          <li data-contact="email" hidden><a id="fEmail2" href="#">Email</a></li>
+          <li data-contact="ig" hidden><a id="fIg" href="#" rel="noopener">Instagram</a></li>
+          <li data-contact="area" hidden><span id="fArea"></span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="ftr__base">
+      <p class="ftr__copy">
+        <span id="year">2026</span> Bali Private Chef. <span data-i18n="footer.rights">All rights reserved.</span>
+      </p>
+      <p class="ftr__credit" data-i18n="footer.credit">Development · Anabhi Dev</p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- Tombol WhatsApp mengambang. Disembunyikan sampai nomor asli diisi
+     di js/config.js — lebih baik tidak ada tombol daripada tombol yang
+     mengarah ke nomor yang tidak ada. -->
+<a class="wa-float" id="waFloat" href="#" hidden
+   aria-label="Chat on WhatsApp" rel="noopener">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.13c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.08-1.82-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.19-1.58-1.19-3.02 0-1.44.75-2.14 1.02-2.44.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.16.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.29.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.27.15.43.12.59-.07.16-.19.68-.79.86-1.07.18-.27.36-.22.61-.13.24.09 1.55.73 1.82.86.27.14.44.2.5.31.07.11.07.65-.17 1.28Z"/>
+  </svg>
+</a>
+
+<script src="js/config.js?v=20260828d" defer></script>
+<script src="js/i18n.js?v=20260828d" defer></script>
+<script src="js/main.js?v=20260828d" defer></script>
+<script src="js/booking.js?v=20260828d" defer></script>
+</body>
+</html>
