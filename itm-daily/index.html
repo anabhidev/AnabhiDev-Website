@@ -3,75 +3,63 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.14
-Generated : 28 August 2026, 04:09:22
+Version   : 2.15
+Generated : 28 August 2026, 09:27:32
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
 
-PAKET RILIS INI — 3 FILE, URUTAN WAJIB
-  1. MFB-IT_v1.6.sql   (SQL Editor Supabase)
-  2. MFB-IT_v1.14.ts   (Edge Function submit-task)
-  3. FILE INI          (Cloudflare, jadi index.html)
-  Detail & akibat kalau urutannya salah: lihat STATUS.md.
+PASANGAN WAJIB
+  Edge Function v1.15 (MFB-IT_v1.15.ts). Deploy FUNCTION DULU.
+  MFB-IT_v1.6.sql sudah dijalankan 28 Aug 2026 — tidak perlu diulang.
 
-PERUBAHAN DARI v2.13
+PERUBAHAN DARI v2.14 — RILIS PERBAIKAN, NOL FITUR BARU
 ================================================================
 
-A. BOTTOM NAV DIBUAT OPAQUE
-  1. Latar nav lama rgba(11,27,46,.06) menghasilkan warna efektif
-     #E0E4E8, dan label non-aktif --muted #8A96A3 di atasnya hanya
-     mencapai kontras 2,36:1 — GAGAL jauh dari AA 4,5:1 untuk teks
-     10,5px. Ini penjelasan terukur dari keluhan "label nav tidak
-     kelihatan jelas" dan "nav terlihat menggantung": backdrop-filter
-     membuat penampilannya berubah mengikuti apa pun di belakangnya,
-     termasuk toast yang muncul tepat di atasnya.
-     Sekarang latar solid var(--card), backdrop-filter dihapus, label
-     non-aktif --mid, opacity ikon .72 -> .85.
-     Kontras baru: label 5,47:1 light / 8,12:1 dark; ikon 3,98:1 /
-     6,22:1. Posisi, ukuran, dan tinggi nav TIDAK diubah.
+Ketiga masalah di bawah ditemukan dari pemakaian nyata di HP setelah
+v2.14 live, dan ketiganya adalah KESALAHAN SAYA di v2.14.
 
-B. TAB LOG AKHIRNYA BERISI
-  2. Tab "Log" sejak versi pertama hanya memunculkan toast "coming
-     soon" — tidak punya markup sama sekali. Padahal tabel
-     activity_log SUDAH terisi sejak awal (login, AI parse, submit,
-     edit, hapus, backup) dan view v_activity_log_full sudah dibuat
-     di MFB-IT_v1.1.sql tapi belum pernah dipakai.
-     Sekarang: 80 entri terakhir, badge per jenis event, filter per
-     jenis event, dan baris meta (task id, prioritas, status, tag,
-     perangkat, versi app).
+BUG 1 — MIKROFON: dialog izin tidak pernah muncul
+  Penyebab: ensureMicPermission() memanggil
+  navigator.permissions.query() dengan await LEBIH DULU, baru
+  getUserMedia. Await itu MENGHABISKAN "transient user activation"
+  dari ketukan tombol, sehingga Chrome Android menolak getUserMedia
+  dengan NotAllowedError TANPA PERNAH menampilkan dialog izin.
+  Pengguna tidak pernah dapat kesempatan menekan "Allow", lalu app
+  menyalahkan "izin diblokir" padahal belum pernah ditanya.
 
-C. REGISTRY ASET, FOLLOW-UP VENDOR, FOTO BUKTI
-  3. Task bisa ditautkan ke perangkat dari daftar aset. Kode aset
-     ikut tampil di tabel Riwayat, dan bisa dikoreksi dari sheet
-     detail. Tujuan akhirnya: bisa dijawab "printer ini sudah berapa
-     kali rusak bulan ini" — data untuk mengajukan penggantian.
-  4. Follow-up vendor: nama vendor + tanggal janji, muncul HANYA saat
-     status "Waiting Vendor". Tanggal yang sudah lewat ditandai merah
-     di sheet detail.
-  5. Foto bukti: dikompres di HP ke maksimal 1600px / mutu 0,72
-     SEBELUM dikirim. Bucket-nya privat — foto dibuka lewat signed
-     URL 10 menit dari server, bukan URL langsung.
+  Perbaikan:
+    a. getUserMedia dipanggil PALING AWAL, nol await di depannya.
+       Permissions API hanya dipakai SETELAH gagal.
+    b. Kode error dibedakan: NotFoundError (tidak ada mikrofon),
+       NotReadableError (dipakai aplikasi lain), sisanya diblokir.
+       Sebelumnya semuanya disamakan jadi "diblokir", sehingga
+       pengguna diarahkan ke halaman izin untuk masalah yang bukan
+       soal izin.
+    c. Kalau benar-benar diblokir, muncul SHEET panduan 2 jalur
+       (address bar & Site settings), bukan toast panjang yang
+       hilang dalam 3 detik. Dua jalur ditulis dua-duanya karena
+       kalau situs diblokir lewat Site settings, ikon di address bar
+       sering tidak menampilkan baris Microphone sama sekali.
 
-D. SALIN LAPORAN UNTUK GOOGLE SHEETS
-  6. Tombol "Copy for Google Sheets" menyalin laporan sebagai TSV
-     yang langsung terbagi ke sel saat ditempel. Ini jalan tengah
-     yang disadari: integrasi Google Sheets API sesungguhnya butuh
-     OAuth + kredensial Google Cloud yang harus disiapkan & dijaga
-     manual. Tempel-TSV memberi hasil akhir yang sama tanpa itu.
-  7. Export Excel ikut mendapat 3 kolom baru: Asset, Vendor, Follow Up.
+BUG 2 — data aset / vendor / foto tidak pernah terbaca kembali
+  Lihat MFB-IT_v1.15.ts. Sisi HTML tidak diubah untuk bug ini:
+  kodenya sudah benar sejak v2.14, yang salah adalah server tidak
+  pernah mengirim kolomnya. Dicatat di sini supaya jelas mengapa
+  fitur aset/foto terasa "tidak jalan" di v2.14 padahal picker-nya
+  muncul dan foto tersimpan.
 
-E. BUG LAMA YANG SEKALIAN DIPERBAIKI
-  8. Di sheet detail Riwayat, isi task dimasukkan ke <textarea> TANPA
-     di-escape. Task yang memuat "</textarea>" akan menutup elemen
-     lebih awal dan sisa teksnya jadi markup halaman. escapeHtml
-     sudah ada dan dipakai di tabel — di sini terlewat sejak awal.
+BUG 3 — tab Log: "Failed to load activity log"
+  Lihat MFB-IT_v1.15.ts. Sisi HTML tidak diubah.
 
-F. DEGRADASI AMAN (SOP 8.8)
-  Semua fitur di bagian B & C mengecek serverVersion lebih dulu.
-  Kalau Edge Function masih < v1.14 atau MFB-IT_v1.6.sql belum
-  dijalankan, fitur yang bersangkutan DISEMBUNYIKAN — bukan error,
-  bukan tombol yang ditekan lalu tidak terjadi apa-apa.
+CATATAN PROSES
+  Bug 2 dan 3 lolos dari validasi v2.14 karena verifikasi kolom saat
+  itu melakukan grep ke SELURUH file SQL, sehingga alias yang hanya
+  hidup di dalam CTE ikut dianggap kolom keluaran view. Sekarang
+  verifikasinya membaca SELECT FINAL saja, dan menyilangkan setiap
+  field it.xxx yang dibaca HTML dengan daftar kolom yang benar-benar
+  dikirim server. Kesalahan jenis ini tidak bisa lolos lagi tanpa
+  terdeteksi.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -1406,7 +1394,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.14', // WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.15', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -3856,32 +3844,69 @@ let recog = null, recogOn = false;
 // memunculkan dialog itu dengan andal, jadi dipakai sebagai pembuka.
 //
 // Mengembalikan: 'ok' | 'denied' | 'unsupported'
+// v2.15 — BUG FIX PENTING.
+//
+// Versi v2.14 memanggil navigator.permissions.query() dengan `await`
+// LEBIH DULU, baru getUserMedia. Await itu MENGHABISKAN "transient user
+// activation" dari ketukan tombol. Akibatnya Chrome Android menolak
+// getUserMedia dengan NotAllowedError TANPA PERNAH memunculkan dialog
+// izin — pengguna tidak pernah mendapat kesempatan menekan "Allow",
+// lalu app menyalahkan "izin diblokir" padahal belum pernah ditanya.
+//
+// Sekarang getUserMedia dipanggil PALING AWAL, tanpa satu pun await di
+// depannya. Permissions API baru dipakai SETELAH gagal, hanya untuk
+// menentukan pesan yang tepat.
+//
+// Mengembalikan: "ok" | "denied" | "nomic" | "busy" | "unsupported"
 async function ensureMicPermission() {
-  // Kalau Permissions API tersedia dan sudah 'granted', tidak perlu
-  // membuka stream sama sekali.
-  try {
-    if (navigator.permissions && navigator.permissions.query) {
-      const st = await navigator.permissions.query({ name: 'microphone' });
-      if (st && st.state === 'granted') return 'ok';
-    }
-  } catch (e) { /* nama 'microphone' tidak dikenali peramban — lanjut */ }
-
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    // Tidak ada getUserMedia: biarkan SpeechRecognition mencoba sendiri.
     return 'unsupported';
   }
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    // Stream ditutup segera. Tujuannya HANYA memicu dialog izin;
-    // yang merekam nanti adalah SpeechRecognition, bukan stream ini.
-    // Kalau dibiarkan terbuka, indikator mikrofon menyala terus dan
-    // di sebagian perangkat justru memblokir SpeechRecognition.
+    // Stream ditutup segera. Tujuannya HANYA memicu dialog izin; yang
+    // merekam nanti adalah SpeechRecognition, bukan stream ini.
     stream.getTracks().forEach(t => t.stop());
     return 'ok';
   } catch (e) {
+    // Kode error DIBEDAKAN. Sebelumnya semuanya disamakan jadi
+    // 'denied', sehingga "tidak ada mikrofon" dan "mikrofon dipakai
+    // aplikasi lain" pun diarahkan ke halaman pengaturan izin —
+    // pengguna dikirim mencari di tempat yang salah.
+    const nama = (e && e.name) || '';
+    if (nama === 'NotFoundError' || nama === 'DevicesNotFoundError') return 'nomic';
+    if (nama === 'NotReadableError' || nama === 'TrackStartError') return 'busy';
     return 'denied';
   }
+}
+
+// Panduan yang bisa dibaca tenang, bukan toast yang hilang 3 detik.
+// Dua jalur ditulis dua-duanya karena mana yang tersedia berbeda-beda:
+// kalau situs pernah DIBLOKIR lewat Site settings, ikon di address bar
+// sering TIDAK menampilkan baris Microphone sama sekali.
+function bukaPanduanMikrofon() {
+  const html = '<div style="padding:0 20px 4px">'
+    + '<div class="hint" style="font-size:13px;line-height:1.6;color:var(--ink)">'
+    +   'Chrome is blocking the microphone for this site. Try in this order:'
+    + '</div>'
+    + '<div class="field" style="margin-top:14px">'
+    +   '<label class="label">Way 1 — from the address bar</label>'
+    +   '<div class="hint" style="line-height:1.7">'
+    +     'Tap the icon at the left of the address bar &rarr; <b>Permissions</b> &rarr; <b>Microphone</b> &rarr; <b>Allow</b>, then reload the page.'
+    +   '</div>'
+    + '</div>'
+    + '<div class="field">'
+    +   '<label class="label">Way 2 — if Microphone is not listed there</label>'
+    +   '<div class="hint" style="line-height:1.7">'
+    +     'Chrome menu <b>&#8942;</b> &rarr; <b>Settings</b> &rarr; <b>Site settings</b> &rarr; <b>Microphone</b> &rarr; find <b>anabhidev.com</b> under Blocked &rarr; tap it &rarr; <b>Allow</b>.'
+    +   '</div>'
+    + '</div>'
+    + '<div class="hint" style="line-height:1.7">'
+    +   'Voice input is a shortcut, not a requirement — the Free write box works the same when typed.'
+    + '</div>'
+    + '</div>';
+  openSheet('Microphone blocked', html);
 }
 
 function setupVoiceInput() {
@@ -3906,9 +3931,20 @@ function setupVoiceInput() {
 
     // v2.13 — izin diminta lebih dulu; tanpa ini Chrome Android bisa
     // menjawab 'not-allowed' tanpa pernah memunculkan dialog.
+    // v2.15 — hasilnya kini dibedakan per sebab.
     const izin = await ensureMicPermission();
+    if (izin === 'nomic') {
+      toast('No microphone found on this device.', 'err');
+      return;
+    }
+    if (izin === 'busy') {
+      toast('Microphone is in use by another app. Close it, then try again.', 'err');
+      return;
+    }
     if (izin === 'denied') {
-      toast('Microphone blocked for this site. Tap the icon left of the address bar, open Permissions, then allow Microphone.', 'err');
+      // Panduan dibuka sebagai sheet, bukan toast: langkahnya 2 jalur
+      // dan tidak mungkin terbaca tuntas dalam toast 3 detik.
+      bukaPanduanMikrofon();
       return;
     }
 
@@ -3946,7 +3982,7 @@ function setupVoiceInput() {
       // tidak tersedia — mengarahkan pengguna ke setting izin untuk kasus
       // itu membuat ia mencari di tempat yang salah.
       if (code === 'not-allowed') {
-        toast('Microphone blocked for this site. Tap the icon left of the address bar, open Permissions, then allow Microphone.', 'err');
+        bukaPanduanMikrofon(); // v2.15 — panduan yang sama, bukan toast panjang
       } else if (code === 'service-not-allowed') {
         toast('Speech recognition is unavailable on this browser. Type it instead.', 'err');
       } else if (code === 'no-speech') {
