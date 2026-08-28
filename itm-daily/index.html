@@ -3,8 +3,8 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.15
-Generated : 28 August 2026, 09:27:32
+Version   : 2.16
+Generated : 28 August 2026, 15:09:14
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
@@ -13,53 +13,49 @@ PASANGAN WAJIB
   Edge Function v1.15 (MFB-IT_v1.15.ts). Deploy FUNCTION DULU.
   MFB-IT_v1.6.sql sudah dijalankan 28 Aug 2026 — tidak perlu diulang.
 
-PERUBAHAN DARI v2.14 — RILIS PERBAIKAN, NOL FITUR BARU
+CATATAN VERSI
+  v2.15 TIDAK PERNAH di-deploy. Seluruh isinya sudah termasuk di
+  file ini, jadi tidak ada yang hilang. v2.16 = v2.15 + panduan
+  mikrofon yang disusun ulang.
+
+PERUBAHAN DARI v2.15
 ================================================================
 
-Ketiga masalah di bawah ditemukan dari pemakaian nyata di HP setelah
-v2.14 live, dan ketiganya adalah KESALAHAN SAYA di v2.14.
+PANDUAN MIKROFON DISUSUN ULANG — dari bukti, bukan dugaan.
 
-BUG 1 — MIKROFON: dialog izin tidak pernah muncul
-  Penyebab: ensureMicPermission() memanggil
-  navigator.permissions.query() dengan await LEBIH DULU, baru
-  getUserMedia. Await itu MENGHABISKAN "transient user activation"
-  dari ketukan tombol, sehingga Chrome Android menolak getUserMedia
-  dengan NotAllowedError TANPA PERNAH menampilkan dialog izin.
-  Pengguna tidak pernah dapat kesempatan menekan "Allow", lalu app
-  menyalahkan "izin diblokir" padahal belum pernah ditanya.
+  Dua screenshot Chrome Android dari pengguna membuktikan:
+    1. Halaman Permissions untuk anabhidev.com HANYA memuat
+       Notifications & Local network. TIDAK ADA baris Microphone.
+    2. Settings > Site settings > Microphone TIDAK punya daftar
+       per-situs sama sekali — tidak ada bagian "Blocked".
 
-  Perbaikan:
-    a. getUserMedia dipanggil PALING AWAL, nol await di depannya.
-       Permissions API hanya dipakai SETELAH gagal.
-    b. Kode error dibedakan: NotFoundError (tidak ada mikrofon),
-       NotReadableError (dipakai aplikasi lain), sisanya diblokir.
-       Sebelumnya semuanya disamakan jadi "diblokir", sehingga
-       pengguna diarahkan ke halaman izin untuk masalah yang bukan
-       soal izin.
-    c. Kalau benar-benar diblokir, muncul SHEET panduan 2 jalur
-       (address bar & Site settings), bukan toast panjang yang
-       hilang dalam 3 detik. Dua jalur ditulis dua-duanya karena
-       kalau situs diblokir lewat Site settings, ikon di address bar
-       sering tidak menampilkan baris Microphone sama sekali.
+  Kesimpulannya: situs ini BUKAN diblokir — ia belum pernah DITANYA.
+  Itu justru membenarkan diagnosis BUG 3 di v2.15: dialog izin tidak
+  pernah muncul karena await Permissions API menghabiskan transient
+  user activation sebelum getUserMedia dipanggil. Pesan "blocked" di
+  v2.14 adalah salah label, bukan keadaan sebenarnya.
 
-BUG 2 — data aset / vendor / foto tidak pernah terbaca kembali
-  Lihat MFB-IT_v1.15.ts. Sisi HTML tidak diubah untuk bug ini:
-  kodenya sudah benar sejak v2.14, yang salah adalah server tidak
-  pernah mengirim kolomnya. Dicatat di sini supaya jelas mengapa
-  fitur aset/foto terasa "tidak jalan" di v2.14 padahal picker-nya
-  muncul dan foto tersimpan.
+  Panduan v2.15 menyuruh pengguna mencari daftar "Blocked" yang
+  memang tidak ada — menyesatkan. Sekarang urutannya mengikuti
+  kemungkinan penyebab dari yang paling sering:
+    1. Izin mikrofon Chrome di tingkat ANDROID (Settings > Apps >
+       Chrome > Permissions > Microphone). Kalau ini ditolak,
+       getUserMedia gagal TANPA dialog web DAN daftar per-situs
+       tetap kosong — persis gejala yang terlihat di screenshot.
+    2. Reset permissions pada halaman Permissions situs. Tombol ini
+       NYATA ada di screenshot, berbeda dari daftar "Blocked" yang
+       tidak ada.
+    3. Kalau tetap gagal: dinyatakan jujur bahwa input suara tidak
+       tersedia di perangkat itu, dan bahwa tidak ada yang rusak —
+       kotak Free write bekerja sama saja bila diketik.
 
-BUG 3 — tab Log: "Failed to load activity log"
-  Lihat MFB-IT_v1.15.ts. Sisi HTML tidak diubah.
+  Judul sheet diubah dari "Microphone blocked" menjadi
+  "Microphone unavailable", karena "blocked" ternyata bukan
+  keadaan yang sebenarnya terjadi.
 
-CATATAN PROSES
-  Bug 2 dan 3 lolos dari validasi v2.14 karena verifikasi kolom saat
-  itu melakukan grep ke SELURUH file SQL, sehingga alias yang hanya
-  hidup di dalam CTE ikut dianggap kolom keluaran view. Sekarang
-  verifikasinya membaca SELECT FINAL saja, dan menyilangkan setiap
-  field it.xxx yang dibaca HTML dengan daftar kolom yang benar-benar
-  dikirim server. Kesalahan jenis ini tidak bisa lolos lagi tanpa
-  terdeteksi.
+TIDAK ADA perubahan lain. Perbaikan BUG 1 (tab Log), BUG 2 (kolom
+aset/vendor/foto tidak terbaca), dan BUG 3 (urutan getUserMedia)
+seluruhnya sudah ada di file ini sejak v2.15 dan tidak disentuh.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -1394,7 +1390,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.15', // WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.16', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -3881,32 +3877,55 @@ async function ensureMicPermission() {
   }
 }
 
-// Panduan yang bisa dibaca tenang, bukan toast yang hilang 3 detik.
-// Dua jalur ditulis dua-duanya karena mana yang tersedia berbeda-beda:
-// kalau situs pernah DIBLOKIR lewat Site settings, ikon di address bar
-// sering TIDAK menampilkan baris Microphone sama sekali.
+// v2.16 — panduan DISUSUN ULANG dari bukti screenshot pengguna,
+// bukan dari dugaan.
+//
+// Yang terbukti dari 2 screenshot Chrome Android:
+//   1. Halaman Permissions untuk anabhidev.com HANYA memuat
+//      Notifications & Local network. TIDAK ADA baris Microphone.
+//   2. Settings > Site settings > Microphone TIDAK punya daftar
+//      per-situs sama sekali — tidak ada bagian "Blocked".
+//
+// Artinya situs ini BELUM PERNAH diblokir; ia belum pernah DITANYA.
+// Panduan v2.15 menyuruh mencari daftar "Blocked" yang memang tidak
+// ada, jadi malah menyesatkan. Urutan sekarang mengikuti kemungkinan
+// penyebab dari yang paling sering:
+//   Langkah 1 = izin mikrofon Chrome di tingkat ANDROID. Kalau ini
+//   ditolak, getUserMedia gagal tanpa dialog web apa pun DAN daftar
+//   per-situs tetap kosong — persis gejala yang terlihat.
+//   Langkah 2 = Reset permissions (tombol ini NYATA ada di halaman
+//   Permissions situs, terlihat di screenshot).
 function bukaPanduanMikrofon() {
   const html = '<div style="padding:0 20px 4px">'
     + '<div class="hint" style="font-size:13px;line-height:1.6;color:var(--ink)">'
-    +   'Chrome is blocking the microphone for this site. Try in this order:'
+    +   'The microphone could not be opened. Check in this order &mdash; step 1 is the most common cause.'
     + '</div>'
+
     + '<div class="field" style="margin-top:14px">'
-    +   '<label class="label">Way 1 — from the address bar</label>'
+    +   '<label class="label">1. Does Chrome itself have microphone access?</label>'
     +   '<div class="hint" style="line-height:1.7">'
-    +     'Tap the icon at the left of the address bar &rarr; <b>Permissions</b> &rarr; <b>Microphone</b> &rarr; <b>Allow</b>, then reload the page.'
+    +     'Android <b>Settings</b> &rarr; <b>Apps</b> &rarr; <b>Chrome</b> &rarr; <b>Permissions</b> &rarr; <b>Microphone</b> &rarr; <b>Allow</b>.'
+    +     '<br><span style="opacity:.8">If this is off, no website can ever use the mic — and no permission popup will appear either.</span>'
     +   '</div>'
     + '</div>'
+
     + '<div class="field">'
-    +   '<label class="label">Way 2 — if Microphone is not listed there</label>'
+    +   '<label class="label">2. Reset this site&rsquo;s permissions</label>'
     +   '<div class="hint" style="line-height:1.7">'
-    +     'Chrome menu <b>&#8942;</b> &rarr; <b>Settings</b> &rarr; <b>Site settings</b> &rarr; <b>Microphone</b> &rarr; find <b>anabhidev.com</b> under Blocked &rarr; tap it &rarr; <b>Allow</b>.'
+    +     'Tap the icon at the left of the address bar &rarr; <b>Permissions</b> &rarr; <b>Reset permissions</b>, then reload the page and tap the mic again.'
     +   '</div>'
     + '</div>'
-    + '<div class="hint" style="line-height:1.7">'
-    +   'Voice input is a shortcut, not a requirement — the Free write box works the same when typed.'
-    + '</div>'
+
+    + '<div class="field">'
+    +   '<label class="label">3. Still nothing?</label>'
+    +   '<div class="hint" style="line-height:1.7">'
+    +     'Then voice input is not available on this device. Nothing is broken &mdash; the Free write box works exactly the same when typed, and AI Parse reads typed text just as well.'
+    +   '</div>'
     + '</div>';
-  openSheet('Microphone blocked', html);
+
+  // Judul sheet tidak lagi menyebut "blocked": pada kasus yang
+  // sebenarnya terjadi, izinnya belum pernah ditanyakan sama sekali.
+  openSheet('Microphone unavailable', html);
 }
 
 function setupVoiceInput() {
