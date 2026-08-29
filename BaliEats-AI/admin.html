@@ -3,14 +3,25 @@
 AnabhiDev - BaliEats-AI — Admin Panel (AI Report & Feedback)
 HTML/CSS/JS · Cloudflare Pages · Gemini API (via Google Apps Script)
 Development · Anabhi Dev
-Version   : 2.4
-Generated : 16 August 2026, 08:00:00 WITA
+Version   : 2.5
+Generated : 29 August 2026, 09:50:00 WITA
 ================================================================
 -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('baliEatsTheme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#10B981">
 <meta name="robots" content="noindex, nofollow">
@@ -20,10 +31,16 @@ Generated : 16 August 2026, 08:00:00 WITA
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0A0A0A;}
 :focus-visible{outline:2px solid #10B981;outline-offset:2px;}
-:root{
+:root, [data-theme="light"]{
   --black:#0A0A0A;--sidebar-bg:#111111;--surface:#F7F7F5;--white:#FFFFFF;
-  --text-primary:#0A0A0A;--text-muted:#999999;--emerald:#10B981;--emerald-dark:#059669;
+  --text-primary:#0A0A0A;--text-muted:#6E6E6E;--emerald:#10B981;--emerald-dark:#059669;
   --border:#E8E8E5;--sidebar-border:#222222;--sidebar-muted:rgba(255,255,255,0.55);
+  --sidebar-width:240px;
+}
+[data-theme="dark"]{
+  --black:#0A0A0A;--sidebar-bg:#111111;--surface:#151515;--white:#1E1E1E;
+  --text-primary:#F0F0EE;--text-muted:#9A9A9A;--emerald:#10B981;--emerald-dark:#34D399;
+  --border:#2A2A2A;--sidebar-border:#222222;--sidebar-muted:rgba(255,255,255,0.55);
   --sidebar-width:240px;
 }
 /* PIN SCREEN */
@@ -201,9 +218,15 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
       </a>
     </nav>
     <div class="sidebar-bottom">
-      <a class="nav-item" onclick="window.location.href='https://anabhidev.com/BaliEats-AI/'">
-        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        Kembali ke App
+      <div class="sidebar-version" style="font-size:10px; color:var(--sidebar-muted); text-align:center; padding-bottom:10px; font-weight:600; letter-spacing:1px;">v2.5</div>
+      <a class="nav-item" onclick="toggleTheme()" id="theme-toggle-desktop">
+        <svg class="nav-icon theme-icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="nav-icon theme-icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <span class="nav-label" id="theme-toggle-label">Mode Gelap</span>
+      </a>
+      <a class="nav-item" onclick="logoutAdmin()">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Logout
       </a>
     </div>
   </aside>
@@ -324,6 +347,26 @@ html,body{overflow-x:hidden;max-width:100%;height:100%;min-height:100dvh;font-fa
 </div>
 
 <script>
+function applyThemeMetaColor(theme){
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#059669' : '#10B981');
+}
+function updateThemeUI(theme){
+  var label = document.getElementById('theme-toggle-label');
+  if (label) label.textContent = theme === 'dark' ? 'Mode Terang' : 'Mode Gelap';
+}
+function toggleTheme(){
+  var current = document.documentElement.getAttribute('data-theme') || 'light';
+  var next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('baliEatsTheme', next); } catch(e) {}
+  applyThemeMetaColor(next);
+  updateThemeUI(next);
+}
+// Init theme UI
+document.addEventListener('DOMContentLoaded', function() {
+  updateThemeUI(document.documentElement.getAttribute('data-theme') || 'light');
+});
 
 var GAS_URL='https://script.google.com/macros/s/AKfycbxvI8NJdV0OnDvwA7l1bZz-YRzWvPP8ZjWQUj-g5HeIEmPUMht843fykuvd_UOHEurCeA/exec';
 function gasPost(action,params,onSuccess,onFailure){
