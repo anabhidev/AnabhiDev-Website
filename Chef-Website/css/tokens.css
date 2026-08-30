@@ -1,9 +1,9 @@
 /* ================================================================
-   AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+   AnabhiDev-BPC — Nature Private Chef & Culinary Consulting Website
    HTML5 · Vanilla CSS · Vanilla JavaScript
    Development · Anabhi Dev
-   Version   : 1.1
-   Generated : 28 August 2026, 00:59:18
+   Version   : 1.3
+   Generated : 30 August 2026, 13:54:30
    ----------------------------------------------------------------
    Design token — SATU-SATUNYA sumber kebenaran untuk warna, tipografi,
    spacing, dan durasi. Dilarang menulis hex code langsung di file CSS
@@ -31,9 +31,13 @@
   --c-dark-text    : #1A1815;   /* teks di atas background terang    */
 
   /* Turunan — teks sekunder di atas ivory.
-     #6B655C di atas #F3EFE7 = 5.03:1 (lolos WCAG AA 4.5:1).
+     #666057 di atas #F3EFE7 (ivory) = 5.42:1  dan di atas #E9E2D5 (soft)
+     = 4.83:1. Keduanya lolos WCAG AA 4.5:1.
+     Nilai lama #6B655C hanya diukur terhadap ivory (5.03:1); terhadap
+     soft-ivory hasilnya 4.48:1 — GAGAL AA, padahal .eyebrow--light memang
+     dipakai di band-soft. Diperbaiki 30-08-2026.
      Jangan dibikin lebih terang dari ini. */
-  --c-dark-text-2  : #6B655C;
+  --c-dark-text-2  : #666057;
 
   /* ---- Kontras terukur (dihitung, bukan dikira) -----------------
      Dipakai sebagai pagar saat memilih kombinasi warna:
@@ -45,7 +49,8 @@
        #E3C47A di atas #0B0B0A  = 11.67:1  emas terang / hover
        #1A1815 di atas #C9A35A  =  7.48:1  teks gelap di tombol emas
        #1A1815 di atas #F3EFE7  = 15.45:1  teks utama band terang
-       #6B655C di atas #F3EFE7  =  5.03:1  teks sekunder band terang
+       #666057 di atas #F3EFE7  =  5.42:1  teks sekunder band terang
+       #666057 di atas #E9E2D5  =  4.83:1  teks sekunder band soft
        #8D7140 di atas #0B0B0A  =  4.28:1  HANYA border/detail, bukan teks
        #C9A35A di atas #F3EFE7  =  2.06:1  ❌ GAGAL
 
@@ -92,6 +97,15 @@
      tambahan — sekaligus mencegah heading raksasa memicu overflow
      horizontal di layar 320px. */
   --fs-h1     : clamp(2.35rem, 1.30rem + 4.6vw,  4.75rem);
+
+  /* Judul hero dipisah dari --fs-h1 supaya bisa dikecilkan tanpa ikut
+     mengecilkan h1 halaman lain. Dihitung agar "PRIVATE DINING, CRAFTED
+     JUST FOR YOU" (36 karakter kapital) muat SATU BARIS di desktop:
+     36 kar x ~0,55em x 54px = ~1070px, sedangkan lebar dalam container
+     1280px dikurangi gutter = ~1190px. Di layar sempit tetap dibiarkan
+     membungkus sendiri — memaksa satu baris di ponsel membuat judulnya
+     terlalu kecil untuk dibaca. */
+  --fs-hero   : clamp(1.75rem, 0.85rem + 3.2vw,  3.40rem);
   --fs-h2     : clamp(1.90rem, 1.25rem + 2.7vw,  3.25rem);
   --fs-h3     : clamp(1.30rem, 1.08rem + 0.9vw,  1.85rem);
   --fs-h4     : clamp(1.06rem, 0.98rem + 0.35vw, 1.25rem);

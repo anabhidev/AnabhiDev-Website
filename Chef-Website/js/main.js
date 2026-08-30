@@ -1,9 +1,9 @@
 // ================================================================
-// AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+// AnabhiDev-BPC — Nature Private Chef & Culinary Consulting Website
 // HTML5 · Vanilla CSS · Vanilla JavaScript
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 28 August 2026, 02:48:22
+// Version   : 1.3
+// Generated : 30 August 2026, 13:54:30
 // ----------------------------------------------------------------
 // Interaksi global: header sticky, drawer mobile, reveal on scroll,
 // scrollspy, lightbox galeri, dan pengisian kontak dari CONFIG.
@@ -232,11 +232,78 @@
      6. ESC — urutan prioritas
      Lightbox ditutup lebih dulu kalau keduanya terbuka bersamaan.
      ============================================================== */
+  /* Focus trap. Tanpa ini, `aria-modal="true"` pada lightbox adalah
+     klaim palsu: Tab tetap bisa keluar ke konten di belakang, dan
+     pengguna keyboard/pembaca layar tersesat di halaman yang tidak
+     terlihat. Berlaku untuk lightbox dan drawer mobile. */
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), ' +
+                  'select:not([disabled]), textarea:not([disabled]), ' +
+                  '[tabindex]:not([tabindex="-1"])';
+
+  function trapTab(container, e) {
+    var all = container.querySelectorAll(FOCUSABLE);
+    var list = [];
+    Array.prototype.forEach.call(all, function (el) {
+      // lewati yang tersembunyi; offsetParent null berarti tidak dirender
+      if (el.offsetParent !== null || el === doc.activeElement) list.push(el);
+    });
+    if (!list.length) return;
+
+    var first = list[0];
+    var last  = list[list.length - 1];
+
+    if (e.shiftKey && doc.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && doc.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   doc.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape' && e.key !== 'Esc') return;
-    if (lightboxIsOpen()) { closeLightbox(); return; }
-    if (drawerIsOpen())   { closeDrawer(true); }
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      if (lightboxIsOpen()) { closeLightbox(); return; }
+      if (drawerIsOpen())   { closeDrawer(true); }
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    // Lightbox lebih prioritas: kalau keduanya terbuka, ia yang mengurung.
+    if (lightboxIsOpen()) { trapTab(lb, e); return; }
+    if (drawerIsOpen() && nav) { trapTab(nav, e); }
   });
+
+
+  /* ==============================================================
+     6b. BACK TO TOP
+     Muncul setelah satu layar penuh terlewati. Scroll-nya menghormati
+     prefers-reduced-motion: mulus untuk yang tidak keberatan gerak,
+     langsung lompat untuk yang keberatan.
+     ============================================================== */
+  var toTop = doc.getElementById('toTop');
+  if (toTop) {
+    var topTicking = false;
+    var onTopScroll = function () {
+      if (topTicking) return;
+      topTicking = true;
+      window.requestAnimationFrame(function () {
+        toTop.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.9);
+        topTicking = false;
+      });
+    };
+    window.addEventListener('scroll', onTopScroll, { passive: true });
+    onTopScroll();
+
+    toTop.addEventListener('click', function () {
+      var reduce = window.matchMedia &&
+                   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      // Kembalikan fokus ke awal halaman, bukan dibiarkan di tombol —
+      // kalau tidak, pengguna keyboard masih "berada" di bawah.
+      var skip = doc.querySelector('.skip-link');
+      if (skip) skip.focus();
+    });
+  }
 
 
   /* ==============================================================
@@ -292,7 +359,7 @@
     if (wa) {
       show('wa');
       setLink('cWa', wa, isPlaceholder(CONFIG.WA_DISPLAY) ? 'Chat on WhatsApp' : CONFIG.WA_DISPLAY);
-      setLink('fWa', wa, 'WhatsApp');
+      setLink('fWa', wa, 'WhatsApp Me');
 
       var float = doc.getElementById('waFloat');
       if (float) { float.setAttribute('href', wa); float.hidden = false; }
@@ -309,6 +376,20 @@
       show('ig');
       setLink('cIg', 'https://instagram.com/' + ig, '@' + ig);
       setLink('fIg', 'https://instagram.com/' + ig, 'Instagram');
+    }
+
+    // TikTok & Facebook — sama polanya dengan Instagram: hanya tampil
+    // kalau handle-nya sudah diisi di config.js.
+    if (!isPlaceholder(CONFIG.TIKTOK)) {
+      var tt = String(CONFIG.TIKTOK).replace(/^@/, '');
+      show('tt');
+      setLink('fTt', 'https://www.tiktok.com/@' + tt, 'TikTok');
+    }
+
+    if (!isPlaceholder(CONFIG.FACEBOOK)) {
+      var fb = String(CONFIG.FACEBOOK).replace(/^@/, '');
+      show('fb');
+      setLink('fFb', 'https://www.facebook.com/' + fb, 'Facebook');
     }
 
     if (!isPlaceholder(CONFIG.SERVICE_AREA)) {

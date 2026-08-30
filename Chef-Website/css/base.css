@@ -1,9 +1,9 @@
 /* ================================================================
-   AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+   AnabhiDev-BPC — Nature Private Chef & Culinary Consulting Website
    HTML5 · Vanilla CSS · Vanilla JavaScript
    Development · Anabhi Dev
-   Version   : 1.2
-   Generated : 28 August 2026, 09:45:38
+   Version   : 1.5
+   Generated : 30 August 2026, 12:26:55
    ----------------------------------------------------------------
    Reset, blok wajib SOP, tipografi dasar, dan primitif layout.
    Komponen (header, card, form, lightbox) ada di components.css.
@@ -147,7 +147,6 @@ p { max-width: var(--w-measure); }
   color: var(--c-warm-gray);
   font-weight: var(--fw-light);
 }
-.band-light .lead { color: var(--c-dark-text-2); }
 
 /* Garis pemisah tipis — PRD bagian 29. */
 .rule {
@@ -245,6 +244,68 @@ p { max-width: var(--w-measure); }
 }
 
 
+/* Split full-bleed: foto menyentuh tepi layar, teks tetap segaris dengan
+   .container. Dipakai untuk momen editorial besar SAJA — kalau semua
+   .split dijadikan bleed, efeknya hilang dan halaman kehilangan ritme.
+
+   Section pembungkusnya sengaja TIDAK memakai .section maupun .container:
+   padding vertikal pindah ke .bleed__body, supaya foto benar-benar
+   menyentuh tepi atas & bawah band. */
+.bleed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  /* Jaga tinggi minimum kalau teksnya pendek — tanpa ini foto ikut
+     memendek dan kehilangan kesan editorial. */
+  min-height: clamp(420px, 44vw, 620px);
+}
+
+/* Kenapa max-width + margin auto, BUKAN 100vw:
+   100vw ikut menghitung lebar scrollbar dan memicu scroll horizontal
+   (CLAUDE.md 4.3). Setengah lebar container + margin auto membuat tepi
+   luar teks jatuh persis di tepi .container, tanpa menyentuh 100vw. */
+.bleed__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(var(--w-content) / 2);
+  padding-block: var(--sp-section-lg);
+  padding-inline: var(--sp-gutter);
+  margin-left: auto;            /* default: teks kiri, foto kanan */
+}
+.bleed--media-left .bleed__body {
+  margin-left: 0;
+  margin-right: auto;           /* teks kanan, foto kiri */
+}
+
+/* Urutan DOM selalu teks dulu baru foto — urutan baca yang benar untuk
+   screen reader. Posisi visual diatur lewat order, bukan urutan markup. */
+.bleed__media { position: relative; overflow: hidden; }
+.bleed--media-left .bleed__media { order: -1; }
+.bleed__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 880px) {
+  .bleed {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .bleed__body {
+    max-width: none;
+    margin: 0;
+    padding-block: var(--sp-section-md);
+  }
+  /* Sama seperti .split__media — di mobile foto selalu di atas teks. */
+  .bleed__media { order: -1; }
+  .bleed__media img { height: auto; aspect-ratio: 4 / 3; }
+}
+
+
 /* ================================================================
    5. HEADER SECTION (judul + eyebrow + deskripsi)
    ================================================================ */
@@ -339,6 +400,49 @@ p { max-width: var(--w-measure); }
 .link-arrow svg { transition: transform var(--t-fast) var(--ease-out); }
 .link-arrow:hover svg { transform: translateX(4px); }
 
+/* Komponen yang default-nya diwarnai untuk band GELAP, dipulihkan saat
+   dipakai di band terang. Tanpa blok ini teksnya praktis hilang:
+   --c-white 1.07:1 · --c-warm-gray 1.81:1 · --c-gold 2.06:1 di atas ivory.
+   Emas sebagai TEKS dilarang di band terang (lihat tokens.css); di sini
+   emas hanya bertahan sebagai garis/angka besar dekoratif. */
+.band-light .lead,
+.band-soft  .lead,
+.band-light .value__text,
+.band-soft  .value__text,
+.band-light .pillar__text,
+.band-soft  .pillar__text,
+.band-light .note,
+.band-soft  .note {
+  color: var(--c-dark-text-2);
+}
+
+.band-light .value__title,
+.band-soft  .value__title,
+.band-light .pillar__title,
+.band-soft  .pillar__title {
+  color: var(--c-dark-text);
+}
+
+/* Angka 01–06: 1.5rem = 24px, masuk kategori teks besar (ambang AA 3:1).
+   #8D7140 = 4.01:1 di ivory, 3.57:1 di soft — keduanya lolos. */
+.band-light .value__mark,
+.band-soft  .value__mark {
+  color: var(--c-gold-muted);
+}
+
+/* Garis kiri pilar tetap emas — sebagai garis, bukan teks, itu sah. */
+.band-light .pillar,
+.band-soft  .pillar {
+  border-left-color: var(--c-gold-muted);
+}
+
+/* Latar sementara di balik foto galeri sebelum gambar termuat: charcoal
+   akan tampak sebagai kotak hitam di band terang. */
+.band-light .gallery__btn,
+.band-soft  .gallery__btn {
+  background: var(--c-soft-ivory);
+}
+
 
 /* ================================================================
    7. REVEAL ON SCROLL
@@ -364,3 +468,9 @@ p { max-width: var(--w-measure); }
 /* Utilities */
 .ta-center { text-align: center; }
 .mt-xl { margin-top: var(--sp-xl); }
+
+/* Pembungkus rata-tengah tidak boleh terkunci lebar baca 68ch dari
+   `p { max-width: var(--w-measure) }` — kalau terkunci, isinya terpusat
+   di dalam kotak sempit yang rata kiri, bukan di tengah container.
+   Ini yang sempat membuat tombol CTA tampak melenceng ke kiri. */
+.ta-center { max-width: none; }

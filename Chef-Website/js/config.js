@@ -1,16 +1,15 @@
 // ================================================================
-// AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+// AnabhiDev-BPC — Nature Private Chef Website
 // HTML5 · Vanilla CSS · Vanilla JavaScript
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 28 August 2026, 01:09:30
+// Version   : 1.2
+// Generated : 30 August 2026, 13:54:30
 // ----------------------------------------------------------------
 // SATU-SATUNYA tempat data klien disimpan.
 //
-// 🔴 Semua nilai bertanda PLACEHOLDER_ belum dikonfirmasi klien.
-//    DILARANG mengarang isinya. Begitu data asli masuk, ganti di
-//    file ini saja — tidak ada satu pun nomor/email/nama yang
-//    ditulis langsung di file HTML.
+// Data di bawah ini sudah DIKONFIRMASI dari kartu nama Chef Galung
+// dan katalog menu (flipbook), diserahkan user 30-08-2026.
+// Yang masih bertanda PLACEHOLDER_ belum ada datanya.
 //
 // Daftar lengkap yang masih ditunggu ada di STATUS.md bagian 4.
 // ================================================================
@@ -18,45 +17,44 @@
 var CONFIG = {
 
   // ---- Identitas brand ------------------------------------------
-  // Nama di mockup chef. Belum dikonfirmasi sebagai nama final.
-  BRAND_NAME  : 'Bali Private Chef',
-  BRAND_TAG   : 'Culinary Experience',
-  CHEF_NAME   : 'PLACEHOLDER_NAMA_CHEF',
+  BRAND_NAME  : 'Nature Private Chef',
+  BRAND_TAG   : 'Private Chef · Bali',
+  CHEF_NAME   : 'Chef Galung',
+  TAGLINE     : 'Taste the Difference, Experience the Care.',
 
   // ---- Kontak ---------------------------------------------------
   // Format nomor: kode negara tanpa "+" dan tanpa spasi (dipakai wa.me).
-  // Nomor di mockup (+62 812-3456-7890) adalah nomor contoh, BUKAN
-  // nomor asli — jangan dipakai.
-  WA_NUMBER   : 'PLACEHOLDER_WA',          // contoh isi benar: '628123456789'
-  WA_DISPLAY  : 'PLACEHOLDER_WA_TAMPIL',   // contoh isi benar: '+62 812-3456-789'
-  EMAIL       : 'PLACEHOLDER_EMAIL',
-  INSTAGRAM   : 'PLACEHOLDER_IG',          // tanpa "@"
-  SERVICE_AREA: 'PLACEHOLDER_AREA',        // mis. 'Seminyak · Canggu · Uluwatu'
+  WA_NUMBER   : '6281236321113',
+  WA_DISPLAY  : '+62 812-3632-1113',
+  EMAIL       : 'naturesprivatechef@gmail.com',
+  INSTAGRAM   : 'natures_privatechef',   // tanpa "@"
+  TIKTOK      : 'natures_privatechef',   // tanpa "@"
+  FACEBOOK    : 'natures_privatechef',
+  SERVICE_AREA: 'Uluwatu · Bali',
 
   // ---- Website --------------------------------------------------
   // Dipakai untuk canonical, og:url, dan sitemap.xml.
-  // Selama masih placeholder, canonical belum boleh dianggap final.
-  SITE_URL    : 'PLACEHOLDER_DOMAIN',      // mis. 'https://baliprivatechef.com'
+  // Domain belum dibeli — lihat STATUS.md bagian 3.
+  SITE_URL    : 'PLACEHOLDER_DOMAIN',
 
   // ---- Bukti sosial ---------------------------------------------
-  // null = belum ada / belum dikonfirmasi = section-nya TIDAK dirender.
-  // Mockup memasang badge TripAdvisor dengan rating, padahal belum
-  // tentu profilnya ada. PRD bagian 23.3: bukti hanya kalau terverifikasi.
+  // null / kosong = section-nya TIDAK dirender.
   TRIPADVISOR_URL: null,
   GOOGLE_MAPS_URL: null,
-  TESTIMONIALS   : [],   // kosong = section testimoni tidak ditampilkan
+  TESTIMONIALS   : [],
 
   // ---- Layanan --------------------------------------------------
-  // Diambil dari mockup chef. Wajib dikonfirmasi ke chef mana yang
-  // benar-benar ditawarkan sebelum live — PRD bagian 11 & 25.
+  // Diselaraskan dengan kartu nama Chef Galung 30-08-2026:
+  // "We serve: Breakfast · Lunch · Dinner · Cooking Class · BBQ Party".
+  // Floating Breakfast dipisah karena punya paket & harga sendiri.
   SERVICES: [
-    { id: 'villa-dining',   label: 'On Villa Dining'  },
-    { id: 'private-bbq',    label: 'Private BBQ'      },
-    { id: 'catering',       label: 'Catering'         },
-    { id: 'cooking-class',  label: 'Cooking Class'    },
-    { id: 'special-events', label: 'Special Events'   },
-    { id: 'consulting',     label: 'Culinary Consulting' },
-    { id: 'other',          label: 'Other'            }
+    { id: 'floating-breakfast', label: 'Floating Breakfast' },
+    { id: 'breakfast',          label: 'Breakfast'          },
+    { id: 'lunch',              label: 'Lunch'              },
+    { id: 'dinner',             label: 'Dinner'             },
+    { id: 'cooking-class',      label: 'Cooking Class'      },
+    { id: 'bbq-party',          label: 'BBQ Party'          },
+    { id: 'other',              label: 'Other'              }
   ]
 };
 

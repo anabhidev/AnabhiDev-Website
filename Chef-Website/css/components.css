@@ -1,9 +1,9 @@
 /* ================================================================
-   AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+   AnabhiDev-BPC — Nature Private Chef & Culinary Consulting Website
    HTML5 · Vanilla CSS · Vanilla JavaScript
    Development · Anabhi Dev
-   Version   : 1.3
-   Generated : 28 August 2026, 09:45:38
+   Version   : 1.11
+   Generated : 30 August 2026, 13:54:30
    ----------------------------------------------------------------
    Komponen: skip link, header + drawer, hero, kartu, galeri +
    lightbox, nilai, kuliner, form, footer, tombol WhatsApp.
@@ -104,7 +104,8 @@
   min-width: 0;          /* judul panjang tidak mendorong hamburger keluar */
   flex-shrink: 1;
 }
-.hdr__mark { width: 34px; height: 34px; flex-shrink: 0; }
+.hdr__mark { width: 38px; height: 30px; object-fit: contain; flex-shrink: 0; }
+.ftr__mark  { width: 46px; height: 55px; object-fit: contain; flex-shrink: 0; }
 .hdr__name {
   display: flex;
   flex-direction: column;
@@ -327,7 +328,10 @@
 .hero__inner { width: 100%; }
 
 .hero__title {
-  max-width: 15ch;
+  /* 15ch lama memaksa judul membungkus. Dilepas supaya bisa satu baris;
+     lebarnya sudah dibatasi .container (1280px). */
+  max-width: none;
+  font-size: var(--fs-hero);
   margin-bottom: var(--sp-lg);
   font-weight: var(--fw-light);
   text-transform: uppercase;
@@ -692,10 +696,62 @@ a.contact-list__value:hover { color: var(--c-gold-light); }
    Surface sedikit berbeda dari section gelap di atasnya supaya
    batasnya tetap terbaca (SOP kategori 1, struktur multi-band).
    ================================================================ */
+/* Footer — tekstur beton grunge (foto klien, keputusan user 30-08-2026).
+
+   Foto: Unsplash `photo-1578662996442-48f60103fc96` (Peter Gargiulo,
+   "Grunge Concrete"). Tekstur abstrak, tidak mengklaim lokasi — sah di
+   bawah kategori B manifest foto meski metadata lokasinya Bloomfield, NJ.
+
+   Kecerahan foto DIUKUR, bukan dikira (skala 0–255): rata-rata 17,6 ·
+   p95 34 · p99 40 · maksimum 61. Tanpa scrim pun emas #C9A35A sudah
+   4,59:1 di titik paling terang — lolos AA. Scrim 25% dipasang karena
+   titik paling terang justru di tengah, persis tempat teks footer duduk;
+   dengan scrim emas naik ke 5,53:1, margin yang nyaman tanpa mematikan
+   teksturnya.
+
+   Lebar w=1200 (80 KB), bukan 1600 (169 KB): teksturnya tidak punya
+   detail tajam, jadi diregangkan `cover` ke layar 2560px pun tidak
+   terlihat lunak. Naikkan ke w=1600 hanya kalau memang terlihat lembek.
+
+   Motif ubin semen CSS yang sebelumnya ada di `.ftr::before` DIHAPUS —
+   foto ini sudah menjadi teksturnya, menumpuk pola geometris di atas
+   beton asli akan terbaca seperti kesalahan. Versi bermotif tersimpan di
+   `arsip/components_v1.5.css` kalau suatu saat mau dipakai lagi.
+
+   Tidak memakai background-attachment: fixed (dilarang SOP, rusak iOS). */
 .ftr {
-  background: var(--c-charcoal);
-  border-top: 1px solid var(--c-line-dark);
+  position: relative;
   padding-block: var(--sp-3xl) var(--sp-xl);
+  /* Warna dasar: kalau foto gagal termuat, footer tetap gelap dan
+     teksnya tetap terbaca. */
+  background-color: var(--c-charcoal);
+  background-image:
+    linear-gradient(rgba(11, 11, 10, 0.25), rgba(11, 11, 10, 0.25)),
+    radial-gradient(88% 120% at 12% -15%, rgba(201, 163, 90, 0.085), transparent 58%),
+    radial-gradient(70%  95% at 88% 115%, rgba(201, 163, 90, 0.050), transparent 62%),
+    url("https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=75");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* Garis batas atas. Border 1px rata sebelumnya nyaris tak terlihat karena
+   band di atasnya sama-sama nyaris hitam — inilah yang membuat footer
+   terasa menempel pada section di atasnya. Gradien yang menyala di tengah
+   dan meredup ke tepi memberi batas yang terbaca tanpa terasa kaku. */
+.ftr::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(201, 163, 90, 0.10) 18%,
+    rgba(201, 163, 90, 0.55) 50%,
+    rgba(201, 163, 90, 0.10) 82%,
+    transparent 100%);
 }
 .ftr__grid {
   display: grid;
@@ -794,6 +850,14 @@ a.contact-list__value:hover { color: var(--c-gold-light); }
   body { background: #FFFFFF; color: #000000; }
   .band-dark, .band-charcoal { background: #FFFFFF; color: #000000; }
   .section, .section--md { padding-block: var(--sp-lg); }
+  /* Foto tekstur footer tidak ikut tercetak — boros tinta dan
+     tidak menambah informasi apa pun di atas kertas. */
+  .ftr { background: #FFFFFF; color: #000000; }
+  .ftr::after { display: none !important; }
+  /* Bleed: di kertas turunkan jadi satu kolom, foto dibatasi tingginya. */
+  .bleed { grid-template-columns: 1fr; min-height: 0; }
+  .bleed__body { max-width: none; margin: 0; padding-block: var(--sp-lg); }
+  .bleed__media img { height: auto; max-height: 8cm; }
 }
 
 /* Utility classes from consulting.html */
@@ -804,3 +868,306 @@ a.contact-list__value:hover { color: var(--c-gold-light); }
 
 
 .gallery__item:not(.gallery__item--wide) .gallery__btn img { aspect-ratio: 4 / 3; }
+
+
+/* ================================================================
+   STRIP HIGHLIGHT (di bawah hero)
+   Menggantikan gagasan hero-slider. Tiga kartu foto rapat tanpa jarak,
+   menempel langsung di bawah hero seperti kelanjutan gambarnya.
+   ================================================================ */
+.strip { padding: 0; }
+.strip__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Wajib: tanpa ini anak grid menolak mengecil dan memicu scroll
+   horizontal di layar sempit (SOP kategori 1). */
+.strip__list > * { min-width: 0; }
+
+.strip__link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+}
+.strip__link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform var(--t-slow) var(--ease-out);
+}
+.strip__link:hover img,
+.strip__link:focus-visible img { transform: scale(1.05); }
+
+/* Gradient mencapai 0.92 di dasar, jadi kontras teks putih terjamin
+   berapa pun terangnya foto — inilah yang membuat foto terang tetap
+   aman di sini, padahal gagal dipakai sebagai hero. */
+.strip__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--sp-2xl) var(--sp-lg) var(--sp-lg);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 10, 0)    0%,
+    rgba(11, 11, 10, 0.55) 45%,
+    rgba(11, 11, 10, 0.92) 100%
+  );
+}
+.strip__title {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-white);
+}
+.strip__text {
+  display: block;
+  margin-top: var(--sp-xs);
+  font-size: var(--fs-small);
+  color: var(--c-warm-gray);
+}
+
+/* Garis emas tipis antar kartu — memisahkan tanpa jarak kosong. */
+.strip__item + .strip__item .strip__link { border-left: 1px solid var(--c-line-dark); }
+
+@media (max-width: 860px) {
+  .strip__list { grid-template-columns: 1fr; }
+  .strip__link img { aspect-ratio: 16 / 9; }
+  .strip__item + .strip__item .strip__link {
+    border-left: 0;
+    border-top: 1px solid var(--c-line-dark);
+  }
+}
+
+
+/* ================================================================
+   PAKET MENU (menu.html)
+   Baris editorial berselang-seling: foto kiri, lalu kanan, lalu kiri.
+   Sengaja BUKAN grid kartu — daftar hidangan butuh lebar untuk dibaca,
+   dan harga harus punya ruang sendiri supaya langsung tertangkap mata.
+   ================================================================ */
+.pkgs {
+  display: grid;
+  gap: var(--sp-3xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pkg {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(var(--sp-xl), 4vw, var(--sp-3xl));
+  align-items: center;
+}
+.pkg > * { min-width: 0; }
+
+/* Selang-seling sisi foto. Urutan DOM tetap foto-dulu supaya pembaca
+   layar mendapat konteks visual sebelum daftar hidangan. */
+.pkg:nth-child(even) .pkg__media { order: 1; }
+
+.pkg__media { overflow: hidden; border-radius: var(--r-md); box-shadow: var(--shadow-light); }
+.pkg__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform var(--t-slow) var(--ease-out);
+}
+.pkg:hover .pkg__media img { transform: scale(1.04); }
+
+.pkg__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+/* Harga dibedakan kuat: emas tua di band terang (4,01:1 di ivory —
+   lolos AA untuk teks besar, lihat tokens.css). */
+.pkg__price {
+  margin-top: var(--sp-2xs);
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  color: var(--c-gold-muted);
+  letter-spacing: 0.02em;
+}
+.pkg__choose {
+  margin-top: var(--sp-md);
+  font-size: var(--fs-small);
+  color: var(--c-dark-text-2);
+  font-style: italic;
+}
+.pkg__list {
+  margin: var(--sp-md) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--sp-2xs);
+}
+.pkg__list li {
+  position: relative;
+  padding-left: var(--sp-md);
+  font-size: var(--fs-small);
+  color: var(--c-dark-text);
+  line-height: 1.6;
+}
+.pkg__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c-gold-muted);
+}
+/* Baris berlabel kursus (Starter / Soup / Main / Dessert) */
+.pkg__list--course li { padding-left: 0; }
+.pkg__list--course li::before { display: none; }
+.pkg__course {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-gold-muted);
+  margin-bottom: 2px;
+}
+.pkg__list--course li + li { margin-top: var(--sp-sm); }
+
+.pkg__note {
+  margin-top: var(--sp-md);
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--c-dark-text-2);
+}
+
+@media (max-width: 860px) {
+  .pkg { grid-template-columns: 1fr; gap: var(--sp-lg); }
+  /* Di ponsel foto selalu di atas teks — sama seperti .split dan .bleed. */
+  .pkg:nth-child(even) .pkg__media { order: 0; }
+  .pkgs { gap: var(--sp-2xl); }
+}
+
+/* Kredit developer jadi tautan ke anabhidev.com. Dibuat redup supaya
+   tidak bersaing dengan brand klien, tapi tetap lolos kontras. */
+.ftr__credit a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.ftr__credit a:hover,
+.ftr__credit a:focus-visible { color: var(--c-gold); border-bottom-color: var(--c-gold-muted); }
+
+
+/* ================================================================
+   BREADCRUMB
+   Dipasangkan dengan BreadcrumbList di JSON-LD. Schema tanpa
+   breadcrumb yang terlihat adalah pelanggaran pedoman Google
+   (structured data harus mencerminkan isi halaman yang tampak).
+   ================================================================ */
+.crumb { padding-block: var(--sp-lg); }
+.crumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+}
+.crumb__list li { display: flex; align-items: center; gap: var(--sp-xs); }
+.crumb__list li + li::before {
+  content: "/";
+  color: var(--c-gold-muted);
+  opacity: 0.8;
+}
+.crumb__list a { color: inherit; opacity: 0.75; }
+.crumb__list a:hover,
+.crumb__list a:focus-visible { opacity: 1; color: var(--c-gold); }
+.crumb__list [aria-current="page"] { font-weight: var(--fw-bold); }
+
+
+/* ================================================================
+   BACK TO TOP
+   Muncul setelah pengguna melewati satu layar penuh. Ditaruh di kiri
+   supaya tidak bertabrakan dengan tombol WhatsApp mengambang di kanan.
+   ================================================================ */
+.to-top {
+  position: fixed;
+  left: var(--sp-lg);
+  bottom: var(--sp-lg);
+  z-index: var(--z-float, 60);
+  display: grid;
+  place-items: center;
+  width: 44px;               /* target sentuh minimal 44x44 (SOP kat. 8) */
+  height: 44px;
+  border: 1px solid var(--c-line-dark);
+  border-radius: 50%;
+  background: rgba(11, 11, 10, 0.82);
+  color: var(--c-white);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--t-base) var(--ease-out),
+              transform var(--t-base) var(--ease-out),
+              visibility var(--t-base) var(--ease-out),
+              background var(--t-fast) var(--ease-out);
+}
+.to-top.is-on { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { background: var(--c-gold); color: var(--c-obsidian); border-color: var(--c-gold); }
+
+@media (max-width: 560px) {
+  /* Di ponsel tombol WhatsApp lebih penting; back-to-top dikecilkan
+     dan dirapatkan supaya tidak memakan ruang baca. */
+  .to-top { width: 40px; height: 40px; left: var(--sp-md); bottom: var(--sp-md); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .to-top { transition: opacity 0.01ms, visibility 0.01ms; transform: none; }
+}
+
+
+/* ================================================================
+   FAQ (details/summary bawaan browser)
+   ================================================================ */
+.faq { display: grid; gap: 0; }
+.faq__item { border-top: 1px solid var(--c-line-light); }
+.faq__item:last-child { border-bottom: 1px solid var(--c-line-light); }
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  padding: var(--sp-lg) 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: var(--fw-semi);
+  color: var(--c-dark-text);
+}
+.faq__q::-webkit-details-marker { display: none; }
+/* Penanda buka-tutup digambar sendiri: segitiga bawaan browser tidak
+   bisa diwarnai konsisten lintas mesin. */
+.faq__q::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px; height: 10px;
+  border-right: 1.5px solid var(--c-gold-muted);
+  border-bottom: 1.5px solid var(--c-gold-muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform var(--t-fast) var(--ease-out);
+}
+.faq__item[open] .faq__q::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.faq__a { padding-bottom: var(--sp-lg); }
+.faq__a p { margin: 0; font-size: var(--fs-small); color: var(--c-dark-text-2); max-width: none; }
+@media (prefers-reduced-motion: reduce) { .faq__q::after { transition: none; } }
+
+.nf__links { display: grid; gap: var(--sp-md); justify-content: center; margin: var(--sp-xl) 0 0; padding: 0; list-style: none; }

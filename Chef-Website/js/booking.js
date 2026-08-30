@@ -1,5 +1,5 @@
 // ================================================================
-// AnabhiDev-BPC — Bali Private Chef & Culinary Consulting Website
+// AnabhiDev-BPC — Nature Private Chef & Culinary Consulting Website
 // HTML5 · Vanilla CSS · Vanilla JavaScript
 // Development · Anabhi Dev
 // Version   : 1.1
