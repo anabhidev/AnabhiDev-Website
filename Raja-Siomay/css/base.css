@@ -1,0 +1,345 @@
+/* ================================================================
+   AnabhiDev-RS — Raja Siomay Website
+   HTML5 · CSS3 · Vanilla JS
+   Development · Anabhi Dev
+   Version   : 1.2
+   Generated : 30 August 2026, 01:12:00
+   ----------------------------------------------------------------
+   base.css — reset, design token, tipografi, layout primitive.
+   Token warna dipisah per [data-theme]; setiap warna teks diberi
+   catatan rasio kontras terhadap background mode-nya (WCAG 2.2 AA).
+   ================================================================ */
+
+/* ============================================================
+   1. TOKEN — LIGHT (default aktif: ivory premium, bukan putih polos)
+   ============================================================ */
+:root,
+[data-theme="light"] {
+  --bg:            #FBF8F2;
+  --bg-alt:        #F3ECDF;
+  --surface:       #FFFFFF;
+  --surface-2:     #F7F1E5;
+
+  --ink:           #191510;   /* kontras 17.14:1 di atas --bg */
+  --ink-soft:      #4A4237;   /* kontras  9.32:1 di atas --bg (8.41:1 di atas --bg-alt) */
+  --muted:         #6B6153;   /* kontras  5.73:1 di atas --bg (5.17:1 di atas --bg-alt) */
+
+  --gold:          #7E5F1E;   /* kontras  5.59:1 di atas --bg — permukaan paling ketat --bg-alt tetap 5.05:1.
+                                 Varian gelap WAJIB: #DCB667 milik mode gelap hanya 1.7:1 di sini. */
+  --gold-bright:   #5C4514;   /* kontras  8.55:1 di atas --bg (7.72:1 di atas --bg-alt) */
+  --chili:         #A63A22;   /* kontras  6.10:1 di atas --bg */
+
+  --line:          rgba(126,95,30,.22);
+  --line-strong:   rgba(126,95,30,.42);
+  --shadow-sm:     0 2px 10px rgba(72,56,20,.07);
+  --shadow-md:     0 18px 44px rgba(72,56,20,.10);
+  --shadow-lg:     0 34px 80px rgba(72,56,20,.14);
+  --glow:          0 0 0 1px rgba(126,95,30,.24), 0 22px 60px rgba(126,95,30,.10);
+
+  --on-gold:       #FBF6EA;   /* kontras 6.94:1 di atas --gold #7E5F1E — dibalik dari mode gelap */
+
+  --btn-solid-bg:  #17140E;
+  --btn-solid-ink: #F7EFDD;   /* kontras 16.05:1 di atas --btn-solid-bg */
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   2. TOKEN — DARK (tersedia tapi dimatikan, lihat catatan di bawah)
+   ============================================================ */
+/* Mode gelap DINONAKTIFKAN atas permintaan klien (30 Agustus 2026).
+   Blok ini SENGAJA TIDAK DIHAPUS — saklarnya ada di dua tempat:
+     1. DARK_MODE di skrip inline <head> tiap halaman HTML
+     2. DARK_MODE_ENABLED di js/main.js
+   Ubah keduanya jadi true dan seluruh mode gelap hidup kembali
+   tanpa perlu menulis ulang satu baris pun. Rasio kontras di bawah
+   sudah diverifikasi, jadi tidak perlu dihitung ulang saat diaktifkan. */
+[data-theme="dark"] {
+  /* Permukaan */
+  --bg:            #0B0A08;   /* warm black */
+  --bg-alt:        #16120B;   /* band selang-seling — sengaja dinaikkan dari #121009 agar batas antar band terbaca */
+  --surface:       #17140E;   /* card */
+  --surface-2:     #211C13;   /* card hover / inset */
+
+  /* Teks */
+  --ink:           #F5F0E6;   /* kontras 17.42:1 di atas --bg */
+  --ink-soft:      #CFC6B4;   /* kontras 11.68:1 di atas --bg */
+  --muted:         #A29885;   /* kontras  6.94:1 di atas --bg (6.45:1 di atas --surface) */
+
+  /* Aksen */
+  --gold:          #DCB667;   /* kontras 10.30:1 di atas --bg (9.56:1 di atas --surface) */
+  --gold-bright:   #F0DCA8;   /* kontras 14.61:1 di atas --bg */
+  --chili:         #E8785A;   /* kontras  6.85:1 di atas --bg */
+
+  /* Garis & bayangan */
+  --line:          rgba(220,182,103,.16);
+  --line-strong:   rgba(220,182,103,.34);
+  --shadow-sm:     0 2px 10px rgba(0,0,0,.34);
+  --shadow-md:     0 18px 44px rgba(0,0,0,.46);
+  --shadow-lg:     0 34px 80px rgba(0,0,0,.58);
+  --glow:          0 0 0 1px rgba(220,182,103,.30), 0 22px 60px rgba(220,182,103,.10);
+
+  /* Warna teks di atas bidang --gold */
+  --on-gold:       #14110A;   /* kontras  9.81:1 di atas --gold #DCB667 */
+
+  /* Tombol solid */
+  --btn-solid-bg:  #DCB667;
+  --btn-solid-ink: #14110A;   /* kontras  9.81:1 di atas --btn-solid-bg */
+
+  color-scheme: dark;
+}
+
+/* ============================================================
+   3. TOKEN KONSTAN — permukaan gelap yang TIDAK ikut berganti tema
+   (hero, band ajakan, footer). Warna teks di atasnya karena itu
+   cukup diverifikasi sekali, tidak perlu dua set per mode.
+   ============================================================ */
+:root {
+  --inv-bg:        #0B0A08;
+  --inv-bg-2:      #16120B;
+  --inv-ink:       #F5F0E6;   /* kontras 17.42:1 di atas --inv-bg */
+  --inv-ink-soft:  #CFC6B4;   /* kontras 11.68:1 di atas --inv-bg (11.01:1 di atas --inv-bg-2) */
+  --inv-muted:     #A29885;   /* kontras  6.94:1 di atas --inv-bg (6.55:1 di atas --inv-bg-2) */
+  --inv-gold:      #DCB667;   /* kontras 10.30:1 di atas --inv-bg */
+  --inv-line:      rgba(220,182,103,.18);
+
+  /* Ritme & bentuk */
+  --gutter:        clamp(20px, 5vw, 64px);
+  --shell:         1240px;
+  --sec-y:         clamp(72px, 9vw, 132px);
+  --r-sm:          6px;
+  --r-md:          14px;
+  --r-lg:          22px;
+  --nav-h:         76px;
+  --nav-h-sm:      62px;
+
+  /* Tipografi */
+  --f-display:     "Marcellus", "Playfair Display", Georgia, "Times New Roman", serif;
+  --f-body:        "Jost", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease:          cubic-bezier(.22,.61,.36,1);
+  --ease-out:      cubic-bezier(.16,1,.3,1);
+}
+
+/* ============================================================
+   4. RESET + BLOK STARTER WAJIB (SOP kategori 1)
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+/* Overflow lock — WAJIB html DAN body; body saja tidak cukup.
+   max-width:100% (bukan 100vw) supaya lebar scrollbar Windows
+   tidak menciptakan overflow horizontal ~15px. */
+html, body {
+  overflow-x: hidden;   /* fallback browser lama */
+  overflow-x: clip;     /* menang di browser modern: mencegah scroll horizontal
+                           TANPA menjadikan body scroll container — kalau pakai
+                           hidden, position:sticky pada .nav ikut tergulung.
+                           Terbukti lewat uji: nav top 0px menjadi -1970px. */
+  max-width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: 300;
+  font-size: clamp(1rem, .96rem + .18vw, 1.075rem);
+  line-height: 1.75;
+  letter-spacing: .006em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color .45s var(--ease), color .45s var(--ease);
+}
+
+/* Elemen yang menolak mengecil — ditangani eksplisit (SOP kategori 1) */
+img, svg, video, canvas, iframe { max-width: 100%; height: auto; }
+img { display: block; }
+.grid > *, .row > *, .flex > * { min-width: 0; }
+pre, code { overflow-x: auto; max-width: 100%; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Focus indicator — default browser sering di bawah kontras 3:1 */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* [hidden] harus mengalahkan display dari class komponen.
+   Tanpa !important, .icon-btn{display:grid} membuat tombol beratribut
+   hidden tetap tampil karena ditulis di file yang dimuat belakangan. */
+[hidden] { display: none !important; }
+
+/* Screen-reader-only */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Hormati preferensi motion pengguna */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar tipis — halaman & setiap area scrollable (SOP kategori 13) */
+html { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+::selection { background: #DCB667; color: #14110A; }
+
+/* ============================================================
+   5. TIPOGRAFI
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: .004em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.7rem, 1.6rem + 4.6vw, 5.1rem); line-height: 1.02; }
+h2 { font-size: clamp(2rem, 1.35rem + 2.7vw, 3.35rem); }
+h3 { font-size: clamp(1.2rem, 1.08rem + .5vw, 1.5rem); line-height: 1.24; }
+h4 { font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); line-height: 1.3; }
+
+p { text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+strong, b { font-weight: 500; color: var(--ink); }
+
+/* Eyebrow / label section */
+.eyebrow {
+  font-family: var(--f-body);
+  font-size: .715rem;
+  font-weight: 500;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.6;
+}
+.eyebrow--muted { color: var(--muted); }
+
+.lead {
+  font-size: clamp(1.05rem, 1rem + .34vw, 1.24rem);
+  line-height: 1.72;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+.prose { color: var(--ink-soft); }
+.prose p + p { margin-top: 1.1em; }
+
+/* Angka statistik & harga — tabular figures supaya tidak bergoyang
+   saat animasi count-up berjalan */
+.num, .stat__num, .price { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   6. LAYOUT PRIMITIVE
+   ============================================================ */
+.shell {
+  width: 100%;
+  max-width: var(--shell);   /* diperbolehkan untuk halaman marketing (SOP Blueprint A) */
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--sec-y); position: relative; }
+.section--tight { padding-block: clamp(52px, 6vw, 84px); }
+
+/* Band selang-seling — ritme visual antar section */
+.band       { background: var(--bg); }
+.band--alt  { background: var(--bg-alt); }
+.band--soft { background: var(--surface); }
+
+/* Band konstan gelap — warna teks tidak pernah berubah per mode */
+.band--invert {
+  background: var(--inv-bg);
+  color: var(--inv-ink);
+  --ink: var(--inv-ink);
+  --ink-soft: var(--inv-ink-soft);
+  --muted: var(--inv-muted);
+  --gold: var(--inv-gold);
+  --gold-bright: #F0DCA8;
+  --line: var(--inv-line);
+  --line-strong: rgba(220,182,103,.34);
+  --surface: #17130C;
+  --surface-2: #201A11;
+  --on-gold: #14110A;
+  --btn-solid-bg: #DCB667;
+  --btn-solid-ink: #14110A;
+}
+
+/* Jump navigation di bawah sticky nav */
+[id] { scroll-margin-top: calc(var(--nav-h) + 22px); }
+@media (max-width: 900px) { [id] { scroll-margin-top: calc(var(--nav-h-sm) + 18px); } }
+
+.stack > * + * { margin-top: var(--gap, 20px); }
+
+/* Grid dasar — anak grid wajib boleh mengecil */
+.grid { display: grid; gap: clamp(18px, 2.4vw, 30px); }
+.grid > * { min-width: 0; }
+.grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 980px) { .grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .grid--2, .grid--3 { grid-template-columns: minmax(0, 1fr); } }
+
+.center { text-align: center; }
+.center .rule-crown { margin-inline: auto; }
+
+/* ============================================================
+   7. TEKSTUR PREMIUM — butiran film halus di seluruh halaman,
+   dipasang di pseudo-element body supaya nol elemen DOM tambahan.
+   ============================================================ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: .04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   8. ANIMASI MASUK (dipicu IntersectionObserver di js/main.js)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .85s var(--ease-out), transform .85s var(--ease-out);
+  transition-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+.reveal.is-in { opacity: 1; transform: none; will-change: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   9. CETAK
+   ============================================================ */
+@media print {
+  .nav, .drawer, .drawer-scrim, .hero__scroll, .ticker,
+  .lightbox, .to-top, .btn { display: none !important; }
+  body { background: #fff; color: #000; }
+  body::after { display: none; }
+  .section { padding-block: 18px; break-inside: avoid; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; color: #555; }
+}

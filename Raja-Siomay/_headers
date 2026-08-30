@@ -1,0 +1,36 @@
+# ================================================================
+# AnabhiDev-RS — Raja Siomay Website
+# _headers · Cloudflare Pages / Netlify
+# Development · Anabhi Dev
+# Version   : 1.1
+# Generated : 30 August 2026, 00:11:00
+# ================================================================
+#
+# Catatan CSP: 'unsafe-inline' pada script-src dibutuhkan oleh satu skrip
+# anti-FOUC di <head> tiap halaman (pembaca tema sebelum body dirender).
+# Kalau nanti mau CSP ketat, ganti dengan nonce/sha256 khusus skrip itu —
+# jangan hapus skripnya, kilatan tema salah lebih merusak daripada CSP longgar.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://wa.me
+
+# Aset ber-version-query — aman di-cache selamanya, URL berubah saat isinya berubah
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Logo & ikon: nama file tetap, jadi pakai revalidate cepat, BUKAN immutable —
+# supaya penggantian foto/logo dengan nama sama tetap muncul tanpa purge manual
+/assets/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Halaman HTML selalu divalidasi ulang supaya update konten langsung terlihat
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
