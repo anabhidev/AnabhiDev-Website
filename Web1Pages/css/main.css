@@ -139,11 +139,11 @@ img { max-width: 100%; height: auto; display: block; }
 
 .scene {
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 0 clamp(24px, 10vw, 120px);
+  padding: 100px clamp(24px, 5vw, 120px) 40px; /* Added top padding to clear header */
   overflow: hidden;
 }
 
@@ -286,3 +286,31 @@ img { max-width: 100%; height: auto; display: block; }
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; }
 .stat-item { border-top: 1px solid rgba(0,0,0,0.1); padding-top: 24px; }
 .stat-number { font-family: var(--font-heading); font-size: 4rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 16px;}
+
+/* ---------------------------------
+   STRICT MOBILE SAFEGUARDS
+----------------------------------- */
+@media (max-width: 768px) {
+  .site-header { padding: 16px 24px; }
+  .brand-mark img { height: 48px; transform: none; }
+  
+  .scene { 
+    align-items: flex-start; /* Prevent vertical centering from pushing content up into logo */
+    padding-top: 100px; /* Fixed space for header */
+    padding-bottom: 30px;
+    padding-right: 40px; /* Keep text away from right-side pagination dots */
+  }
+  
+  .split-layout { gap: 20px; }
+  
+  .hero-title { font-size: clamp(2.5rem, 9vw, 3.5rem); margin-bottom: 12px; }
+  .hero-subtitle { font-size: 1rem !important; margin-bottom: 16px !important; line-height: 1.5; }
+  
+  .stats-counter { margin-top: 16px; padding-top: 16px; gap: 16px; }
+  .stat-n { font-size: 2rem; }
+  
+  .cinematic-image { height: 30vh; border-radius: 12px; }
+  .hero-portrait-wrapper { max-height: 35vh; max-width: 250px; margin: 0 auto; }
+  
+  .btn-primary { padding: 14px 28px; margin-top: 16px; }
+}
