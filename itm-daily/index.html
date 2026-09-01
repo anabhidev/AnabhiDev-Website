@@ -3,59 +3,256 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.16
-Generated : 28 August 2026, 15:09:14
+Version   : 2.19
+Generated : 1 September 2026, 15:35:51
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
 
 PASANGAN WAJIB
-  Edge Function v1.15 (MFB-IT_v1.15.ts). Deploy FUNCTION DULU.
+  Edge Function v1.16 (MFB-IT_v1.16.ts) — BELUM di-deploy.
+  Deploy FUNCTION DULU, baru file ini.
+
+CATATAN VERSI
+  v2.17 dan v2.18 TIDAK PERNAH di-deploy. Seluruh isinya termasuk di
+  file ini. Yang live per 1 Sep 2026 masih v2.16.
+
+  ⚠️ Termasuk perubahan angka "% Done" dari 15% ke 33%. Baca catatan
+  v2.17 di bawah sebelum deploy kalau angka lama pernah dilaporkan.
+
+PERUBAHAN DARI v2.18 — FITUR BARU: REKAP OPS MEETING
+================================================================
+
+Operation Weekly Meeting berlangsung setiap SELASA. Rekap ini menutup
+rentang RABU s/d SELASA — 7 hari, tanpa tumpang tindih antar minggu.
+
+A. KENAPA RABU, BUKAN SELASA-KE-SELASA
+  Kalau Selasa lalu ikut dihitung, rentangnya jadi 8 hari dan
+  aktivitas hari Selasa itu MUNCUL DUA KALI — di rekap minggu lalu
+  dan di rekap minggu ini. Yang terjadi pada hari meeting sebelumnya
+  sudah dibahas saat meeting itu berlangsung.
+  Dipilih bersama pengguna; diuji: rentang minggu lalu selalu
+  berakhir tepat SEBELUM rentang minggu ini dimulai.
+
+B. PATOKANNYA SELASA BERIKUTNYA, BUKAN SELASA TERAKHIR
+  Termasuk hari ini kalau hari ini Selasa. Alasannya praktis: rekap
+  disiapkan SEBELUM meeting — Senin malam atau Selasa pagi. Kalau
+  memakai Selasa terakhir yang sudah lewat, membukanya hari Senin
+  akan menampilkan periode yang rekapnya sudah dipakai minggu lalu.
+  Diuji dari ketujuh hari dalam seminggu: rentangnya selalu 7 hari
+  dan selalu mulai hari Rabu.
+
+C. DI MANA
+  Tab Report, mode ke-3 di sebelah "By month" dan "Date range":
+  "Ops week". Sengaja BUKAN tab baru di bottom nav — SOP kategori 16
+  membatasi bottom nav maksimal 5 tab, dan tab ke-6 membuat target
+  sentuh terlalu sempit. Rekap ini juga dipakai sekali seminggu,
+  sementara Input dipakai tiap hari; memberinya ruang navigasi
+  permanen tidak sepadan.
+
+  Rentangnya DIHITUNG OTOMATIS — tidak ada tanggal yang perlu diisi.
+  Ada tombol < > untuk melihat minggu-minggu sebelumnya. Tombol ">"
+  mati saat sudah di minggu terdekat: datanya belum ada.
+
+D. ISINYA — HANYA TASK
+  Sesuai permintaan pengguna, DIBUANG dari rekap:
+    - baris hari libur (status kosong: Day Off / Leave / Holiday)
+    - task berstatus Cancelled
+
+  Tiga kelompok, dan sengaja TIDAK saling tumpang tindih:
+    DONE            status Done
+    IN PROGRESS     status On Progress + Pending
+    WAITING VENDOR  status Waiting Vendor
+
+  "Waiting Vendor" dipisah dari "in progress" meskipun sama-sama
+  belum selesai. Alasannya untuk ruang meeting: yang satu "sedang
+  saya kerjakan", yang satu "nunggu orang lain" — dan yang kedua itu
+  yang perlu DITAGIH, bukan dijelaskan.
+
+  Bagian WAITING VENDOR menampilkan nama vendor, tanggal janji, dan
+  penanda "LATE Nd" untuk follow-up yang sudah lewat tanggal. Ini
+  memakai kolom vendor_overdue yang sudah dihitung database sejak
+  MFB-IT_v1.6.sql tapi belum pernah dipakai untuk apa pun.
+  Di akhir rekap ada satu baris peringatan jumlah yang telat.
+
+E. DUA CARA PAKAI
+  1. Dibaca langsung di layar — rekapnya dirender berkelompok di tab
+     Report, jadi bisa dibacakan saat meeting tanpa disalin dulu.
+  2. Tombol "Copy recap for WhatsApp" — teks polos siap tempel ke
+     grup ops. Tanpa markdown/tabel: WhatsApp tidak merender tabel,
+     dan tanda bintang untuk tebal justru berisik di tempat yang
+     tidak mendukungnya.
+
+  Tombol Download Excel, Official Report, dan Copy for Google Sheets
+  yang sudah ada OTOMATIS ikut memakai rentang minggu ini saat mode
+  Ops week aktif — nol perubahan pada ketiganya, karena semuanya
+  membaca currentReportRange() yang sama.
+
+F. PERIODE YANG BELUM TUNTAS DINYATAKAN
+  Kalau rekap dibuka di tengah periode (mis. hari Kamis, meeting
+  Selasa depan), rekapnya menyebut "period still in progress" beserta
+  tanggal batas datanya. Supaya angkanya tidak dibaca sebagai hasil
+  akhir minggu.
+
+G. NOL PERUBAHAN SERVER
+  Seluruh fitur ini memakai action get-report yang sudah ada dengan
+  rentang tanggal bebas. MFB-IT_v1.16.ts tidak disentuh.
+================================================================
+
+================================================================
+CATATAN v2.18 & v2.17 (belum pernah di-deploy) — TETAP BERLAKU
+================================================================
+
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
+
+PASANGAN WAJIB
+  Edge Function v1.16 (MFB-IT_v1.16.ts) — BELUM di-deploy.
+  Deploy FUNCTION DULU, baru file ini.
+
+CATATAN VERSI
+  v2.17 TIDAK PERNAH di-deploy. Seluruh isinya termasuk di file ini,
+  jadi tidak ada yang hilang. v2.18 = v2.17 + bersih-bersih kode mati.
+
+  ⚠️ SELURUH catatan v2.17 di bawah tetap berlaku — termasuk
+  perubahan angka "% Done" dari 15% ke 33%. Baca bagian itu sebelum
+  deploy kalau angka lama pernah dilaporkan ke manajemen.
+
+PERUBAHAN DARI v2.17 — BERSIH-BERSIH, NOL PERUBAHAN PERILAKU
+================================================================
+
+Semua yang dihapus di bawah ini sudah diverifikasi otomatis TIDAK
+pernah dipakai: nol di markup, nol di string JS, nol di querySelector.
+Bukti sebelum/sesudah dijalankan dengan alat yang sama:
+  SEBELUM : 8 kelas CSS mati, 2 fungsi JS mati
+  SESUDAH : 0 kelas mati, 0 fungsi mati
+
+A. KELAS CSS YANG DIHAPUS (8)
+  Seluruhnya sisa tampilan History versi lama yang berbentuk daftar
+  kartu. Sejak digantikan renderWorksheetTable (kelas .ws-*), tidak
+  satu pun pernah dipasang lagi.
+    .riwayat-item   (didefinisikan DUA KALI — duplikat ikut dibersihkan)
+    .riwayat-top    .riwayat-id     .riwayat-date
+    .riwayat-task   .riwayat-meta   .riwayat-chip (+ 3 pengubah warna)
+    .ai-badge       .scroll-inner.centered
+
+  .riwayat-head dan .riwayat-empty TETAP dipakai, jadi tidak disentuh.
+
+  Catatan soal .ai-badge: warnanya var(--amber) yang hanya 3,64:1 di
+  atas putih — gagal AA untuk teks 10px. Jadi kelas itu memang tidak
+  layak dihidupkan, bukan sekadar kebetulan tidak terpakai.
+
+B. FUNGSI JS YANG DIHAPUS (2)
+    chipClassForPriority()   chipClassForStatus()
+  Keduanya mengembalikan kelas .riwayat-chip yang sudah tidak ada, dan
+  tidak pernah dipanggil dari mana pun. Penggantinya wsChipClassPriority
+  dan wsChipClassStatus yang memang dipakai tabel worksheet.
+
+C. YANG SENGAJA TIDAK DIHAPUS
+  id="pinLogo" pada logo layar PIN. Memang tidak dirujuk kode mana pun,
+  tapi menghapus atribut dari markup tidak memberi keuntungan apa pun
+  sementara tetap ada risikonya. Dibiarkan, dan dicatat di sini supaya
+  audit berikutnya tahu ini sudah ditinjau, bukan terlewat.
+
+D. KENAPA KODE MATI PERLU DIBERESKAN
+  Bukan soal ukuran file — 168 karakter tidak berarti apa-apa. Yang
+  berbahaya adalah kode mati yang MASIH TERLIHAT BENAR: fungsi
+  chipClassForStatus mengembalikan nama kelas yang sudah tidak ada,
+  jadi siapa pun yang memakainya di kemudian hari akan mendapat chip
+  tanpa gaya sama sekali — tanpa error, tanpa peringatan.
+================================================================
+
+================================================================
+CATATAN v2.17 (belum pernah di-deploy) — TETAP BERLAKU
+================================================================
+
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
+
+PASANGAN WAJIB
+  Edge Function v1.16 (MFB-IT_v1.16.ts). Deploy FUNCTION DULU.
   MFB-IT_v1.6.sql sudah dijalankan 28 Aug 2026 — tidak perlu diulang.
 
 CATATAN VERSI
-  v2.15 TIDAK PERNAH di-deploy. Seluruh isinya sudah termasuk di
-  file ini, jadi tidak ada yang hilang. v2.16 = v2.15 + panduan
-  mikrofon yang disusun ulang.
+  v2.16 di-deploy 28 Aug 2026 dan berjalan baik (tab Log & History
+  sudah benar). v2.17 melanjutkan dari sana.
 
-PERUBAHAN DARI v2.15
+PERUBAHAN DARI v2.16
 ================================================================
 
-PANDUAN MIKROFON DISUSUN ULANG — dari bukti, bukan dugaan.
+⚠️ ANGKA "% Done" BERUBAH — INI DISENGAJA, BUKAN BUG
 
-  Dua screenshot Chrome Android dari pengguna membuktikan:
-    1. Halaman Permissions untuk anabhidev.com HANYA memuat
-       Notifications & Local network. TIDAK ADA baris Microphone.
-    2. Settings > Site settings > Microphone TIDAK punya daftar
-       per-situs sama sekali — tidak ada bagian "Blocked".
+  Nilai lama SALAH dan selalu meremehkan capaian. Pembaginya adalah
+  JUMLAH SELURUH BARIS, termasuk Day Off / Public Holiday / Leave
+  yang status-nya kosong. Hari libur ikut menekan persentase.
 
-  Kesimpulannya: situs ini BUKAN diblokir — ia belum pernah DITANYA.
-  Itu justru membenarkan diagnosis BUG 3 di v2.15: dialog izin tidak
-  pernah muncul karena await Permissions API menghabiskan transient
-  user activation sebelum getUserMedia dipanggil. Pesan "blocked" di
-  v2.14 adalah salah label, bukan keadaan sebenarnya.
+  Data nyata pengguna, Agustus 2026:
+    13 baris · 2 Done · 4 Open · 7 baris hari libur
+    LAMA : 2 / 13 = 15%
+    BARU : 2 /  6 = 33%   <- terhadap task yang benar-benar ada
 
-  Panduan v2.15 menyuruh pengguna mencari daftar "Blocked" yang
-  memang tidak ada — menyesatkan. Sekarang urutannya mengikuti
-  kemungkinan penyebab dari yang paling sering:
-    1. Izin mikrofon Chrome di tingkat ANDROID (Settings > Apps >
-       Chrome > Permissions > Microphone). Kalau ini ditolak,
-       getUserMedia gagal TANPA dialog web DAN daftar per-situs
-       tetap kosong — persis gejala yang terlihat di screenshot.
-    2. Reset permissions pada halaman Permissions situs. Tombol ini
-       NYATA ada di screenshot, berbeda dari daftar "Blocked" yang
-       tidak ada.
-    3. Kalau tetap gagal: dinyatakan jujur bahwa input suara tidak
-       tersedia di perangkat itu, dan bahwa tidak ada yang rusak —
-       kotak Free write bekerja sama saja bila diketik.
+  Selisihnya lebih dari dua kali lipat, dan arahnya SELALU merugikan:
+  makin sering libur tercatat, makin rendah angkanya terlihat. Kalau
+  angka lama pernah dilaporkan ke manajemen, angka baru akan tampak
+  "melonjak" — padahal yang berubah cuma cara hitungnya, bukan
+  kinerjanya. SOP 8.11: perubahan ini dikomunikasikan lebih dulu dan
+  disetujui pengguna sebelum dikerjakan.
 
-  Judul sheet diubah dari "Microphone blocked" menjadi
-  "Microphone unavailable", karena "blocked" ternyata bukan
-  keadaan yang sebenarnya terjadi.
+A. ANGKA YANG DIPERBAIKI
+  1. Kartu "Total task" -> "Work tasks" (hanya baris yang punya
+     status). Hari libur pindah ke kartu tersendiri "Off days" di
+     bagian Show more.
+  2. Kartu Done kini menampilkan PECAHAN: "2/6" dengan label
+     "Done · 33%". Pembagi yang terlihat tidak bisa menyesatkan —
+     kalau suatu saat salah lagi, langsung ketahuan tanpa membongkar
+     kode.
+  3. Ringkasan tab Report ikut diperbaiki dengan cara yang sama.
+     Di sana tidak ada tanda persen, tapi "Total task" bersebelahan
+     dengan "Done" — pembaca tetap membagi keduanya di kepala.
+     Ditambah baris keterangan "+ N off days (not counted as tasks)"
+     supaya selisih dengan jumlah baris tabel punya penjelasan.
 
-TIDAK ADA perubahan lain. Perbaikan BUG 1 (tab Log), BUG 2 (kolom
-aset/vendor/foto tidak terbaca), dan BUG 3 (urutan getUserMedia)
-seluruhnya sudah ada di file ini sejak v2.15 dan tidak disentuh.
+B. ANGKA YANG BISA DITINDAKLANJUTI
+  4. Kartu "Oldest open" kini MENYEBUT NAMA TASK-nya, bukan cuma
+     "10d". Angka umur saja memunculkan pertanyaan "task yang mana?"
+     dan memaksa pengguna mencari sendiri di History.
+  5. Kartu "Open" dan "Oldest open" BISA DIKETUK -> membuka History
+     dalam mode "open tasks": semua task yang masih terbuka, TANPA
+     batas 7 hari, urut paling tua dulu. Batas 7 hari dilepas karena
+     justru task tertua yang paling perlu ditindaklanjuti — dengan
+     batas lama, task 10 hari malah tidak akan muncul.
+     Ada penanda mode + tombol "Back to last 7 days".
+     Keduanya diberi chevron supaya terlihat bisa ditekan; fitur yang
+     bisa diketuk diam-diam tidak akan pernah ditemukan.
+
+C. DATA YANG SUDAH ADA TAPI BELUM DIPAKAI
+  6. Kartu "Vendor overdue" — memakai kolom vendor_overdue yang sudah
+     dihitung database sejak MFB-IT_v1.6.sql tapi belum pernah
+     ditampilkan. Kartunya HANYA muncul kalau memang ada yang telat;
+     kartu peringatan yang selalu menampilkan 0 lama-lama diabaikan.
+
+D. BATASAN YANG DILEPAS
+  7. Dashboard tidak lagi terkunci ke bulan berjalan. Ada tombol
+     bulan sebelumnya / berikutnya. Tombol "next" mati saat sudah di
+     bulan berjalan. Sebelumnya, setiap tanggal 1 Dashboard kosong
+     melompong tanpa cara melihat bulan yang baru saja selesai —
+     justru saat rekap bulanan paling dibutuhkan.
+     Pergeseran bulan menetapkan tanggal ke 1 lebih dulu, supaya
+     mundur dari tanggal 31 tidak melompati satu bulan penuh.
+
+E. CHART HARIAN JADI JUJUR
+  8. Batang dipisah dua tumpukan: Work (navy) dan Off (brass).
+     Sebelumnya hari libur digambar setinggi 1 — persis sama dengan
+     hari kerja yang menyelesaikan satu task. Secara visual, libur
+     terlihat seperti produktivitas. Legend dinyalakan karena begitu
+     ada dua warna, tanpa keterangan warnanya cuma jadi tebakan.
+
+F. DEGRADASI AMAN (SOP 8.8)
+  Perbaikan angka TIDAK menunggu server: kalau Edge Function masih
+  < v1.16, workTotal dihitung ulang di HP dari items — hasilnya sama.
+  Yang butuh v1.16 hanya mode "open tasks"; kalau server lama,
+  ketukan kartu tetap membuka History, hanya isinya belum tersaring.
+  Tab Report memakai label lama saat server belum mengirim workTotal —
+  lebih baik istilah lama daripada memberi nama baru pada angka yang
+  belum berubah artinya.
 ================================================================
 -->
 <!DOCTYPE html>
@@ -390,7 +587,8 @@ body.dark-mode .btn-logout:active { background: var(--field); }
 /* Penengahan HANYA aktif bila konten muat penuh tanpa perlu scroll —
    dicek lewat JS (lihat centerIfFits), bukan lewat media query, karena
    tinggi konten berubah-ubah tergantung mode Hari Kerja / Libur. */
-.scroll-inner.centered { justify-content: center; flex: 1; }
+/* v2.18 — .centered dihapus: nol pemakaian. Semua tab memakai
+   .scroll-inner biasa; tidak ada layar yang isinya ditengahkan. */
 
 /* v2.10 — strip "Hari ini". Navy senada header, bukan kartu putih
    besar (disengaja tipis, ±30px). Warna brand solid (var(--navy))
@@ -583,6 +781,130 @@ body.dark-mode .ws-chip.asset { background: rgba(255,255,255,.10); color: var(--
 .copy-btn:active { background: var(--field); }
 .copy-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 
+/* ══════════════════════════════════════════════
+   v2.17 — DASHBOARD: kartu bisa ditindaklanjuti
+   ══════════════════════════════════════════════ */
+
+/* Kartu yang bisa diketuk diberi penanda VISUAL, bukan hanya bisa
+   diketuk diam-diam. Tanpa penanda, pengguna tidak akan pernah tahu
+   ada yang bisa ditekan — fiturnya ada tapi tidak pernah ditemukan. */
+.summary-card.tappable {
+  cursor: pointer; position: relative;
+  border: 1px solid var(--line);
+}
+.summary-card.tappable:active { background: var(--field); }
+.summary-card.tappable:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+/* Chevron kecil di pojok — isyarat "ada lanjutannya" yang sudah
+   dipakai .picker-row di form, jadi maknanya sudah dikenal. */
+.summary-card.tappable::after {
+  content: '\203A'; position: absolute; top: 8px; right: 11px;
+  font-size: 17px; line-height: 1; color: var(--muted); opacity: .75;
+}
+
+/* Baris keterangan di bawah angka. Dipakai untuk menyebut NAMA task
+   pada kartu "Oldest open" — angka "10d" saja tidak memberi tahu
+   task mana yang nyangkut. */
+.summary-sub {
+  font-size: 11px; color: var(--mid); margin-top: 3px; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Kartu peringatan vendor telat. Merah dipakai hanya di sini di
+   Dashboard, jadi kemunculannya benar-benar berarti sesuatu. */
+.summary-card.alert { border-color: rgba(192,57,43,.45); background: rgba(192,57,43,.06); }
+.summary-card.alert .summary-num { color: var(--red); }
+
+/* Navigasi bulan Dashboard. */
+.dash-month-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-2); margin-bottom: var(--sp-3);
+}
+.dash-month-nav > * { min-width: 0; }
+.dash-month-btn {
+  flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font-size: 17px; line-height: 1; cursor: pointer;
+}
+.dash-month-btn:active { background: var(--field); }
+.dash-month-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.dash-month-btn[disabled] { opacity: .35; cursor: default; }
+.dash-month-title { flex: 1 1 auto; text-align: center; font-size: 15px; font-weight: 600; color: var(--heading); }
+
+/* Penanda mode di tab History saat sedang menampilkan daftar */
+/* "open tasks" dan bukan 7 hari terakhir.                     */
+.riwayat-mode {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-2); background: rgba(201,168,76,.12);
+  border: 1px solid rgba(201,168,76,.35); border-radius: 10px;
+  padding: 8px 12px; margin-bottom: var(--sp-3); font-size: 12.5px;
+}
+.riwayat-mode > * { min-width: 0; }
+.riwayat-mode-text { color: var(--ink); font-weight: 600; }
+.riwayat-mode-btn {
+  flex: 0 0 auto; background: transparent; border: 0; cursor: pointer;
+  color: #7E6319; font-weight: 700; font-size: 12.5px;
+  padding: 6px 2px; min-height: 32px;
+}
+body.dark-mode .riwayat-mode-btn { color: var(--ai-accent-text); }
+
+/* ══════════════════════════════════════════════
+   v2.19 — REKAP OPS MEETING
+   ══════════════════════════════════════════════ */
+
+/* Baris rentang minggu + navigasi. Pola sama dengan navigasi bulan
+   di Dashboard supaya cara pakainya sudah dikenal. */
+.ops-week-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-2); margin-bottom: var(--sp-3);
+}
+.ops-week-nav > * { min-width: 0; }
+.ops-week-label {
+  flex: 1 1 auto; text-align: center; font-size: 13px; font-weight: 600;
+  color: var(--heading); line-height: 1.35;
+}
+.ops-week-sub { display: block; font-size: 11px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+
+/* Satu blok kelompok dalam rekap (Done / In progress / Waiting vendor). */
+.ops-group { margin-bottom: var(--sp-4); }
+.ops-group-head {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: 12px; font-weight: 700; letter-spacing: .4px;
+  text-transform: uppercase; margin-bottom: var(--sp-2);
+}
+.ops-group-count {
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px;
+  background: var(--field); color: var(--mid);
+}
+/* Warna kepala kelompok memakai token yang SUDAH terukur di file ini,
+   bukan warna baru: hijau #2E7D5B (dipakai .ws-chip.done & toast good),
+   navy --heading, dan brass-gelap #7E6319 (dihitung 4,96:1 di v2.13). */
+.ops-group.done .ops-group-head   { color: #2E7D5B; }
+.ops-group.open .ops-group-head   { color: var(--heading); }
+.ops-group.vendor .ops-group-head { color: #7E6319; }
+body.dark-mode .ops-group.vendor .ops-group-head { color: var(--ai-accent-text); }
+
+/* Satu baris task di rekap. */
+.ops-item {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 11px; padding: 10px 12px; margin-bottom: 6px;
+}
+.ops-item-task { font-size: 13.5px; color: var(--ink); line-height: 1.45; }
+.ops-item-meta {
+  font-size: 11px; color: var(--muted); margin-top: 4px;
+  display: flex; flex-wrap: wrap; gap: 3px 9px;
+}
+/* Penanda follow-up vendor yang sudah lewat tanggal. Merah dipakai
+   HANYA di sini dalam rekap, jadi kemunculannya benar-benar berarti. */
+.ops-late { color: var(--red); font-weight: 700; }
+.ops-item.late { border-color: rgba(192,57,43,.45); background: rgba(192,57,43,.05); }
+
+.ops-empty { font-size: 12.5px; color: var(--muted); padding: 2px 0 var(--sp-2); }
+.ops-note {
+  font-size: 11.5px; color: var(--muted); line-height: 1.6;
+  border-top: 1px solid var(--line); padding-top: var(--sp-3); margin-top: var(--sp-2);
+}
+
 .ai {
   background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--brass);
   border-radius: 16px; padding: var(--sp-4); margin-bottom: var(--sp-3);
@@ -590,7 +912,10 @@ body.dark-mode .ws-chip.asset { background: rgba(255,255,255,.10); color: var(--
 }
 .ai-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); }
 .ai-title { font-size: 13px; font-weight: 600; color: var(--mid); display: flex; align-items: center; gap: 6px; }
-.ai-badge { font-size: 10px; font-weight: 600; color: var(--amber); background: rgba(201,168,76,.14); padding: 3px var(--sp-2); border-radius: 6px; }
+/* v2.18 — .ai-badge dihapus: tidak pernah dipasang di markup mana pun.
+   Ringkasan hasil AI memakai .ai-summary, bukan badge terpisah.
+   Catatan: warnanya var(--amber) yang hanya 3,64:1 di atas putih —
+   gagal AA untuk teks 10px, jadi memang tidak layak dihidupkan. */
 .ai-box {
   width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 12px;
   padding: var(--sp-3) var(--sp-4); font-size: 15px; line-height: 1.55; color: var(--ink);
@@ -632,8 +957,7 @@ body.dark-mode .ai-summary { color: var(--ai-accent-text-soft); }
 .ai-summary b { font-weight: 600; }
 
 /* ── RIWAYAT — item bisa diketuk ── */
-.riwayat-item { cursor: pointer; transition: background .15s; }
-.riwayat-item:active { background: var(--field); }
+/* v2.18 — .riwayat-item dihapus: sisa daftar-kartu History lama. */
 
 /* ── LAPORAN ── */
 .report-filter { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); }
@@ -712,16 +1036,14 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
 /* ── RIWAYAT ── */
 .riwayat-head { margin-bottom: var(--sp-3); }
 .riwayat-empty { text-align: center; color: var(--muted); font-size: 14px; padding: var(--sp-7) 0; }
-.riwayat-item {
-  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-  padding: var(--sp-4); margin-bottom: var(--sp-3);
-}
-.riwayat-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-2); }
-.riwayat-id { font-size: 11px; color: var(--muted); font-weight: 500; }
-.riwayat-date { font-size: 11px; color: var(--muted); }
-.riwayat-task { font-size: 15px; color: var(--ink); line-height: 1.45; margin-bottom: var(--sp-2); }
-.riwayat-meta { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
-.riwayat-chip { font-size: 11px; padding: 3px var(--sp-2); border-radius: 8px; background: var(--field); color: var(--mid); }
+/* v2.18 — 7 kelas dihapus: .riwayat-item, .riwayat-top, .riwayat-id,
+   .riwayat-date, .riwayat-task, .riwayat-meta, .riwayat-chip.
+
+   Semuanya sisa tampilan History versi lama yang berbentuk daftar
+   kartu. Sejak digantikan renderWorksheetTable (kelas .ws-*), tidak
+   satu pun dari kelas ini pernah dipasang lagi — nol di markup, nol
+   di string JS, nol di querySelector. .riwayat-head dan
+   .riwayat-empty di atas TETAP dipakai, jadi tidak ikut dihapus. */
 
 /* ── TAMPILAN WORKSHEET (tabel) — dipakai Riwayat & Laporan ──
    Kartu (di atas) diganti tabel supaya banyak baris lebih gampang
@@ -767,9 +1089,8 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
 .ws-chip.dayoff   { background: rgba(201,168,76,.18); color: #7E6319; }
 body.dark-mode .ws-chip.dayoff { color: var(--ai-accent-text); }
 .ws-hint { font-size: 11px; color: var(--muted); text-align: center; padding: var(--sp-2) 0 0; }
-.riwayat-chip.critical { background: rgba(192,57,43,.12); color: var(--red); }
-.riwayat-chip.high     { background: rgba(183,121,31,.12); color: var(--amber); }
-.riwayat-chip.done     { background: rgba(46,125,91,.12); color: #2E7D5B; }
+/* v2.18 — 3 pengubah .riwayat-chip dihapus bersama kelas induknya.
+   Penggantinya .ws-chip.critical / .high / .done di blok worksheet. */
 
 .card {
   background: var(--card); border: 1px solid var(--line); border-radius: 16px;
@@ -1224,6 +1545,14 @@ body.dark-mode .nb.on { color: #FFFFFF; }
         <div class="card-title" style="margin-bottom:0" id="riwayatTitle">History — last 7 days</div>
       </div>
 
+      <!-- v2.17 — penanda saat History sedang menampilkan "open tasks"
+           hasil ketukan kartu Dashboard, bukan 7 hari terakhir. Tanpa
+           penanda ini pengguna bisa mengira riwayatnya berubah sendiri. -->
+      <div class="riwayat-mode hidden" id="riwayatModeBar" role="status">
+        <span class="riwayat-mode-text" id="riwayatModeText"></span>
+        <button class="riwayat-mode-btn" id="riwayatModeReset" type="button">Back to last 7 days</button>
+      </div>
+
       <!-- v2.12 — pencarian seluruh riwayat (butuh Edge Function v1.13).
            Kotak kosong = perilaku lama, yaitu 7 hari terakhir. Kotak ini
            disembunyikan JS bila server masih versi lama, supaya tidak
@@ -1244,6 +1573,16 @@ body.dark-mode .nb.on { color: #FFFFFF; }
       <div class="report-filter">
         <div class="report-mode-tab on" data-mode="month" id="modeMonth">By month</div>
         <div class="report-mode-tab" data-mode="range" id="modeRange">Date range</div>
+        <!-- v2.19 — mode ke-3: rekap untuk Operation Weekly Meeting
+             tiap Selasa. Rentangnya DIHITUNG OTOMATIS (Rabu s/d Selasa)
+             supaya tidak perlu memilih tanggal manual tiap minggu. -->
+        <div class="report-mode-tab" data-mode="ops" id="modeOps">Ops week</div>
+      </div>
+
+      <div class="ops-week-nav hidden" id="opsWeekRow">
+        <button class="dash-month-btn" id="opsPrevWeek" type="button" aria-label="Previous week">&#8249;</button>
+        <div class="ops-week-label" id="opsWeekLabel">—</div>
+        <button class="dash-month-btn" id="opsNextWeek" type="button" aria-label="Next week">&#8250;</button>
       </div>
 
       <div class="report-month-row" id="reportMonthRow">
@@ -1277,6 +1616,13 @@ body.dark-mode .nb.on { color: #FFFFFF; }
         <button class="copy-btn" id="reportCopyBtn" type="button">Copy for Google Sheets</button>
       </div>
 
+      <!-- v2.19 — hanya muncul di mode Ops week. Teks polos siap tempel
+           ke grup WhatsApp; itu jalur tercepat di HP, jauh lebih mungkin
+           dibaca orang daripada lampiran file. -->
+      <div class="report-btn-row hidden" id="opsCopyRow" style="margin-top:var(--sp-2)">
+        <button class="copy-btn" id="opsCopyBtn" type="button">Copy recap for WhatsApp</button>
+      </div>
+
       <div id="reportSummary"></div>
       <div id="reportList"></div>
 
@@ -1289,7 +1635,16 @@ body.dark-mode .nb.on { color: #FFFFFF; }
     </div>
 
     <div class="scroll-inner hidden" id="viewDash">
-      <div class="card-title">Dashboard — <span id="dashMonthLabel">this month</span></div>
+      <!-- v2.17 — Dashboard sebelumnya TERKUNCI ke bulan berjalan
+           (currentMonthRange memakai new Date() tanpa pilihan apa pun).
+           Akibatnya setiap tanggal 1, Dashboard kosong melompong dan
+           tidak ada cara melihat bulan yang baru saja selesai — justru
+           saat rekap bulanan paling dibutuhkan. -->
+      <div class="dash-month-nav">
+        <button class="dash-month-btn" id="dashPrevMonth" type="button" aria-label="Previous month">&#8249;</button>
+        <div class="dash-month-title">Dashboard — <span id="dashMonthLabel">this month</span></div>
+        <button class="dash-month-btn" id="dashNextMonth" type="button" aria-label="Next month">&#8250;</button>
+      </div>
 
       <!-- v2.11 — dashKpi sekarang wrapper polos (bukan .summary-grid
            langsung); JS renderDashboard() yang membangun grid + toggle
@@ -1390,7 +1745,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.16', // WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.19', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -1516,9 +1871,12 @@ function switchView(view) {
   $('scroll').scrollTop = 0;
   // v2.12 — kalau kotak pencarian sedang berisi, jangan timpa hasilnya
   // dengan daftar 7 hari setiap kali pengguna pindah tab lalu kembali.
+  // v2.17 — mode "open" menang atas pencarian: mode itu baru saja
+  // dipilih pengguna lewat ketukan kartu, jadi itu niat terbarunya.
   if (view === 'riwayat') {
     const sq = $('riwayatSearch') ? $('riwayatSearch').value.trim() : '';
-    if (sq.length >= 2) runRiwayatSearch(sq);
+    if (riwayatMode === 'open') loadRiwayat();
+    else if (sq.length >= 2) runRiwayatSearch(sq);
     else loadRiwayat();
   }
   if (view === 'laporan') initReportDefaults();
@@ -2259,15 +2617,11 @@ const RIWAYAT_STATUS_LABEL = Object.fromEntries(STATUS_TYPES.map(s => [s.db, s.i
 // teks yang ditampilkan ke mata, lihat data-p di HTML untuk nilai asli.
 const PRIORITY_SHORT_LABEL = { Low: 'Low', Medium: 'Med', High: 'High', Critical: 'Ctrl' };
 
-function chipClassForPriority(p) {
-  if (p === 'Critical') return 'riwayat-chip critical';
-  if (p === 'High') return 'riwayat-chip high';
-  return 'riwayat-chip';
-}
-function chipClassForStatus(s) {
-  if (s === 'Done') return 'riwayat-chip done';
-  return 'riwayat-chip';
-}
+// v2.18 — chipClassForPriority & chipClassForStatus dihapus.
+// Keduanya mengembalikan kelas .riwayat-chip yang sudah tidak ada,
+// dan tidak pernah dipanggil dari mana pun sejak History berpindah
+// ke tabel worksheet. Penggantinya wsChipClassPriority dan
+// wsChipClassStatus tepat di bawah ini.
 
 // ── TAMPILAN WORKSHEET (tabel), dipakai bersama oleh Riwayat & Laporan ──
 function wsChipClassPriority(p) {
@@ -2354,12 +2708,37 @@ function renderWorksheetTable(containerEl, items, onRowClick) {
 
 let riwayatCache = [];
 
+// v2.17 — mode tampilan History. '' = 7 hari terakhir (perilaku lama),
+// 'open' = semua task yang masih terbuka tanpa batas tanggal. Mode
+// "open" dinyalakan dengan mengetuk kartu Open / Oldest open di
+// Dashboard.
+let riwayatMode = '';
+
+function renderRiwayatModeBar(jumlah) {
+  const bar = $('riwayatModeBar');
+  if (!bar) return;
+  const aktif = riwayatMode === 'open';
+  bar.classList.toggle('hidden', !aktif);
+  if (aktif) {
+    $('riwayatModeText').textContent = jumlah + (jumlah === 1 ? ' open task' : ' open tasks') + ' · oldest first';
+  }
+}
+
 async function loadRiwayat() {
   const box = $('riwayatList');
+  const modeOpen = riwayatMode === 'open';
   box.innerHTML = '<div class="riwayat-empty">Loading history…</div>';
 
   try {
-    const r = await callApi({ action: 'get-history', sessionToken: state.token });
+    const r = await callApi({
+      action: 'get-history',
+      sessionToken: state.token,
+      // Field ini diabaikan Edge Function < v1.16, yang selalu
+      // mengembalikan 7 hari terakhir. Jadi kalau server masih lama,
+      // ketukan kartu tetap membuka History — hanya isinya belum
+      // tersaring. Tidak error, hanya belum membaik (SOP 8.8).
+      mode: modeOpen ? 'open' : 'recent',
+    });
     if (!r.ok) {
       box.innerHTML = '<div class="riwayat-empty">' + (r.error || 'Failed to load history.') + '</div>';
       return;
@@ -2368,8 +2747,24 @@ async function loadRiwayat() {
     const items = r.items || [];
     riwayatCache = items;
 
+    // Server v1.16 menjawab mode yang benar-benar dipakainya. Kalau
+    // server lama tidak mengirim field itu, penanda mode tidak
+    // ditampilkan supaya tidak menjanjikan penyaringan yang tidak terjadi.
+    const modeDilayani = r.mode === 'open';
+    if (modeOpen && !modeDilayani) riwayatMode = '';
+    renderRiwayatModeBar(items.length);
+
+    const judul = $('riwayatTitle');
+    if (judul) {
+      judul.textContent = (riwayatMode === 'open')
+        ? 'History — open tasks'
+        : 'History — last 7 days';
+    }
+
     if (items.length === 0) {
-      box.innerHTML = '<div class="riwayat-empty">No activity in the last 7 days.</div>';
+      box.innerHTML = (riwayatMode === 'open')
+        ? '<div class="riwayat-empty">Nothing is open. All caught up.</div>'
+        : '<div class="riwayat-empty">No activity in the last 7 days.</div>';
       return;
     }
 
@@ -2526,7 +2921,248 @@ function openRiwayatDetail(idx) {
 /* ══════════════════════════════════════════════
    LAPORAN
 ══════════════════════════════════════════════ */
-let reportMode = 'month'; // 'month' | 'range'
+let reportMode = 'month'; // 'month' | 'range' | 'ops'
+
+/* ══════════════════════════════════════════════
+   v2.19 — REKAP OPS MEETING
+
+   Operation Weekly Meeting selalu hari SELASA. Rekapnya menutup
+   rentang RABU s/d SELASA — 7 hari, tanpa tumpang tindih.
+
+   Kenapa Rabu, bukan Selasa-ke-Selasa (8 hari): kalau Selasa lalu
+   ikut, aktivitas hari itu akan muncul DUA KALI — di rekap minggu
+   lalu dan di rekap minggu ini. Yang terjadi pada hari meeting lalu
+   sudah dibahas saat meeting itu.
+   ══════════════════════════════════════════════ */
+
+// Selasa = 2 pada getDay() (0 = Minggu).
+const OPS_MEETING_DOW = 2;
+
+// 0 = periode yang sedang berjalan / meeting terdekat, -1 = minggu lalu.
+let opsWeekOffset = 0;
+
+function isoDari(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0')
+       + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+// Rentang Rabu..Selasa untuk meeting TERDEKAT.
+//
+// Patokannya SELASA BERIKUTNYA, termasuk hari ini kalau hari ini Selasa.
+// Bukan Selasa terakhir yang sudah lewat — karena rekap ini disiapkan
+// SEBELUM meeting (Senin malam atau Selasa pagi). Kalau memakai Selasa
+// terakhir, membukanya pada hari Senin akan menampilkan periode yang
+// rekapnya sudah dipakai minggu sebelumnya.
+function opsWeekRange(offset) {
+  const hariIni = new Date(todayISO() + 'T00:00:00');
+  const maju = (OPS_MEETING_DOW - hariIni.getDay() + 7) % 7; // 0 kalau hari ini Selasa
+
+  const end = new Date(hariIni);
+  end.setDate(end.getDate() + maju + (offset || 0) * 7);
+
+  const start = new Date(end);
+  start.setDate(start.getDate() - 6); // Rabu = Selasa - 6 hari
+
+  return { start: isoDari(start), end: isoDari(end) };
+}
+
+// Task yang MASUK rekap. Sesuai permintaan: hanya task, tanpa hari
+// libur dan tanpa yang dibatalkan.
+//   - baris tanpa status = entri hari libur -> DIBUANG
+//   - status 'Cancelled'                     -> DIBUANG
+function opsFilterTasks(items) {
+  return (items || []).filter(it => it.status && it.status !== 'Cancelled');
+}
+
+// Tiga kelompok, dan sengaja TIDAK saling tumpang tindih.
+//
+// 'Waiting Vendor' dipisah dari 'in progress' meskipun secara status
+// keduanya sama-sama belum selesai. Alasannya untuk ruang meeting:
+// yang satu "sedang saya kerjakan", yang satu "nunggu orang lain" —
+// dan yang kedua itu yang perlu ditagih, bukan dijelaskan.
+function opsGroupTasks(items) {
+  const dipakai = opsFilterTasks(items);
+  const urut = (a, b) => String(a.task_date).localeCompare(String(b.task_date));
+  return {
+    done:   dipakai.filter(it => it.status === 'Done').sort(urut),
+    open:   dipakai.filter(it => it.status === 'On Progress' || it.status === 'Pending').sort(urut),
+    vendor: dipakai.filter(it => it.status === 'Waiting Vendor').sort(urut),
+    total:  dipakai.length,
+  };
+}
+
+// Tanggal ringkas untuk baris meta, mis. "Wed 26 Aug".
+function opsTanggalPendek(iso) {
+  if (!iso) return '';
+  return dayNameEN(iso).slice(0, 3) + ' ' + formatTanggalPendek(iso).replace(/ \d{4}$/, '');
+}
+
+// Umur task dalam hari sampai hari ini. Dipakai untuk menunjukkan
+// mana yang sudah lama menggantung.
+function opsUmurHari(iso) {
+  const d1 = new Date(iso + 'T00:00:00');
+  const d2 = new Date(todayISO() + 'T00:00:00');
+  return Math.round((d2 - d1) / 86400000);
+}
+
+// Baris meta vendor: nama + tanggal janji + penanda terlambat.
+// vendor_overdue dihitung database (v1.6): tanggal follow-up sudah
+// lewat DAN status belum Done/Cancelled.
+function opsMetaVendor(it) {
+  const bagian = [];
+  if (it.vendor_name) bagian.push('Vendor: ' + it.vendor_name);
+  if (it.vendor_followup_date) {
+    const tgl = 'Follow up ' + opsTanggalPendek(it.vendor_followup_date);
+    if (it.vendor_overdue) {
+      const telat = opsUmurHari(it.vendor_followup_date);
+      bagian.push(tgl + ' — LATE ' + telat + 'd');
+    } else {
+      bagian.push(tgl);
+    }
+  } else if (it.vendor_name) {
+    bagian.push('no follow-up date yet');
+  }
+  return bagian;
+}
+
+/* ── Teks polos untuk WhatsApp ─────────────────────────────
+   Sengaja TANPA markdown/tabel: WhatsApp tidak merender tabel, dan
+   tanda bintang untuk tebal justru berisik kalau dibaca di tempat
+   yang tidak mendukungnya. Cukup baris, indentasi, dan angka. */
+function opsRecapText(range, items) {
+  const g = opsGroupTasks(items);
+  const L = [];
+  const NL2 = String.fromCharCode(10);
+
+  L.push('OPS MEETING RECAP');
+  L.push(dayNameEN(range.start) + ', ' + dateLongEN(range.start)
+        + '  ->  ' + dayNameEN(range.end) + ', ' + dateLongEN(range.end));
+  // Kalau periodenya belum tuntas, katakan — supaya angkanya tidak
+  // dibaca sebagai hasil akhir.
+  if (range.end > todayISO()) {
+    L.push('(period still in progress — up to ' + dateLongEN(todayISO()) + ')');
+  }
+  L.push('');
+  L.push('Tasks: ' + g.total + '  |  Done: ' + g.done.length
+        + '  |  In progress: ' + g.open.length
+        + '  |  Waiting vendor: ' + g.vendor.length);
+
+  const blok = (judul, daftar, denganVendor) => {
+    L.push('');
+    L.push(judul + ' (' + daftar.length + ')');
+    if (daftar.length === 0) {
+      L.push('  -');
+      return;
+    }
+    daftar.forEach(it => {
+      L.push('  - ' + (it.task || '(no description)'));
+      const meta = [opsTanggalPendek(it.task_date)];
+      if (it.asset_code) meta.push(it.asset_code);
+      if (it.priority) meta.push(it.priority);
+      if (denganVendor) opsMetaVendor(it).forEach(m => meta.push(m));
+      else if (it.status === 'Pending') meta.push('Pending');
+      L.push('      ' + meta.join(' · '));
+    });
+  };
+
+  blok('DONE', g.done, false);
+  blok('IN PROGRESS', g.open, false);
+  blok('WAITING VENDOR', g.vendor, true);
+
+  const telat = g.vendor.filter(it => it.vendor_overdue).length;
+  if (telat > 0) {
+    L.push('');
+    L.push('!! ' + telat + ' vendor follow-up' + (telat !== 1 ? 's' : '') + ' past due — needs chasing.');
+  }
+
+  return L.join(NL2);
+}
+
+/* ── Tampilan di layar ─────────────────────────────────────
+   Dibuat terbaca langsung saat meeting, supaya tidak harus disalin
+   dulu ke tempat lain hanya untuk dibaca. */
+function renderOpsRecap(range, items) {
+  const g = opsGroupTasks(items);
+
+  const blok = (kelas, judul, daftar, denganVendor) => {
+    let h = '<div class="ops-group ' + kelas + '">'
+          + '<div class="ops-group-head">' + judul
+          + '<span class="ops-group-count">' + daftar.length + '</span></div>';
+    if (daftar.length === 0) {
+      return h + '<div class="ops-empty">Nothing in this group.</div></div>';
+    }
+    daftar.forEach(it => {
+      const meta = [opsTanggalPendek(it.task_date)];
+      if (it.asset_code) meta.push(escapeHtml(it.asset_code));
+      if (it.priority) meta.push(escapeHtml(it.priority));
+      if (denganVendor) opsMetaVendor(it).forEach(m => meta.push(escapeHtml(m)));
+      else if (it.status === 'Pending') meta.push('Pending');
+
+      const telat = denganVendor && it.vendor_overdue;
+      h += '<div class="ops-item' + (telat ? ' late' : '') + '">'
+         + '<div class="ops-item-task">' + escapeHtml(it.task || '(no description)') + '</div>'
+         + '<div class="ops-item-meta">'
+         +   meta.map(m => '<span' + (telat && /LATE/.test(m) ? ' class="ops-late"' : '') + '>' + m + '</span>').join('')
+         + '</div></div>';
+    });
+    return h + '</div>';
+  };
+
+  let html = '';
+  html += blok('done', 'Done', g.done, false);
+  html += blok('open', 'In progress', g.open, false);
+  html += blok('vendor', 'Waiting vendor', g.vendor, true);
+
+  // Catatan penutup: menjelaskan apa yang SENGAJA tidak masuk, supaya
+  // selisih dengan jumlah baris di tab lain tidak bikin curiga ada
+  // data hilang.
+  html += '<div class="ops-note">Only tasks are included. Off days and cancelled tasks are left out on purpose.'
+        + (range.end > todayISO() ? '<br>This period is still in progress — it closes on ' + dateLongEN(range.end) + '.' : '')
+        + '</div>';
+
+  $('reportList').innerHTML = html;
+}
+
+// Label baris navigasi minggu.
+function renderOpsWeekLabel() {
+  const r = opsWeekRange(opsWeekOffset);
+  const el = $('opsWeekLabel');
+  if (!el) return;
+  el.innerHTML = escapeHtml(opsTanggalPendek(r.start) + '  →  ' + opsTanggalPendek(r.end))
+    + '<span class="ops-week-sub">' + escapeHtml(dateLongEN(r.start) + ' – ' + dateLongEN(r.end))
+    + (r.end > todayISO() ? ' · in progress' : '') + '</span>';
+  // Tidak pernah maju melewati meeting terdekat: datanya belum ada.
+  $('opsNextWeek').disabled = opsWeekOffset >= 0;
+}
+
+async function copyOpsRecap() {
+  if (!reportCache || !reportCache.items) {
+    toast('Show the recap first before copying.', 'err');
+    return;
+  }
+  const teks = opsRecapText(opsWeekRange(opsWeekOffset), reportCache.items);
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(teks);
+    } else {
+      // Jalur cadangan untuk peramban tanpa navigator.clipboard,
+      // pola yang sama dipakai copyReportForSheets.
+      const ta = document.createElement('textarea');
+      ta.value = teks;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (!ok) throw new Error('Copy was blocked by the browser.');
+    }
+    toast('Recap copied — paste it into WhatsApp', 'good');
+  } catch (e) {
+    toast(e.message || 'Could not copy the recap.', 'err');
+  }
+}
 let reportCache = null;
 
 function initReportDefaults() {
@@ -2550,11 +3186,24 @@ function setReportMode(mode) {
   reportMode = mode;
   $('modeMonth').classList.toggle('on', mode === 'month');
   $('modeRange').classList.toggle('on', mode === 'range');
+  $('modeOps').classList.toggle('on', mode === 'ops');   // v2.19
   $('reportMonthRow').classList.toggle('hidden', mode !== 'month');
   $('reportRangeRow').classList.toggle('hidden', mode !== 'range');
+
+  // v2.19 — baris minggu & tombol salin rekap hanya di mode ops.
+  const ops = mode === 'ops';
+  $('opsWeekRow').classList.toggle('hidden', !ops);
+  $('opsCopyRow').classList.toggle('hidden', !ops);
+  if (ops) renderOpsWeekLabel();
 }
 
 function currentReportRange() {
+  // v2.19 — rentang mode ops DIHITUNG, tidak diambil dari input.
+  // Karena itu tombol Show, Download Excel, Official Report, dan
+  // Copy for Google Sheets otomatis ikut memakai rentang minggu ini
+  // tanpa perlu diubah satu pun.
+  if (reportMode === 'ops') return opsWeekRange(opsWeekOffset);
+
   if (reportMode === 'month') {
     const val = $('reportMonth').value; // "YYYY-MM"
     if (!val) return null;
@@ -2583,10 +3232,22 @@ function currentReportRange() {
 // dobel/rusak.
 let dashCharts = { status: null, tag: null, priority: null, daily: null, workType: null };
 
-function currentMonthRange() {
+// v2.17 — offset bulan Dashboard. 0 = bulan berjalan, -1 = bulan lalu.
+// Tidak pernah positif: melihat bulan yang belum terjadi tidak ada
+// gunanya, dan tombol "next" dinonaktifkan saat offset sudah 0.
+let dashMonthOffset = 0;
+
+// Rentang satu bulan penuh. Argumen offset ditambahkan di v2.17;
+// dipanggil tanpa argumen hasilnya PERSIS sama seperti sebelumnya,
+// jadi pemanggil lama tidak berubah perilakunya.
+function currentMonthRange(offset) {
   const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth() + 1;
+  // Tanggal di-set ke 1 dulu sebelum menggeser bulan. Tanpa itu,
+  // menggeser dari tanggal 31 bisa melompati satu bulan penuh
+  // (31 Maret dikurangi 1 bulan = 3 Maret, bukan Februari).
+  const dasar = new Date(now.getFullYear(), now.getMonth() + (offset || 0), 1);
+  const y = dasar.getFullYear();
+  const m = dasar.getMonth() + 1;
   const start = y + '-' + String(m).padStart(2, '0') + '-01';
   const lastDay = new Date(y, m, 0).getDate();
   const end = y + '-' + String(m).padStart(2, '0') + '-' + String(lastDay).padStart(2, '0');
@@ -2594,7 +3255,9 @@ function currentMonthRange() {
 }
 
 async function loadDashboard() {
-  const range = currentMonthRange();
+  const range = currentMonthRange(dashMonthOffset);
+  // Tombol "bulan berikutnya" mati saat sudah di bulan berjalan.
+  $('dashNextMonth').disabled = dashMonthOffset >= 0;
   // v2.11 — MONTH_NAME_ID (Indonesia) diganti pakai MONTH_NAME_EN yang
   // sudah didefinisikan global (lihat formatTanggalPanjang). Sebelumnya
   // dashMonthLabel tetap menampilkan nama bulan Indonesia meskipun label
@@ -2636,14 +3299,28 @@ function computeExtraStats(items, range) {
   const openCount = openItems.length;
 
   // 2) Task tertua belum selesai — task_date paling lama dari openItems
+  //    v2.17 — barisnya ikut disimpan, bukan cuma selisih harinya.
+  //    "10d" saja tidak memberi tahu task MANA yang nyangkut; itu
+  //    memunculkan pertanyaan, bukan jawaban.
   let oldestDays = null;
+  let oldestItem = null;
   if (openItems.length > 0) {
-    const oldestDate = openItems.reduce((min, it) =>
-      it.task_date < min ? it.task_date : min, openItems[0].task_date);
-    const d1 = new Date(oldestDate + 'T00:00:00');
+    oldestItem = openItems.reduce((min, it) =>
+      it.task_date < min.task_date ? it : min, openItems[0]);
+    const d1 = new Date(oldestItem.task_date + 'T00:00:00');
     const d2 = new Date(today + 'T00:00:00');
     oldestDays = Math.round((d2 - d1) / 86400000);
   }
+
+  // 2b) v2.17 — hari libur & follow-up vendor yang sudah lewat.
+  //     Baris tanpa status = entri hari libur (Day Off / Public
+  //     Holiday / Leave). Dipisah karena baris itu TIDAK boleh ikut
+  //     jadi pembagi persentase penyelesaian — lihat renderDashboard.
+  const offDays = items.filter(it => !it.status).length;
+  const workTotal = items.length - offDays;
+  // vendor_overdue dihitung database (v1.6). Kalau server masih lama,
+  // nilainya undefined dan hasilnya 0 — kartunya tidak muncul.
+  const vendorOverdue = items.filter(it => it.vendor_overdue === true).length;
 
   // 3) Hari terisi — hari unik yang punya entry, dibagi hari yang SUDAH
   //    berlalu sejak awal bulan sampai HARI INI (bukan sampai akhir
@@ -2676,7 +3353,11 @@ function computeExtraStats(items, range) {
     }
   }
 
-  return { openCount, oldestDays, filledDays, daysPassed, streak };
+  return {
+    openCount, oldestDays, filledDays, daysPassed, streak,
+    // v2.17
+    oldestItem, offDays, workTotal, vendorOverdue,
+  };
 }
 
 function renderDashboard(s, items, range) {
@@ -2691,8 +3372,24 @@ function renderDashboard(s, items, range) {
   $('dashCharts').classList.remove('hidden');
 
   const doneCount = s.byStatus['Done'] || 0;
-  const donePct = s.total > 0 ? Math.round((doneCount / s.total) * 100) : 0;
   const extra = computeExtraStats(items, range);
+
+  // v2.17 — PEMBAGI PERSENTASE DIPERBAIKI.
+  //
+  // Sebelumnya: donePct = doneCount / s.total, dan s.total adalah
+  // JUMLAH SELURUH BARIS termasuk Day Off / Public Holiday / Leave
+  // yang status-nya kosong. Hari libur ikut menekan angka "% Done".
+  // Contoh nyata dari data pengguna: 13 baris, 2 Done, 4 Open ->
+  // tampil 15%. Terhadap task yang benar-benar punya status hasilnya
+  // 2/6 = 33%. Selisihnya lebih dari dua kali lipat, dan arahnya
+  // selalu merugikan: capaian terlihat lebih rendah dari sebenarnya.
+  //
+  // s.workTotal dikirim Edge Function v1.16+. Kalau server masih lama,
+  // dipakai hitungan lokal dari items — hasilnya sama, hanya dihitung
+  // di HP. Jadi perbaikan ini TIDAK menunggu deploy server.
+  const workTotal = (typeof s.workTotal === 'number') ? s.workTotal : extra.workTotal;
+  const offDays = (typeof s.offDays === 'number') ? s.offDays : extra.offDays;
+  const donePct = workTotal > 0 ? Math.round((doneCount / workTotal) * 100) : 0;
 
   // v2.11 — 6 stat card, 2 kolom x 3 baris (simetris). Default hanya 2
   // baris pertama (4 card) yang tampil; sisanya di balik tombol
@@ -2700,15 +3397,42 @@ function renderDashboard(s, items, range) {
   const filledPct = extra.daysPassed > 0 ? Math.round((extra.filledDays / extra.daysPassed) * 100) : 0;
   const oldestLabel = extra.oldestDays === null ? '—' : (extra.oldestDays === 0 ? 'Today' : extra.oldestDays + 'd');
 
+  // v2.17 — angka Done ditulis sebagai PECAHAN, bukan persen telanjang.
+  // "2/6" tidak bisa menyesatkan: pembaginya terlihat, jadi kalau suatu
+  // saat salah lagi, kesalahannya langsung kelihatan tanpa perlu
+  // membongkar kode.
+  const doneLabel = 'Done · ' + donePct + '%';
+
+  // Nama task tertua. Dipotong supaya kartu tidak melar.
+  const oldestTaskName = extra.oldestItem ? String(extra.oldestItem.task || '').trim() : '';
+  const oldestSub = oldestTaskName
+    ? '<div class="summary-sub">' + escapeHtml(oldestTaskName) + '</div>'
+    : '';
+
   const cardsAlwaysVisible =
-      '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + donePct + '%</div><div class="summary-label">Done</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + extra.openCount + '</div><div class="summary-label">Open</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + oldestLabel + '</div><div class="summary-label">Oldest open</div></div>';
+      '<div class="summary-card"><div class="summary-num">' + workTotal + '</div><div class="summary-label">Work tasks</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + doneCount + '/' + workTotal + '</div><div class="summary-label">' + doneLabel + '</div></div>'
+    // v2.17 — dua kartu berikut BISA DIKETUK: keduanya memunculkan
+    // pertanyaan ("yang mana?"), jadi harus bisa menjawabnya sendiri.
+    + '<div class="summary-card tappable" id="dashCardOpen" role="button" tabindex="0">'
+    +   '<div class="summary-num">' + extra.openCount + '</div><div class="summary-label">Open</div></div>'
+    + '<div class="summary-card tappable" id="dashCardOldest" role="button" tabindex="0">'
+    +   '<div class="summary-num">' + oldestLabel + '</div><div class="summary-label">Oldest open</div>' + oldestSub + '</div>';
+
+  // Kartu vendor telat hanya muncul kalau memang ADA yang telat.
+  // Kartu peringatan yang selalu menampilkan 0 lama-lama diabaikan,
+  // dan saat benar-benar berisi pun ikut tidak terlihat.
+  const kartuVendor = extra.vendorOverdue > 0
+    ? '<div class="summary-card alert"><div class="summary-num">' + extra.vendorOverdue + '</div><div class="summary-label">Vendor overdue</div></div>'
+    : '';
 
   const cardsCollapsible =
       '<div class="summary-card"><div class="summary-num">' + extra.filledDays + '/' + extra.daysPassed + '</div><div class="summary-label">Days filled (' + filledPct + '%)</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + extra.streak + '</div><div class="summary-label">Day' + (extra.streak !== 1 ? 's' : '') + ' streak</div></div>';
+    + '<div class="summary-card"><div class="summary-num">' + extra.streak + '</div><div class="summary-label">Day' + (extra.streak !== 1 ? 's' : '') + ' streak</div></div>'
+    // v2.17 — hari libur ditampilkan sebagai angka tersendiri, bukan
+    // dilebur ke "Total task" seperti dulu.
+    + '<div class="summary-card"><div class="summary-num">' + offDays + '</div><div class="summary-label">Off days</div></div>'
+    + kartuVendor;
 
   $('dashKpi').innerHTML =
     '<div class="summary-grid">' + cardsAlwaysVisible + '</div>'
@@ -2729,6 +3453,25 @@ function renderDashboard(s, items, range) {
     // terbuka = isHidden. Ditulis eksplisit supaya tidak salah baca.
     kpiToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
   };
+  // v2.17 — kartu Open & Oldest open membuka History dalam mode
+  // "open tasks". Keduanya membuka daftar yang SAMA: yang tertua
+  // otomatis berada di baris pertama karena server mengurutkan dari
+  // yang paling lama. Jadi tidak perlu dua alur berbeda.
+  const bukaOpenTasks = () => {
+    riwayatMode = 'open';
+    const cari = $('riwayatSearch');
+    if (cari) cari.value = ''; // pencarian lama tidak boleh ikut terbawa
+    switchView('riwayat');
+  };
+  ['dashCardOpen', 'dashCardOldest'].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('click', bukaOpenTasks);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bukaOpenTasks(); }
+    });
+  });
+
   kpiToggle.addEventListener('click', flipKpi);
   kpiToggle.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipKpi(); }
@@ -2813,18 +3556,35 @@ function renderDashPriorityChart(byPriority) {
 // tidak punya breakdown per tanggal. Sumbu-X mencakup SETIAP tanggal
 // dalam rentang (termasuk yang 0 entry), supaya hari yang bolong
 // terlihat jelas sebagai jarak kosong, bukan cuma hilang dari chart.
+// v2.17 — batang dipisah jadi dua tumpukan: kerja dan libur.
+//
+// Sebelumnya semua entri dihitung sama, sehingga hari libur digambar
+// sebagai batang setinggi 1 — persis sama dengan hari kerja yang
+// menyelesaikan satu task. Secara visual, libur terlihat seperti
+// produktivitas. Sekarang keduanya masih tampil (supaya terlihat
+// bahwa hari itu tercatat, bukan bolong), tapi warnanya beda dan
+// tingginya menumpuk, bukan tercampur.
 function renderDashDailyChart(items, range) {
-  const counts = {};
-  items.forEach(it => { counts[it.task_date] = (counts[it.task_date] || 0) + 1; });
+  const kerja = {};
+  const libur = {};
+  items.forEach(it => {
+    // Status kosong = entri hari libur. Pembeda yang sama dipakai di
+    // computeExtraStats — sengaja konsisten supaya angka kartu dan
+    // tinggi batang tidak pernah bercerita hal yang berbeda.
+    const ember = it.status ? kerja : libur;
+    ember[it.task_date] = (ember[it.task_date] || 0) + 1;
+  });
 
   const labels = [];
-  const data = [];
+  const dataKerja = [];
+  const dataLibur = [];
   const cursor = new Date(range.start + 'T00:00:00');
   const end = new Date(range.end + 'T00:00:00');
   while (cursor <= end) {
     const iso = cursor.toLocaleDateString('en-CA');
     labels.push(String(cursor.getDate())); // cukup tanggalnya saja (1-31), bulan sudah di judul kartu
-    data.push(counts[iso] || 0);
+    dataKerja.push(kerja[iso] || 0);
+    dataLibur.push(libur[iso] || 0);
     cursor.setDate(cursor.getDate() + 1);
   }
 
@@ -2833,13 +3593,21 @@ function renderDashDailyChart(items, range) {
 
   dashCharts.daily = new Chart($('dashDailyChart'), {
     type: 'bar',
-    data: { labels, datasets: [{ data, backgroundColor: '#0B1B2E', borderRadius: 3 }] },
+    data: {
+      labels,
+      datasets: [
+        { label: 'Work', data: dataKerja, backgroundColor: '#0B1B2E', borderRadius: 3 },
+        { label: 'Off',  data: dataLibur, backgroundColor: '#C9A84C', borderRadius: 3 },
+      ],
+    },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      // Legend DINYALAKAN di sini — begitu ada dua warna, tanpa
+      // keterangan warnanya cuma jadi tebakan.
+      plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
       scales: {
-        y: { ticks: { precision: 0 } },
-        x: { ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
+        y: { stacked: true, ticks: { precision: 0 } },
+        x: { stacked: true, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
       },
     },
   });
@@ -2887,7 +3655,9 @@ async function loadReport() {
 
     reportCache = r;
     renderReportSummary(r.summary);
-    renderReportList(r.items);
+    // v2.19 — di mode ops, daftar mentah diganti rekap berkelompok.
+    if (reportMode === 'ops') renderOpsRecap(range, r.items);
+    else renderReportList(r.items);
 
   } catch (e) {
     $('reportSummary').innerHTML = '<div class="riwayat-empty">' + (e.message || 'Failed to load report.') + '</div>';
@@ -2898,14 +3668,41 @@ function renderReportSummary(s) {
   const doneCount = s.byStatus['Done'] || 0;
   const criticalCount = s.byPriority['Critical'] || 0;
 
+  // v2.17 — mengikuti perbaikan yang sama seperti di Dashboard.
+  // Di sini tidak ada persentase, tapi "Total task" bersebelahan
+  // dengan "Done" — pembaca otomatis membagi keduanya di kepala.
+  // Kalau pembilangnya task dan pembaginya termasuk hari libur,
+  // kesan yang terbentuk tetap salah meski tidak ada tanda persen.
+  // Laporan inilah yang paling mungkin sampai ke manajemen.
+  //
+  // s.workTotal baru ada di Edge Function v1.16+. Kalau server masih
+  // lama, label lama dipakai apa adanya — lebih baik menampilkan
+  // istilah lama daripada memberi nama baru pada angka yang belum
+  // berubah artinya.
+  const punyaWorkTotal = typeof s.workTotal === 'number';
+  const totalNum = punyaWorkTotal ? s.workTotal : s.total;
+  const totalLabel = punyaWorkTotal ? 'Work tasks' : 'Total task';
+  const donePct = totalNum > 0 ? Math.round((doneCount / totalNum) * 100) : 0;
+  const doneLabel = punyaWorkTotal ? ('Done · ' + donePct + '%') : 'Done';
+  const doneNum = punyaWorkTotal ? (doneCount + '/' + totalNum) : String(doneCount);
+
   let html = '<div class="summary-grid">'
-    + '<div class="summary-card"><div class="summary-num">' + s.total + '</div><div class="summary-label">Total task</div></div>'
-    + '<div class="summary-card"><div class="summary-num">' + doneCount + '</div><div class="summary-label">Done</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + totalNum + '</div><div class="summary-label">' + totalLabel + '</div></div>'
+    + '<div class="summary-card"><div class="summary-num">' + doneNum + '</div><div class="summary-label">' + doneLabel + '</div></div>'
     + '<div class="summary-card"><div class="summary-num">' + criticalCount + '</div><div class="summary-label">Critical</div></div>'
     + '<div class="summary-card"><div class="summary-num">' + (s.topTag ? s.topTag.count : 0) + '</div><div class="summary-label">' + (s.topTag ? s.topTag.tag : 'Top tag') + '</div></div>';
 
+  // Pesan "kosong" tetap memakai s.total: kalau rentangnya hanya
+  // berisi hari libur, laporannya memang TIDAK kosong — ada isinya,
+  // hanya bukan task. Memakai workTotal di sini akan menyembunyikan
+  // baris libur yang sebenarnya ada.
   if (s.total === 0) {
     html += '<div class="summary-card summary-full"><div class="summary-label">No activity in this range</div></div>';
+  } else if (punyaWorkTotal && s.offDays > 0) {
+    // v2.17 — hari libur disebut terpisah supaya selisih antara jumlah
+    // baris di tabel dan angka "Work tasks" punya penjelasan yang
+    // terlihat, bukan bikin pembaca curiga ada data hilang.
+    html += '<div class="summary-card summary-full"><div class="summary-label">+ ' + s.offDays + ' off day' + (s.offDays !== 1 ? 's' : '') + ' in this range (not counted as tasks)</div></div>';
   }
   html += '</div>';
   $('reportSummary').innerHTML = html;
@@ -4034,6 +4831,14 @@ async function runRiwayatSearch(q) {
   const box = $('riwayatList');
   const title = $('riwayatTitle');
 
+  // v2.17 — mengetik di kotak cari berarti pengguna sudah beralih dari
+  // daftar "open tasks". Modenya dimatikan supaya penanda kuning tidak
+  // tertinggal di atas hasil pencarian yang isinya sudah lain.
+  if (riwayatMode === 'open') {
+    riwayatMode = '';
+    renderRiwayatModeBar(0);
+  }
+
   const query = String(q || '').trim();
   if (query.length < 2) {
     // Kotak dikosongkan -> kembali ke perilaku lama (7 hari terakhir).
@@ -4146,12 +4951,48 @@ function wireEvents() {
   // Laporan
   $('modeMonth').addEventListener('click', () => setReportMode('month'));
   $('modeRange').addEventListener('click', () => setReportMode('range'));
+  // v2.19 — mode Ops week: langsung dimuat begitu dipilih, karena
+  // rentangnya sudah pasti (tidak ada yang perlu diisi pengguna).
+  $('modeOps').addEventListener('click', () => {
+    setReportMode('ops');
+    loadReport();
+  });
+  $('opsPrevWeek').addEventListener('click', () => {
+    opsWeekOffset--;
+    renderOpsWeekLabel();
+    loadReport();
+  });
+  $('opsNextWeek').addEventListener('click', () => {
+    if (opsWeekOffset >= 0) return;
+    opsWeekOffset++;
+    renderOpsWeekLabel();
+    loadReport();
+  });
+  $('opsCopyBtn').addEventListener('click', copyOpsRecap);
   $('reportStart').addEventListener('change', e => { if (e.target.value) $('reportStartText').textContent = formatTanggalPendek(e.target.value); });
   $('reportEnd').addEventListener('change', e => { if (e.target.value) $('reportEndText').textContent = formatTanggalPendek(e.target.value); });
   $('reportLoadBtn').addEventListener('click', loadReport);
   $('reportExportBtn').addEventListener('click', exportReportToExcel);
   $('reportOfficialBtn').addEventListener('click', exportReportOfficial);
   $('reportCopyBtn').addEventListener('click', copyReportForSheets); // v2.14
+
+  // ── v2.17 ──────────────────────────────────────────────
+  // Navigasi bulan Dashboard.
+  $('dashPrevMonth').addEventListener('click', () => {
+    dashMonthOffset--;
+    loadDashboard();
+  });
+  $('dashNextMonth').addEventListener('click', () => {
+    if (dashMonthOffset >= 0) return; // tidak pernah ke masa depan
+    dashMonthOffset++;
+    loadDashboard();
+  });
+
+  // Kembali dari daftar "open tasks" ke 7 hari terakhir.
+  $('riwayatModeReset').addEventListener('click', () => {
+    riwayatMode = '';
+    loadRiwayat();
+  });
   $('backupBtn').addEventListener('click', exportAllData);
 }
 
