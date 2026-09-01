@@ -3,8 +3,112 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.19
-Generated : 1 September 2026, 15:35:51
+Version   : 2.20
+Generated : 1 September 2026, 20:26:02
+================================================================
+
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
+
+PASANGAN WAJIB
+  Edge Function v1.16 (MFB-IT_v1.16.ts) — BELUM di-deploy.
+  Deploy FUNCTION DULU, baru file ini.
+
+CATATAN VERSI
+  Yang LIVE per 1 Sep 2026: v1.15 + v2.16. Versi 2.17, 2.18, dan 2.19
+  tidak pernah di-deploy — seluruh isinya sudah termasuk di file ini.
+  Rekap Ops Meeting (v2.19) sudah dikonfirmasi berfungsi oleh pengguna.
+
+PERUBAHAN DARI v2.19 — 3 BUG DARI UJI DI HP
+================================================================
+
+BUG 1 — tombol "Save changes" tidak terbaca di dark mode
+
+  Penyebab: tombolnya memaksa warna lewat style inline
+  style="color:var(--navy)". Token --navy SENGAJA tidak ikut berubah
+  di dark mode karena dipakai sebagai LATAR solid (header & nav).
+  Saat dipakai sebagai TEKS di dark mode, hasilnya gelap di atas
+  gelap: kontras 1,13:1. Praktis tidak terlihat sama sekali.
+
+  Perbaikan: dua token baru dengan nilai BERBEDA PER MODE —
+  --action-text dan --danger-text. Ini bukan pilihan gaya: sudah
+  diuji bahwa TIDAK ADA satu warna hex yang lolos AA di kedua mode,
+  karena latarnya berlawanan (light #F4F6F8 vs dark #1E2530).
+    --action-text  light 16,01:1  ·  dark 12,99:1
+    --danger-text  light  5,02:1  ·  dark  5,36:1
+
+  Warna tombol kini datang dari KELAS (.btn-primary-action), bukan
+  style inline — supaya tidak bisa lagi lolos dari audit kontras.
+
+BUG 1b — 8 pemakaian var(--red) lain yang juga gagal, belum dilaporkan
+
+  Audit menyeluruh SETIAP token teks terhadap SETIAP permukaan di
+  kedua mode menemukan var(--red) gagal AA di dark mode di mana pun
+  ia dipakai sebagai teks: field 2,83:1 · card 3,14:1 · bg 3,56:1 ·
+  di atas tint merah 2,86:1.
+
+  Tombol "Delete this task" masih samar-samar terbaca, jadi
+  kegagalannya tidak pernah dilaporkan — tapi tetap gagal. Ikut
+  diperbaiki: .btn-logout, .ws-chip.critical, .log-badge.danger,
+  .summary-card.alert, .ops-late, .photo-clear, .tpl-chip-del,
+  .mic-btn.rec, dan hint vendor-overdue di sheet.
+  Sekarang NOL pemakaian var(--red) sebagai warna teks/ikon.
+
+  #E8776F dipilih setelah diuji di SELURUH latar gelap yang benar-
+  benar dipakai — field 5,36 · card 5,94 · bg 6,72 · tint 5,40 —
+  bukan hanya di satu tempat lalu diasumsikan aman di tempat lain.
+
+BUG 2 — pilih Status di Riwayat: sheet langsung menutup sendiri
+
+  Ini bukan "gagal simpan". Sheet-nya DITUTUP OLEH KODENYA SENDIRI.
+
+  Penyebab: app hanya punya SATU elemen sheet yang dipakai bersama,
+  dan openOptionSheet SELALU memanggil closeSheet() setelah onPick.
+  Di sheet Riwayat, onPick memanggil openRiwayatDetail() supaya nilai
+  status yang baru terlihat. Urutannya jadi:
+      onPick     -> sheet dibuka ulang berisi detail task
+      closeSheet -> MENUTUP sheet yang baru saja dibuka itu
+  Pengguna memilih status, sheet berkedip, lalu hilang — belum sempat
+  menekan "Save changes".
+
+  Perbaikan: nomor urut sheet (sheetGen) dinaikkan setiap openSheet.
+  openOptionSheet mencatat nomornya SEBELUM onPick; kalau setelah
+  onPick nomornya berubah, berarti onPick sudah membuka sheet baru —
+  jangan ditutup. Kalau tidak berubah (picker di form Input), tutup
+  seperti biasa. Perilaku lama dipertahankan penuh untuk kasus itu.
+  Diuji 4 skenario termasuk picker bersarang 2 tingkat.
+
+BUG 3 — di Riwayat hanya bisa edit 3 field
+
+  Sebelumnya hanya Description, Priority, dan Status. Padahal
+  update-task di server SUDAH menerima taskDate, activityType,
+  workType, dan remark sejak lama — yang belum ada hanya UI-nya.
+
+  Ditambahkan 4 field: Date, Day type, Work type, Remark.
+  Salah tanggal adalah kesalahan input paling umum (lupa ganti
+  tanggal saat mencatat kerjaan kemarin), dan sebelumnya satu-satunya
+  jalan memperbaikinya adalah hapus lalu input ulang dari nol.
+  Salah Day type juga langsung mempengaruhi angka "Work tasks" dan
+  "% Done" di Dashboard serta rekap Ops.
+
+  Tanggal hanya dikirim kalau bentuknya sah (YYYY-MM-DD): input date
+  yang dikosongkan mengembalikan string kosong, dan kolom bertipe
+  date di Postgres menolak itu.
+
+  Foto TETAP tidak bisa diganti dari edit — keputusan desain v1.14:
+  mengganti lampiran bukti setelah tersimpan mengaburkan jejak.
+
+NOL PERUBAHAN SERVER. Ketiga bug murni di sisi HTML.
+
+CATATAN PROSES
+  Bug 1 lolos berkali-kali karena kontras selalu dihitung untuk warna
+  BARU yang ditambahkan, tapi tidak pernah untuk kombinasi LAMA yang
+  sudah ada di file. Sekarang ada alat yang memeriksa setiap token
+  teks x setiap permukaan x kedua mode sekaligus — itulah yang
+  menemukan bug 1b yang belum pernah dilaporkan siapa pun.
+================================================================
+
+================================================================
+CATATAN v2.19 - v2.17 (belum pernah di-deploy) — TETAP BERLAKU
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
@@ -292,6 +396,33 @@ F. DEGRADASI AMAN (SOP 8.8)
   --field:   #F4F6F8;
   --red:     #C0392B;
   --amber:   #B7791F;
+
+  /* v2.20 — DUA TOKEN BARU, satu nilai per mode.
+
+     Kenapa perlu token, bukan satu warna hex: tidak ADA satu warna
+     yang lolos AA di kedua mode sekaligus, karena latarnya berlawanan
+     (light #F4F6F8 vs dark #1E2530). Sudah diuji: #C0392B dapat
+     5,02:1 di light tapi cuma 2,83:1 di dark; #E8776F sebaliknya.
+     Jadi satu-satunya jalan yang benar adalah nilai per mode.
+
+     --action-text : teks tombol aksi utama di atas permukaan card/field.
+       Sebelumnya tombol "Save changes" memaksa var(--navy) lewat style
+       inline. --navy SENGAJA tidak ikut dark mode (dipakai sebagai
+       LATAR solid header & nav), jadi saat dipakai sebagai TEKS di
+       dark mode hasilnya gelap-di-atas-gelap: 1,13:1. Praktis tidak
+       terlihat sama sekali.
+       light 16,01:1  ·  dark 12,99:1
+
+     --danger-text : teks aksi merusak (hapus). --red #C0392B lolos di
+       light (5,02:1) tapi GAGAL di dark (2,83:1) — tombol "Delete this
+       task" masih samar-samar terbaca sehingga kegagalannya tidak
+       pernah dilaporkan, tapi tetap gagal.
+       light 5,02:1  ·  dark 5,36:1
+       #E8776F diuji di SELURUH latar dark yang benar-benar dipakai:
+       field 5,36 · card 5,94 · bg 6,72 · tint merah 14% 5,40 —
+       lolos semuanya, bukan hanya di satu tempat. */
+  --action-text: #0B1B2E;
+  --danger-text: #C0392B;
   --heading: #0B1B2E;
   --nav-h:   64px;
   --app-w:   520px;
@@ -336,6 +467,12 @@ body.dark-mode {
      latar gelap tersebut. */
   --ai-accent-text: #E6C878;
   --ai-accent-text-soft: #DDBE72;
+
+  /* v2.20 — lihat penjelasan di :root. Nilai dark dipilih supaya
+     lolos AA di SEMUA permukaan gelap yang benar-benar dipakai,
+     bukan hanya di satu. */
+  --action-text: #E8ECF1;
+  --danger-text: #E8776F;
 }
 /* Transisi halus saat toggle, biar tidak "kedip" mendadak */
 body, .header, .nav, .toast { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
@@ -559,12 +696,16 @@ body.dark-mode .theme-icon-moon { display: block; }
 .btn-logout {
   width: 100%; margin-top: var(--sp-4); padding: var(--sp-4);
   background: var(--field); border: 1px solid var(--line); border-radius: 12px;
-  color: var(--red); font-size: 15px; font-weight: 600; text-align: center; cursor: pointer;
+  color: var(--danger-text); font-size: 15px; font-weight: 600; text-align: center; cursor: pointer;
 }
 .btn-logout:active { background: #EFE3E1; }
 /* v2.10 fix — #EFE3E1 (merah muda pucat) kedip putih di atas latar
    gelap. var(--field) dark mode = #1E2530 (gelap, senada tema). */
 body.dark-mode .btn-logout:active { background: var(--field); }
+/* v2.20 — varian .btn-logout untuk aksi POSITIF (simpan), bukan
+   merusak. Dibuat sebagai kelas, bukan style inline, supaya
+   warnanya ikut token dan tidak bisa lagi lolos dari audit. */
+.btn-logout.btn-primary-action { color: var(--action-text); margin-bottom: 10px; }
 
 .option-list { padding: 0 var(--sp-3) var(--sp-3); }
 .option-item {
@@ -640,7 +781,9 @@ body.dark-mode .btn-logout:active { background: var(--field); }
 .mic-btn:active { background: var(--field); }
 .mic-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 /* Sedang merekam: merah + denyut halus, supaya jelas mikrofon aktif. */
-.mic-btn.rec { color: var(--red); border-color: var(--red); animation: micPulse 1.2s ease-in-out infinite; }
+/* v2.20 — ikon: ambang AA 3:1. var(--red) di dark hanya 3,14:1 (lolos
+   tipis); --danger-text 5,94:1. Disamakan karena tokennya sudah ada. */
+.mic-btn.rec { color: var(--danger-text); border-color: var(--danger-text); animation: micPulse 1.2s ease-in-out infinite; }
 @keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
 
 /* Chip template. Memakai ukuran & radius yang sama dengan .tag-add
@@ -660,7 +803,7 @@ body.dark-mode .btn-logout:active { background: var(--field); }
   color: var(--muted); font-weight: 700; line-height: 1;
   padding: 4px 2px 4px 4px; margin: -4px -2px -4px 0;
 }
-.tpl-chip-del:active { color: var(--red); }
+.tpl-chip-del:active { color: var(--danger-text); }
 
 /* Kotak pencarian riwayat. Memakai kelas .input yang sudah ada untuk
    tampilannya; hanya butuh jarak bawah. */
@@ -719,7 +862,9 @@ body.dark-mode .btn-logout:active { background: var(--field); }
   background: var(--field); color: var(--mid); white-space: nowrap;
 }
 .log-badge.submit { background: rgba(46,125,91,.14);  color: #2E7D5B; }
-.log-badge.danger { background: rgba(192,57,43,.14);  color: var(--red); }
+/* v2.20 — --red diganti --danger-text. Di dark mode --red hanya
+   dapat 2,86:1 di atas tint merah ini; --danger-text dapat 5,40:1. */
+.log-badge.danger { background: rgba(192,57,43,.14);  color: var(--danger-text); }
 .log-badge.edit   { background: rgba(201,168,76,.18); color: #7E6319; }
 body.dark-mode .log-badge.edit { color: var(--ai-accent-text); }
 .log-empty { text-align: center; color: var(--muted); font-size: 13px; padding: var(--sp-7) var(--sp-4); line-height: 1.6; }
@@ -762,7 +907,7 @@ body.dark-mode .ws-chip.asset { background: rgba(255,255,255,.10); color: var(--
 }
 .photo-info { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
 .photo-clear {
-  flex: 0 0 auto; font-size: 12px; font-weight: 600; color: var(--red);
+  flex: 0 0 auto; font-size: 12px; font-weight: 600; color: var(--danger-text);
   cursor: pointer; padding: var(--sp-2); min-height: 40px;
   display: flex; align-items: center; background: none; border: 0;
 }
@@ -813,7 +958,7 @@ body.dark-mode .ws-chip.asset { background: rgba(255,255,255,.10); color: var(--
 /* Kartu peringatan vendor telat. Merah dipakai hanya di sini di
    Dashboard, jadi kemunculannya benar-benar berarti sesuatu. */
 .summary-card.alert { border-color: rgba(192,57,43,.45); background: rgba(192,57,43,.06); }
-.summary-card.alert .summary-num { color: var(--red); }
+.summary-card.alert .summary-num { color: var(--danger-text); }
 
 /* Navigasi bulan Dashboard. */
 .dash-month-nav {
@@ -896,7 +1041,7 @@ body.dark-mode .ops-group.vendor .ops-group-head { color: var(--ai-accent-text);
 }
 /* Penanda follow-up vendor yang sudah lewat tanggal. Merah dipakai
    HANYA di sini dalam rekap, jadi kemunculannya benar-benar berarti. */
-.ops-late { color: var(--red); font-weight: 700; }
+.ops-late { color: var(--danger-text); font-weight: 700; }
 .ops-item.late { border-color: rgba(192,57,43,.45); background: rgba(192,57,43,.05); }
 
 .ops-empty { font-size: 12.5px; color: var(--muted); padding: 2px 0 var(--sp-2); }
@@ -1076,7 +1221,7 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
   display: inline-block; font-size: 10.5px; font-weight: 600; padding: 2px 7px;
   border-radius: 6px; background: var(--field); color: var(--mid); white-space: nowrap;
 }
-.ws-chip.critical { background: rgba(192,57,43,.14); color: var(--red); }
+.ws-chip.critical { background: rgba(192,57,43,.14); color: var(--danger-text); }
 .ws-chip.high     { background: rgba(183,121,31,.14); color: var(--amber); }
 .ws-chip.done     { background: rgba(46,125,91,.14); color: #2E7D5B; }
 /* v2.13 — chip jenis hari (Day Off, Public Holiday, dst) di kolom Task.
@@ -1745,7 +1890,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.19', // WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.20', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -1930,16 +2075,26 @@ function dateLongEN(iso) {
 function trackEdit() { state.editCount++; }
 
 function openSheet(title, bodyHtml) {
+  sheetGen++; // v2.20 — penanda "sheet berganti", lihat openOptionSheet
   $('sheetTitle').textContent = title;
   $('sheetBody').innerHTML = bodyHtml;
   $('sheetBackdrop').classList.add('on');
   $('sheet').classList.add('on');
+  // Sheet di-scroll ke atas setiap kali dibuka. Tanpa ini, membuka
+  // ulang detail task setelah memilih status akan tetap berada di
+  // posisi scroll sebelumnya — terasa seperti isinya berubah sendiri.
+  $('sheet').scrollTop = 0;
 }
 function closeSheet() {
   $('sheetBackdrop').classList.remove('on');
   $('sheet').classList.remove('on');
 }
 $('sheetBackdrop').addEventListener('click', closeSheet);
+
+// Nomor urut sheet. Dinaikkan setiap kali openSheet dipanggil, jadi
+// bisa dipakai untuk tahu apakah sheet yang ada di layar SEKARANG
+// masih sheet yang sama dengan yang tadi.
+let sheetGen = 0;
 
 function openOptionSheet(title, options, currentDb, onPick) {
   const html = '<div class="option-list">' + options.map(o => {
@@ -1951,8 +2106,27 @@ function openOptionSheet(title, options, currentDb, onPick) {
   openSheet(title, html);
   $('sheetBody').querySelectorAll('.option-item').forEach(el => {
     el.addEventListener('click', () => {
+      // v2.20 — BUG FIX PENTING.
+      //
+      // Sebelumnya baris ini SELALU closeSheet() setelah onPick.
+      // Masalahnya: app ini hanya punya SATU elemen sheet yang
+      // dipakai bersama. Kalau onPick membuka sheet lain (misalnya
+      // openRiwayatDetail, supaya nilai status yang baru terlihat),
+      // urutannya jadi:
+      //     onPick   -> sheet dibuka ulang dengan detail task
+      //     closeSheet -> MENUTUP sheet yang baru saja dibuka itu
+      //
+      // Akibatnya pengguna memilih status, sheet berkedip, lalu
+      // tertutup — belum sempat menekan "Save changes". Bukan
+      // "gagal simpan": sheet-nya ditutup oleh kodenya sendiri.
+      //
+      // Perbaikannya: catat nomor sheet SEBELUM onPick. Kalau setelah
+      // onPick nomornya berubah, berarti onPick sudah membuka sheet
+      // baru — jangan ditutup. Kalau tidak berubah (pemakaian normal
+      // di form Input), tutup seperti biasa.
+      const genSebelum = sheetGen;
       onPick(el.dataset.db);
-      closeSheet();
+      if (sheetGen === genSebelum) closeSheet();
     });
   });
 }
@@ -2785,6 +2959,28 @@ function openRiwayatDetail(idx) {
   // awal dan sisa teksnya jadi markup halaman. escapeHtml sudah ada di
   // file ini dan dipakai di tabel — di sini terlewat.
   const html = '<div style="padding:0 20px">'
+
+    // v2.20 — TANGGAL bisa diedit. Server sudah menerima taskDate
+    // untuk update-task sejak lama; yang belum ada cuma UI-nya.
+    // Salah tanggal adalah kesalahan input paling umum (mis. lupa
+    // ganti tanggal saat mencatat kerjaan kemarin), dan sebelumnya
+    // satu-satunya jalan memperbaikinya adalah hapus lalu input ulang.
+    + '<div class="field"><label class="label" for="rwEditDate">Date</label>'
+    +   '<div class="date-row">'
+    +     '<span class="date-text" id="rwEditDateText">' + escapeHtml(formatTanggalPanjang(it.task_date)) + '</span>'
+    +     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.4;flex-shrink:0"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+    +     '<input type="date" id="rwEditDate" value="' + escapeHtml(it.task_date || '') + '">'
+    +   '</div></div>'
+
+    // v2.20 — JENIS HARI bisa diedit (kakak menyebutnya "tingkat").
+    // Berguna saat entri salah ditandai Working Day padahal libur,
+    // atau sebaliknya — dan itu langsung mempengaruhi angka
+    // "Work tasks" & "% Done" di Dashboard maupun rekap Ops.
+    + '<div class="field"><label class="label">Day type</label>'
+    +   '<div class="picker-row" id="rwActivityRow"><span class="picker-value" id="rwActivityVal">'
+    +   escapeHtml(RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || 'Working Day')
+    +   '</span><span class="picker-chevron">&#8250;</span></div></div>'
+
     + '<div class="field"><label class="label">Description</label>'
     + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + escapeHtml(it.task || '') + '</textarea></div>'
 
@@ -2813,7 +3009,7 @@ function openRiwayatDetail(idx) {
           + '<input class="input" id="rwVendorName" value="' + escapeHtml(it.vendor_name || '') + '"></div>'
           + '<div class="field" style="margin-bottom:0"><label class="label">Follow up on</label>'
           + '<input type="date" class="input" id="rwVendorFollowup" value="' + escapeHtml(it.vendor_followup_date || '') + '">'
-          + (it.vendor_overdue ? '<div class="hint" style="color:var(--red)">Follow-up date has passed.</div>' : '')
+          + (it.vendor_overdue ? '<div class="hint" style="color:var(--danger-text)">Follow-up date has passed.</div>' : '')
           + '</div></div>') : '')
 
     // v2.14 — foto bukti. Gambarnya TIDAK langsung dimuat: bucket-nya
@@ -2826,7 +3022,22 @@ function openRiwayatDetail(idx) {
       + '<img class="photo-view hidden" id="rwPhotoImg" alt="Photo evidence">'
       + '</div>') : '')
 
-    + '<button class="btn-logout" id="rwSaveBtn" style="color:var(--navy);margin-bottom:10px">Save changes</button>'
+    // v2.20 — dulu di sini ada style="color:var(--navy)". --navy tidak
+    // ikut berubah di dark mode, jadi tombolnya gelap di atas gelap
+    // (1,13:1 — tidak terlihat). Sekarang memakai token --action-text
+    // yang punya nilai berbeda per mode.
+
+    // v2.20 — WORK TYPE & REMARK. Keduanya sudah diterima server
+    // sejak awal tapi tidak pernah bisa dikoreksi dari Riwayat.
+    + '<div class="field"><label class="label">Work type</label>'
+    +   '<div class="picker-row" id="rwWorkTypeRow"><span class="picker-value" id="rwWorkTypeVal">'
+    +   escapeHtml(it.work_type || 'Task')
+    +   '</span><span class="picker-chevron">&#8250;</span></div></div>'
+
+    + '<div class="field"><label class="label" for="rwEditRemark">Remark <span style="opacity:.6">— optional</span></label>'
+    + '<input class="input" id="rwEditRemark" value="' + escapeHtml(it.remark || '') + '"></div>'
+
+    + '<button class="btn-logout btn-primary-action" id="rwSaveBtn">Save changes</button>'
     + '<button class="btn-logout" id="rwDeleteBtn">Delete this task</button>'
     + '</div>';
 
@@ -2834,6 +3045,47 @@ function openRiwayatDetail(idx) {
 
   let editPriority = it.priority;
   let editStatus = it.status;
+  // v2.20 — jenis hari & jenis pekerjaan diedit lewat variabel lokal,
+  // pola yang sama dengan priority/status.
+  let editActivity = it.activity_type || 'Working Day';
+  let editWorkType = it.work_type || 'Task';
+
+  // Label tanggal ikut berubah saat tanggalnya diganti, supaya yang
+  // terbaca bukan tanggal lama sementara input-nya sudah baru.
+  const elDate = $('rwEditDate');
+  if (elDate) {
+    elDate.addEventListener('change', (e) => {
+      const v = e.target.value;
+      if (v) $('rwEditDateText').textContent = formatTanggalPanjang(v);
+    });
+  }
+
+  // Kedua picker di bawah memakai openOptionSheet, dan sejak v2.20
+  // openOptionSheet TIDAK lagi menutup sheet kalau onPick membuka
+  // sheet baru — jadi detail task tetap terbuka setelah memilih.
+  const rwActivityRow = $('rwActivityRow');
+  if (rwActivityRow) {
+    rwActivityRow.addEventListener('click', () => {
+      openOptionSheet('Day type', ACTIVITY_TYPES, editActivity, (db) => {
+        editActivity = db;
+        openRiwayatDetail(idx);
+        const f = ACTIVITY_TYPES.find(a => a.db === db);
+        setTimeout(() => { const el = $('rwActivityVal'); if (el && f) el.textContent = f.id; }, 0);
+      });
+    });
+  }
+
+  const rwWorkTypeRow = $('rwWorkTypeRow');
+  if (rwWorkTypeRow) {
+    rwWorkTypeRow.addEventListener('click', () => {
+      const opsi = WORK_TYPES.map(w => ({ db: w, id: w }));
+      openOptionSheet('Work type', opsi, editWorkType, (db) => {
+        editWorkType = db;
+        openRiwayatDetail(idx);
+        setTimeout(() => { const el = $('rwWorkTypeVal'); if (el) el.textContent = db; }, 0);
+      });
+    });
+  }
   // v2.14 — nilai aset diedit lewat variabel lokal, sama pola dengan
   // priority/status di atas, bukan langsung ke state global.
   let editAssetId = (typeof it.asset_id === 'number') ? it.asset_id : null;
@@ -2891,10 +3143,24 @@ function openRiwayatDetail(idx) {
       // dibaca dengan penjagaan, bukan diasumsikan ada.
       const vn = $('rwVendorName');
       const vf = $('rwVendorFollowup');
+      // v2.20 — tanggal, jenis hari, jenis pekerjaan, dan remark ikut
+      // dikirim. Server (update-task) sudah menerima keempatnya sejak
+      // lama — yang belum ada hanya UI-nya, jadi NOL perubahan server.
+      const elTgl = $('rwEditDate');
+      const elRemark = $('rwEditRemark');
       const kiriman = {
         action: 'update-task', sessionToken: state.token, id: it.id,
         task: newTask, priority: editPriority, status: editStatus,
+        activityType: editActivity,
+        workType: editWorkType,
       };
+      // Tanggal hanya dikirim kalau bentuknya sah. Input date yang
+      // dikosongkan mengembalikan string kosong, dan kolom bertipe
+      // date di Postgres menolak itu.
+      if (elTgl && /^\d{4}-\d{2}-\d{2}$/.test(elTgl.value)) {
+        kiriman.taskDate = elTgl.value;
+      }
+      if (elRemark) kiriman.remark = elRemark.value.trim();
       if (state.assets.length) kiriman.assetId = editAssetId;
       if (vn) kiriman.vendorName = vn.value.trim();
       if (vf) kiriman.vendorFollowupDate = vf.value;
