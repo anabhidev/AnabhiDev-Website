@@ -3,8 +3,251 @@
 MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
-Version   : 2.20
-Generated : 1 September 2026, 20:26:02
+Version   : 2.23
+Generated : 2 September 2026, 06:34:56
+================================================================
+
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
+
+PASANGAN WAJIB
+  Edge Function v1.17 (MFB-IT_v1.17.ts) — BELUM di-deploy.
+  DEPLOY FUNCTION DULU, baru file ini. Urutan tidak boleh dibalik.
+
+CATATAN VERSI
+  Yang LIVE per 2 Sep 2026: v1.15 + v2.16. Versi 2.17-2.22 tidak
+  pernah di-deploy; seluruh isinya termasuk di file ini.
+
+  Kalau file ini ter-upload lebih dulu sementara function masih
+  versi lama, tab "AI Report" DISEMBUNYIKAN sendiri (gerbang
+  serverAtLeast(1, 17)) — tidak ada tombol yang pasti error. Pola
+  degradasi yang sama dipakai pencarian riwayat sejak v1.13.
+
+PERUBAHAN DARI v2.22 — AI INTELLIGENCE REPORT (UI)
+================================================================
+
+  Seluruhnya ADITIF. Nol fungsi lama yang diubah perilakunya, nol
+  handler lama yang dihapus. Yang disentuh dari kode lama hanya
+  empat titik, semuanya berupa CABANG TAMBAHAN:
+
+    setReportMode()          + cabang 'ai'
+    currentReportRange()     + cabang 'ai'
+    applyServerCapabilities() + gerbang serverAtLeast(1, 17)
+    .report-filter (CSS)     + flex-wrap
+
+  1. Mode ke-4 di tab Report: "AI Report".
+
+     Empat pilihan periode: This week / Last week / This month /
+     Last month. MINGGUAN SENIN–MINGGU.
+
+     Ini SENGAJA berbeda dari rekap Ops Meeting yang Rabu–Selasa.
+     Keduanya hidup berdampingan sebagai dua mode terpisah karena
+     menjawab dua pertanyaan berbeda: yang satu periode kalender,
+     yang satu menutup satu siklus meeting. Menyatukan keduanya
+     akan membuat salah satunya salah. opsWeekRange() TIDAK
+     disentuh sama sekali.
+
+  2. Toggle bahasa EN/ID, default EN. Pilihannya disimpan di
+     localStorage supaya tidak perlu diatur ulang tiap kali.
+
+     Yang berpindah bahasa adalah ISI LAPORAN dan JUDUL BAGIANNYA,
+     bukan antarmuka. Kalau judul bagian tetap Inggris sementara
+     isinya Indonesia, hasil salinan ke WhatsApp jadi campur dua
+     bahasa dalam satu pesan.
+
+  3. Bentuk berbagian, sesuai permintaan ("berbagian aja kak"):
+     headline, Summary, Highlights, Needs attention, Vs previous
+     period, Recommendations.
+
+  4. Angka mentah dari server ditampilkan DI BAWAH narasi.
+
+     Ini bukan hiasan. Seluruh angka dihitung server; AI hanya
+     merangkai kalimat dan prompt-nya melarang menghitung. Dengan
+     angka aslinya ada di layar yang sama, kekeliruan AI menyebut
+     sesuatu bisa langsung terlihat — bukan cuma dipercaya.
+
+  5. Perbandingan dengan periode sebelumnya selalu dikirim, dan
+     panjangnya selalu sama dengan periode sekarang (pekan vs
+     pekan, bulan penuh vs bulan penuh). Kalau periode pembanding
+     kosong, server mengirim null dan AI dilarang mengklaim tren.
+
+  6. "Copy report for WhatsApp" — teks polos, tanpa markdown yang
+     tidak dikenali WhatsApp. Tombolnya BARU MUNCUL setelah ada
+     laporan yang benar-benar tampil, jadi tidak pernah ada tombol
+     salin tanpa isi.
+
+  7. "Saved reports" — membaca kembali laporan yang sudah pernah
+     dibuat dari activity_log. Membaca laporan pekan lalu tidak
+     perlu membakar kuota Gemini lagi.
+
+  8. Memilih tab AI TIDAK langsung memanggil AI (beda dari mode Ops
+     week yang langsung memuat). Alasannya biaya: satu panggilan
+     Gemini per klik tab akan terbakar hanya karena pengguna
+     melihat-lihat. AI dipanggil hanya oleh tombol Generate.
+
+  9. Show / Download Excel / Official Report / Copy for Google
+     Sheets otomatis ikut memakai periode AI yang dipilih, karena
+     currentReportRange() sudah jadi satu-satunya sumber rentang
+     sejak v2.19. Nol tombol yang perlu diubah.
+
+ 10. Tab mode Report jadi 2x2 (flex-wrap + basis 50%).
+
+     Alasannya bukan selera: dengan empat tab dalam satu baris, di
+     layar 360px setiap tab hanya kebagian ~76px sementara label
+     "Date range" butuh ~84px — setiap label pecah jadi dua baris
+     dengan tinggi tidak seragam. Ini perubahan tampilan yang
+     DISENGAJA pada mode yang sudah ada, bukan efek samping.
+
+ 11. Warna: .air-note dan .air-saved-meta memakai var(--mid), BUKAN
+     var(--muted) yang biasa untuk teks sekunder.
+
+     var(--muted) masih 3,01:1 di light dan 3,91:1 di dark — gagal
+     WCAG AA, dan keputusan soal token itu masih menunggu jawaban.
+     Fitur baru sengaja TIDAK menambah kombinasi yang gagal.
+     Seluruh warna baru di v2.23 sudah dihitung dan lolos AA di
+     KEDUA mode; yang terendah 4,82:1 (--mid di atas --bg).
+
+ 12. Seluruh isi dari AI melewati escapeHtml sebelum masuk
+     innerHTML — termasuk headline, tiap butir daftar, judul
+     bagian, chip angka, dan pesan error dari server. Keluaran
+     model adalah masukan tak terpercaya seperti masukan pengguna.
+
+VALIDASI YANG DIJALANKAN (SOP 8.5)
+  node --check                     JS LULUS
+  node --experimental-strip-types  TS LULUS (brace 433:433)
+  CSS brace 359:359, komentar 91:91, HTML komentar 25:25
+  checkids.js   144 rujukan id, nol yang tidak ada
+  audit.js      nol class mati, nol fungsi mati
+  ceksql.js     LULUS — dan alatnya DIPERLUAS: sekarang ikut
+                memeriksa kolom di .eq/.gte/.lte/.order, bukan
+                hanya .select. Celahnya sejenis dengan bug v1.14.
+  cekwarna.js   nol kombinasi gagal BARU
+  sim23.js      113 cek LULUS (Senin–Minggu untuk ketujuh hari
+                acuan, batas bulan, batas tahun, kabisat 2028 /
+                2000 / 1900, pemisahan dari Ops week)
+  regresi       sim(45) sim13(36) sim14(61) sim17(34) sim19(58)
+                sim20(58) sim21(40) — semuanya LULUS
+
+BELUM DIUJI DI PERANGKAT NYATA
+  Jalur Gemini dan Telegram tidak bisa diuji dari sini: keduanya
+  butuh kunci yang hanya ada di environment Supabase. Yang sudah
+  dibuktikan adalah aritmatika tanggal, bentuk permintaan, gerbang
+  versi, dan escaping. Panggilan AI-nya sendiri baru terbukti
+  setelah dicoba di HP.
+
+================================================================
+CATATAN v2.22 - v2.17 (belum pernah di-deploy) — TETAP BERLAKU
+================================================================
+
+PERUBAHAN DARI v2.21
+================================================================
+
+  1. rwDraft dibersihkan saat layar PIN muncul (logout / sesi habis).
+
+     Ditemukan saat audit menyeluruh, bukan dari laporan pengguna.
+     Draft edit hidup di modul-level supaya tahan saat sheet dibuka
+     ulang — tapi itu juga berarti ia BERTAHAN melewati logout.
+
+     Gejalanya kalau dibiarkan: sesi habis saat sheet edit terbuka,
+     pengguna login ulang, membuka task yang sama, dan perubahan lama
+     muncul lagi. Terasa seperti sudah tersimpan padahal tidak pernah
+     terkirim ke server. Jenis kesalahan yang paling berbahaya:
+     data terlihat benar tapi sebenarnya tidak ada di database.
+
+     Sekarang draft dibuang di 4 jalan keluar: setelah simpan, setelah
+     hapus, saat sheet ditutup lewat backdrop, dan saat layar PIN
+     muncul.
+
+NOL PERUBAHAN SERVER.
+================================================================
+
+================================================================
+CATATAN v2.21 - v2.17 (belum pernah di-deploy) — TETAP BERLAKU
+================================================================
+
+NAMA FILE DI PROJECT CLOUDFLARE : index.html
+
+PASANGAN WAJIB
+  Edge Function v1.16 (MFB-IT_v1.16.ts) — BELUM di-deploy.
+  Deploy FUNCTION DULU, baru file ini.
+
+CATATAN VERSI
+  Yang LIVE per 2 Sep 2026: v1.15 + v2.16. Versi 2.17-2.20 tidak
+  pernah di-deploy; seluruh isinya termasuk di file ini.
+
+PERUBAHAN DARI v2.20 — 2 BUG DARI UJI DI HP & DESKTOP
+================================================================
+
+BUG 1 — ubah Status di Riwayat lalu Save: yang tersimpan nilai LAMA
+
+  Dilaporkan pengguna: status Done diubah ke On Progress, ditekan
+  Save, tapi yang tersimpan tetap Done.
+
+  Ini BUKAN bug yang sama dengan v2.20. v2.20 memperbaiki sheet yang
+  menutup sendiri. Yang ini lebih dalam: closure.
+
+  Akar masalahnya:
+    1. openRiwayatDetail() menyimpan nilai edit di variabel LOKAL
+       (editStatus, editActivity, editWorkType, editAssetId).
+    2. Empat picker memanggil openRiwayatDetail(idx) di dalam onPick
+       supaya nilai barunya terlihat di layar.
+    3. Memanggil fungsi itu lagi MEMBUAT CLOSURE BARU — variabelnya
+       dibuat ulang dari `it`, yaitu data LAMA dari server.
+    4. Tombol Save yang aktif setelah itu milik closure BARU.
+       Pilihan pengguna tertinggal di closure lama yang sudah mati.
+
+  Petunjuk yang mengungkapnya: Priority BISA diedit. Handler-nya
+  adalah satu-satunya yang TIDAK memanggil openRiwayatDetail — ia
+  hanya menyetel variabel dan menukar kelas CSS. Perbedaan itulah
+  yang menunjukkan bahwa masalahnya bukan pada "simpan", melainkan
+  pada pemanggilan ulang.
+
+  Perbaikan: seluruh nilai edit dipindah ke rwDraft — objek yang
+  hidup DI LUAR openRiwayatDetail. Draft hanya diisi ulang kalau task
+  yang dibuka BERBEDA dari draft tersimpan, jadi membuka ulang sheet
+  untuk task yang sama tidak pernah menimpa pilihan yang berjalan.
+
+  Ini menghapus seluruh KELAS bug tersebut, bukan menambal satu
+  picker: Status, Day type, Work type, dan Asset semuanya terkena
+  masalah yang sama.
+
+  Ikut diamankan: teks Description & Remark dan input Date sekarang
+  juga tersimpan ke draft saat diketik. Sebelumnya mengetik lalu
+  membuka picker akan mengembalikan teksnya ke versi server —
+  ketikan pengguna hilang tanpa peringatan apa pun.
+
+  Draft dibuang setelah simpan, setelah hapus, dan saat sheet
+  ditutup lewat backdrop. Kalau tidak, perubahan yang TIDAK disimpan
+  akan muncul lagi saat task itu dibuka berikutnya — dan itu terasa
+  seperti data sudah tersimpan padahal belum.
+
+BUG 2 — bottom nav rusak di desktop
+
+  Di layar >= 620px, #app berubah jadi KARTU setinggi maks 880px yang
+  di-center. Tapi .nav memakai position:fixed; bottom:0 — patokannya
+  VIEWPORT, bukan kartu. Jadi nav melayang terlepas dari app-nya, dan
+  latar #DCE2E8 terlihat di antara keduanya.
+
+  Perbaikan: di dalam media query desktop, .nav jadi position:absolute
+  relatif ke #app (yang sudah position:relative), menempel ke dasar
+  kartu. Sudut bawah dibulatkan mengikuti border-radius kartu, dan
+  safe-area-inset dinolkan karena desktop tidak punya gesture bar.
+
+  Elemen fixed lain ikut diperbaiki dengan alasan yang sama: .sheet,
+  .sheet-backdrop, .toast, dan .update-banner. Tanpa itu, toast akan
+  muncul di dasar layar sementara app-nya di tengah.
+
+  left:50% + translateX(-50%) pada .sheet dan .toast TIDAK perlu
+  diubah — setelah jadi absolute, patokannya #app yang lebarnya sama
+  dengan --app-w, jadi hasilnya tetap benar.
+
+  NOL perubahan untuk mobile: semua aturan ini hanya hidup di dalam
+  @media (min-width: 620px).
+
+NOL PERUBAHAN SERVER. Kedua bug murni di sisi HTML.
+================================================================
+
+================================================================
+CATATAN v2.20 - v2.17 (belum pernah di-deploy) — TETAP BERLAKU
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
@@ -615,6 +858,43 @@ img, svg, canvas { max-width: 100%; }
      terlihat. 100vh dibiarkan sebagai baris pertama = fallback peramban lama. */
   body { background: #DCE2E8; display: flex; align-items: center; justify-content: center; min-height: 100vh; min-height: 100dvh; }
   #app { box-shadow: 0 0 0 1px rgba(11,27,46,.07), 0 24px 64px rgba(11,27,46,.16); border-radius: 20px; overflow: hidden; height: min(100dvh, 880px); }
+
+  /* v2.21 — BUG FIX: bottom nav di desktop.
+
+     Di desktop, #app berubah jadi KARTU setinggi maks 880px yang
+     di-center di layar. Tapi .nav memakai position:fixed; bottom:0 —
+     yang menempel ke bawah VIEWPORT, bukan ke bawah kartu.
+
+     Akibatnya nav melayang terlepas dari app-nya: di layar tinggi ia
+     jauh di bawah kartu, dan latar #DCE2E8 terlihat di antaranya.
+     Persis yang terlihat di screenshot pengguna.
+
+     Perbaikannya: di desktop nav jadi position:absolute relatif ke
+     #app (yang sudah position:relative), sehingga menempel ke dasar
+     KARTU. Sudut bawahnya ikut dibulatkan supaya menyatu dengan
+     border-radius kartu, dan safe-area-inset dinolkan karena di
+     desktop tidak ada notch/gesture bar.
+
+     Nol perubahan untuk mobile: seluruh aturan ini hanya hidup di
+     dalam media query ini. */
+  .nav {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    transform: none;
+    max-width: none;
+    padding: var(--sp-2) var(--sp-1);
+    border-radius: 0 0 20px 20px;
+  }
+
+  /* Toast, sheet, dan banner update juga position:fixed dengan patokan
+     viewport. Di desktop mereka harus ikut kartu, kalau tidak toast
+     muncul di dasar layar sementara app-nya di tengah. */
+  .sheet, .sheet-backdrop, .toast, .update-banner {
+    position: absolute;
+  }
+  .sheet { border-radius: 20px 20px 0 0; }
+  .sheet-backdrop { border-radius: 20px; }
+  .update-banner { border-radius: 20px 20px 0 0; padding-top: var(--sp-3); }
 }
 
 .header {
@@ -1105,9 +1385,14 @@ body.dark-mode .ai-summary { color: var(--ai-accent-text-soft); }
 /* v2.18 — .riwayat-item dihapus: sisa daftar-kartu History lama. */
 
 /* ── LAPORAN ── */
-.report-filter { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+/* v2.23 — flex-wrap + basis 50%: sejak mode ke-4 (AI Report) ada,
+   empat tab dalam SATU baris hanya kebagian ~76px per tab di layar
+   360px, sehingga setiap labelnya pecah jadi dua baris dengan tinggi
+   tidak seragam. Basis 50% membuatnya selalu 2x2 di semua lebar.
+   Perubahan tampilan yang disengaja, bukan efek samping. */
+.report-filter { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-3); }
 .report-mode-tab {
-  flex: 1; text-align: center; padding: var(--sp-2) var(--sp-2); border-radius: 10px;
+  flex: 1 1 calc(50% - 4px); text-align: center; padding: var(--sp-2) var(--sp-2); border-radius: 10px;
   background: var(--field); border: 1px solid var(--line); font-size: 13px; color: var(--mid);
   cursor: pointer; min-height: 40px; display: flex; align-items: center; justify-content: center;
 }
@@ -1129,6 +1414,105 @@ body.dark-mode .ai-summary { color: var(--ai-accent-text-soft); }
   background: transparent; border: 1px dashed var(--line);
 }
 .report-official-btn:active { background: var(--field); }
+
+/* ══════════════════════════════════════════════
+   v2.23 — AI INTELLIGENCE REPORT
+   ══════════════════════════════════════════════ */
+
+/* Pemilih periode. Sengaja 2x2, BUKAN satu baris: empat label
+   ("This week" … "Last month") pada layar 360px hanya kebagian
+   ~76px per tab, sementara teksnya butuh ~84px. Dengan basis
+   50% hasilnya selalu 2x2 di semua lebar — rapi dan bisa
+   diperkirakan, tanpa baris yatim 3+1. */
+.ai-period-row {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-3);
+}
+.ai-period-tab {
+  flex: 1 1 calc(50% - 4px); min-width: 0; text-align: center;
+  padding: var(--sp-2); border-radius: 10px;
+  background: var(--field); border: 1px solid var(--line);
+  font-size: 13px; color: var(--mid); cursor: pointer; min-height: 40px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ai-period-tab.on { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+
+.ai-opt-row {
+  display: flex; align-items: center; gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.ai-range-label { flex: 1 1 auto; min-width: 0; font-size: 12px; color: var(--mid); line-height: 1.4; }
+.ai-lang { display: flex; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+.ai-lang-btn {
+  border: 0; background: var(--field); color: var(--mid); cursor: pointer;
+  font-size: 12px; font-weight: 600; padding: 0 11px; min-height: 34px;
+}
+.ai-lang-btn.on { background: var(--navy); color: #fff; }
+.ai-lang-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: -2px; }
+
+/* Tombol Generate dinonaktifkan selagi laporan dibuat. Tanpa penanda
+   visual, teksnya berubah jadi "Generating…" tapi tombolnya tetap
+   terlihat bisa ditekan — pengguna akan menekan berulang. Aditif:
+   tidak ada kode lama yang menonaktifkan kedua kelas ini. */
+.report-load-btn:disabled, .copy-btn:disabled { opacity: .6; cursor: default; }
+
+/* Kartu hasil. Satu bagian = satu blok, sesuai permintaan
+   "berbagian aja" — bukan satu paragraf mengalir. */
+.air-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: var(--sp-4); margin-bottom: var(--sp-3);
+}
+.air-headline {
+  background: rgba(201,168,76,.10); border-radius: 12px;
+  padding: var(--sp-3); margin-bottom: var(--sp-4);
+  font-size: 15px; font-weight: 700; color: var(--heading); line-height: 1.4;
+}
+.air-sec { margin-bottom: var(--sp-4); }
+.air-sec:last-child { margin-bottom: 0; }
+.air-sec-title {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  color: #8A6D1E; margin-bottom: var(--sp-2);
+}
+/* v2.10 fix — lihat catatan --ai-accent-text di :root */
+body.dark-mode .air-sec-title { color: var(--ai-accent-text); }
+.air-body { font-size: 13.5px; color: var(--ink); line-height: 1.6; }
+.air-list { list-style: none; margin: 0; padding: 0; }
+.air-list li {
+  font-size: 13.5px; color: var(--ink); line-height: 1.55;
+  padding: 0 0 0 15px; margin-bottom: 7px; position: relative;
+}
+.air-list li:last-child { margin-bottom: 0; }
+.air-list li::before {
+  content: '·'; position: absolute; left: 3px; top: -1px;
+  font-weight: 700; color: var(--mid);
+}
+/* Merah HANYA di bagian Concerns, jadi kemunculannya berarti —
+   alasan yang sama dengan .ops-late di rekap Ops. */
+.air-sec.concern .air-list li { background: rgba(192,57,43,.06); border-radius: 9px; padding: 7px 10px 7px 15px; }
+.air-sec.concern .air-list li::before { color: var(--danger-text); left: 5px; top: 6px; }
+
+/* Angka mentah dari server, ditaruh di bawah narasi supaya bisa
+   dicek: kalau AI salah menyebut angka, pembanding aslinya ada. */
+.air-stat-row {
+  display: flex; flex-wrap: wrap; gap: 3px 10px;
+  border-top: 1px solid var(--line); padding-top: var(--sp-3); margin-top: var(--sp-2);
+  font-size: 11px; color: var(--mid);
+}
+/* var(--mid), BUKAN var(--muted) yang biasa dipakai untuk teks
+   sekunder. --muted masih 3,01:1 di light dan 3,91:1 di dark —
+   gagal AA, dan keputusan soal token itu belum diambil. Fitur baru
+   sengaja TIDAK menambah kombinasi yang gagal: --mid lolos di kedua
+   mode (5,47 / 8,12) dan hierarkinya tetap terbaca karena isi utama
+   memakai --ink (17,85 / 14,41). */
+.air-note { font-size: 11.5px; color: var(--mid); line-height: 1.6; margin-top: var(--sp-3); }
+
+/* Daftar laporan tersimpan (dibaca dari activity_log). */
+.air-saved-item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 12px; margin-bottom: 6px; cursor: pointer;
+}
+.air-saved-item:active { background: var(--field); }
+.air-saved-top { font-size: 13px; color: var(--ink); line-height: 1.45; }
+.air-saved-meta { font-size: 11px; color: var(--mid); margin-top: 3px; } /* lihat catatan .air-note */
 
 /* ── BACKUP (Phase 2A) ── */
 .backup-section { margin-top: var(--sp-6); }
@@ -1234,6 +1618,13 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
 .ws-chip.dayoff   { background: rgba(201,168,76,.18); color: #7E6319; }
 body.dark-mode .ws-chip.dayoff { color: var(--ai-accent-text); }
 .ws-hint { font-size: 11px; color: var(--muted); text-align: center; padding: var(--sp-2) 0 0; }
+/* v2.23 — penanda "tidak ada teks task". Dulu ini satu-satunya sisa
+   style="color:var(--muted)" INLINE di seluruh file, dan style inline
+   itulah pola yang menyembunyikan bug kontras v2.20 dari audit selama
+   berbulan-bulan: alat audit membaca <style>, bukan atribut style.
+   Dipindah ke kelas supaya ikut terperiksa, sekalian dinaikkan ke
+   --mid (5,47:1 / 8,12:1 — lolos AA di kedua mode). */
+.ws-dash { color: var(--mid); }
 /* v2.18 — 3 pengubah .riwayat-chip dihapus bersama kelas induknya.
    Penggantinya .ws-chip.critical / .high / .done di blok worksheet. */
 
@@ -1722,6 +2113,38 @@ body.dark-mode .nb.on { color: #FFFFFF; }
              tiap Selasa. Rentangnya DIHITUNG OTOMATIS (Rabu s/d Selasa)
              supaya tidak perlu memilih tanggal manual tiap minggu. -->
         <div class="report-mode-tab" data-mode="ops" id="modeOps">Ops week</div>
+        <!-- v2.23 — mode ke-4: AI Intelligence Report. Narasi berbagian
+             dari angka yang SUDAH dihitung server; Gemini hanya
+             merangkai kalimatnya, tidak menghitung apa pun. -->
+        <div class="report-mode-tab" data-mode="ai" id="modeAi">AI Report</div>
+      </div>
+
+      <!-- v2.23 — panel AI Report. Seluruhnya disembunyikan di mode lain. -->
+      <div class="hidden" id="aiRow">
+        <div class="ai-period-row">
+          <div class="ai-period-tab on" data-p="this-week" id="aiPThisWeek">This week</div>
+          <div class="ai-period-tab" data-p="last-week" id="aiPLastWeek">Last week</div>
+          <div class="ai-period-tab" data-p="this-month" id="aiPThisMonth">This month</div>
+          <div class="ai-period-tab" data-p="last-month" id="aiPLastMonth">Last month</div>
+        </div>
+
+        <div class="ai-opt-row">
+          <div class="ai-range-label" id="aiRangeLabel">—</div>
+          <!-- Toggle bahasa. Default EN sesuai permintaan; pilihan
+               disimpan lokal supaya tidak perlu diatur ulang tiap kali. -->
+          <div class="ai-lang" role="group" aria-label="Report language">
+            <button class="ai-lang-btn on" id="aiLangEn" type="button">EN</button>
+            <button class="ai-lang-btn" id="aiLangId" type="button">ID</button>
+          </div>
+        </div>
+
+        <div class="report-btn-row" style="margin-top:var(--sp-2)">
+          <button class="report-load-btn" id="aiGenBtn" type="button">Generate report</button>
+          <button class="copy-btn" id="aiSavedBtn" type="button">Saved reports</button>
+        </div>
+        <div class="report-btn-row hidden" id="aiCopyRow" style="margin-top:var(--sp-2)">
+          <button class="copy-btn" id="aiCopyBtn" type="button">Copy report for WhatsApp</button>
+        </div>
       </div>
 
       <div class="ops-week-nav hidden" id="opsWeekRow">
@@ -1890,7 +2313,7 @@ const CONFIG = {
   FUNCTION_NAME:     'submit-task',
   GEMINI_MODEL:      'gemini-3.5-flash-lite',
   APP_TITLE:         'Miss Fish IT Daily Activity',
-  APP_VERSION:       '2.20', // WAJIB sama dengan header file (SC bagian 5)
+  APP_VERSION:       '2.23', // WAJIB sama dengan header file (SC bagian 5)
   PIN_LENGTH:        4,
   TIMEZONE:          'Asia/Makassar',
   SESSION_DAYS:      3,
@@ -2089,7 +2512,14 @@ function closeSheet() {
   $('sheetBackdrop').classList.remove('on');
   $('sheet').classList.remove('on');
 }
-$('sheetBackdrop').addEventListener('click', closeSheet);
+// v2.21 — menutup sheet lewat backdrop berarti membatalkan. Draft
+// dibuang supaya perubahan yang tidak disimpan tidak muncul lagi
+// saat task itu dibuka berikutnya — itu akan terasa seperti data
+// tersimpan padahal tidak.
+$('sheetBackdrop').addEventListener('click', () => {
+  rwDraft = { id: null };
+  closeSheet();
+});
 
 // Nomor urut sheet. Dinaikkan setiap kali openSheet dipanggil, jadi
 // bisa dipakai untuk tahu apakah sheet yang ada di layar SEKARANG
@@ -2251,6 +2681,11 @@ function clientMeta() {
 let pinBuffer = '', pinBusy = false;
 
 function showPin(message) {
+  // v2.22 — draft edit dibuang saat layar PIN muncul (logout atau sesi
+  // habis). Kalau tidak, draft yang belum tersimpan bertahan; setelah
+  // login ulang dan membuka task yang sama, perubahan lama muncul lagi
+  // dan terasa seperti sudah tersimpan padahal tidak pernah terkirim.
+  rwDraft = { id: null };
   pinBuffer = ''; paintDots();
   $('pinMsg').textContent = message || '';
   $('pinMsg').className = 'pin-msg' + (message ? ' err' : '');
@@ -2850,7 +3285,7 @@ function renderWorksheetTable(containerEl, items, onRowClick) {
     if (it.task && isDayOff) taskText = dayChip + ' ' + escapeHtml(it.task);
     else if (it.task)        taskText = escapeHtml(it.task);
     else if (isDayOff)       taskText = dayChip;
-    else                     taskText = '<span style="color:var(--muted)">—</span>';
+    else                     taskText = '<span class="ws-dash">—</span>';
     // Chip aset ditaruh di DEPAN teks, dan chip foto di belakang —
     // urutannya konsisten supaya mata tidak perlu mencari.
     if (assetChip) taskText = assetChip + ' ' + taskText;
@@ -2950,6 +3385,29 @@ async function loadRiwayat() {
 }
 
 // ── SHEET: DETAIL / UBAH / HAPUS SATU TASK DI RIWAYAT ────────
+
+// v2.21 — draft edit yang HIDUP DI LUAR openRiwayatDetail.
+//
+// Wajib di luar, karena fungsi itu dipanggil ulang setiap kali sebuah
+// picker selesai memilih (supaya nilai barunya terlihat). Kalau draft
+// ada di dalam, setiap pemanggilan ulang akan menimpanya dengan data
+// lama dari server — dan pilihan pengguna hilang tanpa jejak.
+//
+// id dipakai sebagai penanda pemilik: draft hanya diisi ulang kalau
+// task yang dibuka BERBEDA dari draft yang tersimpan.
+let rwDraft = { id: null };
+
+// Ambil nilai untuk ditampilkan: dari draft kalau sudah pernah diubah,
+// kalau belum dari data server. null/undefined di draft berarti
+// "belum disentuh" — itu sebabnya dibedakan dari string kosong, yang
+// merupakan pilihan sah (mis. remark sengaja dikosongkan).
+function rwNilai(it, kunci, bawaan) {
+  if (rwDraft.id === it.id && rwDraft[kunci] !== null && rwDraft[kunci] !== undefined) {
+    return rwDraft[kunci];
+  }
+  return bawaan === null || bawaan === undefined ? '' : bawaan;
+}
+
 function openRiwayatDetail(idx) {
   const it = riwayatCache[idx];
   if (!it) return;
@@ -2969,7 +3427,10 @@ function openRiwayatDetail(idx) {
     +   '<div class="date-row">'
     +     '<span class="date-text" id="rwEditDateText">' + escapeHtml(formatTanggalPanjang(it.task_date)) + '</span>'
     +     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.4;flex-shrink:0"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-    +     '<input type="date" id="rwEditDate" value="' + escapeHtml(it.task_date || '') + '">'
+    // v2.21 — nilai diambil dari DRAFT bila ada, jatuh ke `it` bila
+    // belum pernah disentuh. Tanpa ini, tanggal/teks yang sudah diubah
+    // akan kembali ke nilai server setiap kali picker dipakai.
+    +     '<input type="date" id="rwEditDate" value="' + escapeHtml(rwNilai(it, 'date', it.task_date)) + '">'
     +   '</div></div>'
 
     // v2.20 — JENIS HARI bisa diedit (kakak menyebutnya "tingkat").
@@ -2978,27 +3439,33 @@ function openRiwayatDetail(idx) {
     // "Work tasks" & "% Done" di Dashboard maupun rekap Ops.
     + '<div class="field"><label class="label">Day type</label>'
     +   '<div class="picker-row" id="rwActivityRow"><span class="picker-value" id="rwActivityVal">'
-    +   escapeHtml(RIWAYAT_ACTIVITY_LABEL[it.activity_type] || it.activity_type || 'Working Day')
+    +   escapeHtml((() => {
+          const v = rwNilai(it, 'activity', it.activity_type || 'Working Day');
+          return RIWAYAT_ACTIVITY_LABEL[v] || v;
+        })())
     +   '</span><span class="picker-chevron">&#8250;</span></div></div>'
 
     + '<div class="field"><label class="label">Description</label>'
-    + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + escapeHtml(it.task || '') + '</textarea></div>'
+    + '<textarea class="textarea" id="rwEditTask" style="height:76px">' + escapeHtml(rwNilai(it, 'task', it.task)) + '</textarea></div>'
 
     // v2.14 — aset. Baris ini hanya muncul kalau daftar aset memang
     // tersedia; kalau MFB-IT_v1.6.sql belum jalan, bagian ini tidak ada.
     + (state.assets.length ? ('<div class="field"><label class="label">Device / asset</label>'
       + '<div class="picker-row" id="rwAssetRow"><span class="picker-value" id="rwAssetVal">'
-      + escapeHtml(assetLabel(state.assets.find(a => a.id === it.asset_id)))
+      + escapeHtml(assetLabel(state.assets.find(a => a.id === rwNilai(it, 'assetId', it.asset_id))))
       + '</span><span class="picker-chevron">&#8250;</span></div></div>') : '')
 
     + '<div class="field"><label class="label">Priority</label>'
     + '<div class="prio" id="rwEditPrio">'
     + ['Low','Medium','High','Critical'].map(p =>
-        '<div class="pb' + (p === it.priority ? ' on' : '') + '" data-p="' + p + '">' + PRIORITY_SHORT_LABEL[p] + '</div>').join('')
+        '<div class="pb' + (p === rwNilai(it, 'priority', it.priority) ? ' on' : '') + '" data-p="' + p + '">' + PRIORITY_SHORT_LABEL[p] + '</div>').join('')
     + '</div></div>'
     + '<div class="field"><label class="label">Status</label>'
     + '<div class="picker-row" id="rwEditStatusRow"><span class="picker-value" id="rwEditStatusVal">'
-    + (RIWAYAT_STATUS_LABEL[it.status] || it.status || '') + '</span><span class="picker-chevron">&#8250;</span></div></div>'
+    + escapeHtml((() => {
+        const v = rwNilai(it, 'status', it.status);
+        return RIWAYAT_STATUS_LABEL[v] || v || '';
+      })()) + '</span><span class="picker-chevron">&#8250;</span></div></div>'
 
     // v2.14 — follow-up vendor. Ditampilkan kalau statusnya Waiting
     // Vendor ATAU kalau datanya sudah pernah diisi — supaya data lama
@@ -3031,11 +3498,11 @@ function openRiwayatDetail(idx) {
     // sejak awal tapi tidak pernah bisa dikoreksi dari Riwayat.
     + '<div class="field"><label class="label">Work type</label>'
     +   '<div class="picker-row" id="rwWorkTypeRow"><span class="picker-value" id="rwWorkTypeVal">'
-    +   escapeHtml(it.work_type || 'Task')
+    +   escapeHtml(rwNilai(it, 'workType', it.work_type || 'Task'))
     +   '</span><span class="picker-chevron">&#8250;</span></div></div>'
 
     + '<div class="field"><label class="label" for="rwEditRemark">Remark <span style="opacity:.6">— optional</span></label>'
-    + '<input class="input" id="rwEditRemark" value="' + escapeHtml(it.remark || '') + '"></div>'
+    + '<input class="input" id="rwEditRemark" value="' + escapeHtml(rwNilai(it, 'remark', it.remark)) + '"></div>'
 
     + '<button class="btn-logout btn-primary-action" id="rwSaveBtn">Save changes</button>'
     + '<button class="btn-logout" id="rwDeleteBtn">Delete this task</button>'
@@ -3043,12 +3510,42 @@ function openRiwayatDetail(idx) {
 
   openSheet(it.task_id, html);
 
-  let editPriority = it.priority;
-  let editStatus = it.status;
-  // v2.20 — jenis hari & jenis pekerjaan diedit lewat variabel lokal,
-  // pola yang sama dengan priority/status.
-  let editActivity = it.activity_type || 'Working Day';
-  let editWorkType = it.work_type || 'Task';
+  // v2.21 — BUG FIX BESAR: nilai edit dipindah KELUAR dari fungsi ini.
+  //
+  // Sebelumnya editStatus/editActivity/editWorkType/editAssetId adalah
+  // variabel LOKAL. Empat picker (Status, Day type, Work type, Asset)
+  // memanggil openRiwayatDetail(idx) di dalam onPick supaya nilai baru
+  // terlihat di layar. Tapi memanggil fungsi ini lagi berarti:
+  //
+  //   1. variabel lokal dibuat ULANG dari `it` (data lama dari server)
+  //   2. tombol Save yang aktif sekarang milik closure BARU
+  //   3. pilihan pengguna tertinggal di closure lama yang sudah mati
+  //
+  // Hasilnya: mengubah Status dari Done ke On Progress lalu menekan
+  // Save akan menyimpan "Done" lagi. Perubahan SELALU hilang.
+  //
+  // Priority tidak terkena karena handler-nya TIDAK memanggil
+  // openRiwayatDetail — ia hanya menyetel variabel dan menukar kelas
+  // CSS. Itu justru petunjuk yang mengungkap akar masalahnya.
+  //
+  // Perbaikannya: draft disimpan di rwDraft (modul-level, di luar
+  // fungsi ini) dan hanya diisi dari `it` saat draft memang milik task
+  // LAIN. Jadi membuka ulang sheet untuk task yang sama TIDAK pernah
+  // menimpa pilihan yang sedang berjalan. Ini menghapus seluruh KELAS
+  // bug ini sekaligus — bukan menambal satu picker.
+  if (rwDraft.id !== it.id) {
+    rwDraft = {
+      id: it.id,
+      priority: it.priority,
+      status: it.status,
+      activity: it.activity_type || 'Working Day',
+      workType: it.work_type || 'Task',
+      assetId: (typeof it.asset_id === 'number') ? it.asset_id : null,
+      // Teks juga disimpan: kalau pengguna sudah mengetik lalu membuka
+      // picker, ketikannya tidak boleh hilang saat sheet dibuka ulang.
+      task: null, remark: null, date: null,
+    };
+  }
 
   // Label tanggal ikut berubah saat tanggalnya diganti, supaya yang
   // terbaca bukan tanggal lama sementara input-nya sudah baru.
@@ -3056,9 +3553,18 @@ function openRiwayatDetail(idx) {
   if (elDate) {
     elDate.addEventListener('change', (e) => {
       const v = e.target.value;
+      rwDraft.date = v; // v2.21 — supaya tidak hilang saat picker dipakai
       if (v) $('rwEditDateText').textContent = formatTanggalPanjang(v);
     });
   }
+
+  // v2.21 — teks yang sedang diketik juga disimpan ke draft. Tanpa ini,
+  // mengetik deskripsi lalu membuka picker Status akan mengembalikan
+  // teksnya ke versi server — ketikan pengguna hilang tanpa peringatan.
+  const elTask = $('rwEditTask');
+  if (elTask) elTask.addEventListener('input', (e) => { rwDraft.task = e.target.value; });
+  const elRmk = $('rwEditRemark');
+  if (elRmk) elRmk.addEventListener('input', (e) => { rwDraft.remark = e.target.value; });
 
   // Kedua picker di bawah memakai openOptionSheet, dan sejak v2.20
   // openOptionSheet TIDAK lagi menutup sheet kalau onPick membuka
@@ -3066,11 +3572,9 @@ function openRiwayatDetail(idx) {
   const rwActivityRow = $('rwActivityRow');
   if (rwActivityRow) {
     rwActivityRow.addEventListener('click', () => {
-      openOptionSheet('Day type', ACTIVITY_TYPES, editActivity, (db) => {
-        editActivity = db;
+      openOptionSheet('Day type', ACTIVITY_TYPES, rwDraft.activity, (db) => {
+        rwDraft.activity = db;
         openRiwayatDetail(idx);
-        const f = ACTIVITY_TYPES.find(a => a.db === db);
-        setTimeout(() => { const el = $('rwActivityVal'); if (el && f) el.textContent = f.id; }, 0);
       });
     });
   }
@@ -3079,30 +3583,26 @@ function openRiwayatDetail(idx) {
   if (rwWorkTypeRow) {
     rwWorkTypeRow.addEventListener('click', () => {
       const opsi = WORK_TYPES.map(w => ({ db: w, id: w }));
-      openOptionSheet('Work type', opsi, editWorkType, (db) => {
-        editWorkType = db;
+      openOptionSheet('Work type', opsi, rwDraft.workType, (db) => {
+        rwDraft.workType = db;
         openRiwayatDetail(idx);
-        setTimeout(() => { const el = $('rwWorkTypeVal'); if (el) el.textContent = db; }, 0);
       });
     });
   }
-  // v2.14 — nilai aset diedit lewat variabel lokal, sama pola dengan
-  // priority/status di atas, bukan langsung ke state global.
-  let editAssetId = (typeof it.asset_id === 'number') ? it.asset_id : null;
-
+  // v2.21 — nilai aset kini disimpan di rwDraft, bukan variabel lokal.
   const rwAssetRow = $('rwAssetRow');
   if (rwAssetRow) {
     rwAssetRow.addEventListener('click', () => {
       const opsi = [{ db: '', id: '— none —' }].concat(
         state.assets.map(a => ({ db: String(a.id), id: assetLabel(a) }))
       );
-      openOptionSheet('Device / asset', opsi, editAssetId === null ? '' : String(editAssetId), (db) => {
-        editAssetId = db ? Number(db) : null;
-        // openOptionSheet mengganti seluruh isi sheet, jadi detail task
-        // dibuka ulang — pola yang sama dipakai picker Status di bawah.
+      const kini = rwDraft.assetId === null || rwDraft.assetId === undefined
+        ? '' : String(rwDraft.assetId);
+      openOptionSheet('Device / asset', opsi, kini, (db) => {
+        rwDraft.assetId = db ? Number(db) : null;
+        // Sheet dibuka ulang supaya nilai barunya terlihat. Aman
+        // sekarang: draft ada di luar, jadi tidak tertimpa.
         openRiwayatDetail(idx);
-        const a = state.assets.find(x => x.id === editAssetId);
-        setTimeout(() => { const el = $('rwAssetVal'); if (el) el.textContent = assetLabel(a); }, 0);
       });
     });
   }
@@ -3117,21 +3617,31 @@ function openRiwayatDetail(idx) {
     });
   }
 
+  // v2.21 — priority ikut pindah ke draft. Sebelumnya ia SATU-SATUNYA
+  // yang berfungsi (karena tidak memanggil openRiwayatDetail), tapi
+  // kalau tetap pakai variabel lokal, pilihannya akan hilang begitu
+  // picker LAIN dipakai setelahnya — bug yang sama, hanya lebih halus.
   $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(el => {
     el.addEventListener('click', () => {
-      editPriority = el.dataset.p;
-      $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(x => x.classList.toggle('on', x.dataset.p === editPriority));
+      rwDraft.priority = el.dataset.p;
+      $('sheetBody').querySelectorAll('#rwEditPrio .pb').forEach(x => x.classList.toggle('on', x.dataset.p === rwDraft.priority));
     });
   });
 
+  // v2.21 — INI BUG YANG DILAPORKAN: ubah Status dari Done ke
+  // On Progress lalu Save, yang tersimpan tetap Done.
+  //
+  // Sebelumnya `editStatus = db` menulis ke variabel LOKAL, lalu
+  // openRiwayatDetail(idx) membuat closure BARU yang membaca ulang
+  // editStatus dari it.status (data lama server). Tombol Save yang
+  // aktif setelah itu milik closure baru — jadi selalu mengirim nilai
+  // lama. Nilai pilihan pengguna tertinggal di closure yang sudah mati.
+  //
+  // Sekarang menulis ke rwDraft yang hidup di luar fungsi ini.
   $('rwEditStatusRow').addEventListener('click', () => {
-    openOptionSheet('Status', STATUS_TYPES, editStatus, (db) => {
-      editStatus = db;
-      // openOptionSheet mengganti isi #sheetBody sepenuhnya, jadi detail
-      // task ini perlu dibuka ulang agar nilai status yang baru terlihat.
+    openOptionSheet('Status', STATUS_TYPES, rwDraft.status, (db) => {
+      rwDraft.status = db;
       openRiwayatDetail(idx);
-      const found = STATUS_TYPES.find(s => s.db === db);
-      setTimeout(() => { $('rwEditStatusVal').textContent = found.id; }, 0);
     });
   });
 
@@ -3148,11 +3658,16 @@ function openRiwayatDetail(idx) {
       // lama — yang belum ada hanya UI-nya, jadi NOL perubahan server.
       const elTgl = $('rwEditDate');
       const elRemark = $('rwEditRemark');
+      // v2.21 — seluruh nilai dibaca dari rwDraft (dengan cadangan ke
+      // data server kalau field itu belum pernah disentuh). Sebelumnya
+      // dibaca dari variabel lokal yang bisa sudah tertimpa.
       const kiriman = {
         action: 'update-task', sessionToken: state.token, id: it.id,
-        task: newTask, priority: editPriority, status: editStatus,
-        activityType: editActivity,
-        workType: editWorkType,
+        task: newTask,
+        priority: rwNilai(it, 'priority', it.priority),
+        status: rwNilai(it, 'status', it.status),
+        activityType: rwNilai(it, 'activity', it.activity_type || 'Working Day'),
+        workType: rwNilai(it, 'workType', it.work_type || 'Task'),
       };
       // Tanggal hanya dikirim kalau bentuknya sah. Input date yang
       // dikosongkan mengembalikan string kosong, dan kolom bertipe
@@ -3161,12 +3676,22 @@ function openRiwayatDetail(idx) {
         kiriman.taskDate = elTgl.value;
       }
       if (elRemark) kiriman.remark = elRemark.value.trim();
-      if (state.assets.length) kiriman.assetId = editAssetId;
+      if (state.assets.length) {
+        // null di sini SAH artinya: melepas tautan aset. Jadi dibedakan
+        // dari undefined (= belum pernah disentuh).
+        kiriman.assetId = (rwDraft.id === it.id && rwDraft.assetId !== undefined)
+          ? rwDraft.assetId
+          : ((typeof it.asset_id === 'number') ? it.asset_id : null);
+      }
       if (vn) kiriman.vendorName = vn.value.trim();
       if (vf) kiriman.vendorFollowupDate = vf.value;
       const r = await callApi(kiriman);
       if (!r.ok) { toast(r.error || 'Failed to save changes.', 'err'); return; }
       toast('Changes saved', 'good');
+      // v2.21 — draft dibuang setelah tersimpan. Kalau dibiarkan,
+      // membuka task yang SAMA lagi akan menampilkan draft lama
+      // padahal server sudah punya nilai baru.
+      rwDraft = { id: null };
       closeSheet();
       loadRiwayat();
     } catch (e) { toast(e.message || 'Failed to save changes.', 'err'); }
@@ -3178,6 +3703,7 @@ function openRiwayatDetail(idx) {
       const r = await callApi({ action: 'delete-task', sessionToken: state.token, id: it.id });
       if (!r.ok) { toast(r.error || 'Failed to delete.', 'err'); return; }
       toast('Task deleted', 'good');
+      rwDraft = { id: null }; // v2.21
       closeSheet();
       loadRiwayat();
     } catch (e) { toast(e.message || 'Failed to delete.', 'err'); }
@@ -3453,6 +3979,7 @@ function setReportMode(mode) {
   $('modeMonth').classList.toggle('on', mode === 'month');
   $('modeRange').classList.toggle('on', mode === 'range');
   $('modeOps').classList.toggle('on', mode === 'ops');   // v2.19
+  $('modeAi').classList.toggle('on', mode === 'ai');     // v2.23
   $('reportMonthRow').classList.toggle('hidden', mode !== 'month');
   $('reportRangeRow').classList.toggle('hidden', mode !== 'range');
 
@@ -3461,6 +3988,14 @@ function setReportMode(mode) {
   $('opsWeekRow').classList.toggle('hidden', !ops);
   $('opsCopyRow').classList.toggle('hidden', !ops);
   if (ops) renderOpsWeekLabel();
+
+  // v2.23 — panel AI hanya di mode ai. Tombol Copy TETAP tersembunyi
+  // di sini: ia baru muncul kalau ada laporan yang benar-benar tampil,
+  // supaya tidak pernah ada tombol salin tanpa isi.
+  const ai = mode === 'ai';
+  $('aiRow').classList.toggle('hidden', !ai);
+  if (!ai) $('aiCopyRow').classList.add('hidden');
+  if (ai) renderAiRangeLabel();
 }
 
 function currentReportRange() {
@@ -3469,6 +4004,15 @@ function currentReportRange() {
   // Copy for Google Sheets otomatis ikut memakai rentang minggu ini
   // tanpa perlu diubah satu pun.
   if (reportMode === 'ops') return opsWeekRange(opsWeekOffset);
+
+  // v2.23 — mode ai memakai alasan yang sama: rentangnya sudah
+  // ditentukan oleh pilihan periode, jadi Show / Download Excel /
+  // Official Report / Copy for Google Sheets otomatis bekerja pada
+  // periode yang sama dengan laporan AI-nya, tanpa satu pun diubah.
+  if (reportMode === 'ai') {
+    const p = aiPeriodInfo(aiPeriod);
+    return { start: p.start, end: p.end };
+  }
 
   if (reportMode === 'month') {
     const val = $('reportMonth').value; // "YYYY-MM"
@@ -3483,6 +4027,350 @@ function currentReportRange() {
   const end = $('reportEnd').value;
   if (!start || !end) return null;
   return { start, end };
+}
+
+/* ══════════════════════════════════════════════
+   v2.23 — AI INTELLIGENCE REPORT
+
+   Mingguan SENIN–MINGGU. Sengaja BEDA dari rekap Ops Meeting
+   (Rabu–Selasa): yang ini laporan periode kalender, yang itu
+   menutup satu siklus meeting. Menyatukan keduanya akan membuat
+   salah satunya salah.
+
+   Seluruh ANGKA dihitung server dari v_daily_activity. Gemini
+   hanya merangkai kalimat dari angka yang sudah jadi — prompt-nya
+   melarang menghitung atau menaksir. Karena itu angka mentahnya
+   ikut ditampilkan di bawah narasi: kalau AI keliru menyebut
+   sesuatu, pembandingnya ada di layar yang sama.
+   ══════════════════════════════════════════════ */
+
+let aiPeriod = 'this-week';  // 'this-week' | 'last-week' | 'this-month' | 'last-month'
+let aiLang = 'en';           // default EN sesuai permintaan
+let aiBusy = false;
+let aiLast = null;           // laporan yang sedang tampil (untuk tombol Copy)
+let aiSavedCache = [];
+
+// Senin sebagai hari pertama. getDay() memberi 0 untuk Minggu, jadi
+// (dow + 6) % 7 menghasilkan 0 untuk Senin dan 6 untuk Minggu.
+function aiWeekRange(offsetPekan) {
+  const hariIni = new Date(todayISO() + 'T00:00:00');
+  const kebelakang = (hariIni.getDay() + 6) % 7;
+  const start = new Date(hariIni);
+  start.setDate(start.getDate() - kebelakang + (offsetPekan || 0) * 7);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
+  return { start: isoDari(start), end: isoDari(end) };
+}
+
+// new Date(y, m, 1) menormalkan bulan di luar 0..11 dengan sendirinya,
+// jadi offset -1 dari Januari benar jatuh ke Desember tahun sebelumnya.
+// new Date(y, m + 1, 0) = hari terakhir bulan m, termasuk Februari
+// tahun kabisat — tanpa tabel jumlah hari yang harus dijaga sendiri.
+function aiMonthRange(offsetBulan) {
+  const hariIni = new Date(todayISO() + 'T00:00:00');
+  const y = hariIni.getFullYear();
+  const m = hariIni.getMonth() + (offsetBulan || 0);
+  return { start: isoDari(new Date(y, m, 1)), end: isoDari(new Date(y, m + 1, 0)) };
+}
+
+// Satu tempat yang menentukan rentang SEKARANG dan rentang PEMBANDING.
+// Pembandingnya selalu satu periode tepat sebelumnya dan sama
+// panjangnya, supaya perbandingannya jujur.
+function aiPeriodInfo(p) {
+  if (p === 'this-month' || p === 'last-month') {
+    const off = p === 'this-month' ? 0 : -1;
+    const kini = aiMonthRange(off);
+    const lalu = aiMonthRange(off - 1);
+    const [y, m] = kini.start.split('-').map(Number);
+    return {
+      periodType: 'month', start: kini.start, end: kini.end,
+      prevStart: lalu.start, prevEnd: lalu.end,
+      label: MONTH_NAME_EN[m - 1] + ' ' + y,
+    };
+  }
+  const off = p === 'last-week' ? -1 : 0;
+  const kini = aiWeekRange(off);
+  const lalu = aiWeekRange(off - 1);
+  return {
+    periodType: 'week', start: kini.start, end: kini.end,
+    prevStart: lalu.start, prevEnd: lalu.end,
+    label: dateLongEN(kini.start) + ' – ' + dateLongEN(kini.end),
+  };
+}
+
+function renderAiRangeLabel() {
+  const el = $('aiRangeLabel');
+  if (!el) return;
+  const p = aiPeriodInfo(aiPeriod);
+  // textContent, bukan innerHTML: tidak ada markup di sini, jadi tidak
+  // ada jalan masuk yang perlu di-escape.
+  el.textContent = formatTanggalPendek(p.start) + '  →  ' + formatTanggalPendek(p.end)
+    + '   ·   vs ' + formatTanggalPendek(p.prevStart) + ' → ' + formatTanggalPendek(p.prevEnd);
+}
+
+function setAiPeriod(p) {
+  aiPeriod = p;
+  ['this-week', 'last-week', 'this-month', 'last-month'].forEach(k => {
+    const el = $('aiP' + k.split('-').map(s => s[0].toUpperCase() + s.slice(1)).join(''));
+    if (el) el.classList.toggle('on', k === p);
+  });
+  renderAiRangeLabel();
+}
+
+function setAiLang(l) {
+  aiLang = l === 'id' ? 'id' : 'en';
+  $('aiLangEn').classList.toggle('on', aiLang === 'en');
+  $('aiLangId').classList.toggle('on', aiLang === 'id');
+  // Disimpan lokal supaya tidak perlu diatur ulang tiap kali dibuka.
+  // Gagal menyimpan (mode privat) tidak boleh menghentikan apa pun.
+  try { localStorage.setItem('mfbit_ai_lang', aiLang); } catch (e) {}
+}
+
+// Judul bagian mengikuti BAHASA LAPORAN, bukan bahasa antarmuka.
+// Kalau laporannya ID tapi judulnya EN, hasil salinan ke WhatsApp jadi
+// campur dua bahasa dalam satu pesan.
+const AIR_LABEL = {
+  en: { summary: 'Summary', highlights: 'Highlights', concerns: 'Needs attention',
+        comparison: 'Vs previous period', recommendations: 'Recommendations',
+        numbers: 'Source numbers',
+        note: 'The numbers above are counted from the database, not by the AI. The AI only writes the wording.' },
+  id: { summary: 'Ringkasan', highlights: 'Yang menonjol', concerns: 'Perlu perhatian',
+        comparison: 'Dibanding periode sebelumnya', recommendations: 'Rekomendasi',
+        numbers: 'Angka sumber',
+        note: 'Angka di atas dihitung dari database, bukan oleh AI. AI hanya menyusun kalimatnya.' },
+};
+
+// 'en-GB' dipilih SENGAJA. Locale 'id-ID' memakai TITIK sebagai pemisah
+// jam-menit, yang di v2.16 menghasilkan jam terbaca "19.38:37".
+function aiWaktuSingkat(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) return String(ts).slice(0, 16);
+  return d.toLocaleString('en-GB', {
+    timeZone: CONFIG.TIMEZONE, day: '2-digit', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', hour12: false,
+  });
+}
+
+function aiStatChips(s) {
+  if (!s) return [];
+  const n = (v) => typeof v === 'number' ? v : 0;
+  const chips = [
+    n(s.workTotal) + ' tasks',
+    n(s.done) + ' done',
+    n(s.open) + ' open',
+    n(s.critical) + ' critical',
+    n(s.waitingVendor) + ' waiting vendor',
+    n(s.daysWithEntry) + ' days logged',
+  ];
+  if (n(s.offDays) > 0) chips.push(n(s.offDays) + ' off days');
+  if (n(s.vendorOverdue) > 0) chips.push(n(s.vendorOverdue) + ' vendor overdue');
+  if (n(s.cancelled) > 0) chips.push(n(s.cancelled) + ' cancelled');
+  return chips;
+}
+
+function renderAiReport(d, gagalSimpan) {
+  const wadah = $('reportList');
+  if (!wadah) return;
+  const L = AIR_LABEL[d.lang === 'id' ? 'id' : 'en'];
+  const r = d.report || {};
+
+  const bagian = (judul, isiHtml, kelas) => isiHtml
+    ? '<div class="air-sec' + (kelas ? ' ' + kelas : '') + '">'
+      + '<div class="air-sec-title">' + escapeHtml(judul) + '</div>' + isiHtml + '</div>'
+    : '';
+  const daftar = (arr) => (Array.isArray(arr) && arr.length)
+    ? '<ul class="air-list">' + arr.map(x => '<li>' + escapeHtml(String(x)) + '</li>').join('') + '</ul>'
+    : '';
+  const teks = (v) => v ? '<div class="air-body">' + escapeHtml(String(v)) + '</div>' : '';
+
+  const chips = aiStatChips(d.stats);
+
+  wadah.innerHTML = '<div class="air-card">'
+    + (r.headline ? '<div class="air-headline">' + escapeHtml(String(r.headline)) + '</div>' : '')
+    + bagian(L.summary, teks(r.summary))
+    + bagian(L.highlights, daftar(r.highlights))
+    + bagian(L.concerns, daftar(r.concerns), 'concern')
+    + bagian(L.comparison, teks(r.comparison))
+    + bagian(L.recommendations, daftar(r.recommendations))
+    + (chips.length
+        ? '<div class="air-stat-row">' + chips.map(c => '<span>' + escapeHtml(c) + '</span>').join('') + '</div>'
+        : '')
+    + '<div class="air-note">' + escapeHtml(L.note)
+    + (gagalSimpan ? ' ' + escapeHtml('This report could not be saved to the log — copy it if you need to keep it.') : '')
+    + '</div>'
+    + '</div>';
+}
+
+// Teks polos untuk WhatsApp. Bentuknya mengikuti opsRecapText: satu
+// baris judul, lalu bagian-bagian bertanda, tanpa markdown yang tidak
+// dikenali WhatsApp.
+function aiReportText(d) {
+  const L = AIR_LABEL[d.lang === 'id' ? 'id' : 'en'];
+  const r = d.report || {};
+  const baris = [];
+  baris.push('*AI REPORT — ' + String(d.label || '') + '*');
+  if (r.headline) baris.push(String(r.headline));
+  const seksiTeks = (judul, isi) => {
+    if (!isi) return;
+    baris.push('');
+    baris.push(judul.toUpperCase());
+    baris.push(String(isi));
+  };
+  const seksiDaftar = (judul, arr) => {
+    if (!Array.isArray(arr) || !arr.length) return;
+    baris.push('');
+    baris.push(judul.toUpperCase());
+    arr.forEach(x => baris.push('- ' + String(x)));
+  };
+  seksiTeks(L.summary, r.summary);
+  seksiDaftar(L.highlights, r.highlights);
+  seksiDaftar(L.concerns, r.concerns);
+  seksiTeks(L.comparison, r.comparison);
+  seksiDaftar(L.recommendations, r.recommendations);
+  const chips = aiStatChips(d.stats);
+  if (chips.length) {
+    baris.push('');
+    baris.push(L.numbers.toUpperCase() + ': ' + chips.join(' · '));
+  }
+  baris.push('');
+  baris.push(L.note);
+  return baris.join('\n');
+}
+
+// Penyalin bersama untuk fitur baru. copyOpsRecap & copyReportForSheets
+// DIBIARKAN apa adanya — keduanya sudah terbukti jalan di HP pengguna,
+// dan menyatukannya sekarang berarti menyentuh kode yang tidak perlu
+// disentuh.
+async function salinKePapanKlip(teks) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    await navigator.clipboard.writeText(teks);
+    return;
+  }
+  const ta = document.createElement('textarea');
+  ta.value = teks;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  const ok = document.execCommand('copy');
+  document.body.removeChild(ta);
+  if (!ok) throw new Error('Copy was blocked by the browser.');
+}
+
+async function copyAiReport() {
+  if (!aiLast || !aiLast.report) {
+    toast('Generate the report first before copying.', 'err');
+    return;
+  }
+  try {
+    await salinKePapanKlip(aiReportText(aiLast));
+    toast('Report copied — paste it into WhatsApp', 'good');
+  } catch (e) {
+    toast(e.message || 'Could not copy the report.', 'err');
+  }
+}
+
+async function generateAiReport() {
+  if (aiBusy) return;
+  const p = aiPeriodInfo(aiPeriod);
+  const btn = $('aiGenBtn');
+  aiBusy = true;
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+  $('reportSummary').innerHTML = '<div class="riwayat-empty">Writing the report… this can take up to a minute.</div>';
+  $('reportList').innerHTML = '';
+  $('aiCopyRow').classList.add('hidden');
+
+  try {
+    const r = await callApi({
+      action: 'ai-report', sessionToken: state.token,
+      periodType: p.periodType, startDate: p.start, endDate: p.end,
+      prevStartDate: p.prevStart, prevEndDate: p.prevEnd,
+      lang: aiLang, label: p.label,
+    });
+
+    if (!r.ok) {
+      $('reportSummary').innerHTML = '<div class="riwayat-empty">'
+        + escapeHtml(r.error || 'Failed to generate the report.') + '</div>';
+      return;
+    }
+    // Periode tanpa catatan: server sengaja TIDAK memanggil AI. Yang
+    // tampil adalah keterangan apa adanya, bukan narasi karangan.
+    if (r.empty) {
+      aiLast = null;
+      $('reportSummary').innerHTML = '<div class="riwayat-empty">No activity recorded for '
+        + escapeHtml(p.label) + ' — nothing to report yet.</div>';
+      return;
+    }
+
+    aiLast = {
+      report: r.report, stats: r.stats, prevStats: r.prevStats,
+      label: r.label || p.label, lang: r.lang || aiLang,
+      from: p.start, to: p.end,
+    };
+    $('reportSummary').innerHTML = '';
+    renderAiReport(aiLast, r.saved === false);
+    $('aiCopyRow').classList.remove('hidden');
+
+  } catch (e) {
+    $('reportSummary').innerHTML = '<div class="riwayat-empty">'
+      + escapeHtml(e.message || 'Failed to generate the report.') + '</div>';
+  } finally {
+    aiBusy = false;
+    btn.disabled = false;
+    btn.textContent = 'Generate report';
+  }
+}
+
+// Laporan yang sudah pernah dibuat dibaca ulang dari activity_log —
+// membaca laporan minggu lalu tidak perlu membakar kuota Gemini lagi.
+async function loadSavedAiReports() {
+  openSheet('Saved AI reports', '<div class="riwayat-empty">Loading…</div>');
+  try {
+    const r = await callApi({ action: 'get-ai-reports', sessionToken: state.token });
+    if (!r.ok) {
+      $('sheetBody').innerHTML = '<div class="riwayat-empty">'
+        + escapeHtml(r.error || 'Failed to load saved reports.') + '</div>';
+      return;
+    }
+    // Baris yang isinya gagal di-parse di server datang dengan report
+    // null. Dibuang di sini supaya tidak ada kartu kosong yang diketuk
+    // lalu tidak melakukan apa-apa.
+    aiSavedCache = (r.items || []).filter(x => x && x.report);
+    if (!aiSavedCache.length) {
+      $('sheetBody').innerHTML = '<div class="riwayat-empty">No saved reports yet. Generate one first.</div>';
+      return;
+    }
+    $('sheetBody').innerHTML = aiSavedCache.map((x, i) =>
+      '<div class="air-saved-item" data-i="' + i + '">'
+      + '<div class="air-saved-top">' + escapeHtml(String(x.label || '')) + '</div>'
+      + '<div class="air-saved-meta">'
+      + escapeHtml(String(x.period_type || '') + ' · ' + String(x.lang || 'en').toUpperCase()
+                   + ' · ' + aiWaktuSingkat(x.created_at))
+      + '</div></div>').join('');
+
+    $('sheetBody').querySelectorAll('.air-saved-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const x = aiSavedCache[Number(el.dataset.i)];
+        if (!x) return;
+        aiLast = {
+          report: x.report, stats: x.stats, prevStats: x.prev_stats,
+          label: x.label, lang: x.lang || 'en',
+          from: x.date_from, to: x.date_to,
+        };
+        closeSheet();
+        if (reportMode !== 'ai') setReportMode('ai');
+        $('reportSummary').innerHTML = '';
+        renderAiReport(aiLast, false);
+        $('aiCopyRow').classList.remove('hidden');
+      });
+    });
+  } catch (e) {
+    $('sheetBody').innerHTML = '<div class="riwayat-empty">'
+      + escapeHtml(e.message || 'Failed to load saved reports.') + '</div>';
+  }
 }
 
 // ── DASBOR ────────────────────────────────────────────────────
@@ -4556,6 +5444,18 @@ function applyServerCapabilities(version) {
   const canSearch = serverAtLeast(1, 13);
   const box = $('riwayatSearchBox');
   if (box) box.classList.toggle('hidden', !canSearch);
+
+  // v2.23 — AI Report butuh action "ai-report" & "get-ai-reports" (v1.17).
+  // Kalau HTML sudah di-upload tapi Edge Function masih versi lama,
+  // tabnya DISEMBUNYIKAN — bukan menampilkan tombol yang pasti error.
+  // Pola degradasi yang sama dipakai pencarian riwayat di atas.
+  const canAi = serverAtLeast(1, 17);
+  const tabAi = $('modeAi');
+  if (tabAi) tabAi.classList.toggle('hidden', !canAi);
+  // Kalau mode AI sedang aktif lalu server ternyata belum mendukung,
+  // pengguna dikembalikan ke mode bulan supaya tidak terjebak di
+  // panel yang tabnya sudah hilang.
+  if (!canAi && reportMode === 'ai') setReportMode('month');
 }
 
 // ── FITUR: ANTREAN OFFLINE ──────────────────────────────────
@@ -5235,6 +6135,28 @@ function wireEvents() {
     loadReport();
   });
   $('opsCopyBtn').addEventListener('click', copyOpsRecap);
+
+  // ── v2.23 — AI Intelligence Report ────────────────────
+  // Memilih mode AI TIDAK langsung memanggil AI (beda dari mode Ops
+  // yang langsung memuat). Alasannya biaya: satu panggilan Gemini
+  // per klik tab akan terbakar hanya karena pengguna melihat-lihat.
+  $('modeAi').addEventListener('click', () => setReportMode('ai'));
+  $('aiPThisWeek').addEventListener('click', () => setAiPeriod('this-week'));
+  $('aiPLastWeek').addEventListener('click', () => setAiPeriod('last-week'));
+  $('aiPThisMonth').addEventListener('click', () => setAiPeriod('this-month'));
+  $('aiPLastMonth').addEventListener('click', () => setAiPeriod('last-month'));
+  $('aiLangEn').addEventListener('click', () => setAiLang('en'));
+  $('aiLangId').addEventListener('click', () => setAiLang('id'));
+  $('aiGenBtn').addEventListener('click', generateAiReport);
+  $('aiSavedBtn').addEventListener('click', loadSavedAiReports);
+  $('aiCopyBtn').addEventListener('click', copyAiReport);
+  // Bahasa pilihan terakhir dipulihkan. Kalau localStorage tidak bisa
+  // dibaca, default EN tetap berlaku — tidak ada yang gagal.
+  try {
+    const simpanan = localStorage.getItem('mfbit_ai_lang');
+    if (simpanan === 'id' || simpanan === 'en') setAiLang(simpanan);
+  } catch (e) {}
+
   $('reportStart').addEventListener('change', e => { if (e.target.value) $('reportStartText').textContent = formatTanggalPendek(e.target.value); });
   $('reportEnd').addEventListener('change', e => { if (e.target.value) $('reportEndText').textContent = formatTanggalPendek(e.target.value); });
   $('reportLoadBtn').addEventListener('click', loadReport);
