@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!-- ================================================================
+     AnabhiDev-3D — Anabhi Dev Selected Work (3D Portfolio)
+     HTML · CSS · JavaScript · Three.js r128 · GSAP ScrollTrigger
+     Development · Anabhi Dev
+     Version   : 1.3
+     Generated : 3 September 2026, 09:37:58
+     ================================================================ -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -93,7 +100,8 @@ h1,h2,h3{font-family:'Sora',sans-serif; font-weight:700; line-height:1.1;}
 .wrap{max-width:var(--max); margin:0 auto; padding:0 var(--gutter);}
 @media (max-width:760px){ :root{ --gutter:24px; } }
 
-section{position:relative; z-index:1;}
+/* nav fixed lebih tinggi setelah logo dinaikkan 100% — jump link tidak boleh ketutup */
+section{position:relative; z-index:1; scroll-margin-top:118px;}
 
 /* ===== CUSTOM CURSOR ===== */
 #cur{position:fixed; width:7px; height:7px; background:var(--blue-lt); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%);}
@@ -104,19 +112,20 @@ section{position:relative; z-index:1;}
 #bg-canvas{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
 
 /* ===== BG MODE SWITCHER ===== */
-.bg-switch{position:fixed; bottom:24px; right:24px; z-index:90; display:flex; gap:4px;}
+/* 8 mode — dibungkus 2 baris supaya tidak memanjang melewati layar */
+.bg-switch{position:fixed; bottom:24px; right:24px; z-index:90; display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px; max-width:min(430px, calc(100vw - 48px));}
 .bg-btn{padding:8px 16px; background:rgba(11,24,41,0.7); border:1px solid var(--w12); color:var(--silver); font-family:'Sora',sans-serif; font-size:.52rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; cursor:none; transition:all .3s ease; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
 .bg-btn:hover, .bg-btn.active{border-color:var(--blue-lt); color:var(--blue-lt); background:rgba(59,158,232,0.1);}
 @media (max-width:560px){
-  .bg-switch{bottom:16px; right:8px; left:8px; flex-wrap:nowrap; justify-content:center;}
-  .bg-btn{padding:5px 8px; font-size:.4rem; letter-spacing:.12em; flex:1; text-align:center;}
+  .bg-switch{bottom:16px; right:8px; left:8px; max-width:none; flex-wrap:wrap; justify-content:center;}
+  .bg-btn{padding:5px 4px; font-size:.4rem; letter-spacing:.08em; flex:1 1 21%; text-align:center;}
 }
 
 /* ===== NAV ===== */
 nav{position:fixed; top:0; left:0; right:0; z-index:300; padding:22px var(--gutter); display:flex; align-items:center; justify-content:space-between; transition:all .4s;}
 nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); padding:14px var(--gutter); border-bottom:1px solid var(--w07);}
 .nav-brand{display:flex; align-items:center; gap:10px;}
-.nav-brand img{height:32px; display:block;}
+.nav-brand img{height:64px; display:block;}
 .nav-links{display:flex; align-items:center; gap:6px;}
 .nav-links a.nl{font-family:'Sora',sans-serif; font-size:13px; font-weight:500; color:var(--silver); padding:8px 14px; border-radius:6px; transition:color .25s ease; cursor:none;}
 .nav-links a.nl:hover{color:var(--white);}
@@ -136,7 +145,7 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
   position:fixed; top:0; right:0; height:100vh; width:78vw; max-width:320px;
   background:rgba(11,24,41,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   border-left:1px solid var(--w12); z-index:290;
-  display:flex; flex-direction:column; gap:4px; padding:100px 28px 40px;
+  display:flex; flex-direction:column; gap:4px; padding:124px 28px 40px;
   transform:translateX(100%); transition:transform .35s ease;
 }
 #mobileMenu.open{ transform:translateX(0); }
@@ -149,7 +158,8 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 }
 
 /* ===== HERO ===== */
-#hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 24px 80px;}
+/* padding bawah dilebihkan supaya blok konten yang ter-center tidak menabrak .scroll-hint */
+#hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:124px 24px 110px;}
 .hero-in{opacity:0; transform:translateY(32px);}
 .hero-logo-wrap{position:relative; display:inline-block; margin:0 auto 28px;}
 .hero-logo-glow{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:140%; height:140%; pointer-events:none; background:radial-gradient(ellipse,rgba(59,158,232,0.22) 0%,transparent 65%); z-index:0;}
@@ -175,7 +185,7 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 .hero-cta{margin-top:36px; display:inline-block; padding:14px 38px; background:var(--blue); color:var(--white); font-family:'Sora',sans-serif; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; border-radius:999px; transition:all .3s ease; cursor:none;}
 .hero-cta:hover{background:var(--blue-lt); box-shadow:0 0 40px rgba(59,158,232,0.4); transform:translateY(-2px);}
 
-.stats{margin-top:64px; display:flex; gap:64px; flex-wrap:wrap; justify-content:center; opacity:0;}
+.stats{margin-top:52px; display:flex; gap:64px; flex-wrap:wrap; justify-content:center; opacity:0;}
 .stat{min-width:140px; text-align:center;}
 .stat-num{font-family:'Sora',sans-serif; font-weight:700; font-size:clamp(40px,5.4vw,56px); line-height:1; color:var(--white); font-variant-numeric:tabular-nums;}
 .stat-num .suffix{color:var(--blue-lt);}
@@ -201,8 +211,8 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 
 /* ===== WORK / CAROUSEL ===== */
 #work{padding:20px 0 130px;}
-#carousel-canvas{width:100%; height:560px; display:block; cursor:none;}
-@media (max-width:760px){ #carousel-canvas{height:420px;} }
+#carousel-canvas{width:100%; height:700px; display:block; cursor:none;}
+@media (max-width:760px){ #carousel-canvas{height:540px;} }
 .carousel-hint{text-align:center; margin-top:14px; font-family:'Sora',sans-serif; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--w60);}
 .work-detail{text-align:center; margin-top:36px; min-height:64px;}
 .work-detail-name{font-family:'Sora',sans-serif; font-size:22px; font-weight:600; color:var(--white);}
@@ -223,12 +233,15 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 .skill-tag{font-family:'Sora',sans-serif; font-size:12px; font-weight:500; padding:7px 16px; border:1px solid var(--w12); border-radius:999px; color:var(--silver); background:var(--w07);}
 
 /* ===== GALLERY (auto-scroll marquee) ===== */
-#gallery{padding:0 0 130px; overflow:hidden;}
-.gallery-track-wrap{overflow:hidden; position:relative; width:100%; max-width:100vw; -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);}
-.gallery-track{display:flex; gap:20px; width:max-content; animation:marquee 38s linear infinite;}
+/* sisa padding bawah dipindah ke .gallery-track supaya ada ruang untuk pantulan */
+#gallery{padding:0 0 46px; overflow:hidden;}
+.gallery-track-wrap{overflow:hidden; position:relative; width:100%; max-width:100vw; perspective:1500px; perspective-origin:50% 32%; -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);}
+.gallery-track{display:flex; gap:20px; width:max-content; padding-bottom:112px; transform-style:preserve-3d; animation:marquee 38s linear infinite;}
 @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-.gal-item{flex:0 0 auto; width:340px; height:240px; border-radius:10px; overflow:hidden; border:1px solid var(--w12); position:relative;}
-@media (max-width:760px){ .gal-item{width:240px; height:170px;} }
+.gal-item{flex:0 0 auto; width:340px; height:240px; border-radius:10px; overflow:hidden; border:1px solid var(--w12); position:relative; box-shadow:0 26px 54px rgba(4,10,20,.55);}
+/* pantulan lantai — Chromium/Safari; browser lain mengabaikannya tanpa efek samping */
+@media (min-width:761px){ .gal-item{-webkit-box-reflect:below 6px linear-gradient(transparent 58%, rgba(255,255,255,0.26));} }
+@media (max-width:760px){ .gal-item{width:240px; height:170px;} .gallery-track{padding-bottom:70px;} }
 .gal-item img{width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.82) saturate(.95);}
 .gal-overlay{position:absolute; bottom:0; left:0; right:0; padding:14px 16px; background:linear-gradient(transparent, rgba(6,14,26,0.85)); font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--white);}
 
@@ -255,17 +268,23 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12px; color:var(--w60); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; position:relative; z-index:1;}
 
 /* ===== MODAL (carousel item detail) ===== */
-.modal-overlay{position:fixed; inset:0; z-index:500; background:rgba(6,14,26,0.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .3s;}
+/* perspective dipasang di overlay (bukan di box) supaya modal benar-benar berputar
+   di ruang 3D dan anak-anaknya bisa bertingkat kedalaman */
+.modal-overlay{position:fixed; inset:0; z-index:500; background:rgba(6,14,26,0.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .3s; perspective:1500px; perspective-origin:50% 45%;}
 .modal-overlay.open{opacity:1; pointer-events:all;}
-.modal-box{max-width:640px; width:100%; background:var(--navy-card); border:1px solid var(--w12); position:relative; overflow:hidden; border-radius:12px;}
-.modal-box::before{content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,var(--blue-lt),transparent);}
-.modal-close{position:absolute; top:16px; right:16px; z-index:10; background:transparent; border:1px solid var(--w12); color:var(--silver); width:32px; height:32px; cursor:none; font-size:14px; border-radius:999px; display:flex; align-items:center; justify-content:center; transition:all .3s;}
+/* overflow:hidden SENGAJA dihapus — properti itu memaksa preserve-3d jadi flat,
+   sudut membulat kini ditangani border-radius masing-masing anak */
+.modal-box{max-width:640px; width:100%; background:linear-gradient(160deg,#1B2C44 0%,var(--navy-card) 55%,#101C2E 100%); border:1px solid var(--w12); position:relative; border-radius:14px; transform-style:preserve-3d; box-shadow:0 44px 90px rgba(0,0,0,.62), 0 10px 26px rgba(0,0,0,.45);}
+.modal-box::before{content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,var(--blue-lt),transparent); transform:translateZ(2px);}
+.modal-close{position:absolute; top:16px; right:16px; z-index:10; background:rgba(11,24,41,.55); border:1px solid var(--w12); color:var(--silver); width:32px; height:32px; cursor:none; font-size:14px; border-radius:999px; display:flex; align-items:center; justify-content:center; transition:border-color .3s, color .3s; transform:translateZ(46px); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);}
 .modal-close:hover{border-color:var(--blue-lt); color:var(--white);}
-.modal-media{height:240px; background:repeating-linear-gradient(135deg, var(--navy-mid) 0px, var(--navy-mid) 2px, var(--navy-card) 2px, var(--navy-card) 4px); display:flex; align-items:center; justify-content:center; color:var(--w60); font-size:13px; text-align:center; padding:20px;}
-.modal-body{padding:32px 36px 36px;}
-.modal-eyebrow{font-family:'Sora',sans-serif; font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--blue-lt); display:block; margin-bottom:10px;}
-.modal-name{font-size:26px; margin-bottom:14px;}
-.modal-desc{font-size:14px; line-height:1.8; color:var(--silver); margin-bottom:22px;}
+/* background-size:cover di-set lewat JS; tanpa overflow:hidden di sini, gambar
+   akan menembus sudut membulat modal — clip-nya harus dipegang elemen ini sendiri */
+.modal-media{height:240px; overflow:hidden; background:repeating-linear-gradient(135deg, var(--navy-mid) 0px, var(--navy-mid) 2px, var(--navy-card) 2px, var(--navy-card) 4px); display:flex; align-items:center; justify-content:center; color:var(--w60); font-size:13px; text-align:center; padding:20px; border-radius:13px 13px 0 0; box-shadow:0 14px 30px rgba(0,0,0,.42);}
+.modal-body{padding:32px 36px 36px; transform-style:preserve-3d;}
+.modal-eyebrow{font-family:'Sora',sans-serif; font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--blue-lt); display:block; margin-bottom:10px; transform:translateZ(10px);}
+.modal-name{font-size:26px; margin-bottom:14px; transform:translateZ(22px);}
+.modal-desc{font-size:14px; line-height:1.8; color:var(--silver); margin-bottom:22px; transform:translateZ(12px);}
 .modal-link{font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--blue-lt); border-bottom:1px solid var(--blue-dark); padding-bottom:3px;}
 
 /* reveal helper (driven by GSAP, default state set above per-element) */
@@ -282,12 +301,16 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
   <button class="bg-btn" data-bg="ocean">Ocean</button>
   <button class="bg-btn" data-bg="helix">Helix</button>
   <button class="bg-btn" data-bg="cosmic">Cosmic</button>
+  <button class="bg-btn" data-bg="neural">Neural</button>
+  <button class="bg-btn" data-bg="grid">Grid</button>
+  <button class="bg-btn" data-bg="circuit">Circuit</button>
+  <button class="bg-btn" data-bg="matrix">Matrix</button>
 </div>
 
 <header>
 <nav id="nav">
   <a href="#hero" class="nav-brand">
-    <img src="logo.png" alt="Anabhi Dev" width="57" height="32">
+    <img src="https://anabhidev.com/3D/logo.png?v=20260903a" alt="Anabhi Dev" width="114" height="64">
   </a>
   <div class="nav-links">
     <a href="#hero" class="nl">Home</a>
@@ -318,7 +341,7 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
     <div class="eyebrow">Selected Work — Coding &amp; Automation</div>
     <div class="hero-logo-wrap">
       <div class="hero-logo-glow"></div>
-      <img id="hero-logo" src="https://anabhidev.com/logo.webp" alt="Anabhi Dev">
+      <img id="hero-logo" src="https://anabhidev.com/logo.webp?v=20260903a" alt="Anabhi Dev">
     </div>
     <h1 class="hero-h1">
       Between idea and deploy,
@@ -375,23 +398,23 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
   </div>
   <div class="gallery-track-wrap">
     <div class="gallery-track" id="galleryTrack">
-      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
-      <div class="gal-item"><img src="spingather.jpg" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
-      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="lms.jpg" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
-      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
-      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace.webp?v=20260903a" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit.jpg?v=20260903a" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/spingather.jpg?v=20260903a" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace-2.webp?v=20260903a" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/lms.jpg?v=20260903a" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit-2.jpg?v=20260903a" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace-3.webp?v=20260903a" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit-3.jpg?v=20260903a" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
       <!-- duplicate set for seamless loop -->
-      <div class="gal-item"><img src="innerpeace.webp" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit.jpg" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
-      <div class="gal-item"><img src="spingather.jpg" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
-      <div class="gal-item"><img src="innerpeace-2.webp" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="lms.jpg" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
-      <div class="gal-item"><img src="delanswit-2.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
-      <div class="gal-item"><img src="innerpeace-3.webp" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
-      <div class="gal-item"><img src="delanswit-3.jpg" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace.webp?v=20260903a" alt="InnerPeace Villa pool" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit.jpg?v=20260903a" alt="Delanswit hampers" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Hampers</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/spingather.jpg?v=20260903a" alt="SpinGather wheel" width="340" height="240" loading="lazy"><div class="gal-overlay">SpinGather — Automation</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace-2.webp?v=20260903a" alt="InnerPeace Villa bedroom" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/lms.jpg?v=20260903a" alt="LMS dashboard" width="340" height="240" loading="lazy"><div class="gal-overlay">LMS — Dashboard</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit-2.jpg?v=20260903a" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/innerpeace-3.webp?v=20260903a" alt="InnerPeace Villa terrace" width="340" height="240" loading="lazy"><div class="gal-overlay">InnerPeace Bali — Villa</div></div>
+      <div class="gal-item"><img src="https://anabhidev.com/3D/delanswit-3.jpg?v=20260903a" alt="Delanswit gallery" width="340" height="240" loading="lazy"><div class="gal-overlay">Delanswit — Pastry</div></div>
     </div>
   </div>
 </section>
@@ -416,7 +439,7 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
 
 <section id="about">
   <div class="about-wrap">
-    <div class="about-photo" id="aboutPhoto" style="background-image:url('https://anabhidev.com/founder-anabhi-dev.webp'); background-size:cover; background-position:center;"></div>
+    <div class="about-photo" id="aboutPhoto" style="background-image:url('https://anabhidev.com/founder-anabhi-dev.webp?v=20260903a'); background-size:cover; background-position:center;"></div>
     <div class="about-text" id="aboutText">
       <span class="eyebrow" style="margin-bottom:14px;">About</span>
       <h2 style="font-size:28px; margin-bottom:16px;">I'm Agus Wibawa</h2>
@@ -529,6 +552,17 @@ let activeParticleCount=N;
 function setParticleCount(n){ activeParticleCount=n; pG.setDrawRange(0,n); }
 
 const wm=(c,o)=>new THREE.MeshBasicMaterial({color:c, wireframe:true, transparent:true, opacity:o});
+
+/* helper bersama — dipakai mode Grid dan juga lantai/bayangan carousel di bawah */
+function makeRadialTexture(inner, outer){
+  const cv=document.createElement('canvas'); cv.width=cv.height=256;
+  const g=cv.getContext('2d');
+  const gr=g.createRadialGradient(128,128,0,128,128,128);
+  gr.addColorStop(0, inner); gr.addColorStop(1, outer);
+  g.fillStyle=gr; g.fillRect(0,0,256,256);
+  const t=new THREE.CanvasTexture(cv); t.needsUpdate=true;
+  return t;
+}
 
 /* ── CLASSIC: TorusKnot + Icosahedron + Octahedron ── */
 const classicGroup=new THREE.Group();
@@ -669,11 +703,216 @@ function animCosmic(t){
   cosmicGroup.rotation.x=Math.sin(t*.1)*.1;
 }
 
+/* ── NEURAL: Node Network + Sinapsis Berdenyut ── */
+const neuralGroup=new THREE.Group(); neuralGroup.visible=false;
+const NN=110, nnBase=[], nnPos=new Float32Array(NN*3), nnCol=new Float32Array(NN*3);
+for(let i=0;i<NN;i++){
+  const th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1), r=1.4+Math.random()*3.4;
+  const x=Math.sin(ph)*Math.cos(th)*r, y=Math.cos(ph)*r*.85, z=Math.sin(ph)*Math.sin(th)*r;
+  nnBase.push({x:x, y:y, z:z, sp:.4+Math.random()*.9, ph:Math.random()*6.28});
+  nnPos[i*3]=x; nnPos[i*3+1]=y; nnPos[i*3+2]=z;
+  const c=pal[~~(Math.random()*pal.length)];
+  nnCol[i*3]=c[0]; nnCol[i*3+1]=c[1]; nnCol[i*3+2]=c[2];
+}
+const nnGeo=new THREE.BufferGeometry();
+nnGeo.setAttribute('position', new THREE.BufferAttribute(nnPos,3));
+nnGeo.setAttribute('color', new THREE.BufferAttribute(nnCol,3));
+/* pakai sprite bulat, bukan titik kotak default — node dekat kamera jadi bulatan lembut */
+const nnDot=makeRadialTexture('rgba(255,255,255,1)','rgba(255,255,255,0)');
+neuralGroup.add(new THREE.Points(nnGeo, new THREE.PointsMaterial({map:nnDot, size:.11, vertexColors:true, transparent:true, opacity:.85, sizeAttenuation:true, depthWrite:false})));
+
+/* pasangan node yang cukup dekat saja yang disambung, dibatasi supaya tidak berat */
+const nnPairs=[];
+for(let i=0;i<NN;i++) for(let j=i+1;j<NN;j++){
+  const a=nnBase[i], b=nnBase[j];
+  const dx=a.x-b.x, dy=a.y-b.y, dz=a.z-b.z;
+  if(dx*dx+dy*dy+dz*dz < 2.0) nnPairs.push(i,j);
+}
+if(nnPairs.length>520) nnPairs.length=520;
+const nnLinePos=new Float32Array(nnPairs.length*3);
+const nnLineGeo=new THREE.BufferGeometry();
+nnLineGeo.setAttribute('position', new THREE.BufferAttribute(nnLinePos,3));
+const nnLineMat=new THREE.LineBasicMaterial({color:0x3B9EE8, transparent:true, opacity:.16});
+neuralGroup.add(new THREE.LineSegments(nnLineGeo, nnLineMat));
+bgS.add(neuralGroup);
+
+function animNeural(t){
+  const p=nnGeo.attributes.position.array;
+  for(let i=0;i<NN;i++){
+    const b=nnBase[i];
+    p[i*3]  = b.x + Math.sin(t*b.sp + b.ph)*.22;
+    p[i*3+1]= b.y + Math.cos(t*b.sp*.8 + b.ph)*.22;
+    p[i*3+2]= b.z + Math.sin(t*b.sp*.6 + b.ph)*.22;
+  }
+  nnGeo.attributes.position.needsUpdate=true;
+  for(let k=0;k<nnPairs.length;k++){
+    const n=nnPairs[k];
+    nnLinePos[k*3]=p[n*3]; nnLinePos[k*3+1]=p[n*3+1]; nnLinePos[k*3+2]=p[n*3+2];
+  }
+  nnLineGeo.attributes.position.needsUpdate=true;
+  nnLineMat.opacity=.12+Math.sin(t*1.3)*.05;
+  neuralGroup.rotation.y=t*.06;
+  neuralGroup.rotation.x=Math.sin(t*.12)*.12;
+}
+
+/* ── GRID: Lantai Neon Tak Terhingga ── */
+const gridGroup=new THREE.Group(); gridGroup.visible=false;
+const GRID_CELL=1; /* 60 / 60 divisi */
+function makeNeonGrid(y){
+  const g=new THREE.GridHelper(60, 60, 0x8FD0FF, 0x2E7FC4);
+  g.material.transparent=true; g.material.opacity=.58; g.material.depthWrite=false;
+  g.position.y=y;
+  return g;
+}
+const gridFloor=makeNeonGrid(-3.4), gridCeil=makeNeonGrid(3.4);
+gridGroup.add(gridFloor); gridGroup.add(gridCeil);
+const horizon=new THREE.Mesh(
+  new THREE.PlaneGeometry(70,16),
+  new THREE.MeshBasicMaterial({map:makeRadialTexture('rgba(59,158,232,0.85)','rgba(59,158,232,0)'), transparent:true, opacity:.45, depthWrite:false, blending:THREE.AdditiveBlending})
+);
+horizon.position.set(0,0,-22);
+gridGroup.add(horizon);
+bgS.add(gridGroup);
+
+function animGrid(t){
+  /* digeser sepanjang satu sel lalu diulang — ilusi lantai tak berujung */
+  const z=(t*2.6)%GRID_CELL;
+  gridFloor.position.z=z; gridCeil.position.z=z;
+  gridGroup.rotation.y=Math.sin(t*.05)*.05;
+}
+
+/* ── CIRCUIT: Jalur PCB + Pulsa Data ── */
+const circuitGroup=new THREE.Group(); circuitGroup.visible=false;
+const traces=[], trSeg=[], padPts=[];
+for(let i=0;i<30;i++){
+  const pts=[];
+  const z=-5+Math.random()*4.5;
+  let x=Math.round((Math.random()-.5)*17*2)/2;
+  let y=Math.round((Math.random()-.5)*11*2)/2;
+  pts.push(new THREE.Vector3(x,y,z));
+  let horiz=Math.random()<.5;
+  const steps=3+~~(Math.random()*3);
+  for(let s=0;s<steps;s++){
+    /* kalau melewati batas, arah dibalik — panjang segmen tidak pernah nol */
+    const len=(.8+Math.random()*2.6)*(Math.random()<.5?-1:1);
+    if(horiz){ x = (x+len<-9.5 || x+len>9.5) ? x-len : x+len; }
+    else     { y = (y+len<-6.5 || y+len>6.5) ? y-len : y+len; }
+    pts.push(new THREE.Vector3(x,y,z));
+    horiz=!horiz;
+  }
+  const segLen=[]; let tot=0;
+  for(let s=0;s<pts.length-1;s++){ const d=pts[s].distanceTo(pts[s+1]); segLen.push(d); tot+=d; }
+  pts.segLen=segLen; pts.total=tot;
+  traces.push(pts);
+  for(let s=0;s<pts.length-1;s++){
+    trSeg.push(pts[s].x,pts[s].y,pts[s].z, pts[s+1].x,pts[s+1].y,pts[s+1].z);
+  }
+  padPts.push(pts[0].x,pts[0].y,pts[0].z, pts[pts.length-1].x,pts[pts.length-1].y,pts[pts.length-1].z);
+}
+const trGeo=new THREE.BufferGeometry();
+trGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(trSeg),3));
+circuitGroup.add(new THREE.LineSegments(trGeo, new THREE.LineBasicMaterial({color:0x2E7FC4, transparent:true, opacity:.34})));
+const padGeo=new THREE.BufferGeometry();
+padGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(padPts),3));
+const padMat=new THREE.PointsMaterial({color:0x6AB8F0, size:.10, transparent:true, opacity:.45, sizeAttenuation:true});
+circuitGroup.add(new THREE.Points(padGeo, padMat));
+
+const PULSE=70, pulses=[], pulsePos=new Float32Array(PULSE*3);
+for(let i=0;i<PULSE;i++) pulses.push({tr:~~(Math.random()*traces.length), d:Math.random(), sp:.35+Math.random()*.9});
+const pulseGeo=new THREE.BufferGeometry();
+pulseGeo.setAttribute('position', new THREE.BufferAttribute(pulsePos,3));
+circuitGroup.add(new THREE.Points(pulseGeo, new THREE.PointsMaterial({color:0xCFE9FF, size:.13, transparent:true, opacity:.95, sizeAttenuation:true, depthWrite:false, blending:THREE.AdditiveBlending})));
+bgS.add(circuitGroup);
+
+let ccLast=0;
+function animCircuit(t){
+  let dt=t-ccLast; ccLast=t;
+  if(dt<0 || dt>.1) dt=.016;
+  for(let i=0;i<PULSE;i++){
+    const p=pulses[i];
+    p.d += p.sp*dt/6;
+    if(p.d>1){ p.d=0; p.tr=~~(Math.random()*traces.length); }
+    const tr=traces[p.tr];
+    if(tr.total<=0) continue;
+    let target=p.d*tr.total, acc=0, si=0;
+    while(si<tr.segLen.length-1 && acc+tr.segLen[si]<target){ acc+=tr.segLen[si]; si++; }
+    const f = tr.segLen[si]>0 ? (target-acc)/tr.segLen[si] : 0;
+    const a=tr[si], b=tr[si+1];
+    pulsePos[i*3]  = a.x+(b.x-a.x)*f;
+    pulsePos[i*3+1]= a.y+(b.y-a.y)*f;
+    pulsePos[i*3+2]= a.z+(b.z-a.z)*f;
+  }
+  pulseGeo.attributes.position.needsUpdate=true;
+  padMat.opacity=.35+Math.sin(t*1.6)*.14;
+  circuitGroup.rotation.y=Math.sin(t*.08)*.10;
+  circuitGroup.rotation.x=Math.cos(t*.06)*.06;
+}
+
+/* ── MATRIX: Code Rain ── */
+const matrixGroup=new THREE.Group(); matrixGroup.visible=false;
+const MX_CHARS=['0','1','ｱ','ﾂ'], MX_COLS=48, MX_TRAIL=13;
+function makeGlyphTexture(ch){
+  const cv=document.createElement('canvas'); cv.width=cv.height=64;
+  const g=cv.getContext('2d');
+  g.fillStyle='#ffffff';
+  g.font='700 50px Sora, monospace';
+  g.textAlign='center'; g.textBaseline='middle';
+  g.fillText(ch, 32, 34);
+  const t=new THREE.CanvasTexture(cv); t.needsUpdate=true;
+  return t;
+}
+const mxSets=[];
+for(let g=0; g<MX_CHARS.length; g++){
+  const cols=[];
+  for(let i=g;i<MX_COLS;i+=MX_CHARS.length){
+    cols.push({
+      x:(i-MX_COLS/2)*.42 + (Math.random()-.5)*.15,
+      z:-6+Math.random()*6.2,
+      head:Math.random()*18-9,
+      speed:1.6+Math.random()*2.6
+    });
+  }
+  const n=cols.length*MX_TRAIL;
+  const pos=new Float32Array(n*3), col=new Float32Array(n*3);
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(col,3));
+  matrixGroup.add(new THREE.Points(geo, new THREE.PointsMaterial({
+    map:makeGlyphTexture(MX_CHARS[g]), size:.30, vertexColors:true, transparent:true,
+    opacity:.95, sizeAttenuation:true, depthWrite:false, blending:THREE.AdditiveBlending
+  })));
+  mxSets.push({cols:cols, geo:geo, pos:pos, col:col});
+}
+bgS.add(matrixGroup);
+
+let mxLast=0;
+function animMatrix(t){
+  let dt=t-mxLast; mxLast=t;
+  if(dt<0 || dt>.1) dt=.016;
+  for(let s=0;s<mxSets.length;s++){
+    const set=mxSets[s]; let k=0;
+    for(let i=0;i<set.cols.length;i++){
+      const c=set.cols[i];
+      c.head -= c.speed*dt;
+      if(c.head < -9){ c.head = 9+Math.random()*3; c.z=-6+Math.random()*6.2; }
+      for(let j=0;j<MX_TRAIL;j++){
+        const f=1-j/MX_TRAIL;                 /* kepala paling terang, ekor memudar */
+        set.pos[k*3]=c.x; set.pos[k*3+1]=c.head + j*.42; set.pos[k*3+2]=c.z;
+        if(j===0){ set.col[k*3]=.85; set.col[k*3+1]=.97; set.col[k*3+2]=1; }
+        else { set.col[k*3]=.13*f; set.col[k*3+1]=.55*f; set.col[k*3+2]=.90*f; }
+        k++;
+      }
+    }
+    set.geo.attributes.position.needsUpdate=true;
+    set.geo.attributes.color.needsUpdate=true;
+  }
+}
+
 /* ── MODE SWITCHER ── */
 let currentMode='classic';
-const bgGroups={classic:classicGroup, ocean:oceanGroup, helix:helixGroup, cosmic:cosmicGroup};
-const bgAnimFns={classic:animClassic, ocean:animOcean, helix:animHelix, cosmic:animCosmic};
-const bgParticleCounts={classic:2200, ocean:1000, helix:1600, cosmic:900};
+const bgGroups={classic:classicGroup, ocean:oceanGroup, helix:helixGroup, cosmic:cosmicGroup, neural:neuralGroup, grid:gridGroup, circuit:circuitGroup, matrix:matrixGroup};
+const bgAnimFns={classic:animClassic, ocean:animOcean, helix:animHelix, cosmic:animCosmic, neural:animNeural, grid:animGrid, circuit:animCircuit, matrix:animMatrix};
+const bgParticleCounts={classic:2200, ocean:1000, helix:1600, cosmic:900, neural:700, grid:1300, circuit:600, matrix:500};
 
 function switchBgMode(mode){
   if(mode===currentMode) return;
@@ -742,11 +981,14 @@ function animateStats(){
 }
 
 /* ============ WORK DATA ============ */
+/* Aset sendiri dipanggil absolut + version query (SOP kat. 1) supaya preview lokal
+   file:// tetap menemukan gambar dan update tidak tertahan cache CDN. */
+const ASSET='https://anabhidev.com/3D/', AV='?v=20260903a';
 const WORK=[
-  {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:'innerpeace.webp'},
-  {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:'delanswit.jpg'},
-  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:'spingather.jpg'},
-  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:'lms.jpg'},
+  {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:ASSET+'innerpeace.webp'+AV},
+  {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:ASSET+'delanswit.jpg'+AV},
+  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:ASSET+'spingather.jpg'+AV},
+  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:ASSET+'lms.jpg'+AV},
 ];
 
 /* ============ CAROUSEL 3D (Three.js) ============ */
@@ -754,8 +996,15 @@ const mC=document.getElementById('carousel-canvas');
 const mR=new THREE.WebGLRenderer({canvas:mC, alpha:true, antialias:true});
 mR.setPixelRatio(Math.min(devicePixelRatio,2));
 const mScene=new THREE.Scene();
-const mCam=new THREE.PerspectiveCamera(50, mC.clientWidth/mC.clientHeight, .1, 50);
-mCam.position.set(0, 0.3, 6.2);
+/* kamera diangkat + FOV dinaikkan: perspektif lebih kuat, ring terbaca sebagai elips,
+   dan ada ruang di bawah card untuk pantulan lantai */
+const mCam=new THREE.PerspectiveCamera(56, mC.clientWidth/mC.clientHeight, .1, 60);
+/* mundur lagi setelah ring dimiringkan: card sisi kanan naik ~0,81 unit dan sisi kiri
+   turun sebanyak itu, jadi tinggi total yang harus muat bertambah ~1,6 unit */
+/* card tertinggi selalu berada di SISI ring (z~0), yang jaraknya jauh dari kamera,
+   jadi headroom-nya jauh lebih longgar dari perkiraan kasar — kamera boleh maju */
+mCam.position.set(0, 1.05, 7.8);
+mCam.lookAt(0, -0.45, 0);
 
 function resM(){
   const w=mC.clientWidth, h=mC.clientHeight;
@@ -766,18 +1015,51 @@ function resM(){
 resM();
 window.addEventListener('resize', resM);
 
-const CARD_W=2.0, CARD_H=2.6, RADIUS=3.4;
-const cGroup=new THREE.Group();
-mScene.add(cGroup);
+const CARD_W=2.15, CARD_H=2.8, RADIUS=3.6;
+const FLOOR_Y=-CARD_H/2-0.14;            /* ring dipindah ke dasar card, jadi "lantai" */
+const _v3=new THREE.Vector3();
 
-const oRing=new THREE.Mesh(new THREE.TorusGeometry(RADIUS,.008,8,80), new THREE.MeshBasicMaterial({color:0x3B9EE8, transparent:true, opacity:.22}));
+/* tiltGroup dipisah dari cGroup supaya parallax mouse tidak bertabrakan
+   dengan tween intro ScrollTrigger yang menganimasikan cGroup.rotation.x */
+const tiltGroup=new THREE.Group();
+mScene.add(tiltGroup);
+
+/* rollGroup = kemiringan "cincin Saturnus". Harus jadi PARENT dari cGroup, bukan
+   properti cGroup sendiri: kalau rotation.z dipasang di cGroup, urutan Euler XYZ
+   membuat roll ikut berputar bersama spin rotation.y, sehingga kemiringannya
+   berputar-putar. Sebagai parent, roll-nya diam di ruang dunia — sisi kanan tetap
+   di atas dan sisi kiri tetap di bawah sementara card berputar melewatinya. */
+const SATURN_TILT=13*Math.PI/180;
+const rollGroup=new THREE.Group();
+rollGroup.rotation.z=SATURN_TILT;
+tiltGroup.add(rollGroup);
+const cGroup=new THREE.Group();
+rollGroup.add(cGroup);
+
+/* garis cincin dipertegas — inilah yang membuat kemiringannya terbaca sebagai "cincin Saturnus" */
+const oRing=new THREE.Mesh(new THREE.TorusGeometry(RADIUS,.011,8,80), new THREE.MeshBasicMaterial({color:0x3B9EE8, transparent:true, opacity:.34}));
 oRing.rotation.x=Math.PI/2;
+oRing.position.y=FLOOR_Y;
 cGroup.add(oRing);
+
+const oRing2=new THREE.Mesh(new THREE.TorusGeometry(RADIUS+.55,.007,8,90), new THREE.MeshBasicMaterial({color:0x186DB0, transparent:true, opacity:.22}));
+oRing2.rotation.x=Math.PI/2;
+oRing2.position.y=FLOOR_Y-.02;
+cGroup.add(oRing2);
+
+/* cahaya lantai — bikin ring terasa sebagai bidang, bukan garis mengambang */
+const floorGlow=new THREE.Mesh(
+  new THREE.CircleGeometry(RADIUS+1.2, 64),
+  new THREE.MeshBasicMaterial({map:makeRadialTexture('rgba(59,158,232,0.55)','rgba(59,158,232,0)'), transparent:true, opacity:.28, depthWrite:false, blending:THREE.AdditiveBlending})
+);
+floorGlow.rotation.x=-Math.PI/2;
+floorGlow.position.y=FLOOR_Y-.03;
+cGroup.add(floorGlow);
 
 const OP=110, opa=new Float32Array(OP*3);
 for(let i=0;i<OP;i++){
   const a=Math.random()*Math.PI*2, r=RADIUS+(Math.random()-.5)*.6;
-  opa[i*3]=Math.cos(a)*r; opa[i*3+1]=(Math.random()-.5)*.4; opa[i*3+2]=Math.sin(a)*r;
+  opa[i*3]=Math.cos(a)*r; opa[i*3+1]=FLOOR_Y+(Math.random()-.5)*.5; opa[i*3+2]=Math.sin(a)*r;
 }
 const opG=new THREE.BufferGeometry();
 opG.setAttribute('position', new THREE.BufferAttribute(opa,3));
@@ -820,30 +1102,44 @@ function makeCardTex(item){
 
   // load real image into the media area once available
   if(item.img){
-    const img=new Image();
-    img.crossOrigin='anonymous';
-    img.onload=function(){
-      ctx.save();
-      ctx.beginPath(); ctx.rect(18,18,476,360); ctx.clip();
-      const areaW=476, areaH=360;
-      const asp=img.width/img.height;
-      let dw=areaW, dh=areaH;
-      if(asp > areaW/areaH){ dh=areaH; dw=dh*asp; } else { dw=areaW; dh=dw/asp; }
-      ctx.drawImage(img, 18+(areaW-dw)/2, 18+(areaH-dh)/2, dw, dh);
-      ctx.restore();
-      // subtle scanline overlay for cohesion with card aesthetic
-      ctx.strokeStyle='rgba(0,0,0,0.05)'; ctx.lineWidth=.5;
-      for(let y=18;y<378;y+=3){ ctx.beginPath(); ctx.moveTo(18,y); ctx.lineTo(494,y); ctx.stroke(); }
-      tex.needsUpdate=true;
-    };
-    img.onerror=function(){
+    function showUnavailable(){
       // keep placeholder text but mark as unavailable
       ctx.fillStyle='rgba(17,31,51,0.9)'; ctx.fillRect(18,18,476,360);
       ctx.fillStyle='rgba(184,200,216,0.5)'; ctx.font='400 14px DM Sans, sans-serif';
       ctx.textAlign='center'; ctx.fillText('Image unavailable', 256, 200); ctx.textAlign='left';
       tex.needsUpdate=true;
-    };
-    img.src=item.img;
+    }
+    // Dua tahap. Tahap 1 pakai crossOrigin='anonymous' — ini satu-satunya cara foto
+    // lintas-origin bisa masuk WebGL, TAPI mensyaratkan server mengirim header
+    // Access-Control-Allow-Origin. anabhidev.com terbukti TIDAK mengirim header itu,
+    // jadi tahap 1 gagal dan tahap 2 mengulang tanpa crossOrigin: di produksi foto
+    // berada di origin yang sama dengan halaman, sehingga berhasil tanpa mencemari canvas.
+    function loadPhoto(useCors){
+      const img=new Image();
+      if(useCors) img.crossOrigin='anonymous';
+      img.onload=function(){
+        // Foto digambar ke canvas terpisah dulu, lalu dites tercemar (tainted) atau tidak.
+        // Kalau tercemar, canvas kartu TIDAK disentuh sama sekali — kalau dipaksa,
+        // texImage2D melempar SecurityError di dalam render loop dan seluruh carousel mati.
+        const areaW=476, areaH=360;
+        const sc=document.createElement('canvas'); sc.width=areaW; sc.height=areaH;
+        const sx=sc.getContext('2d');
+        const asp=img.width/img.height;
+        let dw=areaW, dh=areaH;
+        if(asp > areaW/areaH){ dh=areaH; dw=dh*asp; } else { dw=areaW; dh=dw/asp; }
+        sx.drawImage(img, (areaW-dw)/2, (areaH-dh)/2, dw, dh);
+        try { sx.getImageData(0,0,1,1); }
+        catch(err){ if(useCors) loadPhoto(false); else showUnavailable(); return; }
+        ctx.drawImage(sc, 18, 18);
+        // subtle scanline overlay for cohesion with card aesthetic
+        ctx.strokeStyle='rgba(0,0,0,0.05)'; ctx.lineWidth=.5;
+        for(let y=18;y<378;y+=3){ ctx.beginPath(); ctx.moveTo(18,y); ctx.lineTo(494,y); ctx.stroke(); }
+        tex.needsUpdate=true;
+      };
+      img.onerror=function(){ if(useCors) loadPhoto(false); else showUnavailable(); };
+      img.src=item.img;
+    }
+    loadPhoto(true);
   }
 
   return tex;
@@ -865,30 +1161,136 @@ const cards=[];
 const raycaster=new THREE.Raycaster(), mouse=new THREE.Vector2();
 let hoveredCard=null;
 
+/* alphaMap pantulan. Plane pantulan di-mirror lewat scale.y=-1, jadi baris ATAS
+   canvas (v=1) mendarat di BAWAH layar (jauh dari card) → harus transparan/hitam,
+   baris bawah canvas menempel di card → putih/opaque. */
+function makeReflectAlpha(){
+  const cv=document.createElement('canvas'); cv.width=8; cv.height=256;
+  const g=cv.getContext('2d');
+  const gr=g.createLinearGradient(0,0,0,256);
+  gr.addColorStop(0,'#000000'); gr.addColorStop(.5,'#0f0f0f'); gr.addColorStop(1,'#ffffff');
+  g.fillStyle=gr; g.fillRect(0,0,8,256);
+  const t=new THREE.CanvasTexture(cv); t.needsUpdate=true;
+  return t;
+}
+/* pita kilau yang menyapu permukaan card — ujung kiri & kanan sama-sama transparan
+   supaya mulus saat texture.offset digeser berulang */
+function makeGlossTexture(){
+  const cv=document.createElement('canvas'); cv.width=256; cv.height=8;
+  const g=cv.getContext('2d');
+  const gr=g.createLinearGradient(0,0,256,0);
+  gr.addColorStop(0,'rgba(255,255,255,0)');
+  gr.addColorStop(.42,'rgba(255,255,255,0)');
+  gr.addColorStop(.5,'rgba(255,255,255,0.85)');
+  gr.addColorStop(.58,'rgba(255,255,255,0)');
+  gr.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=gr; g.fillRect(0,0,256,8);
+  const t=new THREE.CanvasTexture(cv);
+  t.wrapS=THREE.RepeatWrapping; t.wrapT=THREE.ClampToEdgeWrapping; t.needsUpdate=true;
+  return t;
+}
+
+const faceGeo=new THREE.PlaneGeometry(CARD_W, CARD_H);
+const slabGeo=new THREE.BoxGeometry(CARD_W+.13, CARD_H+.13, .17);
+const slabEdgeGeo=new THREE.EdgesGeometry(slabGeo);
+const glossGeo=new THREE.PlaneGeometry(CARD_W+.13, CARD_H+.13);
+const shadowGeo=new THREE.PlaneGeometry(CARD_W*1.55, CARD_W*1.05);
+const reflectAlpha=makeReflectAlpha();
+const glossTex=makeGlossTexture();
+const shadowTex=makeRadialTexture('rgba(0,0,0,0.60)','rgba(0,0,0,0)');
+
 WORK.forEach((item,i)=>{
   const tex=makeCardTex(item);
-  const mat=new THREE.MeshBasicMaterial({map:tex, transparent:true, side:THREE.DoubleSide});
-  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(CARD_W, CARD_H), mat);
+
+  /* pivot = penempatan di ring (hanya rotasi Y, jadi sumbu Y lokal = Y dunia)
+     holder = target animasi hover/float, supaya penempatan ring tidak ikut terganggu */
+  const pivot=new THREE.Group();
   const angle=(i/WORK.length)*Math.PI*2;
-  mesh.position.x=Math.sin(angle)*RADIUS;
-  mesh.position.z=Math.cos(angle)*RADIUS;
-  mesh.position.y=0;
-  mesh.lookAt(0,0,0);
-  mesh.rotateY(Math.PI);
-  mesh.userData={index:i, item, visible:true};
-  cGroup.add(mesh);
-  cards.push({mesh, mat, item});
+  pivot.position.set(Math.sin(angle)*RADIUS, 0, Math.cos(angle)*RADIUS);
+  pivot.lookAt(0,0,0);
+  pivot.rotateY(Math.PI);              /* +Z lokal menghadap keluar ring */
+  cGroup.add(pivot);
+
+  const holder=new THREE.Group();
+  pivot.add(holder);
+
+  /* badan card — punya tebal nyata dan MeshStandardMaterial supaya kena cahaya */
+  const slabMat=new THREE.MeshStandardMaterial({color:0x14243A, metalness:.45, roughness:.50, transparent:true, opacity:1});
+  const slab=new THREE.Mesh(slabGeo, slabMat);
+  slab.position.z=-.09;
+  holder.add(slab);
+
+  /* garis tepi menyala — menegaskan rusuk balok saat card berputar */
+  const edgeMat=new THREE.LineBasicMaterial({color:0x6AB8F0, transparent:true, opacity:.42});
+  const edges=new THREE.LineSegments(slabEdgeGeo, edgeMat);
+  edges.position.z=-.09;
+  holder.add(edges);
+
+  /* muka card tetap MeshBasicMaterial supaya teks & foto terbaca jelas (tidak digelapkan cahaya).
+     FrontSide, bukan DoubleSide: punggung card sekarang gelap seperti benda nyata. */
+  const faceMat=new THREE.MeshBasicMaterial({map:tex, transparent:true, side:THREE.FrontSide});
+  const face=new THREE.Mesh(faceGeo, faceMat);
+  face.position.z=.006;
+  face.userData={index:i, item:item, visible:true};
+  holder.add(face);
+
+  const glossMat=new THREE.MeshBasicMaterial({map:glossTex, transparent:true, opacity:.18, depthWrite:false, blending:THREE.AdditiveBlending});
+  const gloss=new THREE.Mesh(glossGeo, glossMat);
+  gloss.position.z=.02;
+  holder.add(gloss);
+
+  /* pantulan lantai: cermin card terhadap bidang FLOOR_Y. DoubleSide wajib —
+     scale.y=-1 membalik winding sehingga FrontSide akan ter-cull. */
+  const reflMat=new THREE.MeshBasicMaterial({map:tex, alphaMap:reflectAlpha, transparent:true, opacity:.30, side:THREE.DoubleSide, depthWrite:false});
+  const refl=new THREE.Mesh(faceGeo, reflMat);
+  refl.scale.y=-1;
+  refl.position.set(0, FLOOR_Y*2, .006);
+  holder.add(refl);
+
+  /* bayangan kontak menempel di pivot (bukan holder) supaya tetap diam di lantai
+     saat card mengambang naik-turun atau maju ke depan waktu di-hover */
+  const shadowMat=new THREE.MeshBasicMaterial({map:shadowTex, transparent:true, opacity:.32, depthWrite:false});
+  const shadow=new THREE.Mesh(shadowGeo, shadowMat);
+  shadow.rotation.x=-Math.PI/2;
+  shadow.position.set(0, FLOOR_Y+.012, .08);
+  pivot.add(shadow);
+
+  cards.push({index:i, item:item, pivot:pivot, holder:holder, face:face,
+              faceMat:faceMat, slabMat:slabMat, edgeMat:edgeMat, glossMat:glossMat,
+              reflMat:reflMat, shadowMat:shadowMat, opacity:1, phase:i*1.7});
 });
 
-mScene.add(new THREE.AmbientLight(0x3B9EE8, .3));
+/* pencahayaan — inilah yang membuat tebal & rusuk card benar-benar terbaca 3D.
+   MeshBasicMaterial sebelumnya mengabaikan cahaya sepenuhnya. */
+mScene.add(new THREE.AmbientLight(0x25415E, 1.15));
+const keyLight=new THREE.DirectionalLight(0x9AD4FF, 1.35); keyLight.position.set(2.5,4,6); mScene.add(keyLight);
+const rimLight=new THREE.DirectionalLight(0x2F7FC4, .90); rimLight.position.set(-4,-1,-4); mScene.add(rimLight);
+mScene.add(new THREE.PointLight(0x3B9EE8, 1.6, 14, 2));   /* di pusat ring, menyinari punggung card */
 
 let mAngle=0, mPaused=false; const SPEED=.003;
 let canvasHover=false;
+/* dipanggil hanya saat kartu ter-hover BERUBAH — sebelumnya gsap.to ditembak
+   tiap frame selama kursor di atas canvas */
+function setHovered(idx){
+  if(idx===hoveredCard) return;
+  hoveredCard=idx;
+  cards.forEach(c=>{
+    const on=(c.index===idx);
+    gsap.to(c.holder.scale,    {x:on?1.09:1, y:on?1.09:1, z:on?1.09:1, duration:.4, ease:'power3.out', overwrite:true});
+    gsap.to(c.holder.position, {z:on?.45:0, duration:.4, ease:'power3.out', overwrite:true});
+    gsap.to(c.holder.rotation, {x:on?-.07:0, duration:.4, ease:'power3.out', overwrite:true});
+  });
+  if(idx===null){
+    clearWorkDetail();
+    $cr.style.width='38px'; $cr.style.height='38px'; $cr.style.opacity='.5';
+  } else {
+    showWorkDetail(cards[idx].item);
+    $cr.style.width='52px'; $cr.style.height='52px'; $cr.style.opacity='.85';
+  }
+}
+
 mC.addEventListener('mouseenter', ()=>{ canvasHover=true; mPaused=true; });
-mC.addEventListener('mouseleave', ()=>{
-  canvasHover=false; mPaused=false; hoveredCard=null;
-  cards.forEach(c=>{ c.mesh.scale.set(1,1,1); c.mat.opacity = c.mesh.userData.visible ? 1 : 0; });
-});
+mC.addEventListener('mouseleave', ()=>{ canvasHover=false; mPaused=false; setHovered(null); });
 mC.addEventListener('mousemove', e=>{
   const r=mC.getBoundingClientRect();
   mouse.x=((e.clientX-r.left)/r.width)*2-1;
@@ -911,45 +1313,51 @@ document.querySelectorAll('.pill').forEach(btn=>{
     document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     activeFilter=btn.dataset.filter;
-    cards.forEach(c=>{ c.mesh.userData.visible = (activeFilter==='all') || (c.item.cat===activeFilter); });
+    cards.forEach(c=>{ c.face.userData.visible = (activeFilter==='all') || (c.item.cat===activeFilter); });
   });
 });
 
 (function mTick(){
   requestAnimationFrame(mTick);
+  const now=performance.now()*.001;
   if(!mPaused) mAngle += SPEED;
-  cGroup.rotation.y = mAngle;
-  oRing.rotation.z = performance.now()*.0002;
+  cGroup.rotation.y  = mAngle;
+  oRing.rotation.z   = now*.2;
+  oRing2.rotation.z  = -now*.14;
+  glossTex.offset.x  = (now*.08)%1;      /* kilau menyapu semua card serempak */
+
+  /* parallax mengikuti kursor — menambah rasa kedalaman tanpa mengganggu tween intro */
+  const tiltX = canvasHover ? -mouse.y*.13 : 0;
+  const tiltY = canvasHover ?  mouse.x*.10 : 0;
+  tiltGroup.rotation.x += (tiltX - tiltGroup.rotation.x)*.05;
+  tiltGroup.rotation.y += (tiltY - tiltGroup.rotation.y)*.05;
 
   if(canvasHover){
     raycaster.setFromCamera(mouse, mCam);
-    const visibleMeshes = cards.filter(c=>c.mesh.userData.visible).map(c=>c.mesh);
-    const hits = raycaster.intersectObjects(visibleMeshes);
-    if(hits.length>0){
-      const idx = hits[0].object.userData.index;
-      hoveredCard = idx;
-      cards.forEach((c,i)=>{
-        if(i===idx){
-          gsap.to(c.mesh.scale, {x:1.1,y:1.1,z:1.1, duration:.3, overwrite:true});
-          c.mat.opacity=1;
-          showWorkDetail(c.item);
-        } else {
-          gsap.to(c.mesh.scale, {x:1,y:1,z:1, duration:.3, overwrite:true});
-          c.mat.opacity = c.mesh.userData.visible ? .5 : 0;
-        }
-      });
-      $cr.style.width='52px'; $cr.style.height='52px'; $cr.style.opacity='.85';
-    } else {
-      hoveredCard=null;
-      cards.forEach(c=>{
-        gsap.to(c.mesh.scale, {x:1,y:1,z:1, duration:.3, overwrite:true});
-        c.mat.opacity = c.mesh.userData.visible ? 1 : 0;
-      });
-      $cr.style.width='38px'; $cr.style.height='38px'; $cr.style.opacity='.5';
-      clearWorkDetail();
-    }
+    const hits = raycaster.intersectObjects(cards.filter(c=>c.face.userData.visible).map(c=>c.face));
+    setHovered(hits.length ? hits[0].object.userData.index : null);
   }
-  cards.forEach(c=>{ if(!c.mesh.userData.visible) c.mat.opacity = Math.max(c.mat.opacity-.02, 0); });
+
+  cards.forEach(c=>{
+    const vis=c.face.userData.visible;
+    const want = !vis ? 0 : ((hoveredCard===null || hoveredCard===c.index) ? 1 : .42);
+    c.opacity += (want - c.opacity)*.12;   /* satu jalur opacity untuk hover + filter sekaligus */
+
+    c.holder.position.y = Math.sin(now*.9 + c.phase)*.055;
+    c.holder.rotation.z = Math.sin(now*.6 + c.phase)*.012;
+
+    /* card di sisi jauh ring diredupkan — cue kedalaman yang paling cepat terbaca mata */
+    c.face.getWorldPosition(_v3);
+    const depth = THREE.MathUtils.clamp((_v3.z + RADIUS)/(2*RADIUS), 0, 1);
+    const o = c.opacity*(.42 + .58*depth);
+    c.faceMat.opacity   = o;
+    c.slabMat.opacity   = Math.min(1, o*1.1);
+    c.edgeMat.opacity   = o*.45;
+    c.glossMat.opacity  = o*.13;   /* pita kilau ditahan supaya tidak mengganggu keterbacaan teks card */
+    c.reflMat.opacity   = o*.26;
+    c.shadowMat.opacity = o*.32;
+    c.pivot.visible     = o>.01;
+  });
 
   mR.render(mScene, mCam);
 })();
@@ -995,18 +1403,93 @@ function openModal(idx){
     linkEl.textContent = '';
   }
   document.getElementById('modal').classList.add('open');
-  gsap.fromTo('#modalBox', {scale:.9, opacity:0}, {scale:1, opacity:1, duration:.4, ease:'power3.out'});
+  /* modal berayun masuk dari kedalaman, bukan sekadar membesar */
+  modalTiltOn=false;
+  gsap.fromTo('#modalBox',
+    {opacity:0, z:-320, rotationX:-26, rotationY:12, scale:.94},
+    {opacity:1, z:0, rotationX:0, rotationY:0, scale:1, duration:.7, ease:'power3.out',
+     onComplete(){ modalTiltOn=true; }});
 }
 function closeModal(){
-  gsap.to('#modalBox', {scale:.92, opacity:0, duration:.25, ease:'power2.in', onComplete(){
+  modalTiltOn=false;
+  gsap.to('#modalBox', {opacity:0, z:-200, rotationX:16, rotationY:-6, scale:.94, duration:.3, ease:'power2.in', onComplete(){
     document.getElementById('modal').classList.remove('open');
   }});
 }
+
+/* tilt mengikuti kursor — posisi dihitung dari ukuran window, bukan
+   getBoundingClientRect(), supaya tidak memicu forced reflow tiap mousemove (SOP kat. 1) */
+let modalTiltOn=false;
+document.getElementById('modal').addEventListener('mousemove', e=>{
+  if(!modalTiltOn) return;
+  const px=(e.clientX/innerWidth-.5)*2, py=(e.clientY/innerHeight-.5)*2;
+  gsap.to('#modalBox', {rotationY:px*8, rotationX:-py*8, duration:.55, ease:'power2.out', overwrite:'auto'});
+});
 document.getElementById('modalClose').addEventListener('click', closeModal);
 document.getElementById('modal').addEventListener('click', e=>{
   if(e.target===document.getElementById('modal')) closeModal();
 });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ============ GALLERY 3D DEPTH ============
+   Gerakannya tetap dari CSS marquee yang lama — lapisan ini hanya menambah
+   rotasi/kedalaman per item. Kalau blok ini gagal, gallery tetap berjalan
+   persis seperti versi 1.1 (nol regresi). */
+(function(){
+  const track=document.getElementById('galleryTrack');
+  if(!track) return;
+  const wrap=track.parentElement;
+  const items=Array.prototype.slice.call(track.children);
+  if(!items.length) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* offsetLeft tidak terpengaruh transform, jadi cukup diukur sekali dan di-cache —
+     mencegah forced reflow per item tiap frame (SOP kat. 1) */
+  let centers=[], wrapW=0;
+  function measure(){
+    wrapW=wrap.clientWidth;
+    centers=items.map(function(el){ return el.offsetLeft + el.offsetWidth/2; });
+  }
+  measure();
+  let rz=null;
+  window.addEventListener('resize', function(){ clearTimeout(rz); rz=setTimeout(measure,150); });
+  window.addEventListener('load', measure);
+
+  let active=true;
+  if('IntersectionObserver' in window){
+    active=false;
+    new IntersectionObserver(function(es){ active=es[0].isIntersecting; }, {rootMargin:'150px'}).observe(wrap);
+  }
+
+  /* satu pembacaan style per frame untuk seluruh track, sisanya aritmetika murni */
+  function trackX(){
+    const tr=getComputedStyle(track).transform;
+    if(!tr || tr==='none') return 0;
+    const v=tr.slice(tr.indexOf('(')+1,-1).split(',');
+    if(v.length>=16) return parseFloat(v[12])||0;   /* matrix3d */
+    if(v.length>=6)  return parseFloat(v[4])||0;    /* matrix   */
+    return 0;
+  }
+
+  (function galTick(){
+    requestAnimationFrame(galTick);
+    if(!active || !wrapW) return;
+    const tx=trackX(), cx=wrapW/2;
+    for(let i=0;i<items.length;i++){
+      let a=(centers[i]+tx-cx)/cx;
+      if(a<-1) a=-1; else if(a>1) a=1;
+      const abs=a<0?-a:a;
+      items[i].style.transform =
+        'translateZ('+(-abs*250).toFixed(1)+'px) rotateY('+(-a*40).toFixed(2)+'deg)'+
+        ' translateY('+(abs*16).toFixed(1)+'px) scale('+(1-abs*.07).toFixed(3)+')';
+      items[i].style.zIndex=String(200-Math.round(abs*100));
+      const img=items[i].firstElementChild;
+      if(img && img.tagName==='IMG'){
+        img.style.filter='brightness('+(.95-abs*.38).toFixed(3)+') saturate(.95)';
+      }
+    }
+  })();
+})();
 </script>
 
 </body>
