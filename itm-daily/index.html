@@ -4,7 +4,7 @@ MFB-IT — Miss Fish IT Daily Activity System
 HTML · CSS · JavaScript · Supabase Edge Function
 IT Department · Miss Fish Bali
 Version   : 2.23
-Generated : 2 September 2026, 06:34:56
+Generated : 2 September 2026, 10:54:28
 ================================================================
 
 NAMA FILE DI PROJECT CLOUDFLARE : index.html
@@ -111,21 +111,189 @@ PERUBAHAN DARI v2.22 — AI INTELLIGENCE REPORT (UI)
      bagian, chip angka, dan pesan error dari server. Keluaran
      model adalah masukan tak terpercaya seperti masukan pengguna.
 
+DUA KEPUTUSAN USER 2 SEP 2026 — dikerjakan di rilis yang sama
+================================================================
+
+ 13. KONTRAS --muted: dipilih OPSI C dari tiga opsi yang diajukan.
+
+     Masalahnya (temuan audit, bukan laporan pengguna): var(--muted)
+     hanya 3,01:1 di light dan 3,91:1 di dark — gagal WCAG AA 4,5:1
+     di 14 tempat yang berisi teks konten.
+
+     Menggelapkan --muted itu sendiri (opsi A) memang patuh AA di
+     semuanya, TAPI nilainya harus jadi #636E7C yang nyaris sama
+     dengan --mid #5C6B7A (5,18 vs 5,47). Beda "muted vs mid"
+     praktis hilang dan seluruh app terasa lebih berat. Itu
+     keputusan desain, bukan perbaikan yang jelas benar — jadi
+     ditawarkan ke user lebih dulu (SOP 8.11), bukan diputuskan
+     sendiri.
+
+     Yang dikerjakan: token BARU --meta-text dengan nilai per mode,
+     dipakai HANYA di tiga tempat yang benar-benar dibaca untuk
+     mengambil keputusan:
+
+       .summary-label   label di bawah angka Dashboard. Inilah yang
+                        memberi ARTI pada angkanya — angka tanpa
+                        label yang terbaca sama dengan angka tanpa
+                        arti.
+       .ws-col-date     kolom Date di History, kolom yang paling
+                        sering dibaca di tabel itu.
+       .ws-col-id       kolom Task ID, dipakai saat merujuk satu
+                        task ke orang lain.
+
+     Nilainya berlawanan arah per mode karena latarnya berlawanan:
+       light #636E7C : card 5,18 · bg 4,57 · field 4,78
+       dark  #8A96A3 : card 5,68 · bg 6,42 · field 5,12
+     Lolos AA di keenam kombinasi, dan hierarkinya tetap terjaga —
+     masih jelas lebih terang dari --mid di light, lebih gelap di
+     dark.
+
+     --muted SENGAJA dibiarkan apa adanya. Sebelas tempat lain
+     (jam di Log, hint form, pesan kosong, dst) masih di bawah AA:
+     itu keputusan user yang sadar, bukan kelalaian.
+
+ 14. TOMBOL MIKROFON DIHAPUS.
+
+     Bukan karena ada bug yang belum diperbaiki — perbaikan dari
+     sisi kode memang sudah habis:
+
+       v2.13  menambah permintaan izin eksplisit sebelum mulai.
+       v2.15  menemukan akar masalah yang sebenarnya: `await
+              navigator.permissions.query()` dipanggil SEBELUM
+              getUserMedia, dan await itu menghabiskan "transient
+              user activation" dari ketukan tombol — sehingga
+              Chrome Android menolak dengan NotAllowedError TANPA
+              PERNAH memunculkan dialog izin. Diperbaiki:
+              getUserMedia dipindah ke paling depan. Pesan error
+              juga dibedakan per sebab.
+
+     Dua screenshot dari user membuktikan situsnya BUKAN diblokir —
+     ia belum pernah DITANYA: halaman Permissions anabhidev.com
+     hanya memuat Notifications & Local network, dan Site settings
+     > Microphone tidak punya daftar per-situs sama sekali.
+
+     Sisanya di luar kendali kode ini: Web Speech API di Chrome
+     Android bergantung layanan Google dan izin tingkat OS. Tidak
+     ada tweak yang bisa MENJAMIN — itu disampaikan apa adanya ke
+     user, bukan dijanjikan bisa.
+
+     Tombol yang ditekan lalu gagal terasa seperti app-nya rusak.
+     Untuk app yang dipakai tiap hari, itu lebih merugikan
+     daripada tidak ada tombol.
+
+     Dihapus di 4 lapis, diverifikasi nol rujukan tersisa sebelum
+     dihapus (SOP 8.7): tombol #micBtn di markup · 5 aturan CSS
+     .mic-btn + @keyframes micPulse · 195 baris JS (recog/recogOn,
+     ensureMicPermission, bukaPanduanMikrofon, setupVoiceInput) ·
+     pemanggilnya di init.
+
+     TIDAK ikut terhapus: kotak Free write dan "Parse with AI"
+     (doAiParse + action 'parse-task') utuh. Itu jalur utamanya
+     sejak awal; mikrofon hanya salah satu cara mengisi kotak yang
+     sama. Nol perubahan server — Web Speech berjalan di peramban
+     dan tidak pernah menyentuh Edge Function.
+
+     Kalau suatu saat mau dihidupkan lagi: kodenya utuh di
+     arsip/MFB-IT_v2.22.html, cari "FITUR: INPUT SUARA".
+
 VALIDASI YANG DIJALANKAN (SOP 8.5)
   node --check                     JS LULUS
-  node --experimental-strip-types  TS LULUS (brace 433:433)
-  CSS brace 359:359, komentar 91:91, HTML komentar 25:25
-  checkids.js   144 rujukan id, nol yang tidak ada
+  node --experimental-strip-types  TS LULUS (brace 434:434)
+  CSS brace seimbang, komentar HTML 25:25
+  checkids.js   nol id dirujuk yang tidak ada
   audit.js      nol class mati, nol fungsi mati
-  ceksql.js     LULUS — dan alatnya DIPERLUAS: sekarang ikut
-                memeriksa kolom di .eq/.gte/.lte/.order, bukan
-                hanya .select. Celahnya sejenis dengan bug v1.14.
+  ceksql.js     LULUS
+  cekai.js      LULUS — 6 nama bagian laporan sama PERSIS di tiga
+                tempat: bentuk yang diminta prompt, yang
+                dinormalkan server, dan yang dirender client.
   cekwarna.js   nol kombinasi gagal BARU
-  sim23.js      113 cek LULUS (Senin–Minggu untuk ketujuh hari
-                acuan, batas bulan, batas tahun, kabisat 2028 /
-                2000 / 1900, pemisahan dari Ops week)
+  sim23.js      113 cek (Senin–Minggu untuk ketujuh hari acuan,
+                batas bulan, batas tahun, kabisat 2028/2000/1900,
+                pemisahan dari Ops week)
+  sim23b.js      64 cek (kontras --meta-text di 6 kombinasi,
+                tepat 3 tempat yang dipindah, mikrofon terhapus
+                tuntas di 4 lapis, Free write tetap utuh)
   regresi       sim(45) sim13(36) sim14(61) sim17(34) sim19(58)
                 sim20(58) sim21(40) — semuanya LULUS
+
+  TOTAL 530 cek LULUS, 0 gagal.
+
+  ENAM ALAT DIPERKUAT di rilis ini, masing-masing menutup celah
+  yang nyata (bukan celah hipotetis):
+
+    ceksql.js    dulu hanya memeriksa kolom di .select(). Kolom di
+                 .eq/.gte/.lte/.order tidak pernah diperiksa,
+                 padahal .eq("kolom") yang tidak ada menghasilkan
+                 error 400 yang sama dengan bug "Failed to load
+                 activity log". Sekarang 33 kolom penyaring ikut
+                 diperiksa.
+
+    cekwarna.js  dulu hanya membaca isi blok CSS. Bug v2.20 memakai
+                 style="color:var(--navy)" sebagai ATRIBUT, jadi
+                 tidak pernah masuk pemeriksaan — lolos berkali-kali
+                 bukan karena hitungannya salah, tapi karena
+                 tempatnya tidak pernah dilihat. Dibuktikan: alat
+                 yang sudah diperkuat menemukan bug v2.20 yang ASLI
+                 saat dijalankan ke arsip/MFB-IT_v2.19.html
+                 (--navy 1,13:1 dan --red 2,83:1 di dark mode).
+                 Di v2.23 hasilnya AMAN.
+
+    sim23b.js    cara membuang komentar HTML dengan satu regex lazy
+                 ternyata bisa MENELAN markup yang terselip antara dua
+                 komentar berdempetan. Percobaan pertama melaporkan tab
+                 AI Report "hilang" padahal ada. Sekarang dibuang per
+                 pasangan dari kiri.
+
+    komentar.js  MODUL BARU, dipakai bersama oleh audit.js,
+                 cekwarna.js, sim20, sim21, sim23, sim23b.
+
+                 Sebelumnya keenam alat masing-masing punya SALINAN
+                 kode pembuang komentar dan pengambil blok CSS. Karena
+                 disalin, kesalahannya juga tersalin — dan diperbaiki
+                 di satu alat tidak memperbaiki yang lima lainnya.
+
+                 Dua celah nyata yang ditutup:
+
+                 (a) Blok CSS diambil dengan indexOf mentah mencari
+                     tag pembuka style. Kata itu bisa muncul DI DALAM
+                     komentar header, dan indexOf menemukan yang di
+                     komentar LEBIH DULU — blok CSS terambil dari
+                     titik yang salah, isinya ratusan baris prosa,
+                     dan alat melaporkan kelas yang sudah dihapus
+                     "masih dipakai". Sekarang komentar dibuang lebih
+                     dulu, dan fungsinya MELEMPAR kalau hasilnya
+                     mencurigakan (< 50 aturan) — bukan diam-diam
+                     salah.
+
+                 (b) Blok media query dipotong dengan menebak pola
+                     baris kosong. Begitu isi blok berubah, tebakan
+                     meleset dan tes melaporkan .nav absolute
+                     "hilang" padahal masih ada. Sekarang batasnya
+                     DIHITUNG dengan mencocokkan kurung kurawal.
+
+                 Dibuktikan dengan uji kekebalan: kata pemicu
+                 disisipkan sengaja ke dalam komentar file uji.
+                 Cara lama membaca .mic-btn sebagai kelas hidup;
+                 cara baru tidak, dan kelas nyata tetap terbaca.
+
+  CATATAN PENTING untuk siapa pun yang menyunting header ini:
+  JANGAN menuliskan penanda struktural secara literal di dalam
+  header — penutup komentar HTML, maupun tag pembuka style.
+
+  Ini bukan aturan hipotetis. Percobaan pertama menulis keduanya
+  apa adanya, dan akibatnya: penutup komentar MENUTUP header ini
+  lebih awal di baris 240, sehingga 250 baris sisanya dibaca
+  sebagai KODE — tiga simulasi lalu melaporkan .mic-btn dan
+  editStatus "masih ada" padahal keduanya hanya DIKUTIP di
+  penjelasan.
+
+  Butuh tiga langkah salah arah untuk menemukannya: disangka
+  urutan pembuangan komentar, lalu disangka pasangan komentar
+  berdempetan, ternyata header ini sendiri yang rusak. Dicatat
+  supaya tidak ada yang mengulangi jalur itu.
+
+  Tulis "tag pembuka style" atau "blok CSS" sebagai kata, jangan
+  sebagai penandanya.
 
 BELUM DIUJI DI PERANGKAT NYATA
   Jalur Gemini dan Telegram tidak bisa diuji dari sini: keduanya
@@ -666,6 +834,40 @@ F. DEGRADASI AMAN (SOP 8.8)
        lolos semuanya, bukan hanya di satu tempat. */
   --action-text: #0B1B2E;
   --danger-text: #C0392B;
+
+  /* v2.23 — TOKEN KETIGA dengan nilai per mode: --meta-text.
+     Keputusan user 2 Sep 2026 = Opsi C dari tiga opsi yang diajukan.
+
+     Masalahnya: var(--muted) gagal AA di 14 tempat (light 3,01:1 di
+     card, dark 3,91:1). Menggelapkan --muted itu sendiri akan patuh
+     AA di semuanya, TAPI nilainya jadi #636E7C yang nyaris sama
+     dengan --mid #5C6B7A (5,18 vs 5,47) — beda "muted vs mid"
+     praktis hilang dan seluruh app terasa lebih berat.
+
+     Jadi --muted DIBIARKAN apa adanya, dan token baru ini dipakai
+     HANYA di tiga tempat yang benar-benar dibaca untuk mengambil
+     keputusan:
+       .summary-label  label di bawah angka Dashboard — inilah yang
+                       memberi ARTI pada angkanya ("Work tasks",
+                       "Done", "Open"). Angka tanpa label yang
+                       terbaca sama saja dengan angka tanpa arti.
+       .ws-col-date    kolom Date di History — kolom yang paling
+                       sering dibaca di tabel itu.
+       .ws-col-id      kolom Task ID — dipakai saat merujuk satu
+                       task ke orang lain.
+
+     Sebelas tempat lain (jam di Log, hint form, pesan kosong, dst)
+     SENGAJA tidak disentuh: masih terbaca, dan mengubah semuanya
+     berarti mengubah nuansa seluruh app untuk teks yang tidak
+     dipakai mengambil keputusan.
+
+     Nilainya BERBEDA arah di tiap mode karena latarnya berlawanan:
+     light harus lebih GELAP dari --muted, dark harus lebih TERANG.
+       light #636E7C : card 5,18 · bg 4,57 · field 4,78
+       dark  #8A96A3 : card 5,68 · bg 6,42 · field 5,12
+     Lolos AA di keenam kombinasi, bukan hanya di satu tempat. */
+  --meta-text: #636E7C;
+
   --heading: #0B1B2E;
   --nav-h:   64px;
   --app-w:   520px;
@@ -693,6 +895,12 @@ body.dark-mode {
   --muted:   #6E7A88;
   --line:    #2A3340;
   --field:   #1E2530;
+  /* v2.23 — lihat catatan --meta-text di :root. Di dark mode arahnya
+     TERBALIK: harus lebih TERANG dari --muted #6E7A88, bukan lebih
+     gelap. Kebetulan nilainya sama dengan --muted versi light —
+     bukan kemalasan, memang itu yang lolos: card 5,68 · bg 6,42 ·
+     field 5,12, dan tetap jelas berbeda dari --mid #A9B4C0 (8,12). */
+  --meta-text: #8A96A3;
   /* --heading BEDA dari --navy: --navy tetap gelap (dipakai untuk
      background/border elemen brand solid seperti header & tombol
      primer, itu benar tetap sama). --heading dipakai KHUSUS untuk
@@ -1049,22 +1257,10 @@ body.dark-mode .btn-logout:active { background: var(--field); }
 .queue-bar-btn:active { opacity: .6; }
 .queue-bar-btn[disabled] { opacity: .45; cursor: default; }
 
-/* Tombol mikrofon di kepala kartu Free write. 36px sudah memenuhi
-   SOP 8 (AA = 24px); tidak dibuat 44px supaya tidak mendorong tinggi
-   baris judul kartu. */
-.mic-btn {
-  width: 36px; height: 36px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 10px; border: 1px solid var(--line);
-  background: transparent; color: var(--mid); cursor: pointer;
-}
-.mic-btn:active { background: var(--field); }
-.mic-btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
-/* Sedang merekam: merah + denyut halus, supaya jelas mikrofon aktif. */
-/* v2.20 — ikon: ambang AA 3:1. var(--red) di dark hanya 3,14:1 (lolos
-   tipis); --danger-text 5,94:1. Disamakan karena tokennya sudah ada. */
-.mic-btn.rec { color: var(--danger-text); border-color: var(--danger-text); animation: micPulse 1.2s ease-in-out infinite; }
-@keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+/* v2.23 — .mic-btn, .mic-btn:active, .mic-btn:focus-visible,
+   .mic-btn.rec dan @keyframes micPulse DIHAPUS bersama tombolnya.
+   Diverifikasi nol rujukan tersisa di markup maupun JS sebelum
+   dihapus (SOP 8.7). Lihat alasannya di markup kartu Free write. */
 
 /* Chip template. Memakai ukuran & radius yang sama dengan .tag-add
    supaya terasa satu keluarga, tapi garis penuh (bukan dashed) untuk
@@ -1533,7 +1729,9 @@ body.dark-mode .air-sec-title { color: var(--ai-accent-text); }
   padding: var(--sp-4) var(--sp-3); text-align: center;
 }
 .summary-num { font-size: 24px; font-weight: 700; color: var(--heading); line-height: 1; margin-bottom: 4px; }
-.summary-label { font-size: 11px; color: var(--muted); }
+/* v2.23 — var(--meta-text), bukan var(--muted). Lihat catatan token
+   di :root: label inilah yang memberi ARTI pada angka di atasnya. */
+.summary-label { font-size: 11px; color: var(--meta-text); }
 .summary-full { grid-column: 1 / -1; }
 .summary-full .summary-num { font-size: 20px; }
 
@@ -1597,8 +1795,10 @@ body.dark-mode .dash-kpi-toggle { color: var(--ai-accent-text); }
 .ws-table tbody tr:last-child td { border-bottom: none; }
 .ws-table tbody tr.ws-row-clickable { cursor: pointer; transition: background .12s; }
 .ws-table tbody tr.ws-row-clickable:active { background: var(--field); }
-.ws-col-date  { white-space: nowrap; color: var(--muted); }
-.ws-col-id    { white-space: nowrap; color: var(--muted); font-size: 11.5px; }
+/* v2.23 — var(--meta-text): kolom Date paling sering dibaca di tabel
+   ini, dan Task ID dipakai saat merujuk satu task ke orang lain. */
+.ws-col-date  { white-space: nowrap; color: var(--meta-text); }
+.ws-col-id    { white-space: nowrap; color: var(--meta-text); font-size: 11.5px; }
 .ws-col-task  { min-width: 200px; max-width: 280px; line-height: 1.4; }
 .ws-col-chip  { white-space: nowrap; }
 .ws-chip {
@@ -1621,7 +1821,7 @@ body.dark-mode .ws-chip.dayoff { color: var(--ai-accent-text); }
 /* v2.23 — penanda "tidak ada teks task". Dulu ini satu-satunya sisa
    style="color:var(--muted)" INLINE di seluruh file, dan style inline
    itulah pola yang menyembunyikan bug kontras v2.20 dari audit selama
-   berbulan-bulan: alat audit membaca <style>, bukan atribut style.
+   berbulan-bulan: alat audit membaca blok CSS, bukan atribut style.
    Dipindah ke kelas supaya ikut terperiksa, sekalian dinaikkan ke
    --mid (5,47:1 / 8,12:1 — lolos AA di kedua mode). */
 .ws-dash { color: var(--mid); }
@@ -1902,13 +2102,27 @@ body.dark-mode .nb.on { color: #FFFFFF; }
       <div class="ai">
         <div class="ai-head">
           <div class="ai-title">&#10022; Free write</div>
-          <!-- v2.12 — input suara. Tombol ini DISEMBUNYIKAN oleh JS bila
-               peramban tidak mendukung Web Speech API, jadi tidak pernah
-               ada tombol yang ditekan lalu tidak terjadi apa-apa. -->
-          <button class="mic-btn hidden" id="micBtn" type="button"
-                  aria-label="Dictate with voice" title="Dictate with voice">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
+          <!-- v2.23 — TOMBOL MIKROFON DIHAPUS. Keputusan user 2 Sep 2026.
+
+               Alasannya bukan bug yang belum diperbaiki. Seluruh yang
+               bisa dikerjakan dari sisi kode SUDAH dikerjakan: v2.15
+               memindahkan getUserMedia ke paling depan (sebelumnya
+               `await` di depannya menghabiskan transient user
+               activation, sehingga dialog izin tidak pernah muncul),
+               dan pesan errornya dibedakan per sebab.
+
+               Yang tersisa di luar kendali kode: Web Speech API di
+               Chrome Android bergantung layanan Google. Screenshot
+               user membuktikan situsnya tidak pernah diblokir — ia
+               belum pernah DITANYA. Tidak ada tweak yang bisa
+               MENJAMIN fiturnya jalan.
+
+               Tombol yang ditekan lalu gagal terasa seperti app-nya
+               rusak. Itu lebih merugikan daripada tidak ada tombol.
+
+               Input teks + "Parse with AI" TIDAK berubah sama sekali;
+               itu jalur utamanya sejak awal, dan mikrofon hanya
+               pengisi kotak yang sama. Nol fitur lain terpengaruh. -->
         </div>
         <textarea class="ai-box" id="aiInput"
           placeholder="Describe your work as-is. Example: replaced printer LAN cable, urgent."></textarea>
@@ -5786,207 +6000,51 @@ function renderTemplates() {
   });
 }
 
-// ── FITUR: INPUT SUARA ──────────────────────────────────────
-// Mengisi kotak Free write lewat Web Speech API, lalu pengguna bisa
-// menekan "Parse with AI" seperti biasa — memakai pipeline AI yang
-// sudah ada, tanpa endpoint baru.
-let recog = null, recogOn = false;
-
-// v2.13 — Meminta izin mikrofon secara eksplisit SEBELUM memulai
-// pengenalan suara.
+// ── FITUR: INPUT SUARA — DIHAPUS di v2.23 ───────────────────
 //
-// Kenapa perlu: pengaturan global Chrome "Sites can ask for your
-// microphone" hanya mengizinkan situs BERTANYA — bukan memberi izin.
-// Izin sebenarnya dipegang per-situs. SpeechRecognition.start() di
-// Chrome Android sering langsung menjawab 'not-allowed' tanpa pernah
-// memunculkan dialog apa pun bila izin situs belum ada. getUserMedia
-// memunculkan dialog itu dengan andal, jadi dipakai sebagai pembuka.
+// Keputusan user 2 Sep 2026 setelah tiga versi mencoba memperbaikinya.
 //
-// Mengembalikan: 'ok' | 'denied' | 'unsupported'
-// v2.15 — BUG FIX PENTING.
+// Yang dihapus: `recog`/`recogOn`, ensureMicPermission(),
+// bukaPanduanMikrofon(), setupVoiceInput(), pemanggilannya di init,
+// tombol #micBtn di markup, dan 5 aturan CSS .mic-btn + @keyframes
+// micPulse. Diverifikasi nol rujukan tersisa sebelum dihapus (SOP 8.7).
 //
-// Versi v2.14 memanggil navigator.permissions.query() dengan `await`
-// LEBIH DULU, baru getUserMedia. Await itu MENGHABISKAN "transient user
-// activation" dari ketukan tombol. Akibatnya Chrome Android menolak
-// getUserMedia dengan NotAllowedError TANPA PERNAH memunculkan dialog
-// izin — pengguna tidak pernah mendapat kesempatan menekan "Allow",
-// lalu app menyalahkan "izin diblokir" padahal belum pernah ditanya.
+// KENAPA DIHAPUS, bukan diperbaiki lagi:
 //
-// Sekarang getUserMedia dipanggil PALING AWAL, tanpa satu pun await di
-// depannya. Permissions API baru dipakai SETELAH gagal, hanya untuk
-// menentukan pesan yang tepat.
+//   Perbaikan dari sisi kode sudah habis. v2.13 menambahkan permintaan
+//   izin eksplisit. v2.15 menemukan akar masalah yang sebenarnya —
+//   `await navigator.permissions.query()` dipanggil SEBELUM
+//   getUserMedia, dan await itu menghabiskan "transient user
+//   activation" dari ketukan tombol, sehingga Chrome Android menolak
+//   dengan NotAllowedError TANPA PERNAH memunculkan dialog izin.
+//   Itu diperbaiki: getUserMedia dipindah ke paling depan tanpa satu
+//   pun await di depannya. v2.15 juga membedakan pesan error per sebab
+//   (nomic / busy / denied / unsupported).
 //
-// Mengembalikan: "ok" | "denied" | "nomic" | "busy" | "unsupported"
-async function ensureMicPermission() {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    return 'unsupported';
-  }
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    // Stream ditutup segera. Tujuannya HANYA memicu dialog izin; yang
-    // merekam nanti adalah SpeechRecognition, bukan stream ini.
-    stream.getTracks().forEach(t => t.stop());
-    return 'ok';
-  } catch (e) {
-    // Kode error DIBEDAKAN. Sebelumnya semuanya disamakan jadi
-    // 'denied', sehingga "tidak ada mikrofon" dan "mikrofon dipakai
-    // aplikasi lain" pun diarahkan ke halaman pengaturan izin —
-    // pengguna dikirim mencari di tempat yang salah.
-    const nama = (e && e.name) || '';
-    if (nama === 'NotFoundError' || nama === 'DevicesNotFoundError') return 'nomic';
-    if (nama === 'NotReadableError' || nama === 'TrackStartError') return 'busy';
-    return 'denied';
-  }
-}
-
-// v2.16 — panduan DISUSUN ULANG dari bukti screenshot pengguna,
-// bukan dari dugaan.
+//   Dua screenshot Chrome Android dari user membuktikan situsnya
+//   BUKAN diblokir — ia belum pernah DITANYA: halaman Permissions
+//   anabhidev.com hanya memuat Notifications & Local network (tidak
+//   ada baris Microphone), dan Settings > Site settings > Microphone
+//   tidak punya daftar per-situs sama sekali.
 //
-// Yang terbukti dari 2 screenshot Chrome Android:
-//   1. Halaman Permissions untuk anabhidev.com HANYA memuat
-//      Notifications & Local network. TIDAK ADA baris Microphone.
-//   2. Settings > Site settings > Microphone TIDAK punya daftar
-//      per-situs sama sekali — tidak ada bagian "Blocked".
+//   Sisanya di luar kendali kode ini: Web Speech API di Chrome Android
+//   bergantung pada layanan Google dan izin di tingkat OS. Tidak ada
+//   tweak yang bisa MENJAMIN fiturnya jalan — dan itu sudah disampaikan
+//   apa adanya ke user, bukan dijanjikan bisa.
 //
-// Artinya situs ini BELUM PERNAH diblokir; ia belum pernah DITANYA.
-// Panduan v2.15 menyuruh mencari daftar "Blocked" yang memang tidak
-// ada, jadi malah menyesatkan. Urutan sekarang mengikuti kemungkinan
-// penyebab dari yang paling sering:
-//   Langkah 1 = izin mikrofon Chrome di tingkat ANDROID. Kalau ini
-//   ditolak, getUserMedia gagal tanpa dialog web apa pun DAN daftar
-//   per-situs tetap kosong — persis gejala yang terlihat.
-//   Langkah 2 = Reset permissions (tombol ini NYATA ada di halaman
-//   Permissions situs, terlihat di screenshot).
-function bukaPanduanMikrofon() {
-  const html = '<div style="padding:0 20px 4px">'
-    + '<div class="hint" style="font-size:13px;line-height:1.6;color:var(--ink)">'
-    +   'The microphone could not be opened. Check in this order &mdash; step 1 is the most common cause.'
-    + '</div>'
+//   Tombol yang ditekan lalu gagal terasa seperti app-nya rusak. Untuk
+//   app yang dipakai setiap hari, itu lebih merugikan daripada tidak
+//   ada tombol sama sekali.
+//
+// YANG TIDAK BERUBAH: kotak Free write dan "Parse with AI" utuh.
+// Itu jalur utamanya sejak awal; mikrofon hanya salah satu cara
+// mengisi kotak yang sama. Nol fitur lain terpengaruh, nol perubahan
+// server (Web Speech berjalan di peramban, tidak pernah menyentuh
+// Edge Function).
+//
+// KALAU SUATU SAAT MAU DIHIDUPKAN LAGI: kodenya utuh di
+// arsip/MFB-IT_v2.22.html — cari "FITUR: INPUT SUARA".
 
-    + '<div class="field" style="margin-top:14px">'
-    +   '<label class="label">1. Does Chrome itself have microphone access?</label>'
-    +   '<div class="hint" style="line-height:1.7">'
-    +     'Android <b>Settings</b> &rarr; <b>Apps</b> &rarr; <b>Chrome</b> &rarr; <b>Permissions</b> &rarr; <b>Microphone</b> &rarr; <b>Allow</b>.'
-    +     '<br><span style="opacity:.8">If this is off, no website can ever use the mic — and no permission popup will appear either.</span>'
-    +   '</div>'
-    + '</div>'
-
-    + '<div class="field">'
-    +   '<label class="label">2. Reset this site&rsquo;s permissions</label>'
-    +   '<div class="hint" style="line-height:1.7">'
-    +     'Tap the icon at the left of the address bar &rarr; <b>Permissions</b> &rarr; <b>Reset permissions</b>, then reload the page and tap the mic again.'
-    +   '</div>'
-    + '</div>'
-
-    + '<div class="field">'
-    +   '<label class="label">3. Still nothing?</label>'
-    +   '<div class="hint" style="line-height:1.7">'
-    +     'Then voice input is not available on this device. Nothing is broken &mdash; the Free write box works exactly the same when typed, and AI Parse reads typed text just as well.'
-    +   '</div>'
-    + '</div>';
-
-  // Judul sheet tidak lagi menyebut "blocked": pada kasus yang
-  // sebenarnya terjadi, izinnya belum pernah ditanyakan sama sekali.
-  openSheet('Microphone unavailable', html);
-}
-
-function setupVoiceInput() {
-  const btn = $('micBtn');
-  if (!btn) return;
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  // Tidak didukung (mis. Firefox Android): tombol tetap tersembunyi.
-  // Lebih baik tidak ada tombol daripada ada tombol yang diam.
-  if (!SR) return;
-
-  btn.classList.remove('hidden');
-
-  const stop = () => {
-    recogOn = false;
-    btn.classList.remove('rec');
-    btn.setAttribute('aria-label', 'Dictate with voice');
-    try { if (recog) recog.stop(); } catch (e) {}
-  };
-
-  btn.addEventListener('click', async () => {
-    if (recogOn) { stop(); return; }
-
-    // v2.13 — izin diminta lebih dulu; tanpa ini Chrome Android bisa
-    // menjawab 'not-allowed' tanpa pernah memunculkan dialog.
-    // v2.15 — hasilnya kini dibedakan per sebab.
-    const izin = await ensureMicPermission();
-    if (izin === 'nomic') {
-      toast('No microphone found on this device.', 'err');
-      return;
-    }
-    if (izin === 'busy') {
-      toast('Microphone is in use by another app. Close it, then try again.', 'err');
-      return;
-    }
-    if (izin === 'denied') {
-      // Panduan dibuka sebagai sheet, bukan toast: langkahnya 2 jalur
-      // dan tidak mungkin terbaca tuntas dalam toast 3 detik.
-      bukaPanduanMikrofon();
-      return;
-    }
-
-    try {
-      recog = new SR();
-    } catch (e) {
-      toast('Voice input is not available on this browser.', 'err');
-      return;
-    }
-
-    // Bahasa Indonesia: yang didiktekan memang campur Indonesia-Inggris,
-    // dan pengenalan id-ID menangani itu lebih baik daripada en-US untuk
-    // kalimat berbahasa Indonesia. Hasilnya tetap diuraikan AI ke Inggris.
-    recog.lang = 'id-ID';
-    recog.interimResults = false;
-    recog.continuous = false;
-
-    recog.onresult = (ev) => {
-      let text = '';
-      for (let i = 0; i < ev.results.length; i++) text += ev.results[i][0].transcript;
-      text = text.trim();
-      if (!text) return;
-      const box = $('aiInput');
-      // Ditambahkan, bukan menimpa — supaya bisa didiktekan bertahap.
-      box.value = box.value.trim() ? (box.value.trim() + ' ' + text) : text;
-      trackEdit();
-    };
-
-    recog.onerror = (ev) => {
-      stop();
-      const code = ev && ev.error ? ev.error : '';
-      // v2.13 — dua kode ini DIPISAH. Sebelumnya keduanya diberi pesan
-      // "blocked in browser settings", padahal service-not-allowed bukan
-      // soal izin situs melainkan layanan pengenalan suara peramban yang
-      // tidak tersedia — mengarahkan pengguna ke setting izin untuk kasus
-      // itu membuat ia mencari di tempat yang salah.
-      if (code === 'not-allowed') {
-        bukaPanduanMikrofon(); // v2.15 — panduan yang sama, bukan toast panjang
-      } else if (code === 'service-not-allowed') {
-        toast('Speech recognition is unavailable on this browser. Type it instead.', 'err');
-      } else if (code === 'no-speech') {
-        toast('No speech detected. Try again.', 'err');
-      } else {
-        toast('Voice input failed. Type it instead.', 'err');
-      }
-    };
-
-    recog.onend = () => stop();
-
-    try {
-      recog.start();
-      recogOn = true;
-      btn.classList.add('rec');
-      btn.setAttribute('aria-label', 'Stop dictation');
-    } catch (e) {
-      stop();
-      toast('Could not start the microphone.', 'err');
-    }
-  });
-}
 
 // ── FITUR: CARI DI SELURUH RIWAYAT ──────────────────────────
 // get-history hanya 7 hari. Pencarian ini menembus seluruh data lewat
@@ -6085,9 +6143,8 @@ function wireEvents() {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); saveCurrentAsTemplate(); }
   });
 
-  // Input suara. Fungsi ini sendiri yang memutuskan tombolnya
-  // ditampilkan atau tidak, tergantung dukungan peramban.
-  setupVoiceInput();
+  // v2.23 — setupVoiceInput() dihapus bersama fitur input suara.
+  // Lihat alasannya di blok "FITUR: INPUT SUARA — DIHAPUS di v2.23".
 
   // Pencarian riwayat. Diberi jeda 450 ms supaya tidak mengirim
   // satu permintaan per ketukan huruf.
