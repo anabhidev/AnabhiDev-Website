@@ -3,8 +3,8 @@
      AnabhiDev-3D — Anabhi Dev Selected Work (3D Portfolio)
      HTML · CSS · JavaScript · Three.js r128 · GSAP ScrollTrigger
      Development · Anabhi Dev
-     Version   : 1.3
-     Generated : 3 September 2026, 09:37:58
+     Version   : 1.6
+     Generated : 4 September 2026, 08:40:00
      ================================================================ -->
 <html lang="en">
 <head>
@@ -112,13 +112,15 @@ section{position:relative; z-index:1; scroll-margin-top:118px;}
 #bg-canvas{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
 
 /* ===== BG MODE SWITCHER ===== */
-/* 8 mode — dibungkus 2 baris supaya tidak memanjang melewati layar */
-.bg-switch{position:fixed; bottom:24px; right:24px; z-index:90; display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px; max-width:min(430px, calc(100vw - 48px));}
-.bg-btn{padding:8px 16px; background:rgba(11,24,41,0.7); border:1px solid var(--w12); color:var(--silver); font-family:'Sora',sans-serif; font-size:.52rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; cursor:none; transition:all .3s ease; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
+/* 8 mode — WAJIB grid 4 kolom, bukan flex-wrap.
+   flex-wrap membungkus mengikuti lebar teks, jadi tombol pendek ("GRID") ikut
+   naik ke baris atas dan hasilnya 5+3. Grid mengunci 4+4 dengan lebar seragam. */
+.bg-switch{position:fixed; bottom:24px; right:24px; z-index:90; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; width:min(430px, calc(100vw - 48px));}
+.bg-btn{padding:8px 10px; background:rgba(11,24,41,0.7); border:1px solid var(--w12); color:var(--silver); font-family:'Sora',sans-serif; font-size:.52rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; text-align:center; cursor:none; transition:all .3s ease; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
 .bg-btn:hover, .bg-btn.active{border-color:var(--blue-lt); color:var(--blue-lt); background:rgba(59,158,232,0.1);}
 @media (max-width:560px){
-  .bg-switch{bottom:16px; right:8px; left:8px; max-width:none; flex-wrap:wrap; justify-content:center;}
-  .bg-btn{padding:5px 4px; font-size:.4rem; letter-spacing:.08em; flex:1 1 21%; text-align:center;}
+  .bg-switch{bottom:16px; right:8px; left:8px; width:auto;}
+  .bg-btn{padding:6px 2px; font-size:.4rem; letter-spacing:.06em;}
 }
 
 /* ===== NAV ===== */
@@ -172,7 +174,7 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 .hero-h1 .typed-line{display:block; color:var(--blue-lt); font-weight:600; margin-top:6px; font-size:0.72em;}
 .hero-h1 .cursor{display:inline-block; width:3px; height:0.8em; background:var(--blue-lt); margin-left:4px; vertical-align:-0.05em; animation:blink 1s step-end infinite;}
 @media (max-width:760px){
-  #hero{ padding-top:139px; justify-content:flex-start; }
+  #hero{ padding-top:139px; padding-bottom:150px; justify-content:flex-start; }
   #hero-logo{ width:min(100px,28vw); }
   .hero-h1{ font-size:clamp(26px,4.6vw,32px); }
   .hero-h1 .typed-line{ font-size:0.55em; }
@@ -195,6 +197,14 @@ nav.sc{background:rgba(11,24,41,0.88); backdrop-filter:blur(20px); -webkit-backd
 .scroll-hint span{font-family:'Sora',sans-serif; font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--w60);}
 .scroll-line{width:1px; height:46px; background:linear-gradient(to bottom,var(--blue-lt),transparent); animation:sp 2s ease-in-out infinite;}
 @keyframes sp{0%,100%{opacity:.3} 50%{opacity:1}}
+/* Override mobile HARUS ditulis setelah .stats dan .scroll-hint di atas —
+   specificity-nya sama, jadi yang menang adalah yang terakhir dideklarasikan.
+   .bg-switch itu position:fixed, jadi padding pada #hero tidak bisa mendorongnya;
+   yang harus dirapatkan adalah kontennya sendiri. */
+@media (max-width:760px){
+  .stats{ margin-top:32px; gap:26px; }
+  .scroll-hint{ bottom:112px; }
+}
 
 /* ===== SECTION HEADER (shared) ===== */
 .sec-hdr{text-align:center; max-width:640px; margin:0 auto 56px;}
@@ -286,6 +296,109 @@ footer{border-top:1px solid var(--w07); padding:32px var(--gutter); font-size:12
 .modal-name{font-size:26px; margin-bottom:14px; transform:translateZ(22px);}
 .modal-desc{font-size:14px; line-height:1.8; color:var(--silver); margin-bottom:22px; transform:translateZ(12px);}
 .modal-link{font-family:'Sora',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--blue-lt); border-bottom:1px solid var(--blue-dark); padding-bottom:3px;}
+
+/* ===== SISTEM 3D: TEKS NAVBAR & TOMBOL =====
+   Ditulis sebagai satu blok di AKHIR stylesheet supaya menimpa aturan dasar di atas
+   tanpa perlu mengubahnya satu per satu — aturan lama tetap utuh sebagai fallback
+   kalau blok ini dihapus. Kedalaman dibangun dari 3 lapis:
+     1. inset terang di tepi atas   -> permukaan menghadap cahaya
+     2. box-shadow solid di bawah   -> ketebalan badan tombol
+     3. shadow blur di bawahnya     -> jarak tombol ke lantai
+   Ditekan = lapis 2 memendek dan tombol turun, jadi terasa benar-benar masuk. */
+
+/* --- Teks navbar --- */
+.nav-links{ perspective:700px; }
+.nav-links a.nl{
+  transform-style:preserve-3d;
+  text-shadow:0 1px 0 rgba(4,10,20,.9), 0 2px 4px rgba(0,0,0,.55);
+  transition:color .25s ease, transform .35s cubic-bezier(.2,.8,.2,1), text-shadow .35s ease;
+}
+.nav-links a.nl:hover{
+  color:var(--white);
+  transform:translateZ(26px) translateY(-2px);
+  text-shadow:0 2px 0 rgba(4,10,20,.95), 0 8px 18px rgba(59,158,232,.5);
+}
+.nav-brand{ perspective:600px; }
+.nav-brand img{ transition:transform .4s cubic-bezier(.2,.8,.2,1); }
+.nav-brand:hover img{ transform:translateZ(18px) rotateY(-8deg); }
+#mobileMenu .ml{ text-shadow:0 1px 0 rgba(4,10,20,.9), 0 2px 4px rgba(0,0,0,.5); transition:color .25s ease, transform .3s ease; }
+#mobileMenu .ml:hover{ color:var(--white); transform:translateX(4px); }
+
+/* --- Tombol padat (biru) --- */
+.nav-cta, .hero-cta, .btn-filled{
+  /* Titik --blue sengaja ditarik ke 28%, bukan 46%: baris teks tombol berada di
+     kira-kira 34-71% tinggi, jadi teks selalu duduk di atas --blue atau yang lebih
+     gelap. Kalau highlight terang dibiarkan turun sampai tengah, kontras teks putih
+     ikut turun di bawah nilai aslinya. */
+  background:linear-gradient(180deg,#7CC2F3 0%,var(--blue) 28%,#2A7AB9 100%);
+  border:none;
+  text-shadow:0 1px 2px rgba(4,10,20,.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 -2px 0 rgba(4,10,20,.3),
+    0 5px 0 #175A92,
+    0 10px 20px rgba(0,0,0,.45);
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, background .25s ease;
+}
+.nav-cta:hover, .hero-cta:hover, .btn-filled:hover{
+  background:linear-gradient(180deg,#94D0F7 0%,var(--blue-lt) 46%,#3288C8 100%);
+  transform:translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.6),
+    inset 0 -2px 0 rgba(4,10,20,.3),
+    0 8px 0 #175A92,
+    0 16px 30px rgba(0,0,0,.5),
+    0 0 34px rgba(59,158,232,.4);
+}
+.nav-cta:active, .hero-cta:active, .btn-filled:active{
+  transform:translateY(3px);
+  box-shadow:
+    inset 0 2px 5px rgba(4,10,20,.5),
+    0 1px 0 #175A92,
+    0 3px 8px rgba(0,0,0,.4);
+}
+
+/* --- Tombol garis / kaca (outline, pill, mode background) --- */
+.btn-outline, .pill, .bg-btn{
+  background:linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.03) 55%, rgba(4,10,20,.16) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(4,10,20,.4),
+    0 3px 0 rgba(4,10,20,.5),
+    0 7px 14px rgba(0,0,0,.38);
+  text-shadow:0 1px 1px rgba(4,10,20,.7);
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, color .25s ease, border-color .25s ease, background .25s ease;
+}
+.btn-outline:hover, .pill:hover, .bg-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 -1px 0 rgba(4,10,20,.4),
+    0 5px 0 rgba(4,10,20,.5),
+    0 11px 20px rgba(0,0,0,.45);
+}
+.btn-outline:active, .pill:active, .bg-btn:active{
+  transform:translateY(2px);
+  box-shadow:inset 0 2px 4px rgba(4,10,20,.5), 0 1px 0 rgba(4,10,20,.5);
+}
+/* status aktif ditekan ke dalam — bukan cuma beda warna, tapi beda kedalaman */
+.pill.active, .bg-btn.active{
+  transform:translateY(2px);
+  box-shadow:
+    inset 0 2px 6px rgba(4,10,20,.55),
+    inset 0 -1px 0 rgba(255,255,255,.12),
+    0 1px 0 rgba(4,10,20,.5);
+}
+.pill.active{ background:linear-gradient(180deg,#2A7AB9 0%,var(--blue) 100%); }
+.bg-btn.active{ background:linear-gradient(180deg, rgba(59,158,232,.28) 0%, rgba(59,158,232,.12) 100%); }
+
+/* tombol tutup modal ikut punya ketebalan */
+.modal-close{ box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 3px 0 rgba(4,10,20,.55), 0 6px 12px rgba(0,0,0,.45); }
+.modal-close:active{ transform:translateZ(46px) translateY(3px); box-shadow:inset 0 2px 4px rgba(4,10,20,.5); }
+
+@media (prefers-reduced-motion: reduce){
+  .nav-links a.nl:hover, .nav-brand:hover img{ transform:none; }
+}
 
 /* reveal helper (driven by GSAP, default state set above per-element) */
 </style>
@@ -985,10 +1098,10 @@ function animateStats(){
    file:// tetap menemukan gambar dan update tidak tertahan cache CDN. */
 const ASSET='https://anabhidev.com/3D/', AV='?v=20260903a';
 const WORK=[
-  {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:ASSET+'innerpeace.webp'+AV},
-  {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:ASSET+'delanswit.jpg'+AV},
-  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:ASSET+'spingather.jpg'+AV},
-  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:ASSET+'lms.jpg'+AV},
+  {cat:'website', tag:'WEBSITE', name:'InnerPeace Bali', desc:'Private ricefield villas & a monthly residence in Gianyar, Bali — bilingual site with booking info and gallery.', status:'live', link:'https://www.innerpeacebali.com', img:ASSET+'innerpeace.webp'+AV, imgRel:'innerpeace.webp'+AV},
+  {cat:'website', tag:'WEBSITE', name:'Delanswit', desc:'Hampers & pastry gifting brand — product catalog, WhatsApp ordering flow, and Instagram showcase.', status:'live', link:'https://delanswit.netlify.app', img:ASSET+'delanswit.jpg'+AV, imgRel:'delanswit.jpg'+AV},
+  {cat:'webapp', tag:'WEB APP', name:'SpinGather', desc:'Spin-wheel prize draw that auto-confirms winners, logs to Sheets, and notifies via Telegram — zero manual tracking.', status:'live', link:'#', img:ASSET+'spingather.jpg'+AV, imgRel:'spingather.jpg'+AV},
+  {cat:'webapp', tag:'WEB APP', name:'Learning Management System', desc:'Custom LMS with offline attendance forms, self-paced modules, and automatic certificates.', status:'progress', link:'#', img:ASSET+'lms.jpg'+AV, imgRel:'lms.jpg'+AV},
 ];
 
 /* ============ CAROUSEL 3D (Three.js) ============ */
@@ -1065,21 +1178,41 @@ const opG=new THREE.BufferGeometry();
 opG.setAttribute('position', new THREE.BufferAttribute(opa,3));
 cGroup.add(new THREE.Points(opG, new THREE.PointsMaterial({color:0x6AB8F0, size:.03, transparent:true, opacity:.5})));
 
+/* ── helper sudut membulat ── */
+const CARD_TEX_R=26, MEDIA_R=15;
+function roundRectPath(c, x, y, w, h, r){
+  c.beginPath();
+  c.moveTo(x+r, y);
+  c.lineTo(x+w-r, y);   c.quadraticCurveTo(x+w, y,     x+w,   y+r);
+  c.lineTo(x+w,   y+h-r); c.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  c.lineTo(x+r,   y+h);   c.quadraticCurveTo(x,   y+h, x,     y+h-r);
+  c.lineTo(x,     y+r);   c.quadraticCurveTo(x,   y,   x+r,   y);
+  c.closePath();
+}
+/* Shape untuk ExtrudeGeometry — dipusatkan di origin seperti PlaneGeometry/BoxGeometry */
+function roundedRectShape(w, h, r){
+  const s=new THREE.Shape(), x=-w/2, y=-h/2;
+  s.moveTo(x+r, y);
+  s.lineTo(x+w-r, y);   s.quadraticCurveTo(x+w, y,     x+w,   y+r);
+  s.lineTo(x+w,   y+h-r); s.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  s.lineTo(x+r,   y+h);   s.quadraticCurveTo(x,   y+h, x,     y+h-r);
+  s.lineTo(x,     y+r);   s.quadraticCurveTo(x,   y,   x+r,   y);
+  return s;
+}
+
 function makeCardTex(item){
   const cv=document.createElement('canvas'); cv.width=512; cv.height=666;
   const ctx=cv.getContext('2d');
-  // navy-card background
-  ctx.fillStyle='rgba(22,35,54,0.96)'; ctx.fillRect(0,0,512,666);
-  ctx.strokeStyle='rgba(59,158,232,0.4)'; ctx.lineWidth=2; ctx.strokeRect(2,2,508,662);
-  const cm=18; ctx.strokeStyle='rgba(106,184,240,0.7)'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(0,cm); ctx.lineTo(0,0); ctx.lineTo(cm,0); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(512-cm,0); ctx.lineTo(512,0); ctx.lineTo(512,cm); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(0,666-cm); ctx.lineTo(0,666); ctx.lineTo(cm,666); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(512-cm,666); ctx.lineTo(512,666); ctx.lineTo(512,666-cm); ctx.stroke();
+  // Latar digambar lewat path membulat, BUKAN fillRect — sudutnya jadi transparan
+  // sejak awal sehingga tidak perlu masking tambahan. Siku tajam di 4 pojok dihapus.
+  roundRectPath(ctx, 0, 0, 512, 666, CARD_TEX_R);
+  ctx.fillStyle='rgba(22,35,54,0.96)'; ctx.fill();
+  roundRectPath(ctx, 1.5, 1.5, 509, 663, CARD_TEX_R-1.5);
+  ctx.strokeStyle='rgba(59,158,232,0.45)'; ctx.lineWidth=2; ctx.stroke();
 
   // media area placeholder (replaced by real image once loaded)
-  ctx.fillStyle='rgba(17,31,51,0.9)';
-  ctx.fillRect(18,18,476,360);
+  roundRectPath(ctx, 18, 18, 476, 360, MEDIA_R);
+  ctx.fillStyle='rgba(17,31,51,0.9)'; ctx.fill();
   ctx.fillStyle='rgba(184,200,216,0.5)';
   ctx.font='400 14px DM Sans, sans-serif';
   ctx.textAlign='center';
@@ -1104,17 +1237,38 @@ function makeCardTex(item){
   if(item.img){
     function showUnavailable(){
       // keep placeholder text but mark as unavailable
-      ctx.fillStyle='rgba(17,31,51,0.9)'; ctx.fillRect(18,18,476,360);
+      roundRectPath(ctx, 18, 18, 476, 360, MEDIA_R);
+      ctx.fillStyle='rgba(17,31,51,0.9)'; ctx.fill();
       ctx.fillStyle='rgba(184,200,216,0.5)'; ctx.font='400 14px DM Sans, sans-serif';
-      ctx.textAlign='center'; ctx.fillText('Image unavailable', 256, 200); ctx.textAlign='left';
+      ctx.textAlign='center';
+      // Di file:// browser SELALU menolak gambar masuk ke texture WebGL, apa pun
+      // sumbernya. Pesannya dibedakan supaya penyebabnya jelas, bukan terbaca bug.
+      if(location.protocol==='file:'){
+        ctx.fillText('Preview lewat http:// untuk melihat foto', 256, 190);
+        ctx.font='400 12px DM Sans, sans-serif';
+        ctx.fillStyle='rgba(184,200,216,0.35)';
+        ctx.fillText('(batasan keamanan browser pada file://)', 256, 212);
+      } else {
+        ctx.fillText('Image unavailable', 256, 200);
+      }
+      ctx.textAlign='left';
       tex.needsUpdate=true;
     }
-    // Dua tahap. Tahap 1 pakai crossOrigin='anonymous' — ini satu-satunya cara foto
-    // lintas-origin bisa masuk WebGL, TAPI mensyaratkan server mengirim header
-    // Access-Control-Allow-Origin. anabhidev.com terbukti TIDAK mengirim header itu,
-    // jadi tahap 1 gagal dan tahap 2 mengulang tanpa crossOrigin: di produksi foto
-    // berada di origin yang sama dengan halaman, sehingga berhasil tanpa mencemari canvas.
-    function loadPhoto(useCors){
+    // Foto kartu masuk ke <canvas> lalu jadi texture WebGL, jadi WAJIB same-origin
+    // (atau di-izinkan CORS). Dicoba berjenjang, yang pertama berhasil dipakai:
+    //   1. path RELATIF  -> selalu same-origin, canvas dijamin bersih. Inilah yang
+    //      dipakai versi asli dan inilah alasan dulu gambarnya muncul.
+    //   2. URL absolut + crossOrigin -> hanya berhasil kalau server kirim header ACAO
+    //      (anabhidev.com terbukti TIDAK mengirimnya).
+    //   3. URL absolut tanpa crossOrigin -> gambar termuat tapi canvas tercemar;
+    //      tes taint menangkapnya dan jatuh ke placeholder, bukan crash.
+    const tries=[];
+    if(item.imgRel) tries.push({url:item.imgRel, cors:false});
+    if(item.img){ tries.push({url:item.img, cors:true}); tries.push({url:item.img, cors:false}); }
+
+    function loadPhoto(step){
+      if(step>=tries.length){ showUnavailable(); return; }
+      const useCors=tries[step].cors;
       const img=new Image();
       if(useCors) img.crossOrigin='anonymous';
       img.onload=function(){
@@ -1129,17 +1283,22 @@ function makeCardTex(item){
         if(asp > areaW/areaH){ dh=areaH; dw=dh*asp; } else { dw=areaW; dh=dw/asp; }
         sx.drawImage(img, (areaW-dw)/2, (areaH-dh)/2, dw, dh);
         try { sx.getImageData(0,0,1,1); }
-        catch(err){ if(useCors) loadPhoto(false); else showUnavailable(); return; }
+        catch(err){ loadPhoto(step+1); return; }
+        // foto + scanline di-clip ke path membulat supaya sudut media ikut melengkung
+        ctx.save();
+        roundRectPath(ctx, 18, 18, 476, 360, MEDIA_R);
+        ctx.clip();
         ctx.drawImage(sc, 18, 18);
         // subtle scanline overlay for cohesion with card aesthetic
         ctx.strokeStyle='rgba(0,0,0,0.05)'; ctx.lineWidth=.5;
         for(let y=18;y<378;y+=3){ ctx.beginPath(); ctx.moveTo(18,y); ctx.lineTo(494,y); ctx.stroke(); }
+        ctx.restore();
         tex.needsUpdate=true;
       };
-      img.onerror=function(){ if(useCors) loadPhoto(false); else showUnavailable(); };
-      img.src=item.img;
+      img.onerror=function(){ loadPhoto(step+1); };
+      img.src=tries[step].url;
     }
-    loadPhoto(true);
+    loadPhoto(0);
   }
 
   return tex;
@@ -1191,9 +1350,25 @@ function makeGlossTexture(){
 }
 
 const faceGeo=new THREE.PlaneGeometry(CARD_W, CARD_H);
-const slabGeo=new THREE.BoxGeometry(CARD_W+.13, CARD_H+.13, .17);
-const slabEdgeGeo=new THREE.EdgesGeometry(slabGeo);
-const glossGeo=new THREE.PlaneGeometry(CARD_W+.13, CARD_H+.13);
+/* Badan card: ExtrudeGeometry dari shape bersudut membulat + bevel, menggantikan
+   BoxGeometry. Bevel-nya yang membuat tepi menangkap cahaya jadi garis tipis
+   mengkilap — kesan "kaku dan kotak" hilang. */
+const CARD_R=0.17;
+const slabShape=roundedRectShape(CARD_W+.13, CARD_H+.13, CARD_R);
+const slabGeo=new THREE.ExtrudeGeometry(slabShape, {depth:.13, bevelEnabled:true, bevelThickness:.022, bevelSize:.022, bevelSegments:3, curveSegments:14});
+slabGeo.center();   /* ExtrudeGeometry meng-extrude dari z=0 ke +depth, perlu dipusatkan */
+/* garis tepi mengikuti kontur membulat — EdgesGeometry tidak dipakai karena pada
+   bentuk ber-bevel ia menghasilkan ratusan garis pecah */
+const slabEdgeGeo=(function(){
+  const pts=slabShape.getPoints(90), arr=new Float32Array(pts.length*3);
+  for(let i=0;i<pts.length;i++){ arr[i*3]=pts[i].x; arr[i*3+1]=pts[i].y; arr[i*3+2]=0; }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(arr,3));
+  return g;
+})();
+/* gloss dikecilkan 0,10 unit dari tepi supaya sudut kotaknya tetap berada di dalam
+   siluet membulat card (batas amannya 0,293 x radius) */
+const glossGeo=new THREE.PlaneGeometry(CARD_W-.10, CARD_H-.10);
 const shadowGeo=new THREE.PlaneGeometry(CARD_W*1.55, CARD_W*1.05);
 const reflectAlpha=makeReflectAlpha();
 const glossTex=makeGlossTexture();
@@ -1222,8 +1397,8 @@ WORK.forEach((item,i)=>{
 
   /* garis tepi menyala — menegaskan rusuk balok saat card berputar */
   const edgeMat=new THREE.LineBasicMaterial({color:0x6AB8F0, transparent:true, opacity:.42});
-  const edges=new THREE.LineSegments(slabEdgeGeo, edgeMat);
-  edges.position.z=-.09;
+  const edges=new THREE.LineLoop(slabEdgeGeo, edgeMat);
+  edges.position.z=.002;   /* tepat di depan permukaan slab, di belakang muka card */
   holder.add(edges);
 
   /* muka card tetap MeshBasicMaterial supaya teks & foto terbaca jelas (tidak digelapkan cahaya).
