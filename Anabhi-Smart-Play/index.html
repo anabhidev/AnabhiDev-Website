@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!-- ================================================================
+     AnabhiDev-ASP — Anabhi Smart Play
+     HTML · CSS modular · JavaScript modular · PWA · Google Apps Script
+     Development · Anabhi Dev
+     Version   : 5.3
+     Generated : 7 September 2026, 18:05:44
+     ================================================================ -->
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Anabhi Smart Play</title>
+<meta name="description" content="Math & Fun Games untuk Ana & Abhi — belajar sambil bermain.">
+<meta name="theme-color" content="#11102B">
+
+<!-- ── PWA ── -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Anabhi Play">
+<!-- Splash iOS — Android 12+ memakai ikon aplikasi, tidak bisa diatur (SOP 18.4) -->
+<link rel="apple-touch-startup-image" href="assets/splash-750x1334.png"  media="(device-width:375px) and (device-height:667px) and (-webkit-device-pixel-ratio:2)">
+<link rel="apple-touch-startup-image" href="assets/splash-1125x2436.png" media="(device-width:375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="assets/splash-1170x2532.png" media="(device-width:390px) and (device-height:844px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="assets/splash-1179x2556.png" media="(device-width:393px) and (device-height:852px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="assets/splash-1284x2778.png" media="(device-width:428px) and (device-height:926px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="assets/splash-1290x2796.png" media="(device-width:430px) and (device-height:932px) and (-webkit-device-pixel-ratio:3)">
+
+<!-- ── Aset self-host (SOP 18.12 — CSP ikut menempel ke sw.js,
+     aset CDN gagal senyap DAN tidak jalan offline) ── -->
+<link rel="preload" href="assets/fonts/nunito-latin-var.woff2"   as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fredoka-one-latin.woff2"  as="font" type="font/woff2" crossorigin>
+<script src="js/twemoji.min.js"></script>
+<link rel="stylesheet" href="css/tokens.css?v=20260907d">
+<link rel="stylesheet" href="css/themes.css?v=20260907d">
+<link rel="stylesheet" href="css/screens.css?v=20260907d">
+<link rel="stylesheet" href="css/components.css?v=20260907d">
+</head>
+<body class="th-space">
+<div class="bg-particles" id="bgPart"></div>
+<!-- Penanda display-mode (SOP 18.7, MANDATORY) — bukti definitif hasil install:
+     "aplikasi" = WebAPK sungguhan, "browser" = masih tab / pintasan -->
+<div class="version">v5.3 <span id="runMode"></span></div>
+
+<!-- Banner versi baru — sengaja TIDAK auto-reload saat anak sedang main (PRD §40) -->
+<div class="update-bar" id="updateBar" hidden>
+  <span>✨ Versi baru siap!</span>
+  <button id="updateBtn">Perbarui</button>
+  <button class="ub-x" id="updateClose" aria-label="Tutup">✕</button>
+</div>
+
+<!-- CONFIRM -->
+<div class="confirm-ov" id="confirmOv">
+  <div class="confirm-box">
+    <div class="ci">⚠️</div>
+    <h2>Yakin mau keluar?</h2>
+    <p>Soal yang sudah dijawab akan hilang!</p>
+    <div class="cbns">
+      <button class="btn-stay" id="btnStay">🎮 Lanjut Main</button>
+      <button class="btn-leave" id="btnLeave">Keluar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WELCOME ══════════ -->
+<div class="screen active" id="s-welcome">
+  <div class="game-title"><span style="-webkit-text-fill-color:initial">&#x1F430;</span> Anabhi Smart Play <span style="-webkit-text-fill-color:initial">&#x1F9AB;</span></div>
+  <p class="subtitle">Math & Fun Games untuk Ana & Abhi! 🌟</p>
+
+  <div class="player-cards">
+    <div class="pcard ana" id="pcard-ana" onclick="selectPlayer('ana')">
+      <div class="pcard-check">✓</div>
+      <img class="pcard-photo" src="assets/Ana.webp" alt="Ana" width="280" height="280"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-photo" style="display:none;align-items:center;justify-content:center;background:rgba(255,107,107,.3);font-size:2rem">🎀</div>
+      <div class="pcard-name">Anjali Kirana</div>
+      <div class="pcard-tag">🌸 Ana</div>
+    </div>
+    <div class="pcard abhi" id="pcard-abhi" onclick="selectPlayer('abhi')">
+      <div class="pcard-check">✓</div>
+      <img class="pcard-photo" src="assets/Abhi.webp" alt="Abhi" width="280" height="280"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-photo" style="display:none;align-items:center;justify-content:center;background:rgba(78,205,196,.3);font-size:2rem">⚡</div>
+      <div class="pcard-name">Abhinaya Kenzie</div>
+      <div class="pcard-tag">⚡ Abhi</div>
+    </div>
+  </div>
+
+  <div class="app-sel-title">Pilih Game</div>
+  <div class="app-cards">
+    <div class="acard math-card" id="acard-math" onclick="selectApp('math')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🚀</div>
+      <div class="acard-name">Math Adventure</div>
+      <div class="acard-desc">Urutan angka, hitung,<br>perbandingan & lebih!</div>
+    </div>
+    <div class="acard fun-card" id="acard-fun" onclick="selectApp('fun')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🎨</div>
+      <div class="acard-name">Fun Games</div>
+      <div class="acard-desc">Warna, huruf, gambar<br>& tebak jam!</div>
+    </div>
+    <div class="acard bindo-card" id="acard-bindo" onclick="selectApp('bindo')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">✍️</div>
+      <div class="acard-name">Bahasa Indonesia</div>
+      <div class="acard-desc">Menyalin kalimat<br>dengan mengetik!</div>
+    </div>
+    <div class="acard bing-card" id="acard-bing" onclick="selectApp('bing')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🦉</div>
+      <div class="acard-name">Bahasa Inggris</div>
+      <div class="acard-desc">Hewan, buah, warna<br>& kata sederhana!</div>
+    </div>
+    <div class="acard sains-card" id="acard-sains" onclick="selectApp('sains')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🔬</div>
+      <div class="acard-name">Pengetahuan Umum</div>
+      <div class="acard-desc">Hewan, tubuh, alam<br>& sains dasar!</div>
+    </div>
+    <div class="acard seni-card" id="acard-seni" onclick="selectApp('seni')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🎨</div>
+      <div class="acard-name">Seni & Kreativitas</div>
+      <div class="acard-desc">Warna campuran,<br>musik & jenis seni!</div>
+    </div>
+    <div class="acard logika-card" id="acard-logika" onclick="selectApp('logika')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🧩</div>
+      <div class="acard-name">Logika & Pola</div>
+      <div class="acard-desc">Pola, lebih banyak<br>& klasifikasi!</div>
+    </div>
+    <div class="acard mix-card" id="acard-mix" onclick="selectApp('mix')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🌀</div>
+      <div class="acard-name">Mix Challenge</div>
+      <div class="acard-desc">Campuran semua<br>pelajaran!</div>
+    </div>
+  </div>
+
+  <div class="qcount-title">Jumlah Soal</div>
+  <div class="qcount-opts">
+    <button class="qcbtn" data-q="10" onclick="selectQ(10)">10 soal</button>
+    <button class="qcbtn" data-q="15" onclick="selectQ(15)">15 soal</button>
+    <button class="qcbtn" data-q="20" onclick="selectQ(20)">20 soal</button>
+  </div>
+
+  <button class="start-btn" id="startBtn" onclick="startGame()">🎮 Mulai!</button>
+
+  <!-- Tombol pasang PWA — TANPA preventDefault() pada beforeinstallprompt,
+       supaya pop-up install bawaan Chrome tetap muncul (SOP 18.6) -->
+  <button class="install-btn" id="installBtn" hidden>📱 Pasang Aplikasi</button>
+  <div class="pwa-note" id="pwaNote" hidden></div>
+</div>
+
+<!-- ══════════ GAME ══════════ -->
+<div class="screen" id="s-game">
+  <div class="game-hdr">
+    <div class="player-hud">
+      <img class="hud-photo" id="hudPhoto" src="" alt="">
+      <div class="hud-photo photo-fb" style="display:none"></div>
+      <div>
+        <div class="hud-label" id="hudName">–</div>
+        <div class="hud-score"><span id="hudScore">0</span> poin</div>
+      </div>
+    </div>
+    <div class="app-badge" id="appBadge">🚀</div>
+    <div class="prog-txt">Soal <span id="curQ">1</span>/<span id="totQ">10</span></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-fill" id="progFill" style="width:0%"></div>
+  </div>
+  <div class="q-area" id="qArea"></div>
+</div>
+
+<!-- ══════════ FINISH ══════════ -->
+<div class="screen" id="s-finish">
+  <div class="confetti">🎉🏆🎊</div>
+  <div class="finish-title">Selesai! Luar Biasa!</div>
+  <div class="result-card">
+    <img class="rc-photo" id="rcPhoto" src="" alt="">
+    <div class="rc-photo photo-fb" style="display:none"></div>
+    <div class="rc-name"  id="rcName">–</div>
+    <div class="rc-score" id="rcScore">0</div>
+    <div class="rc-label">poin</div>
+    <div class="rc-acc"   id="rcAcc">–</div>
+    <div class="rc-stars" id="rcStars">⭐</div>
+    <div class="rc-streak"id="rcStreak">🔥 – hari berturut-turut</div>
+  </div>
+  <div class="stat-row" id="statRow"></div>
+  <div class="time-disp">⏱️ Durasi: <span id="finTime">-</span></div>
+  <button class="play-again-btn" onclick="playAgain()">🔄 Main Lagi!</button>
+  <div class="tg-status" id="tgStatus">📤 Mengirim laporan...</div>
+</div>
+
+<script src="js/config.js?v=20260907d"></script>
+<script src="js/questions/math.js?v=20260907d"></script>
+<script src="js/questions/fun.js?v=20260907d"></script>
+<script src="js/questions/bindo.js?v=20260907d"></script>
+<script src="js/questions/bing.js?v=20260907d"></script>
+<script src="js/questions/sains.js?v=20260907d"></script>
+<script src="js/questions/seni.js?v=20260907d"></script>
+<script src="js/questions/logika.js?v=20260907d"></script>
+<script src="js/questions/mix.js?v=20260907d"></script>
+<script src="js/engine/session.js?v=20260907d"></script>
+<script src="js/engine/render.js?v=20260907d"></script>
+<script src="js/engine/finish.js?v=20260907d"></script>
+<script src="js/services/db.js?v=20260907d"></script>
+<script src="js/services/hint.js?v=20260907d"></script>
+<script src="js/services/gas.js?v=20260907d"></script>
+<script src="js/engine/ui.js?v=20260907d"></script>
+<script src="js/pwa/install.js?v=20260907d"></script>
+<script src="js/pwa/update.js?v=20260907d"></script>
+<script src="js/main.js?v=20260907d"></script>
+</body>
+</html>

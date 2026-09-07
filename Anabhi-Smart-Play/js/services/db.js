@@ -1,0 +1,295 @@
+// ================================================================
+// AnabhiDev-ASP — Anabhi Smart Play
+// JavaScript · Memori belajar — IndexedDB + mesin penguasaan
+// Development · Anabhi Dev
+// Version   : 1.0
+// Generated : 7 September 2026, 18:05:44
+// ================================================================
+//
+// Menyimpan riwayat sesi, riwayat jawaban, dan PENGUASAAN per konsep/kata
+// (PRD §10.8 · Master 2 §5 & §11).
+//
+// 🔴 DUA BAGIAN YANG SENGAJA DIPISAH:
+//   1. ATURAN penguasaan  -> fungsi MURNI, tanpa menyentuh database sama sekali
+//   2. PENYIMPANAN        -> pembungkus tipis IndexedDB
+// Alasannya: aturan yang murni bisa diuji ribuan kali tanpa browser, sedangkan
+// kalau logika dan penyimpanan menyatu, satu-satunya cara mengujinya adalah
+// membuka browser sungguhan — dan itu berarti tidak pernah benar-benar diuji.
+//
+// 🔴 IndexedDB TIDAK BOLEH mematikan gameplay (aturan 9 CLAUDE.md).
+// Semua fungsi penyimpanan dibungkus penjaga dan SELALU resolve. Kalau
+// IndexedDB tidak ada (mode penyamaran, kuota penuh, browser lama), aplikasi
+// tetap jalan penuh — hanya riwayatnya saja yang tidak tercatat.
+//
+// 🔴 Antrean laporan (outbox) SENGAJA DIBIARKAN di localStorage.
+// Antrean itu sudah terbukti jalan dan diuji offline. Memindahkannya sekarang
+// berisiko menghilangkan laporan yang belum terkirim — untung kecil, rugi besar.
+
+// ══════════════════════════════════════
+// 1. ATURAN PENGUASAAN  (fungsi murni)
+// ══════════════════════════════════════
+//
+// Tahapan (Master 2 §11): BARU -> DILIHAT -> BERLATIH -> AKRAB -> DIKUASAI -> ULANG
+//
+// Ambang batas dikumpulkan di satu tempat supaya bisa disetel tanpa membongkar
+// logika (Master 2 §19: "thresholds must be configurable and validated").
+var MASTERY_ATURAN = {
+  akrab    : 2,    // benar berturut-turut minimal -> AKRAB
+  dikuasai : 4,    // benar berturut-turut minimal -> DIKUASAI
+  // Jarak ulangan dalam HARI, per tahap. Angka kecil dulu lalu melebar —
+  // kata yang sudah dikuasai tidak perlu sering ditanya lagi.
+  jeda     : { baru:0, dilihat:1, berlatih:1, akrab:3, dikuasai:7, ulang:0 }
+};
+
+var HARI_MS = 86400000;
+
+function masteryAwal(id){
+  return { id:id, benar:0, salah:0, beruntun:0,
+           tahap:'baru', terakhirLihat:0, terakhirBenar:0, ulangPada:0 };
+}
+
+// Menghitung keadaan BARU dari keadaan lama + satu jawaban.
+// Murni: input sama -> output sama, tidak menyentuh apa pun di luar.
+function masteryHitung(lama, benar, waktu){
+  var m = lama ? JSON.parse(JSON.stringify(lama)) : masteryAwal('');
+  var t = waktu || Date.now();
+  var tahapLama = m.tahap;
+
+  m.terakhirLihat = t;
+  if(benar){
+    m.benar++; m.beruntun++; m.terakhirBenar = t;
+  }else{
+    m.salah++; m.beruntun = 0;
+  }
+
+  if(!benar){
+    // Salah setelah pernah AKRAB/DIKUASAI berarti mulai lupa -> masuk antrean ulang.
+    // Ini inti "Memory Bank" (Master 2 §20): lupa itu sinyal, bukan kegagalan.
+    m.tahap = (tahapLama==='akrab'||tahapLama==='dikuasai'||tahapLama==='ulang')
+      ? 'ulang' : 'berlatih';
+  } else if(m.beruntun >= MASTERY_ATURAN.dikuasai){
+    m.tahap = 'dikuasai';
+  } else if(m.beruntun >= MASTERY_ATURAN.akrab){
+    m.tahap = 'akrab';
+  } else if(m.benar + m.salah <= 1){
+    m.tahap = 'dilihat';
+  } else {
+    m.tahap = 'berlatih';
+  }
+
+  var jeda = MASTERY_ATURAN.jeda[m.tahap];
+  if(typeof jeda !== 'number') jeda = 1;
+  m.ulangPada = t + jeda*HARI_MS;
+  return m;
+}
+
+// Apakah kata/konsep ini perlu diulang sekarang?
+function perluDiulang(m, waktu){
+  if(!m) return true;                       // belum pernah dilihat = perlu
+  if(m.tahap==='ulang') return true;        // sedang dilupakan
+  return (waktu||Date.now()) >= (m.ulangPada||0);
+}
+
+// Urutan prioritas untuk antrean ulangan: yang paling dilupakan lebih dulu.
+function urutkanUlangan(daftar, waktu){
+  var t = waktu||Date.now();
+  var bobot = { ulang:0, berlatih:1, dilihat:2, akrab:3, dikuasai:4, baru:5 };
+  return daftar.slice().sort(function(a,b){
+    var ba=bobot[a.tahap], bb=bobot[b.tahap];
+    if(ba!==bb) return ba-bb;
+    return (a.ulangPada||0)-(b.ulangPada||0);   // yang paling lama jatuh tempo
+  }).filter(function(m){ return perluDiulang(m,t); });
+}
+
+var MASTERY_LABEL = { baru:'Baru', dilihat:'Dilihat', berlatih:'Berlatih',
+                      akrab:'Akrab', dikuasai:'Dikuasai', ulang:'Perlu diulang' };
+function masteryLabel(tahap){ return MASTERY_LABEL[tahap] || tahap; }
+
+// Kunci penguasaan. Kata Inggris dan konsep matematika hidup di SATU tabel
+// supaya mesinnya cuma satu (Master 2 §26) — dibedakan lewat awalannya.
+function kunciKata(wordId){ return 'kata:'+wordId; }
+function kunciKonsep(tipe){ return 'konsep:'+tipe; }
+
+// ══════════════════════════════════════
+// 2. PENYIMPANAN  (IndexedDB, semua dibungkus penjaga)
+// ══════════════════════════════════════
+var DB_NAMA = 'anabhi_smart_play';
+var DB_VERSI = 1;
+var _db = null, _dbGagal = false;
+
+function dbBuka(){
+  if(_db) return Promise.resolve(_db);
+  if(_dbGagal) return Promise.resolve(null);
+  return new Promise(function(resolve){
+    try{
+      if(typeof indexedDB === 'undefined' || !indexedDB){ _dbGagal=true; return resolve(null); }
+      var req = indexedDB.open(DB_NAMA, DB_VERSI);
+      req.onupgradeneeded = function(e){
+        var db = e.target.result;
+        if(!db.objectStoreNames.contains('sesi'))
+          db.createObjectStore('sesi',{keyPath:'sessionId'});
+        if(!db.objectStoreNames.contains('jawaban'))
+          db.createObjectStore('jawaban',{keyPath:'id',autoIncrement:true});
+        if(!db.objectStoreNames.contains('mastery'))
+          db.createObjectStore('mastery',{keyPath:'id'});
+      };
+      req.onsuccess = function(){ _db = req.result; resolve(_db); };
+      req.onerror   = function(){ _dbGagal=true; resolve(null); };
+      // Kalau permintaan diblokir tab lain, jangan menggantung selamanya.
+      req.onblocked = function(){ _dbGagal=true; resolve(null); };
+    }catch(e){ _dbGagal=true; resolve(null); }
+  });
+}
+
+function dbTulis(namaStore, nilai){
+  return dbBuka().then(function(db){
+    if(!db) return false;
+    return new Promise(function(resolve){
+      try{
+        var tx = db.transaction(namaStore,'readwrite');
+        tx.objectStore(namaStore).put(nilai);
+        tx.oncomplete = function(){ resolve(true); };
+        tx.onerror    = function(){ resolve(false); };
+        tx.onabort    = function(){ resolve(false); };
+      }catch(e){ resolve(false); }
+    });
+  }).catch(function(){ return false; });
+}
+
+function dbBaca(namaStore, kunci){
+  return dbBuka().then(function(db){
+    if(!db) return null;
+    return new Promise(function(resolve){
+      try{
+        var req = db.transaction(namaStore,'readonly').objectStore(namaStore).get(kunci);
+        req.onsuccess = function(){ resolve(req.result||null); };
+        req.onerror   = function(){ resolve(null); };
+      }catch(e){ resolve(null); }
+    });
+  }).catch(function(){ return null; });
+}
+
+function dbSemua(namaStore){
+  return dbBuka().then(function(db){
+    if(!db) return [];
+    return new Promise(function(resolve){
+      try{
+        var req = db.transaction(namaStore,'readonly').objectStore(namaStore).getAll();
+        req.onsuccess = function(){ resolve(req.result||[]); };
+        req.onerror   = function(){ resolve([]); };
+      }catch(e){ resolve([]); }
+    });
+  }).catch(function(){ return []; });
+}
+
+// ══════════════════════════════════════
+// 3. PENCATATAN SESI
+// ══════════════════════════════════════
+//
+// Dipanggil SEKALI di akhir sesi, bukan tiap soal dijawab. Alasannya: jalur
+// menjawab soal adalah bagian paling sensitif terhadap jeda — menyisipkan
+// tulisan database di sana berisiko membuat tombol terasa lambat bagi anak.
+// 🔴 Mengembalikan true HANYA kalau datanya benar-benar tersimpan.
+// Sebelumnya fungsi ini selalu menjawab true walau tidak ada satu pun tulisan
+// yang berhasil — persis jenis kebohongan yang dulu bikin orang tua diberi tahu
+// "laporan terkirim" padahal hilang (bug B4). Laporan palsu lebih berbahaya
+// daripada kegagalan yang diakui.
+function catatSesi(ringkas){
+  try{
+    return dbBuka().then(function(db){
+      if(!db) return false;                 // tidak ada database = tidak tersimpan
+
+      var t = Date.now();
+      var perubahan = [];
+      for(var i=0;i<S.qBank.length && i<S.results.length;i++){
+        var q = S.qBank[i];
+        var kunci = null;
+        if(typeof vocabIdOfQuestion==='function'){
+          var wid = vocabIdOfQuestion(q);
+          if(wid) kunci = kunciKata(wid);
+        }
+        if(!kunci) kunci = kunciKonsep(q.t);
+        perubahan.push({kunci:kunci, benar:!!S.results[i], tipe:q.t});
+      }
+
+      var tugas = [];
+      tugas.push(dbTulis('sesi',{
+        sessionId : S.sessionId,
+        waktu     : t,
+        pemain    : S.player,
+        game      : S.app,
+        jumlahSoal: S.qCount,
+        score     : S.score,
+        benar     : S.results.filter(Boolean).length,
+        akurasi   : ringkas && ringkas.akurasi
+      }));
+
+      perubahan.forEach(function(p,j){
+        tugas.push(dbTulis('jawaban',{
+          sessionId:S.sessionId, waktu:t, pemain:S.player,
+          urutan:j+1, kunci:p.kunci, tipe:p.tipe, benar:p.benar
+        }));
+      });
+
+      tugas.push(perbaruiMastery(perubahan, t));
+
+      return Promise.all(tugas).then(function(hasil){
+        return hasil.length>0 && hasil.every(Boolean);
+      });
+    }).catch(function(){ return false; });
+  }catch(e){
+    return Promise.resolve(false);   // riwayat gagal != permainan gagal
+  }
+}
+
+// Menggabungkan beberapa jawaban untuk kunci yang SAMA dalam satu sesi supaya
+// urutannya tidak saling menimpa (mis. Mix Challenge: 3 soal 'konsep:ops').
+function perbaruiMastery(perubahan, waktu){
+  var per = {};
+  perubahan.forEach(function(p){
+    (per[p.kunci] = per[p.kunci] || []).push(p.benar);
+  });
+  var kunci = Object.keys(per);
+  return Promise.all(kunci.map(function(k){
+    return dbBaca('mastery',k).then(function(lama){
+      var m = lama || masteryAwal(k);
+      per[k].forEach(function(benar){ m = masteryHitung(m,benar,waktu); m.id=k; });
+      return dbTulis('mastery',m);
+    });
+  })).then(function(hasil){
+    // Jujur: true hanya kalau SEMUA penguasaan benar-benar tertulis.
+    return hasil.length>0 && hasil.every(Boolean);
+  }).catch(function(){ return false; });
+}
+
+// ══════════════════════════════════════
+// 4. BACAAN UNTUK LAPORAN & ULANGAN
+// ══════════════════════════════════════
+function masteryKata(){
+  return dbSemua('mastery').then(function(a){
+    return a.filter(function(m){ return m.id && m.id.indexOf('kata:')===0; });
+  });
+}
+
+// Daftar kata yang perlu diulang hari ini (Memory Bank, Master 2 §20).
+function kataPerluDiulang(batas){
+  return masteryKata().then(function(a){
+    var u = urutkanUlangan(a, Date.now());
+    return u.slice(0, batas||10).map(function(m){
+      var wid = m.id.slice(5);
+      var v = (typeof VOCAB_BY_ID!=='undefined') ? VOCAB_BY_ID[wid] : null;
+      return { wordId:wid, word:v?v.word:wid, arti:v?v.arti:'',
+               tahap:m.tahap, label:masteryLabel(m.tahap) };
+    });
+  }).catch(function(){ return []; });
+}
+
+function ringkasanBelajar(){
+  return dbSemua('mastery').then(function(a){
+    var h = { baru:0, dilihat:0, berlatih:0, akrab:0, dikuasai:0, ulang:0 };
+    a.forEach(function(m){ if(h[m.tahap]!==undefined) h[m.tahap]++; });
+    return { total:a.length, tahap:h,
+             kataDikuasai:a.filter(function(m){
+               return m.id.indexOf('kata:')===0 && m.tahap==='dikuasai'; }).length };
+  }).catch(function(){ return {total:0,tahap:{},kataDikuasai:0}; });
+}

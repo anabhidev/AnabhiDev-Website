@@ -1,0 +1,52 @@
+/* ================================================================
+   AnabhiDev-ASP — Anabhi Smart Play
+   CSS · Font, token warna & lebar
+   Development · Anabhi Dev
+   Version   : 1.1
+   Generated : 7 September 2026, 09:55:12
+   ================================================================ */
+
+/* ── FONT SELF-HOST ──
+   🔴 url() di dalam CSS dihitung RELATIF TERHADAP BERKAS CSS-nya, bukan
+   terhadap halaman. Berkas ini ada di css/, jadi path wajib naik satu tingkat
+   dengan '../'. Waktu CSS masih menyatu di <style> dalam index.html, path
+   'assets/...' benar; begitu dipecah ke css/, path yang sama jadi
+   'css/assets/...' -> 404 dan halaman diam-diam memakai font sistem. */
+@font-face{
+  font-family:'Nunito';
+  font-style:normal;
+  font-weight:400 800;          /* variable font — 1 berkas untuk seluruh rentang */
+  font-display:swap;
+  src:url('../assets/fonts/nunito-latin-var.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Fredoka One';
+  font-style:normal;
+  font-weight:400;              /* STATIS — jangan diberi rentang, nanti faux bold */
+  font-display:swap;
+  src:url('../assets/fonts/fredoka-one-latin.woff2') format('woff2');
+}
+
+:root{
+  /* Lebar area game — melebar di tablet, tetap ramping di HP */
+  --game-w:560px;
+  --ana:#FF6B6B; --abhi:#4ECDC4; --accent:#FFE66D;
+  --ok:#6BCB77; --err:#FF4444;
+  --ana-glow:rgba(255,107,107,.45); --abhi-glow:rgba(78,205,196,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+/* Overflow lock — WAJIB html DAN body, body saja tidak cukup (SOP kat. 1) */
+html,body{overflow-x:hidden;max-width:100%;}
+body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;color:white;}
+img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;}
+
+/* Blok CSS starter wajib (SOP kat. 1) */
+:focus-visible{outline:3px solid #FFE66D;outline-offset:3px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  .bg-particles{display:none;}
+}
+/* Elemen yang menolak menyempit — penyebab horizontal scroll tersering */
+.opts-grid>*,.seq-disp>*{min-width:0;}
+img,svg,video,canvas{max-width:100%;}
