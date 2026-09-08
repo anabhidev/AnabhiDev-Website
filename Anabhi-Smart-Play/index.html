@@ -3,8 +3,8 @@
      AnabhiDev-ASP — Anabhi Smart Play
      HTML · CSS modular · JavaScript modular · PWA · Google Apps Script
      Development · Anabhi Dev
-     Version   : 5.3
-     Generated : 7 September 2026, 18:05:44
+     Version   : 5.8
+     Generated : 8 September 2026, 06:05:12
      ================================================================ -->
 <html lang="id">
 <head>
@@ -35,22 +35,24 @@
 <link rel="preload" href="assets/fonts/nunito-latin-var.woff2"   as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/fredoka-one-latin.woff2"  as="font" type="font/woff2" crossorigin>
 <script src="js/twemoji.min.js"></script>
-<link rel="stylesheet" href="css/tokens.css?v=20260907d">
-<link rel="stylesheet" href="css/themes.css?v=20260907d">
-<link rel="stylesheet" href="css/screens.css?v=20260907d">
-<link rel="stylesheet" href="css/components.css?v=20260907d">
+<link rel="stylesheet" href="css/tokens.css?v=20260908b">
+<link rel="stylesheet" href="css/themes.css?v=20260908b">
+<link rel="stylesheet" href="css/screens.css?v=20260908b">
+<link rel="stylesheet" href="css/components.css?v=20260908b">
 </head>
 <body class="th-space">
 <div class="bg-particles" id="bgPart"></div>
 <!-- Penanda display-mode (SOP 18.7, MANDATORY) — bukti definitif hasil install:
      "aplikasi" = WebAPK sungguhan, "browser" = masih tab / pintasan -->
-<div class="version">v5.3 <span id="runMode"></span></div>
+<div class="version">v5.8 <span id="runMode"></span></div>
 
 <!-- Banner versi baru — sengaja TIDAK auto-reload saat anak sedang main (PRD §40) -->
-<div class="update-bar" id="updateBar" hidden>
+<div class="update-bar" id="updateBar" hidden
+     title="Versi baru sudah tersimpan di perangkat. Tombol Perbarui hanya memuat ulang halaman — tidak ada data yang hilang.">
   <span>✨ Versi baru siap!</span>
-  <button id="updateBtn">Perbarui</button>
-  <button class="ub-x" id="updateClose" aria-label="Tutup">✕</button>
+  <button id="updateBtn" title="Muat ulang halaman untuk memakai versi baru">Perbarui</button>
+  <button class="ub-x" id="updateClose" aria-label="Tutup, nanti saja"
+          title="Nanti saja — banner tidak akan muncul lagi">✕</button>
 </div>
 
 <!-- CONFIRM -->
@@ -116,6 +118,12 @@
       <div class="acard-name">Bahasa Inggris</div>
       <div class="acard-desc">Hewan, buah, warna<br>& kata sederhana!</div>
     </div>
+    <div class="acard eng-card" id="acard-eng" onclick="selectApp('eng')">
+      <div class="acard-check">✓</div>
+      <div class="acard-icon">🌍</div>
+      <div class="acard-name">English Adventure</div>
+      <div class="acard-desc">Tebak siluet, susun<br>huruf &amp; kalimat!</div>
+    </div>
     <div class="acard sains-card" id="acard-sains" onclick="selectApp('sains')">
       <div class="acard-check">✓</div>
       <div class="acard-icon">🔬</div>
@@ -151,6 +159,28 @@
 
   <button class="start-btn" id="startBtn" onclick="startGame()">🎮 Mulai!</button>
 
+  <!-- Belajar santai — tanpa skor & tanpa laporan (Master 2 §6, §12).
+       SENGAJA dipisah dari grid "Pilih Game": kartu game harus dipilih dulu
+       lalu tekan Mulai, sedangkan dua kartu ini LANGSUNG membuka layarnya.
+       Kalau dicampur jadi satu grid, anak menekan lalu bingung kenapa yang
+       satu menyala dan yang lain langsung pindah layar. Karena itu keduanya
+       juga tidak punya tanda centang — tidak ada yang perlu "dipilih". -->
+  <div class="app-sel-title learn-title">Belajar Santai</div>
+  <div class="app-cards learn-cards">
+    <div class="acard belajar-card" id="acard-belajar" onclick="bukaKartu()">
+      <div class="acard-icon">📚</div>
+      <div class="acard-name">Belajar Kata</div>
+      <div class="acard-desc">Kartu kosakata<br>bolak-balik!</div>
+    </div>
+    <div class="acard cerita-card" id="acard-cerita" onclick="bukaCerita()">
+      <div class="acard-icon">📖</div>
+      <div class="acard-name">Cerita Seru</div>
+      <div class="acard-desc">Baca cerita lalu<br>jawab soalnya!</div>
+    </div>
+  </div>
+  <div class="card-stat" id="cardStat" hidden></div>
+  <div class="pwa-note" id="cardNote" hidden></div>
+
   <!-- Tombol pasang PWA — TANPA preventDefault() pada beforeinstallprompt,
        supaya pop-up install bawaan Chrome tetap muncul (SOP 18.6) -->
   <button class="install-btn" id="installBtn" hidden>📱 Pasang Aplikasi</button>
@@ -177,6 +207,24 @@
   <div class="q-area" id="qArea"></div>
 </div>
 
+<!-- ══════════ SMART CARDS ══════════ -->
+<div class="screen" id="s-cards">
+  <div class="card-hdr">
+    <button class="card-back" id="cardBack" onclick="tutupKartu()">← Kembali</button>
+    <div class="card-prog" id="cardProg"></div>
+  </div>
+  <div class="card-body" id="cardBody"></div>
+</div>
+
+<!-- ══════════ CERITA SERU ══════════ -->
+<div class="screen" id="s-story">
+  <div class="card-hdr">
+    <button class="card-back" id="storyBack" onclick="tutupCerita()">← Kembali</button>
+    <div class="card-prog" id="storyProg"></div>
+  </div>
+  <div class="card-body" id="storyBody"></div>
+</div>
+
 <!-- ══════════ FINISH ══════════ -->
 <div class="screen" id="s-finish">
   <div class="confetti">🎉🏆🎊</div>
@@ -197,24 +245,28 @@
   <div class="tg-status" id="tgStatus">📤 Mengirim laporan...</div>
 </div>
 
-<script src="js/config.js?v=20260907d"></script>
-<script src="js/questions/math.js?v=20260907d"></script>
-<script src="js/questions/fun.js?v=20260907d"></script>
-<script src="js/questions/bindo.js?v=20260907d"></script>
-<script src="js/questions/bing.js?v=20260907d"></script>
-<script src="js/questions/sains.js?v=20260907d"></script>
-<script src="js/questions/seni.js?v=20260907d"></script>
-<script src="js/questions/logika.js?v=20260907d"></script>
-<script src="js/questions/mix.js?v=20260907d"></script>
-<script src="js/engine/session.js?v=20260907d"></script>
-<script src="js/engine/render.js?v=20260907d"></script>
-<script src="js/engine/finish.js?v=20260907d"></script>
-<script src="js/services/db.js?v=20260907d"></script>
-<script src="js/services/hint.js?v=20260907d"></script>
-<script src="js/services/gas.js?v=20260907d"></script>
-<script src="js/engine/ui.js?v=20260907d"></script>
-<script src="js/pwa/install.js?v=20260907d"></script>
-<script src="js/pwa/update.js?v=20260907d"></script>
-<script src="js/main.js?v=20260907d"></script>
+<script src="js/config.js?v=20260908b"></script>
+<script src="js/questions/math.js?v=20260908b"></script>
+<script src="js/questions/fun.js?v=20260908b"></script>
+<script src="js/questions/bindo.js?v=20260908b"></script>
+<script src="js/questions/bing.js?v=20260908b"></script>
+<script src="js/questions/eng.js?v=20260908b"></script>
+<script src="js/questions/story.js?v=20260908b"></script>
+<script src="js/questions/sains.js?v=20260908b"></script>
+<script src="js/questions/seni.js?v=20260908b"></script>
+<script src="js/questions/logika.js?v=20260908b"></script>
+<script src="js/questions/mix.js?v=20260908b"></script>
+<script src="js/engine/session.js?v=20260908b"></script>
+<script src="js/engine/render.js?v=20260908b"></script>
+<script src="js/engine/finish.js?v=20260908b"></script>
+<script src="js/services/db.js?v=20260908b"></script>
+<script src="js/services/hint.js?v=20260908b"></script>
+<script src="js/services/gas.js?v=20260908b"></script>
+<script src="js/engine/ui.js?v=20260908b"></script>
+<script src="js/features/cards.js?v=20260908b"></script>
+<script src="js/features/story.js?v=20260908b"></script>
+<script src="js/pwa/install.js?v=20260908b"></script>
+<script src="js/pwa/update.js?v=20260908b"></script>
+<script src="js/main.js?v=20260908b"></script>
 </body>
 </html>

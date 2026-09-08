@@ -53,7 +53,7 @@ function sendGAS(dur,streak,acc,correct,wrong,retry){
   el.textContent='📤 Mengirim laporan ke Telegram...';el.style.color='#7EDDD8';
 
   const pd=PDATA[S.player];
-  const appName={math:'Math Adventure',fun:'Fun Games',bindo:'Bahasa Indonesia',bing:'Bahasa Inggris',sains:'Pengetahuan Umum',seni:'Seni & Kreativitas',logika:'Logika & Pola',mix:'Mix Challenge'}[S.app];
+  const appName={math:'Math Adventure',fun:'Fun Games',bindo:'Bahasa Indonesia',bing:'Bahasa Inggris',eng:'English Adventure',sains:'Pengetahuan Umum',seni:'Seni & Kreativitas',logika:'Logika & Pola',mix:'Mix Challenge'}[S.app];
   const poinIcon=acc>=90?'🏆':acc>=70?'🌟':acc>=50?'⭐':'💪';
   const stars=acc>=90?'⭐⭐⭐':acc>=70?'⭐⭐':acc>=50?'⭐':'';
   const motivasi=

@@ -107,8 +107,17 @@ function masteryLabel(tahap){ return MASTERY_LABEL[tahap] || tahap; }
 
 // Kunci penguasaan. Kata Inggris dan konsep matematika hidup di SATU tabel
 // supaya mesinnya cuma satu (Master 2 §26) — dibedakan lewat awalannya.
-function kunciKata(wordId){ return 'kata:'+wordId; }
-function kunciKonsep(tipe){ return 'konsep:'+tipe; }
+// 🔴 Kunci WAJIB memuat pemain. Versi pertama saya menulis 'kata:animals:cat'
+// tanpa nama anak, sehingga kemajuan Ana dan Abhi TERCAMPUR jadi satu: kata
+// yang sudah dikuasai Abhi ikut terhitung dikuasai oleh Ana, dan antrean
+// ulangan Ana ikut terhapus saat Abhi menjawab benar. Bagi mesin penguasaan,
+// itu artinya seluruh datanya tidak bisa dipercaya.
+// Diperbaiki sekarang, selagi yang tersimpan baru data uji.
+function kunciKata(pemain, wordId){ return 'kata:'+(pemain||'?')+':'+wordId; }
+function kunciKonsep(pemain, tipe){ return 'konsep:'+(pemain||'?')+':'+tipe; }
+
+// Awalan untuk menyaring milik satu anak saja.
+function awalanKata(pemain){ return 'kata:'+(pemain||'?')+':'; }
 
 // ══════════════════════════════════════
 // 2. PENYIMPANAN  (IndexedDB, semua dibungkus penjaga)
@@ -206,9 +215,9 @@ function catatSesi(ringkas){
         var kunci = null;
         if(typeof vocabIdOfQuestion==='function'){
           var wid = vocabIdOfQuestion(q);
-          if(wid) kunci = kunciKata(wid);
+          if(wid) kunci = kunciKata(S.player, wid);
         }
-        if(!kunci) kunci = kunciKonsep(q.t);
+        if(!kunci) kunci = kunciKonsep(S.player, q.t);
         perubahan.push({kunci:kunci, benar:!!S.results[i], tipe:q.t});
       }
 
@@ -265,31 +274,92 @@ function perbaruiMastery(perubahan, waktu){
 // ══════════════════════════════════════
 // 4. BACAAN UNTUK LAPORAN & ULANGAN
 // ══════════════════════════════════════
-function masteryKata(){
+// Semua fungsi bacaan WAJIB menerima `pemain`. Tanpa itu, laporan Ana akan
+// memuat kemajuan Abhi. Kalau pemain tidak diberikan, dipakai S.player.
+function pemainAktif(pemain){
+  if(pemain) return pemain;
+  try{ return S.player || '?'; }catch(e){ return '?'; }
+}
+
+function masteryKata(pemain){
+  var aw = awalanKata(pemainAktif(pemain));
   return dbSemua('mastery').then(function(a){
-    return a.filter(function(m){ return m.id && m.id.indexOf('kata:')===0; });
-  });
+    return a.filter(function(m){ return m.id && m.id.indexOf(aw)===0; });
+  }).catch(function(){ return []; });
 }
 
 // Daftar kata yang perlu diulang hari ini (Memory Bank, Master 2 §20).
-function kataPerluDiulang(batas){
-  return masteryKata().then(function(a){
+function kataPerluDiulang(batas, pemain){
+  var p  = pemainAktif(pemain);
+  var aw = awalanKata(p);
+  return masteryKata(p).then(function(a){
     var u = urutkanUlangan(a, Date.now());
     return u.slice(0, batas||10).map(function(m){
-      var wid = m.id.slice(5);
+      var wid = m.id.slice(aw.length);          // buang 'kata:<pemain>:'
       var v = (typeof VOCAB_BY_ID!=='undefined') ? VOCAB_BY_ID[wid] : null;
       return { wordId:wid, word:v?v.word:wid, arti:v?v.arti:'',
+               emoji:v?v.emoji:'', contoh:v?v.contoh:'',
                tahap:m.tahap, label:masteryLabel(m.tahap) };
     });
   }).catch(function(){ return []; });
 }
 
-function ringkasanBelajar(){
-  return dbSemua('mastery').then(function(a){
+// Kata untuk sesi Smart Card. Urutannya: yang jatuh tempo diulang lebih dulu,
+// baru kata yang BELUM PERNAH dilihat sama sekali. Kata yang sudah dikuasai
+// dan belum jatuh tempo tidak ditampilkan — mengulang yang sudah bisa itu
+// membosankan dan memakan waktu yang seharusnya dipakai untuk kata baru.
+function kartuUntukBelajar(batas, pemain){
+  var p  = pemainAktif(pemain);
+  var aw = awalanKata(p);
+  var n  = batas || 10;
+  return masteryKata(p).then(function(a){
+    var sudah = {};
+    a.forEach(function(m){ sudah[m.id.slice(aw.length)] = m; });
+
+    var out = [];
+    // 1. yang perlu diulang
+    urutkanUlangan(a, Date.now()).forEach(function(m){
+      if(out.length>=n) return;
+      var wid = m.id.slice(aw.length);
+      var v = VOCAB_BY_ID[wid];
+      if(v) out.push({ v:v, tahap:m.tahap, label:masteryLabel(m.tahap) });
+    });
+    // 2. kata yang belum pernah muncul
+    for(var i=0;i<VOCAB.length && out.length<n;i++){
+      if(!sudah[VOCAB[i].wordId]) out.push({ v:VOCAB[i], tahap:'baru', label:'Baru' });
+    }
+    return out;
+  }).catch(function(){
+    // Tanpa database, Smart Card TETAP bisa dipakai — cuma tanpa ingatan.
+    return VOCAB.slice(0, n).map(function(v){
+      return { v:v, tahap:'baru', label:'Baru' }; });
+  });
+}
+
+// Mencatat hasil satu kartu ("sudah bisa" / "ulangi lagi").
+function catatKartu(wordId, bisa, pemain){
+  var k = kunciKata(pemainAktif(pemain), wordId);
+  return dbBuka().then(function(db){
+    if(!db) return false;
+    return dbBaca('mastery',k).then(function(lama){
+      var m = masteryHitung(lama || masteryAwal(k), !!bisa, Date.now());
+      m.id = k;
+      return dbTulis('mastery', m);
+    });
+  }).catch(function(){ return false; });
+}
+
+function ringkasanBelajar(pemain){
+  var p  = pemainAktif(pemain);
+  var aw = awalanKata(p);
+  var ak = 'konsep:'+p+':';
+  return dbSemua('mastery').then(function(semua){
+    var a = semua.filter(function(m){
+      return m.id && (m.id.indexOf(aw)===0 || m.id.indexOf(ak)===0); });
     var h = { baru:0, dilihat:0, berlatih:0, akrab:0, dikuasai:0, ulang:0 };
     a.forEach(function(m){ if(h[m.tahap]!==undefined) h[m.tahap]++; });
-    return { total:a.length, tahap:h,
+    return { pemain:p, total:a.length, tahap:h,
              kataDikuasai:a.filter(function(m){
-               return m.id.indexOf('kata:')===0 && m.tahap==='dikuasai'; }).length };
-  }).catch(function(){ return {total:0,tahap:{},kataDikuasai:0}; });
+               return m.id.indexOf(aw)===0 && m.tahap==='dikuasai'; }).length };
+  }).catch(function(){ return {pemain:p,total:0,tahap:{},kataDikuasai:0}; });
 }

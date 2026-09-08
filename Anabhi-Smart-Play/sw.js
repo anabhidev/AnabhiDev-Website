@@ -2,8 +2,8 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Service Worker · Cache API
 // Development · Anabhi Dev
-// Version   : 2.4
-// Generated : 7 September 2026, 18:05:44
+// Version   : 2.9
+// Generated : 8 September 2026, 06:05:12
 // ================================================================
 //
 // Strategi (SOP Checklist Standar Website v1.9, kategori 18.5):
@@ -13,7 +13,7 @@
 // Lupa menaikkan = pengguna terkunci di versi lama dan tidak bisa diperbaiki
 // dari jarak jauh selain meminta mereka membersihkan data aplikasi satu per satu.
 
-var CACHE_VERSION = 'anabhi-smart-play-v5-3';   // header Version : 2.4
+var CACHE_VERSION = 'anabhi-smart-play-v5-8';   // header Version : 2.9
 
 // BASE diturunkan dari lokasi sw.js itu sendiri, TIDAK dipatok mati.
 // Produksi  -> /Anabhi-Smart-Play/
@@ -37,15 +37,25 @@ var BASE = new URL('./', self.location.href).pathname;
 // partikel awal ikut berubah jadi <img>. Sebelumnya keempatnya terlewat karena
 // letaknya di dalam <script>, bukan di markup — akibatnya 4 request 404 tiap
 // halaman dibuka (tersamarkan karena twemoji memasang alt = emoji aslinya).
+// 1f30d 🌍 ditambahkan di v5.4 — ikon kartu "English Adventure". Sempat lolos
+// dan jadi 404 di Chrome karena pemeriksaan emoji dulu membaca berkas simpanan
+// yang basi, bukan mengekstrak ulang dari markup. Sekarang check.js mengekstrak
+// langsung dari index.html + main.js, jadi kelalaian yang sama tidak terulang.
+// v5.5 menambah 1f30d 🌍 (kartu English Adventure) dan 1f4da 📚 (tombol
+// Belajar Kata). Keduanya ada di MARKUP, jadi ikut diubah parseEmoji() saat
+// halaman dimuat. Layar Smart Card sengaja TIDAK di-parse (lihat cards.js),
+// jadi emoji kosakata tidak butuh berkas SVG.
+// check.js mengekstrak daftar ini ulang dari markup + berkas JS yang memanggil
+// parseEmoji(), dengan komentar dibuang lebih dulu.
 var EMOJI =
-  "1f300 1f319 1f31f 1f338 1f380 1f389 1f38a 1f3a8 1f3ae 1f3c6 1f430 1f4ab 1f4e4 "+
-  "1f4f1 1f504 1f525 1f52c 1f680 1f989 1f9ab 1f9e9 1fa90 23f1 2604 26a0 26a1 270d "+
-  "2728 2b50 ";
+  "1f300 1f30d 1f319 1f31f 1f338 1f380 1f389 1f38a 1f3a8 1f3ae 1f3c6 1f430 1f4ab "+
+  "1f4d6 1f4da 1f4e4 1f4f1 1f504 1f525 1f52c 1f680 1f989 1f9ab 1f9e9 1fa90 23f1 "+
+  "2604 26a0 26a1 270d 2728 2b50 ";
 
 // Cache-busting aset internal (SOP kat. 1). Angkanya WAJIB sama persis dengan
 // yang ada di <link>/<script> di index.html — kalau beda, berkas diambil dua
 // kali dan versi cache tidak pernah kena.
-var V = '?v=20260907d';
+var V = '?v=20260908b';
 
 var CSS = ['tokens', 'themes', 'screens', 'components']
   .map(function (n) { return 'css/' + n + '.css'; });
@@ -55,10 +65,12 @@ var CSS = ['tokens', 'themes', 'screens', 'components']
 var JS = [
   'js/config.js',
   'js/questions/math.js', 'js/questions/fun.js', 'js/questions/bindo.js',
-  'js/questions/bing.js', 'js/questions/sains.js', 'js/questions/seni.js',
+  'js/questions/bing.js', 'js/questions/eng.js', 'js/questions/story.js',
+  'js/questions/sains.js', 'js/questions/seni.js',
   'js/questions/logika.js', 'js/questions/mix.js',
   'js/engine/session.js', 'js/engine/render.js', 'js/engine/finish.js',
   'js/services/db.js', 'js/services/hint.js', 'js/services/gas.js', 'js/engine/ui.js',
+  'js/features/cards.js', 'js/features/story.js',
   'js/pwa/install.js', 'js/pwa/update.js', 'js/main.js'
 ];
 

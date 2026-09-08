@@ -2,8 +2,8 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Bank soal — Fun Games
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 7 September 2026, 10:02:44
+// Version   : 1.2
+// Generated : 8 September 2026, 06:05:12
 // ================================================================
 
 // ══════════════════════════════════════════════════════════
@@ -88,11 +88,20 @@ const LETTER_BANK=[
   {emoji:'🎵',word:'Musik',letter:'M'},
   {emoji:'🌻',word:'Bunga Matahari',letter:'B'},
 ];
+// 🔴 B11 — daftar huruf pengecoh.
+// Sebelumnya tertulis 'ABCDEFGHIJKLMNOPRSTMKBL' — perhatikan ekor "MKBL":
+// huruf B, K, L, M ikut TERTULIS DUA KALI, jadi peluangnya muncul dua kali
+// lipat dibanding huruf lain. Itu jelas salah ketik, bukan kesengajaan.
+// Sekarang daftarnya unik. Q, V, X, Y, Z sengaja tidak dipakai — jarang jadi
+// huruf awal kata Indonesia untuk anak kelas 1, dan sebagai pengecoh terlalu
+// mudah dibuang sehingga soalnya jadi lebih gampang dari yang seharusnya.
+const LETTER_POOL='ABCDEFGHIJKLMNOPRSTUW'.split('');
+
 function genLetterBank(){
   const r=[];
   const shuffled=[...LETTER_BANK].sort(()=>Math.random()-.5);
   shuffled.forEach(item=>{
-    const allLetters='ABCDEFGHIJKLMNOPRSTMKBL'.split('');
+    const allLetters=LETTER_POOL;
     const wrong=new Set();
     while(wrong.size<3){
       const l=allLetters[Math.floor(Math.random()*allLetters.length)];
@@ -105,34 +114,47 @@ function genLetterBank(){
 }
 
 // ── 3. ODD ONE OUT ──
+//
+// 🔴 B7 — SETIAP anggota punya NAMA ASLI, bukan "Hewan Laut 1/2/3".
+// Dulu tiga anggota kelompok diberi label bernomor sesuai nama kelompoknya,
+// sedangkan si pengecualian memakai nama aslinya. Soal "Mana yang TIDAK
+// termasuk Hewan Laut?" jadi bisa dijawab benar TANPA MELIHAT GAMBARNYA
+// sama sekali — cukup pilih satu-satunya yang labelnya bukan "Hewan Laut N".
+// Sekarang semua label setara, jadi anak benar-benar harus mengenali bendanya.
+// Nama dijaga ≤12 huruf karena label dipotong di renderQ().
 const ODD_GROUPS=[
-  {group:'Hewan Laut',    members:['🐬','🐠','🦈','🐙'],odd:{e:'🦁',l:'Singa'},reason:'bukan hewan laut'},
-  {group:'Buah',          members:['🍎','🍌','🍇','🍓'],odd:{e:'🥦',l:'Brokoli'},reason:'bukan buah'},
-  {group:'Kendaraan',     members:['🚗','✈️','🚂','🚲'],odd:{e:'🍕',l:'Pizza'},reason:'bukan kendaraan'},
-  {group:'Hewan Terbang', members:['🦅','🦋','🐝','🦜'],odd:{e:'🐸',l:'Katak'},reason:'tidak bisa terbang'},
-  {group:'Warna Merah',   members:['🍎','🌹','❤️','🍓'],odd:{e:'🍌',l:'Pisang'},reason:'bukan merah'},
-  {group:'Alat Tulis',    members:['✏️','🖊️','📏','📐'],odd:{e:'🎸',l:'Gitar'},reason:'bukan alat tulis'},
-  {group:'Hewan Darat',   members:['🦁','🐘','🦒','🐯'],odd:{e:'🐬',l:'Lumba-lumba'},reason:'bukan hewan darat'},
-  {group:'Langit Malam',  members:['🌙','⭐','🌟','☄️'],odd:{e:'🌻',l:'Bunga Matahari'},reason:'bukan di langit malam'},
-  {group:'Sayuran',       members:['🥦','🥕','🧅','🌽'],odd:{e:'🍰',l:'Kue'},reason:'bukan sayuran'},
-  {group:'Pakaian',       members:['👕','👖','🧢','👟'],odd:{e:'📚',l:'Buku'},reason:'bukan pakaian'},
-  {group:'Alat Musik',    members:['🎸','🥁','🎹','🎺'],odd:{e:'🍕',l:'Pizza'},reason:'bukan alat musik'},
-  {group:'Hewan Laut 2',  members:['🦀','🦑','🐡','🦞'],odd:{e:'🐺',l:'Serigala'},reason:'bukan hewan laut'},
-  {group:'Bunga',         members:['🌸','🌺','🌼','🌻'],odd:{e:'🍎',l:'Apel'},reason:'bukan bunga'},
-  {group:'Binatang Peliharaan',members:['🐱','🐶','🐹','🐰'],odd:{e:'🦁',l:'Singa'},reason:'bukan peliharaan biasa'},
-  {group:'Makanan Manis', members:['🍭','🍰','🍩','🍫'],odd:{e:'🧅',l:'Bawang'},reason:'bukan makanan manis'},
-  {group:'Olahraga Bola', members:['⚽','🏀','🎾','🏐'],odd:{e:'🎸',l:'Gitar'},reason:'bukan bola olahraga'},
-  {group:'Benda Sekolah', members:['📚','✏️','📏','🎒'],odd:{e:'🏖️',l:'Pantai'},reason:'bukan benda sekolah'},
-  {group:'Hewan Bertelur',members:['🐓','🐢','🦅','🐊'],odd:{e:'🐄',l:'Sapi'},reason:'tidak bertelur'},
-  {group:'Biru/Laut',     members:['🌊','💧','🐟','🫧'],odd:{e:'🔥',l:'Api'},reason:'bukan berkaitan laut/biru'},
-  {group:'Angkasa',       members:['🚀','🌙','⭐','🪐'],odd:{e:'🐸',l:'Katak'},reason:'bukan di angkasa'},
+  {group:'Hewan Laut',    members:[['🐬','Lumba-lumba'],['🐠','Ikan'],['🦈','Hiu'],['🐙','Gurita']],odd:{e:'🦁',l:'Singa'},reason:'bukan hewan laut'},
+  {group:'Buah',          members:[['🍎','Apel'],['🍌','Pisang'],['🍇','Anggur'],['🍓','Stroberi']],odd:{e:'🥦',l:'Brokoli'},reason:'bukan buah'},
+  {group:'Kendaraan',     members:[['🚗','Mobil'],['✈️','Pesawat'],['🚂','Kereta'],['🚲','Sepeda']],odd:{e:'🍕',l:'Pizza'},reason:'bukan kendaraan'},
+  {group:'Hewan Terbang', members:[['🦅','Elang'],['🦋','Kupu-kupu'],['🐝','Lebah'],['🦜','Burung Beo']],odd:{e:'🐸',l:'Katak'},reason:'tidak bisa terbang'},
+  {group:'Warna Merah',   members:[['🍎','Apel'],['🌹','Mawar'],['❤️','Hati'],['🍓','Stroberi']],odd:{e:'🍌',l:'Pisang'},reason:'bukan merah'},
+  {group:'Alat Tulis',    members:[['✏️','Pensil'],['🖊️','Pulpen'],['📏','Penggaris'],['📐','Busur']],odd:{e:'🎸',l:'Gitar'},reason:'bukan alat tulis'},
+  {group:'Hewan Darat',   members:[['🦁','Singa'],['🐘','Gajah'],['🦒','Jerapah'],['🐯','Harimau']],odd:{e:'🐬',l:'Lumba-lumba'},reason:'bukan hewan darat'},
+  {group:'Langit Malam',  members:[['🌙','Bulan'],['⭐','Bintang'],['🌟','Bintang Emas'],['☄️','Komet']],odd:{e:'🌻',l:'Matahari'},reason:'bukan di langit malam'},
+  {group:'Sayuran',       members:[['🥦','Brokoli'],['🥕','Wortel'],['🧅','Bawang'],['🌽','Jagung']],odd:{e:'🍰',l:'Kue'},reason:'bukan sayuran'},
+  {group:'Pakaian',       members:[['👕','Kaos'],['👖','Celana'],['🧢','Topi'],['👟','Sepatu']],odd:{e:'📚',l:'Buku'},reason:'bukan pakaian'},
+  {group:'Alat Musik',    members:[['🎸','Gitar'],['🥁','Drum'],['🎹','Piano'],['🎺','Terompet']],odd:{e:'🍕',l:'Pizza'},reason:'bukan alat musik'},
+  {group:'Hewan Laut 2',  members:[['🦀','Kepiting'],['🦑','Cumi-cumi'],['🐡','Ikan Buntal'],['🦞','Lobster']],odd:{e:'🐺',l:'Serigala'},reason:'bukan hewan laut'},
+  {group:'Bunga',         members:[['🌸','Sakura'],['🌺','Kembang'],['🌼','Aster'],['🌻','Matahari']],odd:{e:'🍎',l:'Apel'},reason:'bukan bunga'},
+  {group:'Binatang Peliharaan',members:[['🐱','Kucing'],['🐶','Anjing'],['🐹','Hamster'],['🐰','Kelinci']],odd:{e:'🦁',l:'Singa'},reason:'bukan peliharaan biasa'},
+  {group:'Makanan Manis', members:[['🍭','Permen'],['🍰','Kue'],['🍩','Donat'],['🍫','Cokelat']],odd:{e:'🧅',l:'Bawang'},reason:'bukan makanan manis'},
+  {group:'Olahraga Bola', members:[['⚽','Bola Kaki'],['🏀','Basket'],['🎾','Tenis'],['🏐','Voli']],odd:{e:'🎸',l:'Gitar'},reason:'bukan bola olahraga'},
+  {group:'Benda Sekolah', members:[['📚','Buku'],['✏️','Pensil'],['📏','Penggaris'],['🎒','Tas']],odd:{e:'🏖️',l:'Pantai'},reason:'bukan benda sekolah'},
+  {group:'Hewan Bertelur',members:[['🐓','Ayam'],['🐢','Kura-kura'],['🦅','Elang'],['🐊','Buaya']],odd:{e:'🐄',l:'Sapi'},reason:'tidak bertelur'},
+  {group:'Biru/Laut',     members:[['🌊','Ombak'],['💧','Air'],['🐟','Ikan'],['🫧','Gelembung']],odd:{e:'🔥',l:'Api'},reason:'bukan berkaitan laut/biru'},
+  {group:'Angkasa',       members:[['🚀','Roket'],['🌙','Bulan'],['⭐','Bintang'],['🪐','Planet']],odd:{e:'🐸',l:'Katak'},reason:'bukan di angkasa'},
 ];
 function genOddBank(){
   const r=[];
-  ODD_GROUPS.sort(()=>Math.random()-.5).forEach(g=>{
-    const members=g.members.sort(()=>Math.random()-.5).slice(0,3);
+  // 🔴 B10 — JANGAN mengurutkan ODD_GROUPS atau g.members langsung.
+  // `const` hanya melarang penggantian isi variabel, BUKAN mengubah isinya.
+  // `ODD_GROUPS.sort()` dan `g.members.sort()` mengacak DATA ASLINYA secara
+  // permanen, jadi urutan anggota ikut berubah antar sesi dan anggota mana
+  // yang terpilih bergantung pada sesi-sesi sebelumnya. Pakai salinan.
+  ODD_GROUPS.slice().sort(()=>Math.random()-.5).forEach(g=>{
+    const members=g.members.slice().sort(()=>Math.random()-.5).slice(0,3);
     const allItems=[
-      ...members.map((e,i)=>({e,l:g.group+' '+(i+1)})),
+      ...members.map(m=>({e:m[0],l:m[1]})),
       g.odd
     ].sort(()=>Math.random()-.5);
     const ansIdx=allItems.findIndex(x=>x.e===g.odd.e&&x.l===g.odd.l);

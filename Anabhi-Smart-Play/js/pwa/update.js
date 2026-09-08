@@ -2,20 +2,36 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Service Worker & banner versi baru
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 7 September 2026, 10:02:44
+// Version   : 1.2
+// Generated : 8 September 2026, 04:40:55
 // ================================================================
 
-let swReloaded=false, pendingUpdate=false;
+let swReloaded=false, pendingUpdate=false, updateDitutup=false;
 function applyUpdate(){ if(!swReloaded){ swReloaded=true; window.location.reload(); } }
+
+// Banner "Versi baru siap!" — APA GUNANYA:
+// Service Worker sudah menyimpan versi baru di perangkat, tapi halaman yang
+// sedang terbuka MASIH menjalankan kode lama. Tombol "Perbarui" hanya memuat
+// ulang halaman supaya kode barunya dipakai. Tidak ada yang diunduh lagi,
+// tidak ada data yang hilang.
+// Sengaja TIDAK auto-reload: kalau halaman dimuat ulang sendiri saat anak
+// sedang mengerjakan soal, jawabannya hilang (PRD §40).
 function offerUpdate(){
+  if(updateDitutup)return;          // sudah ditutup anak/orang tua — hormati itu
   const bar=document.getElementById('updateBar');
-  if(bar)bar.hidden=false;
+  if(!bar)return;
+  bar.hidden=false;
+  // Dorong isi halaman turun supaya banner tidak menutupi foto anak.
+  try{ document.body.classList.add('ada-update'); }catch(e){}
 }
 function dismissUpdate(){
   const bar=document.getElementById('updateBar');
   if(bar)bar.hidden=true;
+  try{ document.body.classList.remove('ada-update'); }catch(e){}
   pendingUpdate=false;
+  // Ditutup = jangan ditawarkan lagi sampai halaman dimuat ulang. Tanpa ini,
+  // banner muncul lagi tiap kali sesi selesai dan terasa seperti mengganggu.
+  updateDitutup=true;
 }
 function initSW(){
   if(!('serviceWorker' in navigator))return;

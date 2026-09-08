@@ -2,8 +2,8 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Render soal & tangani jawaban
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 7 September 2026, 10:02:44
+// Version   : 1.2
+// Generated : 8 September 2026, 06:05:12
 // ================================================================
 
 function renderQ(q){
@@ -395,13 +395,29 @@ function handleAns(q,chosen,correctIdx){
   } else {
     fb.className='fb-msg err';
     const msgs=['❌ Hampir! Tetap semangat! 💪','❌ Yuk coba lagi besok! 🌈','❌ Belum tepat, semangat! ⚡'];
-    fb.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    // 🔴 B12 — `reason` sudah lama ikut disimpan di tiap soal Odd One Out tapi
+    // TIDAK PERNAH ditampilkan di mana pun. Daripada dihapus, dipakai: saat
+    // jawabannya salah, anak diberi tahu ALASANNYA. Tahu "kenapa" jauh lebih
+    // berguna daripada sekadar tahu "salah" (PRD §17 — kesalahan itu sinyal
+    // belajar, bukan vonis). Hanya muncul saat salah, jadi tidak membocorkan
+    // jawaban pada soal berikutnya.
+    if(q.t==='odd'&&q.reason&&btns[correctIdx]){
+      const bnr=q.items[correctIdx];
+      fb.innerHTML=msgs[Math.floor(Math.random()*msgs.length)]+
+        `<br><span class="fb-alasan">${bnr.e} <b>${bnr.l}</b> ${q.reason}</span>`;
+    } else {
+      fb.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    }
   }
 
-  // Auto advance 888ms
+  // Betul: lanjut cepat (888ms) — anak sudah tahu jawabannya, jangan dibuat menunggu.
+  // Salah: TAHAN lebih lama. Dengan 888ms, kotak jawaban yang benar baru saja
+  // menyala lalu langsung hilang — anak tidak sempat melihat mana yang betul,
+  // apalagi membaca alasannya. Soal ketik & susun ubin sudah memakai ~2,2 detik;
+  // sekarang pilihan ganda ikut, supaya seluruh permainan terasa sama.
   const nextIdx=S.qIdx+1;
   setTimeout(()=>{
     if(nextIdx>=S.qCount)finishGame();
     else showQ(nextIdx);
-  },888);
+  }, ok?888:2200);
 }

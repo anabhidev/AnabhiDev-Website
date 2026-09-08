@@ -14,8 +14,12 @@ function selectPlayer(p){
   document.getElementById('pcard-ana').classList.toggle('selected',p==='ana');
   document.getElementById('pcard-abhi').classList.toggle('selected',p==='abhi');
   checkReady();
+  // Ringkasan penguasaan ditampilkan per anak — Ana dan Abhi punya catatan
+  // sendiri, jadi angkanya wajib ikut berganti saat pemainnya berganti.
+  try{ if(typeof segarkanRingkasan==='function') segarkanRingkasan(); }catch(e){}
+  var cn=document.getElementById('cardNote'); if(cn) cn.hidden=true;
 }
-const APP_IDS=['math','fun','bindo','bing','sains','seni','logika','mix'];
+const APP_IDS=['math','fun','bindo','bing','eng','sains','seni','logika','mix'];
 function selectApp(a){
   S.app=a;
   APP_IDS.forEach(id=>document.getElementById('acard-'+id).classList.toggle('sel',a===id));
@@ -40,7 +44,7 @@ function startGame(){
   const pad=n=>String(n).padStart(2,'0');
   S.sessionId=`${S.player.toUpperCase()}-${S.app.toUpperCase()}-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
   Object.assign(S,{score:0,qIdx:0,results:[],statDetail:{},startTime:Date.now(),active:true,tgSent:false,_payload:null});
-  const BANK_BUILDERS={math:buildMathBank,fun:buildFunBank,bindo:buildBindoBank,bing:buildBingBank,sains:buildSainsBank,seni:buildSeniBank,logika:buildLogikaBank,mix:buildMixBank};
+  const BANK_BUILDERS={math:buildMathBank,fun:buildFunBank,bindo:buildBindoBank,bing:buildBingBank,eng:buildEngBank,sains:buildSainsBank,seni:buildSeniBank,logika:buildLogikaBank,mix:buildMixBank};
   S.qBank = BANK_BUILDERS[S.app](S.qCount);
 
   // Theme & partikel per app
@@ -49,6 +53,7 @@ function startGame(){
     fun:  {cls:'th-candy', part:['🌟','✨','💫','🎀','🍭','🌈','💜','⭐']},
     bindo:{cls:'th-bindo', part:['📖','✏️','📝','🔤','⭐','✨','📕','🖍️']},
     bing: {cls:'th-bing',  part:['🦉','📘','⭐','✨','🔤','💙','🌟','📖']},
+    eng:  {cls:'th-eng',   part:['🌍','🔤','⭐','✨','📝','🌊','🌟','🎧']},
     sains:{cls:'th-sains', part:['🌱','🔬','🍃','⭐','✨','🌿','🦋','💚']},
     seni: {cls:'th-seni',  part:['🎨','🖌️','🎭','🎵','✨','🌈','🖍️','⭐']},
     logika:{cls:'th-logika',part:['🧩','⚡','🔷','🔶','✨','💡','❓','⭐']},
@@ -61,7 +66,7 @@ function startGame(){
   setPhoto(document.getElementById('hudPhoto'),pd);
   document.getElementById('hudName').textContent=pd.name;
   document.getElementById('hudScore').textContent='0';
-  document.getElementById('appBadge').textContent={math:'🚀',fun:'🎨',bindo:'✍️',bing:'🦉',sains:'🔬',seni:'🎨',logika:'🧩',mix:'🌀'}[S.app];
+  document.getElementById('appBadge').textContent={math:'🚀',fun:'🎨',bindo:'✍️',bing:'🦉',eng:'🌍',sains:'🔬',seni:'🎨',logika:'🧩',mix:'🌀'}[S.app];
   document.getElementById('totQ').textContent=S.qCount;
 
   setGuard(true);

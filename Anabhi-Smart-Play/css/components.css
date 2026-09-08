@@ -2,9 +2,156 @@
    AnabhiDev-ASP — Anabhi Smart Play
    CSS · PWA, tablet & komponen tambahan
    Development · Anabhi Dev
-   Version   : 1.1
-   Generated : 7 September 2026, 09:55:12
+   Version   : 1.2
+   Generated : 7 September 2026, 19:20:11
    ================================================================ */
+
+/* ══════════ SMART CARDS ══════════ */
+.cards-btn{font-family:'Fredoka One',cursive;font-size:1rem;min-height:48px;padding:12px 30px;
+  margin-top:14px;border:2px solid rgba(126,221,216,.55);border-radius:50px;
+  background:rgba(126,221,216,.14);color:#7EDDD8;cursor:pointer;transition:all .28s;}
+.cards-btn:hover{background:rgba(126,221,216,.26);transform:translateY(-3px);}
+.card-stat{margin-top:10px;font-size:.85rem;font-weight:800;color:rgba(255,255,255,.75);}
+.card-stat b{color:#FFE66D;}
+
+.card-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;max-width:var(--game-w);margin-bottom:18px;}
+.card-back{min-height:44px;padding:9px 18px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.9rem;color:#fff;background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.22);border-radius:50px;cursor:pointer;transition:all .2s;}
+.card-back:hover{background:rgba(255,255,255,.22);}
+.card-prog{font-weight:800;font-size:.9rem;color:rgba(255,255,255,.7);}
+.card-body{width:100%;max-width:var(--game-w);display:flex;flex-direction:column;align-items:center;}
+.card-load{padding:50px 20px;font-weight:800;color:rgba(255,255,255,.7);text-align:center;}
+
+/* Kartu bolak-balik. Dua sisi ditumpuk lalu diputar 3D — bukan diganti isinya,
+   supaya perputarannya terasa seperti membalik kartu sungguhan. */
+.flip{width:100%;max-width:340px;height:400px;perspective:1200px;cursor:pointer;}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .55s cubic-bezier(.4,.2,.2,1);}
+.flip.dibalik .flip-in{transform:rotateY(180deg);}
+.flip-face{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;padding:26px 20px;text-align:center;
+  border-radius:26px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.11);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.flip-belakang{transform:rotateY(180deg);background:rgba(255,230,109,.13);
+  border-color:rgba(255,230,109,.4);}
+.fc-emoji{font-size:clamp(4.5rem,20vw,7rem);line-height:1;}
+.fc-emoji img.emoji{height:1em;width:1em;}
+.fc-kata{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,7vw,2.6rem);color:#FFE66D;}
+.fc-petunjuk{font-size:.82rem;font-weight:700;color:rgba(255,255,255,.55);margin-top:6px;}
+.fc-arti{font-family:'Fredoka One',cursive;font-size:clamp(1.6rem,6vw,2.2rem);color:#fff;}
+.fc-contoh{font-size:1.02rem;font-weight:700;font-style:italic;color:rgba(255,255,255,.85);
+  line-height:1.5;}
+.fc-topik{font-size:.8rem;font-weight:800;color:rgba(255,255,255,.55);margin-top:4px;}
+.fc-tahap{position:absolute;top:14px;right:14px;font-size:.7rem;font-weight:800;
+  padding:4px 11px;border-radius:50px;background:rgba(255,255,255,.16);color:rgba(255,255,255,.8);}
+.fc-ulang{background:rgba(255,68,68,.28);color:#fca5a5;}
+.fc-dikuasai{background:rgba(107,203,119,.28);color:#6ee7b7;}
+.fc-baru{background:rgba(126,221,216,.24);color:#7EDDD8;}
+
+.card-aksi{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:22px;}
+.ca-bisa,.ca-ulang{font-family:'Fredoka One',cursive;font-size:.98rem;min-height:52px;
+  padding:13px 26px;border-radius:50px;cursor:pointer;transition:all .24s;border:2px solid;}
+.ca-bisa{background:rgba(107,203,119,.2);border-color:rgba(107,203,119,.6);color:#6BCB77;}
+.ca-bisa:hover{background:rgba(107,203,119,.34);transform:translateY(-2px);}
+.ca-ulang{background:rgba(255,230,109,.14);border-color:rgba(255,230,109,.5);color:#FFE66D;}
+.ca-ulang:hover{background:rgba(255,230,109,.26);transform:translateY(-2px);}
+
+.card-selesai{display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:40px 20px;text-align:center;}
+.cs-emoji{font-size:4rem;line-height:1;}
+.cs-judul{font-family:'Fredoka One',cursive;font-size:1.5rem;color:#FFE66D;}
+.cs-angka{font-weight:800;color:rgba(255,255,255,.85);}
+.cs-angka b{color:#6BCB77;font-size:1.2rem;}
+.cs-ulang b{color:#FFE66D;}
+
+/* Penjelasan singkat saat jawaban salah (Odd One Out) */
+.fb-alasan{display:inline-block;margin-top:6px;font-size:.86rem;font-weight:700;
+  opacity:.92;line-height:1.45;}
+.fb-alasan b{color:#FFE66D;}
+
+/* ══════════ CERITA SERU ══════════ */
+.story-btn{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.14);color:#FB923C;}
+.story-btn:hover{background:rgba(251,146,60,.26);}
+
+.st-judul{font-family:'Fredoka One',cursive;font-size:clamp(1.4rem,5.5vw,1.9rem);
+  color:#FFE66D;text-align:center;}
+.st-judul-id{font-size:.9rem;font-weight:700;color:rgba(255,255,255,.6);
+  text-align:center;margin-bottom:18px;}
+.st-judul-kecil{font-family:'Fredoka One',cursive;font-size:1rem;color:rgba(255,230,109,.8);
+  text-align:center;margin-bottom:14px;}
+
+.st-hal{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+  width:100%;padding:28px 20px;border-radius:24px;
+  background:rgba(255,255,255,.09);border:2px solid rgba(255,255,255,.16);}
+.st-em{font-size:clamp(4rem,17vw,6.5rem);line-height:1;}
+.st-en{font-family:'Fredoka One',cursive;font-size:clamp(1.3rem,5.5vw,1.8rem);
+  color:#fff;line-height:1.35;}
+.st-id{font-size:1rem;font-weight:700;font-style:italic;color:rgba(255,255,255,.68);}
+
+.st-nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px;}
+.st-next,.st-prev{font-family:'Fredoka One',cursive;font-size:1rem;min-height:52px;
+  padding:13px 28px;border-radius:50px;cursor:pointer;transition:all .24s;border:2px solid;}
+.st-next{background:rgba(255,230,109,.18);border-color:rgba(255,230,109,.6);color:#FFE66D;}
+.st-next:hover{background:rgba(255,230,109,.3);transform:translateY(-2px);}
+.st-prev{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24);
+  color:rgba(255,255,255,.8);}
+.st-prev:hover{background:rgba(255,255,255,.18);}
+
+.st-tanya{margin-bottom:18px;}
+.st-kata-judul{font-size:.85rem;font-weight:800;color:rgba(255,255,255,.6);margin-top:8px;}
+.st-kata-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px;}
+.st-kata{font-size:.9rem;font-weight:700;color:rgba(255,255,255,.85);
+  padding:7px 13px;border-radius:50px;background:rgba(255,255,255,.1);}
+.st-kata b{color:#FFE66D;}
+.st-tombol{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+
+/* ══════════ ENGLISH ADVENTURE — siluet & ubin ══════════ */
+
+/* Siluet dibuat MURNI dengan filter CSS, bukan berkas gambar terpisah:
+   brightness(0) menghitamkan emoji, invert(1) memutihkannya kembali —
+   bentuknya tetap, warnanya hilang. Nol berkas tambahan untuk offline. */
+.shadow-disp{display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.shadow-em{font-size:clamp(4rem,15vw,7rem);line-height:1;
+  filter:brightness(0) invert(1) opacity(.9);
+  -webkit-filter:brightness(0) invert(1) opacity(.9);}
+@media (prefers-reduced-motion:no-preference){
+  .shadow-em{animation:shadowIn .5s ease-out;}
+}
+@keyframes shadowIn{from{transform:scale(.82);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+.tile-arti{font-size:.9rem;font-weight:800;color:rgba(255,255,255,.62);margin-bottom:14px;}
+
+/* Slot jawaban */
+.slot-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px;}
+.slot{display:flex;align-items:center;justify-content:center;min-width:46px;height:56px;
+  padding:0 8px;font-family:'Fredoka One',cursive;font-size:1.5rem;color:#fff;
+  background:rgba(255,255,255,.07);border:2px dashed rgba(255,255,255,.3);border-radius:12px;
+  transition:all .2s;}
+.slot.isi{background:rgba(255,230,109,.16);border-style:solid;border-color:rgba(255,230,109,.6);}
+.slot.slot-ok{background:rgba(107,203,119,.28);border-color:#6BCB77;border-style:solid;}
+.slot.slot-err{background:rgba(255,68,68,.24);border-color:#FF4444;border-style:solid;}
+.slot-w{min-width:74px;font-size:1.05rem;}
+.slot-row-w .slot{height:50px;}
+
+/* Ubin yang bisa ditekan — minimal 48px supaya nyaman untuk jari anak */
+.tile-row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:14px;}
+.tile{min-width:52px;min-height:52px;padding:0 12px;
+  font-family:'Fredoka One',cursive;font-size:1.4rem;color:#fff;
+  background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.28);
+  border-radius:14px;cursor:pointer;transition:all .18s;}
+.tile:hover:not(:disabled):not(.dipakai){background:rgba(255,255,255,.26);transform:translateY(-2px);}
+.tile:active:not(:disabled):not(.dipakai){transform:translateY(0) scale(.95);}
+.tile.dipakai{opacity:.22;pointer-events:none;}
+.tile:disabled{cursor:default;}
+.tile-w{font-size:1.02rem;min-width:64px;}
+
+.tile-undo{min-height:44px;padding:9px 22px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.9rem;color:rgba(255,255,255,.85);background:rgba(255,255,255,.09);
+  border:2px solid rgba(255,255,255,.22);border-radius:50px;cursor:pointer;transition:all .2s;}
+.tile-undo:hover:not(:disabled){background:rgba(255,255,255,.2);}
+.tile-undo:disabled{opacity:.3;cursor:default;}
 
 /* ══════════ PWA — tombol pasang & banner update ══════════ */
 .install-btn{font-family:'Fredoka One',cursive;font-size:1rem;min-height:48px;padding:12px 30px;border:2px solid rgba(255,230,109,.55);border-radius:50px;background:rgba(255,230,109,.14);color:#FFE66D;cursor:pointer;transition:all .28s;}
@@ -12,7 +159,12 @@
 .pwa-note{max-width:420px;font-size:.82rem;font-weight:700;line-height:1.5;text-align:center;color:rgba(255,255,255,.72);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:11px 16px;}
 .pwa-note b{color:#FFE66D;}
 /* Di ATAS layar, bukan bawah — supaya tidak pernah menutupi tombol Mulai,
-   Main Lagi, atau Pasang Aplikasi. */
+   Main Lagi, atau Pasang Aplikasi.
+   🔴 Tapi karena position:fixed, banner ini SEBELUMNYA menutupi foto Ana &
+   Abhi di layar awal. Sekarang saat banner tampil, body diberi kelas
+   .ada-update yang mendorong seluruh isi halaman turun — jadi banner punya
+   tempatnya sendiri dan tidak pernah menutupi apa pun. */
+body.ada-update .screen{padding-top:74px;}
 .update-bar{position:fixed;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top));z-index:300;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);background:#1e2a3a;border:2px solid rgba(78,205,196,.5);border-radius:50px;padding:8px 8px 8px 18px;font-size:.85rem;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:slideUp .3s ease;}
 .update-bar button{font-family:'Fredoka One',cursive;font-size:.85rem;min-height:38px;padding:8px 18px;border:none;border-radius:50px;background:linear-gradient(135deg,#4ECDC4,#6BCB77);color:white;cursor:pointer;flex-shrink:0;}
 .update-bar .ub-x{background:transparent;color:rgba(255,255,255,.55);min-width:34px;min-height:34px;padding:0 6px;font-size:1rem;}

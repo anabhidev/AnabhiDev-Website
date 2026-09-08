@@ -53,7 +53,7 @@ function finishGame(){
 }
 
 function typeName(t){
-  const m={seq:'🔢 Urutan',cmp:'⚖️ Banding',addvis:'➕ Jumlah',subvis:'➖ Kurang',ops:'🔢 Hitung',shape:'🔷 Bentuk',letter:'🔤 Huruf',odd:'🧩 Odd Out',clock:'🕐 Jam',ketik:'✍️ Menyalin',bing:'🦉 B.Inggris',sains:'🔬 Sains',seni:'🎨 Seni',logika:'🧩 Logika'};
+  const m={seq:'🔢 Urutan',cmp:'⚖️ Banding',addvis:'➕ Jumlah',subvis:'➖ Kurang',ops:'🔢 Hitung',shape:'🔷 Bentuk',letter:'🔤 Huruf',odd:'🧩 Odd Out',clock:'🕐 Jam',ketik:'✍️ Menyalin',bing:'🦉 B.Inggris',shadow:'🌑 Siluet',spell:'🔤 Susun Huruf',build:'📝 Susun Kalimat',sains:'🔬 Sains',seni:'🎨 Seni',logika:'🧩 Logika'};
   return m[t]||t;
 }
 

@@ -25,6 +25,22 @@
 // satu jawaban terlihat benar / tidak ada yang bisa dibedakan).
 var SHADOW_TOPIK_DILARANG = { colors: 1 };
 
+// 🔴 Pengacak sungguhan (Fisher-Yates).
+// Bank soal lama memakai `sort(function(){return Math.random()-.5})`. Itu BUKAN
+// pengacak: pembandingnya tidak konsisten, hasilnya berat sebelah, dan untuk
+// larik pendek sering mengembalikan urutan ASLI. Untuk pilihan ganda dampaknya
+// cuma "kurang acak", tapi di Susun Huruf akibatnya fatal — kata muncul sudah
+// tersusun benar sejak awal, jadi anak tinggal menekan berurutan tanpa belajar.
+// Terbukti di tes: 3 dari 4.771 soal keluar dalam keadaan sudah jadi.
+function acakUbin(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
 function genShadowBank(){
   var pool = VOCAB.filter(function(v){ return !SHADOW_TOPIK_DILARANG[v.topic]; });
   var r = [];
@@ -69,11 +85,13 @@ function genSpellBank(){
     var huruf = item.word.toUpperCase().split('');
     // Ubin diacak. Kalau kebetulan hasil acakannya sama persis dengan kata
     // aslinya, soalnya jadi tidak melatih apa-apa — jadi diacak ulang.
-    var ubin, coba = 0;
-    do{
-      ubin = huruf.slice().sort(function(){ return Math.random()-.5; });
-      coba++;
-    }while(coba<12 && ubin.join('')===huruf.join('') && huruf.length>1);
+    // Kata dengan huruf berulang (mis. EGG) punya sedikit susunan berbeda,
+    // jadi pengulangannya dibatasi — kalau tetap sama, soal ini dilewati
+    // supaya tidak pernah ada soal yang sudah tersusun benar sejak awal.
+    var ubin = null, coba = 0;
+    do{ ubin = acakUbin(huruf); coba++; }
+    while(coba<40 && ubin.join('')===huruf.join(''));
+    if(ubin.join('')===huruf.join('')) continue;
     r.push({ t:'spell', emoji:item.emoji, word:item.word, cat:item.topic,
              arti:item.arti, huruf:huruf, ubin:ubin });
   }
@@ -92,11 +110,10 @@ function genBuildBank(){
     var item = VOCAB[Math.floor(Math.random()*VOCAB.length)];
     var kata = item.contoh.replace(/\.$/,'').split(/\s+/);
     if(kata.length<3) continue;
-    var ubin, coba = 0;
-    do{
-      ubin = kata.slice().sort(function(){ return Math.random()-.5; });
-      coba++;
-    }while(coba<12 && ubin.join(' ')===kata.join(' '));
+    var ubin = null, coba = 0;
+    do{ ubin = acakUbin(kata); coba++; }
+    while(coba<40 && ubin.join(' ')===kata.join(' '));
+    if(ubin.join(' ')===kata.join(' ')) continue;
     r.push({ t:'build', emoji:item.emoji, word:item.word, cat:item.topic,
              arti:item.arti, kalimat:kata, ubin:ubin });
   }
@@ -109,22 +126,39 @@ function genBuildBank(){
 // Campuran seimbang. Sama seperti buildBingBank, kata yang sama tidak boleh
 // muncul dua kali dalam satu sesi (B8) — kalau berulang, penguasaan kata itu
 // terhitung dua kali dan skornya melonjak palsu.
+// 🔴 Penyaringan kembar dilakukan SAAT mengambil dari bank, bukan sesudahnya.
+// Versi pertama saya memotong tiap bank lebih dulu (0.4/0.3/0.3) lalu membuang
+// yang kembar — hasilnya sering kurang dari n, dan kekurangannya ditambal
+// dengan DUPLIKAT. Itu justru menciptakan ulang bug B8: satu kata dihitung dua
+// kali dan skor penguasaannya melonjak palsu.
 function buildEngBank(n){
-  var semua = []
-    .concat(genShadowBank().slice(0, Math.ceil(n*0.4)))
-    .concat(genSpellBank().slice(0,  Math.ceil(n*0.3)))
-    .concat(genBuildBank().slice(0,  Math.ceil(n*0.3)))
-    .sort(function(){ return Math.random()-.5; });
+  var acak = function(){ return Math.random()-.5; };
+  var kuota = [
+    { arr: genShadowBank(), n: Math.ceil(n*0.4) },
+    { arr: genSpellBank(),  n: Math.ceil(n*0.3) },
+    { arr: genBuildBank(),  n: Math.ceil(n*0.3) }
+  ];
 
   var out = [], dipakai = {};
-  for(var i=0;i<semua.length && out.length<n;i++){
-    var k = semua[i].t + ':' + semua[i].word;
-    if(dipakai[k]) continue;
-    dipakai[k] = 1; out.push(semua[i]);
+  function ambil(arr, batas){
+    var c = 0;
+    for(var i=0;i<arr.length && c<batas && out.length<n;i++){
+      var k = arr[i].t + ':' + arr[i].word;
+      if(dipakai[k]) continue;
+      dipakai[k] = 1; out.push(arr[i]); c++;
+    }
   }
-  // Cadangan: jumlah soal TIDAK PERNAH boleh kurang dari yang diminta.
-  for(var j=0;j<semua.length && out.length<n;j++) out.push(semua[j]);
-  return out;
+
+  kuota.forEach(function(q){ ambil(q.arr, q.n); });
+
+  // Masih kurang (mis. satu mekanik kehabisan kata unik)? Isi dari sisa semua
+  // mekanik — tetap TANPA kembar. Total kata unik yang tersedia jauh lebih
+  // banyak daripada 20, jadi jumlahnya selalu terpenuhi.
+  if(out.length < n){
+    var sisa = [].concat(kuota[0].arr, kuota[1].arr, kuota[2].arr).sort(acak);
+    ambil(sisa, n);
+  }
+  return out.sort(acak);
 }
 
 // Label tipe untuk layar hasil & laporan

@@ -22,6 +22,8 @@ function playAgain(){
   setRunMode();
   updateOutboxNote();
   outboxFlush();
+  // Pemain direset di atas, jadi ringkasan per anak ikut disembunyikan.
+  try{ if(typeof segarkanRingkasan==='function') segarkanRingkasan(); }catch(e){}
 }
 function showScr(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
