@@ -1,8 +1,56 @@
+# ================================================================
+# AnabhiDev-ASP — Anabhi Smart Play
+# Berkas ini disalin jadi `.assetsignore` di ROOT repo AnabhiDev-Website
+# Development · Anabhi Dev
+# Version   : 1.0
+# Generated : 8 September 2026, 10:12:40
+# ================================================================
+#
+# .assetsignore vs .gitignore — BEDA JAUH:
+#
+#   .gitignore     -> berkas TIDAK MASUK repo sama sekali (tidak ada backup)
+#   .assetsignore  -> berkas TETAP ADA di repo, tapi TIDAK DIUPLOAD ke server
+#
+# Untuk kasus kita, .assetsignore JUSTRU LEBIH TEPAT: `gas/`, `tests/`, dan
+# `arsip/` berguna disimpan di GitHub sebagai cadangan & riwayat, tapi tidak
+# ada gunanya (malah tidak pantas) bisa dibuka publik lewat URL.
+#
+# Sumber: developers.cloudflare.com/workers/static-assets/binding/
+#   "Wrangler will not upload asset files that match lines in this file."
+#   Letaknya: di ROOT folder aset — untuk repo ini berarti root repo,
+#   sejajar dengan `_headers`. Sintaksnya sama persis dengan .gitignore.
+#
+# ⚠️ CATATAN: `_headers` TIDAK perlu dimasukkan ke sini. Cloudflare sudah
+# memperlakukannya sebagai konfigurasi, bukan berkas yang bisa diunduh
+# ("will not itself be served as a static asset, but will instead be parsed
+# by Workers"). Memasukkannya tidak merusak, tapi memang tidak perlu.
+
+# ── Alat & dokumen internal: ada di repo, JANGAN naik ke server ──
+Anabhi-Smart-Play/tests/
+Anabhi-Smart-Play/gas/
+Anabhi-Smart-Play/arsip/
+Anabhi-Smart-Play/.remember/
+Anabhi-Smart-Play/dev-server.js
+Anabhi-Smart-Play/STATUS.md
+Anabhi-Smart-Play/CLAUDE.md
+
+# ── Berkas rujukan, bukan berkas produksi ──
+Anabhi-Smart-Play/_headers
+Anabhi-Smart-Play/_headers anabhidev
+Anabhi-Smart-Play/gitignore-untuk-ROOT-repo.txt
+Anabhi-Smart-Play/assetsignore-untuk-ROOT-repo.txt
+
+# ── Versi lama ──
+Anabhi-Smart-Play/index-old.html
+
 # Exclude version control folder — ini yang menyebabkan .git/HEAD bisa diakses publik
 .git
 .git/**
 
-# File/folder umum lain yang sebaiknya tidak ikut ke-upload sebagai static asset
+# ── Umum ──
+node_modules/
+.DS_Store
+Thumbs.db
 .gitignore
 .DS_Store
 node_modules
@@ -12,3 +60,20 @@ node_modules/**
 *.log
 .vscode
 .vscode/**
+
+# ================================================================
+# CARA MEMASANG
+# ================================================================
+# 1. Di GitHub, buka ROOT repo AnabhiDev-Website (bukan di dalam
+#    folder Anabhi-Smart-Play).
+# 2. Add file -> Create new file -> beri nama:  .assetsignore
+# 3. Tempel isi di atas (boleh sekalian dengan komentarnya), lalu Commit.
+# 4. Tunggu deploy Cloudflare selesai, lalu buktikan:
+#       https://anabhidev.com/Anabhi-Smart-Play/tests/check.js
+#       https://anabhidev.com/Anabhi-Smart-Play/gas/Code.gs
+#    Keduanya HARUS membalas 404. Kalau masih terbaca, berarti
+#    .assetsignore belum terbaca — cek namanya (pakai titik di depan)
+#    dan letaknya (root repo).
+#
+# 🔴 Kalau memakai .assetsignore, TIDAK PERLU menghapus gas/ & tests/
+#    dari GitHub. Justru lebih baik dibiarkan sebagai cadangan.
