@@ -24,6 +24,9 @@ function playAgain(){
   outboxFlush();
   // Pemain direset di atas, jadi ringkasan per anak ikut disembunyikan.
   try{ if(typeof segarkanRingkasan==='function') segarkanRingkasan(); }catch(e){}
+  // Kembali ke layar awal = saat paling aman memasang versi baru yang tertunda.
+  // Memuat ulang di sini tidak terlihat: layar awal muncul lagi sama persis.
+  try{ if(typeof cobaPerbarui==='function') cobaPerbarui(); }catch(e){}
 }
 function showScr(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));

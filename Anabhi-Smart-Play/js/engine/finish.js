@@ -48,8 +48,10 @@ function finishGame(){
   try{ if(typeof catatSesi==='function') catatSesi({akurasi:acc}); }catch(e){}
 
   sendGAS(dur,streak,acc,correct,wrong);
-  // Versi baru yang ditahan selama anak main baru ditawarkan sekarang (PRD §40)
-  if(pendingUpdate){ pendingUpdate=false; offerUpdate(); }
+  // Versi baru SENGAJA tidak dipasang di sini. Layar hasil baru saja muncul —
+  // memuat ulang sekarang akan menghapus skor yang belum sempat dilihat anak.
+  // Ditunda sampai kembali ke layar awal (playAgain), tempat memuat ulang
+  // tidak terlihat sama sekali.
 }
 
 function typeName(t){

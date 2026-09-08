@@ -146,6 +146,7 @@ function tutupKartu(){
   setRunMode();
   updateOutboxNote();
   segarkanRingkasan();
+  try{ if(typeof cobaPerbarui==='function') cobaPerbarui(); }catch(e){}
 }
 
 // ══════════════════════════════════════

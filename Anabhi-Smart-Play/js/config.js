@@ -11,7 +11,7 @@
 // ╚══════════════════════════════════════╝
 const CONFIG = {
   APP_TITLE   : 'Anabhi Smart Play',
-  APP_VERSION : '5.8',
+  APP_VERSION : '5.9',
   // Semua aset kini SELF-HOST (SOP 18.12) — jangan dikembalikan ke CDN/image host
   // pihak ketiga: gagal senyap di balik CSP dan tidak jalan offline.
   TWEMOJI_BASE: 'assets/twemoji/',

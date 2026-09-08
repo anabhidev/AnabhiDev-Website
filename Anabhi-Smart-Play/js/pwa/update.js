@@ -1,46 +1,64 @@
 // ================================================================
 // AnabhiDev-ASP — Anabhi Smart Play
-// JavaScript · Service Worker & banner versi baru
+// JavaScript · Service Worker & pemasangan versi baru (diam-diam)
 // Development · Anabhi Dev
-// Version   : 1.2
-// Generated : 8 September 2026, 04:40:55
+// Version   : 2.0
+// Generated : 8 September 2026, 17:10:22
 // ================================================================
+//
+// 🔴 TIDAK ADA BANNER. Dihapus di v5.9 atas permintaan orang tua — banner
+// "Versi baru siap!" muncul di atas layar awal dan mengganggu.
+//
+// Kenapa aman dihapus: Service Worker sudah memakai skipWaiting() +
+// clients.claim(), jadi versi baru SUDAH aktif di perangkat begitu selesai
+// diunduh. Yang tersisa hanyalah halaman yang sedang terbuka masih memakai
+// kode lama. Jadi banner itu sebenarnya cuma "tombol muat ulang" — dan
+// memuat ulang bisa dilakukan sendiri oleh aplikasi pada saat yang aman.
+//
+// KAPAN dianggap aman:
+//   1. anak TIDAK sedang mengerjakan soal  (S.active === false)  — PRD §40
+//   2. sedang berada di LAYAR AWAL
+// Di layar awal, memuat ulang tidak terlihat sama sekali: layar awal hilang
+// lalu muncul lagi dalam keadaan sama persis. Tidak ada yang perlu ditekan,
+// tidak ada jawaban yang hilang.
+//
+// Kalau syaratnya belum terpenuhi, permintaan ditahan (pendingUpdate) dan
+// dicoba lagi setiap kali anak kembali ke layar awal (playAgain / tutupKartu /
+// tutupCerita). Kalau aplikasi keburu ditutup, versi baru tetap terpakai
+// pada pembukaan berikutnya — jadi tidak ada jalan buntu.
 
-let swReloaded=false, pendingUpdate=false, updateDitutup=false;
-function applyUpdate(){ if(!swReloaded){ swReloaded=true; window.location.reload(); } }
+let swReloaded=false, pendingUpdate=false;
 
-// Banner "Versi baru siap!" — APA GUNANYA:
-// Service Worker sudah menyimpan versi baru di perangkat, tapi halaman yang
-// sedang terbuka MASIH menjalankan kode lama. Tombol "Perbarui" hanya memuat
-// ulang halaman supaya kode barunya dipakai. Tidak ada yang diunduh lagi,
-// tidak ada data yang hilang.
-// Sengaja TIDAK auto-reload: kalau halaman dimuat ulang sendiri saat anak
-// sedang mengerjakan soal, jawabannya hilang (PRD §40).
-function offerUpdate(){
-  if(updateDitutup)return;          // sudah ditutup anak/orang tua — hormati itu
-  const bar=document.getElementById('updateBar');
-  if(!bar)return;
-  bar.hidden=false;
-  // Dorong isi halaman turun supaya banner tidak menutupi foto anak.
-  try{ document.body.classList.add('ada-update'); }catch(e){}
+function applyUpdate(){
+  if(swReloaded)return;
+  swReloaded=true;
+  window.location.reload();
 }
-function dismissUpdate(){
-  const bar=document.getElementById('updateBar');
-  if(bar)bar.hidden=true;
-  try{ document.body.classList.remove('ada-update'); }catch(e){}
-  pendingUpdate=false;
-  // Ditutup = jangan ditawarkan lagi sampai halaman dimuat ulang. Tanpa ini,
-  // banner muncul lagi tiap kali sesi selesai dan terasa seperti mengganggu.
-  updateDitutup=true;
+
+// Apakah sekarang saat yang aman untuk memasang versi baru?
+function amanUntukPerbarui(){
+  try{
+    if(S.active)return false;                       // anak sedang main
+    const w=document.getElementById('s-welcome');
+    return !!(w&&w.classList.contains('active'));   // hanya di layar awal
+  }catch(e){ return false; }
 }
+
+// Dipanggil saat versi baru siap, DAN setiap kali kembali ke layar awal.
+function cobaPerbarui(){
+  if(!pendingUpdate)return;
+  if(!amanUntukPerbarui())return;
+  applyUpdate();
+}
+
 function initSW(){
   if(!('serviceWorker' in navigator))return;
 
   // 🔴 Bedakan PEMASANGAN PERTAMA dari UPDATE SUNGGUHAN.
   // Saat Service Worker pertama kali terpasang, ia tetap mengambil alih halaman
   // (skipWaiting + clients.claim) sehingga 'controllerchange' ikut menyala —
-  // padahal tidak ada versi baru apa pun. Tanpa penjaga ini, banner
-  // "Versi baru siap!" muncul di kunjungan pertama dan membingungkan.
+  // padahal tidak ada versi baru apa pun. Tanpa penjaga ini, halaman akan
+  // memuat ulang tanpa alasan di kunjungan pertama.
   const sudahDikendalikan = !!navigator.serviceWorker.controller;
 
   navigator.serviceWorker.register('sw.js').then(reg=>{
@@ -57,17 +75,8 @@ function initSW(){
 
   navigator.serviceWorker.addEventListener('controllerchange',()=>{
     if(swReloaded)return;
-    if(!sudahDikendalikan)return;          // pemasangan pertama — bukan update
-    // PRD §40: JANGAN paksa refresh saat anak sedang main.
-    // Tunggu sesi selesai, lalu tawarkan tombol "Perbarui".
-    if(S.active){ pendingUpdate=true; return; }
-    offerUpdate();
+    if(!sudahDikendalikan)return;      // pemasangan pertama — bukan update
+    pendingUpdate=true;
+    cobaPerbarui();                    // pasang sekarang kalau memang aman
   });
-
-  const btn=document.getElementById('updateBtn');
-  if(btn)btn.addEventListener('click',applyUpdate);
-  const x=document.getElementById('updateClose');
-  if(x)x.addEventListener('click',dismissUpdate);
 }
-
-// ── INIT ──
