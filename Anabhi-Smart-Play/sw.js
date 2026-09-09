@@ -2,8 +2,8 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Service Worker · Cache API
 // Development · Anabhi Dev
-// Version   : 3.1
-// Generated : 9 September 2026, 08:55:40
+// Version   : 3.2
+// Generated : 9 September 2026, 11:20:14
 // ================================================================
 //
 // Strategi (SOP Checklist Standar Website v1.9, kategori 18.5):
@@ -13,7 +13,7 @@
 // Lupa menaikkan = pengguna terkunci di versi lama dan tidak bisa diperbaiki
 // dari jarak jauh selain meminta mereka membersihkan data aplikasi satu per satu.
 
-var CACHE_VERSION = 'anabhi-smart-play-v5-10';  // header Version : 3.1
+var CACHE_VERSION = 'anabhi-smart-play-v5-11';  // header Version : 3.2
 
 // BASE diturunkan dari lokasi sw.js itu sendiri, TIDAK dipatok mati.
 // Produksi  -> /Anabhi-Smart-Play/
@@ -49,13 +49,13 @@ var BASE = new URL('./', self.location.href).pathname;
 // parseEmoji(), dengan komentar dibuang lebih dulu.
 var EMOJI =
   "1f300 1f30d 1f319 1f31f 1f338 1f380 1f389 1f38a 1f3a8 1f3ae 1f3c6 1f430 1f4ab "+
-  "1f4d6 1f4da 1f4e4 1f4f1 1f504 1f525 1f52c 1f680 1f989 1f9ab 1f9e9 1fa90 23f1 "+
-  "2604 26a0 26a1 270d 2728 2b50 ";
+  "1f4ca 1f4d6 1f4da 1f4e4 1f4f1 1f504 1f525 1f52c 1f680 1f989 1f9ab 1f9e9 1fa90 "+
+  "23f1 2604 26a0 26a1 270d 2728 2b50 ";
 
 // Cache-busting aset internal (SOP kat. 1). Angkanya WAJIB sama persis dengan
 // yang ada di <link>/<script> di index.html — kalau beda, berkas diambil dua
 // kali dan versi cache tidak pernah kena.
-var V = '?v=20260909a';
+var V = '?v=20260909b';
 
 var CSS = ['tokens', 'themes', 'screens', 'components']
   .map(function (n) { return 'css/' + n + '.css'; });
@@ -70,7 +70,7 @@ var JS = [
   'js/questions/logika.js', 'js/questions/mix.js',
   'js/engine/session.js', 'js/engine/render.js', 'js/engine/finish.js',
   'js/services/db.js', 'js/services/hint.js', 'js/services/gas.js', 'js/engine/ui.js',
-  'js/features/cards.js', 'js/features/story.js',
+  'js/features/cards.js', 'js/features/story.js', 'js/features/report.js',
   'js/pwa/install.js', 'js/pwa/update.js', 'js/main.js'
 ];
 

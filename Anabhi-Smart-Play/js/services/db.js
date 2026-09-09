@@ -349,6 +349,74 @@ function catatKartu(wordId, bisa, pemain){
   }).catch(function(){ return false; });
 }
 
+// ══════════════════════════════════════
+// 5. LAPORAN MINGGUAN ORANG TUA (PRD §26)
+// ══════════════════════════════════════
+//
+// 🔴 SEMUA ANGKA di sini dihitung dari data yang tersimpan — deterministik,
+// tanpa AI sama sekali. AI hanya boleh merangkai kalimat, tidak pernah
+// menghasilkan angkanya (PRD §7).
+//
+// Rentangnya 7 hari terakhir, bukan "minggu kalender": orang tua membuka
+// laporan di hari mana pun, dan yang berguna adalah "seminggu terakhir".
+function laporanMingguan(pemain, hariKe){
+  var p = pemainAktif(pemain);
+  var hari = hariKe || 7;
+  var batas = Date.now() - hari*HARI_MS;
+
+  return Promise.all([dbSemua('sesi'), dbSemua('jawaban'), masteryKata(p)])
+    .then(function(hasil){
+      var sesi = hasil[0].filter(function(s){ return s.pemain===p && s.waktu>=batas; });
+      var jwb  = hasil[1].filter(function(j){ return j.pemain===p && j.waktu>=batas; });
+      var kata = hasil[2];
+
+      // Hari aktif = tanggal berbeda yang ada sesinya
+      var tgl = {};
+      sesi.forEach(function(s){ tgl[new Date(s.waktu).toDateString()] = 1; });
+
+      var benar = jwb.filter(function(j){ return j.benar; }).length;
+
+      // Kekuatan & kelemahan per jenis soal — hanya dihitung kalau datanya
+      // cukup (minimal 3 soal), supaya 1 kali salah tidak langsung dicap lemah.
+      var perTipe = {};
+      jwb.forEach(function(j){
+        var t = perTipe[j.tipe] || (perTipe[j.tipe] = {ok:0,tot:0});
+        t.tot++; if(j.benar) t.ok++;
+      });
+      var daftarTipe = Object.keys(perTipe)
+        .filter(function(t){ return perTipe[t].tot >= 3; })
+        .map(function(t){
+          return { tipe:t, ok:perTipe[t].ok, tot:perTipe[t].tot,
+                   persen:Math.round(perTipe[t].ok/perTipe[t].tot*100) };
+        })
+        .sort(function(a,b){ return b.persen - a.persen; });
+
+      var tahap = { baru:0, dilihat:0, berlatih:0, akrab:0, dikuasai:0, ulang:0 };
+      kata.forEach(function(m){ if(tahap[m.tahap]!==undefined) tahap[m.tahap]++; });
+
+      return {
+        pemain      : p,
+        hari        : hari,
+        jumlahSesi  : sesi.length,
+        hariAktif   : Object.keys(tgl).length,
+        jumlahSoal  : jwb.length,
+        soalBenar   : benar,
+        akurasi     : jwb.length ? Math.round(benar/jwb.length*100) : 0,
+        kataDikuasai: tahap.dikuasai,
+        kataDipelajari: kata.length,
+        perluDiulang: tahap.ulang,
+        terkuat     : daftarTipe.length ? daftarTipe[0] : null,
+        terlemah    : daftarTipe.length > 1 ? daftarTipe[daftarTipe.length-1] : null,
+        perTipe     : daftarTipe
+      };
+    })
+    .catch(function(){
+      return { pemain:p, hari:hari, jumlahSesi:0, hariAktif:0, jumlahSoal:0,
+               soalBenar:0, akurasi:0, kataDikuasai:0, kataDipelajari:0,
+               perluDiulang:0, terkuat:null, terlemah:null, perTipe:[] };
+    });
+}
+
 function ringkasanBelajar(pemain){
   var p  = pemainAktif(pemain);
   var aw = awalanKata(p);

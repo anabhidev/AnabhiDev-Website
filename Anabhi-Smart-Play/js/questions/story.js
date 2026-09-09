@@ -149,6 +149,138 @@ var STORIES = [
       { en:{q:'What is green?',o:['Leaf','Apple','Sky','Banana'],benar:'Leaf'},
         id:{q:'Apa yang berwarna hijau?',o:['Daun','Apel','Langit','Pisang'],benar:'Daun'} }
     ]
+  },
+  {
+    id: 'kelinci-kecil',
+    judul: 'The Little Rabbit',
+    judulId: 'Kelinci Kecil',
+    emoji: '🐰',
+    halaman: [
+      { em:'🐰', en:'This is a rabbit.',       id:'Ini seekor kelinci.' },
+      { em:'🥕', en:'The rabbit likes carrot.', id:'Kelinci suka wortel.' },
+      { em:'🐦', en:'A bird sings a song.',     id:'Burung menyanyikan lagu.' },
+      { em:'🌸', en:'They play in the garden.', id:'Mereka bermain di taman.' },
+      { em:'😊', en:'What a happy day!',        id:'Hari yang menyenangkan!' }
+    ],
+    kata: ['animals:rabbit','food:carrot','animals:bird'],
+    soal: [
+      { en:{q:'What does the rabbit like?',o:['Carrot','Cake','Bread','Rice'],benar:'Carrot'},
+        id:{q:'Kelinci suka apa?',o:['Wortel','Kue','Roti','Nasi'],benar:'Wortel'} },
+      { en:{q:'What is "burung" in English?',o:['Bird','Rabbit','Fish','Frog'],benar:'Bird'},
+        id:{q:'Apa arti "bird"?',o:['Burung','Kelinci','Ikan','Katak'],benar:'Burung'} },
+      { en:{q:'Where do they play?',o:['Garden','School','Home','Farm'],benar:'Garden'},
+        id:{q:'Mereka bermain di mana?',o:['Taman','Sekolah','Rumah','Peternakan'],benar:'Taman'} }
+    ]
+  },
+  {
+    id: 'sarapan',
+    judul: 'My Breakfast',
+    judulId: 'Sarapanku',
+    emoji: '🍞',
+    halaman: [
+      { em:'🍞', en:'I eat bread.',           id:'Aku makan roti.' },
+      { em:'🥚', en:'I eat an egg.',          id:'Aku makan telur.' },
+      { em:'🍚', en:'Father eats rice.',      id:'Ayah makan nasi.' },
+      { em:'🍊', en:'We drink orange juice.', id:'Kami minum jus jeruk.' },
+      { em:'😋', en:'Breakfast is ready!',    id:'Sarapan sudah siap!' }
+    ],
+    kata: ['food:bread','food:egg','food:rice','food:orange'],
+    soal: [
+      { en:{q:'What does Father eat?',o:['Rice','Bread','Cake','Egg'],benar:'Rice'},
+        id:{q:'Ayah makan apa?',o:['Nasi','Roti','Kue','Telur'],benar:'Nasi'} },
+      { en:{q:'What is "telur" in English?',o:['Egg','Bread','Rice','Milk'],benar:'Egg'},
+        id:{q:'Apa arti "egg"?',o:['Telur','Roti','Nasi','Susu'],benar:'Telur'} },
+      { en:{q:'What do we drink?',o:['Orange juice','Milk','Water','Tea'],benar:'Orange juice'},
+        id:{q:'Kami minum apa?',o:['Jus jeruk','Susu','Air','Teh'],benar:'Jus jeruk'} }
+    ]
+  },
+  {
+    id: 'di-hutan',
+    judul: 'In the Jungle',
+    judulId: 'Di Hutan',
+    emoji: '🦁',
+    halaman: [
+      { em:'🦁', en:'The lion is big.',        id:'Singa itu besar.' },
+      { em:'🐘', en:'The elephant is bigger.', id:'Gajah lebih besar.' },
+      { em:'🐵', en:'A monkey climbs a tree.', id:'Monyet memanjat pohon.' },
+      { em:'🐦', en:'A bird flies high.',      id:'Burung terbang tinggi.' },
+      { em:'🌳', en:'The jungle is alive!',    id:'Hutannya ramai!' }
+    ],
+    kata: ['animals:lion','animals:elephant','animals:monkey','animals:bird'],
+    soal: [
+      { en:{q:'Which animal is bigger?',o:['Elephant','Lion','Monkey','Bird'],benar:'Elephant'},
+        id:{q:'Hewan mana yang lebih besar?',o:['Gajah','Singa','Monyet','Burung'],benar:'Gajah'} },
+      { en:{q:'What is "monyet" in English?',o:['Monkey','Lion','Elephant','Bird'],benar:'Monkey'},
+        id:{q:'Apa arti "monkey"?',o:['Monyet','Singa','Gajah','Burung'],benar:'Monyet'} },
+      { en:{q:'What does the monkey climb?',o:['Tree','Rock','House','Car'],benar:'Tree'},
+        id:{q:'Monyet memanjat apa?',o:['Pohon','Batu','Rumah','Mobil'],benar:'Pohon'} }
+    ]
+  },
+  {
+    id: 'waktu-menggambar',
+    judul: 'Drawing Time',
+    judulId: 'Waktunya Menggambar',
+    emoji: '🖍️',
+    halaman: [
+      { em:'🖍️', en:'I take my crayon.',   id:'Aku mengambil krayon.' },
+      { em:'📖', en:'I open my notebook.',  id:'Aku membuka buku tulis.' },
+      { em:'🌈', en:'I draw a rainbow.',    id:'Aku menggambar pelangi.' },
+      { em:'🧽', en:'I use an eraser.',     id:'Aku memakai penghapus.' },
+      { em:'🎨', en:'My drawing is done!',  id:'Gambarku selesai!' }
+    ],
+    kata: ['school:crayon','school:notebook','school:eraser'],
+    soal: [
+      { en:{q:'What do I draw?',o:['Rainbow','House','Cat','Tree'],benar:'Rainbow'},
+        id:{q:'Aku menggambar apa?',o:['Pelangi','Rumah','Kucing','Pohon'],benar:'Pelangi'} },
+      { en:{q:'What is "penghapus" in English?',o:['Eraser','Crayon','Ruler','Book'],benar:'Eraser'},
+        id:{q:'Apa arti "eraser"?',o:['Penghapus','Krayon','Penggaris','Buku'],benar:'Penghapus'} },
+      { en:{q:'What do I open?',o:['Notebook','Door','Bag','Box'],benar:'Notebook'},
+        id:{q:'Aku membuka apa?',o:['Buku tulis','Pintu','Tas','Kotak'],benar:'Buku tulis'} }
+    ]
+  },
+  {
+    id: 'camilan-manis',
+    judul: 'Sweet Snacks',
+    judulId: 'Camilan Manis',
+    emoji: '🍰',
+    halaman: [
+      { em:'🍰', en:'Mother makes a cake.',       id:'Ibu membuat kue.' },
+      { em:'🍓', en:'I put strawberry on top.',   id:'Aku menaruh stroberi di atas.' },
+      { em:'🍦', en:'My sister wants ice cream.', id:'Adik mau es krim.' },
+      { em:'🍇', en:'We share grapes too.',       id:'Kami juga berbagi anggur.' },
+      { em:'😋', en:'Everything is sweet!',       id:'Semuanya manis!' }
+    ],
+    kata: ['food:cake','food:strawberry','food:ice-cream','food:grapes'],
+    soal: [
+      { en:{q:'Who makes the cake?',o:['Mother','Father','Sister','Brother'],benar:'Mother'},
+        id:{q:'Siapa yang membuat kue?',o:['Ibu','Ayah','Adik','Kakak'],benar:'Ibu'} },
+      { en:{q:'What is "es krim" in English?',o:['Ice cream','Cake','Grapes','Milk'],benar:'Ice cream'},
+        id:{q:'Apa arti "ice cream"?',o:['Es krim','Kue','Anggur','Susu'],benar:'Es krim'} },
+      { en:{q:'What is on top of the cake?',o:['Strawberry','Grapes','Egg','Rice'],benar:'Strawberry'},
+        id:{q:'Apa yang ada di atas kue?',o:['Stroberi','Anggur','Telur','Nasi'],benar:'Stroberi'} }
+    ]
+  },
+  {
+    id: 'sikat-gigi',
+    judul: 'Brush Your Teeth',
+    judulId: 'Sikat Gigi',
+    emoji: '🦷',
+    halaman: [
+      { em:'🦷', en:'I brush my tooth.',      id:'Aku menyikat gigi.' },
+      { em:'👄', en:'I open my mouth wide.',  id:'Aku membuka mulut lebar.' },
+      { em:'💇', en:'Then I comb my hair.',   id:'Lalu aku menyisir rambut.' },
+      { em:'🦶', en:'I wash my foot too.',    id:'Aku juga mencuci kaki.' },
+      { em:'✨', en:'Now I am clean!',        id:'Sekarang aku bersih!' }
+    ],
+    kata: ['body:tooth','body:mouth','body:hair','body:foot'],
+    soal: [
+      { en:{q:'What do I brush?',o:['Tooth','Hair','Foot','Hand'],benar:'Tooth'},
+        id:{q:'Aku menyikat apa?',o:['Gigi','Rambut','Kaki','Tangan'],benar:'Gigi'} },
+      { en:{q:'What is "rambut" in English?',o:['Hair','Tooth','Mouth','Foot'],benar:'Hair'},
+        id:{q:'Apa arti "hair"?',o:['Rambut','Gigi','Mulut','Kaki'],benar:'Rambut'} },
+      { en:{q:'What do I wash?',o:['Foot','Tooth','Hair','Mouth'],benar:'Foot'},
+        id:{q:'Aku mencuci apa?',o:['Kaki','Gigi','Rambut','Mulut'],benar:'Kaki'} }
+    ]
   }
 ];
 
@@ -199,3 +331,36 @@ function pilihCerita(dibaca, kataPerlu){
 }
 
 var STORY_JUMLAH = STORIES.length;
+
+// Berapa cerita yang DITAWARKAN sekaligus. Banknya boleh terus bertambah,
+// tapi yang tampil tetap 5 — layar penuh pilihan justru membuat anak lama
+// memilih dan akhirnya tidak membaca apa pun.
+var STORY_TAMPIL = 5;
+
+// Memilih 5 cerita untuk ditawarkan.
+// Diacak dulu (Fisher-Yates), BARU diurutkan menurut skor — jadi cerita yang
+// memuat kata jatuh tempo tetap didahulukan, tapi di antara yang skornya sama
+// urutannya benar-benar acak. Tanpa pengacakan awal, urutan bank yang tetap
+// membuat cerita yang sama muncul terus.
+function pilihLimaCerita(dibaca, kataPerlu, jumlah){
+  var perlu = {};
+  (kataPerlu||[]).forEach(function(k){ perlu[k.wordId] = 1; });
+
+  var acak = (typeof acakUbin==='function') ? acakUbin(STORIES) : STORIES.slice();
+  var berskor = acak.map(function(st){
+    var skor = 0;
+    st.kata.forEach(function(w){ if(perlu[w]) skor += 10; });
+    if(!(dibaca||{})[st.id]) skor += 1;      // belum pernah dibaca sedikit didahulukan
+    return { st:st, skor:skor };
+  });
+  berskor.sort(function(a,b){ return b.skor - a.skor; });
+
+  return berskor.slice(0, jumlah || STORY_TAMPIL).map(function(x){
+    return { st:x.st, perluDiulang:x.skor>=10, sudahDibaca:!!(dibaca||{})[x.st.id] };
+  });
+}
+
+function ceritaBerId(id){
+  for(var i=0;i<STORIES.length;i++) if(STORIES[i].id===id) return STORIES[i];
+  return null;
+}

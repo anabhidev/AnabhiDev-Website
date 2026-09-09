@@ -66,6 +66,49 @@
 .cs-angka b{color:#6BCB77;font-size:1.2rem;}
 .cs-ulang b{color:#FFE66D;}
 
+/* ══════════ LAPORAN ORANG TUA ══════════ */
+.acard.lapor-card{border-style:dashed;}
+.acard.lapor-card:hover{border-color:#94A3B8;border-style:solid;
+  box-shadow:0 12px 32px rgba(148,163,184,.35);background:rgba(148,163,184,.15);}
+.report-body{max-width:900px;}
+.rp-ganti{display:flex;gap:9px;justify-content:center;margin-bottom:20px;}
+.rp-hari{min-height:40px;padding:9px 20px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.85rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);
+  border:2px solid rgba(255,255,255,.16);border-radius:50px;cursor:pointer;transition:all .2s;}
+.rp-hari:hover{background:rgba(255,255,255,.18);}
+.rp-hari.aktif{color:#FFE66D;border-color:rgba(255,230,109,.6);background:rgba(255,230,109,.14);}
+.rp-anak{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%;}
+.rp-kartu{flex:1 1 300px;max-width:400px;padding:22px 20px;text-align:center;
+  background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.14);border-radius:22px;}
+.rp-nama{font-family:'Fredoka One',cursive;font-size:1.15rem;color:#fff;margin-bottom:10px;}
+.rp-akurasi{font-family:'Fredoka One',cursive;font-size:3.2rem;line-height:1;color:#FFE66D;}
+.rp-akurasi span{font-size:1.3rem;opacity:.7;}
+.rp-akurasi-ket{font-size:.76rem;font-weight:700;opacity:.55;margin-bottom:16px;}
+.rp-baris{display:flex;flex-direction:column;gap:7px;text-align:left;}
+.rp-item{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;font-weight:700;
+  padding:7px 12px;background:rgba(255,255,255,.05);border-radius:11px;}
+.rp-item span{opacity:.66;}
+.rp-item b{color:#fff;white-space:nowrap;}
+.rp-sorot{margin-top:10px;font-size:.84rem;font-weight:700;padding:9px 13px;border-radius:12px;
+  text-align:left;line-height:1.45;}
+.rp-kuat{background:rgba(107,203,119,.15);color:#9ae6b4;}
+.rp-lemah{background:rgba(255,230,109,.13);color:#FFE66D;}
+.rp-kosong{font-size:.88rem;font-weight:700;opacity:.55;padding:26px 10px;line-height:1.5;}
+.rp-catatan{margin-top:20px;font-size:.74rem;font-weight:700;opacity:.42;text-align:center;
+  line-height:1.5;max-width:420px;}
+
+/* ══════════ TOMBOL BANTUAN (hint 1-4) ══════════ */
+.hint-wrap{display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:16px;}
+.hint-btn{min-height:44px;padding:10px 22px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.88rem;color:rgba(255,230,109,.9);background:rgba(255,230,109,.11);
+  border:2px solid rgba(255,230,109,.34);border-radius:50px;cursor:pointer;transition:all .22s;}
+.hint-btn:hover:not(:disabled){background:rgba(255,230,109,.24);transform:translateY(-2px);}
+.hint-btn:disabled{opacity:.42;cursor:default;}
+.hint-txt{max-width:460px;font-size:.92rem;font-weight:700;line-height:1.55;
+  color:rgba(255,255,255,.9);background:rgba(255,230,109,.1);
+  border:1px solid rgba(255,230,109,.28);border-radius:14px;padding:12px 16px;
+  text-align:center;animation:popIn .28s cubic-bezier(.175,.885,.32,1.275);}
+
 /* Penjelasan singkat saat jawaban salah (Odd One Out) */
 .fb-alasan{display:inline-block;margin-top:6px;font-size:.86rem;font-weight:700;
   opacity:.92;line-height:1.45;}
@@ -100,6 +143,25 @@
 .st-prev:hover{background:rgba(255,255,255,.18);}
 
 .st-tanya{margin-bottom:18px;}
+
+/* ── Pilih cerita: 5 kartu acak (v5.11) ── */
+.st-daftar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%;}
+.st-kartu{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;
+  width:clamp(140px,30vw,175px);min-height:150px;padding:18px 12px;
+  background:rgba(255,255,255,.09);border:3px solid rgba(255,255,255,.16);
+  border-radius:20px;cursor:pointer;transition:all .26s;color:#fff;text-align:center;}
+.st-kartu:hover{transform:translateY(-5px);background:rgba(251,146,60,.16);
+  border-color:rgba(251,146,60,.7);}
+.st-kartu-em{font-size:2.5rem;line-height:1;}
+.st-kartu-judul{font-family:'Fredoka One',cursive;font-size:.95rem;color:#FFE66D;line-height:1.2;}
+.st-kartu-id{font-size:.72rem;font-weight:700;opacity:.62;line-height:1.3;}
+.st-kartu-sudah{font-size:.62rem;font-weight:800;opacity:.42;text-transform:uppercase;
+  letter-spacing:.4px;margin-top:2px;}
+/* Penanda cerita yang memuat kata jatuh tempo — dorongan halus, bukan paksaan */
+.st-tanda-ulang{position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  font-size:.55rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+  padding:3px 9px;border-radius:50px;white-space:nowrap;
+  background:rgba(255,230,109,.2);color:#FFE66D;}
 
 /* ── Pilih bahasa soal (v5.10) ── */
 .st-bahasa-tanya{font-family:'Fredoka One',cursive;font-size:clamp(1.15rem,4.5vw,1.5rem);

@@ -112,6 +112,9 @@ function sendGAS(dur,streak,acc,correct,wrong,retry){
       // Kosakata yang muncul di sesi ini + benar/salahnya (Master 2 §5, §22).
       // Field BARU — GAS lama yang belum mengenalnya cukup mengabaikannya,
       // jadi aplikasi ini tetap bisa dipakai sebelum .gs diperbarui.
+      // Berapa kali tombol bantuan ditekan — membedakan "bisa sendiri" dari
+      // "bisa setelah dibantu". Field baru; GAS lama cukup mengabaikannya.
+      bantuan:S.hintDipakai||0,
       vocab:ringkasKosakata(),
       // Penjelasan tingkat 5 KHUSUS ORANG TUA untuk soal yang dijawab salah.
       // Tidak pernah ditampilkan ke anak.

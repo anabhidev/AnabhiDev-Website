@@ -43,7 +43,7 @@ function startGame(){
   const now=new Date();
   const pad=n=>String(n).padStart(2,'0');
   S.sessionId=`${S.player.toUpperCase()}-${S.app.toUpperCase()}-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
-  Object.assign(S,{score:0,qIdx:0,results:[],statDetail:{},startTime:Date.now(),active:true,tgSent:false,_payload:null});
+  Object.assign(S,{score:0,qIdx:0,results:[],statDetail:{},startTime:Date.now(),active:true,tgSent:false,_payload:null,hintDipakai:0});
   const BANK_BUILDERS={math:buildMathBank,fun:buildFunBank,bindo:buildBindoBank,bing:buildBingBank,eng:buildEngBank,sains:buildSainsBank,seni:buildSeniBank,logika:buildLogikaBank,mix:buildMixBank};
   S.qBank = BANK_BUILDERS[S.app](S.qCount);
 

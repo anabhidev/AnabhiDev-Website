@@ -38,13 +38,49 @@ function bukaCerita(){
   try{ ambil = kataPerluDiulang(30, S.player); }
   catch(e){ ambil = Promise.resolve([]); }
 
-  ambil.then(function(perlu){ mulaiCerita(perlu); })
-       .catch(function(){ mulaiCerita([]); });
+  ambil.then(function(perlu){ gambarPilihCerita(perlu); })
+       .catch(function(){ gambarPilihCerita([]); });
 }
 
-function mulaiCerita(perlu){
+// ══════════════════════════════════════
+// FASE 0 — PILIH CERITA (5 acak)
+// ══════════════════════════════════════
+// Banknya 12 cerita, tapi yang ditawarkan hanya 5 dan diacak tiap kali.
+// Anak jadi punya pilihan tanpa harus memilah daftar panjang, dan cerita yang
+// memuat kata jatuh tempo tetap didahulukan diam-diam.
+function gambarPilihCerita(perlu){
+  var body = document.getElementById('storyBody');
+  var prog = document.getElementById('storyProg');
+  if(!body) return;
+
   var dibaca = bacaRiwayatCerita();
-  STORY.data = pilihCerita(dibaca, perlu);
+  var daftar = pilihLimaCerita(dibaca, perlu);
+  STORY.fase = 'pilih';
+  if(prog) prog.textContent = 'Pilih cerita';
+
+  body.innerHTML =
+    '<div class="st-bahasa-tanya">Mau baca cerita apa? 📖</div>' +
+    '<div class="st-daftar">' +
+      daftar.map(function(x){
+        return '<button class="st-kartu" data-id="'+x.st.id+'">' +
+          (x.perluDiulang ? '<span class="st-tanda-ulang">Latihan kata</span>' : '') +
+          '<span class="st-kartu-em">'+x.st.emoji+'</span>' +
+          '<span class="st-kartu-judul">'+x.st.judul+'</span>' +
+          '<span class="st-kartu-id">'+x.st.judulId+'</span>' +
+          (x.sudahDibaca ? '<span class="st-kartu-sudah">sudah dibaca</span>' : '') +
+        '</button>';
+      }).join('') +
+    '</div>';
+
+  body.querySelectorAll('.st-kartu').forEach(function(b){
+    b.addEventListener('click', function(){ mulaiCerita(b.dataset.id); });
+  });
+}
+
+function mulaiCerita(id){
+  var st = ceritaBerId(id);
+  if(!st) return;
+  STORY.data = siapkanCerita(st);
   STORY.hal = 0; STORY.fase = 'baca';
   STORY.qIdx = 0; STORY.benar = 0; STORY.jawaban = [];
   gambarCerita();
@@ -277,12 +313,7 @@ function gambarHasilCerita(){
     '</div>';
 
   var u = document.getElementById('stUlang');
-  if(u) u.addEventListener('click', function(){
-    STORY.hal=0; STORY.fase='baca'; STORY.qIdx=0; STORY.benar=0; STORY.jawaban=[];
-    STORY.data = siapkanCerita(
-      STORIES.filter(function(x){ return x.id===d.id; })[0]);
-    gambarCerita();
-  });
+  if(u) u.addEventListener('click', function(){ mulaiCerita(d.id); });
   var l = document.getElementById('stLain');
   if(l) l.addEventListener('click', bukaCerita);
 }

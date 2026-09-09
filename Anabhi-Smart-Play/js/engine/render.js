@@ -192,8 +192,14 @@ function renderQ(q){
       <div class="q-text">${qText}</div>
       ${bodyHtml}
       <div class="${gridClass}" id="optsWrap">${optsHtml}</div>
+      <div class="hint-wrap" id="hintWrap">
+        <button class="hint-btn" id="hintBtn">💡 Bantuan</button>
+        <div class="hint-txt" id="hintTxt" hidden></div>
+      </div>
       <div id="fb"></div>
     </div>`;
+
+  pasangHint(q);
 
   area.querySelectorAll('.opt-btn').forEach(b=>{
     b.addEventListener('click',()=>handleAns(q,parseInt(b.dataset.i),answerIdx));
@@ -214,6 +220,48 @@ function renderQ(q){
     inp.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
     setTimeout(()=>inp.focus(),250);
   }
+}
+
+// ══════════════════════════════════════
+// TOMBOL BANTUAN (tangga hint 1-4)
+// ══════════════════════════════════════
+//
+// Mesin hint-nya sudah ada sejak v5.2 (js/services/hint.js) tapi belum pernah
+// punya tombol. Sekarang dipakai.
+//
+// 🔴 Hanya LOKAL — tidak menunggu jaringan sama sekali, jadi tetap jalan
+// offline dan tidak pernah membuat anak menunggu.
+// 🔴 Maksimal tingkat 4. Tingkat 5 khusus orang tua dan sudah dikunci di
+// dalam hintUntukAnak(); di sini tidak ada jalur untuk mencapainya.
+// Tingkat 1-3 tidak menyebut jawaban — anak tetap harus berpikir.
+function pasangHint(q){
+  var btn = document.getElementById('hintBtn');
+  var txt = document.getElementById('hintTxt');
+  if(!btn||!txt) return;
+  if(typeof hintUntukAnak!=='function'){ btn.hidden=true; return; }
+
+  var tingkat = 0;
+  btn.addEventListener('click', function(){
+    if(tingkat>=4) return;
+    tingkat++;
+    var t = '';
+    try{ t = hintUntukAnak(q, tingkat); }catch(e){ t = ''; }
+    if(!t){ btn.hidden = true; return; }     // tidak ada hint = sembunyikan saja
+    txt.hidden = false;
+    txt.textContent = t;
+    // Berapa kali anak minta bantuan ikut tercatat, supaya laporan orang tua
+    // bisa membedakan "bisa sendiri" dari "bisa setelah dibantu".
+    S.hintDipakai = (S.hintDipakai||0) + 1;
+    btn.textContent = tingkat>=4 ? '💡 Sudah semua' : '💡 Bantuan lagi ('+tingkat+'/4)';
+    if(tingkat>=4) btn.disabled = true;
+  });
+}
+
+// Bantuan ditutup begitu anak menjawab — supaya tidak dipakai untuk mengintip
+// setelah jawabannya terlihat.
+function kunciHint(){
+  var w = document.getElementById('hintWrap');
+  if(w) w.hidden = true;
 }
 
 // ══════════════════════════════════════
@@ -263,6 +311,7 @@ function selesaiUbin(q,target,terisi,slotRow,tileRow,undoBtn){
   // Kunci semua kendali supaya tidak bisa diubah setelah dinilai
   tileRow.querySelectorAll('.tile').forEach(function(b){ b.disabled=true; });
   if(undoBtn) undoBtn.disabled=true;
+  kunciHint();
 
   var jawab = terisi.map(function(i){ return q.ubin[i]; });
   var ok = jawab.join(q.t==='spell'?'':' ') === target.join(q.t==='spell'?'':' ');
@@ -303,6 +352,7 @@ function selesaiUbin(q,target,terisi,slotRow,tileRow,undoBtn){
 // ══════════════════════════════════════
 function handleTypedAns(q,inp,btn){
   inp.disabled=true;btn.disabled=true;
+  kunciHint();
 
   const ok = normalizeBI(inp.value)===normalizeBI(q.sentence);
   S.results.push(ok);
@@ -368,6 +418,7 @@ function makeAnalogClock(h,m){
 function handleAns(q,chosen,correctIdx){
   const btns=document.querySelectorAll('.opt-btn');
   btns.forEach(b=>b.disabled=true);
+  kunciHint();
 
   const ok=chosen===correctIdx;
   S.results.push(ok);
