@@ -3,8 +3,8 @@
      AnabhiDev-ASP — Anabhi Smart Play
      HTML · CSS modular · JavaScript modular · PWA · Google Apps Script
      Development · Anabhi Dev
-     Version   : 5.11
-     Generated : 9 September 2026, 11:20:14
+     Version   : 5.12
+     Generated : 9 September 2026, 17:25:08
      ================================================================ -->
 <html lang="id">
 <head>
@@ -35,16 +35,16 @@
 <link rel="preload" href="assets/fonts/nunito-latin-var.woff2"   as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/fredoka-one-latin.woff2"  as="font" type="font/woff2" crossorigin>
 <script src="js/twemoji.min.js"></script>
-<link rel="stylesheet" href="css/tokens.css?v=20260909b">
-<link rel="stylesheet" href="css/themes.css?v=20260909b">
-<link rel="stylesheet" href="css/screens.css?v=20260909b">
-<link rel="stylesheet" href="css/components.css?v=20260909b">
+<link rel="stylesheet" href="css/tokens.css?v=20260909c">
+<link rel="stylesheet" href="css/themes.css?v=20260909c">
+<link rel="stylesheet" href="css/screens.css?v=20260909c">
+<link rel="stylesheet" href="css/components.css?v=20260909c">
 </head>
 <body class="th-space">
 <div class="bg-particles" id="bgPart"></div>
 <!-- Penanda display-mode (SOP 18.7, MANDATORY) — bukti definitif hasil install:
      "aplikasi" = WebAPK sungguhan, "browser" = masih tab / pintasan -->
-<div class="version">v5.11 <span id="runMode"></span></div>
+<div class="version">v5.12 <span id="runMode"></span></div>
 
 <!-- Banner "Versi baru siap!" DIHAPUS di v5.9 (permintaan orang tua).
      Versi baru kini dipasang DIAM-DIAM saat aman — lihat js/pwa/update.js.
@@ -149,12 +149,14 @@
          Keduanya LANGSUNG membuka layarnya (tidak perlu pilih jumlah soal
          lalu tekan Mulai), karena itu tanpa tanda centang ✓ dan garis tepinya
          putus-putus. Label teks sengaja tidak dipakai — lihat screens.css. -->
-    <div class="acard belajar-card" id="acard-belajar" onclick="bukaKartu()">
+    <div class="acard belajar-card" id="acard-belajar" onclick="selectLearn('belajar')">
+      <div class="acard-check">✓</div>
       <div class="acard-icon">📚</div>
       <div class="acard-name">Belajar Kata</div>
       <div class="acard-desc">Kartu kosakata<br>bolak-balik!</div>
     </div>
-    <div class="acard cerita-card" id="acard-cerita" onclick="bukaCerita()">
+    <div class="acard cerita-card" id="acard-cerita" onclick="selectLearn('cerita')">
+      <div class="acard-check">✓</div>
       <div class="acard-icon">📖</div>
       <div class="acard-name">Cerita Seru</div>
       <div class="acard-desc">Baca cerita lalu<br>jawab soalnya!</div>
@@ -252,29 +254,29 @@
   <div class="tg-status" id="tgStatus">📤 Mengirim laporan...</div>
 </div>
 
-<script src="js/config.js?v=20260909b"></script>
-<script src="js/questions/math.js?v=20260909b"></script>
-<script src="js/questions/fun.js?v=20260909b"></script>
-<script src="js/questions/bindo.js?v=20260909b"></script>
-<script src="js/questions/bing.js?v=20260909b"></script>
-<script src="js/questions/eng.js?v=20260909b"></script>
-<script src="js/questions/story.js?v=20260909b"></script>
-<script src="js/questions/sains.js?v=20260909b"></script>
-<script src="js/questions/seni.js?v=20260909b"></script>
-<script src="js/questions/logika.js?v=20260909b"></script>
-<script src="js/questions/mix.js?v=20260909b"></script>
-<script src="js/engine/session.js?v=20260909b"></script>
-<script src="js/engine/render.js?v=20260909b"></script>
-<script src="js/engine/finish.js?v=20260909b"></script>
-<script src="js/services/db.js?v=20260909b"></script>
-<script src="js/services/hint.js?v=20260909b"></script>
-<script src="js/services/gas.js?v=20260909b"></script>
-<script src="js/engine/ui.js?v=20260909b"></script>
-<script src="js/features/cards.js?v=20260909b"></script>
-<script src="js/features/story.js?v=20260909b"></script>
-<script src="js/features/report.js?v=20260909b"></script>
-<script src="js/pwa/install.js?v=20260909b"></script>
-<script src="js/pwa/update.js?v=20260909b"></script>
-<script src="js/main.js?v=20260909b"></script>
+<script src="js/config.js?v=20260909c"></script>
+<script src="js/questions/math.js?v=20260909c"></script>
+<script src="js/questions/fun.js?v=20260909c"></script>
+<script src="js/questions/bindo.js?v=20260909c"></script>
+<script src="js/questions/bing.js?v=20260909c"></script>
+<script src="js/questions/eng.js?v=20260909c"></script>
+<script src="js/questions/story.js?v=20260909c"></script>
+<script src="js/questions/sains.js?v=20260909c"></script>
+<script src="js/questions/seni.js?v=20260909c"></script>
+<script src="js/questions/logika.js?v=20260909c"></script>
+<script src="js/questions/mix.js?v=20260909c"></script>
+<script src="js/engine/session.js?v=20260909c"></script>
+<script src="js/engine/render.js?v=20260909c"></script>
+<script src="js/engine/finish.js?v=20260909c"></script>
+<script src="js/services/db.js?v=20260909c"></script>
+<script src="js/services/hint.js?v=20260909c"></script>
+<script src="js/services/gas.js?v=20260909c"></script>
+<script src="js/engine/ui.js?v=20260909c"></script>
+<script src="js/features/cards.js?v=20260909c"></script>
+<script src="js/features/story.js?v=20260909c"></script>
+<script src="js/features/report.js?v=20260909c"></script>
+<script src="js/pwa/install.js?v=20260909c"></script>
+<script src="js/pwa/update.js?v=20260909c"></script>
+<script src="js/main.js?v=20260909c"></script>
 </body>
 </html>

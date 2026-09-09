@@ -13,7 +13,8 @@ function playAgain(){
   S.player=null;S.app=null;S.qCount=0;S.tgSent=false;S._payload=null;
   document.getElementById('pcard-ana').classList.remove('selected');
   document.getElementById('pcard-abhi').classList.remove('selected');
-  APP_IDS.forEach(id=>document.getElementById('acard-'+id).classList.remove('sel'));
+  learnPending=null;
+  bersihkanPilihanKartu();
   document.querySelectorAll('.qcbtn').forEach(b=>b.classList.remove('sel'));
   document.getElementById('startBtn').classList.remove('ready');
   document.body.className='th-space';

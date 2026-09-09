@@ -18,12 +18,64 @@ function selectPlayer(p){
   // sendiri, jadi angkanya wajib ikut berganti saat pemainnya berganti.
   try{ if(typeof segarkanRingkasan==='function') segarkanRingkasan(); }catch(e){}
   var cn=document.getElementById('cardNote'); if(cn) cn.hidden=true;
+  // Kalau tadi sudah menekan Belajar Kata / Cerita Seru, langsung jalankan —
+  // niatnya tidak perlu diulang.
+  if(learnPending) jalankanLearn();
 }
 const APP_IDS=['math','fun','bindo','bing','eng','sains','seni','logika','mix'];
+
+// Kartu "belajar santai". Sejak v5.12 keduanya ikut aturan pilih-memilih yang
+// SAMA dengan kartu game: ditekan -> menyala + centang hijau, dan pilihannya
+// TIDAK hilang saat nama anak dipilih setelahnya.
+//
+// 🔴 Masalah nyata yang diperbaiki: dulu menekan kartu ini tanpa memilih anak
+// cuma memunculkan pesan "Pilih Ana atau Abhi dulu", lalu niatnya HILANG —
+// setelah memilih nama, orang tua harus menekan kartunya lagi. Sekarang
+// niatnya disimpan di learnPending dan dijalankan begitu namanya dipilih.
+const LEARN_IDS=['belajar','cerita'];
+let learnPending=null;
+
+function bersihkanPilihanKartu(){
+  APP_IDS.concat(LEARN_IDS).forEach(function(id){
+    const el=document.getElementById('acard-'+id);
+    if(el) el.classList.remove('sel');
+  });
+}
+
 function selectApp(a){
   S.app=a;
-  APP_IDS.forEach(id=>document.getElementById('acard-'+id).classList.toggle('sel',a===id));
+  learnPending=null;                 // memilih game membatalkan niat belajar santai
+  bersihkanPilihanKartu();
+  const el=document.getElementById('acard-'+a);
+  if(el) el.classList.add('sel');
+  const cn=document.getElementById('cardNote'); if(cn) cn.hidden=true;
   checkReady();
+}
+
+// Memilih Belajar Kata / Cerita Seru.
+function selectLearn(jenis){
+  S.app=null;                        // bukan sesi permainan — tombol Mulai tetap mati
+  learnPending=jenis;
+  bersihkanPilihanKartu();
+  const el=document.getElementById('acard-'+jenis);
+  if(el) el.classList.add('sel');
+  checkReady();
+
+  const cn=document.getElementById('cardNote');
+  if(S.player){
+    if(cn) cn.hidden=true;
+    jalankanLearn();
+  }else{
+    // Belum pilih anak: kartunya TETAP menyala, tinggal pilih nama.
+    if(cn){ cn.hidden=false; cn.textContent='Pilih Ana atau Abhi dulu ya 😊'; }
+  }
+}
+
+function jalankanLearn(){
+  const j=learnPending;
+  learnPending=null;                 // sekali jalan, jangan terpicu lagi
+  if(j==='belajar')      bukaKartu();
+  else if(j==='cerita')  bukaCerita();
 }
 function selectQ(n){
   S.qCount=n;
