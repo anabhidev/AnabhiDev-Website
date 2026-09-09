@@ -32,9 +32,12 @@ var STORIES = [
     ],
     kata: ['animals:cat','animals:fish','food:milk'],
     soal: [
-      { q:'What animal is in the story?', o:['Cat','Dog','Cow','Duck'], benar:'Cat' },
-      { q:'What does the cat eat?',       o:['Fish','Cake','Bread','Corn'], benar:'Fish' },
-      { q:'Apa arti "milk"?',             o:['Susu','Roti','Telur','Nasi'], benar:'Susu' }
+      { en:{q:'What animal is in the story?',o:['Cat','Dog','Cow','Duck'],benar:'Cat'},
+        id:{q:'Hewan apa yang ada di cerita?',o:['Kucing','Anjing','Sapi','Bebek'],benar:'Kucing'} },
+      { en:{q:'What does the cat eat?',o:['Fish','Cake','Bread','Corn'],benar:'Fish'},
+        id:{q:'Apa yang dimakan kucing?',o:['Ikan','Kue','Roti','Jagung'],benar:'Ikan'} },
+      { en:{q:'What is "susu" in English?',o:['Milk','Bread','Egg','Rice'],benar:'Milk'},
+        id:{q:'Apa arti "milk"?',o:['Susu','Roti','Telur','Nasi'],benar:'Susu'} }
     ]
   },
   {
@@ -51,9 +54,12 @@ var STORIES = [
     ],
     kata: ['school:bag','school:book','school:pencil','school:ruler'],
     soal: [
-      { q:'What is in the bag?',      o:['Book','Fish','Milk','Frog'], benar:'Book' },
-      { q:'Apa arti "pencil"?',       o:['Pensil','Penggaris','Buku','Tas'], benar:'Pensil' },
-      { q:'Where does the child go?', o:['School','Home','Zoo','Farm'], benar:'School' }
+      { en:{q:'What is in the bag?',o:['Book','Fish','Milk','Frog'],benar:'Book'},
+        id:{q:'Apa yang ada di dalam tas?',o:['Buku','Ikan','Susu','Katak'],benar:'Buku'} },
+      { en:{q:'What is "pensil" in English?',o:['Pencil','Ruler','Book','Bag'],benar:'Pencil'},
+        id:{q:'Apa arti "pencil"?',o:['Pensil','Penggaris','Buku','Tas'],benar:'Pensil'} },
+      { en:{q:'Where does the child go?',o:['School','Home','Zoo','Farm'],benar:'School'},
+        id:{q:'Anak itu pergi ke mana?',o:['Sekolah','Rumah','Kebun binatang','Peternakan'],benar:'Sekolah'} }
     ]
   },
   {
@@ -70,9 +76,12 @@ var STORIES = [
     ],
     kata: ['animals:cow','animals:horse','animals:duck','animals:goat'],
     soal: [
-      { q:'Which animal says quack?', o:['Duck','Cow','Goat','Horse'], benar:'Duck' },
-      { q:'Apa arti "horse"?',        o:['Kuda','Sapi','Kambing','Bebek'], benar:'Kuda' },
-      { q:'What does the goat eat?',  o:['Grass','Cake','Fish','Rice'], benar:'Grass' }
+      { en:{q:'Which animal says quack?',o:['Duck','Cow','Goat','Horse'],benar:'Duck'},
+        id:{q:'Hewan apa yang berkata kwek?',o:['Bebek','Sapi','Kambing','Kuda'],benar:'Bebek'} },
+      { en:{q:'What is "kuda" in English?',o:['Horse','Cow','Goat','Duck'],benar:'Horse'},
+        id:{q:'Apa arti "horse"?',o:['Kuda','Sapi','Kambing','Bebek'],benar:'Kuda'} },
+      { en:{q:'What does the goat eat?',o:['Grass','Cake','Fish','Rice'],benar:'Grass'},
+        id:{q:'Apa yang dimakan kambing?',o:['Rumput','Kue','Ikan','Nasi'],benar:'Rumput'} }
     ]
   },
   {
@@ -89,9 +98,12 @@ var STORIES = [
     ],
     kata: ['food:apple','food:banana','food:orange','food:watermelon'],
     soal: [
-      { q:'What does my sister like?', o:['Orange','Apple','Bread','Milk'], benar:'Orange' },
-      { q:'Apa arti "watermelon"?',    o:['Semangka','Pisang','Apel','Jeruk'], benar:'Semangka' },
-      { q:'How is the fruit?',         o:['Sweet','Big','Cold','Red'], benar:'Sweet' }
+      { en:{q:'What does my sister like?',o:['Orange','Apple','Bread','Milk'],benar:'Orange'},
+        id:{q:'Adik suka buah apa?',o:['Jeruk','Apel','Roti','Susu'],benar:'Jeruk'} },
+      { en:{q:'What is "semangka" in English?',o:['Watermelon','Banana','Apple','Orange'],benar:'Watermelon'},
+        id:{q:'Apa arti "watermelon"?',o:['Semangka','Pisang','Apel','Jeruk'],benar:'Semangka'} },
+      { en:{q:'How is the fruit?',o:['Sweet','Big','Cold','Red'],benar:'Sweet'},
+        id:{q:'Bagaimana rasa buahnya?',o:['Manis','Besar','Dingin','Merah'],benar:'Manis'} }
     ]
   },
   {
@@ -108,9 +120,12 @@ var STORIES = [
     ],
     kata: ['body:eye','body:ear','body:nose','body:hand'],
     soal: [
-      { q:'What do I see with?', o:['Eyes','Ears','Nose','Hands'], benar:'Eyes' },
-      { q:'Apa arti "ear"?',     o:['Telinga','Mata','Hidung','Tangan'], benar:'Telinga' },
-      { q:'What do I clap with?',o:['Hands','Nose','Eyes','Ears'], benar:'Hands' }
+      { en:{q:'What do I see with?',o:['Eyes','Ears','Nose','Hands'],benar:'Eyes'},
+        id:{q:'Aku melihat dengan apa?',o:['Mata','Telinga','Hidung','Tangan'],benar:'Mata'} },
+      { en:{q:'What is "telinga" in English?',o:['Ear','Eye','Nose','Hand'],benar:'Ear'},
+        id:{q:'Apa arti "ear"?',o:['Telinga','Mata','Hidung','Tangan'],benar:'Telinga'} },
+      { en:{q:'What do I clap with?',o:['Hands','Nose','Eyes','Ears'],benar:'Hands'},
+        id:{q:'Aku bertepuk dengan apa?',o:['Tangan','Hidung','Mata','Telinga'],benar:'Tangan'} }
     ]
   },
   {
@@ -127,9 +142,12 @@ var STORIES = [
     ],
     kata: ['colors:red','colors:yellow','colors:green','colors:blue'],
     soal: [
-      { q:'What color is the banana?', o:['Yellow','Red','Blue','Green'], benar:'Yellow' },
-      { q:'Apa arti "blue"?',          o:['Biru','Merah','Hijau','Kuning'], benar:'Biru' },
-      { q:'What is green?',            o:['Leaf','Apple','Sky','Banana'], benar:'Leaf' }
+      { en:{q:'What color is the banana?',o:['Yellow','Red','Blue','Green'],benar:'Yellow'},
+        id:{q:'Pisangnya berwarna apa?',o:['Kuning','Merah','Biru','Hijau'],benar:'Kuning'} },
+      { en:{q:'What is "biru" in English?',o:['Blue','Red','Green','Yellow'],benar:'Blue'},
+        id:{q:'Apa arti "blue"?',o:['Biru','Merah','Hijau','Kuning'],benar:'Biru'} },
+      { en:{q:'What is green?',o:['Leaf','Apple','Sky','Banana'],benar:'Leaf'},
+        id:{q:'Apa yang berwarna hijau?',o:['Daun','Apel','Langit','Pisang'],benar:'Daun'} }
     ]
   }
 ];
@@ -138,16 +156,29 @@ var STORIES = [
 // benar tidak selalu di posisi pertama (anak cepat sekali menghafal posisi).
 // Memakai acakUbin() — Fisher-Yates dari eng.js, BUKAN sort(Math.random()-.5)
 // yang untuk 4 elemen sering mengembalikan urutan asli.
+//
+// Sejak v5.10 tiap soal punya DUA versi: `id` (Bahasa Indonesia) dan `en`
+// (English). Anak memilih bahasanya sebelum kuis dimulai. Keduanya disiapkan
+// sekaligus supaya berpindah bahasa tidak perlu membuat ulang apa pun.
+function siapkanSoal(s){
+  var o = (typeof acakUbin==='function') ? acakUbin(s.o) : s.o.slice();
+  return { q:s.q, o:o, a:o.indexOf(s.benar), benar:s.benar };
+}
 function siapkanCerita(st){
   return {
     id: st.id, judul: st.judul, judulId: st.judulId,
     emoji: st.emoji, halaman: st.halaman, kata: st.kata,
     soal: st.soal.map(function(s){
-      var o = (typeof acakUbin==='function') ? acakUbin(s.o) : s.o.slice();
-      return { q:s.q, o:o, a:o.indexOf(s.benar), benar:s.benar };
+      return { id: siapkanSoal(s.id), en: siapkanSoal(s.en) };
     })
   };
 }
+
+// Label bahasa — dipakai layar pemilihan & penunjuk saat kuis berjalan.
+var STORY_BAHASA = {
+  id: { nama:'Bahasa Indonesia', pendek:'Indonesia', tanya:'Soal pakai bahasa apa?' },
+  en: { nama:'English',          pendek:'English',   tanya:'Choose the question language' }
+};
 
 // Cerita yang paling berguna dibaca sekarang: yang paling banyak memuat kata
 // jatuh tempo. Kalau tidak ada catatan sama sekali (anak baru mulai), ambil

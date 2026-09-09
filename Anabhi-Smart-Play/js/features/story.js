@@ -17,7 +17,8 @@
 // 🔴 Semua API browser dibungkus penjaga — layar ini tidak boleh mematikan
 // gameplay kalau IndexedDB tidak ada (aturan 9).
 
-var STORY = { data:null, hal:0, fase:'baca', qIdx:0, benar:0, jawaban:[] };
+// bahasa: 'id' (Bahasa Indonesia) atau 'en' (English) — dipilih anak sebelum kuis.
+var STORY = { data:null, hal:0, fase:'baca', qIdx:0, benar:0, jawaban:[], bahasa:'id' };
 
 function bukaCerita(){
   if(!S.player){
@@ -96,7 +97,7 @@ function gambarCerita(){
 
   var next = document.getElementById('stNext');
   if(next) next.addEventListener('click', function(){
-    if(akhir){ STORY.fase='kuis'; gambarKuis(); }
+    if(akhir){ STORY.fase='bahasa'; gambarPilihBahasa(); }
     else { STORY.hal++; gambarCerita(); }
   });
   var prev = document.getElementById('stPrev');
@@ -106,7 +107,75 @@ function gambarCerita(){
 }
 
 // ══════════════════════════════════════
-// FASE 2 — KUIS
+// FASE 2 — PILIH BAHASA SOAL
+// ══════════════════════════════════════
+//
+// Ceritanya selalu dua bahasa, tapi SOALNYA dipilih. Anak yang belum lancar
+// membaca Inggris tetap bisa membuktikan ia paham isi ceritanya lewat soal
+// Bahasa Indonesia — kalau soalnya dipaksa Inggris, yang terukur jadi
+// "bisa membaca Inggris", bukan "paham ceritanya". Dua hal yang berbeda.
+//
+// Pilihan terakhir diingat per anak, dan dipakai sebagai pilihan yang menyala
+// duluan — supaya yang sudah nyaman dengan satu bahasa tidak memilih ulang
+// setiap kali, tapi tetap bebas berpindah.
+function bacaBahasaTerakhir(){
+  try{
+    var v = localStorage.getItem('asp_bahasa_soal_' + (S.player||'x'));
+    return (v==='en'||v==='id') ? v : 'id';
+  }catch(e){ return 'id'; }
+}
+function simpanBahasaTerakhir(b){
+  try{ localStorage.setItem('asp_bahasa_soal_' + (S.player||'x'), b); }catch(e){}
+}
+
+function gambarPilihBahasa(){
+  var body = document.getElementById('storyBody');
+  var prog = document.getElementById('storyProg');
+  var d = STORY.data;
+  if(!body || !d) return;
+
+  var pilihan = bacaBahasaTerakhir();
+  if(prog) prog.textContent = 'Pilih bahasa';
+
+  body.innerHTML =
+    '<div class="st-judul-kecil">' + d.emoji + ' ' + d.judul + '</div>' +
+    '<div class="st-bahasa-tanya">Soal pakai bahasa apa? 🤔</div>' +
+    '<div class="st-bahasa">' +
+      // Sengaja BUKAN emoji bendera (🇮🇩/🇬🇧): di Windows bendera tidak
+      // digambar sama sekali, hanya muncul sebagai huruf "ID"/"GB". Buku
+      // berwarna tampil sama di semua perangkat, dan warnanya sendiri sudah
+      // jadi pembeda yang bisa dikenali anak yang belum lancar membaca.
+      '<button class="st-bhs' + (pilihan==='id'?' terakhir':'') + '" data-b="id">' +
+        '<span class="bhs-ikon">📗</span>' +
+        '<span class="bhs-nama">Bahasa Indonesia</span>' +
+        '<span class="bhs-ket">Lebih mudah dipahami</span>' +
+      '</button>' +
+      '<button class="st-bhs' + (pilihan==='en'?' terakhir':'') + '" data-b="en">' +
+        '<span class="bhs-ikon">📘</span>' +
+        '<span class="bhs-nama">English</span>' +
+        '<span class="bhs-ket">Lebih menantang</span>' +
+      '</button>' +
+    '</div>' +
+    '<div class="st-nav">' +
+      '<button class="st-prev" id="stKembaliBaca">← Baca lagi</button>' +
+    '</div>';
+
+  body.querySelectorAll('.st-bhs').forEach(function(b){
+    b.addEventListener('click', function(){
+      STORY.bahasa = b.dataset.b;
+      simpanBahasaTerakhir(STORY.bahasa);
+      STORY.fase='kuis'; STORY.qIdx=0; STORY.benar=0; STORY.jawaban=[];
+      gambarKuis();
+    });
+  });
+  var kb = document.getElementById('stKembaliBaca');
+  if(kb) kb.addEventListener('click', function(){
+    STORY.fase='baca'; STORY.hal=0; gambarCerita();
+  });
+}
+
+// ══════════════════════════════════════
+// FASE 3 — KUIS
 // ══════════════════════════════════════
 function gambarKuis(){
   var body = document.getElementById('storyBody');
@@ -116,11 +185,14 @@ function gambarKuis(){
 
   if(STORY.qIdx >= d.soal.length){ gambarHasilCerita(); return; }
 
-  var s = d.soal[STORY.qIdx];
+  // Ambil versi soal sesuai bahasa yang dipilih anak.
+  var s = d.soal[STORY.qIdx][STORY.bahasa] || d.soal[STORY.qIdx].id;
   if(prog) prog.textContent = 'Soal ' + (STORY.qIdx+1) + '/' + d.soal.length;
 
   body.innerHTML =
-    '<div class="st-judul-kecil">' + d.emoji + ' ' + d.judul + '</div>' +
+    '<div class="st-judul-kecil">' + d.emoji + ' ' + d.judul +
+      ' <span class="st-bhs-tanda">' +
+        (STORY.bahasa==='en' ? '📘 English' : '📗 Indonesia') + '</span></div>' +
     '<div class="q-text st-tanya">' + s.q + '</div>' +
     '<div class="opts-grid" id="stOpts">' +
       s.o.map(function(x,i){

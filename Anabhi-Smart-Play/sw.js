@@ -2,8 +2,8 @@
 // AnabhiDev-ASP — Anabhi Smart Play
 // JavaScript · Service Worker · Cache API
 // Development · Anabhi Dev
-// Version   : 3.0
-// Generated : 8 September 2026, 17:10:22
+// Version   : 3.1
+// Generated : 9 September 2026, 08:55:40
 // ================================================================
 //
 // Strategi (SOP Checklist Standar Website v1.9, kategori 18.5):
@@ -13,7 +13,7 @@
 // Lupa menaikkan = pengguna terkunci di versi lama dan tidak bisa diperbaiki
 // dari jarak jauh selain meminta mereka membersihkan data aplikasi satu per satu.
 
-var CACHE_VERSION = 'anabhi-smart-play-v5-9';   // header Version : 3.0
+var CACHE_VERSION = 'anabhi-smart-play-v5-10';  // header Version : 3.1
 
 // BASE diturunkan dari lokasi sw.js itu sendiri, TIDAK dipatok mati.
 // Produksi  -> /Anabhi-Smart-Play/
@@ -55,7 +55,7 @@ var EMOJI =
 // Cache-busting aset internal (SOP kat. 1). Angkanya WAJIB sama persis dengan
 // yang ada di <link>/<script> di index.html — kalau beda, berkas diambil dua
 // kali dan versi cache tidak pernah kena.
-var V = '?v=20260908c';
+var V = '?v=20260909a';
 
 var CSS = ['tokens', 'themes', 'screens', 'components']
   .map(function (n) { return 'css/' + n + '.css'; });

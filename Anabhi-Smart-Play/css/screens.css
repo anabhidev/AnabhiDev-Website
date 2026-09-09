@@ -39,7 +39,20 @@
 
 /* App selection */
 .app-sel-title{font-family:'Fredoka One',cursive;font-size:1rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;text-align:center;}
-.app-cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+/* 🔴 Dibatasi 6 kartu per baris di layar lebar.
+   Tanpa batas ini, layar 1900px memuat 10 kartu dalam satu baris dan menyisakan
+   1 kartu sendirian di baris kedua — terlihat seperti salah pasang.
+   Hitungannya: 6 kartu x 160px + 5 jarak x 16px = 1040px.
+   Baris terakhir tetap di tengah karena flex + justify-content:center. */
+.app-cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  max-width:1040px;margin-left:auto;margin-right:auto;}
+/* 🔴 Rentang 880–1099px (mis. tablet landscape 1024px) memuat pas 5 kartu per
+   baris, dan 11 kartu jadi 5 + 5 + 1 — satu kartu sendirian lagi, keluhan yang
+   sama. Dipaksa 4 per baris supaya jadi 4 + 4 + 3.
+   688px = 4 kartu x 160px + 3 jarak x 16px. */
+@media (min-width:880px) and (max-width:1099px){
+  .app-cards{max-width:688px;}
+}
 .acard{background:rgba(255,255,255,.08);border:3px solid rgba(255,255,255,.14);border-radius:22px;padding:18px 14px;cursor:pointer;transition:all .3s;display:flex;flex-direction:column;align-items:center;gap:10px;width:clamp(130px,22vw,160px);text-align:center;}
 .acard:hover{transform:translateY(-6px);}
 .acard.math-card:hover,.acard.math-card.sel{border-color:#7C3AED;box-shadow:0 12px 32px rgba(124,58,237,.4);background:rgba(124,58,237,.15);}
@@ -52,18 +65,14 @@
 .acard.logika-card:hover,.acard.logika-card.sel{border-color:#F97316;box-shadow:0 12px 32px rgba(249,115,22,.4);background:rgba(249,115,22,.15);}
 .acard.mix-card:hover,.acard.mix-card.sel{border-color:#A78BFA;box-shadow:0 12px 32px rgba(167,139,250,.4);background:rgba(167,139,250,.15);}
 .acard-icon{font-size:2.6rem;line-height:1;}
-/* Belajar santai — kartu yang LANGSUNG membuka layarnya, bukan dipilih dulu.
-   Sejak v5.9 berada di grid yang SAMA dengan kartu game (permintaan orang tua).
-   Karena perilakunya berbeda, bedanya ditandai dua hal yang halus tapi jelas:
-   tulisan "Langsung main" di pojok, dan garis tepi putus-putus. */
+/* Belajar santai — kartu yang langsung membuka layarnya.
+   Label "LANGSUNG MAIN" DIHAPUS di v5.10: orang tua sendiri bertanya
+   "maksudnya apa?" — kalau penanda masih perlu dijelaskan, ia gagal sebagai
+   penanda. Cukup garis tepi putus-putus: terlihat beda tanpa menuntut
+   penjelasan, dan anak akan paham setelah sekali menekan. */
 .acard.belajar-card,.acard.cerita-card{border-style:dashed;}
 .acard.belajar-card:hover{border-color:#7EDDD8;border-style:solid;box-shadow:0 12px 32px rgba(126,221,216,.4);background:rgba(126,221,216,.15);}
 .acard.cerita-card:hover{border-color:#FB923C;border-style:solid;box-shadow:0 12px 32px rgba(251,146,60,.4);background:rgba(251,146,60,.15);}
-.acard-langsung{position:absolute;top:7px;right:8px;font-size:.55rem;font-weight:800;
-  letter-spacing:.4px;text-transform:uppercase;color:rgba(255,255,255,.45);
-  background:rgba(255,255,255,.09);border-radius:50px;padding:3px 8px;}
-.acard.belajar-card:hover .acard-langsung{color:#7EDDD8;background:rgba(126,221,216,.18);}
-.acard.cerita-card:hover .acard-langsung{color:#FB923C;background:rgba(251,146,60,.18);}
 /* ── TYPED ANSWER (B. Indonesia) ── */
 .copy-disp{background:rgba(255,255,255,.10);border:2px dashed rgba(255,230,109,.5);border-radius:14px;padding:16px 14px;margin-bottom:16px;font-family:'Fredoka One',cursive;font-size:clamp(1.3rem,4.5vw,1.8rem);letter-spacing:1px;color:#FFE66D;}
 .type-input{width:100%;max-width:420px;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.25);border-radius:14px;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(1.05rem,3.5vw,1.3rem);color:white;text-align:center;outline:none;transition:border-color .25s;}
