@@ -1,0 +1,187 @@
+/* ================================================================
+AnabhiDev-PORKCHOLESTEROL — Interactive Pork Nutrition Comparison
+CSS · Base Styles & Design Tokens
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 10 September 2026, 07:55:00
+================================================================ */
+
+/* ============================================================
+   1. DESIGN TOKENS — Satu sumber kebenaran per warna & kontras
+   ============================================================ */
+:root, [data-theme="light"] {
+  --paper: #f4f7fa;
+  --card: #ffffff;
+  --ink: #112a43;             /* Teks utama: kontras 12.8:1 di atas --card */
+  --muted: #53697e;           /* Teks redup: kontras 5.2:1 di atas --card */
+  --line: #dce5ec;            /* Border & pembagi */
+  --line-strong: #bacddc;
+  --navy: #173752;            /* Sidebar & header Anabhi Dev */
+  --navy-deep: #0e2e48;       /* Background solid gelap */
+  --teal: #056268;            /* Varian gelap: kontras 6.7:1 di atas putih */
+  --teal-soft: #e9f8f8;
+  --teal-soft-ink: #05585d;
+  --accent: #946808;          /* Amber/Gold varian gelap untuk teks terang */
+  --accent-soft: #fff6e0;
+  --red-warn: #b22727;        /* Peringatan: kontras 5.8:1 di atas putih */
+  --red-soft: #fdf0f0;
+  --answer-bg: #f3f8fa;
+  --answer-ink: #2c4a61;
+  --shadow: 0 18px 50px rgba(20, 55, 80, 0.12);
+  --shadow-soft: 0 8px 25px rgba(20, 55, 80, 0.06);
+  --rail-ink: #dce8f0;
+  --rail-num: #8db6ce;
+  --rail-kicker: #a9c3d5;
+  --rail-foot: #9db7c8;
+}
+
+[data-theme="dark"] {
+  --paper: #0b1829;
+  --card: #142c3e;
+  --ink: #e8eef7;             /* Teks utama: kontras 12.5:1 di atas --card */
+  --muted: #9ab0c2;           /* Teks redup: kontras 5.1:1 di atas --card */
+  --line: #2a4659;
+  --line-strong: #3b5f78;
+  --navy: #0b2438;
+  --navy-deep: #071a2b;
+  --teal: #5be0df;            /* Varian terang: kontras 8.9:1 di atas --card */
+  --teal-soft: #10313f;
+  --teal-soft-ink: #7fe9e7;
+  --accent: #f5c862;          /* Amber/Gold varian terang untuk teks gelap */
+  --accent-soft: #2c2512;
+  --red-warn: #ff7b7b;
+  --red-soft: #381818;
+  --answer-bg: #102638;
+  --answer-ink: #cfe0ec;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+  --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.28);
+  --rail-ink: #dce8f0;
+  --rail-num: #8db6ce;
+  --rail-kicker: #a9c3d5;
+  --rail-foot: #9db7c8;
+}
+
+/* Hero gradient konstan (selalu gelap di kedua mode agar kontras teks selalu aman) */
+:root {
+  --gold-on-hero: #ffb21b;
+  --cyan-on-hero: #5ce3de;
+  --header-h: 58px;
+}
+
+/* ============================================================
+   2. RESET + OVERFLOW LOCK (SOP Website v1.9 Kategori 1)
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Overflow lock WAJIB html DAN body, max-width 100% (bukan 100vw) */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+pre, code {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.grid-safe > * {
+  min-width: 0;
+}
+
+/* Focus indicator yang jelas & kontras (SOP Kategori 1 & 8) */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar tipis (SOP Kategori 13 & 14) */
+.sidebar, .table-wrap, .modal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.sidebar::-webkit-scrollbar,
+.table-wrap::-webkit-scrollbar,
+.modal::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.table-wrap::-webkit-scrollbar-track,
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.table-wrap::-webkit-scrollbar-thumb,
+.modal::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}
+
+/* ============================================================
+   3. ATURAN WIDTH MANDATORY (SOP Kategori 1 & Blueprint B)
+   DILARANG max-width px/ch pada #main maupun elemen teks naratif!
+   Lebar diatur HANYA via clamp() padding pada #main.
+   ============================================================ */
+#main {
+  grid-column: 2;
+  min-width: 0;
+  padding: 40px clamp(24px, 6vw, 180px) 100px;
+}
+
+.section {
+  margin: 0 0 48px;
+  scroll-margin-top: calc(var(--header-h) + 18px);
+}
+
