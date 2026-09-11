@@ -3,30 +3,29 @@
 # File        : _headers
 # Description : Cloudflare Pages response headers.
 #               Digabung dari versi sebelumnya (Microsoft auth,
-#               Google Analytics, PDF.js/StPageFlip, Supabase)
-#               DITAMBAH aturan Anabhi Smart Play.
+#               Google Analytics, PDF.js/StPageFlip, Supabase,
+#               Anabhi Smart Play) DITAMBAH aturan resmi
+#               Miss Fish Bali Talent & Career (/MFB/Talent/).
 # IT Department · Miss Fish Bali
-# Version     : 1.3
-# Generated   : 7 September 2026, 19:25:40 WITA
+# Version     : 1.4
+# Generated   : 11 September 2026, 17:00:00 WITA
 # ================================================================
 #
-# YANG DIUBAH DARI v1.2 — HANYA PENAMBAHAN DI BAGIAN BAWAH:
+# YANG DIUBAH DARI v1.3:
 #
-#   + blok /Anabhi-Smart-Play/*  (Service Worker, manifest, cache aset)
+#   1. Global CSP (/*):
+#      + connect-src: ditambahkan https://api.clickup.com (ATS API)
+#      + frame-src: ditambahkan 'self' https://forms.clickup.com
+#        (izin render iframe formulir lamaran ClickUp di modal)
+#      + font-src: ditambahkan data:
+#   2. Penambahan blok /MFB/Talent/*:
+#      + Service Worker: max-age=0, must-revalidate
+#      + Manifest PWA: Content-Type application/manifest+json
+#      + Halaman HTML (career.html, index.html, mockups): max-age=0
+#      + Aset statis (/MFB/Talent/assets/*): immutable 1 tahun
 #
-# TIDAK ADA satu pun aturan v1.2 yang dihapus atau diubah.
-# Baris CSP, HSTS, Referrer-Policy, Permissions-Policy, dan seluruh
-# aturan cache lama tetap PERSIS seperti semula.
-#
-# 🔴 CSP TIDAK PERLU DIUBAH untuk Anabhi Smart Play. Sudah kompatibel:
-#     script-src  'self' 'unsafe-inline'  -> handler onclick di markup
-#     style-src   'self' 'unsafe-inline'  -> gaya inline
-#     font-src    'self'                  -> font self-host
-#     img-src     'self' data:            -> foto & emoji SVG self-host
-#     connect-src 'self' + script.google.com -> laporan ke Apps Script
-#     worker-src  'self' blob:            -> pendaftaran Service Worker
-#   Seluruh aset aplikasi self-host, jadi tidak ada domain baru yang
-#   perlu diizinkan (SOP v1.9 kategori 18.12).
+# TIDAK ADA SATUPUN aturan Anabhi Smart Play atau Microsoft auth
+# yang dihapus. Seluruhnya tetap utuh dan kompatibel 100%.
 # ================================================================
 
 /*
@@ -35,7 +34,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://api.clickup.com https://*.supabase.co; frame-src 'self' https://forms.clickup.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 /*.webp
   Cache-Control: public, max-age=31536000, immutable
@@ -94,24 +93,54 @@
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
 
-# ── Alternatif kalau nanti ingin lebih ketat ──────────────────────
-# Longgarkan HANYA folder mockup, sisa situs tetap seperti semula.
-# Caranya: kembalikan script-src di blok /* ke bentuk asli (tanpa
-# blob: dan tanpa jsdelivr), lalu hidupkan blok di bawah ini.
-# Aturan yang lebih spesifik ditaruh SETELAH aturan umum.
+# ════════════════════════════════════════════════════════════════
+# MISS FISH BALI TALENT & RECRUITMENT — /MFB/Talent/
+# ════════════════════════════════════════════════════════════════
 #
-# /MFB-PDFAudio/*
-#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
-#
-# Kalau caramu itu ditempuh, tambahkan juga blok khusus untuk MFB-IT
-# supaya tetap bisa memanggil Supabase meski aturan umum diperketat:
-#
-# /itm-daily/*
-#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
-#
-# Dan blok khusus Anabhi Smart Play (semua aset self-host):
-#
-# /Anabhi-Smart-Play/*
-#   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+# Folder aplikasi: https://anabhidev.com/MFB/Talent/
+# Cloudflare Pages menerapkan aturan spesifik ini untuk menimpa
+# cache global pada berkas HTML, manifest, dan Service Worker.
 
+# ── Service Worker: JANGAN PERNAH di-cache ──────────────────────
+# sw.js yang ter-cache menyebabkan pembaruan versi tidak dapat
+# diterima kandidat atau tim HR tanpa menghapus cache browser manual.
+/MFB/Talent/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/javascript; charset=utf-8
 
+# ── Manifest PWA: Content-Type wajib eksplisit ──────────────────
+# Cloudflare secara default mengirimkan application/json.
+# Wajib application/manifest+json agar instalasi PWA berjalan lancar.
+/MFB/Talent/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Halaman Web Career & Dashboard HR: Selalu revalidate ────────
+# Memastikan perubahan lowongan pekerjaan dan pipeline pelamar
+# selalu tampil secara real-time tanpa tertahan cache browser.
+/MFB/Talent/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/career.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/MFB-Career-Website_v1.1.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/MFB-HR-Mockup_v1.2.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/MFB-HR-Mockup_v1.1(1).html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Aset Statis & Gambar: Immutable 1 Tahun ─────────────────────
+/MFB/Talent/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Font / Aset CORS jika diperlukan ───────────────────────────
+/MFB/Talent/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
