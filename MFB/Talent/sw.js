@@ -6,15 +6,15 @@
 
 const CACHE_NAME = 'mfb-career-v1.1';
 const PRECACHE = [
-  '/career.html',
-  '/index.html',
-  '/manifest.json',
-  '/assets/favicon.ico',
-  '/assets/favicon.svg',
-  '/assets/icon-192-2.png',
-  '/assets/icon-512-2.png',
-  '/assets/MISS-FISH-OG-IMAGES.webp',
-  '/assets/missfish-logo.webp'
+  './career.html',
+  './index.html',
+  './manifest.json',
+  './assets/favicon.ico',
+  './assets/favicon.svg',
+  './assets/icon-192-2.png',
+  './assets/icon-512-2.png',
+  './assets/MISS-FISH-OG-IMAGES.webp',
+  './assets/missfish-logo.webp'
 ];
 
 self.addEventListener('install', event => {
@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, resClone));
           return response;
         })
-        .catch(() => caches.match(event.request) || caches.match('/career.html'))
+        .catch(() => caches.match(event.request) || caches.match('./career.html'))
     );
     return;
   }

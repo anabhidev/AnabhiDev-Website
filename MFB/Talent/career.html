@@ -5,8 +5,8 @@
      MFB-CAREER — Miss Fish Bali Official Career & Talent Portal
      HTML5 · CSS3 · Vanilla JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 1.1
-     Generated : 11 September 2026, 10:55:00
+     Version   : 1.2
+     Generated : 11 September 2026, 20:30:00
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -786,6 +786,143 @@ h1, h2, h3, h4 {
   color: #8c6721 !important;
 }
 
+/* Miss Fish Talent Matcher Widget */
+.talent-matcher-card {
+  background: linear-gradient(135deg, #0f0f0e 0%, #171613 100%);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 16px 40px rgba(24, 21, 18, 0.16);
+  position: relative;
+  overflow: hidden;
+}
+.matcher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.matcher-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(223, 190, 153, 0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.matcher-title {
+  font-size: 20px;
+  font-weight: 850;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+.matcher-desc {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.5;
+}
+.matcher-step-tracker {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.matcher-step-dot {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+.matcher-step-dot.active {
+  background: var(--gold);
+}
+.matcher-q-text {
+  font-size: 15px;
+  font-weight: 750;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+.matcher-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+.matcher-opt-btn {
+  background: #1d1b18;
+  border: 1px solid rgba(223, 190, 153, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 13px 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  color: #e5e5e5;
+}
+.matcher-opt-btn:hover {
+  background: #25221d;
+  border-color: var(--gold);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(223, 190, 153, 0.15);
+}
+.matcher-opt-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.matcher-opt-title {
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #ffffff;
+  line-height: 1.3;
+}
+.matcher-opt-sub {
+  font-size: 11.5px;
+  color: #a89f91;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.matcher-result-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.btn-share-icon {
+  padding: 8px 12px;
+  background: rgba(140, 103, 56, 0.1);
+  border: 1px solid rgba(140, 103, 56, 0.25);
+  border-radius: 8px;
+  color: #433b33;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-share-icon:hover {
+  background: rgba(140, 103, 56, 0.2);
+  border-color: var(--gold-dark);
+  color: #181512;
+}
+
 /* Light Section: Hiring Flow (#hiring) */
 .sec-light .step-card {
   background: #ffffff !important;
@@ -1355,6 +1492,25 @@ h1, h2, h3, h4 {
         </p>
       </div>
 
+      <!-- Miss Fish Talent Matcher Widget (30-Second Role Finder) -->
+      <div class="talent-matcher-card" id="talentMatcherWidget">
+        <div class="matcher-header">
+          <div>
+            <div class="matcher-badge">✨ 30-Second Talent Matcher</div>
+            <h3 class="matcher-title">Bingung Posisi Mana yang Paling Tepat untuk Anda?</h3>
+            <p class="matcher-desc">
+              Jawab 3 pertanyaan kilat mengenai keahlian dan ritme kerja Anda untuk menemukan divisi dan peluang terbaik di Miss Fish Bali Canggu.
+            </p>
+          </div>
+          <button class="btn-outline-gold" onclick="startMatcher()" style="padding: 8px 16px; font-size: 12px;" id="btnResetMatcher">
+            ↺ Mulai Ulang Tes
+          </button>
+        </div>
+        <div id="matcherBody">
+          <!-- Dynamic steps rendered via JavaScript -->
+        </div>
+      </div>
+
       <!-- Filter toolbar -->
       <div class="jobs-toolbar">
         <div class="jobs-filter-group" id="deptFilterGroup">
@@ -1640,9 +1796,43 @@ h1, h2, h3, h4 {
     </div>
 
     <div class="drawer-body">
-      <div style="background: rgba(223, 190, 153, 0.08); border: 1px solid var(--gold-border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 24px;">
-        <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: var(--gold); margin-bottom: 4px;">Compensation & Level</div>
-        <div id="drawerSalary" style="font-size: 16px; font-weight: 850; color: #ffffff;">Rp 6,500,000 – Rp 9,000,000 + Service Charge</div>
+      <!-- Canggu Compensation & Take-Home Estimator -->
+      <div class="comp-estimator-box" style="background: linear-gradient(135deg, rgba(223, 190, 153, 0.09) 0%, rgba(20, 20, 20, 0.95) 100%); border: 1px solid var(--gold-border); border-radius: 12px; padding: 18px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);">
+            Canggu Compensation & Take-Home Estimator
+          </div>
+          <span style="font-size: 10.5px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10b981; padding: 2px 8px; border-radius: 999px; font-weight: 750;">
+            ✓ Transparent Standard
+          </span>
+        </div>
+        
+        <div id="drawerSalary" style="font-size: 17px; font-weight: 850; color: #ffffff; margin-bottom: 12px;">
+          Rp 6,500,000 – Rp 9,000,000 + Service Charge
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.45); border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; border: 1px solid rgba(255, 255, 255, 0.06);">
+          <div style="display: flex; justify-content: space-between; color: #ccc;">
+            <span>💵 Gaji Pokok (Base Salary):</span>
+            <strong style="color: #fff;" id="compBaseEst">Rp 6,500,000 – Rp 9,000,000</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; color: #ccc;">
+            <span>🌟 Estimasi Service Charge Canggu:</span>
+            <strong style="color: var(--gold);" id="compScEst">+ Rp 3,500,000 – Rp 5,500,000 / bln</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; color: #ccc;">
+            <span>🏥 Tunjangan & Fasilitas:</span>
+            <strong style="color: #10b981;">BPJS Kesehatan + TK + Staff Meals 2x</strong>
+          </div>
+          <div style="height: 1px; background: rgba(223, 190, 153, 0.15); margin: 2px 0;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+            <span style="font-weight: 750; color: #fff;">Estimasi Total Penerimaan:</span>
+            <strong style="color: var(--gold-light); font-size: 14.5px;" id="compTotalEst">Rp 10,000,000 – Rp 14,500,000 / bln*</strong>
+          </div>
+        </div>
+        <div style="font-size: 10.5px; color: #888; margin-top: 8px; line-height: 1.4;">
+          *Service charge dihitung transparan dari pendapatan venue & didistribusikan merata ke seluruh tim floor & kitchen.
+        </div>
       </div>
 
       <div style="margin-bottom: 24px;">
@@ -1668,6 +1858,9 @@ h1, h2, h3, h4 {
 
     <div class="drawer-footer">
       <button class="btn-gold" style="flex: 1;" onclick="applyForRole()">Apply via ClickUp Form →</button>
+      <button class="btn-outline-gold" id="drawerShareWaBtn" onclick="shareSelectedRoleWhatsApp()" style="display: inline-flex; align-items: center; gap: 6px;" title="Bagikan Lowongan ke WhatsApp">
+        <span>📲</span> Share
+      </button>
       <a id="drawerWaBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-gold">Chat HR</a>
     </div>
   </div>
@@ -1812,7 +2005,7 @@ async function fetchVacanciesFromGoogleSheets() {
     const json = await res.json();
     if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
       POSITIONS_DATA = json.data;
-      renderPositions();
+      renderJobs();
       if (badge) badge.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span> <span>Live Google Sheets: ' + POSITIONS_DATA.length + ' Positions Synced</span>';
     }
   } catch (err) {
@@ -2081,7 +2274,7 @@ function renderJobs() {
   }
 
   container.innerHTML = filtered.map(job => `
-    <div class="job-card">
+    <div class="job-card" id="job-card-${job.id}">
       <div>
         <div class="job-top-tags">
           <span class="job-dept-tag">${job.dept}</span>
@@ -2093,9 +2286,14 @@ function renderJobs() {
       </div>
       <div class="job-footer-actions">
         <span class="job-salary-est">${job.salary.split('+')[0]}</span>
-        <button class="btn-gold" style="padding: 8px 18px; font-size: 12px;" onclick="openRoleDrawer('${job.id}')">
-          View Role & Apply →
-        </button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="btn-share-icon" onclick="shareJobWhatsApp('${job.id}')" title="Bagikan Lowongan ke WhatsApp">
+            <span>📲</span> Share
+          </button>
+          <button class="btn-gold" style="padding: 8px 18px; font-size: 12px;" onclick="openRoleDrawer('${job.id}')">
+            View Role & Apply →
+          </button>
+        </div>
       </div>
     </div>
   `).join('');
@@ -2108,6 +2306,8 @@ function filterJobs(dept) {
     btn.classList.toggle('active', btn.textContent.includes(dept) || (dept === 'all' && btn.textContent.includes('All')));
   });
   renderJobs();
+  const el = document.getElementById('positions');
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
 function handleJobSearch() {
@@ -2136,12 +2336,37 @@ function openRoleDrawer(jobId) {
   document.getElementById('drawerSalary').textContent = job.salary;
   document.getElementById('drawerAbout').textContent = job.about;
 
+  // Dynamic Compensation Estimator update
+  const baseSalary = job.salary.split('+')[0].trim();
+  const compBaseEl = document.getElementById('compBaseEst');
+  if (compBaseEl) compBaseEl.textContent = baseSalary;
+
+  const compTotalEl = document.getElementById('compTotalEst');
+  if (compTotalEl) {
+    if (job.salary.includes('11,000,000')) {
+      compTotalEl.textContent = 'Rp 12,000,000 – Rp 16,500,000 / bln*';
+    } else if (job.salary.includes('13,000,000')) {
+      compTotalEl.textContent = 'Rp 13,000,000 – Rp 18,500,000 / bln*';
+    } else if (job.salary.includes('9,500,000')) {
+      compTotalEl.textContent = 'Rp 10,500,000 – Rp 15,000,000 / bln*';
+    } else if (job.salary.includes('7,500,000')) {
+      compTotalEl.textContent = 'Rp 9,000,000 – Rp 13,000,000 / bln*';
+    } else {
+      compTotalEl.textContent = 'Rp 10,000,000 – Rp 14,500,000 / bln*';
+    }
+  }
+
   document.getElementById('drawerResp').innerHTML = job.resp.map(r => `<li>${r}</li>`).join('');
   document.getElementById('drawerReq').innerHTML = job.req.map(r => `<li>${r}</li>`).join('');
   document.getElementById('drawerBenefits').innerHTML = job.benefits.map(b => `<li>${b}</li>`).join('');
 
   const waText = encodeURIComponent(`Hello Miss Fish Bali HR, I would like to inquire about the ${job.title} position in Canggu.`);
   document.getElementById('drawerWaBtn').href = `https://wa.me/6281228805646?text=${waText}`;
+
+  // Deep linking URL hash
+  try {
+    history.replaceState(null, null, '#pos-' + jobId);
+  } catch (e) {}
 
   document.getElementById('roleDrawerOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2150,6 +2375,215 @@ function openRoleDrawer(jobId) {
 function closeRoleDrawer() {
   document.getElementById('roleDrawerOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  try {
+    if (window.location.hash.startsWith('#pos-') || window.location.hash.startsWith('#role=')) {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+  } catch (e) {}
+}
+
+// WhatsApp Job Sharing
+function shareJobWhatsApp(jobId) {
+  const job = POSITIONS_DATA.find(j => j.id === jobId);
+  if (!job) return;
+  const baseUrl = window.location.origin + window.location.pathname;
+  const deepLink = `${baseUrl}#pos-${job.id}`;
+  const message = `Halo! Cek lowongan kerja di Miss Fish Bali Canggu:\n\n🍣 *${job.title}* (${job.dept})\n📍 Lokasi: ${job.location}\n💰 Kompensasi: ${job.salary}\n\nLihat rincian tugas, benefit, dan kirim lamaran langsung di sini:\n${deepLink}`;
+  const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+  window.open(shareUrl, '_blank');
+}
+
+function shareSelectedRoleWhatsApp() {
+  if (selectedRole) {
+    shareJobWhatsApp(selectedRole.id);
+  }
+}
+
+// Deep Linking URL Listener
+function checkUrlDeepLink() {
+  const hash = window.location.hash;
+  if (!hash) return;
+  let targetId = '';
+  if (hash.startsWith('#pos-')) {
+    targetId = hash.replace('#pos-', '');
+  } else if (hash.startsWith('#role=')) {
+    targetId = hash.replace('#role=', '');
+  }
+  if (targetId) {
+    const job = POSITIONS_DATA.find(j => j.id === targetId);
+    if (job) {
+      setTimeout(() => {
+        const posSection = document.getElementById('positions');
+        if (posSection) posSection.scrollIntoView({ behavior: 'smooth' });
+        openRoleDrawer(targetId);
+      }, 300);
+    }
+  }
+}
+
+// ================================================================
+// Miss Fish Talent Matcher Engine (Interactive 30-Second Role Finder)
+// ================================================================
+const MATCHER_QUESTIONS = [
+  {
+    id: 'craft',
+    title: '1. Di bidang keahlian mana passion utama Anda berada?',
+    options: [
+      { id: 'kitchen', icon: '🔪', title: 'Kitchen & Culinary Artistry', sub: 'Omakase, Edo-mae sushi, robata grill, & hot line' },
+      { id: 'bar', icon: '🍸', title: 'Bar & Japanese Mixology', sub: 'Artisan cocktails, rare sake, wine, & spirits' },
+      { id: 'foh', icon: '🛎️', title: 'Guest Relations & Floor Service', sub: 'Hospitality bintang 5, sambutan hangat, VIP service' },
+      { id: 'ops', icon: '💻', title: 'Operations, Tech & Cost Control', sub: 'Sistem POS, purchasing, food cost, & kelancaran sistem' }
+    ]
+  },
+  {
+    id: 'vibe',
+    title: '2. Suasana dan ritme kerja apa yang paling memotivasi Anda?',
+    options: [
+      { id: 'rush', icon: '🔥', title: 'High-Energy Nightlife Rush', sub: 'Ritme cepat, antusias, berenergi dari dinner hingga late night' },
+      { id: 'omakase', icon: '🎯', title: 'Presisi & Craftsmanship Intim', sub: 'Ketelitian tinggi per piring, interaksi intim di meja chef' },
+      { id: 'vip', icon: '🌟', title: 'Elegansi Tamu & Storytelling', sub: 'Memandu tamu menikmati pengalaman kuliner yang berkesan' },
+      { id: 'systems', icon: '📊', title: 'Kendali Sistem & Efisiensi', sub: 'Analisis data, audit stok, dan kehandalan infrastruktur' }
+    ]
+  },
+  {
+    id: 'exp',
+    title: '3. Berapa lama pengalaman Anda di dunia F&B / Hospitality?',
+    options: [
+      { id: 'junior', icon: '🌱', title: '1 – 2 Tahun (Talenta Muda)', sub: 'Memiliki dasar kuat dan haus belajar teknik baru' },
+      { id: 'mid', icon: '⚖️', title: '3 – 4 Tahun (Praktisi Terampil)', sub: 'Mandiri, cekatan, dan terbiasa dengan standar tinggi' },
+      { id: 'senior', icon: '👑', title: '5+ Tahun (Senior / Lead)', sub: 'Siap memimpin seksi, mentoring, dan kontrol kualitas' }
+    ]
+  }
+];
+
+let matcherCurrentStep = 0;
+let matcherAnswers = {};
+
+function startMatcher() {
+  matcherCurrentStep = 0;
+  matcherAnswers = {};
+  renderMatcher();
+}
+
+function renderMatcher() {
+  const container = document.getElementById('matcherBody');
+  if (!container) return;
+
+  if (matcherCurrentStep < MATCHER_QUESTIONS.length) {
+    const q = MATCHER_QUESTIONS[matcherCurrentStep];
+    container.innerHTML = `
+      <div class="matcher-step-tracker">
+        ${MATCHER_QUESTIONS.map((_, idx) => `<div class="matcher-step-dot ${idx <= matcherCurrentStep ? 'active' : ''}"></div>`).join('')}
+      </div>
+      <div class="matcher-q-text">${q.title}</div>
+      <div class="matcher-options-grid">
+        ${q.options.map(opt => `
+          <button class="matcher-opt-btn" onclick="selectMatcherOption('${q.id}', '${opt.id}')">
+            <span class="matcher-opt-icon">${opt.icon}</span>
+            <div>
+              <div class="matcher-opt-title">${opt.title}</div>
+              <div class="matcher-opt-sub">${opt.sub}</div>
+            </div>
+          </button>
+        `).join('')}
+      </div>
+    `;
+  } else {
+    // Show matched result
+    const matchedRole = calculateMatchedRole(matcherAnswers);
+    container.innerHTML = `
+      <div class="matcher-result-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <span class="matcher-badge" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #10b981; margin: 0;">
+            ✨ ${matchedRole.score}% Kecocokan Profil
+          </span>
+          <span style="font-size: 12px; color: var(--gold);">${matchedRole.job.dept} · Canggu, Bali</span>
+        </div>
+
+        <div>
+          <h3 style="font-size: 20px; color: #ffffff; margin-bottom: 6px;">${matchedRole.job.title}</h3>
+          <p style="font-size: 13.5px; color: #d0c8be; line-height: 1.55;">${matchedRole.reason}</p>
+        </div>
+
+        <div style="background: rgba(223, 190, 153, 0.08); border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--gold); font-weight: 750;">Kisaran Kompensasi</div>
+            <div style="font-size: 14px; font-weight: 800; color: #ffffff;">${matchedRole.job.salary}</div>
+          </div>
+          <div style="font-size: 12px; color: #10b981; font-weight: 700;">✓ BPJS + Staff Meals + Service Charge</div>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+          <button class="btn-gold" style="flex: 1; padding: 11px 18px; font-size: 13px; justify-content: center;" onclick="openRoleDrawer('${matchedRole.job.id}')">
+            Buka Detail & Lamar Posisi Ini →
+          </button>
+          <button class="btn-outline-gold" style="padding: 11px 16px; font-size: 13px;" onclick="filterJobs('${matchedRole.job.dept}')">
+            Filter Roster: ${matchedRole.job.dept}
+          </button>
+          <button class="btn-outline-gold" style="padding: 11px 16px; font-size: 13px;" onclick="startMatcher()">
+            Ulangi Tes ↺
+          </button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function selectMatcherOption(questionId, optionId) {
+  matcherAnswers[questionId] = optionId;
+  matcherCurrentStep++;
+  renderMatcher();
+}
+
+function calculateMatchedRole(answers) {
+  let targetId = 'mfb-chef-de-partie';
+  let score = 96;
+  let reason = 'Pengalaman dan minat Anda sejalan dengan fokus kualitas dan ritme kerja Miss Fish Bali.';
+
+  if (answers.craft === 'kitchen') {
+    if (answers.vibe === 'omakase') {
+      targetId = 'mfb-sushi-chef';
+      score = 98;
+      reason = 'Keahlian dan dedikasi Anda pada presisi sangat selaras dengan filosofi omakase dan sushi bar Edo-mae kami di bawah Head Chef Putra Agustina.';
+    } else {
+      targetId = 'mfb-chef-de-partie';
+      score = 95;
+      reason = 'Ketahanan dan ritme kerja Anda ideal untuk memimpin lini Robatayaki dan hot kitchen kami bersama Executive Chef Carlos Barvo.';
+    }
+  } else if (answers.craft === 'bar') {
+    if (answers.vibe === 'omakase' || answers.exp === 'senior') {
+      targetId = 'mfb-sommelier';
+      score = 96;
+      reason = 'Kedalaman pengetahuan dan ketertarikan Anda pada storytelling minuman sangat cocok untuk memandu kurasi wine dan sake pairing bagi tamu eksklusif.';
+    } else {
+      targetId = 'mfb-senior-mixologist';
+      score = 97;
+      reason = 'Karakter dinamis dan kecintaan Anda pada cocktail artisanal menjamin Anda akan bersinar di panggung bar utama Miss Fish Canggu.';
+    }
+  } else if (answers.craft === 'foh') {
+    if (answers.vibe === 'rush' || answers.exp === 'senior') {
+      targetId = 'mfb-restaurant-supervisor';
+      score = 96;
+      reason = 'Kepemimpinan dan ketenangan Anda di bawah tekanan sangat dibutuhkan untuk mengorkestrasi lantai restoran dari jam makan malam hingga larut malam.';
+    } else {
+      targetId = 'mfb-guest-relations';
+      score = 98;
+      reason = 'Kehangatan, keramahan, dan aura percaya diri Anda adalah aset utama untuk menjadi wajah penyambut pertama tamu-tamu VIP Miss Fish Bali.';
+    }
+  } else if (answers.craft === 'ops') {
+    if (answers.vibe === 'systems' || answers.vibe === 'rush') {
+      targetId = 'mfb-it-pos';
+      score = 97;
+      reason = 'Keahlian teknologi Anda menjamin kehandalan sistem POS, jaringan Wi-Fi, dan audio visual tetap prima sepanjang peak hours Canggu.';
+    } else {
+      targetId = 'mfb-cost-controller';
+      score = 95;
+      reason = 'Ketajaman analitis dan disiplin audit Anda menjaga efisiensi F&B cost serta kemitraan supplier lokal di Bali.';
+    }
+  }
+
+  const job = POSITIONS_DATA.find(j => j.id === targetId) || POSITIONS_DATA[0];
+  return { job, score, reason };
 }
 
 // ClickUp Apply Modal
@@ -2208,7 +2642,15 @@ document.addEventListener('keydown', e => {
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   renderJobs();
+  renderMatcher();
+  checkUrlDeepLink();
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
 });
+window.addEventListener('hashchange', checkUrlDeepLink);
 </script>
 </body>
 </html>

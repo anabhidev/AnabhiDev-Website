@@ -5,8 +5,8 @@
      MFB-HR — Miss Fish Bali HR Career & Recruitment Platform
      HTML5 · CSS3 · JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 1.2
-     Generated : 11 September 2026, 10:15:05
+     Version   : 1.3
+     Generated : 11 September 2026, 20:30:00
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1647,6 +1647,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" data-view="admin-analytics" onclick="navTo('admin-analytics')">
         <span class="ico">📈</span> Analytics & ClickUp
       </button>
+      <button class="nav-btn" data-view="admin-ai-reports" onclick="navTo('admin-ai-reports')" style="border-left: 2px solid var(--accent);" title="Laporan Intelligence Rekrutmen Gemini AI (AIReports_v1.5.gs)">
+        <span class="ico">✨</span> AI Intelligence (Gemini)
+      </button>
     </nav>
 
     <div class="sidebar-foot">
@@ -2161,7 +2164,12 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
             <div class="section-title">Applicants Management</div>
             <div class="section-sub">Search, screen, and update candidate statuses</div>
           </div>
-          <button class="btn btn-accent" onclick="openAddCandidateModal()">+ Add Candidate</button>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-ghost" onclick="exportApplicantsToCsv()" title="Export candidate data to CSV">
+              <span>📥</span> Export CSV
+            </button>
+            <button class="btn btn-accent" onclick="openAddCandidateModal()">+ Add Candidate</button>
+          </div>
         </div>
 
         <div class="toolbar">
@@ -2418,6 +2426,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
           </div>
 
           <div style="display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="navTo('admin-ai-reports')" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));">
+              <span>✨</span> Buka Laporan AI Intelligence (Gemini) →
+            </button>
             <button class="btn btn-ghost" onclick="openClickUpConfigModal()">
               View Required ClickUp Parameter Checklist
             </button>
@@ -2430,7 +2441,7 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
 
     
   <!-- SCREEN 9: AI RECRUITMENT REPORTS & INTELLIGENCE (GEMINI 3.5 FLASH LITE) -->
-  <section id="view-admin-ai-reports" class="view">
+  <section id="view-admin-ai-reports" class="view-panel">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
       <div>
         <h2 style="font-size:22px; font-weight:800; color:var(--text); margin-bottom:4px; display:flex; align-items:center; gap:10px;">
@@ -2569,6 +2580,7 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="modal-tab" data-tab="cand-docs" onclick="switchCandTab('cand-docs')">Documents & CV</button>
       <button class="modal-tab" data-tab="cand-notes" onclick="switchCandTab('cand-notes')">Internal Notes</button>
       <button class="modal-tab" data-tab="cand-activity" onclick="switchCandTab('cand-activity')">Activity Timeline</button>
+      <button class="modal-tab" data-tab="cand-ai-guide" onclick="switchCandTab('cand-ai-guide')">✨ AI Interview Guide</button>
     </div>
 
     <div class="modal-body" id="candModalBody">
@@ -3084,7 +3096,8 @@ const viewTitles = {
   'admin-dash': { title: 'HR Recruitment Dashboard', sub: 'Recruitment Overview · Miss Fish Bali' },
   'admin-applicants': { title: 'Applicants Management', sub: 'Track & Filter Candidates' },
   'admin-pipeline': { title: 'Recruitment Pipeline', sub: 'Visual Kanban Workflow' },
-  'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' }
+  'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' },
+  'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' }
 };
 
 function navTo(viewId) {
@@ -3564,7 +3577,276 @@ function renderCandidateDetailBody(cand) {
         </div>
       </div>
     `;
+  } else if (currentCandDetailTab === 'cand-ai-guide') {
+    const kit = getAiInterviewKit(cand.position, cand.name, cand.experience);
+    container.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--accent); background: rgba(223, 190, 153, 0.12); padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);">
+            <span>✨</span> Gemini 3.5 Flash Lite · Intelligent Interview Kit
+          </div>
+          <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px;">Panduan wawancara berbasis kompetensi, studi kasus Canggu, & filosofi Miss Fish Bali.</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-ghost" style="min-height: 36px; padding: 6px 12px; font-size: 12px;" onclick="copyAiInterviewKit('${esc(cand.name)}', '${esc(cand.position)}')">
+            📋 Copy Interview Kit
+          </button>
+        </div>
+      </div>
+
+      <!-- Technical Questions -->
+      <div class="card" style="padding: 18px; margin-bottom: 16px; background: var(--surface2);">
+        <div style="font-size: 12.5px; font-weight: 850; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">
+          1. Uji Kompetensi Teknis & Seni Kuliner (Craft Mastery)
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13.5px;">
+          ${kit.technical.map((q, idx) => `
+            <div>
+              <strong>Q${idx + 1}:</strong> ${esc(q.question)}
+              <div style="font-size: 12px; color: var(--muted); margin-top: 3px; font-style: italic;">
+                🔍 Kriteria Jawaban Ideal: ${esc(q.criteria)}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- High-Volume Canggu Scenarios -->
+      <div class="card" style="padding: 18px; margin-bottom: 16px; background: var(--surface2);">
+        <div style="font-size: 12.5px; font-weight: 850; color: #10b981; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">
+          2. Studi Kasus Dinamika Canggu (High-Volume & VIP Scenarios)
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13.5px;">
+          ${kit.situational.map((q, idx) => `
+            <div>
+              <strong>Skenario ${idx + 1}:</strong> ${esc(q.scenario)}
+              <div style="font-size: 12px; color: var(--muted); margin-top: 3px; font-style: italic;">
+                🎯 Fokus Observasi: ${esc(q.focus)}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Culture & Teamwork Rubric -->
+      <div class="card" style="padding: 18px; background: var(--surface2);">
+        <div style="font-size: 12.5px; font-weight: 850; color: var(--text); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">
+          3. Rubrik Penilaian Budaya Miss Fish Bali (Skor 1 - 5)
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 6px;">
+            <span>🎎 <strong>Craft Passion & Pride:</strong> Ketertarikan mendalam pada seni Jepang dan inovasi Canggu.</span>
+            <span style="color: var(--accent); font-weight: 700;">[ 1 · 2 · 3 · 4 · 5 ]</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 6px;">
+            <span>🤝 <strong>Team Humility & Harmony:</strong> Kerendahan hati dalam menerima feedback & kekompakan antar divisi.</span>
+            <span style="color: var(--accent); font-weight: 700;">[ 1 · 2 · 3 · 4 · 5 ]</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 6px;">
+            <span>⚡ <strong>Stamina & Composure:</strong> Ketenangan dan ketangkasan selama jam sibuk malam hari.</span>
+            <span style="color: var(--accent); font-weight: 700;">[ 1 · 2 · 3 · 4 · 5 ]</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>🧼 <strong>Hygiene & Discipline:</strong> Kedisiplinan 5S / Kaizen pada area kerja dan kebersihan pribadi.</span>
+            <span style="color: var(--accent); font-weight: 700;">[ 1 · 2 · 3 · 4 · 5 ]</span>
+          </div>
+        </div>
+      </div>
+    `;
   }
+}
+
+// AI Interview Guide Generator (Gemini 3.5 Flash Lite)
+function getAiInterviewKit(position, candidateName, experience) {
+  const posLower = (position || '').toLowerCase();
+  
+  if (posLower.includes('chef') || posLower.includes('kitchen') || posLower.includes('commis')) {
+    return {
+      technical: [
+        {
+          question: 'Bagaimana Anda mengatur mise-en-place dan timing station agar suhu sajian panas atau kesegaran nigiri tetap konsisten di tengah rush 40 meja sekaligus?',
+          criteria: 'Menjelaskan sistem prep rapi, urutan eksekusi tiket FIFO, dan komunikasi proaktif antar seksi dapur.'
+        },
+        {
+          question: 'Dalam penanganan bahan baku premium (seperti Bluefin tuna, Hokkaido uni, atau daging Wagyu A5), bagaimana Anda mengontrol yield, meminimalkan waste, dan menjaga standar higienitas suhu?',
+          criteria: 'Menguasai kontrol suhu chiller, metode pemotongan hemat yield, dan rotasi FIFO ketat.'
+        }
+      ],
+      situational: [
+        {
+          scenario: 'Seorang tamu di konter omakase mengeluhkan tekstur salah satu sajian atau meminta penggantian menu dadakan karena alergi berat yang baru diinfokan.',
+          focus: 'Ketenangan bersikap, respon tanpa defensif, serta kecepatan berkoordinasi dengan Head Chef untuk solusi alternatif berkelas.'
+        },
+        {
+          scenario: 'Terjadi keterlambatan stok seafood impor dari supplier saat waktu dinner service tersisa 45 menit.',
+          focus: 'Solusi taktis mise-en-place, inventarisasi alternatif darurat, dan koordinasi dengan Restaurant Manager.'
+        }
+      ]
+    };
+  } else if (posLower.includes('bar') || posLower.includes('mixologist') || posLower.includes('sommelier')) {
+    return {
+      technical: [
+        {
+          question: 'Bagaimana Anda menyeimbangkan rasa dalam signature cocktail yang menggabungkan bahan Jepang (yuzu, shiso, matcha, sake) dengan palet rasa tamu internasional di Canggu?',
+          criteria: 'Memahami acidity balance, rasio spirit-to-modifier, dan teknik batching/clarification modern.'
+        },
+        {
+          question: 'Ketika tamu VIP meminta rekomendasi pairing antara sake kering (Junmai Daiginjo) vs cocktail modern untuk mendampingi hidangan Robata gurih, bagaimana Anda memandunya?',
+          criteria: 'Storytelling minuman yang memikat, pengetahuan umami pairing, dan percaya diri tanpa terkesan menggurui.'
+        }
+      ],
+      situational: [
+        {
+          scenario: 'Suasana lounge bertransisi ramai menuju jam nightlife, pesanan cocktail menumpuk 15 pesanan bersamaan dari meja VIP dan bar counter.',
+          focus: 'Efisiensi gerak tangan, teknik double-shaking, prioritaskan pesanan sesuai waktu antrean, dan menjaga bar tetap higienis.'
+        },
+        {
+          scenario: 'Seorang tamu yang sudah mengonsumsi beberapa minuman meminta alkohol tambahan dengan nada memaksa.',
+          focus: 'Penerapan SOP Responsible Service of Alcohol (RSA) dengan santun, diplomatis, dan pengalihan ke sajian mocktail / air.'
+        }
+      ]
+    };
+  } else if (posLower.includes('manager') || posLower.includes('supervisor') || posLower.includes('controller')) {
+    return {
+      technical: [
+        {
+          question: 'Bagaimana pendekatan Anda dalam memantau F&B cost ratio, menganalisis variance harian di POS/sistem inventaris, dan mencegah kebocoran stok?',
+          criteria: 'Penguasaan audit harian, recipe costing, waste logging, dan tindakan korektif cepat bersama chef/bar lead.'
+        },
+        {
+          question: 'Bagaimana Anda mengevaluasi dan membina motivasi staf lapangan (kitchen & floor) yang mengalami kelelahan di musim liburan puncak Bali?',
+          criteria: 'Kepemimpinan empatik, rotasi jadwal adil, briefing positif, dan penghargaan terhadap kerja keras tim.'
+        }
+      ],
+      situational: [
+        {
+          scenario: 'Terjadi perselisihan komunikasi antara staf service dan dapur mengenai keterlambatan sajian meja VIP saat resto full-house.',
+          focus: 'Kemampuan de-eskalasi emosi seketika, menyelesaikan pesanan tamu terlebih dahulu, dan evaluasi briefing pasca-shift.'
+        },
+        {
+          scenario: 'Dua orang staf kunci mendadak berhalangan hadir saat malam reservasi penuh dan event DJ khusus sedang berlangsung.',
+          focus: 'Keahlian realokasi pos kerja, turun langsung ke lantai operasional, dan menjaga ketenangan seluruh tim.'
+        }
+      ]
+    };
+  } else {
+    return {
+      technical: [
+        {
+          question: 'Bagaimana cara Anda menghafal detail menu, alergen, dan filosofi bahan Miss Fish untuk memberikan penjelasan berkelas kepada tamu internasional?',
+          criteria: 'Daya ingat baik, antusiasme mempelajari kuliner Jepang, dan penguasaan bahasa Inggris percakapan yang luwes.'
+        },
+        {
+          question: 'Dalam standar layanan fine-dining, apa perbedaan utama antara pelayanan yang "kaku formal" dengan keramahan yang "tulus & elegan"?',
+          criteria: 'Menunjukkan kepekaan membaca suasana hati tamu, senyum ramah natural, dan perhatian tanpa mengganggu privasi tamu.'
+        }
+      ],
+      situational: [
+        {
+          scenario: 'Tamu walk-in VIP datang tanpa reservasi saat seluruh meja dan omakase counter terisi penuh selama 2 jam ke depan.',
+          focus: 'Menyambut hangat, menawarkan kursi tunggu di lounge bar dengan welcome drink, dan memberikan estimasi waktu transparan.'
+        },
+        {
+          scenario: 'Tamu tidak sengaja menumpahkan minuman ke atas meja dan pakaian rekannya di area dining.',
+          focus: 'Gerak cepat membantu tanpa membuat tamu merasa malu, segera mengganti linen meja, dan menawarkan bantuan pembersihan.'
+        }
+      ]
+    };
+  }
+}
+
+function copyAiInterviewKit(name, position) {
+  const kit = getAiInterviewKit(position, name, '');
+  let text = `========================================================\n`;
+  text += `MISS FISH BALI — AI INTERVIEW GUIDE (GEMINI 3.5 FLASH LITE)\n`;
+  text += `Kandidat: ${name}\n`;
+  text += `Posisi: ${position}\n`;
+  text += `Venue: Miss Fish Bali, Canggu\n`;
+  text += `========================================================\n\n`;
+  
+  text += `1. UJI KOMPETENSI TEKNIS & SENI KULINER (CRAFT MASTERY):\n`;
+  kit.technical.forEach((q, i) => {
+    text += `Q${i + 1}: ${q.question}\n   🔍 Kriteria Jawaban: ${q.criteria}\n\n`;
+  });
+
+  text += `2. STUDI KASUS DINAMIKA CANGGU (HIGH-VOLUME & VIP SCENARIOS):\n`;
+  kit.situational.forEach((s, i) => {
+    text += `Skenario ${i + 1}: ${s.scenario}\n   🎯 Fokus Observasi: ${s.focus}\n\n`;
+  });
+
+  text += `3. RUBRIK PENILAIAN BUDAYA MISS FISH BALI (Skor 1 - 5):\n`;
+  text += `- Craft Passion & Pride (1-5)\n`;
+  text += `- Team Humility & Harmony (1-5)\n`;
+  text += `- Stamina & Composure (1-5)\n`;
+  text += `- Hygiene & 5S Discipline (1-5)\n\n`;
+  text += `IT Department · Miss Fish Bali\n`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      toast('AI Interview Kit copied to clipboard!');
+    }).catch(() => {
+      toast('Failed to copy. Please allow clipboard permissions.');
+    });
+  } else {
+    toast('AI Interview Kit copied!');
+  }
+}
+
+// Export Applicants to CSV
+function exportApplicantsToCsv() {
+  const q = (document.getElementById('adminAppSearch')?.value || '').toLowerCase();
+  const pos = document.getElementById('adminPosFilter')?.value || '';
+  const st = document.getElementById('adminStatusFilter')?.value || '';
+
+  const candidates = applicantsData.filter(a => {
+    const mQ = !q || a.name.toLowerCase().includes(q) || a.position.toLowerCase().includes(q) || a.email.toLowerCase().includes(q);
+    const mPos = !pos || a.position === pos;
+    const mSt = !st || a.status === st;
+    return mQ && mPos && mSt;
+  });
+
+  if (candidates.length === 0) {
+    toast('No applicants found matching current filters');
+    return;
+  }
+
+  const headers = ['ID', 'ClickUp Task ID', 'Full Name', 'Position', 'Applied Date', 'Status', 'Email', 'Phone', 'Location', 'Experience', 'CV File', 'Notes Count'];
+  
+  const escapeCsv = (val) => {
+    if (val === null || val === undefined) return '""';
+    const str = String(val).replace(/"/g, '""');
+    return `"${str}"`;
+  };
+
+  const rows = candidates.map(c => [
+    escapeCsv(c.id),
+    escapeCsv(c.clickupId),
+    escapeCsv(c.name),
+    escapeCsv(c.position),
+    escapeCsv(c.date),
+    escapeCsv(c.status),
+    escapeCsv(c.email),
+    escapeCsv(c.phone),
+    escapeCsv(c.location),
+    escapeCsv(c.experience),
+    escapeCsv(c.cvFile),
+    escapeCsv(c.notes ? c.notes.length : 0)
+  ].join(','));
+
+  const csvContent = '\uFEFF' + [headers.map(escapeCsv).join(','), ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `MFB-Applicants-${dateStr}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  toast(`Exported ${candidates.length} candidate(s) to CSV!`);
 }
 
 // Update Candidate Status (Simulating ClickUp Write-back)
