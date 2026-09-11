@@ -1,0 +1,7817 @@
+// ================================================================
+// AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+// Standalone Bundle (Compatible with file:/// and http/https)
+// Development · Anabhi Dev
+// Version   : 2.0 (High Contrast Audit & Bilingual ID/EN)
+// Generated : 11 September 2026
+// ================================================================
+
+(function () {
+  'use strict';
+
+
+  // --- Source: js/state.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Application State & Bus
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 11:02:00
+  // ================================================================
+  
+  class AppState {
+    constructor() {
+      this.subscribers = new Set();
+  
+      // Inisialisasi status collapse sidebar desktop dari localStorage
+      let savedCollapse = false;
+      try {
+        savedCollapse = localStorage.getItem('anabhidev_smart_study_sidebar_collapsed') === 'true';
+      } catch (e) {}
+  
+      // Inisialisasi bahasa (Default: 'id' sesuai instruksi user)
+      let savedLang = 'id';
+      try {
+        const stored = localStorage.getItem('anabhidev-smart-study-lang');
+        if (stored === 'en' || stored === 'id') savedLang = stored;
+      } catch (e) {}
+  
+      // Inisialisasi tema (Default: 'light' sesuai instruksi user)
+      let savedTheme = 'light';
+      try {
+        const stored = localStorage.getItem('anabhidev-smart-study-theme');
+        if (stored === 'dark' || stored === 'light') savedTheme = stored;
+      } catch (e) {}
+  
+      document.documentElement.setAttribute('lang', savedLang);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+  
+      this.state = {
+        currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects'
+        currentSubjectId: null,
+        currentTopicId: null,
+        sidebarCollapsed: savedCollapse,
+        drawerOpen: false,
+        activeMathMethod: 'place-value',
+        mathA: 65,
+        mathB: 35,
+        activeGeoTab: 'earth', // 'earth' | 'provinces' | 'cities' | 'bali' | 'quizzes'
+        selectedProvinceId: 'bali',
+        searchCityQuery: '',
+        modalVideo: null, // { title, url }
+        lang: savedLang, // 'id' | 'en' (Default: 'id')
+        theme: savedTheme // 'light' | 'dark' (Default: 'light')
+      };
+    }
+  
+    get() {
+      return this.state;
+    }
+  
+    set(partial) {
+      this.state = { ...this.state, ...partial };
+      
+      // Simpan collapse status ke localStorage jika ada perubahan
+      if ('sidebarCollapsed' in partial) {
+        try {
+          localStorage.setItem('anabhidev_smart_study_sidebar_collapsed', String(this.state.sidebarCollapsed));
+        } catch (e) {}
+      }
+  
+      // Simpan bahasa jika berubah
+      if ('lang' in partial) {
+        try {
+          localStorage.setItem('anabhidev-smart-study-lang', this.state.lang);
+          document.documentElement.setAttribute('lang', this.state.lang);
+        } catch (e) {}
+      }
+  
+      // Simpan tema jika berubah
+      if ('theme' in partial) {
+        try {
+          localStorage.setItem('anabhidev-smart-study-theme', this.state.theme);
+          document.documentElement.setAttribute('data-theme', this.state.theme);
+        } catch (e) {}
+      }
+  
+      this.notify();
+    }
+  
+    subscribe(callback) {
+      this.subscribers.add(callback);
+      return () => this.subscribers.delete(callback);
+    }
+  
+    notify() {
+      for (const sub of this.subscribers) {
+        try {
+          sub(this.state);
+        } catch (err) {
+          console.error('[State] Error in subscriber:', err);
+        }
+      }
+    }
+  
+    toggleTheme() {
+      const next = this.state.theme === 'dark' ? 'light' : 'dark';
+      this.set({ theme: next });
+    }
+  
+    toggleLang() {
+      const next = this.state.lang === 'id' ? 'en' : 'id';
+      this.set({ lang: next });
+    }
+  
+    toggleSidebar() {
+      this.set({ sidebarCollapsed: !this.state.sidebarCollapsed });
+    }
+  
+    toggleDrawer(forceState) {
+      const next = typeof forceState === 'boolean' ? forceState : !this.state.drawerOpen;
+      this.set({ drawerOpen: next });
+    }
+  
+    navigate(route, subjectId = null, topicId = null) {
+      this.set({
+        currentRoute: route,
+        currentSubjectId: subjectId,
+        currentTopicId: topicId,
+        drawerOpen: false
+      });
+      // Update URL hash
+      if (route === 'home') {
+        window.location.hash = '#home';
+      } else if (route === 'subject' && subjectId) {
+        window.location.hash = `#subject/${subjectId}`;
+      } else if (route === 'tantangan') {
+        window.location.hash = '#tantangan';
+      } else if (route === 'progress') {
+        window.location.hash = '#progress';
+      } else if (route === 'all-subjects') {
+        window.location.hash = '#semua-pelajaran';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+  
+  const appState = new AppState();
+  
+
+  // --- Source: js/store.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · LocalStorage Progress Store (v1)
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:55:00
+  // ================================================================
+  
+  const STORAGE_KEY = 'anabhidev-smart-study-progress';
+  const SCHEMA_VERSION = 1;
+  
+  function getTodayString() {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
+  const DEFAULT_STATE = {
+    version: SCHEMA_VERSION,
+    updatedAt: new Date().toISOString(),
+    stars: 15,
+    streakDays: 1,
+    lastVisitDate: getTodayString(),
+    completedLessons: ['matematika:65+35', 'geografi:earth-intro'],
+    quizRecords: {},
+    badges: [
+      { id: 'first-step', name: 'Langkah Pertama', icon: '🌟', desc: 'Membuka Smart Study dan mulai belajar!' },
+      { id: 'math-ninja', name: 'Math Ninja', icon: '🧮', desc: 'Mencoba trik matematika seru!' }
+    ],
+    dailyChallenge: {
+      date: getTodayString(),
+      completedCount: 0,
+      targetCount: 3,
+      claimed: false
+    },
+    settings: {
+      soundEffects: true
+    }
+  };
+  
+  class ProgressStore {
+    constructor() {
+      this.data = this.load();
+      this.checkStreak();
+    }
+  
+    load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...DEFAULT_STATE };
+        const parsed = JSON.parse(raw);
+        if (parsed.version !== SCHEMA_VERSION) {
+          // Safe migration if needed
+          return { ...DEFAULT_STATE, ...parsed, version: SCHEMA_VERSION };
+        }
+        return parsed;
+      } catch (e) {
+        console.warn('[Store] Gagal membaca LocalStorage, menggunakan nilai awal:', e);
+        return { ...DEFAULT_STATE };
+      }
+    }
+  
+    save() {
+      try {
+        this.data.updatedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+      } catch (e) {
+        console.warn('[Store] Gagal menyimpan LocalStorage:', e);
+      }
+    }
+  
+    checkStreak() {
+      const today = getTodayString();
+      if (this.data.lastVisitDate !== today) {
+        const lastDate = new Date(this.data.lastVisitDate);
+        const currDate = new Date(today);
+        const diffDays = Math.round((currDate - lastDate) / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) {
+          this.data.streakDays = (this.data.streakDays || 0) + 1;
+        } else if (diffDays > 1) {
+          this.data.streakDays = 1;
+        }
+        this.data.lastVisitDate = today;
+  
+        // Reset daily challenge if new day
+        if (this.data.dailyChallenge?.date !== today) {
+          this.data.dailyChallenge = {
+            date: today,
+            completedCount: 0,
+            targetCount: 3,
+            claimed: false
+          };
+        }
+        this.save();
+      }
+    }
+  
+    addStars(count = 1) {
+      this.data.stars = (this.data.stars || 0) + count;
+      this.save();
+      return this.data.stars;
+    }
+  
+    completeLesson(lessonKey) {
+      if (!this.data.completedLessons) this.data.completedLessons = [];
+      if (!this.data.completedLessons.includes(lessonKey)) {
+        this.data.completedLessons.push(lessonKey);
+        this.addStars(5);
+        this.incrementDailyChallenge();
+        this.save();
+      }
+    }
+  
+    isLessonCompleted(lessonKey) {
+      return (this.data.completedLessons || []).includes(lessonKey);
+    }
+  
+    recordQuizResult(quizId, score, total) {
+      if (!this.data.quizRecords) this.data.quizRecords = {};
+      this.data.quizRecords[quizId] = {
+        score,
+        total,
+        date: new Date().toISOString()
+      };
+      if (score === total) {
+        this.addStars(10);
+        this.checkAndAwardBadge('quiz-master', 'Bintang Kuis', '🏆', 'Menjawab kuis dengan nilai sempurna 100!');
+      } else {
+        this.addStars(Math.max(1, score * 2));
+      }
+      this.incrementDailyChallenge();
+      this.save();
+    }
+  
+    incrementDailyChallenge() {
+      if (!this.data.dailyChallenge) {
+        this.data.dailyChallenge = { date: getTodayString(), completedCount: 0, targetCount: 3, claimed: false };
+      }
+      if (this.data.dailyChallenge.completedCount < this.data.dailyChallenge.targetCount) {
+        this.data.dailyChallenge.completedCount++;
+        if (this.data.dailyChallenge.completedCount >= this.data.dailyChallenge.targetCount && !this.data.dailyChallenge.claimed) {
+          this.data.dailyChallenge.claimed = true;
+          this.addStars(15);
+          this.checkAndAwardBadge('daily-hero', 'Pahlawan Harian', '🎯', 'Menuntaskan semua tantangan harian hari ini!');
+        }
+        this.save();
+      }
+    }
+  
+    checkAndAwardBadge(badgeId, name, icon, desc) {
+      if (!this.data.badges) this.data.badges = [];
+      if (!this.data.badges.some(b => b.id === badgeId)) {
+        this.data.badges.push({ id: badgeId, name, icon, desc });
+        this.save();
+      }
+    }
+  
+    resetProgress() {
+      this.data = { ...DEFAULT_STATE, lastVisitDate: getTodayString() };
+      this.save();
+    }
+  }
+  
+  const store = new ProgressStore();
+  
+  
+
+  // --- Source: js/data/i18n.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Internationalization (i18n) Dictionary
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 11:00:00
+  // ================================================================
+  
+  const I18N = {
+    id: {
+      appName: 'Smart Study',
+      gradeBadge: 'SD Kelas 1B',
+      mainNav: 'Navigasi Utama',
+      home: 'Beranda',
+      allSubjects: 'Semua Pelajaran',
+      subjectsKicker: 'Mata Pelajaran',
+      activitiesKicker: 'Aktivitas & Rapor',
+      dailyChallenge: 'Tantangan Harian',
+      progress: 'Rapor & Bintang',
+      footerTagline: 'Belajar Seru & Berkarakter',
+      developmentCredit: 'Development · Anabhi Dev',
+      
+      // Topbar
+      starsTitle: 'Total Bintang yang Dikumpulkan',
+      streakTitle: 'Hari Belajar Berturut-turut',
+      days: 'Hari',
+      installApp: 'Install App',
+      installTitle: 'Install Smart Study di Tablet / Laptop',
+      themeLight: 'Ganti ke tema terang',
+      themeDark: 'Ganti ke tema gelap',
+      langSwitch: 'Ganti ke Bahasa Inggris (Switch to English)',
+  
+      // Hero
+      pill: 'Media Belajar Interaktif SD Kelas 1',
+      heroTitlePrefix: 'Belajar Jadi ',
+      heroTitleAccent: 'Lebih Seru!',
+      heroSubtitle: 'Yuk belajar, coba trik baru, terus jadi makin jago! 🚀',
+      heroLead: 'Ubah materi sekolah jadi petualangan interaktif. Ada jurus cepat matematika 65 + 35, keliling Bumi dan 38 provinsi Indonesia, hingga misi seru harian.',
+      heroBtnMath: '🧮 Coba Matematika (65 + 35) ↓',
+      heroBtnGeo: '🌍 Jelajah 38 Provinsi & Globe ↓',
+      featureMathTitle: 'Flagship Matematika',
+      featureMathDesc: '5 jurus asyik: Nilai Tempat s/d Anzan',
+      featureGeoTitle: 'Geografi Nusantara',
+      featureGeoDesc: 'Bumi bulat bola, 38 provinsi & Bali',
+      featureBadgeTitle: 'Bintang & Lencana',
+      featureBadgeDesc: 'Progres tersimpan privat di perangkat',
+      
+      // Subjects Section
+      tenSubjectsEyebrow: '10 Mapel',
+      tenSubjectsBadge: 'Jadwal Kelas 1B Lengkap',
+      whatToLearnTitle: 'Mau Belajar Apa Hari Ini?',
+      whatToLearnSub: 'Pilih salah satu mata pelajaran di bawah untuk mulai berpetualang!',
+      openSubject: 'Buka Materi ➔',
+      topicsCountLabel: 'Topik Belajar',
+  
+      // Math
+      mathFlagshipBadge: '🧮 Flagship Interactive Experience',
+      presetLabel: 'Pilih Preset atau Masukkan Angkamu Sendiri:',
+      randomProblem: '🎲 Acak Soal Baru',
+      chooseThinkingTool: '🛠️ Pilih Alat Berpikirmu:',
+      modeVisual: '👁️ Mode Belajar Visual',
+      modeCompare: '⚖️ Bandingkan Cara (Compare)',
+      num1Label: 'Angka 1',
+      num2Label: 'Angka 2',
+      resultLabel: 'Hasil',
+      practiceEyebrow: 'Latihan',
+      practiceTurboBadge: 'Asah Otak Mode Turbo',
+      practiceTitle: 'Tantang Dirimu Sendiri!',
+      practiceHeader: 'Coba Sendiri dengan Jurus Pilihanmu!',
+      practiceQuestionPrefix: 'Soal Latihan',
+      of: 'dari',
+      checkAnswer: 'Cek Jawaban ➔',
+      hintLabel: 'Petunjuk',
+      prevQuestion: '← Soal Sebelumnya',
+      nextQuestion: 'Soal Berikutnya →',
+      answerPlaceholder: 'Jawaban',
+      practiceSuccess: '🎉 <strong>YES! Otak mode turbo!</strong> Jawabanmu tepat sekali! Hebat!',
+      practiceWrong: '😄 <strong>Belum nih!</strong> Coba cek satuannya lagi atau intip tombol petunjuk!',
+      showAnotherWaySuccess: '🎉 Yesss! Kamu Berhasil Menemukan Jawabannya!',
+      showAnotherWayPrompt: 'Mau lihat bagaimana soal ini diselesaikan dengan cara lain yang nggak kalah keren?',
+      showAnotherWayBtn: '✨ Kasih Lihat Cara Lain!',
+      badgesSectionTitle: '🏆 Lencana Eksplorasi Alat Berpikir',
+      badgesSectionSub: 'Koleksi jurus yang sudah kamu coba!',
+      problemsSolvedBadge: 'Soal Terselesaikan',
+      tryThisWay: 'Coba Cara Ini ➔',
+      topicPrefix: 'Topik',
+      independentMission: 'Misi Mandiri:',
+      visualExplorations: 'Eksplorasi Visual',
+      stopAutoRotate: '⏸ Berhenti',
+      startAutoRotate: '▶ Putar',
+      videosHeaderEyebrow: 'Video Pembelajaran',
+      videosHeaderTitle: 'Tontonan Penguat Konsep',
+      playVideo: '▶ Putar Video',
+  
+      // Geography
+      geoBadge: '🌍 Modul Geografi & Nusantara',
+      geoBadge: '🌍 Modul Geografi & Dunia',
+      tabEarth: '1. Bumi & Globe 3D',
+      tabProvinces: '2. 38 Provinsi & Ibu Kota',
+      tabCities: '3. Kota Terkenal (Malang, dll)',
+      tabBali: '4. Jelajah Bali (8+1)',
+      tabQuizzes: '5. Kuis Geografi',
+      tabCountries: '2. Negara-Negara di Dunia',
+      tabProvinces: '3. 38 Provinsi & Ibu Kota',
+      tabCities: '4. Kota Terkenal (Malang, dll)',
+      tabBali: '5. Jelajah Bali (8+1)',
+      tabQuizzes: '6. Kuis Geografi',
+      earthShapeBadge: 'Bentuk Asli: Hampir Bulat Sempurna (Bola)',
+      rotateLeft: '⟲ Putar Kiri',
+      autoRotate: '⏯ Otomatis',
+      rotateRight: '⟳ Putar Kanan',
+      focusIndonesia: '🇮🇩 Fokus Indonesia',
+      zoomIn: '🔍 Perbesar',
+      zoomOut: '🔎 Perkecil',
+      globeTouchTip: '💡 Sentuh, geser atau cubit untuk memutar bola dunia secara bebas!',
+      globeTouchTip: '💡 Sentuh, geser atau cubit untuk memutar bola dunia seperti globe meja asli!',
+      searchCountryPlaceholder: '🔍 Cari negara, ibu kota, atau benua (misal: Jepang, Kairo, Brasil)...',
+      foundCountriesPrefix: 'Menampilkan',
+      countriesCountSuffix: 'Negara Sahabat di Dunia',
+      continentAll: 'Semua Benua',
+      continentAsia: '🌏 Asia',
+      continentEurope: '🌍 Eropa',
+      continentAfrica: '🌍 Afrika',
+      continentNorthAmerica: '🌎 Amerika Utara',
+      continentSouthAmerica: '🌎 Amerika Selatan',
+      continentOceania: '🌏 Oseania',
+      currencyLabel: 'Mata Uang:',
+      landmarkLabel: 'Ikon & Landmark:',
+      languageLabel: 'Bahasa:',
+      focusOnGlobeBtn: '🌍 Lihat di Globe',
+      countryFunFactBadge: '✨ Fakta Seru Edukatif',
+      showingProvincesPrefix: 'Menampilkan',
+      provincesCountSuffix: 'dari 38 Provinsi',
+      capitalLabel: 'Ibu Kota:',
+      nonCapitalBadge: 'Bukan Ibu Kota',
+      mandatoryExampleBadge: '⭐ (Contoh Wajib)',
+      partOfProvince: 'Bagian dari Provinsi:',
+      cityDisclaimer: '📢 <strong>Penting Diketahui:</strong> Kota-kota di bawah ini adalah <u>kota-kota terkenal di Indonesia yang BUKAN merupakan ibu kota provinsi</u>. Daftar ini merupakan pilihan edukatif terkurasi dan bukan daftar seluruh kota di Indonesia.',
+      searchCityPlaceholder: 'Cari kota (misal: Malang, Solo, Cirebon)...',
+      foundCitiesPrefix: 'Ditemukan',
+      citiesSuffix: 'Kota Terkenal',
+      specialBaliPill: '🌺 Modul Spesial Pulau Dewata',
+      govCenterLabel: 'Ibu Kota / Pusat:',
+      geoSourceTitle: 'Sumber Data Geografi Resmi:',
+      curationStatus: 'Status Kurasi:',
+      scopeLabel: 'Cakupan:',
+  
+      // Quizzes
+      scoreLabel: 'Skor:',
+      showHintBtn: '💡 Lihat Petunjuk',
+      hideHintBtn: '💡 Tutup Petunjuk',
+      finishQuizBtn: 'Selesai & Kumpulkan Bintang 🏆',
+      nextQBtn: 'Soal Berikutnya ➔',
+      quizFinishedTitle: 'Kuis Selesai!',
+      quizFinishedPerfect: 'Luar biasa! Kamu menjawab semua pertanyaan dengan benar!',
+      quizFinishedGood: 'Hebat! Terus berlatih agar makin jago!',
+      retryQuizBtn: '🔄 Ulangi Kuis',
+      continueNextSubjectBtn: 'Lanjut Belajar Lain ➔',
+      quizCorrectFeedback: '🎉 <strong>YES! Keren banget!</strong> Jawabanmu tepat sekali.',
+      quizWrongFeedback: '😄 <strong>Hampir!</strong> Jawaban yang tepat adalah',
+  
+      // Challenge
+      challengeBadge: '🎯 Micro-Learning 3–5 Menit',
+      challengeTitle: 'Tantangan Harian Anak Pintar',
+      challengeSub: 'Selesaikan 3 aktivitas kecil hari ini untuk menjaga streak dan mendapatkan bintang emas tambahan!',
+      todayTargetPrefix: 'Target Hari Ini:',
+      doneCountLabel: 'Beres',
+      challengeSuccessMsg: '🎉 <strong>YEAH! Tantangan hari ini beres!</strong> Kamu mendapatkan +15 Bintang Emas &amp; lencana Pahlawan Harian! 🏆',
+      challengePrompt: 'Selesaikan tantangan di bawah ini dengan mengklik tombol "Mulai"!',
+      statusDone: '✅ Selesai',
+      statusPending: 'Belum',
+      repeatLessonBtn: 'Ulangi Materi',
+  
+      // Progress / Report
+      reportBadge: '📈 Rapor Belajar Anak & Ringkasan Orang Tua',
+      reportTitle: 'Pencapaian & Koleksi Bintang',
+      reportSub: 'Pantau perkembangan belajar anak secara positif, ramah, dan tanpa tekanan nilai sekolah.',
+      totalGoldStars: 'Total Bintang Emas',
+      activeStreak: 'Streak Belajar Aktif',
+      badgesWon: 'Lencana Dimenangkan',
+      levelLabel: 'Level: Makin Jago',
+      kidBadgesTitle: 'Koleksi Lencana Anak',
+      parentSummaryTitle: 'Ringkasan Pendampingan Orang Tua',
+      parentPrivacyNotice: 'Privasi Terjaga 100% (Lokal di Perangkat)',
+      parentSummaryDesc: 'Seluruh progres belajar, bintang, dan lencana tersimpan aman di browser/tablet ini tanpa mengirim data pribadi ke server luar. Cocok untuk review santai bersama ananda setiap sore atau malam hari.',
+      completedLabel: 'Selesai',
+      resetProgressBtn: '⚠️ Reset Progres Belajar',
+      resetConfirmPrompt: 'Apakah Ayah/Bunda yakin ingin mereset progres belajar ananda dari awal?',
+      resetSuccessAlert: 'Progres berhasil direset. Mari mulai petualangan belajar baru!'
+    },
+  
+    en: {
+      appName: 'Smart Study',
+      gradeBadge: 'Grade 1B',
+      mainNav: 'Main Navigation',
+      home: 'Home',
+      allSubjects: 'All Subjects',
+      subjectsKicker: 'Subjects',
+      activitiesKicker: 'Activities & Report',
+      dailyChallenge: 'Daily Challenge',
+      progress: 'Report & Stars',
+      footerTagline: 'Fun & Mindful Learning',
+      developmentCredit: 'Development · Anabhi Dev',
+  
+      // Topbar
+      starsTitle: 'Total Gold Stars Collected',
+      streakTitle: 'Consecutive Days Learning',
+      days: 'Days',
+      installApp: 'Install App',
+      installTitle: 'Install Smart Study on Tablet / Laptop',
+      themeLight: 'Switch to light theme',
+      themeDark: 'Switch to dark theme',
+      langSwitch: 'Ganti ke Bahasa Indonesia (Switch to Indonesian)',
+  
+      // Hero
+      pill: 'Interactive Learning for Grade 1',
+      heroTitlePrefix: 'Learning Made ',
+      heroTitleAccent: 'More Fun!',
+      heroSubtitle: "Let's learn, try new tricks, and level up! 🚀",
+      heroLead: 'Turn school lessons into an interactive adventure. Master quick math tricks like 65 + 35, explore Earth and Indonesia’s 38 provinces, and complete fun daily missions.',
+      heroBtnMath: '🧮 Try Math (65 + 35) ↓',
+      heroBtnGeo: '🌍 Explore 38 Provinces & Globe ↓',
+      featureMathTitle: 'Flagship Mathematics',
+      featureMathDesc: '5 fun methods: Place Value to Anzan',
+      featureGeoTitle: 'Indonesian & World Geography',
+      featureGeoDesc: 'Spherical Earth, 38 provinces & Bali',
+      featureBadgeTitle: 'Stars & Badges',
+      featureBadgeDesc: 'Progress saved privately on device',
+  
+      // Subjects Section
+      tenSubjectsEyebrow: '10 Subjects',
+      tenSubjectsBadge: 'Complete Grade 1B Curriculum',
+      whatToLearnTitle: 'What Do You Want to Learn Today?',
+      whatToLearnSub: 'Choose a subject below to embark on your learning journey!',
+      openSubject: 'Open Lessons ➔',
+      topicsCountLabel: 'Learning Topics',
+  
+      // Math
+      mathFlagshipBadge: '🧮 Flagship Interactive Experience',
+      presetLabel: 'Choose a Preset or Enter Your Own Numbers:',
+      randomProblem: '🎲 New Random Problem',
+      chooseThinkingTool: '🛠️ Choose Your Thinking Tool:',
+      modeVisual: '👁️ Visual Learning Mode',
+      modeCompare: '⚖️ Compare Strategies',
+      num1Label: 'Number 1',
+      num2Label: 'Number 2',
+      resultLabel: 'Result',
+      practiceEyebrow: 'Practice',
+      practiceTurboBadge: 'Turbo Brain Workout',
+      practiceTitle: 'Challenge Yourself!',
+      practiceHeader: 'Try It Yourself With Your Favorite Strategy!',
+      practiceQuestionPrefix: 'Practice Question',
+      of: 'of',
+      checkAnswer: 'Check Answer ➔',
+      hintLabel: 'Hint',
+      prevQuestion: '← Previous Question',
+      nextQuestion: 'Next Question →',
+      answerPlaceholder: 'Answer',
+      practiceSuccess: '🎉 <strong>YES! Turbo brain mode!</strong> Your answer is spot on! Excellent!',
+      practiceWrong: '😄 <strong>Not quite yet!</strong> Check the units place or peek at the hint button!',
+      showAnotherWaySuccess: '🎉 Yesss! You Found the Answer!',
+      showAnotherWayPrompt: 'Want to see how this problem is solved another cool way?',
+      showAnotherWayBtn: '✨ Show Another Way!',
+      badgesSectionTitle: '🏆 Thinking Tool Exploration Badges',
+      badgesSectionSub: 'Collection of thinking tools you have explored!',
+      problemsSolvedBadge: 'Problems Solved',
+      tryThisWay: 'Try This Way ➔',
+      topicPrefix: 'Topic',
+      independentMission: 'Independent Mission:',
+      visualExplorations: 'Visual Explorations',
+      stopAutoRotate: '⏸ Pause',
+      startAutoRotate: '▶ Spin',
+      videosHeaderEyebrow: 'Learning Videos',
+      videosHeaderTitle: 'Concept Enrichment Videos',
+      playVideo: '▶ Play Video',
+  
+      // Geography
+      geoBadge: '🌍 Geography & Archipelago Module',
+      geoBadge: '🌍 Geography & World Module',
+      tabEarth: '1. Earth & 3D Globe',
+      tabProvinces: '2. 38 Provinces & Capitals',
+      tabCities: '3. Famous Cities (Malang, etc)',
+      tabBali: '4. Explore Bali (8+1)',
+      tabQuizzes: '5. Geography Quizzes',
+      tabCountries: '2. World Countries',
+      tabProvinces: '3. 38 Provinces & Capitals',
+      tabCities: '4. Famous Cities (Malang, etc)',
+      tabBali: '5. Explore Bali (8+1)',
+      tabQuizzes: '6. Geography Quizzes',
+      earthShapeBadge: 'True Shape: Almost Perfect Sphere (Ball)',
+      rotateLeft: '⟲ Rotate Left',
+      autoRotate: '⏯ Auto-Spin',
+      rotateRight: '⟳ Rotate Right',
+      focusIndonesia: '🇮🇩 Focus Indonesia',
+      zoomIn: '🔍 Zoom In',
+      zoomOut: '🔎 Zoom Out',
+      globeTouchTip: '💡 Touch, drag or pinch to freely spin and explore the real Earth!',
+      globeTouchTip: '💡 Touch, drag or pinch to freely spin the globe just like a real desk globe!',
+      searchCountryPlaceholder: '🔍 Search country, capital, or continent (e.g. Japan, Cairo, Brazil)...',
+      foundCountriesPrefix: 'Showing',
+      countriesCountSuffix: 'World Countries',
+      continentAll: 'All Continents',
+      continentAsia: '🌏 Asia',
+      continentEurope: '🌍 Europe',
+      continentAfrica: '🌍 Africa',
+      continentNorthAmerica: '🌎 North America',
+      continentSouthAmerica: '🌎 South America',
+      continentOceania: '🌏 Oceania',
+      currencyLabel: 'Currency:',
+      landmarkLabel: 'Icon & Landmark:',
+      languageLabel: 'Language:',
+      focusOnGlobeBtn: '🌍 View on Globe',
+      countryFunFactBadge: '✨ Fun Fact for Kids',
+      showingProvincesPrefix: 'Showing',
+      provincesCountSuffix: 'of 38 Provinces',
+      capitalLabel: 'Capital:',
+      nonCapitalBadge: 'Non-Capital City',
+      mandatoryExampleBadge: '⭐ (Mandatory Sample)',
+      partOfProvince: 'Part of Province:',
+      cityDisclaimer: '📢 <strong>Important Notice:</strong> The cities listed below are <u>well-known Indonesian cities that are NOT provincial capitals</u>. This is a curated educational sample, not an exhaustive list of all cities in Indonesia.',
+      searchCityPlaceholder: 'Search city (e.g. Malang, Solo, Cirebon)...',
+      foundCitiesPrefix: 'Found',
+      citiesSuffix: 'Famous Cities',
+      specialBaliPill: '🌺 Island of the Gods Special Module',
+      govCenterLabel: 'Capital / Government Center:',
+      geoSourceTitle: 'Official Geography Source:',
+      curationStatus: 'Curation Status:',
+      scopeLabel: 'Scope:',
+  
+      // Quizzes
+      scoreLabel: 'Score:',
+      showHintBtn: '💡 Show Hint',
+      hideHintBtn: '💡 Hide Hint',
+      finishQuizBtn: 'Finish & Collect Stars 🏆',
+      nextQBtn: 'Next Question ➔',
+      quizFinishedTitle: 'Quiz Finished!',
+      quizFinishedPerfect: 'Outstanding! You answered every question correctly!',
+      quizFinishedGood: 'Great job! Keep practicing to become a true master!',
+      retryQuizBtn: '🔄 Retry Quiz',
+      continueNextSubjectBtn: 'Continue Other Lessons ➔',
+      quizCorrectFeedback: '🎉 <strong>YES! Super cool!</strong> Your answer is completely correct.',
+      quizWrongFeedback: '😄 <strong>Almost!</strong> The correct answer is',
+  
+      // Challenge
+      challengeBadge: '🎯 3–5 Min Micro-Learning',
+      challengeTitle: 'Smart Kid Daily Challenge',
+      challengeSub: 'Complete 3 quick activities today to maintain your streak and earn bonus gold stars!',
+      todayTargetPrefix: "Today's Target:",
+      doneCountLabel: 'Done',
+      challengeSuccessMsg: "🎉 <strong>YEAH! Today's challenge is completed!</strong> You earned +15 Gold Stars &amp; the Daily Hero badge! 🏆",
+      challengePrompt: 'Complete the challenges below by clicking "Start"!',
+      statusDone: '✅ Done',
+      statusPending: 'Pending',
+      repeatLessonBtn: 'Review Lesson',
+  
+      // Progress / Report
+      reportBadge: '📈 Student Learning Report & Parent Summary',
+      reportTitle: 'Achievements & Star Collection',
+      reportSub: "Track your child's learning journey positively, playfully, and without school grade pressure.",
+      totalGoldStars: 'Total Gold Stars',
+      activeStreak: 'Active Learning Streak',
+      badgesWon: 'Badges Earned',
+      levelLabel: 'Level: Leveling Up',
+      kidBadgesTitle: "Child's Badge Collection",
+      parentSummaryTitle: 'Parent Mentoring Summary',
+      parentPrivacyNotice: '100% Private (Local to Device)',
+      parentSummaryDesc: 'All learning progress, stars, and badges are stored securely in this browser/tablet without sending personal data to external servers. Ideal for a relaxing review with your child every afternoon or evening.',
+      completedLabel: 'Completed',
+      resetProgressBtn: '⚠️ Reset Learning Progress',
+      resetConfirmPrompt: 'Are you sure you want to reset all learning progress from the beginning?',
+      resetSuccessAlert: 'Progress has been reset. Let’s start a brand new learning journey!'
+    }
+  };
+  
+  function t(key, lang = 'id') {
+    const currentLang = (lang === 'en') ? 'en' : 'id';
+    return I18N[currentLang][key] || I18N['id'][key] || key;
+  }
+  
+  
+
+  // --- Source: js/data/subjects.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Subjects Master Registry
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:40:00
+  // ================================================================
+  
+  const SUBJECTS = [
+    {
+      id: 'matematika',
+      slug: 'matematika',
+      name: 'Matematika',
+      nameEn: 'Mathematics',
+      shortName: 'Math',
+      shortNameEn: 'Math',
+      icon: '🧮',
+      badge: 'Flagship Interactive',
+      badgeEn: 'Flagship Interactive',
+      accentColor: '#056268',
+      accentLight: '#e9f8f8',
+      accentBorder: '#5be0df',
+      description: 'Bongkar angka dengan trik seru! Ada 9 jurus berhitung asyik.',
+      descriptionEn: 'Explore numbers with fun tricks! 9 exciting calculation tools.',
+      topicsCount: 4,
+      order: 1
+    },
+    {
+      id: 'geografi',
+      slug: 'geografi',
+      name: 'Geografi',
+      nameEn: 'Geography',
+      shortName: 'Geografi',
+      shortNameEn: 'Geography',
+      icon: '🌍',
+      badge: 'Jelajah Nusantara & Dunia',
+      badgeEn: 'Explore Archipelago & World',
+      accentColor: '#1d7198',
+      accentLight: '#e8f4fa',
+      accentBorder: '#5ce3de',
+      description: 'Kenali bentuk Bumi, 38 provinsi Indonesia, negara dunia, kota terkenal, dan Pulau Bali!',
+      descriptionEn: 'Discover round Earth, 38 Indonesian provinces, world countries, famous cities, and Bali!',
+      topicsCount: 5,
+      order: 2
+    },
+    {
+      id: 'bahasa-indonesia',
+      slug: 'bahasa-indonesia',
+      name: 'Bahasa Indonesia',
+      nameEn: 'Indonesian Language',
+      shortName: 'B. Indonesia',
+      shortNameEn: 'Indonesian',
+      icon: '📖',
+      badge: 'Membaca Ceria',
+      badgeEn: 'Joyful Reading',
+      accentColor: '#b24a1b',
+      accentLight: '#fdf1eb',
+      accentBorder: '#f89a6b',
+      description: 'Mengenal huruf vokal, konsonan, suku kata, dan menyusun kalimat seru.',
+      descriptionEn: 'Learn vowels, consonants, syllables, and assemble cheerful sentences.',
+      topicsCount: 3,
+      order: 3
+    },
+    {
+      id: 'bahasa-inggris',
+      slug: 'bahasa-inggris',
+      name: 'Bahasa Inggris',
+      nameEn: 'English',
+      shortName: 'English',
+      shortNameEn: 'English',
+      icon: '🔤',
+      badge: 'Fun English',
+      badgeEn: 'Fun English',
+      accentColor: '#2b5ea8',
+      accentLight: '#edf3fc',
+      accentBorder: '#7ea9eb',
+      description: 'Belajar sapaan, warna, angka, dan binatang dalam bahasa Inggris.',
+      descriptionEn: 'Learn greetings, colors, numbers, and friendly animals in English.',
+      topicsCount: 3,
+      order: 4
+    },
+    {
+      id: 'pancasila',
+      slug: 'pancasila',
+      name: 'Pendidikan Pancasila',
+      nameEn: 'Civics & Pancasila',
+      shortName: 'Pancasila',
+      shortNameEn: 'Civics',
+      icon: '🦅',
+      badge: 'Anak Hebat',
+      badgeEn: 'Great Kids',
+      accentColor: '#962b2b',
+      accentLight: '#fceeeb',
+      accentBorder: '#e87272',
+      description: 'Mengenal lambang Garuda, nilai gotong royong, dan aturan tertib di sekolah.',
+      descriptionEn: 'Discover the Garuda emblem, teamwork values, and positive school habits.',
+      topicsCount: 3,
+      order: 5
+    },
+    {
+      id: 'bahasa-bali',
+      slug: 'bahasa-bali',
+      name: 'Bahasa Bali',
+      nameEn: 'Balinese Language',
+      shortName: 'B. Bali',
+      shortNameEn: 'Balinese',
+      icon: '🌴',
+      badge: 'Budaya Luhur',
+      badgeEn: 'Noble Culture',
+      accentColor: '#8a6a1f',
+      accentLight: '#fdf7e8',
+      accentBorder: '#e8c468',
+      description: 'Mengenal kruna dasar, salam harian, warna, dan anggota tubuh basa Bali.',
+      descriptionEn: 'Learn basic words, daily greetings, colors, and body parts in Balinese.',
+      topicsCount: 3,
+      order: 6
+    },
+    {
+      id: 'seni-rupa',
+      slug: 'seni-rupa',
+      name: 'Seni Rupa',
+      nameEn: 'Visual Arts',
+      shortName: 'Seni Rupa',
+      shortNameEn: 'Visual Arts',
+      icon: '🎨',
+      badge: 'Kreasi Warna',
+      badgeEn: 'Color Creations',
+      accentColor: '#7b359c',
+      accentLight: '#f7eeff',
+      accentBorder: '#c387df',
+      description: 'Campuran warna primer & sekunder, bentuk bidang, dan membuat pola indah.',
+      descriptionEn: 'Primary and secondary color mixing, basic shapes, and playful pattern making.',
+      topicsCount: 3,
+      order: 7
+    },
+    {
+      id: 'pjok',
+      slug: 'pjok',
+      name: 'PJOK',
+      nameEn: 'Physical Education',
+      shortName: 'Olahraga',
+      shortNameEn: 'Sports & PE',
+      icon: '🏃',
+      badge: 'Badan Bugar',
+      badgeEn: 'Fit Body',
+      accentColor: '#1e7b45',
+      accentLight: '#edfbf2',
+      accentBorder: '#5be08f',
+      description: 'Gerak lokomotor, koordinasi tubuh, dan kebiasaan hidup bersih & sehat.',
+      descriptionEn: 'Locomotor movements, body coordination, and healthy daily habits.',
+      topicsCount: 3,
+      order: 8
+    },
+    {
+      id: 'agama',
+      slug: 'agama',
+      name: 'Agama & Budi Pekerti',
+      nameEn: 'Character & Ethics',
+      shortName: 'Budi Pekerti',
+      shortNameEn: 'Character',
+      icon: '🌱',
+      badge: 'Hati Baik',
+      badgeEn: 'Kind Heart',
+      accentColor: '#366d62',
+      accentLight: '#ecf7f4',
+      accentBorder: '#76cebd',
+      description: 'Belajar bersyukur, sopan santun, tolong menolong, dan menyayangi sesama.',
+      descriptionEn: 'Learn gratitude, polite manners, mutual kindness, and caring for others.',
+      topicsCount: 3,
+      order: 9
+    },
+    {
+      id: 'kokurikuler',
+      slug: 'kokurikuler',
+      name: 'Kokurikuler',
+      nameEn: 'Co-curricular Missions',
+      shortName: 'Kokurikuler',
+      shortNameEn: 'Missions',
+      icon: '🧩',
+      badge: 'Misi Mandiri',
+      badgeEn: 'Independence',
+      accentColor: '#c27803',
+      accentLight: '#fff8eb',
+      accentBorder: '#ffc15e',
+      description: 'Misi mingguan seru anak mandiri: bereskan meja, rawat tanaman, senyum sapa.',
+      descriptionEn: 'Exciting weekly self-reliance missions: tidy desk, water plants, greet others.',
+      topicsCount: 3,
+      order: 10
+    }
+  ];
+  
+  function getSubjectName(sub, lang = 'id') {
+    if (!sub) return '';
+    return (lang === 'en' && sub.nameEn) ? sub.nameEn : sub.name;
+  }
+  
+  function getSubjectBadge(sub, lang = 'id') {
+    if (!sub) return '';
+    return (lang === 'en' && sub.badgeEn) ? sub.badgeEn : sub.badge;
+  }
+  
+  function getSubjectDesc(sub, lang = 'id') {
+    if (!sub) return '';
+    return (lang === 'en' && sub.descriptionEn) ? sub.descriptionEn : sub.description;
+  }
+  
+
+  // --- Source: js/data/math-data.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Mathematics Flagship Data & Math Toolbox
+  // Development · Anabhi Dev
+  // Version   : 2.0 (Math Toolbox Master Blueprint)
+  // Generated : 10 September 2026, 12:00:00
+  // ================================================================
+  
+  const MATH_DATA = {
+    id: 'matematika',
+    title: 'Math Toolbox — Satu Soal, Banyak Cara!',
+    titleEn: 'Math Toolbox — One Problem, Many Ways!',
+    subtitle: 'Matematika bukan cuma berhitung satu per satu. Temukan pola, pilih alat berpikirmu, dan gunakan cara yang paling kamu suka!',
+    subtitleEn: "Math isn't just counting one by one. Spot patterns, choose your thinking tool, and use the way you love most!",
+    signaturePrompt: 'Satu soal. Banyak cara. Kamu pilih cara yang paling kamu suka. 😎',
+    signaturePromptEn: 'One problem. Many ways. You choose the way that fits you best. 😎',
+  
+    // Soal Flagship & Signature Sesuai Blueprint v1.0
+    flagship: {
+      a: 67,
+      b: 59,
+      answer: 126,
+      recommended: ['compensation', 'make-hundred', 'decomposition', 'number-line'],
+      reason: 'Angka 59 hampir 60! Coba jurus Kompensasi atau Bikin 100.',
+      reasonEn: 'Number 59 is almost 60! Try Compensation or Make 100.'
+    },
+    secondSignature: {
+      a: 68,
+      b: 32,
+      answer: 100,
+      recommended: ['make-hundred', 'decomposition'],
+      reason: 'Wih! 68 dan 32 pasangan serasi yang langsung pas jadi 100!',
+      reasonEn: '68 and 32 are a perfect pair that instantly makes 100!'
+    },
+    thirdSignature: {
+      a: 125,
+      b: 75,
+      answer: 200,
+      recommended: ['make-hundred', 'number-bonds', 'number-line'],
+      reason: '25 + 75 = 100! Digabung 100 pertama langsung melesat jadi 200!',
+      reasonEn: '25 + 75 = 100! Combined with the first 100, it leaps to 200!'
+    },
+  
+    // 4 Slot Video YouTube Matematika & Penjumlahan Terkurasi
+    videoSlots: [
+      {
+        id: 'math-yt-1',
+        title: '1. Berhitung Cepat Jari Tanpa Sempoa (TK & SD)',
+        description: 'Jurus kilat menghitung penjumlahan hanya dengan formasi jari tangan tanpa alat bantu.',
+        url: 'https://www.youtube.com/watch?v=bdx64w2lG_Y',
+        channel: 'MA Kids Fun House',
+        ageFit: 'Kelas 1–6 SD'
+      },
+      {
+        id: 'math-yt-2',
+        title: '2. Jarimatika Jurus Zero: Trik Penjumlahan Jari',
+        description: 'Trik ceria berhitung penjumlahan dengan gerakan jari tangan ala Jarimatika super asyik.',
+        url: 'https://www.youtube.com/watch?v=3DrTPVa6yVQ',
+        channel: 'Ayo Cerdas Indonesia',
+        ageFit: 'Kelas 1–6 SD'
+      },
+      {
+        id: 'math-yt-3',
+        title: '3. Kuis Matematika Dasar: Asah Otak Penjumlahan',
+        description: 'Kuis interaktif melatih kecepatan dan ketepatan berhitung jumlah-jumlahan dasar dengan riang.',
+        url: 'https://www.youtube.com/watch?v=DQYkGL0X-yA',
+        channel: 'Quiz QUPU',
+        ageFit: 'Kelas 1–6 SD'
+      },
+      {
+        id: 'math-yt-4',
+        title: '4. Cara Menghitung Penjumlahan Bersusun (Nilai Tempat)',
+        description: 'Panduan langkah demi langkah menghitung penjumlahan susun panjang & pendek dengan mudah dan jelas.',
+        url: 'https://www.youtube.com/watch?v=uY1Wndy5N0o',
+        channel: 'Bu Retno - Belajar Matematika',
+        ageFit: 'Kelas 1–6 SD'
+      }
+    ],
+  
+    // 9 Strategi Berpikir (Strategy Library)
+    methods: [
+      {
+        id: 'decomposition',
+        name: 'Pecah Angka',
+        nameEn: 'Split Numbers',
+        badge: 'Nilai Tempat',
+        badgeEn: 'Place Value',
+        icon: '🧩',
+        summary: 'Pisahkan puluhan dan satuan, jumlahkan masing-masing kelompok, lalu satukan kembali hasilnya!',
+        summaryEn: 'Separate tens and ones, add each group, then combine them back together!',
+        whyGood: 'Sangat mudah karena otak kita terbiasa menghitung puluhan dan satuan secara terpisah.',
+        whyGoodEn: 'Super intuitive because our brain naturally groups tens and ones separately.'
+      },
+      {
+        id: 'number-bonds',
+        name: 'Number Bonds',
+        nameEn: 'Number Bonds',
+        badge: 'Bongkar Pasang',
+        badgeEn: 'Deconstruct & Bond',
+        icon: '🔗',
+        summary: 'Bongkar angka menjadi cabang-cabang bagian yang ramah, lalu hubungkan kembali membentuk total.',
+        summaryEn: 'Break numbers into friendly branches, then reconnect them to find the total.',
+        whyGood: 'Membantu melihat bahwa angka bisa dibongkar pasang seperti balok lego.',
+        whyGoodEn: 'Helps you see that numbers can be disassembled and rebuilt like Lego blocks.'
+      },
+      {
+        id: 'make-hundred',
+        name: 'Bikin 100',
+        nameEn: 'Make 100',
+        badge: 'Make Ten / Hundred',
+        badgeEn: 'Round to 100',
+        icon: '🔟',
+        summary: 'Pinjam sedikit dari angka sebelah untuk menggenapkan angka utama menjadi 100 bulat yang nyaman!',
+        summaryEn: 'Borrow a little from the other number to round up to a friendly, solid 100!',
+        whyGood: 'Menghitung dari 100 itu super enteng dan bebas pusing.',
+        whyGoodEn: 'Adding from 100 is effortless and stress-free.'
+      },
+      {
+        id: 'compensation',
+        name: 'Kompensasi',
+        nameEn: 'Compensation',
+        badge: 'Hampir Bulat',
+        badgeEn: 'Near Round',
+        icon: '⚖️',
+        summary: 'Jika angka hampir bulat (seperti 59 → 60), genapkan dulu! Nanti di akhir tinggal kembalikan kelebihannya.',
+        summaryEn: 'If a number is nearly round (like 59 → 60), round up first! Then subtract the extra at the end.',
+        whyGood: 'Jurus favorit para jagoan mental math untuk angka yang berakhiran 8 atau 9.',
+        whyGoodEn: 'Favorite strategy of mental math champions for numbers ending in 8 or 9.'
+      },
+      {
+        id: 'number-line',
+        name: 'Garis Bilangan',
+        nameEn: 'Number Line',
+        badge: 'Lompatan Chunk',
+        badgeEn: 'Chunk Jumps',
+        icon: '📏',
+        summary: 'Melompat di garis bilangan dengan langkah-langkah besar (+50, lalu +9) tanpa perlu melompat satu-satu.',
+        summaryEn: 'Hop along the number line with big chunk jumps (+50, then +9) instead of counting by ones.',
+        whyGood: 'Mata bisa langsung melihat perjalanan jarak dari titik awal ke titik akhir.',
+        whyGoodEn: 'Your eyes clearly see the journey from starting point to the destination.'
+      },
+      {
+        id: 'base-ten',
+        name: 'Balok Nilai Tempat',
+        nameEn: 'Base-Ten Blocks',
+        badge: 'Base-Ten Blocks',
+        badgeEn: 'Manipulatives',
+        icon: '🧱',
+        summary: 'Gunakan batang puluhan (rods) dan kubus satuan (cubes). Bila ada 10 kubus, tukar menjadi 1 batang baru!',
+        summaryEn: 'Use 10-rods and 1-cubes. Whenever you have 10 cubes, trade them for 1 new rod (regrouping)!',
+        whyGood: 'Wujud fisik nyata dari konsep menyimpan (regrouping / carrying).',
+        whyGoodEn: 'The real physical foundation of carrying and regrouping.'
+      },
+      {
+        id: 'bar-model',
+        name: 'Bar / Tape Model',
+        nameEn: 'Bar / Tape Model',
+        badge: 'Model Batang',
+        badgeEn: 'Tape Diagram',
+        icon: '📦',
+        summary: 'Gunakan batang proporsional untuk membandingkan ukuran bagian pertama, bagian kedua, dan total gabungannya.',
+        summaryEn: 'Use proportional bars to visualize part-whole relationships and the combined total.',
+        whyGood: 'Jembatan terbaik untuk memahami soal cerita dan relasi bagian-ke-keseluruhan.',
+        whyGoodEn: 'The best bridge for understanding word problems and part-whole logic.'
+      },
+      {
+        id: 'mental-math',
+        name: 'Mental Math',
+        nameEn: 'Mental Math',
+        badge: 'Angka Ramah',
+        badgeEn: 'Friendly Numbers',
+        icon: '🧠',
+        summary: 'Atur angka di pikiran menjadi bentuk yang paling enak diajak kerja sama sebelum dieksekusi.',
+        summaryEn: 'Rearrange numbers in your mind into the friendliest shapes before calculating.',
+        whyGood: 'Melatih kelenturan berpikir (number sense) di kepala.',
+        whyGoodEn: 'Builds mental flexibility and strong numerical intuition.'
+      },
+      {
+        id: 'soroban',
+        name: 'Soroban Abacus',
+        nameEn: 'Soroban Abacus',
+        badge: 'Sempoa Jepang',
+        badgeEn: 'Japanese Abacus',
+        icon: '🧮',
+        summary: 'Pendekatan sempoa visual: manik atas bernilai 5 (surga) dan manik bawah bernilai 1 (bumi).',
+        summaryEn: 'Visual bead abacus: upper bead equals 5 (heaven) and lower beads equal 1 (earth).',
+        whyGood: 'Dasar visual berhitung cepat yang melatih fokus dan bayangan mental.',
+        whyGoodEn: 'Visual foundation for high-speed calculation and vivid mental math imaging.'
+      }
+    ],
+  
+    // Preset Pilihan Cepat Soal Flagship & Variasi
+    presetExamples: [
+      { a: 67, b: 59, label: '67 + 59 (Flagship)', labelEn: '67 + 59 (Flagship)', highlight: true },
+      { a: 68, b: 32, label: '68 + 32 (Bikin 100)', labelEn: '68 + 32 (Make 100)' },
+      { a: 125, b: 75, label: '125 + 75 (Ratusan)', labelEn: '125 + 75 (Hundreds)' },
+      { a: 49, b: 51, label: '49 + 51 (Pas 100)', labelEn: '49 + 51 (Exact 100)' },
+      { a: 27, b: 18, label: '27 + 18 (Dasar)', labelEn: '27 + 18 (Basic)' },
+      { a: 58, b: 29, label: '58 + 29 (Kompensasi)', labelEn: '58 + 29 (Compensation)' }
+    ],
+  
+    // Bank Soal Latihan Multi-Strategi
+    practiceProblems: [
+      {
+        id: 'p1',
+        a: 67,
+        b: 59,
+        answer: 126,
+        question: '67 + 59 = ?',
+        story: 'Kadek mengumpulkan 67 kerang di pantai Sanur, lalu Wayan memberinya 59 kerang lagi. Berapa total kerang mereka sekarang?',
+        storyEn: 'Kadek collected 67 seashells at Sanur Beach, then Wayan gave him 59 more. How many seashells do they have in total?',
+        recommended: ['compensation', 'make-hundred', 'decomposition'],
+        hints: [
+          '💡 Petunjuk 1: Coba perhatikan angka 59. Angka ini hampir jadi angka berapa yang bulat ya?',
+          '💡 Petunjuk 2: 59 hampir jadi 60! Coba bayangkan 67 + 60 dulu. Berapa hasilnya?',
+          '💡 Petunjuk 3: 67 + 60 = 127. Karena tadi kita melebihkan 1, sekarang kurangi 1: 127 - 1 = 126! 🎉'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Look closely at 59. What round number is it almost close to?',
+          '💡 Hint 2: 59 is almost 60! First imagine 67 + 60. What do you get?',
+          '💡 Hint 3: 67 + 60 = 127. Since we added 1 too many, subtract 1 now: 127 - 1 = 126! 🎉'
+        ],
+        explanation: '59 → 60. Maka 67 + 60 = 127. Lalu kembalikan 1: 127 - 1 = 126!',
+        explanationEn: '59 → 60. Then 67 + 60 = 127. Subtract 1: 127 - 1 = 126!'
+      },
+      {
+        id: 'p2',
+        a: 68,
+        b: 32,
+        answer: 100,
+        question: '68 + 32 = ?',
+        story: 'Ibu membeli 68 kue lapis dan 32 lemper untuk perayaan sekolah. Berapa jumlah kue semuanya?',
+        storyEn: 'Mom bought 68 layer cakes and 32 sticky rice snacks for the school festival. How many cakes are there altogether?',
+        recommended: ['make-hundred', 'decomposition'],
+        hints: [
+          '💡 Petunjuk 1: Coba lihat satuannya: 8 + 2. Pas banget menghasilkan berapa?',
+          '💡 Petunjuk 2: 8 + 2 = 10. Sekarang puluhan: 60 + 30 = 90.',
+          '💡 Petunjuk 3: 90 + 10 = 100 bulat sempurna! Keren banget kan?'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Check the ones digits: 8 + 2. What perfect number do they make?',
+          '💡 Hint 2: 8 + 2 = 10. Now add the tens: 60 + 30 = 90.',
+          '💡 Hint 3: 90 + 10 = 100 perfectly! Awesome, right?'
+        ],
+        explanation: '68 butuh 32 untuk menjadi 100. Pasangan sempurna langsung menghasilkan 100!',
+        explanationEn: '68 needs 32 to become 100. Perfect partners instantly make 100!'
+      },
+      {
+        id: 'p3',
+        a: 125,
+        b: 75,
+        answer: 200,
+        question: '125 + 75 = ?',
+        story: 'Di perpustakaan ada 125 buku dongeng dan 75 buku ensiklopedia. Berapa jumlah buku seluruhnya?',
+        storyEn: 'In the library there are 125 storybooks and 75 encyclopedias. How many books are there in total?',
+        recommended: ['make-hundred', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: Fokus ke ekornya: 25 + 75 itu pasangan istimewa loh!',
+          '💡 Petunjuk 2: 25 + 75 = 100. Sekarang satukan dengan 100 yang ada di depan 125.',
+          '💡 Petunjuk 3: 100 + 100 = 200! Tepat sekali!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Look at the endings: 25 + 75 is a famous pair!',
+          '💡 Hint 2: 25 + 75 = 100. Now combine with the 100 in front of 125.',
+          '💡 Hint 3: 100 + 100 = 200! Exactly right!'
+        ],
+        explanation: '125 + 75 = 100 + (25 + 75) = 100 + 100 = 200!',
+        explanationEn: '125 + 75 = 100 + (25 + 75) = 100 + 100 = 200!'
+      },
+      {
+        id: 'p4',
+        a: 49,
+        b: 51,
+        answer: 100,
+        question: '49 + 51 = ?',
+        story: 'Budi punya 49 kelereng biru dan 51 kelereng merah. Berapa kelereng Budi semuanya?',
+        storyEn: 'Budi has 49 blue marbles and 51 red marbles. How many marbles does Budi have in total?',
+        recommended: ['compensation', 'make-hundred'],
+        hints: [
+          '💡 Petunjuk 1: Pindahkan 1 kelereng dari 51 ke 49.',
+          '💡 Petunjuk 2: Sekarang kedua kelompok sama-sama menjadi 50 dan 50!',
+          '💡 Petunjuk 3: 50 + 50 = 100! Seimbang dan sangat cepat!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Move 1 marble from 51 to 49.',
+          '💡 Hint 2: Now both piles become 50 and 50!',
+          '💡 Hint 3: 50 + 50 = 100! Balanced and super quick!'
+        ],
+        explanation: 'Pindahkan 1 dari 51 ke 49 → menjadi 50 + 50 = 100!',
+        explanationEn: 'Shift 1 from 51 to 49 → becomes 50 + 50 = 100!'
+      },
+      {
+        id: 'p5',
+        a: 58,
+        b: 29,
+        answer: 87,
+        question: '58 + 29 = ?',
+        story: 'Ada 58 burung di pohon beringin dan datang lagi 29 burung. Berapa burung semuanya?',
+        storyEn: 'There are 58 birds on the banyan tree and 29 more join in. How many birds are there altogether?',
+        recommended: ['compensation', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: 29 hampir jadi 30 (cuma kurang 1).',
+          '💡 Petunjuk 2: Hitung 58 + 30 = 88.',
+          '💡 Petunjuk 3: Kurangi 1 karena tadi kebanyakan: 88 - 1 = 87!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: 29 is almost 30 (just 1 away).',
+          '💡 Hint 2: Add 58 + 30 = 88.',
+          '💡 Hint 3: Subtract 1 because we added 1 too many: 88 - 1 = 87!'
+        ],
+        explanation: '58 + 30 = 88. Lalu 88 - 1 = 87!',
+        explanationEn: '58 + 30 = 88. Then 88 - 1 = 87!'
+      }
+    ],
+  
+    // Pertanyaan Metakognisi Setelah Berhasil
+    metacognition: {
+      question: 'Kenapa kamu memilih cara ini?',
+      questionEn: 'Why did you choose this strategy?',
+      options: [
+        { id: 'opt1', text: '🧩 Angkanya gampang dipecah puluhan & satuan', textEn: '🧩 Numbers easily split into tens & ones' },
+        { id: 'opt2', text: '🔟 Bisa langsung dibikin pas 100', textEn: '🔟 Can quickly round up to 100' },
+        { id: 'opt3', text: '⚖️ Enak dibulatkan lalu dikembalikan lebihnya', textEn: '⚖️ Easy to round up then adjust the difference' },
+        { id: 'opt4', text: '📏 Paling jelas dan kelihatan di garis bilangan', textEn: '📏 Clearest and easiest to see on number line' },
+        { id: 'opt5', text: '⚡ Cara ini terasa paling santai di kepalaku', textEn: '⚡ Feels most effortless in my head' }
+      ]
+    },
+  
+    // Lencana Penghargaan Eksplorasi (Reward Mindset)
+    badges: [
+      { id: 'badge-decomp', name: 'Number Builder', icon: '🧩', desc: 'Mencoba jurus Pecah Angka', descEn: 'Tried Split Numbers strategy' },
+      { id: 'badge-make100', name: 'Hundred Maker', icon: '🔟', desc: 'Menggenapkan angka ke 100', descEn: 'Rounded numbers up to 100' },
+      { id: 'badge-line', name: 'Number Line Rider', icon: '📏', desc: 'Melompat chunk di Garis Bilangan', descEn: 'Made chunk jumps on Number Line' },
+      { id: 'badge-blocks', name: 'Block Master', icon: '🧱', desc: 'Menata balok dan regrouping', descEn: 'Regrouped Base-Ten blocks' },
+      { id: 'badge-comp', name: 'Balance Wizard', icon: '⚖️', desc: 'Menguasai jurus Kompensasi', descEn: 'Mastered Compensation trick' },
+      { id: 'badge-abacus', name: 'Abacus Explorer', icon: '🧮', desc: 'Menjelajahi sempoa Soroban', descEn: 'Explored Soroban abacus beads' }
+    ]
+  };
+  
+
+  // --- Source: js/data/geo-data.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Geography Master Dataset & Bali Module
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:45:00
+  // ================================================================
+  
+  const GEO_DATA = {
+    id: 'geografi',
+    title: 'Geografi — Jelajah Bumi & Nusantara',
+    titleEn: 'Geography — Discover Earth & Indonesia',
+    subtitle: 'Yuk keliling Bumi yang bulat, kenali 38 provinsi Indonesia, cari kota-kota seru, dan jelajahi pulau dewata Bali! 🌍',
+    subtitleEn: 'Explore the spherical Earth, learn 38 Indonesian provinces, find famous cities, and explore Bali! 🌍',
+  
+    // Metadata Sumber Data Resmi (Sesuai Syarat Mandatori)
+    metadata: {
+      source: 'Kementerian Dalam Negeri Republik Indonesia & Badan Pusat Statistik (BPS) 2026',
+      reviewedAt: '2026-09-10',
+      curator: 'Development · Anabhi Dev',
+      scope: 'Daftar Negara-Negara di Dunia (6 Benua Lengkap), 38 Provinsi Resmi Indonesia, 38 Ibu Kota, Kota Terkenal Non-Ibu Kota Terpilih, dan 8 Kabupaten + 1 Kota Provinsi Bali.'
+    },
+  
+    // 3 Slot Video YouTube Geografi (Otomatis tersembunyi bila url kosong)
+    videoSlots: [
+      {
+        id: 'geo-yt-1',
+        title: '1. Mengenal Bumi & Globe yang Berputar',
+        description: 'Kenapa Bumi tampak bulat seperti bola biru dari luar angkasa? Yuk tonton penjelasannya!',
+        url: '',
+        ageFit: 'Kelas 1 SD'
+      },
+      {
+        id: 'geo-yt-2',
+        title: '2. Keliling Dunia & Benua Sahabat',
+        description: 'Mengenal benua Asia, Afrika, Eropa, Amerika, dan Australia dengan seru.',
+        url: '',
+        ageFit: 'Kelas 1 SD'
+      },
+      {
+        id: 'geo-yt-3',
+        title: '3. Indonesia yang Luas: 38 Provinsi Indah',
+        description: 'Jelajah nusantara dari Sabang sampai Merauke, dari Miangas hingga Pulau Rote.',
+        url: '',
+        ageFit: 'Kelas 1 SD'
+      }
+    ],
+  
+    // 1. Pengenalan Bumi & Fakta Bentuk Bola
+    earthIntro: {
+      heading: 'Bumi Kita: Rumah Berbentuk Bola yang Indah',
+      headingEn: 'Our Earth: A Beautiful Spherical Home',
+      funFactBadge: '🌍 Fakta Keren Antariksa',
+      funFactBadgeEn: '🌍 Space Wonder Fact',
+      explanation: 'Tahukah kamu? Bumi tempat kita tinggal berbentuk hampir bulat sempurna seperti bola! Para astronaut di luar angkasa melihat Bumi seperti kelereng biru berkilau yang berputar anggun. Walaupun di kutubnya sedikit pepat (istilah ilmiahnya geoid / oblate spheroid), dari luar Bumi tampak bulat bola bundar!',
+      explanationEn: 'Did you know? The Earth we live on is almost a perfect sphere! Astronauts in outer space see Earth as a shining blue marble gracefully spinning. Although slightly flattened at the poles (scientifically an oblate spheroid), from space Earth appears beautifully spherical and round!',
+      highlights: [
+        { icon: '🌐', title: 'Hampir Bulat Seperti Bola', titleEn: 'Spherical Like a Globe', desc: 'Bukan datar seperti piring, melainkan bola 3D raksasa yang berputar siang dan malam.', descEn: 'Not flat like a disc, but a massive 3D sphere spinning day and night.' },
+        { icon: '🌊', title: '70% Tertutup Air', titleEn: '70% Covered by Water', desc: 'Lautan luas membuat Bumi berwarna biru cerah dipandang dari antariksa.', descEn: 'Vast oceans make Earth look brilliantly blue from outer space.' },
+        { icon: '🔄', title: 'Bumi Terus Berputar (Rotasi)', titleEn: 'Earth Continuously Rotates', desc: 'Perputaran Bumi pada porosnya membuat ada waktu pagi ceria dan malam berbintang.', descEn: 'Rotation on its axis brings bright sunny mornings and starry nights.' },
+        { icon: '🇮🇩', title: 'Indonesia di Garis Khatulistiwa', titleEn: 'Indonesia on the Equator', desc: 'Negara kita berada tepat di tengah Bumi, jadi hangat dan mendapat sinar matahari sepanjang tahun!', descEn: 'Our archipelago sits right on the Equator, enjoying warm sunshine all year round!' }
+      ]
+    },
+  
+    // 1.5. Daftar Negara-Negara di Dunia (6 Benua Lengkap)
+    countries: [
+      {
+          "id": "indonesia",
+          "name": "Indonesia",
+          "nameEn": "Indonesia",
+          "capital": "Jakarta / IKN Nusantara",
+          "continent": "Asia",
+          "flag": "🇮🇩",
+          "currency": "Rupiah (IDR)",
+          "landmark": "Monas, Candi Borobudur, & Danau Toba",
+          "language": "Bahasa Indonesia",
+          "funFact": "Negara kepulauan terbesar di dunia dengan lebih dari 17.000 pulau eksotis.",
+          "coords": [
+              106.8,
+              -6.2
+          ]
+      },
+      {
+          "id": "malaysia",
+          "name": "Malaysia",
+          "nameEn": "Malaysia",
+          "capital": "Kuala Lumpur",
+          "continent": "Asia",
+          "flag": "🇲🇾",
+          "currency": "Ringgit (MYR)",
+          "landmark": "Menara Kembar Petronas & Batu Caves",
+          "language": "Bahasa Melayu",
+          "funFact": "Punya menara kembar tertinggi di dunia yang dihubungkan jembatan udara megah.",
+          "coords": [
+              101.7,
+              3.1
+          ]
+      },
+      {
+          "id": "singapura",
+          "name": "Singapura",
+          "nameEn": "Singapore",
+          "capital": "Singapura",
+          "continent": "Asia",
+          "flag": "🇸🇬",
+          "currency": "Dolar Singapura (SGD)",
+          "landmark": "Patung Merlion & Gardens by the Bay",
+          "language": "Inggris, Melayu, Mandarin, Tamil",
+          "funFact": "Negara pulau terbersih dan paling hijau dengan pohon-pohon buatan raksasa bercahaya.",
+          "coords": [
+              103.8,
+              1.35
+          ]
+      },
+      {
+          "id": "brunei",
+          "name": "Brunei Darussalam",
+          "nameEn": "Brunei",
+          "capital": "Bandar Seri Begawan",
+          "continent": "Asia",
+          "flag": "🇧🇳",
+          "currency": "Dolar Brunei (BND)",
+          "landmark": "Masjid Sultan Omar Ali Saifuddien",
+          "language": "Bahasa Melayu",
+          "funFact": "Kubah masjid megahnya terbuat dari emas murni 24 karat yang berkilau indah.",
+          "coords": [
+              114.9,
+              4.9
+          ]
+      },
+      {
+          "id": "thailand",
+          "name": "Thailand",
+          "nameEn": "Thailand",
+          "capital": "Bangkok",
+          "continent": "Asia",
+          "flag": "🇹🇭",
+          "currency": "Baht (THB)",
+          "landmark": "Grand Palace & Kuil Fajar Wat Arun",
+          "language": "Bahasa Thai",
+          "funFact": "Dijuluki Negeri Gajah Putih dan Negeri Senyuman (Land of Smiles).",
+          "coords": [
+              100.5,
+              13.75
+          ]
+      },
+      {
+          "id": "filipina",
+          "name": "Filipina",
+          "nameEn": "Philippines",
+          "capital": "Manila",
+          "continent": "Asia",
+          "flag": "🇵🇭",
+          "currency": "Peso Filipina (PHP)",
+          "landmark": "Bukit Cokelat Bohol & Kota Bersejarah Intramuros",
+          "language": "Filipino / Tagalog & Inggris",
+          "funFact": "Punya bukit-bukit kapur unik yang berubah warna kecokelatan saat musim kemarau.",
+          "coords": [
+              121,
+              14.6
+          ]
+      },
+      {
+          "id": "vietnam",
+          "name": "Vietnam",
+          "nameEn": "Vietnam",
+          "capital": "Hanoi",
+          "continent": "Asia",
+          "flag": "🇻🇳",
+          "currency": "Dong (VND)",
+          "landmark": "Teluk Ha Long & Jembatan Emas Da Nang",
+          "language": "Bahasa Vietnam",
+          "funFact": "Teluk Ha Long punya ribuan pulau batu karang yang menjulang tinggi di atas zamrud laut.",
+          "coords": [
+              105.8,
+              21
+          ]
+      },
+      {
+          "id": "jepang",
+          "name": "Jepang",
+          "nameEn": "Japan",
+          "capital": "Tokyo",
+          "continent": "Asia",
+          "flag": "🇯🇵",
+          "currency": "Yen (JPY)",
+          "landmark": "Gunung Fuji & Menara Tokyo",
+          "language": "Bahasa Jepang",
+          "funFact": "Negara matahari terbit dengan kereta cepat Shinkansen yang super tepat waktu.",
+          "coords": [
+              139.7,
+              35.7
+          ]
+      },
+      {
+          "id": "korea-selatan",
+          "name": "Korea Selatan",
+          "nameEn": "South Korea",
+          "capital": "Seoul",
+          "continent": "Asia",
+          "flag": "🇰🇷",
+          "currency": "Won (KRW)",
+          "landmark": "Istana Gyeongbokgung & Menara N Seoul",
+          "language": "Bahasa Korea (Hangeul)",
+          "funFact": "Negara ginseng asal musik K-Pop dan serial animasi ramah anak seperti Pororo & Tayo.",
+          "coords": [
+              126.98,
+              37.56
+          ]
+      },
+      {
+          "id": "tiongkok",
+          "name": "Tiongkok",
+          "nameEn": "China",
+          "capital": "Beijing",
+          "continent": "Asia",
+          "flag": "🇨🇳",
+          "currency": "Yuan / Renminbi (CNY)",
+          "landmark": "Tembok Besar Tiongkok & Kota Terlarang",
+          "language": "Mandarin",
+          "funFact": "Tembok besarnya membentang ribuan kilometer melintasi pegunungan gagah.",
+          "coords": [
+              116.4,
+              39.9
+          ]
+      },
+      {
+          "id": "india",
+          "name": "India",
+          "nameEn": "India",
+          "capital": "New Delhi",
+          "continent": "Asia",
+          "flag": "🇮🇳",
+          "currency": "Rupee India (INR)",
+          "landmark": "Taj Mahal & Gerbang India (India Gate)",
+          "language": "Hindi & Inggris",
+          "funFact": "Taj Mahal dari marmer putih dibangun sebagai lambang cinta yang megah.",
+          "coords": [
+              77.2,
+              28.6
+          ]
+      },
+      {
+          "id": "arab-saudi",
+          "name": "Arab Saudi",
+          "nameEn": "Saudi Arabia",
+          "capital": "Riyadh",
+          "continent": "Asia",
+          "flag": "🇸🇦",
+          "currency": "Riyal (SAR)",
+          "landmark": "Ka'bah di Makkah & Masjid Nabawi Madinah",
+          "language": "Bahasa Arab",
+          "funFact": "Tempat dua kota suci umat Islam yang dikunjungi jutaan orang dari seluruh penjuru dunia.",
+          "coords": [
+              46.7,
+              24.7
+          ]
+      },
+      {
+          "id": "uea",
+          "name": "Uni Emirat Arab",
+          "nameEn": "United Arab Emirates",
+          "capital": "Abu Dhabi",
+          "continent": "Asia",
+          "flag": "🇦🇪",
+          "currency": "Dirham (AED)",
+          "landmark": "Burj Khalifa Dubai & Masjid Agung Sheikh Zayed",
+          "language": "Bahasa Arab",
+          "funFact": "Punya Burj Khalifa, gedung tertinggi di dunia yang menembus awan setinggi 828 meter!",
+          "coords": [
+              54.4,
+              24.5
+          ]
+      },
+      {
+          "id": "turki",
+          "name": "Turki",
+          "nameEn": "Turkey",
+          "capital": "Ankara",
+          "continent": "Asia",
+          "flag": "🇹🇷",
+          "currency": "Lira Turki (TRY)",
+          "landmark": "Hagia Sophia & Balon Udara Cappadocia",
+          "language": "Bahasa Turki",
+          "funFact": "Negara unik yang berada di dua benua sekaligus: sebagian di Asia dan sebagian di Eropa!",
+          "coords": [
+              32.85,
+              39.93
+          ]
+      },
+      {
+          "id": "palestina",
+          "name": "Palestina",
+          "nameEn": "Palestine",
+          "capital": "Yerusalem Timur",
+          "continent": "Asia",
+          "flag": "🇵🇸",
+          "currency": "Shekel & Dinar",
+          "landmark": "Masjid Al-Aqsa & Kubah As-Sakhrah",
+          "language": "Bahasa Arab",
+          "funFact": "Tanah bersejarah para nabi dengan pohon zaitun tertua di dunia yang berbuah lebat.",
+          "coords": [
+              35.2,
+              31.8
+          ]
+      },
+      {
+          "id": "qatar",
+          "name": "Qatar",
+          "nameEn": "Qatar",
+          "capital": "Doha",
+          "continent": "Asia",
+          "flag": "🇶🇦",
+          "currency": "Riyal Qatar (QAR)",
+          "landmark": "Museum Seni Islam & Pulau The Pearl",
+          "language": "Bahasa Arab",
+          "funFact": "Negara modern yang pernah sukses menjadi tuan rumah Piala Dunia sepak bola.",
+          "coords": [
+              51.5,
+              25.3
+          ]
+      },
+      {
+          "id": "iran",
+          "name": "Iran",
+          "nameEn": "Iran",
+          "capital": "Teheran",
+          "continent": "Asia",
+          "flag": "🇮🇷",
+          "currency": "Rial Iran (IRR)",
+          "landmark": "Menara Azadi & Reruntuhan Kuno Persepolis",
+          "language": "Bahasa Persia (Farsi)",
+          "funFact": "Pusat peradaban Persia kuno yang terkenal dengan karpet anyaman tangan bernilai tinggi.",
+          "coords": [
+              51.4,
+              35.7
+          ]
+      },
+      {
+          "id": "pakistan",
+          "name": "Pakistan",
+          "nameEn": "Pakistan",
+          "capital": "Islamabad",
+          "continent": "Asia",
+          "flag": "🇵🇰",
+          "currency": "Rupee Pakistan (PKR)",
+          "landmark": "Masjid Faisal & Puncak Gunung K2",
+          "language": "Urdu & Inggris",
+          "funFact": "Punya puncak gunung K2, gunung tertinggi kedua di dunia yang diselimuti salju abadi.",
+          "coords": [
+              73,
+              33.7
+          ]
+      },
+      {
+          "id": "timor-leste",
+          "name": "Timor Leste",
+          "nameEn": "Timor-Leste",
+          "capital": "Dili",
+          "continent": "Asia",
+          "flag": "🇹🇱",
+          "currency": "Dolar AS (USD)",
+          "landmark": "Patung Cristo Rei Dili & Pantai Areia Branca",
+          "language": "Tetum & Portugis",
+          "funFact": "Tetangga timur pulau Timor dengan terumbu karang pulau Atauro yang sangat kaya hayati.",
+          "coords": [
+              125.6,
+              -8.55
+          ]
+      },
+      {
+          "id": "kamboja",
+          "name": "Kamboja",
+          "nameEn": "Cambodia",
+          "capital": "Phnom Penh",
+          "continent": "Asia",
+          "flag": "🇰🇭",
+          "currency": "Riel (KHR)",
+          "landmark": "Kompleks Candi Angkor Wat",
+          "language": "Bahasa Khmer",
+          "funFact": "Angkor Wat adalah monumen keagamaan terbesar di dunia yang dibangun ribuan tahun lalu.",
+          "coords": [
+              104.9,
+              11.55
+          ]
+      },
+      {
+          "id": "inggris",
+          "name": "Inggris (Britania Raya)",
+          "nameEn": "United Kingdom",
+          "capital": "London",
+          "continent": "Eropa",
+          "flag": "🇬🇧",
+          "currency": "Poundsterling (GBP)",
+          "landmark": "Menara Jam Big Ben, London Eye, & Tower Bridge",
+          "language": "Bahasa Inggris",
+          "funFact": "Asal mula bahasa Inggris internasional dan bus tingkat merah ikonik yang lucu.",
+          "coords": [
+              -0.12,
+              51.5
+          ]
+      },
+      {
+          "id": "prancis",
+          "name": "Prancis",
+          "nameEn": "France",
+          "capital": "Paris",
+          "continent": "Eropa",
+          "flag": "🇫🇷",
+          "currency": "Euro (EUR)",
+          "landmark": "Menara Eiffel & Museum Seni Louvre",
+          "language": "Bahasa Prancis",
+          "funFact": "Menara Eiffel terbuat dari besi tempa dan bisa bertambah tinggi 15 cm saat musim panas!",
+          "coords": [
+              2.35,
+              48.85
+          ]
+      },
+      {
+          "id": "jerman",
+          "name": "Jerman",
+          "nameEn": "Germany",
+          "capital": "Berlin",
+          "continent": "Eropa",
+          "flag": "🇩🇪",
+          "currency": "Euro (EUR)",
+          "landmark": "Gerbang Brandenburg & Kastil Neuschwanstein",
+          "language": "Bahasa Jerman",
+          "funFact": "Kastil Neuschwanstein di Jerman menjadi inspirasi kastil dongeng Cinderella di Disney!",
+          "coords": [
+              13.4,
+              52.5
+          ]
+      },
+      {
+          "id": "italia",
+          "name": "Italia",
+          "nameEn": "Italy",
+          "capital": "Roma",
+          "continent": "Eropa",
+          "flag": "🇮🇹",
+          "currency": "Euro (EUR)",
+          "landmark": "Colosseum Roma & Menara Miring Pisa",
+          "language": "Bahasa Italia",
+          "funFact": "Negara asal pizza dan pasta lezat! Menara Pisa miring karena tanahnya lunak saat dibangun.",
+          "coords": [
+              12.5,
+              41.9
+          ]
+      },
+      {
+          "id": "belanda",
+          "name": "Belanda",
+          "nameEn": "Netherlands",
+          "capital": "Amsterdam",
+          "continent": "Eropa",
+          "flag": "🇳🇱",
+          "currency": "Euro (EUR)",
+          "landmark": "Kincir Angin Zaanse Schans & Kebun Tulip Keukenhof",
+          "language": "Bahasa Belanda",
+          "funFact": "Negara kincir angin dan bunga tulip yang memiliki lebih banyak sepeda daripada penduduknya!",
+          "coords": [
+              4.9,
+              52.37
+          ]
+      },
+      {
+          "id": "spanyol",
+          "name": "Spanyol",
+          "nameEn": "Spain",
+          "capital": "Madrid",
+          "continent": "Eropa",
+          "flag": "🇪🇸",
+          "currency": "Euro (EUR)",
+          "landmark": "Katedral Sagrada Familia Barcelona & Istana Alhambra",
+          "language": "Bahasa Spanyol",
+          "funFact": "Katedral megah Sagrada Familia karya arsitek Gaudi sudah dibangun lebih dari 140 tahun.",
+          "coords": [
+              -3.7,
+              40.4
+          ]
+      },
+      {
+          "id": "swiss",
+          "name": "Swiss",
+          "nameEn": "Switzerland",
+          "capital": "Bern",
+          "continent": "Eropa",
+          "flag": "🇨🇭",
+          "currency": "Franc Swiss (CHF)",
+          "landmark": "Pegunungan Alpen & Puncak Matterhorn",
+          "language": "Jerman, Prancis, Italia, Romansh",
+          "funFact": "Terkenal dengan cokelat lezat, jam tangan presisi, dan desa pegunungan yang sangat bersih.",
+          "coords": [
+              7.45,
+              46.95
+          ]
+      },
+      {
+          "id": "rusia",
+          "name": "Rusia",
+          "nameEn": "Russia",
+          "capital": "Moskow",
+          "continent": "Eropa",
+          "flag": "🇷🇺",
+          "currency": "Rubel Rusia (RUB)",
+          "landmark": "Lapangan Merah & Katedral Santo Basil",
+          "language": "Bahasa Rusia",
+          "funFact": "Negara dengan wilayah terluas di dunia, mencakup 11 zona waktu yang berbeda!",
+          "coords": [
+              37.6,
+              55.75
+          ]
+      },
+      {
+          "id": "norwegia",
+          "name": "Norwegia",
+          "nameEn": "Norway",
+          "capital": "Oslo",
+          "continent": "Eropa",
+          "flag": "🇳🇴",
+          "currency": "Krone Norwegia (NOK)",
+          "landmark": "Fjord Geiranger & Fenomena Cahaya Aurora Borealis",
+          "language": "Bahasa Norwegia",
+          "funFact": "Di bagian utaranya matahari tidak pernah terbenam di musim panas (Midnight Sun)!",
+          "coords": [
+              10.75,
+              59.9
+          ]
+      },
+      {
+          "id": "yunani",
+          "name": "Yunani",
+          "nameEn": "Greece",
+          "capital": "Athena",
+          "continent": "Eropa",
+          "flag": "🇬🇷",
+          "currency": "Euro (EUR)",
+          "landmark": "Kuil Parthenon di Bukit Akropolis & Pulau Santorini",
+          "language": "Bahasa Yunani",
+          "funFact": "Tempat lahirnya pesta olahraga Olimpiade dunia pada ribuan tahun yang lalu.",
+          "coords": [
+              23.7,
+              38
+          ]
+      },
+      {
+          "id": "portugal",
+          "name": "Portugal",
+          "nameEn": "Portugal",
+          "capital": "Lisabon",
+          "continent": "Eropa",
+          "flag": "🇵🇹",
+          "currency": "Euro (EUR)",
+          "landmark": "Menara Belém & Trem Kuning Nomor 28",
+          "language": "Bahasa Portugis",
+          "funFact": "Punya kue tart telur custard manis Pastel de Nata yang terkenal di seluruh dunia.",
+          "coords": [
+              -9.14,
+              38.72
+          ]
+      },
+      {
+          "id": "vatikan",
+          "name": "Vatikan",
+          "nameEn": "Vatican City",
+          "capital": "Kota Vatikan",
+          "continent": "Eropa",
+          "flag": "🇻🇦",
+          "currency": "Euro (EUR)",
+          "landmark": "Basilika Santo Petrus & Kapel Sistina",
+          "language": "Latin & Italia",
+          "funFact": "Negara berdaulat terkecil di dunia, seluruh wilayahnya berada di dalam kota Roma.",
+          "coords": [
+              12.45,
+              41.9
+          ]
+      },
+      {
+          "id": "swedia",
+          "name": "Swedia",
+          "nameEn": "Sweden",
+          "capital": "Stockholm",
+          "continent": "Eropa",
+          "flag": "🇸🇪",
+          "currency": "Krona Swedia (SEK)",
+          "landmark": "Museum Kapal Laut Kuno Vasa & Kota Tua Gamla Stan",
+          "language": "Bahasa Swedia",
+          "funFact": "Tempat pemberian Penghargaan Nobel bergengsi bagi tokoh ilmuwan dan perdamaian dunia.",
+          "coords": [
+              18.06,
+              59.33
+          ]
+      },
+      {
+          "id": "austria",
+          "name": "Austria",
+          "nameEn": "Austria",
+          "capital": "Wina",
+          "continent": "Eropa",
+          "flag": "🇦🇹",
+          "currency": "Euro (EUR)",
+          "landmark": "Istana Schönbrunn & Gedung Opera Wina",
+          "language": "Bahasa Jerman",
+          "funFact": "Kota musik klasik dunia, rumah bagi komponis Mozart dan Beethoven berkarya.",
+          "coords": [
+              16.37,
+              48.2
+          ]
+      },
+      {
+          "id": "belgia",
+          "name": "Belgia",
+          "nameEn": "Belgium",
+          "capital": "Brussel",
+          "continent": "Eropa",
+          "flag": "🇧🇪",
+          "currency": "Euro (EUR)",
+          "landmark": "Monumen Atomium & Alun-alun Grand Place",
+          "language": "Belanda, Prancis, Jerman",
+          "funFact": "Terkenal dengan wafel renyah manis dan cokelat praline berbentuk kerang laut.",
+          "coords": [
+              4.35,
+              50.85
+          ]
+      },
+      {
+          "id": "mesir",
+          "name": "Mesir",
+          "nameEn": "Egypt",
+          "capital": "Kairo",
+          "continent": "Afrika",
+          "flag": "🇪🇬",
+          "currency": "Pound Mesir (EGP)",
+          "landmark": "Piramida Agung Giza & Patung Sphinx Raksasa",
+          "language": "Bahasa Arab",
+          "funFact": "Piramida Giza dibangun batu demi batu ribuan tahun lalu dan menjadi keajaiban dunia!",
+          "coords": [
+              31.23,
+              30.04
+          ]
+      },
+      {
+          "id": "afrika-selatan",
+          "name": "Afrika Selatan",
+          "nameEn": "South Africa",
+          "capital": "Pretoria / Cape Town",
+          "continent": "Afrika",
+          "flag": "🇿🇦",
+          "currency": "Rand (ZAR)",
+          "landmark": "Gunung Meja (Table Mountain) & Safari Kruger",
+          "language": "11 Bahasa Resmi (Zulu, Xhosa, Afrikaans, dll)",
+          "funFact": "Punya pantai Boulders tempat ribuan penguin liar berenang dan bermain di pantai.",
+          "coords": [
+              28.2,
+              -25.75
+          ]
+      },
+      {
+          "id": "maroko",
+          "name": "Maroko",
+          "nameEn": "Morocco",
+          "capital": "Rabat",
+          "continent": "Afrika",
+          "flag": "🇲🇦",
+          "currency": "Dirham Maroko (MAD)",
+          "landmark": "Masjid Hassan II Casablanca & Kota Biru Chefchaouen",
+          "language": "Arab & Berber",
+          "funFact": "Kota Chefchaouen dicat serba biru langit yang memesona di kaki pegunungan Rif.",
+          "coords": [
+              -6.85,
+              34.02
+          ]
+      },
+      {
+          "id": "kenya",
+          "name": "Kenya",
+          "nameEn": "Kenya",
+          "capital": "Nairobi",
+          "continent": "Afrika",
+          "flag": "🇰🇪",
+          "currency": "Shilling Kenya (KES)",
+          "landmark": "Cagar Alam Liar Maasai Mara & Gunung Kenya",
+          "language": "Swahili & Inggris",
+          "funFact": "Tempat melihat migrasi besar jutaan zebra dan rusa wildebeest menyeberangi sungai.",
+          "coords": [
+              36.8,
+              -1.29
+          ]
+      },
+      {
+          "id": "madagaskar",
+          "name": "Madagaskar",
+          "nameEn": "Madagascar",
+          "capital": "Antananarivo",
+          "continent": "Afrika",
+          "flag": "🇲🇬",
+          "currency": "Ariary (MGA)",
+          "landmark": "Jalan Pohon Baobab Raksasa (Avenue of the Baobabs)",
+          "language": "Malagasi & Prancis",
+          "funFact": "Pulau unik rumah bagi hewan lemur bermata bulat yang tidak ditemukan di alam lain.",
+          "coords": [
+              47.5,
+              -18.88
+          ]
+      },
+      {
+          "id": "nigeria",
+          "name": "Nigeria",
+          "nameEn": "Nigeria",
+          "capital": "Abuja",
+          "continent": "Afrika",
+          "flag": "🇳🇬",
+          "currency": "Naira (NGN)",
+          "landmark": "Batu Raksasa Zuma Rock & Taman Nasional Yankari",
+          "language": "Bahasa Inggris",
+          "funFact": "Negara dengan jumlah penduduk terbanyak di benua Afrika dan industri film Nollywood.",
+          "coords": [
+              7.5,
+              9.07
+          ]
+      },
+      {
+          "id": "ghana",
+          "name": "Ghana",
+          "nameEn": "Ghana",
+          "capital": "Accra",
+          "continent": "Afrika",
+          "flag": "🇬🇭",
+          "currency": "Cedi (GHS)",
+          "landmark": "Kastil Pesisir Elmina & Danau Volta Buatan",
+          "language": "Bahasa Inggris",
+          "funFact": "Salah satu produsen biji kakao terbaik di dunia untuk membuat cokelat lezat.",
+          "coords": [
+              -0.19,
+              5.6
+          ]
+      },
+      {
+          "id": "aljazair",
+          "name": "Aljazair",
+          "nameEn": "Algeria",
+          "capital": "Aljir",
+          "continent": "Afrika",
+          "flag": "🇩🇿",
+          "currency": "Dinar Aljazair (DZD)",
+          "landmark": "Monumen Martir & Gurun Pasir Sahara Tassili",
+          "language": "Bahasa Arab",
+          "funFact": "Negara dengan wilayah terluas di seluruh benua Afrika, sebagian besar gurun Sahara.",
+          "coords": [
+              3.06,
+              36.75
+          ]
+      },
+      {
+          "id": "ethiopia",
+          "name": "Ethiopia",
+          "nameEn": "Ethiopia",
+          "capital": "Addis Ababa",
+          "continent": "Afrika",
+          "flag": "🇪🇹",
+          "currency": "Birr Ethiopia (ETB)",
+          "landmark": "Gereja Batu Utuh Lalibela & Pegunungan Simien",
+          "language": "Bahasa Amharik",
+          "funFact": "Tempat asal mula ditemukannya tanaman kopi pertama kali di dunia oleh penggembala kambing!",
+          "coords": [
+              38.75,
+              9.03
+          ]
+      },
+      {
+          "id": "tanzania",
+          "name": "Tanzania",
+          "nameEn": "Tanzania",
+          "capital": "Dodoma",
+          "continent": "Afrika",
+          "flag": "🇹🇿",
+          "currency": "Shilling Tanzania (TZS)",
+          "landmark": "Gunung Salju Kilimanjaro & Kawah Ngorongoro",
+          "language": "Swahili & Inggris",
+          "funFact": "Gunung Kilimanjaro adalah puncak tertinggi di benua Afrika yang memiliki salju di khatulistiwa!",
+          "coords": [
+              35.75,
+              -6.17
+          ]
+      },
+      {
+          "id": "amerika-serikat",
+          "name": "Amerika Serikat",
+          "nameEn": "United States",
+          "capital": "Washington, D.C.",
+          "continent": "Amerika Utara",
+          "flag": "🇺🇸",
+          "currency": "Dolar AS (USD)",
+          "landmark": "Patung Liberty New York & Ngarai Grand Canyon",
+          "language": "Bahasa Inggris",
+          "funFact": "Patung Liberty adalah hadiah persahabatan dari rakyat Prancis kepada Amerika Serikat.",
+          "coords": [
+              -77.04,
+              38.9
+          ]
+      },
+      {
+          "id": "kanada",
+          "name": "Kanada",
+          "nameEn": "Canada",
+          "capital": "Ottawa",
+          "continent": "Amerika Utara",
+          "flag": "🇨🇦",
+          "currency": "Dolar Kanada (CAD)",
+          "landmark": "Menara CN Toronto, Danau Louise, & Air Terjun Niagara",
+          "language": "Inggris & Prancis",
+          "funFact": "Negara dengan garis pantai terpanjang di dunia dan terkenal dengan sirup maple manis.",
+          "coords": [
+              -75.7,
+              45.42
+          ]
+      },
+      {
+          "id": "meksiko",
+          "name": "Meksiko",
+          "nameEn": "Mexico",
+          "capital": "Mexico City",
+          "continent": "Amerika Utara",
+          "flag": "🇲🇽",
+          "currency": "Peso Meksiko (MXN)",
+          "landmark": "Piramida Maya Chichen Itza & Katedral Metropolitan",
+          "language": "Bahasa Spanyol",
+          "funFact": "Asal mula makanan lezat taco dan tradisi festival ceria Hari Orang Mati (Dia de Muertos).",
+          "coords": [
+              -99.13,
+              19.43
+          ]
+      },
+      {
+          "id": "kuba",
+          "name": "Kuba",
+          "nameEn": "Cuba",
+          "capital": "Havana",
+          "continent": "Amerika Utara",
+          "flag": "🇨🇺",
+          "currency": "Peso Kuba (CUP)",
+          "landmark": "Kawasan Kota Tua Havana & Mobil Klasik Warna-Warni",
+          "language": "Bahasa Spanyol",
+          "funFact": "Di jalanan kotanya masih beroperasi ribuan mobil klasik antik era tahun 1950-an!",
+          "coords": [
+              -82.36,
+              23.11
+          ]
+      },
+      {
+          "id": "kosta-rika",
+          "name": "Kosta Rika",
+          "nameEn": "Costa Rica",
+          "capital": "San Jose",
+          "continent": "Amerika Utara",
+          "flag": "🇨🇷",
+          "currency": "Colon (CRC)",
+          "landmark": "Hutan Hujan Tropis Monteverde & Gunung Api Arenal",
+          "language": "Bahasa Spanyol",
+          "funFact": "Negara paling ramah lingkungan dengan keanekaragaman burung tukan dan kungkang (sloth).",
+          "coords": [
+              -84.08,
+              9.93
+          ]
+      },
+      {
+          "id": "panama",
+          "name": "Panama",
+          "nameEn": "Panama",
+          "capital": "Panama City",
+          "continent": "Amerika Utara",
+          "flag": "🇵🇦",
+          "currency": "Balboa & USD",
+          "landmark": "Terusan Kanal Panama",
+          "language": "Bahasa Spanyol",
+          "funFact": "Terusan Panama adalah kanal buatan manusia yang memotong benua dan menghubungkan dua samudra!",
+          "coords": [
+              -79.52,
+              8.98
+          ]
+      },
+      {
+          "id": "brasil",
+          "name": "Brasil",
+          "nameEn": "Brazil",
+          "capital": "Brasilia",
+          "continent": "Amerika Selatan",
+          "flag": "🇧🇷",
+          "currency": "Real Brasil (BRL)",
+          "landmark": "Patung Kristus Penebus Rio & Hutan Hujan Amazon",
+          "language": "Bahasa Portugis",
+          "funFact": "Hutan Amazon menghasilkan banyak oksigen dunia dan sungai Amazon adalah sungai terpanjang.",
+          "coords": [
+              -47.88,
+              -15.79
+          ]
+      },
+      {
+          "id": "argentina",
+          "name": "Argentina",
+          "nameEn": "Argentina",
+          "capital": "Buenos Aires",
+          "continent": "Amerika Selatan",
+          "flag": "🇦🇷",
+          "currency": "Peso Argentina (ARS)",
+          "landmark": "Air Terjun Raksasa Iguazu & Gletser Perito Moreno",
+          "language": "Bahasa Spanyol",
+          "funFact": "Negara tari Tango dan juara dunia sepak bola dengan gletser es biru yang spektakuler.",
+          "coords": [
+              -58.38,
+              -34.6
+          ]
+      },
+      {
+          "id": "kolombia",
+          "name": "Kolombia",
+          "nameEn": "Colombia",
+          "capital": "Bogota",
+          "continent": "Amerika Selatan",
+          "flag": "🇨🇴",
+          "currency": "Peso Kolombia (COP)",
+          "landmark": "Lembah Palem Raksasa Cocora & Kota Bersejarah Cartagena",
+          "language": "Bahasa Spanyol",
+          "funFact": "Punya pohon palem lilin Quindio yang bisa tumbuh tinggi menjulang hingga 60 meter!",
+          "coords": [
+              -74.07,
+              4.71
+          ]
+      },
+      {
+          "id": "chili",
+          "name": "Chili",
+          "nameEn": "Chile",
+          "capital": "Santiago",
+          "continent": "Amerika Selatan",
+          "flag": "🇨🇱",
+          "currency": "Peso Chili (CLP)",
+          "landmark": "Gurun Terkering Atacama & Patung Moai Pulau Paskah",
+          "language": "Bahasa Spanyol",
+          "funFact": "Bentuk negaranya sangat panjang dan ramping seperti cabai, membentang 4.300 km!",
+          "coords": [
+              -70.67,
+              -33.45
+          ]
+      },
+      {
+          "id": "peru",
+          "name": "Peru",
+          "nameEn": "Peru",
+          "capital": "Lima",
+          "continent": "Amerika Selatan",
+          "flag": "🇵🇪",
+          "currency": "Sol Peru (PEN)",
+          "landmark": "Kota Kuno di Atas Awan Machu Picchu & Gunung Pelangi",
+          "language": "Spanyol & Quechua",
+          "funFact": "Machu Picchu adalah benteng kota batu bangsa Inca kuno yang tersembunyi di puncak gunung.",
+          "coords": [
+              -77.04,
+              -12.05
+          ]
+      },
+      {
+          "id": "uruguay",
+          "name": "Uruguay",
+          "nameEn": "Uruguay",
+          "capital": "Montevideo",
+          "continent": "Amerika Selatan",
+          "flag": "🇺🇾",
+          "currency": "Peso Uruguay (UYU)",
+          "landmark": "Monumen Jari Pasir La Mano & Pantai Punta del Este",
+          "language": "Bahasa Spanyol",
+          "funFact": "Tuan rumah Piala Dunia sepak bola pertama di dunia pada tahun 1930 dan menjadi juara pertama!",
+          "coords": [
+              -56.16,
+              -34.9
+          ]
+      },
+      {
+          "id": "venezuela",
+          "name": "Venezuela",
+          "nameEn": "Venezuela",
+          "capital": "Caracas",
+          "continent": "Amerika Selatan",
+          "flag": "🇻🇪",
+          "currency": "Bolivar (VES)",
+          "landmark": "Air Terjun Angel Falls (Tertinggi di Dunia)",
+          "language": "Bahasa Spanyol",
+          "funFact": "Air Terjun Angel Falls menjatuhkan airnya dari tebing gunung setinggi hampir 1 kilometer!",
+          "coords": [
+              -66.9,
+              10.48
+          ]
+      },
+      {
+          "id": "ekuador",
+          "name": "Ekuador",
+          "nameEn": "Ecuador",
+          "capital": "Quito",
+          "continent": "Amerika Selatan",
+          "flag": "🇪🇨",
+          "currency": "Dolar AS (USD)",
+          "landmark": "Monumen Garis Khatulistiwa (Mitad del Mundo) & Kepulauan Galapagos",
+          "language": "Bahasa Spanyol",
+          "funFact": "Nama Ekuador diambil dari kata \"Khatulistiwa\", tempat kura-kura raksasa Galapagos hidup.",
+          "coords": [
+              -78.47,
+              -0.18
+          ]
+      },
+      {
+          "id": "australia",
+          "name": "Australia",
+          "nameEn": "Australia",
+          "capital": "Canberra",
+          "continent": "Oseania",
+          "flag": "🇦🇺",
+          "currency": "Dolar Australia (AUD)",
+          "landmark": "Gedung Opera Sydney & Karang Penghalang Besar (Great Barrier Reef)",
+          "language": "Bahasa Inggris",
+          "funFact": "Satu-satunya benua yang dihuni hewan berkantung unik seperti kanguru dan koala!",
+          "coords": [
+              149.13,
+              -35.28
+          ]
+      },
+      {
+          "id": "selandia-baru",
+          "name": "Selandia Baru",
+          "nameEn": "New Zealand",
+          "capital": "Wellington",
+          "continent": "Oseania",
+          "flag": "🇳🇿",
+          "currency": "Dolar Selandia Baru (NZD)",
+          "landmark": "Pedesaan Dongeng Hobbiton & Fjord Milford Sound",
+          "language": "Inggris & Maori",
+          "funFact": "Rumah bagi burung Kiwi yang tidak bisa terbang dan pemandangan alam magis film Lord of the Rings.",
+          "coords": [
+              174.78,
+              -41.29
+          ]
+      },
+      {
+          "id": "fiji",
+          "name": "Fiji",
+          "nameEn": "Fiji",
+          "capital": "Suva",
+          "continent": "Oseania",
+          "flag": "🇫🇯",
+          "currency": "Dolar Fiji (FJD)",
+          "landmark": "Kepulauan Terumbu Karang Mamanuca & Sungai Navua",
+          "language": "Fiji, Hindi, Inggris",
+          "funFact": "Kepulauan tropis yang terkenal dengan sambutan hangat ramah dan terumbu karang warna-warni.",
+          "coords": [
+              178.44,
+              -18.14
+          ]
+      },
+      {
+          "id": "papua-nugini",
+          "name": "Papua Nugini",
+          "nameEn": "Papua New Guinea",
+          "capital": "Port Moresby",
+          "continent": "Oseania",
+          "flag": "🇵🇬",
+          "currency": "Kina (PGK)",
+          "landmark": "Pegunungan Dataran Tinggi & Habitat Burung Cenderawasih",
+          "language": "Tok Pisin, Hiri Motu, Inggris",
+          "funFact": "Negara dengan keragaman bahasa terbanyak di dunia, memiliki lebih dari 800 bahasa daerah!",
+          "coords": [
+              147.18,
+              -9.44
+          ]
+      },
+      {
+          "id": "samoa",
+          "name": "Samoa",
+          "nameEn": "Samoa",
+          "capital": "Apia",
+          "continent": "Oseania",
+          "flag": "🇼🇸",
+          "currency": "Tala Samoa (WST)",
+          "landmark": "Kolam Laut To Sua Ocean Trench & Pantai Lalomanu",
+          "language": "Samoa & Inggris",
+          "funFact": "Kolam laut To Sua adalah lubang alami raksasa di tengah hutan hijau yang berisi air laut jernih.",
+          "coords": [
+              -171.76,
+              -13.83
+          ]
+      }
+  ],
+  
+    // 2. Seluruh 38 Provinsi Indonesia + 38 Ibu Kota Lengkap
+    provinces: [
+      // --- SUMATRA (10) ---
+      { id: 'aceh', name: 'Aceh', capital: 'Banda Aceh', island: 'Sumatra', icon: '🕌', funFact: 'Dikenal sebagai Serambi Mekkah dengan Masjid Raya Baiturrahman yang megah.' },
+      { id: 'sumut', name: 'Sumatera Utara', capital: 'Medan', island: 'Sumatra', icon: '🏞️', funFact: 'Punya Danau Toba yang merupakan danau vulkanik terbesar di dunia.' },
+      { id: 'sumbar', name: 'Sumatera Barat', capital: 'Padang', island: 'Sumatra', icon: '🏠', funFact: 'Terkenal dengan Rumah Gadang dan masakan rendang yang sedap.' },
+      { id: 'riau', name: 'Riau', capital: 'Pekanbaru', island: 'Sumatra', icon: '🌴', funFact: 'Kaya akan sungai besar dan kebudayaan Melayu yang kental.' },
+      { id: 'kepri', name: 'Kepulauan Riau', capital: 'Tanjungpinang', island: 'Sumatra', icon: '⛵', funFact: 'Terdiri dari ribuan pulau cantik di dekat Selat Malaka.' },
+      { id: 'jambi', name: 'Jambi', capital: 'Jambi', island: 'Sumatra', icon: '🏛️', funFact: 'Punya Kompleks Candi Muaro Jambi yang amat luas dan bersejarah.' },
+      { id: 'bengkulu', name: 'Bengkulu', capital: 'Bengkulu', island: 'Sumatra', icon: '🌺', funFact: 'Habitat asli bunga raksasa langka di dunia, Rafflesia arnoldii.' },
+      { id: 'sumsel', name: 'Sumatera Selatan', capital: 'Palembang', island: 'Sumatra', icon: '🌉', funFact: 'Ikon Jembatan Ampera yang gagah melintasi Sungai Musi.' },
+      { id: 'babel', name: 'Kepulauan Bangka Belitung', capital: 'Pangkalpinang', island: 'Sumatra', icon: '🏖️', funFact: 'Pantai berpasir putih dengan batu-batu granit raksasa yang eksotis.' },
+      { id: 'lampung', name: 'Lampung', capital: 'Bandar Lampung', island: 'Sumatra', icon: '🐘', funFact: 'Pintu gerbang pulau Sumatra dan rumah konservasi gajah di Way Kambas.' },
+  
+      // --- JAWA (6) ---
+      { id: 'banten', name: 'Banten', capital: 'Serang', island: 'Jawa', icon: '🦏', funFact: 'Habitat badak bercula satu di Taman Nasional Ujung Kulon.' },
+      { id: 'dki', name: 'DKI Jakarta', capital: 'Jakarta', island: 'Jawa', icon: '🏙️', funFact: 'Ibu kota negara dengan monumen Monas berpuncak emas yang berkilau.' },
+      { id: 'jabar', name: 'Jawa Barat', capital: 'Bandung', island: 'Jawa', icon: '⛰️', funFact: 'Kota kembang berhawa sejuk, alat musik tradisional angklung dari bambu.' },
+      { id: 'jateng', name: 'Jawa Tengah', capital: 'Semarang', island: 'Jawa', icon: '🛕', funFact: 'Memiliki Candi Borobudur yang megah dan pusat batik nusantara.' },
+      { id: 'diy', name: 'DI Yogyakarta', capital: 'Yogyakarta', island: 'Jawa', icon: '👑', funFact: 'Kota istimewa budaya dengan Keraton dan Jalan Malioboro yang ramah.' },
+      { id: 'jatim', name: 'Jawa Timur', capital: 'Surabaya', island: 'Jawa', icon: '🌋', funFact: 'Kota Pahlawan dan pesona pemandangan Gunung Bromo yang memukau.' },
+  
+      // --- BALI & NUSA TENGGARA (3) ---
+      { id: 'bali', name: 'Bali', capital: 'Denpasar', island: 'Bali & Nusa Tenggara', icon: '🌺', funFact: 'Pulau Dewata yang termasyhur di dunia dengan tari, gamelan, dan pura indah.' },
+      { id: 'ntb', name: 'Nusa Tenggara Barat', capital: 'Mataram', island: 'Bali & Nusa Tenggara', icon: '🏔️', funFact: 'Gunung Rinjani yang menjulang tinggi dan keindahan pantai pulau Lombok.' },
+      { id: 'ntt', name: 'Nusa Tenggara Timur', capital: 'Kupang', island: 'Bali & Nusa Tenggara', icon: '🦎', funFact: 'Habitat asli hewan purba komodo di Pulau Komodo dan Labuan Bajo.' },
+  
+      // --- KALIMANTAN (5) ---
+      { id: 'kalbar', name: 'Kalimantan Barat', capital: 'Pontianak', island: 'Kalimantan', icon: '🧭', funFact: 'Dilintasi garis khatulistiwa dengan Tugu Khatulistiwa di Pontianak.' },
+      { id: 'kalteng', name: 'Kalimantan Tengah', capital: 'Palangka Raya', island: 'Kalimantan', icon: '🦧', funFact: 'Hutan tropis lebat yang menjadi rumah orangutan di Tanjung Puting.' },
+      { id: 'kalsel', name: 'Kalimantan Selatan', capital: 'Banjarmasin', island: 'Kalimantan', icon: '🛶', funFact: 'Kota Seribu Sungai dengan pasar terapung Lok Baintan yang unik.' },
+      { id: 'kaltim', name: 'Kalimantan Timur', capital: 'Samarinda', island: 'Kalimantan', icon: '🌳', funFact: 'Daerah pesisir dan sungai Mahakam yang luas serta kawasan IKN.' },
+      { id: 'kaltara', name: 'Kalimantan Utara', capital: 'Tanjung Selor', island: 'Kalimantan', icon: '🌿', funFact: 'Provinsi termuda di pulau Kalimantan dengan alam yang asri.' },
+  
+      // --- SULAWESI (6) ---
+      { id: 'sulut', name: 'Sulawesi Utara', capital: 'Manado', island: 'Sulawesi', icon: '🤿', funFact: 'Taman Laut Bunaken yang terkenal dengan terumbu karang warna-warni.' },
+      { id: 'gorontalo', name: 'Gorontalo', capital: 'Gorontalo', island: 'Sulawesi', icon: '🌽', funFact: 'Dikenal sebagai lumbung jagung dan pesona laut Teluk Tomini.' },
+      { id: 'sulteng', name: 'Sulawesi Tengah', capital: 'Palu', island: 'Sulawesi', icon: '🐦', funFact: 'Rumah burung langka Maleo dan patung megalitik Lembah Bada.' },
+      { id: 'sulbar', name: 'Sulawesi Barat', capital: 'Mamuju', island: 'Sulawesi', icon: '⛵', funFact: 'Pelaut ulung Mandar dengan perahu tradisional Sandeq yang gesit.' },
+      { id: 'sulsel', name: 'Sulawesi Selatan', capital: 'Makassar', island: 'Sulawesi', icon: '🏰', funFact: 'Benteng Rotterdam bersejarah, budaya Toraja, dan pantai Losari.' },
+      { id: 'sultra', name: 'Sulawesi Tenggara', capital: 'Kendari', island: 'Sulawesi', icon: '🐠', funFact: 'Kepulauan Wakatobi yang merupakan surga penyelam dunia.' },
+  
+      // --- MALUKU (2) ---
+      { id: 'maluku', name: 'Maluku', capital: 'Ambon', island: 'Kepulauan Maluku', icon: '🎶', funFact: 'Ambon Manise yang dijuluki Kota Musik Dunia oleh UNESCO.' },
+      { id: 'malut', name: 'Maluku Utara', capital: 'Sofifi', island: 'Kepulauan Maluku', icon: '🌰', funFact: 'Kepulauan rempah cengkih dan pala yang dicari penjelajah dunia tempo dulu.' },
+  
+      // --- PAPUA (6) ---
+      { id: 'papua-barat', name: 'Papua Barat', capital: 'Manokwari', island: 'Papua', icon: '🦜', funFact: 'Kota bersejarah Manokwari dan alam pegunungan Arfak yang menakjubkan.' },
+      { id: 'papua-barat-daya', name: 'Papua Barat Daya', capital: 'Sorong', island: 'Papua', icon: '🏝️', funFact: 'Pintu gerbang menuju keajaiban pulau karang Raja Ampat.' },
+      { id: 'papua', name: 'Papua', capital: 'Jayapura', island: 'Papua', icon: '🏞️', funFact: 'Danau Sentani yang indah dan burung Cenderawasih yang elok.' },
+      { id: 'papua-selatan', name: 'Papua Selatan', capital: 'Merauke', island: 'Papua', icon: '🌅', funFact: 'Ujung paling timur Indonesia tempat matahari terbit lebih awal.' },
+      { id: 'papua-tengah', name: 'Papua Tengah', capital: 'Nabire', island: 'Papua', icon: '🦈', funFact: 'Taman Nasional Teluk Cenderawasih dengan hiu paus yang ramah.' },
+      { id: 'papua-pegunungan', name: 'Papua Pegunungan', capital: 'Wamena', island: 'Papua', icon: '⛰️', funFact: 'Satu-satunya provinsi tanpa laut di Indonesia, di Lembah Baliem yang sejuk.' }
+    ],
+  
+    // 3. Kota-kota Terkenal di Indonesia yang BUKAN Ibu Kota Provinsi
+    // Catatan: Wajib ada Malang -> Jawa Timur, non-eksklusif, dan tidak memuat ibu kota provinsi!
+    famousNonCapitalCities: [
+      {
+        name: 'Malang',
+        province: 'Jawa Timur',
+        island: 'Jawa',
+        icon: '🍎',
+        desc: 'Kota sejuk penghasil apel malang yang manis, dekat dengan Gunung Bromo, dan kota pendidikan favorit.',
+        isCapital: false
+      },
+      {
+        name: 'Surakarta (Solo)',
+        province: 'Jawa Tengah',
+        island: 'Jawa',
+        icon: '🏛️',
+        desc: 'Kota budaya batik halus dengan Keraton Kasunanan dan pasar Klewer yang terkenal.',
+        isCapital: false
+      },
+      {
+        name: 'Bukittinggi',
+        province: 'Sumatera Barat',
+        island: 'Sumatra',
+        icon: '🕰️',
+        desc: 'Kota berhawa sejuk dengan menara Jam Gadang dan Ngarai Sianok yang memukau.',
+        isCapital: false
+      },
+      {
+        name: 'Cirebon',
+        province: 'Jawa Barat',
+        island: 'Jawa',
+        icon: '🦐',
+        desc: 'Kota Udang di pesisir utara Jawa Barat dengan batik mega mendung khas keraton.',
+        isCapital: false
+      },
+      {
+        name: 'Bogor',
+        province: 'Jawa Barat',
+        island: 'Jawa',
+        icon: '🌧️',
+        desc: 'Dikenal sebagai Kota Hujan dengan Kebun Raya Bogor tertua di Asia Tenggara.',
+        isCapital: false
+      },
+      {
+        name: 'Banyuwangi',
+        province: 'Jawa Timur',
+        island: 'Jawa',
+        icon: '🔥',
+        desc: 'The Sunrise of Java di ujung timur pulau Jawa, terkenal dengan Kawah Ijen api biru.',
+        isCapital: false
+      },
+      {
+        name: 'Singaraja',
+        province: 'Bali',
+        island: 'Bali & Nusa Tenggara',
+        icon: '🐬',
+        desc: 'Kota pendidikan di pesisir utara Bali (Buleleng), dekat dengan pantai Lovina lumba-lumba.',
+        isCapital: false
+      },
+      {
+        name: 'Labuan Bajo',
+        province: 'Nusa Tenggara Timur',
+        island: 'Bali & Nusa Tenggara',
+        icon: '⛵',
+        desc: 'Kota pelabuhan eksotis pintu masuk menuju habitat hewan langka Komodo.',
+        isCapital: false
+      },
+      {
+        name: 'Balikpapan',
+        province: 'Kalimantan Timur',
+        island: 'Kalimantan',
+        icon: '⛽',
+        desc: 'Kota Minyak yang bersih, modern, dan tertata rapi di pesisir Selat Makassar.',
+        isCapital: false
+      },
+      {
+        name: 'Magelang',
+        province: 'Jawa Tengah',
+        island: 'Jawa',
+        icon: '🛕',
+        desc: 'Kota lembah di antara pegunungan, tempat berdirinya Candi Borobudur nan agung.',
+        isCapital: false
+      }
+    ],
+  
+    // 4. Modul Khusus: Jelajah Provinsi Bali (8 Kabupaten + 1 Kota)
+    // Wajib mencakup seluruh nama kabupaten/kota dan ibu kota / pusat pemerintahan masing-masing!
+    baliModule: {
+      title: 'Jelajah Pulau Dewata: 8 Kabupaten & 1 Kota',
+      titleEn: 'Discover the Island of Gods: 8 Regencies & 1 City',
+      description: 'Provinsi Bali memiliki 8 Kabupaten dan 1 Kota. Masing-masing memiliki pusat pemerintahan dan pesona kebudayaan tersendiri.',
+      descriptionEn: 'Bali Province comprises 8 Regencies and 1 City, each with its own administrative center and rich cultural charm.',
+      regions: [
+        {
+          name: 'Kabupaten Jembrana',
+          capital: 'Negara',
+          type: 'Kabupaten',
+          icon: '🐃',
+          highlight: 'Tradisi balapan kerbau Makepung dan pelabuhan Gilimanuk pintu barat Bali.'
+        },
+        {
+          name: 'Kabupaten Tabanan',
+          capital: 'Tabanan',
+          type: 'Kabupaten',
+          icon: '🌾',
+          highlight: 'Lumbung beras Bali dengan sawah bertingkat Jatiluwih dan Pura Tanah Lot.'
+        },
+        {
+          name: 'Kabupaten Badung',
+          capital: 'Mangupura',
+          type: 'Kabupaten',
+          icon: '🏄',
+          highlight: 'Pusat pariwisata internasional dengan pantai Kuta, Seminyak, dan Pura Uluwatu.'
+        },
+        {
+          name: 'Kabupaten Gianyar',
+          capital: 'Gianyar',
+          type: 'Kabupaten',
+          icon: '🎨',
+          highlight: 'Pusat seni, patung, dan tari di Ubud, serta kebun binatang ramah anak.'
+        },
+        {
+          name: 'Kabupaten Klungkung',
+          capital: 'Semarapura',
+          type: 'Kabupaten',
+          icon: '🏛️',
+          highlight: 'Kerthi Gosa lukisan wayang Kamasan dan gugusan pulau Nusa Penida.'
+        },
+        {
+          name: 'Kabupaten Bangli',
+          capital: 'Bangli',
+          type: 'Kabupaten',
+          icon: '🌋',
+          highlight: 'Satu-satunya kabupaten tanpa pantai di Bali, punya Danau Batur dan desa terbersih Penglipuran.'
+        },
+        {
+          name: 'Kabupaten Karangasem',
+          capital: 'Amlapura',
+          type: 'Kabupaten',
+          icon: '⛰️',
+          highlight: 'Gunung Agung yang sakral, Istana Air Tirta Gangga, dan Pura Besakih.'
+        },
+        {
+          name: 'Kabupaten Buleleng',
+          capital: 'Singaraja',
+          type: 'Kabupaten',
+          icon: '🐬',
+          highlight: 'Wilayah Bali Utara yang luas, pantai Lovina tempat bermain lumba-lumba, dan air terjun Gitgit.'
+        },
+        {
+          name: 'Kota Denpasar',
+          capital: 'Denpasar',
+          type: 'Kota',
+          icon: '🏙️',
+          highlight: 'Pusat pemerintahan dan ekonomi provinsi Bali dengan Lapangan Renon dan Pasar Badung.'
+        }
+      ]
+    },
+  
+    // 5. Kuis Geografi Interaktif
+    quizzes: [
+      {
+          "id": "quiz-world-capitals",
+          "title": "Kuis 4: Tebak Ibu Kota Negara di Dunia",
+          "desc": "Jelajahi dunia! Seberapa hebat kamu mengingat ibu kota negara-negara sahabat?",
+          "questions": [
+              {
+                  "q": "Apa ibu kota negara Jepang?",
+                  "options": [
+                      "Tokyo",
+                      "Kyoto",
+                      "Osaka",
+                      "Sapporo"
+                  ],
+                  "answer": "Tokyo",
+                  "hint": "Kota metropolitan terbesar dengan Menara Tokyo yang terkenal."
+              },
+              {
+                  "q": "Apa ibu kota negara Arab Saudi?",
+                  "options": [
+                      "Riyadh",
+                      "Jeddah",
+                      "Makkah",
+                      "Madinah"
+                  ],
+                  "answer": "Riyadh",
+                  "hint": "Pusat pemerintahan dan ekonomi kerajaan di tengah gurun Nejd."
+              },
+              {
+                  "q": "Apa ibu kota negara Inggris (Britania Raya)?",
+                  "options": [
+                      "London",
+                      "Manchester",
+                      "Liverpool",
+                      "Edinburgh"
+                  ],
+                  "answer": "London",
+                  "hint": "Kota bersejarah tempat Menara Big Ben dan jam raksasanya berdentang."
+              },
+              {
+                  "q": "Apa ibu kota negara Mesir di Afrika?",
+                  "options": [
+                      "Kairo",
+                      "Iskandariyah",
+                      "Giza",
+                      "Luxor"
+                  ],
+                  "answer": "Kairo",
+                  "hint": "Kota di tepi Sungai Nil dekat dengan piramida megah."
+              },
+              {
+                  "q": "Apa ibu kota negara Australia?",
+                  "options": [
+                      "Canberra",
+                      "Sydney",
+                      "Melbourne",
+                      "Brisbane"
+                  ],
+                  "answer": "Canberra",
+                  "hint": "Bukan Sydney atau Melbourne, melainkan kota terencana yang indah di pedalaman!"
+              }
+          ]
+      },
+      {
+        id: 'quiz-prov-capital',
+        title: 'Kuis 1: Tebak Ibu Kota Provinsi',
+        desc: 'Uji hafalanmu tentang ibu kota dari 38 provinsi di Indonesia!',
+        questions: [
+          { q: 'Apa ibu kota Provinsi Jawa Timur?', options: ['Surabaya', 'Malang', 'Bandung', 'Semarang'], answer: 'Surabaya', hint: 'Kota Pahlawan yang terkenal dengan Tugu Pahlawan!' },
+          { q: 'Apa ibu kota Provinsi Bali?', options: ['Singaraja', 'Denpasar', 'Gianyar', 'Mangupura'], answer: 'Denpasar', hint: 'Kota di tengah Bali yang memiliki Monumen Bajra Sandhi.' },
+          { q: 'Apa ibu kota Provinsi Sumatera Barat?', options: ['Bukittinggi', 'Padang', 'Medan', 'Pekanbaru'], answer: 'Padang', hint: 'Kota asal kuliner rendang yang mendunia!' },
+          { q: 'Apa ibu kota Provinsi Papua Pegunungan?', options: ['Jayapura', 'Wamena', 'Merauke', 'Nabire'], answer: 'Wamena', hint: 'Kota sejuk di Lembah Baliem.' },
+          { q: 'Apa ibu kota Provinsi Kalimantan Timur?', options: ['Balikpapan', 'Samarinda', 'Pontianak', 'Banjarmasin'], answer: 'Samarinda', hint: 'Kota di tepi Sungai Mahakam.' }
+        ]
+      },
+      {
+        id: 'quiz-city-province',
+        title: 'Kuis 2: Tebak Asal Provinsi Kota Terkenal',
+        desc: 'Kota-kota ini sangat terkenal, tapi bukan ibu kota provinsi! Di mana ya lokasinya?',
+        questions: [
+          { q: 'Kota Malang yang sejuk dan terkenal dengan buah apel berada di provinsi mana?', options: ['Jawa Timur', 'Jawa Barat', 'Jawa Tengah', 'DI Yogyakarta'], answer: 'Jawa Timur', hint: 'Kota ini dekat dengan Gunung Bromo dan berhawa sejuk.' },
+          { q: 'Kota Surakarta (Solo) yang terkenal dengan keraton dan batiknya berada di provinsi mana?', options: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat', 'Banten'], answer: 'Jawa Tengah', hint: 'Berada di dekat Yogyakarta, terkenal dengan lagu Bengawan Solo.' },
+          { q: 'Kota Bukittinggi dengan ikon Jam Gadang berada di provinsi mana?', options: ['Sumatera Barat', 'Riau', 'Sumatera Utara', 'Jambi'], answer: 'Sumatera Barat', hint: 'Kawasan Minangkabau berhawa sejuk di pegunungan Bukit Barisan.' },
+          { q: 'Kota Singaraja yang terkenal di Bali Utara berada di kabupaten apa?', options: ['Buleleng', 'Badung', 'Tabanan', 'Jembrana'], answer: 'Buleleng', hint: 'Daerah pesisir utara tempat pantai Lovina lumba-lumba berada.' },
+          { q: 'Kota Labuan Bajo gerbang menuju pulau Komodo berada di provinsi mana?', options: ['Nusa Tenggara Timur', 'Nusa Tenggara Barat', 'Bali', 'Maluku'], answer: 'Nusa Tenggara Timur', hint: 'Singkatannya NTT, terkenal dengan tenun ikatnya.' }
+        ]
+      },
+      {
+        id: 'quiz-bali-regions',
+        title: 'Kuis 3: Jelajah Bali 8 Kabupaten & 1 Kota',
+        desc: 'Cocokkan nama kabupaten di Bali dengan pusat pemerintahannya!',
+        questions: [
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Badung adalah...', options: ['Mangupura', 'Kuta', 'Denpasar', 'Gianyar'], answer: 'Mangupura', hint: 'Pusat pemerintahannya bernama Mangupura di Sempidi.' },
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Buleleng adalah...', options: ['Singaraja', 'Lovina', 'Seririt', 'Tabanan'], answer: 'Singaraja', hint: 'Pernah menjadi ibu kota Sunda Kecil pada masa lampau.' },
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Jembrana adalah...', options: ['Negara', 'Gilimanuk', 'Tabanan', 'Amlapura'], answer: 'Negara', hint: 'Kota Negara yang terkenal dengan tradisi Makepung.' },
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Karangasem adalah...', options: ['Amlapura', 'Candidasa', 'Klungkung', 'Bangli'], answer: 'Amlapura', hint: 'Pusat pemerintahan di timur Bali di bawah kaki Gunung Agung.' },
+          { q: 'Satu-satunya kabupaten di Bali yang TIDAK memiliki wilayah pantai adalah...', options: ['Bangli', 'Gianyar', 'Tabanan', 'Klungkung'], answer: 'Bangli', hint: 'Kabupaten di dataran tinggi yang memiliki Danau Batur.' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/bahasa-indonesia.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Bahasa Indonesia Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:47:00
+  // ================================================================
+  
+  const BAHASA_INDONESIA_DATA = {
+    id: 'bahasa-indonesia',
+    title: 'Bahasa Indonesia — Membaca & Merangkai Kata',
+    titleEn: 'Indonesian Language — Reading & Word Building',
+    subtitle: 'Huruf-huruf seru siap diajak bermain! Mari mengeja suku kata dan merangkai kalimat bergambar 📖',
+    subtitleEn: 'Fun letters ready to explore! Let\'s spell simple syllables and build sentences with pictures 📖',
+    topics: [
+      {
+        id: 'bi-vokal-konsonan',
+        title: 'Mengenal Huruf Vokal & Konsonan',
+        titleEn: 'Introduction to Vowels & Consonants',
+        desc: 'Ada 5 huruf vokal bernyanyi: A, I, U, E, O, dan 21 sahabat konsonan lainnya!',
+        descEn: 'There are 5 singing vowels: A, I, U, E, O, and 21 other consonant friends!',
+        activities: [
+          { q: 'Manakah kelompok huruf vokal yang benar?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Huruf vokal adalah huruf hidup yang bersuara nyaring!' }
+        ],
+        activitiesEn: [
+          { q: 'Which of the following is the correct vowel group?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Vowels are open vocal sounds with clear voices!' }
+        ]
+      },
+      {
+        id: 'bi-suku-kata',
+        title: 'Mengeja Suku Kata Sederhana',
+        titleEn: 'Spelling Simple Syllables',
+        desc: 'Gabungkan konsonan dan vokal: B-U = BU, K-U = KU → BUKU!',
+        descEn: 'Combine consonants and vowels: B-U = BU, K-U = KU → BUKU (Book)!',
+        activities: [
+          { q: 'BO + LA dibaca...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'Benda bulat yang sering ditendang saat main sepak bola ⚽' },
+          { q: 'KU + DA dibaca...', options: ['KUDA', 'DAKU', 'KUKU', 'DADA'], answer: 'KUDA', hint: 'Hewan yang bisa berlari kencang dan bersuara meringkik 🐎' }
+        ],
+        activitiesEn: [
+          { q: 'BO + LA is read as...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'A round ball used in soccer ⚽' },
+          { q: 'KU + DA is read as...', options: ['KUDA', 'DAKU', 'KUKU', 'DADA'], answer: 'KUDA', hint: 'A horse animal that gallops fast and neighs 🐎' }
+        ]
+      },
+      {
+        id: 'bi-susun-kalimat',
+        title: 'Menyusun Kalimat Ceria',
+        titleEn: 'Arranging Fun Sentences',
+        desc: 'Eh, kata-katanya berantakan 😆 Yuk susun lagi menjadi kalimat yang benar!',
+        descEn: 'Oops, the words are scrambled! Let\'s arrange them into a proper Indonesian sentence.',
+        activities: [
+          { q: 'Susun kata: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subjek pelaku di depan: siapa yang membaca?' }
+        ],
+        activitiesEn: [
+          { q: 'Arrange the words: [membaca] - [buku] - [Budi] (reading - book - Budi)', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subject in front: who is reading the book?' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/bahasa-inggris.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · English Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:48:00
+  // ================================================================
+  
+  const ENGLISH_DATA = {
+    id: 'bahasa-inggris',
+    title: 'English — Fun & Easy Vocabulary',
+    titleEn: 'English — Fun & Easy Vocabulary',
+    subtitle: 'Easy peasy! Mari kenalan dengan kata-kata bahasa Inggris sehari-hari yang keren 🇬🇧',
+    subtitleEn: 'Easy peasy! Let\'s learn cool everyday English words and friendly greetings 🇬🇧',
+    topics: [
+      {
+        id: 'eng-greetings',
+        title: 'Greetings & Sapaan Ceria',
+        desc: 'Good morning, good afternoon, dan sapaan sopan kepada guru dan teman.',
+        activities: [
+          { q: 'Bagaimana menyapa "Selamat pagi" dalam bahasa Inggris?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning artinya pagi hari saat matahari baru terbit ☀️' },
+          { q: 'Bagaimana mengucapkan "Terima kasih"?', options: ['Thank you', 'Please', 'Sorry', 'Hello'], answer: 'Thank you', hint: 'Ucapkan "Thank you" saat seseorang membantumu!' }
+        ]
+      },
+      {
+        id: 'eng-colors',
+        title: 'Rainbow Colors (Mengenal Warna)',
+        desc: 'Red, Blue, Yellow, Green, and Purple! Warna-warni pelangi ceria.',
+        activities: [
+          { q: 'Apa warna "BLUE" dalam bahasa Indonesia?', options: ['Biru', 'Merah', 'Kuning', 'Hijau'], answer: 'Biru', hint: 'Warna langit cerah di siang hari dan air laut.' },
+          { q: 'Warna daun pohon yang segar adalah "GREEN", artinya...', options: ['Hijau', 'Hitam', 'Putih', 'Cokelat'], answer: 'Hijau', hint: 'Hijau seperti dedaunan dan rumput di taman.' }
+        ]
+      },
+      {
+        id: 'eng-animals',
+        title: 'Friendly Animals (Hewan Sahabat)',
+        desc: 'Cat, Dog, Bird, Fish, and Elephant! Sahabat hewan yang lucu.',
+        activities: [
+          { q: '"CAT" adalah hewan yang bersuara meong, artinya...', options: ['Kucing', 'Anjing', 'Burung', 'Ikan'], answer: 'Kucing', hint: 'Hewan berbulu lembut yang suka dielus 🐱' },
+          { q: '"FISH" hidup dan berenang di dalam air, artinya...', options: ['Ikan', 'Kelinci', 'Kuda', 'Gajah'], answer: 'Ikan', hint: 'Hewan yang bernapas dengan insang 🐟' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/pancasila.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Pendidikan Pancasila Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:49:00
+  // ================================================================
+  
+  const PANCASILA_DATA = {
+    id: 'pancasila',
+    title: 'Pendidikan Pancasila — Anak Hebat Berkarakter',
+    titleEn: 'Pancasila Education — Character & Citizenship',
+    subtitle: 'Mengenal Garuda Pancasila, belajar gotong royong, dan jadi anak Indonesia yang rukun 🇮🇩',
+    subtitleEn: 'Discover the Garuda Pancasila, teamwork spirit, and harmony in Indonesia 🇮🇩',
+    topics: [
+      {
+        id: 'pan-simbol',
+        title: 'Mengenal 5 Simbol Sila Pancasila',
+        titleEn: 'The 5 Pancasila Shield Symbols',
+        desc: 'Bintang, Rantai Emas, Pohon Beringin, Kepala Banteng, serta Padi & Kapas.',
+        descEn: 'Star, Gold Chain, Banyan Tree, Bull Head, Rice & Cotton.',
+        activities: [
+          { q: 'Simbol sila pertama "Ketuhanan Yang Maha Esa" adalah...', options: ['Bintang', 'Rantai Emas', 'Pohon Beringin', 'Kepala Banteng'], answer: 'Bintang', hint: 'Bintang emas bersudut lima di perisai tengah burung Garuda ⭐' },
+          { q: 'Padi dan Kapas melambangkan sila ke...', options: ['Kelima (5)', 'Pertama (1)', 'Kedua (2)', 'Ketiga (3)'], answer: 'Kelima (5)', hint: 'Keadilan sosial bagi seluruh rakyat Indonesia.' }
+        ],
+        activitiesEn: [
+          { q: 'What is the symbol of the 1st principle "Belief in the One and Only God"?', options: ['Star', 'Gold Chain', 'Banyan Tree', 'Bull Head'], answer: 'Star', hint: 'A golden five-pointed star in the center of the shield ⭐' },
+          { q: 'Rice and cotton represent which Pancasila principle?', options: ['Fifth (5th)', 'First (1st)', 'Second (2nd)', 'Third (3rd)'], answer: 'Fifth (5th)', hint: 'Social justice for all the people of Indonesia.' }
+        ]
+      },
+      {
+        id: 'pan-gotong-royong',
+        title: 'Gotong Royong & Kerja Sama',
+        titleEn: 'Mutual Cooperation & Teamwork',
+        desc: 'Membersihkan kelas bersama-sama membuat pekerjaan berat jadi ringan dan cepat selesai.',
+        descEn: 'Cleaning the classroom together makes heavy chores light and quickly done.',
+        activities: [
+          { q: 'Saat temanmu kesulitan merapikan mainan bersama, sikapmu adalah...', options: ['Membantu dengan senang hati', 'Melihat saja', 'Mengejeknya', 'Meninggalkannya'], answer: 'Membantu dengan senang hati', hint: 'Anak hebat suka saling tolong menolong sesama teman.' }
+        ],
+        activitiesEn: [
+          { q: 'When a classmate struggles cleaning up toys, what should you do?', options: ['Help gladly', 'Just watch', 'Mock them', 'Walk away'], answer: 'Help gladly', hint: 'Kind students always support their friends.' }
+        ]
+      },
+      {
+        id: 'pan-antre',
+        title: 'Belajar Tertib & Sabar Antre',
+        titleEn: 'Orderliness & Queuing with Patience',
+        desc: 'Membiasakan budaya antre di kantin, tempat wudu/cuci tangan, dan saat bermain.',
+        descEn: 'Practicing good queueing habits at the school canteen, washing area, and playground.',
+        activities: [
+          { q: 'Ketika antre membeli makanan di kantin sekolah, kita harus...', options: ['Tertib menunggu giliran', 'Menyerobot teman di depan', 'Mendorong teman', 'Berteriak-teriak'], answer: 'Tertib menunggu giliran', hint: 'Sabar antre adalah tanda anak yang disiplin dan menghargai orang lain.' }
+        ],
+        activitiesEn: [
+          { q: 'When queuing to buy food at the school canteen, we must...', options: ['Wait patiently in turn', 'Cut in front of others', 'Push friends', 'Shout loudly'], answer: 'Wait patiently in turn', hint: 'Queueing patiently demonstrates discipline and respect for others.' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/bahasa-bali.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Bahasa Bali Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:50:00
+  // ================================================================
+  
+  const BAHASA_BALI_DATA = {
+    id: 'bahasa-bali',
+    title: 'Basa Bali — Mlajah Basa Bali Ceria',
+    titleEn: 'Balinese Language & Culture — Cheerful Learning',
+    subtitle: 'Rahajeng semeng alit-alit! Yuk belajar kruna basa Bali, salam sopan, dan angga sarira 🌴',
+    subtitleEn: 'Rahajeng semeng children! Let\'s learn polite Balinese greetings and body words 🌴',
+    topics: [
+      {
+        id: 'bali-salam',
+        title: 'Salam & Sapaan Basa Bali',
+        titleEn: 'Balinese Greetings & Politeness',
+        desc: 'Rahajeng semeng (Selamat pagi), Rahajeng tengai (Selamat siang), dan Matur suksma (Terima kasih).',
+        descEn: 'Rahajeng semeng (Good morning), Rahajeng tengai (Good afternoon), and Matur suksma (Thank you).',
+        activities: [
+          { q: 'Ucap sapaan "Selamat pagi" ring Basa Bali inggih punika...', options: ['Rahajeng semeng', 'Rahajeng wengi', 'Rahajeng tengai', 'Matur suksma'], answer: 'Rahajeng semeng', hint: 'Semeng artine semut baru bangun, pagi hari saat fajar merekah ☀️' },
+          { q: 'Rikala maan tulung utawi wantuan, iraga ngucapang...', options: ['Matur suksma', 'Rahajeng', 'Kenken kabare', 'Sampun'], answer: 'Matur suksma', hint: 'Matur suksma artine matur terima kasih dengan santun.' }
+        ],
+        activitiesEn: [
+          { q: 'How do you say "Good morning" in Balinese?', options: ['Rahajeng semeng', 'Rahajeng wengi', 'Rahajeng tengai', 'Matur suksma'], answer: 'Rahajeng semeng', hint: 'Semeng means early morning when the sun rises ☀️' },
+          { q: 'When receiving help or kindness, in Balinese we say...', options: ['Matur suksma', 'Rahajeng', 'Kenken kabare', 'Sampun'], answer: 'Matur suksma', hint: 'Matur suksma means thank you politely.' }
+        ]
+      },
+      {
+        id: 'bali-angga-sarira',
+        title: 'Angga Sarira (Anggota Tubuh)',
+        titleEn: 'Angga Sarira (Body Parts in Balinese)',
+        desc: 'Mengenal panyingakan (mata), karna (telinga), irung (hidung), dan cangkem (mulut).',
+        descEn: 'Panyingakan (eyes), karna (ears), irung (nose), and cangkem (mouth).',
+        activities: [
+          { q: '"Panyingakan" utawi "peningalan" kaanggen ngetokang (melihat), artine...', options: ['Mata', 'Hidung', 'Telinga', 'Tangan'], answer: 'Mata', hint: 'Organ tubuh yang ada dua buah untuk melihat keindahan alam 👀' },
+          { q: '"Karna" kaanggen mirengang gending utawi orti, artine...', options: ['Telinga', 'Mulut', 'Kaki', 'Rambut'], answer: 'Telinga', hint: 'Untuk mendengarkan suara yang merdu 👂' }
+        ],
+        activitiesEn: [
+          { q: '"Panyingakan" is used for seeing, which means...', options: ['Eyes', 'Nose', 'Ears', 'Hands'], answer: 'Eyes', hint: 'Two organs on our face to observe nature 👀' },
+          { q: '"Karna" is used to listen to melodies or speech, meaning...', options: ['Ears', 'Mouth', 'Legs', 'Hair'], answer: 'Ears', hint: 'Used to hear harmonious sounds 👂' }
+        ]
+      },
+      {
+        id: 'bali-kruna-wilangan',
+        title: 'Kruna Wilangan (Angka 1 - 5)',
+        titleEn: 'Kruna Wilangan (Numbers 1 to 5 in Balinese)',
+        desc: 'Siki (1), Kalih (2), Tiga (3), Papat (4), Lima (5).',
+        descEn: 'Siki (1), Kalih (2), Tiga (3), Papat (4), Lima (5).',
+        activities: [
+          { q: 'Angka 1 ring basa Bali alus inggih punika...', options: ['Siki', 'Kalih', 'Tiga', 'Lima'], answer: 'Siki', hint: 'Satu dalam basa Bali alus adalah siki.' },
+          { q: 'Angka 2 ring basa Bali inggih punika...', options: ['Kalih / Dua', 'Papat', 'Lima', 'Tiga'], answer: 'Kalih / Dua', hint: 'Dua buah benda dihitung kalih.' }
+        ],
+        activitiesEn: [
+          { q: 'What is number 1 in polite Balinese?', options: ['Siki', 'Kalih', 'Tiga', 'Lima'], answer: 'Siki', hint: 'One in polite Balinese is siki.' },
+          { q: 'Number 2 in Balinese is...', options: ['Kalih / Dua', 'Papat', 'Lima', 'Tiga'], answer: 'Kalih / Dua', hint: 'Two items are counted as kalih.' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/seni-rupa.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Seni Rupa Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:51:00
+  // ================================================================
+  
+  const SENI_RUPA_DATA = {
+    id: 'seni-rupa',
+    title: 'Seni Rupa — Imajinasi Warna & Bentuk',
+    titleEn: 'Visual Arts — Imagination of Colors & Shapes',
+    subtitle: 'Yuk bikin warna jadi rame tapi nggak rusuh! Eksplorasi palet warna dan bentuk geometri 🎨',
+    subtitleEn: 'Bring vibrant colors to life! Explore color palettes and basic geometric shapes 🎨',
+    topics: [
+      {
+        id: 'seni-warna-dasar',
+        title: 'Warna Primer & Campuran Ajaib',
+        titleEn: 'Primary Colors & Color Magic',
+        desc: 'Tiga warna utama: Merah, Kuning, dan Biru. Bila dicampur akan melahirkan warna baru!',
+        descEn: 'Three primary colors: Red, Yellow, and Blue. Mixing them creates brand new colors!',
+        activities: [
+          { q: 'Jika warna KUNING dicampur dengan BIRU, akan menghasilkan warna...', options: ['Hijau', 'Oranye', 'Ungu', 'Cokelat'], answer: 'Hijau', hint: 'Warna rumput segar dan dedaunan pohon di kebun 🌿' },
+          { q: 'Warna MERAH dicampur KUNING akan menjadi warna...', options: ['Oranye (Jingga)', 'Ungu', 'Hijau', 'Hitam'], answer: 'Oranye (Jingga)', hint: 'Seperti warna buah jeruk yang manis segar 🍊' }
+        ],
+        activitiesEn: [
+          { q: 'Mixing YELLOW with BLUE produces which color?', options: ['Green', 'Orange', 'Purple', 'Brown'], answer: 'Green', hint: 'The color of lush grass and tree leaves 🌿' },
+          { q: 'Mixing RED with YELLOW creates...', options: ['Orange', 'Purple', 'Green', 'Black'], answer: 'Orange', hint: 'Like a fresh ripe orange fruit 🍊' }
+        ]
+      },
+      {
+        id: 'seni-bentuk-geometri',
+        title: 'Bentuk-Bentuk Geometri',
+        titleEn: 'Geometric Shapes in Everyday Life',
+        desc: 'Mengenal lingkaran bundar seperti roda, segitiga seperti atap rumah, dan segi empat.',
+        descEn: 'Discover circles like wheels, triangles like roofs, and rectangles like books.',
+        activities: [
+          { q: 'Benda apa di bawah ini yang berbentuk LINGKARAN?', options: ['Roda sepeda', 'Buku tulis', 'Penggaris segitiga', 'Pintu rumah'], answer: 'Roda sepeda', hint: 'Bentuk bundar yang tidak memiliki sudut lancip ⭕' }
+        ],
+        activitiesEn: [
+          { q: 'Which of the following objects has a CIRCLE shape?', options: ['Bicycle wheel', 'Notebook', 'Triangle ruler', 'House door'], answer: 'Bicycle wheel', hint: 'A round shape with no sharp corners ⭕' }
+        ]
+      },
+      {
+        id: 'seni-garis-pola',
+        title: 'Garis Lurus & Pola Hias',
+        titleEn: 'Straight Lines & Decorative Patterns',
+        desc: 'Garis lurus, garis lengkung, zig-zag bergelombang, dan titik-titik indah.',
+        descEn: 'Straight lines, curves, wavy zig-zags, and lovely polka dots.',
+        activities: [
+          { q: 'Garis yang naik turun tajam seperti gigi gergaji dinamakan garis...', options: ['Zig-zag', 'Lurus', 'Melengkung', 'Spiral'], answer: 'Zig-zag', hint: 'Bentuk garis lancip bergantian naik dan turun ⚡' }
+        ],
+        activitiesEn: [
+          { q: 'A sharp line that alternates up and down like saw teeth is called a...', options: ['Zig-zag line', 'Straight line', 'Curved line', 'Spiral line'], answer: 'Zig-zag line', hint: 'Sharp back-and-forth zigzag patterns ⚡' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/pjok.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · PJOK Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:52:00
+  // ================================================================
+  
+  const PJOK_DATA = {
+    id: 'pjok',
+    title: 'PJOK — Tubuh Bugar & Sehat Ceria',
+    titleEn: 'Physical Education — Fit, Strong & Cheerful',
+    subtitle: 'Gerak aktif, badan kuat, hati gembira! Latih koordinasi gerak dan kebiasaan hidup sehat 🏃',
+    subtitleEn: 'Move actively, stay healthy, and smile! Train motor coordination and good daily habits 🏃',
+    topics: [
+      {
+        id: 'pjok-lokomotor',
+        title: 'Gerak Lokomotor (Berpindah Tempat)',
+        titleEn: 'Locomotor Movements (Moving Across Space)',
+        desc: 'Berjalan, berlari kencang, melompat katak, dan melangkah lincah.',
+        descEn: 'Walking, sprinting, frog jumping, and leaping forward.',
+        activities: [
+          { q: 'Manakah contoh gerakan lokomotor (berpindah tempat)?', options: ['Berlari ke depan', 'Menggelengkan kepala di tempat', 'Membungkuk', 'Diam berdiri'], answer: 'Berlari ke depan', hint: 'Gerak lokomotor artinya badanmu berpindah dari titik A ke titik B!' }
+        ],
+        activitiesEn: [
+          { q: 'Which is an example of a locomotor movement (traveling from one spot to another)?', options: ['Running forward', 'Nodding head in place', 'Bending over', 'Standing still'], answer: 'Running forward', hint: 'Locomotor movement shifts your body from point A to point B!' }
+        ]
+      },
+      {
+        id: 'pjok-non-lokomotor',
+        title: 'Gerak Non-Lokomotor (Di Tempat)',
+        titleEn: 'Non-Locomotor Movements (In Place)',
+        desc: 'Memutar lengan, merentangkan tangan seperti burung terbang, dan menekuk lutut tanpa berpindah.',
+        descEn: 'Arm circles, spreading wings like a bird, and bending knees without traveling.',
+        activities: [
+          { q: 'Ketika kamu merentangkan kedua tangan dan memutar badan di tempat, itu adalah gerakan...', options: ['Non-lokomotor', 'Lokomotor', 'Melompat', 'Berlari'], answer: 'Non-lokomotor', hint: 'Kaki tetap diam berpijak di tempat yang sama.' }
+        ],
+        activitiesEn: [
+          { q: 'Spreading your arms and twisting your torso while standing in place is...', options: ['Non-locomotor movement', 'Locomotor movement', 'Jumping', 'Sprinting'], answer: 'Non-locomotor movement', hint: 'Your feet stay planted on the same spot.' }
+        ]
+      },
+      {
+        id: 'pjok-kebiasaan-sehat',
+        title: 'Kebiasaan Hidup Bersih & Sehat',
+        titleEn: 'Clean & Healthy Daily Habits',
+        desc: 'Mencuci tangan dengan sabun, minum air putih cukup, dan istirahat tidur teratur.',
+        descEn: 'Washing hands with soap, drinking plenty of water, and getting restful sleep.',
+        activities: [
+          { q: 'Kapan waktu wajib mencuci tangan memakai air mengalir dan sabun?', options: ['Sebelum makan dan sesudah bermain', 'Hanya saat mau tidur', 'Cukup seminggu sekali', 'Tidak perlu sabun'], answer: 'Sebelum makan dan sesudah bermain', hint: 'Kuman di tangan harus bersih sebelum memegang makanan 🧼' }
+        ],
+        activitiesEn: [
+          { q: 'When is it essential to wash your hands with running water and soap?', options: ['Before eating and after playing', 'Only right before bedtime', 'Once a week is enough', 'Soap is never needed'], answer: 'Before eating and after playing', hint: 'Keep hands clean from germs before touching food 🧼' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/agama.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Agama & Budi Pekerti Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:53:00
+  // ================================================================
+  
+  const AGAMA_DATA = {
+    id: 'agama',
+    title: 'Agama & Budi Pekerti — Hati Hangat & Berakhlak Baik',
+    titleEn: 'Character & Ethics — Warm Hearts & Good Deeds',
+    subtitle: 'Belajar bersyukur atas alam ciptaan, bersikap jujur, sopan santun, dan menyayangi sesama 🌱',
+    subtitleEn: 'Learn gratitude for nature, honesty, courteous manners, and caring for others 🌱',
+    topics: [
+      {
+        id: 'agama-makhluk-hidup',
+        title: 'Menyayangi Ciptaan & Alam',
+        titleEn: 'Caring for Living Creatures & Nature',
+        desc: 'Merawat tanaman dengan menyiramnya dan memberi makan hewan peliharaan dengan kasih sayang.',
+        descEn: 'Watering plants and feeding pets with gentle affection.',
+        activities: [
+          { q: 'Bagaimana cara menyayangi tanaman bunga di halaman rumah?', options: ['Menyiramnya secara rutin dan memberi sinar matahari', 'Memetik dan merusaknya', 'Menginjak-injak daunnya', 'Membiarkannya layu kering'], answer: 'Menyiramnya secara rutin dan memberi sinar matahari', hint: 'Tanaman adalah makhluk hidup yang butuh air dan cahaya 🌸' }
+        ],
+        activitiesEn: [
+          { q: 'How should we care for garden flowers in our yard?', options: ['Water regularly and provide sunshine', 'Pick and destroy them', 'Trample their leaves', 'Let them dry and wither'], answer: 'Water regularly and provide sunshine', hint: 'Plants are living things that need water and sunlight 🌸' }
+        ]
+      },
+      {
+        id: 'agama-sopan-santun',
+        title: 'Sopan Santun kepada Orang Tua & Guru',
+        titleEn: 'Respect & Courtesy for Parents & Teachers',
+        desc: 'Mencium tangan atau memberi salam hangat, berbicara dengan lembut, dan mendengarkan nasihat.',
+        descEn: 'Greeting warmly, speaking politely, and listening attentively to guidance.',
+        activities: [
+          { q: 'Ketika bertemu bapak atau ibu guru di koridor sekolah, kita sebaiknya...', options: ['Tersenyum dan mengucapkan salam ramah', 'Pura-pura tidak melihat', 'Berlari kencang', 'Bersembunyi di balik pintu'], answer: 'Tersenyum dan mengucapkan salam ramah', hint: 'Menyapa guru dengan santun mencerminkan budi pekerti yang luhur.' }
+        ],
+        activitiesEn: [
+          { q: 'When meeting your teacher in the school hallway, you should...', options: ['Smile and offer a polite greeting', 'Pretend not to see them', 'Run away fast', 'Hide behind a door'], answer: 'Smile and offer a polite greeting', hint: 'Greeting teachers politely reflects noble character and gratitude.' }
+        ]
+      },
+      {
+        id: 'agama-kejujuran',
+        title: 'Berkata Jujur & Menepati Janji',
+        titleEn: 'Speaking the Truth & Keeping Promises',
+        desc: 'Anak hebat berani berkata jujur meskipun berbuat salah, dan meminta maaf dengan tulus.',
+        descEn: 'Brave students speak the truth even when making a mistake, and apologize sincerely.',
+        activities: [
+          { q: 'Jika tidak sengaja menumpahkan air di meja, tindakan yang jujur adalah...', options: ['Mengaku, meminta maaf, lalu membersihkannya', 'Menyalahkan teman di sebelah', 'Diam saja dan melarikan diri', 'Menangis tersedu-sedu'], answer: 'Mengaku, meminta maaf, lalu membersihkannya', hint: 'Kejujuran dan tanggung jawab adalah sifat pahlawan sejati.' }
+        ],
+        activitiesEn: [
+          { q: 'If you accidentally spill water on the table, what is the honest response?', options: ['Admit it, apologize, and wipe it clean', 'Blame your friend sitting next to you', 'Stay silent and run away', 'Cry loudly'], answer: 'Admit it, apologize, and wipe it clean', hint: 'Honesty and taking responsibility make a true everyday hero.' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/kokurikuler.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Kokurikuler Subject Data
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 09:54:00
+  // ================================================================
+  
+  const KOKURIKULER_DATA = {
+    id: 'kokurikuler',
+    title: 'Kokurikuler — Misi Mandiri Anak Hebat',
+    titleEn: 'Co-curricular Missions — Independent Young Achievers',
+    subtitle: 'Belajar bukan cuma di buku! Yuk selesaikan misi mandiri kecil yang bikin bangga orang tua 🧩',
+    subtitleEn: 'Learning beyond textbooks! Complete fun little missions that make family proud 🧩',
+    topics: [
+      {
+        id: 'koku-meja-rapi',
+        title: 'Misi 1: Meja Belajar Rapi Bersih',
+        titleEn: 'Mission 1: Tidy & Clean Study Desk',
+        desc: 'Letakkan pensil pada tempat pensil, susun buku tegak, dan buang serpihan rautan.',
+        descEn: 'Place pencils in holder, stack books upright, and throw pencil shavings in the bin.',
+        checklist: [
+          'Buku pelajaran tertata rapi di rak atau sudut meja',
+          'Pensil, penghapus, dan penggaris masuk kotak pensil',
+          'Meja bersih dari sampah remah makanan atau kertas'
+        ],
+        checklistEn: [
+          'School books arranged neatly on the shelf or desk corner',
+          'Pencils, eraser, and ruler stored in the pencil case',
+          'Desk cleared of food crumbs and paper scraps'
+        ],
+        activities: [
+          { q: 'Setelah selesai menggambar dan belajar, apa yang harus kamu lakukan?', options: ['Merapikan kembali semua alat tulis ke tempatnya', 'Membiarkan meja berantakan', 'Menunggu orang tua yang merapikan', 'Melemparkan pensil ke lantai'], answer: 'Merapikan kembali semua alat tulis ke tempatnya', hint: 'Anak mandiri selalu menjaga kerapian tempat belajarnya sendiri.' }
+        ],
+        activitiesEn: [
+          { q: 'After finishing your drawing and study time, what should you do?', options: ['Put all stationery back in its proper place', 'Leave the desk messy', 'Wait for parents to clean it up', 'Throw pencils onto the floor'], answer: 'Put all stationery back in its proper place', hint: 'Independent students always take care of their own study space.' }
+        ]
+      },
+      {
+        id: 'koku-bantu-ortu',
+        title: 'Misi 2: Membantu Orang Tua di Rumah',
+        titleEn: 'Mission 2: Helping Parents at Home',
+        desc: 'Merapikan sepatu di rak sepatu dan membawa piring sendiri ke wastafel cuci piring.',
+        descEn: 'Place shoes on the shoe rack and carry your own plate to the kitchen sink.',
+        checklist: [
+          'Sepatu sekolah terparkir rapi di rak sepatu',
+          'Membawa piring/gelas kotor sendiri setelah makan',
+          'Ucapkan terima kasih dan peluk ayah/ibu'
+        ],
+        checklistEn: [
+          'School shoes parked neatly on the shoe rack',
+          'Carry your own dirty plate/glass after meals',
+          'Say thank you and hug your mom/dad'
+        ],
+        activities: [
+          { q: 'Sepatu yang habis kamu pakai sepulang sekolah sebaiknya diletakkan di...', options: ['Rak sepatu dengan rapi', 'Tengah pintu masuk rumah', 'Bawah kolong tempat tidur sembarangan', 'Halaman luar terkena hujan'], answer: 'Rak sepatu dengan rapi', hint: 'Rak sepatu membuat rumah tetap rapi dan sepatu gampang dicari.' }
+        ],
+        activitiesEn: [
+          { q: 'Where should your school shoes go after returning home?', options: ['Neatly on the shoe rack', 'In the middle of the front doorway', 'Messily under the bed', 'Outside in the rain'], answer: 'Neatly on the shoe rack', hint: 'The shoe rack keeps the home tidy and shoes easy to find.' }
+        ]
+      },
+      {
+        id: 'koku-cerita-kreasi',
+        title: 'Misi 3: Berbagi Cerita Hari Ini',
+        titleEn: 'Mission 3: Sharing Today\'s Discovery',
+        desc: 'Ceritakan satu ilmu atau hal baru yang paling membuatmu tersenyum hari ini.',
+        descEn: 'Tell someone at home one new insight or discovery that made you smile today.',
+        checklist: [
+          'Ceritakan pada orang tua apa yang kamu pelajari di Smart Study',
+          'Tunjukkan jurus matematika atau nama provinsi yang kamu tahu',
+          'Tersenyum gembira!'
+        ],
+        checklistEn: [
+          'Tell parents what you explored in Smart Study today',
+          'Show off a math trick or an Indonesian province you learned',
+          'Share a cheerful smile!'
+        ],
+        activities: [
+          { q: 'Mengapa asyik menceritakan apa yang baru kita pelajari kepada orang tua?', options: ['Supaya orang tua senang dan otak kita makin ingat materi', 'Supaya dapat hadiah mahal', 'Untuk pamer ke teman', 'Hanya membuang waktu'], answer: 'Supaya orang tua senang dan otak kita makin ingat materi', hint: 'Mengulang cerita membuat pemahaman kita semakin kuat!' }
+        ],
+        activitiesEn: [
+          { q: 'Why is sharing what we learned with our parents so beneficial?', options: ['It brings joy to parents and reinforces memory', 'To get expensive gifts', 'To show off to others', 'It is just a waste of time'], answer: 'It brings joy to parents and reinforces memory', hint: 'Retelling what we learned deepens our understanding!' }
+        ]
+      }
+    ]
+  };
+  
+  
+
+  // --- Source: js/data/globe-paths.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // Political World Map Vector Paths & Labels for 3D Globe
+  // Development · Anabhi Dev
+  // Version   : 1.2
+  // Generated : 11 September 2026
+  // ================================================================
+  
+  const GLOBE_COUNTRIES = [{"name":"Fiji","fill":"#ff9ff3","d":"M2048,603.4L2048,606.2L2044.4,607.6L2040.7,608.8L2040,606.7L2042.9,605.5L2044.7,605.2L2048,603.4Z M2037.3,611.6L2038.7,610.6L2040.7,612.3L2039.8,615.3L2036.2,616L2033.1,615.3L2032.6,612.8L2034.7,610.9L2037.3,611.6Z M1.2,603.1L0.5,605.9L0,606.2L0,603.4L1.2,603.1Z"},{"name":"Tanzania","fill":"#2bcbba","d":"M1216.9,517.4L1217.8,518L1238.5,529.6L1238.9,532.9L1247,538.6L1244.4,545.6L1244.7,548.8L1248.4,550.9L1248.5,552.4L1247,555.8L1247.3,557.6L1246.9,560.3L1248.9,563.8L1251.3,569.4L1253.4,570.7L1253.4,570.7L1248.8,574L1242.6,576.2L1239.2,576.1L1237.2,577.8L1233.2,578L1231.7,578.7L1224.9,577.1L1220.6,577.5L1219,569.8L1217.1,567.1L1215.9,565.6L1210.4,564.5L1207.1,562.8L1203.5,561.8L1201.3,560.9L1198.9,559.4L1198.9,559.4L1195.8,552.3L1192.5,549.1L1191.4,545.8L1191.9,542.8L1190.9,537.6L1193.3,537.3L1195.3,535.3L1197.5,532.3L1198.9,531.1L1198.9,529.3L1197.7,528L1197.3,525.7L1197.3,525.7L1199,525L1199.3,521.7L1197.1,518.5L1199,517.8L1205.3,517.8L1216.9,517.4Z"},{"name":"W. Sahara","fill":"#ff6b6b","d":"M974.7,354.7L974.7,355L974.6,356.1L974.6,364.8L955.9,364.5L956.1,379L950.8,379.5L949.4,382.5L950.4,390.7L928.2,390.6L926.9,392.5L927.2,390.1L927.3,390.1L940.1,389.7L940.8,387.6L943.1,385.1L945,377.2L952.9,371.1L955.6,363.9L957.3,363.5L959.2,359.1L964,358.5L966,359.2L968.6,359.2L970.5,357.9L974,357.7L973.8,354.7L974.7,354.7Z"},{"name":"Canada","fill":"#706fd3","d":"M325.2,233.2L324.4,233.2L313.4,227.6L309.3,225.2L299,222.8L295.9,217.8L296.7,214.3L289.4,211.9L288.4,207.3L281.5,203.2L281.4,200.2L281.4,200.2L284.6,197.5L284.4,193.9L274.7,190.3L268.9,183.8L265.4,179.7L260.1,177.1L256.3,174.8L253.3,171.9L247.6,173.7L242,176.9L237,173.2L233,170.7L227.5,169.1L221.9,168.9L221.9,136.5L221.9,115.4L221.9,115.4L232.6,116.8L241.5,119.5L247.4,120L252.4,117.7L259.3,115.9L267.8,116.6L276.3,114.1L285.6,112.7L289.5,115L293.8,113.7L295,111L299,111.6L308.6,116.7L316.2,112.9L316.9,117.2L323.9,116.3L326.1,114.6L333,114.9L341.7,117.3L355,119.4L362.8,120.4L368.4,120L376,122.9L368,125.7L378.3,126.9L393.7,126.3L398.5,125.3L404.6,128.7L410.8,125.8L405,123.4L408.6,121.4L415.6,121.2L420.1,120.6L424.7,122L430.4,125.1L436.8,124.6L446.8,127.2L455.7,126.3L464,126.4L463.3,122.9L468.4,121.9L477.2,123.8L477.2,129.2L480.8,124.6L485.3,124.8L487.9,119.1L481.8,115.6L475.2,113.3L475.6,107L482.4,102.9L489.9,103.8L495.6,106.3L503.4,112.7L498.3,115.5L508.9,116.6L508.9,122.5L516.5,118L523.3,121.7L521.6,125.9L527.1,129.7L533,125.6L537.2,120.7L537.5,114.4L545.6,114.9L554,115.7L561.6,118.5L561.9,121.4L557.7,124.4L561.7,127.4L561,130.2L549.9,134.2L541.9,135.1L536.1,133.4L534.4,136.2L528.9,141L527.2,143.5L520.6,147.3L512.5,147.7L508,150.1L507.6,153.8L501,154.5L494,159.1L487.9,165.6L485.7,170L485.3,176.6L493.7,177.6L496.3,182.9L498.9,187.2L506.9,186.1L517.5,188.6L523.2,190.7L527.2,193.4L534.4,195L540.4,197.4L549.8,197.7L556,198.3L555,203.2L556.8,208.9L560.9,215.3L569.4,220.7L573.8,218.8L576.8,213L573.9,204L569.9,201L579,198.3L585.4,194.3L588.6,190.4L588.1,186.6L584.2,181.7L577.3,177.5L584,171.5L581.6,166.4L579.7,157.5L583.6,156.2L593.4,157.7L599.2,158.3L603.9,156.8L609.2,158.7L616.2,162L618,164.2L628.1,164.6L627.9,169.4L629.8,176.6L635,177.5L639.1,180.8L647.4,177.7L652.8,171.4L656.6,168.8L661,173.8L668.4,181.1L674.7,187.9L672.4,191.5L680,194.7L685.1,198L694.2,199.4L697.8,201.2L700.1,206L704.5,206.8L706.8,209L707.2,215.3L703.1,217.5L699,219.5L689.6,221.5L682.5,226.2L672.9,227.1L660.7,225.9L652.2,225.9L646.3,226.3L641.5,230.3L634.2,232.9L626,240.4L619.5,245.6L624.3,244.7L633.5,237.2L645.4,232.5L653.9,231.9L658.9,234.7L653.6,238.5L655.4,244.7L657.2,249L664.6,251.8L674,251L679.7,244.6L680.1,248.7L683.8,250.8L676.8,254.5L664.2,257.9L658.5,260.2L652.2,264.3L647.8,263.9L647.6,259L657.5,254.3L648.4,254.5L642.1,255.2L638.3,252L638.3,244.2L635.8,242.6L632,243.6L630.1,242.1L625.8,246.4L624,250.8L622,253.4L619.6,254.3L617.8,254.5L617.2,256L606.7,256L598.1,256L595.5,257L589.5,261.1L588.8,261.6L587,263.8L581.8,263.8L576.2,263.8L573.6,264.7L574.5,265.8L575,267.6L574.9,268.2L567.5,271L561.6,271.9L555,274.9L553.6,274.9L551.7,274L551,273.2L551.1,272.6L552.4,270.6L555.1,267.5L556.7,264.1L555.6,259.2L554.4,254L548.4,251.4L549.2,250.3L548.3,249.6L546.8,249.6L545.6,248.7L545.3,247.4L544.2,248L542.7,247.8L543,247.2L541.7,246.7L541.1,245.2L536.7,243.4L532.1,241.5L526.6,239.3L521.2,237.2L516.1,238.8L514.3,238.9L507.3,237.4L502.7,238.1L497.2,236.4L491.3,235.5L487.4,235.1L485.6,234.2L484.6,231L482.7,231.1L482.7,233.2L470.9,233.2L451.4,233.2L432.1,233.2L415,233.2L397.9,233.2L381.2,233.2L363.8,233.2L358.2,233.2L341.3,233.2L325.2,233.2Z M546.2,156.7L550.4,154.1L558.2,154.1L558.1,155.2L551.4,158.4L547.4,158.3L546.2,156.7Z M570.2,97.8L563.9,94.8L564.1,92.8L566.9,92.4L579.9,93L589.7,96.1L590.2,97.7L584.2,97.5L578,97.4L571.8,98.2L570.2,97.8Z M567.1,158.8L569.3,157.1L571.6,157.2L573.1,158.4L570.8,161.4L568.3,160.9L566.8,159.2L567.1,158.8Z M491.4,85.4L488.4,87.7L480.1,87.2L473.2,85.7L476.2,83.2L484.4,81.7L489.4,83.6L491.4,85.4Z M490.2,71L487.6,71.2L476.9,70.8L475.4,69.2L486.8,69.3L490.8,70.3L490.2,71Z M473.6,63.9L480.4,65.9L478.8,67.9L470.4,69.1L465.8,67.8L463.3,65.7L462.9,63.3L470.3,63.5L473.6,63.9Z M522.5,88.8L513.3,88.1L498.2,86.3L496.3,83.1L495.6,80.3L489.8,77.8L478.1,77.1L471.5,75.4L473.6,73L485.4,73.4L491.7,75.2L502.9,75.2L507.8,77.1L506.5,79.2L513,80.5L516.6,81.9L524.3,82.1L532.6,82.6L541.6,81.4L553.2,80.9L562.5,81.3L568.6,83.4L569.8,85.8L566.3,87.3L557.8,88.5L550.5,87.8L534.2,88.7L522.5,88.8Z M391,67.4L399.1,68.3L397.2,70L386.6,71.6L378.1,69.8L382.7,68L391,67.4Z M392.7,63.7L400.1,64.8L393.2,66L383.8,65.9L383.9,65.1L389.7,63.4L392.7,63.7Z M707.7,220.1L704.7,223.6L700.9,228.6L704.6,226.7L708.4,227.9L706.4,229.9L711.5,231.5L714.1,230.1L719.8,231.8L718,236L722,235L722.7,238L724.5,241.6L722.1,246.6L719.5,246.8L715.8,245.7L717,241.1L715.4,240.3L708.8,245.3L705.4,245.1L709.5,242.4L704,241L697.9,241.4L686.8,241.2L686,239.5L689.5,237.5L687,236L691.8,232.5L697.7,223.5L701.2,220.2L706.2,218.3L708.8,218.5L707.7,220.1Z M546.8,141.6L553,143.5L559.5,145.3L560.1,148L564.2,147.6L568.3,149.5L563.3,151.3L554.4,149.9L551.2,147.3L545.6,150.4L537.5,153.3L535.5,150L527.8,150.5L532.7,147.7L533.5,143.2L535.4,138L539.5,138.5L540.6,141L543.5,140.1L546.8,141.6Z M575.9,100.4L581.3,98.1L593.9,101L601.7,103.7L602.5,106.2L613,104.9L619,108.5L632.7,110.8L637.6,113.1L643,118.4L632.6,121.1L646,124.8L655,126L663.2,131.3L672.1,131.6L670.4,135.6L660.4,142.2L653.4,139.8L644.4,134.3L637.1,135L636.4,138.3L642.3,141.6L650.1,144.2L652.4,145.7L656.1,151.4L654.1,155.5L647,153.9L632.7,149.4L640.7,154.3L646.7,157.7L647.6,159.7L632.2,157.4L620,154.1L613.1,151.3L615,149.7L606.6,146.8L598.3,144L598.4,145.7L581.9,146.6L577.1,144.7L580.9,140.5L591.5,140.4L603.3,139.6L601.4,137.6L603.3,134.8L610.7,129.2L609.1,126.7L606.9,124.8L598.2,122L586.7,120.1L590.3,118.6L584.3,115.1L579.3,114.8L574.8,112.8L571.8,114.5L561.5,115.2L540.8,114L528.7,112.3L519.5,111.4L514.8,109.4L520.7,106.8L512.6,106.8L510.8,101.1L515.2,96L521.1,93.7L535.7,92.1L531.6,95.8L536,99.4L541.3,94.8L555.7,92.4L565.5,98.3L564.6,102L575.9,100.4Z M486.4,90.3L498.2,90.5L509.1,91.8L500.6,96.9L493.8,98L487.7,102.3L481.2,102L477.7,97.1L477.8,94.2L480.7,91.8L486.4,90.3Z M325.1,79L325.1,79L334.7,74.7L346.4,71L355.2,71.1L363,70.3L362.2,74.7L357.8,76.6L352.5,76.9L341.9,79.3L332.8,80.2L325.1,79Z M269,204.6L274.5,204.1L272.8,210.6L277.7,215.2L275.5,215.1L272,212.5L269.9,209.9L267.1,208.1L266,205.6L266.4,203.8L269,204.6Z M423.9,60.9L435,61.6L450.4,63.7L454.8,66.4L457,68.8L447.7,68.2L438.3,66.3L425.7,66.1L431.2,64.4L424.3,63L423.9,60.9Z M321.4,236L318.5,236.8L309.2,234.2L307.5,232.2L302.4,230.2L301.3,228.6L295.5,227.6L293.3,224.5L293.8,223.2L299.8,224.4L303.2,225.3L308.6,225.9L310.5,227.8L313.3,230.5L319,232.9L321.4,236Z M332.6,88.5L340.7,89.6L355.2,90L360.8,91.6L366.9,94L359.7,95.4L345.8,99.4L338.7,103.4L338.7,105.9L323.7,108.6L320.7,106.2L307.6,103.1L310,100.7L314,96.6L318.9,92.8L313.4,89.4L332.6,88.5Z M410.6,80.5L415.7,79.6L421.7,79.8L422.7,82.6L419.2,85.3L399.9,86.2L385.6,88.7L376.9,88.8L376.2,86.9L388,84.4L362.3,85.1L354.4,84.1L362.1,78.5L367.5,76.9L383.5,78.8L393.6,82.2L403.5,82.6L395.4,77.2L400.6,75.1L406.5,75.8L408.4,78.5L410.6,80.5Z M418,96.3L424.4,98.6L427.9,104.1L429.7,108.1L439.3,110.9L449.5,113.6L448.9,116.1L439.6,116.6L443.2,118.8L441.3,120.9L431,120L421.2,118.4L414.6,118.8L403.9,120.7L389.5,121.6L379.4,122.1L376.3,119.4L368.5,117.9L363.5,118.5L356.5,114L360.3,113.4L369,112.4L377.1,112.7L384.5,111.7L373.5,110.4L361.3,110.8L353.3,110.7L350.3,108.6L363.4,106.3L354.7,106.4L344.7,104.9L349.5,100.6L353.5,98.4L368.7,94.9L374.5,96L371.7,98.7L384.3,97L392.2,99.8L398.7,96.9L403.9,98.8L408.5,104.4L411.4,102L407.3,96.2L412.4,95.4L418,96.3Z M452.6,98.4L446.4,94.7L453.1,91.9L459.9,93.1L470,92.4L471.5,94L466.2,96.8L474.8,99.2L473.8,104.3L464.4,106.5L459,106.1L455,103.9L440.9,99.5L441,97.7L452.6,98.4Z M417.6,93.3L425.2,93.1L429.5,94.3L424.5,98.1L415.6,94.1L417.6,93.3Z M463.6,75.5L468,78.2L468.2,81.1L465.6,85.3L456.2,85.9L450.1,85L450.2,81.7L440.9,82.1L440.5,77.7L446.6,77.9L455.2,76L463.2,76.3L463.6,75.5Z M477.8,53.5L481.7,51.7L487.5,51.3L485.1,50L498.3,49.7L505.6,52.8L515.1,54L524.5,55.1L529,58.8L535.8,60.7L528,62.4L517.5,66.6L507.4,67L495.6,66.3L489.5,64L489.6,61.9L494.1,60.4L483.7,60.5L477.4,58.6L473.8,56L477.8,53.5Z M503,46.1L511.4,45L518.1,44.8L529.2,43.9L537.6,41.8L544.7,42.1L550.8,43.7L555.1,40.6L562.6,39.7L572.8,39.1L590.2,38.8L593.2,39.5L609.7,38.5L622,38.9L634.3,39.2L649.5,39.7L661.7,40.4L672.1,41.9L671.9,43.5L658,45.9L644.2,47.1L639.1,48.3L651.5,48.3L638.1,51.8L628.8,53.4L619.1,58L607.3,59L603.7,60.1L586.5,60.7L594.3,61.5L590.4,62.5L595.1,65.3L589.7,67.2L580.9,68.8L578.2,71.1L570.3,72.8L571.1,74.1L580.8,73.8L580.9,75.2L565.7,78.6L550.8,77.1L534.1,77.9L525.7,77.3L514.9,77L514.2,74.2L524.7,72.9L521.9,68.8L525.4,68.4L540.6,70.9L532.8,67.2L523.6,66.2L528.2,64L538.3,62.6L539.9,60.6L531.9,58.4L529.5,55.5L545,55.7L549.5,56.3L558.4,54.2L545.6,53.6L525.7,54L515.6,52L510.9,49.7L504.2,48.1L503,46.1Z M596.1,128.3L592.4,130L586,130.3L584.6,127.5L587,124.3L592.2,123.5L596.7,125.1L596.7,127.5L596.1,128.3Z M476.4,116.7L479.9,118.9L476.3,120.8L468.7,119.1L464,119.7L456.3,117.2L461.3,115.4L465.2,113L471.3,114.6L474.7,115.6L476.4,116.7Z M657,228.3L658.9,227.8L666.4,229.2L672.2,231.6L672.4,232.6L669.6,232.7L662.2,231L657,228.3Z M659.8,244.4L661.8,247.2L665.9,247.9L671.2,247.8L668.4,250.1L666.3,250.5L659.1,248.1L657.7,246.2L659.8,244.4Z"},{"name":"United States of America","fill":"#f7d794","d":"M325.2,233.2L341.3,233.2L358.2,233.2L363.8,233.2L381.2,233.2L397.9,233.2L415,233.2L432.1,233.2L451.4,233.2L470.9,233.2L482.7,233.2L482.7,231.1L484.6,231L485.6,234.2L487.4,235.1L491.3,235.5L497.2,236.4L502.7,238.1L507.3,237.4L514.3,238.9L516.1,238.8L521.2,237.2L526.6,239.3L532.1,241.5L536.7,243.4L541.1,245.2L541.7,246.7L543,247.2L542.7,247.8L544.2,248L545.3,247.4L545.6,248.7L546.8,249.6L548.3,249.6L549.2,250.3L548.4,251.4L554.4,254L555.6,259.2L556.7,264.1L555.1,267.5L552.4,270.6L551.1,272.6L551,273.2L551.7,274L553.6,274.9L555,274.9L561.6,271.9L567.5,271L574.9,268.2L575,267.6L574.5,265.8L573.6,264.7L576.2,263.8L581.8,263.8L587,263.8L588.8,261.6L589.5,261.1L595.5,257L598.1,256L606.7,256L617.2,256L617.8,254.5L619.6,254.3L622,253.4L624,250.8L625.8,246.4L630.1,242.1L632,243.6L635.8,242.6L638.3,244.2L638.3,252L642.1,255.2L643,257.1L637,259.8L631.1,261.8L625.1,263.5L622.1,266.9L621.1,268.1L621.1,271.2L623,274.2L625.3,274.3L624.7,272.2L626.4,273.5L626,275.1L622.1,276.1L619.4,275.9L615.2,276.9L612.7,277.2L609.4,277.5L604.7,279.1L613,278.1L614.7,279.2L606.7,280.9L603.1,280.9L603.3,280.2L601.6,281.8L603.2,282L602,286.1L597.9,290.5L597.4,289L596.2,288.7L594.3,287.3L595.5,290.4L596.9,291.4L597,293.5L595.2,295.7L592,300.3L591.5,300.1L593.2,296.2L590.3,294L589.7,289.3L588.6,291.7L589.8,295.3L586,294.5L589.9,296.3L590.2,301.7L591.8,302.1L592.4,304.1L593.2,309.8L589.6,314L583.7,315.7L580,319L577.1,319.4L574.2,321.5L573.4,323.4L567.2,327.1L564,329.8L561.3,333.1L560.4,337.2L561.4,341.1L563.3,346L565.8,350L565.9,352.5L568.6,359.1L568.4,362.9L568.1,365.1L566.7,368.6L565,369.3L562.2,368.6L561.3,366.1L559.2,364.8L556.1,359.9L553.5,355.6L552.6,353.4L553.8,349.6L552.2,346.5L547.8,341.7L545.6,340.8L539.8,343.4L538.8,343.1L536,340.5L532.5,339.1L526,339.8L521,339.1L516.7,339.5L514.3,340.4L515.3,341.9L515.2,344.2L516.5,345.4L515.4,346.1L513.3,345.3L511.1,346.4L507,346.2L502.7,343.2L497.8,343.9L493.6,342.6L490.1,343L485.3,344.3L480.1,348.5L474.5,351L471.4,353.7L470.1,356.2L470,360.2L470.3,362.9L471.4,364.8L469.2,365L465.1,363.7L460.7,362L459.1,359.3L457.8,355.3L454.5,352.1L452.5,348.8L449.7,344.9L445.7,342.6L441,342.7L437.4,347.2L432.7,345.5L429.8,343.8L428.3,340.6L426.5,337.7L423.1,335.2L420.2,333.4L418.1,331.4L408.2,331.4L408.2,333.7L403.7,333.7L392.4,333.7L379.4,329.7L370.8,327L371.4,325.9L364.1,326.5L357.7,326.9L356.7,324L353,320.7L350.4,320.1L349.8,318.4L346.6,318.1L344.5,316.6L339.2,316L337.8,315.1L337.1,312L331.6,306.3L326.8,298.4L327,297.1L324.5,295.2L320.1,290.4L319.3,285.8L316.3,282.7L317.6,277.9L317.4,273.1L315.5,268.7L317.8,263.3L318.5,258.2L319.2,253L318.1,245.4L316.3,240.5L314.7,237.9L315.4,236.8L323.6,238.7L326.6,244.1L328,242.6L327.1,237.9L325.2,233.2Z M139.9,397.8L140.9,398.3L141.9,399L143.3,401L143.2,401.3L141,402.5L139.1,403.4L138.3,404.4L136.9,403.6L137.1,402L136.1,399.9L136.4,399.3L137.4,398.4L137,397.2L137.3,396.7L137.8,396.8L139.9,397.8Z M136.6,393.9L136.1,394.6L134.2,395L133.2,393.8L132.5,393.3L132.5,392.9L133,392.5L135.1,393L136.6,393.9Z M132.2,391.5L132,392.1L129,392L129.4,391.3L132.2,391.5Z M125,388.5L125.5,388.8L127.1,390.7L126.8,391L126.4,391L124.4,390.8L123.7,389.5L123.5,389.2L125,388.5Z M117.4,385.6L117.5,386.9L116.8,387.5L114.9,386.5L115.2,386.1L116.1,385.5L117.4,385.6Z M77,168.5L81.5,169L82,171.2L78.5,172.1L74.8,171L71.4,169.5L77,168.5Z M152.3,182.2L156.1,182.6L158.5,184.4L153.6,187.1L147.9,189.2L145,187.8L144.1,185.1L149.3,183.1L152.3,182.2Z M221.9,115.4L221.9,115.4L221.9,136.5L221.9,168.9L227.5,169.1L233,170.7L237,173.2L242,176.9L247.6,173.7L253.3,171.9L256.3,174.8L260.1,177.1L265.4,179.7L268.9,183.8L274.7,190.3L284.4,193.9L284.6,197.5L281.4,200.2L281.4,200.2L281.4,200.2L278.3,198.1L273.3,196.3L271.6,191.3L264.3,186.7L261.2,181.3L255.8,181L246.7,180.8L240.1,179.2L228.3,173.3L222.9,172.2L212.9,170.2L205,170.7L193.8,168.1L187.1,165.6L180.8,166.8L181.9,170.8L178.8,171.2L172.2,172.3L167.2,174.3L160.9,175.5L160.1,172.1L162.6,166.5L168.7,164.8L167.1,163.4L159.9,166.5L156,170.3L147.8,174.4L152,177.1L146.6,181.2L140.5,183.6L134.8,185.3L133.4,187.8L124.5,190.8L122.7,193.5L116,195.9L112.1,195.4L106.8,197L101,199L96.3,200.9L86.6,202.5L85.7,201.5L91.9,198.9L97.5,197.1L103.5,194L110.6,193.4L113.4,191L121.3,187.6L122.5,186.5L126.7,184.5L127.7,180.2L130.6,176.8L124,178.5L122.2,177.6L119.1,179.6L115.4,176.7L113.9,178.8L111.8,176L106.1,178.2L102.6,178.2L102.1,174.8L103.1,172.8L99.5,170.7L92.1,171.8L87.3,169.1L83.4,167.8L83.3,164.6L79,162.1L81.2,158.9L85.8,155.7L87.8,152.8L92.4,152.4L96.3,153.3L100.9,150.5L105,151L109.4,149.2L108.3,146.6L105.1,145.6L109.4,143.4L105.9,143.5L99.8,144.7L98.1,146L93.6,144.7L85.6,145.4L77.2,144L74.8,141.7L67.6,138.4L75.6,136L88.3,133.3L93,133.3L92.2,136.1L104.2,135.9L99.6,132.3L92.6,130.2L88.6,127.3L83.1,124.9L75.3,123.1L78.5,120.1L88.6,119.9L95.8,117.4L97.1,114.6L102.9,111.9L108.5,111.2L119.2,108.7L124.5,109.1L133.2,106.1L141.8,107.2L146,109.8L148.5,108.7L158.1,109.1L157.8,110.4L166.5,111.3L172.3,110.8L184.2,112.6L195.2,113.1L199.6,113.8L207.1,112.9L215.8,114.6L221.9,115.4L221.9,115.4Z M47,149.1L50.5,150.2L54.1,149.6L58.7,151.1L64.3,151.9L63.9,152.5L59.6,153.7L55.2,152.5L53.1,151.5L48.1,151.8L46.7,151.3L47,149.1Z"},{"name":"Kazakhstan","fill":"#70a1ff","d":"M1521,232L1516.7,235.8L1511.9,236.3L1511.7,242L1508.5,244.6L1497.2,242.7L1493.1,252.9L1490.2,254.2L1478.9,256.5L1484,266.4L1480.1,267.8L1480.6,271.1L1477.1,270.2L1474.2,268.2L1465.8,267.6L1456.4,267.4L1454.3,268.1L1446.2,265.7L1443,266.9L1442.1,270.2L1432.7,268.3L1429,269.1L1427.7,271.6L1424.4,272.6L1416.9,276.6L1414.4,280.6L1412.3,280.7L1410.8,278L1403.5,277.8L1402.4,273.1L1399.6,273.1L1400,267.4L1393.2,263.2L1383.5,263.7L1376.8,264.5L1371.4,259.4L1366.7,257.2L1357.9,253.2L1356.8,252.7L1342.2,256L1342.4,277L1339.5,277.3L1335.5,272.8L1331.7,271.2L1325.2,272.4L1322.7,274.3L1322.4,272.9L1323.8,270.5L1322.7,268.6L1316.1,266.6L1313.5,261.5L1310.4,260.1L1310.2,258.2L1315.7,258.8L1315.9,254.6L1320.8,253.7L1325.7,254.5L1326.8,249L1325.8,245.5L1320.1,245.7L1315.2,244.3L1308.6,246.8L1303.3,248L1300.4,247.1L1301,244.2L1297.4,240.4L1293.2,240.5L1288.3,236.7L1291.6,232.4L1290,231.2L1294.5,225L1300.4,228.3L1301.1,224.1L1312.8,217.9L1321.7,217.8L1334.2,221.7L1341,224L1347,221.6L1356,221.5L1363.3,224.5L1365,222.8L1372.9,223L1374.4,220.3L1365.1,216.4L1370.6,213.6L1369.5,212.1L1375,210.6L1370.9,206.7L1373.5,204.8L1394.8,202.8L1397.6,201.4L1411.8,199.3L1416.9,196.9L1427.1,198.1L1428.9,204L1434.9,202.7L1442.2,204.6L1441.7,207.7L1447.2,207.4L1461.4,202L1459.3,203.8L1466.6,208.2L1479.3,222.6L1482.3,219.7L1490.2,222.9L1498.4,221.5L1501.5,222.5L1504.2,225.8L1508.2,226.9L1510.6,229.3L1518,228.5L1521,232Z"},{"name":"Uzbekistan","fill":"#ff9f43","d":"M1342.4,277L1342.2,256L1356.8,252.7L1357.9,253.2L1366.7,257.2L1371.4,259.4L1376.8,264.5L1383.5,263.7L1393.2,263.2L1400,267.4L1399.6,273.1L1402.4,273.1L1403.5,277.8L1410.8,278L1412.3,280.7L1414.4,280.6L1416.9,276.6L1424.4,272.6L1427.7,271.6L1429.4,272.1L1424.6,275.8L1428.8,277.9L1432.9,276.5L1439.6,279.5L1432.3,283.6L1428,283.1L1425.6,283.2L1424.8,281.6L1426,279L1418.4,280.3L1416.6,284L1413.9,287.1L1409.1,286.8L1407.7,289.3L1411.8,290.7L1413.1,294.9L1409.9,300.7L1405.6,299.5L1402.4,299.4L1402.6,296L1395,293.5L1389.1,290.7L1385.3,288.1L1378.8,284.1L1376,278.3L1374.1,277.2L1368,277.5L1365.8,276.3L1365.2,271.8L1357.5,268.8L1352.7,272.1L1347.9,274.1L1348.8,276.9L1342.4,277Z"},{"name":"Papua New Guinea","fill":"#e056fd","d":"M1826.1,526.8L1836,530.7L1846.5,534L1850.4,536.9L1853.6,539.7L1854.5,543.1L1864,546.6L1865.3,549.6L1860.1,550.2L1861.4,554L1866.4,557.8L1870.1,563.8L1873.4,563.6L1873.2,566.1L1877.6,567.1L1875.8,568.2L1881.9,570.6L1881.3,572.2L1877.5,572.6L1876.1,571.1L1871.2,570.5L1865.5,569.6L1861,566L1857.8,562.9L1854.9,557.9L1847.4,555.4L1842.6,557L1839.1,558.9L1839.9,563.1L1835.4,565.1L1832.2,564.1L1826.3,563.9L1826.2,545.3L1826.1,526.8Z M1892.4,532.8L1894.5,534.6L1895.2,537.6L1893.4,539.1L1892.3,535.8L1891,533.6L1888.4,531.7L1885.2,529.3L1881.1,527.6L1882.7,526.2L1885.8,527.8L1887.7,529.1L1890.1,530.4L1892.4,532.8Z M1884.7,545.2L1881.6,546.6L1878.7,547.9L1875.7,547.9L1871,546.3L1867.8,544.7L1868.2,542.9L1873.3,543.8L1876.5,543.3L1877.3,540.6L1878.1,540.5L1878.7,543.5L1881.9,543L1883.5,541.1L1886.7,539.1L1886.1,535.7L1889.5,535.6L1890.6,536.5L1890.5,539.7L1888.6,543.2L1885.6,543.6L1884.7,545.2Z M1904.4,542.4L1906.1,543.7L1908.9,547.3L1911.6,549.2L1910.8,550.8L1909.2,551.4L1906.7,549.2L1904.2,545.6L1903,541.2L1903.8,540.7L1904.4,542.4Z"},{"name":"Indonesia","fill":"#10ac84","d":"M1826.1,526.8L1826.2,545.3L1826.3,563.9L1821.3,559.2L1815.5,558.1L1814.1,559.7L1806.9,559.9L1809.3,555.2L1812.9,553.6L1811.4,547.5L1808.7,542.7L1797.6,537.9L1792.9,537.4L1784.4,532.1L1782.7,534.9L1780.5,535.4L1779.2,533.3L1779.2,530.8L1774.9,528L1781,526L1785.1,526.1L1784.6,524.6L1776.3,524.6L1774,521.2L1768.9,520.1L1766.5,517.3L1774.2,516L1777.1,514.1L1786.2,516.4L1787.1,518.6L1788.7,527.8L1794.6,531.2L1799.4,525.1L1805.9,521.7L1810.9,521.7L1815.8,523.7L1820,525.7L1826.1,526.8Z M1734.9,562.6L1735.5,563.7L1735.6,565.4L1731.9,569.7L1727,570.9L1726.4,570.3L1726.9,568.3L1729.3,564.8L1734.9,562.6Z M1787.5,551.2L1787,546.9L1788,544.9L1789.2,543L1790.4,544.6L1790.4,547.4L1787.5,551.2Z M1694.6,488.5L1691.4,493.6L1695.6,499L1694.6,501.6L1701,506.9L1694.2,507.5L1692.3,511.4L1692.6,516.6L1687.1,520.5L1686.9,526.1L1684.8,534.8L1683.9,532.8L1677.5,535.4L1675.2,531.9L1671.1,531.6L1668.3,529.7L1661.5,531.8L1659.5,529L1655.7,529.3L1651.1,528.7L1650.2,521.1L1647.3,519.5L1644.6,514.6L1643.8,509.6L1644.5,504.4L1647.9,500.6L1648.8,504.4L1652.7,507.6L1656.4,506.4L1660,506.9L1663.3,504L1666,503.5L1671.4,505.1L1676.1,503.9L1679,495.9L1681.2,494L1683.1,487.5L1689.7,487.5L1694.6,488.5Z M1760,527.9L1766.2,529.6L1768.3,534L1763.5,531.6L1758.7,531.1L1755.5,531.5L1751.6,531.3L1753,528.2L1760,527.9Z M1745.8,533.6L1741.8,532.5L1740.7,530.1L1746.5,529.8L1747.9,531.7L1745.8,533.6Z M1751.8,499.6L1752.2,502.7L1755.6,503.2L1756.1,505.6L1755.8,510.5L1752.9,510L1752,513.4L1754.3,516.4L1752.7,517.1L1750.5,513.5L1748.8,506.2L1749.9,501.7L1751.8,499.6Z M1723.3,507L1729.9,506.8L1735.5,502.7L1736.5,503.9L1731.9,509.6L1727.6,510.7L1722.2,509.5L1712.7,509.8L1707.7,510.7L1706.9,515L1712,520L1715.1,517.4L1725.7,515.5L1725.2,518.1L1722.7,517.3L1720.3,520.6L1715.2,522.8L1720.6,530.1L1719.6,532.1L1724.7,538.6L1724.7,542.4L1721.6,544.1L1719.4,542.1L1722.1,537.4L1716.6,539.6L1715.1,538L1715.9,535.8L1711.8,532.5L1712.2,526.9L1708.4,528.7L1708.9,535.3L1709.1,543.4L1705.5,544.3L1703.1,542.6L1704.7,537.4L1703.8,531.9L1701.4,531.8L1699.7,527.9L1702,524.2L1702.8,519.7L1705.7,511.1L1706.9,508.8L1711.7,504.6L1716.1,506.2L1723.3,507Z M1708.3,570.4L1700.8,566.4L1706.1,565.3L1709.1,567L1711.1,568.7L1710.7,570.3L1708.3,570.4Z M1714.3,560.6L1718.1,560.1L1723.2,558L1722.4,561.2L1713.8,562.8L1706.2,562.1L1706.2,560L1710.7,558.9L1714.3,560.6Z M1696.8,559.6L1700.3,559.1L1701.7,561.5L1695.1,562.7L1691.2,563.4L1688.1,563.4L1690.1,560.1L1693.2,560.1L1694.7,558.1L1696.8,559.6Z M1641.2,548.5L1641.9,550.6L1652.8,551.1L1654.1,548.8L1664.7,551.5L1666.7,555.2L1675.3,556.2L1682.2,559.6L1675.7,561.8L1669.5,559.5L1664.3,559.7L1658.4,559.2L1653.1,558.2L1646.5,556L1642.3,555.5L1640,556.2L1629.6,553.8L1628.6,551.4L1623.4,551L1627.3,545.5L1634.2,545.9L1638.8,548.1L1641.2,548.5Z M1617.7,518.2L1618.7,522.1L1620.7,525.3L1624.9,525.8L1627.6,529.4L1626.2,536.5L1626,545.3L1619.7,545.4L1614.9,540.7L1607.6,536L1605.2,532.6L1600.8,527.9L1598,523.7L1593.7,515.7L1588.7,511L1587,506.1L1584.9,501.6L1579.8,498L1576.8,493.2L1572.5,490L1566.6,483.7L1566.1,480.8L1569.8,481.1L1578.6,482.2L1583.6,487.7L1588,491.6L1591.1,493.9L1596.5,500.1L1602.3,500.1L1607.1,504L1610.4,508.8L1614.7,511.4L1612.4,516.1L1615.7,518L1617.7,518.2Z"},{"name":"Argentina","fill":"#54a0ff","d":"M633.5,811.4L635.7,814.1L638.6,818.3L646,821.8L653.9,823.2L651.4,826L646,826.3L643.1,824.3L639.6,824.1L633.6,824.1L633.5,811.4Z M696.2,683.9L694.8,688.4L693.2,694.3L693.3,700L692.1,701.2L691.6,704.9L691.2,707.9L698.4,712.7L697.7,716.7L701.2,719.2L700.9,721.9L695.5,729.2L687,732.3L675.6,733.5L669.4,732.9L670.6,736.3L669.4,740.5L670.5,743.4L667,745.4L661.2,746.2L655.7,744.1L653.6,745.6L654.3,751.3L658.2,753L661.3,751.2L663,754.1L657.8,755.9L653.2,759.4L652.4,765.2L651,768.2L645.6,768.2L641.2,771.1L639.5,775.4L645.1,779.6L650.6,780.7L648.6,785.8L641.9,789L638.2,795.7L633,797.9L630.7,800.6L632.5,806.5L636.3,809.8L633.9,809.5L628.6,808.6L614.9,807.9L612.5,804.6L612.6,800.3L608.8,800.7L606.8,798.6L606.3,792.6L610.7,790.1L612.5,786.5L611.9,783.6L614.9,778.7L616.9,771.2L616.3,767.9L618.8,766.8L618.2,764.6L615.6,763.5L617.4,761.1L614.9,758.9L613.6,752.4L615.8,751.2L614.9,744.3L616.2,738.5L617.7,733.4L621.1,731.3L619.4,725.8L619.4,720.5L623.7,716.8L623.6,712.1L626.8,706.5L626.8,701.3L625.4,700.3L622.7,690.4L626.2,684.6L625.7,679.1L627.7,673.9L631.5,668.6L635.5,665L633.8,662.8L635,661L634.8,651.5L641,648.7L642.9,642.8L642.2,641.3L647,636.2L654.4,637.6L657.8,641.7L660,637.1L666.5,637.4L667.4,638.6L677.9,647.9L682.5,648.7L689.5,652.9L695.3,655.1L696.1,657.7L690.5,666.3L696.3,667.9L702.7,668.7L707.2,667.8L712.3,663.4L713.2,658.4L716.1,657.3L718.9,660.6L718.8,665.2L714,668.3L710.2,670.6L703.8,676.1L696.2,683.9Z"},{"name":"Chile","fill":"#e056fd","d":"M633.5,811.4L633.6,824.1L639.6,824.1L643.1,824.3L641.2,826.6L636.3,828.4L633.5,828.2L630.1,827.7L626,826L620.1,825.2L612.9,822L607.1,819L599.3,812.6L603.9,813.8L611.9,817.6L619.5,819.6L622.4,817L624.3,813.1L629.5,810.8L633.5,811.4Z M628.1,612L630.9,615.9L631.7,620L634.6,622.4L632.8,627.9L635.9,634.3L638.1,642.1L642.2,641.3L642.9,642.8L641,648.7L634.8,651.5L635,661L633.8,662.8L635.5,665L631.5,668.6L627.7,673.9L625.7,679.1L626.2,684.6L622.7,690.4L625.4,700.3L626.8,701.3L626.8,706.5L623.6,712.1L623.7,716.8L619.4,720.5L619.4,725.8L621.1,731.3L617.7,733.4L616.2,738.5L614.9,744.3L615.8,751.2L613.6,752.4L614.9,758.9L617.4,761.1L615.6,763.5L618.2,764.6L618.8,766.8L616.3,767.9L616.9,771.2L614.9,778.7L611.9,783.6L612.5,786.5L610.7,790.1L606.3,792.6L606.8,798.6L608.8,800.7L612.6,800.3L612.5,804.6L614.9,807.9L628.6,808.6L633.9,809.5L628.8,809.5L626.1,810.9L621,812.9L620.1,818.3L617.6,818.4L611.2,816.5L604.7,812.6L604.7,812.6L597.6,809.3L595.9,805.7L597.5,802.4L594.6,798.6L593.9,788.9L596.3,783.4L602.3,779L593.7,777.4L599.1,772.3L601,762.9L607.3,764.9L610.3,753.1L606.5,751.6L604.7,758.7L601.1,757.9L602.9,749.8L604.9,739.2L607.5,735.3L605.8,729.8L605.4,723.4L607.8,723.2L611.3,714L615.2,704.9L617.6,696.4L616.3,687.9L618,683.2L617.3,676.2L620.6,669.2L621.7,658.2L623.5,646.4L625.3,633.7L624.8,624.4L623.7,616.4L626.6,614.9L628.1,612Z"},{"name":"Dem. Rep. Congo","fill":"#cf6a87","d":"M1190.9,537.6L1191.9,542.8L1191.4,545.8L1192.5,549.1L1195.8,552.3L1198.9,559.4L1198.9,559.4L1196.6,558.9L1189,559.8L1187.5,560.5L1185.8,564.1L1187.1,566.6L1186.1,573.4L1185.4,579.1L1186.9,580.1L1190.9,582.3L1192.5,581.3L1193,587.4L1188.6,587.4L1186.3,584.2L1184.2,581.8L1179.8,581L1178.5,578L1175.1,579.8L1170.5,579L1168.6,576.5L1165,575.9L1162.3,576.1L1162,574.3L1160,574.2L1157.4,573.8L1153.9,574.7L1151.4,574.5L1150,575.1L1150.3,568.3L1148.4,566.2L1148,562.7L1148.9,559.3L1147.7,557.1L1147.6,553.5L1140.7,553.5L1141.2,551.5L1138.3,551.5L1138,552.5L1134.5,552.7L1133,556L1132.2,557.4L1129,556.6L1127.2,557.4L1123.4,557.9L1121.2,554.9L1119.9,553.1L1118.3,549.7L1116.9,545.4L1100.1,545.4L1098.1,546L1096.4,545.9L1094.1,546.7L1093.3,544.9L1094.8,544.3L1094.9,541.9L1095.9,540.4L1097.9,539.2L1099.4,539.8L1101.4,537.6L1104.5,537.7L1104.8,539.3L1107,540.3L1110.3,536.7L1113.6,533.9L1115.1,532.1L1114.9,527.4L1117.3,521.9L1119.9,519L1123.7,516.2L1124.3,514.4L1124.5,512.3L1125.4,510.4L1125.1,507.1L1125.8,502.1L1126.9,498.5L1128.6,495.5L1129,492.1L1129.5,488.1L1131.7,485.2L1134.8,483.4L1139.4,485.3L1143.1,487.4L1147.2,488L1151.5,489.1L1153.2,485.6L1153.9,485.2L1156.5,485.8L1162.9,482.9L1165.1,484.1L1167,484L1167.8,482.6L1169.9,482.1L1174.2,482.7L1177.9,482.8L1179.7,482.2L1183.2,486.9L1185.7,487.6L1187.3,486.7L1189.9,487L1193.1,485.8L1194.4,488.3L1199.4,492L1199.4,492L1199.1,498.7L1201.3,499.5L1199.5,501.5L1197.3,503L1195.2,506L1194,508.6L1193.6,513.2L1192.3,515.3L1192.3,519.6L1190.6,521.2L1190.4,524.6L1189.6,525L1189.1,528.2L1190.6,530.7L1190.9,537.6Z"},{"name":"Somalia","fill":"#c8d6e5","d":"M1260.6,521.6L1257.2,516.9L1257.1,496.2L1262.1,489.7L1263.7,487.9L1267.3,487.8L1272.4,483.8L1279.8,483.5L1295.9,466.5L1299.8,461.7L1302.4,458.2L1302.4,455.3L1302.4,449.5L1302.4,447.2L1302.5,447.1L1302.5,447.1L1304.3,447L1306.9,446.1L1309.9,445.6L1312.6,443.6L1314.8,443.6L1314.9,445.2L1314.4,448.5L1314.4,451.5L1313.2,453.5L1311.6,459.7L1308.8,466L1305.3,473.3L1300.4,481.6L1295.6,488L1288.9,495.8L1283.2,500.4L1274.7,506L1269.4,510.3L1263.2,517.2L1261.9,520.2L1260.6,521.6Z"},{"name":"Kenya","fill":"#55efc4","d":"M1247,538.6L1238.9,532.9L1238.5,529.6L1217.8,518L1216.9,517.4L1216.8,511.4L1218.4,509.1L1221.2,505.3L1223.3,501.2L1220.8,494.6L1220.1,491.8L1217.5,487.8L1221,484.4L1224.8,480.7L1227.8,481.6L1227.8,484.8L1229.7,486.7L1233.7,486.7L1240.9,491.5L1242.7,491.6L1244,491.4L1245.3,492.1L1249,492.5L1250.7,490.2L1255.9,487.8L1258.2,489.7L1262.1,489.7L1257.1,496.2L1257.2,516.9L1260.6,521.6L1256.6,523.8L1255.2,526.2L1253.1,526.6L1252.2,530.6L1250.4,532.9L1249.3,536.7L1247,538.6Z"},{"name":"Sudan","fill":"#ffb142","d":"M1163.8,465.2L1159.4,462.7L1157.5,461.1L1157.1,459.3L1158,456.9L1158,454.6L1154.7,451L1154.1,448.6L1154.1,447.2L1152,445.6L1152,442.3L1150.8,440.1L1148.8,440.4L1149.4,438.3L1150.8,435.9L1150.2,433.6L1152.1,431.8L1150.9,430.5L1152.4,427L1155,422.8L1159.9,423.2L1159.6,400.6L1159.7,398.2L1166.2,398.2L1166.2,386.8L1189.1,386.8L1211.2,386.8L1233.7,386.8L1235.6,392.4L1234.3,393.5L1235.1,399.3L1237.2,406.1L1239.4,407.5L1242.5,409.6L1239.6,412.9L1235.4,413.8L1233.6,415.5L1233.1,419.3L1230.6,427.7L1231.2,430L1230.3,434.8L1228,440.4L1224.6,443.3L1222.2,447.6L1221.6,449.9L1218.9,451.5L1217.2,457.5L1217.3,462.6L1217.2,458.2L1216.4,458L1216.5,455.2L1215.8,453.3L1212.9,451L1212.2,446.9L1212.9,442.7L1210.3,442.3L1209.9,443.6L1206.5,443.9L1207.8,445.5L1208.3,449L1205.2,452.1L1202.4,456.2L1199.4,456.8L1194.6,453.5L1192.5,454.6L1191.9,456.3L1189,457.4L1188.8,458.5L1183.1,458.5L1182.3,457.4L1178.2,457.2L1176.2,458.1L1174.6,457.7L1171.7,454.3L1170.7,452.8L1166.6,453.6L1165.1,456.2L1163.6,461.3L1161.6,462.3L1159.9,463L1163.8,465.2Z"},{"name":"Chad","fill":"#706fd3","d":"M1159.6,400.6L1159.9,423.2L1155,422.8L1152.4,427L1150.9,430.5L1152.1,431.8L1150.2,433.6L1150.8,435.9L1149.4,438.3L1148.8,440.4L1150.8,440.1L1152,442.3L1152,445.6L1154.1,447.2L1154.1,448.6L1150.5,449.6L1147.6,451.9L1143.5,458.1L1138.1,460.7L1132.6,460.4L1131,460.9L1131.6,462.9L1128.6,464.9L1126.2,467.1L1119,469.3L1117.6,468L1116.7,467.9L1115.6,469.3L1110.9,469.8L1111.8,468.2L1110,464.3L1109.2,462L1106.7,461L1103.4,457.7L1104.6,455L1107.2,455.6L1108.8,455.2L1112,455.2L1108.9,450L1109.1,446.3L1108.7,442.5L1106.5,438.8L1107,436.2L1103.4,436L1103.4,432.4L1101,430.3L1103.5,422.8L1110.7,417.4L1111,410L1113.2,398.5L1114.5,396L1112.1,394.1L1112,392.3L1109.9,390.8L1108.5,381.9L1114.2,378.8L1136.9,389.7L1159.6,400.6Z"},{"name":"Haiti","fill":"#33d9b2","d":"M616,399.8L616.5,402.9L616.1,405.1L614.7,406.1L616.2,407.8L616.1,409.3L612.3,408.4L609.6,408.8L606.1,408.4L603.5,409.4L600.4,407.7L600.9,405.8L606.2,406.6L610.4,407.1L612.5,405.8L609.9,403.3L609.9,401.2L606.4,400.3L607.6,398.7L611.1,399L616,399.8Z"},{"name":"Dominican Rep.","fill":"#ff5252","d":"M616.1,409.3L616.2,407.8L614.7,406.1L616.1,405.1L616.5,402.9L616,399.8L616.7,398.9L621.2,398.9L624.6,400.4L626.1,400.2L627.1,402.2L630.2,402.1L630,403.8L632.6,404L635.3,406.1L633.2,408.4L630.5,407.2L627.9,407.4L626,407.2L625,408.2L622.8,408.6L622,407.2L620.1,408L617.8,411.9L616.3,411L616.1,409.3Z"},{"name":"Russia","fill":"#ff793f","d":"M2040.7,107.5L2048,105.2L2048,109L2041.8,109.3L2040.7,107.5Z M1303.3,248L1300.7,251.4L1295.2,252.4L1289.6,258.2L1294.7,263.6L1294.2,267.5L1300.4,274.2L1300.4,274.2L1297,276.4L1296,277.9L1293.5,277.5L1289.6,274.1L1288,273.9L1284.4,272.5L1282.7,270.2L1277.4,269L1273.9,269.9L1272.9,268.9L1265.2,266.1L1256.8,265.2L1252,264.2L1251.3,264.9L1244,260.1L1237.6,258L1232.6,254.6L1236.8,253.7L1241.5,248.9L1238.3,246.7L1246.7,244.4L1246.6,243.1L1241.4,244L1241.6,241.5L1244.6,239.9L1250.1,239.5L1251,237.6L1249.7,234.5L1252,231.5L1251.9,229.8L1243.6,228L1240.2,228L1236.7,225.4L1232.4,226.3L1225.1,224.3L1225.3,223.2L1223.2,220.7L1218.7,220.4L1218.2,218.6L1219.7,217.5L1216,214.3L1210.1,214.8L1208.4,214.5L1207,215.8L1204.8,215.6L1204.8,215.6L1203.4,212L1202.1,210.1L1203.2,209.5L1207.8,209.7L1210,208.5L1208.4,207L1204.5,206L1204.9,204.9L1202.5,203.9L1199,200.2L1200.2,198.6L1199.6,196L1194.1,194.6L1191.1,195.3L1190.3,193.9L1184.3,192.5L1182.5,189.1L1182,186.3L1179.2,185L1181.7,183.2L1180,177.9L1184,174.6L1183.2,173.7L1183.2,173.7L1189.6,170.5L1183.7,167.8L1183.7,167.8L1195.9,160.5L1201.2,157.3L1203.3,154.4L1194.9,150.5L1197.2,146.7L1192.1,142.5L1195.9,137.6L1189.3,131.2L1194.5,126.9L1185.8,123.1L1186.7,119.1L1191.3,118.6L1200.9,116.3L1200.9,116.3L1206.8,114.3L1216.1,117.8L1231.7,119.1L1253.2,125.5L1257.6,128.2L1258,132L1251.6,135L1242.4,136.5L1217,132.2L1212.8,132.9L1222.1,137.1L1222.4,139.7L1222.8,145.6L1230.1,147.3L1234.6,148.8L1235.3,146L1231.9,143.6L1235.5,141.4L1249.2,144.9L1254,143.6L1250.2,139.4L1263.5,133.8L1268.7,134.2L1274,136.1L1277.3,132.2L1272.6,128.8L1275.4,125.4L1271.2,121.9L1287.1,123.7L1290.4,126.9L1283.2,127.6L1283.2,130.8L1287.7,132.7L1296.5,131.5L1297.9,127.9L1309.7,125.2L1329.6,120.3L1333.9,120.6L1328.3,124L1335.3,124.6L1339.4,122.7L1350.1,122.5L1358.5,120.1L1365,123.6L1371.5,119.8L1365.5,116.5L1368.5,114.6L1385.3,116.4L1393.1,118.1L1413.8,124.6L1417.6,121.7L1411.8,118.6L1411.6,117.4L1404.8,116.9L1406.6,114.2L1403.6,109.7L1403.4,107.9L1413.9,102.8L1417.7,97.6L1421.9,96.5L1436.9,98L1438.1,101.1L1432.7,105.8L1436.3,107.6L1438.1,111.6L1436.8,119.3L1443.1,122.8L1440.6,126.6L1429.5,134.7L1436,135.6L1438.3,133.5L1444.5,132L1446,129.2L1451,126.5L1447.6,123.3L1450.3,119.5L1444.1,119.1L1442.7,115.9L1447.3,110.2L1439.9,105.5L1450,101.7L1448.7,97.7L1451.6,97.5L1454.6,100.7L1452.3,106.2L1458.4,107.2L1455.8,103.1L1465.3,100.9L1477.1,100.6L1487.6,103.8L1482.6,99.1L1482,93L1491.9,91.9L1505.6,92.1L1517.9,91.4L1513.3,88.4L1519.9,84.7L1526.4,84.5L1537.5,81.7L1552.5,80.9L1554.4,79.4L1569.3,78.8L1574,80.1L1586.8,77.1L1597.2,77.2L1598.8,74.7L1604.2,72.3L1617.6,70L1627.4,71.8L1619.7,73.2L1632.5,74.1L1634.1,76.9L1639.3,75.5L1655.9,75.6L1668.7,78.4L1673.3,80.5L1671.9,83.5L1665.6,85.2L1650.6,88.3L1646.4,90L1653.4,90.8L1661.8,92.2L1667,91.2L1669.9,94.8L1672.4,93.3L1681.5,92.4L1699.7,93.4L1701.1,96L1724.9,96.9L1725.2,92.5L1737.3,93.5L1746.4,93.5L1755.5,96.5L1758.2,100.1L1754.8,102.5L1761.9,107L1770.9,109.3L1776.4,103.3L1785.5,105.9L1795.2,104.4L1806.2,106.1L1810.4,104.5L1819.7,105.3L1815.6,100L1823.1,97.6L1874.5,101.3L1879.3,104.6L1894.2,109L1917.2,107.9L1928.5,108.8L1933.3,111.2L1932.6,115.4L1939.6,117L1947.2,115.8L1957.3,115.7L1968,116.8L1978.8,116.2L1988.7,121.2L1995.8,119.4L1991.2,115.8L1993.7,113.2L2011.8,114.8L2023.7,114.5L2040,117.2L2048,119.7L2048,142.3L2048,142.4L2040.6,144.9L2033.3,144.5L2038.4,147.5L2041.8,152.2L2044.4,153.7L2045.1,156.1L2043.6,157.6L2033,156.3L2017.1,160.6L2012,161.3L2003.3,165.3L1995.1,168.8L1993,171.3L1984.9,167.4L1970,171.9L1967.4,169.8L1962,172.2L1954.4,171.4L1952.5,175.2L1945.7,180.7L1945.9,183L1952.4,184.2L1951.6,192.5L1946.3,192.7L1943.9,197.5L1946.3,199.9L1936.3,202.8L1934.3,209.3L1925.9,210.7L1924.2,216.5L1916,221.8L1913.9,217.9L1911.4,209.6L1908.2,196.9L1911,189.1L1915.8,185.7L1916.1,183L1924.9,181.7L1935.1,174.6L1944.9,168.7L1955.1,164.2L1959.7,156.2L1952.8,156.6L1949.3,161.3L1934.9,167.6L1930.3,160.6L1915.6,162.5L1901.3,172L1906,175.5L1893.3,177L1884.5,177.6L1884.9,173.5L1876.1,172.6L1869.1,175.4L1851.7,174.4L1832.9,176.1L1814.5,187.2L1792.7,200.6L1801.7,201.4L1804.5,204.9L1810,206.2L1813.6,203.4L1819.9,203.7L1828.1,210L1828.3,214.8L1823.8,220.5L1823.4,227.3L1820.8,236.4L1812.2,244.6L1810.3,248.6L1802.6,255.2L1794.9,261.8L1791.3,265.1L1783.7,268.5L1780.1,268.5L1776.5,265.8L1768.9,269.9L1768,271.8L1768,271.8L1768,271.8L1768,271.8L1767.2,270.8L1767.2,270.8L1767.2,267.9L1770.1,267.8L1770.9,261.1L1769.4,256.2L1774.3,254.2L1781.2,255.2L1785,249.6L1787,243.4L1789.2,241.3L1792.1,236.2L1782.7,237.9L1777.8,240.1L1769.2,240.1L1766.9,234.8L1760.1,230.7L1750.2,228.9L1748.1,223.3L1746.1,219.9L1744,217.4L1740.5,211.7L1735.5,209.6L1727,207.9L1719.4,208L1712.4,209.1L1707.7,211.9L1710.8,213.2L1710.9,216.4L1707.7,218.2L1702.6,224.2L1702.6,226.7L1694.6,230.3L1687.8,228.2L1681,228.7L1678,226.8L1674.6,226.1L1666.3,230.2L1658.8,231.1L1653.5,232.5L1646.4,231.6L1641.1,231.6L1637.7,228.7L1632.1,226L1626.4,225.2L1619.2,226L1613.8,227L1605.7,224.7L1604.6,220.4L1597.9,218.9L1592.8,218.3L1586.4,215.9L1580.5,221.8L1582.8,225.2L1577.3,229.1L1569.1,227.7L1563.4,227.5L1559.6,224.8L1553.7,224.7L1548.7,223L1540.1,225.7L1529.2,230.6L1523.2,231.6L1521,232L1518,228.5L1510.6,229.3L1508.2,226.9L1504.2,225.8L1501.5,222.5L1498.4,221.5L1490.2,222.9L1482.3,219.7L1479.3,222.6L1466.6,208.2L1459.3,203.8L1461.4,202L1447.2,207.4L1441.7,207.7L1442.2,204.6L1434.9,202.7L1428.9,204L1427.1,198.1L1416.9,196.9L1411.8,199.3L1397.6,201.4L1394.8,202.8L1373.5,204.8L1370.9,206.7L1375,210.6L1369.5,212.1L1370.6,213.6L1365.1,216.4L1374.4,220.3L1372.9,223L1365,222.8L1363.3,224.5L1356,221.5L1347,221.6L1341,224L1334.2,221.7L1321.7,217.8L1312.8,217.9L1301.1,224.1L1300.4,228.3L1294.5,225L1290,231.2L1291.6,232.4L1288.3,236.7L1293.2,240.5L1297.4,240.4L1301,244.2L1300.4,247.1L1303.3,248Z M1557.5,51.1L1569.8,49.8L1580.9,52.6L1594,58.1L1592.5,63.3L1580.1,64L1564.3,62.3L1554.8,60.2L1550.5,56.1L1542.7,54.9L1557.5,51.1Z M1609,61L1623.5,64.2L1621.8,66.5L1589.7,68.7L1600.1,61.2L1604.8,60.6L1609,61Z M1813.8,78.9L1828.8,79.1L1849.4,82.1L1844.9,86.4L1823.9,86.2L1814.5,87.5L1803.2,83.8L1806.3,79.9L1813.8,78.9Z M1867.2,83.4L1881.5,84.9L1874.9,87.1L1865.8,86.6L1855.3,84.3L1856.6,82.5L1867.2,83.4Z M1819.7,94.6L1825.1,92.4L1832.2,91.8L1840.3,94L1840.9,95.5L1832.3,95.5L1820.7,94.9L1819.7,94.6Z M1279.1,53.5L1290.2,52.5L1298.9,52.4L1300,54L1303.3,52.6L1308.7,51.7L1317.1,52.9L1314.9,53.8L1307.3,54.5L1302.2,55L1301.4,55.9L1294.7,56.8L1288.5,55.5L1291.8,53.7L1279.1,53.5Z M1153.3,202.9L1142.9,203L1135.8,202.4L1137.1,199.9L1145,198L1151,199L1153.5,199.9L1152.9,201.5L1153.3,202.9Z M1328.4,92.4L1342,87.5L1340.5,84.9L1353.2,81.9L1372,78.2L1390.9,77.1L1400.7,75L1411.7,74.3L1415.7,76.5L1411.9,78.3L1391.7,81.1L1374.3,83.8L1356.7,89.3L1348.2,94.8L1339.3,100.3L1340.4,105L1351.3,109.7L1348,110.2L1329.4,109.4L1327.9,106.9L1317.6,105.4L1316.7,102.3L1322.5,101.1L1322.3,98L1333.6,93.1L1328.4,92.4Z M1837,206.5L1839,212L1838.8,217.6L1841.2,223.3L1846.9,233.4L1838.5,231.5L1835,239.7L1840.5,245.6L1840.4,249.5L1836.1,246.1L1832.3,250.5L1831.3,245.7L1831.9,240.2L1831.3,234L1832.6,229.7L1832.8,222.1L1829.5,216.5L1830,208.8L1835.3,206.2L1833,203.5L1835.5,202.7L1837,206.5Z M28.9,129.7L28.4,133.2L32.2,134.6L30.9,130.5L46.3,131.3L57.5,136.7L51.8,139.1L42.5,139.7L42.4,145.3L40.1,146.5L34.7,146.3L30.4,144.3L22.8,142.7L21.6,140.2L15.8,139.3L9.3,140L6.2,138L7.5,135.9L0.7,137.2L3.2,139.9L0,142.3L0,119.7L13.9,124L28.9,129.7Z M7.4,108.7L0,109L0,105.2L0.7,104.9L5.6,104.9L13.8,106.6L13.3,107.3L7.4,108.7Z M1214.2,250.5L1215.7,249.1L1219.8,250.3L1221.6,250.5L1222.3,251.6L1223.2,251.8L1223.2,252.3L1226,253.7L1231.8,253.3L1230.7,255.4L1224.5,256.3L1216.8,259.6L1213.6,258.5L1214.8,255.8L1208.6,254.1L1209.6,253L1215.1,251.2L1214.2,250.5Z"},{"name":"Bahamas","fill":"#33d9b2","d":"M574.7,359.6L577.4,359.1L581.1,359.3L581.3,360.8L575.1,361.7L574.7,359.6Z M581.5,358.2L586,360.7L585,364.8L583.9,364L584,361.1L581.5,358.8L581.5,358.2Z M579.2,368.6L580.9,368.8L582.9,373.5L582.9,376.8L581.5,377.1L580.1,373.8L577.9,372.2L579.2,368.6Z"},{"name":"Falkland Is.","fill":"#ff9ff3","d":"M675.8,807L682.7,803.6L687.5,805L690.9,802.7L695.5,805.3L693.8,807.3L686.1,809L683.5,807L678.7,809.5L675.8,807Z"},{"name":"Norway","fill":"#feca57","d":"M1110.1,58.7L1112.3,56.8L1120.7,56.6L1127.8,58.6L1146.6,62.8L1132.2,65.1L1129.1,69.3L1124.1,70.3L1121.4,75L1114.5,75.3L1102.3,71.8L1107.5,69.8L1098.9,68.1L1087.8,63.3L1083.4,58.9L1098.9,56.8L1102,58.8L1110.1,58.7Z M1200.9,116.3L1191.3,118.6L1186.7,119.1L1189.1,115.1L1181.8,112.8L1172.9,114.8L1170.1,118.9L1164.7,121.5L1158.6,120.1L1151.2,120.4L1144.9,117.4L1141.5,118.9L1137.9,119.1L1137.1,122.8L1126.4,121.9L1124.9,125.1L1119.4,125.1L1115.6,129.1L1110,135.4L1101.1,143.4L1103.2,145.4L1101.2,147.6L1095.6,147.5L1091.9,152.9L1092.2,160.4L1095.9,163.3L1094,170L1089.2,173.9L1086.7,177.2L1082.9,173.7L1071.7,180.3L1064.1,181.6L1056.2,178.7L1054.2,172.6L1052.4,159.5L1057.6,155.8L1072.7,151L1083.9,145.1L1094.3,137.2L1108,126.2L1117.5,122L1133.1,114.8L1145.6,112.3L1155,112.6L1163.6,107.9L1174,108.2L1184.2,107L1202,111.2L1194.7,112.7L1200.9,116.3Z M1179.9,56.6L1171.5,59.6L1155,60.3L1138.2,59.4L1137.2,57.8L1129,57.7L1122.8,55.1L1140.4,53.5L1148.6,54.9L1154.4,53.2L1168.8,54.6L1179.9,56.6Z M1164.7,69.1L1151.9,71.4L1141.9,70.1L1145.8,68.6L1142.4,66.8L1154.2,65.7L1156.4,67.8L1164.7,69.1Z"},{"name":"Greenland","fill":"#dff9fb","d":"M758,41.9L777.1,38.5L797,38.8L804.3,36.7L824.4,36.2L869.8,36.9L905.4,41.4L894.9,43.6L873.1,43.8L842.5,44.4L845.4,45.4L865.5,44.8L882.7,46.7L893.7,45L898.4,47L892.2,50.3L906.7,48.2L934.3,46L951.4,47.1L954.5,49.5L931.4,53.6L928.1,54.9L910,55.9L923.1,56.2L916.5,60.3L911.9,64L912.1,70.3L918.9,74L910,74.3L900.7,76.1L911.2,79.1L912.5,83.9L906.4,84.4L913.8,89.3L901.2,89.7L907.8,92.1L905.9,94.1L897.9,95L889.9,95L897.1,98.8L897.1,101.4L885.9,99L883,100.5L890.6,101.9L898.1,105.4L900.2,110L890.1,111.1L885.7,108.9L878.7,105.6L880.6,109.5L874,112.5L889,112.7L896.9,113L881.6,118L866.1,122.5L849.5,124.4L843.2,124.5L837.3,126.7L829.4,132.7L817.2,136.7L813.3,136.9L805.7,138.3L797.5,139.6L792.6,143.1L792.6,147.1L789.7,150.9L780.4,155.4L782.7,159.9L780.1,164.6L777.2,170.1L769.2,170.5L760.8,165.8L749.4,165.8L743.9,162.7L740.1,157.1L730.3,150L727.4,146.3L726.6,141.2L718.7,136L720.8,131.8L717,129.8L722.6,123.1L731.2,121L733.4,118.6L734.6,114.2L728.1,116.2L725,117L719.9,117.9L712.9,116L712.5,112.1L714.8,109.1L720,109L731.6,110.5L721.9,106.9L716.8,105L711.1,105.8L706.4,104.4L712.7,99.1L709.3,96.9L704.7,93L697.9,87L690.6,84.8L690.7,82.4L675.4,79.1L663.4,78.6L648.2,78.9L634.3,79.3L627.7,77.5L617.8,73.9L632.7,72.1L644.2,71.8L619.8,70.3L607,68L607.8,65.8L629.3,63.1L650.2,60.3L652.4,58.3L637,56.2L642,54L661.7,50L670,49.4L667.6,46.8L681.1,45.3L698.6,44.4L716,44.4L722.2,46.1L737.3,43L750.9,45.1L758.9,45.6L770.7,47.4L757.2,44.4L758,41.9Z"},{"name":"Fr. S. Antarctic Lands","fill":"#48dbfb","d":"M1416.2,788.6L1419.8,790.4L1425.2,791.1L1425.4,792.2L1423.8,794.8L1415.1,795.2L1414.9,792.1L1415.8,789.8L1416.2,788.6Z"},{"name":"Timor-Leste","fill":"#1dd1a1","d":"M1734.9,562.6L1735.6,561.2L1740.5,560L1744.5,559.8L1746.2,559.1L1748.4,559.8L1746.3,561.3L1740.4,563.8L1735.6,565.4L1735.5,563.7L1734.9,562.6Z"},{"name":"South Africa","fill":"#786fa6","d":"M1117,674.6L1119.7,671.8L1122,673.3L1122.9,675.7L1125.5,676.2L1129,677.2L1132.1,676.8L1137.2,673.9L1137.2,652.9L1138.7,653.8L1142.1,659.2L1141.6,662.6L1142.8,664.6L1146.9,664L1149.8,661.5L1152.5,659.8L1153.8,657.1L1156.6,655.8L1159,656.4L1161.7,658L1166.4,658.3L1170,657L1170.6,655.2L1171.6,652.5L1174.7,652L1176.4,649.9L1178.3,646.1L1183.4,641.9L1191.4,637.7L1193.8,637.7L1196.5,638.7L1198.4,638L1201.4,638.6L1204.2,646.6L1205.6,650.6L1204.6,657L1205.1,659L1202.3,658L1200.6,658.4L1200.1,660L1198.5,662.2L1198.6,664.1L1202,667.2L1205.3,666.6L1206.5,664.1L1210.8,664.1L1209.3,668.3L1208.7,673L1207.2,675.6L1203.3,678.4L1202.2,679.3L1199.8,682.2L1198.2,685.1L1195,689.2L1188.6,695L1184.5,698.4L1180.2,701L1174.3,703.2L1171.4,703.5L1170.7,705.1L1167.2,704.3L1164.4,705.3L1158.2,704.3L1154.8,704.9L1152.4,704.6L1146.6,706.9L1141.7,707.8L1138.2,709.9L1135.6,710.1L1133.2,708.1L1131.3,707.9L1128.8,705.4L1128.5,706.2L1127.8,704.7L1127.8,701.3L1126,697.5L1127.8,696.5L1127.7,692.1L1123.9,686.8L1121.1,682L1121.1,682L1117,674.6Z M1188.9,676.7L1186.4,675L1183.7,676.1L1180.6,678.4L1177.6,682L1181.9,686.3L1183.9,685.8L1184.9,684L1188.1,683.1L1189.1,681.2L1190.8,678.4L1188.9,676.7Z"},{"name":"Lesotho","fill":"#ff9f43","d":"M1188.9,676.7L1190.8,678.4L1189.1,681.2L1188.1,683.1L1184.9,684L1183.9,685.8L1181.9,686.3L1177.6,682L1180.6,678.4L1183.7,676.1L1186.4,675L1188.9,676.7Z"},{"name":"Mexico","fill":"#22a6b3","d":"M357.7,326.9L364.1,326.5L371.4,325.9L370.8,327L379.4,329.7L392.4,333.7L403.7,333.7L408.2,333.7L408.2,331.4L418.1,331.4L420.2,333.4L423.1,335.2L426.5,337.7L428.3,340.6L429.8,343.8L432.7,345.5L437.4,347.2L441,342.7L445.7,342.6L449.7,344.9L452.5,348.8L454.5,352.1L457.8,355.3L459.1,359.3L460.7,362L465.1,363.7L469.2,365L471.4,364.8L469.2,369.8L468.2,373.9L467.8,381.5L467.2,384.3L468.2,387.4L470,390.2L471.1,394.6L474.9,398.8L476.2,402.1L478.4,404.9L484.5,406.4L486.8,408.8L491.8,407.2L496.2,406.6L500.4,405.6L504,404.6L507.6,402.3L509,399L509.4,394.2L510.4,392.5L514.3,391L520.3,389.7L525.3,389.9L528.8,389.4L530.1,390.6L529.9,393.4L526.9,396.8L525.5,400.2L526.6,401.2L525.7,403.7L524.3,408.1L522.9,406.7L521.7,406.8L520.6,406.8L518.6,410.3L517.5,409.6L516.8,409.9L516.9,410.7L511.6,410.6L506.3,410.6L506.3,413.8L503.7,413.9L505.8,415.8L508,417.1L508.6,418.3L509.5,418.6L509.4,420.6L502.1,420.6L499.3,425.2L500.1,426.3L499.5,427.6L499.3,429.3L492.9,423.2L490,421.3L485.3,419.8L482.1,420.2L477.6,422.4L474.7,422.9L470.7,421.4L466.4,420.4L461.1,417.8L456.8,417L450.4,414.3L445.6,411.6L444.2,410.1L441,409.7L435.2,407.9L432.8,405.3L426.7,402.1L423.9,398.5L422.5,395.8L424.4,395.2L423.8,393.6L425.1,392.1L425.2,390.1L423.2,387.6L422.7,385.3L420.8,382.4L415.8,376.8L410.1,372.3L407.3,368.8L402.4,366.5L401.4,365.1L402.3,361.6L399.4,360.2L396,357.5L394.6,353.5L391.5,353L388.2,350L385.5,347.3L385.3,345.5L382.2,341.2L380.2,336.9L380.3,334.7L376.2,332.4L374.3,332.7L371,331.1L370.1,333.4L371.1,336.1L371.6,340.4L373.6,342.8L377.8,346.7L378.7,348L379.6,348.4L380.4,350.4L381.4,350.3L382.5,354L384.2,355.4L385.5,357.4L389,360.3L390.9,365.6L392.6,368.1L394.2,370.8L394.5,373.8L397.2,374L399.5,376.5L401.6,379.1L401.4,380.1L399.1,382.2L398,382.2L396.5,378.7L392.8,375.5L388.7,372.7L385.8,371.3L386,367.1L385.1,364L382.4,362.3L378.5,359.7L377.8,360.5L376.3,359L372.8,357.6L369.5,354.3L369.9,353.9L372.2,354.2L374.3,352.1L374.5,349.5L370.2,345.4L366.8,343.9L364.7,340.3L362.6,336.6L360,332L357.7,326.9Z"},{"name":"Uruguay","fill":"#0abde3","d":"M696.2,683.9L699.9,683.3L705.6,687.7L707.7,687.5L713.5,691.2L718,694.3L721.3,698.2L718.8,700.9L720.4,704.1L717.9,707.7L711.5,710.8L707.3,709.7L704.2,710.3L698.9,707.9L695.1,708.1L691.6,704.9L692.1,701.2L693.3,700L693.2,694.3L694.8,688.4L696.2,683.9Z"},{"name":"Brazil","fill":"#2ed573","d":"M720.4,704.1L718.8,700.9L721.3,698.2L718,694.3L713.5,691.2L707.7,687.5L705.6,687.7L699.9,683.3L696.2,683.9L703.8,676.1L710.2,670.6L714,668.3L718.8,665.2L718.9,660.6L716.1,657.3L713.2,658.4L714.4,655.1L715.1,651.8L715.1,648.7L713.1,647.6L711,648.5L708.8,648.3L708.2,646.1L707.6,640.9L706.6,639.2L702.7,637.6L700.4,638.8L694.4,637.7L694.8,629.9L693.1,626.8L694.9,625.6L694.3,622.4L695.9,619.9L696.9,615.4L695.6,611.9L692.4,610.3L691.8,608L692.7,604.7L681.8,604.5L679.6,597.9L681.2,597.8L681.2,595.3L680.1,593.7L679.8,590.4L676.5,588.7L672.9,588.7L670.6,587.1L666.7,586L664.5,583.8L658.1,582.9L651.9,577.8L652.4,574L651.7,571.8L652.3,567.5L644.9,568.5L641.9,570.6L636.9,572.9L635.6,574.7L632.7,574.8L628.5,574.3L625.2,575.3L622.7,574.6L623,566L618.4,569.3L613.3,569.2L611.2,566.2L607.4,565.8L608.6,563.4L605.5,559.9L603.1,554.8L604.6,553.8L604.6,551.4L608,549.7L607.5,546.6L608.9,544.7L609.3,542L615.8,538.1L620.5,537L621.3,536.2L626.4,536.5L628.9,520.9L629.1,518.4L628.2,515.1L625.7,513.1L625.7,508.9L628.9,508L630,508.6L630.2,506.4L626.9,505.8L626.8,502.2L637.9,502.4L639.8,500.4L641.4,502.2L642.5,505.6L643.5,504.9L646.7,507.9L651.1,507.5L652.2,505.8L656.4,504.4L658.8,503.5L659.4,501.1L663.5,499.5L663.2,498.3L658.4,497.8L657.6,494.2L657.8,490.4L655.3,488.9L656.3,488.4L660.5,489.1L665.1,490.5L666.7,489.2L670.8,488.3L677.2,486.2L679.2,484L678.5,482.4L681.5,482.2L682.8,483.5L682,486L684,486.8L685.3,489.5L683.7,491.5L682.8,496.3L684.3,499.2L684.7,501.8L688.2,504.5L691,504.8L691.6,503.7L693.4,503.4L696,502.4L697.8,500.9L701,501.4L702.4,501.2L705.4,501.7L706,500.5L705,499.4L705.6,497.7L707.9,498.2L710.6,497.6L713.8,498.8L716.3,500L718.1,498.5L719.3,498.7L720.1,500.3L722.8,499.9L725,497.8L726.8,493.6L730.1,488.4L732.1,488.1L733.5,491.2L736.7,501.2L739.7,502.1L739.9,506L735.6,510.7L737.3,512.4L747.4,513.3L747.6,519L751.9,515.3L759.1,517.4L768.5,520.8L771.3,524.2L770.4,527.3L777,525.6L788.1,528.6L796.6,528.3L805,533.1L812.2,539.4L816.6,541.1L821.5,541.3L823.5,543.1L825.5,550.3L826.4,553.8L824.2,563.2L821.3,566.9L813.2,574.8L809.6,581.2L805.4,586.2L804,586.3L802.4,590.5L802.8,601.1L801.2,609.9L800.6,613.6L798.8,615.9L797.8,623.5L792,630.9L791.1,636.8L786.5,639.3L785.1,642.7L779,642.7L770,644.8L766,647.4L759.6,649L752.9,653.6L748.1,659.2L747.3,663.5L748.2,666.6L747.2,672.3L745.9,675.1L741.9,678.3L735.6,688.3L730.6,692.8L726.7,695.4L724.1,700.9L720.4,704.1Z"},{"name":"Bolivia","fill":"#54a0ff","d":"M628.5,574.3L632.7,574.8L635.6,574.7L636.9,572.9L641.9,570.6L644.9,568.5L652.3,567.5L651.7,571.8L652.4,574L651.9,577.8L658.1,582.9L664.5,583.8L666.7,586L670.6,587.1L672.9,588.7L676.5,588.7L679.8,590.4L680.1,593.7L681.2,595.3L681.2,597.8L679.6,597.9L681.8,604.5L692.7,604.7L691.8,608L692.4,610.3L695.6,611.9L696.9,615.4L695.9,619.9L694.3,622.4L694.9,625.6L693.1,626.8L693,625L687.7,622.1L682.4,622L672.5,623.7L669.8,628.7L669.6,631.8L667.4,638.6L666.5,637.4L660,637.1L657.8,641.7L654.4,637.6L647,636.2L642.2,641.3L638.1,642.1L635.9,634.3L632.8,627.9L634.6,622.4L631.7,620L630.9,615.9L628.1,612L631.7,605.9L629.2,601.1L630.6,599.2L629.5,597.1L631.8,594.2L631.9,589.4L632.1,585.4L633.4,583.5L628.5,574.3Z"},{"name":"Peru","fill":"#ffbe76","d":"M626.4,536.5L621.3,536.2L620.5,537L615.8,538.1L609.3,542L608.9,544.7L607.5,546.6L608,549.7L604.6,551.4L604.6,553.8L603.1,554.8L605.5,559.9L608.6,563.4L607.4,565.8L611.2,566.2L613.3,569.2L618.4,569.3L623,566L622.7,574.6L625.2,575.3L628.5,574.3L633.4,583.5L632.1,585.4L631.9,589.4L631.8,594.2L629.5,597.1L630.6,599.2L629.2,601.1L631.7,605.9L628.1,612L626.6,614.9L623.7,616.4L618,613.1L617.5,610.8L606.2,605.1L596,598.8L591.6,595.3L589.2,590.6L590.2,589L585.4,581.5L579.7,571L574.4,559.7L572,557.1L570.3,552.9L565.8,549.2L561.8,546.9L563.6,544.4L560.9,538.9L562.6,535L567.2,531.4L567.8,533.7L566.2,535.1L566.4,537.2L568.7,536.7L571,537.3L573.4,540.2L576.6,537.9L577.7,534L581.2,529.1L588,526.8L594.2,520.9L596,517.2L595.2,512.9L596.7,512.3L600.5,515L602.3,517.7L605,519.2L608.3,525.1L612.5,525.8L615.7,524.3L617.7,525.3L621.2,524.8L625.5,527.5L621.8,533.3L623.5,533.4L626.4,536.5Z"},{"name":"Colombia","fill":"#f9ca24","d":"M643.5,504.9L642.5,505.6L641.4,502.2L639.8,500.4L637.9,502.4L626.8,502.2L626.9,505.8L630.2,506.4L630,508.6L628.9,508L625.7,508.9L625.7,513.1L628.2,515.1L629.1,518.4L628.9,520.9L626.4,536.5L623.5,533.4L621.8,533.3L625.5,527.5L621.2,524.8L617.7,525.3L615.7,524.3L612.5,525.8L608.3,525.1L605,519.2L602.3,517.7L600.5,515L596.7,512.3L595.2,512.9L592.8,511.5L590,509.6L588.4,510.5L583.5,509.7L582.2,507.3L581.1,507.4L575.4,504.1L574.6,502.4L576.8,502L576.5,499.1L577.8,497L580.7,496.7L583.1,493.1L585.2,490.1L583.1,488.7L584.2,485.4L582.9,480.2L584.1,478.7L583.2,473.9L580.9,470.9L581.7,468.1L583.5,468.5L584.6,466.9L583.3,463.5L583.9,462.7L586.9,462.9L591.2,458.9L593.5,458.3L593.6,456.4L594.6,451.6L597.9,448.9L601.4,448.8L601.9,447.7L606.4,448.1L610.8,445.3L613,444L615.8,441.2L617.8,441.6L619.3,443.1L618.2,445L614.5,446L613.1,448.8L610.9,450.4L609.2,452.5L608.6,456.6L607,459.9L609.9,460.3L610.6,462.9L611.9,464.2L612.3,466.5L611.7,468.6L611.9,469.8L613.3,470.2L614.6,472.2L621.9,471.7L625.2,472.4L629.3,477.3L631.6,476.7L635.6,477L638.9,476.3L640.9,477.3L639.9,480.4L638.6,482.3L638.2,486.4L639.3,490.2L640.9,491.8L641.1,493.1L638.2,496L640.3,497.2L641.8,499.2L643.5,504.9Z"},{"name":"Panama","fill":"#ffda79","d":"M583.9,462.7L583.3,463.5L584.6,466.9L583.5,468.5L581.7,468.1L580.9,470.9L579,469.3L577.8,466.2L579.2,464.7L577.8,464.3L576.7,462.4L573.9,460.8L571.4,461.2L570.3,463.2L568,464.6L566.7,464.8L566.2,466L568.9,469.1L567.3,469.8L566.5,470.6L563.8,470.9L562.9,467.5L562.1,468.5L560.2,468.2L559.1,465.9L556.8,465.5L555.3,464.8L552.8,464.8L552.7,466.1L552,465.2L552.3,464.1L552.8,462.9L552.6,461.9L553.4,461.2L552.2,460.4L552.2,458.1L554.4,457.6L556.4,459.6L556.3,460.8L558.6,461.1L559.1,460.6L560.7,462L563.5,461.6L565.9,460.2L569.4,459L571.3,457.3L574.5,457.7L574.2,458.2L577.4,458.4L579.9,459.4L581.8,461.1L583.9,462.7Z"},{"name":"Costa Rica","fill":"#cd84f1","d":"M554.4,457.6L552.2,458.1L552.2,460.4L553.4,461.2L552.6,461.9L552.8,462.9L552.3,464.1L552,465.2L548.9,463.9L547.8,462.8L548.4,461.8L548.2,460.5L546.6,459.1L544.4,458L542.4,457.3L542.1,455.6L540.6,454.6L540.9,456.3L539.8,457.6L538.5,456.1L536.7,455.5L535.9,454.3L535.9,452.6L536.7,450.8L535.1,450L536.4,448.9L537.2,448.2L541,449.7L542.3,449L544.1,449.4L545.1,450.6L546.7,451L548.1,449.8L549.5,452.9L551.7,455.2L554.4,457.6Z"},{"name":"Nicaragua","fill":"#706fd3","d":"M548.1,449.8L546.7,451L545.1,450.6L544.1,449.4L542.3,449L541,449.7L537.2,448.2L536.4,448.9L534.4,447.1L531.8,444.8L530.5,442.9L528.1,441.1L525.3,438.6L525.9,437.7L526.8,438.5L527.3,438.1L529,437.9L529.7,436.6L530.6,436.5L530.5,433.8L531.8,433.6L533,433.7L534.2,432.1L535.9,433.3L536.5,432.6L537.5,431.9L539.5,430.3L539.6,429.2L540.1,429.2L540.9,427.9L541.5,427.7L542.4,428.6L543.6,428.8L544.8,428.1L546.3,428.1L548.2,427.3L549,426.6L551,426.7L550.5,427.2L550.2,428.5L550.8,430.6L549.5,432.5L548.9,434.8L548.7,437.3L549,438.8L549.1,441.3L548.3,441.9L547.7,444.3L548.1,445.8L547,447.3L547.2,448.8L548.1,449.8Z"},{"name":"Honduras","fill":"#33d9b2","d":"M551,426.7L549,426.6L548.2,427.3L546.3,428.1L544.8,428.1L543.6,428.8L542.4,428.6L541.5,427.7L540.9,427.9L540.1,429.2L539.6,429.2L539.5,430.3L537.5,431.9L536.5,432.6L535.9,433.3L534.2,432.1L533,433.7L531.8,433.6L530.5,433.8L530.6,436.5L529.7,436.6L529,437.9L527.3,438.1L526.3,436.4L524.6,435.9L525,433.6L524.2,433L523,432.6L520.5,433.2L520.3,432.5L518.6,431.6L517.4,430.4L515.7,429.9L516.9,428.5L516.4,427.4L516.8,426.3L519.5,424.7L522.1,422.5L522.7,422.7L523.9,421.7L525.6,421.7L526.1,422.1L527,421.8L529.6,422.4L532.2,422.2L534.1,421.6L534.7,420.9L536.6,421.2L537.9,421.6L539.4,421.5L540.5,421L543.1,421.8L544,421.9L545.8,423L547.4,424.3L549.5,425.1L551,426.7Z"},{"name":"El Salvador","fill":"#ff5252","d":"M515.7,429.9L517.4,430.4L518.6,431.6L520.3,432.5L520.5,433.2L523,432.6L524.2,433L525,433.6L524.6,435.9L523.9,437.2L520.6,437.1L518.6,436.6L516.2,435.4L513.1,435.1L511.5,433.9L511.6,433L513.6,431.6L514.6,431L514.3,430.3L515.7,429.9Z"},{"name":"Guatemala","fill":"#34ace0","d":"M499.3,429.3L499.5,427.6L500.1,426.3L499.3,425.2L502.1,420.6L509.4,420.6L509.5,418.6L508.6,418.3L508,417.1L505.8,415.8L503.7,413.9L506.3,413.8L506.3,410.6L511.6,410.6L516.9,410.7L516.8,415.2L516.4,421.6L518.1,421.6L519.9,422.6L520.4,421.8L522.1,422.5L519.5,424.7L516.8,426.3L516.4,427.4L516.9,428.5L515.7,429.9L514.3,430.3L514.6,431L513.6,431.6L511.6,433L511.5,433.9L508.5,432.9L505,432.8L502.4,431.6L499.3,429.3Z"},{"name":"Belize","fill":"#33d9b2","d":"M516.9,410.7L516.8,409.9L517.5,409.6L518.6,410.3L520.6,406.8L521.7,406.8L521.7,407.6L522.8,407.6L522.7,409.2L521.8,411.6L522.3,412.5L521.7,414.5L522,415.1L521.4,418L520.2,419.5L519.2,419.6L518.1,421.6L516.4,421.6L516.8,415.2L516.9,410.7Z"},{"name":"Venezuela","fill":"#ff9ff3","d":"M678.5,482.4L679.2,484L677.2,486.2L670.8,488.3L666.7,489.2L665.1,490.5L660.5,489.1L656.3,488.4L655.3,488.9L657.8,490.4L657.6,494.2L658.4,497.8L663.2,498.3L663.5,499.5L659.4,501.1L658.8,503.5L656.4,504.4L652.2,505.8L651.1,507.5L646.7,507.9L643.5,504.9L641.8,499.2L640.3,497.2L638.2,496L641.1,493.1L640.9,491.8L639.3,490.2L638.2,486.4L638.6,482.3L639.9,480.4L640.9,477.3L638.9,476.3L635.6,477L631.6,476.7L629.3,477.3L625.2,472.4L621.9,471.7L614.6,472.2L613.3,470.2L611.9,469.8L611.7,468.6L612.3,466.5L611.9,464.2L610.6,462.9L609.9,460.3L607,459.9L608.6,456.6L609.2,452.5L610.9,450.4L613.1,448.8L614.5,446L618.2,445L618,446.4L614.7,447L616.6,449.6L616.5,452.6L614,455.9L616.1,460.4L618.6,460L619.9,455.9L618.1,453.9L617.8,449.6L624.9,447.3L624.1,444.6L626.1,442.8L628.1,446.8L632.1,446.9L635.8,450.1L636.1,452L641.2,452L647.2,451.4L650.5,454L654.8,454.7L658,452.9L658.1,451.5L665.1,451.1L672,451L667.1,452.7L669.1,455.4L673.6,455.8L677.9,458.6L678.8,463.2L681.8,463.1L684,464.4L679.5,467.7L679,469.8L681,471.9L679.6,473L676.1,473.9L676.2,476.5L674.6,478.1L678.5,482.4Z"},{"name":"Guyana","fill":"#feca57","d":"M702.4,501.2L701,501.4L697.8,500.9L696,502.4L693.4,503.4L691.6,503.7L691,504.8L688.2,504.5L684.7,501.8L684.3,499.2L682.8,496.3L683.7,491.5L685.3,489.5L684,486.8L682,486L682.8,483.5L681.5,482.2L678.5,482.4L674.6,478.1L676.2,476.5L676.1,473.9L679.6,473L681,471.9L679,469.8L679.5,467.7L684,464.4L687.8,466.5L691.3,470.2L691.5,473.1L693.6,473.3L696.6,476L698.9,478L698,483.1L694.5,484.6L694.8,486L693.8,488.9L696.3,493L698.1,493L698.9,496.2L702.4,501.2Z"},{"name":"Suriname","fill":"#ff6b6b","d":"M713.8,498.8L710.6,497.6L707.9,498.2L705.6,497.7L705,499.4L706,500.5L705.4,501.7L702.4,501.2L698.9,496.2L698.1,493L696.3,493L693.8,488.9L694.8,486L694.5,484.6L698,483.1L698.9,478L705.7,479.2L706.3,478.1L710.9,477.7L717,479.3L714.1,484.1L714.5,488L716.8,491.4L715.8,493.9L715.3,496.5L713.8,498.8Z"},{"name":"France","fill":"#30336b","d":"M730.1,488.4L726.8,493.6L725,497.8L722.8,499.9L720.1,500.3L719.3,498.7L718.1,498.5L716.3,500L713.8,498.8L715.3,496.5L715.8,493.9L716.8,491.4L714.5,488L714.1,484.1L717,479.3L719,479.9L723.2,481.2L729.2,486L730.1,488.4Z M1059.2,230.6L1061.9,232.1L1070.1,233.1L1067.2,237L1066.5,241.1L1064.9,242.1L1062.3,241.5L1062.5,243L1058.3,246.2L1058.3,248.8L1061,247.9L1062.9,250.4L1062.7,252L1064.4,254.1L1062.4,255.8L1063.9,260.2L1066.9,261L1066.3,263.4L1061.1,266.6L1049.9,265.1L1041.6,266.9L1041,270.4L1034.4,271.1L1028,268.5L1025.9,269.8L1015.5,267.2L1013.2,265L1016.1,261.6L1017.2,250.2L1011.3,244.3L1007.1,241.4L998.4,239.2L997.9,235L1005.3,233.8L1014.8,235.3L1013,228.8L1018.4,231.3L1031.6,226.8L1033.3,222.2L1038.3,221L1039.1,223L1041.8,223.1L1044.4,225.4L1048.4,228.1L1051.3,227.6L1056.3,230.2L1057.6,230.7L1059.2,230.6Z M1073.8,269.5L1077.4,267.3L1078.4,272.2L1076.5,276.6L1073.9,275.4L1072.6,271.6L1073.8,269.5Z"},{"name":"Ecuador","fill":"#1dd1a1","d":"M595.2,512.9L596,517.2L594.2,520.9L588,526.8L581.2,529.1L577.7,534L576.6,537.9L573.4,540.2L571,537.3L568.7,536.7L566.4,537.2L566.2,535.1L567.8,533.7L567.2,531.4L570.2,527.1L569,524.6L566.8,527.3L563.4,524.8L564.5,523.2L563.6,518L565.6,517.2L566.6,513.6L568.8,510L568.4,507.6L571.5,506.4L575.4,504.1L581.1,507.4L582.2,507.3L583.5,509.7L588.4,510.5L590,509.6L592.8,511.5L595.2,512.9Z"},{"name":"Puerto Rico","fill":"#f368e0","d":"M646.9,406.7L649.8,407.2L650.9,408.3L649.4,409.7L645.1,409.7L641.8,409.9L641.5,407.5L642.3,406.6L646.9,406.7Z"},{"name":"Jamaica","fill":"#ff9f43","d":"M582.7,406.8L586.5,407.3L589.6,408.7L590.5,410.2L586.5,410.3L584.8,411.3L581.6,410.4L578.3,408.3L579,407L581.4,406.6L582.7,406.8Z"},{"name":"Cuba","fill":"#ee5253","d":"M556,380.1L560.9,380.5L565.4,380.6L570.7,382.5L573,384.6L578.3,383.9L580.3,385.3L585.1,388.8L588.7,391.4L590.5,391.3L593.9,392.4L593.5,394L597.7,394.3L602,396.6L601.3,397.9L597.6,398.7L593.7,398.9L589.8,398.5L581.7,399L585.5,395.9L583.2,394.4L579.5,394L577.5,392.4L576.2,389.1L573,389.4L567.7,387.8L565.9,386.6L558.5,385.8L556.5,384.6L558.7,383.2L553.1,382.9L549,385.9L546.7,386L545.8,387.4L543,388L540.6,387.4L543.6,385.7L544.8,383.6L547.4,382.4L550.3,381.3L554.6,380.7L556,380.1Z"},{"name":"Zimbabwe","fill":"#0abde3","d":"M1201.4,638.6L1198.4,638L1196.5,638.7L1193.8,637.7L1191.4,637.7L1187.8,635.1L1183.4,634.2L1181.7,630.6L1181.7,628.6L1179.3,628L1172.8,621.8L1171.1,618.5L1169.9,617.4L1167.7,612.9L1174.1,613.5L1175.9,614.2L1177.9,614L1181,610.4L1186,605.7L1188,605.2L1188.7,603.3L1191.9,601L1196.2,600.2L1196.6,602.3L1201.3,602.2L1204,603.4L1205.2,604.8L1207.9,605.3L1210.9,607.1L1210.9,614.3L1209.8,618.2L1209.5,622.5L1210.4,624.2L1209.8,627.5L1208.9,628L1207.4,632.1L1201.4,638.6Z"},{"name":"Botswana","fill":"#10ac84","d":"M1191.4,637.7L1183.4,641.9L1178.3,646.1L1176.4,649.9L1174.7,652L1171.6,652.5L1170.6,655.2L1170,657L1166.4,658.3L1161.7,658L1159,656.4L1156.6,655.8L1153.8,657.1L1152.5,659.8L1149.8,661.5L1146.9,664L1142.8,664.6L1141.6,662.6L1142.1,659.2L1138.7,653.8L1137.2,652.9L1137.2,636.3L1142.8,636.1L1143,615.8L1147.2,615.6L1156,613.7L1158.1,616L1161.8,613.8L1163.5,613.8L1166.7,612.5L1167.7,612.9L1169.9,617.4L1171.1,618.5L1172.8,621.8L1179.3,628L1181.7,628.6L1181.7,630.6L1183.4,634.2L1187.8,635.1L1191.4,637.7Z"},{"name":"Namibia","fill":"#54a0ff","d":"M1137.2,652.9L1137.2,673.9L1132.1,676.8L1129,677.2L1125.5,676.2L1122.9,675.7L1122,673.3L1119.7,671.8L1117,674.6L1112.8,670.3L1110.5,666.1L1109.3,660.6L1107.9,656.5L1106,647.7L1105.8,640.9L1105.1,637.8L1102.9,635.4L1100,630.7L1097,623.9L1095.7,620.3L1091.1,614.8L1090.8,610.4L1093.5,609.3L1096.9,608.4L1100.6,608.5L1104,611.1L1104.8,610.7L1127.9,610.5L1131.8,613.2L1145.6,614L1156.1,611.7L1160.7,610.4L1164.4,610.7L1166.7,612L1166.7,612.5L1163.5,613.8L1161.8,613.8L1158.1,616L1156,613.7L1147.2,615.6L1143,615.8L1142.8,636.1L1137.2,636.3L1137.2,652.9Z"},{"name":"Senegal","fill":"#5f27cd","d":"M928.9,434.7L926.6,430.2L923.7,428.2L926.2,427.1L929,423.1L930.3,420.2L932.3,418.4L935.1,418.9L937.9,417.6L941.1,417.6L943.8,419.2L947.6,420.8L951,424.9L954.8,428.8L955,432.4L956.1,435.6L958.3,437.2L958.8,439.4L958.5,441.2L957.7,441.5L954.6,441.1L954.1,441.7L952.9,441.8L948.8,440.5L946.1,440.4L935.5,440.2L934,440.8L932.1,440.6L929.1,441.5L928.2,437.2L933.4,437.3L934.7,436.5L935.8,436.5L937.9,435.1L940.3,436.3L942.8,436.4L945.2,435.2L944.1,433.5L942.2,434.5L940.4,434.5L938.2,433.1L936.4,433.1L935.1,434.5L928.9,434.7Z"},{"name":"Mali","fill":"#c8d6e5","d":"M958.5,441.2L958.8,439.4L958.3,437.2L956.1,435.6L955,432.4L954.8,428.8L956.7,427.8L957.6,424.5L959.4,424.3L963.4,425.9L966.6,424.8L968.8,425.2L969.7,423.9L992.5,423.8L993.8,419.8L992.8,419.1L990,394.6L987.3,370L996,369.9L1015.2,382.3L1034.4,394.7L1035.7,397.4L1039.3,399L1041.9,400L1042,403.6L1048.3,403L1048.3,416.1L1045.2,419.9L1044.7,423.4L1039.6,424.3L1031.9,424.8L1029.8,426.8L1026.1,427.1L1022.5,427.1L1021.1,426L1017.9,426.8L1012.6,429.2L1011.5,431L1007.1,433.5L1006.3,435L1004,436.1L1001.2,435.4L999.6,436.7L998.8,440.6L994.3,445.4L994.4,447.3L992.9,449.7L993.3,453L990.9,453.8L989.6,454.6L988.7,452.1L987.1,452.8L986.1,452.7L985,454.3L980.6,454.3L979.1,453.4L978.3,453.9L976.6,452.3L976.9,450.6L976.2,449.9L975,450.5L975.2,448.6L976.3,447.2L974,444.8L973.3,443.2L972.1,442L970.9,441.8L969.6,442.6L967.7,443.4L966.2,444.6L963.7,444.2L962.2,442.7L961.2,442.5L959.7,443.3L958.8,443.3L958.5,441.2Z"},{"name":"Mauritania","fill":"#ffda79","d":"M926.9,392.5L928.2,390.6L950.4,390.7L949.4,382.5L950.8,379.5L956.1,379L955.9,364.5L974.6,364.8L974.6,356.1L996,369.9L987.3,370L990,394.6L992.8,419.1L993.8,419.8L992.5,423.8L969.7,423.9L968.8,425.2L966.6,424.8L963.4,425.9L959.4,424.3L957.6,424.5L956.7,427.8L954.8,428.8L951,424.9L947.6,420.8L943.8,419.2L941.1,417.6L937.9,417.6L935.1,418.9L932.3,418.4L930.3,420.2L929.9,417.1L931.4,414.3L932.1,409L931.5,403.4L930.8,400.5L931.4,397.7L929.9,395L926.9,392.5Z"},{"name":"Benin","fill":"#cd84f1","d":"M1039.3,476.4L1034.6,477.1L1033.2,473.1L1033.5,460.1L1032.3,458.9L1032.1,456.1L1030.1,454.1L1028.4,452.4L1029.1,449.4L1031.1,448.8L1032.2,446.3L1035,445.8L1036.3,444.1L1038.2,442.4L1040.2,442.4L1044.5,445.7L1044.3,447.6L1045.6,450.9L1044.5,453.2L1045.1,454.8L1042.3,458.3L1040.6,460L1039.5,463.6L1039.6,467.2L1039.3,476.4Z"},{"name":"Niger","fill":"#706fd3","d":"M1108.5,381.9L1109.9,390.8L1112,392.3L1112.1,394.1L1114.5,396L1113.2,398.5L1111,410L1110.7,417.4L1103.5,422.8L1101,430.3L1103.4,432.4L1103.4,436L1107,436.2L1106.5,438.8L1104.9,439.2L1104.7,441L1103.6,441.1L1099.8,434.9L1098.4,434.7L1094,437.8L1089.6,436.2L1086.5,435.8L1084.9,436.6L1081.5,436.5L1078.2,438.9L1075.3,439L1068.4,436.1L1065.7,437.5L1062.8,437.4L1060.7,435.2L1055,433.1L1048.9,433.8L1047.4,435L1046.6,438.3L1044.9,440.6L1044.5,445.7L1040.2,442.4L1038.2,442.4L1036.3,444.1L1036.4,440.2L1029.8,438.9L1029.6,436.1L1026.4,432.4L1025.7,429.8L1026.1,427.1L1029.8,426.8L1031.9,424.8L1039.6,424.3L1044.7,423.4L1045.2,419.9L1048.3,416.1L1048.3,403L1056.3,400.5L1072.8,389.3L1092.3,378.5L1101.3,380.9L1104.5,384L1108.5,381.9Z"},{"name":"Nigeria","fill":"#778beb","d":"M1039.3,476.4L1039.6,467.2L1039.5,463.6L1040.6,460L1042.3,458.3L1045.1,454.8L1044.5,453.2L1045.6,450.9L1044.3,447.6L1044.5,445.7L1044.9,440.6L1046.6,438.3L1047.4,435L1048.9,433.8L1055,433.1L1060.7,435.2L1062.8,437.4L1065.7,437.5L1068.4,436.1L1075.3,439L1078.2,438.9L1081.5,436.5L1084.9,436.6L1086.5,435.8L1089.6,436.2L1094,437.8L1098.4,434.7L1099.8,434.9L1103.6,441.1L1104.7,441L1106.9,443.2L1106.3,444.3L1106,446.2L1101.2,450.6L1099.7,454.2L1098.9,457.2L1097.7,458.4L1096.6,462.4L1093.5,464.7L1092.6,467.6L1091.4,469.9L1090.8,472.3L1086.9,474.2L1083.7,471.9L1081.6,472L1078.2,475.3L1076.5,475.3L1073.8,480.8L1072.4,484.9L1066.5,486.9L1064.3,486.6L1062.1,487.9L1057.6,487.8L1054.5,484.2L1052.6,480.1L1048.6,476.3L1044.3,476.4L1039.3,476.4Z"},{"name":"Cameroon","fill":"#ff5252","d":"M1106.5,438.8L1108.7,442.5L1109.1,446.3L1108.9,450L1112,455.2L1108.8,455.2L1107.2,455.6L1104.6,455L1103.4,457.7L1106.7,461L1109.2,462L1110,464.3L1111.8,468.2L1110.9,469.8L1108.1,475.5L1106.7,476.6L1106.3,481L1106.8,483.4L1106.4,485.1L1109.1,488L1109.5,490.1L1111.6,493L1114.2,494.9L1114.5,497.5L1115.1,499.1L1114.7,502.2L1110.2,500.8L1105.6,499.3L1098.4,499.1L1097.7,498.8L1094.3,499.5L1090.9,498.8L1088.2,499.1L1078.9,499L1079.7,494.5L1077.5,490.8L1074.9,489.8L1073.7,487.2L1072.3,486.4L1072.4,484.9L1073.8,480.8L1076.5,475.3L1078.2,475.3L1081.6,472L1083.7,471.9L1086.9,474.2L1090.8,472.3L1091.4,469.9L1092.6,467.6L1093.5,464.7L1096.6,462.4L1097.7,458.4L1098.9,457.2L1099.7,454.2L1101.2,450.6L1106,446.2L1106.3,444.3L1106.9,443.2L1104.7,441L1104.9,439.2L1106.5,438.8Z"},{"name":"Togo","fill":"#34ace0","d":"M1029.1,449.4L1028.4,452.4L1030.1,454.1L1032.1,456.1L1032.3,458.9L1033.5,460.1L1033.2,473.1L1034.6,477.1L1030,478.3L1028.8,476.3L1027.2,472.7L1026.8,469.8L1028.1,464.7L1026.6,462.6L1026.1,458.2L1026.1,454L1023.7,451.1L1024.1,449.3L1029.1,449.4Z"},{"name":"Ghana","fill":"#33d9b2","d":"M1024.1,449.3L1023.7,451.1L1026.1,454L1026.1,458.2L1026.6,462.6L1028.1,464.7L1026.8,469.8L1027.2,472.7L1028.8,476.3L1030,478.3L1021.1,481.6L1017.9,483.6L1012.8,485.2L1007.8,483.6L1008,481.3L1005.5,476.4L1007,470L1009.4,465.2L1007.9,457.1L1007.1,452.9L1007.3,449.6L1017.2,449.4L1019.7,449.8L1021.5,448.9L1024.1,449.3Z"},{"name":"Côte d'Ivoire","fill":"#ff9ff3","d":"M978.3,453.9L979.1,453.4L980.6,454.3L985,454.3L986.1,452.7L987.1,452.8L988.7,452.1L989.6,454.6L990.9,453.8L993.3,453L995.8,454.2L996.8,456.1L999.4,457.3L1001.4,455.9L1004,455.7L1007.9,457.1L1009.4,465.2L1007,470L1005.5,476.4L1008,481.3L1007.8,483.6L1005.2,483.6L1001.2,482.5L997.5,482.6L990.8,483.6L986.9,485.2L981.2,487.3L980.1,487.2L980.6,482.5L981.1,481.8L980.9,479.5L978.5,477.1L976.7,476.8L975.1,475.2L976.3,472.7L975.7,469.9L976,468.3L976.9,468.3L977.2,465.8L976.8,464.7L977.3,463.9L979.4,463.2L978,458.7L976.7,456.3L977.2,454.4L978.3,453.9Z"},{"name":"Guinea","fill":"#feca57","d":"M946.1,440.4L948.8,440.5L952.9,441.8L954.1,441.7L954.6,441.1L957.7,441.5L958.5,441.2L958.8,443.3L959.7,443.3L961.2,442.5L962.2,442.7L963.7,444.2L966.2,444.6L967.7,443.4L969.6,442.6L970.9,441.8L972.1,442L973.3,443.2L974,444.8L976.3,447.2L975.2,448.6L975,450.5L976.2,449.9L976.9,450.6L976.6,452.3L978.3,453.9L977.2,454.4L976.7,456.3L978,458.7L979.4,463.2L977.3,463.9L976.8,464.7L977.2,465.8L976.9,468.3L976,468.3L974.4,468.1L973.2,470.4L971.6,470.4L970.5,469.2L970.9,466.9L968.5,463.4L967,464.1L965.8,464.2L964.2,464.5L964.3,462.4L963.4,460.9L963.6,459.3L962.3,456.9L960.8,454.9L956.2,454.8L954.9,455.9L953.3,456L952.3,457.3L951.7,458.9L948.6,461.4L946.1,458L943.9,455.8L942.5,455L941.1,453.9L940.4,451.4L939.6,450.1L937.9,449.2L940.5,446.4L942.2,446.5L943.7,445.6L944.9,445.6L945.8,444.8L945.3,442.9L946,442.3L946.1,440.4Z"},{"name":"Guinea-Bissau","fill":"#ff6b6b","d":"M929.1,441.5L932.1,440.6L934,440.8L935.5,440.2L946.1,440.4L946,442.3L945.3,442.9L945.8,444.8L944.9,445.6L943.7,445.6L942.2,446.5L940.5,446.4L937.9,449.2L934.9,446.8L932.5,446.4L931.2,444.8L931.2,444L929.5,442.8L929.1,441.5Z"},{"name":"Liberia","fill":"#48dbfb","d":"M976,468.3L975.7,469.9L976.3,472.7L975.1,475.2L976.7,476.8L978.5,477.1L980.9,479.5L981.1,481.8L980.6,482.5L980.1,487.2L978.6,487.2L972.8,484.5L967.6,480.2L962.8,477.1L958.9,473.4L960.3,471.6L960.6,469.9L963.2,466.8L965.8,464.2L967,464.1L968.5,463.4L970.9,466.9L970.5,469.2L971.6,470.4L973.2,470.4L974.4,468.1L976,468.3Z"},{"name":"Sierra Leone","fill":"#1dd1a1","d":"M948.6,461.4L951.7,458.9L952.3,457.3L953.3,456L954.9,455.9L956.2,454.8L960.8,454.9L962.3,456.9L963.6,459.3L963.4,460.9L964.3,462.4L964.2,464.5L965.8,464.2L963.2,466.8L960.6,469.9L960.3,471.6L958.9,473.4L957.4,473L953.3,470.7L950.3,467.6L949.3,465.6L948.6,461.4Z"},{"name":"Burkina Faso","fill":"#f368e0","d":"M993.3,453L992.9,449.7L994.4,447.3L994.3,445.4L998.8,440.6L999.6,436.7L1001.2,435.4L1004,436.1L1006.3,435L1007.1,433.5L1011.5,431L1012.6,429.2L1017.9,426.8L1021.1,426L1022.5,427.1L1026.1,427.1L1025.7,429.8L1026.4,432.4L1029.6,436.1L1029.8,438.9L1036.4,440.2L1036.3,444.1L1035,445.8L1032.2,446.3L1031.1,448.8L1029.1,449.4L1024.1,449.3L1021.5,448.9L1019.7,449.8L1017.2,449.4L1007.3,449.6L1007.1,452.9L1007.9,457.1L1004,455.7L1001.4,455.9L999.4,457.3L996.8,456.1L995.8,454.2L993.3,453Z"},{"name":"Central African Rep.","fill":"#ff9f43","d":"M1179.7,482.2L1177.9,482.8L1174.2,482.7L1169.9,482.1L1167.8,482.6L1167,484L1165.1,484.1L1162.9,482.9L1156.5,485.8L1153.9,485.2L1153.2,485.6L1151.5,489.1L1147.2,488L1143.1,487.4L1139.4,485.3L1134.8,483.4L1131.7,485.2L1129.5,488.1L1129,492.1L1125.3,491.7L1121.5,490.8L1118.1,493.8L1115.1,499.1L1114.5,497.5L1114.2,494.9L1111.6,493L1109.5,490.1L1109.1,488L1106.4,485.1L1106.8,483.4L1106.3,481L1106.7,476.6L1108.1,475.5L1110.9,469.8L1115.6,469.3L1116.7,467.9L1117.6,468L1119,469.3L1126.2,467.1L1128.6,464.9L1131.6,462.9L1131,460.9L1132.6,460.4L1138.1,460.7L1143.5,458.1L1147.6,451.9L1150.5,449.6L1154.1,448.6L1154.7,451L1158,454.6L1158,456.9L1157.1,459.3L1157.5,461.1L1159.4,462.7L1163.8,465.2L1166.9,467.5L1166.9,469.3L1170.8,472.3L1173.1,474.8L1174.6,478.2L1178.8,480.4L1179.7,482.2Z"},{"name":"Congo","fill":"#cf6a87","d":"M1129,492.1L1128.6,495.5L1126.9,498.5L1125.8,502.1L1125.1,507.1L1125.4,510.4L1124.5,512.3L1124.3,514.4L1123.7,516.2L1119.9,519L1117.3,521.9L1114.9,527.4L1115.1,532.1L1113.6,533.9L1110.3,536.7L1107,540.3L1104.8,539.3L1104.5,537.7L1101.4,537.6L1099.4,539.8L1097.9,539.2L1095.8,537.2L1094.1,538.2L1091.8,540.7L1087.1,534.6L1091.4,531.5L1089.3,527.7L1091.2,526.3L1095.1,525.6L1095.5,523.1L1098.6,525.8L1103.6,526.1L1105.3,523.4L1106.1,519.6L1105.4,515.1L1102.8,511.8L1105.2,505.2L1103.8,504.1L1099.6,504.5L1098,501.6L1098.4,499.1L1105.6,499.3L1110.2,500.8L1114.7,502.2L1115.1,499.1L1118.1,493.8L1121.5,490.8L1125.3,491.7L1129,492.1Z"},{"name":"Gabon","fill":"#0abde3","d":"M1088.2,499.1L1090.9,498.8L1094.3,499.5L1097.7,498.8L1098.4,499.1L1098,501.6L1099.6,504.5L1103.8,504.1L1105.2,505.2L1102.8,511.8L1105.4,515.1L1106.1,519.6L1105.3,523.4L1103.6,526.1L1098.6,525.8L1095.5,523.1L1095.1,525.6L1091.2,526.3L1089.3,527.7L1091.4,531.5L1087.1,534.6L1081.3,528.9L1077.5,524.2L1074.1,518.3L1074.2,516.4L1075.5,514.6L1076.9,510.5L1078,506.3L1079.9,505.9L1088.2,506L1088.2,499.1Z"},{"name":"Eq. Guinea","fill":"#10ac84","d":"M1078.9,499L1088.2,499.1L1088.2,506L1079.9,505.9L1078,506.3L1076.9,505.4L1078.9,499Z"},{"name":"Zambia","fill":"#54a0ff","d":"M1198.9,559.4L1201.3,560.9L1203.5,561.8L1207.1,562.8L1210.4,564.5L1213,567L1214.5,571.9L1213.5,573.4L1212.4,578L1213.5,582.7L1211.7,584.7L1210,590L1213,591.5L1195.7,596.2L1196.2,600.2L1191.9,601L1188.7,603.3L1188,605.2L1186,605.7L1181,610.4L1177.9,614L1175.9,614.2L1174.1,613.5L1167.7,612.9L1166.7,612.5L1166.7,612L1164.4,610.7L1160.7,610.4L1156.1,611.7L1152.4,608.1L1148.5,603.5L1148.8,585.4L1160.6,585.4L1160.1,583.5L1161,581.4L1160,578.7L1160.6,575.9L1160,574.2L1162,574.3L1162.3,576.1L1165,575.9L1168.6,576.5L1170.5,579L1175.1,579.8L1178.5,578L1179.8,581L1184.2,581.8L1186.3,584.2L1188.6,587.4L1193,587.4L1192.5,581.3L1190.9,582.3L1186.9,580.1L1185.4,579.1L1186.1,573.4L1187.1,566.6L1185.8,564.1L1187.5,560.5L1189,559.8L1196.6,558.9L1198.9,559.4Z"},{"name":"Malawi","fill":"#5f27cd","d":"M1210.4,564.5L1215.9,565.6L1217.1,567.1L1219,569.8L1220.6,577.5L1219,581.9L1220.6,589.3L1222.6,589.2L1224.6,591L1227,595.1L1227.5,602.4L1225,603.6L1223.3,607.6L1219.6,604.1L1219.2,600.1L1220.4,597.4L1220,595.1L1217.8,593.7L1216.2,594.2L1213,591.5L1210,590L1211.7,584.7L1213.5,582.7L1212.4,578L1213.5,573.4L1214.5,571.9L1213,567L1210.4,564.5Z"},{"name":"Mozambique","fill":"#c8d6e5","d":"M1220.6,577.5L1224.9,577.1L1231.7,578.7L1233.2,578L1237.2,577.8L1239.2,576.1L1242.6,576.2L1248.8,574L1253.4,570.7L1253.4,570.7L1253.4,570.7L1254.3,573.2L1254,578.9L1254.7,583.9L1255,592.8L1256,595.6L1254.3,599.6L1252.1,603.6L1248.4,607.1L1243.2,609.3L1236.8,612L1230.4,618.2L1228.2,619.2L1224.2,623.2L1221.9,624.5L1221.4,628.6L1224.1,632.9L1225.2,636.3L1225.3,638L1226.3,637.7L1226.1,643.2L1225.2,645.9L1226.6,646.9L1225.7,649.2L1223.3,651.3L1218.7,653.2L1211.8,656.3L1209.3,658.4L1209.8,660.8L1211.3,661.1L1210.8,664.1L1206.5,664.1L1206,661.6L1205.1,659L1204.6,657L1205.6,650.6L1204.2,646.6L1201.4,638.6L1207.4,632.1L1208.9,628L1209.8,627.5L1210.4,624.2L1209.5,622.5L1209.8,618.2L1210.9,614.3L1210.9,607.1L1207.9,605.3L1205.2,604.8L1204,603.4L1201.3,602.2L1196.6,602.3L1196.2,600.2L1195.7,596.2L1213,591.5L1216.2,594.2L1217.8,593.7L1220,595.1L1220.4,597.4L1219.2,600.1L1219.6,604.1L1223.3,607.6L1225,603.6L1227.5,602.4L1227,595.1L1224.6,591L1222.6,589.2L1220.6,589.3L1219,581.9L1220.6,577.5Z"},{"name":"eSwatini","fill":"#ffda79","d":"M1206.5,664.1L1205.3,666.6L1202,667.2L1198.6,664.1L1198.5,662.2L1200.1,660L1200.6,658.4L1202.3,658L1205.1,659L1206,661.6L1206.5,664.1Z"},{"name":"Angola","fill":"#cd84f1","d":"M1097.9,539.2L1095.9,540.4L1094.9,541.9L1094.8,544.3L1093.3,544.9L1091.8,540.7L1094.1,538.2L1095.8,537.2L1097.9,539.2Z M1094.1,546.7L1096.4,545.9L1098.1,546L1100.1,545.4L1116.9,545.4L1118.3,549.7L1119.9,553.1L1121.2,554.9L1123.4,557.9L1127.2,557.4L1129,556.6L1132.2,557.4L1133,556L1134.5,552.7L1138,552.5L1138.3,551.5L1141.2,551.5L1140.7,553.5L1147.6,553.5L1147.7,557.1L1148.9,559.3L1148,562.7L1148.4,566.2L1150.3,568.3L1150,575.1L1151.4,574.5L1153.9,574.7L1157.4,573.8L1160,574.2L1160.6,575.9L1160,578.7L1161,581.4L1160.1,583.5L1160.6,585.4L1148.8,585.4L1148.5,603.5L1152.4,608.1L1156.1,611.7L1145.6,614L1131.8,613.2L1127.9,610.5L1104.8,610.7L1104,611.1L1100.6,608.5L1096.9,608.4L1093.5,609.3L1090.8,610.4L1090.2,606.9L1091,601.8L1093,596.6L1093.3,594.2L1095.1,589.1L1096.5,586.7L1099.7,583L1101.6,580.5L1102.2,576.3L1101.9,573L1100.2,571L1098.6,567.6L1097.2,564.1L1097.6,563L1099.3,560.7L1097.6,555.2L1096.4,551.4L1093.6,547.8L1094.1,546.7Z"},{"name":"Burundi","fill":"#706fd3","d":"M1197.3,525.7L1197.7,528L1198.9,529.3L1198.9,531.1L1197.5,532.3L1195.3,535.3L1193.3,537.3L1190.9,537.6L1190.6,530.7L1189.1,528.2L1192.6,528.6L1194.3,525.4L1197.3,525.7Z"},{"name":"Israel","fill":"#33d9b2","d":"M1227.2,325.9L1226.2,327.7L1224.2,326.9L1223,330.7L1224.4,331.4L1222.9,332.1L1222.7,333.6L1225.4,332.9L1225.5,335.1L1222.7,344.2L1222.1,342.7L1218.9,334.4L1218.9,334.4L1218.9,334.4L1220.6,332.5L1220.2,332.2L1221.7,329.5L1222.9,325.2L1223.7,323.8L1223.8,323.7L1225.7,323.8L1226.3,322.8L1227.8,322.7L1227.9,325L1227.1,325.9L1227.2,325.9Z"},{"name":"Lebanon","fill":"#ff5252","d":"M1227.8,322.7L1226.3,322.8L1225.7,323.8L1223.8,323.7L1225.9,319.1L1228.7,315.1L1228.8,314.9L1231.3,315.2L1232.3,317.4L1229.2,319.6L1227.8,322.7Z"},{"name":"Madagascar","fill":"#f8a5c2","d":"M1305.8,582.9L1307.4,585.4L1308.8,589.1L1309.7,596L1311.2,598.6L1310.6,601.4L1309.6,603L1307.7,599.7L1306.6,601.4L1307.7,605.6L1307.2,608L1305.6,609.3L1305.2,614.1L1303,620.8L1300.2,628.6L1296.7,639.4L1294.5,647.3L1291.9,653.9L1287.3,655.2L1282.3,657.6L1279.1,656.2L1274.5,654.2L1273,651.2L1272.6,646.1L1270.6,641.6L1270.1,637.5L1271.1,633.4L1273.7,632.4L1273.7,630.5L1276.4,626.2L1277,622.6L1275.6,619.9L1274.6,616.3L1274.1,611L1276.1,607.9L1276.9,604.3L1279.7,604L1282.9,602.9L1285,601.8L1287.5,601.8L1290.7,598.5L1295.4,595L1297.1,592.2L1296.3,589.7L1298.7,590.4L1301.9,586.5L1302,583L1303.9,580.5L1305.8,582.9Z"},{"name":"Palestine","fill":"#33d9b2","d":"M1225.4,332.9L1222.7,333.6L1222.9,332.1L1224.4,331.4L1223,330.7L1224.2,326.9L1226.2,327.7L1226.2,331.2L1225.4,332.9Z"},{"name":"Gambia","fill":"#ff9ff3","d":"M928.9,434.7L935.1,434.5L936.4,433.1L938.2,433.1L940.4,434.5L942.2,434.5L944.1,433.5L945.2,435.2L942.8,436.4L940.3,436.3L937.9,435.1L935.8,436.5L934.7,436.5L933.4,437.3L928.2,437.2L928.9,434.7Z"},{"name":"Tunisia","fill":"#feca57","d":"M1077.9,339.6L1075.5,329.4L1072,327.1L1072,325.7L1067.3,322.3L1066.8,318L1070.3,314.9L1071.7,310.2L1070.8,304.7L1071.9,301.8L1078.1,299.5L1082.1,300.2L1081.9,303.1L1086.7,301L1087.1,302.1L1084.3,304.9L1084.3,307.5L1086.2,308.9L1085.5,313.8L1081.7,316.7L1082.8,319.8L1085.8,319.9L1087.2,322.6L1089.4,323.5L1089,327.9L1086.3,329.5L1084.5,331.3L1080.6,333.5L1081.2,335.9L1080.7,338.3L1077.9,339.6Z"},{"name":"Algeria","fill":"#f7d794","d":"M974.6,356.1L974.7,355L974.7,354.7L974.7,347.9L983.8,343.7L989.5,342.9L994.2,341.3L996.4,338.5L1003,336.2L1003.2,332L1006.5,331.5L1009.1,329.4L1016.6,328.5L1017.6,326.2L1016.1,325L1014.1,319L1013.8,315.6L1011.7,311.9L1017.1,308.8L1023.3,307.8L1026.9,305.5L1032.3,303.8L1042,302.7L1051.4,302.3L1054.3,303.1L1059.6,300.9L1065.7,300.8L1068,302.2L1071.9,301.8L1070.8,304.7L1071.7,310.2L1070.3,314.9L1066.8,318L1067.3,322.3L1072,325.7L1072,327.1L1075.5,329.4L1077.9,339.6L1079.8,344.6L1080.1,347.2L1079.1,351.9L1079.5,354.5L1078.8,357.6L1079.3,361.2L1077,363.6L1080.4,367.7L1080.6,370.1L1082.6,373.3L1085.3,372.3L1089.8,374.9L1092.3,378.5L1072.8,389.3L1056.3,400.5L1048.3,403L1042,403.6L1041.9,400L1039.3,399L1035.7,397.4L1034.4,394.7L1015.2,382.3L996,369.9L974.6,356.1Z"},{"name":"Jordan","fill":"#48dbfb","d":"M1226.2,327.7L1227.2,325.9L1233.5,328.2L1244.7,322.1L1247,329L1245.9,329.9L1234.5,332.8L1240.2,338.4L1238.3,339.4L1237.4,341.3L1233,342.1L1231.7,344.1L1229.2,345.9L1222.9,345L1222.7,344.2L1225.5,335.1L1225.4,332.9L1226.2,331.2L1226.2,327.7Z"},{"name":"United Arab Emirates","fill":"#1dd1a1","d":"M1317.4,374.1L1318.4,373.8L1318.7,375.4L1323.1,374.5L1327.8,374.6L1331.2,374.8L1335.1,370.9L1339.4,367.3L1343,363.8L1344.1,365.7L1344.8,370.2L1341.9,370.2L1341.5,373.9L1342.5,374.7L1339.9,375.8L1339.9,378.2L1338.2,380.5L1338.1,382.8L1336.9,384L1319.8,381.1L1317.6,375.4L1317.4,374.1Z"},{"name":"Qatar","fill":"#f368e0","d":"M1313.1,371.2L1312.7,367L1314.2,364L1315.8,363.4L1317.5,365.2L1317.6,368.6L1316.3,371.9L1314.8,372.3L1313.1,371.2Z"},{"name":"Kuwait","fill":"#ff9f43","d":"M1296.9,341.5L1298.1,344L1297.6,345.3L1299.4,349.6L1295.4,349.7L1294,347L1288.9,346.5L1293.1,341L1296.9,341.5Z"},{"name":"Iraq","fill":"#ee5253","d":"M1247,329L1244.7,322.1L1257.3,316.2L1259.4,309.3L1258.9,305.2L1262,303.8L1264.9,300.2L1267.4,299.3L1274,300.1L1276,301.5L1278.7,300.5L1282.4,307.3L1286.1,309L1286.6,312.4L1283.7,314.3L1282.4,318.8L1286.3,324.2L1293.3,327.3L1296.2,331.6L1295.3,335.7L1297.1,335.7L1297.1,338.8L1300.3,341.7L1296.9,341.5L1293.1,341L1288.9,346.5L1278.3,346L1262.3,334.6L1253.8,330.6L1247,329Z"},{"name":"Oman","fill":"#0abde3","d":"M1338.1,382.8L1338.2,380.5L1339.9,378.2L1339.9,375.8L1342.5,374.7L1341.5,373.9L1341.9,370.2L1344.8,370.2L1347.4,374.1L1350.6,376.2L1354.7,376.9L1358.1,377.9L1360.7,381.2L1362.2,383.1L1364.2,383.8L1364.2,385.1L1362.2,388.5L1361.3,390.1L1358.9,391.9L1356.7,395.8L1354.2,395.5L1353,396.8L1352.1,399.7L1352.8,403.5L1352.2,404.2L1349.6,404.2L1346,406.3L1345.5,409.1L1344.2,410.3L1340.7,410.3L1338.4,411.7L1338.5,414L1335.7,415.6L1332.6,415L1328.8,417L1326.1,417.3L1324.3,413.3L1319.8,403.9L1336.9,398.2L1340.7,386.8L1338.1,382.8Z M1344.1,365.7L1343,363.8L1344.6,361.8L1345.3,362.3L1344.8,364.7L1344.1,365.7Z"},{"name":"Vanuatu","fill":"#10ac84","d":"M1975.3,602.4L1978.9,605.7L1977,606.4L1975.1,603.9L1975.3,602.4Z M1972.9,601.1L1972.1,599.6L1971.9,595.2L1974.7,597L1975.6,601.5L1974.1,600.8L1972.9,601.1Z"},{"name":"Cambodia","fill":"#54a0ff","d":"M1607.6,442.7L1606.2,435.8L1609.9,431.1L1617.2,430L1622.6,430.8L1627.3,433L1629.8,429.1L1634.9,431.2L1636.2,435L1635.5,441.8L1625.9,446.2L1628.4,449.6L1622.5,450.1L1617.5,452.3L1612.8,451.5L1610.5,448.5L1607.6,442.7Z"},{"name":"Thailand","fill":"#ff6348","d":"M1622.6,430.8L1617.2,430L1609.9,431.1L1606.2,435.8L1607.6,442.7L1602.5,440.1L1597.6,440.2L1598.5,435.7L1593.4,435.7L1593,442L1589.9,450.3L1588.1,455.3L1588.5,459.4L1592.2,459.6L1594.5,464.8L1595.5,469.7L1598.7,473L1602.1,473.7L1605.1,476.6L1603.2,478.9L1599.5,479.6L1599,476.7L1594.4,474.2L1593.4,475.2L1591.1,473L1590.2,470.2L1587.1,467L1584.4,464.3L1583.4,467.7L1582.4,464.5L1583,460.9L1584.7,455.5L1587.4,449.6L1590.5,444.3L1588.3,439.2L1588.4,436.5L1587.8,433.3L1584,428.8L1582.6,426L1584.6,424.9L1586.7,420L1584.3,416.2L1580.7,412.1L1578,407.1L1580.4,406L1583,399.9L1587,399.6L1590.3,397.2L1593.5,395.8L1596,397.6L1596.3,401L1600.2,401.3L1598.8,407.3L1598.9,412.4L1604.9,409L1606.6,410L1609.9,409.8L1611.1,407.8L1615.4,408.2L1619.7,412.8L1620.1,418.5L1624.7,423.4L1624.4,428.2L1622.6,430.8Z"},{"name":"Laos","fill":"#c8d6e5","d":"M1634.9,431.2L1629.8,429.1L1627.3,433L1622.6,430.8L1624.4,428.2L1624.7,423.4L1620.1,418.5L1619.7,412.8L1615.4,408.2L1611.1,407.8L1609.9,409.8L1606.6,410L1604.9,409L1598.9,412.4L1598.8,407.3L1600.2,401.3L1596.3,401L1596,397.6L1593.5,395.8L1594.8,393.8L1599.6,390L1600.1,391.4L1603.1,391.5L1602.3,385L1605.2,384.2L1608.6,388.7L1611.1,393.9L1618.1,393.9L1620.3,398.9L1616.7,400.4L1615.1,402.4L1621.9,405.8L1626.6,412.5L1630.2,417.5L1634.5,421.5L1635.9,425.5L1634.9,431.2Z"},{"name":"Myanmar","fill":"#ffda79","d":"M1593.5,395.8L1590.3,397.2L1587,399.6L1583,399.9L1580.4,406L1578,407.1L1580.7,412.1L1584.3,416.2L1586.7,420L1584.6,424.9L1582.6,426L1584,428.8L1587.8,433.3L1588.4,436.5L1588.3,439.2L1590.5,444.3L1587.4,449.6L1584.7,455.5L1584.1,451.3L1585.9,446.9L1583.9,443.5L1584.4,437.3L1582.1,434.4L1580.2,427.6L1579.2,420.4L1576.8,415.7L1573,418.5L1566.5,422.6L1563.4,422.1L1559.8,420.8L1561.8,413.7L1560.6,408.4L1556.1,401.8L1556.8,399.8L1553.5,399L1549.5,394.4L1549.1,389.8L1551.1,390.7L1551.2,386.6L1554,385.3L1553.4,382.8L1554.7,380.9L1554.9,375L1559.4,376.3L1561.9,371.6L1562.2,368.9L1565.3,364.1L1565.2,360.8L1572.5,356.9L1576.6,357.9L1576.1,354.4L1578.1,353.4L1577.7,351.2L1581,350.8L1582.9,354.1L1585.4,355.5L1585.6,359.9L1585.3,364.6L1579.9,369.3L1579.3,376.1L1585.3,375.1L1586.6,380.3L1590.2,381.4L1588.6,386.2L1592.8,388.3L1595.3,389.4L1599.4,387.7L1599.6,390L1594.8,393.8L1593.5,395.8Z"},{"name":"Vietnam","fill":"#ffa502","d":"M1617.5,452.3L1622.5,450.1L1628.4,449.6L1625.9,446.2L1635.5,441.8L1636.2,435L1634.9,431.2L1635.9,425.5L1634.5,421.5L1630.2,417.5L1626.6,412.5L1621.9,405.8L1615.1,402.4L1616.7,400.4L1620.3,398.9L1618.1,393.9L1611.1,393.9L1608.6,388.7L1605.2,384.2L1608.3,382.8L1612.8,382.8L1618.4,382.2L1623.2,379.2L1625.9,381.3L1631.1,382.3L1630.2,385.6L1633,387.9L1638.7,389.4L1631.1,394.3L1626.3,399.6L1625.1,403.6L1629.5,409.6L1634.8,417L1639.9,420.5L1643.4,425.1L1646,435.6L1645.2,445.6L1640.5,449.4L1634,453L1629.3,457.8L1622.2,463.1L1620.2,459.4L1621.8,455.6L1617.5,452.3Z"},{"name":"North Korea","fill":"#706fd3","d":"M1768,271.8L1768,271.8L1768,271.8L1768,271.8Z M1767.2,270.8L1767.2,270.8L1768,271.8L1765.8,271.5L1763.4,273.4L1761.7,275.3L1761.9,279.4L1758.9,280.7L1757.9,281.7L1755.8,283.4L1752,284.3L1749.5,285.8L1749.3,288.3L1748.7,288.9L1750.9,289.8L1754.2,292.3L1753.3,293.7L1750.9,294.1L1746.9,294.4L1744.7,296.9L1742.2,296.7L1741.8,297.2L1739,296.2L1738.3,297.2L1736.7,297.7L1736.5,296.6L1735,296.1L1733.5,295.2L1735,292.7L1736.4,292L1735.9,291L1737.3,287.9L1736.9,287L1733.6,286.4L1730.9,284.9L1735.6,281.2L1741.8,278.1L1745.7,274.1L1748.4,275.9L1753.4,276.1L1752.5,273.1L1761.3,270.6L1763.5,267.5L1767.2,270.8Z"},{"name":"South Korea","fill":"#33d9b2","d":"M1741.8,297.2L1742.2,296.7L1744.7,296.9L1746.9,294.4L1750.9,294.1L1753.3,293.7L1754.2,292.3L1759.1,299.1L1760.5,302.7L1760.5,309.3L1758.4,312.4L1753.2,313.5L1748.7,315.9L1743.6,316.4L1742.9,313.3L1744,309L1741.5,303.1L1745.7,302.1L1741.8,297.2Z"},{"name":"Mongolia","fill":"#eccc68","d":"M1523.2,231.6L1529.2,230.6L1540.1,225.7L1548.7,223L1553.7,224.7L1559.6,224.8L1563.4,227.5L1569.1,227.7L1577.3,229.1L1582.8,225.2L1580.5,221.8L1586.4,215.9L1592.8,218.3L1597.9,218.9L1604.6,220.4L1605.7,224.7L1613.8,227L1619.2,226L1626.4,225.2L1632.1,226L1637.7,228.7L1641.1,231.6L1646.4,231.6L1653.5,232.5L1658.8,231.1L1666.3,230.2L1674.6,226.1L1678,226.8L1681,228.7L1687.8,228.2L1685,232.5L1681,238.2L1682.4,240.5L1685.7,239.8L1691.3,240.7L1695.7,238.6L1700.2,240.4L1705.4,244.3L1704.8,246.4L1700.3,245.7L1692,246.5L1688,248.1L1683.8,251.9L1675.2,254.1L1669.5,257.1L1663.6,255.9L1660.4,255.4L1657.4,259.1L1659.3,261.3L1660.2,263.2L1656.2,265.1L1652.1,268.1L1645.5,270.1L1636.9,270.3L1627.8,272.3L1621.1,275.4L1618.6,273.6L1611.7,273.6L1603.3,270.1L1597.7,269.3L1590.1,270.1L1578.4,268.8L1572.1,268.9L1568.8,265.6L1566.2,260.3L1562.7,259.7L1555.8,256.1L1548.1,255.3L1541.4,254.4L1539.3,251.9L1541.5,245.3L1537.6,240.7L1529.5,238.5L1524.7,235.5L1523.2,231.6Z"},{"name":"India","fill":"#ff6b81","d":"M1577.7,351.2L1578.1,353.4L1576.1,354.4L1576.6,357.9L1572.5,356.9L1565.2,360.8L1565.3,364.1L1562.2,368.9L1561.9,371.6L1559.4,376.3L1554.9,375L1554.7,380.9L1553.4,382.8L1554,385.3L1551.2,386.6L1548.2,377.6L1546.6,377.6L1545.7,381.2L1542.6,378.3L1544.3,375.1L1546.9,374.7L1549.5,369.9L1546.2,368.9L1541,369L1535.5,368.2L1535,364.3L1532.3,364L1527.8,361.5L1525.8,365.4L1529.9,368.4L1526.4,370.5L1525.1,372.6L1528.6,374.1L1527.6,377.6L1529.6,381.8L1530.5,386.5L1529.7,388.6L1525.8,388.5L1518.8,389.7L1519.1,394L1516.1,397.4L1507.9,401.2L1501.5,407.9L1497.3,411.5L1491.6,415.2L1491.6,417.8L1488.7,419.2L1483.6,421.3L1481,421.6L1479.3,425.9L1480.4,433.3L1480.7,438L1478.3,443.4L1478.3,453.1L1475.4,453.4L1472.8,457.7L1474.5,459.6L1469.3,461.2L1467.4,465L1465.1,466.7L1459.7,461.4L1457.1,453.4L1454.9,447.7L1452.9,445L1449.9,439.5L1448.5,432.4L1447.5,428.8L1442.3,421L1440,410L1438.3,402.7L1438.3,395.8L1437.2,390.5L1428.9,393.9L1424.9,393.2L1417.5,386.3L1420.2,384.3L1418.5,382L1411.8,377.2L1415.6,373.4L1428.2,373.4L1427,368.6L1423.8,365.7L1423.2,361.3L1419.5,358.7L1425.7,352.8L1432.3,353.2L1438.3,347.2L1441.9,341.5L1447.4,335.8L1447.3,331.7L1452.1,328.4L1447.5,325.6L1445.6,321.8L1443.6,316.8L1446.3,314.3L1455,315.7L1461.3,314.9L1466.8,310.1L1472.9,316.7L1472.3,321.4L1474.6,324.3L1474.4,327.2L1470.3,326.4L1471.9,332.7L1477.5,336.3L1485.4,340.3L1481.8,342.9L1479.6,348.2L1485.1,350.3L1490.5,353.1L1497.9,356.3L1505.7,357.1L1509,360L1513.4,360.5L1520.2,361.8L1525,361.7L1525.6,359.5L1524.9,355.9L1525.3,353.4L1528.8,352.2L1529.3,356.7L1529.4,357.8L1534.5,360L1538.1,359.1L1542.9,359.5L1547.6,359.3L1548,355.8L1545.7,354L1550.2,353.3L1555.4,349.1L1562,345.4L1566.7,346.8L1570.8,344.4L1573.5,348L1571.5,350.4L1577.7,351.2Z"},{"name":"Bangladesh","fill":"#33d9b2","d":"M1551.2,386.6L1551.1,390.7L1549.1,389.8L1549.5,394.4L1547.8,391.4L1547.5,388.5L1546.4,385.8L1544.1,382.5L1538.8,382.3L1539.3,384.6L1537.6,387.8L1535.1,386.6L1534.3,387.7L1532.7,387L1530.5,386.5L1529.6,381.8L1527.6,377.6L1528.6,374.1L1525.1,372.6L1526.4,370.5L1529.9,368.4L1525.8,365.4L1527.8,361.5L1532.3,364L1535,364.3L1535.5,368.2L1541,369L1546.2,368.9L1549.5,369.9L1546.9,374.7L1544.3,375.1L1542.6,378.3L1545.7,381.2L1546.6,377.6L1548.2,377.6L1551.2,386.6Z"},{"name":"Bhutan","fill":"#ff9ff3","d":"M1545.7,354L1548,355.8L1547.6,359.3L1542.9,359.5L1538.1,359.1L1534.5,360L1529.4,357.8L1529.3,356.7L1533,352.5L1536.1,351L1540.2,352.3L1543.2,352.5L1545.7,354Z"},{"name":"Nepal","fill":"#feca57","d":"M1525.3,353.4L1524.9,355.9L1525.6,359.5L1525,361.7L1520.2,361.8L1513.4,360.5L1509,360L1505.7,357.1L1497.9,356.3L1490.5,353.1L1485.1,350.3L1479.6,348.2L1481.8,342.9L1485.4,340.3L1487.8,338.9L1492.4,340.7L1498.1,344.4L1501.3,345.2L1503.2,347.9L1507.6,349.1L1512.2,351.6L1518.7,352.9L1525.3,353.4Z"},{"name":"Pakistan","fill":"#ff6b6b","d":"M1466.8,310.1L1461.3,314.9L1455,315.7L1446.3,314.3L1443.6,316.8L1445.6,321.8L1447.5,325.6L1452.1,328.4L1447.3,331.7L1447.4,335.8L1441.9,341.5L1438.3,347.2L1432.3,353.2L1425.7,352.8L1419.5,358.7L1423.2,361.3L1423.8,365.7L1427,368.6L1428.2,373.4L1415.6,373.4L1411.8,377.2L1407.7,375.8L1406,371.7L1401.6,367.4L1391.1,368.4L1381.9,368.5L1373.9,369.3L1376,362.7L1384.2,359.8L1383.7,357.2L1381,356.2L1380.9,351.2L1375.4,348.7L1373.1,345.3L1370.3,342.3L1379.8,345.2L1385.5,344.4L1388.9,345.1L1390.1,343.8L1394,344.3L1401.4,342L1401.6,337.1L1404.8,333.9L1409,333.9L1409.7,332.3L1414,331.6L1416.1,332.1L1418.3,330.5L1418,327.1L1420.4,323.7L1424.1,322.2L1421.8,318.5L1427.2,318.6L1428.8,316.6L1428.6,314.4L1431.4,312L1430.7,309.2L1429.4,306.8L1432.7,304.3L1438.8,303.1L1445.4,302.4L1448.3,301.4L1451.6,300.8L1455.8,303.4L1457.5,307.8L1466.8,310.1Z"},{"name":"Afghanistan","fill":"#48dbfb","d":"M1402.4,299.4L1405.6,299.5L1409.9,300.7L1411.6,301.4L1415.7,299.6L1417.6,300.7L1419.5,298L1422.9,298.2L1423.8,297.3L1424.4,295L1426.8,293.1L1429.9,294.3L1429.3,296.1L1431,296.4L1430.5,301.1L1432.7,303L1434.7,301.8L1437.2,301.2L1440.8,298.7L1444.7,299.1L1450.6,299.1L1451.6,300.8L1448.3,301.4L1445.4,302.4L1438.8,303.1L1432.7,304.3L1429.4,306.8L1430.7,309.2L1431.4,312L1428.6,314.4L1428.8,316.6L1427.2,318.6L1421.8,318.5L1424.1,322.2L1420.4,323.7L1418,327.1L1418.3,330.5L1416.1,332.1L1414,331.6L1409.7,332.3L1409,333.9L1404.8,333.9L1401.6,337.1L1401.4,342L1394,344.3L1390.1,343.8L1388.9,345.1L1385.5,344.4L1379.8,345.2L1370.3,342.3L1375.5,337.1L1375,333.5L1370.7,332.5L1370.2,328.9L1368.4,324.4L1370.8,321.3L1368.3,320.4L1369.9,316.3L1372.2,309.2L1378,311.3L1382.3,310.6L1383.5,308L1388,307.2L1391.2,305.4L1392.3,300.9L1397.1,299.8L1398,297.7L1400.7,299.3L1402.4,299.4Z"},{"name":"Tajikistan","fill":"#1dd1a1","d":"M1409.9,300.7L1413.1,294.9L1411.8,290.7L1407.7,289.3L1409.1,286.8L1413.9,287.1L1416.6,284L1418.4,280.3L1426,279L1424.8,281.6L1425.6,283.2L1428,283.1L1425.9,284.8L1419.7,283.9L1419.2,287.1L1425.3,286.7L1432.4,288.5L1443.1,287.7L1444.6,292.9L1446.4,292.4L1449.9,293.7L1449.7,295.9L1450.6,299.1L1444.7,299.1L1440.8,298.7L1437.2,301.2L1434.7,301.8L1432.7,303L1430.5,301.1L1431,296.4L1429.3,296.1L1429.9,294.3L1426.8,293.1L1424.4,295L1423.8,297.3L1422.9,298.2L1419.5,298L1417.6,300.7L1415.7,299.6L1411.6,301.4L1409.9,300.7Z"},{"name":"Kyrgyzstan","fill":"#f368e0","d":"M1427.7,271.6L1429,269.1L1432.7,268.3L1442.1,270.2L1443,266.9L1446.2,265.7L1454.3,268.1L1456.4,267.4L1465.8,267.6L1474.2,268.2L1477.1,270.2L1480.6,271.1L1479.8,272.4L1470.8,275.4L1468.8,277.7L1461.5,278.4L1459.4,282L1453.3,281.2L1449.4,282.4L1444,285L1444.8,286.4L1443.1,287.7L1432.4,288.5L1425.3,286.7L1419.2,287.1L1419.7,283.9L1425.9,284.8L1428,283.1L1432.3,283.6L1439.6,279.5L1432.9,276.5L1428.8,277.9L1424.6,275.8L1429.4,272.1L1427.7,271.6Z"},{"name":"Turkmenistan","fill":"#ff9f43","d":"M1322.7,274.3L1325.2,272.4L1331.7,271.2L1335.5,272.8L1339.5,277.3L1342.4,277L1348.8,276.9L1347.9,274.1L1352.7,272.1L1357.5,268.8L1365.2,271.8L1365.8,276.3L1368,277.5L1374.1,277.2L1376,278.3L1378.8,284.1L1385.3,288.1L1389.1,290.7L1395,293.5L1402.6,296L1402.4,299.4L1400.7,299.3L1398,297.7L1397.1,299.8L1392.3,300.9L1391.2,305.4L1388,307.2L1383.5,308L1382.3,310.6L1378,311.3L1372.2,309.2L1371.7,304.4L1367.5,304.2L1361,299.2L1356.4,298.5L1350.1,295.7L1346.1,295.1L1343.6,296.2L1339.8,296L1335.8,299.3L1330.8,300.4L1329.7,296.4L1330.5,290.4L1326.1,288.5L1327.5,284.6L1323.8,284.3L1325,279.5L1330.4,280.9L1335.4,279L1331.2,275.6L1329.6,272.4L1325,273.8L1324.5,278L1322.7,274.3Z"},{"name":"Iran","fill":"#7bed9f","d":"M1300.3,341.7L1297.1,338.8L1297.1,335.7L1295.3,335.7L1296.2,331.6L1293.3,327.3L1286.3,324.2L1282.4,318.8L1283.7,314.3L1286.6,312.4L1286.1,309L1282.4,307.3L1278.7,300.5L1278.7,300.5L1275.6,296L1276.7,294.2L1274.9,287.7L1278.8,286.1L1279.7,288.2L1282.6,290.8L1286.5,291.6L1288.6,291.4L1295.3,287.2L1297.4,286.8L1299.1,288.5L1297.1,291.3L1300.7,294.3L1302.1,294L1303.9,298.2L1309.3,299.4L1313.2,302.2L1321.3,303.2L1330.2,301.7L1330.8,300.4L1335.8,299.3L1339.8,296L1343.6,296.2L1346.1,295.1L1350.1,295.7L1356.4,298.5L1361,299.2L1367.5,304.2L1371.7,304.4L1372.2,309.2L1369.9,316.3L1368.3,320.4L1370.8,321.3L1368.4,324.4L1370.2,328.9L1370.7,332.5L1375,333.5L1375.5,337.1L1370.3,342.3L1373.1,345.3L1375.4,348.7L1380.9,351.2L1381,356.2L1383.7,357.2L1384.2,359.8L1376,362.7L1373.9,369.3L1363.1,367.6L1356.9,366.3L1350.5,365.6L1348.1,358.6L1345.4,357.6L1341,358.6L1335.3,361.4L1328.3,359.5L1322.6,355.1L1317.1,353.5L1313.3,348.1L1309.1,340.5L1306,341.4L1302.4,339.5L1300.3,341.7Z"},{"name":"Syria","fill":"#0abde3","d":"M1227.2,325.9L1227.1,325.9L1227.9,325L1227.8,322.7L1229.2,319.6L1232.3,317.4L1231.3,315.2L1228.8,314.9L1228.3,310.6L1229.7,308.2L1231.2,307L1232.7,305.7L1233,302.5L1234.9,303.7L1241.1,302.1L1244.2,303.1L1248.8,303.1L1255.4,301L1258.5,301.1L1264.9,300.2L1262,303.8L1258.9,305.2L1259.4,309.3L1257.3,316.2L1244.7,322.1L1233.5,328.2L1227.2,325.9Z"},{"name":"Armenia","fill":"#10ac84","d":"M1288.6,291.4L1286.5,291.6L1284.2,288.3L1284.2,287.4L1281.7,287.4L1280,285.9L1278.8,286.1L1276.6,284.4L1272.4,283L1272.9,280.2L1271.9,278.2L1279.8,277.3L1281,278.8L1283.2,279.8L1282,281.3L1285.1,283.2L1283.5,285L1285.9,286.6L1288.4,287.5L1288.6,291.4Z"},{"name":"Sweden","fill":"#54a0ff","d":"M1086.7,177.2L1089.2,173.9L1094,170L1095.9,163.3L1092.2,160.4L1091.9,152.9L1095.6,147.5L1101.2,147.6L1103.2,145.4L1101.1,143.4L1110,135.4L1115.6,129.1L1119.4,125.1L1124.9,125.1L1126.4,121.9L1137.1,122.8L1137.9,119.1L1141.5,118.9L1149,121.6L1157.9,125.5L1158.1,134.3L1160,136.5L1150.2,138.1L1144.7,142.1L1145.6,145.6L1136.5,150.1L1125.5,155L1121.4,163L1125.4,167L1130.9,170.2L1125.7,176.6L1119.7,177.9L1117.6,187.5L1114.3,192.8L1107.4,192.3L1104.2,196.8L1097.6,197.1L1095.8,191.7L1091.1,185.2L1086.7,177.2Z"},{"name":"Belarus","fill":"#5f27cd","d":"M1184.3,192.5L1190.3,193.9L1191.1,195.3L1194.1,194.6L1199.6,196L1200.2,198.6L1199,200.2L1202.5,203.9L1204.9,204.9L1204.5,206L1208.4,207L1210,208.5L1207.8,209.7L1203.2,209.5L1202.1,210.1L1203.4,212L1204.8,215.6L1204.8,215.6L1199.9,215.9L1198.2,217.2L1197.8,220L1195.6,219.5L1190.4,219.8L1188.9,218.4L1186.8,219.4L1184.7,218.6L1180.2,218.5L1173.8,217.1L1168.1,216.7L1163.7,216.8L1160.6,218.4L1157.8,218.6L1157.7,216L1156,213.4L1159.4,212.2L1159.4,210L1157.8,207.8L1157.6,205.3L1163.1,205.3L1169.3,203.2L1170.6,200L1175.3,198.2L1174.7,195.6L1178.2,194.7L1184.3,192.5Z"},{"name":"Ukraine","fill":"#c8d6e5","d":"M1204.8,215.6L1207,215.8L1208.4,214.5L1210.1,214.8L1216,214.3L1219.7,217.5L1218.2,218.6L1218.7,220.4L1223.2,220.7L1225.3,223.2L1225.1,224.3L1232.4,226.3L1236.7,225.4L1240.2,228L1243.6,228L1251.9,229.8L1252,231.5L1249.7,234.5L1251,237.6L1250.1,239.5L1244.6,239.9L1241.6,241.5L1241.4,244L1236.9,244.5L1233.1,246.3L1227.8,246.6L1222.9,248.8L1223.2,251.8L1222.3,251.6L1221.6,250.5L1219.8,250.3L1215.7,249.1L1214.2,250.5L1213.4,249.9L1204.6,248.4L1204.2,246.3L1198.9,247L1196.8,250.1L1192.4,254.3L1189.8,253.4L1187.2,254.3L1184.6,253.2L1186,252.6L1187,250.7L1188.6,248.8L1188.2,247.8L1189.4,247.4L1189.9,248.2L1193.3,248.3L1194.8,247.9L1193.7,247.3L1194.1,246.5L1192.2,245L1191.3,242.7L1189.3,241.7L1189.7,239.8L1187.1,238.3L1184.8,238L1180.6,236.3L1176.8,236.8L1175.4,237.7L1173,237.7L1171.6,239L1167.4,239.6L1165.5,240.4L1162.8,239L1159.2,239L1155.7,238.4L1153.2,239.6L1152.8,238.1L1149.6,236.5L1150.8,234.2L1152.3,232.8L1153.6,233.1L1152.1,230.5L1157.3,225.8L1160.1,225.1L1160.7,223.5L1157.8,218.6L1160.6,218.4L1163.7,216.8L1168.1,216.7L1173.8,217.1L1180.2,218.5L1184.7,218.6L1186.8,219.4L1188.9,218.4L1190.4,219.8L1195.6,219.5L1197.8,220L1198.2,217.2L1199.9,215.9L1204.8,215.6Z"},{"name":"Poland","fill":"#ffda79","d":"M1157.6,205.3L1157.8,207.8L1159.4,210L1159.4,212.2L1156,213.4L1157.7,216L1157.8,218.6L1160.7,223.5L1160.1,225.1L1157.3,225.8L1152.1,230.5L1153.6,233.1L1152.3,232.8L1146.9,230.6L1142.8,231.4L1140.1,230.8L1136.8,232L1133.9,230L1131.6,230.8L1131.3,230.4L1128.6,227.6L1124.4,227.3L1123.9,225.5L1120,224.9L1119.1,226.3L1116,225.2L1116.4,223.6L1112.1,223.1L1109.4,221.3L1107.1,217.6L1107.5,215.7L1106.1,212.6L1104.1,210.6L1105.7,209.1L1104.3,206.2L1108.2,204.5L1117.1,201.9L1124.3,200L1129.9,200.9L1130.4,202.3L1135.8,202.4L1142.9,203L1153.3,202.9L1156.2,203.5L1157.6,205.3Z"},{"name":"Austria","fill":"#cd84f1","d":"M1120.6,238.2L1120.2,240.6L1117,240.6L1118.1,241.8L1116.2,245.5L1115.1,246.4L1110.1,246.6L1107.2,247.9L1102.5,247.4L1094.4,245.9L1093.1,244L1087.5,245L1086.9,246L1083.4,245.2L1080.5,245.1L1077.9,244L1078.8,242.6L1078.6,241.6L1080.3,241.3L1083.2,242.9L1084,241.4L1089,241.6L1093.1,240.6L1095.8,240.8L1097.6,242L1098.1,241L1097.3,237.3L1099.3,236.6L1101.3,233.9L1105.6,235.8L1108.8,233.4L1110.8,233L1115.2,234.8L1117.9,234.5L1120.5,235.5L1120,236.3L1120.6,238.2Z"},{"name":"Hungary","fill":"#706fd3","d":"M1149.6,236.5L1152.8,238.1L1153.2,239.6L1149.7,240.8L1147,244.7L1143.6,248.5L1139,249.6L1135.5,249.3L1131.1,250.8L1131.1,250.8L1129,251.7L1124.3,250.6L1120,248.1L1118.2,247.4L1117.1,245.5L1116.2,245.5L1118.1,241.8L1117,240.6L1120.2,240.6L1120.6,238.2L1123.5,239.7L1125.6,240.3L1130.4,239.6L1130.8,238.5L1133.1,238.3L1135.9,237.4L1136.5,237.8L1139.1,237.1L1140.5,235.7L1142.3,235.4L1148.4,237.1L1149.6,236.5Z"},{"name":"Moldova","fill":"#33d9b2","d":"M1175.4,237.7L1176.8,236.8L1180.6,236.3L1184.8,238L1187.1,238.3L1189.7,239.8L1189.3,241.7L1191.3,242.7L1192.2,245L1194.1,246.5L1193.7,247.3L1194.8,247.9L1193.3,248.3L1189.9,248.2L1189.4,247.4L1188.2,247.8L1188.6,248.8L1187,250.7L1186,252.6L1184.6,253.2L1183.6,250.6L1184.2,248.2L1184,245.7L1180.7,242.3L1178.9,239.9L1177.2,238.2L1175.4,237.7Z"},{"name":"Romania","fill":"#ff5252","d":"M1184.6,253.2L1187.2,254.3L1189.8,253.4L1192.4,254.3L1192.5,255.8L1189.8,257L1188.1,256.5L1186.5,263.4L1183.1,262.8L1179,260.7L1172.3,262L1169.5,263.5L1161.1,263.2L1156.7,262.3L1154.5,262.7L1152.9,260.4L1151.9,259.4L1153.2,258.4L1151.8,257.7L1150,259L1146.7,257.3L1146.2,255L1142.8,253.6L1142.1,251.8L1139,249.6L1143.6,248.5L1147,244.7L1149.7,240.8L1153.2,239.6L1155.7,238.4L1159.2,239L1162.8,239L1165.5,240.4L1167.4,239.6L1171.6,239L1173,237.7L1175.4,237.7L1177.2,238.2L1178.9,239.9L1180.7,242.3L1184,245.7L1184.2,248.2L1183.6,250.6L1184.6,253.2Z"},{"name":"Lithuania","fill":"#34ace0","d":"M1174.7,195.6L1175.3,198.2L1170.6,200L1169.3,203.2L1163.1,205.3L1157.6,205.3L1156.2,203.5L1153.3,202.9L1152.9,201.5L1153.5,199.9L1151,199L1145,198L1143.8,193.2L1150.3,191.5L1159.8,191.9L1165.4,191.3L1166.2,192.5L1169.3,192.9L1174.7,195.6Z"},{"name":"Latvia","fill":"#33d9b2","d":"M1179.2,185L1182,186.3L1182.5,189.1L1184.3,192.5L1178.2,194.7L1174.7,195.6L1169.3,192.9L1166.2,192.5L1165.4,191.3L1159.8,191.9L1150.3,191.5L1143.8,193.2L1144,189L1146.8,185.4L1152.1,183.4L1156.7,187.7L1161.2,187.6L1162.3,183.2L1167.2,182.2L1169.7,182.9L1174.5,185L1179.2,185Z"},{"name":"Estonia","fill":"#ff9ff3","d":"M1183.2,173.7L1183.2,173.7L1184,174.6L1180,177.9L1181.7,183.2L1179.2,185L1174.5,185L1169.7,182.9L1167.2,182.2L1162.3,183.2L1163,179.9L1160.9,180.6L1157.3,178.6L1156.8,175.3L1164,173.7L1171.1,172.9L1177.3,173.8L1183.2,173.7L1183.2,173.7Z"},{"name":"Germany","fill":"#f0932b","d":"M1104.3,206.2L1105.7,209.1L1104.1,210.6L1106.1,212.6L1107.5,215.7L1107.1,217.6L1109.4,221.3L1106.9,221.9L1105.4,221.2L1104,222.3L1099.9,223.4L1097.8,224.8L1093.6,226L1094.6,227.7L1095.2,230.1L1098.1,231.5L1101.3,233.9L1099.3,236.6L1097.3,237.3L1098.1,241L1097.6,242L1095.8,240.8L1093.1,240.6L1089,241.6L1084,241.4L1083.2,242.9L1080.3,241.3L1078.6,241.6L1072.5,239.9L1071.3,241.1L1066.5,241.1L1067.2,237L1070.1,233.1L1061.9,232.1L1059.2,230.6L1059.5,228.1L1058.4,226.8L1059,223L1058.1,217L1061.5,217L1062.9,214.9L1064.3,209.7L1063.3,207.7L1064.4,206.5L1069.1,206.2L1070.2,207.5L1074.1,204.7L1072.8,202.5L1072.5,199.3L1076.8,200.1L1080.4,199.2L1080.5,201.4L1086.3,202.7L1086.2,204.8L1092,203.7L1095.2,202.1L1101.6,204.4L1104.3,206.2Z"},{"name":"Bulgaria","fill":"#ff6b6b","d":"M1152.9,260.4L1154.5,262.7L1156.7,262.3L1161.1,263.2L1169.5,263.5L1172.3,262L1179,260.7L1183.1,262.8L1186.5,263.4L1183.5,265.7L1181.4,269.8L1183.3,273L1178.4,272.3L1172.6,274.1L1172.5,276.9L1167.3,277.4L1163.3,275.4L1158.8,277L1154.6,276.8L1154.2,273.1L1151.3,271.2L1152.3,270.4L1151.6,269.8L1152.6,268L1154.8,266.2L1152,263.7L1151.5,261.6L1152.9,260.4Z"},{"name":"Greece","fill":"#48dbfb","d":"M1173.6,311.2L1172.8,312.9L1164.7,313.3L1164.7,312.4L1157.8,311.3L1158.8,308.9L1161.9,310.8L1166.4,310.5L1170.6,310.9L1170.5,311.9L1173.6,311.2Z M1154.6,276.8L1158.8,277L1163.3,275.4L1167.3,277.4L1172.5,276.9L1172.6,274.1L1175.3,275.6L1173.6,279.1L1172.2,279.8L1168.8,279.6L1165.8,279.1L1158.9,280.5L1162.9,283.7L1160,284.7L1156.8,284.7L1153.8,281.7L1152.7,283L1154,286.4L1156.8,289.1L1154.7,290.3L1157.9,292.9L1160.7,294.6L1160.8,297.8L1155.5,296.3L1157.2,299.2L1153.6,299.8L1155.7,304.8L1151.9,304.9L1147.3,302.4L1145.1,297.8L1144.1,294.1L1141.9,291.4L1139,288.2L1138.6,286.6L1141.3,283.8L1141.6,282L1143.5,281.1L1143.6,279.7L1147.3,279.1L1149.5,277.9L1152.6,278L1153.5,277L1154.6,276.8Z"},{"name":"Turkey","fill":"#1dd1a1","d":"M1278.7,300.5L1276,301.5L1274,300.1L1267.4,299.3L1264.9,300.2L1258.5,301.1L1255.4,301L1248.8,303.1L1244.2,303.1L1241.1,302.1L1234.9,303.7L1233,302.5L1232.7,305.7L1231.2,307L1229.7,308.2L1227.6,305.6L1229.7,303.5L1226.2,304L1221.5,302.7L1217.6,305.9L1208.9,306.6L1204.3,303.5L1198.2,303.3L1196.9,305.7L1193,306.4L1187.5,303.3L1181.2,303.5L1177.9,297.8L1173.7,294.6L1176.5,290.2L1172.9,287.5L1179.2,282.1L1188,281.8L1190.3,277.5L1201.2,278.3L1208,274.6L1214.7,273L1224.1,272.8L1234,276.8L1242.2,279L1248.8,278.2L1253.7,278.7L1260.4,275.7L1266.5,275.4L1271.9,278.2L1272.9,280.2L1272.4,283L1276.6,284.4L1278.8,286.1L1274.9,287.7L1276.7,294.2L1275.6,296L1278.7,300.5L1278.7,300.5Z M1172.6,274.1L1178.4,272.3L1183.3,273L1183.9,275.2L1188.9,277L1187.9,278.4L1181.1,278.8L1178.7,280.5L1173.9,283.6L1172.2,280.9L1172.2,279.8L1173.6,279.1L1175.3,275.6L1172.6,274.1Z"},{"name":"Albania","fill":"#f368e0","d":"M1143.6,279.7L1143.5,281.1L1141.6,282L1141.3,283.8L1138.6,286.6L1137.7,286.2L1137.6,284.9L1134.4,283L1133.9,280.3L1134.4,276.4L1135.2,274.7L1134.2,273.8L1134.2,273.8L1133.8,272L1136.3,269.2L1136.6,270.2L1138.2,269.7L1139.4,271.2L1140.8,271.8L1141.1,273.9L1141.1,273.9L1140.4,275.8L1141.2,278.3L1143.6,279.7Z"},{"name":"Croatia","fill":"#ff9f43","d":"M1118.2,247.4L1120,248.1L1124.3,250.6L1129,251.7L1131.1,250.8L1132.5,253L1134.3,254.7L1132.1,256.8L1129.5,255.5L1125.6,255.6L1120.7,254.7L1118.1,254.8L1116.8,256L1114.8,254.7L1113.6,257L1116.4,259.7L1117.6,261.5L1120.2,263.6L1122.4,264.8L1124.6,267.2L1129.6,269.4L1129,270.3L1129,270.3L1123.6,268.2L1120.3,266.2L1115.1,264.5L1110.3,260.3L1111.5,259.9L1108.9,257.5L1108.8,255.6L1105.1,254.7L1103.4,257.1L1101.7,255.2L1101.8,253.2L1102,253.2L1106,253.3L1107,252.4L1109,253.3L1111.2,253.4L1111.2,251.8L1113.2,251.3L1113.7,249L1118.2,247.4Z"},{"name":"Switzerland","fill":"#ee5253","d":"M1078.6,241.6L1078.8,242.6L1077.9,244L1080.5,245.1L1083.4,245.2L1083,247.6L1080.4,248.5L1076.2,247.8L1075,250.1L1072.3,250.3L1071.3,249.4L1068.1,251.3L1065.4,251.6L1062.9,250.4L1061,247.9L1058.3,248.8L1058.3,246.2L1062.5,243L1062.3,241.5L1064.9,242.1L1066.5,241.1L1071.3,241.1L1072.5,239.9L1078.6,241.6Z"},{"name":"Luxembourg","fill":"#0abde3","d":"M1058.4,226.8L1059.5,228.1L1059.2,230.6L1057.6,230.7L1056.3,230.2L1056.9,227L1058.4,226.8Z"},{"name":"Belgium","fill":"#10ac84","d":"M1059,223L1058.4,226.8L1056.9,227L1056.3,230.2L1051.3,227.6L1048.4,228.1L1044.4,225.4L1041.8,223.1L1039.1,223L1038.3,221L1042.9,219.9L1042.9,219.9L1042.9,219.9L1047,220.3L1052.3,219.2L1055.9,221.7L1059,223Z"},{"name":"Netherlands","fill":"#54a0ff","d":"M1063.3,207.7L1064.3,209.7L1062.9,214.9L1061.5,217L1058.1,217L1059,223L1055.9,221.7L1052.3,219.2L1047,220.3L1042.9,219.9L1042.9,219.9L1045.8,218.3L1050.8,210L1058.6,207.6L1063.3,207.7Z"},{"name":"Portugal","fill":"#5f27cd","d":"M972.6,273.7L974.7,272.3L977,271.5L978.4,274.3L981.8,274.2L982.7,273.5L986.1,273.7L987.7,276.6L985,278.1L985,282.6L984,283.4L983.8,286.1L981.3,286.6L983.6,290L982,293.7L984,295.4L983.2,296.9L981.1,299.1L981.6,301L979.3,302.4L976.3,301.6L973.4,302.3L974.2,297.8L973.7,294.3L971.2,293.8L969.8,291.6L970.3,287.9L972.5,285.8L972.9,283.5L974.1,280.1L974,277.7L972.9,275.7L972.6,273.7Z"},{"name":"Spain","fill":"#badc58","d":"M981.6,301L981.1,299.1L983.2,296.9L984,295.4L982,293.7L983.6,290L981.3,286.6L983.8,286.1L984,283.4L985,282.6L985,278.1L987.7,276.6L986.1,273.7L982.7,273.5L981.8,274.2L978.4,274.3L977,271.5L974.7,272.3L972.6,273.7L972.9,269.7L970.6,267.2L978.6,263.1L985.6,264.1L993.2,264.1L999.3,265.1L1004,264.8L1013.2,265L1015.5,267.2L1025.9,269.8L1028,268.5L1034.4,271.1L1041,270.4L1041.3,273.7L1035.9,277.5L1028.6,278.7L1028.1,280.6L1024.6,283.7L1022.4,288.4L1024.6,291.6L1021.3,294.2L1020.1,297.9L1015.8,299L1011.8,303.4L1004.6,303.5L999.1,303.3L995.6,305.4L993.4,307.5L990.6,307L988.5,305.1L986.9,301.8L981.6,301Z"},{"name":"Ireland","fill":"#ffda79","d":"M988.7,205.6L989.7,209.6L985.4,214.7L975.3,218.1L967.2,217.2L971.9,211.3L968.9,205.5L976.6,201L980.9,198.4L982.1,201.4L980.9,204.5L984.4,204.4L988.7,205.6Z"},{"name":"New Caledonia","fill":"#cd84f1","d":"M1967.1,631.9L1971.8,635.4L1974.7,638.1L1972.6,639.4L1969.4,637.9L1965.4,635.3L1961.7,632.3L1957.9,628.3L1957.1,626.4L1959.6,626.5L1962.8,628.4L1965.3,630.3L1967.1,631.9Z"},{"name":"Solomon Is.","fill":"#706fd3","d":"M1946.3,571.6L1947.9,573.6L1943.9,573.6L1941.7,570.1L1945.1,571.4L1946.3,571.6Z M1943.8,566.6L1942.9,567.7L1938.7,562.7L1937.5,559.3L1939.5,559.3L1941.5,563.9L1943.8,566.6Z M1939.1,568.2L1936.9,568.3L1933.4,567.7L1932.2,566.8L1932.5,564.6L1936.3,565.5L1938.1,566.7L1939.1,568.2Z M1932.2,557.6L1933.5,559.4L1933.8,560.6L1929.3,558.2L1926.2,556.1L1924,554.2L1924.9,553.6L1927.5,555L1932.2,557.6Z M1918,551.9L1920.2,553.8L1919.1,554.1L1916.6,552.8L1914.3,550.5L1914.6,549.5L1918,551.9Z"},{"name":"New Zealand","fill":"#686de0","d":"M2030.3,739.9L2028.1,743L2025.3,746.9L2020.9,749.2L2019.9,747.7L2017.6,746.8L2020.9,742.2L2019,739L2012.9,736.8L2013,734.7L2017.1,732.7L2018.1,728.3L2017.8,724.7L2015.5,720.8L2015.7,719.8L2013,717.5L2008.5,712.5L2006.1,708.4L2008.2,708L2011.3,711.1L2015.7,712.6L2017.3,717.7L2021.5,723.7L2021.6,719.8L2024.2,721.3L2025,725.6L2029.6,727.5L2033.4,728L2036.7,725.8L2039.6,726.4L2038.2,731.5L2036.5,734.8L2032.1,734.7L2030.6,736.4L2031.1,738.9L2030.3,739.9Z M1989.2,759.8L1994.1,756.8L1997.5,753.9L2000,749.6L2002.2,748.2L2003,745L2007,742.4L2008.3,744.8L2009.6,747.1L2013.6,744.8L2015.3,747.2L2015.3,749.6L2013.2,752.3L2009.4,756.5L2006.5,758.7L2008.6,761.5L2004.2,761.5L1999.4,763.7L1997.9,767.4L1994.6,773.2L1990.2,775.7L1987.3,777.3L1982.1,777.2L1978.4,775.3L1972.2,774.9L1971.3,772.9L1974.3,768.6L1981.5,763L1985.1,761.9L1989.2,759.8Z"},{"name":"Australia","fill":"#ff9f43","d":"M1864.2,744.2L1867.6,744.5L1868,751.3L1866.1,753.2L1865.5,757.8L1863.5,756.3L1859.5,760.2L1858.4,759.9L1854.9,759.7L1851.3,754.9L1850.6,751.1L1847.3,746.2L1847.4,743.6L1851.2,744.1L1856.6,746L1859.7,745.2L1864.2,744.2Z M1741.6,695.3L1735.6,698.2L1730.7,699.5L1729.6,702.5L1727.5,704.8L1722.7,704.9L1719.1,705.4L1714.1,704.4L1710,705L1706.1,705.3L1702.7,708.3L1701,708.1L1698.2,709.7L1695.4,711.5L1691.3,711.3L1687.5,711.3L1681.4,707.6L1678.4,706.5L1678.5,703.3L1681.3,702.5L1682.3,701.2L1682.1,699.2L1682.8,695.2L1682.1,691.8L1679.1,686.1L1678.2,682.8L1678.4,679.6L1676.2,675.9L1676,674.2L1673.5,672L1672.8,667.5L1669.6,663L1668.8,660.6L1671.3,663L1669.4,657.8L1672.2,659.4L1673.9,661.6L1673.8,658.7L1670.9,654.2L1670.4,652.4L1669.1,650.7L1669.7,647.4L1670.9,646L1671.6,643.2L1671,639.9L1673.4,635.8L1673.8,640.1L1676.2,636.2L1680.8,634.3L1683.6,631.9L1688,629.8L1690.5,629.3L1692.1,630L1696.6,627.9L1700,627.3L1700.9,626L1702.4,625.5L1705.6,625.6L1711.5,624L1714.6,621.5L1716.1,618.4L1719.4,615.5L1719.7,613.3L1719.8,610.2L1723.8,605.3L1726.2,610.2L1728.6,609.1L1726.6,606.4L1728.4,603.7L1730.9,604.9L1731.6,600.6L1734.7,597.8L1736.1,595.5L1738.9,594.5L1739,593L1741.5,593.6L1741.6,592.2L1744.1,591.4L1746.9,590.6L1751.1,593.2L1754.2,596.6L1757.8,596.6L1761.4,597.2L1760.2,594L1762.9,589.5L1765.5,588L1764.6,586.6L1767.1,583.3L1770.5,581.3L1773.4,582L1778.2,580.9L1778.1,578L1773.9,576.1L1777,575.3L1780.7,576.7L1783.8,579.1L1788.5,580.5L1790.2,579.9L1793.7,581.7L1797,580.1L1799.2,580.5L1800.5,579.5L1803.1,582.3L1801.6,585.3L1799.4,587.6L1797.5,587.8L1798.1,590.1L1796.5,592.9L1794.4,595.7L1794.8,597.3L1799.4,600.5L1803.7,602.3L1806.7,604.2L1810.8,607.6L1812.4,607.6L1815.4,609.1L1816.2,610.8L1821.7,612.8L1825.4,610.8L1826.5,607.8L1827.7,605.2L1828.4,602.1L1830.1,597.6L1829.3,594.8L1829.7,593.2L1829.1,589.9L1829.8,585.6L1830.9,584.5L1830,582.6L1831.4,579.6L1832.5,576.4L1832.6,574.8L1834.8,572.7L1836.4,575.5L1836.8,579L1838.2,579.7L1838.4,582.1L1840.5,585L1840.9,588.2L1840.7,590.3L1842.8,594.8L1846.4,592.6L1848.3,595L1851,597.2L1850.4,599.8L1851.6,604.6L1852.5,607.5L1853.9,608.2L1855.5,613L1854.9,616L1856.8,619.9L1862.9,622.8L1867,625.5L1870.8,628L1870,629.4L1873.3,632.9L1875.5,639.1L1877.8,637.9L1880.1,640.3L1881.5,639.4L1882.5,645.5L1886.5,649L1889.1,651.1L1893.6,655.7L1895.2,660.3L1895.3,663.6L1894.9,667.1L1897.6,671.9L1897.3,676.9L1896.3,679.6L1894.8,684.7L1894.9,687.9L1893.8,692L1891.3,697.2L1887.1,700L1885,704.4L1883.1,707.2L1881.4,712.1L1879.2,714.9L1877.8,719.2L1877,723.1L1877.3,724.9L1874.1,726.9L1867.7,727.1L1862.4,729.4L1859.8,731.6L1856.4,734.1L1851.7,731.6L1848.2,730.6L1849.1,727.6L1846,728.7L1841,732.8L1836.1,731.2L1832.8,730.3L1829.6,729.9L1824.1,728.3L1820.4,724.8L1819.3,720.5L1818,717.6L1815.2,715.3L1809.8,714.6L1811.6,711.8L1810.2,707.6L1807.5,711.5L1802.4,712.6L1805.4,709.4L1806.2,706.2L1808.4,703.4L1808,699.2L1803.4,704L1799.8,706L1797.6,710.5L1793.2,708.1L1793.4,705.1L1789.8,701L1786.8,698.9L1787.9,697.6L1780.6,694.1L1776.6,693.9L1771.1,691.2L1760.9,691.7L1753.5,693.8L1747.1,695.7L1741.6,695.3Z"},{"name":"Sri Lanka","fill":"#34ace0","d":"M1489.3,469.2L1488.4,475.1L1486,476.7L1481.1,478L1478.4,473.5L1477.4,465.3L1480,456.1L1483.9,459.3L1486.5,463.3L1489.3,469.2Z"},{"name":"China","fill":"#feca57","d":"M1646.8,408.5L1642.1,406.7L1642,401.8L1644.8,399.2L1651,397.6L1654.3,397.8L1655.5,400L1653,402.5L1651.7,405.7L1646.8,408.5Z M1480.6,271.1L1480.1,267.8L1484,266.4L1478.9,256.5L1490.2,254.2L1493.1,252.9L1497.2,242.7L1508.5,244.6L1511.7,242L1511.9,236.3L1516.7,235.8L1521,232L1523.2,231.6L1524.7,235.5L1529.5,238.5L1537.6,240.7L1541.5,245.3L1539.3,251.9L1541.4,254.4L1548.1,255.3L1555.8,256.1L1562.7,259.7L1566.2,260.3L1568.8,265.6L1572.1,268.9L1578.4,268.8L1590.1,270.1L1597.7,269.3L1603.3,270.1L1611.7,273.6L1618.6,273.6L1621.1,275.4L1627.8,272.3L1636.9,270.3L1645.5,270.1L1652.1,268.1L1656.2,265.1L1660.2,263.2L1659.3,261.3L1657.4,259.1L1660.4,255.4L1663.6,255.9L1669.5,257.1L1675.2,254.1L1683.8,251.9L1688,248.1L1692,246.5L1700.3,245.7L1704.8,246.4L1705.4,244.3L1700.2,240.4L1695.7,238.6L1691.3,240.7L1685.7,239.8L1682.4,240.5L1681,238.2L1685,232.5L1687.8,228.2L1694.6,230.3L1702.6,226.7L1702.6,224.2L1707.7,218.2L1710.9,216.4L1710.8,213.2L1707.7,211.9L1712.4,209.1L1719.4,208L1727,207.9L1735.5,209.6L1740.5,211.7L1744,217.4L1746.1,219.9L1748.1,223.3L1750.2,228.9L1760.1,230.7L1766.9,234.8L1769.2,240.1L1777.8,240.1L1782.7,237.9L1792.1,236.2L1789.2,241.3L1787,243.4L1785,249.6L1781.2,255.2L1774.3,254.2L1769.4,256.2L1770.9,261.1L1770.1,267.8L1767.2,267.9L1767.2,270.8L1763.5,267.5L1761.3,270.6L1752.5,273.1L1753.4,276.1L1748.4,275.9L1745.7,274.1L1741.8,278.1L1735.6,281.2L1730.9,284.9L1723,286.5L1718.8,289.2L1712.7,290.7L1715.7,288.1L1714.5,285.9L1719,282L1716,279.1L1711,281.1L1704.6,285L1701.1,288.7L1695.5,289L1692.6,291.6L1695.6,295.5L1700.3,296.4L1700.5,299L1705,300.6L1711.4,296.6L1716.4,298.8L1720.1,298.9L1721,301.9L1712.9,303.5L1710.3,306.6L1704.8,309.4L1701.8,313.4L1708,316.5L1710.2,322.1L1713.7,327.3L1717.5,331.7L1717.4,335.9L1713.9,337.5L1715.2,340.5L1718.6,342.3L1717.7,346.9L1716.2,351.4L1713.1,351.9L1708.9,358.1L1704.3,365.6L1699,372.4L1691.2,377.6L1683.3,382.4L1676.9,383L1673.4,385.6L1671.4,383.7L1668.2,386.6L1660.3,389.4L1654.2,390.3L1652.3,396.3L1649.2,396.6L1647.7,392.5L1649,390.3L1641.4,388.5L1638.7,389.4L1633,387.9L1630.2,385.6L1631.1,382.3L1625.9,381.3L1623.2,379.2L1618.4,382.2L1612.8,382.8L1608.3,382.8L1605.2,384.2L1602.3,385L1603.1,391.5L1600.1,391.4L1599.6,390L1599.4,387.7L1595.3,389.4L1592.8,388.3L1588.6,386.2L1590.2,381.4L1586.6,380.3L1585.3,375.1L1579.3,376.1L1579.9,369.3L1585.3,364.6L1585.6,359.9L1585.4,355.5L1582.9,354.1L1581,350.8L1577.7,351.2L1571.5,350.4L1573.5,348L1570.8,344.4L1566.7,346.8L1562,345.4L1555.4,349.1L1550.2,353.3L1545.7,354L1543.2,352.5L1540.2,352.3L1536.1,351L1533,352.5L1529.3,356.7L1528.8,352.2L1525.3,353.4L1518.7,352.9L1512.2,351.6L1507.6,349.1L1503.2,347.9L1501.3,345.2L1498.1,344.4L1492.4,340.7L1487.8,338.9L1485.4,340.3L1477.5,336.3L1471.9,332.7L1470.3,326.4L1474.4,327.2L1474.6,324.3L1472.3,321.4L1472.9,316.7L1466.8,310.1L1457.5,307.8L1455.8,303.4L1451.6,300.8L1450.6,299.1L1449.7,295.9L1449.9,293.7L1446.4,292.4L1444.6,292.9L1443.1,287.7L1444.8,286.4L1444,285L1449.4,282.4L1453.3,281.2L1459.4,282L1461.5,278.4L1468.8,277.7L1470.8,275.4L1479.8,272.4L1480.6,271.1Z"},{"name":"Taiwan","fill":"#ff9ff3","d":"M1716.8,373.2L1713.4,382.3L1710.9,387L1707.9,382.2L1707.3,378L1710.6,372.4L1715.2,368.1L1717.8,369.8L1716.8,373.2Z"},{"name":"Italy","fill":"#6ab04c","d":"M1083.4,245.2L1086.9,246L1087.5,245L1093.1,244L1094.4,245.9L1102.5,247.4L1101.9,250.2L1103.3,252.6L1098.8,251.8L1094.1,253.8L1094.5,256.7L1093.8,258.3L1095.6,261.2L1101,264L1103.8,268.7L1110.1,273.3L1114.6,273.3L1116,274.5L1114.4,275.7L1119.5,277.7L1123.7,279.5L1128.5,282.4L1129.1,283.5L1128.1,285.5L1124.9,282.9L1120,281.9L1117.6,285.6L1121.7,287.7L1121,290.7L1118.6,291L1115.6,295.9L1113.2,296.3L1113.2,294.6L1114.4,291.6L1115.6,290.3L1113.4,287L1111.7,284.2L1109.3,283.5L1107.6,281L1104,280L1101.5,277.7L1097.3,277.3L1092.9,274.7L1087.7,271L1083.8,267.8L1082,262.1L1079.2,261.5L1074.6,259.6L1071.9,260.4L1068.7,263L1066.3,263.4L1066.9,261L1063.9,260.2L1062.4,255.8L1064.4,254.1L1062.7,252L1062.9,250.4L1065.4,251.6L1068.1,251.3L1071.3,249.4L1072.3,250.3L1075,250.1L1076.2,247.8L1080.4,248.5L1083,247.6L1083.4,245.2Z M1108,295L1112.3,294.5L1110.2,299L1111.1,300.7L1109.9,303.7L1105.6,301.5L1102.7,300.9L1094.7,298L1095.5,295.1L1102.2,295.6L1108,295Z M1073.6,279.3L1076.4,277.6L1079.8,281.6L1079,289.1L1076.4,288.8L1074.1,290.7L1071.9,289.2L1071.7,282.3L1070.4,279L1073.6,279.3Z"},{"name":"Denmark","fill":"#ff6b6b","d":"M1080.4,199.2L1076.8,200.1L1072.5,199.3L1070.2,196.2L1070,190.4L1071,188.8L1072.6,187.1L1077.6,186.8L1079.6,185.2L1084.2,183.6L1084,186.5L1082.3,188.4L1083,190L1086.1,190.8L1084.7,193L1083,192.3L1078.9,196.4L1080.4,199.2Z M1094.4,192.8L1096.2,195.6L1092.8,200.2L1086.8,197L1086,194.7L1094.4,192.8Z"},{"name":"United Kingdom","fill":"#eb4d4b","d":"M988.7,205.6L984.4,204.4L980.9,204.5L982.1,201.4L980.9,198.4L985.7,198.1L991.8,201.6L988.7,205.6Z M1006.4,208.2L1006.4,208.2L1007.2,204.9L1003.4,201.4L1003.3,201.3L996.4,200.3L995.1,198.8L997.2,196.2L995.3,194.7L992.2,197.3L991.9,191.9L989,189L991.1,183.1L995.5,178.5L1000,178.9L1006.9,178.4L1000.8,184.6L1006.6,183.8L1012.9,183.8L1011.4,188.5L1006.3,193.6L1012.1,193.9L1012.6,194.5L1017.7,201.2L1021.6,202.2L1025.1,208.6L1026.7,210.9L1033.6,212L1032.9,215.6L1030,217.3L1032.2,220.2L1027.1,223.2L1019.5,223.1L1009.8,224.7L1007.2,223.6L1003.4,226.3L998.2,225.6L994.2,227.8L991.1,226.6L999.5,220.7L1004.6,219.4L1004.5,219.4L995.6,218.5L994,216.2L1000,214.5L996.9,211.4L997.9,207.7L1006.4,208.2Z"},{"name":"Iceland","fill":"#1dd1a1","d":"M941.5,133.9L940.1,137.6L946.6,141.5L939.2,145.8L922.8,149.7L917.9,150.8L910.4,149.9L894.5,148.1L900.1,145.6L887.7,142.8L897.8,141.7L897.6,140.1L885.6,138.7L889.5,135L898.1,134.2L906.9,138.1L915.6,135L922.7,136.6L932,133.5L941.5,133.9Z"},{"name":"Azerbaijan","fill":"#f368e0","d":"M1288,273.9L1289.6,274.1L1293.5,277.5L1296,277.9L1297,276.4L1300.4,274.2L1303.4,277.1L1306.3,281.2L1308.9,281.5L1310.7,283L1306,283.4L1305,287.9L1304,289.9L1301.9,291.2L1302.1,294L1300.7,294.3L1297.1,291.3L1299.1,288.5L1297.4,286.8L1295.3,287.2L1288.6,291.4L1288.4,287.5L1285.9,286.6L1283.5,285L1285.1,283.2L1282,281.3L1283.2,279.8L1281,278.8L1279.8,277.3L1281.2,276.4L1285.5,278.1L1288.5,278.4L1289.3,277.7L1286.5,274.6L1288,273.9Z M1286.5,291.6L1282.6,290.8L1279.7,288.2L1278.8,286.1L1280,285.9L1281.7,287.4L1284.2,287.4L1284.2,288.3L1286.5,291.6Z"},{"name":"Georgia","fill":"#ff9f43","d":"M1251.3,264.9L1252,264.2L1256.8,265.2L1265.2,266.1L1272.9,268.9L1273.9,269.9L1277.4,269L1282.7,270.2L1284.4,272.5L1288,273.9L1286.5,274.6L1289.3,277.7L1288.5,278.4L1285.5,278.1L1281.2,276.4L1279.8,277.3L1271.9,278.2L1266.5,275.4L1260.4,275.7L1261.2,273.3L1259.8,269.4L1256.5,267.3L1253.4,266.6L1251.3,264.9Z"},{"name":"Philippines","fill":"#3742fa","d":"M1711.4,439.7L1708.5,435.4L1713.4,435.6L1715.4,437.6L1713.8,442.6L1711.4,439.7Z M1721.4,455.2L1722.8,453.6L1723.4,450.1L1726.6,449.8L1725.7,453.6L1729.9,448.1L1729.3,453.5L1727.3,455.4L1725.5,459L1723.7,460.7L1720.2,456.7L1721.4,455.2Z M1742.9,464.1L1743.5,467.9L1743.9,471.1L1741.9,476.3L1739.8,470.5L1737.2,473.4L1739,477.6L1737.4,480.3L1730.7,476.9L1729.1,472.8L1730.8,470.1L1727.2,467.4L1725.4,469.8L1722.7,469.6L1718.5,472.7L1717.6,471.1L1719.8,466.3L1723.4,464.7L1726.5,462.5L1728.5,465.1L1732.8,463.6L1733.8,461L1737.8,460.9L1737.5,456.5L1742.1,459.2L1742.5,462L1742.9,464.1Z M1698.2,459L1690.6,464.4L1693.4,460.4L1697.5,456.9L1700.9,453L1703.9,447.3L1704.9,452L1701.1,455.1L1698.2,459Z M1720,408.3L1719,410.7L1721,414.8L1719.5,419.5L1716.1,421.4L1715.2,426L1716.5,430.5L1719.5,431.1L1722,430.4L1729.1,433.6L1728.6,436.7L1730.5,438.1L1729.9,440.7L1725.4,437.9L1723.3,434.9L1721.9,437L1718.2,433.6L1713.1,434.4L1710.2,433.2L1710.5,430.8L1712.3,429.4L1710.6,428.1L1709.9,430.1L1707.1,426.8L1706.2,424.4L1706,418.9L1708.3,420.8L1708.9,411.9L1710.7,406.7L1714.2,406.7L1717.7,408.4L1719.4,406.9L1720,408.3Z M1718.3,447.1L1717.4,444.3L1720.8,446.1L1724.4,446.1L1724.3,448.5L1721.7,450.9L1718.1,452.6L1717.9,450L1718.3,447.1Z M1738,442.8L1739.6,449.2L1735.2,447.7L1735.3,449.6L1736.7,453.1L1734,454.3L1733.7,450.3L1732,450L1731.1,446.6L1734.5,447.1L1734.4,444.9L1730.9,440.6L1736.4,440.7L1738,442.8Z"},{"name":"Malaysia","fill":"#2ed573","d":"M1593.4,475.2L1594.4,474.2L1599,476.7L1599.5,479.6L1603.2,478.9L1605.1,476.6L1606.4,477.1L1609.7,480.6L1612.1,484.4L1612.5,488.2L1611.8,490.8L1612.4,492.8L1612.8,496.1L1614.8,497.7L1617.1,502.7L1616.9,504.6L1612.9,505L1607.5,500.8L1600.8,496.3L1600.1,493.4L1596.8,489.6L1596.1,484.9L1594,481.8L1594.6,477.6L1593.4,475.2Z M1694.6,488.5L1689.7,487.5L1683.1,487.5L1681.2,494L1679,495.9L1676.1,503.9L1671.4,505.1L1666,503.5L1663.3,504L1660,506.9L1656.4,506.4L1652.7,507.6L1648.8,504.4L1647.9,500.6L1652,502.5L1656.4,501.5L1657.6,496.7L1660,495.6L1666.8,494.4L1670.9,489.9L1673.7,486.3L1676.3,489.2L1677.5,487.3L1680.2,487.4L1680.5,483.8L1680.8,481L1685.2,477.1L1688,472.6L1690.3,472.6L1693.3,475.5L1693.5,477.9L1697.3,479.5L1702,481.2L1701.6,483.5L1697.8,483.7L1698.8,486.5L1694.6,488.5Z"},{"name":"Brunei","fill":"#10ac84","d":"M1680.8,481L1680.5,483.8L1680.2,487.4L1677.5,487.3L1676.3,489.2L1673.7,486.3L1675.9,484.1L1680.8,481Z"},{"name":"Slovenia","fill":"#54a0ff","d":"M1102.5,247.4L1107.2,247.9L1110.1,246.6L1115.1,246.4L1116.2,245.5L1117.1,245.5L1118.2,247.4L1113.7,249L1113.2,251.3L1111.2,251.8L1111.2,253.4L1109,253.3L1107,252.4L1106,253.3L1102,253.2L1103.3,252.6L1101.9,250.2L1102.5,247.4Z"},{"name":"Finland","fill":"#5f27cd","d":"M1186.7,119.1L1185.8,123.1L1194.5,126.9L1189.3,131.2L1195.9,137.6L1192.1,142.5L1197.2,146.7L1194.9,150.5L1203.3,154.4L1201.2,157.3L1195.9,160.5L1183.7,167.8L1183.7,167.8L1183.7,167.8L1173.4,168.3L1163.4,170.3L1154.1,171.5L1150.8,168.4L1145.3,166.6L1146.6,161L1143.8,155.8L1146.5,152.5L1151.7,148.9L1164.7,142.8L1168.5,141.6L1167.9,139.2L1160,136.5L1158.1,134.3L1157.9,125.5L1149,121.6L1141.5,118.9L1144.9,117.4L1151.2,120.4L1158.6,120.1L1164.7,121.5L1170.1,118.9L1172.9,114.8L1181.8,112.8L1189.1,115.1L1186.7,119.1Z"},{"name":"Slovakia","fill":"#c8d6e5","d":"M1152.3,232.8L1150.8,234.2L1149.6,236.5L1148.4,237.1L1142.3,235.4L1140.5,235.7L1139.1,237.1L1136.5,237.8L1135.9,237.4L1133.1,238.3L1130.8,238.5L1130.4,239.6L1125.6,240.3L1123.5,239.7L1120.6,238.2L1120,236.3L1120.5,235.5L1121.3,234.3L1123.8,234.4L1125.8,233.8L1125.9,233.3L1127,233L1127.4,231.7L1128.7,231.5L1129.6,230.4L1131.3,230.4L1131.6,230.8L1133.9,230L1136.8,232L1140.1,230.8L1142.8,231.4L1146.9,230.6L1152.3,232.8Z"},{"name":"Czechia","fill":"#ffda79","d":"M1109.4,221.3L1112.1,223.1L1116.4,223.6L1116,225.2L1119.1,226.3L1120,224.9L1123.9,225.5L1124.4,227.3L1128.6,227.6L1131.3,230.4L1129.6,230.4L1128.7,231.5L1127.4,231.7L1127,233L1125.9,233.3L1125.8,233.8L1123.8,234.4L1121.3,234.3L1120.5,235.5L1117.9,234.5L1115.2,234.8L1110.8,233L1108.8,233.4L1105.6,235.8L1101.3,233.9L1098.1,231.5L1095.2,230.1L1094.6,227.7L1093.6,226L1097.8,224.8L1099.9,223.4L1104,222.3L1105.4,221.2L1106.9,221.9L1109.4,221.3Z"},{"name":"Eritrea","fill":"#cd84f1","d":"M1231.2,430L1230.6,427.7L1233.1,419.3L1233.6,415.5L1235.4,413.8L1239.6,412.9L1242.5,409.6L1245.8,416.2L1247.4,421.4L1250.5,424.2L1258.3,429.6L1261.4,432.8L1264.5,436.1L1266.3,438L1269.1,439.8L1267.4,441.1L1264.9,440.6L1263,438.8L1260.6,435.5L1258.1,433.6L1256.7,431.7L1251.7,429.4L1247.8,429.3L1246.4,428.1L1243.1,429.5L1239.6,426.9L1237.9,431.1L1231.2,430Z"},{"name":"Japan","fill":"#ea8685","d":"M1831.2,289.1L1825.9,294.8L1826,300.7L1823.9,305.2L1824.8,308.1L1821.9,312.1L1814.6,314.8L1804.6,315.1L1796.5,321.6L1792.7,319.4L1792.5,315.2L1782.6,316.4L1775.8,319.1L1769.2,319.2L1774.9,323.4L1771.1,333.1L1767.5,335.5L1764.7,333.3L1766.1,328.1L1762.5,326.5L1760.2,322.6L1765.6,320.8L1768.6,317.3L1774.3,314.3L1778.4,310.4L1789.8,308.7L1795.9,309.9L1801.8,299.8L1805.6,302.5L1813.9,296.8L1817.2,294.6L1820.8,287.6L1819.8,281.2L1822.2,277.6L1828.2,276.6L1831.3,284.5L1831.2,289.1Z M1846.7,261.9L1850.7,259.5L1852,265.9L1843.5,267.4L1838.6,273.1L1829.6,269.2L1826.5,275.4L1820.2,275.5L1819.4,269.9L1822.2,265.5L1828.3,265.2L1830,257.3L1831.6,252.9L1838.3,258.8L1842.7,260.7L1846.7,261.9Z M1777,321.6L1780.2,318.2L1783.4,318.9L1785.8,316.5L1789.9,317.7L1790.7,319.7L1787.5,323.1L1785.1,321.3L1782.2,322.6L1780.7,325.9L1777,324.3L1777,321.6Z"},{"name":"Paraguay","fill":"#33d9b2","d":"M693.1,626.8L694.8,629.9L694.4,637.7L700.4,638.8L702.7,637.6L706.6,639.2L707.6,640.9L708.2,646.1L708.8,648.3L711,648.5L713.1,647.6L715.1,648.7L715.1,651.8L714.4,655.1L713.2,658.4L712.3,663.4L707.2,667.8L702.7,668.7L696.3,667.9L690.5,666.3L696.1,657.7L695.3,655.1L689.5,652.9L682.5,648.7L677.9,647.9L667.4,638.6L669.6,631.8L669.8,628.7L672.5,623.7L682.4,622L687.7,622.1L693,625L693.1,626.8Z"},{"name":"Yemen","fill":"#ff5252","d":"M1319.8,403.9L1324.3,413.3L1326.1,417.3L1322,418.8L1320.9,421.3L1320.8,423.3L1315.1,425.7L1306,428.3L1300.9,432.3L1298.4,432.7L1296.7,432.3L1293.4,434.7L1289.8,435.8L1285,436.1L1283.6,436.4L1282.3,437.9L1280.8,438.3L1279.9,439.8L1277.1,439.6L1275.3,440.4L1271.4,440.1L1269.9,436.8L1270.1,433.7L1269.1,432L1268,427.8L1266.4,425.5L1267.5,425.2L1266.9,422.6L1267.6,421.5L1267.4,419L1269.9,417.2L1269.3,414.8L1270.8,412L1273.1,413.5L1274.7,413L1281.2,412.8L1282.3,413.4L1287.8,414L1290,413.7L1291.4,415.6L1294,414.6L1298.1,408.7L1303.4,406.1L1319.8,403.9Z"},{"name":"Saudi Arabia","fill":"#fed330","d":"M1222.9,345L1229.2,345.9L1231.7,344.1L1233,342.1L1237.4,341.3L1238.3,339.4L1240.2,338.4L1234.5,332.8L1245.9,329.9L1247,329L1253.8,330.6L1262.3,334.6L1278.3,346L1288.9,346.5L1294,347L1295.4,349.7L1299.4,349.6L1301.7,354.5L1304.5,355.8L1305.4,357.8L1309.3,360.2L1309.7,362.5L1309.1,364.4L1309.8,366.3L1311.4,367.9L1312.2,369.8L1313.1,371.2L1314.8,372.3L1316.3,371.9L1317.4,374.1L1317.6,375.4L1319.8,381.1L1336.9,384L1338.1,382.8L1340.7,386.8L1336.9,398.2L1319.8,403.9L1303.4,406.1L1298.1,408.7L1294,414.6L1291.4,415.6L1290,413.7L1287.8,414L1282.3,413.4L1281.2,412.8L1274.7,413L1273.1,413.5L1270.8,412L1269.3,414.8L1269.9,417.2L1267.4,419L1266.6,416.6L1264.9,414.9L1264.5,412.6L1261.5,410.5L1258.5,405.8L1256.9,401.1L1253,397.2L1250.4,396.3L1246.7,390.9L1246,386.9L1246.2,383.5L1243,377.2L1240.3,375L1237.2,373.8L1235.4,370.6L1235.7,369.3L1234.1,366.3L1232.4,365.1L1230.2,360.8L1226.8,356.3L1223.9,352.4L1221,352.4L1221.9,349.3L1222.2,347.3L1222.9,345Z"},{"name":"Antarctica","fill":"#e8f0fe","d":"M747.2,956L750.1,956L758.5,954.8L767.1,956L774.1,958.5L776.6,961.9L777.3,964.4L777.5,967.3L768.7,969L759.4,970.5L748.7,971.8L736.8,972.9L723.3,972.6L715.9,970.7L716.9,968.4L729,966.8L733.9,964.9L737.5,962.5L740,960.3L743.5,958.3L747.2,956L747.2,956Z M646.9,968.6L659.7,968.8L672,969.3L676.2,967L679.2,965L685.1,967.3L683.4,970.2L681.8,972.8L669.8,972L657.1,972.4L650,970.5L650,970.2L646.9,968.6Z M603.5,917.4L603.5,917.4L607.4,916.8L614,917L615.6,914.1L616,912L615.9,907.4L619.1,904.7L624.3,903.8L627.3,906L628.7,908.1L631.1,910.6L633,913.1L634.6,915.7L635.3,918.2L634.3,920.5L632.7,922.6L626,923.4L619.7,924.5L612.2,924.4L615,922.1L608.3,922.9L601.9,923.7L597.6,922L597.3,919.7L603.5,917.4Z M441.9,921L441.9,921L445.4,920L452.7,920.8L460.9,921.2L467.1,922L473.4,921.3L476.7,924.6L472.3,924.1L465.4,924.3L458.3,924.1L450.7,924.5L444.9,923.3L441.9,921Z M326.4,931L326.4,931L327.6,929.1L334.4,930.1L341.8,931L348.6,930L345.4,932L340,933.5L332.1,933L326.4,931Z M299.9,929.9L299.9,929.9L304,928.7L309.7,930L318.4,932.3L315.1,932L307.7,931.5L299.9,929.9Z M92.7,959.1L92.7,959.1L96.1,957L106.7,957.9L112.4,959.7L116.7,961.7L118.3,964.2L107.4,965L99.9,963L96.6,961L96.3,960.7L92.7,959.1Z M2048,993.9L2048,1024L0,1024L0,993.9L0.3,994L5.4,990.7L15.6,992.4L16.3,992.2L22.3,990.4L23.1,990.5L23.7,990.5L32,992.9L39.2,990.5L40.5,990.2L57.2,989.2L62.6,990.5L65.3,991.2L73.8,993.1L90,994.6L102.8,996.3L124.7,997.7L141.1,996.1L165.3,997.2L179,999L194.1,997.3L209.9,995.8L211.1,993.1L188.7,992.9L170.3,991.6L165.5,989.3L150.3,988.1L151.3,985.5L153.4,983.2L155.5,981.1L154.4,978.7L144.9,977.2L140.6,975.2L131.8,973.4L145.6,973.7L158.7,972.8L167,974.7L177.1,973L186.5,970.9L191,969L189,966.7L181.7,965.1L173.3,963.5L161.6,963.1L151.4,962.3L140.3,961.8L136.7,959.7L129.3,957.9L124.9,955.9L123.1,949.4L125.9,950L131,951.8L140.3,951.2L149.4,950.4L154.1,952.9L163.1,952.3L170.7,951.1L177.8,949.5L184.2,947.6L192.8,947.1L192.6,945L190.6,942.8L192.3,940.8L199.6,939.8L203,941.7L211.7,940.6L218.2,939.2L226.4,939L234.1,938.5L241.7,937.2L247.9,935.9L254.8,934.7L259.2,935L263.1,935.5L271.6,934.7L279.2,935.7L287,935.6L294.4,934.8L302.1,935.4L310.6,935.9L318.5,935.7L326.8,935.8L335.2,935.9L343,935.7L348.8,934L355.7,933.1L362.9,934.4L369.7,933.4L375.8,931.4L379.5,933.1L381.5,935.1L385.1,937L391,935.4L397.8,937.5L405.5,938.2L412.1,939.7L420.1,939.4L427.4,938.4L436,938.6L443.6,939.4L451.4,940.4L454.4,937.9L450.8,936L448,934L440.6,933.6L437.4,931.5L436.2,929.3L434.2,925.1L438.5,925.9L446,926.2L453.3,925.9L460,926.8L465.8,928.5L468.3,930.5L476,930.8L483.3,930L491.1,928.9L498.1,928.2L503.9,929.6L511.5,929.1L516.4,924.8L521,927.3L527.5,928.3L534.7,927.8L539.4,930L546.8,930.2L553.7,930.9L560.5,932.1L565,930L567.2,928L572.9,930.2L580.7,929.7L586.5,930.9L590.4,932.8L598,932.2L603.9,931L609.7,929.6L616.6,928.8L624.6,928.1L631.8,927.3L637.4,926.1L640.7,924.3L642.1,921.9L641.4,919.5L639.6,917.3L637.6,915.1L635.8,912.9L634.4,910.8L634.1,908.6L634.6,906.4L637.3,904.3L639.5,901.9L640.4,899.7L639.3,897.2L638.6,895L641.4,892.5L644.5,890.8L648.2,888.7L652.1,886.9L656.7,885.2L658.9,882.8L662,881.2L665.6,879.7L671.1,879.4L674.6,877.6L678.6,876.5L683.3,875.8L687.4,874.4L690.7,872.6L695.1,871.9L698.5,873.4L696.3,875.3L690.6,877L688.1,878.2L683.9,877.3L679.2,877.8L675.3,879.2L671.2,880.6L668.4,882.3L667.6,884.5L667.9,886.7L670.6,888.5L666.7,889.9L661.4,890.3L658.2,892.2L654.9,894L651.3,896.5L650.4,898.6L652.4,900.9L655.5,902.7L660.1,904L664.5,905.8L666.8,908.1L668,910.2L669.7,912.4L672.4,914.3L674.1,916.4L674.8,921.7L676.5,923.8L677,926L678.7,928.2L678,931.2L674.8,933.6L671.5,935.5L663.9,936.3L661.4,938.3L657.9,940.2L649.3,942.3L641.7,943.2L634.6,944.4L626.9,945.6L622.4,948L613.2,948.2L603.2,948L594.2,948.4L584.6,948.4L586.4,950.6L595.1,951.6L601.4,953.2L605,955.2L598.6,957L588.8,956.4L580.7,957.9L580.4,960.2L580.1,962.5L586.8,964.4L588,966.5L595.3,968.6L607.3,969.5L617.6,971L625.7,972.8L636.1,974.6L650.2,975.5L664.1,977.1L673.8,978.7L684.4,980.6L690,983.3L692.8,985.4L699.7,983.4L709,981.7L719,980L730.8,978.5L740.9,976.9L755.1,976.8L769,977.6L780.5,979L784.1,976.5L792.1,974.8L806.4,974.7L817.7,973.5L828.4,972.3L840.2,971.5L852.8,970.5L861.6,969L857.6,967L855.1,965L855.1,962.9L844.1,963.1L832.4,964L821.2,964L819.7,961.9L820.5,957.7L823,956.4L831.2,955.1L840.7,953.8L847.7,952.1L854.6,950.4L859.7,948.2L867.5,947.2L875.2,946.4L879.1,946L887.9,945.7L896.2,945L903.3,943.8L910.2,942.5L916.4,941.2L924.3,939.4L929.3,937.5L934.7,935.8L936.3,933.6L930.3,932.2L932.3,929.9L936.1,928.1L942,927L948.3,925.7L954.1,923.9L958.5,921.7L961.3,919L965.4,917.4L972.2,917.8L975,919.7L981.8,919.9L982,917.8L984.9,915.5L991.1,916.1L992.5,918.2L999.3,918.5L1006.7,917.5L1013.8,916.9L1020.2,917.2L1022.7,919.5L1028.9,917.6L1034.7,916.6L1041.2,915.9L1047.5,915.1L1053.3,913.7L1059.7,912.9L1064.6,911.6L1068,909.6L1072.3,911.1L1078.2,910.3L1082.3,913L1085.5,915L1092,913.9L1094.6,911.6L1100.4,910.1L1107.8,910.4L1110.1,912.5L1114.7,910.4L1120.9,909.7L1127.5,909.5L1133.6,909.6L1139.9,910.3L1146,910.6L1148.7,912.5L1152.4,914.2L1158.6,913.2L1165.3,913L1171.8,913L1178.1,912.9L1183.8,912.1L1189.8,911.4L1194.8,909.8L1200.2,908.8L1206,908.3L1210.3,906.7L1213.5,903.6L1216.7,901.7L1222.6,902.6L1224.8,904.6L1229.7,905.9L1235.6,905.5L1239.6,907.5L1243.9,908.9L1249.7,907.6L1251.7,905.2L1256.8,904.2L1262.7,902.3L1268.3,901.5L1275,900.4L1279.4,899.1L1284.1,897.8L1288.6,896.6L1293.9,897.2L1299,895.2L1302.7,893.7L1308.1,893.8L1312.7,892.5L1313.8,890.4L1318.6,888.9L1323.3,887.8L1329,886.9L1334.2,886.4L1339.2,886.8L1344.6,887.3L1349.2,888.9L1349.7,891.3L1354.7,893.2L1358.2,894.8L1365,895.5L1368.8,897L1373.5,898.6L1378.9,898.9L1383.5,897.8L1388.4,895.5L1393.7,896.7L1399.3,897.4L1404.7,898L1410.2,898.5L1415.9,898.5L1420.6,904.4L1420.4,905.8L1419.7,908.4L1414.2,909.8L1409.8,912L1410.6,914.2L1416.9,914.1L1416.1,916.3L1413.2,918.4L1410.6,920.8L1414.9,922.5L1421.5,923.1L1428.1,922.1L1431.2,919.9L1433.1,917.8L1436.2,916L1439.8,914.3L1441.2,912.3L1444.2,909.5L1447.8,908.9L1454.2,908.7L1459.9,908.1L1465.7,907.2L1468.5,904.9L1470.2,902.8L1474.1,900.7L1479.6,899.3L1484.4,898.1L1487.6,896.2L1490.8,895.2L1494.9,894.3L1500.6,894.9L1505.7,894.3L1511.3,893.7L1517.5,894L1521.6,892.5L1524.5,888.7L1526.7,890.2L1529.3,892.9L1534.1,894L1539.6,894.5L1545,893.8L1550.8,894.2L1556.2,894.3L1559.8,893.8L1564.5,894.1L1568.9,895.3L1574,894.6L1580.1,894.6L1585.4,893.8L1591.3,894.6L1595.1,892.7L1598,890.8L1601.9,889.2L1609,885L1612.7,885.8L1617,887.3L1620.8,889.3L1628.1,892.8L1633.6,892.9L1638.9,892.9L1645,892.2L1651.1,891.4L1655.8,889.9L1659.7,888.2L1666.1,888L1670.3,886.8L1674.7,887.9L1677.6,889.7L1681.6,891.4L1687.9,891.2L1691.8,892.7L1698.6,894.1L1705.7,894.7L1711.6,894.2L1716.1,892.5L1719.9,890.7L1725,890.2L1730.1,891L1736,891.6L1741.4,890.7L1746.5,890.7L1751.5,891.2L1756.7,891.8L1761.9,890.8L1768,889.9L1773.8,889.7L1780.3,889.7L1785.5,889.1L1790.6,888.7L1792.2,885.9L1792.4,883.5L1796,885.1L1797,887.7L1798.9,890L1801.2,891.9L1806,892.9L1812.5,892.6L1819.9,892.5L1825,892.1L1832.5,892.1L1837.9,892L1845.3,892.2L1851.7,892.7L1855.7,894.5L1854.6,896.6L1858.3,898.2L1864.4,899.6L1870.7,901L1878.1,902L1885.8,902.9L1891.6,903.8L1898,903.9L1901.7,902L1906.7,903.6L1911.1,905.4L1916.1,906.7L1923,907.3L1929.6,907.9L1932.3,910.2L1938.8,911.5L1943.2,913.5L1949.5,914.4L1956.1,914.3L1962.2,914.6L1969,914.5L1975.8,915L1982.2,915.7L1988.1,917.1L1994,918.2L1998,919.9L1997.3,922.1L1994.3,924.1L1991.7,926.7L1989.7,928.7L1987.1,931L1979.6,931.9L1976.2,933.9L1968.9,935.1L1966.3,937.4L1962.4,939.5L1958.3,941.3L1956,943.6L1954.5,945.7L1954,948.3L1954.1,950.4L1957.3,952.6L1958.5,954.8L1961.2,956.8L1971.8,957.6L1974,960L1963.8,960.9L1955.1,962.1L1944.3,962.3L1939.5,965.6L1938.5,968.3L1936,970.4L1933,972.5L1940.6,974.4L1943.5,976.7L1948.4,978.8L1955.3,980.7L1963.2,982.5L1971.8,984.3L1984.8,986.1L1987.7,988.9L2004.1,990.1L2005.2,990.5L2009.5,992.2L2025.2,990.8L2038.2,992.6L2048,993.9Z"},{"name":"N. Cyprus","fill":"#ff9ff3","d":"M1210.2,312.1L1210.6,312.1L1211.4,310.7L1215.5,310.8L1220.7,309.1L1216.9,311.5L1217.3,312.6L1216.7,312.4L1215.6,312.8L1214.7,312.7L1214.4,312.9L1214.3,312.3L1213.9,312L1212.8,311.9L1211.3,312.4L1210.2,312.1Z"},{"name":"Cyprus","fill":"#feca57","d":"M1210.2,312.1L1211.3,312.4L1212.8,311.9L1213.9,312L1214.3,312.3L1214.4,312.9L1214.7,312.7L1215.6,312.8L1216.7,312.4L1217.3,312.6L1217.4,313L1211.6,315.3L1208.8,314.6L1207.5,312.3L1210.2,312.1Z"},{"name":"Morocco","fill":"#ff6b6b","d":"M1011.7,311.9L1013.8,315.6L1014.1,319L1016.1,325L1017.6,326.2L1016.6,328.5L1009.1,329.4L1006.5,331.5L1003.2,332L1003,336.2L996.4,338.5L994.2,341.3L989.5,342.9L983.8,343.7L974.7,347.9L974.7,354.7L973.8,354.7L974,357.7L970.5,357.9L968.6,359.2L966,359.2L964,358.5L959.2,359.1L957.3,363.5L955.6,363.9L952.9,371.1L945,377.2L943.1,385.1L940.8,387.6L940.1,389.7L927.3,390.1L927.2,390.1L927.4,387.5L929.6,385.9L931.5,383L931.1,381.1L933.1,377L936.2,373.4L938.2,372.5L939.7,369.2L939.8,366.2L941.9,362.6L945.6,360.6L949.2,354.8L949.4,354.7L952.2,352.5L957.5,351.9L962,348L964.8,346.5L969.6,341.7L968.2,334.6L970.3,329.7L971.1,326.7L974.7,322.9L980.5,320.3L984.7,317.9L988.5,312.1L990.3,308.6L994.5,308.6L997.9,311L1003.3,310.6L1009.2,311.9L1011.7,311.9Z"},{"name":"Egypt","fill":"#f3a683","d":"M1233.7,386.8L1211.2,386.8L1189.1,386.8L1166.2,386.8L1166.2,365.9L1166.2,345.7L1164.5,341.1L1166,337.6L1165.1,335.1L1167.2,332.4L1174.7,332.3L1180.2,333.8L1185.9,335.5L1188.5,336.4L1192.9,334.6L1195.2,333L1200.2,332.5L1204.3,333.2L1205.8,336L1207.1,334.2L1211.7,335.5L1216.1,335.8L1218.9,334.4L1218.9,334.4L1222.1,342.7L1222.7,344.2L1221.1,346.5L1219.8,350.8L1218.3,353.7L1217,354.7L1215.1,352.9L1212.5,350.3L1208.5,342.2L1207.9,342.7L1210.2,348.7L1213.7,354.4L1218,363.3L1220.1,366.4L1221.9,369.6L1227.1,375.9L1225.9,376.9L1226.1,380.6L1232.7,385.7L1233.7,386.8Z"},{"name":"Libya","fill":"#f5cd79","d":"M1166.2,386.8L1166.2,398.2L1159.7,398.2L1159.6,400.6L1136.9,389.7L1114.2,378.8L1108.5,381.9L1104.5,384L1101.3,380.9L1092.3,378.5L1089.8,374.9L1085.3,372.3L1082.6,373.3L1080.6,370.1L1080.4,367.7L1077,363.6L1079.3,361.2L1078.8,357.6L1079.5,354.5L1079.1,351.9L1080.1,347.2L1079.8,344.6L1077.9,339.6L1080.7,338.3L1081.2,335.9L1080.6,333.5L1084.5,331.3L1086.3,329.5L1089,327.9L1089.4,323.5L1096,325.4L1098.4,325L1103.2,325.9L1110.7,328.4L1113.4,333.5L1118.5,334.6L1126.5,337L1132.6,339.8L1135.4,338.3L1138.1,335.7L1136.8,331.4L1138.5,328.6L1142.6,325.9L1146.6,325.2L1154.3,326.3L1156.2,328.9L1158.3,328.9L1160.1,329.9L1165.8,330.5L1167.2,332.4L1165.1,335.1L1166,337.6L1164.5,341.1L1166.2,345.7L1166.2,365.9L1166.2,386.8Z"},{"name":"Ethiopia","fill":"#ffeaa7","d":"M1295.9,466.5L1279.8,483.5L1272.4,483.8L1267.3,487.8L1263.7,487.9L1262.1,489.7L1258.2,489.7L1255.9,487.8L1250.7,490.2L1249,492.5L1245.3,492.1L1244,491.4L1242.7,491.6L1240.9,491.5L1233.7,486.7L1229.7,486.7L1227.8,484.8L1227.8,481.6L1224.8,480.7L1221.4,474.5L1218.8,473.2L1217.8,470.9L1215,468.1L1211.5,467.7L1213.4,464.5L1216.4,464.3L1217.3,462.6L1217.2,457.5L1218.9,451.5L1221.6,449.9L1222.2,447.6L1224.6,443.3L1228,440.4L1230.3,434.8L1231.2,430L1237.9,431.1L1239.6,426.9L1243.1,429.5L1246.4,428.1L1247.8,429.3L1251.7,429.4L1256.7,431.7L1258.1,433.6L1260.6,435.5L1263,438.8L1264.9,440.6L1262.9,443.2L1261,445.8L1261.5,447.4L1261.5,449.1L1264.7,449.2L1266.1,448.8L1267.4,449.8L1266.1,451.9L1268.2,455L1270.3,457.7L1272.5,459.8L1291.1,466.5L1295.9,466.5Z"},{"name":"Djibouti","fill":"#ff9f43","d":"M1264.9,440.6L1267.4,441.1L1269.1,439.8L1270.4,441.5L1270.3,443.9L1267,445.2L1269.4,446.8L1267.4,449.8L1266.1,448.8L1264.7,449.2L1261.5,449.1L1261.5,447.4L1261,445.8L1262.9,443.2L1264.9,440.6Z"},{"name":"Somaliland","fill":"#ee5253","d":"M1302.5,447.1L1302.5,447.1L1302.4,447.2L1302.4,449.5L1302.4,455.3L1302.4,458.2L1299.8,461.7L1295.9,466.5L1291.1,466.5L1272.5,459.8L1270.3,457.7L1268.2,455L1266.1,451.9L1267.4,449.8L1269.4,446.8L1271.3,447.8L1272.4,450.2L1275,452.6L1277.8,452.6L1283.2,451.1L1289.4,450.5L1294.4,448.7L1297.2,448.3L1299.2,447.3L1302.5,447.1L1302.5,447.1Z"},{"name":"Uganda","fill":"#0abde3","d":"M1216.9,517.4L1205.3,517.8L1199,517.8L1197.1,518.5L1193.7,520.2L1192.3,519.6L1192.3,515.3L1193.6,513.2L1194,508.6L1195.2,506L1197.3,503L1199.5,501.5L1201.3,499.5L1199.1,498.7L1199.4,492L1199.4,492L1201.8,490.5L1205.4,491.8L1209.9,490.4L1214,490.4L1217.5,487.8L1220.1,491.8L1220.8,494.6L1223.3,501.2L1221.2,505.3L1218.4,509.1L1216.8,511.4L1216.9,517.4Z"},{"name":"Rwanda","fill":"#10ac84","d":"M1197.1,518.5L1199.3,521.7L1199,525L1197.3,525.7L1197.3,525.7L1194.3,525.4L1192.6,528.6L1189.1,528.2L1189.6,525L1190.4,524.6L1190.6,521.2L1192.3,519.6L1193.7,520.2L1197.1,518.5Z"},{"name":"Bosnia and Herz.","fill":"#54a0ff","d":"M1129.6,269.4L1124.6,267.2L1122.4,264.8L1120.2,263.6L1117.6,261.5L1116.4,259.7L1113.6,257L1114.8,254.7L1116.8,256L1118.1,254.8L1120.7,254.7L1125.6,255.6L1129.5,255.5L1132.1,256.8L1132.1,256.8L1134.2,256.8L1132.8,259.3L1135.5,261.5L1134.7,264.1L1133.3,264.4L1132.3,264.9L1130.4,266.2L1129.6,269.4Z"},{"name":"North Macedonia","fill":"#5f27cd","d":"M1151.3,271.2L1154.2,273.1L1154.6,276.8L1153.5,277L1152.6,278L1149.5,277.9L1147.3,279.1L1143.6,279.7L1141.2,278.3L1140.4,275.8L1141.1,273.9L1141.1,273.9L1141.9,273.9L1142.1,272.8L1145.5,271.9L1146.7,271.7L1148.7,271.3L1151.3,271.2Z"},{"name":"Serbia","fill":"#c8d6e5","d":"M1131.1,250.8L1131.1,250.8L1135.5,249.3L1139,249.6L1142.1,251.8L1142.8,253.6L1146.2,255L1146.7,257.3L1150,259L1151.8,257.7L1153.2,258.4L1151.9,259.4L1152.9,260.4L1151.5,261.6L1152,263.7L1154.8,266.2L1152.6,268L1151.6,269.8L1152.3,270.4L1151.3,271.2L1148.7,271.3L1146.7,271.7L1146.6,271.2L1147.2,270.6L1147.9,269.2L1147.1,269.2L1146,268.2L1145,267.9L1144.3,267L1143.2,266.6L1142.4,265.8L1141.4,266.1L1140.6,268L1139.2,268.4L1139.7,268L1137.5,266.8L1135.7,266.2L1134.8,265.4L1133.3,264.4L1134.7,264.1L1135.5,261.5L1132.8,259.3L1134.2,256.8L1132.1,256.8L1132.1,256.8L1134.3,254.7L1132.5,253L1131.1,250.8Z"},{"name":"Montenegro","fill":"#ffda79","d":"M1138.2,269.7L1136.6,270.2L1136.3,269.2L1133.8,272L1134.2,273.8L1133,273.3L1131.4,271.5L1129,270.3L1129.6,269.4L1130.4,266.2L1132.3,264.9L1133.3,264.4L1134.8,265.4L1135.7,266.2L1137.5,266.8L1139.7,268L1139.2,268.4L1138.2,269.7Z"},{"name":"Kosovo","fill":"#cd84f1","d":"M1141.1,273.9L1140.8,271.8L1139.4,271.2L1138.2,269.7L1139.2,268.4L1140.6,268L1141.4,266.1L1142.4,265.8L1143.2,266.6L1144.3,267L1145,267.9L1146,268.2L1147.1,269.2L1147.9,269.2L1147.2,270.6L1146.6,271.2L1146.7,271.7L1145.5,271.9L1142.1,272.8L1141.9,273.9L1141.1,273.9Z"},{"name":"Trinidad and Tobago","fill":"#706fd3","d":"M673.1,450.8L676.4,450L677.6,450.2L677.3,454.5L672.6,455.1L671.6,454.6L673.2,453L673.1,450.8Z"},{"name":"S. Sudan","fill":"#33d9b2","d":"M1199.4,492L1194.4,488.3L1193.1,485.8L1189.9,487L1187.3,486.7L1185.7,487.6L1183.2,486.9L1179.7,482.2L1178.8,480.4L1174.6,478.2L1173.1,474.8L1170.8,472.3L1166.9,469.3L1166.9,467.5L1163.8,465.2L1159.9,463L1161.6,462.3L1163.6,461.3L1165.1,456.2L1166.6,453.6L1170.7,452.8L1171.7,454.3L1174.6,457.7L1176.2,458.1L1178.2,457.2L1182.3,457.4L1183.1,458.5L1188.8,458.5L1189,457.4L1191.9,456.3L1192.5,454.6L1194.6,453.5L1199.4,456.8L1202.4,456.2L1205.2,452.1L1208.3,449L1207.8,445.5L1206.5,443.9L1209.9,443.6L1210.3,442.3L1212.9,442.7L1212.2,446.9L1212.9,451L1215.8,453.3L1216.5,455.2L1216.4,458L1217.2,458.2L1217.3,462.6L1216.4,464.3L1213.4,464.5L1211.5,467.7L1215,468.1L1217.8,470.9L1218.8,473.2L1221.4,474.5L1224.8,480.7L1221,484.4L1217.5,487.8L1214,490.4L1209.9,490.4L1205.4,491.8L1201.8,490.5L1199.4,492Z"}];
+  
+  const GLOBE_LABELS = [{"x":260,"y":520,"size":24,"fill":"rgba(255,255,255,0.75)","text":"PACIFIC OCEAN"},{"x":1840,"y":520,"size":24,"fill":"rgba(255,255,255,0.75)","text":"PACIFIC OCEAN"},{"x":860,"y":560,"size":22,"fill":"rgba(255,255,255,0.75)","text":"ATLANTIC OCEAN"},{"x":1420,"y":640,"size":22,"fill":"rgba(255,255,255,0.75)","text":"INDIAN OCEAN"},{"x":1024,"y":120,"size":20,"fill":"rgba(255,255,255,0.75)","text":"ARCTIC OCEAN"},{"x":1024,"y":920,"size":20,"fill":"rgba(255,255,255,0.75)","text":"SOUTHERN OCEAN"},{"x":500,"y":506,"size":14,"fill":"#fed330","text":"EQUATOR / KHATULISTIWA (0°)"},{"x":1500,"y":506,"size":14,"fill":"#fed330","text":"EQUATOR / KHATULISTIWA (0°)"},{"x":505.9,"y":194.9,"size":18,"fill":"#ffffff","text":"CANADA"},{"x":509.9,"y":298.3,"size":18,"fill":"#ffffff","text":"USA"},{"x":1855.8,"y":560.2,"size":12,"fill":"#ffffff","text":"PAPUA NEW GUINEA"},{"x":1715.7,"y":510.6,"size":13,"fill":"#55efc4","text":"INDONESIA 🇮🇩"},{"x":653.7,"y":726.6,"size":12,"fill":"#ffffff","text":"ARGENTINA"},{"x":617.5,"y":732.8,"size":12,"fill":"#ffffff","text":"CHILE"},{"x":1540.9,"y":179.8,"size":18,"fill":"#ffffff","text":"RUSSIA"},{"x":1126.9,"y":139.2,"size":12,"fill":"#ffffff","text":"NORWAY"},{"x":1042.8,"y":248.6,"size":12,"fill":"#ffffff","text":"FRANCE"},{"x":570.4,"y":392.4,"size":12,"fill":"#ffffff","text":"CUBA"},{"x":1122.9,"y":578.2,"size":12,"fill":"#ffffff","text":"ANGOLA"},{"x":1291.3,"y":618.2,"size":12,"fill":"#ffffff","text":"MADAGASCAR"},{"x":1345.8,"y":397.3,"size":12,"fill":"#ffffff","text":"OMAN"},{"x":1748.8,"y":288.8,"size":12,"fill":"#ffffff","text":"NORTH KOREA"},{"x":1155.6,"y":289.6,"size":12,"fill":"#ffffff","text":"GREECE"},{"x":1233.9,"y":297.7,"size":12,"fill":"#ffffff","text":"TURKEY"},{"x":2022.3,"y":733.3,"size":12,"fill":"#ffffff","text":"NEW ZEALAND"},{"x":1782,"y":651.4,"size":18,"fill":"#ffffff","text":"AUSTRALIA"},{"x":1625.1,"y":303.8,"size":18,"fill":"#ffffff","text":"CHINA"},{"x":1095.8,"y":270.9,"size":12,"fill":"#ffffff","text":"ITALY"},{"x":1078.7,"y":195.8,"size":12,"fill":"#ffffff","text":"DENMARK"},{"x":1006.5,"y":209.4,"size":12,"fill":"#ffffff","text":"UNITED KINGDOM"},{"x":1293.7,"y":286.3,"size":12,"fill":"#ffffff","text":"AZERBAIJAN"},{"x":1717,"y":428.6,"size":12,"fill":"#ffffff","text":"PHILIPPINES"},{"x":1676.9,"y":495.1,"size":12,"fill":"#ffffff","text":"MALAYSIA"},{"x":1797.7,"y":312.8,"size":12,"fill":"#ffffff","text":"JAPAN"},{"x":1008.7,"y":931.4,"size":12,"fill":"#ffffff","text":"ANTARCTICA"}];
+  
+
+  // --- Source: js/engine/math-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Reusable Mathematics Strategy Engine
+  // Development · Anabhi Dev
+  // Version   : 2.0 (Math Toolbox Master Blueprint)
+  // Generated : 10 September 2026, 12:30:00
+  // ================================================================
+  
+  class MathEngine {
+    /**
+     * Menyelesaikan masalah penjumlahan (a + b) dengan 9 strategi terstruktur.
+     * Perhitungan bersifat deterministik tanpa ketergantungan eksternal.
+     */
+    static solve(a, b, lang = 'id') {
+      const numA = parseInt(a, 10) || 0;
+      const numB = parseInt(b, 10) || 0;
+      const sum = numA + numB;
+  
+      const decomposition = this.getDecompositionSteps(numA, numB, lang);
+      const numberBonds = this.getNumberBondsSteps(numA, numB, lang);
+      const makeHundred = this.getMakeHundredSteps(numA, numB, lang);
+      const compensation = this.getCompensationSteps(numA, numB, lang);
+      const numberLine = this.getNumberLineSteps(numA, numB, lang);
+      const baseTen = this.getBaseTenSteps(numA, numB, lang);
+      const barModel = this.getBarModelSteps(numA, numB, lang);
+      const mentalMath = this.getMentalMathSteps(numA, numB, lang);
+      const soroban = this.getSorobanSteps(numA, numB, lang);
+  
+      const recommended = this.recommendStrategies(numA, numB);
+  
+      return {
+        a: numA,
+        b: numB,
+        sum,
+        recommended,
+        // Backward compatibility aliases
+        placeValue: decomposition,
+        makeRound: makeHundred,
+        visualBlocks: baseTen,
+        // Canonical strategy keys
+        decomposition,
+        numberBonds,
+        makeHundred,
+        compensation,
+        numberLine,
+        baseTen,
+        barModel,
+        mentalMath,
+        soroban
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 1: Place Value / Decomposition (Pecah Puluhan & Satuan)
+    // -------------------------------------------------------------
+    static getDecompositionSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const hA = Math.floor(a / 100) * 100;
+      const tA = Math.floor((a % 100) / 10) * 10;
+      const uA = a % 10;
+  
+      const hB = Math.floor(b / 100) * 100;
+      const tB = Math.floor((b % 100) / 10) * 10;
+      const uB = b % 10;
+  
+      const hSum = hA + hB;
+      const tSum = tA + tB;
+      const uSum = uA + uB;
+      const total = a + b;
+  
+      const partsA = [hA, tA, uA].filter(n => n > 0);
+      const partsB = [hB, tB, uB].filter(n => n > 0);
+  
+      return {
+        id: 'decomposition',
+        title: isEn ? 'Split Numbers (Place Value)' : 'Pecah Angka (Nilai Tempat)',
+        badge: isEn ? 'Decompose & Combine' : 'Pisahkan & Satukan',
+        breakdownA: a + ' = ' + (partsA.join(' + ') || '0'),
+        breakdownB: b + ' = ' + (partsB.join(' + ') || '0'),
+        hSum,
+        tSum,
+        uSum,
+        total,
+        step1: hSum > 0 ? ((isEn ? 'Hundreds: ' : 'Ratusan: ') + hA + ' + ' + hB + ' = ' + hSum) : null,
+        step2: (isEn ? 'Tens: ' : 'Puluhan: ') + tA + ' + ' + tB + ' = ' + tSum,
+        step3: (isEn ? 'Ones: ' : 'Satuan: ') + uA + ' + ' + uB + ' = ' + uSum,
+        stepFinal: hSum > 0
+          ? ('Total: ' + hSum + ' + ' + tSum + ' + ' + uSum + ' = ' + total)
+          : ('Total: ' + tSum + ' + ' + uSum + ' = ' + total),
+        steps: [
+          { desc: isEn ? 'Decompose both numbers into their place values' : 'Pecah angka pertama dan kedua ke nilai tempat masing-masing', val: a + ' = ' + tA + ' + ' + uA + ', ' + b + ' = ' + tB + ' + ' + uB },
+          { desc: isEn ? 'Add the tens group' : 'Jumlahkan kelompok puluhan', val: tA + ' + ' + tB + ' = ' + tSum },
+          { desc: isEn ? 'Add the ones group' : 'Jumlahkan kelompok satuan', val: uA + ' + ' + uB + ' = ' + uSum },
+          { desc: isEn ? 'Combine all groups' : 'Gabungkan seluruh kelompok', val: tSum + ' + ' + uSum + ' = ' + total }
+        ]
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 2: Number Bonds (Ikatan Bilangan Cabang & Gabung)
+    // -------------------------------------------------------------
+    // -------------------------------------------------------------
+    // STRATEGY 2: Number Bonds (Ikatan Bilangan Cabang & Gabung)
+    // -------------------------------------------------------------
+    static getNumberBondsSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const tA = Math.floor(a / 10) * 10;
+      const uA = a % 10;
+      const tB = Math.floor(b / 10) * 10;
+      const uB = b % 10;
+  
+      const tSum = tA + tB;
+      const uSum = uA + uB;
+      const total = a + b;
+  
+      return {
+        id: 'number-bonds',
+        title: 'Number Bonds',
+        badge: isEn ? 'Deconstruct & Bond' : 'Bongkar Pasang Lego',
+        treeA: { root: a, branchLeft: tA, branchRight: uA },
+        treeB: { root: b, branchLeft: tB, branchRight: uB },
+        combinedBranches: [
+          { label: isEn ? 'Tens Branch' : 'Cabang Puluhan', calc: tA + ' + ' + tB, result: tSum },
+          { label: isEn ? 'Ones Branch' : 'Cabang Satuan', calc: uA + ' + ' + uB, result: uSum }
+        ],
+        finalBond: { left: tSum, right: uSum, root: total },
+        summary: isEn
+          ? ('Numbers broken into ' + tA + ', ' + uA + ' and ' + tB + ', ' + uB + '. Combined ' + tSum + ' + ' + uSum + ' = ' + total + '!')
+          : ('Angka dibongkar menjadi ' + tA + ', ' + uA + ' dan ' + tB + ', ' + uB + '. Satukan ' + tSum + ' + ' + uSum + ' = ' + total + '!')
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 3: Make Ten / Make Hundred (Menuju Puluhan / Ratusan Bulat)
+    // -------------------------------------------------------------
+    static getMakeHundredSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const total = a + b;
+      let target = 100;
+      if (a >= 100) {
+        target = Math.ceil((a + 1) / 100) * 100;
+      } else if (a + b < 50) {
+        target = Math.ceil(a / 10) * 10;
+      }
+  
+      const need = target - a;
+  
+      if (need > 0 && b >= need) {
+        const remainingB = b - need;
+        return {
+          id: 'make-hundred',
+          title: (isEn ? 'Make ' : 'Bikin ') + target,
+          badge: isEn ? ('Target ' + target + ' Round') : ('Target ' + target + ' Bulat'),
+          target,
+          need,
+          remainingB,
+          total,
+          step1: isEn ? (a + ' needs ' + need + ' to reach ' + target + '.') : (a + ' butuh ' + need + ' untuk menjadi ' + target + '.'),
+          step2: isEn ? ('Split ' + b + ' into ' + need + ' + ' + remainingB + '.') : ('Pecah ' + b + ' menjadi ' + need + ' + ' + remainingB + '.'),
+          step3: a + ' + ' + need + ' = ' + target,
+          step4: target + ' + ' + remainingB + ' = ' + total,
+          visualPath: a + ' ──(+ ' + need + ')──► ' + target + ' ──(+ ' + remainingB + ')──► ' + total
+        };
+      } else {
+        const modA = a % 10;
+        const borrow = modA === 0 ? 0 : 10 - modA;
+        const roundedA = a + borrow;
+        const remB = b - borrow;
+        return {
+          id: 'make-hundred',
+          title: isEn ? 'Make Round Tens' : 'Bikin Puluhan Bulat',
+          badge: isEn ? 'Round Up Numbers' : 'Genapkan Angka',
+          target: roundedA,
+          need: borrow,
+          remainingB: remB,
+          total,
+          step1: borrow > 0
+            ? (isEn ? (a + ' needs ' + borrow + ' to reach ' + roundedA + '.') : (a + ' butuh ' + borrow + ' agar jadi ' + roundedA + '.'))
+            : (isEn ? (a + ' is already a round ten.') : (a + ' sudah merupakan puluhan bulat.')),
+          step2: borrow > 0
+            ? (isEn ? ('Split ' + b + ' into ' + borrow + ' + ' + remB + '.') : ('Pecah ' + b + ' menjadi ' + borrow + ' + ' + remB + '.'))
+            : (isEn ? 'Calculate directly with ease.' : 'Hitung langsung dengan nyaman.'),
+          step3: a + ' + ' + borrow + ' = ' + roundedA,
+          step4: roundedA + ' + ' + remB + ' = ' + total,
+          visualPath: a + ' ──(+ ' + borrow + ')──► ' + roundedA + ' ──(+ ' + remB + ')──► ' + total
+        };
+      }
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 4: Compensation (Hampir Bulat, Kelebihan Dibalikin)
+    // -------------------------------------------------------------
+    static getCompensationSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const total = a + b;
+      const modB = b % 10;
+      const modA = a % 10;
+  
+      let baseNum = a;
+      let roundedNum = b;
+      let diff = 10 - modB;
+  
+      if (modB === 0) {
+        diff = 0;
+      } else if (modA >= 8 && modB < 8) {
+        baseNum = b;
+        roundedNum = a;
+        diff = 10 - modA;
+      }
+  
+      if (diff === 0 || diff > 4) {
+        diff = (10 - (roundedNum % 10)) % 10;
+        if (diff === 0) diff = 1;
+      }
+  
+      const roundValue = roundedNum + diff;
+      const intermediateSum = baseNum + roundValue;
+      const finalAnswer = intermediateSum - diff;
+  
+      return {
+        id: 'compensation',
+        title: isEn ? 'Compensation (Near Round)' : 'Kompensasi (Hampir Bulat)',
+        badge: isEn ? 'Round & Give Back 😎' : 'Kebanyakan Dibalikin 😎',
+        baseNum,
+        roundedNum,
+        roundValue,
+        diff,
+        intermediateSum,
+        total: finalAnswer,
+        step1: isEn
+          ? (roundedNum + ' is almost ' + roundValue + '. Round up first (add ' + diff + ').')
+          : (roundedNum + ' hampir jadi ' + roundValue + '. Kita bulatkan dulu (tambah ' + diff + ').'),
+        step2: baseNum + ' + ' + roundValue + ' = ' + intermediateSum,
+        step3: isEn
+          ? ('We added ' + diff + ' extra, now subtract it: ' + intermediateSum + ' - ' + diff + ' = ' + finalAnswer + '!')
+          : ('Tadi kita melebihkan ' + diff + ', sekarang kita kurangi: ' + intermediateSum + ' - ' + diff + ' = ' + finalAnswer + '!'),
+        friendlyQuote: isEn
+          ? (roundedNum + ' is almost ' + roundValue + '. Friendly round numbers are so pleasant to work with!')
+          : (roundedNum + ' hampir ' + roundValue + '. Angka bulat enak diajak kerja sama!')
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 5: Number Line (Garis Bilangan dengan Lompatan Chunk)
+    // -------------------------------------------------------------
+    static getNumberLineSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const total = a + b;
+      const jumps = [];
+  
+      const tensJump = Math.floor(b / 10) * 10;
+      const unitsJump = b % 10;
+  
+      let current = a;
+      if (tensJump > 0) {
+        const next = current + tensJump;
+        jumps.push({
+          from: current,
+          to: next,
+          amount: '+' + tensJump,
+          label: isEn ? ('Tens jump (+' + tensJump + ')') : ('Lompat puluhan (+' + tensJump + ')'),
+          color: '#ffb21b'
+        });
+        current = next;
+      }
+  
+      if (unitsJump > 0) {
+        const next = current + unitsJump;
+        jumps.push({
+          from: current,
+          to: next,
+          amount: '+' + unitsJump,
+          label: isEn ? ('Ones jump (+' + unitsJump + ')') : ('Lompat satuan (+' + unitsJump + ')'),
+          color: '#00cec9'
+        });
+        current = next;
+      }
+  
+      if (jumps.length === 0) {
+        jumps.push({ from: a, to: total, amount: '+' + b, label: isEn ? 'Direct jump' : 'Lompat langsung', color: '#00cec9' });
+      }
+  
+      return {
+        id: 'number-line',
+        title: isEn ? 'Number Line' : 'Garis Bilangan',
+        badge: isEn ? 'Chunk Jumps' : 'Lompatan Chunk',
+        start: a,
+        target: total,
+        jumps,
+        summary: isEn
+          ? ('Start at ' + a + ' ➔ Big jumps ' + jumps.map(j => j.amount).join(' ') + ' ➔ Land on ' + total + '!')
+          : ('Mulai dari ' + a + ' ➔ Lompat besar ' + jumps.map(j => j.amount).join(' ') + ' ➔ Tiba di ' + total + '!')
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 6: Base-Ten Blocks (Balok Puluhan & Satuan + Regrouping)
+    // -------------------------------------------------------------
+    static getBaseTenSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const flatsA = Math.floor(a / 100);
+      const rodsA = Math.floor((a % 100) / 10);
+      const cubesA = a % 10;
+  
+      const flatsB = Math.floor(b / 100);
+      const rodsB = Math.floor((b % 100) / 10);
+      const cubesB = b % 10;
+  
+      const rawCubes = cubesA + cubesB;
+      const newRodsFromCubes = Math.floor(rawCubes / 10);
+      const remainingCubes = rawCubes % 10;
+  
+      const rawRods = rodsA + rodsB + newRodsFromCubes;
+      const newFlatsFromRods = Math.floor(rawRods / 10);
+      const remainingRods = rawRods % 10;
+  
+      const totalFlats = flatsA + flatsB + newFlatsFromRods;
+      const total = totalFlats * 100 + remainingRods * 10 + remainingCubes;
+  
+      return {
+        id: 'base-ten',
+        title: isEn ? 'Base-Ten Blocks' : 'Balok Nilai Tempat',
+        badge: isEn ? 'Physical Regrouping' : 'Regrouping Nyata',
+        flatsA, rodsA, cubesA,
+        flatsB, rodsB, cubesB,
+        rawCubes,
+        newRodsFromCubes,
+        remainingCubes,
+        rawRods,
+        newFlatsFromRods,
+        remainingRods,
+        totalFlats,
+        total,
+        regroupMessage: newRodsFromCubes > 0
+          ? (isEn
+              ? ('10 of ' + rawCubes + ' unit cubes merge into 1 new ten-rod! Leaving ' + remainingCubes + ' cubes.')
+              : ('10 dari ' + rawCubes + ' kubus satuan bergabung jadi 1 batang puluhan baru! Sisa ' + remainingCubes + ' kubus.'))
+          : (isEn ? 'Ones do not exceed 10, no regrouping needed.' : 'Satuan tidak melebihi 10, tidak perlu pengelompokan ulang.'),
+        explanation: isEn
+          ? ('Total: ' + (totalFlats > 0 ? (totalFlats + ' hundreds (' + (totalFlats * 100) + ') + ') : '') + remainingRods + ' tens (' + (remainingRods * 10) + ') + ' + remainingCubes + ' ones = ' + total + '!')
+          : ('Total: ' + (totalFlats > 0 ? (totalFlats + ' ratusan (' + (totalFlats * 100) + ') + ') : '') + remainingRods + ' puluhan (' + (remainingRods * 10) + ') + ' + remainingCubes + ' satuan = ' + total + '!')
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 7: Bar / Tape Model (Model Batang Bagian & Keseluruhan)
+    // -------------------------------------------------------------
+    static getBarModelSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const total = a + b;
+      const percentA = Math.max(15, Math.min(85, Math.round((a / total) * 100)));
+      const percentB = 100 - percentA;
+  
+      return {
+        id: 'bar-model',
+        title: 'Bar / Tape Model',
+        badge: isEn ? 'Part-Whole Relation' : 'Relasi Bagian & Total',
+        partA: { value: a, percent: percentA, label: (isEn ? 'Part 1: ' : 'Bagian 1: ') + a, color: '#3498db' },
+        partB: { value: b, percent: percentB, label: (isEn ? 'Part 2: ' : 'Bagian 2: ') + b, color: '#e67e22' },
+        whole: { value: total, label: (isEn ? 'Total Whole = ' : 'Total Keseluruhan = ') + total },
+        equation: a + ' + ' + b + ' = ' + total,
+        concept: isEn ? 'Two part bars combine into one full-length bar.' : 'Dua batang bagian digabungkan membentuk satu batang utuh yang panjang.'
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 8: Mental Math / Split and Recombine (Angka Ramah)
+    // -------------------------------------------------------------
+    static getMentalMathSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const tensB = Math.floor(b / 10) * 10;
+      const unitsB = b % 10;
+      const step1 = a + tensB;
+      const total = step1 + unitsB;
+  
+      return {
+        id: 'mental-math',
+        title: isEn ? 'Mental Math (Friendly Numbers)' : 'Mental Math (Angka Ramah)',
+        badge: isEn ? 'Nimble in Mind' : 'Lincah di Kepala',
+        step1Text: isEn ? ('Add tens first: ' + a + ' + ' + tensB + ' = ' + step1) : ('Tambahkan puluhannya dulu: ' + a + ' + ' + tensB + ' = ' + step1),
+        step2Text: isEn ? ('Then add ones: ' + step1 + ' + ' + unitsB + ' = ' + total) : ('Lalu tambahkan satuannya: ' + step1 + ' + ' + unitsB + ' = ' + total),
+        total,
+        thoughtBubble: a + ' ... (+ ' + tensB + ') ➔ ' + step1 + ' ... (+ ' + unitsB + ') ➔ ' + total + '! 🚀'
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 9: Soroban / Japanese Abacus Visual
+    // -------------------------------------------------------------
+    static getSorobanSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const total = a + b;
+  
+      const encodeSoroban = (num) => {
+        const h = Math.floor(num / 100);
+        const t = Math.floor((num % 100) / 10);
+        const u = num % 10;
+  
+        const getCol = (val) => ({
+          val,
+          upperActive: val >= 5, // 1 upper bead worth 5
+          lowerCount: val % 5    // 0-4 lower beads worth 1 each
+        });
+  
+        return {
+          hundreds: getCol(h),
+          tens: getCol(t),
+          units: getCol(u)
+        };
+      };
+  
+      return {
+        id: 'soroban',
+        title: isEn ? 'Soroban (Japanese Abacus)' : 'Soroban (Sempoa Jepang)',
+        badge: isEn ? 'Visual Beads 5 & 1' : 'Manik Visual 5 & 1',
+        abacusA: encodeSoroban(a),
+        abacusB: encodeSoroban(b),
+        abacusTotal: encodeSoroban(total),
+        total,
+        principle: isEn ? 'Upper bead (heaven) equals 5. Lower beads (earth) equal 1 each.' : 'Manik atas (surga) bernilai 5. Manik bawah (bumi) masing-masing bernilai 1.'
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // SMART STRATEGY RECOMMENDATION
+    // -------------------------------------------------------------
+    static recommendStrategies(a, b) {
+      const recs = [];
+      const modA = a % 10;
+      const modB = b % 10;
+  
+      if (a + b === 100 || (a + b) % 100 === 0) {
+        recs.push('make-hundred');
+        recs.push('decomposition');
+      }
+  
+      if (modA === 9 || modB === 9 || modA === 8 || modB === 8) {
+        if (!recs.includes('compensation')) recs.push('compensation');
+      }
+  
+      if (!recs.includes('decomposition')) recs.push('decomposition');
+      if (!recs.includes('number-line')) recs.push('number-line');
+  
+      return recs;
+    }
+  
+    // -------------------------------------------------------------
+    // 3-LEVEL PROGRESSIVE HINT GENERATOR
+    // -------------------------------------------------------------
+    static getHints(a, b, strategyId = 'decomposition') {
+      const total = a + b;
+  
+      switch (strategyId) {
+        case 'compensation':
+          return [
+            '💡 Petunjuk 1 (Amati): Coba perhatikan angka ' + b + '. Apakah ada angka bulat yang sangat dekat dengannya?',
+            '💡 Petunjuk 2 (Arahkan): ' + b + ' sangat dekat dengan ' + (Math.ceil(b / 10) * 10) + '! Coba jumlahkan ' + a + ' + ' + (Math.ceil(b / 10) * 10) + ' dulu.',
+            '💡 Petunjuk 3 (Jawaban Dekat): ' + a + ' + ' + (Math.ceil(b / 10) * 10) + ' = ' + (a + Math.ceil(b / 10) * 10) + '. Tadi kita melebihkan ' + (Math.ceil(b / 10) * 10 - b) + ', sekarang kurangi: hasilnya adalah ' + total + '!'
+          ];
+  
+        case 'make-hundred':
+          const target = a < 100 ? 100 : 200;
+          const need = target - a;
+          return [
+            '💡 Petunjuk 1 (Amati): Berapa yang dibutuhkan oleh ' + a + ' agar menjadi ' + target + '?',
+            '💡 Petunjuk 2 (Arahkan): ' + a + ' butuh ' + need + '. Coba ambil ' + need + ' dari ' + b + ', sisanya berapa?',
+            '💡 Petunjuk 3 (Jawaban Dekat): Gabungkan ' + target + ' dengan sisa ' + (b - need) + ', hasilnya adalah ' + total + '!'
+          ];
+  
+        case 'number-line':
+          const tens = Math.floor(b / 10) * 10;
+          return [
+            '💡 Petunjuk 1 (Amati): Daripada melompat satu per satu, lompat puluhan besar dulu dari ' + a + '.',
+            '💡 Petunjuk 2 (Arahkan): Lompat +' + tens + ' dari ' + a + ' mendarat di ' + (a + tens) + '. Sekarang tinggal melompat sisa satuannya!',
+            '💡 Petunjuk 3 (Jawaban Dekat): Dari ' + (a + tens) + ', lompat +' + (b % 10) + ' mendarat tepat di ' + total + '!'
+          ];
+  
+        case 'decomposition':
+        default:
+          const tA = Math.floor(a / 10) * 10;
+          const tB = Math.floor(b / 10) * 10;
+          const uA = a % 10;
+          const uB = b % 10;
+          return [
+            '💡 Petunjuk 1 (Amati): Pisahkan puluhannya (' + tA + ' + ' + tB + ') dan satuannya (' + uA + ' + ' + uB + ').',
+            '💡 Petunjuk 2 (Arahkan): Puluhannya bernilai ' + (tA + tB) + ', dan satuannya bernilai ' + (uA + uB) + '.',
+            '💡 Petunjuk 3 (Jawaban Dekat): Jumlahkan ' + (tA + tB) + ' + ' + (uA + uB) + ' = ' + total + '!'
+          ];
+      }
+    }
+  
+    // -------------------------------------------------------------
+    // REUSABLE PROBLEM GENERATOR
+    // -------------------------------------------------------------
+    static generateAdditionProblem(options = {}) {
+      const level = options.level || 2;
+      let a, b;
+  
+      switch (level) {
+        case 1:
+          a = Math.floor(Math.random() * 40) + 11;
+          b = Math.floor(Math.random() * (9 - (a % 10))) + 10;
+          break;
+  
+        case 2:
+          const candidates = [
+            [67, 59], [58, 29], [46, 37], [78, 45], [59, 38], [87, 26]
+          ];
+          const pick = candidates[Math.floor(Math.random() * candidates.length)];
+          a = pick[0];
+          b = pick[1];
+          break;
+  
+        case 3:
+          const friends = [
+            [68, 32], [49, 51], [75, 25], [63, 37], [82, 18], [55, 45]
+          ];
+          const fPick = friends[Math.floor(Math.random() * friends.length)];
+          a = fPick[0];
+          b = fPick[1];
+          break;
+  
+        case 4:
+          const large = [
+            [125, 75], [135, 65], [148, 52], [115, 85], [150, 75]
+          ];
+          const lPick = large[Math.floor(Math.random() * large.length)];
+          a = lPick[0];
+          b = lPick[1];
+          break;
+  
+        default:
+          a = 67;
+          b = 59;
+      }
+  
+      const sol = this.solve(a, b);
+      return {
+        a,
+        b,
+        answer: a + b,
+        level,
+        solution: sol,
+        hints: this.getHints(a, b, sol.recommended[0])
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // PROGRESS STORE (LOCAL STORAGE PERSISTENCE)
+    // -------------------------------------------------------------
+    static getProgress() {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          const raw = localStorage.getItem('smartstudy_math_toolbox_progress');
+          if (raw) return JSON.parse(raw);
+        }
+      } catch (e) {
+        // Ignore
+      }
+      return {
+        problemsSolved: 0,
+        strategiesExplored: [],
+        badges: [],
+        recentHistory: []
+      };
+    }
+  
+    static recordStrategyExplored(strategyId) {
+      try {
+        const prog = this.getProgress();
+        if (!prog.strategiesExplored.includes(strategyId)) {
+          prog.strategiesExplored.push(strategyId);
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('smartstudy_math_toolbox_progress', JSON.stringify(prog));
+          }
+        }
+        return prog;
+      } catch (e) {
+        return null;
+      }
+    }
+  
+    static recordProblemSolved(a, b, strategyUsed) {
+      try {
+        const prog = this.getProgress();
+        prog.problemsSolved += 1;
+        prog.recentHistory.unshift({
+          problem: a + ' + ' + b + ' = ' + (a + b),
+          strategy: strategyUsed,
+          time: new Date().toISOString()
+        });
+        if (prog.recentHistory.length > 20) prog.recentHistory.pop();
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('smartstudy_math_toolbox_progress', JSON.stringify(prog));
+        }
+        return prog;
+      } catch (e) {
+        return null;
+      }
+    }
+  }
+  
+
+  // --- Source: js/engine/geo-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Geography Engine & 3D Desktop Globe
+  // Development · Anabhi Dev
+  // Version   : 1.2
+  // Generated : 10 September 2026, 21:30:00
+  // ================================================================
+  
+  
+  
+  
+  class GeoEngine {
+    // Ambil semua negara di dunia
+    static getAllCountries() {
+      return GEO_DATA.countries || [];
+    }
+  
+    // Filter negara berdasarkan benua
+    static getCountriesByContinent(continent) {
+      const list = GEO_DATA.countries || [];
+      if (!continent || continent === 'Semua' || continent === 'All') return list;
+      return list.filter(c => c.continent.toLowerCase() === continent.toLowerCase());
+    }
+  
+    // Cari negara berdasarkan nama (ID & EN), ibukota, benua, mata uang, atau landmark
+    static searchCountries(query) {
+      const list = GEO_DATA.countries || [];
+      if (!query) return list;
+      const q = query.trim().toLowerCase();
+      return list.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.nameEn.toLowerCase().includes(q) ||
+        c.capital.toLowerCase().includes(q) ||
+        c.continent.toLowerCase().includes(q) ||
+        c.currency.toLowerCase().includes(q) ||
+        c.landmark.toLowerCase().includes(q)
+      );
+    }
+  
+    // Ambil negara berdasarkan id
+    static getCountryById(id) {
+      return (GEO_DATA.countries || []).find(c => c.id === id);
+    }
+  
+    // Ambil semua provinsi
+    static getAllProvinces() {
+      return GEO_DATA.provinces || [];
+    }
+  
+    // Filter provinsi berdasarkan pulau
+    static getProvincesByIsland(islandName) {
+      if (!islandName || islandName === 'Semua') return GEO_DATA.provinces;
+      return GEO_DATA.provinces.filter(p => p.island.toLowerCase().includes(islandName.toLowerCase()));
+    }
+  
+    // Cari provinsi atau ibu kota
+    static searchProvinces(query) {
+      if (!query) return GEO_DATA.provinces;
+      const q = query.trim().toLowerCase();
+      return GEO_DATA.provinces.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.capital.toLowerCase().includes(q) ||
+        p.island.toLowerCase().includes(q)
+      );
+    }
+  
+    // Ambil data kota non-ibu kota terkenal (termasuk Malang -> Jatim)
+    static getNonCapitalCities(query = '') {
+      const list = GEO_DATA.famousNonCapitalCities || [];
+      if (!query) return list;
+      const q = query.trim().toLowerCase();
+      return list.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.province.toLowerCase().includes(q) ||
+        c.island.toLowerCase().includes(q)
+      );
+    }
+  
+    // Ambil data modul Bali (8 Kabupaten + 1 Kota)
+    static getBaliRegions() {
+      return (GEO_DATA.baliModule && GEO_DATA.baliModule.regions) || [];
+    }
+  
+    // Ambil data kuis geografi
+    static getQuizzes() {
+      return GEO_DATA.quizzes || [];
+    }
+  }
+  
+  /**
+   * 3D Desktop Globe Visualizer (Classic Schoolroom Desk Globe Stand & Political Map)
+   * Menampilkan bola bumi politik 3D berwarna-warni sesuai referensi foto globe meja fisik:
+   * - Peta politik dunia: negara-negara penuh warna pastel cerah, batas tegas, nama negara & samudra jelas.
+   * - Kerangka dudukan meja mewah: Busur meridian logam berskala derajat (0°-90°), poros miring 23.5°,
+   *   tiang vertikal krom, dan kaki penyangga bundar berkilau dengan bayangan realistis.
+   * - Rotasi 3D halus 60fps dengan kontrol sentuh/geser, tombol putar, zoom, dan fokus instan.
+   */
+  class GlobeVisualizer {
+    constructor(canvasElement, overlayElement = null) {
+      this.canvas = canvasElement;
+      this.overlayCanvas = overlayElement;
+      this.ctx = null;
+      this.overlayCtx = null;
+      this.gl = null;
+      this.useWebGL = false;
+  
+      // Parameter Rotasi & Posisi Bola
+      this.rotation = 118;   // Derajat bujur — default menghadap ke Indonesia (118° BT)
+      this.tilt = 6;         // Derajat lintang pandangan kamera
+      this.axialTilt = 23.5; // Kemiringan sumbu bumi asli 23.5 derajat
+      this.zoom = 1.0;       // Rentang zoom 0.8x s/d 2.0x
+      this.isRotating = true;
+      this.animId = null;
+  
+      // Target Animasi Halus (Lerp ke koordinat tujuan)
+      this.targetRotation = null;
+      this.targetTilt = null;
+      this.focusedLocation = { lon: 118, lat: -2, name: 'INDONESIA 🇮🇩' };
+  
+      // Status Pointer (Mouse / Touch Tablet)
+      this.pointerDown = false;
+      this.lastX = 0;
+      this.lastY = 0;
+      this.pulseAngle = 0;
+  
+      // Aset Tekstur Peta Politik Dunia
+      this.textureLoaded = false;
+      this.offscreenCanvas = null;
+      this.earthImage = null;
+  
+      this.initRenderer();
+      this.initEvents();
+    }
+  
+    initRenderer() {
+      if (!this.canvas) return;
+  
+      if (this.overlayCanvas && typeof this.overlayCanvas.getContext === 'function') {
+        this.overlayCtx = this.overlayCanvas.getContext('2d');
+      }
+  
+      // Siapkan offscreen canvas 2048x1024 untuk tekstur
+      this.offscreenCanvas = document.createElement('canvas');
+      this.offscreenCanvas.width = 2048;
+      this.offscreenCanvas.height = 1024;
+      this.drawProceduralPoliticalTexture(this.offscreenCanvas);
+      this.textureLoaded = true;
+  
+      // Coba inisialisasi WebGL
+      try {
+        this.gl = this.canvas.getContext('webgl', { antialias: true, alpha: true, premultipliedAlpha: false }) ||
+                  this.canvas.getContext('experimental-webgl');
+      } catch (e) {
+        this.gl = null;
+      }
+  
+      if (this.gl) {
+        this.initWebGL();
+      } else if (typeof this.canvas.getContext === 'function') {
+        this.ctx = this.canvas.getContext('2d');
+      }
+  
+      // Muat peta politik SVG beresolusi tinggi bila lingkungan mengizinkan
+      this.loadPoliticalMapSvg();
+    }
+  
+    // Menghasilkan tekstur peta dunia politik lengkap (177 negara + samudra + garis lintang bujur + pin Indonesia)
+    drawProceduralPoliticalTexture(canvas) {
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+  
+      // 1. Latar Samudra Biru Cerah Meja Sekolah (sesuai referensi fisik)
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, H);
+      oceanGrad.addColorStop(0, '#1a78b5');
+      oceanGrad.addColorStop(0.35, '#2192cf');
+      oceanGrad.addColorStop(0.5, '#28a9e0');
+      oceanGrad.addColorStop(0.65, '#2192cf');
+      oceanGrad.addColorStop(1, '#1a78b5');
+      ctx.fillStyle = oceanGrad;
+      ctx.fillRect(0, 0, W, H);
+  
+      // 2. Garis Lintang & Bujur (Graticules Halus)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.lineWidth = 1;
+      for (let lat = -75; lat <= 75; lat += 15) {
+        const y = ((90 - lat) / 180) * H;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+      for (let lon = -180; lon <= 180; lon += 30) {
+        const x = ((lon + 180) / 360) * W;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+  
+      // 3. Garis Khatulistiwa (Ekuator) Emas Tegas
+      const eqY = H / 2;
+      ctx.strokeStyle = '#f5cd79';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([10, 6]);
+      ctx.beginPath();
+      ctx.moveTo(0, eqY);
+      ctx.lineTo(W, eqY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+  
+      // 4. Render Semua 177 Negara Dunia secara Vektor Instan (Path2D)
+      if (typeof Path2D !== 'undefined' && Array.isArray(GLOBE_COUNTRIES)) {
+        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineJoin = 'round';
+        for (let i = 0; i < GLOBE_COUNTRIES.length; i++) {
+          const country = GLOBE_COUNTRIES[i];
+          try {
+            const path = new Path2D(country.d);
+            ctx.fillStyle = country.fill || '#55efc4';
+            ctx.fill(path);
+            ctx.stroke(path);
+          } catch (e) {}
+        }
+      }
+  
+      // 5. Highlight Khusus Wilayah Indonesia (Zamrud Cerah & Batas Putih Tegas)
+      const indo = (GLOBE_COUNTRIES || []).find(c => c.name === 'Indonesia');
+      if (indo && typeof Path2D !== 'undefined') {
+        try {
+          const indoPath = new Path2D(indo.d);
+          ctx.save();
+          ctx.fillStyle = '#10ac84';
+          ctx.fill(indoPath);
+          ctx.lineWidth = 2.2;
+          ctx.strokeStyle = '#ffffff';
+          ctx.stroke(indoPath);
+          ctx.restore();
+        } catch (e) {}
+      }
+  
+      // 6. Label Khatulistiwa & Samudra Dunia
+      ctx.font = 'bold 15px Arial, sans-serif';
+      ctx.fillStyle = '#fed330';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('EQUATOR / KHATULISTIWA (0°)', 500, eqY - 8);
+      ctx.fillText('EQUATOR / KHATULISTIWA (0°)', 1500, eqY - 8);
+  
+      // 7. Label Teks Negara & Samudra (Teks Bergaris Tepi Gelap agar Kontras Tinggi)
+      if (Array.isArray(GLOBE_LABELS)) {
+        for (let i = 0; i < GLOBE_LABELS.length; i++) {
+          const lbl = GLOBE_LABELS[i];
+          if (!lbl || lbl.text.includes('EQUATOR')) continue;
+  
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+  
+          if (lbl.text.includes('OCEAN')) {
+            // Label Samudra
+            ctx.font = `italic bold ${lbl.size || 22}px Arial, sans-serif`;
+            ctx.fillStyle = lbl.fill || 'rgba(255,255,255,0.75)';
+            ctx.strokeStyle = 'rgba(10, 50, 90, 0.75)';
+            ctx.lineWidth = 3.5;
+            ctx.strokeText(lbl.text, lbl.x, lbl.y);
+            ctx.fillText(lbl.text, lbl.x, lbl.y);
+          } else if (lbl.text.includes('INDONESIA')) {
+            // Pin Marker & Badge Indonesia
+            ctx.beginPath();
+            ctx.arc(1715.7, 523.6, 7, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff4757';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#ffffff';
+            ctx.stroke();
+  
+            // Kotak Badge
+            ctx.fillStyle = 'rgba(15, 32, 67, 0.92)';
+            ctx.strokeStyle = '#55efc4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+              ctx.roundRect(lbl.x - 72, lbl.y - 12, 144, 24, 12);
+            } else {
+              ctx.rect(lbl.x - 72, lbl.y - 12, 144, 24);
+            }
+            ctx.fill();
+            ctx.stroke();
+  
+            ctx.fillStyle = '#55efc4';
+            ctx.font = 'bold 13px Arial, sans-serif';
+            ctx.fillText('INDONESIA 🇮🇩', lbl.x, lbl.y);
+          } else {
+            // Nama Negara Terkemuka
+            ctx.font = `bold ${lbl.size || 13}px Arial, sans-serif`;
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 3;
+            ctx.strokeText(lbl.text, lbl.x, lbl.y);
+            ctx.fillText(lbl.text, lbl.x, lbl.y);
+          }
+          ctx.restore();
+        }
+      }
+    }
+  
+    loadPoliticalMapSvg() {
+      try {
+        this.earthImage = new Image();
+        this.earthImage.onload = () => {
+          try {
+            if (this.offscreenCanvas) {
+              const octx = this.offscreenCanvas.getContext('2d');
+              octx.drawImage(this.earthImage, 0, 0, 2048, 1024);
+            }
+            if (this.gl && this.earthTexture) {
+              const gl = this.gl;
+              gl.bindTexture(gl.TEXTURE_2D, this.earthTexture);
+              gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.offscreenCanvas);
+              gl.generateMipmap(gl.TEXTURE_2D);
+            }
+            this.textureLoaded = true;
+            this.draw();
+          } catch (e) {
+            // Tekstur vektor canvas sudah aktif dan sempurna
+          }
+        };
+        this.earthImage.onerror = () => {
+          // Tekstur vektor canvas sudah aktif dan sempurna
+        };
+        this.earthImage.src = 'assets/img/earth_political.svg';
+      } catch (e) {}
+    }
+  
+    initWebGL() {
+      const gl = this.gl;
+      this.useWebGL = true;
+  
+      // Vertex Shader
+      const vsSource = `
+        attribute vec3 aPos;
+        attribute vec2 aUV;
+        uniform mat4 uMVP;
+        varying vec2 vUV;
+        varying vec3 vNorm;
+        void main() {
+          vUV = aUV;
+          vNorm = aPos;
+          gl_Position = uMVP * vec4(aPos, 1.0);
+        }
+      `;
+  
+      // Fragment Shader: Pencahayaan terang alami globe meja kelas (warna negara cerah & specular halus)
+      const fsSource = `
+        precision mediump float;
+        uniform sampler2D uSampler;
+        uniform vec3 uSunDir;
+        varying vec2 vUV;
+        varying vec3 vNorm;
+        void main() {
+          vec4 tex = texture2D(uSampler, vUV);
+          vec3 n = normalize(vNorm);
+          float diff = max(dot(n, uSunDir), 0.0);
+          float light = 0.72 + 0.28 * diff; // Latar terang agar warna negara pastel tetap jelas
+          
+          // Pantulan kilap halus (gloss finish globe)
+          vec3 halfDir = normalize(uSunDir + vec3(0.0, 0.0, 1.0));
+          float spec = pow(max(dot(n, halfDir), 0.0), 32.0) * 0.25;
+          
+          gl_FragColor = vec4(tex.rgb * light + vec3(spec), 1.0);
+        }
+      `;
+  
+      const program = this.createShaderProgram(gl, vsSource, fsSource);
+      if (!program) {
+        this.useWebGL = false;
+        this.ctx = this.canvas.getContext('2d');
+        this.textureLoaded = true;
+        return;
+      }
+  
+      this.program = program;
+      this.attribs = {
+        pos: gl.getAttribLocation(program, 'aPos'),
+        uv: gl.getAttribLocation(program, 'aUV')
+      };
+      this.uniforms = {
+        mvp: gl.getUniformLocation(program, 'uMVP'),
+        sampler: gl.getUniformLocation(program, 'uSampler'),
+        sunDir: gl.getUniformLocation(program, 'uSunDir')
+      };
+  
+      // Geometri Bola Sferis UV
+      this.createSphereMesh(gl, 1.0, 48, 48);
+  
+      // Buat Tekstur WebGL dari Offscreen Canvas
+      this.earthTexture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, this.earthTexture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.offscreenCanvas);
+      try {
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      } catch (e) {
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      }
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  
+      gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
+      gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    }
+  
+    createShaderProgram(gl, vs, fs) {
+      const vShader = gl.createShader(gl.VERTEX_SHADER);
+      gl.shaderSource(vShader, vs);
+      gl.compileShader(vShader);
+      if (!gl.getShaderParameter(vShader, gl.COMPILE_STATUS)) {
+        console.warn('[WebGL] Vertex shader error:', gl.getShaderInfoLog(vShader));
+        return null;
+      }
+  
+      const fShader = gl.createShader(gl.FRAGMENT_SHADER);
+      gl.shaderSource(fShader, fs);
+      gl.compileShader(fShader);
+      if (!gl.getShaderParameter(fShader, gl.COMPILE_STATUS)) {
+        console.warn('[WebGL] Fragment shader error:', gl.getShaderInfoLog(fShader));
+        return null;
+      }
+  
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vShader);
+      gl.attachShader(prog, fShader);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        console.warn('[WebGL] Link error:', gl.getProgramInfoLog(prog));
+        return null;
+      }
+      return prog;
+    }
+  
+    createSphereMesh(gl, radius, latBands, lonBands) {
+      const positions = [];
+      const uvs = [];
+      const indices = [];
+  
+      for (let lat = 0; lat <= latBands; lat++) {
+        const theta = (lat * Math.PI) / latBands;
+        const sinTheta = Math.sin(theta);
+        const cosTheta = Math.cos(theta);
+  
+        for (let lon = 0; lon <= lonBands; lon++) {
+          const phi = (lon * 2 * Math.PI) / lonBands;
+          const sinPhi = Math.sin(phi);
+          const cosPhi = Math.cos(phi);
+  
+          const x = cosPhi * sinTheta;
+          const y = cosTheta;
+          const z = sinPhi * sinTheta;
+          const u = 1 - (lon / lonBands);
+          const v = lat / latBands;
+  
+          positions.push(radius * x, radius * y, radius * z);
+          uvs.push(u, v);
+        }
+      }
+  
+      for (let lat = 0; lat < latBands; lat++) {
+        for (let lon = 0; lon < lonBands; lon++) {
+          const first = lat * (lonBands + 1) + lon;
+          const second = first + lonBands + 1;
+          indices.push(first, second, first + 1);
+          indices.push(second, second + 1, first + 1);
+        }
+      }
+  
+      this.posBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.posBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+  
+      this.uvBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.uvBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uvs), gl.STATIC_DRAW);
+  
+      this.indexBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+  
+      this.indexCount = indices.length;
+    }
+  
+    initEvents() {
+      const target = this.canvas;
+      if (!target) return;
+  
+      target.addEventListener('pointerdown', (e) => {
+        this.pointerDown = true;
+        this.lastX = e.clientX;
+        this.lastY = e.clientY;
+        this.isRotating = false;
+        this.targetRotation = null;
+        this.targetTilt = null;
+        if (typeof target.setPointerCapture === 'function') {
+          target.setPointerCapture(e.pointerId);
+        }
+      });
+  
+      window.addEventListener('pointermove', (e) => {
+        if (!this.pointerDown) return;
+        const dx = e.clientX - this.lastX;
+        const dy = e.clientY - this.lastY;
+        this.rotation += dx * 0.45;
+        this.tilt = Math.max(-45, Math.min(45, this.tilt - dy * 0.35));
+        this.lastX = e.clientX;
+        this.lastY = e.clientY;
+        this.draw();
+      });
+  
+      window.addEventListener('pointerup', () => {
+        if (this.pointerDown) {
+          this.pointerDown = false;
+        }
+      });
+  
+      target.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        this.zoomBy(delta);
+      }, { passive: false });
+    }
+  
+    startLoop() {
+      const render = () => {
+        if (this.isRotating) {
+          this.rotation += 0.25;
+        }
+  
+        // Animasi pergerakan halus (Lerp)
+        if (this.targetRotation !== null) {
+          const diffR = this.targetRotation - this.rotation;
+          this.rotation += diffR * 0.1;
+          if (Math.abs(diffR) < 0.2) {
+            this.rotation = this.targetRotation;
+            this.targetRotation = null;
+          }
+        }
+        if (this.targetTilt !== null) {
+          const diffT = this.targetTilt - this.tilt;
+          this.tilt += diffT * 0.1;
+          if (Math.abs(diffT) < 0.2) {
+            this.tilt = this.targetTilt;
+            this.targetTilt = null;
+          }
+        }
+  
+        this.pulseAngle = (this.pulseAngle + 0.05) % (Math.PI * 2);
+  
+        this.draw();
+        this.animId = requestAnimationFrame(render);
+      };
+      render();
+    }
+  
+    stopLoop() {
+      if (this.animId) {
+        cancelAnimationFrame(this.animId);
+        this.animId = null;
+      }
+    }
+  
+    toggleAutoRotate() {
+      this.isRotating = !this.isRotating;
+      this.targetRotation = null;
+      return this.isRotating;
+    }
+  
+    rotateBy(deltaDeg) {
+      this.rotation += deltaDeg;
+      this.targetRotation = null;
+      this.draw();
+    }
+  
+    zoomBy(delta) {
+      this.zoom = Math.max(0.85, Math.min(1.85, this.zoom + delta));
+      this.draw();
+    }
+  
+    focusCoordinates(lon, lat, name = null) {
+      this.isRotating = false;
+      const normCurrent = ((this.rotation % 360) + 360) % 360;
+      const target = lon;
+      let diff = target - normCurrent;
+      if (diff > 180) diff -= 360;
+      if (diff < -180) diff += 360;
+  
+      this.targetRotation = this.rotation + diff;
+      this.targetTilt = Math.max(-30, Math.min(30, lat));
+      this.zoom = Math.max(1.1, this.zoom);
+      if (name) {
+        this.focusedLocation = { lon, lat, name };
+      }
+    }
+  
+    focusIndonesia() {
+      this.focusCoordinates(118, -2, 'INDONESIA 🇮🇩');
+    }
+  
+    draw() {
+      if (this.useWebGL && this.gl) {
+        this.drawWebGL();
+      } else {
+        this.draw2D();
+      }
+      this.drawOverlay();
+    }
+  
+    drawWebGL() {
+      const gl = this.gl;
+      const canvas = this.canvas;
+      const w = canvas.width;
+      const h = canvas.height;
+  
+      gl.viewport(0, 0, w, h);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  
+      gl.useProgram(this.program);
+  
+      // Matriks Proyeksi Perspektif
+      const fov = 45 * Math.PI / 180;
+      const aspect = w / h;
+      const pMat = this.createPerspectiveMatrix(fov, aspect, 0.1, 100.0);
+  
+      // Jarak kamera disesuaikan dengan posisi globe meja (presisi di tengah meridian ring 335, 280)
+      const dist = 4.83 / this.zoom;
+      let mvMat = this.createIdentityMatrix();
+      mvMat = this.mat4Translate(mvMat, 0.094, 0.25, -dist);
+      // Kemiringan pandangan pengguna (pitch)
+      mvMat = this.mat4RotateX(mvMat, this.tilt * Math.PI / 180);
+      // Kemiringan sumbu bumi asli 23.5° (tilted ke kanan seperti foto referensi)
+      mvMat = this.mat4RotateZ(mvMat, -this.axialTilt * Math.PI / 180);
+      // Rotasi bola bumi pada porosnya (yaw)
+      mvMat = this.mat4RotateY(mvMat, this.rotation * Math.PI / 180);
+  
+      const mvpMat = this.mat4Multiply(pMat, mvMat);
+      gl.uniformMatrix4fv(this.uniforms.mvp, false, new Float32Array(mvpMat));
+  
+      // Arah cahaya dari kanan-atas depan
+      gl.uniform3f(this.uniforms.sunDir, 0.75, 0.45, 1.25);
+  
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.earthTexture);
+      gl.uniform1i(this.uniforms.sampler, 0);
+  
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.posBuffer);
+      gl.enableVertexAttribArray(this.attribs.pos);
+      gl.vertexAttribPointer(this.attribs.pos, 3, gl.FLOAT, false, 0, 0);
+  
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.uvBuffer);
+      gl.enableVertexAttribArray(this.attribs.uv);
+      gl.vertexAttribPointer(this.attribs.uv, 2, gl.FLOAT, false, 0, 0);
+  
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+      gl.drawElements(gl.TRIANGLES, this.indexCount, gl.UNSIGNED_SHORT, 0);
+    }
+  
+    draw2D() {
+      const canvas = this.canvas;
+      if (!canvas || !this.ctx) return;
+      const ctx = this.ctx;
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2 + 15;
+      const cy = h / 2 - 40;
+      const r = 160 * this.zoom;
+  
+      ctx.clearRect(0, 0, w, h);
+  
+      // Bola Samudra
+      const ocean = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.1, cx, cy, r);
+      ocean.addColorStop(0, '#28a9e0');
+      ocean.addColorStop(0.7, '#2192cf');
+      ocean.addColorStop(1, '#156596');
+  
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = ocean;
+      ctx.fill();
+      ctx.clip();
+  
+      // Gambar tekstur jika siap
+      if (this.offscreenCanvas) {
+        const rotNorm = ((this.rotation % 360) + 360) % 360;
+        const sx = (rotNorm / 360) * this.offscreenCanvas.width;
+        const sw = this.offscreenCanvas.width * 0.5;
+        ctx.drawImage(this.offscreenCanvas, sx % this.offscreenCanvas.width, 0, sw, this.offscreenCanvas.height, cx - r, cy - r, r * 2, r * 2);
+      }
+  
+      // Shading 3D
+      const shade = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.15, cx, cy, r);
+      shade.addColorStop(0, 'rgba(255, 255, 255, 0.28)');
+      shade.addColorStop(0.65, 'rgba(0, 0, 0, 0)');
+      shade.addColorStop(1, 'rgba(10, 35, 60, 0.6)');
+      ctx.fillStyle = shade;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+  
+      ctx.restore();
+    }
+  
+    /**
+     * Menggambar Kerangka Dudukan Globe Meja Klasik (Desk Stand) & Busur Meridian Berskala
+     * Persis seperti foto referensi meja sekolah fisik (images2):
+     * - Busur meridian perak krom di sisi kiri dengan angka derajat lintang 0° - 90°
+     * - Pin kutub atas & bawah pada kemiringan 23.5°
+     * - Tiang penyangga silinder krom vertikal
+     * - Piringan kaki penyangga bertingkat (tiered pedestal base) dengan kilau logam & bayangan meja
+     */
+    drawOverlay() {
+      const overlay = this.overlayCanvas;
+      if (!overlay || !this.overlayCtx) return;
+      const ctx = this.overlayCtx;
+      const w = overlay.width;
+      const h = overlay.height;
+  
+      ctx.clearRect(0, 0, w, h);
+  
+      // Koordinat pusat bola bumi pada panggung
+      const cx = w / 2 + 15;
+      const cy = h / 2 - 40;
+      const r = 160 * this.zoom;
+  
+      // Sudut kemiringan sumbu bumi asli 23.5°
+      const tiltAngle = this.axialTilt * Math.PI / 180;
+      const sinA = Math.sin(tiltAngle);
+      const cosA = Math.cos(tiltAngle);
+  
+      // Titik Kutub Utara & Kutub Selatan pada permukaan bola
+      const northX = cx + r * sinA;
+      const northY = cy - r * cosA;
+      const southX = cx - r * sinA;
+      const southY = cy + r * cosA;
+  
+      // Radius busur meridian logam (sedikit di luar bola)
+      const rArch = r + 24;
+      const archThick = 18;
+  
+      // -------------------------------------------------------------
+      // 1. Bayangan Dudukan Meja (Tabletop Shadow)
+      // -------------------------------------------------------------
+      const baseCenterX = cx;
+      const baseCenterY = 575;
+      const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 12, 20, baseCenterX, baseCenterY + 12, 170);
+      shadowGrad.addColorStop(0, 'rgba(3, 10, 20, 0.55)');
+      shadowGrad.addColorStop(0.5, 'rgba(5, 15, 30, 0.25)');
+      shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = shadowGrad;
+      ctx.beginPath();
+      ctx.ellipse(baseCenterX, baseCenterY + 12, 170, 24, 0, 0, Math.PI * 2);
+      ctx.fill();
+  
+      // -------------------------------------------------------------
+      // 2. Kaki Penyangga Bundar Bertingkat (Chrome Tiered Pedestal Base)
+      // -------------------------------------------------------------
+      // Piringan Bawah Terlebar
+      const baseW = 145;
+      const baseH = 22;
+      const baseGrad1 = ctx.createLinearGradient(baseCenterX - baseW, baseCenterY, baseCenterX + baseW, baseCenterY);
+      baseGrad1.addColorStop(0, '#475569');
+      baseGrad1.addColorStop(0.2, '#94a3b8');
+      baseGrad1.addColorStop(0.45, '#ffffff');
+      baseGrad1.addColorStop(0.7, '#cbd5e1');
+      baseGrad1.addColorStop(0.9, '#64748b');
+      baseGrad1.addColorStop(1, '#334155');
+  
+      ctx.fillStyle = baseGrad1;
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.ellipse(baseCenterX, baseCenterY, baseW, baseH, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+  
+      // Piringan Tingkat Kedua (Tengah)
+      const baseGrad2 = ctx.createLinearGradient(baseCenterX - baseW * 0.82, baseCenterY - 10, baseCenterX + baseW * 0.82, baseCenterY - 10);
+      baseGrad2.addColorStop(0, '#334155');
+      baseGrad2.addColorStop(0.25, '#cbd5e1');
+      baseGrad2.addColorStop(0.5, '#ffffff');
+      baseGrad2.addColorStop(0.75, '#94a3b8');
+      baseGrad2.addColorStop(1, '#475569');
+  
+      ctx.fillStyle = baseGrad2;
+      ctx.beginPath();
+      ctx.ellipse(baseCenterX, baseCenterY - 10, baseW * 0.82, baseH * 0.8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+  
+      // Kerucut Penopang (Conical Neck)
+      const neckGrad = ctx.createLinearGradient(baseCenterX - 50, baseCenterY - 30, baseCenterX + 50, baseCenterY - 30);
+      neckGrad.addColorStop(0, '#475569');
+      neckGrad.addColorStop(0.3, '#ffffff');
+      neckGrad.addColorStop(0.7, '#94a3b8');
+      neckGrad.addColorStop(1, '#334155');
+  
+      ctx.fillStyle = neckGrad;
+      ctx.beginPath();
+      ctx.moveTo(baseCenterX - 55, baseCenterY - 10);
+      ctx.lineTo(baseCenterX - 22, baseCenterY - 45);
+      ctx.lineTo(baseCenterX + 22, baseCenterY - 45);
+      ctx.lineTo(baseCenterX + 55, baseCenterY - 10);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+  
+      // Tiang Silinder Krom Vertikal (Vertical Spindle)
+      const stemGrad = ctx.createLinearGradient(baseCenterX - 14, 0, baseCenterX + 14, 0);
+      stemGrad.addColorStop(0, '#334155');
+      stemGrad.addColorStop(0.3, '#f8fafc');
+      stemGrad.addColorStop(0.7, '#cbd5e1');
+      stemGrad.addColorStop(1, '#475569');
+  
+      ctx.fillStyle = stemGrad;
+      ctx.beginPath();
+      ctx.rect(baseCenterX - 14, baseCenterY - 95, 28, 52);
+      ctx.fill();
+      ctx.stroke();
+  
+      // Cincin Sambungan Bawah (Lower Collar)
+      ctx.fillStyle = '#cbd5e1';
+      ctx.beginPath();
+      ctx.ellipse(baseCenterX, baseCenterY - 45, 26, 7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+  
+      // -------------------------------------------------------------
+      // 3. Lengan Sambungan ke Busur Meridian (Lower Arm Bracket)
+      // -------------------------------------------------------------
+      ctx.fillStyle = stemGrad;
+      ctx.beginPath();
+      ctx.moveTo(baseCenterX - 14, baseCenterY - 95);
+      ctx.quadraticCurveTo(baseCenterX - 25, baseCenterY - 105, southX - 18 * sinA, southY + 18 * cosA + 10);
+      ctx.lineTo(southX - 34 * sinA, southY + 34 * cosA + 15);
+      ctx.quadraticCurveTo(baseCenterX + 10, baseCenterY - 90, baseCenterX + 14, baseCenterY - 95);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+  
+      // -------------------------------------------------------------
+      // 4. Busur Meridian Logam Berskala (Calibrated Semi-Meridian Arch)
+      // -------------------------------------------------------------
+      // Busur membentang dari kutub utara ke kutub selatan di sisi kiri bola
+      const startAngle = -Math.PI / 2 + tiltAngle;
+      const endAngle = Math.PI / 2 + tiltAngle;
+  
+      ctx.save();
+      // Gradien Logam Krom Busur
+      const archGrad = ctx.createLinearGradient(cx - rArch, cy, cx, cy);
+      archGrad.addColorStop(0, '#94a3b8');
+      archGrad.addColorStop(0.35, '#ffffff');
+      archGrad.addColorStop(0.75, '#cbd5e1');
+      archGrad.addColorStop(1, '#64748b');
+  
+      // Badan Utama Busur (Tebal 18px)
+      ctx.strokeStyle = archGrad;
+      ctx.lineWidth = archThick;
+      ctx.lineCap = 'butt';
+      ctx.beginPath();
+      ctx.arc(cx, cy, rArch, startAngle, endAngle, false);
+      ctx.stroke();
+  
+      // Garis Batas Luar & Dalam (Bevel Rims)
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rArch - archThick / 2, startAngle, endAngle, false);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, rArch + archThick / 2, startAngle, endAngle, false);
+      ctx.stroke();
+  
+      // Garis Kilap Putih Spekular
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rArch - 2, startAngle + 0.1, endAngle - 0.1, false);
+      ctx.stroke();
+  
+      // Tanda Skala Derajat Lintang (0° hingga 90° Utara & Selatan)
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.2;
+      ctx.font = 'bold 8.5px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+  
+      for (let deg = -90; deg <= 90; deg += 10) {
+        const a = (deg * Math.PI / 180) + tiltAngle + Math.PI;
+        const cosT = Math.cos(a);
+        const sinT = Math.sin(a);
+  
+        const xInner = cx + (rArch - archThick / 2) * cosT;
+        const yInner = cy + (rArch - archThick / 2) * sinT;
+        const isMajor = deg % 30 === 0;
+        const tickLen = isMajor ? archThick * 0.7 : archThick * 0.45;
+        const xOuter = cx + (rArch - archThick / 2 + tickLen) * cosT;
+        const yOuter = cy + (rArch - archThick / 2 + tickLen) * sinT;
+  
+        ctx.beginPath();
+        ctx.moveTo(xInner, yInner);
+        ctx.lineTo(xOuter, yOuter);
+        ctx.stroke();
+  
+        // Angka derajat pada garis utama
+        if (isMajor && Math.abs(deg) !== 90) {
+          const xText = cx + (rArch + 4) * cosT;
+          const yText = cy + (rArch + 4) * sinT;
+          ctx.save();
+          ctx.translate(xText, yText);
+          ctx.rotate(a + Math.PI / 2);
+          ctx.fillText(`${Math.abs(deg)}°`, 0, 0);
+          ctx.restore();
+        }
+      }
+      ctx.restore();
+  
+      // -------------------------------------------------------------
+      // 5. Pin & Baut Kutub Atas dan Bawah (North & South Pole Finials)
+      // -------------------------------------------------------------
+      // Pin Kutub Utara
+      const pinLen = 28;
+      const nPinStartX = cx + (r - 4) * sinA;
+      const nPinStartY = cy - (r - 4) * cosA;
+      const nPinEndX = cx + (rArch + 12) * sinA;
+      const nPinEndY = cy - (rArch + 12) * cosA;
+  
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(nPinStartX, nPinStartY);
+      ctx.lineTo(nPinEndX, nPinEndY);
+      ctx.stroke();
+  
+      // Baut Krom Kutub Utara
+      ctx.fillStyle = '#f8fafc';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(nPinEndX, nPinEndY, 7.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+  
+      // Pin Kutub Selatan
+      const sPinStartX = cx - (r - 4) * sinA;
+      const sPinStartY = cy + (r - 4) * cosA;
+      const sPinEndX = cx - (rArch + 12) * sinA;
+      const sPinEndY = cy + (rArch + 12) * cosA;
+  
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(sPinStartX, sPinStartY);
+      ctx.lineTo(sPinEndX, sPinEndY);
+      ctx.stroke();
+  
+      // Baut Krom Kutub Selatan
+      ctx.beginPath();
+      ctx.arc(sPinEndX, sPinEndY, 7.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+  
+      // -------------------------------------------------------------
+      // 6. Penanda Lokasi Aktif / Fokus (Radar Pulse & Label)
+      // -------------------------------------------------------------
+      if (this.focusedLocation) {
+        const coord = this.project3DPoint(this.focusedLocation.lon, this.focusedLocation.lat, r, cx, cy);
+        if (coord && coord.isFront) {
+          const px = coord.x;
+          const py = coord.y;
+  
+          // Gelombang Radar Emas
+          const pulseR = 12 + Math.sin(this.pulseAngle) * 6;
+          ctx.strokeStyle = `rgba(255, 178, 27, ${0.45 + Math.sin(this.pulseAngle) * 0.35})`;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.arc(px, py, pulseR, 0, Math.PI * 2);
+          ctx.stroke();
+  
+          // Pin Emas Merah
+          ctx.fillStyle = '#ffb21b';
+          ctx.beginPath();
+          ctx.arc(px, py, 7, 0, Math.PI * 2);
+          ctx.fill();
+  
+          ctx.fillStyle = '#e53e3e';
+          ctx.beginPath();
+          ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+          ctx.fill();
+  
+          // Kartu Label Lokasi Mengambang
+          const labelText = this.focusedLocation.name;
+          const labelW = 164;
+          const labelH = 38;
+          const labelX = px + 12;
+          const labelY = py - labelH / 2;
+  
+          ctx.fillStyle = 'rgba(15, 32, 67, 0.92)';
+          ctx.strokeStyle = '#55efc4';
+          ctx.lineWidth = 1.5;
+          this.drawRoundedRect(ctx, labelX, labelY, labelW, labelH, 10);
+          ctx.fill();
+          ctx.stroke();
+  
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 12px Arial, sans-serif';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(labelText, labelX + 12, labelY + 14);
+  
+          ctx.fillStyle = '#55efc4';
+          ctx.font = 'bold 9.5px Arial, sans-serif';
+          ctx.fillText(`${this.focusedLocation.lat >= 0 ? this.focusedLocation.lat + '° LU' : Math.abs(this.focusedLocation.lat) + '° LS'}, ${this.focusedLocation.lon}° BT`, labelX + 12, labelY + 27);
+        }
+      }
+    }
+  
+    project3DPoint(lonDeg, latDeg, radius, cx, cy) {
+      const DEG2RAD = Math.PI / 180;
+      const phi = latDeg * DEG2RAD;
+      const theta = lonDeg * DEG2RAD;
+  
+      const x0 = Math.cos(phi) * Math.sin(theta);
+      const y0 = Math.sin(phi);
+      const z0 = Math.cos(phi) * Math.cos(theta);
+  
+      // 1. Rotasi bujur (Yaw)
+      const rotY = this.rotation * DEG2RAD;
+      const cosY = Math.cos(rotY);
+      const sinY = Math.sin(rotY);
+      const x1 = x0 * cosY - z0 * sinY;
+      const y1 = y0;
+      const z1 = x0 * sinY + z0 * cosY;
+  
+      // 2. Kemiringan sumbu bumi asli 23.5°
+      const rotZ = -this.axialTilt * DEG2RAD;
+      const cosZ = Math.cos(rotZ);
+      const sinZ = Math.sin(rotZ);
+      const x2 = x1 * cosZ - y1 * sinZ;
+      const y2 = x1 * sinZ + y1 * cosZ;
+      const z2 = z1;
+  
+      // 3. Kemiringan pandangan (Pitch)
+      const rotX = this.tilt * DEG2RAD;
+      const cosX = Math.cos(rotX);
+      const sinX = Math.sin(rotX);
+      const x3 = x2;
+      const y3 = y2 * cosX - z2 * sinX;
+      const z3 = y2 * sinX + z2 * cosX;
+  
+      return {
+        x: cx + x3 * radius,
+        y: cy - y3 * radius,
+        z: z3,
+        isFront: z3 > 0.05
+      };
+    }
+  
+    drawRoundedRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+  
+    // Matriks Pembantu 4x4 (Standar Column-Major WebGL)
+    createIdentityMatrix() {
+      return [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ];
+    }
+  
+    createPerspectiveMatrix(fovRad, aspect, near, far) {
+      const f = 1.0 / Math.tan(fovRad / 2);
+      const nf = 1 / (near - far);
+      return [
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (far + near) * nf, -1,
+        0, 0, 2 * far * near * nf, 0
+      ];
+    }
+  
+    mat4Multiply(a, b) {
+      const a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+      const a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+      const a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+      const a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+  
+      const out = new Array(16);
+      let b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+      out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  
+      b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
+      out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  
+      b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
+      out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  
+      b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
+      out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+      return out;
+    }
+  
+    mat4Translate(m, x, y, z) {
+      const out = m.slice();
+      out[12] = m[0] * x + m[4] * y + m[8] * z + m[12];
+      out[13] = m[1] * x + m[5] * y + m[9] * z + m[13];
+      out[14] = m[2] * x + m[6] * y + m[10] * z + m[14];
+      out[15] = m[3] * x + m[7] * y + m[11] * z + m[15];
+      return out;
+    }
+  
+    mat4RotateX(m, rad) {
+      const s = Math.sin(rad);
+      const c = Math.cos(rad);
+      const a10 = m[4], a11 = m[5], a12 = m[6], a13 = m[7];
+      const a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11];
+      const out = m.slice();
+      out[4] = a10 * c + a20 * s;
+      out[5] = a11 * c + a21 * s;
+      out[6] = a12 * c + a22 * s;
+      out[7] = a13 * c + a23 * s;
+      out[8] = a20 * c - a10 * s;
+      out[9] = a21 * c - a11 * s;
+      out[10] = a22 * c - a12 * s;
+      out[11] = a23 * c - a13 * s;
+      return out;
+    }
+  
+    mat4RotateY(m, rad) {
+      const s = Math.sin(rad);
+      const c = Math.cos(rad);
+      const a00 = m[0], a01 = m[1], a02 = m[2], a03 = m[3];
+      const a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11];
+      const out = m.slice();
+      out[0] = a00 * c - a20 * s;
+      out[1] = a01 * c - a21 * s;
+      out[2] = a02 * c - a22 * s;
+      out[3] = a03 * c - a23 * s;
+      out[8] = a00 * s + a20 * c;
+      out[9] = a01 * s + a21 * c;
+      out[10] = a02 * s + a22 * c;
+      out[11] = a03 * s + a23 * c;
+      return out;
+    }
+  
+    mat4RotateZ(m, rad) {
+      const s = Math.sin(rad);
+      const c = Math.cos(rad);
+      const a00 = m[0], a01 = m[1], a02 = m[2], a03 = m[3];
+      const a10 = m[4], a11 = m[5], a12 = m[6], a13 = m[7];
+      const out = m.slice();
+      out[0] = a00 * c + a10 * s;
+      out[1] = a01 * c + a11 * s;
+      out[2] = a02 * c + a12 * s;
+      out[3] = a03 * c + a13 * s;
+      out[4] = a10 * c - a00 * s;
+      out[5] = a11 * c - a01 * s;
+      out[6] = a12 * c - a02 * s;
+      out[7] = a13 * c - a03 * s;
+      return out;
+    }
+  }
+  
+
+  // --- Source: js/components/topbar.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Topbar & Install Prompt Handler
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 11:05:00
+  // ================================================================
+  
+  
+  
+  
+  
+  class TopbarComponent {
+    constructor(container) {
+      this.container = container;
+      this.deferredPrompt = null;
+      this.isStandalone = false;
+  
+      this.checkStandalone();
+      this.initInstallPromptListener();
+    }
+  
+    checkStandalone() {
+      this.isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                          window.navigator.standalone === true;
+    }
+  
+    initInstallPromptListener() {
+      // SOP 1.9 Kategori 18.6: DILARANG preventDefault() agar native Chrome pop-up tetap aktif!
+      window.addEventListener('beforeinstallprompt', (e) => {
+        this.deferredPrompt = e;
+        this.render(); // Render ulang agar tombol Install di UI terlihat
+      });
+  
+      window.addEventListener('appinstalled', () => {
+        this.deferredPrompt = null;
+        this.isStandalone = true;
+        this.render();
+        console.log('[PWA] Aplikasi Smart Study berhasil diinstall!');
+      });
+    }
+  
+    render() {
+      const s = store.data;
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const currentTheme = state.theme || 'light';
+      const showInstallBtn = !this.isStandalone && this.deferredPrompt !== null;
+  
+      this.container.innerHTML = `
+        <div class="topbar-left">
+          <button class="iconbtn" id="menuBtn" type="button" aria-label="Buka menu navigasi drawer" aria-expanded="false" aria-controls="sidebar">
+            ☰
+          </button>
+          <div class="hdr-title" id="topbarBrandBtn" title="Kembali ke Beranda" style="cursor:pointer;">
+            <span class="app-name">Smart Study</span>
+            <span class="grade-badge">${t('gradeBadge', lang)}</span>
+            <span id="runMode" class="run-mode-badge" style="font-size:11px; opacity:0.75; font-weight:600; margin-left:4px;">${this.isStandalone ? '· aplikasi' : '· browser'}</span>
+          </div>
+        </div>
+  
+        <div class="topbar-right">
+          <!-- Bintang Belajar -->
+          <div class="stat-pill" title="${t('starsTitle', lang)}">
+            <span class="icon">⭐</span>
+            <span id="starCount">${s.stars || 0}</span>
+          </div>
+  
+          <!-- Streak Harian -->
+          <div class="stat-pill" title="${t('streakTitle', lang)}">
+            <span class="icon">🔥</span>
+            <span id="streakCount">${s.streakDays || 1} ${t('days', lang)}</span>
+          </div>
+  
+          <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
+          <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px;">
+            ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
+          </button>
+  
+          <!-- Toggle Tema Terang/Gelap (Default: Light) -->
+          <button class="iconbtn" id="themeToggleBtn" type="button" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
+            ${currentTheme === 'dark' ? '☀️' : '🌙'}
+          </button>
+  
+          <!-- Tombol Install PWA (SOP 1.9 Kategori 18) -->
+          ${showInstallBtn ? `
+            <button class="btn-pwa-install" id="pwaInstallBtn" type="button" title="${t('installTitle', lang)}">
+              <span>📲</span> ${t('installApp', lang)}
+            </button>
+          ` : ''}
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const brandBtn = this.container.querySelector('#topbarBrandBtn');
+      if (brandBtn) {
+        brandBtn.addEventListener('click', () => {
+          appState.navigate('home');
+        });
+      }
+  
+      const menuBtn = this.container.querySelector('#menuBtn');
+      if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+          appState.toggleDrawer();
+        });
+      }
+  
+      const themeBtn = this.container.querySelector('#themeToggleBtn');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+          appState.toggleTheme();
+        });
+      }
+  
+      const langBtn = this.container.querySelector('#langToggleBtn');
+      if (langBtn) {
+        langBtn.addEventListener('click', () => {
+          appState.toggleLang();
+        });
+      }
+  
+      const installBtn = this.container.querySelector('#pwaInstallBtn');
+      if (installBtn && this.deferredPrompt) {
+        installBtn.addEventListener('click', async () => {
+          try {
+            await this.deferredPrompt.prompt();
+            const { outcome } = await this.deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+              this.deferredPrompt = null;
+              this.render();
+            }
+          } catch (err) {
+            console.warn('[PWA] Prompt install mungkin sudah digunakan oleh native banner:', err);
+          }
+        });
+      }
+    }
+  }
+  
+
+  // --- Source: js/components/sidebar.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Collapsible Sidebar & Mobile Drawer
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 11:08:00
+  // ================================================================
+  
+  
+  
+  
+  
+  class SidebarComponent {
+    constructor(sidebarElement, scrimElement, shellElement) {
+      this.sidebar = sidebarElement;
+      this.scrim = scrimElement;
+      this.shell = shellElement;
+  
+      this.initKeyboardEvents();
+    }
+  
+    initKeyboardEvents() {
+      window.addEventListener('keydown', (e) => {
+        // Tombol Esc menutup mobile drawer (SOP Kategori 14)
+        if (e.key === 'Escape' && appState.get().drawerOpen) {
+          appState.toggleDrawer(false);
+        }
+      });
+  
+      if (this.scrim) {
+        this.scrim.addEventListener('click', () => {
+          appState.toggleDrawer(false);
+        });
+      }
+    }
+  
+    render() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+  
+      // Sinkronisasi kelas collapsed pada .shell
+      if (state.sidebarCollapsed) {
+        this.shell.classList.add('collapsed');
+      } else {
+        this.shell.classList.remove('collapsed');
+      }
+  
+      // Sinkronisasi status drawer mobile
+      if (state.drawerOpen) {
+        this.sidebar.classList.add('open');
+        if (this.scrim) this.scrim.classList.add('show');
+      } else {
+        this.sidebar.classList.remove('open');
+        if (this.scrim) this.scrim.classList.remove('show');
+      }
+  
+      this.sidebar.innerHTML = `
+        <!-- Logo Anabhi Dev Saja di Atas Sidebar: Besar, Seukuran Sidebar, Tanpa Title Web (SOP 2.0) -->
+        <div class="sidebar-top-branding">
+          <a class="logo-box" href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi anabhidev.com">
+            <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager">
+          </a>
+          <button class="btn-collapse-toggle" id="sidebarCollapseBtn" type="button" aria-label="Ciutkan atau perlebar sidebar" title="${state.sidebarCollapsed ? 'Perlebar Sidebar' : 'Ciutkan Sidebar'}">
+            ${state.sidebarCollapsed ? '»' : '«'}
+          </button>
+        </div>
+  
+        <!-- Menu Utama -->
+        <div class="kicker">${t('mainNav', lang)}</div>
+        <nav class="nav" aria-label="Navigasi Utama">
+          <button class="nav-item ${state.currentRoute === 'home' ? 'active' : ''}" data-route="home" data-tooltip="${t('home', lang)}">
+            <span class="icon">🏠</span>
+            <span class="label">${t('home', lang)}</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}">
+            <span class="icon">📚</span>
+            <span class="label">${t('allSubjects', lang)}</span>
+          </button>
+        </nav>
+  
+        <!-- 10 Mata Pelajaran Lengkap -->
+        <div class="kicker">${t('subjectsKicker', lang)}</div>
+        <nav class="nav" aria-label="Mata Pelajaran">
+          ${SUBJECTS.map(sub => {
+            const isActive = state.currentRoute === 'subject' && state.currentSubjectId === sub.id;
+            const displayName = getSubjectName(sub, lang);
+  
+            return `
+              <button class="nav-item ${isActive ? 'active' : ''}" data-route="subject" data-subject-id="${sub.id}" data-tooltip="${displayName}">
+                <span class="icon">${sub.icon}</span>
+                <span class="label">${displayName}</span>
+              </button>
+            `;
+          }).join('')}
+        </nav>
+  
+        <!-- Fitur Tambahan: Tantangan & Progress -->
+        <div class="kicker">${t('activitiesKicker', lang)}</div>
+        <nav class="nav" aria-label="Aktivitas">
+          <button class="nav-item ${state.currentRoute === 'tantangan' ? 'active' : ''}" data-route="tantangan" data-tooltip="${t('dailyChallenge', lang)}">
+            <span class="icon">🎯</span>
+            <span class="label">${t('dailyChallenge', lang)}</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'progress' ? 'active' : ''}" data-route="progress" data-tooltip="${t('progress', lang)}">
+            <span class="icon">📈</span>
+            <span class="label">${t('progress', lang)}</span>
+          </button>
+        </nav>
+  
+        <!-- Footer Kredit Resmi (Standar Coding 1.5 Bagian 6) -->
+        <div class="sidebar-foot">
+          <strong>ANABHIDEV SMART STUDY</strong>
+          ${t('footerTagline', lang)}
+          <br>
+          ${t('developmentCredit', lang)}
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const collapseBtn = this.sidebar.querySelector('#sidebarCollapseBtn');
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => {
+          appState.toggleSidebar();
+        });
+      }
+  
+      const navItems = this.sidebar.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const route = item.getAttribute('data-route');
+          const subjectId = item.getAttribute('data-subject-id');
+          appState.navigate(route, subjectId);
+        });
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/video-modal.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · YouTube Safe Video Modal Component
+  // Development · Anabhi Dev
+  // Version   : 2.0 (Resilient file:/// & http/https Player Support)
+  // Generated : 11 September 2026
+  // ================================================================
+  
+  class VideoModalComponent {
+    constructor(modalContainer) {
+      this.container = modalContainer;
+      this.initEvents();
+    }
+  
+    initEvents() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.container.classList.contains('show')) {
+          this.close();
+        }
+      });
+  
+      this.container.addEventListener('click', (e) => {
+        if (e.target === this.container) {
+          this.close();
+        }
+      });
+    }
+  
+    open(title, youtubeUrl) {
+      if (!youtubeUrl) return;
+  
+      // Ekstrak ID YouTube dengan aman
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=[&]?|&v=)([^#&?]*).*/;
+      const match = youtubeUrl.match(regExp);
+      const videoId = (match && match[2].length === 11) ? match[2] : null;
+  
+      const directUrl = videoId
+        ? `https://www.youtube.com/watch?v=${videoId}`
+        : youtubeUrl;
+      const embedUrl = videoId
+        ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+        : youtubeUrl;
+      const thumbUrl = videoId
+        ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+        : '';
+  
+      const isFileProtocol = (typeof window !== 'undefined' && window.location.protocol === 'file:');
+  
+      // Buat template modal yang adaptif
+      this.container.innerHTML = `
+        <div class="video-modal-content" role="dialog" aria-modal="true" aria-labelledby="modalVideoTitle">
+          <div class="video-modal-header">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <strong id="modalVideoTitle" style="font-size:15px; font-weight:800; color:var(--ink);">${title || 'Video Pembelajaran'}</strong>
+              <a href="${directUrl}" target="_blank" rel="noopener noreferrer" class="btn" style="padding:4px 10px; font-size:11.5px; text-decoration:none; display:inline-flex; align-items:center; gap:5px; background:rgba(239,68,68,0.12); color:#ef4444; border-color:rgba(239,68,68,0.3);">
+                <span>▶ Buka di YouTube</span> ↗
+              </a>
+            </div>
+            <button class="iconbtn" id="btnModalClose" type="button" aria-label="Tutup video" style="color:var(--ink); border-color:var(--line); height:36px; min-width:36px;">
+              ✕
+            </button>
+          </div>
+  
+          <div class="video-iframe-wrap" id="videoWrapper">
+            ${isFileProtocol ? `
+              <div id="filePlayerPoster" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0b1526; cursor:pointer; text-align:center; padding:16px;">
+                ${thumbUrl ? `<img src="${thumbUrl}" alt="${title}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65); transition:filter 0.2s;" />` : ''}
+                
+                <!-- Tombol Play Merah YouTube -->
+                <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px;">
+                  <div id="btnPosterPlay" style="width:76px; height:52px; background:#ff0000; border-radius:16px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 25px rgba(255,0,0,0.5), 0 0 0 4px rgba(255,255,255,0.25); transition:transform 0.18s ease-in-out;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                  <div style="background:rgba(15,23,42,0.88); color:#ffffff; padding:7px 16px; border-radius:20px; font-size:13px; font-weight:700; border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(6px); letter-spacing:0.3px;">
+                    ▶ Putar Video (Popup Jendela Bebas Gangguan)
+                  </div>
+                </div>
+              </div>
+            ` : `
+              <iframe
+                id="ytEmbedIframe"
+                src="${embedUrl}"
+                title="${title || 'Video Pembelajaran'}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy">
+              </iframe>
+            `}
+          </div>
+  
+          <div class="video-modal-footer" style="padding:12px 18px; background:var(--surface); border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12.5px;">
+            <div style="color:var(--muted); max-width:480px; line-height:1.45;">
+              ${isFileProtocol ? `
+                💡 <strong>Mode Berkas Lokal (file://):</strong> Browser melindungi privasi dengan membatasi iframe YouTube (Error 153). Klik tombol putar untuk membuka jendela video interaktif bebas gangguan, atau jalankan <code>start-server.bat</code> untuk pemutar tersemat.
+              ` : `
+                💡 <strong>Info:</strong> Bila pemutar lokal terhalang aturan privasi, tonton video langsung melalui tombol di sebelah kanan.
+              `}
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              ${isFileProtocol ? `
+                <button class="btn" id="btnForceEmbed" type="button" style="font-size:12px; padding:6px 12px;">
+                  🔄 Paksa Sematkan Iframe
+                </button>
+              ` : ''}
+              <a href="${directUrl}" id="btnOpenDirect" target="_blank" rel="noopener noreferrer" class="btn primary" style="padding:7px 14px; font-size:12.5px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                <span>▶ Tonton di YouTube</span> ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.container.classList.add('show');
+  
+      // Handler tombol tutup
+      const closeBtn = this.container.querySelector('#btnModalClose');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.close());
+      }
+  
+      // Helper membuka video dalam popup elegan
+      const launchVideoPopup = () => {
+        const width = Math.min(window.screen.availWidth || 960, 960);
+        const height = Math.min(window.screen.availHeight || 560, 560);
+        const left = Math.max(0, Math.floor((window.screen.availWidth - width) / 2));
+        const top = Math.max(0, Math.floor((window.screen.availHeight - height) / 2));
+        const popup = window.open(
+          directUrl,
+          'ytPlayer_' + (videoId || 'vid'),
+          `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=no`
+        );
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+          window.open(directUrl, '_blank', 'noopener,noreferrer');
+        }
+      };
+  
+      // Handler klik poster / tombol play di file://
+      const poster = this.container.querySelector('#filePlayerPoster');
+      if (poster) {
+        poster.addEventListener('click', launchVideoPopup);
+      }
+  
+      // Handler paksa sematkan iframe jika user menginginkannya
+      const forceEmbedBtn = this.container.querySelector('#btnForceEmbed');
+      if (forceEmbedBtn) {
+        forceEmbedBtn.addEventListener('click', () => {
+          const wrap = this.container.querySelector('#videoWrapper');
+          if (wrap) {
+            wrap.innerHTML = `
+              <iframe
+                id="ytEmbedIframe"
+                src="${embedUrl}"
+                title="${title || 'Video Pembelajaran'}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy">
+              </iframe>
+            `;
+          }
+          forceEmbedBtn.style.display = 'none';
+        });
+      }
+    }
+  
+    close() {
+      this.container.innerHTML = '';
+      this.container.classList.remove('show');
+    }
+  }
+  
+  
+
+  // --- Source: js/components/quiz-runner.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Reusable Quiz Engine Component
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 10:25:00
+  // ================================================================
+  
+  
+  
+  
+  
+  class QuizRunner {
+    constructor(container, quizData, onComplete) {
+      this.container = container;
+      this.quiz = quizData;
+      this.onComplete = onComplete;
+      this.currentIndex = 0;
+      this.score = 0;
+      this.answered = false;
+      this.showHint = false;
+  
+      this.render();
+    }
+  
+    render() {
+      const lang = appState.get().lang || 'id';
+      const q = this.quiz.questions[this.currentIndex];
+      const isLast = this.currentIndex === this.quiz.questions.length - 1;
+  
+      this.container.innerHTML = `
+        <div class="quiz-box">
+          <div class="quiz-header">
+            <div>
+              <span class="subject-badge">${this.quiz.title}</span>
+              <div style="font-size:12px; color:var(--muted); margin-top:4px;">
+                ${t('practiceQuestionPrefix', lang)} ${this.currentIndex + 1} ${t('of', lang)} ${this.quiz.questions.length}
+              </div>
+            </div>
+            <div style="font-weight:800; color:var(--teal); font-size:13.5px;">
+              ${t('scoreLabel', lang)} ${this.score}
+            </div>
+          </div>
+  
+          <div class="quiz-question">${q.q}</div>
+  
+          <div class="quiz-options">
+            ${q.options.map(opt => `
+              <button class="quiz-opt-btn" data-answer="${opt}" type="button">
+                <span>⚪</span>
+                <span>${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+  
+          ${q.hint ? `
+            <button class="btn" id="btnToggleHint" type="button" style="font-size:12px; padding:6px 12px; min-height:36px;">
+              ${this.showHint ? t('hideHintBtn', lang) : t('showHintBtn', lang)}
+            </button>
+            <div class="hint-panel ${this.showHint ? 'show' : ''}" id="hintPanel">
+              ${q.hint}
+            </div>
+          ` : ''}
+  
+          <div class="feedback-banner" id="feedbackBanner"></div>
+  
+          <div style="margin-top:20px; display:flex; justify-content:flex-end;">
+            <button class="btn primary" id="btnNextQuestion" type="button" style="display:none;">
+              ${isLast ? t('finishQuizBtn', lang) : t('nextQBtn', lang)}
+            </button>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const q = this.quiz.questions[this.currentIndex];
+      const optionBtns = this.container.querySelectorAll('.quiz-opt-btn');
+      const feedbackBanner = this.container.querySelector('#feedbackBanner');
+      const nextBtn = this.container.querySelector('#btnNextQuestion');
+      const hintBtn = this.container.querySelector('#btnToggleHint');
+      const hintPanel = this.container.querySelector('#hintPanel');
+  
+      if (hintBtn) {
+        hintBtn.addEventListener('click', () => {
+          this.showHint = !this.showHint;
+          hintPanel.classList.toggle('show', this.showHint);
+          const curLang = appState.get().lang || 'id';
+          hintBtn.textContent = this.showHint ? t('hideHintBtn', curLang) : t('showHintBtn', curLang);
+        });
+      }
+  
+      optionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (this.answered) return;
+  
+          const selected = btn.getAttribute('data-answer');
+          const isCorrect = selected === q.answer;
+  
+          optionBtns.forEach(b => {
+            b.disabled = true;
+            if (b.getAttribute('data-answer') === q.answer) {
+              b.classList.add('correct');
+              b.querySelector('span').textContent = '✅';
+            }
+          });
+  
+          const currentLang = appState.get().lang || 'id';
+          if (isCorrect) {
+            this.score++;
+            btn.classList.add('correct');
+            feedbackBanner.className = 'feedback-banner success show';
+            feedbackBanner.innerHTML = t('quizCorrectFeedback', currentLang);
+          } else {
+            btn.classList.add('wrong');
+            btn.querySelector('span').textContent = '❌';
+            feedbackBanner.className = 'feedback-banner warning show';
+            feedbackBanner.innerHTML = `${t('quizWrongFeedback', currentLang)} <u>${q.answer}</u>. ${currentLang === 'en' ? 'Keep trying!' : 'Semangat terus!'}`;
+          }
+  
+          this.answered = true;
+          nextBtn.style.display = 'inline-flex';
+        });
+      });
+  
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          if (this.currentIndex < this.quiz.questions.length - 1) {
+            this.currentIndex++;
+            this.answered = false;
+            this.showHint = false;
+            this.render();
+          } else {
+            // Kuis Selesai!
+            store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
+            this.showCompletionScreen();
+          }
+        });
+      }
+    }
+  
+    showCompletionScreen() {
+      const currentLang = appState.get().lang || 'id';
+      const isPerfect = this.score === this.quiz.questions.length;
+      this.container.innerHTML = `
+        <div class="quiz-box" style="text-align:center; padding:36px 20px;">
+          <div style="font-size:52px; margin-bottom:12px;">${isPerfect ? '🏆' : '🌟'}</div>
+          <h3 style="font-size:22px; margin:0 0 8px;">${t('quizFinishedTitle', currentLang)}</h3>
+          <p style="font-size:14px; color:var(--muted); margin:0 0 18px;">
+            ${isPerfect ? t('quizFinishedPerfect', currentLang) : t('quizFinishedGood', currentLang)}
+          </p>
+          <div style="font-size:26px; font-weight:850; color:var(--teal); margin-bottom:20px;">
+            ${t('scoreLabel', currentLang)} ${this.score} / ${this.quiz.questions.length}
+          </div>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn" id="btnRetryQuiz" type="button">${t('retryQuizBtn', currentLang)}</button>
+            <button class="btn primary" id="btnFinishQuiz" type="button">${t('continueNextSubjectBtn', currentLang)}</button>
+          </div>
+        </div>
+      `;
+  
+      const retryBtn = this.container.querySelector('#btnRetryQuiz');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', () => {
+          this.currentIndex = 0;
+          this.score = 0;
+          this.answered = false;
+          this.showHint = false;
+          this.render();
+        });
+      }
+  
+      const finishBtn = this.container.querySelector('#btnFinishQuiz');
+      if (finishBtn && this.onComplete) {
+        finishBtn.addEventListener('click', () => {
+          this.onComplete();
+        });
+      }
+    }
+  }
+  
+  
+
+  // --- Source: js/components/lesson-view.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Mathematics Flagship Lesson View & Math Toolbox
+  // Development · Anabhi Dev
+  // Version   : 2.0 (Math Toolbox Master Blueprint)
+  // Generated : 10 September 2026, 13:30:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  class MathLessonView {
+    constructor(container, videoModal) {
+      this.container = container;
+      this.videoModal = videoModal;
+      this.currentPracticeIndex = 0;
+      this.practiceHintLevel = 0;
+      this.practiceAnswered = false;
+      this.viewMode = 'visual'; // 'visual' | 'compare'
+      this.userMetacognition = null;
+    }
+  
+    render() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const a = state.mathA !== undefined ? state.mathA : 67;
+      const b = state.mathB !== undefined ? state.mathB : 59;
+      const activeMethod = state.activeMathMethod || 'compensation';
+      const solution = MathEngine.solve(a, b, lang);
+  
+      // Filter slot video YouTube yang memiliki url
+      const availableVideos = MATH_DATA.videoSlots.filter(v => v.url && v.url.trim().length > 0);
+      const progress = MathEngine.getProgress();
+  
+      this.container.innerHTML = `
+        <!-- Header Matematika Flagship / Math Toolbox -->
+        <div class="section-header">
+          <div class="math-hero-badge">🧰 ${t('mathFlagshipBadge', lang)}</div>
+          <h2 class="section-title">${isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title}</h2>
+          <p class="section-sub">${isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle}</p>
+        </div>
+  
+        <!-- Kotak Kontrol Bilangan & Preset Soal Flagship -->
+        <div class="math-control-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+            <div style="font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase;">
+              ${t('presetLabel', lang)}
+            </div>
+            <button class="btn" id="btnRandomMathProblem" type="button" style="padding:4px 12px; font-size:12px;">
+              ${t('randomProblem', lang)}
+            </button>
+          </div>
+  
+          <div class="math-presets">
+            ${MATH_DATA.presetExamples.map(ex => `
+              <button class="preset-chip ${ex.a === a && ex.b === b ? 'active' : ''}" data-a="${ex.a}" data-b="${ex.b}" type="button">
+                ${isEn && ex.labelEn ? ex.labelEn : ex.label}
+              </button>
+            `).join('')}
+          </div>
+  
+          <!-- Input Angka Interaktif -->
+          <div class="math-input-row">
+            <div class="math-num-box">
+              <label for="inputMathA">${t('num1Label', lang)}</label>
+              <input type="number" class="math-num-input" id="inputMathA" value="${a}" min="0" max="999">
+            </div>
+            <span class="math-operator">+</span>
+            <div class="math-num-box">
+              <label for="inputMathB">${t('num2Label', lang)}</label>
+              <input type="number" class="math-num-input" id="inputMathB" value="${b}" min="0" max="999">
+            </div>
+            <span class="math-operator">=</span>
+            <div class="math-num-box">
+              <label>${t('resultLabel', lang)}</label>
+              <div class="math-num-input" style="background:var(--teal-soft); color:var(--teal-soft-ink); display:grid; place-items:center;">
+                ${solution.sum}
+              </div>
+            </div>
+          </div>
+  
+          <!-- Smart Recommendation Banner -->
+          ${this.renderSmartRecommendation(a, b, solution, lang)}
+        </div>
+  
+        <!-- Mode Switcher & Strategy Navigation -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="font-size:14px; font-weight:800; color:var(--ink);">
+            ${t('chooseThinkingTool', lang)}
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn ${this.viewMode === 'visual' ? 'primary' : ''}" id="btnModeVisual" type="button" style="font-size:12px; padding:6px 14px;">
+              ${t('modeVisual', lang)}
+            </button>
+            <button class="btn ${this.viewMode === 'compare' ? 'primary' : ''}" id="btnModeCompare" type="button" style="font-size:12px; padding:6px 14px;">
+              ${t('modeCompare', lang)}
+            </button>
+          </div>
+        </div>
+  
+        <!-- Tab Switcher 9 Metode Berpikir -->
+        <div class="method-tabs" role="tablist">
+          ${MATH_DATA.methods.map(m => `
+            <button class="method-tab-btn ${activeMethod === m.id && this.viewMode === 'visual' ? 'active' : ''}" data-method="${m.id}" role="tab" type="button">
+              <span>${m.icon}</span>
+              <span>${isEn && m.nameEn ? m.nameEn : m.name}</span>
+            </button>
+          `).join('')}
+        </div>
+  
+        <!-- Panel Konten Utama (Visual atau Compare) -->
+        <div class="method-content-panel">
+          ${this.viewMode === 'compare' ? this.renderCompareContent(a, b, solution, lang) : this.renderMethodContent(activeMethod, solution, lang)}
+        </div>
+  
+        <!-- Mode Latihan Interaktif (Practice Mode) -->
+        ${this.renderPracticeSection()}
+  
+        <!-- Progress & Badges Showcase -->
+        ${this.renderProgressBadges(progress, lang)}
+  
+        <!-- 4 Slot Video YouTube Matematika -->
+        ${availableVideos.length > 0 ? `
+          <div class="section" style="margin-top:44px;">
+            <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
+            <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${t('videosHeaderTitle', lang) || 'Trik Berhitung Asyik di YouTube'}</h3>
+            <div class="video-grid">
+              ${availableVideos.map(v => `
+                <div class="video-card">
+                  <div>
+                    <span class="subject-badge">${v.ageFit}</span>
+                    <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
+                    <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
+                  </div>
+                  <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+                    <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button" style="flex:1;">
+                      ${t('playVideo', lang) || 'Putar Video'}
+                    </button>
+                    <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; padding:8px 12px; font-size:12px;" title="Tonton langsung di YouTube">
+                      ↗
+                    </a>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+  
+      this.attachEvents();
+    }
+  
+    renderSmartRecommendation(a, b, sol, lang = 'id') {
+      const isEn = lang === 'en';
+      let recText = isEn
+        ? 'Exciting numbers! Try different strategies to find the one you love best.'
+        : 'Angka ini seru! Coba berbagai strategi untuk menemukan cara paling nyaman.';
+      let jumpMethod = sol.recommended[0] || 'decomposition';
+  
+      if (b === 59 || a === 59 || b % 10 === 9 || a % 10 === 9) {
+        recText = isEn
+          ? '💡 <strong>Smart Tip:</strong> An operand ends in 9 (almost round)! Perfect for <strong>Compensation</strong> or <strong>Make 100</strong>!'
+          : '💡 <strong>Trik Cerdas:</strong> Ada angka yang berakhiran 9 (hampir bulat)! Sangat cocok pakai jurus <strong>Kompensasi</strong> atau <strong>Bikin 100</strong>!';
+        jumpMethod = 'compensation';
+      } else if (a + b === 100 || (a + b) % 100 === 0) {
+        recText = isEn
+          ? `💡 <strong>Smart Tip:</strong> Perfect pair! ${a} and ${b} instantly make ${a + b}! Try <strong>Make 100</strong>!`
+          : `💡 <strong>Trik Cerdas:</strong> Pasangan serasi! ${a} dan ${b} langsung pas membentuk ${a + b}! Coba jurus <strong>Bikin 100</strong>!`;
+        jumpMethod = 'make-hundred';
+      }
+  
+      return `
+        <div class="math-smart-recommendation">
+          <div class="rec-text">${recText}</div>
+          <button class="btn" id="btnJumpRecommended" data-method="${jumpMethod}" type="button" style="padding:4px 12px; font-size:12px; border-color:var(--teal); color:var(--teal);">
+            ${t('tryThisWay', lang)}
+          </button>
+        </div>
+      `;
+    }
+  
+    renderMethodContent(methodId, sol, lang = 'id') {
+      const isEn = lang === 'en';
+  
+      switch (methodId) {
+        // 1. Decomposition (Pecah Puluhan & Satuan)
+        case 'decomposition':
+        case 'place-value':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🧩</span> ${sol.decomposition.title}</h3>
+              <span class="subject-badge">${sol.decomposition.badge}</span>
+            </div>
+            <p style="font-size:14px; color:var(--muted); margin:0 0 18px;">
+              ${isEn ? 'Separate numbers into groups of <strong>tens</strong> and <strong>ones</strong>. Add each group, then combine the totals!' : 'Pisahkan bilangan menjadi kelompok <strong>puluhan</strong> dan <strong>satuan</strong>. Hitung masing-masing kelompok, lalu satukan hasilnya!'}
+            </p>
+            <div class="place-value-grid">
+              <div class="pv-tile">
+                <div class="tile-title">${isEn ? '1. Decompose' : '1. Urai Bilangan'}</div>
+                <div class="tile-equation" style="font-size:17px;">${sol.decomposition.breakdownA}</div>
+                <div class="tile-equation" style="font-size:17px; margin-top:6px;">${sol.decomposition.breakdownB}</div>
+              </div>
+              <div class="pv-tile">
+                <div class="tile-title">${isEn ? '2. Add Tens' : '2. Jumlahkan Puluhan'}</div>
+                <div class="tile-equation">${sol.decomposition.step2}</div>
+              </div>
+              <div class="pv-tile">
+                <div class="tile-title">${isEn ? '3. Add Ones' : '3. Jumlahkan Satuan'}</div>
+                <div class="tile-equation">${sol.decomposition.step3}</div>
+              </div>
+              <div class="pv-tile" style="border-color:var(--teal); background:var(--teal-soft);">
+                <div class="tile-title" style="color:var(--teal-soft-ink);">${isEn ? '4. Final Result' : '4. Hasil Akhir'}</div>
+                <div class="tile-equation" style="color:var(--teal-soft-ink);">${sol.decomposition.stepFinal}</div>
+              </div>
+            </div>
+          `;
+  
+        // 2. Number Bonds (Ikatan Bilangan)
+        case 'number-bonds':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🔗</span> ${sol.numberBonds.title}</h3>
+              <span class="subject-badge">${sol.numberBonds.badge}</span>
+            </div>
+            <p style="font-size:14px; color:var(--muted); margin:0 0 14px;">
+              ${sol.numberBonds.summary}
+            </p>
+            <div class="nb-tree-box">
+              <svg class="nb-svg" viewBox="0 0 540 220">
+                <!-- Pohon Cabang Angka A -->
+                <circle cx="120" cy="40" r="26" fill="var(--teal)" />
+                <text x="120" y="47" text-anchor="middle" font-weight="900" font-size="16" fill="#ffffff">${sol.a}</text>
+                <line x1="120" y1="66" x2="70" y2="120" stroke="var(--line)" stroke-width="3" />
+                <line x1="120" y1="66" x2="170" y2="120" stroke="var(--line)" stroke-width="3" />
+                <circle cx="70" cy="130" r="22" fill="var(--paper)" stroke="var(--teal)" stroke-width="2" />
+                <text x="70" y="136" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberBonds.treeA.branchLeft}</text>
+                <circle cx="170" cy="130" r="22" fill="var(--paper)" stroke="var(--teal)" stroke-width="2" />
+                <text x="170" y="136" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberBonds.treeA.branchRight}</text>
+  
+                <!-- Operator Tambah -->
+                <text x="225" y="135" text-anchor="middle" font-weight="900" font-size="24" fill="var(--muted)">+</text>
+  
+                <!-- Pohon Cabang Angka B -->
+                <circle cx="330" cy="40" r="26" fill="#e67e22" />
+                <text x="330" y="47" text-anchor="middle" font-weight="900" font-size="16" fill="#ffffff">${sol.b}</text>
+                <line x1="330" y1="66" x2="280" y2="120" stroke="var(--line)" stroke-width="3" />
+                <line x1="330" y1="66" x2="380" y2="120" stroke="var(--line)" stroke-width="3" />
+                <circle cx="280" cy="130" r="22" fill="var(--paper)" stroke="#e67e22" stroke-width="2" />
+                <text x="280" y="136" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberBonds.treeB.branchLeft}</text>
+                <circle cx="380" cy="130" r="22" fill="var(--paper)" stroke="#e67e22" stroke-width="2" />
+                <text x="380" y="136" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberBonds.treeB.branchRight}</text>
+  
+                <!-- Gabungan Akhir -->
+                <path d="M 70,152 Q 225,210 460,130" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-dasharray="4,4" />
+                <circle cx="470" cy="130" r="30" fill="var(--green)" />
+                <text x="470" y="137" text-anchor="middle" font-weight="900" font-size="17" fill="#ffffff">${sol.sum}</text>
+                <text x="470" y="176" text-anchor="middle" font-weight="800" font-size="12" fill="var(--green)">TOTAL</text>
+              </svg>
+              <div style="font-size:14px; font-weight:800; color:var(--ink); margin-top:8px;">
+                ${isEn ? 'Tens' : 'Puluhan'} (${sol.numberBonds.combinedBranches[0].calc} = ${sol.numberBonds.combinedBranches[0].result}) + ${isEn ? 'Ones' : 'Satuan'} (${sol.numberBonds.combinedBranches[1].calc} = ${sol.numberBonds.combinedBranches[1].result}) = ${sol.sum}!
+              </div>
+            </div>
+          `;
+  
+        // 3. Make Ten / Make Hundred
+        case 'make-hundred':
+        case 'make-round':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🔟</span> ${sol.makeHundred.title}</h3>
+              <span class="subject-badge">${sol.makeHundred.badge}</span>
+            </div>
+            <div class="round-strategy-banner">
+              🎯 <strong>${isEn ? 'Smart Route:' : 'Rute Pintar:'}</strong> ${sol.makeHundred.step1}
+            </div>
+            <div class="pathway-flow">
+              <div class="pathway-node">${sol.a}</div>
+              <div class="pathway-arrow">
+                <span>+${sol.makeHundred.need}</span>
+                <span style="font-size:16px;">➔</span>
+              </div>
+              <div class="pathway-node" style="background:#ffb21b; color:#1a202c;">${sol.makeHundred.target}</div>
+              <div class="pathway-arrow">
+                <span>+${sol.makeHundred.remainingB}</span>
+                <span style="font-size:16px;">➔</span>
+              </div>
+              <div class="pathway-node" style="background:var(--green);">${sol.sum} 🎉</div>
+            </div>
+            <div class="round-step-box">
+              <div style="font-size:15px; font-weight:750; margin-bottom:8px;">${isEn ? 'Step-by-step Explanation:' : 'Langkah Penjelasan:'}</div>
+              <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+                <div>👉 <strong>${isEn ? 'Step 1:' : 'Langkah 1:'}</strong> ${sol.makeHundred.step1}</div>
+                <div>👉 <strong>${isEn ? 'Step 2:' : 'Langkah 2:'}</strong> ${sol.makeHundred.step2}</div>
+                <div>👉 <strong>${isEn ? 'Step 3:' : 'Langkah 3:'}</strong> ${sol.makeHundred.step3}</div>
+                <div style="color:var(--teal); font-weight:800;">👉 <strong>${isEn ? 'Step 4:' : 'Langkah 4:'}</strong> ${sol.makeHundred.step4}</div>
+              </div>
+            </div>
+          `;
+  
+        // 4. Compensation (Kompensasi / Hampir Bulat)
+        case 'compensation':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>⚖️</span> ${sol.compensation.title}</h3>
+              <span class="subject-badge">${sol.compensation.badge}</span>
+            </div>
+            <div class="comp-quote">
+              ${sol.compensation.friendlyQuote}
+            </div>
+            <div class="comp-card-box">
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:18px;">
+                <div style="background:var(--card); padding:16px; border-radius:12px; border:1px solid var(--line); text-align:center;">
+                  <div style="font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase;">${isEn ? '1. Round Up First' : '1. Bulatkan Dulu'}</div>
+                  <div style="font-size:20px; font-weight:900; color:#e67e22; margin-top:4px;">
+                    ${sol.compensation.roundedNum} ➔ ${sol.compensation.roundValue}
+                  </div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:4px;">(${isEn ? 'Added ' : 'Ditambah '}${sol.compensation.diff})</div>
+                </div>
+                <div style="background:var(--card); padding:16px; border-radius:12px; border:1px solid var(--line); text-align:center;">
+                  <div style="font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase;">${isEn ? '2. Easy Calculation' : '2. Hitung Enteng'}</div>
+                  <div style="font-size:20px; font-weight:900; color:var(--teal); margin-top:4px;">
+                    ${sol.compensation.baseNum} + ${sol.compensation.roundValue} = ${sol.compensation.intermediateSum}
+                  </div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:4px;">${isEn ? 'Super easy in your head!' : 'Sangat gampang di kepala!'}</div>
+                </div>
+                <div style="background:var(--card); padding:16px; border-radius:12px; border:1px solid var(--green); text-align:center;">
+                  <div style="font-size:11px; font-weight:800; color:var(--green); text-transform:uppercase;">${isEn ? '3. Subtract Extra' : '3. Balikin Kelebihannya'}</div>
+                  <div style="font-size:20px; font-weight:900; color:var(--green); margin-top:4px;">
+                    ${sol.compensation.intermediateSum} - ${sol.compensation.diff} = ${sol.sum}
+                  </div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:4px;">${isEn ? 'Fast and exact answer!' : 'Jawaban tepat dan kilat!'}</div>
+                </div>
+              </div>
+              <div style="font-size:14px; color:var(--ink);">
+                👉 ${sol.compensation.step3}
+              </div>
+            </div>
+          `;
+  
+        // 5. Number Line (Garis Bilangan)
+        case 'number-line':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>📏</span> ${sol.numberLine.title}</h3>
+              <span class="subject-badge">${sol.numberLine.badge}</span>
+            </div>
+            <p style="font-size:14px; color:var(--muted); margin:0 0 14px;">
+              ${sol.numberLine.summary}
+            </p>
+            <div class="number-line-container">
+              <svg class="number-line-svg" viewBox="0 0 560 120">
+                <!-- Garis Dasar -->
+                <line x1="30" y1="90" x2="520" y2="90" stroke="var(--ink)" stroke-width="3" />
+                <polygon points="520,85 535,90 520,95" fill="var(--ink)" />
+  
+                <!-- Titik Awal -->
+                <circle cx="60" cy="90" r="7" fill="var(--teal)" />
+                <text x="60" y="114" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberLine.start}</text>
+  
+                <!-- Busur Lompatan 1 (Puluhan) -->
+                ${sol.numberLine.jumps[0] ? `
+                  <path d="M 60,90 Q 180,15 300,90" fill="none" stroke="#ffb21b" stroke-width="3" stroke-dasharray="6,4" />
+                  <text x="180" y="40" text-anchor="middle" font-weight="900" font-size="14" fill="#ffb21b">${sol.numberLine.jumps[0].amount}</text>
+                  <circle cx="300" cy="90" r="6" fill="#ffb21b" />
+                  <text x="300" y="114" text-anchor="middle" font-weight="800" font-size="13" fill="var(--ink)">${sol.numberLine.jumps[0].to}</text>
+                ` : ''}
+  
+                <!-- Busur Lompatan 2 (Satuan) -->
+                ${sol.numberLine.jumps[1] ? `
+                  <path d="M 300,90 Q 390,35 480,90" fill="none" stroke="var(--teal)" stroke-width="3" />
+                  <text x="390" y="55" text-anchor="middle" font-weight="900" font-size="14" fill="var(--teal)">${sol.numberLine.jumps[1].amount}</text>
+                ` : ''}
+  
+                <!-- Titik Target Akhir -->
+                <circle cx="480" cy="90" r="8" fill="var(--green)" />
+                <text x="480" y="114" text-anchor="middle" font-weight="900" font-size="15" fill="var(--green)">${sol.sum} 🎯</text>
+              </svg>
+            </div>
+          `;
+  
+        // 6. Base-Ten Blocks (Balok Nilai Tempat)
+        case 'base-ten':
+        case 'visual-blocks':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🧱</span> ${sol.baseTen.title}</h3>
+              <span class="subject-badge">${sol.baseTen.badge}</span>
+            </div>
+            <div class="round-strategy-banner" style="background:rgba(0,206,201,0.1); border-color:var(--teal); color:var(--ink);">
+              💡 <strong>${isEn ? 'Regrouping Concept:' : 'Konsep Regrouping:'}</strong> ${sol.baseTen.regroupMessage}
+            </div>
+            <div class="blocks-stage">
+              <div style="font-weight:750; font-size:13px; margin-bottom:8px;">${isEn ? `Number ${sol.a} (${sol.baseTen.rodsA} Ten-Rods & ${sol.baseTen.cubesA} Unit-Cubes):` : `Angka ${sol.a} (${sol.baseTen.rodsA} Batang Puluhan & ${sol.baseTen.cubesA} Kubus Satuan):`}</div>
+              <div class="blocks-group">
+                <div class="rod-stack">
+                  ${Array(Math.min(10, sol.baseTen.rodsA)).fill(0).map(() => `<div class="rod" title="${isEn ? '1 Rod = 10' : '1 Batang = 10'}"></div>`).join('')}
+                </div>
+                <div class="cube-stack">
+                  ${Array(sol.baseTen.cubesA).fill(0).map(() => `<div class="cube" title="${isEn ? '1 Cube = 1' : '1 Kubus = 1'}"></div>`).join('')}
+                </div>
+              </div>
+  
+              <div style="font-weight:750; font-size:13px; margin:18px 0 8px;">${isEn ? `Number ${sol.b} (${sol.baseTen.rodsB} Ten-Rods & ${sol.baseTen.cubesB} Unit-Cubes):` : `Angka ${sol.b} (${sol.baseTen.rodsB} Batang Puluhan & ${sol.baseTen.cubesB} Kubus Satuan):`}</div>
+              <div class="blocks-group">
+                <div class="rod-stack">
+                  ${Array(Math.min(10, sol.baseTen.rodsB)).fill(0).map(() => `<div class="rod" title="${isEn ? '1 Rod = 10' : '1 Batang = 10'}"></div>`).join('')}
+                </div>
+                <div class="cube-stack">
+                  ${Array(sol.baseTen.cubesB).fill(0).map(() => `<div class="cube" title="${isEn ? '1 Cube = 1' : '1 Kubus = 1'}"></div>`).join('')}
+                </div>
+              </div>
+  
+              <div style="border-top:2px dashed var(--line); margin:18px 0; padding-top:14px;">
+                <div style="font-weight:800; font-size:14px; margin-bottom:8px; color:var(--teal);">${isEn ? 'Combined Blocks:' : 'Hasil Penggabungan Seluruh Balok:'}</div>
+                <div class="blocks-group">
+                  ${sol.baseTen.totalFlats > 0 ? `
+                    <div class="flat-block">
+                      100 (${isEn ? 'Flat' : 'Ratusan'})
+                    </div>
+                  ` : ''}
+                  <div class="rod-stack">
+                    ${Array(sol.baseTen.remainingRods).fill(0).map(() => `<div class="rod" style="background:#10ac84;" title="${isEn ? 'Ten-Rod' : 'Batang Puluhan'}"></div>`).join('')}
+                  </div>
+                  <div class="cube-stack">
+                    ${Array(sol.baseTen.remainingCubes).fill(0).map(() => `<div class="cube" style="background:#2ed573;" title="${isEn ? 'Unit Cube' : 'Kubus Satuan'}"></div>`).join('')}
+                  </div>
+                </div>
+                <p style="margin:12px 0 0; font-size:13px; color:var(--muted);">${sol.baseTen.explanation}</p>
+              </div>
+            </div>
+          `;
+  
+        // 7. Bar / Tape Model
+        case 'bar-model':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>📦</span> ${sol.barModel.title}</h3>
+              <span class="subject-badge">${sol.barModel.badge}</span>
+            </div>
+            <p style="font-size:14px; color:var(--muted); margin:0 0 14px;">
+              ${sol.barModel.concept}
+            </p>
+            <div class="bar-model-wrap">
+              <div style="font-size:14px; font-weight:800; text-align:center; color:var(--teal); margin-bottom:10px;">
+                ${sol.barModel.whole.label}
+              </div>
+              <div class="bar-tape">
+                <div class="bar-part" style="width:${sol.barModel.partA.percent}%; background:#3498db;">
+                  ${sol.barModel.partA.label}
+                </div>
+                <div class="bar-part" style="width:${sol.barModel.partB.percent}%; background:#e67e22;">
+                  ${sol.barModel.partB.label}
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-top:8px;">
+                <span>◀── ${sol.barModel.partA.percent}% ──▶</span>
+                <span>◀── ${sol.barModel.partB.percent}% ──▶</span>
+              </div>
+              <div style="text-align:center; font-size:16px; font-weight:850; color:var(--ink); margin-top:16px;">
+                ${sol.barModel.equation}
+              </div>
+            </div>
+          `;
+  
+        // 8. Mental Math (Angka Ramah)
+        case 'mental-math':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🧠</span> ${sol.mentalMath.title}</h3>
+              <span class="subject-badge">${sol.mentalMath.badge}</span>
+            </div>
+            <div class="anzan-mind-board">
+              <div style="font-size:12.5px; letter-spacing:1px; text-transform:uppercase; color:#ffb21b; font-weight:800;">
+                ${isEn ? 'Mental Journey' : 'Papan Imajinasi Pikiran'}
+              </div>
+              <div style="font-size:24px; font-weight:900; margin:12px 0;">
+                ${sol.mentalMath.thoughtBubble}
+              </div>
+              <div class="anzan-bead-row">
+                <div class="anzan-bead">${sol.a}</div>
+                <div style="font-size:24px; font-weight:900; display:grid; place-items:center;">+</div>
+                <div class="anzan-bead" style="background:#5be0df; color:#0e2e48;">${sol.b}</div>
+                <div style="font-size:24px; font-weight:900; display:grid; place-items:center;">=</div>
+                <div class="anzan-bead" style="background:#2ed573; color:#ffffff;">${sol.sum}</div>
+              </div>
+              <div style="font-size:13.5px; color:rgba(255,255,255,0.85); max-width:440px; margin:0 auto; line-height:1.6;">
+                ${sol.mentalMath.step1Text}<br>${sol.mentalMath.step2Text}
+              </div>
+            </div>
+          `;
+  
+        // 9. Soroban (Sempoa Jepang)
+        case 'soroban':
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🧮</span> ${sol.soroban.title}</h3>
+              <span class="subject-badge">${sol.soroban.badge}</span>
+            </div>
+            <p style="font-size:14px; color:var(--muted); margin:0 0 14px;">
+              ${sol.soroban.principle}
+            </p>
+            <div class="soroban-frame">
+              <div class="soroban-cols">
+                <!-- Kolom Ratusan -->
+                <div class="soroban-col">
+                  <div class="soroban-rod"></div>
+                  <div class="soroban-bead-item ${sol.soroban.abacusTotal.hundreds.upperActive ? 'active' : ''}" title="${isEn ? 'Upper Bead (Value 5)' : 'Manik Atas (Nilai 5)'}"></div>
+                  <div class="soroban-beam"></div>
+                  ${[1, 2, 3, 4].map(idx => `
+                    <div class="soroban-bead-item ${idx <= sol.soroban.abacusTotal.hundreds.lowerCount ? 'active' : ''}" title="${isEn ? 'Lower Bead (Value 1)' : 'Manik Bawah (Nilai 1)'}"></div>
+                  `).join('')}
+                  <div style="margin-top:8px; font-size:14px; font-weight:900; color:#faedcd;">${sol.soroban.abacusTotal.hundreds.val}</div>
+                </div>
+  
+                <!-- Kolom Puluhan -->
+                <div class="soroban-col">
+                  <div class="soroban-rod"></div>
+                  <div class="soroban-bead-item ${sol.soroban.abacusTotal.tens.upperActive ? 'active' : ''}" title="${isEn ? 'Upper Bead (Value 5)' : 'Manik Atas (Nilai 5)'}"></div>
+                  <div class="soroban-beam"></div>
+                  ${[1, 2, 3, 4].map(idx => `
+                    <div class="soroban-bead-item ${idx <= sol.soroban.abacusTotal.tens.lowerCount ? 'active' : ''}" title="${isEn ? 'Lower Bead (Value 1)' : 'Manik Bawah (Nilai 1)'}"></div>
+                  `).join('')}
+                  <div style="margin-top:8px; font-size:14px; font-weight:900; color:#faedcd;">${sol.soroban.abacusTotal.tens.val}</div>
+                </div>
+  
+                <!-- Kolom Satuan -->
+                <div class="soroban-col">
+                  <div class="soroban-rod"></div>
+                  <div class="soroban-bead-item ${sol.soroban.abacusTotal.units.upperActive ? 'active' : ''}" title="${isEn ? 'Upper Bead (Value 5)' : 'Manik Atas (Nilai 5)'}"></div>
+                  <div class="soroban-beam"></div>
+                  ${[1, 2, 3, 4].map(idx => `
+                    <div class="soroban-bead-item ${idx <= sol.soroban.abacusTotal.units.lowerCount ? 'active' : ''}" title="${isEn ? 'Lower Bead (Value 1)' : 'Manik Bawah (Nilai 1)'}"></div>
+                  `).join('')}
+                  <div style="margin-top:8px; font-size:14px; font-weight:900; color:#faedcd;">${sol.soroban.abacusTotal.units.val}</div>
+                </div>
+              </div>
+              <div style="text-align:center; color:#faedcd; font-size:15px; font-weight:900; margin-top:14px;">
+                ${isEn ? `Bead Formation: ${sol.sum} ✨` : `Formasi Manik Terbaca: ${sol.sum} ✨`}
+              </div>
+            </div>
+          `;
+  
+        default:
+          return '';
+      }
+    }
+  
+    renderCompareContent(a, b, sol, lang = 'id') {
+      const isEn = lang === 'en';
+  
+      return `
+        <div class="method-header">
+          <h3 class="method-title"><span>⚖️</span> ${isEn ? 'Compare Strategies Mode' : 'Mode Bandingkan Cara (Compare)'}</h3>
+          <span class="subject-badge">${isEn ? 'One Problem, Three Angles' : 'Satu Soal Tiga Sudut Pandang'}</span>
+        </div>
+        <p style="font-size:14px; color:var(--muted); margin:0 0 16px;">
+          ${isEn ? `See how three different thinking tools solve <strong>${a} + ${b} = ${sol.sum}</strong> in their own way:` : `Lihat bagaimana tiga alat berpikir berbeda menyelesaikan <strong>${a} + ${b} = ${sol.sum}</strong> dengan caranya masing-masing:`}
+        </p>
+        <div class="compare-grid">
+          <!-- 1. Pecah Angka -->
+          <div class="compare-card">
+            <div style="font-size:16px; font-weight:800; color:var(--teal); margin-bottom:8px;">
+              ${isEn ? '🧩 Split Numbers' : '🧩 Pecah Angka'}
+            </div>
+            <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">${isEn ? 'Place Value (Tens & Ones)' : 'Nilai Tempat (Puluhan & Satuan)'}</div>
+            <div style="font-size:14px; line-height:1.6;">
+              <div>• ${isEn ? 'Tens: ' : 'Puluhan: '} ${Math.floor(a/10)*10} + ${Math.floor(b/10)*10} = ${Math.floor(a/10)*10 + Math.floor(b/10)*10}</div>
+              <div>• ${isEn ? 'Ones: ' : 'Satuan: '} ${a%10} + ${b%10} = ${(a%10)+(b%10)}</div>
+              <div style="font-weight:800; color:var(--teal); margin-top:6px;">
+                Total = ${sol.sum}
+              </div>
+            </div>
+          </div>
+  
+          <!-- 2. Bikin 100 -->
+          <div class="compare-card">
+            <div style="font-size:16px; font-weight:800; color:#e67e22; margin-bottom:8px;">
+              ${isEn ? ('🔟 Make ' + sol.makeHundred.target) : '🔟 Bikin 100'}
+            </div>
+            <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">${isEn ? 'Round to Hundred' : 'Genapkan Angka Bulat'}</div>
+            <div style="font-size:14px; line-height:1.6;">
+              <div>• ${isEn ? `${a} needs ${sol.makeHundred.need} to reach ${sol.makeHundred.target}` : `${a} butuh ${sol.makeHundred.need} menuju ${sol.makeHundred.target}`}</div>
+              <div>• ${isEn ? `Remaining from partner: ${sol.makeHundred.remainingB}` : `Sisa teman: ${sol.makeHundred.remainingB}`}</div>
+              <div style="font-weight:800; color:#e67e22; margin-top:6px;">
+                ${sol.makeHundred.target} + ${sol.makeHundred.remainingB} = ${sol.sum}
+              </div>
+            </div>
+          </div>
+  
+          <!-- 3. Kompensasi -->
+          <div class="compare-card">
+            <div style="font-size:16px; font-weight:800; color:var(--green); margin-bottom:8px;">
+              ${isEn ? '⚖️ Compensation' : '⚖️ Kompensasi'}
+            </div>
+            <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">${isEn ? 'Round & Give Back' : 'Bulatkan & Kembalikan'}</div>
+            <div style="font-size:14px; line-height:1.6;">
+              <div>• ${isEn ? `${sol.compensation.roundedNum} rounded to ${sol.compensation.roundValue}` : `${sol.compensation.roundedNum} dijadikan ${sol.compensation.roundValue}`}</div>
+              <div>• ${sol.compensation.baseNum} + ${sol.compensation.roundValue} = ${sol.compensation.intermediateSum}</div>
+              <div style="font-weight:800; color:var(--green); margin-top:6px;">
+                ${sol.compensation.intermediateSum} - ${sol.compensation.diff} = ${sol.sum}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  
+    renderPracticeSection() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const p = MATH_DATA.practiceProblems[this.currentPracticeIndex];
+  
+      const currentStory = (isEn && p.storyEn) ? p.storyEn : p.story;
+      const currentHints = (isEn && p.hintsEn) ? p.hintsEn : p.hints;
+  
+      return `
+        <div class="section" style="margin-top:40px;">
+          <div class="eyebrow"><span class="no">⚡</span><span class="lbl">${t('practiceTurboBadge', lang)}</span></div>
+          <h3 style="font-size:22px; font-weight:850; margin:0 0 16px;">${t('practiceHeader', lang)}</h3>
+  
+          <div class="quiz-box">
+            <div style="font-size:12px; color:var(--muted); margin-bottom:6px;">
+              ${t('practiceQuestionPrefix', lang)} ${this.currentPracticeIndex + 1} ${t('of', lang)} ${MATH_DATA.practiceProblems.length}
+            </div>
+            <div class="quiz-question">${currentStory}</div>
+            <div style="font-size:28px; font-weight:900; color:var(--teal); margin-bottom:18px;">
+              ${p.question}
+            </div>
+  
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+              <input type="number" id="practiceAnswerInput" class="math-num-input" style="width:140px; height:52px;" placeholder="${t('answerPlaceholder', lang)}" ${this.practiceAnswered ? 'disabled' : ''}>
+              <button class="btn primary" id="btnSubmitPractice" type="button" ${this.practiceAnswered ? 'disabled' : ''}>
+                ${t('checkAnswer', lang)}
+              </button>
+              <button class="btn" id="btnMathHint" type="button">
+                ${t('hintLabel', lang)} (${this.practiceHintLevel}/3)
+              </button>
+            </div>
+  
+            <!-- Numeric Keypad Ramah Anak di Tablet -->
+            <div class="num-keypad">
+              ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, '⌫'].map(k => `
+                <button class="keypad-btn" data-key="${k}" type="button">${k}</button>
+              `).join('')}
+            </div>
+  
+            <!-- Panel Petunjuk Progresif 3 Tingkat -->
+            <div class="hint-panel ${this.practiceHintLevel > 0 ? 'show' : ''}" id="mathHintPanel">
+              ${currentHints.slice(0, this.practiceHintLevel).join('<br><br>')}
+            </div>
+  
+            <!-- Feedback Ramah Anak -->
+            <div class="feedback-banner" id="mathFeedbackBanner"></div>
+  
+            <!-- "Mau Lihat Cara Lain?" Callout setelah berhasil -->
+            <div class="show-another-way-banner" id="showAnotherWayBanner" style="display:${this.practiceAnswered ? 'block' : 'none'};">
+              <h4 style="margin:0 0 6px; font-size:16px; font-weight:850; color:var(--teal);">${t('showAnotherWaySuccess', lang)}</h4>
+              <p style="margin:0 0 14px; font-size:13.5px; color:var(--ink);">
+                ${t('showAnotherWayPrompt', lang)}
+              </p>
+              <button class="btn primary" id="btnShowAnotherWay" type="button" style="padding:8px 20px;">
+                ${t('showAnotherWayBtn', lang)}
+              </button>
+            </div>
+  
+            <!-- Refleksi Metakognisi: "Kenapa kamu pilih cara ini?" -->
+            ${this.practiceAnswered ? `
+              <div class="metacognition-box">
+                <div style="font-size:14px; font-weight:800; color:var(--ink);">
+                  💭 ${isEn ? MATH_DATA.metacognition.questionEn : MATH_DATA.metacognition.question}
+                </div>
+                <div class="meta-options-grid">
+                  ${MATH_DATA.metacognition.options.map(opt => `
+                    <button class="meta-chip ${this.userMetacognition === opt.id ? 'selected' : ''}" data-meta="${opt.id}" type="button">
+                      ${isEn ? opt.textEn : opt.text}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+  
+            <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn" id="btnPrevPractice" type="button" ${this.currentPracticeIndex === 0 ? 'disabled' : ''}>
+                ${t('prevQuestion', lang)}
+              </button>
+              <button class="btn primary" id="btnNextPractice" type="button" ${this.currentPracticeIndex === MATH_DATA.practiceProblems.length - 1 ? 'disabled' : ''}>
+                ${t('nextQuestion', lang)}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  
+    renderProgressBadges(progress, lang = 'id') {
+      const isEn = lang === 'en';
+  
+      return `
+        <div class="section" style="margin-top:36px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <div>
+              <h4 style="margin:0; font-size:17px; font-weight:850;">${t('badgesSectionTitle', lang)}</h4>
+              <p style="margin:2px 0 0; font-size:12.5px; color:var(--muted);">${t('badgesSectionSub', lang)}</p>
+            </div>
+            <span class="subject-badge">${progress.problemsSolved} ${t('problemsSolvedBadge', lang)}</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+            ${MATH_DATA.badges.map(b => `
+              <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; text-align:center;">
+                <div style="font-size:28px;">${b.icon}</div>
+                <div style="font-size:13px; font-weight:800; margin-top:6px;">${b.name}</div>
+                <div style="font-size:11px; color:var(--muted); margin-top:2px;">${isEn && b.descEn ? b.descEn : b.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  
+    attachEvents() {
+      // Preset Chip clicks
+      const chips = this.container.querySelectorAll('.preset-chip');
+      chips.forEach(c => {
+        c.addEventListener('click', () => {
+          const a = parseInt(c.getAttribute('data-a'), 10);
+          const b = parseInt(c.getAttribute('data-b'), 10);
+          appState.set({ mathA: a, mathB: b });
+          this.render();
+        });
+      });
+  
+      // Random problem generator button
+      const btnRandom = this.container.querySelector('#btnRandomMathProblem');
+      if (btnRandom) {
+        btnRandom.addEventListener('click', () => {
+          const pGen = MathEngine.generateAdditionProblem({ level: Math.floor(Math.random() * 3) + 2 });
+          appState.set({ mathA: pGen.a, mathB: pGen.b });
+          this.render();
+        });
+      }
+  
+      // Smart recommendation quick jump
+      const btnJump = this.container.querySelector('#btnJumpRecommended');
+      if (btnJump) {
+        btnJump.addEventListener('click', () => {
+          const method = btnJump.getAttribute('data-method');
+          this.viewMode = 'visual';
+          appState.set({ activeMathMethod: method });
+          MathEngine.recordStrategyExplored(method);
+          this.render();
+        });
+      }
+  
+      // Mode Switcher buttons
+      const btnModeVisual = this.container.querySelector('#btnModeVisual');
+      const btnModeCompare = this.container.querySelector('#btnModeCompare');
+      if (btnModeVisual && btnModeCompare) {
+        btnModeVisual.addEventListener('click', () => {
+          this.viewMode = 'visual';
+          this.render();
+        });
+        btnModeCompare.addEventListener('click', () => {
+          this.viewMode = 'compare';
+          this.render();
+        });
+      }
+  
+      // Number Inputs
+      const inputA = this.container.querySelector('#inputMathA');
+      const inputB = this.container.querySelector('#inputMathB');
+      if (inputA && inputB) {
+        const updateInputs = () => {
+          const a = parseInt(inputA.value, 10) || 0;
+          const b = parseInt(inputB.value, 10) || 0;
+          appState.set({ mathA: a, mathB: b });
+          this.render();
+        };
+        inputA.addEventListener('change', updateInputs);
+        inputB.addEventListener('change', updateInputs);
+      }
+  
+      // Strategy Tabs
+      const tabBtns = this.container.querySelectorAll('.method-tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const method = btn.getAttribute('data-method');
+          this.viewMode = 'visual';
+          appState.set({ activeMathMethod: method });
+          MathEngine.recordStrategyExplored(method);
+          this.render();
+        });
+      });
+  
+      // Practice submit & hints
+      const p = MATH_DATA.practiceProblems[this.currentPracticeIndex];
+      const answerInput = this.container.querySelector('#practiceAnswerInput');
+      const submitBtn = this.container.querySelector('#btnSubmitPractice');
+      const hintBtn = this.container.querySelector('#btnMathHint');
+      const feedbackBanner = this.container.querySelector('#mathFeedbackBanner');
+  
+      if (hintBtn) {
+        hintBtn.addEventListener('click', () => {
+          if (this.practiceHintLevel < 3) {
+            this.practiceHintLevel++;
+          } else {
+            this.practiceHintLevel = 1;
+          }
+          this.render();
+        });
+      }
+  
+      if (submitBtn && answerInput) {
+        submitBtn.addEventListener('click', () => {
+          const userAns = parseInt(answerInput.value, 10);
+          if (isNaN(userAns)) return;
+  
+          if (userAns === p.answer) {
+            this.practiceAnswered = true;
+            store.completeLesson('matematika:' + p.id);
+            MathEngine.recordProblemSolved(p.a, p.b, p.recommended ? p.recommended[0] : 'general');
+            feedbackBanner.className = 'feedback-banner success show';
+            feedbackBanner.innerHTML = `🎉 <strong>Yesss! ${p.answer}! Tepat Sekali!</strong> Kamu hebat!`;
+            this.render();
+          } else {
+            feedbackBanner.className = 'feedback-banner warning show';
+            const diff = Math.abs(userAns - p.answer);
+            if (diff <= 3) {
+              feedbackBanner.innerHTML = 'Hampir banget! 😄 Coba cek langkah terakhir atau lihat petunjuk!';
+            } else {
+              feedbackBanner.innerHTML = 'Belum pas 😄 Coba cek kembali bagian puluhan atau satuannya ya!';
+            }
+          }
+        });
+      }
+  
+      // "Show Another Way" Button
+      const btnAnotherWay = this.container.querySelector('#btnShowAnotherWay');
+      if (btnAnotherWay) {
+        btnAnotherWay.addEventListener('click', () => {
+          // Set state to flagship or current problem and switch to compare mode
+          this.viewMode = 'compare';
+          appState.set({ mathA: p.a, mathB: p.b });
+          this.render();
+          window.scrollTo({ top: 120, behavior: 'smooth' });
+        });
+      }
+  
+      // Metacognition chip clicks
+      const metaChips = this.container.querySelectorAll('.meta-chip');
+      metaChips.forEach(mc => {
+        mc.addEventListener('click', () => {
+          this.userMetacognition = mc.getAttribute('data-meta');
+          this.render();
+        });
+      });
+  
+      // Keypad Clicks
+      const keypadBtns = this.container.querySelectorAll('.keypad-btn');
+      keypadBtns.forEach(kb => {
+        kb.addEventListener('click', () => {
+          if (!answerInput || this.practiceAnswered) return;
+          const key = kb.getAttribute('data-key');
+          if (key === 'C') {
+            answerInput.value = '';
+          } else if (key === '⌫') {
+            answerInput.value = answerInput.value.slice(0, -1);
+          } else {
+            answerInput.value += key;
+          }
+        });
+      });
+  
+      // Practice Prev/Next
+      const prevBtn = this.container.querySelector('#btnPrevPractice');
+      const nextBtn = this.container.querySelector('#btnNextPractice');
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          if (this.currentPracticeIndex > 0) {
+            this.currentPracticeIndex--;
+            this.practiceHintLevel = 0;
+            this.practiceAnswered = false;
+            this.userMetacognition = null;
+            this.render();
+          }
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          if (this.currentPracticeIndex < MATH_DATA.practiceProblems.length - 1) {
+            this.currentPracticeIndex++;
+            this.practiceHintLevel = 0;
+            this.practiceAnswered = false;
+            this.userMetacognition = null;
+            this.render();
+          }
+        });
+      }
+  
+      // Video Play Buttons (Safe modal + Error 153 resilience)
+      const playBtns = this.container.querySelectorAll('.btn-play-video');
+      playBtns.forEach(pb => {
+        pb.addEventListener('click', () => {
+          const title = pb.getAttribute('data-title');
+          const url = pb.getAttribute('data-url');
+          if (this.videoModal) {
+            this.videoModal.open(title, url);
+          }
+        });
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/subject-view.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Subject View Coordinator
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 10:35:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  class SubjectViewComponent {
+    constructor(container, videoModal) {
+      this.container = container;
+      this.videoModal = videoModal;
+      this.globeVis = null;
+      this.selectedContinent = 'Semua';
+      this.searchCountryQuery = '';
+      this.selectedIsland = 'Semua';
+      this.searchCityQuery = '';
+      this.activeQuizIndex = 0;
+    }
+  
+    render(subjectId) {
+      if (this.globeVis) {
+        this.globeVis.stopLoop();
+        this.globeVis = null;
+      }
+  
+      if (subjectId === 'matematika') {
+        const mathView = new MathLessonView(this.container, this.videoModal);
+        mathView.render();
+        return;
+      }
+  
+      if (subjectId === 'geografi') {
+        this.renderGeography();
+        return;
+      }
+  
+      // Render 8 mata pelajaran lainnya secara konsisten dan terstruktur
+      this.renderGenericSubject(subjectId);
+    }
+  
+    // ==========================================================
+    // MODUL GEOGRAFI MANDATORI LENGKAP
+    // ==========================================================
+    renderGeography() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const activeTab = state.activeGeoTab || 'earth';
+      const availableVideos = GEO_DATA.videoSlots.filter(v => v.url && v.url.trim().length > 0);
+  
+      this.container.innerHTML = `
+        <div class="section-header">
+          <div class="math-hero-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal);">
+            ${t('geoBadge', lang)}
+          </div>
+          <h2 class="section-title">${(lang === 'en' && GEO_DATA.titleEn) ? GEO_DATA.titleEn : GEO_DATA.title}</h2>
+          <p class="section-sub">${(lang === 'en' && GEO_DATA.subtitleEn) ? GEO_DATA.subtitleEn : GEO_DATA.subtitle}</p>
+        </div>
+  
+        <!-- Tab Sub-Navigasi Geografi (Hierarki: Dunia -> Negara -> Provinsi -> Kota -> Bali -> Kuis) -->
+        <div class="geo-nav-tabs" role="tablist">
+          <button class="geo-tab-btn ${activeTab === 'earth' ? 'active' : ''}" data-geo-tab="earth" type="button">
+            <span>🌐</span> ${t('tabEarth', lang)}
+          </button>
+          <button class="geo-tab-btn ${activeTab === 'countries' ? 'active' : ''}" data-geo-tab="countries" type="button">
+            <span>🗺️</span> ${t('tabCountries', lang)}
+          </button>
+          <button class="geo-tab-btn ${activeTab === 'provinces' ? 'active' : ''}" data-geo-tab="provinces" type="button">
+            <span>🇮🇩</span> ${t('tabProvinces', lang)}
+          </button>
+          <button class="geo-tab-btn ${activeTab === 'cities' ? 'active' : ''}" data-geo-tab="cities" type="button">
+            <span>🏙️</span> ${t('tabCities', lang)}
+          </button>
+          <button class="geo-tab-btn ${activeTab === 'bali' ? 'active' : ''}" data-geo-tab="bali" type="button">
+            <span>🌴</span> ${t('tabBali', lang)}
+          </button>
+          <button class="geo-tab-btn ${activeTab === 'quizzes' ? 'active' : ''}" data-geo-tab="quizzes" type="button">
+            <span>🎯</span> ${t('tabQuizzes', lang)}
+          </button>
+        </div>
+  
+        <!-- Area Konten Tab -->
+        <div id="geoTabContent">
+          ${this.getGeoTabHtml(activeTab, lang)}
+        </div>
+  
+        <!-- 3 Slot Video YouTube Geografi (Otomatis sembunyi jika kosong) -->
+        ${availableVideos.length > 0 ? `
+          <div class="section" style="margin-top:40px;">
+            <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang)}</span></div>
+            <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${lang === 'en' ? 'Visual Explorations' : 'Eksplorasi Visual'}</h3>
+            <div class="video-grid">
+              ${availableVideos.map(v => `
+                <div class="video-card">
+                  <div>
+                    <span class="subject-badge">${v.ageFit}</span>
+                    <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
+                    <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
+                  </div>
+                  <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button">
+                    ${t('playVideo', lang)}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+  
+        <!-- Metadata Box Sumber Resmi -->
+        <div class="metadata-source-box">
+          <strong>${t('geoSourceTitle', lang)}</strong> ${GEO_DATA.metadata.source}<br>
+          <strong>${t('curationStatus', lang)}</strong> ${lang === 'en' ? 'Verified as of' : 'Diverifikasi per'} ${GEO_DATA.metadata.reviewedAt} ${lang === 'en' ? 'by' : 'oleh'} ${GEO_DATA.metadata.curator}.<br>
+          <strong>${t('scopeLabel', lang)}</strong> ${GEO_DATA.metadata.scope}
+        </div>
+      `;
+  
+      this.attachGeoEvents();
+  
+      if (activeTab === 'earth') {
+        const canvas = this.container.querySelector('#globeCanvas');
+        const overlay = this.container.querySelector('#globeOverlay');
+        if (canvas) {
+          this.globeVis = new GlobeVisualizer(canvas, overlay);
+          this.globeVis.startLoop();
+        }
+      } else if (activeTab === 'quizzes') {
+        this.renderSelectedQuiz();
+      }
+    }
+  
+    getGeoTabHtml(tab, lang = 'id') {
+      switch (tab) {
+        case 'earth':
+          return `
+            <div class="globe-stage-card">
+              <div class="globe-canvas-wrap">
+                <div class="globe-canvas-stack">
+                  <canvas id="globeCanvas" width="640" height="640"></canvas>
+                  <canvas id="globeOverlay" width="640" height="640"></canvas>
+                </div>
+                <div class="globe-controls">
+                  <button class="btn" id="btnGlobeRotateLeft" type="button">${t('rotateLeft', lang)}</button>
+                  <button class="btn" id="btnGlobeAutoRotate" type="button">${t('autoRotate', lang)}</button>
+                  <button class="btn" id="btnGlobeRotateRight" type="button">${t('rotateRight', lang)}</button>
+                  <button class="btn primary" id="btnGlobeFocusIndonesia" type="button">${t('focusIndonesia', lang)}</button>
+                  <div class="globe-zoom-group">
+                    <button class="iconbtn" id="btnGlobeZoomIn" type="button" aria-label="${t('zoomIn', lang)}" title="${t('zoomIn', lang)}">➕</button>
+                    <button class="iconbtn" id="btnGlobeZoomOut" type="button" aria-label="${t('zoomOut', lang)}" title="${t('zoomOut', lang)}">➖</button>
+                  </div>
+                </div>
+                <div class="globe-touch-tip">
+                  ${t('globeTouchTip', lang)}
+                </div>
+              </div>
+  
+              <div class="globe-info-copy">
+                <span class="globe-shape-badge">
+                  <span>🪐</span> ${t('earthShapeBadge', lang)}
+                </span>
+                <h3>${(lang === 'en' && GEO_DATA.earthIntro.headingEn) ? GEO_DATA.earthIntro.headingEn : GEO_DATA.earthIntro.heading}</h3>
+                <p style="font-size:14px; color:var(--muted); line-height:1.65;">
+                  ${(lang === 'en' && GEO_DATA.earthIntro.explanationEn) ? GEO_DATA.earthIntro.explanationEn : GEO_DATA.earthIntro.explanation}
+                </p>
+  
+                <div class="globe-highlight-list">
+                  ${GEO_DATA.earthIntro.highlights.map(h => `
+                    <div class="globe-highlight-item">
+                      <span class="icon">${h.icon}</span>
+                      <div>
+                        <strong>${(lang === 'en' && h.titleEn) ? h.titleEn : h.title}</strong>
+                        <p>${(lang === 'en' && h.descEn) ? h.descEn : h.desc}</p>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+  
+  
+        case 'countries': {
+          let list = GeoEngine.getCountriesByContinent(this.selectedContinent);
+          if (this.searchCountryQuery) {
+            const q = this.searchCountryQuery.trim().toLowerCase();
+            list = list.filter(c =>
+              c.name.toLowerCase().includes(q) ||
+              c.nameEn.toLowerCase().includes(q) ||
+              c.capital.toLowerCase().includes(q) ||
+              c.continent.toLowerCase().includes(q) ||
+              c.currency.toLowerCase().includes(q) ||
+              c.landmark.toLowerCase().includes(q)
+            );
+          }
+          const continents = ['Semua', 'Asia', 'Eropa', 'Afrika', 'Amerika Utara', 'Amerika Selatan', 'Oseania'];
+  
+          return `
+            <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:16px;">
+              <div class="search-input-box" style="width:100%;">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="countrySearchInput" placeholder="${t('searchCountryPlaceholder', lang)}" value="${this.searchCountryQuery}">
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div class="island-chips">
+                  ${continents.map(c => `
+                    <button class="chip-btn ${this.selectedContinent === c ? 'active' : ''}" data-continent="${c}" type="button">
+                      ${c === 'Semua' ? t('continentAll', lang) :
+                        c === 'Asia' ? t('continentAsia', lang) :
+                        c === 'Eropa' ? t('continentEurope', lang) :
+                        c === 'Afrika' ? t('continentAfrica', lang) :
+                        c === 'Amerika Utara' ? t('continentNorthAmerica', lang) :
+                        c === 'Amerika Selatan' ? t('continentSouthAmerica', lang) :
+                        t('continentOceania', lang)}
+                    </button>
+                  `).join('')}
+                </div>
+                <div style="font-weight:800; font-size:13px; color:var(--teal);">
+                  ${t('foundCountriesPrefix', lang)} ${list.length} ${t('countriesCountSuffix', lang)}
+                </div>
+              </div>
+            </div>
+  
+            <div class="country-grid">
+              ${list.map(c => `
+                <div class="country-card">
+                  <div>
+                    <div class="country-card-header">
+                      <span class="country-flag-icon">${c.flag}</span>
+                      <span class="subject-badge">${c.continent}</span>
+                    </div>
+                    <h4 class="country-name">${c.name} <span class="country-en-sub">(${c.nameEn})</span></h4>
+                    
+                    <div class="country-info-row">
+                      <span>🏛️ ${t('capitalLabel', lang)}</span>
+                      <strong>${c.capital}</strong>
+                    </div>
+                    <div class="country-info-row">
+                      <span>💰 ${t('currencyLabel', lang)}</span>
+                      <strong>${c.currency}</strong>
+                    </div>
+                    <div class="country-info-row">
+                      <span>🗣️ ${t('languageLabel', lang)}</span>
+                      <span>${c.language}</span>
+                    </div>
+                    <div class="country-landmark-box">
+                      <span class="landmark-tag">📍 ${t('landmarkLabel', lang)}</span>
+                      <p class="landmark-text">${c.landmark}</p>
+                    </div>
+                    <div class="country-fun-fact">
+                      <span class="fact-badge">${t('countryFunFactBadge', lang)}</span>
+                      <p>${c.funFact}</p>
+                    </div>
+                  </div>
+                  <button class="btn primary btn-focus-country-globe" data-lon="${c.coords[0]}" data-lat="${c.coords[1]}" data-name="${c.name} ${c.flag}" type="button">
+                    ${t('focusOnGlobeBtn', lang)}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+  
+        case 'provinces':
+          const provinces = GeoEngine.getProvincesByIsland(this.selectedIsland);
+          const islands = ['Semua', 'Sumatra', 'Jawa', 'Bali & Nusa Tenggara', 'Kalimantan', 'Sulawesi', 'Kepulauan Maluku', 'Papua'];
+  
+          return `
+            <div class="filter-bar">
+              <div class="island-chips">
+                ${islands.map(isl => `
+                  <button class="chip-btn ${this.selectedIsland === isl ? 'active' : ''}" data-island="${isl}" type="button">
+                    ${isl}
+                  </button>
+                `).join('')}
+              </div>
+              <div style="font-weight:800; font-size:13px; color:var(--teal);">
+                ${t('showingProvincesPrefix', lang)} ${provinces.length} ${t('provincesCountSuffix', lang)}
+              </div>
+            </div>
+  
+            <div class="provinces-grid">
+              ${provinces.map(p => `
+                <div class="province-card">
+                  <div>
+                    <div class="province-header">
+                      <span style="font-size:24px;">${p.icon}</span>
+                      <span class="subject-badge">${p.island}</span>
+                    </div>
+                    <h4 class="province-name">${p.name}</h4>
+                    <div class="capital-row">
+                      <span>🏛️ ${t('capitalLabel', lang)}</span>
+                      <strong>${p.capital}</strong>
+                    </div>
+                    <p class="province-fact">💡 ${p.funFact}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+  
+        case 'cities':
+          const cities = GeoEngine.getNonCapitalCities(this.searchCityQuery);
+  
+          return `
+            <div style="background:var(--accent-soft); border:1px solid var(--accent); border-radius:14px; padding:14px 18px; margin-bottom:20px; font-size:13px; color:var(--accent-ink); line-height:1.6;">
+              ${t('cityDisclaimer', lang)}
+            </div>
+  
+            <div class="filter-bar">
+              <div class="search-input-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="citySearchInput" placeholder="${t('searchCityPlaceholder', lang)}" value="${this.searchCityQuery}">
+              </div>
+              <div style="font-size:13px; font-weight:800; color:var(--teal);">
+                ${t('foundCitiesPrefix', lang)} ${cities.length} ${t('citiesSuffix', lang)}
+              </div>
+            </div>
+  
+            <div class="provinces-grid">
+              ${cities.map(c => `
+                <div class="province-card" style="${c.name === 'Malang' ? 'border: 2px solid var(--teal); background: var(--teal-soft);' : ''}">
+                  <div>
+                    <div class="province-header">
+                      <span style="font-size:24px;">${c.icon}</span>
+                      <span class="subject-badge" style="background:#ffb21b; color:#0e2e48;">${t('nonCapitalBadge', lang)}</span>
+                    </div>
+                    <h4 class="province-name" style="color:${c.name === 'Malang' ? 'var(--teal-soft-ink)' : 'inherit'};">
+                      ${c.name} ${c.name === 'Malang' ? t('mandatoryExampleBadge', lang) : ''}
+                    </h4>
+                    <div class="capital-row">
+                      <span>📍 ${t('partOfProvince', lang)}</span>
+                      <strong>${c.province} (${c.island})</strong>
+                    </div>
+                    <p class="province-fact">✨ ${c.desc}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+  
+        case 'bali':
+          const bali = GEO_DATA.baliModule;
+  
+          return `
+            <div class="bali-header-banner">
+              <span class="pill" style="background:rgba(255,255,255,0.2); margin-bottom:10px;">
+                ${t('specialBaliPill', lang)}
+              </span>
+              <h3 style="font-size:24px; font-weight:850; margin:6px 0 8px;">${(lang === 'en' && bali.titleEn) ? bali.titleEn : bali.title}</h3>
+              <p style="font-size:14px; margin:0; opacity:0.95; line-height:1.6;">${(lang === 'en' && bali.descriptionEn) ? bali.descriptionEn : bali.description}</p>
+            </div>
+  
+            <div class="bali-grid">
+              ${bali.regions.map(r => `
+                <div class="bali-region-card">
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                    <span class="region-type">${r.type}</span>
+                    <span style="font-size:22px;">${r.icon}</span>
+                  </div>
+                  <h4>${r.name}</h4>
+                  <div class="bali-gov-center">
+                    🏛️ ${t('govCenterLabel', lang)} <strong>${r.capital}</strong>
+                  </div>
+                  <p style="margin:8px 0 0; font-size:12.5px; color:var(--muted); line-height:1.55;">
+                    ${r.highlight}
+                  </p>
+                </div>
+              `).join('')}
+            </div>
+          `;
+  
+        case 'quizzes':
+          return `
+            <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+              ${GEO_DATA.quizzes.map((qz, idx) => `
+                <button class="btn ${this.activeQuizIndex === idx ? 'primary' : ''} btn-select-quiz" data-idx="${idx}" type="button">
+                  ${qz.title}
+                </button>
+              `).join('')}
+            </div>
+            <div id="quizContainer"></div>
+          `;
+  
+        default:
+          return '';
+      }
+    }
+  
+    bindFocusCountryButtons() {
+      const focusBtns = this.container.querySelectorAll('.btn-focus-country-globe');
+      focusBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lon = parseFloat(btn.getAttribute('data-lon'));
+          const lat = parseFloat(btn.getAttribute('data-lat'));
+          const name = btn.getAttribute('data-name');
+          appState.set({ activeGeoTab: 'earth' });
+          this.renderGeography();
+          if (this.globeVis) {
+            this.globeVis.focusCoordinates(lon, lat, name);
+          }
+        });
+      });
+    }
+  
+    attachGeoEvents() {
+      // Nav tabs switcher
+      const tabBtns = this.container.querySelectorAll('.geo-tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.getAttribute('data-geo-tab');
+          appState.set({ activeGeoTab: tab });
+          this.renderGeography();
+        });
+      });
+  
+      // Continent filters
+      const continentChips = this.container.querySelectorAll('.chip-btn[data-continent]');
+      continentChips.forEach(c => {
+        c.addEventListener('click', () => {
+          this.selectedContinent = c.getAttribute('data-continent');
+          this.renderGeography();
+        });
+      });
+  
+      // Country search input
+      const countryInput = this.container.querySelector('#countrySearchInput');
+      if (countryInput) {
+        countryInput.addEventListener('input', (e) => {
+          this.searchCountryQuery = e.target.value;
+          const grid = this.container.querySelector('.country-grid');
+          if (grid) {
+            let list = GeoEngine.getCountriesByContinent(this.selectedContinent);
+            const q = this.searchCountryQuery.trim().toLowerCase();
+            if (q) {
+              list = list.filter(c =>
+                c.name.toLowerCase().includes(q) ||
+                c.nameEn.toLowerCase().includes(q) ||
+                c.capital.toLowerCase().includes(q) ||
+                c.continent.toLowerCase().includes(q) ||
+                c.currency.toLowerCase().includes(q) ||
+                c.landmark.toLowerCase().includes(q)
+              );
+            }
+            grid.innerHTML = list.map(c => `
+              <div class="country-card">
+                <div>
+                  <div class="country-card-header">
+                    <span class="country-flag-icon">${c.flag}</span>
+                    <span class="subject-badge">${c.continent}</span>
+                  </div>
+                  <h4 class="country-name">${c.name} <span class="country-en-sub">(${c.nameEn})</span></h4>
+                  
+                  <div class="country-info-row">
+                    <span>🏛️ ${t('capitalLabel', appState.get().lang || 'id')}</span>
+                    <strong>${c.capital}</strong>
+                  </div>
+                  <div class="country-info-row">
+                    <span>💰 ${t('currencyLabel', appState.get().lang || 'id')}</span>
+                    <strong>${c.currency}</strong>
+                  </div>
+                  <div class="country-info-row">
+                    <span>🗣️ ${t('languageLabel', appState.get().lang || 'id')}</span>
+                    <span>${c.language}</span>
+                  </div>
+                  <div class="country-landmark-box">
+                    <span class="landmark-tag">📍 ${t('landmarkLabel', appState.get().lang || 'id')}</span>
+                    <p class="landmark-text">${c.landmark}</p>
+                  </div>
+                  <div class="country-fun-fact">
+                    <span class="fact-badge">${t('countryFunFactBadge', appState.get().lang || 'id')}</span>
+                    <p>${c.funFact}</p>
+                  </div>
+                </div>
+                <button class="btn primary btn-focus-country-globe" data-lon="${c.coords[0]}" data-lat="${c.coords[1]}" data-name="${c.name} ${c.flag}" type="button">
+                  ${t('focusOnGlobeBtn', appState.get().lang || 'id')}
+                </button>
+              </div>
+            `).join('');
+  
+            // Re-bind focus buttons in new grid
+            this.bindFocusCountryButtons();
+          }
+        });
+      }
+  
+      // Bind focus country buttons
+      this.bindFocusCountryButtons();
+  
+      // Island filters
+      const chipBtns = this.container.querySelectorAll('.chip-btn[data-island]');
+      chipBtns.forEach(c => {
+        c.addEventListener('click', () => {
+          this.selectedIsland = c.getAttribute('data-island');
+          this.renderGeography();
+        });
+      });
+  
+      // City search input
+      const cityInput = this.container.querySelector('#citySearchInput');
+      if (cityInput) {
+        cityInput.addEventListener('input', (e) => {
+          this.searchCityQuery = e.target.value;
+          const grid = this.container.querySelector('.provinces-grid');
+          if (grid) {
+            const cities = GeoEngine.getNonCapitalCities(this.searchCityQuery);
+            grid.innerHTML = cities.map(c => `
+              <div class="province-card" style="${c.name === 'Malang' ? 'border: 2px solid var(--teal); background: var(--teal-soft);' : ''}">
+                <div>
+                  <div class="province-header">
+                    <span style="font-size:24px;">${c.icon}</span>
+                    <span class="subject-badge" style="background:#ffb21b; color:#0e2e48;">Bukan Ibu Kota</span>
+                  </div>
+                  <h4 class="province-name" style="color:${c.name === 'Malang' ? 'var(--teal-soft-ink)' : 'inherit'};">
+                    ${c.name} ${c.name === 'Malang' ? '⭐ (Contoh Wajib)' : ''}
+                  </h4>
+                  <div class="capital-row">
+                    <span>📍 Bagian dari Provinsi:</span>
+                    <strong>${c.province} (${c.island})</strong>
+                  </div>
+                  <p class="province-fact">✨ ${c.desc}</p>
+                </div>
+              </div>
+            `).join('');
+          }
+        });
+      }
+  
+      // Globe controls
+      const btnRotateLeft = this.container.querySelector('#btnGlobeRotateLeft');
+      const btnRotateRight = this.container.querySelector('#btnGlobeRotateRight');
+      const btnAutoRotate = this.container.querySelector('#btnGlobeAutoRotate');
+      const btnFocusId = this.container.querySelector('#btnGlobeFocusIndonesia');
+      const btnZoomIn = this.container.querySelector('#btnGlobeZoomIn');
+      const btnZoomOut = this.container.querySelector('#btnGlobeZoomOut');
+  
+      if (btnRotateLeft) {
+        btnRotateLeft.addEventListener('click', () => {
+          if (this.globeVis) this.globeVis.rotateBy(-25);
+        });
+      }
+      if (btnRotateRight) {
+        btnRotateRight.addEventListener('click', () => {
+          if (this.globeVis) this.globeVis.rotateBy(25);
+        });
+      }
+      if (btnAutoRotate) {
+        btnAutoRotate.addEventListener('click', () => {
+          if (this.globeVis) {
+            const isSpinning = this.globeVis.toggleAutoRotate();
+            btnAutoRotate.textContent = isSpinning ? '⏸ Berhenti' : '▶ Putar';
+          }
+        });
+      }
+      if (btnFocusId) {
+        btnFocusId.addEventListener('click', () => {
+          if (this.globeVis) {
+            this.globeVis.focusIndonesia();
+          }
+        });
+      }
+      if (btnZoomIn) {
+        btnZoomIn.addEventListener('click', () => {
+          if (this.globeVis) {
+            this.globeVis.zoomBy(0.25);
+          }
+        });
+      }
+      if (btnZoomOut) {
+        btnZoomOut.addEventListener('click', () => {
+          if (this.globeVis) {
+            this.globeVis.zoomBy(-0.25);
+          }
+        });
+      }
+  
+      // Quiz tabs
+      const quizSelectBtns = this.container.querySelectorAll('.btn-select-quiz');
+      quizSelectBtns.forEach(qb => {
+        qb.addEventListener('click', () => {
+          this.activeQuizIndex = parseInt(qb.getAttribute('data-idx'), 10);
+          this.renderGeography();
+        });
+      });
+  
+      const quizWrap = this.container.querySelector('#quizContainer');
+      if (quizWrap) {
+        const qz = GEO_DATA.quizzes[this.activeQuizIndex];
+        new QuizRunner(quizWrap, qz, () => {
+          appState.navigate('progress');
+        });
+      }
+  
+      // Video play
+      const playBtns = this.container.querySelectorAll('.btn-play-video');
+      playBtns.forEach(pb => {
+        pb.addEventListener('click', () => {
+          const title = pb.getAttribute('data-title');
+          const url = pb.getAttribute('data-url');
+          if (this.videoModal) {
+            this.videoModal.open(title, url);
+          }
+        });
+      });
+    }
+  
+    // ==========================================================
+    // 8 MATA PELAJARAN LAINNYA
+    // ==========================================================
+    renderGenericSubject(subjectId) {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const meta = SUBJECTS.find(s => s.id === subjectId);
+      if (!meta) return;
+  
+      let subjectData = null;
+      if (subjectId === 'bahasa-indonesia') subjectData = BAHASA_INDONESIA_DATA;
+      else if (subjectId === 'bahasa-inggris') subjectData = ENGLISH_DATA;
+      else if (subjectId === 'pancasila') subjectData = PANCASILA_DATA;
+      else if (subjectId === 'bahasa-bali') subjectData = BAHASA_BALI_DATA;
+      else if (subjectId === 'seni-rupa') subjectData = SENI_RUPA_DATA;
+      else if (subjectId === 'pjok') subjectData = PJOK_DATA;
+      else if (subjectId === 'agama') subjectData = AGAMA_DATA;
+      else if (subjectId === 'kokurikuler') subjectData = KOKURIKULER_DATA;
+  
+      if (!subjectData) {
+        this.container.innerHTML = `<p>${isEn ? 'Content is being prepared.' : 'Materi sedang dipersiapkan.'}</p>`;
+        return;
+      }
+  
+      const title = (isEn && subjectData.titleEn) ? subjectData.titleEn : subjectData.title;
+      const subtitle = (isEn && subjectData.subtitleEn) ? subjectData.subtitleEn : subjectData.subtitle;
+      const badge = getSubjectBadge(meta, lang);
+  
+      this.container.innerHTML = `
+        <div class="section-header">
+          <div class="math-hero-badge" style="background:${meta.accentLight}; color:${meta.accentColor}; border-color:${meta.accentBorder};">
+            ${meta.icon} ${badge}
+          </div>
+          <h2 class="section-title">${title}</h2>
+          <p class="section-sub">${subtitle}</p>
+        </div>
+  
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          ${subjectData.topics.map((top, idx) => {
+            const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
+            const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
+            const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
+  
+            return `
+              <div class="quiz-box">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                  <span class="no" style="background:var(--navy); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
+                    ${isEn ? 'Topic' : 'Topik'} ${idx + 1}
+                  </span>
+                  <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                </div>
+                <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
+                  ${topDesc}
+                </p>
+  
+                ${checklist ? `
+                  <div style="background:var(--paper); border-radius:12px; padding:14px; margin-bottom:16px;">
+                    <strong style="font-size:13px; display:block; margin-bottom:8px;">${isEn ? 'Independent Mission:' : 'Misi Mandiri:'}</strong>
+                    <ul style="margin:0; padding-left:20px; font-size:13px; color:var(--ink);">
+                      ${checklist.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+  
+                <!-- Mini Quiz / Interaktivitas Topik -->
+                ${top.activities ? `
+                  <div class="topic-activity-wrap" id="act_${top.id}"></div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+  
+      // Render kuis di tiap topik
+      subjectData.topics.forEach(top => {
+        // Untuk bahasa-inggris, gunakan top.activities aslinya sesuai user request ("kecuali pelajaran bahasa inggris")
+        const activities = (isEn && top.activitiesEn) ? top.activitiesEn : top.activities;
+        if (activities) {
+          const wrap = this.container.querySelector(`#act_${top.id}`);
+          if (wrap) {
+            const fakeQuiz = {
+              id: top.id,
+              title: (isEn && top.titleEn) ? top.titleEn : top.title,
+              questions: activities
+            };
+            new QuizRunner(wrap, fakeQuiz, () => {
+              store.completeLesson(`${subjectId}:${top.id}`);
+            });
+          }
+        }
+      });
+    }
+  }
+  
+  
+
+  // --- Source: js/components/challenge-view.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Daily Challenge Component
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 10:40:00
+  // ================================================================
+  
+  
+  
+  
+  
+  class ChallengeViewComponent {
+    constructor(container) {
+      this.container = container;
+    }
+  
+    render() {
+      const lang = appState.get().lang || 'id';
+      const dc = store.data.dailyChallenge || { completedCount: 0, targetCount: 3, claimed: false };
+      const pct = Math.min(100, Math.round((dc.completedCount / dc.targetCount) * 100));
+  
+      const challengeTasks = [
+        {
+          id: 'c1',
+          icon: '🧮',
+          title: lang === 'en' ? 'Quick Calculation Practice' : 'Latihan Hitung Cepat',
+          desc: lang === 'en' ? 'Try one addition trick in the Mathematics module.' : 'Coba satu jurus penjumlahan di modul Matematika.',
+          done: dc.completedCount >= 1,
+          actionLabel: lang === 'en' ? 'Open Math' : 'Buka Matematika',
+          route: 'subject',
+          subjectId: 'matematika'
+        },
+        {
+          id: 'c2',
+          icon: '🌍',
+          title: lang === 'en' ? 'Explore 1 Indonesian Province' : 'Jelajah 1 Provinsi Indonesia',
+          desc: lang === 'en' ? 'Find out the capital of your favorite province.' : 'Cari tahu ibu kota salah satu provinsi favoritmu.',
+          done: dc.completedCount >= 2,
+          actionLabel: lang === 'en' ? 'Open Geography' : 'Buka Geografi',
+          route: 'subject',
+          subjectId: 'geografi'
+        },
+        {
+          id: 'c3',
+          icon: '📖',
+          title: lang === 'en' ? 'Cheerful Greeting of the Day' : 'Sapaan Ceria Hari Ini',
+          desc: lang === 'en' ? 'Learn a greeting in English or Balinese.' : 'Pelajari salam dalam bahasa Inggris atau bahasa Bali.',
+          done: dc.completedCount >= 3,
+          actionLabel: lang === 'en' ? 'Open English' : 'Buka B. Inggris',
+          route: 'subject',
+          subjectId: 'bahasa-inggris'
+        }
+      ];
+  
+      this.container.innerHTML = `
+        <div class="section-header">
+          <div class="math-hero-badge" style="background:#fff6e0; color:#946808; border-color:#ffb21b;">
+            ${t('challengeBadge', lang)}
+          </div>
+          <h2 class="section-title">${t('challengeTitle', lang)}</h2>
+          <p class="section-sub">${t('challengeSub', lang)}</p>
+        </div>
+  
+        <!-- Kartu Progress Tantangan -->
+        <div class="quiz-box" style="background:linear-gradient(135deg, var(--card), var(--paper));">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <strong style="font-size:16px;">${t('todayTargetPrefix', lang)} ${dc.completedCount} ${t('of', lang)} ${dc.targetCount} ${t('doneCountLabel', lang)}</strong>
+            <span style="font-weight:900; font-size:18px; color:var(--teal);">${pct}%</span>
+          </div>
+  
+          <div style="height:14px; background:var(--line); border-radius:999px; overflow:hidden; margin-bottom:18px;">
+            <div style="width:${pct}%; height:100%; background:linear-gradient(90deg, #ffb21b, #1e7b45); border-radius:999px; transition:width 0.4s ease;"></div>
+          </div>
+  
+          ${pct === 100 ? `
+            <div class="feedback-banner success show" style="display:flex; margin-top:0;">
+              ${t('challengeSuccessMsg', lang)}
+            </div>
+          ` : `
+            <div style="font-size:13px; color:var(--muted);">
+              ${t('challengePrompt', lang)}
+            </div>
+          `}
+        </div>
+  
+        <!-- Daftar 3 Tugas Tantangan -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin-top:24px;">
+          ${challengeTasks.map(task => `
+            <div class="quiz-box" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; ${task.done ? 'border-color:var(--green); background:var(--green-soft);' : ''}">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:28px;">${task.icon}</span>
+                  <span class="subject-badge" style="${task.done ? 'background:var(--green); color:#fff;' : ''}">
+                    ${task.done ? t('statusDone', lang) : t('statusPending', lang)}
+                  </span>
+                </div>
+                <h4 style="margin:0 0 6px; font-size:16px; font-weight:800;">${task.title}</h4>
+                <p style="margin:0; font-size:12.5px; color:var(--muted); line-height:1.5;">${task.desc}</p>
+              </div>
+              <div style="margin-top:16px;">
+                <button class="btn ${task.done ? '' : 'primary'} btn-start-task" data-route="${task.route}" data-subject="${task.subjectId}" type="button" style="width:100%;">
+                  ${task.done ? t('repeatLessonBtn', lang) : task.actionLabel + ' ➔'}
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const taskBtns = this.container.querySelectorAll('.btn-start-task');
+      taskBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const route = btn.getAttribute('data-route');
+          const subject = btn.getAttribute('data-subject');
+          appState.navigate(route, subject);
+        });
+      });
+    }
+  }
+  
+  
+
+  // --- Source: js/components/progress-view.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Progress & Parent Summary View
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 10:42:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  class ProgressViewComponent {
+    constructor(container) {
+      this.container = container;
+    }
+  
+    render() {
+      const s = store.data;
+      const lang = appState.get().lang || 'id';
+      const completedCount = (s.completedLessons || []).length;
+      const totalEstimate = 25;
+      const overallPct = Math.min(100, Math.round((completedCount / totalEstimate) * 100));
+  
+      this.container.innerHTML = `
+        <div class="section-header">
+          <div class="math-hero-badge" style="background:#edfbf2; color:#1e7b45; border-color:#5be08f;">
+            ${t('reportBadge', lang)}
+          </div>
+          <h2 class="section-title">${t('reportTitle', lang)}</h2>
+          <p class="section-sub">${t('reportSub', lang)}</p>
+        </div>
+  
+        <!-- Ringkasan Statistik Utama -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:28px;">
+          <div class="quiz-box" style="margin:0; text-align:center;">
+            <div style="font-size:36px; margin-bottom:4px;">⭐</div>
+            <div style="font-size:28px; font-weight:900; color:var(--ink);">${s.stars || 0}</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">${t('totalGoldStars', lang)}</div>
+          </div>
+  
+          <div class="quiz-box" style="margin:0; text-align:center;">
+            <div style="font-size:36px; margin-bottom:4px;">🔥</div>
+            <div style="font-size:28px; font-weight:900; color:var(--ink);">${s.streakDays || 1} ${t('days', lang)}</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">${t('activeStreak', lang)}</div>
+          </div>
+  
+          <div class="quiz-box" style="margin:0; text-align:center;">
+            <div style="font-size:36px; margin-bottom:4px;">🏆</div>
+            <div style="font-size:28px; font-weight:900; color:var(--ink);">${(s.badges || []).length}</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">${t('badgesWon', lang)}</div>
+          </div>
+  
+          <div class="quiz-box" style="margin:0; text-align:center;">
+            <div style="font-size:36px; margin-bottom:4px;">🚀</div>
+            <div style="font-size:28px; font-weight:900; color:var(--teal);">${overallPct}%</div>
+            <div style="font-size:12px; color:var(--muted); font-weight:700;">${t('levelLabel', lang)}</div>
+          </div>
+        </div>
+  
+        <!-- Koleksi Lencana (Badges) -->
+        <div class="section">
+          <h3 style="font-size:19px; font-weight:800; margin:0 0 14px;">${t('kidBadgesTitle', lang)}</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:14px;">
+            ${(s.badges || []).map(b => `
+              <div class="quiz-box" style="margin:0; display:flex; align-items:center; gap:14px; padding:16px;">
+                <span style="font-size:32px;">${b.icon}</span>
+                <div>
+                  <strong style="font-size:14px; display:block;">${(lang === 'en' && b.nameEn) ? b.nameEn : b.name}</strong>
+                  <span style="font-size:12px; color:var(--muted);">${(lang === 'en' && b.descEn) ? b.descEn : b.desc}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+  
+        <!-- Panduan Khusus Orang Tua / Pendamping -->
+        <div class="quiz-box" style="margin-top:30px; border-left:5px solid var(--teal);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <h3 style="font-size:17px; font-weight:800; margin:0;">${t('parentSummaryTitle', lang)}</h3>
+            <span class="subject-badge">${t('parentPrivacyNotice', lang)}</span>
+          </div>
+          <p style="font-size:13px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
+            ${t('parentSummaryDesc', lang)}
+          </p>
+  
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            ${SUBJECTS.slice(0, 5).map(sub => {
+              const count = (s.completedLessons || []).filter(k => k.startsWith(sub.id)).length;
+              const subPct = Math.min(100, count * 35);
+              return `
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12.5px; font-weight:750; margin-bottom:4px;">
+                    <span>${sub.icon} ${getSubjectName(sub, lang)}</span>
+                    <span style="color:var(--teal);">${subPct}% ${t('completedLabel', lang)}</span>
+                  </div>
+                  <div style="height:8px; background:var(--paper); border-radius:999px; overflow:hidden;">
+                    <div style="width:${subPct}%; height:100%; background:var(--teal); border-radius:999px;"></div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+  
+          <div style="margin-top:24px; display:flex; justify-content:flex-end;">
+            <button class="btn" id="btnResetProgress" type="button" style="color:var(--red); border-color:var(--red-soft);">
+              ${t('resetProgressBtn', lang)}
+            </button>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const resetBtn = this.container.querySelector('#btnResetProgress');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          const lang = appState.get().lang || 'id';
+          if (confirm(t('resetConfirmPrompt', lang))) {
+            store.resetProgress();
+            alert(t('resetSuccessAlert', lang));
+            this.render();
+          }
+        });
+      }
+    }
+  }
+  
+  
+
+  // --- Source: js/app.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Main Application Router & Bootstrap
+  // Development · Anabhi Dev
+  // Version   : 1.1
+  // Generated : 10 September 2026, 11:10:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  class App {
+    constructor() {
+      this.topbarEl = document.getElementById('topbar');
+      this.sidebarEl = document.getElementById('sidebar');
+      this.scrimEl = document.getElementById('scrim');
+      this.shellEl = document.getElementById('shell');
+      this.mainEl = document.getElementById('main');
+      this.videoModalEl = document.getElementById('videoModal');
+  
+      // Komponen UI
+      this.topbar = new TopbarComponent(this.topbarEl);
+      this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
+      this.videoModal = new VideoModalComponent(this.videoModalEl);
+      this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal);
+      this.challengeView = new ChallengeViewComponent(this.mainEl);
+      this.progressView = new ProgressViewComponent(this.mainEl);
+  
+      this.initPWA();
+      this.initRouting();
+      this.bindState();
+    }
+  
+    initPWA() {
+      const isLocalOrHttps = window.location.protocol === 'https:' ||
+                             window.location.hostname === 'localhost' ||
+                             window.location.hostname === '127.0.0.1';
+      if ('serviceWorker' in navigator && isLocalOrHttps) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then((reg) => {
+              console.log('[PWA] Service Worker aktif terdaftar:', reg.scope);
+              reg.addEventListener('updatefound', () => {
+                const nw = reg.installing;
+                if (!nw) return;
+                nw.addEventListener('statechange', () => {
+                  if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                    nw.postMessage({ type: 'SKIP_WAITING' });
+                  }
+                });
+              });
+            })
+            .catch((err) => {
+              console.warn('[PWA] Pendaftaran Service Worker dilewati:', err);
+            });
+        });
+      }
+    }
+  
+    initRouting() {
+      const handleHash = () => {
+        const hash = window.location.hash || '#home';
+        if (hash.startsWith('#subject/')) {
+          const subjectId = hash.replace('#subject/', '');
+          appState.set({ currentRoute: 'subject', currentSubjectId: subjectId, drawerOpen: false });
+        } else if (hash === '#tantangan') {
+          appState.set({ currentRoute: 'tantangan', drawerOpen: false });
+        } else if (hash === '#progress') {
+          appState.set({ currentRoute: 'progress', drawerOpen: false });
+        } else if (hash === '#semua-pelajaran') {
+          appState.set({ currentRoute: 'all-subjects', drawerOpen: false });
+        } else {
+          appState.set({ currentRoute: 'home', currentSubjectId: null, drawerOpen: false });
+        }
+      };
+  
+      window.addEventListener('hashchange', handleHash);
+      handleHash();
+    }
+  
+    bindState() {
+      appState.subscribe((state) => {
+        this.topbar.render();
+        this.sidebar.render();
+        this.renderMain(state);
+      });
+  
+      // Initial render
+      this.topbar.render();
+      this.sidebar.render();
+      this.renderMain(appState.get());
+    }
+  
+    renderMain(state) {
+      switch (state.currentRoute) {
+        case 'home':
+          this.renderHome();
+          break;
+        case 'subject':
+          this.subjectView.render(state.currentSubjectId);
+          break;
+        case 'tantangan':
+          this.challengeView.render();
+          break;
+        case 'progress':
+          this.progressView.render();
+          break;
+        case 'all-subjects':
+          this.renderAllSubjects();
+          break;
+        default:
+          this.renderHome();
+      }
+    }
+  
+    renderHome() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+  
+      this.mainEl.innerHTML = `
+        <!-- Hero Banner Ceria -->
+        <section class="hero" id="heroSection">
+          <div class="hero-copy">
+            <div class="pill"><span class="dot"></span> ${t('pill', lang)}</div>
+            <span class="product-mark">SMART STUDY</span>
+            <h1>${t('heroTitlePrefix', lang)}<span>${t('heroTitleAccent', lang)}</span></h1>
+            <h2>${t('heroSubtitle', lang)}</h2>
+            <p class="lead">
+              ${t('heroLead', lang)}
+            </p>
+            <div class="hero-actions">
+              <button class="btn primary" id="heroBtnMath" type="button">
+                ${t('heroBtnMath', lang)}
+              </button>
+              <button class="btn" id="heroBtnGeo" type="button">
+                ${t('heroBtnGeo', lang)}
+              </button>
+            </div>
+          </div>
+  
+          <div class="hero-art">
+            <div class="hero-card-visual">
+              <div class="hero-feature-item">
+                <span class="icon">🧮</span>
+                <div>
+                  <strong>${t('featureMathTitle', lang)}</strong>
+                  <span>${t('featureMathDesc', lang)}</span>
+                </div>
+              </div>
+              <div class="hero-feature-item">
+                <span class="icon">🌍</span>
+                <div>
+                  <strong>${t('featureGeoTitle', lang)}</strong>
+                  <span>${t('featureGeoDesc', lang)}</span>
+                </div>
+              </div>
+              <div class="hero-feature-item">
+                <span class="icon">⭐</span>
+                <div>
+                  <strong>${t('featureBadgeTitle', lang)}</strong>
+                  <span>${t('featureBadgeDesc', lang)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- Section: 10 Mata Pelajaran Lengkap -->
+        <section class="section" id="subjectsSection">
+          <div class="section-header">
+            <div class="eyebrow"><span class="no">${t('tenSubjectsEyebrow', lang)}</span><span class="lbl">${t('tenSubjectsBadge', lang)}</span></div>
+            <h2 class="section-title">${t('whatToLearnTitle', lang)}</h2>
+            <p class="section-sub">${t('whatToLearnSub', lang)}</p>
+          </div>
+  
+          <div class="subject-grid">
+            ${SUBJECTS.map(sub => {
+              const displayName = getSubjectName(sub, lang);
+              const badge = getSubjectBadge(sub, lang);
+              const desc = getSubjectDesc(sub, lang);
+  
+              return `
+                <div class="subject-card" data-subject-id="${sub.id}">
+                  <div>
+                    <div class="subject-card-top">
+                      <div class="subject-icon" style="background:${sub.accentLight}; color:${sub.accentColor};">${sub.icon}</div>
+                      <span class="subject-badge" style="background:${sub.accentLight}; color:${sub.accentColor};">${badge}</span>
+                    </div>
+                    <h3>${displayName}</h3>
+                    <p>${desc}</p>
+                  </div>
+                  <div class="subject-card-footer">
+                    <span>${sub.topicsCount} ${t('topicsCountLabel', lang)}</span>
+                    <span>${t('openSubject', lang)}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </section>
+  
+        <!-- Footer Aplikasi -->
+        <footer class="app-footer">
+          <strong>AnabhiDev Smart Study</strong> — ${t('pill', lang)}<br>
+          ${t('developmentCredit', lang)} · 2026
+        </footer>
+      `;
+  
+      // Pasang event listener untuk card dan tombol hero
+      const heroBtnMath = this.mainEl.querySelector('#heroBtnMath');
+      if (heroBtnMath) {
+        heroBtnMath.addEventListener('click', () => {
+          appState.navigate('subject', 'matematika');
+        });
+      }
+  
+      const heroBtnGeo = this.mainEl.querySelector('#heroBtnGeo');
+      if (heroBtnGeo) {
+        heroBtnGeo.addEventListener('click', () => {
+          appState.navigate('subject', 'geografi');
+        });
+      }
+  
+      const subjectCards = this.mainEl.querySelectorAll('.subject-card');
+      subjectCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.getAttribute('data-subject-id');
+          appState.navigate('subject', id);
+        });
+      });
+    }
+  
+    renderAllSubjects() {
+      this.renderHome();
+    }
+  }
+  
+  // Bootstrap saat DOM siap
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => {
+      new App();
+    });
+  } else {
+    new App();
+  }
+  
+
+  // Bootstrap saat DOM siap
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => {
+      new App();
+    });
+  } else {
+    new App();
+  }
+
+})();

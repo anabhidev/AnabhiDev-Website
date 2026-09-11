@@ -1,0 +1,207 @@
+/* ================================================================
+AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+CSS · Base Styles & Design Tokens
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 10 September 2026, 10:05:00
+================================================================ */
+
+/* ============================================================
+   1. DESIGN TOKENS (Light & Dark Mode) — SOP Website v1.9 Kategori 13
+   ============================================================ */
+:root, [data-theme="light"] {
+  --paper: #f4f7fa;
+  --card: #ffffff;
+  --ink: #112a43;             /* Kontras 12.8:1 di atas --card */
+  --muted: #53697e;           /* Kontras 5.2:1 di atas --card */
+  --line: #dce5ec;
+  --line-strong: #bacddc;
+  
+  --navy: #173752;            /* Warna identitas Anabhi Dev */
+  --navy-deep: #0e2e48;
+  --teal: #056268;            /* Varian gelap: kontras 6.7:1 di atas putih */
+  --teal-soft: #e9f8f8;
+  --teal-soft-ink: #05585d;
+  
+  --gold: #ffb21b;
+  --accent: #8a6a1f;          /* Varian gelap untuk teks terang */
+  --accent-soft: #fdf7e8;
+  --accent-ink: #684f13;
+  
+  --green: #1e7b45;
+  --green-soft: #edfbf2;
+  --red: #b22727;
+  --red-soft: #fdf0f0;
+
+  --shadow: 0 16px 40px rgba(20, 55, 80, 0.08);
+  --shadow-soft: 0 6px 20px rgba(20, 55, 80, 0.05);
+
+  --rail-bg: #173752;
+  --rail-ink: #dce8f0;
+  --rail-num: #8db6ce;
+  --rail-kicker: #a9c3d5;
+  --rail-foot: #9db7c8;
+
+  --header-h: 58px;
+  --sidebar-w: 260px;
+  --sidebar-w-collapsed: 72px;
+}
+
+[data-theme="dark"] {
+  --paper: #0b1829;
+  --card: #142c3e;
+  --ink: #e8eef7;             /* Kontras 12.5:1 di atas --card */
+  --muted: #9ab0c2;           /* Kontras 5.1:1 di atas --card */
+  --line: #2a4659;
+  --line-strong: #3b5f78;
+
+  --navy: #0b2438;
+  --navy-deep: #071a2b;
+  --teal: #5be0df;            /* Varian terang: kontras 8.9:1 di atas --card */
+  --teal-soft: #10313f;
+  --teal-soft-ink: #7fe9e7;
+
+  --gold: #ffc44d;
+  --accent: #e8c468;          /* Varian terang untuk teks gelap */
+  --accent-soft: #2d2613;
+  --accent-ink: #ffd978;
+
+  --green: #48bb78;
+  --green-soft: #143522;
+  --red: #ff7b7b;
+  --red-soft: #381818;
+
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+  --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.28);
+
+  --rail-bg: #0b2438;
+  --rail-ink: #dce8f0;
+  --rail-num: #8db6ce;
+  --rail-kicker: #a9c3d5;
+  --rail-foot: #9db7c8;
+}
+
+/* ============================================================
+   2. RESET + OVERFLOW LOCK (SOP Kategori 1)
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Overflow-x lock WAJIB pada html DAN body dengan max-width 100% (bukan 100vw) */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Accessibility focus indicator (SOP Kategori 8) */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   3. CUSTOM SCROLLBAR (SOP Kategori 13)
+   ============================================================ */
+.sidebar, .custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.sidebar::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}
+
+/* ============================================================
+   4. SHELL & MAIN LAYOUT (Aturan Width Mandatory SOP Kategori 1)
+   Lebar diatur HANYA via clamp() padding pada #main, tanpa max-width kaku.
+   ============================================================ */
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  padding-top: var(--header-h);
+  transition: grid-template-columns 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shell.collapsed {
+  grid-template-columns: var(--sidebar-w-collapsed) minmax(0, 1fr);
+}
+
+#main {
+  grid-column: 2;
+  min-width: 0;
+  padding: 36px clamp(18px, 4vw, 120px) 80px;
+}
+
+.section {
+  margin: 0 0 44px;
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+

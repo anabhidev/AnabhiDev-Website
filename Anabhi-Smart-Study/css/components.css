@@ -1,0 +1,929 @@
+/* ================================================================
+AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+CSS · Reusable UI Components & Navigation Shell
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 10 September 2026, 10:08:00
+================================================================ */
+
+/* ============================================================
+   1. TOPBAR (SOP Kategori 14)
+   ============================================================ */
+.topbar {
+  height: var(--header-h);
+  background: var(--navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  position: fixed;
+  z-index: 80;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hdr-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 14.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.hdr-title .logo-mini {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.hdr-title .app-name {
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.hdr-title .grade-badge {
+  background: rgba(92, 227, 222, 0.2);
+  color: var(--teal-soft-ink);
+  color: #5ce3de;
+  border: 1px solid rgba(92, 227, 222, 0.35);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat-pill .icon {
+  font-size: 14px;
+}
+
+.iconbtn {
+  height: 44px;
+  min-width: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: #ffffff;
+  border-radius: 11px;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.iconbtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.btn-pwa-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffb21b;
+  color: #0e2e48;
+  border: none;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 38px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-pwa-install:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 178, 27, 0.4);
+}
+
+#menuBtn {
+  display: none;
+}
+
+/* ============================================================
+   2. SIDEBAR (Collapsible Desktop & Tooltip Support)
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  top: var(--header-h);
+  bottom: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  background: var(--rail-bg);
+  color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 10px 48px;
+  z-index: 70;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.shell.collapsed .sidebar {
+  width: var(--sidebar-w-collapsed);
+  padding: 14px 6px 48px;
+}
+
+/* Logo Box Anabhi Dev di Sidebar: Besar, Seukuran Sidebar, Transparan, Tanpa Title Web (SOP 2.0) */
+.sidebar-top-branding {
+  position: relative;
+  margin-bottom: 14px;
+  padding: 4px 4px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 76px;
+  background: transparent !important;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  padding: 2px 28px 2px 4px;
+}
+
+.logo-box:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.logo-box img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.btn-collapse-toggle {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border-radius: 8px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  z-index: 2;
+}
+
+.btn-collapse-toggle:hover {
+  background: rgba(20, 174, 179, 0.3);
+  border-color: #5be0df;
+  transform: scale(1.08);
+}
+
+.shell.collapsed .logo-box {
+  height: 38px;
+  padding: 0;
+}
+
+.shell.collapsed .btn-collapse-toggle {
+  position: static;
+  margin-top: 6px;
+}
+
+.kicker {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #8bb0cf !important;
+  font-weight: 850;
+  margin: 14px 8px 6px;
+  user-select: none;
+}
+
+.shell.collapsed .kicker {
+  text-align: center;
+  margin: 12px 0 6px;
+  font-size: 8px;
+  letter-spacing: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Nav Item Sidebar — Warna Kontras Tinggi & Bersih, Single-Line */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 650;
+  min-height: 42px;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.nav-item .icon {
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-item .label {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+.nav-item:hover {
+  background: rgba(20, 174, 179, 0.18) !important;
+  border-color: rgba(91, 224, 223, 0.35) !important;
+  color: #ffffff !important;
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: rgba(20, 174, 179, 0.28) !important;
+  border-color: #5be0df !important;
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.nav-item.active .label {
+  color: #ffffff !important;
+}
+
+/* Tooltip saat collapsed */
+.shell.collapsed .nav-item .label {
+  display: none;
+}
+
+.shell.collapsed .nav-item {
+  justify-content: center;
+  padding: 8px 0;
+  gap: 0;
+}
+
+.shell.collapsed .nav-item:hover {
+  transform: none;
+}
+
+.shell.collapsed .nav-item:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  margin-left: 10px;
+  background: #092032;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(91, 224, 223, 0.35);
+  pointer-events: none;
+}
+
+.sidebar-foot {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 14px 8px 4px;
+  color: #8bb0cf;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.sidebar-foot strong {
+  color: #ffffff;
+  display: block;
+  font-size: 11.5px;
+  margin-bottom: 2px;
+}
+
+.shell.collapsed .sidebar-foot {
+  display: none;
+}
+
+.drawer-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 25, 39, 0.65);
+  backdrop-filter: blur(2px);
+  z-index: 65;
+  display: none;
+}
+
+.drawer-scrim.show {
+  display: block;
+}
+
+/* ============================================================
+   3. HERO SECTION (Playful Educational Theme)
+   ============================================================ */
+.hero {
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #185a84 0%, #1d7198 52%, #177f9b 100%);
+  box-shadow: var(--shadow);
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  padding: 44px 40px;
+  margin-bottom: 36px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  right: -100px;
+  bottom: -220px;
+  box-shadow: 0 0 0 35px rgba(255, 255, 255, 0.025), 0 0 0 70px rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffb21b;
+}
+
+.product-mark {
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #9cf2ed;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4.5vw, 56px);
+  line-height: 1.05;
+  margin: 20px 0 16px;
+  letter-spacing: -1.5px;
+  font-weight: 850;
+}
+
+.hero h1 span {
+  display: block;
+  color: #5ce3de;
+}
+
+.hero h2 {
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 600;
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.4;
+}
+
+.hero .lead {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 22px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.hero-art {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-card-visual {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+}
+
+.hero-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.hero-feature-item .icon {
+  font-size: 24px;
+}
+
+.hero-feature-item strong {
+  display: block;
+  font-size: 13.5px;
+  color: #ffffff;
+}
+
+.hero-feature-item span {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================ */
+.btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  min-height: 44px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background: var(--navy-deep);
+}
+
+[data-theme="dark"] .btn.primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #071a2b;
+}
+
+[data-theme="dark"] .btn.primary:hover {
+  background: #4ac7c6;
+  border-color: #4ac7c6;
+}
+
+.btn.accent {
+  background: #ffb21b;
+  border-color: #ffb21b;
+  color: #0e2e48;
+}
+
+.btn.accent:hover {
+  background: #f5a60b;
+}
+
+.hero .btn {
+  background: #ffffff;
+  color: var(--navy-deep);
+  border-color: #ffffff;
+}
+
+.hero .btn.primary {
+  background: var(--navy-deep);
+  border-color: var(--navy-deep);
+  color: #ffffff;
+}
+
+/* ============================================================
+   5. SUBJECT CARDS & TOPIC GRIDS
+   ============================================================ */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.eyebrow .no {
+  background: var(--navy);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.eyebrow .lbl {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--teal);
+}
+
+.section-title {
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: -0.8px;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.section-sub {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 14px;
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.subject-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: var(--teal);
+}
+
+.subject-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.subject-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  background: var(--paper);
+}
+
+.subject-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal-soft-ink);
+}
+
+.subject-card h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.subject-card p {
+  margin: 0 0 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.subject-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* ============================================================
+   6. QUIZ & EXERCISE COMPONENTS
+   ============================================================ */
+.quiz-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 24px;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.quiz-question {
+  font-size: 16px;
+  font-weight: 750;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.quiz-opt-btn {
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  min-height: 48px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quiz-opt-btn:hover {
+  border-color: var(--teal);
+  background: var(--card);
+}
+
+.quiz-opt-btn.selected {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  color: var(--teal-soft-ink);
+}
+
+.quiz-opt-btn.correct {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.quiz-opt-btn.wrong {
+  border-color: var(--red);
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.hint-panel {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--accent-ink);
+  line-height: 1.5;
+  display: none;
+}
+
+.hint-panel.show {
+  display: block;
+}
+
+.feedback-banner {
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  display: none;
+  font-size: 13.5px;
+  font-weight: 750;
+  align-items: center;
+  gap: 10px;
+}
+
+.feedback-banner.show {
+  display: flex;
+}
+
+.feedback-banner.success {
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+
+.feedback-banner.warning {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+}
+
+/* ============================================================
+   7. VIDEO SLOTS & EMBED MODAL
+   ============================================================ */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.video-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.video-card.empty-slot {
+  display: none !important; /* Tersembunyi otomatis sesuai instruksi jika URL kosong */
+}
+
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+  display: none;
+  place-items: center;
+  padding: 20px;
+}
+
+.video-modal-backdrop.show {
+  display: grid;
+}
+
+.video-modal-content {
+  background: var(--card);
+  border-radius: 20px;
+  overflow: hidden;
+  width: min(92vw, 760px);
+  max-height: 90vh;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+.video-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.video-iframe-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  background: #000000;
+}
+
+.video-iframe-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Footer Aplikasi */
+footer.app-footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+

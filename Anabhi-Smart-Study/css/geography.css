@@ -1,0 +1,561 @@
+/* ================================================================
+AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+CSS · Geography Explorer & 3D Globe Module
+Development · Anabhi Dev
+Version   : 1.1
+Generated : 10 September 2026, 10:15:00
+================================================================ */
+
+.geo-nav-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  scrollbar-width: none;
+}
+
+.geo-tab-btn {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  transition: all 0.15s ease;
+}
+
+.geo-tab-btn:hover {
+  border-color: var(--teal);
+  color: var(--ink);
+}
+
+.geo-tab-btn.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #ffffff;
+}
+
+/* 1. 3D Globe Stage (Tampilan Besar & Peta Asli Fotorealistik) */
+.globe-stage-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.globe-canvas-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #0e2942 0%, #081a2c 65%, #030b14 100%);
+  background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f1f5f9 55%, #e2e8f0 100%);
+  border-radius: 24px;
+  padding: 24px 20px 20px;
+  border: 1px solid rgba(92, 227, 222, 0.25);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04), var(--shadow);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .globe-canvas-wrap {
+  background: radial-gradient(circle at 50% 35%, #1e293b 0%, #0f172a 65%, #020617 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), var(--shadow);
+}
+
+.globe-canvas-stack {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#globeCanvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  display: block;
+}
+
+#globeCanvas:active {
+  cursor: grabbing;
+}
+
+#globeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+
+.globe-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.globe-controls .btn {
+  padding: 8px 14px;
+  font-size: 12.5px;
+  min-height: 40px;
+}
+
+.globe-zoom-group {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.globe-zoom-group .iconbtn {
+  height: 38px;
+  min-width: 38px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.globe-touch-tip {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 10px;
+  text-align: center;
+}
+
+.globe-info-copy h3 {
+  font-size: 24px;
+  margin: 0 0 12px;
+  font-weight: 850;
+  letter-spacing: -0.5px;
+}
+
+.globe-shape-badge {
+  background: var(--teal-soft);
+  color: var(--teal-soft-ink);
+  border: 1px solid var(--teal);
+  font-size: 11px;
+  font-weight: 850;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.globe-highlight-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.globe-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.globe-highlight-item .icon {
+  font-size: 22px;
+  flex: 0 0 28px;
+}
+
+.globe-highlight-item strong {
+  display: block;
+  font-size: 13.5px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.globe-highlight-item p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* 2. Filter Pulau & Search Bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.island-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip-btn {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 750;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip-btn:hover {
+  border-color: var(--teal);
+  color: var(--ink);
+}
+
+.chip-btn.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #ffffff;
+}
+
+.search-input-box {
+  position: relative;
+  min-width: 240px;
+  flex: 1;
+  max-width: 360px;
+}
+
+.search-input-box input {
+  width: 100%;
+  height: 42px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 14px 0 38px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.search-input-box .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* 3. Grid Provinsi & Kota */
+.provinces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.province-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.province-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--teal);
+}
+
+.province-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.province-name {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.capital-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+.province-fact {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 4. Modul Khusus Bali (8 Kabupaten + 1 Kota) */
+.bali-header-banner {
+  background: linear-gradient(135deg, #8a6a1f 0%, #b7791f 100%);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 26px 30px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.bali-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.bali-region-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+  border-left: 5px solid #ffb21b;
+}
+
+.bali-region-card .region-type {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.bali-region-card h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.bali-gov-center {
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+/* Metadata Box Sumber Data */
+.metadata-source-box {
+  background: var(--paper);
+  border: 1px dashed var(--line-strong);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 36px;
+}
+
+.metadata-source-box strong {
+  color: var(--ink);
+}
+
+/* Country List Styles (Negara-Negara di Dunia) */
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.country-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.country-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+  border-color: var(--teal);
+}
+
+.country-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.country-flag-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.country-name {
+  font-size: 18px;
+  font-weight: 850;
+  margin: 0 0 12px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.country-en-sub {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.country-info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed var(--line);
+  color: var(--muted);
+  gap: 8px;
+}
+
+.country-info-row strong {
+  color: var(--ink);
+  text-align: right;
+}
+
+.country-landmark-box {
+  background: var(--teal-soft);
+  border: 1px solid rgba(20, 174, 179, 0.28);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 12px 0 8px;
+}
+
+.landmark-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--teal-soft-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.landmark-text {
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.country-fun-fact {
+  background: #fff9db;
+  border: 1px solid #ffe066;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 10px 0 4px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #664d03;
+}
+
+[data-theme="dark"] .country-fun-fact {
+  background: rgba(254, 211, 48, 0.12);
+  border-color: rgba(254, 211, 48, 0.35);
+  color: #f7d794;
+}
+
+.fact-badge {
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.country-fun-fact p {
+  margin: 0;
+}
+
+.btn-focus-country-globe {
+  width: 100%;
+  font-size: 13.5px;
+  font-weight: 800;
+  padding: 11px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(20, 174, 179, 0.25);
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .globe-stage-card {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 20px;
+  }
+  .globe-canvas-wrap {
+    padding: 18px 12px;
+  }
+  #globeCanvas {
+    max-width: 260px;
+  }
+  .country-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Dark Mode High-Contrast Overrides for Geography
+   ============================================================ */
+[data-theme="dark"] .geo-tab-btn.active,
+[data-theme="dark"] .chip-btn.active {
+  color: #071a2b !important;
+}
+
+
