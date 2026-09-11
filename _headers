@@ -1,31 +1,36 @@
 # ================================================================
-# Miss Fish Bali — anabhidev.com
+# Miss Fish Bali & Anabhi Dev — anabhidev.com
 # File        : _headers
 # Description : Cloudflare Pages response headers.
-#               Digabung dari versi sebelumnya (Microsoft auth,
-#               Google Analytics, PDF.js/StPageFlip, Supabase,
-#               Anabhi Smart Play) DITAMBAH aturan resmi
-#               Miss Fish Bali Talent & Career (/MFB/Talent/).
-# IT Department · Miss Fish Bali
-# Version     : 1.4
-# Generated   : 11 September 2026, 17:00:00 WITA
+#               Digabung dari konfigurasi production:
+#               - Microsoft Auth & Graph API
+#               - Google Analytics 4 & Tag Manager
+#               - PDF.js / StPageFlip / Supabase
+#               - ClickUp Recruitment & ATS API
+#               - Anabhi Smart Play (/Anabhi-Smart-Play/)
+#               - Miss Fish Bali Talent & Career (/MFB/Talent/)
+#               - Anabhi Smart Study (/Anabhi-Smart-Study/)
+# IT Department · Miss Fish Bali & Anabhi Dev
+# Version     : 1.5
+# Generated   : 11 September 2026, 21:00:00 WITA
 # ================================================================
 #
-# YANG DIUBAH DARI v1.3:
+# YANG DIUBAH DARI v1.4:
 #
 #   1. Global CSP (/*):
-#      + connect-src: ditambahkan https://api.clickup.com (ATS API)
-#      + frame-src: ditambahkan 'self' https://forms.clickup.com
-#        (izin render iframe formulir lamaran ClickUp di modal)
-#      + font-src: ditambahkan data:
-#   2. Penambahan blok /MFB/Talent/*:
-#      + Service Worker: max-age=0, must-revalidate
+#      + frame-src: ditambahkan https://www.youtube.com https://www.youtube-nocookie.com
+#        (izin render pemutar video edukasi interaktif Anabhi Smart Study)
+#   2. Penambahan blok /Anabhi-Smart-Study/*:
+#      + Service Worker: max-age=0, must-revalidate, Content-Type text/javascript
 #      + Manifest PWA: Content-Type application/manifest+json
-#      + Halaman HTML (career.html, index.html, mockups): max-age=0
-#      + Aset statis (/MFB/Talent/assets/*): immutable 1 tahun
+#      + Halaman HTML (/Anabhi-Smart-Study/, index.html): max-age=0, must-revalidate
+#      + Aset statis (/Anabhi-Smart-Study/assets/*, js/*, css/*): immutable 1 tahun
+#      + Font (/Anabhi-Smart-Study/assets/fonts/*): immutable 1 tahun, CORS allow origin *
+#   3. Fallback Root Domain:
+#      + /sw.js & /manifest.json untuk deploy mandiri / preview root domain
 #
-# TIDAK ADA SATUPUN aturan Anabhi Smart Play atau Microsoft auth
-# yang dihapus. Seluruhnya tetap utuh dan kompatibel 100%.
+# TIDAK ADA SATUPUN aturan Anabhi Smart Play, Miss Fish Bali Talent,
+# atau Microsoft auth yang dihapus. Seluruhnya tetap utuh dan kompatibel 100%.
 # ================================================================
 
 /*
@@ -34,7 +39,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://api.clickup.com https://*.supabase.co; frame-src 'self' https://forms.clickup.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://api.clickup.com https://*.supabase.co; frame-src 'self' https://forms.clickup.com https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 /*.webp
   Cache-Control: public, max-age=31536000, immutable
@@ -144,3 +149,60 @@
 /MFB/Talent/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
+
+# ════════════════════════════════════════════════════════════════
+# ANABHI SMART STUDY — /Anabhi-Smart-Study/
+# ════════════════════════════════════════════════════════════════
+#
+# Folder aplikasi: https://anabhidev.com/Anabhi-Smart-Study/
+# Cloudflare Pages menerapkan aturan spesifik ini untuk menimpa
+# cache global pada berkas HTML, manifest, dan Service Worker.
+
+# ── Service Worker: JANGAN PERNAH di-cache ──────────────────────
+# sw.js yang ter-cache = pengguna terkunci di versi lama selamanya.
+/Anabhi-Smart-Study/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/javascript; charset=utf-8
+  Service-Worker-Allowed: /Anabhi-Smart-Study/
+
+# ── Manifest PWA: Content-Type wajib eksplisit ──────────────────
+# Default Cloudflare mengirim application/json — itu keliru untuk
+# manifest dan bisa membuat install PWA gagal.
+/Anabhi-Smart-Study/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Halaman Utama: Selalu revalidate ────────────────────────────
+/Anabhi-Smart-Study/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/Anabhi-Smart-Study/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Aset Statis ─────────────────────────────────────────────────
+# Aman immutable: berkas js & css selalu diminta dengan ?v=... , dan
+# query string membuat URL-nya berbeda setiap kali versi dinaikkan.
+/Anabhi-Smart-Study/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/Anabhi-Smart-Study/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/Anabhi-Smart-Study/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Font: butuh CORS walau satu domain (permintaan font selalu CORS) ──
+/Anabhi-Smart-Study/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# ════════════════════════════════════════════════════════════════
+# ROOT FALLBACK (Preview / Standalone Deploy)
+# ════════════════════════════════════════════════════════════════
+/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/javascript; charset=utf-8
