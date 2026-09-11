@@ -1185,11 +1185,11 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
   font-size: 11.5px;
   font-weight: 700;
   pointer-events: none;
-  z-index: 50;
+  z-index: 9999;
   display: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transform: translate(-50%, -110%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transform: translate(-50%, -115%);
   white-space: nowrap;
 }
 
@@ -2414,9 +2414,6 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
         </div>
       </section>
 
-      <!-- Floating Tooltip for Charts -->
-      <div id="chartTooltip" class="chart-tooltip-floating"></div>
-
     </main>
   </div>
 </div>
@@ -3571,16 +3568,41 @@ function scrollToSection(secId) {
 // IT Department · Miss Fish Bali
 // ================================================================
 
-// Chart Tooltip Controller
-function showChartTooltip(e, text) {
+// Chart Tooltip Controller (Safe Primitives — Zero Nested HTML in Attributes)
+function showChartTooltip(e, label, val, series, color) {
   const tt = document.getElementById('chartTooltip');
   if (!tt) return;
-  tt.innerHTML = text;
+  tt.innerHTML = `
+    <div style="font-size: 11px; font-weight: 750; color: rgba(255,255,255,0.7); margin-bottom: 2px;">${label}</div>
+    <div style="font-size: 12.5px; font-weight: 850; display: flex; align-items: center; gap: 6px;">
+      <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${color}; flex-shrink: 0;"></span>
+      <span>${series}:</span>
+      <span style="color: #ffffff; font-weight: 900;">${val}</span>
+    </div>
+  `;
   tt.style.display = 'block';
-  const x = e.pageX || (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
-  const y = e.pageY || (e.touches && e.touches[0] ? e.touches[0].pageY : 0);
-  tt.style.left = x + 'px';
-  tt.style.top = y + 'px';
+  const pageX = e.pageX || (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
+  const pageY = e.pageY || (e.touches && e.touches[0] ? e.touches[0].pageY : 0);
+  tt.style.left = pageX + 'px';
+  tt.style.top = (pageY - 12) + 'px';
+}
+
+function showDonutTooltip(e, label, count, pct, unit, color) {
+  const tt = document.getElementById('chartTooltip');
+  if (!tt) return;
+  tt.innerHTML = `
+    <div style="font-size: 11px; font-weight: 750; color: rgba(255,255,255,0.7); margin-bottom: 2px;">${label}</div>
+    <div style="font-size: 12.5px; font-weight: 850; display: flex; align-items: center; gap: 6px;">
+      <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${color}; flex-shrink: 0;"></span>
+      <span>${count} ${unit || 'Pelamar'}</span>
+      <span style="color: #ffffff; font-weight: 900;">(${pct}%)</span>
+    </div>
+  `;
+  tt.style.display = 'block';
+  const pageX = e.pageX || (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
+  const pageY = e.pageY || (e.touches && e.touches[0] ? e.touches[0].pageY : 0);
+  tt.style.left = pageX + 'px';
+  tt.style.top = (pageY - 12) + 'px';
 }
 
 function hideChartTooltip() {
@@ -3717,22 +3739,22 @@ function renderAdminActivityChart(tf) {
   let dotsSvg = '';
   data.applicants.forEach((val, idx) => {
     const cx = getX(idx), cy = getY(val);
-    const tip = `<b>${data.labels[idx]}</b><br>Pelamar Baru: <span style="color:var(--accent);">${val}</span>`;
+    const lbl = data.labels[idx];
     dotsSvg += `
       <circle cx="${cx}" cy="${cy}" r="5" fill="var(--surface)" stroke="var(--accent)" stroke-width="3" style="cursor:pointer; transition:r 0.15s;"
-        onmouseenter="this.setAttribute('r','7'); showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('r','7'); showChartTooltip(event, '${lbl}', ${val}, 'Pelamar Baru', 'var(--accent)')"
+        onmousemove="showChartTooltip(event, '${lbl}', ${val}, 'Pelamar Baru', 'var(--accent)')"
         onmouseleave="this.setAttribute('r','5'); hideChartTooltip()"/>
     `;
   });
 
   data.interviews.forEach((val, idx) => {
     const cx = getX(idx), cy = getY(val);
-    const tip = `<b>${data.labels[idx]}</b><br>Wawancara: <span style="color:#8b5cf6;">${val}</span>`;
+    const lbl = data.labels[idx];
     dotsSvg += `
       <circle cx="${cx}" cy="${cy}" r="4.5" fill="var(--surface)" stroke="#8b5cf6" stroke-width="2.5" style="cursor:pointer; transition:r 0.15s;"
-        onmouseenter="this.setAttribute('r','6.5'); showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('r','6.5'); showChartTooltip(event, '${lbl}', ${val}, 'Wawancara', '#8b5cf6')"
+        onmousemove="showChartTooltip(event, '${lbl}', ${val}, 'Wawancara', '#8b5cf6')"
         onmouseleave="this.setAttribute('r','4.5'); hideChartTooltip()"/>
     `;
   });
@@ -3770,13 +3792,12 @@ function renderAdminDonutChart() {
   adminDonutData.forEach(item => {
     const dash = (item.pct / 100) * C;
     const currentOffset = offset;
-    const tip = `<b>${item.label}</b><br>${item.count} Pelamar (${item.pct}%)`;
     circlesSvg += `
       <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${item.color}" stroke-width="20"
         stroke-dasharray="${dash} ${C}" stroke-dashoffset="-${currentOffset}"
         style="cursor:pointer; transition: stroke-width 0.2s ease, opacity 0.2s ease;"
-        onmouseenter="this.setAttribute('stroke-width','24'); this.style.opacity='0.85'; showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('stroke-width','24'); this.style.opacity='0.85'; showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Pelamar', '${item.color}')"
+        onmousemove="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Pelamar', '${item.color}')"
         onmouseleave="this.setAttribute('stroke-width','20'); this.style.opacity='1'; hideChartTooltip()"/>
     `;
     offset += dash;
@@ -3792,7 +3813,7 @@ function renderAdminDonutChart() {
   svgWrap.innerHTML = svgMarkup;
 
   legend.innerHTML = adminDonutData.map(item => `
-    <div class="donut-legend-row" onmouseenter="showChartTooltip(event, '${item.label}: ${item.count} Pelamar')" onmouseleave="hideChartTooltip()">
+    <div class="donut-legend-row" onmouseenter="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Pelamar', '${item.color}')" onmousemove="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Pelamar', '${item.color}')" onmouseleave="hideChartTooltip()">
       <span class="donut-legend-title">
         <span class="chart-legend-dot" style="background: ${item.color};"></span>
         <span>${item.label}</span>
@@ -3863,22 +3884,22 @@ function renderPublicMomentumChart(tf) {
   let dotsSvg = '';
   data.reviewed.forEach((val, idx) => {
     const cx = getX(idx), cy = getY(val);
-    const tip = `<b>${data.labels[idx]}</b><br>CV Direview: <span style="color:var(--accent);">${val}</span>`;
+    const lbl = data.labels[idx];
     dotsSvg += `
       <circle cx="${cx}" cy="${cy}" r="5" fill="var(--surface)" stroke="var(--accent)" stroke-width="3" style="cursor:pointer; transition:r 0.15s;"
-        onmouseenter="this.setAttribute('r','7'); showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('r','7'); showChartTooltip(event, '${lbl}', ${val}, 'CV Direview', 'var(--accent)')"
+        onmousemove="showChartTooltip(event, '${lbl}', ${val}, 'CV Direview', 'var(--accent)')"
         onmouseleave="this.setAttribute('r','5'); hideChartTooltip()"/>
     `;
   });
 
   data.hired.forEach((val, idx) => {
     const cx = getX(idx), cy = getY(val);
-    const tip = `<b>${data.labels[idx]}</b><br>Kandidat Diterima: <span style="color:#10b981;">${val} Talent</span>`;
+    const lbl = data.labels[idx];
     dotsSvg += `
       <circle cx="${cx}" cy="${cy}" r="4.5" fill="var(--surface)" stroke="#10b981" stroke-width="2.5" style="cursor:pointer; transition:r 0.15s;"
-        onmouseenter="this.setAttribute('r','6.5'); showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('r','6.5'); showChartTooltip(event, '${lbl}', ${val}, 'Tim Diterima', '#10b981')"
+        onmousemove="showChartTooltip(event, '${lbl}', ${val}, 'Tim Diterima', '#10b981')"
         onmouseleave="this.setAttribute('r','4.5'); hideChartTooltip()"/>
     `;
   });
@@ -3916,13 +3937,12 @@ function renderPublicDepartmentChart() {
   publicDonutData.forEach(item => {
     const dash = (item.pct / 100) * C;
     const currentOffset = offset;
-    const tip = `<b>${item.label}</b><br>${item.count} Talent Aktif (${item.pct}%)`;
     circlesSvg += `
       <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${item.color}" stroke-width="20"
         stroke-dasharray="${dash} ${C}" stroke-dashoffset="-${currentOffset}"
         style="cursor:pointer; transition: stroke-width 0.2s ease, opacity 0.2s ease;"
-        onmouseenter="this.setAttribute('stroke-width','24'); this.style.opacity='0.85'; showChartTooltip(event, '${tip}')"
-        onmousemove="showChartTooltip(event, '${tip}')"
+        onmouseenter="this.setAttribute('stroke-width','24'); this.style.opacity='0.85'; showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Talent', '${item.color}')"
+        onmousemove="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Talent', '${item.color}')"
         onmouseleave="this.setAttribute('stroke-width','20'); this.style.opacity='1'; hideChartTooltip()"/>
     `;
     offset += dash;
@@ -3936,7 +3956,7 @@ function renderPublicDepartmentChart() {
   `;
 
   legend.innerHTML = publicDonutData.map(item => `
-    <div class="donut-legend-row" onmouseenter="showChartTooltip(event, '${item.label}: ${item.count} Talent')" onmouseleave="hideChartTooltip()">
+    <div class="donut-legend-row" onmouseenter="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Talent', '${item.color}')" onmousemove="showDonutTooltip(event, '${item.label}', ${item.count}, ${item.pct}, 'Talent', '${item.color}')" onmouseleave="hideChartTooltip()">
       <span class="donut-legend-title">
         <span class="chart-legend-dot" style="background: ${item.color};"></span>
         <span>${item.label}</span>
@@ -3994,6 +4014,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 100);
 });
 </script>
+<!-- Floating Tooltip for Charts -->
+<div id="chartTooltip" class="chart-tooltip-floating"></div>
 </body>
 </html>
 
