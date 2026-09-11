@@ -352,7 +352,7 @@ export class GlobeVisualizer {
       }
     `;
 
-    // Fragment Shader: Pencahayaan terang alami globe meja kelas (warna negara cerah & specular halus)
+    // Fragment Shader: Pencahayaan terang alami globe meja kelas (warna negara cerah & specular terkontrol)
     const fsSource = `
       precision mediump float;
       uniform sampler2D uSampler;
@@ -363,13 +363,13 @@ export class GlobeVisualizer {
         vec4 tex = texture2D(uSampler, vUV);
         vec3 n = normalize(vNorm);
         float diff = max(dot(n, uSunDir), 0.0);
-        float light = 0.72 + 0.28 * diff; // Latar terang agar warna negara pastel tetap jelas
+        float light = clamp(0.72 + 0.28 * diff, 0.0, 1.0); // Terang jelas, tidak pernah saturasi putih
         
-        // Pantulan kilap halus (gloss finish globe)
+        // Pantulan kilap halus terkontrol (anti-bleach / anti-white bug saat zoom)
         vec3 halfDir = normalize(uSunDir + vec3(0.0, 0.0, 1.0));
-        float spec = pow(max(dot(n, halfDir), 0.0), 32.0) * 0.25;
+        float spec = pow(max(dot(n, halfDir), 0.0), 36.0) * 0.18;
         
-        gl_FragColor = vec4(tex.rgb * light + vec3(spec), 1.0);
+        gl_FragColor = vec4(clamp(tex.rgb * light + vec3(spec), 0.0, 1.0), 1.0);
       }
     `;
 
@@ -496,38 +496,76 @@ export class GlobeVisualizer {
     const target = this.canvas;
     if (!target) return;
 
+    const activePointers = new Map();
+    let initialPinchDist = 0;
+    let initialZoom = 1.0;
+
     target.addEventListener('pointerdown', (e) => {
-      this.pointerDown = true;
-      this.lastX = e.clientX;
-      this.lastY = e.clientY;
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       this.isRotating = false;
       this.targetRotation = null;
       this.targetTilt = null;
+
+      if (activePointers.size === 1) {
+        this.pointerDown = true;
+        this.lastX = e.clientX;
+        this.lastY = e.clientY;
+      } else if (activePointers.size === 2) {
+        // Mulai gestur cubit (pinch zoom)
+        this.pointerDown = false;
+        const pts = Array.from(activePointers.values());
+        initialPinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        initialZoom = this.zoom;
+      }
+
       if (typeof target.setPointerCapture === 'function') {
         target.setPointerCapture(e.pointerId);
       }
     });
 
     window.addEventListener('pointermove', (e) => {
-      if (!this.pointerDown) return;
-      const dx = e.clientX - this.lastX;
-      const dy = e.clientY - this.lastY;
-      this.rotation += dx * 0.45;
-      this.tilt = Math.max(-45, Math.min(45, this.tilt - dy * 0.35));
-      this.lastX = e.clientX;
-      this.lastY = e.clientY;
-      this.draw();
-    });
+      if (!activePointers.has(e.pointerId)) return;
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-    window.addEventListener('pointerup', () => {
-      if (this.pointerDown) {
-        this.pointerDown = false;
+      if (activePointers.size === 2) {
+        // Multi-touch pinch zoom
+        const pts = Array.from(activePointers.values());
+        const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        if (initialPinchDist > 5) {
+          const ratio = currentDist / initialPinchDist;
+          this.zoom = Math.max(0.9, Math.min(2.0, initialZoom * ratio));
+          this.draw();
+        }
+      } else if (this.pointerDown && activePointers.size === 1) {
+        // 1-finger / mouse rotate
+        const dx = e.clientX - this.lastX;
+        const dy = e.clientY - this.lastY;
+        this.rotation += dx * 0.45;
+        this.tilt = Math.max(-45, Math.min(45, this.tilt - dy * 0.35));
+        this.lastX = e.clientX;
+        this.lastY = e.clientY;
+        this.draw();
       }
     });
 
+    const onPointerEnd = (e) => {
+      activePointers.delete(e.pointerId);
+      if (activePointers.size === 0) {
+        this.pointerDown = false;
+      } else if (activePointers.size === 1) {
+        const remaining = Array.from(activePointers.values())[0];
+        this.lastX = remaining.x;
+        this.lastY = remaining.y;
+        this.pointerDown = true;
+      }
+    };
+
+    window.addEventListener('pointerup', onPointerEnd);
+    window.addEventListener('pointercancel', onPointerEnd);
+
     target.addEventListener('wheel', (e) => {
       e.preventDefault();
-      const delta = e.deltaY < 0 ? 0.1 : -0.1;
+      const delta = e.deltaY < 0 ? 0.08 : -0.08;
       this.zoomBy(delta);
     }, { passive: false });
   }
@@ -584,7 +622,7 @@ export class GlobeVisualizer {
   }
 
   zoomBy(delta) {
-    this.zoom = Math.max(0.85, Math.min(1.85, this.zoom + delta));
+    this.zoom = Math.max(0.9, Math.min(2.0, this.zoom + delta));
     this.draw();
   }
 
@@ -598,7 +636,7 @@ export class GlobeVisualizer {
 
     this.targetRotation = this.rotation + diff;
     this.targetTilt = Math.max(-30, Math.min(30, lat));
-    this.zoom = Math.max(1.1, this.zoom);
+    this.zoom = Math.max(1.15, this.zoom);
     if (name) {
       this.focusedLocation = { lon, lat, name };
     }
@@ -628,15 +666,15 @@ export class GlobeVisualizer {
 
     gl.useProgram(this.program);
 
-    // Matriks Proyeksi Perspektif
+    // Matriks Proyeksi Perspektif (Near 0.01 mencegah bug clipping putih saat zoom)
     const fov = 45 * Math.PI / 180;
     const aspect = w / h;
-    const pMat = this.createPerspectiveMatrix(fov, aspect, 0.1, 100.0);
+    const pMat = this.createPerspectiveMatrix(fov, aspect, 0.01, 100.0);
 
-    // Jarak kamera disesuaikan dengan posisi globe meja (presisi di tengah meridian ring 335, 280)
-    const dist = 4.83 / this.zoom;
+    // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar (diameter ~440px di kanvas 720)
+    const dist = 3.65 / this.zoom;
     let mvMat = this.createIdentityMatrix();
-    mvMat = this.mat4Translate(mvMat, 0.094, 0.25, -dist);
+    mvMat = this.mat4Translate(mvMat, 0.08, 0.18, -dist);
     // Kemiringan pandangan pengguna (pitch)
     mvMat = this.mat4RotateX(mvMat, this.tilt * Math.PI / 180);
     // Kemiringan sumbu bumi asli 23.5° (tilted ke kanan seperti foto referensi)
@@ -672,9 +710,9 @@ export class GlobeVisualizer {
     const ctx = this.ctx;
     const w = canvas.width;
     const h = canvas.height;
-    const cx = w / 2 + 15;
-    const cy = h / 2 - 40;
-    const r = 160 * this.zoom;
+    const cx = w / 2 + 18;
+    const cy = h / 2 - 35;
+    const r = 210 * this.zoom;
 
     ctx.clearRect(0, 0, w, h);
 
@@ -691,12 +729,23 @@ export class GlobeVisualizer {
     ctx.fill();
     ctx.clip();
 
-    // Gambar tekstur jika siap
+    // Gambar tekstur jika siap dengan wrap-around aman anti-blank
     if (this.offscreenCanvas) {
       const rotNorm = ((this.rotation % 360) + 360) % 360;
-      const sx = (rotNorm / 360) * this.offscreenCanvas.width;
-      const sw = this.offscreenCanvas.width * 0.5;
-      ctx.drawImage(this.offscreenCanvas, sx % this.offscreenCanvas.width, 0, sw, this.offscreenCanvas.height, cx - r, cy - r, r * 2, r * 2);
+      const tw = this.offscreenCanvas.width;
+      const th = this.offscreenCanvas.height;
+      const sx = (rotNorm / 360) * tw;
+      const sw = tw * 0.5;
+
+      const part1W = Math.min(sw, tw - sx);
+      const destPart1W = (part1W / sw) * (r * 2);
+      ctx.drawImage(this.offscreenCanvas, sx, 0, part1W, th, cx - r, cy - r, destPart1W, r * 2);
+
+      if (part1W < sw) {
+        const part2W = sw - part1W;
+        const destPart2W = (part2W / sw) * (r * 2);
+        ctx.drawImage(this.offscreenCanvas, 0, 0, part2W, th, cx - r + destPart1W, cy - r, destPart2W, r * 2);
+      }
     }
 
     // Shading 3D
@@ -729,10 +778,10 @@ export class GlobeVisualizer {
 
     ctx.clearRect(0, 0, w, h);
 
-    // Koordinat pusat bola bumi pada panggung
-    const cx = w / 2 + 15;
-    const cy = h / 2 - 40;
-    const r = 160 * this.zoom;
+    // Koordinat pusat bola bumi pada panggung (ukuran besar)
+    const cx = w / 2 + 18;
+    const cy = h / 2 - 35;
+    const r = 212 * this.zoom;
 
     // Sudut kemiringan sumbu bumi asli 23.5°
     const tiltAngle = this.axialTilt * Math.PI / 180;
@@ -746,29 +795,29 @@ export class GlobeVisualizer {
     const southY = cy + r * cosA;
 
     // Radius busur meridian logam (sedikit di luar bola)
-    const rArch = r + 24;
-    const archThick = 18;
+    const rArch = r + 28;
+    const archThick = 20;
 
     // -------------------------------------------------------------
     // 1. Bayangan Dudukan Meja (Tabletop Shadow)
     // -------------------------------------------------------------
     const baseCenterX = cx;
-    const baseCenterY = 575;
-    const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 12, 20, baseCenterX, baseCenterY + 12, 170);
+    const baseCenterY = h - 68;
+    const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 200);
     shadowGrad.addColorStop(0, 'rgba(3, 10, 20, 0.55)');
     shadowGrad.addColorStop(0.5, 'rgba(5, 15, 30, 0.25)');
     shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = shadowGrad;
     ctx.beginPath();
-    ctx.ellipse(baseCenterX, baseCenterY + 12, 170, 24, 0, 0, Math.PI * 2);
+    ctx.ellipse(baseCenterX, baseCenterY + 14, 200, 28, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // -------------------------------------------------------------
     // 2. Kaki Penyangga Bundar Bertingkat (Chrome Tiered Pedestal Base)
     // -------------------------------------------------------------
     // Piringan Bawah Terlebar
-    const baseW = 145;
-    const baseH = 22;
+    const baseW = 168;
+    const baseH = 26;
     const baseGrad1 = ctx.createLinearGradient(baseCenterX - baseW, baseCenterY, baseCenterX + baseW, baseCenterY);
     baseGrad1.addColorStop(0, '#475569');
     baseGrad1.addColorStop(0.2, '#94a3b8');
@@ -779,14 +828,14 @@ export class GlobeVisualizer {
 
     ctx.fillStyle = baseGrad1;
     ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
     ctx.ellipse(baseCenterX, baseCenterY, baseW, baseH, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     // Piringan Tingkat Kedua (Tengah)
-    const baseGrad2 = ctx.createLinearGradient(baseCenterX - baseW * 0.82, baseCenterY - 10, baseCenterX + baseW * 0.82, baseCenterY - 10);
+    const baseGrad2 = ctx.createLinearGradient(baseCenterX - baseW * 0.82, baseCenterY - 12, baseCenterX + baseW * 0.82, baseCenterY - 12);
     baseGrad2.addColorStop(0, '#334155');
     baseGrad2.addColorStop(0.25, '#cbd5e1');
     baseGrad2.addColorStop(0.5, '#ffffff');
@@ -795,7 +844,7 @@ export class GlobeVisualizer {
 
     ctx.fillStyle = baseGrad2;
     ctx.beginPath();
-    ctx.ellipse(baseCenterX, baseCenterY - 10, baseW * 0.82, baseH * 0.8, 0, 0, Math.PI * 2);
+    ctx.ellipse(baseCenterX, baseCenterY - 12, baseW * 0.82, baseH * 0.8, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 

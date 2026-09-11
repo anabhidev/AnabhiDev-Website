@@ -83,7 +83,7 @@ Generated : 10 September 2026, 10:15:00
 .globe-canvas-stack {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 660px;
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
@@ -93,7 +93,6 @@ Generated : 10 September 2026, 10:15:00
 #globeCanvas {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   cursor: grab;
   touch-action: none;
   display: block;
@@ -111,6 +110,266 @@ Generated : 10 September 2026, 10:15:00
   height: 100%;
   pointer-events: none;
   display: block;
+}
+
+/* Regional Quick Filter Bar (Pusat Jelajah Peta: Dunia, Indonesia, Bali, Benua) */
+.geo-region-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 18px 0 24px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.region-chip {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.region-chip:hover {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  color: var(--teal-soft-ink);
+  transform: translateY(-1px);
+}
+
+.region-chip.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #071a2b !important;
+  box-shadow: 0 4px 14px rgba(91, 224, 223, 0.4);
+}
+
+[data-theme="dark"] .region-chip.active {
+  color: #071a2b !important;
+}
+
+/* Panel Konten Jelajah Regional di Bawah Globe */
+.geo-region-content {
+  margin-top: 24px;
+}
+
+.interactive-map-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+/* Peta 2D Interaktif (Visual SVG Maps) */
+.peta-2d-canvas-box {
+  background: #e3f2fd;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 12px;
+  margin-bottom: 24px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+[data-theme="dark"] .peta-2d-canvas-box {
+  background: #091e33;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.svg-map-frame {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 440px;
+}
+
+.svg-island-interactive {
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.svg-island-interactive:hover {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25)) brightness(1.1);
+}
+
+.svg-island-interactive.active {
+  stroke: #ffb21b !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 10px rgba(255, 178, 27, 0.8)) brightness(1.15);
+}
+
+.svg-regency-interactive {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.svg-regency-interactive:hover {
+  filter: brightness(1.15) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
+  stroke: #fff !important;
+  stroke-width: 2px !important;
+}
+
+.svg-regency-interactive.active {
+  stroke: #ffb21b !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 8px rgba(255, 178, 27, 0.9));
+}
+
+.svg-landmark-pin {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.svg-landmark-pin:hover {
+  transform: scale(1.3) translateY(-4px);
+}
+
+.peta-2d-legend-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--surface);
+  border-radius: 12px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.interactive-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.interactive-map-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.island-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.island-card-btn {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.island-card-btn:hover, .island-card-btn.active {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.island-card-btn strong {
+  display: block;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.island-card-btn span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.bali-landmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.bali-landmark-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  transition: transform 0.18s ease;
+}
+
+.bali-landmark-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--teal);
+}
+
+.bali-landmark-item h5 {
+  margin: 0 0 6px;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.bali-landmark-item p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.continent-stats-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  background: var(--surface);
+  padding: 18px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  border: 1px solid var(--line);
+}
+
+.continent-stat-item {
+  text-align: center;
+}
+
+.continent-stat-item span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.continent-stat-item strong {
+  font-size: 15px;
+  color: var(--ink);
 }
 
 .globe-controls {

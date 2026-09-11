@@ -72,6 +72,11 @@ export class TopbarComponent {
           <span id="streakCount">${s.streakDays || 1} ${t('days', lang)}</span>
         </div>
 
+        <!-- Tombol Tanya AI Tutor (Gemini) -->
+        <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 10px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;">
+          <span>🤖</span> <span>Tanya AI</span>
+        </button>
+
         <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
         <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px;">
           ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
@@ -95,6 +100,15 @@ export class TopbarComponent {
   }
 
   attachEvents() {
+    const aiTutorBtn = this.container.querySelector('#aiTutorBtn');
+    if (aiTutorBtn) {
+      aiTutorBtn.addEventListener('click', () => {
+        if (window.aiTutorModal) {
+          window.aiTutorModal.open();
+        }
+      });
+    }
+
     const brandBtn = this.container.querySelector('#topbarBrandBtn');
     if (brandBtn) {
       brandBtn.addEventListener('click', () => {

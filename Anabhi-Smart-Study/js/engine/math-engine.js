@@ -25,6 +25,7 @@ export class MathEngine {
     const barModel = this.getBarModelSteps(numA, numB, lang);
     const mentalMath = this.getMentalMathSteps(numA, numB, lang);
     const soroban = this.getSorobanSteps(numA, numB, lang);
+    const tensFrame = this.getTensFrameSteps(numA, numB, lang);
 
     const recommended = this.recommendStrategies(numA, numB);
 
@@ -46,7 +47,8 @@ export class MathEngine {
       baseTen,
       barModel,
       mentalMath,
-      soroban
+      soroban,
+      tensFrame
     };
   }
 
@@ -422,12 +424,82 @@ export class MathEngine {
   }
 
   // -------------------------------------------------------------
+  // STRATEGY 10: Ten-Frames (Kotak 10 Frame Manipulatif Kelas 1 SD)
+  // -------------------------------------------------------------
+  static getTensFrameSteps(a, b, lang = 'id') {
+    const isEn = lang === 'en';
+    const sum = a + b;
+    const uA = a % 10;
+    const uB = b % 10;
+    const tA = Math.floor(a / 10);
+    const tB = Math.floor(b / 10);
+    const tensBundles = tA + tB;
+
+    const needToMake10 = uA === 0 ? 0 : (10 - uA);
+    const canMake10 = needToMake10 > 0 && uB >= needToMake10;
+    const remainingB = canMake10 ? (uB - needToMake10) : (uA === 0 ? uB : (uA + uB));
+    const newTens = (uA + uB >= 10) ? 1 : 0;
+    const totalTens = tensBundles + newTens;
+    const finalUnits = (uA + uB) % 10;
+
+    // Generate frame 1 slots (10 slots: 5x2)
+    const frame1 = [];
+    for (let i = 0; i < 10; i++) {
+      if (i < uA) {
+        frame1.push({ filled: true, source: 'a', color: '#ef4444', icon: '🔴' });
+      } else if (canMake10 && i < uA + needToMake10) {
+        frame1.push({ filled: true, source: 'b_transfer', color: '#f59e0b', icon: '🟡', transferred: true });
+      } else {
+        frame1.push({ filled: false });
+      }
+    }
+
+    // Generate frame 2 slots (10 slots: 5x2)
+    const frame2 = [];
+    for (let i = 0; i < 10; i++) {
+      if (i < remainingB) {
+        frame2.push({ filled: true, source: 'b_rem', color: '#f59e0b', icon: '🟡' });
+      } else {
+        frame2.push({ filled: false });
+      }
+    }
+
+    return {
+      id: 'tens-frame',
+      title: isEn ? 'Ten-Frames (Grade 1 Visual)' : 'Kotak 10 Frame (Visual Kelas 1 SD)',
+      badge: isEn ? 'Grade 1 Concrete Math' : 'Manipulatif Kelas 1 SD',
+      a,
+      b,
+      sum,
+      uA,
+      uB,
+      tA,
+      tB,
+      tensBundles,
+      needToMake10,
+      canMake10,
+      remainingB,
+      totalTens,
+      finalUnits,
+      frame1,
+      frame2,
+      explanation: isEn
+        ? `Frame 1 starts with ${uA} red counters. We borrow ${needToMake10} yellow stars from ${b} to fill Frame 1 into a FULL 10! Now we have ${totalTens} tens and ${finalUnits} ones. Total: ${sum}!`
+        : `Kotak 1 awalnya ada ${uA} koin merah. Pinjam ${needToMake10} koin kuning dari ${b} untuk MENGGENAPKAN Kotak 1 jadi 10 PENUH! Sekarang terkumpul ${totalTens} puluhan dan tersisa ${finalUnits} satuan. Hasilnya: ${sum}! 🎉`
+    };
+  }
+
+  // -------------------------------------------------------------
   // SMART STRATEGY RECOMMENDATION
   // -------------------------------------------------------------
   static recommendStrategies(a, b) {
     const recs = [];
     const modA = a % 10;
     const modB = b % 10;
+
+    if (a <= 20 && b <= 20) {
+      recs.push('tens-frame');
+    }
 
     if (a + b === 100 || (a + b) % 100 === 0) {
       recs.push('make-hundred');
@@ -438,6 +510,7 @@ export class MathEngine {
       if (!recs.includes('compensation')) recs.push('compensation');
     }
 
+    if (!recs.includes('tens-frame')) recs.push('tens-frame');
     if (!recs.includes('decomposition')) recs.push('decomposition');
     if (!recs.includes('number-line')) recs.push('number-line');
 

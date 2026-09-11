@@ -21,6 +21,9 @@ export class MathLessonView {
     this.practiceAnswered = false;
     this.viewMode = 'visual'; // 'visual' | 'compare'
     this.userMetacognition = null;
+    this.selectedMathLevel = 'all';
+    this.counterIconA = '🔴';
+    this.counterIconB = '🟡';
   }
 
   render() {
@@ -55,8 +58,17 @@ export class MathLessonView {
           </button>
         </div>
 
+        <!-- Filter Level Soal (Termasuk Kelas 1 SD) -->
+        <div class="preset-level-tabs">
+          <button class="level-pill-btn ${this.selectedMathLevel === 'all' ? 'active' : ''}" data-level="all" type="button">Semua Soal</button>
+          <button class="level-pill-btn ${this.selectedMathLevel === 'sd1' ? 'active' : ''}" data-level="sd1" type="button">🟢 Kelas 1 SD: Dasar (1–50)</button>
+          <button class="level-pill-btn ${this.selectedMathLevel === 'master' ? 'active' : ''}" data-level="master" type="button">🔴 Mahir: Flagship (67 + 59)</button>
+        </div>
+
         <div class="math-presets">
-          ${MATH_DATA.presetExamples.map(ex => `
+          ${MATH_DATA.presetExamples
+            .filter(ex => this.selectedMathLevel === 'all' || ex.level === this.selectedMathLevel)
+            .map(ex => `
             <button class="preset-chip ${ex.a === a && ex.b === b ? 'active' : ''}" data-a="${ex.a}" data-b="${ex.b}" type="button">
               ${isEn && ex.labelEn ? ex.labelEn : ex.label}
             </button>
@@ -357,27 +369,32 @@ export class MathLessonView {
               <line x1="30" y1="90" x2="520" y2="90" stroke="var(--ink)" stroke-width="3" />
               <polygon points="520,85 535,90 520,95" fill="var(--ink)" />
 
-              <!-- Titik Awal -->
-              <circle cx="60" cy="90" r="7" fill="var(--teal)" />
-              <text x="60" y="114" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberLine.start}</text>
+              <!-- Titik Awal & Kodok Ceria Melompat -->
+              <circle cx="60" cy="90" r="8" fill="var(--teal)" />
+              <text x="60" y="116" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberLine.start}</text>
+              <g class="frog-hopper" transform="translate(60, 58)">
+                <text x="0" y="0" font-size="28" text-anchor="middle" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.18))">🐸</text>
+              </g>
 
               <!-- Busur Lompatan 1 (Puluhan) -->
               ${sol.numberLine.jumps[0] ? `
-                <path d="M 60,90 Q 180,15 300,90" fill="none" stroke="#ffb21b" stroke-width="3" stroke-dasharray="6,4" />
-                <text x="180" y="40" text-anchor="middle" font-weight="900" font-size="14" fill="#ffb21b">${sol.numberLine.jumps[0].amount}</text>
-                <circle cx="300" cy="90" r="6" fill="#ffb21b" />
-                <text x="300" y="114" text-anchor="middle" font-weight="800" font-size="13" fill="var(--ink)">${sol.numberLine.jumps[0].to}</text>
+                <path d="M 60,90 Q 185,12 300,90" fill="none" stroke="#ffb21b" stroke-width="3.5" stroke-dasharray="6,4" />
+                <text x="185" y="38" text-anchor="middle" font-weight="900" font-size="14" fill="#ffb21b">Lompat ${sol.numberLine.jumps[0].amount}</text>
+                <circle cx="300" cy="90" r="7" fill="#ffb21b" />
+                <text x="300" y="116" text-anchor="middle" font-weight="800" font-size="13" fill="var(--ink)">${sol.numberLine.jumps[0].to}</text>
+                <text x="300" y="86" font-size="15" text-anchor="middle">🪷</text>
               ` : ''}
 
               <!-- Busur Lompatan 2 (Satuan) -->
               ${sol.numberLine.jumps[1] ? `
-                <path d="M 300,90 Q 390,35 480,90" fill="none" stroke="var(--teal)" stroke-width="3" />
-                <text x="390" y="55" text-anchor="middle" font-weight="900" font-size="14" fill="var(--teal)">${sol.numberLine.jumps[1].amount}</text>
+                <path d="M 300,90 Q 395,30 480,90" fill="none" stroke="var(--teal)" stroke-width="3.5" />
+                <text x="395" y="52" text-anchor="middle" font-weight="900" font-size="14" fill="var(--teal)">Lompat ${sol.numberLine.jumps[1].amount}</text>
               ` : ''}
 
               <!-- Titik Target Akhir -->
-              <circle cx="480" cy="90" r="8" fill="var(--green)" />
-              <text x="480" y="114" text-anchor="middle" font-weight="900" font-size="15" fill="var(--green)">${sol.sum} 🎯</text>
+              <circle cx="480" cy="90" r="9" fill="var(--green)" />
+              <text x="480" y="80" font-size="18" text-anchor="middle">🎯</text>
+              <text x="480" y="116" text-anchor="middle" font-weight="900" font-size="16" fill="var(--green)">${sol.sum} 🎉</text>
             </svg>
           </div>
         `;
@@ -543,6 +560,121 @@ export class MathLessonView {
             </div>
           </div>
         `;
+
+      // 10. Ten-Frames (Kotak 10 Frame Khusus Kelas 1 SD)
+      case 'tens-frame': {
+        const tf = sol.tensFrame;
+        const iconA = this.counterIconA || '🔴';
+        const iconB = this.counterIconB || '🟡';
+        return `
+          <div class="method-header">
+            <h3 class="method-title"><span>🔴</span> ${tf.title}</h3>
+            <span class="subject-badge">${tf.badge}</span>
+          </div>
+
+          <div class="round-strategy-banner" style="background:rgba(239,68,68,0.08); border-color:#ef4444; color:var(--ink);">
+            🎯 <strong>${isEn ? 'Make-10 Magic:' : 'Keajaiban Kawan 10:'}</strong> ${tf.explanation}
+          </div>
+
+          <!-- Pilihan Ikon Manipulatif Benda Riil (Kelas 1 SD) -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <div style="font-size:13px; font-weight:800; color:var(--ink);">
+              ${isEn ? 'Choose Visual Counters:' : 'Pilih Bentuk Benda Riil (Mudah Dihitung):'}
+            </div>
+            <div class="concrete-toggle-bar" style="display:flex; gap:6px;">
+              <button class="btn btn-counter-icon ${iconA === '🔴' ? 'primary' : ''}" data-icon-a="🔴" data-icon-b="🟡" type="button" style="padding:4px 10px; font-size:12px;">🔴 Koin Ceria</button>
+              <button class="btn btn-counter-icon ${iconA === '🍎' ? 'primary' : ''}" data-icon-a="🍎" data-icon-b="⭐" type="button" style="padding:4px 10px; font-size:12px;">🍎 Apel & Bintang</button>
+              <button class="btn btn-counter-icon ${iconA === '🚗' ? 'primary' : ''}" data-icon-a="🚗" data-icon-b="🚀" type="button" style="padding:4px 10px; font-size:12px;">🚗 Mobil & Roket</button>
+            </div>
+          </div>
+
+          <!-- Tens-Frames Canvas Box -->
+          <div class="tens-frame-box">
+            <!-- Bundel Puluhan Jika Ada -->
+            ${tf.tensBundles > 0 ? `
+              <div style="margin-bottom:16px; padding:12px 16px; background:var(--card); border-radius:12px; border:1px solid var(--line);">
+                <div style="font-size:12.5px; font-weight:800; color:var(--teal); margin-bottom:6px;">
+                  📦 ${isEn ? `Bundles of Tens (${tf.tA * 10} + ${tf.tB * 10} = ${tf.tensBundles * 10})` : `Bundel Puluhan Awal (${tf.tA * 10} + ${tf.tB * 10} = ${tf.tensBundles * 10})`}
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  ${Array(tf.tensBundles).fill(0).map((_, i) => `
+                    <div style="background:var(--teal-soft); color:var(--teal-soft-ink); font-size:11.5px; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid var(--teal);">
+                      🔟 10 Penuh (#${i+1})
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Dua Kotak 10 Utama (Frame 1 & Frame 2) -->
+            <div class="tens-frames-flex">
+              <!-- Kotak 1: Mulai dari Satuan A, digenapkan jadi 10 -->
+              <div class="ten-frame-card ${tf.canMake10 || tf.uA === 0 ? 'full-ten' : ''}">
+                <div class="ten-frame-header">
+                  <span>${tf.canMake10 ? '🔟' : '📦'}</span>
+                  <span>${isEn ? 'Frame 1 (Base)' : 'Kotak 10 Pertama'}</span>
+                </div>
+                <div class="ten-frame-grid">
+                  ${tf.frame1.map(slot => `
+                    <div class="frame-slot ${slot.filled ? 'filled' : ''} ${slot.transferred ? 'transferred' : ''}" title="${slot.transferred ? (isEn ? 'Borrowed from B to make 10' : 'Dipinjam dari B agar pas 10') : ''}">
+                      ${slot.filled ? (slot.transferred ? iconB : iconA) : ''}
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="ten-frame-summary-badge">
+                  ${tf.canMake10 ? (isEn ? '✅ FULL 10 (+1 Ten)!' : '✅ GENAP 10 PENUH (+1 Puluhan)!') : `${tf.uA}/10`}
+                </div>
+              </div>
+
+              <!-- Simbol Tambah -->
+              <div style="font-size:28px; font-weight:900; color:var(--muted); align-self:center;">+</div>
+
+              <!-- Kotak 2: Sisa Satuan B -->
+              <div class="ten-frame-card">
+                <div class="ten-frame-header">
+                  <span>📦</span>
+                  <span>${isEn ? 'Frame 2 (Remaining)' : 'Kotak 10 Kedua (Sisa)'}</span>
+                </div>
+                <div class="ten-frame-grid">
+                  ${tf.frame2.map(slot => `
+                    <div class="frame-slot ${slot.filled ? 'filled' : ''}">
+                      ${slot.filled ? iconB : ''}
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="ten-frame-summary-badge">
+                  ${isEn ? `Remaining: ${tf.finalUnits} units` : `Tersisa: ${tf.finalUnits} Satuan`}
+                </div>
+              </div>
+
+              <!-- Simbol Sama Dengan -->
+              <div style="font-size:28px; font-weight:900; color:var(--teal); align-self:center;">=</div>
+
+              <!-- Kartu Total Hasil -->
+              <div class="ten-frame-card" style="border-color:var(--teal); background:var(--teal-soft); min-width:140px;">
+                <div class="ten-frame-header" style="color:var(--teal-soft-ink);">
+                  <span>🎉 Total</span>
+                </div>
+                <div style="font-size:36px; font-weight:900; color:var(--teal-soft-ink); margin:8px 0;">
+                  ${tf.sum}
+                </div>
+                <div style="font-size:11.5px; font-weight:800; color:var(--teal-soft-ink);">
+                  ${tf.totalTens} Puluhan + ${tf.finalUnits} Satuan
+                </div>
+              </div>
+            </div>
+
+            <!-- Panduan Suara Ramah untuk Anak SD -->
+            <div style="margin-top:14px; padding:12px 18px; background:var(--surface); border-radius:12px; font-size:13px; line-height:1.6; color:var(--ink);">
+              🧒 <strong>Cara Berpikir Sahabat Juara:</strong><br>
+              1. Letakkan <strong>${tf.uA}</strong> ${iconA} di kotak pertama.<br>
+              2. Ambil <strong>${tf.needToMake10}</strong> ${iconB} dari angka kedua untuk <strong>menggenapkan kotak pertama jadi 10 PENUH</strong>! 🔟<br>
+              3. Di kotak kedua masih tersisa <strong>${tf.finalUnits}</strong> ${iconB}.<br>
+              4. Gabungkan: <strong>${tf.totalTens * 10} + ${tf.finalUnits} = ${tf.sum}</strong>! Super mudah tanpa menghitung jari satu per satu! 🎈
+            </div>
+          </div>
+        `;
+      }
 
       default:
         return '';
@@ -723,6 +855,25 @@ export class MathLessonView {
   }
 
   attachEvents() {
+    // Preset Level Tabs (Kelas 1 SD Filter)
+    const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
+    levelBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.selectedMathLevel = btn.getAttribute('data-level');
+        this.render();
+      });
+    });
+
+    // Concrete Counter Icon Toggle (Benda Riil Koin, Apel, Mobil)
+    const counterBtns = this.container.querySelectorAll('.btn-counter-icon');
+    counterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.counterIconA = btn.getAttribute('data-icon-a') || '🔴';
+        this.counterIconB = btn.getAttribute('data-icon-b') || '🟡';
+        this.render();
+      });
+    });
+
     // Preset Chip clicks
     const chips = this.container.querySelectorAll('.preset-chip');
     chips.forEach(c => {

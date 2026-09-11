@@ -186,17 +186,36 @@ export const MATH_DATA = {
       summaryEn: 'Visual bead abacus: upper bead equals 5 (heaven) and lower beads equal 1 (earth).',
       whyGood: 'Dasar visual berhitung cepat yang melatih fokus dan bayangan mental.',
       whyGoodEn: 'Visual foundation for high-speed calculation and vivid mental math imaging.'
+    },
+    {
+      id: 'tens-frame',
+      name: 'Kotak 10 Frame',
+      nameEn: 'Ten-Frames',
+      badge: 'Kelas 1 SD',
+      badgeEn: 'Grade 1 Math',
+      icon: '🔴',
+      summary: 'Alat peraga visual Kotak 10 (Ten-Frame) standar Kelas 1 SD untuk melihat pengelompokan Kawan 10 dan sisa satuannya secara nyata!',
+      summaryEn: 'Visual Ten-Frame manipulatives designed for 1st graders to intuitively spot Make-10 pairs and leftover units!',
+      whyGood: 'Sangat cocok untuk anak Kelas 1 SD karena dapat menghitung benda nyata dan melihat kapan kotak terisi penuh 10.',
+      whyGoodEn: 'Perfect for 1st graders to count concrete objects and visualize when a frame reaches a full ten.'
     }
   ],
 
-  // Preset Pilihan Cepat Soal Flagship & Variasi
+  // Preset Pilihan Cepat Soal Flagship & Variasi (Termasuk Level Khusus Kelas 1 SD)
   presetExamples: [
-    { a: 67, b: 59, label: '67 + 59 (Flagship)', labelEn: '67 + 59 (Flagship)', highlight: true },
-    { a: 68, b: 32, label: '68 + 32 (Bikin 100)', labelEn: '68 + 32 (Make 100)' },
-    { a: 125, b: 75, label: '125 + 75 (Ratusan)', labelEn: '125 + 75 (Hundreds)' },
-    { a: 49, b: 51, label: '49 + 51 (Pas 100)', labelEn: '49 + 51 (Exact 100)' },
-    { a: 27, b: 18, label: '27 + 18 (Dasar)', labelEn: '27 + 18 (Basic)' },
-    { a: 58, b: 29, label: '58 + 29 (Kompensasi)', labelEn: '58 + 29 (Compensation)' }
+    // --- Level 1: Sahabat 10 (Kelas 1 SD) ---
+    { a: 7, b: 5, level: 'sd1', label: '7 + 5 (Kawan 10 Dasar)', labelEn: '7 + 5 (Make 10 Basic)', highlight: true },
+    { a: 8, b: 6, level: 'sd1', label: '8 + 6 (Bikin 10 Ceria)', labelEn: '8 + 6 (Make 10 Fun)' },
+    { a: 9, b: 4, level: 'sd1', label: '9 + 4 (Hampir 10)', labelEn: '9 + 4 (Near 10)' },
+    { a: 8, b: 7, level: 'sd1', label: '8 + 7 (Dobel + 1)', labelEn: '8 + 7 (Doubles + 1)' },
+    // --- Level 2: Menembus Puluhan (Kelas 1 SD) ---
+    { a: 15, b: 8, level: 'sd1', label: '15 + 8 (Lompat Puluhan)', labelEn: '15 + 8 (Jump Tens)' },
+    { a: 24, b: 13, level: 'sd1', label: '24 + 13 (Puluhan Bersahabat)', labelEn: '24 + 13 (Friendly Tens)' },
+    { a: 36, b: 19, level: 'sd1', label: '36 + 19 (Dekat 20)', labelEn: '36 + 19 (Near 20)' },
+    // --- Level 3: Mahir Ratusan & Flagship Soal ---
+    { a: 67, b: 59, level: 'master', label: '67 + 59 (Flagship Master)', labelEn: '67 + 59 (Flagship Master)', highlight: true },
+    { a: 68, b: 32, level: 'master', label: '68 + 32 (Pas 100 Bulat)', labelEn: '68 + 32 (Make 100)' },
+    { a: 125, b: 75, level: 'master', label: '125 + 75 (Ratusan)', labelEn: '125 + 75 (Hundreds)' }
   ],
 
   // Bank Soal Latihan Multi-Strategi

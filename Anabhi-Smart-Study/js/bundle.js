@@ -1107,17 +1107,36 @@
         summaryEn: 'Visual bead abacus: upper bead equals 5 (heaven) and lower beads equal 1 (earth).',
         whyGood: 'Dasar visual berhitung cepat yang melatih fokus dan bayangan mental.',
         whyGoodEn: 'Visual foundation for high-speed calculation and vivid mental math imaging.'
+      },
+      {
+        id: 'tens-frame',
+        name: 'Kotak 10 Frame',
+        nameEn: 'Ten-Frames',
+        badge: 'Kelas 1 SD',
+        badgeEn: 'Grade 1 Math',
+        icon: '🔴',
+        summary: 'Alat peraga visual Kotak 10 (Ten-Frame) standar Kelas 1 SD untuk melihat pengelompokan Kawan 10 dan sisa satuannya secara nyata!',
+        summaryEn: 'Visual Ten-Frame manipulatives designed for 1st graders to intuitively spot Make-10 pairs and leftover units!',
+        whyGood: 'Sangat cocok untuk anak Kelas 1 SD karena dapat menghitung benda nyata dan melihat kapan kotak terisi penuh 10.',
+        whyGoodEn: 'Perfect for 1st graders to count concrete objects and visualize when a frame reaches a full ten.'
       }
     ],
   
-    // Preset Pilihan Cepat Soal Flagship & Variasi
+    // Preset Pilihan Cepat Soal Flagship & Variasi (Termasuk Level Khusus Kelas 1 SD)
     presetExamples: [
-      { a: 67, b: 59, label: '67 + 59 (Flagship)', labelEn: '67 + 59 (Flagship)', highlight: true },
-      { a: 68, b: 32, label: '68 + 32 (Bikin 100)', labelEn: '68 + 32 (Make 100)' },
-      { a: 125, b: 75, label: '125 + 75 (Ratusan)', labelEn: '125 + 75 (Hundreds)' },
-      { a: 49, b: 51, label: '49 + 51 (Pas 100)', labelEn: '49 + 51 (Exact 100)' },
-      { a: 27, b: 18, label: '27 + 18 (Dasar)', labelEn: '27 + 18 (Basic)' },
-      { a: 58, b: 29, label: '58 + 29 (Kompensasi)', labelEn: '58 + 29 (Compensation)' }
+      // --- Level 1: Sahabat 10 (Kelas 1 SD) ---
+      { a: 7, b: 5, level: 'sd1', label: '7 + 5 (Kawan 10 Dasar)', labelEn: '7 + 5 (Make 10 Basic)', highlight: true },
+      { a: 8, b: 6, level: 'sd1', label: '8 + 6 (Bikin 10 Ceria)', labelEn: '8 + 6 (Make 10 Fun)' },
+      { a: 9, b: 4, level: 'sd1', label: '9 + 4 (Hampir 10)', labelEn: '9 + 4 (Near 10)' },
+      { a: 8, b: 7, level: 'sd1', label: '8 + 7 (Dobel + 1)', labelEn: '8 + 7 (Doubles + 1)' },
+      // --- Level 2: Menembus Puluhan (Kelas 1 SD) ---
+      { a: 15, b: 8, level: 'sd1', label: '15 + 8 (Lompat Puluhan)', labelEn: '15 + 8 (Jump Tens)' },
+      { a: 24, b: 13, level: 'sd1', label: '24 + 13 (Puluhan Bersahabat)', labelEn: '24 + 13 (Friendly Tens)' },
+      { a: 36, b: 19, level: 'sd1', label: '36 + 19 (Dekat 20)', labelEn: '36 + 19 (Near 20)' },
+      // --- Level 3: Mahir Ratusan & Flagship Soal ---
+      { a: 67, b: 59, level: 'master', label: '67 + 59 (Flagship Master)', labelEn: '67 + 59 (Flagship Master)', highlight: true },
+      { a: 68, b: 32, level: 'master', label: '68 + 32 (Pas 100 Bulat)', labelEn: '68 + 32 (Make 100)' },
+      { a: 125, b: 75, level: 'master', label: '125 + 75 (Ratusan)', labelEn: '125 + 75 (Hundreds)' }
     ],
   
     // Bank Soal Latihan Multi-Strategi
@@ -2676,61 +2695,310 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Bahasa Indonesia Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:47:00
+  // Version   : 2.0 (Comprehensive LKS & Kurikulum Merdeka Fase A/B)
   // ================================================================
   
   const BAHASA_INDONESIA_DATA = {
     id: 'bahasa-indonesia',
-    title: 'Bahasa Indonesia — Membaca & Merangkai Kata',
-    titleEn: 'Indonesian Language — Reading & Word Building',
-    subtitle: 'Huruf-huruf seru siap diajak bermain! Mari mengeja suku kata dan merangkai kalimat bergambar 📖',
-    subtitleEn: 'Fun letters ready to explore! Let\'s spell simple syllables and build sentences with pictures 📖',
+    title: 'Bahasa Indonesia — Membaca, Menulis, & Merangkai Kata',
+    titleEn: 'Indonesian Language — Reading, Writing, & Word Crafting',
+    subtitle: 'Mari bermain fonik vokal konsonan, mengeja suku kata, menyusun kalimat S-P-O, dan membaca dongeng fabel! 📖',
+    subtitleEn: 'Explore phonics, rhythmic syllables, proper sentence structures, and magical Indonesian folklore! 📖',
     topics: [
       {
         id: 'bi-vokal-konsonan',
         title: 'Mengenal Huruf Vokal & Konsonan',
         titleEn: 'Introduction to Vowels & Consonants',
-        desc: 'Ada 5 huruf vokal bernyanyi: A, I, U, E, O, dan 21 sahabat konsonan lainnya!',
-        descEn: 'There are 5 singing vowels: A, I, U, E, O, and 21 other consonant friends!',
+        desc: 'Ada 5 huruf vokal bernyanyi nyaring: A, I, U, E, O. Huruf vokal membuat suara kata menjadi terbuka dan jelas terdengar. Sahabatnya adalah 21 huruf konsonan (B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X, Y, Z) yang membentuk ragam bunyi ketika dipadukan!',
+        descEn: 'There are 5 singing vowels: A, I, U, E, O which produce open and vibrant sounds. They partner with 21 consonant letters to form meaningful words and melodious sentences!',
+        checklist: [
+          'Misi 1: Ucapkan 5 huruf vokal (A - I - U - E - O) dengan suara lantang dan artikulasi bibir yang tepat.',
+          'Misi 2: Temukan 3 benda di dalam rumahmu yang diawali huruf vokal (misal: apel, ember, obat).',
+          'Misi 3: Tuliskan huruf vokal dengan pensil warna merah dan huruf konsonan dengan pensil warna biru.'
+        ],
+        checklistEn: [
+          'Mission 1: Pronounce the 5 vowels (A - I - U - E - O) clearly aloud with proper lip shapes.',
+          'Mission 2: Identify 3 household objects starting with a vowel letter (e.g. apple, eraser, umbrella).',
+          'Mission 3: Write vowels with a red colored pencil and consonants with a blue colored pencil.'
+        ],
         activities: [
-          { q: 'Manakah kelompok huruf vokal yang benar?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Huruf vokal adalah huruf hidup yang bersuara nyaring!' }
+          { q: 'Manakah kelompok huruf vokal yang benar?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Huruf vokal adalah huruf hidup yang bersuara nyaring!' },
+          { q: 'Huruf pertama pada kata "ELANG" dan "EMBER" adalah huruf vokal...', options: ['E', 'A', 'I', 'O'], answer: 'E', hint: 'E-L-A-N-G bersuara /e/ atau /é/.' },
+          { q: 'Ada berapa huruf vokal pada kata "INDONESIA"?', options: ['5 vokal (I, O, E, I, A)', '3 vokal', '2 vokal', '7 vokal'], answer: '5 vokal (I, O, E, I, A)', hint: 'Hitung huruf I, O, E, I, dan A yang ada di kata Indonesia.' }
         ],
         activitiesEn: [
-          { q: 'Which of the following is the correct vowel group?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Vowels are open vocal sounds with clear voices!' }
+          { q: 'Which of the following is the correct vowel group?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Vowels are open vocal sounds with clear voices!' },
+          { q: 'The initial letter in "ELANG" and "EMBER" is the vowel...', options: ['E', 'A', 'I', 'O'], answer: 'E', hint: 'Both words begin with the letter E.' }
         ]
       },
       {
         id: 'bi-suku-kata',
-        title: 'Mengeja Suku Kata Sederhana',
-        titleEn: 'Spelling Simple Syllables',
-        desc: 'Gabungkan konsonan dan vokal: B-U = BU, K-U = KU → BUKU!',
-        descEn: 'Combine consonants and vowels: B-U = BU, K-U = KU → BUKU (Book)!',
+        title: 'Mengeja Suku Kata Pola KV & KVK',
+        titleEn: 'Spelling Syllables (CV & CVC Patterns)',
+        desc: 'Suku kata adalah ketukan bunyi saat kita mengucapkan sebuah kata. Pola KV (Konsonan-Vokal) seperti BA-JU, KU-DA, RO-TI. Pola KVK (Konsonan-Vokal-Konsonan) seperti PEN-SIL, RUM-PUT, RUM-AH. Mengeja suku kata membuat kita membaca lebih lancar dan percaya diri!',
+        descEn: 'A syllable is a single beat of speech sound. Combining Consonant-Vowel (CV like ba-ju) and Consonant-Vowel-Consonant (CVC like pen-sil) helps build reading fluency rapidly!',
+        checklist: [
+          'Misi 1: Tepuk tangan sesuai jumlah suku kata saat mengucapkan namamu sendiri (contoh: Bi-ma = 2 tepukan).',
+          'Misi 2: Eja dan tuliskan 4 kata berpola KV-KV (misal: sa-pi, ma-ta, bo-la, bu-ku) di buku latihan.',
+          'Misi 3: Sambungkan dua suku kata acak menjadi satu kata baru yang memiliki arti jelas.'
+        ],
+        checklistEn: [
+          'Mission 1: Clap hands matching syllable counts while saying your full name.',
+          'Mission 2: Spell and write down 4 CV-CV words (e.g. sa-pi, ma-ta, bo-la, bu-ku) in your notebook.',
+          'Mission 3: Connect two random syllables together to form a meaningful everyday word.'
+        ],
         activities: [
-          { q: 'BO + LA dibaca...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'Benda bulat yang sering ditendang saat main sepak bola ⚽' },
-          { q: 'KU + DA dibaca...', options: ['KUDA', 'DAKU', 'KUKU', 'DADA'], answer: 'KUDA', hint: 'Hewan yang bisa berlari kencang dan bersuara meringkik 🐎' }
+          { q: 'BO + LA bila digabungkan dibaca...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'Benda bulat yang sering ditendang saat main sepak bola ⚽' },
+          { q: 'Kata "PELANGI" terdiri dari berapa suku kata?', options: ['3 suku kata (pe - la - ngi)', '2 suku kata', '4 suku kata', '1 suku kata'], answer: '3 suku kata (pe - la - ngi)', hint: 'Hitung ketukan saat kamu mengucapkan: pe... la... ngi!' },
+          { q: 'Suku kata yang tepat untuk melengkapi kata "SE-PA-..." adalah...', options: ['TU (menjadi SEPATU)', 'KO', 'RI', 'NA'], answer: 'TU (menjadi SEPATU)', hint: 'Alas kaki yang kita pakai saat berangkat ke sekolah 👟' }
         ],
         activitiesEn: [
-          { q: 'BO + LA is read as...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'A round ball used in soccer ⚽' },
-          { q: 'KU + DA is read as...', options: ['KUDA', 'DAKU', 'KUKU', 'DADA'], answer: 'KUDA', hint: 'A horse animal that gallops fast and neighs 🐎' }
+          { q: 'BO + LA combined is read as...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'A round ball used in soccer ⚽' },
+          { q: 'How many syllables does the word "PELANGI" have?', options: ['3 syllables (pe - la - ngi)', '2 syllables', '4 syllables', '1 syllable'], answer: '3 syllables (pe - la - ngi)', hint: 'Count each verbal beat: pe - la - ngi!' }
         ]
       },
       {
         id: 'bi-susun-kalimat',
-        title: 'Menyusun Kalimat Ceria',
-        titleEn: 'Arranging Fun Sentences',
-        desc: 'Eh, kata-katanya berantakan 😆 Yuk susun lagi menjadi kalimat yang benar!',
-        descEn: 'Oops, the words are scrambled! Let\'s arrange them into a proper Indonesian sentence.',
+        title: 'Menyusun Kalimat Ceria Berpola S-P-O',
+        titleEn: 'Structuring Sentences (Subject - Predicate - Object)',
+        desc: 'Kalimat lengkap yang runtut terdiri dari: Subjek (siapa pelakunya), Predikat (apa kegiatannya / kata kerja), dan Objek (benda yang dikenai kegiatan). Contoh: "Rani (S) menyiram (P) bunga (O)". Kalimat yang baik diawali huruf kapital dan diakhiri tanda titik!',
+        descEn: 'A clear complete sentence consists of Subject (who), Predicate (action verb), and Object (the recipient of action). Example: "Rani waters flowers". It starts with a capital letter and finishes with a period!',
+        checklist: [
+          'Misi 1: Buat 1 kalimat tentang kegiatan pagimu menggunakan pola Subjek + Predikat + Objek.',
+          'Misi 2: Garis bawahi mana kata kerjanya (Predikat) pada kalimat yang kamu buat.',
+          'Misi 3: Bacakan kalimatmu dengan intonasi yang tegas dan ceria kepada ayah atau ibu.'
+        ],
+        checklistEn: [
+          'Mission 1: Write 1 complete sentence about your morning routine using S-P-O format.',
+          'Mission 2: Underline the action verb (Predicate) in your written sentence.',
+          'Mission 3: Read your sentence aloud proudly to your parents or guardian.'
+        ],
         activities: [
-          { q: 'Susun kata: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subjek pelaku di depan: siapa yang membaca?' }
+          { q: 'Susun kata acak berikut: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Letakkan orang yang melakukan kegiatan (Subjek) di depan.' },
+          { q: 'Pada kalimat "Ibu memasak nasi", kata "memasak" bertindak sebagai...', options: ['Predikat (kata kerja)', 'Subjek', 'Objek', 'Tanda baca'], answer: 'Predikat (kata kerja)', hint: 'Memasak adalah tindakan atau kegiatan yang dilakukan Ibu.' },
+          { q: 'Manakah kalimat berikut yang paling lengkap dan benar?', options: ['Siti menyapu halaman.', 'Menyapu halaman Siti.', 'Halaman menyapu Siti.', 'Siti halaman.'], answer: 'Siti menyapu halaman.', hint: 'Urutan: Subjek (Siti) + Predikat (menyapu) + Objek (halaman).' }
         ],
         activitiesEn: [
-          { q: 'Arrange the words: [membaca] - [buku] - [Budi] (reading - book - Budi)', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subject in front: who is reading the book?' }
+          { q: 'Arrange the scrambled words: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subject comes first: who is doing the reading action?' }
         ]
+      },
+      {
+        id: 'bi-tanda-baca',
+        title: 'Tanda Baca & Huruf Kapital',
+        titleEn: 'Punctuation Marks & Capital Letters',
+        desc: 'Huruf kapital dipakai di awal kalimat, nama orang (Dayu, Edo), hari (Senin, Selasa), dan nama tempat (Jakarta, Bali). Tanda titik (.) digunakan untuk mengakhiri kalimat berita. Tanda tanya (?) untuk bertanya. Tanda seru (!) untuk perintah atau ungkapan penuh semangat!',
+        descEn: 'Capital letters are used at sentence beginnings, names of people, days, and places. Use a period (.) for statements, a question mark (?) for inquiries, and an exclamation mark (!) for commands and enthusiasm!',
+        checklist: [
+          'Misi 1: Tulis namamu dan nama kota tempat tinggalmu dengan huruf kapital di awal kata.',
+          'Misi 2: Tulis satu kalimat tanya menggunakan kata tanya "Di mana" atau "Kapan" diakhiri tanda tanya (?).',
+          'Misi 3: Temukan 3 tanda titik pada buku cerita favoritmu hari ini.'
+        ],
+        checklistEn: [
+          'Mission 1: Write your full name and hometown name with proper capitalized initials.',
+          'Mission 2: Formulate an inquisitive question starting with "Where" or "When" ending with (?).',
+          'Mission 3: Hunt and point out 3 period punctuation marks in your bedtime storybook.'
+        ],
+        activities: [
+          { q: 'Tanda baca yang tepat untuk kalimat: "Siapa nama sahabat barumu..." adalah...', options: ['Tanda tanya (?)', 'Tanda titik (.)', 'Tanda seru (!)', 'Tanda koma (,)'], answer: 'Tanda tanya (?)', hint: 'Kata "Siapa" menunjukkan kalimat pertanyaan.' },
+          { q: 'Penulisan huruf kapital yang benar pada nama orang dan tempat adalah...', options: ['Made berlibur ke Denpasar.', 'made berlibur ke denpasar.', 'Made berlibur Ke denpasar.', 'made Berlibur ke Denpasar.'], answer: 'Made berlibur ke Denpasar.', hint: 'Nama orang (Made) dan nama kota (Denpasar) diawali huruf kapital.' },
+          { q: 'Tanda seru (!) biasanya dipakai untuk kalimat...', options: ['Perintah atau ajakan penuh semangat', 'Pertanyaan ingin tahu', 'Kalimat berita santai', 'Kalimat berhitung'], answer: 'Perintah atau ajakan penuh semangat', hint: 'Contoh: "Jagalah kebersihan kelas kita!"' }
+        ],
+        activitiesEn: [
+          { q: 'Which punctuation mark fits best: "Where is my pencil..."?', options: ['Question mark (?)', 'Period (.)', 'Exclamation mark (!)', 'Comma (,)'], answer: 'Question mark (?)', hint: 'It asks an inquiry question.' }
+        ]
+      },
+      {
+        id: 'bi-pantun-puisi',
+        title: 'Puisi Ceria & Pantun Anak Nusantara',
+        titleEn: 'Children Poetry & Indonesian Pantun',
+        desc: 'Puisi dan pantun adalah karya sastra indah penuh irama. Pantun anak jenaka biasanya bersajak a-b-a-b, terdiri dari 4 baris: baris 1-2 adalah sampiran yang memikat, dan baris 3-4 adalah isi yang menyampaikan nasehat kebaikan atau canda riang!',
+        descEn: 'Poetry and pantun celebrate the rhythm of language. Indonesian pantun typically follows an a-b-a-b rhyme scheme across 4 lines: 2 introductory lines and 2 advice or joyful concluding lines!',
+        checklist: [
+          'Misi 1: Baca pantun anak di bawah dengan intonasi ceria di hadapan anggota keluargamu.',
+          'Misi 2: Temukan kata yang bersajak sama (rima akhir) pada baris pertama dan ketiga.',
+          'Misi 3: Coba buat 2 baris puisi sederhana tentang bunga mawar atau kucing kesayangan.'
+        ],
+        checklistEn: [
+          'Mission 1: Recite a 4-line children pantun poem out loud with joyful facial expressions.',
+          'Mission 2: Find rhyming words matching between the first and third lines.',
+          'Mission 3: Draft a 2-line mini poem praising a colorful flower or a beloved pet kitten.'
+        ],
+        activities: [
+          { q: 'Perhatikan pantun ini: "Pohon beringin daunnya lebat / Tempat berteduh di waktu siang / Ayo kawan belajar giat / Agar masa depan gilang-gemilang". Baris yang merupakan ISI nasehat adalah...', options: ['Baris ke-3 dan ke-4', 'Baris ke-1 dan ke-2', 'Hanya baris ke-1', 'Hanya baris ke-2'], answer: 'Baris ke-3 dan ke-4', hint: 'Nasehat pantun selalu berada di dua baris terakhir (baris 3 dan 4).' },
+          { q: 'Rima bunyi akhir pada bait pantun tradisional umumnya berpola...', options: ['a - b - a - b', 'a - a - a - b', 'b - b - b - a', 'bebas tanpa rima'], answer: 'a - b - a - b', hint: 'Bunyi baris 1 seirama baris 3, bunyi baris 2 seirama baris 4.' }
+        ],
+        activitiesEn: [
+          { q: 'In traditional Indonesian Pantun, which lines contain the core advice / message?', options: ['Lines 3 and 4', 'Lines 1 and 2', 'Line 1 only', 'Line 2 only'], answer: 'Lines 3 and 4', hint: 'The moral message is always found in the concluding couplet (lines 3 & 4).' }
+        ]
+      },
+      {
+        id: 'bi-dongeng-fabel',
+        title: 'Membaca Pemahaman & Fabel Nusantara',
+        titleEn: 'Reading Comprehension & Animal Fables',
+        desc: 'Fabel adalah cerita dongeng di mana hewan-hewan dapat berbicara dan bertingkah seperti manusia. Membaca fabel membantu kita memahami karakter tokoh, alur awal-tengah-akhir, dan memetik pesan budi pekerti yang luhur!',
+        descEn: 'Fables are charming stories where animals talk and act like humans. Reading fables sharpens comprehension, teaches narrative sequencing, and imparts memorable moral virtues!',
+        checklist: [
+          'Misi 1: Baca dongeng fabel "Kancil dan Buaya" atau fabel pilihanmu bersama orang tua.',
+          'Misi 2: Tuliskan siapa nama tokoh yang cerdik atau baik hati dalam cerita tersebut.',
+          'Misi 3: Ceritakan kembali dengan kata-katamu sendiri apa pesan moral dari dongeng itu.'
+        ],
+        checklistEn: [
+          'Mission 1: Read a short fable story such as "The Clever Mouse Deer & The Crocodiles".',
+          'Mission 2: Write down the name of the kindhearted protagonist character.',
+          'Mission 3: Retell in your own words what moral lesson was taught by the ending.'
+        ],
+        activities: [
+          { q: 'Cerita dongeng dengan tokoh hewan yang bertingkah laku seperti manusia disebut...', options: ['Fabel', 'Legenda', 'Mite', 'Biografi'], answer: 'Fabel', hint: 'Fabel adalah kisah hewan jenaka penuh pesan moral.' },
+          { q: 'Dalam fabel "Semut dan Belalang", Semut rajin mengumpulkan makanan saat musim kemarau, sedangkan Belalang malas dan hanya bernyanyi. Sikap Semut mengajarkan kita untuk...', options: ['Rajin bekerja dan mempersiapkan masa depan', 'Malas-malasan setiap hari', 'Menghabiskan makanan sekaligus', 'Mengejek teman lain'], answer: 'Rajin bekerja dan mempersiapkan masa depan', hint: 'Semut yang rajin tidak akan kelaparan saat musim dingin tiba 🐜' }
+        ],
+        activitiesEn: [
+          { q: 'What do we call fictional stories where animal characters speak and behave like people?', options: ['Fable', 'Biography', 'Encyclopedia', 'Atlas'], answer: 'Fable', hint: 'Aesop and folklore animal tales are known as fables.' }
+        ]
+      }
+  ,
+      {
+        id: 'bi-kata-ajaib',
+        title: '4 Kata Ajaib: Tolong, Maaf, Terima Kasih, & Permisi',
+        titleEn: '4 Magic Words: Please, Sorry, Thank You, & Excuse Me',
+        desc: 'Ada 4 kata ajaib yang membuat semua orang tersenyum dan senang: "Tolong" saat butuh bantuan, "Maaf" saat berbuat salah atau tidak sengaja, "Terima Kasih" saat menerima kebaikan, dan "Permisi" saat lewat di depan orang lain. Membiasakan kata ajaib sejak Kelas 1 SD menjadikan kita anak berbudi pekerti luhur!',
+        descEn: 'There are 4 magical words that bring smiles and warmth everywhere: "Please" when asking for help, "Sorry" when making an accidental mistake, "Thank you" when receiving kindness, and "Excuse me" when passing by others. Practicing these words makes us wonderful polite learners!',
+        checklist: [
+          "Misi 1: Ucapkan \"Terima kasih\" kepada Ibu atau Ayah saat disiapkan sarapan pagi yang lezat.",
+          "Misi 2: Praktikkan kata \"Tolong\" dengan suara santun saat meminta bantuan mengambilkan buku.",
+          "Misi 3: Buat kartu gambar bertuliskan \"4 KATA AJAIB\" dan tempelkan di dekat meja belajarmu."
+  ],
+        checklistEn: [
+          "Mission 1: Say \"Thank you\" warmly to your parents when they prepare your meal.",
+          "Mission 2: Practice saying \"Please\" politely when requesting assistance.",
+          "Mission 3: Create a cheerful drawing card showing the \"4 Magic Words\" near your desk."
+  ],
+        activities: [
+          {
+                  "q": "Saat Budi tidak sengaja menjatuhkan pensil milik Siti, kata ajaib yang harus diucapkan Budi adalah...",
+                  "options": [
+                          "Maaf",
+                          "Terima kasih",
+                          "Tolong",
+                          "Biarin saja"
+                  ],
+                  "answer": "Maaf",
+                  "hint": "Gunakan kata ini ketika kita berbuat salah atau ada ketidaksengajaan."
+          },
+          {
+                  "q": "Ketika Kadek diberi kue bolu lezat oleh nenek, Kadek mengucapkan...",
+                  "options": [
+                          "Terima kasih, Nenek!",
+                          "Tolong!",
+                          "Permisi!",
+                          "Maaf!"
+                  ],
+                  "answer": "Terima kasih, Nenek!",
+                  "hint": "Ungkapan rasa syukur atas kebaikan orang lain."
+          },
+          {
+                  "q": "Saat kita hendak berjalan lewat di depan guru yang sedang berbincang, kita bersikap membungkuk dan berkata...",
+                  "options": [
+                          "Permisi, Pak Guru",
+                          "Awas minggir",
+                          "Tolong",
+                          "Diam"
+                  ],
+                  "answer": "Permisi, Pak Guru",
+                  "hint": "Kata santun untuk meminta izin lewat."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "When you accidentally bump into a friend, you should say...",
+                  "options": [
+                          "Sorry",
+                          "Thank you",
+                          "Please",
+                          "Go away"
+                  ],
+                  "answer": "Sorry",
+                  "hint": "Say this to express regret when an accident occurs."
+          },
+          {
+                  "q": "When grandmother gives you a delicious treat, you say...",
+                  "options": [
+                          "Thank you, Grandma!",
+                          "Please!",
+                          "Excuse me!",
+                          "Sorry!"
+                  ],
+                  "answer": "Thank you, Grandma!",
+                  "hint": "Show gratitude for kindness received."
+          }
+  ]
+      },
+      {
+        id: 'bi-cerita-bergambar',
+        title: 'Membaca Cerita Bergambar & Menemukan Pesan Moral',
+        titleEn: 'Reading Picture Books & Discovering Moral Lessons',
+        desc: 'Cerita bergambar membantu imajinasi kita terbang tinggi! Gambar menunjukkan suasana tempat dan ekspresi wajah tokoh, sedangkan tulisan menceritakan alur kisahnya. Dari setiap cerita, kita bisa belajar mana perbuatan baik yang patut ditiru dan mana perbuatan buruk yang harus dihindari.',
+        descEn: 'Picture books ignite our imagination! Vibrant illustrations show character emotions and magical settings, while words guide the story plot. Through every tale, we discover valuable moral wisdom to live by every day.',
+        checklist: [
+          "Misi 1: Ambil buku cerita bergambar favoritmu dan bacalah satu halaman dengan suara lantang dan intonasi tepat.",
+          "Misi 2: Ceritakan kembali kepada Ayah/Ibu siapa tokoh utama cerita tersebut dan apa sifat baiknya.",
+          "Misi 3: Gambarkan adegan paling seru dari cerita tersebut di buku gambarmu."
+  ],
+        checklistEn: [
+          "Mission 1: Pick your favorite picture book and read one page aloud with cheerful expressions.",
+          "Mission 2: Retell the main character and their good habits to your parents.",
+          "Mission 3: Draw your favorite scene from the story in your drawing book."
+  ],
+        activities: [
+          {
+                  "q": "Dalam cerita \"Semut dan Belalang\", Semut rajin mengumpulkan makanan sedangkan Belalang hanya bermain. Pesan baiknya adalah...",
+                  "options": [
+                          "Rajin bekerja dan mempersiapkan masa depan",
+                          "Bermain terus sepanjang hari",
+                          "Tidak mau berbagi makanan",
+                          "Tidur seharian di pohon"
+                  ],
+                  "answer": "Rajin bekerja dan mempersiapkan masa depan",
+                  "hint": "Semut tidak kelaparan saat musim hujan karena rajin bekerja."
+          },
+          {
+                  "q": "Tokoh yang memiliki sifat baik dan suka menolong dalam cerita disebut tokoh...",
+                  "options": [
+                          "Protagonis (tokoh baik)",
+                          "Antagonis (tokoh jahat)",
+                          "Penonton",
+                          "Penulis"
+                  ],
+                  "answer": "Protagonis (tokoh baik)",
+                  "hint": "Tokoh teladan yang dicintai pembaca."
+          },
+          {
+                  "q": "Unsur cerita yang menceritakan kapan dan di mana peristiwa terjadi dinamakan...",
+                  "options": [
+                          "Latar (tempat & waktu)",
+                          "Judul",
+                          "Penerbit",
+                          "Halaman"
+                  ],
+                  "answer": "Latar (tempat & waktu)",
+                  "hint": "Contoh: di hutan lebat pada pagi hari yang cerah."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "In the fable of the Ant and the Grasshopper, the hardworking Ant teaches us to...",
+                  "options": [
+                          "Work hard and prepare for tomorrow",
+                          "Play all day and sleep",
+                          "Never share anything",
+                          "Ignore our goals"
+                  ],
+                  "answer": "Work hard and prepare for tomorrow",
+                  "hint": "Diligent preparation brings safety and happiness."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/bahasa-inggris.js ---
@@ -2738,47 +3006,321 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · English Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:48:00
+  // Version   : 2.0 (Comprehensive LKS & Global Vocabulary)
   // ================================================================
   
   const ENGLISH_DATA = {
     id: 'bahasa-inggris',
-    title: 'English — Fun & Easy Vocabulary',
-    titleEn: 'English — Fun & Easy Vocabulary',
-    subtitle: 'Easy peasy! Mari kenalan dengan kata-kata bahasa Inggris sehari-hari yang keren 🇬🇧',
-    subtitleEn: 'Easy peasy! Let\'s learn cool everyday English words and friendly greetings 🇬🇧',
+    title: 'English — Fun & Easy Global Vocabulary',
+    titleEn: 'English — Fun & Easy Global Vocabulary',
+    subtitle: 'Easy peasy! Learn friendly greetings, colorful shapes, school supplies, and daily action verbs! 🇬🇧',
+    subtitleEn: 'Easy peasy! Learn friendly greetings, colorful shapes, school supplies, and daily action verbs! 🇬🇧',
     topics: [
       {
         id: 'eng-greetings',
-        title: 'Greetings & Sapaan Ceria',
-        desc: 'Good morning, good afternoon, dan sapaan sopan kepada guru dan teman.',
+        title: 'Warm Greetings & Everyday Politeness',
+        titleEn: 'Warm Greetings & Everyday Politeness',
+        desc: 'Polite greetings make everyone smile! Use "Good morning" at sunrise, "Good afternoon" after noon, and "Good night" before sleeping. Always remember magic words: "Please", "Thank you", and "Excuse me"!',
+        descEn: 'Polite greetings make everyone smile! Use "Good morning" at sunrise, "Good afternoon" after noon, and "Good night" before sleeping. Always remember magic words: "Please", "Thank you", and "Excuse me"!',
+        checklist: [
+          'Mission 1: Greet three friends or family members with "Good morning" with a warm smile.',
+          'Mission 2: Say "Thank you very much!" whenever someone hands you food or helps you.',
+          'Mission 3: Practice saying "Excuse me, may I pass?" politely in front of a mirror.'
+        ],
+        checklistEn: [
+          'Mission 1: Greet three friends or family members with "Good morning" with a warm smile.',
+          'Mission 2: Say "Thank you very much!" whenever someone hands you food or helps you.',
+          'Mission 3: Practice saying "Excuse me, may I pass?" politely in front of a mirror.'
+        ],
         activities: [
-          { q: 'Bagaimana menyapa "Selamat pagi" dalam bahasa Inggris?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning artinya pagi hari saat matahari baru terbit ☀️' },
-          { q: 'Bagaimana mengucapkan "Terima kasih"?', options: ['Thank you', 'Please', 'Sorry', 'Hello'], answer: 'Thank you', hint: 'Ucapkan "Thank you" saat seseorang membantumu!' }
+          { q: 'How do you greet your teacher at 7:30 in the morning?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning is when the sun begins to rise ☀️' },
+          { q: 'What is the magic word when you receive a nice gift?', options: ['Thank you', 'Please', 'Sorry', 'Excuse me'], answer: 'Thank you', hint: 'Express your gratitude with "Thank you"!' },
+          { q: 'What do you say when you accidentally bump into someone?', options: ['I am sorry / Excuse me', 'Good morning', 'You are welcome', 'Goodbye'], answer: 'I am sorry / Excuse me', hint: 'Say sorry politely when making a mistake.' }
+        ],
+        activitiesEn: [
+          { q: 'How do you greet your teacher at 7:30 in the morning?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning is when the sun begins to rise ☀️' },
+          { q: 'What is the magic word when you receive a nice gift?', options: ['Thank you', 'Please', 'Sorry', 'Excuse me'], answer: 'Thank you', hint: 'Express your gratitude with "Thank you"!' }
         ]
       },
       {
-        id: 'eng-colors',
-        title: 'Rainbow Colors (Mengenal Warna)',
-        desc: 'Red, Blue, Yellow, Green, and Purple! Warna-warni pelangi ceria.',
+        id: 'eng-colors-shapes',
+        title: 'Rainbow Colors & Geometric Shapes',
+        titleEn: 'Rainbow Colors & Geometric Shapes',
+        desc: 'Our world is filled with vibrant colors: Red, Blue, Yellow, Green, Purple, and Orange! Match them with shapes like Circle (round like a coin), Square (four equal sides), Triangle (three sharp corners), and Star (sparkling in the sky)!',
+        descEn: 'Our world is filled with vibrant colors: Red, Blue, Yellow, Green, Purple, and Orange! Match them with shapes like Circle (round like a coin), Square (four equal sides), Triangle (three sharp corners), and Star (sparkling in the sky)!',
+        checklist: [
+          'Mission 1: Find 1 red item, 1 blue item, and 1 yellow item in your study room.',
+          'Mission 2: Draw a yellow star ⭐ and a green triangle 🔺 on your sketchpad.',
+          'Mission 3: Name the color of the clear daytime sky in English (Blue).'
+        ],
+        checklistEn: [
+          'Mission 1: Find 1 red item, 1 blue item, and 1 yellow item in your study room.',
+          'Mission 2: Draw a yellow star ⭐ and a green triangle 🔺 on your sketchpad.',
+          'Mission 3: Name the color of the clear daytime sky in English (Blue).'
+        ],
         activities: [
-          { q: 'Apa warna "BLUE" dalam bahasa Indonesia?', options: ['Biru', 'Merah', 'Kuning', 'Hijau'], answer: 'Biru', hint: 'Warna langit cerah di siang hari dan air laut.' },
-          { q: 'Warna daun pohon yang segar adalah "GREEN", artinya...', options: ['Hijau', 'Hitam', 'Putih', 'Cokelat'], answer: 'Hijau', hint: 'Hijau seperti dedaunan dan rumput di taman.' }
+          { q: 'What color is the fresh summer grass?', options: ['Green', 'Red', 'Blue', 'Black'], answer: 'Green', hint: 'Leaves and grass are vivid green 🌿' },
+          { q: 'Which shape is round like a full moon or a clock?', options: ['Circle', 'Square', 'Triangle', 'Rectangle'], answer: 'Circle', hint: 'A circle has no straight edges or corners ⭕' },
+          { q: 'A ripe red apple is described as...', options: ['A red apple', 'A blue apple', 'A green circle', 'A yellow banana'], answer: 'A red apple', hint: 'Red is the color of ripe strawberries and apples 🍎' }
+        ],
+        activitiesEn: [
+          { q: 'What color is the fresh summer grass?', options: ['Green', 'Red', 'Blue', 'Black'], answer: 'Green', hint: 'Leaves and grass are vivid green 🌿' },
+          { q: 'Which shape is round like a full moon or a clock?', options: ['Circle', 'Square', 'Triangle', 'Rectangle'], answer: 'Circle', hint: 'A circle has no straight edges or corners ⭕' }
         ]
       },
       {
-        id: 'eng-animals',
-        title: 'Friendly Animals (Hewan Sahabat)',
-        desc: 'Cat, Dog, Bird, Fish, and Elephant! Sahabat hewan yang lucu.',
+        id: 'eng-family-pets',
+        title: 'My Loving Family & Cute Pets',
+        titleEn: 'My Loving Family & Cute Pets',
+        desc: 'Meet our dearest family members: Father, Mother, Brother, Sister, Grandfather, and Grandmother. And meet lovely pets: Cat (purring kitten), Dog (faithful puppy), Rabbit (long-eared bunny), and Fish (swimming in water)!',
+        descEn: 'Meet our dearest family members: Father, Mother, Brother, Sister, Grandfather, and Grandmother. And meet lovely pets: Cat (purring kitten), Dog (faithful puppy), Rabbit (long-eared bunny), and Fish (swimming in water)!',
+        checklist: [
+          'Mission 1: Draw your happy family portrait and write "Father", "Mother", and "Me" below.',
+          'Mission 2: Imitate the sound of a pet Cat ("Meow") and a pet Dog ("Woof woof").',
+          'Mission 3: Say "I love my family" aloud to your parents.'
+        ],
+        checklistEn: [
+          'Mission 1: Draw your happy family portrait and write "Father", "Mother", and "Me" below.',
+          'Mission 2: Imitate the sound of a pet Cat ("Meow") and a pet Dog ("Woof woof").',
+          'Mission 3: Say "I love my family" aloud to your parents.'
+        ],
         activities: [
-          { q: '"CAT" adalah hewan yang bersuara meong, artinya...', options: ['Kucing', 'Anjing', 'Burung', 'Ikan'], answer: 'Kucing', hint: 'Hewan berbulu lembut yang suka dielus 🐱' },
-          { q: '"FISH" hidup dan berenang di dalam air, artinya...', options: ['Ikan', 'Kelinci', 'Kuda', 'Gajah'], answer: 'Ikan', hint: 'Hewan yang bernapas dengan insang 🐟' }
+          { q: 'Who is your mother\'s mother?', options: ['Grandmother', 'Sister', 'Aunt', 'Brother'], answer: 'Grandmother', hint: 'The warm grandmother who tells wonderful stories 👵' },
+          { q: 'Which animal says "Woof! Woof!" and wags its tail?', options: ['Dog', 'Cat', 'Bird', 'Fish'], answer: 'Dog', hint: 'Man\'s best four-legged friend 🐕' },
+          { q: '"My younger sister" means...', options: ['Adik perempuanku', 'Kakak laki-lakiku', 'Ayahku', 'Ibuku'], answer: 'Adik perempuanku', hint: 'Sister means saudara perempuan.' }
+        ],
+        activitiesEn: [
+          { q: 'Who is your mother\'s mother?', options: ['Grandmother', 'Sister', 'Aunt', 'Brother'], answer: 'Grandmother', hint: 'The warm grandmother who tells wonderful stories 👵' },
+          { q: 'Which animal says "Woof! Woof!" and wags its tail?', options: ['Dog', 'Cat', 'Bird', 'Fish'], answer: 'Dog', hint: 'Man\'s best four-legged friend 🐕' }
         ]
+      },
+      {
+        id: 'eng-classroom',
+        title: 'Classroom Objects & School Bag',
+        titleEn: 'Classroom Objects & School Bag',
+        desc: 'Let\'s unpack our school backpack: Pencil (to write), Eraser / Rubber (to wipe errors), Ruler (to draw straight lines), Book (to read), Notebook (to write notes), and Scissors (for craft paper)!',
+        descEn: 'Let\'s unpack our school backpack: Pencil (to write), Eraser / Rubber (to wipe errors), Ruler (to draw straight lines), Book (to read), Notebook (to write notes), and Scissors (for craft paper)!',
+        checklist: [
+          'Mission 1: Check your pencil case and count your pencils in English (1, 2, 3...).',
+          'Mission 2: Point to your eraser and say: "This is my eraser."',
+          'Mission 3: Keep your study desk neat and tidy before starting your homework.'
+        ],
+        checklistEn: [
+          'Mission 1: Check your pencil case and count your pencils in English (1, 2, 3...).',
+          'Mission 2: Point to your eraser and say: "This is my eraser."',
+          'Mission 3: Keep your study desk neat and tidy before starting your homework.'
+        ],
+        activities: [
+          { q: 'What object do you use to erase pencil marks on paper?', options: ['Eraser', 'Ruler', 'Sharpener', 'Scissors'], answer: 'Eraser', hint: 'It rubs away pencil mistakes cleanly ✏️' },
+          { q: 'Where do you pack your textbooks, pencil case, and bottle?', options: ['School bag / Backpack', 'Plate', 'Shoe', 'Pillow'], answer: 'School bag / Backpack', hint: 'You carry it on your shoulders to school 🎒' }
+        ],
+        activitiesEn: [
+          { q: 'What object do you use to erase pencil marks on paper?', options: ['Eraser', 'Ruler', 'Sharpener', 'Scissors'], answer: 'Eraser', hint: 'It rubs away pencil mistakes cleanly ✏️' }
+        ]
+      },
+      {
+        id: 'eng-numbers-actions',
+        title: 'Numbers 1 to 20 & Action Verbs',
+        titleEn: 'Numbers 1 to 20 & Action Verbs',
+        desc: 'Counting is energetic and exciting: One, Two, Three, Four, Five... up to Twenty! Combine numbers with joyful actions: Walk, Run, Jump, Dance, Sing, Read, Write, and Sleep!',
+        descEn: 'Counting is energetic and exciting: One, Two, Three, Four, Five... up to Twenty! Combine numbers with joyful actions: Walk, Run, Jump, Dance, Sing, Read, Write, and Sleep!',
+        checklist: [
+          'Mission 1: Count your 10 fingers aloud in English: One to Ten.',
+          'Mission 2: Jump three times while shouting: "One! Two! Three! Jump!"',
+          'Mission 3: Sing the English alphabet or number rhyme with clapping rhythm.'
+        ],
+        checklistEn: [
+          'Mission 1: Count your 10 fingers aloud in English: One to Ten.',
+          'Mission 2: Jump three times while shouting: "One! Two! Three! Jump!"',
+          'Mission 3: Sing the English alphabet or number rhyme with clapping rhythm.'
+        ],
+        activities: [
+          { q: 'What number comes directly after "NINE"?', options: ['TEN (10)', 'EIGHT (8)', 'SEVEN (7)', 'ELEVEN (11)'], answer: 'TEN (10)', hint: '8, 9, ... what comes next?' },
+          { q: 'Which action verb means moving fast on your feet?', options: ['Run', 'Sleep', 'Sit', 'Eat'], answer: 'Run', hint: 'Athletes run swiftly in track races 🏃' }
+        ],
+        activitiesEn: [
+          { q: 'What number comes directly after "NINE"?', options: ['TEN (10)', 'EIGHT (8)', 'SEVEN (7)', 'ELEVEN (11)'], answer: 'TEN (10)', hint: '8, 9, ... what comes next?' }
+        ]
+      },
+      {
+        id: 'eng-food-routine',
+        title: 'Healthy Food & Daily Routine',
+        titleEn: 'Healthy Food & Daily Routine',
+        desc: 'Fuel your day with nutritious food: Bread, Milk, Egg, Rice, Vegetables, and Fruits! Follow a sparkling daily routine: Wake up, Brush teeth, Wash face, Eat breakfast, and Study hard!',
+        descEn: 'Fuel your day with nutritious food: Bread, Milk, Egg, Rice, Vegetables, and Fruits! Follow a sparkling daily routine: Wake up, Brush teeth, Wash face, Eat breakfast, and Study hard!',
+        checklist: [
+          'Mission 1: Name 2 fruits you enjoy eating in English (e.g. Apple, Banana, Orange).',
+          'Mission 2: Say: "I brush my teeth twice a day" before going to bed.',
+          'Mission 3: Drink a fresh glass of water or milk to stay hydrated.'
+        ],
+        checklistEn: [
+          'Mission 1: Name 2 fruits you enjoy eating in English (e.g. Apple, Banana, Orange).',
+          'Mission 2: Say: "I brush my teeth twice a day" before going to bed.',
+          'Mission 3: Drink a fresh glass of water or milk to stay hydrated.'
+        ],
+        activities: [
+          { q: 'What healthy white drink comes from dairy cows?', options: ['Milk', 'Soda', 'Coffee', 'Tea'], answer: 'Milk', hint: 'Rich in calcium for strong bones and teeth 🥛' },
+          { q: 'What do you do right after waking up in the morning?', options: ['Brush teeth and wash face', 'Go to sleep', 'Play video games', 'Watch TV until noon'], answer: 'Brush teeth and wash face', hint: 'Keep fresh hygiene at dawn 🪥' }
+        ],
+        activitiesEn: [
+          { q: 'What healthy white drink comes from dairy cows?', options: ['Milk', 'Soda', 'Coffee', 'Tea'], answer: 'Milk', hint: 'Rich in calcium for strong bones and teeth 🥛' }
+        ]
+      }
+  ,
+      {
+        id: 'en-fruits-food',
+        title: 'Delicious Fruits & Healthy Food',
+        titleEn: 'Delicious Fruits & Healthy Food',
+        desc: 'Eating colorful fruits keeps our body energetic and strong! Let us learn their English names: Red Apple 🍎, Yellow Banana 🍌, Juicy Orange 🍊, Sweet Mango 🥭, and Crispy Watermelon 🍉. For healthy meals: White Rice 🍚, Fresh Milk 🥛, and Warm Bread 🍞!',
+        descEn: 'Eating colorful fruits keeps our body energetic and strong! Let us learn their English names: Red Apple 🍎, Yellow Banana 🍌, Juicy Orange 🍊, Sweet Mango 🥭, and Crispy Watermelon 🍉. For healthy meals: White Rice 🍚, Fresh Milk 🥛, and Warm Bread 🍞!',
+        checklist: [
+          "Mission 1: Point to 3 fruits at home and say their English names aloud.",
+          "Mission 2: Practice saying the sentence: \"I like to eat sweet apples and fresh bananas!\"",
+          "Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K."
+  ],
+        checklistEn: [
+          "Mission 1: Point to 3 fruits at home and say their English names aloud.",
+          "Mission 2: Practice saying the sentence: \"I like to eat sweet apples and fresh bananas!\"",
+          "Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K."
+  ],
+        activities: [
+          {
+                  "q": "What is the English name for \"Apel Merah\"?",
+                  "options": [
+                          "Red Apple",
+                          "Yellow Banana",
+                          "Green Grapes",
+                          "Orange Juice"
+                  ],
+                  "answer": "Red Apple",
+                  "hint": "The fruit is crunchy, sweet, and red 🍎"
+          },
+          {
+                  "q": "Monkeys love to eat this yellow fruit. It is called a...",
+                  "options": [
+                          "Banana",
+                          "Watermelon",
+                          "Strawberry",
+                          "Pineapple"
+                  ],
+                  "answer": "Banana",
+                  "hint": "Yellow curved fruit that tastes sweet 🍌"
+          },
+          {
+                  "q": "\"I drink fresh ... every morning.\" The correct word is...",
+                  "options": [
+                          "milk",
+                          "pencil",
+                          "chair",
+                          "book"
+                  ],
+                  "answer": "milk",
+                  "hint": "A white nutritious drink that strengthens bones 🥛"
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "What is the English name for \"Apel Merah\"?",
+                  "options": [
+                          "Red Apple",
+                          "Yellow Banana",
+                          "Green Grapes",
+                          "Orange Juice"
+                  ],
+                  "answer": "Red Apple",
+                  "hint": "The fruit is crunchy, sweet, and red 🍎"
+          },
+          {
+                  "q": "Monkeys love to eat this yellow fruit. It is called a...",
+                  "options": [
+                          "Banana",
+                          "Watermelon",
+                          "Strawberry",
+                          "Pineapple"
+                  ],
+                  "answer": "Banana",
+                  "hint": "Yellow curved fruit that tastes sweet 🍌"
+          }
+  ]
+      },
+      {
+        id: 'en-body-parts',
+        title: 'My Body Parts & 5 Senses',
+        titleEn: 'My Body Parts & 5 Senses',
+        desc: 'Our body is a miraculous gift! We have two Eyes 👀 to see rainbow colors, two Ears 👂 to hear bird songs, one Nose 👃 to smell fresh flowers, one Mouth 👄 to speak polite words, and two Hands ✋ to help our friends!',
+        descEn: 'Our body is a miraculous gift! We have two Eyes 👀 to see rainbow colors, two Ears 👂 to hear bird songs, one Nose 👃 to smell fresh flowers, one Mouth 👄 to speak polite words, and two Hands ✋ to help our friends!',
+        checklist: [
+          "Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.",
+          "Mission 2: Count your fingers in English from 1 to 10 proudly.",
+          "Mission 3: Say aloud: \"I see with my eyes, I hear with my ears, I smile with my mouth!\""
+  ],
+        checklistEn: [
+          "Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.",
+          "Mission 2: Count your fingers in English from 1 to 10 proudly.",
+          "Mission 3: Say aloud: \"I see with my eyes, I hear with my ears, I smile with my mouth!\""
+  ],
+        activities: [
+          {
+                  "q": "We use our ... to see colorful stars in the sky.",
+                  "options": [
+                          "eyes",
+                          "ears",
+                          "feet",
+                          "elbows"
+                  ],
+                  "answer": "eyes",
+                  "hint": "Two organs on our face that can open and close 👀"
+          },
+          {
+                  "q": "We use our ... to listen to good stories and music.",
+                  "options": [
+                          "ears",
+                          "nose",
+                          "knees",
+                          "hands"
+                  ],
+                  "answer": "ears",
+                  "hint": "Located on the left and right sides of our head 👂"
+          },
+          {
+                  "q": "How many fingers do you have on both hands?",
+                  "options": [
+                          "10 fingers",
+                          "5 fingers",
+                          "20 fingers",
+                          "8 fingers"
+                  ],
+                  "answer": "10 fingers",
+                  "hint": "Count: 1, 2, 3, 4, 5 on one hand, and 5 on the other hand!"
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "We use our ... to see colorful stars in the sky.",
+                  "options": [
+                          "eyes",
+                          "ears",
+                          "feet",
+                          "elbows"
+                  ],
+                  "answer": "eyes",
+                  "hint": "Two organs on our face that can open and close 👀"
+          },
+          {
+                  "q": "How many fingers do you have on both hands?",
+                  "options": [
+                          "10 fingers",
+                          "5 fingers",
+                          "20 fingers",
+                          "8 fingers"
+                  ],
+                  "answer": "10 fingers",
+                  "hint": "Count: 1 to 10 on both hands!"
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/pancasila.js ---
@@ -2786,61 +3328,294 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Pendidikan Pancasila Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:49:00
+  // Version   : 2.0 (Comprehensive LKS & Karakter Pelajar Pancasila)
   // ================================================================
   
   const PANCASILA_DATA = {
     id: 'pancasila',
-    title: 'Pendidikan Pancasila — Anak Hebat Berkarakter',
-    titleEn: 'Pancasila Education — Character & Citizenship',
-    subtitle: 'Mengenal Garuda Pancasila, belajar gotong royong, dan jadi anak Indonesia yang rukun 🇮🇩',
-    subtitleEn: 'Discover the Garuda Pancasila, teamwork spirit, and harmony in Indonesia 🇮🇩',
+    title: 'Pendidikan Pancasila — Anak Hebat Berkarakter Luhur',
+    titleEn: 'Pancasila Education — Noble Character & Citizenship',
+    subtitle: 'Mengenal 5 simbol Garuda Pancasila, hak & kewajiban, budaya tertib antre, dan indahnya gotong royong! 🇮🇩',
+    subtitleEn: 'Discover the 5 Garuda symbols, civic rights & duties, orderly queuing, and mutual cooperation spirit! 🇮🇩',
     topics: [
       {
         id: 'pan-simbol',
-        title: 'Mengenal 5 Simbol Sila Pancasila',
-        titleEn: 'The 5 Pancasila Shield Symbols',
-        desc: 'Bintang, Rantai Emas, Pohon Beringin, Kepala Banteng, serta Padi & Kapas.',
-        descEn: 'Star, Gold Chain, Banyan Tree, Bull Head, Rice & Cotton.',
+        title: 'Mengenal 5 Simbol Sila Garuda Pancasila',
+        titleEn: 'The 5 Pancasila Shield Symbols & Meaning',
+        desc: 'Burung Garuda adalah lambang negara kita yang perkasa. Di dadanya terdapat perisai dengan 5 simbol mulia: Sila 1 Bintang Emas (Ketuhanan), Sila 2 Rantai Emas (Kemanusiaan), Sila 3 Pohon Beringin (Persatuan), Sila 4 Kepala Banteng (Musyawarah), dan Sila 5 Padi & Kapas (Keadilan Sosial)!',
+        descEn: 'Garuda Pancasila is our proud national emblem. On its chest is a shield bearing 5 sacred symbols: Golden Star (Faith), Gold Chain (Humanity), Banyan Tree (Unity), Bull Head (Deliberation), and Rice & Cotton (Social Justice)!',
+        checklist: [
+          'Misi 1: Hafalkan bunyi 5 sila Pancasila dengan intonasi lantang dan sikap berdiri tegap.',
+          'Misi 2: Gambar perisai Pancasila dan warnai simbol Bintang Emas di buku gambarmu.',
+          'Misi 3: Sebutkan simbol sila ke-3 (Pohon Beringin) dan jelaskan artinya tempat berteduh semua rakyat.'
+        ],
+        checklistEn: [
+          'Mission 1: Recite the 5 Pancasila principles aloud standing tall with dignity.',
+          'Mission 2: Draw the Pancasila shield and color the golden star symbol in your sketchbook.',
+          'Mission 3: Name the 3rd principle symbol (Banyan Tree) and explain its meaning of unity and shelter.'
+        ],
         activities: [
-          { q: 'Simbol sila pertama "Ketuhanan Yang Maha Esa" adalah...', options: ['Bintang', 'Rantai Emas', 'Pohon Beringin', 'Kepala Banteng'], answer: 'Bintang', hint: 'Bintang emas bersudut lima di perisai tengah burung Garuda ⭐' },
-          { q: 'Padi dan Kapas melambangkan sila ke...', options: ['Kelima (5)', 'Pertama (1)', 'Kedua (2)', 'Ketiga (3)'], answer: 'Kelima (5)', hint: 'Keadilan sosial bagi seluruh rakyat Indonesia.' }
+          { q: 'Simbol sila pertama "Ketuhanan Yang Maha Esa" adalah...', options: ['Bintang Emas', 'Rantai Emas', 'Pohon Beringin', 'Kepala Banteng'], answer: 'Bintang Emas', hint: 'Bintang emas bersudut lima di perisai tengah burung Garuda ⭐' },
+          { q: 'Padi dan Kapas melambangkan sila ke...', options: ['Kelima (5)', 'Pertama (1)', 'Kedua (2)', 'Ketiga (3)'], answer: 'Kelima (5)', hint: 'Keadilan sosial bagi seluruh rakyat Indonesia.' },
+          { q: 'Semboyan yang dicengkeram oleh kaki burung Garuda adalah...', options: ['Bhinneka Tunggal Ika', 'Tut Wuri Handayani', 'Bersatu Kita Teguh', 'Garuda Jaya'], answer: 'Bhinneka Tunggal Ika', hint: 'Artinya: Berbeda-beda tetapi tetap satu jua 🇮🇩' }
         ],
         activitiesEn: [
-          { q: 'What is the symbol of the 1st principle "Belief in the One and Only God"?', options: ['Star', 'Gold Chain', 'Banyan Tree', 'Bull Head'], answer: 'Star', hint: 'A golden five-pointed star in the center of the shield ⭐' },
-          { q: 'Rice and cotton represent which Pancasila principle?', options: ['Fifth (5th)', 'First (1st)', 'Second (2nd)', 'Third (3rd)'], answer: 'Fifth (5th)', hint: 'Social justice for all the people of Indonesia.' }
+          { q: 'What is the symbol of the 1st principle "Belief in the One and Only God"?', options: ['Golden Star', 'Gold Chain', 'Banyan Tree', 'Bull Head'], answer: 'Golden Star', hint: 'A golden five-pointed star in the center of the shield ⭐' }
+        ]
+      },
+      {
+        id: 'pan-penerapan',
+        title: 'Penerapan Nilai Pancasila Sehari-hari',
+        titleEn: 'Applying Pancasila Values in Daily Life',
+        desc: 'Pancasila bukan hanya dihafal, tapi diamalkan! Berdoa sebelum makan dan belajar adalah contoh Sila 1. Menghibur teman yang bersedih adalah Sila 2. Rukun bermain tanpa bertengkar adalah Sila 3. Memilih ketua kelas dengan musyawarah adalah Sila 4. Berbagi bekal makanan secara adil adalah Sila 5!',
+        descEn: 'Pancasila comes alive through our daily actions: Praying before meals (Principle 1), Comforting friends (Principle 2), Playing harmoniously (Principle 3), Voting for class leader (Principle 4), and Sharing fairly (Principle 5)!',
+        checklist: [
+          'Misi 1: Berdoa dengan khusyuk sebelum mulai belajar dan sebelum tidur malam.',
+          'Misi 2: Bantu saudaramu atau teman yang sedang kesulitan merapikan peralatan bermain.',
+          'Misi 3: Tuliskan satu kebaikan yang kamu lakukan hari ini di buku jurnal harian.'
+        ],
+        checklistEn: [
+          'Mission 1: Say your prayers mindfully before morning study and evening bedtime.',
+          'Mission 2: Help your sibling or classmate tidy up learning supplies.',
+          'Mission 3: Record one kind deed you accomplished today in your reflective journal.'
+        ],
+        activities: [
+          { q: 'Berdoa dengan tertib sebelum memulai pelajaran di kelas merupakan contoh pengamalan sila ke...', options: ['Pertama (1)', 'Kedua (2)', 'Ketiga (3)', 'Keempat (4)'], answer: 'Pertama (1)', hint: 'Sila pertama berkaitan dengan ibadah dan rasa syukur kepada Tuhan.' },
+          { q: 'Ketika ada teman yang terjatuh saat lari di halaman sekolah, sikapmu adalah...', options: ['Menolongnya berdiri dan membawanya ke UKS', 'Menertawakannya', 'Pura-pura tidak melihat', 'Menyalahkannya'], answer: 'Menolongnya berdiri dan membawanya ke UKS', hint: 'Sikap kemanusiaan yang adil dan beradab (Sila ke-2).' }
+        ],
+        activitiesEn: [
+          { q: 'Praying respectfully before studying at school exemplifies which principle?', options: ['First (1st)', 'Second (2nd)', 'Third (3rd)', 'Fourth (4th)'], answer: 'First (1st)', hint: 'The first principle relates to reverence for God.' }
+        ]
+      },
+      {
+        id: 'pan-hak-kewajiban',
+        title: 'Hak & Kewajiban Anak di Rumah & Sekolah',
+        titleEn: 'Children\'s Rights & Responsibilities',
+        desc: 'Hak adalah sesuatu yang berhak kita terima dengan layak (seperti hak mendapat kasih sayang, makan sehat, dan belajar). Kewajiban adalah tugas yang harus kita laksanakan dengan penuh tanggung jawab (seperti menghormati orang tua, belajar tekun, dan menjaga kebersihan kamar)!',
+        descEn: 'Rights are what every child deserves to receive (love, nutritious food, safe education). Responsibilities are duties we must honor (respecting elders, studying diligently, keeping our space clean)!',
+        checklist: [
+          'Misi 1: Rapikan tempat tidurmu sendiri setelah bangun pagi tanpa disuruh.',
+          'Misi 2: Sebutkan 2 hak anak di rumah (hak mendapat kasih sayang dan perlindungan).',
+          'Misi 3: Buat jadwal harian antara waktu belajar, membantu orang tua, dan bermain.'
+        ],
+        checklistEn: [
+          'Mission 1: Make your own bed neatly after waking up without reminders.',
+          'Mission 2: Name two rights of children at home (love and protection).',
+          'Mission 3: Draft a balanced daily timetable for study, chores, and play.'
+        ],
+        activities: [
+          { q: 'Mendapatkan kasih sayang dari orang tua dan bimbingan guru di sekolah adalah contoh...', options: ['Hak anak', 'Kewajiban anak', 'Hukuman anak', 'Permintaan sepihak'], answer: 'Hak anak', hint: 'Hak adalah sesuatu yang patut diterima anak untuk tumbuh kembang.' },
+          { q: 'Manakah yang merupakan KEWAJIBAN siswa di sekolah?', options: ['Belajar tekun dan mematuhi tata tertib', 'Bermain terus sepanjang hari', 'Mengotori meja kelas', 'Pulang sebelum bel berbunyi'], answer: 'Belajar tekun dan mematuhi tata tertib', hint: 'Kewajiban adalah tanggung jawab murid di lingkungan sekolah.' }
+        ],
+        activitiesEn: [
+          { q: 'Receiving parental love and teacher guidance is an example of...', options: ['A child\'s right', 'A child\'s punishment', 'A chore', 'An option'], answer: 'A child\'s right', hint: 'Rights protect children and foster growth.' }
+        ]
+      },
+      {
+        id: 'pan-tertib-antre',
+        title: 'Aturan, Tata Tertib, & Budaya Antre',
+        titleEn: 'Classroom Rules & Patient Queuing Culture',
+        desc: 'Aturan dibuat agar hidup kita tertib, aman, dan nyaman. Contoh aturan di sekolah: datang tepat waktu, mendengarkan guru saat menjelaskan, dan mengantre giliran saat mencuci tangan atau di kantin dengan sabar tanpa saling dorong!',
+        descEn: 'Rules exist to maintain harmony, safety, and mutual peace. Examples include arriving on time, listening attentively to teachers, and patiently queuing without pushing!',
+        checklist: [
+          'Misi 1: Praktikkan berdiri tertib di barisan saat upacara bendera atau antre masuk kelas.',
+          'Misi 2: Angkat tangan kanan dengan sopan saat ingin bertanya atau berpendapat di kelas.',
+          'Misi 3: Ingatkan teman dengan ramah jika ada yang lupa mencuci tangan sebelum makan.'
+        ],
+        checklistEn: [
+          'Mission 1: Stand patiently in line during morning assembly or when entering class.',
+          'Mission 2: Raise your right hand politely before speaking or answering questions.',
+          'Mission 3: Kindly remind classmates to wash hands with soap before mealtime.'
+        ],
+        activities: [
+          { q: 'Saat membeli makanan di kantin sekolah yang sedang ramai, sikap tertib yang benar adalah...', options: ['Mengantre dengan sabar di belakang teman', 'Menyerobot ke baris paling depan', 'Mendorong teman di depan', 'Berteriak memanggil penjual'], answer: 'Mengantre dengan sabar di belakang teman', hint: 'Budaya antre melatih kesabaran dan menghargai hak orang lain.' },
+          { q: 'Mengapa di kelas perlu ada aturan dan tata tertib bersama?', options: ['Agar suasana belajar menjadi aman, tertib, dan nyaman', 'Agar murid merasa takut', 'Agar guru bisa beristirahat', 'Hanya sebagai hiasan dinding'], answer: 'Agar suasana belajar menjadi aman, tertib, dan nyaman', hint: 'Tata tertib menjaga keteraturan bersama seluruh murid.' }
+        ],
+        activitiesEn: [
+          { q: 'When buying food at a busy school canteen, what is the proper civic behavior?', options: ['Queue patiently behind others', 'Cut to the front', 'Push other students', 'Yell loudly'], answer: 'Queue patiently behind others', hint: 'Queuing shows respect and emotional maturity.' }
+        ]
+      },
+      {
+        id: 'pan-keberagaman',
+        title: 'Bhinneka Tunggal Ika & Keragaman Teman',
+        titleEn: 'Unity in Diversity (Bhinneka Tunggal Ika)',
+        desc: 'Indonesia kaya akan keberagaman suku bangsa (Jawa, Sunda, Batak, Bali, Dayak, Papua, dll), bahasa daerah, dan agama. Meskipun berbeda suku dan warna kulit, semboyan kita tetap "Bhinneka Tunggal Ika" — Berbeda-beda tetapi tetap satu jua!',
+        descEn: 'Indonesia embraces rich ethnic diversity across hundreds of tribes, regional dialects, and faiths. Despite differences, our motto "Bhinneka Tunggal Ika" binds us as one unified family!',
+        checklist: [
+          'Misi 1: Tanyakan kepada 3 teman sekelas dari suku atau daerah asal manakah orang tuanya.',
+          'Misi 2: Pelajari 1 kata sapaan bahasa daerah sahabatmu (misal: "Sampurasun" atau "Om Swastyastu").',
+          'Misi 3: Tulis pesan persahabatan: "Kita semua sahabat satu Indonesia".'
+        ],
+        checklistEn: [
+          'Mission 1: Ask 3 classmates about their cultural or ancestral home islands.',
+          'Mission 2: Learn 1 traditional regional greeting word from a classmate.',
+          'Mission 3: Pen a friendship note: "We are all proud brothers and sisters of Indonesia".'
+        ],
+        activities: [
+          { q: 'Apa arti semboyan nasional "Bhinneka Tunggal Ika"?', options: ['Berbeda-beda tetapi tetap satu jua', 'Bersatu kita teguh bercerai kita runtuh', 'Maju tak gentar membela yang benar', 'Adil dan makmur sejahtera'], answer: 'Berbeda-beda tetapi tetap satu jua', hint: 'Walau berbeda suku, agama, dan budaya, bangsa Indonesia tetap bersatu 🇮🇩' },
+          { q: 'Jika sahabat barumu berasal dari daerah yang berbeda logat bahasanya, sikapmu adalah...', options: ['Menghargai dan senang berteman dengannya', 'Mengejek logatnya', 'Menjauhinya', 'Menyuruhnya berganti logat'], answer: 'Menghargai dan senang berteman dengannya', hint: 'Menghargai keberagaman adalah ciri pelajar berkarakter Pancasila.' }
+        ],
+        activitiesEn: [
+          { q: 'What is the translation of "Bhinneka Tunggal Ika"?', options: ['Unity in Diversity (Different yet one)', 'Strength in silence', 'Victory through peace', 'Ever onward'], answer: 'Unity in Diversity (Different yet one)', hint: 'It honors mutual solidarity amid diverse backgrounds.' }
         ]
       },
       {
         id: 'pan-gotong-royong',
-        title: 'Gotong Royong & Kerja Sama',
-        titleEn: 'Mutual Cooperation & Teamwork',
-        desc: 'Membersihkan kelas bersama-sama membuat pekerjaan berat jadi ringan dan cepat selesai.',
-        descEn: 'Cleaning the classroom together makes heavy chores light and quickly done.',
+        title: 'Gotong Royong & Peduli Lingkungan',
+        titleEn: 'Gotong Royong & Environmental Stewardship',
+        desc: 'Gotong royong adalah warisan budaya luhur bangsa Indonesia di mana pekerjaan dilakukan bersama-sama secara sukarela. Pekerjaan berat seperti membersihkan selokan atau piket kelas menjadi ringan dan cepat selesai jika dikerjakan bersama!',
+        descEn: 'Gotong royong is Indonesia\'s timeless tradition of communal voluntary teamwork. Heavy chores such as classroom cleaning or garden tending become swift and delightful when carried out together!',
+        checklist: [
+          'Misi 1: Laksanakan piket kelas dengan penuh semangat bersama regu piketmu.',
+          'Misi 2: Pungut sampah yang tercecer di halaman sekolah dan masukkan ke tempat sampah yang sesuai.',
+          'Misi 3: Bersihkan meja makan dan cuci piringmu sendiri setelah selesai makan di rumah.'
+        ],
+        checklistEn: [
+          'Mission 1: Perform your classroom cleaning duty with enthusiasm alongside your team.',
+          'Mission 2: Pick up stray litter on the school yard and place it into the correct bin.',
+          'Mission 3: Clear the dining table and wash your personal cup after dinner at home.'
+        ],
         activities: [
-          { q: 'Saat temanmu kesulitan merapikan mainan bersama, sikapmu adalah...', options: ['Membantu dengan senang hati', 'Melihat saja', 'Mengejeknya', 'Meninggalkannya'], answer: 'Membantu dengan senang hati', hint: 'Anak hebat suka saling tolong menolong sesama teman.' }
+          { q: 'Manfaat utama dari kegiatan gotong royong membersihkan kelas adalah...', options: ['Pekerjaan berat menjadi ringan dan cepat selesai', 'Membuat anak-anak bertengkar', 'Menghabiskan waktu sia-sia', 'Membuat kelas semakin kotor'], answer: 'Pekerjaan berat menjadi ringan dan cepat selesai', hint: 'Kerja sama membuat pekerjaan besar terasa ringan.' },
+          { q: 'Contoh nyata semangat gotong royong di lingkungan sekolah adalah...', options: ['Bekerja sama menyiram tanaman di kebun sekolah', 'Mengerjakan ujian bersama secara menyontek', 'Meninggalkan sampah di laci meja', 'Mendorong teman saat bermain'], answer: 'Bekerja sama menyiram tanaman di kebun sekolah', hint: 'Gotong royong selalu untuk hal-hal positif dan bermanfaat bagi lingkungan.' }
         ],
         activitiesEn: [
-          { q: 'When a classmate struggles cleaning up toys, what should you do?', options: ['Help gladly', 'Just watch', 'Mock them', 'Walk away'], answer: 'Help gladly', hint: 'Kind students always support their friends.' }
+          { q: 'What is the main benefit of communal gotong royong teamwork?', options: ['Heavy tasks become light and finish faster', 'Causes chaos', 'Wastes time', 'Makes spaces dirtier'], answer: 'Heavy tasks become light and finish faster', hint: 'Cooperation lightens any heavy load.' }
         ]
+      }
+  ,
+      {
+        id: 'pp-musyawarah-cilik',
+        title: 'Musyawarah Cilik & Menghargai Pendapat Teman',
+        titleEn: 'Junior Deliberation & Respecting Friends’ Opinions',
+        desc: 'Sila ke-4 Pancasila mengajarkan kita untuk bermusyawarah saat mengambil keputusan bersama. Di kelas, anak-anak berdiskusi secara tertib, mendengarkan saat teman lain berbicara tanpa memotong, dan menerima hasil kesepakatan bersama dengan hati gembira!',
+        descEn: 'The 4th principle of Pancasila teaches us democratic deliberation. In the classroom, children discuss peacefully, listen patiently without interrupting, and cheerfully support agreed decisions!',
+        checklist: [
+          "Misi 1: Dengarkan teman berbicara sampai selesai tanpa menyela saat diskusi kelompok.",
+          "Misi 2: Angkat tanganmu terlebih dahulu sebelum menyampaikan usul atau pendapat di kelas.",
+          "Misi 3: Berikan tepuk tangan hangat untuk ide bagus yang disampaikan oleh sahabatmu."
+  ],
+        checklistEn: [
+          "Mission 1: Listen to your friend until they finish speaking without interrupting.",
+          "Mission 2: Raise your hand politely before sharing ideas in class discussions.",
+          "Mission 3: Applaud warmly for creative ideas shared by your classmates."
+  ],
+        activities: [
+          {
+                  "q": "Sikap yang benar saat teman sedang menyampaikan pendapatnya adalah...",
+                  "options": [
+                          "Mendengarkan dengan tenang dan tertib",
+                          "Mengobrol sendiri dengan teman lain",
+                          "Mengejek pendapat teman",
+                          "Memotong pembicaraannya"
+                  ],
+                  "answer": "Mendengarkan dengan tenang dan tertib",
+                  "hint": "Hormati teman yang sedang mendapat giliran berbicara."
+          },
+          {
+                  "q": "Musyawarah untuk mufakat merupakan pengamalan Pancasila sila ke-...",
+                  "options": [
+                          "4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)",
+                          "1",
+                          "2",
+                          "3"
+                  ],
+                  "answer": "4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)",
+                  "hint": "Disimbolkan dengan lambang Kepala Banteng yang gagah."
+          },
+          {
+                  "q": "Setelah keputusan musyawarah kelas disepakati bersama, sikap kita adalah...",
+                  "options": [
+                          "Melaksanakan keputusan dengan ikhlas dan gembira",
+                          "Menolak karena bukan ide kita",
+                          "Marah-marah",
+                          "Pulang ke rumah"
+                  ],
+                  "answer": "Melaksanakan keputusan dengan ikhlas dan gembira",
+                  "hint": "Keputusan bersama harus ditaati demi kebaikan seluruh warga kelas."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "The best attitude when a classmate is speaking is to...",
+                  "options": [
+                          "Listen calmly and respectfully",
+                          "Chat with someone else loudly",
+                          "Laugh at their idea",
+                          "Interrupt them immediately"
+                  ],
+                  "answer": "Listen calmly and respectfully",
+                  "hint": "Show respect while others speak."
+          }
+  ]
       },
       {
-        id: 'pan-antre',
-        title: 'Belajar Tertib & Sabar Antre',
-        titleEn: 'Orderliness & Queuing with Patience',
-        desc: 'Membiasakan budaya antre di kantin, tempat wudu/cuci tangan, dan saat bermain.',
-        descEn: 'Practicing good queueing habits at the school canteen, washing area, and playground.',
+        id: 'pp-fasilitas-sekolah',
+        title: 'Menjaga Fasilitas Bersama & Lingkungan Sekolah',
+        titleEn: 'Caring for School Facilities & Shared Spaces',
+        desc: 'Sekolah adalah rumah kedua kita. Meja, kursi, papan tulis, buku perpustakaan, dan toilet adalah fasilitas bersama yang harus dijaga dengan penuh kasih sayang. Tidak mencoret-coret meja dan selalu membuang sampah pada tempatnya adalah wujud cinta kepada sekolah.',
+        descEn: 'School is our joyful second home. Desks, chairs, library books, and playgrounds are shared treasures. Refraining from writing on desks and always placing trash into bins reflects our deep respect for our community.',
+        checklist: [
+          "Misi 1: Periksa laci meja belajarmu, pastikan bersih dari sampah kertas atau plastik.",
+          "Misi 2: Matikan keran air wastafel setelah selesai mencuci tangan agar air tidak terbuang percuma.",
+          "Misi 3: Kembalikan buku perpustakaan sekolah tepat waktu ke rak yang rapi."
+  ],
+        checklistEn: [
+          "Mission 1: Check your classroom desk drawer and keep it free of litter.",
+          "Mission 2: Turn off the water tap firmly after washing hands to conserve water.",
+          "Mission 3: Return library books punctually and gently place them on the shelf."
+  ],
         activities: [
-          { q: 'Ketika antre membeli makanan di kantin sekolah, kita harus...', options: ['Tertib menunggu giliran', 'Menyerobot teman di depan', 'Mendorong teman', 'Berteriak-teriak'], answer: 'Tertib menunggu giliran', hint: 'Sabar antre adalah tanda anak yang disiplin dan menghargai orang lain.' }
-        ],
+          {
+                  "q": "Mencoret-coret dinding atau meja sekolah dengan spidol adalah perbuatan yang...",
+                  "options": [
+                          "Tidak terpuji dan merusak fasilitas",
+                          "Hebat dan keren",
+                          "Patut dicontoh",
+                          "Membuat sekolah makin bersih"
+                  ],
+                  "answer": "Tidak terpuji dan merusak fasilitas",
+                  "hint": "Fasilitas sekolah harus dirawat agar rapi dan nyaman digunakan semua anak."
+          },
+          {
+                  "q": "Setelah selesai membaca buku cerita di perpustakaan sekolah, buku harus...",
+                  "options": [
+                          "Dikembalikan ke rak buku secara rapi",
+                          "Ditinggal tergeletak di lantai",
+                          "Dibawa pulang tanpa izin",
+                          "Dirobek halamannya"
+                  ],
+                  "answer": "Dikembalikan ke rak buku secara rapi",
+                  "hint": "Agar teman lain mudah menemukannya saat ingin membaca."
+          },
+          {
+                  "q": "Menjaga kebersihan dan keasrian lingkungan sekolah adalah tanggung jawab...",
+                  "options": [
+                          "Seluruh warga sekolah (siswa, guru, dan penjaga)",
+                          "Hanya tukang kebun saja",
+                          "Hanya kepala sekolah",
+                          "Hanya ketua kelas"
+                  ],
+                  "answer": "Seluruh warga sekolah (siswa, guru, dan penjaga)",
+                  "hint": "Semua orang yang belajar dan bekerja di sekolah wajib bergotong royong."
+          }
+  ],
         activitiesEn: [
-          { q: 'When queuing to buy food at the school canteen, we must...', options: ['Wait patiently in turn', 'Cut in front of others', 'Push friends', 'Shout loudly'], answer: 'Wait patiently in turn', hint: 'Queueing patiently demonstrates discipline and respect for others.' }
-        ]
+          {
+                  "q": "Doodling on school walls and classroom desks is...",
+                  "options": [
+                          "Disrespectful and damages shared property",
+                          "Cool and funny",
+                          "Encouraged by teachers",
+                          "Helpful"
+                  ],
+                  "answer": "Disrespectful and damages shared property",
+                  "hint": "Shared school facilities should be treasured."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/bahasa-bali.js ---
@@ -2848,65 +3623,295 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Bahasa Bali Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:50:00
+  // Version   : 2.0 (Comprehensive LKS & Kearifan Lokal Dewata)
   // ================================================================
   
   const BAHASA_BALI_DATA = {
     id: 'bahasa-bali',
-    title: 'Basa Bali — Mlajah Basa Bali Ceria',
-    titleEn: 'Balinese Language & Culture — Cheerful Learning',
-    subtitle: 'Rahajeng semeng alit-alit! Yuk belajar kruna basa Bali, salam sopan, dan angga sarira 🌴',
-    subtitleEn: 'Rahajeng semeng children! Let\'s learn polite Balinese greetings and body words 🌴',
+    title: 'Bahasa Bali — Melajah Basa & Budaya Bali',
+    titleEn: 'Balinese Language — Exploring Heritage & Dialect',
+    subtitle: 'Rahajeng semeng! Ngiring melajah anggah-ungguhing basa, kruna aran, gending rare, tur satua Bali 🌴',
+    subtitleEn: 'Welcome! Let\'s learn polite Balinese speech levels, traditional children songs, numbers, and folk fables 🌴',
     topics: [
       {
         id: 'bali-salam',
-        title: 'Salam & Sapaan Basa Bali',
-        titleEn: 'Balinese Greetings & Politeness',
-        desc: 'Rahajeng semeng (Selamat pagi), Rahajeng tengai (Selamat siang), dan Matur suksma (Terima kasih).',
-        descEn: 'Rahajeng semeng (Good morning), Rahajeng tengai (Good afternoon), and Matur suksma (Thank you).',
+        title: 'Salam Panganjali & Kruna Tata Krama',
+        titleEn: 'Balinese Greetings & Politeness (Tata Krama)',
+        desc: 'Masyarakat Bali menjunjung tinggi tata krama bertutur kata. Salam panganjali "Om Swastyastu" diucapkan dengan cakupan tangan di dada saat bertemu. Ucapkan "Matur suksma" untuk berterima kasih, "Mewali" untuk membalas terima kasih, dan "Rahajeng semeng" untuk selamat pagi!',
+        descEn: 'Balinese society honors courteous speech. The universal greeting "Om Swastyastu" is offered with hands folded in front of the heart. Say "Matur suksma" for thank you and "Mewali" for you are welcome!',
+        checklist: [
+          'Misi 1: Latih salam "Om Swastyastu" dengan menangkupkan kedua telapak tangan di depan dada.',
+          'Misi 2: Ucapkan "Matur suksma" saat menerima sesuatu dari orang tua atau gurumu.',
+          'Misi 3: Hafalkan arti ucapan "Rahajeng semeng" (Selamat pagi) dan "Rahajeng wengi" (Selamat malam).'
+        ],
+        checklistEn: [
+          'Mission 1: Practice the greeting "Om Swastyastu" with hands folded respectfully at chest level.',
+          'Mission 2: Say "Matur suksma" warmly when receiving guidance or a gift.',
+          'Mission 3: Memorize the meaning of "Rahajeng semeng" (Good morning) and "Rahajeng wengi" (Good night).'
+        ],
         activities: [
-          { q: 'Ucap sapaan "Selamat pagi" ring Basa Bali inggih punika...', options: ['Rahajeng semeng', 'Rahajeng wengi', 'Rahajeng tengai', 'Matur suksma'], answer: 'Rahajeng semeng', hint: 'Semeng artine semut baru bangun, pagi hari saat fajar merekah ☀️' },
-          { q: 'Rikala maan tulung utawi wantuan, iraga ngucapang...', options: ['Matur suksma', 'Rahajeng', 'Kenken kabare', 'Sampun'], answer: 'Matur suksma', hint: 'Matur suksma artine matur terima kasih dengan santun.' }
+          { q: 'Salam Panganjali umat Hindu dan masyarakat Bali saat bertegur sapa adalah...', options: ['Om Swastyastu', 'Matur suksma', 'Sampurasun', 'Horas'], answer: 'Om Swastyastu', hint: 'Diucapkan dengan menangkupkan kedua tangan di depan dada 🙏' },
+          { q: 'Bila seseorang berbuat baik atau memberi bantuan, kita mengucapkan...', options: ['Matur suksma', 'Rahajeng wengi', 'Ampura', 'Nggih'], answer: 'Matur suksma', hint: 'Matur suksma artinya terima kasih banyak.' },
+          { q: '"Rahajeng semeng" dalam bahasa Indonesia artinya...', options: ['Selamat pagi', 'Selamat siang', 'Selamat malam', 'Selamat jalan'], answer: 'Selamat pagi', hint: 'Semeng artinya waktu pagi hari saat matahari terbit.' }
         ],
         activitiesEn: [
-          { q: 'How do you say "Good morning" in Balinese?', options: ['Rahajeng semeng', 'Rahajeng wengi', 'Rahajeng tengai', 'Matur suksma'], answer: 'Rahajeng semeng', hint: 'Semeng means early morning when the sun rises ☀️' },
-          { q: 'When receiving help or kindness, in Balinese we say...', options: ['Matur suksma', 'Rahajeng', 'Kenken kabare', 'Sampun'], answer: 'Matur suksma', hint: 'Matur suksma means thank you politely.' }
+          { q: 'The traditional Balinese welcoming greeting with folded hands is...', options: ['Om Swastyastu', 'Matur suksma', 'Sampurasun', 'Horas'], answer: 'Om Swastyastu', hint: 'Offered with hands pressed gently at heart level 🙏' }
         ]
       },
       {
-        id: 'bali-angga-sarira',
-        title: 'Angga Sarira (Anggota Tubuh)',
-        titleEn: 'Angga Sarira (Body Parts in Balinese)',
-        desc: 'Mengenal panyingakan (mata), karna (telinga), irung (hidung), dan cangkem (mulut).',
-        descEn: 'Panyingakan (eyes), karna (ears), irung (nose), and cangkem (mouth).',
+        id: 'bali-kruna-aran',
+        title: 'Kruna Aran ring Jeroan (Benda di Rumah)',
+        titleEn: 'Balinese Nouns for Household Objects',
+        desc: 'Kruna aran adalah kata benda dalam bahasa Bali. Di jeroan (rumah), ada meja (méja), kursi (kursi), pintu (jelanan), jendela (jendela/kori), tempat tidur (pedeman/pesarean), dan dapur (pawaregan). Mengenal kruna aran memperkaya kosakata harian!',
+        descEn: 'Kruna aran refers to nouns in Balinese. Common house items include jelanan (door), pedeman (bed), and pawaregan (kitchen). Learning these nouns builds conversational confidence!',
+        checklist: [
+          'Misi 1: Tunjuk pintu rumahmu dan sebutkan kruna Balinya ("Jelanan").',
+          'Misi 2: Sebutkan sebutan dapur tradisional Bali ("Pawaregan") kepada orang tuamu.',
+          'Misi 3: Tuliskan 3 kruna aran benda yang ada di kamarmu pada buku catatan.'
+        ],
+        checklistEn: [
+          'Mission 1: Point to the entrance door and pronounce its Balinese noun ("Jelanan").',
+          'Mission 2: Mention the traditional kitchen term ("Pawaregan") to your family.',
+          'Mission 3: Write down 3 household nouns in Balinese in your study notepad.'
+        ],
         activities: [
-          { q: '"Panyingakan" utawi "peningalan" kaanggen ngetokang (melihat), artine...', options: ['Mata', 'Hidung', 'Telinga', 'Tangan'], answer: 'Mata', hint: 'Organ tubuh yang ada dua buah untuk melihat keindahan alam 👀' },
-          { q: '"Karna" kaanggen mirengang gending utawi orti, artine...', options: ['Telinga', 'Mulut', 'Kaki', 'Rambut'], answer: 'Telinga', hint: 'Untuk mendengarkan suara yang merdu 👂' }
+          { q: 'Pintu rumah dalam bahasa Bali halus/lumrah sering disebut...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'Akses keluar masuk ruangan atau pekarangan rumah.' },
+          { q: 'Tempat memasak makanan di rumah (dapur) dalam bahasa Bali disebut...', options: ['Pawaregan', 'Bale dauh', 'Bale daja', 'Jaba'], answer: 'Pawaregan', hint: 'Ruangan tempat menyiapkan masakan lezat.' }
         ],
         activitiesEn: [
-          { q: '"Panyingakan" is used for seeing, which means...', options: ['Eyes', 'Nose', 'Ears', 'Hands'], answer: 'Eyes', hint: 'Two organs on our face to observe nature 👀' },
-          { q: '"Karna" is used to listen to melodies or speech, meaning...', options: ['Ears', 'Mouth', 'Legs', 'Hair'], answer: 'Ears', hint: 'Used to hear harmonious sounds 👂' }
+          { q: 'The entrance door or gate in Balinese is referred to as...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'The gateway or doorway.' }
         ]
       },
       {
-        id: 'bali-kruna-wilangan',
-        title: 'Kruna Wilangan (Angka 1 - 5)',
-        titleEn: 'Kruna Wilangan (Numbers 1 to 5 in Balinese)',
-        desc: 'Siki (1), Kalih (2), Tiga (3), Papat (4), Lima (5).',
-        descEn: 'Siki (1), Kalih (2), Tiga (3), Papat (4), Lima (5).',
+        id: 'bali-wilangan',
+        title: 'Wilangan Angka Basa Bali (1 - 20)',
+        titleEn: 'Balinese Numbers & Counting (1 to 20)',
+        desc: 'Berhitung dalam bahasa Bali sangat unik dan berirama: 1 (Sa/Besik), 2 (Dua), 3 (Telu), 4 (Papat), 5 (Lima), 6 (Nem), 7 (Pitu), 8 (Kutus), 9 (Sia), 10 (Dasa). Selanjutnya 11 (Solas), 12 (Roras), hingga 20 (Duang dasa)!',
+        descEn: 'Counting in Balinese has a rhythmic flow: Sa (1), Dua (2), Telu (3), Papat (4), Lima (5), Nem (6), Pitu (7), Kutus (8), Sia (9), Dasa (10), Solas (11), Roras (12)... up to Duang dasa (20)!',
+        checklist: [
+          'Misi 1: Hitung jarimu dari 1 sampai 10 memakai wilangan Bali: Sa, Dua, Telu, Papat, Lima...',
+          'Misi 2: Ucapkan angka 8 dalam bahasa Bali ("Kutus") dengan jelas.',
+          'Misi 3: Hitung jumlah buku di tas sekolahmu menggunakan wilangan Bali.'
+        ],
+        checklistEn: [
+          'Mission 1: Count your 10 fingers using Balinese numerals: Sa, Dua, Telu, Papat, Lima...',
+          'Mission 2: Pronounce the number 8 in Balinese ("Kutus") distinctly.',
+          'Mission 3: Tally your school textbooks using Balinese counting words.'
+        ],
         activities: [
-          { q: 'Angka 1 ring basa Bali alus inggih punika...', options: ['Siki', 'Kalih', 'Tiga', 'Lima'], answer: 'Siki', hint: 'Satu dalam basa Bali alus adalah siki.' },
-          { q: 'Angka 2 ring basa Bali inggih punika...', options: ['Kalih / Dua', 'Papat', 'Lima', 'Tiga'], answer: 'Kalih / Dua', hint: 'Dua buah benda dihitung kalih.' }
+          { q: 'Angka 3 dalam wilangan bahasa Bali disebut...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: '1=Sa, 2=Dua, 3=Telu.' },
+          { q: 'Angka 10 dalam bahasa Bali adalah...', options: ['Dasa', 'Solas', 'Kutus', 'Sia'], answer: 'Dasa', hint: 'Sepuluh dalam bahasa Bali.' },
+          { q: 'Angka 11 dalam bahasa Bali disebut...', options: ['Solas', 'Roras', 'Telulas', 'Patbelas'], answer: 'Solas', hint: 'Sebelas diucapkan solas.' }
         ],
         activitiesEn: [
-          { q: 'What is number 1 in polite Balinese?', options: ['Siki', 'Kalih', 'Tiga', 'Lima'], answer: 'Siki', hint: 'One in polite Balinese is siki.' },
-          { q: 'Number 2 in Balinese is...', options: ['Kalih / Dua', 'Papat', 'Lima', 'Tiga'], answer: 'Kalih / Dua', hint: 'Two items are counted as kalih.' }
+          { q: 'Number 3 in Balinese counting is called...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: 'Sa (1), Dua (2), Telu (3).' }
         ]
+      },
+      {
+        id: 'bali-gending-rare',
+        title: 'Gending Rare (Tembang Ceria Anak Bali)',
+        titleEn: 'Gending Rare (Traditional Balinese Children Songs)',
+        desc: 'Gending rare adalah lagu dolanan tradisional anak-anak Bali yang dinyanyikan saat bermain di bawah sinar bulan purnama atau saat santai. Lagu terkenalnya: "Putri Cening Ayu", "Meong-meong", dan "Dadong Dauh" yang sarat nasehat bakti kepada orang tua!',
+        descEn: 'Gending rare are joyful traditional folksongs sung by Balinese children during playtime under moonlight. Famous tunes include "Putri Cening Ayu" and "Meong-meong", teaching kindness and affection!',
+        checklist: [
+          'Misi 1: Dengarkan atau nyanyikan bait pertama tembang "Putri Cening Ayu".',
+          'Misi 2: Tirukan lirik lagu "Meong-meong alih jek bikule" sambil bertepuk tangan.',
+          'Misi 3: Ceritakan pesan nasehat lagu Putri Cening Ayu (anak yang penurut dan menyayangi ibu).'
+        ],
+        checklistEn: [
+          'Mission 1: Listen to or sing the opening stanza of "Putri Cening Ayu".',
+          'Mission 2: Recite the playful rhyme "Meong-meong" while clapping rhythmically.',
+          'Mission 3: Reflect on the moral lesson of honoring and helping mothers.'
+        ],
+        activities: [
+          { q: 'Gending rare yang menceritakan kucing mengejar tikus (biku) yang nakal adalah...', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Liriknya: "Meong-meong, alih ja bikule..." 🐱' },
+          { q: 'Tembang "Putri Cening Ayu" menceritakan nasehat seorang ibu yang hendak pergi ke...', options: ['Peken (Pasar)', 'Carik (Sawah)', 'Pasih (Pantai)', 'Gunung'], answer: 'Peken (Pasar)', hint: 'Lirik: "Putri cening ayu, ngijeng cening jumah, meme luas kapeken..."' }
+        ],
+        activitiesEn: [
+          { q: 'Which Balinese children song depicts a cat chasing a mischievous mouse?', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Lyrical line: "Meong-meong, alih ja bikule..." 🐱' }
+        ]
+      },
+      {
+        id: 'bali-rahina-nyepi',
+        title: 'Pura, Upacara, & Rahina Suci Nyepi',
+        titleEn: 'Temples, Ceremonies, & Sacred Nyepi Day',
+        desc: 'Pulau Bali terkenal dengan ribuan Pura megah dan upacara tradisi yang asri. Saat menyambut Tahun Baru Saka (Hari Raya Nyepi), umat Hindu melaksanakan Catur Brata Penyepian: Amati Geni (tidak menyalakan api/lampu), Amati Karya (tidak bekerja), Amati Lelungan (tidak bepergian), dan Amati Lelanguan (tidak bersenang-senang)!',
+        descEn: 'Bali is celebrated worldwide for thousands of sacred shrines. During Nyepi (Balinese Day of Silence), four contemplative observances (Catur Brata Penyepian) are practiced to cleanse nature and the human spirit!',
+        checklist: [
+          'Misi 1: Sebutkan nama Pura terbesar di Bali yang terletak di lereng Gunung Agung (Pura Besakih).',
+          'Misi 2: Pahami makna "Amati Geni" saat Nyepi (tidak menyalakan lampu agar hening dan tenang).',
+          'Misi 3: Buat gambar ornamen janur atau canang sari sederhana di buku sketsamu.'
+        ],
+        checklistEn: [
+          'Mission 1: Name Bali\'s largest Mother Temple on Mount Agung (Pura Besakih).',
+          'Mission 2: Explain the significance of "Amati Geni" (no lighting of fire/lamps for quiet serenity).',
+          'Mission 3: Sketch a simple floral Canang Sari offering in your art book.'
+        ],
+        activities: [
+          { q: 'Salah satu bagian dari Catur Brata Penyepian yang artinya tidak menyalakan api/lampu adalah...', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni artinya api atau sumber cahaya penerangan.' },
+          { q: 'Ibu dari seluruh Pura di Bali yang berdiri megah di lereng Gunung Agung adalah...', options: ['Pura Agung Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Tirta Empul'], answer: 'Pura Agung Besakih', hint: 'Terletak di Kabupaten Karangasem.' }
+        ],
+        activitiesEn: [
+          { q: 'Which observance of Nyepi\'s Catur Brata means refraining from lighting fire and lamps?', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni signifies fire or artificial light.' }
+        ]
+      },
+      {
+        id: 'bali-satua',
+        title: 'Satua Bali (Dongeng Tradisional & Satwa)',
+        titleEn: 'Satua Bali (Fables & Traditional Wisdom)',
+        desc: 'Satua Bali adalah cerita dongeng rakyat berbahasa Bali yang diwariskan turun-temurun. Cerita populer seperti "Satua I Siap Selem" (induk ayam hitam yang melindungi anak-anaknya dari musang I Meng) mengajarkan kasih sayang orang tua dan kecerdikan mengalahkan bahaya!',
+        descEn: 'Satua Bali are folklore fables passed through oral traditions. Classic stories like "Satua I Siap Selem" (the clever black hen protecting her chicks from the wildcat) teach bravery, motherly love, and wisdom!',
+        checklist: [
+          'Misi 1: Dengarkan cerita Satua "I Siap Selem" dari orang tua atau gurumu.',
+          'Misi 2: Sebutkan siapa tokoh cerdik dan pemberani dalam cerita I Siap Selem (I Mengkadut).',
+          'Misi 3: Petik pesan moral bahwa kasih sayang ibu selalu melindungi kita dari marabahaya.'
+        ],
+        checklistEn: [
+          'Mission 1: Listen to the traditional fable "I Siap Selem".',
+          'Mission 2: Identify the clever little chick character in the story.',
+          'Mission 3: Discuss the moral message of maternal bravery and resilience.'
+        ],
+        activities: [
+          { q: 'Dalam satua Bali "I Siap Selem", tokoh Siap Selem adalah seekor...', options: ['Ayam betina berbulu hitam', 'Kucing belang', 'Bebek putih', 'Kera abu-abu'], answer: 'Ayam betina berbulu hitam', hint: 'Siap artinya ayam, selem artinya hitam.' },
+          { q: 'Pesan moral utama dari Satua I Siap Selem adalah...', options: ['Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', 'Kekuatan fisik yang jahat selalu menang', 'Malas mencari makan', 'Meninggalkan teman sendirian'], answer: 'Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', hint: 'Ibu ayam melindungi semua anak-anaknya dari bahaya.' }
+        ],
+        activitiesEn: [
+          { q: 'In the Balinese fable "I Siap Selem", what creature is Siap Selem?', options: ['A black hen mother', 'A striped tiger', 'A white duck', 'A brown monkey'], answer: 'A black hen mother', hint: 'Siap means chicken, selem means black.' }
+        ]
+      }
+  ,
+      {
+        id: 'bb-ceciren-buron',
+        title: 'Ceciren Buron & Suarannyane (Nama Hewan & Suaranya)',
+        titleEn: 'Animal Names & Sounds in Balinese (Ceciren Buron)',
+        desc: 'Ring wewidangan Bali, akeh pisan wenten buron (hewan) sane ramah. Meong (kucing) maswara "ngeong-ngeong", Cicing (anjing) maswara "kungkung", Siap (ayam) maswara "kukuruyuk", Bebek maswara "kwek-kwek", lan Bojog (kera) sane mekedekan ring Ubud. Malajah basa Bali indik buron puniki ngulangunin pisan!',
+        descEn: 'In Bali, many friendly animals live alongside people. Meong (cat) purrs "meow", Cicing (dog) barks, Siap (chicken) crows at sunrise, Bebek (duck) waddles, and Bojog (monkey) plays in Ubud forests. Learning animal names in Balinese is so colorful and enjoyable!',
+        checklist: [
+          "Misi 1: Tiru suara Siap (ayam jantan) lan Meong (kucing) ngangge basa Bali sane patut.",
+          "Misi 2: Sebutkan 3 wastan buron (nama hewan) sane sering kacingak ring pekarangan umah.",
+          "Misi 3: Nyanyikan gending anak-anak Bali \"Meong-meong Alih Ja Bikule\" sareng rerama."
+  ],
+        checklistEn: [
+          "Mission 1: Mimic rooster (Siap) and cat (Meong) sounds cheerfully in Balinese.",
+          "Mission 2: Name 3 animals frequently spotted around Balinese house compounds.",
+          "Mission 3: Sing the traditional Balinese children song \"Meong-meong\" with your parents."
+  ],
+        activities: [
+          {
+                  "q": "Wastan buron \"Kucing\" ring Basa Bali inggih punika...",
+                  "options": [
+                          "Meong",
+                          "Bojog",
+                          "Sampi",
+                          "Bebek"
+                  ],
+                  "answer": "Meong",
+                  "hint": "Hewan berbulu lucu yang suka makan ikan 🐱"
+          },
+          {
+                  "q": "Buron sane meawak ageng, ma-tanduk, lan seneng ngamah padang mawasta...",
+                  "options": [
+                          "Sampi (Sapi)",
+                          "Kedis (Burung)",
+                          "Bikul (Tikus)",
+                          "Lelipi (Ular)"
+                  ],
+                  "answer": "Sampi (Sapi)",
+                  "hint": "Sering membantu petani membajak sawah subak 🐂"
+          },
+          {
+                  "q": "Suaran siap muani (ayam jantan) ring semeng rikala matan ai terbit inggih punika...",
+                  "options": [
+                          "Kukuruyuk!",
+                          "Meong!",
+                          "Kwek-kwek!",
+                          "Cit-cit!"
+                  ],
+                  "answer": "Kukuruyuk!",
+                  "hint": "Membangunkan anak-anak untuk mandi dan sekolah 🌅"
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "The Balinese word for \"Cat\" is...",
+                  "options": [
+                          "Meong",
+                          "Bojog",
+                          "Sampi",
+                          "Bebek"
+                  ],
+                  "answer": "Meong",
+                  "hint": "A cute furry pet that purrs 🐱"
+          }
+  ]
+      },
+      {
+        id: 'bb-sarwa-sekar',
+        title: 'Sarwa Sekar & Tetanduran (Bunga & Tanaman Asri Bali)',
+        titleEn: 'Flowers & Plants of Bali (Sarwa Sekar & Tetanduran)',
+        desc: 'Pekarangan umah ring Bali asri pisan kadagingin sekar (bunga) sane miik ngalub. Wenten Sekar Jepun (Kamboja) sane mawarna putih lan kuning, Sekar Sandat sane miik sumingkir, Sekar Mawar barak, lan Sekar Pacah. Sekar-sekar puniki kaanggen canang sari pinaka rasa suksma majeng Ida Sang Hyang Widhi Wasa.',
+        descEn: 'Balinese home compounds are lush with fragrant blossoms. Sekar Jepun (Frangipani) shines in radiant yellow and white, Sekar Sandat perfumes the breeze, along with vibrant red roses. These lovely flowers adorn sacred offerings expressing gratitude to Nature and the Creator.',
+        checklist: [
+          "Misi 1: Ruruh (temukan) 1 sekar Jepun sane ulung ring natahe, ambung miiknyane sane sumingkir.",
+          "Misi 2: Sebutkan 3 warna sekar sane wenten ring pekarangan umah (putih, barak, kuning).",
+          "Misi 3: Siram tetanduran sekar ring natahe saban sore mangda tetep seger lan nedeng kembang."
+  ],
+        checklistEn: [
+          "Mission 1: Pick up a fallen Frangipani (Jepun) blossom and enjoy its sweet gentle fragrance.",
+          "Mission 2: Name 3 flower colors found in your garden (white, red, golden yellow).",
+          "Mission 3: Water the flower garden every afternoon to help the blossoms stay radiant."
+  ],
+        activities: [
+          {
+                  "q": "Sekar Jepun punika ring basa Indonesia kabaos bunga...",
+                  "options": [
+                          "Kamboja",
+                          "Melati",
+                          "Matahari",
+                          "Anggrek"
+                  ],
+                  "answer": "Kamboja",
+                  "hint": "Bunga khas Pulau Bali yang sering disematkan di telinga 🌺"
+          },
+          {
+                  "q": "Bunga sane warnanyane barak (merah) kabaos sekar...",
+                  "options": [
+                          "Barak",
+                          "Selem",
+                          "Pelung",
+                          "Gading"
+                  ],
+                  "answer": "Barak",
+                  "hint": "Barak = Merah dalam Basa Bali."
+          },
+          {
+                  "q": "Tetanduran ring natahe patut kasiram saban rahina mangda...",
+                  "options": [
+                          "Subur lan seger (tidak layu)",
+                          "Gering (sakit)",
+                          "Mati",
+                          "Gundul"
+                  ],
+                  "answer": "Subur lan seger (tidak layu)",
+                  "hint": "Tanaman butuh air dan sinar matahari untuk tumbuh subur."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "The iconic Balinese flower \"Sekar Jepun\" is known in English as...",
+                  "options": [
+                          "Frangipani",
+                          "Sunflower",
+                          "Lotus",
+                          "Tulip"
+                  ],
+                  "answer": "Frangipani",
+                  "hint": "Famous fragrant tropical blossom of Bali 🌺"
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/seni-rupa.js ---
@@ -2914,61 +3919,294 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Seni Rupa Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:51:00
+  // Version   : 2.0 (Comprehensive LKS & Eksplorasi Visual Kreatif)
   // ================================================================
   
   const SENI_RUPA_DATA = {
     id: 'seni-rupa',
-    title: 'Seni Rupa — Imajinasi Warna & Bentuk',
-    titleEn: 'Visual Arts — Imagination of Colors & Shapes',
-    subtitle: 'Yuk bikin warna jadi rame tapi nggak rusuh! Eksplorasi palet warna dan bentuk geometri 🎨',
-    subtitleEn: 'Bring vibrant colors to life! Explore color palettes and basic geometric shapes 🎨',
+    title: 'Seni Rupa — Imajinasi, Warna, & Bentuk Kreatif',
+    titleEn: 'Visual Arts — Imagination, Color, & Creative Shapes',
+    subtitle: 'Ayo melukis garis berirama, mencampur warna pelangi, membuat kolase alam, dan membentuk karya 3D! 🎨',
+    subtitleEn: 'Explore expressive lines, blend primary colors, build organic collages, and sculpt 3D artwork! 🎨',
     topics: [
       {
-        id: 'seni-warna-dasar',
-        title: 'Warna Primer & Campuran Ajaib',
-        titleEn: 'Primary Colors & Color Magic',
-        desc: 'Tiga warna utama: Merah, Kuning, dan Biru. Bila dicampur akan melahirkan warna baru!',
-        descEn: 'Three primary colors: Red, Yellow, and Blue. Mixing them creates brand new colors!',
+        id: 'sr-unsur-dasar',
+        title: 'Unsur Seni Rupa: Titik, Garis, & Bidang',
+        titleEn: 'Art Elements: Points, Lines, & Shapes',
+        desc: 'Semua karya gambar berawal dari sebuah TITIK kecil. Ketika titik ditarik bergerak, jadilah GARIS (lurus, lengkung, bergelombang, zig-zag, spiral). Ketika ujung garis bertemu kembali, terbentuklah BIDANG datar yang indah!',
+        descEn: 'Every great masterpiece begins with a tiny POINT. Connecting points creates dynamic LINES (straight, curvy, wavy, zig-zag, spiral). Closing lines together yields flat 2D SHAPES!',
+        checklist: [
+          'Misi 1: Buat 5 jenis garis berbeda (garis lurus, gelombang ombak, zig-zag petir, spiral obat nyamuk, dan putus-putus).',
+          'Misi 2: Hubungkan 4 garis lurus sama panjang untuk membentuk bidang bujur sangkar.',
+          'Misi 3: Coba gambar pohon rindang hanya menggunakan garis lengkung dan titik-titik dedaunan.'
+        ],
+        checklistEn: [
+          'Mission 1: Draw 5 distinct line types (straight, ocean wave, lightning zig-zag, spiral, dashed).',
+          'Mission 2: Connect four equal straight lines to create a square shape.',
+          'Mission 3: Sketch a lush canopy tree using only curvy lines and dotted point leaves.'
+        ],
         activities: [
-          { q: 'Jika warna KUNING dicampur dengan BIRU, akan menghasilkan warna...', options: ['Hijau', 'Oranye', 'Ungu', 'Cokelat'], answer: 'Hijau', hint: 'Warna rumput segar dan dedaunan pohon di kebun 🌿' },
-          { q: 'Warna MERAH dicampur KUNING akan menjadi warna...', options: ['Oranye (Jingga)', 'Ungu', 'Hijau', 'Hitam'], answer: 'Oranye (Jingga)', hint: 'Seperti warna buah jeruk yang manis segar 🍊' }
+          { q: 'Garis yang bentuknya naik turun tajam seperti kilatan petir disebut garis...', options: ['Zig-zag', 'Lengkung', 'Lurus mendatar', 'Lingkaran'], answer: 'Zig-zag', hint: 'Garis zig-zag bersudut lancip dan tegas ⚡' },
+          { q: 'Unsur seni rupa paling awal dan paling sederhana adalah...', options: ['Titik', 'Warna', 'Ruang', 'Tekstur'], answer: 'Titik', hint: 'Titik adalah tanda terkecil tempat mulainya sebuah goresan pensil.' }
         ],
         activitiesEn: [
-          { q: 'Mixing YELLOW with BLUE produces which color?', options: ['Green', 'Orange', 'Purple', 'Brown'], answer: 'Green', hint: 'The color of lush grass and tree leaves 🌿' },
-          { q: 'Mixing RED with YELLOW creates...', options: ['Orange', 'Purple', 'Green', 'Black'], answer: 'Orange', hint: 'Like a fresh ripe orange fruit 🍊' }
+          { q: 'A sharp, angled back-and-forth line resembling lightning is called a...', options: ['Zig-zag line', 'Curvy line', 'Horizontal line', 'Circular line'], answer: 'Zig-zag line', hint: 'Zig-zags feature sharp points ⚡' }
         ]
       },
       {
-        id: 'seni-bentuk-geometri',
-        title: 'Bentuk-Bentuk Geometri',
-        titleEn: 'Geometric Shapes in Everyday Life',
-        desc: 'Mengenal lingkaran bundar seperti roda, segitiga seperti atap rumah, dan segi empat.',
-        descEn: 'Discover circles like wheels, triangles like roofs, and rectangles like books.',
+        id: 'sr-lingkaran-warna',
+        title: 'Lingkaran Warna: Primer & Sekunder',
+        titleEn: 'Color Wheel: Primary & Secondary Colors',
+        desc: 'Warna Primer adalah warna pokok murni yang tidak bisa dibuat dari warna lain: MERAH, KUNING, dan BIRU. Jika dicampur berpasangan, terciptalah Warna Sekunder: Merah + Kuning = JINGGA (Oranye), Kuning + Biru = HIJAU, Merah + Biru = UNGU!',
+        descEn: 'Primary colors are pure foundational pigments: RED, YELLOW, and BLUE. Blending them pairs creates Secondary colors: Red + Yellow = ORANGE, Yellow + Blue = GREEN, Red + Blue = PURPLE!',
+        checklist: [
+          'Misi 1: Campurkan cat air / krayon kuning dan biru untuk membuktikan bahwa hasilnya menjadi hijau segar.',
+          'Misi 2: Warnai gambar matahari terbenam dengan perpaduan warna jingga dan merah menyala.',
+          'Misi 3: Sebutkan 3 warna primer dengan suara percaya diri di depan kelas atau keluarga.'
+        ],
+        checklistEn: [
+          'Mission 1: Mix yellow and blue watercolor pigments to witness how lush green appears.',
+          'Mission 2: Color a sunset scenery using radiant blends of orange and fiery red.',
+          'Mission 3: Confidently name the three primary colors (Red, Yellow, Blue).'
+        ],
         activities: [
-          { q: 'Benda apa di bawah ini yang berbentuk LINGKARAN?', options: ['Roda sepeda', 'Buku tulis', 'Penggaris segitiga', 'Pintu rumah'], answer: 'Roda sepeda', hint: 'Bentuk bundar yang tidak memiliki sudut lancip ⭕' }
+          { q: 'Manakah yang termasuk kelompok 3 warna primer?', options: ['Merah, Kuning, Biru', 'Hijau, Ungu, Jingga', 'Hitam, Putih, Abu-abu', 'Cokelat, Merah muda, Emas'], answer: 'Merah, Kuning, Biru', hint: 'Tiga warna pokok dasar yang menjadi asal mula warna lainnya 🎨' },
+          { q: 'Jika warna MERAH dicampur dengan warna KUNING, akan menghasilkan warna...', options: ['Jingga (Oranye)', 'Hijau', 'Ungu', 'Cokelat'], answer: 'Jingga (Oranye)', hint: 'Warna hangat seperti buah jeruk matang 🍊' },
+          { q: 'Warna HIJAU daun dihasilkan dari percampuran warna...', options: ['Kuning dan Biru', 'Merah dan Biru', 'Merah dan Kuning', 'Putih dan Hitam'], answer: 'Kuning dan Biru', hint: 'Campuran warna cerah sinar matahari (kuning) dan langit (biru).' }
         ],
         activitiesEn: [
-          { q: 'Which of the following objects has a CIRCLE shape?', options: ['Bicycle wheel', 'Notebook', 'Triangle ruler', 'House door'], answer: 'Bicycle wheel', hint: 'A round shape with no sharp corners ⭕' }
+          { q: 'Which trio constitutes the primary colors?', options: ['Red, Yellow, Blue', 'Green, Purple, Orange', 'Black, White, Gray', 'Brown, Pink, Gold'], answer: 'Red, Yellow, Blue', hint: 'The fundamental root colors 🎨' }
         ]
       },
       {
-        id: 'seni-garis-pola',
-        title: 'Garis Lurus & Pola Hias',
-        titleEn: 'Straight Lines & Decorative Patterns',
-        desc: 'Garis lurus, garis lengkung, zig-zag bergelombang, dan titik-titik indah.',
-        descEn: 'Straight lines, curves, wavy zig-zags, and lovely polka dots.',
+        id: 'sr-kolase-mozaik',
+        title: 'Karya Kolase & Mozaik dari Bahan Alam',
+        titleEn: 'Collage & Mosaic with Natural Materials',
+        desc: 'Kolase adalah teknik menempel berbagai macam bahan (daun kering, ranting kecil, biji jagung, cangkang telur) pada bidang gambar. Mozaik menempel kepingan bahan sejenis yang disusun rapi membentuk pola indah. Keduanya melatih motorik halus dan cinta lingkungan!',
+        descEn: 'Collage involves pasting varied textured materials (dry leaves, twigs, corn seeds, eggshells) onto canvas. Mosaic places uniform small pieces neatly into patterned artworks, nurturing fine motor dexterity!',
+        checklist: [
+          'Misi 1: Kumpulkan 5 helai daun kering yang gugur di halaman dengan beragam ukuran.',
+          'Misi 2: Buat bentuk ikan atau kura-kura dari susunan daun kering yang ditempel dengan lem.',
+          'Misi 3: Beri bingkai sederhana pada karya kolasemu dan pajang di meja belajar.'
+        ],
+        checklistEn: [
+          'Mission 1: Collect 5 fallen dry leaves of different shapes and textures from the garden.',
+          'Mission 2: Paste the dried leaves to shape a fish or tortoise on heavy paper.',
+          'Mission 3: Add a colorful paper frame and display your finished collage on your desk.'
+        ],
         activities: [
-          { q: 'Garis yang naik turun tajam seperti gigi gergaji dinamakan garis...', options: ['Zig-zag', 'Lurus', 'Melengkung', 'Spiral'], answer: 'Zig-zag', hint: 'Bentuk garis lancip bergantian naik dan turun ⚡' }
+          { q: 'Karya seni rupa yang dibuat dengan menempelkan berbagai bahan alam pada gambar disebut...', options: ['Kolase', 'Patung', 'Seni Grafis', 'Pahat'], answer: 'Kolase', hint: 'Teknik tempel bahan alami seperti daun, biji, dan kertas.' },
+          { q: 'Bahan alam manakah di sekitar rumah yang bisa dipakai untuk membuat kolase?', options: ['Daun kering dan biji-bijian', 'Limbah plastik kotor', 'Batu bata berat', 'Kaca tajam berbahaya'], answer: 'Daun kering dan biji-bijian', hint: 'Pilihlah bahan alami yang aman, bersih, dan ramah lingkungan 🍂' }
         ],
         activitiesEn: [
-          { q: 'A sharp line that alternates up and down like saw teeth is called a...', options: ['Zig-zag line', 'Straight line', 'Curved line', 'Spiral line'], answer: 'Zig-zag line', hint: 'Sharp back-and-forth zigzag patterns ⚡' }
+          { q: 'The art technique of pasting organic items like dried leaves and seeds is called...', options: ['Collage', 'Sculpture', 'Lithography', 'Etching'], answer: 'Collage', hint: 'Collage assembles pasted mixed textures.' }
         ]
+      },
+      {
+        id: 'sr-geometris-organis',
+        title: 'Bentuk Geometris vs Bentuk Organis',
+        titleEn: 'Geometric Shapes vs Organic Nature Forms',
+        desc: 'Bentuk GEOMETRIS adalah bentuk teratur yang diukur matematis: persegi, lingkaran, segitiga, trapesium. Bentuk ORGANIS adalah bentuk alami yang mengalir bebas tanpa batas lurus, seperti bentuk awan di langit, tetesan air, daun monstera, dan kontur batu karang!',
+        descEn: 'GEOMETRIC shapes have precise regular measurements: squares, circles, triangles. ORGANIC shapes flow freely without rigid boundaries, echoing clouds, water droplets, and jungle foliage!',
+        checklist: [
+          'Misi 1: Gambar sebuah rumah yang tersusun dari gabungan bentuk geometris (atap segitiga, dinding kotak, jendela bundar).',
+          'Misi 2: Gambar bentuk organis tetesan air hujan 💧 dan awan bergelombang ☁️ di buku gambarmu.',
+          'Misi 3: Warnai gambar tersebut dengan gradasi warna muda ke tua.'
+        ],
+        checklistEn: [
+          'Mission 1: Sketch a friendly house using geometric shapes (triangle roof, square walls, circular window).',
+          'Mission 2: Draw organic water droplets 💧 and billowing cumulus clouds ☁️.',
+          'Mission 3: Blend shading from light tints to deep hues using colored pencils.'
+        ],
+        activities: [
+          { q: 'Manakah di bawah ini yang merupakan contoh bentuk organis dari alam?', options: ['Bentuk awan di langit dan daun pohon', 'Bentuk kubus dan segitiga sama sisi', 'Bentuk balok penggaris', 'Bentuk meja persegi panjang'], answer: 'Bentuk awan di langit dan daun pohon', hint: 'Bentuk organis mengalir bebas dan tidak kaku seperti alam semesta.' },
+          { q: 'Roda sepeda dan uang koin memiliki bentuk dasar geometris...', options: ['Lingkaran', 'Persegi', 'Segitiga', 'Trapesium'], answer: 'Lingkaran', hint: 'Bentuk bulat tanpa sudut ⭕' }
+        ],
+        activitiesEn: [
+          { q: 'Which of the following is an organic form found in nature?', options: ['Clouds and tree leaves', 'Cubes and equilateral triangles', 'Plastic rulers', 'Square tiles'], answer: 'Clouds and tree leaves', hint: 'Organic shapes are fluid and non-geometric.' }
+        ]
+      },
+      {
+        id: 'sr-batik-motif',
+        title: 'Mengenal Ragam Hias Motif Batik Nusantara',
+        titleEn: 'Indonesian Batik Patterns & Cultural Motifs',
+        desc: 'Batik adalah mahakarya warisan budaya dunia Indonesia (UNESCO). Tiap daerah punya motif khas penuh doa: Motif Kawung (bulat lonjong seperti buah kolang-kaling melambangkan kesucian hati), Mega Mendung Cirebon (awan bertingkat pembawa kesejukan), dan Parang (ombak samudra pantang menyerah)!',
+        descEn: 'Batik is an internationally recognized Indonesian cultural treasure (UNESCO). Renowned motifs include Kawung (purity of heart), Mega Mendung (cooling cloud horizons), and Parang (resilience like ocean waves)!',
+        checklist: [
+          'Misi 1: Amati pakaian batik yang ada di rumahmu, lalu perhatikan motif polanya yang berulang.',
+          'Misi 2: Rancang motif batik Kawung sederhana di atas kertas kotak berpetak.',
+          'Misi 3: Warnai motif rancanganmu dengan kombinasi warna cokelat soga dan krem.'
+        ],
+        checklistEn: [
+          'Mission 1: Inspect a piece of batik clothing at home and observe its repeating motifs.',
+          'Mission 2: Draft a simplified Kawung motif layout on grid paper.',
+          'Mission 3: Color your pattern with traditional earth tones of soga brown and warm cream.'
+        ],
+        activities: [
+          { q: 'Motif batik Mega Mendung yang berbentuk gumpalan awan bertingkat berasal dari daerah...', options: ['Cirebon', 'Yogyakarta', 'Solo', 'Papua'], answer: 'Cirebon', hint: 'Cirebon di pesisir utara Jawa Barat terkenal dengan Mega Mendung ☁️' },
+          { q: 'Batik telah diakui oleh badan dunia PBB sebagai Warisan Budaya Dunia asli milik bangsa...', options: ['Indonesia', 'Inggris', 'Jepang', 'Australia'], answer: 'Indonesia', hint: 'Ditetapkan oleh UNESCO pada 2 Oktober 2009 🇮🇩' }
+        ],
+        activitiesEn: [
+          { q: 'The iconic Mega Mendung layered cloud batik motif originates from...', options: ['Cirebon', 'Yogyakarta', 'Solo', 'Papua'], answer: 'Cirebon', hint: 'Cirebon on the northern coast of West Java ☁️' }
+        ]
+      },
+      {
+        id: 'sr-tiga-dimensi',
+        title: 'Karya 3D: Berkreasi dengan Plastisin & Clay',
+        titleEn: '3D Art: Sculpting with Modeling Clay & Playdough',
+        desc: 'Karya seni rupa Tiga Dimensi (3D) memiliki panjang, lebar, dan tinggi (volume), sehingga bisa dilihat dan disentuh dari segala arah! Membentuk plastisin menjadi patung hewan kecil (kucing, kura-kura, burung) melatih kekuatan jari dan imajinasi spasial anak!',
+        descEn: 'Three-Dimensional (3D) artwork possesses length, width, and depth (volume), allowing it to be viewed from all sides. Molding clay into miniature animals sharpens finger muscles and spatial creativity!',
+        checklist: [
+          'Misi 1: Remas dan bentuk bola plastisin menjadi bulat sempurna dengan kedua telapak tanganmu.',
+          'Misi 2: Buat patung kura-kura mini lengkap dengan tempurung bertekstur dan empat kaki.',
+          'Misi 3: Ceritakan kepada teman atau orang tua kisah tentang patung kura-kura yang kamu buat.'
+        ],
+        checklistEn: [
+          'Mission 1: Knead and roll a ball of modeling clay between your palms until smooth.',
+          'Mission 2: Sculpt a miniature tortoise complete with a patterned shell and four legs.',
+          'Mission 3: Share a creative short story about your sculpted tortoise to family or peers.'
+        ],
+        activities: [
+          { q: 'Ciri utama dari karya seni rupa tiga dimensi (3D) adalah...', options: ['Memiliki panjang, lebar, volume/tinggi, serta dapat dilihat dari segala sisi', 'Hanya bisa dilihat dari depan saja', 'Hanya memiliki warna hitam dan putih', 'Tidak bisa disentuh tangan'], answer: 'Memiliki panjang, lebar, volume/tinggi, serta dapat dilihat dari segala sisi', hint: 'Karya 3D memiliki ruang dan volume nyata seperti patung dan guci.' },
+          { q: 'Bahan lunak buatan yang mudah dibentuk berulang kali dengan tangan untuk membuat miniatur patung adalah...', options: ['Plastisin / Clay', 'Batu kali keras', 'Kaca bening', 'Besi baja'], answer: 'Plastisin / Clay', hint: 'Lunak, warna-warni, dan aman dimainkan anak-anak.' }
+        ],
+        activitiesEn: [
+          { q: 'What defines a three-dimensional (3D) artwork?', options: ['It possesses length, width, and volume/depth viewable from all angles', 'It is strictly flat', 'It has only one flat side', 'It cannot be touched'], answer: 'It possesses length, width, and volume/depth viewable from all angles', hint: '3D pieces occupy tangible spatial volume.' }
+        ]
+      }
+  ,
+      {
+        id: 'sr-lempung-plastisin',
+        title: 'Membentuk Lempung Lunak & Plastisin Warna-Warni',
+        titleEn: 'Sculpting Colorful Clay & Soft Dough',
+        desc: 'Bermain plastisin dan lempung lunak (clay) sangat menyenangkan! Jari-jemari kita belajar meremas, memilin menjadi silinder panjang seperti cacing, membulatkan seperti bakso, dan menekan pipih. Kita bisa membentuk miniatur buah jeruk, kura-kura mungil, atau mangkuk kecil buatan sendiri!',
+        descEn: 'Shaping soft clay and playdough is pure sensory joy! Children practice rolling clay into smooth spheres, snake-like coils, and gentle slabs. We can sculpt miniature fruits, tiny friendly turtles, or adorable miniature cups with our own hands!',
+        checklist: [
+          "Misi 1: Pilin plastisin menjadi 5 bulatan kecil lalu susun berderet membentuk ulat lucu.",
+          "Misi 2: Campur plastisin warna kuning dan biru sedikit demi sedikit, amati perubahan warnanya menjadi hijau!",
+          "Misi 3: Letakkan hasil kreasi miniatur plastisinmu di atas tatakan karton dan tunjukkan kepada keluarga."
+  ],
+        checklistEn: [
+          "Mission 1: Roll dough into 5 small balls and line them up to make an adorable caterpillar.",
+          "Mission 2: Knead blue and yellow dough together and watch them transform magically into green!",
+          "Mission 3: Display your clay sculpture on a small cardboard pedestal for your family to admire."
+  ],
+        activities: [
+          {
+                  "q": "Teknik meremas dan memutar plastisin di antara dua telapak tangan akan menghasilkan bentuk...",
+                  "options": [
+                          "Bulat (bola)",
+                          "Segitiga",
+                          "Garis lurus",
+                          "Bintang"
+                  ],
+                  "answer": "Bulat (bola)",
+                  "hint": "Seperti gerakan saat membuat bulatan adonan bakso."
+          },
+          {
+                  "q": "Jika kita mencampurkan lempung warna merah dengan lempung warna kuning, akan menghasilkan warna baru yaitu...",
+                  "options": [
+                          "Oranye (Jingga)",
+                          "Hijau",
+                          "Ungu",
+                          "Hitam"
+                  ],
+                  "answer": "Oranye (Jingga)",
+                  "hint": "Warna hangat seperti buah jeruk 🍊"
+          },
+          {
+                  "q": "Bahan plastisin atau clay memiliki sifat...",
+                  "options": [
+                          "Lunak dan mudah dibentuk",
+                          "Keras seperti batu",
+                          "Cair seperti air",
+                          "Tajam"
+                  ],
+                  "answer": "Lunak dan mudah dibentuk",
+                  "hint": "Bisa ditekan dan ditarik sesuka hati tanpa patah."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "Rolling dough between both palms creates a smooth...",
+                  "options": [
+                          "Sphere (round ball)",
+                          "Sharp triangle",
+                          "Flat paper",
+                          "Box"
+                  ],
+                  "answer": "Sphere (round ball)",
+                  "hint": "Like rolling a tiny bouncy ball."
+          }
+  ]
+      },
+      {
+        id: 'sr-cap-cetak-alami',
+        title: 'Seni Cap Cetak dari Bahan Alam & Pelepah Pisang',
+        titleEn: 'Natural Printmaking with Banana Stems & Leaves',
+        desc: 'Alam di sekitar kita menyediakan kuas dan cetakan yang unik! Potongan pelepah pisang memiliki pori-pori seperti bunga mawar. Potongan belimbing menghasilkan cetakan bintang emas. Daun yang berurat tegas menghasilkan tekstur guratan daun yang memesona jika diolesi cat air lalu dicapkan ke kertas putih.',
+        descEn: 'Mother Nature provides extraordinary organic stamps! Sliced banana stems reveal rose-like petal pores. Starfruit slices create shimmering golden stars. Veined leaves produce intricate forest textures when pressed onto art paper with watercolors.',
+        checklist: [
+          "Misi 1: Carilah sehelai daun kering yang urat daunnya menonjol di halaman rumah.",
+          "Misi 2: Oleskan cat air tipis-tipis pada permukaan urat daun, lalu tekan secara perlahan di kertas putih.",
+          "Misi 3: Buat pola berulang dari cap pelepah pisang membentuk taman bunga yang mekar indah."
+  ],
+        checklistEn: [
+          "Mission 1: Find a fallen leaf with prominent veins in the garden.",
+          "Mission 2: Brush watercolor lightly across the leaf veins and press gently onto drawing paper.",
+          "Mission 3: Stamp repeated banana stem prints to compose an enchanting blooming meadow."
+  ],
+        activities: [
+          {
+                  "q": "Potongan melintang buah belimbing yang dicapkan pada kertas gambar akan menghasilkan bentuk...",
+                  "options": [
+                          "Bintang ⭐",
+                          "Lingkaran ⚪",
+                          "Segitiga 🔺",
+                          "Garis lurus ➖"
+                  ],
+                  "answer": "Bintang ⭐",
+                  "hint": "Buah belimbing memiliki 5 sayap runcing seperti bintang."
+          },
+          {
+                  "q": "Saat mencetak cap daun dengan cat air, cat yang dioleskan sebaiknya...",
+                  "options": [
+                          "Pas dan tidak terlalu basah/berlebihan",
+                          "Sangat tebal sampai banjir",
+                          "Kering total tanpa air",
+                          "Minyak goreng"
+                  ],
+                  "answer": "Pas dan tidak terlalu basah/berlebihan",
+                  "hint": "Cat yang pas membuat guratan urat daun tercetak jelas dan rapi."
+          },
+          {
+                  "q": "Bahan alam yang dapat digunakan untuk membuat karya seni cetak cap adalah...",
+                  "options": [
+                          "Pelepah pisang, daun, dan kentang",
+                          "Kaca tajam",
+                          "Batu bata kasar",
+                          "Paku besi"
+                  ],
+                  "answer": "Pelepah pisang, daun, dan kentang",
+                  "hint": "Bahan alami yang lunak, aman, dan bertekstur indah."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "A cross-section slice of starfruit stamped on paper creates a shape of a...",
+                  "options": [
+                          "Star ⭐",
+                          "Square",
+                          "Circle",
+                          "Triangle"
+                  ],
+                  "answer": "Star ⭐",
+                  "hint": "Starfruit features 5 distinct ridges."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/pjok.js ---
@@ -2976,209 +4214,882 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · PJOK Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:52:00
+  // Version   : 2.0 (Comprehensive LKS & Kebugaran Jasmani Anak)
   // ================================================================
   
   const PJOK_DATA = {
     id: 'pjok',
-    title: 'PJOK — Tubuh Bugar & Sehat Ceria',
-    titleEn: 'Physical Education — Fit, Strong & Cheerful',
-    subtitle: 'Gerak aktif, badan kuat, hati gembira! Latih koordinasi gerak dan kebiasaan hidup sehat 🏃',
-    subtitleEn: 'Move actively, stay healthy, and smile! Train motor coordination and good daily habits 🏃',
+    title: 'PJOK — Tubuh Bugar, Jiwa Sehat, & Gerak Ceria',
+    titleEn: 'Physical Education — Active Fitness & Vital Health',
+    subtitle: 'Ayo bergerak lincah! Latih gerak lokomotor, senam irama, cuci tangan 6 langkah, dan gizi seimbang Isi Piringku! ⚽',
+    subtitleEn: 'Stay vibrant and energetic! Master locomotor drills, rhythmic gymnastics, clean hygiene, and balanced nutrition! ⚽',
     topics: [
       {
         id: 'pjok-lokomotor',
-        title: 'Gerak Lokomotor (Berpindah Tempat)',
-        titleEn: 'Locomotor Movements (Moving Across Space)',
-        desc: 'Berjalan, berlari kencang, melompat katak, dan melangkah lincah.',
-        descEn: 'Walking, sprinting, frog jumping, and leaping forward.',
+        title: 'Gerak Dasar Lokomotor (Berpindah Tempat)',
+        titleEn: 'Locomotor Skills (Traveling Movements)',
+        desc: 'Gerak LOKOMOTOR adalah gerakan tubuh yang menyebabkan berpindah tempat dari satu titik ke titik lain. Contoh utamanya: BERJALAN santai, BERLARI kencang, MELOMPAT dengan tolakan dua kaki, dan MENCONGKANG (gallop) lincah seperti kuda berlari!',
+        descEn: 'LOCOMOTOR movements transport your body across space from one spot to another. Core fundamentals include WALKING upright, RUNNING swiftly, JUMPING off two feet, and GALLOPING like a playful pony!',
+        checklist: [
+          'Misi 1: Praktikkan berjalan lurus di atas satu garis lantai sepanjang 5 meter dengan pandangan ke depan.',
+          'Misi 2: Lakukan lari pelan (jogging) di tempat selama 30 detik untuk pemanasan.',
+          'Misi 3: Lakukan 5 kali lompatan katak dengan mendarat mengeper menggunakan kedua lutut lentur.'
+        ],
+        checklistEn: [
+          'Mission 1: Walk along a straight floor tape line for 5 meters keeping balanced posture.',
+          'Mission 2: Jog gently in place for 30 seconds as a light aerobic warm-up.',
+          'Mission 3: Perform 5 frog jumps landing softly with cushioned, bent knees.'
+        ],
         activities: [
-          { q: 'Manakah contoh gerakan lokomotor (berpindah tempat)?', options: ['Berlari ke depan', 'Menggelengkan kepala di tempat', 'Membungkuk', 'Diam berdiri'], answer: 'Berlari ke depan', hint: 'Gerak lokomotor artinya badanmu berpindah dari titik A ke titik B!' }
+          { q: 'Gerakan tubuh yang membuat kita berpindah tempat disebut gerak...', options: ['Lokomotor', 'Non-lokomotor', 'Manipulatif', 'Statik'], answer: 'Lokomotor', hint: 'Lokomotor berarti bergerak berpindah posisi (contoh: berjalan dan berlari).' },
+          { q: 'Saat berlari cepat, ayunan kedua tangan yang benar adalah...', options: ['Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', 'Diam di samping pinggang', 'Diangkat lurus ke atas kepala', 'Dimasukkan ke dalam saku celana'], answer: 'Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', hint: 'Ayunan lengan seirama membantu keseimbangan dan menambah dorongan lari.' }
         ],
         activitiesEn: [
-          { q: 'Which is an example of a locomotor movement (traveling from one spot to another)?', options: ['Running forward', 'Nodding head in place', 'Bending over', 'Standing still'], answer: 'Running forward', hint: 'Locomotor movement shifts your body from point A to point B!' }
+          { q: 'Body movements that transport you across from one location to another are called...', options: ['Locomotor', 'Non-locomotor', 'Manipulative', 'Static'], answer: 'Locomotor', hint: 'Walking and running travel through space.' }
         ]
       },
       {
         id: 'pjok-non-lokomotor',
-        title: 'Gerak Non-Lokomotor (Di Tempat)',
-        titleEn: 'Non-Locomotor Movements (In Place)',
-        desc: 'Memutar lengan, merentangkan tangan seperti burung terbang, dan menekuk lutut tanpa berpindah.',
-        descEn: 'Arm circles, spreading wings like a bird, and bending knees without traveling.',
+        title: 'Gerak Dasar Non-Lokomotor (Tanpa Berpindah)',
+        titleEn: 'Non-Locomotor Skills (Stationary Movements)',
+        desc: 'Gerak NON-LOKOMOTOR adalah gerakan tubuh yang dilakukan di tempat tanpa berpindah posisi. Contoh: MEMBUNGKUK menyentuh ujung sepatu, MELIUKKAN badan ke kanan dan kiri, MEMUTAR pinggang, serta MENGAYUN lengan untuk peregangan otot agar lentur dan terhindar dari cedera!',
+        descEn: 'NON-LOCOMOTOR movements are performed right in place without moving from your base. Core examples include BENDING down to toes, SWAYING side to side, TWISTING the torso, and STRETCHING limbs to prevent cramps!',
+        checklist: [
+          'Misi 1: Berdiri tegak, bungkukkan badan perlahan dan sentuh ujung jari kaki tanpa menekuk lutut selama 8 hitungan.',
+          'Misi 2: Rentangkan kedua tangan ke samping dan liukkan badan ke kiri dan kanan seperti pohon tertiup angin.',
+          'Misi 3: Putar kedua pergelangan tangan dan bahu ke arah depan dan belakang sebanyak 8 putaran.'
+        ],
+        checklistEn: [
+          'Mission 1: Stand tall, hinge forward slowly to touch toes without bending knees for 8 counts.',
+          'Mission 2: Stretch arms wide and sway torso side to side like a palm tree in gentle breeze.',
+          'Mission 3: Roll wrists and shoulders forward and backward smoothly for 8 rotations.'
+        ],
         activities: [
-          { q: 'Ketika kamu merentangkan kedua tangan dan memutar badan di tempat, itu adalah gerakan...', options: ['Non-lokomotor', 'Lokomotor', 'Melompat', 'Berlari'], answer: 'Non-lokomotor', hint: 'Kaki tetap diam berpijak di tempat yang sama.' }
+          { q: 'Manakah di bawah ini yang merupakan contoh gerak non-lokomotor?', options: ['Meliukkan badan ke samping di tempat', 'Berlari mengelilingi lapangan', 'Melompat melewati rintangan kardus', 'Berenang menyeberangi kolam'], answer: 'Meliukkan badan ke samping di tempat', hint: 'Non-lokomotor dilakukan diam di tempat tanpa melangkah berpindah.' },
+          { q: 'Apa manfaat melakukan gerakan peregangan otot sebelum berolahraga?', options: ['Mencegah cedera otot dan membuat tubuh lebih lentur', 'Membuat tubuh cepat lelah', 'Menurunkan detak jantung mendadak', 'Agar bisa tidur saat olahraga'], answer: 'Mencegah cedera otot dan membuat tubuh lebih lentur', hint: 'Peregangan menyiapkan otot dan sendi agar siap bergerak aktif.' }
         ],
         activitiesEn: [
-          { q: 'Spreading your arms and twisting your torso while standing in place is...', options: ['Non-locomotor movement', 'Locomotor movement', 'Jumping', 'Sprinting'], answer: 'Non-locomotor movement', hint: 'Your feet stay planted on the same spot.' }
+          { q: 'Which of the following is an example of stationary non-locomotor movement?', options: ['Swaying torso sideways in place', 'Sprinting across field', 'Jumping hurdles', 'Swimming across pool'], answer: 'Swaying torso sideways in place', hint: 'Non-locomotor stays rooted in one place.' }
         ]
       },
       {
-        id: 'pjok-kebiasaan-sehat',
-        title: 'Kebiasaan Hidup Bersih & Sehat',
-        titleEn: 'Clean & Healthy Daily Habits',
-        desc: 'Mencuci tangan dengan sabun, minum air putih cukup, dan istirahat tidur teratur.',
-        descEn: 'Washing hands with soap, drinking plenty of water, and getting restful sleep.',
+        id: 'pjok-manipulatif',
+        title: 'Gerak Dasar Manipulatif (Menggunakan Alat)',
+        titleEn: 'Manipulative Skills (Ball & Object Control)',
+        desc: 'Gerak MANIPULATIF melibatkan penguasaan anggota tubuh terhadap suatu benda atau alat olahraga (seperti bola atau raket). Keterampilan dasarnya: MELEMPAR bola ke sasaran, MENANGKAP bola dengan kedua tangan lentur, MENENDANG bola ke gawang, dan MENGGIRING bola!',
+        descEn: 'MANIPULATIVE movements develop coordination when interacting with equipment like balls and racquets. Fundamental drills include THROWING accurately, CATCHING with soft hands, KICKING toward targets, and DRIBBLING smoothly!',
+        checklist: [
+          'Misi 1: Lempar bola plastik kecil ke atas dan tangkap kembali dengan kedua tangan sebanyak 5 kali tanpa jatuh.',
+          'Misi 2: Tendang bola pelan ke arah sasaran botol plastik dari jarak 3 meter.',
+          'Misi 3: Giring bola dengan kaki bagian dalam melewati 3 rintangan kerucut/botol.'
+        ],
+        checklistEn: [
+          'Mission 1: Toss a small ball upwards and catch it with both hands 5 times without dropping.',
+          'Mission 2: Kick a ball gently towards a plastic bottle target from a 3-meter distance.',
+          'Mission 3: Dribble a soccer ball using the inside of your foot around 3 cones.'
+        ],
         activities: [
-          { q: 'Kapan waktu wajib mencuci tangan memakai air mengalir dan sabun?', options: ['Sebelum makan dan sesudah bermain', 'Hanya saat mau tidur', 'Cukup seminggu sekali', 'Tidak perlu sabun'], answer: 'Sebelum makan dan sesudah bermain', hint: 'Kuman di tangan harus bersih sebelum memegang makanan 🧼' }
+          { q: 'Menendang, melempar, dan menangkap bola termasuk ke dalam kelompok gerak...', options: ['Manipulatif', 'Lokomotor', 'Non-lokomotor', 'Non-aktif'], answer: 'Manipulatif', hint: 'Manipulatif menggunakan benda atau objek luar sebagai alat olahraga 🎾' },
+          { q: 'Saat hendak menangkap bola lemparan dari teman, posisi kedua telapak tangan yang benar adalah...', options: ['Terbuka membentuk mangkuk menghadap ke arah datangnya bola', 'Mengepal kaku ke bawah', 'Disilangkan di belakang punggung', 'Menutup kedua mata'], answer: 'Terbuka membentuk mangkuk menghadap ke arah datangnya bola', hint: 'Jari-jari lentur siap meredam benturan bola.' }
         ],
         activitiesEn: [
-          { q: 'When is it essential to wash your hands with running water and soap?', options: ['Before eating and after playing', 'Only right before bedtime', 'Once a week is enough', 'Soap is never needed'], answer: 'Before eating and after playing', hint: 'Keep hands clean from germs before touching food 🧼' }
+          { q: 'Kicking, tossing, and catching a ball belong to which category of movement skills?', options: ['Manipulative', 'Locomotor', 'Non-locomotor', 'Static'], answer: 'Manipulative', hint: 'Involves handling external sport gear or balls 🎾' }
         ]
+      },
+      {
+        id: 'pjok-senam-irama',
+        title: 'Aktivitas Senam Irama / Ritmik Ceria',
+        titleEn: 'Rhythmic Gymnastics & Musical Movement',
+        desc: 'Senam Irama memadukan gerakan langkah kaki dan ayunan lengan yang selaras mengikuti irama ketukan musik atau hitungan ceria. Senam ini melatih koordinasi otak kiri dan kanan, kelenturan tubuh, rasa percaya diri, serta memupuk keceriaan bersama kawan!',
+        descEn: 'Rhythmic gymnastics blends footwork and sweeping arm gestures synchronized to upbeat musical tempos. It builds bilateral brain coordination, cardiovascular endurance, and social joy!',
+        checklist: [
+          'Misi 1: Langkah kaki ke samping kanan dan kiri secara bergantian mengikuti ketukan musik 1-2-3-4.',
+          'Misi 2: Ayunkan kedua lengan ke atas dan ke bawah seirama dengan langkah kakimu.',
+          'Misi 3: Ajak saudaramu senam bersama di pagi hari selama 5 menit di teras rumah.'
+        ],
+        checklistEn: [
+          'Mission 1: Step sideways right and left alternately matching a cheerful 1-2-3-4 music tempo.',
+          'Mission 2: Swing both arms overhead and down in cadence with your footwork.',
+          'Mission 3: Lead your family in a 5-minute sunny morning rhythmic exercise routine.'
+        ],
+        activities: [
+          { q: 'Unsur terpenting yang memandu gerakan pada senam irama adalah...', options: ['Ketukan irama musik atau tempo hitungan', 'Berat beban alat', 'Kecepatan lari kencang', 'Ketinggian lompatan'], answer: 'Ketukan irama musik atau tempo hitungan', hint: 'Gerakan harus selaras dan kompak dengan ritme musik 🎶' },
+          { q: 'Senam irama yang dilakukan bersama teman-teman sekelas melatih rasa...', options: ['Kekompakan dan kebersamaan', 'Egois ingin menang sendiri', 'Rasa malas bergerak', 'Kecurigaan'], answer: 'Kekompakan dan kebersamaan', hint: 'Senam bersama menumbuhkan harmoni dan persahabatan.' }
+        ],
+        activitiesEn: [
+          { q: 'What is the most crucial pacing element in rhythmic aerobic exercise?', options: ['Musical rhythm and count tempo', 'Heavy barbell weight', 'Max sprint speed', 'Jump height'], answer: 'Musical rhythm and count tempo', hint: 'Movement syncs with the musical beat 🎶' }
+        ]
+      },
+      {
+        id: 'pjok-kebersihan-diri',
+        title: 'Menjaga Kebersihan Diri & Cuci Tangan 6 Langkah',
+        titleEn: 'Personal Hygiene & 6-Step Handwashing',
+        desc: 'Tubuh yang sehat berawal dari kebersihan diri: Mandi 2 kali sehari memakai sabun, sikat gigi pagi setelah sarapan dan malam sebelum tidur, serta memotong kuku kotor. Cuci tangan 6 langkah memakai sabun dan air mengalir selama 20 detik membasmi kuman dan virus penyakit!',
+        descEn: 'Vibrant health blooms from clean hygiene habits: Showering twice daily, brushing teeth morning and night, and clipping fingernails. Proper 6-step handwashing with soap for 20 seconds eliminates germs!',
+        checklist: [
+          'Misi 1: Praktikkan 6 langkah cuci tangan pakai sabun (telapak, punggung tangan, sela jari, kunci jari, putar ibu jari, dan ujung kuku).',
+          'Misi 2: Sikat gigimu secara menyeluruh dengan pasta gigi berfluoride sebelum tidur malam ini.',
+          'Misi 3: Periksa kuku jari tanganmu; jika sudah panjang dan hitam, mintalah bantuan orang tua untuk memotongnya rapi.'
+        ],
+        checklistEn: [
+          'Mission 1: Demonstrate the 6 handwashing steps using soap under flowing water for 20 seconds.',
+          'Mission 2: Brush your teeth thoroughly with circular strokes before bedtime tonight.',
+          'Mission 3: Check fingernails; trim them clean with parental assistance if overgrown.'
+        ],
+        activities: [
+          { q: 'Berapa durasi waktu minimal yang disarankan dokter saat mencuci tangan pakai sabun?', options: ['20 detik', '2 detik', '1 menit tanpa henti', 'Hanya celup air saja'], answer: '20 detik', hint: 'Cukup untuk menyanyikan lagu "Selamat Ulang Tahun" 2 kali 🧼' },
+          { q: 'Kapan waktu yang paling tepat untuk menyikat gigi agar terhindar dari gigi berlubang?', options: ['Pagi setelah sarapan dan malam sebelum tidur', 'Hanya seminggu sekali', 'Hanya saat sakit gigi', 'Tengah malam saat tidur'], answer: 'Pagi setelah sarapan dan malam sebelum tidur', hint: 'Membersihkan sisa makanan agar kuman tidak merusak lapisan gigi.' }
+        ],
+        activitiesEn: [
+          { q: 'What is the recommended minimum duration for effective handwashing with soap?', options: ['20 seconds', '2 seconds', '10 minutes', 'Just a quick splash'], answer: '20 seconds', hint: 'Equal to singing the "Happy Birthday" song twice 🧼' }
+        ]
+      },
+      {
+        id: 'pjok-gizi-seimbang',
+        title: 'Gizi Seimbang: Isi Piringku & Istirahat Cukup',
+        titleEn: 'Balanced Nutrition (Isi Piringku) & Quality Sleep',
+        desc: 'Prinsip "Isi Piringku" mengajarkan porsi gizi seimbang dalam satu piring makan: 1/3 Makanan Pokok (nasi/kentang/ubi), 1/3 Sayuran segar, 1/6 Lauk-pauk berprotein (ikan/telur/tahu), dan 1/6 Buah-buahan manis alami. Minum air putih 8 gelas sehari dan tidur 8-9 jam agar tubuh tumbuh optimal!',
+        descEn: 'The "Isi Piringku" guide balances every plate: 1/3 Staple carbs (rice/potatoes), 1/3 Fresh greens & veggies, 1/6 Healthy protein (fish/eggs/tofu), and 1/6 Fresh fruit! Hydrate with 8 glasses of water and rest 8-9 hours every night!',
+        checklist: [
+          'Misi 1: Amati piring makan siangmu dan sebutkan mana sayuran serta lauk proteinnya.',
+          'Misi 2: Minum minimal 6-8 gelas air putih bersih sepanjang hari hari ini.',
+          'Misi 3: Tidur tepat waktu pukul 20.30 malam dan hindari menatap layar gadget sebelum tidur.'
+        ],
+        checklistEn: [
+          'Mission 1: Examine your lunch plate and identify the vegetable and protein portions.',
+          'Mission 2: Drink at least 6 to 8 cups of fresh pure water throughout the day.',
+          'Mission 3: Go to sleep on schedule by 8:30 PM, putting aside screens for restful sleep.'
+        ],
+        activities: [
+          { q: 'Dalam pedoman gizi seimbang "Isi Piringku", sumber energi makanan pokok contohnya adalah...', options: ['Nasi, jagung, dan ubi', 'Permen manis dan lolipop', 'Keripik asin pedas', 'Minuman soda bersoda'], answer: 'Nasi, jagung, dan ubi', hint: 'Karbohidrat kompleks yang memberikan tenaga belajar dan bermain 🍚' },
+          { q: 'Berapa jam waktu tidur malam yang dianjurkan untuk anak usia sekolah dasar agar tumbuh tinggi dan cerdas?', options: ['8 sampai 9 jam', 'Hanya 2 jam', '15 jam seharian', 'Tidak perlu tidur'], answer: '8 sampai 9 jam', hint: 'Tidur cukup memulihkan stamina dan memicu hormon pertumbuhan.' }
+        ],
+        activitiesEn: [
+          { q: 'In the balanced nutrition plate guide, which food serves as a healthy staple carbohydrate?', options: ['Steamed rice, corn, and sweet potato', 'Cotton candy and lollipops', 'Processed spicy crisps', 'Fizzy soda drinks'], answer: 'Steamed rice, corn, and sweet potato', hint: 'Wholesome carbohydrates fuel active play and study 🍚' }
+        ]
+      }
+  ,
+      {
+        id: 'pjok-keseimbangan',
+        title: 'Latihan Keseimbangan Tubuh: Sikap Bangau & Jinjit',
+        titleEn: 'Body Balance Training: Crane Stand & Tip-Toe Walking',
+        desc: 'Keseimbangan tubuh yang kuat mencegah kita mudah terjatuh saat berlari atau bermain. Ada keseimbangan diam (statis) seperti berdiri satu kaki meniru burung bangau dengan kedua tangan direntangkan. Ada pula keseimbangan bergerak (dinamis) seperti berjalan jinjit di atas garis lurus tanpa oleng!',
+        descEn: 'A resilient sense of balance prevents falls during joyful games. Static balance involves holding poses like the graceful Crane Stand on one foot with arms outstretched. Dynamic balance involves walking tip-toe along a chalk line with poised composure!',
+        checklist: [
+          "Misi 1: Praktikkan sikap berdiri burung bangau (satu kaki ditekuk) selama 10 hitungan tanpa bergoyang.",
+          "Misi 2: Berjalan jinjit di atas lantai lurus sejauh 3 meter dengan kedua tangan direntangkan ke samping.",
+          "Misi 3: Lakukan gerakan menarik napas panjang dan hembuskan perlahan untuk mendinginkan tubuh."
+  ],
+        checklistEn: [
+          "Mission 1: Hold the Crane Stand pose on one foot for 10 calm seconds without wobbling.",
+          "Mission 2: Walk tip-toe along a straight floor tile seam for 3 meters with arms spread wide.",
+          "Mission 3: Take deep relaxing breaths to cool down after balance exercises."
+  ],
+        activities: [
+          {
+                  "q": "Berdiri dengan satu kaki ditekuk dan kedua tangan direntangkan ke samping meniru gerakan...",
+                  "options": [
+                          "Burung Bangau",
+                          "Katak melompat",
+                          "Kuda berlari",
+                          "Ikan berenang"
+                  ],
+                  "answer": "Burung Bangau",
+                  "hint": "Burung anggun berkaki panjang yang sering berdiri tenang di tepi sawah."
+          },
+          {
+                  "q": "Tujuan utama dari merentangkan kedua tangan saat berjalan di titian atau garis lurus adalah...",
+                  "options": [
+                          "Menjaga keseimbangan tubuh agar tidak oleng/jatuh",
+                          "Mengejar layang-layang",
+                          "Mendinginkan ketiak",
+                          "Terbang ke awan"
+                  ],
+                  "answer": "Menjaga keseimbangan tubuh agar tidak oleng/jatuh",
+                  "hint": "Tangan bertindak sebagai penyeimbang beban kiri dan kanan."
+          },
+          {
+                  "q": "Latihan keseimbangan dilakukan di tempat yang...",
+                  "options": [
+                          "Aman, rata, dan tidak licin",
+                          "Tangga yang curam",
+                          "Lantai basah berlumut",
+                          "Jalan raya ramai kendaraan"
+                  ],
+                  "answer": "Aman, rata, dan tidak licin",
+                  "hint": "Keselamatan adalah hal paling utama saat berolahraga."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "Standing poised on one foot with arms outstretched mimics the posture of a...",
+                  "options": [
+                          "Graceful Crane",
+                          "Jumping frog",
+                          "Galloping horse",
+                          "Swimming fish"
+                  ],
+                  "answer": "Graceful Crane",
+                  "hint": "A tall marsh bird known for steady balance."
+          }
+  ]
+      },
+      {
+        id: 'pjok-makanan-sehat',
+        title: 'Piring Makanku Sehat: Gizi Seimbang & Air Putih',
+        titleEn: 'My Healthy Plate: Balanced Nutrition & Fresh Water',
+        desc: 'Agar tubuh anak Kelas 1 SD tumbuh tinggi, cerdas, dan jarang sakit, kita perlu menyantap makanan bergizi seimbang! Panduan "Isi Piringku": sepertiga makanan pokok (nasi/kentang), sepertiga sayuran segar (bayam/wortel), dan sepertiganya lauk pauk (telur/ikan/tempe) plus buah manis, serta minum 6-8 gelas air putih setiap hari!',
+        descEn: 'To grow energetic, clever, and robust, 1st graders enjoy balanced nutritious plates! The "Healthy Plate" guide: 1/3 whole grains, 1/3 crisp greens, and 1/3 protein (eggs/fish/tempeh) topped with juicy fruits and 6-8 glasses of fresh water daily!',
+        checklist: [
+          "Misi 1: Habiskan porsi sayur hijau (bayam, brokoli, atau wortel) saat makan siang hari ini.",
+          "Misi 2: Bawa botol minum air putih ke sekolah dan minum secara teratur setelah berolahraga.",
+          "Misi 3: Cuci tangan dengan sabun di air mengalir sebelum memegang makanan."
+  ],
+        checklistEn: [
+          "Mission 1: Enjoy your portion of colorful vegetables with your lunch today.",
+          "Mission 2: Carry a reusable water bottle to school and hydrate regularly during exercise.",
+          "Mission 3: Wash hands thoroughly with soap under running water before every meal."
+  ],
+        activities: [
+          {
+                  "q": "Makanan yang kaya akan vitamin dan serat untuk kesehatan mata dan pencernaan adalah...",
+                  "options": [
+                          "Sayuran hijau dan buah-buahan segar",
+                          "Permen manis dan chiki",
+                          "Minuman soda bersoda",
+                          "Gorengan minyak jelantah"
+                  ],
+                  "answer": "Sayuran hijau dan buah-buahan segar",
+                  "hint": "Wortel, bayam, apel, dan pepaya menyehatkan tubuh."
+          },
+          {
+                  "q": "Berapa gelas air putih yang disarankan diminum oleh anak setiap hari?",
+                  "options": [
+                          "6 sampai 8 gelas air putih",
+                          "Hanya 1 sendok",
+                          "100 gelas",
+                          "Tidak perlu minum sama sekali"
+                  ],
+                  "answer": "6 sampai 8 gelas air putih",
+                  "hint": "Tubuh kita membutuhkan air agar tidak lemas dan dehidrasi."
+          },
+          {
+                  "q": "Sebelum makan, kita wajib mencuci tangan menggunakan...",
+                  "options": [
+                          "Sabun dan air bersih yang mengalir",
+                          "Cukup dilap ke celana",
+                          "Tisu kotor",
+                          "Air kopi"
+                  ],
+                  "answer": "Sabun dan air bersih yang mengalir",
+                  "hint": "Kuman dan bakteri di tangan mati oleh sabun."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "Foods rich in vital vitamins and dietary fiber for strong health are...",
+                  "options": [
+                          "Fresh vegetables and juicy fruits",
+                          "Sugary candies and soda",
+                          "Greasy deep-fried chips",
+                          "Ice pops only"
+                  ],
+                  "answer": "Fresh vegetables and juicy fruits",
+                  "hint": "Natural garden produce nourishes our organs."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/agama.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
-  // JavaScript · ES Module · Agama & Budi Pekerti Subject Data
+  // JavaScript · ES Module · Pendidikan Agama & Budi Pekerti Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:53:00
+  // Version   : 2.0 (Comprehensive LKS & Nilai Universal Kebaikan)
   // ================================================================
   
   const AGAMA_DATA = {
     id: 'agama',
-    title: 'Agama & Budi Pekerti — Hati Hangat & Berakhlak Baik',
-    titleEn: 'Character & Ethics — Warm Hearts & Good Deeds',
-    subtitle: 'Belajar bersyukur atas alam ciptaan, bersikap jujur, sopan santun, dan menyayangi sesama 🌱',
-    subtitleEn: 'Learn gratitude for nature, honesty, courteous manners, and caring for others 🌱',
+    title: 'Pendidikan Agama — Budi Pekerti & Kasih Sayang Semesta',
+    titleEn: 'Religious Education — Universal Ethics & Compassion',
+    subtitle: 'Mari bersyukur atas ciptaan Tuhan, berbakti kepada orang tua, menyayangi satwa, dan rukun antarumat beragama! 🙏',
+    subtitleEn: 'Cultivate gratitude for divine creation, honor parents, show empathy to animals, and foster interfaith harmony! 🙏',
     topics: [
       {
-        id: 'agama-makhluk-hidup',
-        title: 'Menyayangi Ciptaan & Alam',
-        titleEn: 'Caring for Living Creatures & Nature',
-        desc: 'Merawat tanaman dengan menyiramnya dan memberi makan hewan peliharaan dengan kasih sayang.',
-        descEn: 'Watering plants and feeding pets with gentle affection.',
+        id: 'ag-bersyukur',
+        title: 'Bersyukur Atas Ciptaan Tuhan Yang Maha Esa',
+        titleEn: 'Gratitude for the Wonders of Creation',
+        desc: 'Tuhan Yang Maha Esa menciptakan alam semesta yang indah: matahari yang menghangatkan bumi, udara bersih untuk bernapas, air jernih untuk minum, serta tubuh yang sehat dan sempurna. Rasa syukur diwujudkan dengan menjaga kesehatan, beribadah rajin, dan memelihara alam sekitar!',
+        descEn: 'God created the majestic cosmos: warming sunlight, fresh air to breathe, crystalline water, and healthy human bodies. We honor creation through heartfelt prayers, joyful gratitude, and caring for nature!',
+        checklist: [
+          'Misi 1: Ucapkan doa syukur saat bangun di pagi hari atas nafas dan hari baru yang cerah.',
+          'Misi 2: Sebutkan 3 ciptaan Tuhan yang paling kamu kagumi saat melihat pemandangan alam (misal: gunung, laut, burung).',
+          'Misi 3: Matikan keran air setelah digunakan agar tidak membuang-buang berkah air bersih.'
+        ],
+        checklistEn: [
+          'Mission 1: Say a morning prayer of gratitude for a fresh healthy day upon waking.',
+          'Mission 2: Name 3 creations of nature that inspire your awe (e.g. mountains, ocean, colorful birds).',
+          'Mission 3: Turn off the water tap tightly after use to conserve precious natural water.'
+        ],
         activities: [
-          { q: 'Bagaimana cara menyayangi tanaman bunga di halaman rumah?', options: ['Menyiramnya secara rutin dan memberi sinar matahari', 'Memetik dan merusaknya', 'Menginjak-injak daunnya', 'Membiarkannya layu kering'], answer: 'Menyiramnya secara rutin dan memberi sinar matahari', hint: 'Tanaman adalah makhluk hidup yang butuh air dan cahaya 🌸' }
+          { q: 'Cara terbaik menunjukkan rasa syukur atas nikmat tubuh yang sehat adalah...', options: ['Menjaga kesehatan dengan makan teratur dan berolahraga', 'Malas mandi dan makan sembarangan', 'Begadang main game sampai larut', 'Mengeluh setiap hari'], answer: 'Menjaga kesehatan dengan makan teratur dan berolahraga', hint: 'Merawat tubuh adalah amanah dan ungkapan terima kasih kepada Tuhan.' },
+          { q: 'Matahari terbit di timur memberikan kehangatan dan vitamin D. Matahari adalah ciptaan...', options: ['Tuhan Yang Maha Kuasa', 'Pabrik manusia', 'Robot antariksa', 'Komputer canggih'], answer: 'Tuhan Yang Maha Kuasa', hint: 'Seluruh tata surya dan benda langit diciptakan oleh Tuhan Yang Maha Esa ☀️' }
         ],
         activitiesEn: [
-          { q: 'How should we care for garden flowers in our yard?', options: ['Water regularly and provide sunshine', 'Pick and destroy them', 'Trample their leaves', 'Let them dry and wither'], answer: 'Water regularly and provide sunshine', hint: 'Plants are living things that need water and sunlight 🌸' }
+          { q: 'What is the most sincere way to show gratitude for a healthy body?', options: ['Caring for physical health with nutritious meals and active exercise', 'Neglecting hygiene and skipping meals', 'Staying up all night gaming', 'Complaining constantly'], answer: 'Caring for physical health with nutritious meals and active exercise', hint: 'Treating your body kindly honors divine creation.' }
         ]
       },
       {
-        id: 'agama-sopan-santun',
-        title: 'Sopan Santun kepada Orang Tua & Guru',
-        titleEn: 'Respect & Courtesy for Parents & Teachers',
-        desc: 'Mencium tangan atau memberi salam hangat, berbicara dengan lembut, dan mendengarkan nasihat.',
-        descEn: 'Greeting warmly, speaking politely, and listening attentively to guidance.',
+        id: 'ag-budi-pekerti',
+        title: 'Budi Pekerti: Kasih Sayang Kepada Orang Tua & Guru',
+        titleEn: 'Noble Character: Devotion to Parents & Teachers',
+        desc: 'Ayah dan ibu telah merawat kita dengan penuh kasih sayang sejak bayi. Guru mendidik dan mengajarkan kita ilmu pengetahuan dengan sabar. Berbakti kepada orang tua dan guru dilakukan dengan bertutur kata santun, mendengarkan nasehat baik, dan tidak membantah dengan kasar!',
+        descEn: 'Parents nurture us with unconditional love from infancy. Teachers patiently illuminate our minds with wisdom. We honor them through polite words, heedful obedience to wholesome advice, and respectful helpfulness!',
+        checklist: [
+          'Misi 1: Ucapkan terima kasih dan peluk ayah atau ibumu hari ini dengan tulus.',
+          'Misi 2: Dengarkan nasehat guru di kelas tanpa memotong pembicaraan dengan gaduh.',
+          'Misi 3: Cium tangan orang tua dengan takzim saat berpamitan berangkat ke sekolah.'
+        ],
+        checklistEn: [
+          'Mission 1: Hug and say a sincere "Thank you, Mom and Dad" for their ceaseless love.',
+          'Mission 2: Listen attentively to teacher instructions without disruptive talking.',
+          'Mission 3: Show customary warm respect when bidding farewell before departing for school.'
+        ],
         activities: [
-          { q: 'Ketika bertemu bapak atau ibu guru di koridor sekolah, kita sebaiknya...', options: ['Tersenyum dan mengucapkan salam ramah', 'Pura-pura tidak melihat', 'Berlari kencang', 'Bersembunyi di balik pintu'], answer: 'Tersenyum dan mengucapkan salam ramah', hint: 'Menyapa guru dengan santun mencerminkan budi pekerti yang luhur.' }
+          { q: 'Saat orang tua atau guru sedang menasehati kita demi kebaikan, sikap yang santun adalah...', options: ['Mendengarkan dengan tenang dan penuh rasa hormat', 'Membantah sambil berteriak', 'Menutup telinga dan lari', 'Mengejek nasehatnya'], answer: 'Mendengarkan dengan tenang dan penuh rasa hormat', hint: 'Mendengarkan dengan hormat adalah tanda anak berbakti dan berbudi luhur.' },
+          { q: 'Bagaimana cara berbakti kepada orang tua saat di rumah?', options: ['Membantu merapikan rumah dan berbicara dengan nada lembut', 'Meminta uang jajan berlebihan', 'Membuat rumah berantakan', 'Malas belajar'], answer: 'Membantu merapikan rumah dan berbicara dengan nada lembut', hint: 'Membantu meringankan beban orang tua mendatangkan keberkahan.' }
         ],
         activitiesEn: [
-          { q: 'When meeting your teacher in the school hallway, you should...', options: ['Smile and offer a polite greeting', 'Pretend not to see them', 'Run away fast', 'Hide behind a door'], answer: 'Smile and offer a polite greeting', hint: 'Greeting teachers politely reflects noble character and gratitude.' }
+          { q: 'When parents or teachers provide thoughtful advice, how should a well-mannered student respond?', options: ['Listen respectfully and calmly', 'Shout back angrily', 'Plug ears and storm out', 'Mock the guidance'], answer: 'Listen respectfully and calmly', hint: 'Respectful listening embodies noble character.' }
         ]
       },
       {
-        id: 'agama-kejujuran',
-        title: 'Berkata Jujur & Menepati Janji',
-        titleEn: 'Speaking the Truth & Keeping Promises',
-        desc: 'Anak hebat berani berkata jujur meskipun berbuat salah, dan meminta maaf dengan tulus.',
-        descEn: 'Brave students speak the truth even when making a mistake, and apologize sincerely.',
+        id: 'ag-sayang-makhluk',
+        title: 'Menyayangi Makhluk Hidup & Menjaga Lingkungan',
+        titleEn: 'Compassion for Living Beings & Animal Welfare',
+        desc: 'Hewan dan tumbuhan adalah sesama makhluk ciptaan Tuhan. Kucing, burung, ikan, dan pohon berhak hidup nyaman di bumi. Tidak boleh menyiksa hewan, tidak memetik bunga sembarangan, memberi makan hewan peliharaan, dan menyiram tanaman adalah wujud kasih sayang universal!',
+        descEn: 'Animals and plants are our fellow earthly cohabitants created by God. Pets and wildlife deserve kindness. Refraining from harming animals, watering potted plants, and preserving green foliage manifests universal empathy!',
+        checklist: [
+          'Misi 1: Beri makan atau minum hewan peliharaanmu (atau kucing liar sekitar rumah) dengan ramah.',
+          'Misi 2: Siram tanaman di pot atau halaman rumahmu di sore hari yang sejuk.',
+          'Misi 3: Jangan menginjak rumput taman atau merusak ranting pohon yang sedang bersemi.'
+        ],
+        checklistEn: [
+          'Mission 1: Feed or provide fresh clean water to a pet or a gentle neighborhood stray.',
+          'Mission 2: Water potted flowers or garden plants in the soothing cool afternoon.',
+          'Mission 3: Avoid trampling fresh grass beds or breaking budding flowering branches.'
+        ],
         activities: [
-          { q: 'Jika tidak sengaja menumpahkan air di meja, tindakan yang jujur adalah...', options: ['Mengaku, meminta maaf, lalu membersihkannya', 'Menyalahkan teman di sebelah', 'Diam saja dan melarikan diri', 'Menangis tersedu-sedu'], answer: 'Mengaku, meminta maaf, lalu membersihkannya', hint: 'Kejujuran dan tanggung jawab adalah sifat pahlawan sejati.' }
+          { q: 'Jika melihat anak kucing yang kelaparan di pinggir jalan, tindakan mulia yang patut dilakukan adalah...', options: ['Memberinya sedikit makanan atau susu dan memperlakukannya lembut', 'Menendang atau melemparinya batu', 'Menakut-nakutinya dengan suara keras', 'Membiarkannya kehujanan'], answer: 'Memberinya sedikit makanan atau susu dan memperlakukannya lembut', hint: 'Menyayangi hewan adalah perbuatan terpuji yang dicintai Tuhan 🐱' },
+          { q: 'Mengapa kita perlu menyiram tanaman di sekitar pekarangan rumah kita?', options: ['Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', 'Agar tanaman cepat mati', 'Agar halaman becek berlumpur', 'Hanya membuang waktu'], answer: 'Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', hint: 'Tanaman yang subur memberi kesejukan dan keindahan lingkungan.' }
         ],
         activitiesEn: [
-          { q: 'If you accidentally spill water on the table, what is the honest response?', options: ['Admit it, apologize, and wipe it clean', 'Blame your friend sitting next to you', 'Stay silent and run away', 'Cry loudly'], answer: 'Admit it, apologize, and wipe it clean', hint: 'Honesty and taking responsibility make a true everyday hero.' }
+          { q: 'If you encounter a hungry little kitten, what is the compassionate action?', options: ['Offer a bowl of clean water or food gently', 'Kick pebbles at it', 'Shout to terrorize it', 'Trap it in the cold rain'], answer: 'Offer a bowl of clean water or food gently', hint: 'Gentleness to animals reflects pure kindness 🐱' }
         ]
+      },
+      {
+        id: 'ag-enam-agama',
+        title: '6 Agama Resmi di Indonesia & Tempat Ibadahnya',
+        titleEn: '6 Recognized Religions & Sacred Places of Worship',
+        desc: 'Indonesia mengakui 6 agama resmi yang hidup rukun berdampingan: Islam (Masjid), Kristen Protestan (Gereja), Katolik (Gereja), Hindu (Pura), Buddha (Vihara), dan Konghucu (Klenteng/Litang). Semua agama mengajarkan kebaikan, kejujuran, dan persaudaraan sejati!',
+        descEn: 'Indonesia officially recognizes 6 faiths coexisting in harmony: Islam (Mosque), Protestantism (Church), Catholicism (Church), Hinduism (Pura), Buddhism (Vihara), and Confucianism (Klenteng). All religions advocate truth, peace, and love!',
+        checklist: [
+          'Misi 1: Sebutkan nama tempat ibadah untuk agamamu sendiri dan letaknya di kotamu.',
+          'Misi 2: Pasangkan 3 agama dengan tempat ibadahnya (Islam-Masjid, Hindu-Pura, Kristen-Gereja).',
+          'Misi 3: Ucapkan salam perdamaian kepada teman yang berbeda agama dengan senyum persahabatan.'
+        ],
+        checklistEn: [
+          'Mission 1: Name the place of worship for your family\'s faith community.',
+          'Mission 2: Match 3 religions to their houses of worship (Islam-Mosque, Hindu-Pura, Christian-Church).',
+          'Mission 3: Extend a peaceful, friendly greeting to peers of different faiths.'
+        ],
+        activities: [
+          { q: 'Tempat ibadah suci bagi umat Hindu di Bali dan nusantara disebut...', options: ['Pura', 'Masjid', 'Gereja', 'Vihara'], answer: 'Pura', hint: 'Pura dengan candi bentar yang anggun nan asri 🛕' },
+          { q: 'Umat Islam melaksanakan ibadah sholat berjamaah di...', options: ['Masjid', 'Pura', 'Klenteng', 'Candi'], answer: 'Masjid', hint: 'Masjid dengan kubah megah dan menara azan 🕌' },
+          { q: 'Vihara adalah tempat ibadah suci bagi pemeluk agama...', options: ['Buddha', 'Konghucu', 'Katolik', 'Islam'], answer: 'Buddha', hint: 'Pemeluk agama Buddha beribadah di Vihara.' }
+        ],
+        activitiesEn: [
+          { q: 'The sacred place of worship for Hindu communities in Bali and Indonesia is...', options: ['Pura', 'Mosque', 'Church', 'Vihara'], answer: 'Pura', hint: 'Pura shrines featuring ornate split gates 🛕' }
+        ]
+      },
+      {
+        id: 'ag-toleransi',
+        title: 'Sikap Toleransi & Menghargai Perbedaan',
+        titleEn: 'Interfaith Tolerance & Respecting Differences',
+        desc: 'Toleransi adalah sikap saling menghormati dan menghargai keyakinan orang lain tanpa membeda-bedakan. Saat teman sedang berpuasa atau beribadah, kita tidak boleh mengganggunya. Kita saling mengucapkan selamat hari raya dan tetap bermain bersama dengan ceria!',
+        descEn: 'Tolerance means deeply respecting others\' spiritual beliefs without prejudice. When friends observe fasting or prayers, we offer quiet respect. We exchange heartfelt festive greetings and remain great buddies!',
+        checklist: [
+          'Misi 1: Jaga ketenangan saat temanmu yang berbeda agama sedang khusyuk berdoa.',
+          'Misi 2: Berikan ucapan selamat hari raya (Idul Fitri, Natal, Nyepi, Waisak, Imlek) kepada temanmu saat perayaannya.',
+          'Misi 3: Duduk dan makan bersama teman di sekolah tanpa pernah membeda-bedakan agamanya.'
+        ],
+        checklistEn: [
+          'Mission 1: Maintain serene silence when a classmate of another faith offers prayer.',
+          'Mission 2: Wish warm holiday greetings (Eid, Christmas, Nyepi, Vesak, Lunar New Year) to celebrants.',
+          'Mission 3: Sit and share lunch with schoolmates warmly regardless of faith traditions.'
+        ],
+        activities: [
+          { q: 'Ketika tetangga atau temanmu sedang melaksanakan ibadah di rumahnya, sikap toleransi yang tepat adalah...', options: ['Menjaga ketenangan dan tidak menyetel musik keras-keras', 'Berteriak di depan pintu rumahnya', 'Mengajak main bola di depan jendelanya', 'Membunyikan klakson kencang'], answer: 'Menjaga ketenangan dan tidak menyetel musik keras-keras', hint: 'Menghargai waktu ibadah orang lain menciptakan lingkungan yang damai dan rukun.' },
+          { q: 'Bolehkah kita memilih-milih teman bermain hanya berdasarkan agamanya saja?', options: ['Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', 'Boleh saja sesuka hati', 'Hanya bermain dengan tetangga sebelah', 'Harus memusuhi teman yang berbeda'], answer: 'Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', hint: 'Semua anak Indonesia adalah sahabat yang sederajat.' }
+        ],
+        activitiesEn: [
+          { q: 'When a neighbor is observing peaceful prayers at home, what is the right civic attitude?', options: ['Keep quiet and refrain from blasting loud music', 'Shout outside their doorway', 'Play soccer right at their window', 'Honk horns repeatedly'], answer: 'Keep quiet and refrain from blasting loud music', hint: 'Respecting worship hours creates community peace.' }
+        ]
+      },
+      {
+        id: 'ag-kejujuran-amal',
+        title: 'Kejujuran, Doa, & Gemar Berbuat Kebaikan',
+        titleEn: 'Honesty, Prayerful Reflection, & Daily Kindness',
+        desc: 'Kejujuran adalah mutiara hati: berkata benar apa adanya, mengakui kesalahan bila berbuat salah, dan mengembalikan barang temuan kepada pemiliknya. Berbuat baik tidak harus menunggu kaya; tersenyum ramah, menyapa santun, dan menolong teman adalah sedekah / amal kebajikan yang mulia!',
+        descEn: 'Honesty is the pearl of the heart: speaking the truth, owning up to mistakes, and returning lost items. Kindness requires no wealth; a warm smile, gentle words, and helping hands are priceless treasures of virtue!',
+        checklist: [
+          'Misi 1: Katakan hal yang sebenarnya dengan jujur kepada orang tua tanpa rasa takut.',
+          'Misi 2: Jika menemukan pensil atau penghapus jatuh di kelas, serahkan kepada guru agar kembali ke pemiliknya.',
+          'Misi 3: Sisihkan sedikit uang sakumu ke dalam kotak amal atau celengan kebaikan.'
+        ],
+        checklistEn: [
+          'Mission 1: Speak the transparent truth to your parents courageously.',
+          'Mission 2: Hand over any lost pencil found on the floor to the teacher for safekeeping.',
+          'Mission 3: Set aside a small portion of allowance into a charity coin box.'
+        ],
+        activities: [
+          { q: 'Ketika kamu tidak sengaja menjatuhkan penggaris teman hingga patah, sikap jujur yang benar adalah...', options: ['Meminta maaf dan berterus terang dengan jujur', 'Menuduh teman lain yang merusaknya', 'Menyembunyikannya di bawah lemari', 'Pura-pura tidak tahu dan tertawa'], answer: 'Meminta maaf dan berterus terang dengan jujur', hint: 'Anak pemberani berani berkata jujur dan bertanggung jawab.' },
+          { q: 'Perbuatan suka menolong orang lain tanpa mengharapkan pamrih pujian disebut perbuatan...', options: ['Ikhlas dan beramal kebajikan', 'Sombong', 'Pamer di media sosial', 'Terpaksa'], answer: 'Ikhlas dan beramal kebajikan', hint: 'Ikhlas artinya berbuat baik tulus karena cinta kepada Tuhan dan sesama.' }
+        ],
+        activitiesEn: [
+          { q: 'If you accidentally drop a friend\'s ruler and break it, what is the honest integrity reaction?', options: ['Apologize sincerely and admit the mishap truthfully', 'Blame someone else falsely', 'Hide the pieces under the carpet', 'Pretend nothing happened'], answer: 'Apologize sincerely and admit the mishap truthfully', hint: 'Integrity means taking honest responsibility.' }
+        ]
+      }
+  ,
+      {
+        id: 'ag-kebersihan-ibadah',
+        title: 'Menjaga Kesucian Diri & Kebersihan Tempat Ibadah',
+        titleEn: 'Purity of Self & Cleanliness of Worship Sanctuaries',
+        desc: 'Kebersihan adalah bagian dari keimanan. Sebelum menghadap Tuhan Yang Maha Esa untuk beribadah, kita membersihkan diri: berwudu / cuci tangan dan kaki, mengenakan pakaian yang rapi dan suci, serta menjaga keheningan tempat ibadah (Masjid, Pura, Gereja, Vihara, Klenteng) agar semua orang beribadah dengan damai.',
+        descEn: 'Cleanliness is an essential facet of devotion. Before offering heartfelt prayers, we cleanse our body, put on neat attire, and lovingly maintain the tranquility of worship sanctuaries so everyone experiences divine peace.',
+        checklist: [
+          "Misi 1: Cuci tangan, wajah, dan kaki hingga bersih sebelum memulai ibadah dan doa bersama.",
+          "Misi 2: Susun sandal dan sepatumu secara rapi di rak pintu masuk tempat ibadah.",
+          "Misi 3: Tidak berbicara keras atau berlarian saat berada di dalam rumah ibadah yang hening."
+  ],
+        checklistEn: [
+          "Mission 1: Cleanse hands, face, and feet with fresh water before commencing sacred prayer.",
+          "Mission 2: Neatly align your sandals or shoes on the designated sanctuary entryway rack.",
+          "Mission 3: Maintain respectful silence and composure inside places of worship."
+  ],
+        activities: [
+          {
+                  "q": "Sebelum masuk ke tempat ibadah untuk bersembahyang, pakaian yang kita kenakan harus...",
+                  "options": [
+                          "Bersih, rapi, dan sopan",
+                          "Kotor penuh lumpur",
+                          "Pakaian tidur robek",
+                          "Pakaian basah kuyup"
+                  ],
+                  "answer": "Bersih, rapi, dan sopan",
+                  "hint": "Sebagai wujud penghormatan dan rasa syukur kepada Tuhan."
+          },
+          {
+                  "q": "Sikap kita ketika berada di dalam rumah ibadah adalah...",
+                  "options": [
+                          "Khusyuk, tenang, dan tertib",
+                          "Bermain bola di dalam ruangan",
+                          "Berteriak-teriak memanggil teman",
+                          "Makan permen karet"
+                  ],
+                  "answer": "Khusyuk, tenang, dan tertib",
+                  "hint": "Tempat ibadah digunakan untuk berdoa dengan penuh ketulusan."
+          },
+          {
+                  "q": "Menjaga kebersihan tempat ibadah adalah kewajiban dari...",
+                  "options": [
+                          "Seluruh jemaah / umat yang beribadah",
+                          "Hanya pengurus saja",
+                          "Tidak ada yang wajib",
+                          "Orang lain"
+                  ],
+                  "answer": "Seluruh jemaah / umat yang beribadah",
+                  "hint": "Rumah ibadah adalah milik bersama untuk mendekatkan diri kepada Tuhan."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "Attire worn during sacred moments of prayer should always be...",
+                  "options": [
+                          "Clean, neat, and reverent",
+                          "Muddy and torn",
+                          "Sleepwear",
+                          "Dirty"
+                  ],
+                  "answer": "Clean, neat, and reverent",
+                  "hint": "Expressing heartfelt respect before God."
+          }
+  ]
+      },
+      {
+        id: 'ag-amanah-janji',
+        title: 'Menepati Janji & Menjaga Amanah (Dapat Dipercaya)',
+        titleEn: 'Keeping Promises & Honoring Trusts (Being Faithful)',
+        desc: 'Anak yang bertakwa dan berakhlak mulia selalu menepati janji yang diucapkan. Bila meminjam barang teman, barang itu dijaga baik-baik dan dikembalikan tepat waktu. Kejujuran dan sifat dapat dipercaya (amanah) membuat kita disayangi oleh Tuhan, disukai guru, dan memiliki banyak sahabat setia!',
+        descEn: 'Children with pure upright hearts treasure their promises. When borrowing a friend’s pencil or book, they handle it gently and return it promptly. Trustworthiness earns divine blessings, teacher appreciation, and enduring lifelong friendships!',
+        checklist: [
+          "Misi 1: Kembalikan buku atau mainan yang kamu pinjam dari teman sambil mengucapkan terima kasih.",
+          "Misi 2: Tepati janji membantumu merapikan mainan sendiri setelah selesai bermain di rumah.",
+          "Misi 3: Jangan membuka rahasia atau pesan titipan yang diamanahkan orang tua kepadamu."
+  ],
+        checklistEn: [
+          "Mission 1: Return borrowed books or pencils to your classmates with a cheerful smile.",
+          "Mission 2: Fulfill your commitment to tidy up playthings after playtime at home.",
+          "Mission 3: Honor the trusted tasks and words entrusted to you by your elders."
+  ],
+        activities: [
+          {
+                  "q": "Bila kita berjanji kepada teman untuk belajar bersama jam 4 sore, maka kita harus...",
+                  "options": [
+                          "Datang tepat waktu sesuai janji",
+                          "Lupa dan pergi tidur",
+                          "Sengaja membatalkan tanpa kabar",
+                          "Marah-marah"
+                  ],
+                  "answer": "Datang tepat waktu sesuai janji",
+                  "hint": "Menepati janji adalah ciri anak hebat yang dapat dipercaya."
+          },
+          {
+                  "q": "Ketika meminjam penghapus milik teman, sikap yang benar adalah...",
+                  "options": [
+                          "Menggunakan dengan hati-hati lalu mengembalikan",
+                          "Menyembunyikan di tas kita",
+                          "Merobeknya menjadi dua",
+                          "Membuang ke kolam"
+                  ],
+                  "answer": "Menggunakan dengan hati-hati lalu mengembalikan",
+                  "hint": "Barang titipan atau pinjaman harus dijaga dengan penuh tanggung jawab."
+          },
+          {
+                  "q": "Sikap orang yang jujur dan dapat dipercaya disebut...",
+                  "options": [
+                          "Amanah",
+                          "Pembohong",
+                          "Penakut",
+                          "Kasar"
+                  ],
+                  "answer": "Amanah",
+                  "hint": "Sifat terpuji yang dicintai Tuhan dan sesama manusia."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "When we promise a friend to study together at 4 PM, we should...",
+                  "options": [
+                          "Arrive punctually as committed",
+                          "Sleep and forget deliberately",
+                          "Ghost them without notice",
+                          "Complain loudly"
+                  ],
+                  "answer": "Arrive punctually as committed",
+                  "hint": "Honoring commitments reflects personal integrity."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/kokurikuler.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
-  // JavaScript · ES Module · Kokurikuler Subject Data
+  // JavaScript · ES Module · Kokurikuler / Proyek P5 Subject Data
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 09:54:00
+  // Version   : 2.0 (Comprehensive LKS & Proyek Pelajar Pancasila)
   // ================================================================
   
   const KOKURIKULER_DATA = {
     id: 'kokurikuler',
-    title: 'Kokurikuler — Misi Mandiri Anak Hebat',
-    titleEn: 'Co-curricular Missions — Independent Young Achievers',
-    subtitle: 'Belajar bukan cuma di buku! Yuk selesaikan misi mandiri kecil yang bikin bangga orang tua 🧩',
-    subtitleEn: 'Learning beyond textbooks! Complete fun little missions that make family proud 🧩',
+    title: 'Kokurikuler & Proyek P5 — Kreasi Cilik Berdampak Nyata',
+    titleEn: 'Co-Curricular & P5 Projects — Hands-on Discovery & Innovation',
+    subtitle: 'Belajar kontekstual dan aksi nyata: pilah sampah ramah bumi, permainan tradisional, eksperimen sains, dan kebun sekolah! 🌱',
+    subtitleEn: 'Contextual project-based learning: waste segregation, traditional games, science experiments, and eco school gardening! 🌱',
     topics: [
       {
-        id: 'koku-meja-rapi',
-        title: 'Misi 1: Meja Belajar Rapi Bersih',
-        titleEn: 'Mission 1: Tidy & Clean Study Desk',
-        desc: 'Letakkan pensil pada tempat pensil, susun buku tegak, dan buang serpihan rautan.',
-        descEn: 'Place pencils in holder, stack books upright, and throw pencil shavings in the bin.',
+        id: 'p5-sampah-lestari',
+        title: 'P5 Gaya Hidup Berkelanjutan: Pilah Sampah Mandiri',
+        titleEn: 'P5 Sustainable Lifestyle: Waste Segregation Mission',
+        desc: 'Bumi kita membutuhkan bantuan kita untuk tetap bersih dan hijau! Sampah ORGANIK (sisa makanan, kulit buah, daun) bisa diolah menjadi pupuk kompos penyubur tanaman. Sampah ANORGANIK (botol plastik, kaleng, kardus) dapat didaur ulang menjadi pot bunga atau tempat pensil kreatif!',
+        descEn: 'Our home planet needs our mindful care! ORGANIC waste (food peels, fallen leaves) turns into nutrient-rich compost. INORGANIC recyclables (plastic bottles, tin cans, cardboard) can be upcycled into cheerful pencil holders and planters!',
         checklist: [
-          'Buku pelajaran tertata rapi di rak atau sudut meja',
-          'Pensil, penghapus, dan penggaris masuk kotak pensil',
-          'Meja bersih dari sampah remah makanan atau kertas'
+          'Misi 1: Sediakan 2 kantong/tempat sampah berbeda di rumah: Hijau untuk organik dan Kuning untuk plastik.',
+          'Misi 2: Kumpulkan 1 botol plastik bekas minuman, bersihkan, dan hias menjadi pot tanaman mini.',
+          'Misi 3: Lakukan operasi semut selama 5 menit: kumpulkan sampah kering di sekitarmu dan buang ke tempatnya.'
         ],
         checklistEn: [
-          'School books arranged neatly on the shelf or desk corner',
-          'Pencils, eraser, and ruler stored in the pencil case',
-          'Desk cleared of food crumbs and paper scraps'
+          'Mission 1: Set up 2 separate bins at home: Green for organic peels and Yellow for recyclable plastics.',
+          'Mission 2: Clean and decorate 1 recycled plastic bottle into a tabletop succulent planter.',
+          'Mission 3: Complete a 5-minute litter sweep around your yard and dispose of trash responsibly.'
         ],
         activities: [
-          { q: 'Setelah selesai menggambar dan belajar, apa yang harus kamu lakukan?', options: ['Merapikan kembali semua alat tulis ke tempatnya', 'Membiarkan meja berantakan', 'Menunggu orang tua yang merapikan', 'Melemparkan pensil ke lantai'], answer: 'Merapikan kembali semua alat tulis ke tempatnya', hint: 'Anak mandiri selalu menjaga kerapian tempat belajarnya sendiri.' }
+          { q: 'Sisa kulit pisang dan dedaunan kering yang berguguran termasuk ke dalam kelompok sampah...', options: ['Organik (dapat membusuk alami)', 'Anorganik (plastik)', 'Limbah B3 beracun', 'Batu mulia'], answer: 'Organik (dapat membusuk alami)', hint: 'Organik berasal dari makhluk hidup dan dapat diolah jadi kompos 🍂' },
+          { q: 'Apa tindakan terbaik untuk memanfaatkan botol plastik air mineral bekas yang masih bersih?', options: ['Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', 'Membakarnya di pekarangan hingga berasap tebal', 'Membuangnya ke selokan atau sungai', 'Menimbunnya di dalam tanah'], answer: 'Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', hint: 'Daur ulang (Upcycling) mengurangi timbunan sampah plastik di bumi.' }
         ],
         activitiesEn: [
-          { q: 'After finishing your drawing and study time, what should you do?', options: ['Put all stationery back in its proper place', 'Leave the desk messy', 'Wait for parents to clean it up', 'Throw pencils onto the floor'], answer: 'Put all stationery back in its proper place', hint: 'Independent students always take care of their own study space.' }
+          { q: 'Fallen dry leaves and fruit peels belong to which waste category?', options: ['Organic (naturally compostable)', 'Inorganic (plastic)', 'Hazardous chemical', 'Mineral'], answer: 'Organic (naturally compostable)', hint: 'Organic waste decomposes into rich soil fertilizer 🍂' }
         ]
       },
       {
-        id: 'koku-bantu-ortu',
-        title: 'Misi 2: Membantu Orang Tua di Rumah',
-        titleEn: 'Mission 2: Helping Parents at Home',
-        desc: 'Merapikan sepatu di rak sepatu dan membawa piring sendiri ke wastafel cuci piring.',
-        descEn: 'Place shoes on the shoe rack and carry your own plate to the kitchen sink.',
+        id: 'p5-kearifan-lokal',
+        title: 'P5 Kearifan Lokal: Melestarikan Permainan Tradisional',
+        titleEn: 'P5 Local Wisdom: Reviving Heritage Games',
+        desc: 'Sebelum ada ponsel pintar, anak-anak Indonesia bermain permainan tradisional yang menyehatkan fisik dan mempererat persahabatan: Engklek (melompat dengan satu kaki di petak kotak), Egrang batok kelapa (keseimbangan kaki), Gobak Sodor (ketangkasan dan strategi tim), serta Congklak (berhitung biji kerang)!',
+        descEn: 'Traditional Indonesian games build agile physical stamina and authentic social bonds: Engklek (hopscotch jumping), Coconut-shell Stilts (balance mastery), Gobak Sodor (tactical teamwork), and Congklak (mathematical shell counting)!',
         checklist: [
-          'Sepatu sekolah terparkir rapi di rak sepatu',
-          'Membawa piring/gelas kotor sendiri setelah makan',
-          'Ucapkan terima kasih dan peluk ayah/ibu'
+          'Misi 1: Gambar petak Engklek di lantai halaman dengan kapur tulis dan mainkan bersama teman.',
+          'Misi 2: Buat sepasang egrang batok kelapa sederhana bersama ayah menggunakan tali tambang.',
+          'Misi 3: Praktikkan sikap sportif: bersalaman dan memberi selamat kepada tim lawan saat menang atau kalah.'
         ],
         checklistEn: [
-          'School shoes parked neatly on the shoe rack',
-          'Carry your own dirty plate/glass after meals',
-          'Say thank you and hug your mom/dad'
+          'Mission 1: Chalk an Engklek hopscotch grid on the yard pavement and hop through the tiles.',
+          'Mission 2: Craft coconut shell stilts with sturdy rope alongside your family.',
+          'Mission 3: Practice good sportsmanship by congratulating opponents regardless of the score.'
         ],
         activities: [
-          { q: 'Sepatu yang habis kamu pakai sepulang sekolah sebaiknya diletakkan di...', options: ['Rak sepatu dengan rapi', 'Tengah pintu masuk rumah', 'Bawah kolong tempat tidur sembarangan', 'Halaman luar terkena hujan'], answer: 'Rak sepatu dengan rapi', hint: 'Rak sepatu membuat rumah tetap rapi dan sepatu gampang dicari.' }
+          { q: 'Permainan tradisional melompat dengan satu kaki melintasi kotak-kotak berurutan yang digambar di tanah adalah...', options: ['Engklek / Sunda Manda', 'Bermain game online di HP', 'Menonton bioskop', 'Catur papan'], answer: 'Engklek / Sunda Manda', hint: 'Melatih keseimbangan kaki dan ketepatan melompat.' },
+          { q: 'Nilai karakter luhur yang kita pelajari dari permainan tradisional beregu (seperti Gobak Sodor) adalah...', options: ['Kekompakan, strategi tim, dan sikap sportif jujur', 'Boleh curang asal menang', 'Menangis jika kalah', 'Mengejek teman yang jatuh'], answer: 'Kekompakan, strategi tim, dan sikap sportif jujur', hint: 'Sportivitas dan kerja sama adalah kunci permainan yang membahagiakan.' }
         ],
         activitiesEn: [
-          { q: 'Where should your school shoes go after returning home?', options: ['Neatly on the shoe rack', 'In the middle of the front doorway', 'Messily under the bed', 'Outside in the rain'], answer: 'Neatly on the shoe rack', hint: 'The shoe rack keeps the home tidy and shoes easy to find.' }
+          { q: 'The classic one-legged hopping game jumping through chalked grid boxes is...', options: ['Engklek (Hopscotch)', 'Mobile video gaming', 'Watching movies', 'Chess tournament'], answer: 'Engklek (Hopscotch)', hint: 'Trains leg strength and single-foot balancing balance.' }
         ]
       },
       {
-        id: 'koku-cerita-kreasi',
-        title: 'Misi 3: Berbagi Cerita Hari Ini',
-        titleEn: 'Mission 3: Sharing Today\'s Discovery',
-        desc: 'Ceritakan satu ilmu atau hal baru yang paling membuatmu tersenyum hari ini.',
-        descEn: 'Tell someone at home one new insight or discovery that made you smile today.',
+        id: 'p5-celengan-mandiri',
+        title: 'P5 Kewirausahaan Cilik: Celengan Mandiri & Nilai Berhemat',
+        titleEn: 'P5 Junior Entrepreneurship: Smart Savings & Budgeting',
+        desc: 'Menjadi anak mandiri dimulai dari bijak mengatur uang saku. Kita belajar membedakan KEBUTUHAN (hal penting seperti buku tulis, makanan sehat, dan pensil) dengan KEINGINAN (mainan mewah atau jajan berlebihan). Menabung uang logam sisa jajan di celengan membuat kita siap menghadapi masa depan!',
+        descEn: 'Independence starts with financial literacy. We distinguish between NEEDS (essential textbooks, wholesome food) and WANTS (fancy trinkets, sugary snacks). Saving daily change in a piggy bank prepares us for future success!',
         checklist: [
-          'Ceritakan pada orang tua apa yang kamu pelajari di Smart Study',
-          'Tunjukkan jurus matematika atau nama provinsi yang kamu tahu',
-          'Tersenyum gembira!'
+          'Misi 1: Buat celengan buatanmu sendiri dari kaleng biskuit bekas atau kotak kardus sepatu.',
+          'Misi 2: Sisihkan uang koin Rp1.000 atau Rp2.000 dari sisa uang sakumu ke dalam celengan setiap hari.',
+          'Misi 3: Tuliskan 1 barang impian yang ingin kamu beli sendiri dari hasil menabung selama 3 bulan.'
         ],
         checklistEn: [
-          'Tell parents what you explored in Smart Study today',
-          'Show off a math trick or an Indonesian province you learned',
-          'Share a cheerful smile!'
+          'Mission 1: Upcycle a clean tin can or shoebox into a personalized savings bank.',
+          'Mission 2: Deposit small spare change into your coin bank every single afternoon.',
+          'Mission 3: Write down 1 meaningful goal you wish to achieve from 3 months of savings.'
         ],
         activities: [
-          { q: 'Mengapa asyik menceritakan apa yang baru kita pelajari kepada orang tua?', options: ['Supaya orang tua senang dan otak kita makin ingat materi', 'Supaya dapat hadiah mahal', 'Untuk pamer ke teman', 'Hanya membuang waktu'], answer: 'Supaya orang tua senang dan otak kita makin ingat materi', hint: 'Mengulang cerita membuat pemahaman kita semakin kuat!' }
+          { q: 'Manakah di bawah ini yang merupakan contoh KEBUTUHAN utama seorang siswa sekolah?', options: ['Buku tulis dan pensil untuk belajar', 'Mainan robot mahal keluaran terbaru', 'Baju pesta yang mewah', 'Pulsa game online'], answer: 'Buku tulis dan pensil untuk belajar', hint: 'Kebutuhan adalah barang pokok yang sangat diperlukan untuk menuntut ilmu ✏️' },
+          { q: 'Pepatah bijak nusantara mengatakan "Hemat pangkal kaya, rajin pangkal..."', options: ['Pandai', 'Malas', 'Bosan', 'Lapar'], answer: 'Pandai', hint: 'Rajin belajar membuat kita pintar dan berwawasan luas.' }
         ],
         activitiesEn: [
-          { q: 'Why is sharing what we learned with our parents so beneficial?', options: ['It brings joy to parents and reinforces memory', 'To get expensive gifts', 'To show off to others', 'It is just a waste of time'], answer: 'It brings joy to parents and reinforces memory', hint: 'Retelling what we learned deepens our understanding!' }
+          { q: 'Which of the following represents an essential NEED for an elementary student?', options: ['Notebooks and pencils for class', 'Expensive luxury video game gadgets', 'Designer party costumes', 'Online gaming credits'], answer: 'Notebooks and pencils for class', hint: 'Needs are essential tools for learning ✏️' }
         ]
+      },
+      {
+        id: 'p5-eksperimen-sains',
+        title: 'P5 Rekayasa Sains: Eksperimen Pelangi & Erupsi Soda',
+        titleEn: 'P5 STEM Discovery: Rainbow Density & Fizzy Eruption',
+        desc: 'Sains itu seru dan menakjubkan! Kita bisa membuat simulasi "Gunung Berapi Meletus" menggunakan soda kue dapur dicampur cuka dan pewarna merah (reaksi asam-basa menghasilkan gas karbon dioksida berbusa!), atau eksperimen "Massa Jenis Pelangi" dari larutan air gula berbagai warna!',
+        descEn: 'Science is thrilling discovery! Create a foaming "Volcanic Eruption" mixing baking soda, vinegar, and red dye (an acid-base reaction producing fizzy CO2 bubbles), or demonstrate "Rainbow Density Columns" with tiered sugar-water solutions!',
+        checklist: [
+          'Misi 1: Siapkan 1 sendok soda kue, tuangkan sedikit cuka dapur, dan amati busa gas yang mendesis meletup.',
+          'Misi 2: Celupkan batang seledri atau bunga putih ke dalam air berwarna merah semalaman; amati kapilaritas batang air.',
+          'Misi 3: Tuliskan hasil pengamatan eksperimenmu di tabel lembar observasi sains.'
+        ],
+        checklistEn: [
+          'Mission 1: Mix a spoonful of baking soda with vinegar in a cup; observe bubbling carbon dioxide foam.',
+          'Mission 2: Place a white carnation stem in red dyed water overnight; observe capillary water conduction.',
+          'Mission 3: Record your scientific observations neatly in your STEM lab notebook.'
+        ],
+        activities: [
+          { q: 'Ketika bubuk soda kue dicampur dengan tetesan cuka dapur, muncul busa gas. Gas apakah itu?', options: ['Gas Karbon Dioksida (CO2)', 'Gas Racun', 'Gas Oksigen murni', 'Uap air dingin'], answer: 'Gas Karbon Dioksida (CO2)', hint: 'Reaksi kimia asam cuka dan basa soda menghasilkan gelembung CO2 yang mendesis.' },
+          { q: 'Mengapa minyak goreng selalu mengapung di atas permukaan air saat dituangkan ke dalam gelas?', options: ['Karena massa jenis minyak lebih ringan daripada air', 'Karena minyak membeku', 'Karena air mengandung garam', 'Karena minyak takut air'], answer: 'Karena massa jenis minyak lebih ringan daripada air', hint: 'Benda dengan kerapatan massa jenis lebih kecil akan selalu terapung di atas cairan yang lebih padat.' }
+        ],
+        activitiesEn: [
+          { q: 'When baking soda reacts with vinegar, what gas creates the energetic bubbling foam?', options: ['Carbon Dioxide (CO2)', 'Toxic gas', 'Pure Oxygen', 'Ice vapor'], answer: 'Carbon Dioxide (CO2)', hint: 'An acid-base reaction releases bubbly carbon dioxide.' }
+        ]
+      },
+      {
+        id: 'p5-anti-bullying',
+        title: 'P5 Bangunlah Jiwa Raganya: Sahabat Hebat Anti-Bullying',
+        titleEn: 'P5 Wellbeing: Kind Friends Against Bullying',
+        desc: 'Setiap anak berhak belajar dan bermain di sekolah dengan rasa aman dan gembira. Tolak perundungan (bullying): STOP mengejek nama orang tua, STOP memanggil julukan buruk, STOP mengucilkan kawan, dan STOP bermain kasar! Jadilah pembela kebaikan (upstander) yang melindungi teman!',
+        descEn: 'Every child has the absolute right to learn and thrive in an emotionally and physically safe classroom. STOP name-calling, STOP mocking appearance, STOP excluding peers, and STOP physical aggression! Be a brave, compassionate upstander!',
+        checklist: [
+          'Misi 1: Tulis ikrar di selembar kertas: "Aku Pelajar Hebat, Suka Menolong & Menolak Mengejek Teman".',
+          'Misi 2: Ajak teman yang sedang duduk sendirian di pojok kelas untuk bergabung bermain bersama regumu.',
+          'Misi 3: Segera lapor kepada guru jika melihat ada teman yang diganggu atau disakiti orang lain.'
+        ],
+        checklistEn: [
+          'Mission 1: Pen a personal pledge: "I am a Kindhearted Scholar; I Uplift and Never Tease Friends".',
+          'Mission 2: Invite a lonely student sitting alone at recess to join your group games.',
+          'Mission 3: Promptly inform a trusted teacher whenever you witness unfair bullying behavior.'
+        ],
+        activities: [
+          { q: 'Jika kamu melihat seorang teman baru diejek atau disoraki oleh anak lain, sikap terbaikmu adalah...', options: ['Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', 'Ikut-ikutan mengejek agar dianggap hebat', 'Merekamnya sambil tertawa', 'Menyuruh teman tersebut menangis'], answer: 'Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', hint: 'Jadilah upstander pemberani yang membela teman yang tertindas.' },
+          { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' }
+        ],
+        activitiesEn: [
+          { q: 'If you witness a classmate being teased or excluded, what is the upstander action?', options: ['Stand by their side, invite them over, and notify a teacher', 'Join in the cruel laughter', 'Record it for amusement', 'Tell them it is their fault'], answer: 'Stand by their side, invite them over, and notify a teacher', hint: 'An upstander protects and seeks supportive adult help.' }
+        ]
+      },
+      {
+        id: 'p5-kebun-sekolah',
+        title: 'P5 Rekayasa & Lingkungan: Proyek Berkebun Hidroponik / Sayur',
+        titleEn: 'P5 Urban Agriculture: School Gardening & Hydroponics',
+        desc: 'Menanam tanaman adalah petualangan sains yang mengasyikkan! Dari sebutir biji kacang hijau kecil di atas kapas basah, ia akan berkecambah mengeluarkan akar putih, batang lentur, hingga helai daun hijau yang menyerap sinar matahari melalui fotosintesis. Kita belajar merawat kehidupan dengan sabar!',
+        descEn: 'Planting seeds is a living science journey! Watch a mung bean sprout from moist cotton, developing roots, stems, and sun-seeking green leaves via photosynthesis. Nurturing plants teaches patience, ecology, and stewardship!',
+        checklist: [
+          'Misi 1: Siapkan wadah gelas plastik bekas, beri kapas basah, dan taburkan 5 butir biji kacang hijau.',
+          'Misi 2: Letakkan di tempat yang terkena sinar matahari pagi dan basahi kapas setiap pagi.',
+          'Misi 3: Catat tinggi pertumbuhan batang kecambah setiap hari selama 7 hari di tabel jurnal tanaman.'
+        ],
+        checklistEn: [
+          'Mission 1: Line a clear plastic cup with damp cotton balls and scatter 5 mung bean seeds.',
+          'Mission 2: Place by a sunny windowsill and mist the cotton moist daily.',
+          'Mission 3: Measure and graph the stem growth height in centimeters over 7 consecutive days.'
+        ],
+        activities: [
+          { q: 'Tiga hal utama yang dibutuhkan oleh biji tanaman untuk berkecambah dan tumbuh subur adalah...', options: ['Air, udara (oksigen), dan sinar matahari yang cukup', 'Minyak goreng, susu, dan garam', 'Ruangan gelap gulita tanpa udara', 'Plastik pembungkus yang kedap udara'], answer: 'Air, udara (oksigen), dan sinar matahari yang cukup', hint: 'Air memicu perkecambahan biji dan sinar matahari memberi energi fotosintesis 🌱' },
+          { q: 'Bagian tanaman yang tumbuh ke bawah masuk ke dalam tanah untuk menyerap air dan mineral adalah...', options: ['Akar', 'Daun', 'Bunga', 'Buah'], answer: 'Akar', hint: 'Akar menopang tanaman kokoh dan menyerap air tanah.' }
+        ],
+        activitiesEn: [
+          { q: 'What primary elements do sprouting seeds need to flourish into vibrant seedlings?', options: ['Water, air (oxygen), and adequate sunlight', 'Cooking oil, milk, and salt', 'Pitch darkness without ventilation', 'Airtight plastic wrap'], answer: 'Water, air (oxygen), and adequate sunlight', hint: 'Moisture triggers germination and sunlight powers photosynthesis 🌱' }
+        ]
+      }
+  ,
+      {
+        id: 'p5-suara-demokrasi',
+        title: 'Suara Demokrasi Cilik: Musyawarah Regu Piket Kelas',
+        titleEn: 'Junior Democracy: Classroom Chores Team Deliberation',
+        desc: 'Dalam Projek Profil Pelajar Pancasila tema "Suara Demokrasi", anak Kelas 1 SD diajak bermusyawarah secara nyata: menentukan giliran regu piket kelas, menyepakati aturan bermain saat istirahat, dan memilih ketua kelompok belajar dengan cara angkat tangan yang adil dan transparan.',
+        descEn: 'In the P5 theme "Voice of Democracy", 1st grade learners experience real democratic participation: organizing classroom cleaning teams, setting fair playground rules, and electing team coordinators through honest hand-raising ballots.',
+        checklist: [
+          "Misi 1: Usulkan satu ide permainan tradisional seru untuk dimainkan bersama saat jam istirahat.",
+          "Misi 2: Ikuti pemungutan suara pemilihan ketua kelompok dengan mengangkat tangan secara tertib.",
+          "Misi 3: Laksanakan tugas piket membersihkan papan tulis sesuai hari regu piketmu dengan riang gembira."
+  ],
+        checklistEn: [
+          "Mission 1: Propose a fun playground game idea during classroom morning meeting.",
+          "Mission 2: Participate in team coordinator election by raising hands orderly.",
+          "Mission 3: Fulfill your chalkboard cleaning chore on your designated duty day enthusiastically."
+  ],
+        activities: [
+          {
+                  "q": "Cara demokratis yang paling adil untuk memilih ketua kelompok belajar adalah...",
+                  "options": [
+                          "Pemungutan suara (voting) bersama seluruh anggota",
+                          "Ditentukan sendiri oleh yang paling galak",
+                          "Melempar koin ke lantai",
+                          "Berkelahi"
+                  ],
+                  "answer": "Pemungutan suara (voting) bersama seluruh anggota",
+                  "hint": "Setiap anak memiliki hak suara yang sama dan setara."
+          },
+          {
+                  "q": "Bila usulan kita tidak terpilih dalam musyawarah kelas, sikap Pelajar Pancasila adalah...",
+                  "options": [
+                          "Menerima dengan lapang dada dan mendukung yang terpilih",
+                          "Menangis di pojokan",
+                          "Merusak papan tulis",
+                          "Tidak mau masuk sekolah"
+                  ],
+                  "answer": "Menerima dengan lapang dada dan mendukung yang terpilih",
+                  "hint": "Jiwa besar dan sportivitas adalah kunci kerukunan bersama."
+          },
+          {
+                  "q": "Tujuan utama pembagian regu piket kelas adalah...",
+                  "options": [
+                          "Menjaga kebersihan kelas secara gotong royong dan adil",
+                          "Menghukum anak yang nakal",
+                          "Membuat anak capek",
+                          "Supaya tidak perlu belajar"
+                  ],
+                  "answer": "Menjaga kebersihan kelas secara gotong royong dan adil",
+                  "hint": "Pekerjaan berat menjadi ringan jika dibagi bersama."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "The fairest democratic method to select a study group leader is...",
+                  "options": [
+                          "A shared vote where every member casts a voice",
+                          "Letting the loudest kid decide alone",
+                          "Flipping a random coin",
+                          "Quarreling"
+                  ],
+                  "answer": "A shared vote where every member casts a voice",
+                  "hint": "Every learner has equal voice."
+          }
+  ]
+      },
+      {
+        id: 'p5-sayang-bumi',
+        title: 'Aku Sayang Bumi: Menanam Biji Kacang Hijau di Pot Daur Ulang',
+        titleEn: 'I Love Mother Earth: Sprouting Mung Beans in Recycled Pots',
+        desc: 'Projek sains cilik yang penuh keajaiban! Kita memanfaatkan gelas plastik bekas air mineral sebagai pot mini ramah lingkungan. Diberi kapas basah dan 5 butir biji kacang hijau. Dalam 3 hari, biji bertunas kecil, mengeluarkan akar putih halus, dan tumbuh daun hijau mungil menghadap sinar matahari!',
+        descEn: 'A magical junior botanical adventure! Children repurpose clean used beverage cups as eco-friendly mini pots. Lined with moist cotton and 5 mung bean seeds, within 3 days delicate white roots emerge and bright green sprouts reach upward for sunlight!',
+        checklist: [
+          "Misi 1: Siapkan 1 gelas plastik bekas yang sudah dicuci bersih dan letakkan kapas basah di dasarnya.",
+          "Misi 2: Taburkan 5 biji kacang hijau di atas kapas basah, lalu letakkan di tempat yang terkena cahaya matahari.",
+          "Misi 3: Catat dan amati tinggi tunas kacang hijau setiap pagi di buku jurnal sains cilikmu."
+  ],
+        checklistEn: [
+          "Mission 1: Prepare one clean recycled plastic cup and place moist cotton at the base.",
+          "Mission 2: Scatter 5 green mung bean seeds onto the cotton and set near natural window sunlight.",
+          "Mission 3: Measure and record the sprout growth height each morning in your science journal."
+  ],
+        activities: [
+          {
+                  "q": "Dua hal penting yang dibutuhkan biji kacang hijau agar bertunas subur adalah...",
+                  "options": [
+                          "Air (kelembapan) dan cahaya matahari",
+                          "Minyak goreng dan es batu",
+                          "Pasir panas tanpa air",
+                          "Gula pasir manis"
+                  ],
+                  "answer": "Air (kelembapan) dan cahaya matahari",
+                  "hint": "Air memicu perkecambahan biji dan sinar matahari memberi energi tumbuh."
+          },
+          {
+                  "q": "Memanfaatkan gelas plastik bekas air mineral untuk pot tanaman adalah contoh aksi...",
+                  "options": [
+                          "Daur ulang (Recycle) dan cinta lingkungan",
+                          "Membuang sampah sembarangan",
+                          "Merusak alam",
+                          "Membuang uang"
+                  ],
+                  "answer": "Daur ulang (Recycle) dan cinta lingkungan",
+                  "hint": "Mengurangi sampah plastik dengan menjadikannya barang bermanfaat 🌱"
+          },
+          {
+                  "q": "Bagian tumbuhan yang pertama kali muncul dari biji menembus ke bawah adalah...",
+                  "options": [
+                          "Akar halus untuk menyerap air",
+                          "Buah lebat",
+                          "Bunga mawar",
+                          "Batang raksasa"
+                  ],
+                  "answer": "Akar halus untuk menyerap air",
+                  "hint": "Akar berfungsi mencengkeram dan mencari air di dalam kapas."
+          }
+  ],
+        activitiesEn: [
+          {
+                  "q": "Two essential elements required for seeds to germinate into healthy sprouts are...",
+                  "options": [
+                          "Moisture (water) and sunlight",
+                          "Cooking oil and ice cubes",
+                          "Dry hot sand without water",
+                          "Sugar powder"
+                  ],
+                  "answer": "Moisture (water) and sunlight",
+                  "hint": "Water unlocks germination and light fuels growth."
+          }
+  ]
       }
     ]
   };
-  
   
 
   // --- Source: js/data/globe-paths.js ---
@@ -3223,6 +5134,7 @@
       const barModel = this.getBarModelSteps(numA, numB, lang);
       const mentalMath = this.getMentalMathSteps(numA, numB, lang);
       const soroban = this.getSorobanSteps(numA, numB, lang);
+      const tensFrame = this.getTensFrameSteps(numA, numB, lang);
   
       const recommended = this.recommendStrategies(numA, numB);
   
@@ -3244,7 +5156,8 @@
         baseTen,
         barModel,
         mentalMath,
-        soroban
+        soroban,
+        tensFrame
       };
     }
   
@@ -3620,12 +5533,82 @@
     }
   
     // -------------------------------------------------------------
+    // STRATEGY 10: Ten-Frames (Kotak 10 Frame Manipulatif Kelas 1 SD)
+    // -------------------------------------------------------------
+    static getTensFrameSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const sum = a + b;
+      const uA = a % 10;
+      const uB = b % 10;
+      const tA = Math.floor(a / 10);
+      const tB = Math.floor(b / 10);
+      const tensBundles = tA + tB;
+  
+      const needToMake10 = uA === 0 ? 0 : (10 - uA);
+      const canMake10 = needToMake10 > 0 && uB >= needToMake10;
+      const remainingB = canMake10 ? (uB - needToMake10) : (uA === 0 ? uB : (uA + uB));
+      const newTens = (uA + uB >= 10) ? 1 : 0;
+      const totalTens = tensBundles + newTens;
+      const finalUnits = (uA + uB) % 10;
+  
+      // Generate frame 1 slots (10 slots: 5x2)
+      const frame1 = [];
+      for (let i = 0; i < 10; i++) {
+        if (i < uA) {
+          frame1.push({ filled: true, source: 'a', color: '#ef4444', icon: '🔴' });
+        } else if (canMake10 && i < uA + needToMake10) {
+          frame1.push({ filled: true, source: 'b_transfer', color: '#f59e0b', icon: '🟡', transferred: true });
+        } else {
+          frame1.push({ filled: false });
+        }
+      }
+  
+      // Generate frame 2 slots (10 slots: 5x2)
+      const frame2 = [];
+      for (let i = 0; i < 10; i++) {
+        if (i < remainingB) {
+          frame2.push({ filled: true, source: 'b_rem', color: '#f59e0b', icon: '🟡' });
+        } else {
+          frame2.push({ filled: false });
+        }
+      }
+  
+      return {
+        id: 'tens-frame',
+        title: isEn ? 'Ten-Frames (Grade 1 Visual)' : 'Kotak 10 Frame (Visual Kelas 1 SD)',
+        badge: isEn ? 'Grade 1 Concrete Math' : 'Manipulatif Kelas 1 SD',
+        a,
+        b,
+        sum,
+        uA,
+        uB,
+        tA,
+        tB,
+        tensBundles,
+        needToMake10,
+        canMake10,
+        remainingB,
+        totalTens,
+        finalUnits,
+        frame1,
+        frame2,
+        explanation: isEn
+          ? `Frame 1 starts with ${uA} red counters. We borrow ${needToMake10} yellow stars from ${b} to fill Frame 1 into a FULL 10! Now we have ${totalTens} tens and ${finalUnits} ones. Total: ${sum}!`
+          : `Kotak 1 awalnya ada ${uA} koin merah. Pinjam ${needToMake10} koin kuning dari ${b} untuk MENGGENAPKAN Kotak 1 jadi 10 PENUH! Sekarang terkumpul ${totalTens} puluhan dan tersisa ${finalUnits} satuan. Hasilnya: ${sum}! 🎉`
+      };
+    }
+  
+    // -------------------------------------------------------------
     // SMART STRATEGY RECOMMENDATION
     // -------------------------------------------------------------
     static recommendStrategies(a, b) {
       const recs = [];
       const modA = a % 10;
       const modB = b % 10;
+  
+      if (a <= 20 && b <= 20) {
+        recs.push('tens-frame');
+      }
   
       if (a + b === 100 || (a + b) % 100 === 0) {
         recs.push('make-hundred');
@@ -3636,6 +5619,7 @@
         if (!recs.includes('compensation')) recs.push('compensation');
       }
   
+      if (!recs.includes('tens-frame')) recs.push('tens-frame');
       if (!recs.includes('decomposition')) recs.push('decomposition');
       if (!recs.includes('number-line')) recs.push('number-line');
   
@@ -4154,7 +6138,7 @@
         }
       `;
   
-      // Fragment Shader: Pencahayaan terang alami globe meja kelas (warna negara cerah & specular halus)
+      // Fragment Shader: Pencahayaan terang alami globe meja kelas (warna negara cerah & specular terkontrol)
       const fsSource = `
         precision mediump float;
         uniform sampler2D uSampler;
@@ -4165,13 +6149,13 @@
           vec4 tex = texture2D(uSampler, vUV);
           vec3 n = normalize(vNorm);
           float diff = max(dot(n, uSunDir), 0.0);
-          float light = 0.72 + 0.28 * diff; // Latar terang agar warna negara pastel tetap jelas
+          float light = clamp(0.72 + 0.28 * diff, 0.0, 1.0); // Terang jelas, tidak pernah saturasi putih
           
-          // Pantulan kilap halus (gloss finish globe)
+          // Pantulan kilap halus terkontrol (anti-bleach / anti-white bug saat zoom)
           vec3 halfDir = normalize(uSunDir + vec3(0.0, 0.0, 1.0));
-          float spec = pow(max(dot(n, halfDir), 0.0), 32.0) * 0.25;
+          float spec = pow(max(dot(n, halfDir), 0.0), 36.0) * 0.18;
           
-          gl_FragColor = vec4(tex.rgb * light + vec3(spec), 1.0);
+          gl_FragColor = vec4(clamp(tex.rgb * light + vec3(spec), 0.0, 1.0), 1.0);
         }
       `;
   
@@ -4298,38 +6282,76 @@
       const target = this.canvas;
       if (!target) return;
   
+      const activePointers = new Map();
+      let initialPinchDist = 0;
+      let initialZoom = 1.0;
+  
       target.addEventListener('pointerdown', (e) => {
-        this.pointerDown = true;
-        this.lastX = e.clientX;
-        this.lastY = e.clientY;
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
         this.isRotating = false;
         this.targetRotation = null;
         this.targetTilt = null;
+  
+        if (activePointers.size === 1) {
+          this.pointerDown = true;
+          this.lastX = e.clientX;
+          this.lastY = e.clientY;
+        } else if (activePointers.size === 2) {
+          // Mulai gestur cubit (pinch zoom)
+          this.pointerDown = false;
+          const pts = Array.from(activePointers.values());
+          initialPinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+          initialZoom = this.zoom;
+        }
+  
         if (typeof target.setPointerCapture === 'function') {
           target.setPointerCapture(e.pointerId);
         }
       });
   
       window.addEventListener('pointermove', (e) => {
-        if (!this.pointerDown) return;
-        const dx = e.clientX - this.lastX;
-        const dy = e.clientY - this.lastY;
-        this.rotation += dx * 0.45;
-        this.tilt = Math.max(-45, Math.min(45, this.tilt - dy * 0.35));
-        this.lastX = e.clientX;
-        this.lastY = e.clientY;
-        this.draw();
-      });
+        if (!activePointers.has(e.pointerId)) return;
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
   
-      window.addEventListener('pointerup', () => {
-        if (this.pointerDown) {
-          this.pointerDown = false;
+        if (activePointers.size === 2) {
+          // Multi-touch pinch zoom
+          const pts = Array.from(activePointers.values());
+          const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+          if (initialPinchDist > 5) {
+            const ratio = currentDist / initialPinchDist;
+            this.zoom = Math.max(0.9, Math.min(2.0, initialZoom * ratio));
+            this.draw();
+          }
+        } else if (this.pointerDown && activePointers.size === 1) {
+          // 1-finger / mouse rotate
+          const dx = e.clientX - this.lastX;
+          const dy = e.clientY - this.lastY;
+          this.rotation += dx * 0.45;
+          this.tilt = Math.max(-45, Math.min(45, this.tilt - dy * 0.35));
+          this.lastX = e.clientX;
+          this.lastY = e.clientY;
+          this.draw();
         }
       });
   
+      const onPointerEnd = (e) => {
+        activePointers.delete(e.pointerId);
+        if (activePointers.size === 0) {
+          this.pointerDown = false;
+        } else if (activePointers.size === 1) {
+          const remaining = Array.from(activePointers.values())[0];
+          this.lastX = remaining.x;
+          this.lastY = remaining.y;
+          this.pointerDown = true;
+        }
+      };
+  
+      window.addEventListener('pointerup', onPointerEnd);
+      window.addEventListener('pointercancel', onPointerEnd);
+  
       target.addEventListener('wheel', (e) => {
         e.preventDefault();
-        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        const delta = e.deltaY < 0 ? 0.08 : -0.08;
         this.zoomBy(delta);
       }, { passive: false });
     }
@@ -4386,7 +6408,7 @@
     }
   
     zoomBy(delta) {
-      this.zoom = Math.max(0.85, Math.min(1.85, this.zoom + delta));
+      this.zoom = Math.max(0.9, Math.min(2.0, this.zoom + delta));
       this.draw();
     }
   
@@ -4400,7 +6422,7 @@
   
       this.targetRotation = this.rotation + diff;
       this.targetTilt = Math.max(-30, Math.min(30, lat));
-      this.zoom = Math.max(1.1, this.zoom);
+      this.zoom = Math.max(1.15, this.zoom);
       if (name) {
         this.focusedLocation = { lon, lat, name };
       }
@@ -4430,15 +6452,15 @@
   
       gl.useProgram(this.program);
   
-      // Matriks Proyeksi Perspektif
+      // Matriks Proyeksi Perspektif (Near 0.01 mencegah bug clipping putih saat zoom)
       const fov = 45 * Math.PI / 180;
       const aspect = w / h;
-      const pMat = this.createPerspectiveMatrix(fov, aspect, 0.1, 100.0);
+      const pMat = this.createPerspectiveMatrix(fov, aspect, 0.01, 100.0);
   
-      // Jarak kamera disesuaikan dengan posisi globe meja (presisi di tengah meridian ring 335, 280)
-      const dist = 4.83 / this.zoom;
+      // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar (diameter ~440px di kanvas 720)
+      const dist = 3.65 / this.zoom;
       let mvMat = this.createIdentityMatrix();
-      mvMat = this.mat4Translate(mvMat, 0.094, 0.25, -dist);
+      mvMat = this.mat4Translate(mvMat, 0.08, 0.18, -dist);
       // Kemiringan pandangan pengguna (pitch)
       mvMat = this.mat4RotateX(mvMat, this.tilt * Math.PI / 180);
       // Kemiringan sumbu bumi asli 23.5° (tilted ke kanan seperti foto referensi)
@@ -4474,9 +6496,9 @@
       const ctx = this.ctx;
       const w = canvas.width;
       const h = canvas.height;
-      const cx = w / 2 + 15;
-      const cy = h / 2 - 40;
-      const r = 160 * this.zoom;
+      const cx = w / 2 + 18;
+      const cy = h / 2 - 35;
+      const r = 210 * this.zoom;
   
       ctx.clearRect(0, 0, w, h);
   
@@ -4493,12 +6515,23 @@
       ctx.fill();
       ctx.clip();
   
-      // Gambar tekstur jika siap
+      // Gambar tekstur jika siap dengan wrap-around aman anti-blank
       if (this.offscreenCanvas) {
         const rotNorm = ((this.rotation % 360) + 360) % 360;
-        const sx = (rotNorm / 360) * this.offscreenCanvas.width;
-        const sw = this.offscreenCanvas.width * 0.5;
-        ctx.drawImage(this.offscreenCanvas, sx % this.offscreenCanvas.width, 0, sw, this.offscreenCanvas.height, cx - r, cy - r, r * 2, r * 2);
+        const tw = this.offscreenCanvas.width;
+        const th = this.offscreenCanvas.height;
+        const sx = (rotNorm / 360) * tw;
+        const sw = tw * 0.5;
+  
+        const part1W = Math.min(sw, tw - sx);
+        const destPart1W = (part1W / sw) * (r * 2);
+        ctx.drawImage(this.offscreenCanvas, sx, 0, part1W, th, cx - r, cy - r, destPart1W, r * 2);
+  
+        if (part1W < sw) {
+          const part2W = sw - part1W;
+          const destPart2W = (part2W / sw) * (r * 2);
+          ctx.drawImage(this.offscreenCanvas, 0, 0, part2W, th, cx - r + destPart1W, cy - r, destPart2W, r * 2);
+        }
       }
   
       // Shading 3D
@@ -4531,10 +6564,10 @@
   
       ctx.clearRect(0, 0, w, h);
   
-      // Koordinat pusat bola bumi pada panggung
-      const cx = w / 2 + 15;
-      const cy = h / 2 - 40;
-      const r = 160 * this.zoom;
+      // Koordinat pusat bola bumi pada panggung (ukuran besar)
+      const cx = w / 2 + 18;
+      const cy = h / 2 - 35;
+      const r = 212 * this.zoom;
   
       // Sudut kemiringan sumbu bumi asli 23.5°
       const tiltAngle = this.axialTilt * Math.PI / 180;
@@ -4548,29 +6581,29 @@
       const southY = cy + r * cosA;
   
       // Radius busur meridian logam (sedikit di luar bola)
-      const rArch = r + 24;
-      const archThick = 18;
+      const rArch = r + 28;
+      const archThick = 20;
   
       // -------------------------------------------------------------
       // 1. Bayangan Dudukan Meja (Tabletop Shadow)
       // -------------------------------------------------------------
       const baseCenterX = cx;
-      const baseCenterY = 575;
-      const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 12, 20, baseCenterX, baseCenterY + 12, 170);
+      const baseCenterY = h - 68;
+      const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 200);
       shadowGrad.addColorStop(0, 'rgba(3, 10, 20, 0.55)');
       shadowGrad.addColorStop(0.5, 'rgba(5, 15, 30, 0.25)');
       shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = shadowGrad;
       ctx.beginPath();
-      ctx.ellipse(baseCenterX, baseCenterY + 12, 170, 24, 0, 0, Math.PI * 2);
+      ctx.ellipse(baseCenterX, baseCenterY + 14, 200, 28, 0, 0, Math.PI * 2);
       ctx.fill();
   
       // -------------------------------------------------------------
       // 2. Kaki Penyangga Bundar Bertingkat (Chrome Tiered Pedestal Base)
       // -------------------------------------------------------------
       // Piringan Bawah Terlebar
-      const baseW = 145;
-      const baseH = 22;
+      const baseW = 168;
+      const baseH = 26;
       const baseGrad1 = ctx.createLinearGradient(baseCenterX - baseW, baseCenterY, baseCenterX + baseW, baseCenterY);
       baseGrad1.addColorStop(0, '#475569');
       baseGrad1.addColorStop(0.2, '#94a3b8');
@@ -4581,14 +6614,14 @@
   
       ctx.fillStyle = baseGrad1;
       ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.8;
       ctx.beginPath();
       ctx.ellipse(baseCenterX, baseCenterY, baseW, baseH, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
   
       // Piringan Tingkat Kedua (Tengah)
-      const baseGrad2 = ctx.createLinearGradient(baseCenterX - baseW * 0.82, baseCenterY - 10, baseCenterX + baseW * 0.82, baseCenterY - 10);
+      const baseGrad2 = ctx.createLinearGradient(baseCenterX - baseW * 0.82, baseCenterY - 12, baseCenterX + baseW * 0.82, baseCenterY - 12);
       baseGrad2.addColorStop(0, '#334155');
       baseGrad2.addColorStop(0.25, '#cbd5e1');
       baseGrad2.addColorStop(0.5, '#ffffff');
@@ -4597,7 +6630,7 @@
   
       ctx.fillStyle = baseGrad2;
       ctx.beginPath();
-      ctx.ellipse(baseCenterX, baseCenterY - 10, baseW * 0.82, baseH * 0.8, 0, 0, Math.PI * 2);
+      ctx.ellipse(baseCenterX, baseCenterY - 12, baseW * 0.82, baseH * 0.8, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
   
@@ -5000,6 +7033,309 @@
   }
   
 
+  // --- Source: js/components/ai-modal.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · AI Tutor Modal Component
+  // Development · Anabhi Dev
+  // Version   : 2.3 (Gemini 1.5 Flash Cloudflare & Local Key Support)
+  // ================================================================
+  
+  
+  
+  
+  class AiTutorModalComponent {
+    constructor() {
+      this.modalEl = null;
+      this.messages = [];
+      this.isLoading = false;
+      this.initModal();
+    }
+  
+    initModal() {
+      let el = document.getElementById('aiTutorModal');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'aiTutorModal';
+        el.className = 'video-modal-overlay';
+        el.style.display = 'none';
+        document.body.appendChild(el);
+      }
+      this.modalEl = el;
+      this.attachOverlayClose();
+    }
+  
+    attachOverlayClose() {
+      this.modalEl.addEventListener('click', (e) => {
+        if (e.target === this.modalEl) {
+          this.close();
+        }
+      });
+    }
+  
+    open(initialPrompt = '') {
+      this.render();
+      this.modalEl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+  
+      if (initialPrompt && initialPrompt.trim()) {
+        this.sendQuestion(initialPrompt.trim());
+      }
+    }
+  
+    close() {
+      this.modalEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  
+    getApiKey() {
+      return localStorage.getItem('anabhi_gemini_api_key') || '';
+    }
+  
+    setApiKey(key) {
+      if (key && key.trim()) {
+        localStorage.setItem('anabhi_gemini_api_key', key.trim());
+      } else {
+        localStorage.removeItem('anabhi_gemini_api_key');
+      }
+    }
+  
+    async sendQuestion(questionText) {
+      if (!questionText || this.isLoading) return;
+  
+      const state = appState.get();
+      const currentSub = state.currentSubjectId || 'Umum';
+  
+      this.messages.push({ role: 'user', text: questionText });
+      this.isLoading = true;
+      this.render();
+  
+      try {
+        let reply = '';
+        const localKey = this.getApiKey();
+  
+        // Coba panggil Cloudflare Pages Function /api/ai-tutor bila ada atau bila tanpa local key
+        if (!localKey && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+          try {
+            const cfResp = await fetch('/api/ai-tutor', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                prompt: questionText,
+                subject: currentSub,
+                studentGrade: 'Kelas 1 SD'
+              })
+            });
+            if (cfResp.ok) {
+              const data = await cfResp.json();
+              reply = data.reply;
+            }
+          } catch (e) {
+            // Cloudflare endpoint not available or local testing
+          }
+        }
+  
+        // Jika belum terjawab dan ada localKey, panggil langsung Google Gemini API
+        if (!reply && localKey) {
+          const sysMsg = 'Kamu adalah Kakak Belajar Pintar dari Anabhi Dev Smart Study untuk siswa SD. Berikan penjelasan yang ramah, santun, ceria, edukatif dengan analogi sederhana. JANGAN langsung membocorkan jawaban soal ujian, melainkan pandu langkah berpikirnya. Mata pelajaran: ' + currentSub;
+          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${localKey}`;
+          
+          const gResp = await fetch(geminiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [
+                { role: 'user', parts: [{ text: `${sysMsg}\n\nPertanyaan Anak: "${questionText}"` }] }
+              ],
+              generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
+            })
+          });
+  
+          if (gResp.ok) {
+            const gData = await gResp.json();
+            reply = gData.candidates?.[0]?.content?.parts?.[0]?.text;
+          } else {
+            const errText = await gResp.text();
+            throw new Error('Gemini API Error: ' + errText);
+          }
+        }
+  
+        if (!reply) {
+          reply = `Halo Sahabat Juara! 🌟 Untuk mengaktifkan Kakak Belajar AI:
+  1. **Di Cloudflare Pages**: Tambahkan Environment Variable 'GEMINI_API_KEY' di Cloudflare Dashboard (Settings ➔ Environment variables).
+  2. **Di Komputer Lokal**: Klik tombol ⚙️ Pengaturan di pojok atas dialog ini dan masukkan Gemini API Key milikmu.
+  
+  Kakak siap membantu menjelaskan materi pelajaran apa saja!`;
+        }
+  
+        this.messages.push({ role: 'ai', text: reply });
+      } catch (err) {
+        this.messages.push({
+          role: 'ai',
+          text: 'Wah, terjadi kendala saat menghubungi AI: ' + err.message + '. Silakan periksa koneksi internet atau Gemini API Key.'
+        });
+      } finally {
+        this.isLoading = false;
+        this.render();
+        const chatBox = this.modalEl.querySelector('#aiChatHistory');
+        if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+  
+    render() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const apiKey = this.getApiKey();
+  
+      this.modalEl.innerHTML = `
+        <div class="video-modal-dialog" style="max-width:680px; width:92%; max-height:88vh; display:flex; flex-direction:column; padding:0; overflow:hidden; border-radius:24px; border:2px solid var(--teal);">
+          <!-- Modal Header -->
+          <div style="background:var(--navy); color:#fff; padding:18px 24px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:26px;">🤖</span>
+              <div>
+                <h3 style="margin:0; font-size:17px; font-weight:850; color:#fff;">
+                  ${isEn ? 'Smart AI Tutor — Ask Anything!' : 'Kakak Belajar Pintar — Tanya Seputar Pelajaran'}
+                </h3>
+                <span style="font-size:11.5px; opacity:0.85;">Powered by Google Gemini · Anabhi Dev Smart Study</span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button class="iconbtn" id="btnAiSettingsToggle" type="button" title="Pengaturan API Key" style="background:rgba(255,255,255,0.15); color:#fff; border-radius:10px; width:34px; height:34px;">⚙️</button>
+              <button class="btn-close-modal" id="btnAiClose" type="button" aria-label="Tutup" style="color:#fff; font-size:22px; width:34px; height:34px; border:none; background:transparent; cursor:pointer;">✕</button>
+            </div>
+          </div>
+  
+          <!-- Panel Pengaturan API Key (Tersembunyi secara default) -->
+          <div id="aiSettingsPanel" style="display:none; background:var(--surface); border-bottom:1px solid var(--line); padding:16px 24px;">
+            <h4 style="margin:0 0 6px; font-size:13px; font-weight:800; color:var(--ink);">🔑 Pengaturan Gemini API Key</h4>
+            <p style="margin:0 0 10px; font-size:12px; color:var(--muted); line-height:1.5;">
+              Di Cloudflare Pages, kunci aman disimpan di <strong>Environment Variables (GEMINI_API_KEY)</strong>. Untuk testing di komputer lokal, Kakak bisa memasukkan API Key di bawah:
+            </p>
+            <div style="display:flex; gap:8px;">
+              <input type="password" id="inputLocalGeminiKey" placeholder="Tempel AIzaSy... API Key di sini" value="${apiKey}" style="flex:1; padding:8px 12px; border-radius:10px; border:1px solid var(--line); font-size:12.5px; background:var(--card); color:var(--ink);">
+              <button class="btn primary" id="btnSaveLocalKey" type="button" style="padding:6px 14px; font-size:12px;">Simpan Kunci</button>
+            </div>
+          </div>
+  
+          <!-- Chat History -->
+          <div id="aiChatHistory" style="flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:16px; min-height:240px; max-height:420px; background:var(--card);">
+            ${this.messages.length === 0 ? `
+              <div style="text-align:center; padding:30px 10px; color:var(--muted);">
+                <span style="font-size:42px; display:block; margin-bottom:12px;">🌟</span>
+                <strong style="display:block; font-size:16px; color:var(--ink); margin-bottom:6px;">
+                  ${isEn ? 'Hello! What do you want to learn today?' : 'Halo Sobat Juara! Mau tanya apa hari ini?'}
+                </strong>
+                <p style="font-size:13px; margin:0 0 16px; line-height:1.6;">
+                  ${isEn ? 'I can explain math tricks, nature wonders, history, or help guide your homework step by step!' : 'Kakak AI siap membimbingmu memahami cara cepat berhitung, mengenal rahasia alam bumi, cerita rakyat, dan konsep pelajaran!'}
+                </p>
+  
+                <!-- Quick starter chips -->
+                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;">
+                  <button class="region-chip starter-q-chip" data-q="Jelasin dong kak trik berhitung cepat 67 + 59!" type="button" style="font-size:12px;">
+                    🧮 Trik 67 + 59
+                  </button>
+                  <button class="region-chip starter-q-chip" data-q="Kenapa bumi berbentuk bola dan tampak biru dari luar angkasa?" type="button" style="font-size:12px;">
+                    🌍 Kenapa Bumi Bulat?
+                  </button>
+                  <button class="region-chip starter-q-chip" data-q="Apa saja tradisi unik dan tempat terkenal di Pulau Bali?" type="button" style="font-size:12px;">
+                    🏝️ Budaya Pulau Bali
+                  </button>
+                  <button class="region-chip starter-q-chip" data-q="Bagaimana cara menyusun kalimat S-P-O yang benar?" type="button" style="font-size:12px;">
+                    📖 Pola Kalimat S-P-O
+                  </button>
+                </div>
+              </div>
+            ` : ''}
+  
+            ${this.messages.map(m => `
+              <div style="display:flex; gap:10px; align-items:flex-start; ${m.role === 'user' ? 'justify-content:flex-end;' : 'justify-content:flex-start;'}">
+                ${m.role === 'ai' ? '<span style="font-size:24px;">🤖</span>' : ''}
+                <div style="max-width:82%; padding:12px 16px; border-radius:18px; font-size:13.5px; line-height:1.65; ${
+                  m.role === 'user' 
+                    ? 'background:var(--teal); color:#071a2b; font-weight:600; border-bottom-right-radius:4px;' 
+                    : 'background:var(--surface); color:var(--ink); border:1px solid var(--line); border-bottom-left-radius:4px; white-space:pre-wrap;'
+                }">
+                  ${m.text}
+                </div>
+                ${m.role === 'user' ? '<span style="font-size:24px;">🧒</span>' : ''}
+              </div>
+            `).join('')}
+  
+            ${this.isLoading ? `
+              <div style="display:flex; gap:10px; align-items:center;">
+                <span style="font-size:24px;">🤖</span>
+                <div style="background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:10px 18px; font-size:13px; color:var(--muted);">
+                  ✨ Kakak AI sedang merangkai penjelasan ceria...
+                </div>
+              </div>
+            ` : ''}
+          </div>
+  
+          <!-- Chat Input Bar -->
+          <div style="padding:14px 20px; background:var(--surface); border-top:1px solid var(--line); display:flex; gap:10px; align-items:center;">
+            <input type="text" id="aiUserInput" placeholder="${isEn ? 'Ask a question about your lesson...' : 'Ketik pertanyaan belajarmu di sini...'}" style="flex:1; padding:10px 16px; border-radius:14px; border:1px solid var(--line); font-size:13.5px; background:var(--card); color:var(--ink);">
+            <button class="btn primary" id="btnAiSend" type="button" style="padding:10px 18px; font-weight:800; font-size:13px;">
+              ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
+            </button>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    attachEvents() {
+      const btnClose = this.modalEl.querySelector('#btnAiClose');
+      if (btnClose) btnClose.addEventListener('click', () => this.close());
+  
+      const btnSettings = this.modalEl.querySelector('#btnAiSettingsToggle');
+      const settingsPanel = this.modalEl.querySelector('#aiSettingsPanel');
+      if (btnSettings && settingsPanel) {
+        btnSettings.addEventListener('click', () => {
+          settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+        });
+      }
+  
+      const btnSaveKey = this.modalEl.querySelector('#btnSaveLocalKey');
+      const inputKey = this.modalEl.querySelector('#inputLocalGeminiKey');
+      if (btnSaveKey && inputKey) {
+        btnSaveKey.addEventListener('click', () => {
+          this.setApiKey(inputKey.value);
+          alert('Kunci Gemini API berhasil disimpan!');
+          settingsPanel.style.display = 'none';
+        });
+      }
+  
+      const btnSend = this.modalEl.querySelector('#btnAiSend');
+      const inputUser = this.modalEl.querySelector('#aiUserInput');
+      const doSend = () => {
+        if (inputUser && inputUser.value.trim()) {
+          const q = inputUser.value.trim();
+          inputUser.value = '';
+          this.sendQuestion(q);
+        }
+      };
+  
+      if (btnSend) btnSend.addEventListener('click', doSend);
+      if (inputUser) {
+        inputUser.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') doSend();
+        });
+      }
+  
+      const starterChips = this.modalEl.querySelectorAll('.starter-q-chip');
+      starterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const q = chip.getAttribute('data-q');
+          this.sendQuestion(q);
+        });
+      });
+    }
+  }
+  
+
   // --- Source: js/components/topbar.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -5075,6 +7411,11 @@
             <span id="streakCount">${s.streakDays || 1} ${t('days', lang)}</span>
           </div>
   
+          <!-- Tombol Tanya AI Tutor (Gemini) -->
+          <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 10px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;">
+            <span>🤖</span> <span>Tanya AI</span>
+          </button>
+  
           <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
           <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px;">
             ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
@@ -5098,6 +7439,15 @@
     }
   
     attachEvents() {
+      const aiTutorBtn = this.container.querySelector('#aiTutorBtn');
+      if (aiTutorBtn) {
+        aiTutorBtn.addEventListener('click', () => {
+          if (window.aiTutorModal) {
+            window.aiTutorModal.open();
+          }
+        });
+      }
+  
       const brandBtn = this.container.querySelector('#topbarBrandBtn');
       if (brandBtn) {
         brandBtn.addEventListener('click', () => {
@@ -5672,6 +8022,9 @@
       this.practiceAnswered = false;
       this.viewMode = 'visual'; // 'visual' | 'compare'
       this.userMetacognition = null;
+      this.selectedMathLevel = 'all';
+      this.counterIconA = '🔴';
+      this.counterIconB = '🟡';
     }
   
     render() {
@@ -5706,8 +8059,17 @@
             </button>
           </div>
   
+          <!-- Filter Level Soal (Termasuk Kelas 1 SD) -->
+          <div class="preset-level-tabs">
+            <button class="level-pill-btn ${this.selectedMathLevel === 'all' ? 'active' : ''}" data-level="all" type="button">Semua Soal</button>
+            <button class="level-pill-btn ${this.selectedMathLevel === 'sd1' ? 'active' : ''}" data-level="sd1" type="button">🟢 Kelas 1 SD: Dasar (1–50)</button>
+            <button class="level-pill-btn ${this.selectedMathLevel === 'master' ? 'active' : ''}" data-level="master" type="button">🔴 Mahir: Flagship (67 + 59)</button>
+          </div>
+  
           <div class="math-presets">
-            ${MATH_DATA.presetExamples.map(ex => `
+            ${MATH_DATA.presetExamples
+              .filter(ex => this.selectedMathLevel === 'all' || ex.level === this.selectedMathLevel)
+              .map(ex => `
               <button class="preset-chip ${ex.a === a && ex.b === b ? 'active' : ''}" data-a="${ex.a}" data-b="${ex.b}" type="button">
                 ${isEn && ex.labelEn ? ex.labelEn : ex.label}
               </button>
@@ -6008,27 +8370,32 @@
                 <line x1="30" y1="90" x2="520" y2="90" stroke="var(--ink)" stroke-width="3" />
                 <polygon points="520,85 535,90 520,95" fill="var(--ink)" />
   
-                <!-- Titik Awal -->
-                <circle cx="60" cy="90" r="7" fill="var(--teal)" />
-                <text x="60" y="114" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberLine.start}</text>
+                <!-- Titik Awal & Kodok Ceria Melompat -->
+                <circle cx="60" cy="90" r="8" fill="var(--teal)" />
+                <text x="60" y="116" text-anchor="middle" font-weight="800" font-size="14" fill="var(--ink)">${sol.numberLine.start}</text>
+                <g class="frog-hopper" transform="translate(60, 58)">
+                  <text x="0" y="0" font-size="28" text-anchor="middle" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.18))">🐸</text>
+                </g>
   
                 <!-- Busur Lompatan 1 (Puluhan) -->
                 ${sol.numberLine.jumps[0] ? `
-                  <path d="M 60,90 Q 180,15 300,90" fill="none" stroke="#ffb21b" stroke-width="3" stroke-dasharray="6,4" />
-                  <text x="180" y="40" text-anchor="middle" font-weight="900" font-size="14" fill="#ffb21b">${sol.numberLine.jumps[0].amount}</text>
-                  <circle cx="300" cy="90" r="6" fill="#ffb21b" />
-                  <text x="300" y="114" text-anchor="middle" font-weight="800" font-size="13" fill="var(--ink)">${sol.numberLine.jumps[0].to}</text>
+                  <path d="M 60,90 Q 185,12 300,90" fill="none" stroke="#ffb21b" stroke-width="3.5" stroke-dasharray="6,4" />
+                  <text x="185" y="38" text-anchor="middle" font-weight="900" font-size="14" fill="#ffb21b">Lompat ${sol.numberLine.jumps[0].amount}</text>
+                  <circle cx="300" cy="90" r="7" fill="#ffb21b" />
+                  <text x="300" y="116" text-anchor="middle" font-weight="800" font-size="13" fill="var(--ink)">${sol.numberLine.jumps[0].to}</text>
+                  <text x="300" y="86" font-size="15" text-anchor="middle">🪷</text>
                 ` : ''}
   
                 <!-- Busur Lompatan 2 (Satuan) -->
                 ${sol.numberLine.jumps[1] ? `
-                  <path d="M 300,90 Q 390,35 480,90" fill="none" stroke="var(--teal)" stroke-width="3" />
-                  <text x="390" y="55" text-anchor="middle" font-weight="900" font-size="14" fill="var(--teal)">${sol.numberLine.jumps[1].amount}</text>
+                  <path d="M 300,90 Q 395,30 480,90" fill="none" stroke="var(--teal)" stroke-width="3.5" />
+                  <text x="395" y="52" text-anchor="middle" font-weight="900" font-size="14" fill="var(--teal)">Lompat ${sol.numberLine.jumps[1].amount}</text>
                 ` : ''}
   
                 <!-- Titik Target Akhir -->
-                <circle cx="480" cy="90" r="8" fill="var(--green)" />
-                <text x="480" y="114" text-anchor="middle" font-weight="900" font-size="15" fill="var(--green)">${sol.sum} 🎯</text>
+                <circle cx="480" cy="90" r="9" fill="var(--green)" />
+                <text x="480" y="80" font-size="18" text-anchor="middle">🎯</text>
+                <text x="480" y="116" text-anchor="middle" font-weight="900" font-size="16" fill="var(--green)">${sol.sum} 🎉</text>
               </svg>
             </div>
           `;
@@ -6194,6 +8561,121 @@
               </div>
             </div>
           `;
+  
+        // 10. Ten-Frames (Kotak 10 Frame Khusus Kelas 1 SD)
+        case 'tens-frame': {
+          const tf = sol.tensFrame;
+          const iconA = this.counterIconA || '🔴';
+          const iconB = this.counterIconB || '🟡';
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🔴</span> ${tf.title}</h3>
+              <span class="subject-badge">${tf.badge}</span>
+            </div>
+  
+            <div class="round-strategy-banner" style="background:rgba(239,68,68,0.08); border-color:#ef4444; color:var(--ink);">
+              🎯 <strong>${isEn ? 'Make-10 Magic:' : 'Keajaiban Kawan 10:'}</strong> ${tf.explanation}
+            </div>
+  
+            <!-- Pilihan Ikon Manipulatif Benda Riil (Kelas 1 SD) -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+              <div style="font-size:13px; font-weight:800; color:var(--ink);">
+                ${isEn ? 'Choose Visual Counters:' : 'Pilih Bentuk Benda Riil (Mudah Dihitung):'}
+              </div>
+              <div class="concrete-toggle-bar" style="display:flex; gap:6px;">
+                <button class="btn btn-counter-icon ${iconA === '🔴' ? 'primary' : ''}" data-icon-a="🔴" data-icon-b="🟡" type="button" style="padding:4px 10px; font-size:12px;">🔴 Koin Ceria</button>
+                <button class="btn btn-counter-icon ${iconA === '🍎' ? 'primary' : ''}" data-icon-a="🍎" data-icon-b="⭐" type="button" style="padding:4px 10px; font-size:12px;">🍎 Apel & Bintang</button>
+                <button class="btn btn-counter-icon ${iconA === '🚗' ? 'primary' : ''}" data-icon-a="🚗" data-icon-b="🚀" type="button" style="padding:4px 10px; font-size:12px;">🚗 Mobil & Roket</button>
+              </div>
+            </div>
+  
+            <!-- Tens-Frames Canvas Box -->
+            <div class="tens-frame-box">
+              <!-- Bundel Puluhan Jika Ada -->
+              ${tf.tensBundles > 0 ? `
+                <div style="margin-bottom:16px; padding:12px 16px; background:var(--card); border-radius:12px; border:1px solid var(--line);">
+                  <div style="font-size:12.5px; font-weight:800; color:var(--teal); margin-bottom:6px;">
+                    📦 ${isEn ? `Bundles of Tens (${tf.tA * 10} + ${tf.tB * 10} = ${tf.tensBundles * 10})` : `Bundel Puluhan Awal (${tf.tA * 10} + ${tf.tB * 10} = ${tf.tensBundles * 10})`}
+                  </div>
+                  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    ${Array(tf.tensBundles).fill(0).map((_, i) => `
+                      <div style="background:var(--teal-soft); color:var(--teal-soft-ink); font-size:11.5px; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid var(--teal);">
+                        🔟 10 Penuh (#${i+1})
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+  
+              <!-- Dua Kotak 10 Utama (Frame 1 & Frame 2) -->
+              <div class="tens-frames-flex">
+                <!-- Kotak 1: Mulai dari Satuan A, digenapkan jadi 10 -->
+                <div class="ten-frame-card ${tf.canMake10 || tf.uA === 0 ? 'full-ten' : ''}">
+                  <div class="ten-frame-header">
+                    <span>${tf.canMake10 ? '🔟' : '📦'}</span>
+                    <span>${isEn ? 'Frame 1 (Base)' : 'Kotak 10 Pertama'}</span>
+                  </div>
+                  <div class="ten-frame-grid">
+                    ${tf.frame1.map(slot => `
+                      <div class="frame-slot ${slot.filled ? 'filled' : ''} ${slot.transferred ? 'transferred' : ''}" title="${slot.transferred ? (isEn ? 'Borrowed from B to make 10' : 'Dipinjam dari B agar pas 10') : ''}">
+                        ${slot.filled ? (slot.transferred ? iconB : iconA) : ''}
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div class="ten-frame-summary-badge">
+                    ${tf.canMake10 ? (isEn ? '✅ FULL 10 (+1 Ten)!' : '✅ GENAP 10 PENUH (+1 Puluhan)!') : `${tf.uA}/10`}
+                  </div>
+                </div>
+  
+                <!-- Simbol Tambah -->
+                <div style="font-size:28px; font-weight:900; color:var(--muted); align-self:center;">+</div>
+  
+                <!-- Kotak 2: Sisa Satuan B -->
+                <div class="ten-frame-card">
+                  <div class="ten-frame-header">
+                    <span>📦</span>
+                    <span>${isEn ? 'Frame 2 (Remaining)' : 'Kotak 10 Kedua (Sisa)'}</span>
+                  </div>
+                  <div class="ten-frame-grid">
+                    ${tf.frame2.map(slot => `
+                      <div class="frame-slot ${slot.filled ? 'filled' : ''}">
+                        ${slot.filled ? iconB : ''}
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div class="ten-frame-summary-badge">
+                    ${isEn ? `Remaining: ${tf.finalUnits} units` : `Tersisa: ${tf.finalUnits} Satuan`}
+                  </div>
+                </div>
+  
+                <!-- Simbol Sama Dengan -->
+                <div style="font-size:28px; font-weight:900; color:var(--teal); align-self:center;">=</div>
+  
+                <!-- Kartu Total Hasil -->
+                <div class="ten-frame-card" style="border-color:var(--teal); background:var(--teal-soft); min-width:140px;">
+                  <div class="ten-frame-header" style="color:var(--teal-soft-ink);">
+                    <span>🎉 Total</span>
+                  </div>
+                  <div style="font-size:36px; font-weight:900; color:var(--teal-soft-ink); margin:8px 0;">
+                    ${tf.sum}
+                  </div>
+                  <div style="font-size:11.5px; font-weight:800; color:var(--teal-soft-ink);">
+                    ${tf.totalTens} Puluhan + ${tf.finalUnits} Satuan
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Panduan Suara Ramah untuk Anak SD -->
+              <div style="margin-top:14px; padding:12px 18px; background:var(--surface); border-radius:12px; font-size:13px; line-height:1.6; color:var(--ink);">
+                🧒 <strong>Cara Berpikir Sahabat Juara:</strong><br>
+                1. Letakkan <strong>${tf.uA}</strong> ${iconA} di kotak pertama.<br>
+                2. Ambil <strong>${tf.needToMake10}</strong> ${iconB} dari angka kedua untuk <strong>menggenapkan kotak pertama jadi 10 PENUH</strong>! 🔟<br>
+                3. Di kotak kedua masih tersisa <strong>${tf.finalUnits}</strong> ${iconB}.<br>
+                4. Gabungkan: <strong>${tf.totalTens * 10} + ${tf.finalUnits} = ${tf.sum}</strong>! Super mudah tanpa menghitung jari satu per satu! 🎈
+              </div>
+            </div>
+          `;
+        }
   
         default:
           return '';
@@ -6374,6 +8856,25 @@
     }
   
     attachEvents() {
+      // Preset Level Tabs (Kelas 1 SD Filter)
+      const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
+      levelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.selectedMathLevel = btn.getAttribute('data-level');
+          this.render();
+        });
+      });
+  
+      // Concrete Counter Icon Toggle (Benda Riil Koin, Apel, Mobil)
+      const counterBtns = this.container.querySelectorAll('.btn-counter-icon');
+      counterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.counterIconA = btn.getAttribute('data-icon-a') || '🔴';
+          this.counterIconB = btn.getAttribute('data-icon-b') || '🟡';
+          this.render();
+        });
+      });
+  
       // Preset Chip clicks
       const chips = this.container.querySelectorAll('.preset-chip');
       chips.forEach(c => {
@@ -6603,6 +9104,8 @@
       this.selectedIsland = 'Semua';
       this.searchCityQuery = '';
       this.activeQuizIndex = 0;
+      this.activeRegion = 'indonesia';
+      this.selectedMapIsland = 'Semua';
     }
   
     render(subjectId) {
@@ -6722,8 +9225,8 @@
             <div class="globe-stage-card">
               <div class="globe-canvas-wrap">
                 <div class="globe-canvas-stack">
-                  <canvas id="globeCanvas" width="640" height="640"></canvas>
-                  <canvas id="globeOverlay" width="640" height="640"></canvas>
+                  <canvas id="globeCanvas" width="720" height="720"></canvas>
+                  <canvas id="globeOverlay" width="720" height="720"></canvas>
                 </div>
                 <div class="globe-controls">
                   <button class="btn" id="btnGlobeRotateLeft" type="button">${t('rotateLeft', lang)}</button>
@@ -6760,6 +9263,50 @@
                     </div>
                   `).join('')}
                 </div>
+              </div>
+            </div>
+  
+            <!-- PUSAT JELAJAH PETA & KAWASAN REGIONAL (Peta Indonesia, Bali, Benua Asia/Eropa/dll) -->
+            <div class="geo-region-explorer-section" style="margin-top:32px;">
+              <div class="interactive-map-header">
+                <div>
+                  <div class="eyebrow"><span class="no">📍</span><span class="lbl">${lang === 'en' ? 'Interactive Regional Map Explorer' : 'Pusat Jelajah Peta & Kawasan Interaktif'}</span></div>
+                  <h3 class="interactive-map-title">${lang === 'en' ? 'Explore Indonesia, Bali, & Continents' : 'Jelajahi Peta Indonesia, Bali, & Benua Dunia'}</h3>
+                  <p style="font-size:13.5px; color:var(--muted); margin:4px 0 0;">
+                    ${lang === 'en' ? 'Select a region below to inspect detailed maps, key landmarks, cultural facts, and orient the 3D globe.' : 'Pilih kawasan di bawah untuk melihat peta detail, landmark ikonik, fakta budaya, dan putar globe 3D langsung ke wilayah tersebut.'}
+                  </p>
+                </div>
+              </div>
+  
+              <div class="geo-region-filter-bar">
+                <button class="region-chip ${(this.activeRegion || 'indonesia') === 'indonesia' ? 'active' : ''}" data-region="indonesia" type="button">
+                  🇮🇩 ${lang === 'en' ? 'Indonesia Map (38 Prov)' : 'Peta Indonesia (38 Prov)'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'bali' ? 'active' : ''}" data-region="bali" type="button">
+                  🏝️ ${lang === 'en' ? 'Bali Island Map' : 'Peta Pulau Bali'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'asia' ? 'active' : ''}" data-region="asia" type="button">
+                  🌏 ${lang === 'en' ? 'Asia Continent' : 'Benua Asia'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'europe' ? 'active' : ''}" data-region="europe" type="button">
+                  🏰 ${lang === 'en' ? 'Europe Continent' : 'Benua Eropa'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'africa' ? 'active' : ''}" data-region="africa" type="button">
+                  🦁 ${lang === 'en' ? 'Africa Continent' : 'Benua Afrika'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'americas' ? 'active' : ''}" data-region="americas" type="button">
+                  🗽 ${lang === 'en' ? 'Americas Continent' : 'Benua Amerika'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'oceania' ? 'active' : ''}" data-region="oceania" type="button">
+                  🦘 ${lang === 'en' ? 'Oceania Continent' : 'Benua Oseania'}
+                </button>
+                <button class="region-chip ${this.activeRegion === 'world' ? 'active' : ''}" data-region="world" type="button">
+                  🌍 ${lang === 'en' ? 'All Continents & Oceans' : 'Seluruh Benua & Samudra'}
+                </button>
+              </div>
+  
+              <div id="geoRegionContent" class="geo-region-content">
+                ${this.getRegionContentHtml(this.activeRegion || 'indonesia', lang)}
               </div>
             </div>
           `;
@@ -6969,6 +9516,576 @@
   
         default:
           return '';
+      }
+    }
+  
+    getRegionContentHtml(region, lang = 'id') {
+      const isEn = lang === 'en';
+      switch (region) {
+        case 'indonesia': {
+          const island = this.selectedMapIsland || 'Semua';
+          const normIsland = island.toLowerCase().replace('sumatera', 'sumatra');
+          let list = GEO_DATA.provinces || [];
+          if (island !== 'Semua') {
+            if (island === 'Maluku & Papua') {
+              list = list.filter(p => p.island === 'Kepulauan Maluku' || p.island === 'Papua');
+            } else {
+              list = list.filter(p => p.island.toLowerCase().includes(normIsland));
+            }
+          }
+          const islands = [
+            { id: 'Semua', name: isEn ? 'All Archipelago (38)' : 'Semua Nusantara (38)', count: 38 },
+            { id: 'Sumatra', name: 'Sumatera', count: 10 },
+            { id: 'Jawa', name: 'Jawa', count: 6 },
+            { id: 'Kalimantan', name: 'Kalimantan', count: 5 },
+            { id: 'Sulawesi', name: 'Sulawesi', count: 6 },
+            { id: 'Bali & Nusa Tenggara', name: 'Bali & Nusa Tenggara', count: 3 },
+            { id: 'Maluku & Papua', name: 'Maluku & Papua', count: 8 }
+          ];
+  
+          return `
+            <div class="interactive-map-panel">
+              <div class="interactive-map-header">
+                <div>
+                  <h4 class="interactive-map-title">
+                    🇮🇩 ${isEn ? 'Republic of Indonesia — 2D Interactive Map (38 Provinces)' : 'Peta 2D Interaktif Indonesia — 38 Provinsi & Kepulauan'}
+                  </h4>
+                  <p style="font-size:13px; color:var(--muted); margin:4px 0 0;">
+                    ${isEn ? 'Click on any island on the vector map or choose a button below to explore provinces and unique facts.' : 'Sentuh atau klik pulau pada peta vektor 2D di bawah ini untuk menjelajahi keunikan dan ibu kota provinsi.'}
+                  </p>
+                </div>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:700;">
+                  🗺️ ${isEn ? '2D Vector Atlas' : 'Peta Vektor 2D Interaktif'}
+                </span>
+              </div>
+  
+              <!-- Visual 2D SVG Map of Indonesia -->
+              <div class="peta-2d-canvas-box" style="margin-bottom:16px;">
+                <svg class="svg-map-frame" viewBox="0 0 940 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Lautan / Background perairan -->
+                  <rect width="940" height="380" rx="16" fill="currentColor" style="color:var(--surface); opacity:0.6;"/>
+                  <defs>
+                    <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.08"/>
+                      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.18"/>
+                    </linearGradient>
+                    <filter id="shadowIsland" x="-10%" y="-10%" width="130%" height="130%">
+                      <feDropShadow dx="1" dy="3" stdDeviation="3" flood-opacity="0.25"/>
+                    </filter>
+                  </defs>
+                  <rect width="940" height="380" rx="16" fill="url(#oceanGrad)"/>
+  
+                  <!-- Garis Khatulistiwa 0 Derajat -->
+                  <line x1="20" y1="138" x2="920" y2="138" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.65"/>
+                  <text x="30" y="132" fill="#ef4444" font-size="11" font-weight="700" letter-spacing="1">GARIS KHATULISTIWA (EQUATOR 0°)</text>
+  
+                  <!-- Arah Mata Angin Kompas -->
+                  <g transform="translate(890, 42)" opacity="0.75">
+                    <circle cx="0" cy="0" r="18" fill="var(--card)" stroke="var(--line)" stroke-width="1.5"/>
+                    <path d="M 0 -12 L 4 0 L 0 3 L -4 0 Z" fill="#ef4444"/>
+                    <path d="M 0 12 L 4 0 L 0 3 L -4 0 Z" fill="var(--muted)"/>
+                    <text x="0" y="-14" text-anchor="middle" font-size="9.5" font-weight="900" fill="#ef4444">U</text>
+                  </g>
+  
+                  <!-- Pulau Sumatra -->
+                  <g class="svg-island-interactive ${island === 'Sumatra' ? 'active' : ''}" data-island="Sumatra" filter="url(#shadowIsland)">
+                    <path d="M 39.5 53.6 L 43.1 50.8 L 47.9 66.8 L 57.6 77.2 L 67.2 92.4 L 84.1 123.6 L 94.6 137.2 L 105.1 146.4 L 115.6 160.8 L 132.5 174.4 L 148.2 196.4 L 165.1 217.2 L 180.7 236 L 202.4 256.4 L 217.5 272.8 L 222.9 285.2 L 238 290.4 L 227.7 296 L 210.3 286.4 L 199.4 266.4 L 176.5 237.2 L 149.4 206.8 L 130.7 186.4 L 115.6 162.8 L 97.6 142.4 L 79.5 119.6 L 64.4 96.8 L 51.2 78 L 39.5 53.6 Z"
+                          fill="#10b981" stroke="#047857" stroke-width="2"/>
+                    <text x="110" y="165" font-size="13" font-weight="800" fill="#064e3b" text-anchor="middle" style="pointer-events:none;">SUMATERA</text>
+                  </g>
+  
+                  <!-- Pulau Jawa -->
+                  <g class="svg-island-interactive ${island === 'Jawa' ? 'active' : ''}" data-island="Jawa" filter="url(#shadowIsland)">
+                    <path d="M 226.5 289.6 L 260.8 288.4 L 297 290.8 L 334.3 293.6 L 372.3 295.2 L 410.2 300 L 444.6 304.8 L 478.9 308.8 L 515 311.2 L 536.7 312 L 547.6 312 L 545.2 316.8 L 521 318.4 L 484.9 319.2 L 442.2 319.2 L 401.8 318.4 L 360.8 317.6 L 320.5 315.2 L 278.9 313.6 L 253 310.4 L 230.1 306.4 L 224.1 298.4 Z"
+                          fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+                    <text x="380" y="312" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" style="pointer-events:none;">JAWA</text>
+                  </g>
+  
+                  <!-- Pulau Kalimantan -->
+                  <g class="svg-island-interactive ${island === 'Kalimantan' ? 'active' : ''}" data-island="Kalimantan" filter="url(#shadowIsland)">
+                    <path d="M 300.8 190.4 L 315.9 164.8 L 336.3 147.2 L 358 132 L 388.7 114.4 L 417.6 102 L 443.5 98 L 464 104.4 L 477.3 118.8 L 485.7 137.2 L 482.1 158.4 L 468.8 178 L 459.8 198 L 461 218 L 452.6 237.2 L 434.5 250 L 414 256.4 L 389.9 256.4 L 368.2 250 L 345.9 238 L 327.9 220 L 311 202 Z"
+                          fill="#059669" stroke="#065f46" stroke-width="2"/>
+                    <text x="395" y="180" font-size="13" font-weight="800" fill="#022c22" text-anchor="middle" style="pointer-events:none;">KALIMANTAN</text>
+                  </g>
+  
+                  <!-- Pulau Sulawesi -->
+                  <g class="svg-island-interactive ${island === 'Sulawesi' ? 'active' : ''}" data-island="Sulawesi" filter="url(#shadowIsland)">
+                    <path d="M 490 120 L 518 116 L 542 118 L 570 125 L 565 138 L 540 144 L 522 150 L 518 174 L 545 186 L 568 192 L 562 205 L 535 200 L 518 205 L 522 232 L 535 258 L 515 264 L 504 235 L 500 195 L 482 178 L 485 145 Z"
+                          fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+                    <text x="548" y="172" font-size="12.5" font-weight="800" fill="#1e3a8a" text-anchor="middle" style="pointer-events:none;">SULAWESI</text>
+                  </g>
+  
+                  <!-- Kepulauan Bali & Nusa Tenggara -->
+                  <g class="svg-island-interactive ${island === 'Bali & Nusa Tenggara' ? 'active' : ''}" data-island="Bali & Nusa Tenggara" filter="url(#shadowIsland)">
+                    <!-- Bali -->
+                    <path d="M 548 313 L 562 312 L 567 318 L 558 325 L 546 322 Z" fill="#ec4899" stroke="#be185d" stroke-width="1.8"/>
+                    <text x="556" y="306" font-size="10" font-weight="800" fill="#9d174d" text-anchor="middle" style="pointer-events:none;">BALI</text>
+                    <!-- Lombok & Sumbawa (NTB) -->
+                    <path d="M 572 314 L 602 312 L 625 316 L 620 326 L 595 328 L 570 324 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
+                    <!-- Flores, Sumba & Timor (NTT) -->
+                    <path d="M 632 315 L 685 314 L 690 324 L 635 326 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
+                    <path d="M 620 335 L 655 334 L 652 344 L 618 343 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
+                    <path d="M 700 328 L 740 325 L 745 335 L 705 342 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
+                    <text x="645" y="348" font-size="10.5" font-weight="800" fill="#881337" text-anchor="middle" style="pointer-events:none;">NUSA TENGGARA</text>
+                  </g>
+  
+                  <!-- Kepulauan Maluku -->
+                  <g class="svg-island-interactive ${island === 'Maluku & Papua' ? 'active' : ''}" data-island="Maluku & Papua" filter="url(#shadowIsland)">
+                    <!-- Halmahera -->
+                    <path d="M 685 95 L 702 92 L 705 115 L 720 122 L 712 135 L 698 128 L 688 145 L 678 138 L 688 120 L 680 108 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
+                    <!-- Buru, Seram, Ambon -->
+                    <path d="M 662 188 L 682 186 L 680 200 L 660 198 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
+                    <path d="M 692 188 L 742 186 L 740 198 L 690 198 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
+                    <text x="696" y="174" font-size="11" font-weight="800" fill="#155e75" text-anchor="middle" style="pointer-events:none;">MALUKU</text>
+                  </g>
+  
+                  <!-- Pulau Papua -->
+                  <g class="svg-island-interactive ${island === 'Maluku & Papua' ? 'active' : ''}" data-island="Maluku & Papua" filter="url(#shadowIsland)">
+                    <path d="M 735 150 L 760 142 L 782 152 L 778 175 L 760 178 L 755 192 L 775 198 L 795 200 L 840 202 L 890 205 L 890 290 L 840 286 L 798 278 L 775 258 L 760 228 L 745 198 L 730 175 Z"
+                          fill="#8b5cf6" stroke="#6d28d9" stroke-width="2"/>
+                    <text x="825" y="240" font-size="14" font-weight="800" fill="#4c1d95" text-anchor="middle" style="pointer-events:none;">PAPUA</text>
+                  </g>
+                </svg>
+  
+                <!-- Legend Bar di Bawah Peta 2D -->
+                <div class="peta-2d-legend-bar">
+                  <span>💡 <strong>Tips:</strong> Klik pulau langsung pada gambar peta di atas atau pilih filter di bawah.</span>
+                  <span>✨ <strong>Wilayah:</strong> 38 Provinsi · 3 Zona Waktu (WIB, WITA, WIT) · > 17.500 Pulau</span>
+                </div>
+              </div>
+  
+              <!-- Filter Kepulauan Indonesia -->
+              <div class="island-nav-grid">
+                ${islands.map(isl => `
+                  <button class="island-card-btn ${island === isl.id ? 'active' : ''}" data-map-island="${isl.id}" type="button">
+                    <strong>🏝️ ${isl.name}</strong>
+                    <span>${isl.count} ${isEn ? 'Provinces' : 'Provinsi'}</span>
+                  </button>
+                `).join('')}
+              </div>
+  
+              <!-- Ringkasan Wilayah Terpilih -->
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <span style="font-size:13.5px; font-weight:700; color:var(--ink);">
+                  ${isEn ? 'Displaying' : 'Menampilkan'}: <span style="color:var(--teal); font-weight:800;">${island}</span> (${list.length} ${isEn ? 'provinces' : 'provinsi'})
+                </span>
+              </div>
+  
+              <!-- Grid Provinsi Indonesia (Bersih tanpa undefined & tanpa tombol link globe) -->
+              <div class="provinces-grid">
+                ${list.map((p, idx) => `
+                  <div class="province-card" id="provCard_${p.id}">
+                    <div>
+                      <div class="province-header">
+                        <span class="province-no" style="font-size:22px; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--surface); border-radius:50%;">
+                          ${p.icon || '🏛️'}
+                        </span>
+                        <span class="subject-badge">${p.island}</span>
+                      </div>
+                      <h4 class="province-name">${p.name}</h4>
+                      <div class="capital-row">
+                        <span>🏛️ ${isEn ? 'Capital City' : 'Ibu Kota'}:</span>
+                        <strong>${p.capital}</strong>
+                      </div>
+                      <div class="country-landmark-box" style="margin-top:10px;">
+                        <span class="landmark-tag">✨ ${isEn ? 'Unique Fact' : 'Fakta Unik & Ciri Khas'}</span>
+                        <p class="landmark-text" style="font-size:12.5px; line-height:1.55; margin:4px 0 0;">${p.funFact}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+  
+        case 'bali': {
+          const bali = GEO_DATA.baliModule;
+          const landmarks = [
+            { name: 'Pura Tanah Lot', reg: 'Tabanan', icon: '🌊', desc: isEn ? 'Ancient sea temple perched on an offshore rock formation with spectacular sunset views.' : 'Pura suci di atas batu karang lepas pantai dengan pemandangan matahari terbenam memukau.' },
+            { name: 'Pura Luhur Uluwatu', reg: 'Badung', icon: '🌅', desc: isEn ? 'Cliffside temple 70 meters above the Indian Ocean, famous for evening Kecak fire dance.' : 'Pura megah di puncak tebing karang curam 70 meter di atas Samudra Hindia dengan Tari Kecak api.' },
+            { name: 'Pura Agung Besakih', reg: 'Karangasem', icon: '⛰️', desc: isEn ? 'The Mother Temple of Bali nestled on the slopes of sacred Mount Agung (3,142m).' : 'Ibu dari seluruh Pura di Bali yang berdiri kokoh dan anggun di lereng Gunung Agung.' },
+            { name: 'Danau & Pura Ulun Danu Beratan', reg: 'Tabanan (Bedugul)', icon: '🌸', desc: isEn ? 'Picturesque water temple located on the tranquil shores of Lake Beratan in cool Bedugul.' : 'Pura danau yang tampak terapung di Danau Beratan dengan udara pegunungan Bedugul yang sejuk.' },
+            { name: 'Terasering Sawah Jatiluwih', reg: 'Tabanan', icon: '🌾', desc: isEn ? 'UNESCO World Heritage terraced rice fields preserved with the thousand-year Subak cooperative water system.' : 'Hamparan sawah berundak spektakuler Warisan Budaya Dunia UNESCO dengan sistem irigasi Subak.' },
+            { name: 'Pura Tirta Empul', reg: 'Gianyar (Tampaksiring)', icon: '💧', desc: isEn ? 'Sacred water spring temple where worshippers take holy cleansing baths (Melukat).' : 'Pura mata air suci yang digunakan untuk ritual penyucian diri dan ketenangan jiwa (Melukat).' },
+            { name: 'Mandala Suci Wenara Wana (Monkey Forest)', reg: 'Gianyar (Ubud)', icon: '🐒', desc: isEn ? 'Sacred monkey sanctuary in Ubud enveloped by dense tropical banyan forests and historic temples.' : 'Kawasan hutan suci di Ubud yang dihuni ratusan kera abu-abu ramah dan pohon beringin rimbun.' }
+          ];
+  
+          return `
+            <div class="interactive-map-panel">
+              <div class="interactive-map-header">
+                <div>
+                  <h4 class="interactive-map-title">
+                    🏝️ ${isEn ? 'Island of Bali — 2D Interactive Map (8 Regencies & 1 City)' : 'Peta 2D Interaktif Pulau Bali — 8 Kabupaten & 1 Kota Madya'}
+                  </h4>
+                  <p style="font-size:13px; color:var(--muted); margin:4px 0 0;">
+                    ${isEn ? 'Explore the Island of Gods by clicking regencies or landmark pins directly on the 2D map below.' : 'Jelajahi Pulau Dewata dengan mengklik kabupaten atau pin landmark langsung pada peta 2D di bawah.'}
+                  </p>
+                </div>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:linear-gradient(135deg, #ffedd5, #fed7aa); color:#9a3412; font-weight:800;">
+                  🌺 Peta Vektor 2D Bali
+                </span>
+              </div>
+  
+              <!-- Visual 2D SVG Map of Bali -->
+              <div class="peta-2d-canvas-box" style="margin-bottom:20px;">
+                <svg class="svg-map-frame" viewBox="0 0 760 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Lautan sekeliling Bali -->
+                  <rect width="760" height="480" rx="16" fill="currentColor" style="color:var(--surface); opacity:0.6;"/>
+                  <defs>
+                    <linearGradient id="baliOceanGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.1"/>
+                      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.2"/>
+                    </linearGradient>
+                    <filter id="baliShadow" x="-5%" y="-5%" width="120%" height="120%">
+                      <feDropShadow dx="1" dy="3" stdDeviation="3" flood-opacity="0.2"/>
+                    </filter>
+                  </defs>
+                  <rect width="760" height="480" rx="16" fill="url(#baliOceanGrad)"/>
+  
+                  <!-- Label Lautan & Selat -->
+                  <text x="380" y="45" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">LAUT BALI (UTARA)</text>
+                  <text x="50" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(-90 50 240)" letter-spacing="1">SELAT BALI (BARAT)</text>
+                  <text x="720" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(90 720 240)" letter-spacing="1">SELAT LOMBOK (TIMUR)</text>
+                  <text x="380" y="465" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">SAMUDRA HINDIA (SELATAN)</text>
+  
+                  <!-- 1. Buleleng (Utara) -->
+                  <path class="svg-regency-interactive" data-regency="Buleleng" filter="url(#baliShadow)"
+                        d="M 120 160 L 220 110 L 360 85 L 500 95 L 600 135 L 580 170 L 460 150 L 350 145 L 240 165 L 140 185 Z"
+                        fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                  <text x="360" y="125" font-size="12" font-weight="800" fill="#075985" text-anchor="middle" style="pointer-events:none;">BULELENG (Singaraja)</text>
+  
+                  <!-- 2. Jembrana (Barat) -->
+                  <path class="svg-regency-interactive" data-regency="Jembrana" filter="url(#baliShadow)"
+                        d="M 60 210 L 140 185 L 240 165 L 230 220 L 180 255 L 80 245 Z"
+                        fill="#34d399" stroke="#059669" stroke-width="2"/>
+                  <text x="140" y="225" font-size="11.5" font-weight="800" fill="#065f46" text-anchor="middle" style="pointer-events:none;">JEMBRANA (Negara)</text>
+  
+                  <!-- 3. Tabanan (Barat Daya & Tengah) -->
+                  <path class="svg-regency-interactive" data-regency="Tabanan" filter="url(#baliShadow)"
+                        d="M 240 165 L 350 145 L 340 230 L 300 295 L 220 285 L 180 255 L 230 220 Z"
+                        fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+                  <text x="265" y="235" font-size="11.5" font-weight="800" fill="#78350f" text-anchor="middle" style="pointer-events:none;">TABANAN</text>
+  
+                  <!-- 4. Badung (Tengah Memanjang ke Selatan) -->
+                  <path class="svg-regency-interactive" data-regency="Badung" filter="url(#baliShadow)"
+                        d="M 350 145 L 390 150 L 380 235 L 410 285 L 415 350 L 390 420 L 360 415 L 375 345 L 340 290 L 340 230 Z"
+                        fill="#f87171" stroke="#dc2626" stroke-width="2"/>
+                  <text x="365" y="325" font-size="10.5" font-weight="800" fill="#7f1d1d" text-anchor="middle" style="pointer-events:none;">BADUNG</text>
+  
+                  <!-- 5. Denpasar (Kota Madya Pesisir Tenggara) -->
+                  <path class="svg-regency-interactive" data-regency="Denpasar" filter="url(#baliShadow)"
+                        d="M 410 285 L 455 290 L 460 335 L 415 350 Z"
+                        fill="#ec4899" stroke="#be185d" stroke-width="2"/>
+                  <text x="435" y="320" font-size="10" font-weight="800" fill="#831843" text-anchor="middle" style="pointer-events:none;">DENPASAR</text>
+  
+                  <!-- 6. Gianyar (Timur Tengah) -->
+                  <path class="svg-regency-interactive" data-regency="Gianyar" filter="url(#baliShadow)"
+                        d="M 390 150 L 445 155 L 470 230 L 455 290 L 410 285 L 380 235 Z"
+                        fill="#a78bfa" stroke="#7c3aed" stroke-width="2"/>
+                  <text x="425" y="225" font-size="11" font-weight="800" fill="#4c1d95" text-anchor="middle" style="pointer-events:none;">GIANYAR</text>
+  
+                  <!-- 7. Bangli (Pegunungan Tengah) -->
+                  <path class="svg-regency-interactive" data-regency="Bangli" filter="url(#baliShadow)"
+                        d="M 445 155 L 485 150 L 515 220 L 470 230 Z"
+                        fill="#818cf8" stroke="#4f46e5" stroke-width="2"/>
+                  <text x="480" y="195" font-size="11" font-weight="800" fill="#312e81" text-anchor="middle" style="pointer-events:none;">BANGLI</text>
+  
+                  <!-- 8. Karangasem (Ujung Timur / Gunung Agung) -->
+                  <path class="svg-regency-interactive" data-regency="Karangasem" filter="url(#baliShadow)"
+                        d="M 500 115 L 600 135 L 670 190 L 640 255 L 545 245 L 515 220 L 530 145 Z"
+                        fill="#fb923c" stroke="#ea580c" stroke-width="2"/>
+                  <text x="585" y="195" font-size="12" font-weight="800" fill="#7c2d12" text-anchor="middle" style="pointer-events:none;">KARANGASEM (Amlapura)</text>
+  
+                  <!-- 9. Klungkung (Daratan + Nusa Penida) -->
+                  <g class="svg-regency-interactive" data-regency="Klungkung" filter="url(#baliShadow)">
+                    <path d="M 470 230 L 545 245 L 525 285 L 460 275 Z" fill="#2dd4bf" stroke="#0d9488" stroke-width="2"/>
+                    <path d="M 550 330 L 610 325 L 625 365 L 565 375 Z" fill="#2dd4bf" stroke="#0d9488" stroke-width="2"/>
+                    <text x="495" y="260" font-size="10.5" font-weight="800" fill="#134e4a" text-anchor="middle" style="pointer-events:none;">KLUNGKUNG</text>
+                    <text x="585" y="355" font-size="10" font-weight="800" fill="#134e4a" text-anchor="middle" style="pointer-events:none;">Nusa Penida</text>
+                  </g>
+  
+                  <!-- Pin Landmark Ikonik Bali -->
+                  <!-- Pura Tanah Lot -->
+                  <g class="svg-landmark-pin" data-landmark="Pura Tanah Lot" transform="translate(260, 290)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">1</text>
+                  </g>
+                  <!-- Uluwatu -->
+                  <g class="svg-landmark-pin" data-landmark="Pura Luhur Uluwatu" transform="translate(365, 415)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">2</text>
+                  </g>
+                  <!-- Besakih -->
+                  <g class="svg-landmark-pin" data-landmark="Pura Agung Besakih" transform="translate(560, 168)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">3</text>
+                  </g>
+                  <!-- Danau Beratan -->
+                  <g class="svg-landmark-pin" data-landmark="Danau & Pura Ulun Danu Beratan" transform="translate(345, 142)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">4</text>
+                  </g>
+                  <!-- Jatiluwih -->
+                  <g class="svg-landmark-pin" data-landmark="Terasering Sawah Jatiluwih" transform="translate(295, 195)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">5</text>
+                  </g>
+                  <!-- Tirta Empul -->
+                  <g class="svg-landmark-pin" data-landmark="Pura Tirta Empul" transform="translate(435, 185)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">6</text>
+                  </g>
+                  <!-- Ubud Monkey Forest -->
+                  <g class="svg-landmark-pin" data-landmark="Mandala Suci Wenara Wana (Monkey Forest)" transform="translate(415, 245)">
+                    <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">7</text>
+                  </g>
+                </svg>
+  
+                <!-- Legend Bar Bali -->
+                <div class="peta-2d-legend-bar">
+                  <span>📍 <strong>Pin Merah 1–7:</strong> Landmark Terkenal (1.Tanah Lot · 2.Uluwatu · 3.Besakih · 4.Bedugul · 5.Jatiluwih · 6.Tirta Empul · 7.Monkey Forest)</span>
+                  <span>🌺 <strong>Kearifan:</strong> Tri Hita Karana & Sistem Subak UNESCO</span>
+                </div>
+              </div>
+  
+              <!-- 8 Kabupaten + 1 Kota Grid (Bersih tanpa undefined) -->
+              <div class="eyebrow" style="margin-top:16px;">
+                <span class="no">🏛️</span>
+                <span class="lbl">${isEn ? '8 Regencies & 1 Administrative City in Bali' : 'Daftar 8 Kabupaten & 1 Kota Madya di Bali'}</span>
+              </div>
+              <div class="bali-grid" style="margin-top:10px;">
+                ${bali.regions.map(r => `
+                  <div class="bali-region-card" id="baliCard_${r.name.replace(/\s+/g, '_')}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                      <span class="region-type">${r.type}</span>
+                      <span style="font-size:24px;">${r.icon}</span>
+                    </div>
+                    <h4 style="margin:4px 0 6px;">${r.name}</h4>
+                    <div class="bali-gov-center">
+                      🏛️ ${t('govCenterLabel', lang)}: <strong>${r.capital}</strong>
+                    </div>
+                    <p style="margin:8px 0 0; font-size:12.5px; color:var(--muted); line-height:1.55;">
+                      ${r.highlight}
+                    </p>
+                  </div>
+                `).join('')}
+              </div>
+  
+              <!-- Landmark Ikonik Bali Explorer -->
+              <div class="eyebrow" style="margin-top:28px;">
+                <span class="no">📍</span>
+                <span class="lbl">${isEn ? '7 Iconic Bali Landmarks & World Heritage' : '7 Destinasi Landmark Ikonik & Warisan Dunia di Bali'}</span>
+              </div>
+              <div class="bali-landmarks-grid">
+                ${landmarks.map((lm, idx) => `
+                  <div class="bali-landmark-item" id="landmarkCard_${idx + 1}">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                      <span style="font-size:22px;">${lm.icon}</span>
+                      <h5 style="margin:0; font-size:14.5px; font-weight:800;">${lm.name}</h5>
+                    </div>
+                    <span class="subject-badge" style="font-size:11px; margin-bottom:8px; display:inline-block;">📍 ${lm.reg}</span>
+                    <p style="margin:0; font-size:12.5px; color:var(--muted); line-height:1.5;">${lm.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+  
+              <!-- Budaya & Tradisi Luhur Bali -->
+              <div class="continent-stats-banner" style="margin-top:24px; background:linear-gradient(135deg, rgba(230,81,0,0.08), rgba(255,178,27,0.12)); border:1px solid #ffb21b;">
+                <h4 style="margin:0 0 10px; font-size:16px; font-weight:800; color:var(--ink);">🌺 ${isEn ? 'Balinese Wisdom & Living Traditions' : 'Kearifan Lokal & Seni Budaya Luhur Bali'}</h4>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; font-size:12.5px; color:var(--muted);">
+                  <div><strong>🌊 Subak:</strong> ${isEn ? 'Egalitarian community irrigation system recognized by UNESCO.' : 'Sistem irigasi sawah tradisional berbasis gotong royong yang diakui UNESCO.'}</div>
+                  <div><strong>🎭 Seni Tari:</strong> ${isEn ? 'Tari Kecak, Tari Barong, Tari Pendet & gamelan semar pegulingan.' : 'Tari Kecak, Tari Barong, Tari Pendet, Legong, dan gamelan Bali.'}</div>
+                  <div><strong>✨ Hari Raya Nyepi:</strong> ${isEn ? 'Balinese New Year of total silence, no lights, and meditation.' : 'Tahun Baru Saka yang hening dengan Catur Brata Penyepian tanpa polusi suara/cahaya.'}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+  
+        case 'asia':
+        case 'europe':
+        case 'africa':
+        case 'americas':
+        case 'oceania': {
+          const continentConfig = {
+            asia: {
+              title: isEn ? 'Asia Continent' : 'Benua Asia',
+              icon: '🌏',
+              filter: 'Asia',
+              stats: [
+                { label: isEn ? 'Area' : 'Luas Wilayah', val: '44,58 juta km² (Terbesar)' },
+                { label: isEn ? 'Population' : 'Populasi', val: '> 4,7 Miliar (Terpadat)' },
+                { label: isEn ? 'Highest Peak' : 'Puncak Tertinggi', val: 'Gunung Everest (8.848 m)' },
+                { label: isEn ? 'Longest River' : 'Sungai Terpanjang', val: 'Sungai Yangtze (6.300 km)' }
+              ],
+              desc: isEn ? 'The largest continent on Earth, spanning from tropical Indonesia to the Himalayas and the Arctic tundra.' : 'Benua terluas di dunia dengan ragam kebudayaan tertua, membentang dari khatulistiwa nusantara hingga puncak Himalaya.'
+            },
+            europe: {
+              title: isEn ? 'Europe Continent' : 'Benua Eropa',
+              icon: '🏰',
+              filter: 'Eropa',
+              stats: [
+                { label: isEn ? 'Area' : 'Luas Wilayah', val: '10,18 juta km²' },
+                { label: isEn ? 'Population' : 'Populasi', val: '± 750 Juta' },
+                { label: isEn ? 'Mountain Range' : 'Pegunungan', val: 'Pegunungan Alpen' },
+                { label: isEn ? 'Longest River' : 'Sungai Terpanjang', val: 'Sungai Volga (3.530 km)' }
+              ],
+              desc: isEn ? 'Known as the Blue Continent with historic castles, advanced science, and classical art heritage.' : 'Dikenal sebagai Benua Biru dengan warisan arsitektur megah, kastil bersejarah, sains modern, dan seni rupa klasik.'
+            },
+            africa: {
+              title: isEn ? 'Africa Continent' : 'Benua Afrika',
+              icon: '🦁',
+              filter: 'Afrika',
+              stats: [
+                { label: isEn ? 'Area' : 'Luas Wilayah', val: '30,37 juta km² (Ke-2 Terbesar)' },
+                { label: isEn ? 'Population' : 'Populasi', val: '± 1,4 Miliar' },
+                { label: isEn ? 'Longest River' : 'Sungai Terpanjang', val: 'Sungai Nil (6.650 km)' },
+                { label: isEn ? 'Largest Desert' : 'Gurun Terluas', val: 'Gurun Sahara (9,2 juta km²)' }
+              ],
+              desc: isEn ? 'The cradle of ancient civilizations, home to incredible wildlife safaris and the immense Sahara Desert.' : 'Benua eksotis dengan sabana satwa liar terbesar, peradaban kuno Mesir piramida, dan Sungai Nil yang panjang.'
+            },
+            americas: {
+              title: isEn ? 'Americas Continent' : 'Benua Amerika',
+              icon: '🗽',
+              filter: 'Amerika',
+              stats: [
+                { label: isEn ? 'Area' : 'Luas Wilayah', val: '42,55 juta km²' },
+                { label: isEn ? 'Population' : 'Populasi', val: '± 1 Miliar' },
+                { label: isEn ? 'Rainforest' : 'Hutan Terluas', val: 'Hutan Hujan Amazon' },
+                { label: isEn ? 'Longest Range' : 'Pegunungan Terpanjang', val: 'Pegunungan Andes (7.000 km)' }
+              ],
+              desc: isEn ? 'Spanning both North and South hemispheres with Niagara Falls, Grand Canyon, and the Amazon lungs of Earth.' : 'Membentang dari kutub utara ke selatan, rumah bagi paru-paru dunia Hutan Amazon dan air terjun spektakuler.'
+            },
+            oceania: {
+              title: isEn ? 'Oceania & Australia' : 'Benua Oseania & Australia',
+              icon: '🦘',
+              filter: 'Oseania',
+              stats: [
+                { label: isEn ? 'Area' : 'Luas Wilayah', val: '8,52 juta km² (Terkecil)' },
+                { label: isEn ? 'Population' : 'Populasi', val: '± 45 Juta' },
+                { label: isEn ? 'Coral Reef' : 'Karang Laut Terbesar', val: 'Great Barrier Reef' },
+                { label: isEn ? 'Endemic Animals' : 'Satwa Khas', val: 'Kanguru, Koala, Platipus' }
+              ],
+              desc: isEn ? 'The island continent surrounded by the Pacific and Indian oceans, celebrated for marsupial wildlife and coral reefs.' : 'Benua kepulauan yang dikelilingi samudra luas, terkenal dengan hewan berkantung kanguru dan terumbu karang raksasa.'
+            }
+          };
+  
+          const cfg = continentConfig[region];
+          const countries = (GEO_DATA.countries || []).filter(c => c.continent.toLowerCase().includes(cfg.filter.toLowerCase()));
+  
+          return `
+            <div class="interactive-map-panel">
+              <div class="interactive-map-header">
+                <div>
+                  <h4 class="interactive-map-title">${cfg.icon} ${cfg.title}</h4>
+                  <p style="font-size:13px; color:var(--muted); margin:4px 0 0;">${cfg.desc}</p>
+                </div>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--surface); font-weight:700;">
+                  🌍 Atlas Regional 2D
+                </span>
+              </div>
+  
+              <!-- Banner Statistik Benua -->
+              <div class="continent-stats-banner">
+                ${cfg.stats.map(s => `
+                  <div class="stat-box">
+                    <div class="stat-val">${s.val}</div>
+                    <div class="stat-label">${s.label}</div>
+                  </div>
+                `).join('')}
+              </div>
+  
+              <div class="eyebrow" style="margin-top:20px;"><span class="no">🗺️</span><span class="lbl">${isEn ? 'Featured Countries in this Continent' : 'Daftar Negara Pilihan di Benua Ini'}</span></div>
+              <div class="country-grid" style="margin-top:12px;">
+                ${countries.map(c => `
+                  <div class="country-card">
+                    <div>
+                      <div class="country-card-header">
+                        <span class="country-flag-icon">${c.flag}</span>
+                        <span class="subject-badge">${c.continent}</span>
+                      </div>
+                      <h4 class="country-name">${c.name} <span class="country-en-sub">(${c.nameEn})</span></h4>
+                      <div class="country-info-row">
+                        <span>🏛️ ${t('capitalLabel', lang)}</span>
+                        <strong>${c.capital}</strong>
+                      </div>
+                      <div class="country-info-row">
+                        <span>💰 ${t('currencyLabel', lang)}</span>
+                        <strong>${c.currency}</strong>
+                      </div>
+                      <div class="country-landmark-box">
+                        <span class="landmark-tag">📍 ${t('landmarkLabel', lang)}</span>
+                        <p class="landmark-text">${c.landmark}</p>
+                      </div>
+                      <div class="country-fun-fact">
+                        <span class="fact-badge">${t('countryFunFactBadge', lang)}</span>
+                        <p>${c.funFact}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+  
+        case 'world':
+        default: {
+          return `
+            <div class="interactive-map-panel">
+              <div class="interactive-map-header">
+                <div>
+                  <h4 class="interactive-map-title">🌍 ${isEn ? 'Planet Earth — 7 Continents & 5 Oceans' : 'Planet Bumi — 7 Benua & 5 Samudra Luas'}</h4>
+                  <p style="font-size:13px; color:var(--muted); margin:4px 0 0;">
+                    ${isEn ? 'Earth is our spherical blue home rotating in space. 70% of its surface is water.' : 'Bumi adalah bola raksasa rumah kita bersama di alam semesta. Sekitar 70% permukaannya tertutup perairan samudra.'}
+                  </p>
+                </div>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--surface); font-weight:700;">
+                  🌐 Ringkasan Dunia 2D
+                </span>
+              </div>
+  
+              <!-- Ringkasan 7 Benua -->
+              <div class="eyebrow" style="margin-top:16px;"><span class="no">🌍</span><span class="lbl">${isEn ? 'The 7 Continents on Earth' : '7 Benua Besar di Muka Bumi'}</span></div>
+              <div class="island-nav-grid" style="margin-top:10px;">
+                <div class="island-card-btn"><strong>🌏 Asia</strong><span>Terluas & terpadat</span></div>
+                <div class="island-card-btn"><strong>🦁 Afrika</strong><span>Gurun Sahara & Nil</span></div>
+                <div class="island-card-btn"><strong>🗽 Amerika Utara</strong><span>Kanada, AS, Meksiko</span></div>
+                <div class="island-card-btn"><strong>🌴 Amerika Selatan</strong><span>Hutan Amazon & Andes</span></div>
+                <div class="island-card-btn"><strong>❄️ Antartika</strong><span>Kutub Selatan es abadi</span></div>
+                <div class="island-card-btn"><strong>🏰 Eropa</strong><span>Benua Biru bersejarah</span></div>
+                <div class="island-card-btn"><strong>🦘 Oseania / Australia</strong><span>Kanguru & Karang Laut</span></div>
+              </div>
+  
+              <!-- 5 Samudra Luas -->
+              <div class="eyebrow" style="margin-top:24px;"><span class="no">🌊</span><span class="lbl">${isEn ? 'The 5 Great Oceans' : '5 Samudra Luas Dunia'}</span></div>
+              <div class="bali-landmarks-grid" style="margin-top:10px;">
+                <div class="bali-landmark-item">
+                  <h5>🌊 Samudra Pasifik</h5>
+                  <p>${isEn ? 'The largest ocean on Earth, covering more area than all land combined.' : 'Samudra terluas dan terdalam di dunia yang mencakup sepertiga permukaan Bumi.'}</p>
+                </div>
+                <div class="bali-landmark-item">
+                  <h5>🚢 Samudra Atlantik</h5>
+                  <p>${isEn ? 'The second largest ocean, separating the Americas from Europe and Africa.' : 'Samudra berbentuk huruf S yang memisahkan Benua Amerika dengan Eropa dan Afrika.'}</p>
+                </div>
+                <div class="bali-landmark-item">
+                  <h5>🏝️ Samudra Hindia</h5>
+                  <p>${isEn ? 'Warm tropical ocean washing the shores of Indonesia, India, and East Africa.' : 'Samudra tropis hangat yang mengelilingi perairan selatan nusantara dan benua Asia.'}</p>
+                </div>
+                <div class="bali-landmark-item">
+                  <h5>🧊 Samudra Arktik</h5>
+                  <p>${isEn ? 'The smallest and shallowest ocean, located around the frozen North Pole.' : 'Samudra paling utara di Kutub Utara yang sebagian besar permukaannya membeku tertutup es.'}</p>
+                </div>
+                <div class="bali-landmark-item">
+                  <h5>❄️ Samudra Selatan / Antarktika</h5>
+                  <p>${isEn ? 'Encircles the entire Antarctic continent with freezing currents and icebergs.' : 'Mengelilingi Benua Antartika dengan arus dingin dan gunung es terapung.'}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        }
       }
     }
   
@@ -7185,6 +10302,90 @@
           if (this.videoModal) {
             this.videoModal.open(title, url);
           }
+        });
+      });
+  
+      // Pasang listener Pusat Jelajah Peta Regional di bawah bola dunia
+      this.attachRegionContentEvents();
+    }
+  
+    attachRegionContentEvents() {
+      const lang = appState.get().lang || 'id';
+  
+      // 1. Region chips (Tab Peta: Indonesia, Bali, Asia, Eropa, dll)
+      const regionChips = this.container.querySelectorAll('.region-chip[data-region]');
+      regionChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const targetRegion = chip.getAttribute('data-region');
+          this.activeRegion = targetRegion;
+          regionChips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+  
+          const contentEl = this.container.querySelector('#geoRegionContent');
+          if (contentEl) {
+            contentEl.innerHTML = this.getRegionContentHtml(this.activeRegion, lang);
+            this.attachRegionContentEvents();
+          }
+        });
+      });
+  
+      // 2. Island filter buttons in Indonesia Map
+      const islandBtns = this.container.querySelectorAll('.island-card-btn[data-map-island]');
+      islandBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.selectedMapIsland = btn.getAttribute('data-map-island');
+          const contentEl = this.container.querySelector('#geoRegionContent');
+          if (contentEl) {
+            contentEl.innerHTML = this.getRegionContentHtml('indonesia', lang);
+            this.attachRegionContentEvents();
+          }
+        });
+      });
+  
+      // 3. Interactive SVG Islands in Indonesia Map (Klik langsung pulau di peta 2D)
+      const svgIslands = this.container.querySelectorAll('.svg-island-interactive[data-island]');
+      svgIslands.forEach(el => {
+        el.addEventListener('click', () => {
+          const isl = el.getAttribute('data-island');
+          this.selectedMapIsland = isl;
+          const contentEl = this.container.querySelector('#geoRegionContent');
+          if (contentEl) {
+            contentEl.innerHTML = this.getRegionContentHtml('indonesia', lang);
+            this.attachRegionContentEvents();
+          }
+        });
+      });
+  
+      // 4. Interactive SVG Regencies in Bali Map (Klik langsung kabupaten di peta Bali)
+      const svgRegencies = this.container.querySelectorAll('.svg-regency-interactive[data-regency]');
+      svgRegencies.forEach(el => {
+        el.addEventListener('click', () => {
+          const reg = el.getAttribute('data-regency');
+          svgRegencies.forEach(r => r.classList.remove('active'));
+          el.classList.add('active');
+  
+          const targetCard = this.container.querySelector(`[id^="baliCard_"][id*="${reg}"]`);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetCard.style.boxShadow = '0 0 0 3px var(--teal)';
+            setTimeout(() => { targetCard.style.boxShadow = ''; }, 1800);
+          }
+        });
+      });
+  
+      // 5. Interactive Landmark Pins in Bali Map
+      const landmarkPins = this.container.querySelectorAll('.svg-landmark-pin[data-landmark]');
+      landmarkPins.forEach(pin => {
+        pin.addEventListener('click', () => {
+          const lmName = pin.getAttribute('data-landmark');
+          const allLmCards = this.container.querySelectorAll('.bali-landmark-item');
+          allLmCards.forEach(c => {
+            if (c.textContent.includes(lmName)) {
+              c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              c.style.boxShadow = '0 0 0 3px #ef4444';
+              setTimeout(() => { c.style.boxShadow = ''; }, 1800);
+            }
+          });
         });
       });
     }
@@ -7569,6 +10770,7 @@
   
   
   
+  
   class App {
     constructor() {
       this.topbarEl = document.getElementById('topbar');
@@ -7579,6 +10781,8 @@
       this.videoModalEl = document.getElementById('videoModal');
   
       // Komponen UI
+      this.aiModal = new AiTutorModalComponent();
+      window.aiTutorModal = this.aiModal;
       this.topbar = new TopbarComponent(this.topbarEl);
       this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
       this.videoModal = new VideoModalComponent(this.videoModalEl);
@@ -7676,88 +10880,128 @@
     renderHome() {
       const state = appState.get();
       const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const progress = store.getProgress();
   
       this.mainEl.innerHTML = `
-        <!-- Hero Banner Ceria -->
-        <section class="hero" id="heroSection">
-          <div class="hero-copy">
-            <div class="pill"><span class="dot"></span> ${t('pill', lang)}</div>
-            <span class="product-mark">SMART STUDY</span>
-            <h1>${t('heroTitlePrefix', lang)}<span>${t('heroTitleAccent', lang)}</span></h1>
-            <h2>${t('heroSubtitle', lang)}</h2>
-            <p class="lead">
-              ${t('heroLead', lang)}
-            </p>
-            <div class="hero-actions">
-              <button class="btn primary" id="heroBtnMath" type="button">
-                ${t('heroBtnMath', lang)}
-              </button>
-              <button class="btn" id="heroBtnGeo" type="button">
-                ${t('heroBtnGeo', lang)}
-              </button>
+        <!-- 1. Dashboard Pelajar Ceria (Greeting, Streak, & Bintang) -->
+        <section class="dashboard-greeting-card" style="background:linear-gradient(135deg, var(--card), var(--surface)); border:1px solid var(--line); border-radius:24px; padding:28px; margin-bottom:28px; box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+            <div>
+              <div class="pill" style="margin-bottom:10px;"><span class="dot"></span> ${isEn ? 'Student Learning Dashboard' : 'Dashboard Pelajar Cerdas'}</div>
+              <h1 style="margin:0 0 8px; font-size:26px; font-weight:850; color:var(--ink);">
+                ${isEn ? 'Welcome Back, Champion! 🌟' : 'Halo Sobat Juara! Semangat Belajar Hari Ini 🌟'}
+              </h1>
+              <p style="margin:0; font-size:14px; color:var(--muted); max-width:600px; line-height:1.6;">
+                ${isEn ? 'Every day is a fresh adventure to collect stars, master new skills, and explore the universe!' : 'Setiap hari adalah petualangan seru untuk menambah ilmu, melatih nalar, dan mengumpulkan bintang prestasi!'}
+              </p>
+            </div>
+  
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+                <span style="font-size:22px;">🔥</span>
+                <strong style="display:block; font-size:18px; color:var(--ink);">${progress.streakDays || 1} ${isEn ? 'Days' : 'Hari'}</strong>
+                <span style="font-size:11px; color:var(--muted);">${isEn ? 'Learning Streak' : 'Streak Semangat'}</span>
+              </div>
+              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+                <span style="font-size:22px;">⭐</span>
+                <strong style="display:block; font-size:18px; color:var(--ink);">${progress.stars || 15}</strong>
+                <span style="font-size:11px; color:var(--muted);">${isEn ? 'Stars Collected' : 'Bintang Juara'}</span>
+              </div>
             </div>
           </div>
   
-          <div class="hero-art">
-            <div class="hero-card-visual">
-              <div class="hero-feature-item">
-                <span class="icon">🧮</span>
-                <div>
-                  <strong>${t('featureMathTitle', lang)}</strong>
-                  <span>${t('featureMathDesc', lang)}</span>
-                </div>
+          <!-- Bar Lanjutkan Belajar Terakhir -->
+          <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="font-size:24px; background:var(--teal-soft); border-radius:12px; padding:6px 10px;">🧮</span>
+              <div>
+                <span style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">${isEn ? 'Continue Where You Left Off:' : 'Lanjutkan Belajar Terakhir:'}</span>
+                <strong style="display:block; font-size:14.5px; color:var(--ink);">${isEn ? 'Mathematics — Math Toolbox (Decomposition & Number Line)' : 'Matematika — Math Toolbox (Pecah Angka & Garis Bilangan)'}</strong>
               </div>
-              <div class="hero-feature-item">
-                <span class="icon">🌍</span>
-                <div>
-                  <strong>${t('featureGeoTitle', lang)}</strong>
-                  <span>${t('featureGeoDesc', lang)}</span>
-                </div>
+            </div>
+            <button class="btn primary" id="btnResumeLearning" type="button">
+              ${isEn ? 'Resume Learning ➔' : 'Lanjutkan Belajar ➔'}
+            </button>
+          </div>
+        </section>
+  
+        <!-- 2. Tantangan Hari Ini & Misi Ceria -->
+        <section style="margin-bottom:32px;">
+          <div style="background:linear-gradient(135deg, rgba(91,224,223,0.12), rgba(255,178,27,0.12)); border:1px solid var(--teal); border-radius:20px; padding:22px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                <span style="font-size:20px;">🎯</span>
+                <h3 style="margin:0; font-size:17px; font-weight:850; color:var(--ink);">${isEn ? 'Daily Quest Ready!' : 'Misi Tantangan Hari Ini Siap!'}</h3>
               </div>
-              <div class="hero-feature-item">
-                <span class="icon">⭐</span>
-                <div>
-                  <strong>${t('featureBadgeTitle', lang)}</strong>
-                  <span>${t('featureBadgeDesc', lang)}</span>
-                </div>
+              <p style="margin:0; font-size:13px; color:var(--muted);">
+                ${isEn ? 'Complete 3 interactive mini quizzes to earn bonus achievement points and unlock new avatars.' : 'Selesaikan 3 kuis interaktif hari ini untuk mendapatkan bonus poin bintang dan lencana pahlawan cilik.'}
+              </p>
+            </div>
+            <button class="btn secondary" id="btnGoToChallenge" type="button" style="background:var(--card); font-weight:750;">
+              ${isEn ? 'Open Daily Challenge 🚀' : 'Buka Tantangan Harian 🚀'}
+            </button>
+          </div>
+        </section>
+  
+        <!-- 3. Dua Modul Flagship Unggulan -->
+        <section style="margin-bottom:36px;">
+          <div class="section-header" style="margin-bottom:18px;">
+            <div class="eyebrow"><span class="no">⭐</span><span class="lbl">${isEn ? 'Featured Interactive Modules' : 'Modul Pembelajaran Unggulan'}</span></div>
+            <h2 class="section-title">${isEn ? 'Master Key Subjects Interactively' : 'Pelajari Modul Unggulan Interaktif'}</h2>
+            <p class="section-sub">${isEn ? 'Explore deep conceptual visualizers for Mathematics and Geography' : 'Dilengkapi visualizer konsep mendalam untuk Matematika dan Geografi'}</p>
+          </div>
+  
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+            <!-- Card Matematika -->
+            <div class="subject-card" data-subject-id="matematika" style="cursor:pointer; border:2px solid var(--teal); background:var(--card); padding:24px;">
+              <div class="subject-card-top" style="margin-bottom:14px;">
+                <div class="subject-icon" style="background:var(--teal-soft); color:var(--teal-soft-ink); font-size:28px;">🧮</div>
+                <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">Flagship v2.0</span>
+              </div>
+              <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Math Toolbox — One Problem, Many Ways!' : 'Math Toolbox — Satu Soal, Banyak Cara!'}</h3>
+              <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
+                ${isEn ? 'Master multi-strategy thinking: Number Bonds, Compensation, Number Line, Base-Ten Blocks, and Soroban Abacus!' : 'Kuasai 9 jurus berpikir fleksibel: Pecah Angka, Number Bonds, Bikin 100, Kompensasi, Garis Bilangan, Balok Satuan, hingga Sempoa Soroban!'}
+              </p>
+              <div class="subject-card-footer" style="padding-top:12px; border-top:1px solid var(--line);">
+                <span style="font-weight:700; color:var(--teal);">${isEn ? '9 Thinking Strategies' : '9 Jurus Berpikir'}</span>
+                <span style="font-weight:800; color:var(--ink);">${isEn ? 'Explore Math ➔' : 'Eksplorasi Matematika ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- Card Geografi -->
+            <div class="subject-card" data-subject-id="geografi" style="cursor:pointer; border:2px solid #2192cf; background:var(--card); padding:24px;">
+              <div class="subject-card-top" style="margin-bottom:14px;">
+                <div class="subject-icon" style="background:rgba(33,146,207,0.15); color:#2192cf; font-size:28px;">🌍</div>
+                <span class="subject-badge" style="background:rgba(33,146,207,0.15); color:#2192cf;">Globe 3D & Peta 2D</span>
+              </div>
+              <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Geography — Earth & 2D Indonesian Map' : 'Geografi — Bumi Bulat & Peta 2D Indonesia'}</h3>
+              <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
+                ${isEn ? 'Turn the enlarged 3D Globe, inspect the interactive 2D Map of Indonesia with 38 provinces, and discover the 9 regencies of Bali!' : 'Putar Globe 3D meja sekolah, jelajahi Peta 2D Interaktif Indonesia 38 provinsi, dan kenali 8 kabupaten + 1 kota di Pulau Bali!'}
+              </p>
+              <div class="subject-card-footer" style="padding-top:12px; border-top:1px solid var(--line);">
+                <span style="font-weight:700; color:#2192cf;">38 Prov & 177 Negara</span>
+                <span style="font-weight:800; color:var(--ink);">${isEn ? 'Explore Geography ➔' : 'Jelajah Geografi ➔'}</span>
               </div>
             </div>
           </div>
         </section>
   
-        <!-- Section: 10 Mata Pelajaran Lengkap -->
-        <section class="section" id="subjectsSection">
-          <div class="section-header">
-            <div class="eyebrow"><span class="no">${t('tenSubjectsEyebrow', lang)}</span><span class="lbl">${t('tenSubjectsBadge', lang)}</span></div>
-            <h2 class="section-title">${t('whatToLearnTitle', lang)}</h2>
-            <p class="section-sub">${t('whatToLearnSub', lang)}</p>
-          </div>
-  
-          <div class="subject-grid">
-            ${SUBJECTS.map(sub => {
-              const displayName = getSubjectName(sub, lang);
-              const badge = getSubjectBadge(sub, lang);
-              const desc = getSubjectDesc(sub, lang);
-  
-              return `
-                <div class="subject-card" data-subject-id="${sub.id}">
-                  <div>
-                    <div class="subject-card-top">
-                      <div class="subject-icon" style="background:${sub.accentLight}; color:${sub.accentColor};">${sub.icon}</div>
-                      <span class="subject-badge" style="background:${sub.accentLight}; color:${sub.accentColor};">${badge}</span>
-                    </div>
-                    <h3>${displayName}</h3>
-                    <p>${desc}</p>
-                  </div>
-                  <div class="subject-card-footer">
-                    <span>${sub.topicsCount} ${t('topicsCountLabel', lang)}</span>
-                    <span>${t('openSubject', lang)}</span>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
+        <!-- 4. Tombol Akses Cepat ke Katalog Lengkap -->
+        <section style="text-align:center; padding:24px; background:var(--surface); border:1px dashed var(--line); border-radius:18px; margin-bottom:36px;">
+          <h4 style="margin:0 0 6px; font-size:16px; font-weight:800; color:var(--ink);">${isEn ? 'Looking for Other Subjects?' : 'Ingin Belajar Mata Pelajaran Lainnya?'}</h4>
+          <p style="margin:0 0 14px; font-size:13px; color:var(--muted);">
+            ${isEn ? 'Check out all 10 subjects including English, Indonesian, Civics, Balinese, Arts, PE, and P5 Projects.' : 'Buka katalog 10 mata pelajaran lengkap: Bahasa Indonesia, Bahasa Inggris, Pancasila, Bahasa Bali, Seni Rupa, PJOK, Agama, dan Proyek P5.'}
+          </p>
+          <button class="btn primary" id="btnOpenAllSubjects" type="button">
+            ${isEn ? 'View All 10 Subjects Catalog 📚' : 'Buka Katalog 10 Mata Pelajaran 📚'}
+          </button>
         </section>
+  
+        <!-- 5. Kutipan Motivasi Pelajar -->
+        <blockquote style="margin:0 0 32px; padding:18px 24px; background:var(--card); border-left:4px solid var(--teal); border-radius:12px; font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.6;">
+          ${isEn ? '“One problem has many ways. Never be afraid to make mistakes, because every step is a beginning of real learning!” — Anabhi Dev Smart Study' : '“Satu soal memiliki banyak cara. Jangan pernah takut salah, karena dari situlah pemikiran kreatif dan rasa ingin tahu kita berkembang!” — Anabhi Dev Smart Study'}
+        </blockquote>
   
         <!-- Footer Aplikasi -->
         <footer class="app-footer">
@@ -7766,22 +11010,29 @@
         </footer>
       `;
   
-      // Pasang event listener untuk card dan tombol hero
-      const heroBtnMath = this.mainEl.querySelector('#heroBtnMath');
-      if (heroBtnMath) {
-        heroBtnMath.addEventListener('click', () => {
+      // Event listeners di dashboard beranda
+      const btnResume = this.mainEl.querySelector('#btnResumeLearning');
+      if (btnResume) {
+        btnResume.addEventListener('click', () => {
           appState.navigate('subject', 'matematika');
         });
       }
   
-      const heroBtnGeo = this.mainEl.querySelector('#heroBtnGeo');
-      if (heroBtnGeo) {
-        heroBtnGeo.addEventListener('click', () => {
-          appState.navigate('subject', 'geografi');
+      const btnChallenge = this.mainEl.querySelector('#btnGoToChallenge');
+      if (btnChallenge) {
+        btnChallenge.addEventListener('click', () => {
+          appState.navigate('tantangan');
         });
       }
   
-      const subjectCards = this.mainEl.querySelectorAll('.subject-card');
+      const btnAll = this.mainEl.querySelector('#btnOpenAllSubjects');
+      if (btnAll) {
+        btnAll.addEventListener('click', () => {
+          appState.navigate('all-subjects');
+        });
+      }
+  
+      const subjectCards = this.mainEl.querySelectorAll('.subject-card[data-subject-id]');
       subjectCards.forEach(card => {
         card.addEventListener('click', () => {
           const id = card.getAttribute('data-subject-id');
@@ -7791,7 +11042,145 @@
     }
   
     renderAllSubjects() {
-      this.renderHome();
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+  
+      let activeCategory = 'all';
+      let searchQuery = '';
+  
+      const renderCatalogGrid = () => {
+        let filtered = SUBJECTS;
+        if (activeCategory === 'core') {
+          filtered = filtered.filter(s => ['matematika', 'geografi', 'bahasa-indonesia', 'bahasa-inggris'].includes(s.id));
+        } else if (activeCategory === 'character') {
+          filtered = filtered.filter(s => ['pancasila', 'agama'].includes(s.id));
+        } else if (activeCategory === 'skills') {
+          filtered = filtered.filter(s => ['seni-rupa', 'pjok'].includes(s.id));
+        } else if (activeCategory === 'local') {
+          filtered = filtered.filter(s => ['bahasa-bali', 'kokurikuler'].includes(s.id));
+        }
+  
+        if (searchQuery.trim()) {
+          const q = searchQuery.trim().toLowerCase();
+          filtered = filtered.filter(s => {
+            const name = getSubjectName(s, lang).toLowerCase();
+            const desc = getSubjectDesc(s, lang).toLowerCase();
+            return name.includes(q) || desc.includes(q);
+          });
+        }
+  
+        const gridEl = this.mainEl.querySelector('#catalogGrid');
+        const countEl = this.mainEl.querySelector('#catalogCount');
+        if (countEl) {
+          countEl.textContent = `${filtered.length} ${isEn ? 'subjects found' : 'mata pelajaran ditemukan'}`;
+        }
+  
+        if (gridEl) {
+          gridEl.innerHTML = filtered.map(sub => {
+            const displayName = getSubjectName(sub, lang);
+            const badge = getSubjectBadge(sub, lang);
+            const desc = getSubjectDesc(sub, lang);
+  
+            return `
+              <div class="subject-card" data-subject-id="${sub.id}" style="cursor:pointer;">
+                <div>
+                  <div class="subject-card-top">
+                    <div class="subject-icon" style="background:${sub.accentLight}; color:${sub.accentColor};">${sub.icon}</div>
+                    <span class="subject-badge" style="background:${sub.accentLight}; color:${sub.accentColor};">${badge}</span>
+                  </div>
+                  <h3>${displayName}</h3>
+                  <p>${desc}</p>
+                </div>
+                <div class="subject-card-footer">
+                  <span>${sub.topicsCount} ${t('topicsCountLabel', lang)} • 6 LKS</span>
+                  <span>${t('openSubject', lang)} ➔</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+  
+          gridEl.querySelectorAll('.subject-card[data-subject-id]').forEach(card => {
+            card.addEventListener('click', () => {
+              const id = card.getAttribute('data-subject-id');
+              appState.navigate('subject', id);
+            });
+          });
+        }
+      };
+  
+      this.mainEl.innerHTML = `
+        <!-- Header Katalog Semua Pelajaran -->
+        <section class="section-header" style="margin-bottom:24px;">
+          <div class="eyebrow"><span class="no">📚</span><span class="lbl">${isEn ? 'Curriculum Directory · Elementary Grades' : 'Direktori Kurikulum Lengkap · SD Fase A & B'}</span></div>
+          <h2 class="section-title">${isEn ? 'All 10 Subjects Catalog' : 'Katalog 10 Mata Pelajaran Lengkap'}</h2>
+          <p class="section-sub">
+            ${isEn ? 'Browse through the complete curriculum. Each subject contains detailed concepts, student worksheets (LKS), and interactive quizzes.' : 'Jelajahi seluruh mata pelajaran sekolah. Setiap pelajaran dilengkapi ringkasan konsep, lembar kerja siswa (LKS), dan kuis interaktif.'}
+          </p>
+        </section>
+  
+        <!-- Bar Pencarian & Filter Kategori -->
+        <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:14px; margin-bottom:28px;">
+          <div class="search-input-box" style="width:100%;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="allSubjectsSearchInput" placeholder="${isEn ? 'Search subjects, topics, or keywords...' : 'Cari nama pelajaran, topik, atau kata kunci...'}">
+          </div>
+  
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div class="island-chips" id="catalogCategoryChips">
+              <button class="chip-btn active" data-cat="all" type="button">
+                ${isEn ? 'All Subjects (10)' : 'Semua Pelajaran (10)'}
+              </button>
+              <button class="chip-btn" data-cat="core" type="button">
+                ${isEn ? 'Core Subjects (4)' : 'Pelajaran Utama (4)'}
+              </button>
+              <button class="chip-btn" data-cat="character" type="button">
+                ${isEn ? 'Character & Civics (2)' : 'Karakter & Nilai (2)'}
+              </button>
+              <button class="chip-btn" data-cat="skills" type="button">
+                ${isEn ? 'Arts & PE (2)' : 'Seni & Raga (2)'}
+              </button>
+              <button class="chip-btn" data-cat="local" type="button">
+                ${isEn ? 'Local & P5 Project (2)' : 'Muatan Lokal & P5 (2)'}
+              </button>
+            </div>
+            <div id="catalogCount" style="font-weight:750; font-size:13px; color:var(--teal);">
+              10 ${isEn ? 'subjects found' : 'mata pelajaran'}
+            </div>
+          </div>
+        </div>
+  
+        <!-- Grid Daftar Mata Pelajaran -->
+        <div class="subject-grid" id="catalogGrid"></div>
+  
+        <!-- Footer Aplikasi -->
+        <footer class="app-footer" style="margin-top:40px;">
+          <strong>AnabhiDev Smart Study</strong> — ${t('pill', lang)}<br>
+          ${t('developmentCredit', lang)} · 2026
+        </footer>
+      `;
+  
+      // Pasang listener input pencarian
+      const searchInput = this.mainEl.querySelector('#allSubjectsSearchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value;
+          renderCatalogGrid();
+        });
+      }
+  
+      // Pasang listener chip kategori
+      const catChips = this.mainEl.querySelectorAll('#catalogCategoryChips .chip-btn');
+      catChips.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catChips.forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          activeCategory = btn.getAttribute('data-cat');
+          renderCatalogGrid();
+        });
+      });
+  
+      renderCatalogGrid();
     }
   }
   
