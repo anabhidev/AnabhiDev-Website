@@ -286,6 +286,114 @@ export const KOKURIKULER_DATA = {
                 "hint": "Water unlocks germination and light fuels growth."
         }
 ]
-    }
+    },
+    {
+      "id": "p5-bazar-wirausaha",
+    "title": "Kewirausahaan Cilik: Bazar Minuman Sehat Jeruk Peras",
+    "titleEn": "Little Entrepreneurs: Fresh Orange Juice Stand",
+    "desc": "Belajar berwirausaha melatih kreativitas, kerja sama tim, dan kejujuran berhitung. Siswa bersama kelompok menyiapkan buah jeruk segar, memeras dengan alat manual, menghitung modal belanja, melayani pembeli dengan 3S (Senyum, Salam, Sapa), dan mencatat hasil penjualan!",
+    "descEn": "Early entrepreneurship builds teamwork, financial honesty, and customer courtesy. Students collaborate to squeeze fresh orange juice, compute ingredient costs, serve peers with warm smiles, and record earnings!",
+    "checklist": [
+      "Misi 1: Hitung modal membeli 10 buah jeruk dan gelas kertas bersama kelompokmu.",
+      "Misi 2: Praktikkan 3S (Senyum, Salam, Sapa) saat melayani teman yang membeli minuman.",
+      "Misi 3: Hitung total uang hasil penjualan dan pisahkan modal dengan keuntungan bersih."
+    ],
+    "checklistEn": [
+      "Mission 1: Calculate total ingredient expenses for 10 fresh oranges and paper cups.",
+      "Mission 2: Practice warm hospitality (Smile, Greet, Thank) when serving peer customers.",
+      "Mission 3: Tally final cash receipts and separate initial costs from net earnings."
+    ],
+    "activities": [
+      {
+        "q": "Sikap pedagang cilik yang jujur dan disenangi pembeli adalah...",
+        "options": [
+          "Melayani dengan senyuman ramah dan mengembalikan kembalian tepat",
+          "Mengurangi takaran sembunyi-sembunyi",
+          "Marah jika pembeli bertanya",
+          "Memberi kembalian palsu"
+        ],
+        "answer": "Melayani dengan senyuman ramah dan mengembalikan kembalian tepat",
+        "hint": "Kejujuran adalah modal utama dalam berwirausaha yang sukses berkah."
+      },
+      {
+        "q": "Jika modal membeli bahan Rp 10.000 dan hasil penjualan terkumpul Rp 15.000, maka kita mendapat...",
+        "options": [
+          "Keuntungan (laba) sebesar Rp 5.000",
+          "Rugi Rp 5.000",
+          "Habis modal",
+          "Tidak ada hasil"
+        ],
+        "answer": "Keuntungan (laba) sebesar Rp 5.000",
+        "hint": "Laba = Uang Hasil Penjualan dikurangi Modal Awal."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "An honest young shopkeeper always...",
+        "options": [
+          "Serves with cheerful smiles and provides exact change",
+          "Cheats on measurements",
+          "Scolds customers",
+          "Overcharges"
+        ],
+        "answer": "Serves with cheerful smiles and provides exact change",
+        "hint": "Integrity wins customer trust!"
+      }
+    ]
+  },
+  {
+    "id": "p5-exhibition-day",
+    "title": "Pameran Portofolio & Perayaan Hari Belajar (Exhibition Day)",
+    "titleEn": "Learning Exhibition Day & Portfolio Celebration",
+    "desc": "Perayaan Belajar (Exhibition Day) adalah puncak apresiasi Projek P5 di akhir semester. Siswa mendekorasi stan pameran kelas, memajang karya kolase alam, tanaman pot daur ulang, celengan kreatif, dan mempresentasikan hasil belajarnya kepada orang tua yang hadir!",
+    "descEn": "Exhibition Day is the joyful culmination of P5 projects. Students decorate classroom display booths, exhibit nature collages, recycled planters, and handmade piggy banks, explaining their creations to visiting parents!",
+    "checklist": [
+      "Misi 1: Pilih 3 karya portofolio paling membanggakan selama belajar semester ini.",
+      "Misi 2: Hias stan pameran mejamu dengan taplak rapi dan papan nama karya bertulisan indah.",
+      "Misi 3: Sambut orang tua dan guru dengan presentasi ceria: \"Selamat datang di stanku!\""
+    ],
+    "checklistEn": [
+      "Mission 1: Curate your 3 proudest creative artifacts accomplished this school semester.",
+      "Mission 2: Decorate your display desk with neat runners and artistic label cards.",
+      "Mission 3: Welcome visiting parents and teachers with enthusiastic presentations!"
+    ],
+    "activities": [
+      {
+        "q": "Tujuan utama diadakannya Perayaan Hari Belajar (Exhibition Day) adalah...",
+        "options": [
+          "Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya",
+          "Mencari juara 1 dan menjatuhkan yang lain",
+          "Menjual barang mahal",
+          "Hanya piknik"
+        ],
+        "answer": "Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya",
+        "hint": "P5 menekankan penguatan karakter dan kebanggaan atas karya sendiri."
+      },
+      {
+        "q": "Saat orang tua berkunjung ke meja pameranmu, sikap yang tepat adalah...",
+        "options": [
+          "Menjelaskan cerita di balik karyamu dengan bangga dan santun",
+          "Kabur sembunyi di bawah meja",
+          "Meminta pulang cepat",
+          "Menangis tersedu-sedu"
+        ],
+        "answer": "Menjelaskan cerita di balik karyamu dengan bangga dan santun",
+        "hint": "Orang tua sangat senang dan bangga mendengar celoteh cerdas putranya!"
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Primary goal of the P5 Learning Exhibition Day:",
+        "options": [
+          "Celebrate student learning journeys and appreciate creative efforts",
+          "Compete aggressively",
+          "Sell expensive trinkets",
+          "Skip classes"
+        ],
+        "answer": "Celebrate student learning journeys and appreciate creative efforts",
+        "hint": "Affirming character, collaboration, and joyful growth."
+      }
+    ]
+  }
   ]
 };

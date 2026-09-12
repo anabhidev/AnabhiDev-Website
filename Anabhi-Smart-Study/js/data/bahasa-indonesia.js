@@ -303,6 +303,147 @@ export const BAHASA_INDONESIA_DATA = {
                 "hint": "Diligent preparation brings safety and happiness."
         }
 ]
-    }
+    },
+    {
+      "id": "bi-kalimat-tanya",
+    "title": "Kalimat Tanya & 6 Kata Ajaib Tanya (5W1H)",
+    "titleEn": "Question Sentences & Question Words",
+    "desc": "Kalimat tanya digunakan untuk mencari tahu hal yang belum kita ketahui. Selalu diakhiri dengan tanda tanya (?). Ada 6 kata tanya sakti: APA (benda/kejadian), SIAPA (orang), DI MANA (tempat), KAPAN (waktu), MENGAPA (alasan), dan BAGAIMANA (cara/keadaan)!",
+    "descEn": "Question sentences help us discover new knowledge and are always sealed with a question mark (?). We use: WHAT (objects/events), WHO (people), WHERE (places), WHEN (time), WHY (reasons), and HOW (manners/states)!",
+    "checklist": [
+      "Misi 1: Gunakan kata \"Siapa\" untuk menanyakan nama lengkap teman barumu di kelas.",
+      "Misi 2: Cari dan lingkari tanda tanya (?) pada buku cerita kesukaanmu.",
+      "Misi 3: Susunlah 3 kalimat tanya sopan yang ditujukan kepada Ayah, Ibu, atau Bapak/Ibu Guru."
+    ],
+    "checklistEn": [
+      "Mission 1: Use the word \"Who\" to politely ask a new classmate their name.",
+      "Mission 2: Find and circle question marks (?) in your favorite storybook.",
+      "Mission 3: Formulate 3 respectful questions addressed to your parents or teacher."
+    ],
+    "activities": [
+      {
+        "q": "Kata tanya yang tepat untuk menanyakan nama seseorang adalah...",
+        "options": [
+          "Siapa",
+          "Kapan",
+          "Berapa",
+          "Di mana"
+        ],
+        "answer": "Siapa",
+        "hint": "\"... namamu?\" -> Siapa namamu?"
+      },
+      {
+        "q": "Tanda baca yang wajib ditaruh di akhir kalimat tanya adalah...",
+        "options": [
+          "Tanda tanya (?)",
+          "Tanda titik (.)",
+          "Tanda seru (!)",
+          "Tanda koma (,)"
+        ],
+        "answer": "Tanda tanya (?)",
+        "hint": "Bentuknya seperti kait payung dengan titik di bawahnya ❓"
+      },
+      {
+        "q": "\"... kamu tinggal?\" Kata tanya yang tepat untuk menanyakan tempat tinggal adalah...",
+        "options": [
+          "Di mana",
+          "Siapa",
+          "Mengapa",
+          "Kapan"
+        ],
+        "answer": "Di mana",
+        "hint": "Menanyakan lokasi atau tempat keberadaan rumah 🏡"
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Which word asks for a person's name?",
+        "options": [
+          "Who",
+          "When",
+          "How much",
+          "Where"
+        ],
+        "answer": "Who",
+        "hint": "\"Who are you?\" asks about a person."
+      },
+      {
+        "q": "What punctuation ends every question?",
+        "options": [
+          "Question mark (?)",
+          "Period (.)",
+          "Exclamation mark (!)",
+          "Comma (,)"
+        ],
+        "answer": "Question mark (?)",
+        "hint": "It curves like an umbrella handle ❓"
+      }
+    ]
+  },
+  {
+    "id": "bi-cerita-pengalaman",
+    "title": "Bercerita Pengalaman Diri & Membuat Kartu Ceria",
+    "titleEn": "Sharing Personal Experiences & Crafting Cheerful Cards",
+    "desc": "Setiap anak memiliki pengalaman seru yang berharga, seperti membantu ibu memasak, bermain bola bersama teman, atau memelihara kucing. Menceritakan pengalaman melatih keberanian berbicara di depan kelas dan menumbuhkan rasa percaya diri!",
+    "descEn": "Every child holds delightful personal stories, like cooking with mom, playing soccer with pals, or caring for pets. Sharing real experiences cultivates classroom confidence and expressive storytelling!",
+    "checklist": [
+      "Misi 1: Ceritakan kegiatan pagimu hari ini dalam 3 kalimat berurutan (bangun tidur - mandi - sarapan).",
+      "Misi 2: Buatlah kartu ucapan terima kasih berhias bunga untuk Ibu atau Ayah tercinta.",
+      "Misi 3: Tuliskan cita-cita impianmu dengan huruf tegak yang rapi di buku catatan."
+    ],
+    "checklistEn": [
+      "Mission 1: Describe your morning routine today in 3 sequential sentences.",
+      "Mission 2: Craft a colorful thank-you card with flowers for your beloved parents.",
+      "Mission 3: Write down your dream future profession neatly in your notebook."
+    ],
+    "activities": [
+      {
+        "q": "Saat menceritakan pengalaman di depan kelas, sikap tubuh kita sebaiknya...",
+        "options": [
+          "Berdiri tegak, tersenyum, dan suara jelas terdengar",
+          "Menunduk dan berbisik malu",
+          "Membelakangi teman-teman",
+          "Tertawa berlebihan tanpa bicara"
+        ],
+        "answer": "Berdiri tegak, tersenyum, dan suara jelas terdengar",
+        "hint": "Percaya diri dan ramah membuat pendengar senang mendengarkan ceritamu!"
+      },
+      {
+        "q": "Tulisan \"Terima kasih Ayah dan Ibu atas kasih sayangnya\" cocok ditulis di dalam...",
+        "options": [
+          "Kartu ucapan kasih sayang",
+          "Buku nota belanjaan",
+          "Kamus bahasa",
+          "Tiket karcis"
+        ],
+        "answer": "Kartu ucapan kasih sayang",
+        "hint": "Ungkapan tulus untuk orang tua yang merawat kita ❤️"
+      },
+      {
+        "q": "Urutan bercerita yang runtut dimulai dari...",
+        "options": [
+          "Awal kejadian, jalannya peristiwa, lalu akhir cerita",
+          "Akhir cerita dulu baru awal",
+          "Acak sesuka hati",
+          "Hanya bagian lucunya saja"
+        ],
+        "answer": "Awal kejadian, jalannya peristiwa, lalu akhir cerita",
+        "hint": "Kronologis: ada permulaan, isi kegiatan, dan kesan penutup."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "When sharing a story in front of class, we should...",
+        "options": [
+          "Stand straight, smile, and speak clearly",
+          "Hide our face and whisper",
+          "Turn our back to friends",
+          "Run out of class"
+        ],
+        "answer": "Stand straight, smile, and speak clearly",
+        "hint": "Confidence and warmth captivate your audience!"
+      }
+    ]
+  }
   ]
 };

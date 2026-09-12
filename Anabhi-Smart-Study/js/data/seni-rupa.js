@@ -287,6 +287,114 @@ export const SENI_RUPA_DATA = {
                 "hint": "Starfruit features 5 distinct ridges."
         }
 ]
-    }
+    },
+    {
+      "id": "seni-origami-kertas",
+    "title": "Seni Melipat Kertas (Origami Ceria: Perahu & Burung)",
+    "titleEn": "Paper Folding Art (Origami: Boats & Birds)",
+    "desc": "Melipat kertas adalah seni tradisional yang mengasah ketelitian tangan dan koordinasi mata. Dari selembar kertas persegi warna-warni, kita bisa membuat perahu layar yang bisa mengapung, kodok yang bisa melompat, atau burung bangau yang cantik!",
+    "descEn": "Origami sharpens fine-motor precision and spatial thinking. Transform a single colorful square sheet into a floating sailboat, a leaping frog, or an elegant swan without using scissors or glue!",
+    "checklist": [
+      "Misi 1: Lipat perahu kertas sederhana lalu uji apakah bisa terapung di mangkuk air.",
+      "Misi 2: Buat lipatan kepala anjing atau kucing lucu dan beri mata dengan spidol hitam.",
+      "Misi 3: Pastikan setiap garis lipatan ditekan rapi dengan ujung kuku agar bentuknya simetris."
+    ],
+    "checklistEn": [
+      "Mission 1: Fold a simple paper sailboat and test if it floats in a bowl of water.",
+      "Mission 2: Craft a cute origami cat/dog face and draw whiskers with a marker.",
+      "Mission 3: Crease every fold crisply with your fingernail for symmetrical perfection."
+    ],
+    "activities": [
+      {
+        "q": "Bentuk kertas dasar yang paling sering dipakai dalam seni melipat origami adalah...",
+        "options": [
+          "Persegi / bujur sangkar sama sisi 🟧",
+          "Lingkaran bundar",
+          "Bintang",
+          "Garis lurus"
+        ],
+        "answer": "Persegi / bujur sangkar sama sisi 🟧",
+        "hint": "Kertas origami memiliki keempat sisi yang sama panjang."
+      },
+      {
+        "q": "Keterampilan yang dilatih saat melipat kertas origami adalah...",
+        "options": [
+          "Ketelitian, kesabaran, dan motorik halus tangan",
+          "Berlari cepat",
+          "Bicara keras",
+          "Menendang bola"
+        ],
+        "answer": "Ketelitian, kesabaran, dan motorik halus tangan",
+        "hint": "Jari jemari menjadi terampil, luwes, dan sabar menekuk kertas."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "The most common paper shape used in origami is...",
+        "options": [
+          "Square with equal sides 🟧",
+          "Circle",
+          "Triangle",
+          "Wavy strip"
+        ],
+        "answer": "Square with equal sides 🟧",
+        "hint": "Four identical sides and corners."
+      }
+    ]
+  },
+  {
+    "id": "seni-apresiasi-karya",
+    "title": "Apresiasi Karya Seni: Memamerkan Gambar Sendiri",
+    "titleEn": "Art Appreciation: Exhibiting & Presenting Artwork",
+    "desc": "Setiap goresan gambar anak-anak memiliki cerita dan keunikan tersendiri. Menjelaskan gambar sendiri di depan teman melatih rasa percaya diri. Menghargai karya teman dengan kata-kata pujian yang baik menumbuhkan rasa persahabatan!",
+    "descEn": "Every artwork is an authentic expression of imagination. Presenting your own drawing in front of friends fosters pride, while offering genuine compliments to classmates nurtures warm artistic fellowship!",
+    "checklist": [
+      "Misi 1: Pilih 1 gambar terbaik buatanmu dan ceritakan maknanya kepada Ayah atau Ibu.",
+      "Misi 2: Berikan 1 kata pujian tulus (\"Gambarmu indah sekali warnanya!\") kepada teman sekelas.",
+      "Misi 3: Buat bingkai tepi sederhana dari kertas karton untuk memajang karyamu di dinding kamar."
+    ],
+    "checklistEn": [
+      "Mission 1: Select your best drawing and explain its story proudly to your parents.",
+      "Mission 2: Give a sincere compliment to a classmate's artwork.",
+      "Mission 3: Craft a simple border frame out of cardboard to display on your bedroom wall."
+    ],
+    "activities": [
+      {
+        "q": "Sikap yang baik ketika teman sedang memamerkan hasil gambarnya adalah...",
+        "options": [
+          "Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi",
+          "Mengejek gambarnya jelek",
+          "Mengabaikan sambil bermain sendiri",
+          "Merobek gambarnya"
+        ],
+        "answer": "Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi",
+        "hint": "Saling menghargai membuat semua anak makin semangat berkarya! 👏"
+      },
+      {
+        "q": "Kumpulan hasil karya seni dan lembar tugas siswa yang disimpan rapi disebut...",
+        "options": [
+          "Portofolio karya seni",
+          "Koran bekas",
+          "Katalog belanja",
+          "Buku telepon"
+        ],
+        "answer": "Portofolio karya seni",
+        "hint": "Koleksi dokumentasi kemajuan belajar anak dari awal hingga akhir semester."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "How should we react when a friend exhibits their artwork?",
+        "options": [
+          "Listen warmly and applaud enthusiastically 👏",
+          "Tease them meanly",
+          "Rip their paper",
+          "Look away"
+        ],
+        "answer": "Listen warmly and applaud enthusiastically 👏",
+        "hint": "Kind encouragement inspires everyone!"
+      }
+    ]
+  }
   ]
 };

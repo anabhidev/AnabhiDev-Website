@@ -286,6 +286,114 @@ export const PJOK_DATA = {
                 "hint": "Natural garden produce nourishes our organs."
         }
 ]
-    }
+    },
+    {
+      "id": "pjok-aktivitas-air",
+    "title": "Pengenalan Aktivitas Air & Keselamatan Kolam",
+    "titleEn": "Water Activities & Swimming Pool Safety",
+    "desc": "Bermain air sangat menyenangkan dan menyegarkan tubuh! Namun kita harus selalu berhati-hati di sekitar kolam renang: jangan pernah berlari di tepi kolam yang licin, selalu didampingi orang tua/guru, lakukan pemanasan sebelum masuk air, dan belajar bernapas dengan teknik bubbling!",
+    "descEn": "Splashing in water is delightful and healthy! However, pool safety is essential: never run on slippery wet decks, always swim under adult supervision, warm up properly, and practice blowing rhythmic bubbles!",
+    "checklist": [
+      "Misi 1: Hafalkan aturan penting kolam renang: berjalan hati-hati, tidak boleh berlari di lantai basah.",
+      "Misi 2: Lakukan pemanasan peregangan tangan dan kaki selama 5 menit sebelum masuk air.",
+      "Misi 3: Latihan meniup gelembung air (bubbling) di baskom atau kolam dangkal bersama orang tua."
+    ],
+    "checklistEn": [
+      "Mission 1: Remember vital safety rules: walk cautiously, never run on wet pool decks.",
+      "Mission 2: Perform 5 minutes of arm and leg stretching exercises before entering water.",
+      "Mission 3: Practice blowing rhythmic water bubbles in shallow water with adult supervision."
+    ],
+    "activities": [
+      {
+        "q": "Mengapa dilarang berlari di lantai sekitar tepi kolam renang?",
+        "options": [
+          "Karena lantainya basah dan licin, rawan terpeleset jatuh",
+          "Supaya tidak berkeringat",
+          "Supaya kolamnya sepi",
+          "Hanya larangan tanpa alasan"
+        ],
+        "answer": "Karena lantainya basah dan licin, rawan terpeleset jatuh",
+        "hint": "Keselamatan nomor satu! Berjalanlah dengan tenang di area basah."
+      },
+      {
+        "q": "Sebelum menceburkan diri ke dalam air kolam, kita wajib melakukan...",
+        "options": [
+          "Pemanasan dan peregangan otot",
+          "Makan makanan berat",
+          "Tidur terlentang",
+          "Minum soda"
+        ],
+        "answer": "Pemanasan dan peregangan otot",
+        "hint": "Pemanasan mencegah otot mengalami kram saat berenang."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Why is running prohibited near the swimming pool deck?",
+        "options": [
+          "The wet tiles are slippery and risky for falling",
+          "To avoid sweating",
+          "To keep it quiet",
+          "No reason"
+        ],
+        "answer": "The wet tiles are slippery and risky for falling",
+        "hint": "Safety first: always walk calmly on wet surfaces."
+      }
+    ]
+  },
+  {
+    "id": "pjok-pola-tidur",
+    "title": "Istirahat Cukup & Pola Tidur Sehat Anak Sekolah",
+    "titleEn": "Adequate Rest & Healthy Sleep Habits for Schoolers",
+    "desc": "Setelah seharian belajar dan berolahraga, tubuh kita membutuhkan istirahat untuk memulihkan energi dan tumbuh tinggi. Anak usia SD membutuhkan tidur nyenyak selama 9–10 jam setiap malam. Tidur tepat waktu membuat kita bangun segar, ceria, dan tidak mengantuk di kelas!",
+    "descEn": "After a lively day of learning and sports, our body repairs tissues and grows taller during sleep. Primary schoolers need 9–10 hours of sound sleep each night. Early bedtime yields energized morning vigor!",
+    "checklist": [
+      "Misi 1: Pasang jam tidur malam teratur, maksimal pukul 20.30–21.00 sudah terlelap.",
+      "Misi 2: Menggosok gigi dan mematikan gawai/layar ponsel minimal 30 menit sebelum tidur.",
+      "Misi 3: Merapikan selimut dan bantal sendiri begitu bangun pagi dengan rasa syukur."
+    ],
+    "checklistEn": [
+      "Mission 1: Set a regular bedtime schedule, falling asleep peacefully by 8:30–9:00 PM.",
+      "Mission 2: Brush your teeth and turn off all digital screens 30 minutes before sleep.",
+      "Mission 3: Make your bed and fold blankets independently upon waking up."
+    ],
+    "activities": [
+      {
+        "q": "Berapa jam durasi tidur malam yang ideal untuk anak usia SD Kelas 1?",
+        "options": [
+          "9 sampai 10 jam setiap malam",
+          "Hanya 3 jam",
+          "15 jam sepanjang hari",
+          "1 jam saja"
+        ],
+        "answer": "9 sampai 10 jam setiap malam",
+        "hint": "Tidur yang cukup membantu pertumbuhan tulang, otak, dan daya tahan tubuh."
+      },
+      {
+        "q": "Akibat buruk jika sering begadang dan tidur larut malam adalah...",
+        "options": [
+          "Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar",
+          "Makin pintar",
+          "Tubuh makin kuat",
+          "Nilai selalu 100"
+        ],
+        "answer": "Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar",
+        "hint": "Kurang tidur membuat daya tangkap otak melambat dan mudah mengantuk."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Ideal night sleep duration for Grade 1 children is...",
+        "options": [
+          "9 to 10 hours every night",
+          "3 hours",
+          "15 hours non-stop",
+          "1 hour"
+        ],
+        "answer": "9 to 10 hours every night",
+        "hint": "Sleep fuels brain and body development."
+      }
+    ]
+  }
   ]
 };

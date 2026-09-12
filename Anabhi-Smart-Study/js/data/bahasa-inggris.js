@@ -314,6 +314,158 @@ export const ENGLISH_DATA = {
                 "hint": "Count: 1 to 10 on both hands!"
         }
 ]
-    }
+    },
+    {
+      "id": "en-animals-zoo",
+    "title": "Wild Animals & Farm Friends",
+    "titleEn": "Wild Animals & Farm Friends",
+    "desc": "Animals live in nature, on peaceful farms, and in zoos! Farm animals like cows (moo!), ducks (quack!), and sheep (baa!) help us. Wild animals like roaring lions, tall giraffes, and mighty elephants roam majestic grasslands!",
+    "descEn": "Animals thrive on peaceful farms and in the wild! Learn names and sounds: cows moo, ducks quack, sheep baa, while lions roar and elephants trumpet in safari lands!",
+    "checklist": [
+      "Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.",
+      "Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.",
+      "Mission 3: Draw a safari animal and write: \"This is a [lion/elephant]!\""
+    ],
+    "checklistEn": [
+      "Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.",
+      "Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.",
+      "Mission 3: Draw a safari animal and write: \"This is a [lion/elephant]!\""
+    ],
+    "activities": [
+      {
+        "q": "What sound does a duck make in English?",
+        "options": [
+          "Quack! Quack!",
+          "Moo! Moo!",
+          "Meow! Meow!",
+          "Roar! Roar!"
+        ],
+        "answer": "Quack! Quack!",
+        "hint": "Ducks swim in ponds and quack merrily 🦆"
+      },
+      {
+        "q": "Which animal has a very long neck to reach tall tree leaves?",
+        "options": [
+          "Giraffe",
+          "Elephant",
+          "Rabbit",
+          "Monkey"
+        ],
+        "answer": "Giraffe",
+        "hint": "The tallest yellow spotted mammal in the savanna 🦒"
+      },
+      {
+        "q": "\"An ELEPHANT is very...\"",
+        "options": [
+          "Big and strong",
+          "Tiny and small",
+          "Flying in the sky",
+          "Swimming like a fish"
+        ],
+        "answer": "Big and strong",
+        "hint": "Elephants have long trunks and huge ears 🐘"
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "What sound does a duck make?",
+        "options": [
+          "Quack! Quack!",
+          "Moo! Moo!",
+          "Meow! Meow!",
+          "Roar! Roar!"
+        ],
+        "answer": "Quack! Quack!",
+        "hint": "Ducks say quack 🦆"
+      },
+      {
+        "q": "Which animal has a long neck?",
+        "options": [
+          "Giraffe",
+          "Elephant",
+          "Rabbit",
+          "Turtle"
+        ],
+        "answer": "Giraffe",
+        "hint": "The tall yellow mammal 🦒"
+      }
+    ]
+  },
+  {
+    "id": "en-weather-seasons",
+    "title": "Weather, Seasons & Clothes to Wear",
+    "titleEn": "Weather, Seasons & Clothes to Wear",
+    "desc": "The sky changes every day! It can be sunny (warm sunshine), rainy (bring an umbrella!), cloudy (clouds cover the sun), or windy (leaves fly around!). We wear warm jackets when it is cold and t-shirts when it is hot!",
+    "descEn": "Observe the sky outside! Learn weather words: sunny, rainy, cloudy, windy, and match with proper attire like raincoats, hats, t-shirts, and shoes!",
+    "checklist": [
+      "Mission 1: Look out the window and describe today's weather: \"Today is sunny/rainy!\"",
+      "Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).",
+      "Mission 3: Sing the English song: \"Rain, rain, go away, come again another day!\""
+    ],
+    "checklistEn": [
+      "Mission 1: Look out the window and describe today's weather: \"Today is sunny/rainy!\"",
+      "Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).",
+      "Mission 3: Sing the English song: \"Rain, rain, go away, come again another day!\""
+    ],
+    "activities": [
+      {
+        "q": "When it is RAINING heavily, we should bring an...",
+        "options": [
+          "Umbrella ☂️",
+          "Ice cream 🍦",
+          "Sunglasses 🕶️",
+          "Fan"
+        ],
+        "answer": "Umbrella ☂️",
+        "hint": "An umbrella shields us from raindrops!"
+      },
+      {
+        "q": "On a bright SUNNY day, the sky is bright and we see the...",
+        "options": [
+          "Sun ☀️",
+          "Snow ❄️",
+          "Stars at noon",
+          "Thunder"
+        ],
+        "answer": "Sun ☀️",
+        "hint": "The golden sun shines brightly in the blue sky."
+      },
+      {
+        "q": "\"Put on your ... to protect your feet when walking outside.\"",
+        "options": [
+          "Shoes 👟",
+          "Hat 🧢",
+          "Gloves",
+          "Scarf"
+        ],
+        "answer": "Shoes 👟",
+        "hint": "We wear comfortable shoes on our feet."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "When it rains, carry an...",
+        "options": [
+          "Umbrella ☂️",
+          "Ice cream",
+          "Sunglasses",
+          "Pillow"
+        ],
+        "answer": "Umbrella ☂️",
+        "hint": "Shields from rain!"
+      },
+      {
+        "q": "Sunny day features the bright...",
+        "options": [
+          "Sun ☀️",
+          "Snow",
+          "Raincoat",
+          "Flashlight"
+        ],
+        "answer": "Sun ☀️",
+        "hint": "Golden ball in the sky!"
+      }
+    ]
+  }
   ]
 };

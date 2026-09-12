@@ -22,7 +22,7 @@ export const SUBJECTS = [
     accentBorder: '#5be0df',
     description: 'Bongkar angka dengan trik seru! Ada 9 jurus berhitung asyik.',
     descriptionEn: 'Explore numbers with fun tricks! 9 exciting calculation tools.',
-    topicsCount: 4,
+    topicsCount: 9,
     order: 1
   },
   {
@@ -40,7 +40,7 @@ export const SUBJECTS = [
     accentBorder: '#5ce3de',
     description: 'Kenali bentuk Bumi, 38 provinsi Indonesia, negara dunia, kota terkenal, dan Pulau Bali!',
     descriptionEn: 'Discover round Earth, 38 Indonesian provinces, world countries, famous cities, and Bali!',
-    topicsCount: 5,
+    topicsCount: 10,
     order: 2
   },
   {
@@ -58,7 +58,7 @@ export const SUBJECTS = [
     accentBorder: '#f89a6b',
     description: 'Mengenal huruf vokal, konsonan, suku kata, dan menyusun kalimat seru.',
     descriptionEn: 'Learn vowels, consonants, syllables, and assemble cheerful sentences.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 3
   },
   {
@@ -76,7 +76,7 @@ export const SUBJECTS = [
     accentBorder: '#7ea9eb',
     description: 'Belajar sapaan, warna, angka, dan binatang dalam bahasa Inggris.',
     descriptionEn: 'Learn greetings, colors, numbers, and friendly animals in English.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 4
   },
   {
@@ -94,7 +94,7 @@ export const SUBJECTS = [
     accentBorder: '#e87272',
     description: 'Mengenal lambang Garuda, nilai gotong royong, dan aturan tertib di sekolah.',
     descriptionEn: 'Discover the Garuda emblem, teamwork values, and positive school habits.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 5
   },
   {
@@ -112,7 +112,7 @@ export const SUBJECTS = [
     accentBorder: '#e8c468',
     description: 'Mengenal kruna dasar, salam harian, warna, dan anggota tubuh basa Bali.',
     descriptionEn: 'Learn basic words, daily greetings, colors, and body parts in Balinese.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 6
   },
   {
@@ -130,7 +130,7 @@ export const SUBJECTS = [
     accentBorder: '#c387df',
     description: 'Campuran warna primer & sekunder, bentuk bidang, dan membuat pola indah.',
     descriptionEn: 'Primary and secondary color mixing, basic shapes, and playful pattern making.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 7
   },
   {
@@ -148,7 +148,7 @@ export const SUBJECTS = [
     accentBorder: '#5be08f',
     description: 'Gerak lokomotor, koordinasi tubuh, dan kebiasaan hidup bersih & sehat.',
     descriptionEn: 'Locomotor movements, body coordination, and healthy daily habits.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 8
   },
   {
@@ -166,7 +166,7 @@ export const SUBJECTS = [
     accentBorder: '#76cebd',
     description: 'Belajar bersyukur, sopan santun, tolong menolong, dan menyayangi sesama.',
     descriptionEn: 'Learn gratitude, polite manners, mutual kindness, and caring for others.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 9
   },
   {
@@ -184,7 +184,7 @@ export const SUBJECTS = [
     accentBorder: '#ffc15e',
     description: 'Misi mingguan seru anak mandiri: bereskan meja, rawat tanaman, senyum sapa.',
     descriptionEn: 'Exciting weekly self-reliance missions: tidy desk, water plants, greet others.',
-    topicsCount: 3,
+    topicsCount: 10,
     order: 10
   }
 ];

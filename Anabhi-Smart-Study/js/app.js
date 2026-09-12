@@ -125,12 +125,15 @@ class App {
   }
 
   renderHome() {
-    const state = appState.get();
-    const lang = state.lang || 'id';
-    const isEn = lang === 'en';
-    const progress = store.getProgress();
+    try {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const progress = (store && typeof store.getProgress === 'function')
+        ? store.getProgress()
+        : (store && store.data ? store.data : {});
 
-    this.mainEl.innerHTML = `
+      this.mainEl.innerHTML = `
       <!-- 1. Dashboard Pelajar Ceria (Greeting, Streak, & Bintang) -->
       <section class="dashboard-greeting-card" style="background:linear-gradient(135deg, var(--card), var(--surface)); border:1px solid var(--line); border-radius:24px; padding:28px; margin-bottom:28px; box-shadow:var(--shadow);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
@@ -252,8 +255,8 @@ class App {
 
       <!-- Footer Aplikasi -->
       <footer class="app-footer">
-        <strong>AnabhiDev Smart Study</strong> — ${t('pill', lang)}<br>
-        ${t('developmentCredit', lang)} · 2026
+        <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
+        ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
       </footer>
     `;
 
@@ -286,6 +289,9 @@ class App {
         appState.navigate('subject', id);
       });
     });
+    } catch (err) {
+      console.error('[App] Error in renderHome:', err);
+    }
   }
 
   renderAllSubjects() {
@@ -402,8 +408,8 @@ class App {
 
       <!-- Footer Aplikasi -->
       <footer class="app-footer" style="margin-top:40px;">
-        <strong>AnabhiDev Smart Study</strong> — ${t('pill', lang)}<br>
-        ${t('developmentCredit', lang)} · 2026
+        <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
+        ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
       </footer>
     `;
 

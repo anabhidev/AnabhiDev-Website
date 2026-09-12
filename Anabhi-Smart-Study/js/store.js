@@ -46,6 +46,10 @@ export class ProgressStore {
     this.checkStreak();
   }
 
+  getProgress() {
+    return this.data || {};
+  }
+
   load() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);

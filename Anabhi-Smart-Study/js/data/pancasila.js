@@ -287,6 +287,136 @@ export const PANCASILA_DATA = {
                 "hint": "Shared school facilities should be treasured."
         }
 ]
-    }
+    },
+    {
+      "id": "pancasila-bendera-lagu",
+    "title": "Bangga Sebagai Anak Indonesia: Bendera & Lagu Kebangsaan",
+    "titleEn": "Proud Indonesian Children: National Flag & Anthem",
+    "desc": "Bendera negara kita adalah Sang Merah Putih. Merah melambangkan keberanian membela kebenaran, dan putih melambangkan kesucian hati serta budi luhur. Lagu kebangsaan Indonesia Raya ciptaan W.R. Supratman kita nyanyikan dengan sikap tegap dan penuh rasa hormat!",
+    "descEn": "Our national flag is the Red and White (Sang Merah Putih). Red embodies courage and righteousness, while white symbolizes purity of heart. We sing Indonesia Raya with dignity, standing tall and proud!",
+    "checklist": [
+      "Misi 1: Berdiri tegap sempurna dan tidak bercanda saat lagu Indonesia Raya berkumandang.",
+      "Misi 2: Gambarlah Bendera Merah Putih dengan posisi warna merah di bagian atas dan putih di bagian bawah.",
+      "Misi 3: Hafalkan bait pertama lagu kebangsaan Indonesia Raya dengan nada yang khidmat."
+    ],
+    "checklistEn": [
+      "Mission 1: Stand upright attentively without chatting when the national anthem plays.",
+      "Mission 2: Draw the Red & White flag with red on top and white on bottom.",
+      "Mission 3: Memorize the first stanza of Indonesia Raya with heartfelt pride."
+    ],
+    "activities": [
+      {
+        "q": "Posisi warna yang benar pada bendera Sang Merah Putih adalah...",
+        "options": [
+          "Merah di atas, Putih di bawah",
+          "Putih di atas, Merah di bawah",
+          "Merah di kiri, Putih di kanan",
+          "Biru di atas, Merah di bawah"
+        ],
+        "answer": "Merah di atas, Putih di bawah",
+        "hint": "Merah di atas bermakna api keberanian menaungi kesucian jiwa 🇮🇩"
+      },
+      {
+        "q": "Pencipta lagu kebangsaan Indonesia Raya adalah pahlawan nasional...",
+        "options": [
+          "Wage Rudolf (W.R.) Supratman",
+          "Ir. Soekarno",
+          "Moh. Hatta",
+          "Ki Hajar Dewantara"
+        ],
+        "answer": "Wage Rudolf (W.R.) Supratman",
+        "hint": "Beliau memainkan biola saat lagu pertama kali diperdengarkan pada Sumpah Pemuda 1928."
+      },
+      {
+        "q": "Sikap yang benar saat upacara bendera hari Senin adalah...",
+        "options": [
+          "Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat",
+          "Duduk mengobrol dengan teman",
+          "Bermain ponsel",
+          "Berlari-larian di lapangan"
+        ],
+        "answer": "Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat",
+        "hint": "Menghormati jasa para pahlawan yang telah memperjuangkan kemerdekaan."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Correct position of Indonesian flag colors:",
+        "options": [
+          "Red on top, White on bottom",
+          "White on top, Red on bottom",
+          "Green and Yellow",
+          "Blue on top"
+        ],
+        "answer": "Red on top, White on bottom",
+        "hint": "Red on top, white beneath 🇮🇩"
+      }
+    ]
+  },
+  {
+    "id": "pancasila-sopan-santun",
+    "title": "Tata Krama, Sopan Santun, & Menghormati yang Lebih Tua",
+    "titleEn": "Good Manners, Politeness, & Respecting Elders",
+    "desc": "Sopan santun adalah cermin budi pekerti luhur bangsa Indonesia. Kita wajib menghormati orang tua, guru, kakek-nenek, dan kakak, serta menyayangi adik. Berpamitan saat pergi, memberi salam saat bertemu, dan bertutur kata santun mencerminkan pribadi berakhlak mulia!",
+    "descEn": "Politeness mirrors noble character. We respect parents, teachers, grandparents, and care gently for younger siblings. Saying greetings, bidding farewell, and using polite speech honors our community!",
+    "checklist": [
+      "Misi 1: Berpamitan dan mencium tangan Ayah serta Ibu sebelum berangkat ke sekolah.",
+      "Misi 2: Ucapkan salam \"Selamat Pagi/Siang\" saat berpapasan dengan Bapak/Ibu Guru di koridor.",
+      "Misi 3: Tidak memotong pembicaraan ketika orang tua atau orang yang lebih tua sedang berbicara."
+    ],
+    "checklistEn": [
+      "Mission 1: Kiss parents' hands and bid polite farewell before departing for school.",
+      "Mission 2: Greet your teachers warmly whenever passing by them in the school hallway.",
+      "Mission 3: Listen respectfully without interrupting when elders are conversing."
+    ],
+    "activities": [
+      {
+        "q": "Sebelum berangkat sekolah, kebiasaan baik yang wajib kita lakukan kepada orang tua adalah...",
+        "options": [
+          "Berpamitan sopan dan memohon doa restu",
+          "Langsung lari tanpa bicara",
+          "Meminta uang jajan berlebihan sambil marah",
+          "Pura-pura tidur"
+        ],
+        "answer": "Berpamitan sopan dan memohon doa restu",
+        "hint": "Doa restu orang tua membuat langkah belajar kita berkah dan lancar!"
+      },
+      {
+        "q": "Ketika bertemu guru di halaman sekolah, ucapan yang santun adalah...",
+        "options": [
+          "\"Selamat pagi Ibu/Bapak Guru!\" sambil tersenyum",
+          "\"Hai kamu!\"",
+          "Lewat begitu saja tanpa menoleh",
+          "Menutup muka"
+        ],
+        "answer": "\"Selamat pagi Ibu/Bapak Guru!\" sambil tersenyum",
+        "hint": "Guru adalah orang tua kita selama berada di sekolah 🏫"
+      },
+      {
+        "q": "Jika tidak sengaja berjalan di depan orang yang lebih tua yang sedang duduk, kita mengucapkan...",
+        "options": [
+          "\"Permisi, numpang lewat...\" sambil sedikit membungkuk",
+          "\"Awas, minggir!\"",
+          "\"Jangan halangi jalanku\"",
+          "Diam saja"
+        ],
+        "answer": "\"Permisi, numpang lewat...\" sambil sedikit membungkuk",
+        "hint": "Sikap sopan dan santun khas adat nusantara."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Before leaving for school, we should...",
+        "options": [
+          "Say goodbye politely to parents",
+          "Run away silently",
+          "Shout angrily",
+          "Hide under bed"
+        ],
+        "answer": "Say goodbye politely to parents",
+        "hint": "Polite farewell shows love!"
+      }
+    ]
+  }
   ]
 };

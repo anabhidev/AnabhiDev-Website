@@ -287,6 +287,114 @@ export const AGAMA_DATA = {
                 "hint": "Honoring commitments reflects personal integrity."
         }
 ]
-    }
+    },
+    {
+      "id": "agama-sikap-berdoa",
+    "title": "Tata Tertib Berdoa & Sikap Khidmat Beribadah",
+    "titleEn": "Reverence in Prayer & Respectful Worship Manner",
+    "desc": "Berdoa adalah saat kita berkomunikasi secara tulus dengan Tuhan Yang Maha Esa. Saat berdoa, kita harus menunjukkan rasa hormat: menenangkan hati, duduk dengan sikap tegak atau bersimpuh rapi, tidak bercanda atau bermain-main, dan memanjatkan doa dengan tulus!",
+    "descEn": "Prayer is an intimate communion with the Almighty Creator. Reverence requires calming our minds, maintaining respectful posture, ceasing playful chattering, and petitioning heartfelt gratitude humbly!",
+    "checklist": [
+      "Misi 1: Berdoa dengan khidmat sebelum mulai belajar di sekolah dan sebelum makan.",
+      "Misi 2: Menjaga ketenangan dan tidak mengganggu saudara/teman yang sedang beribadah.",
+      "Misi 3: Mengucapkan syukur atas berkah kesehatan dan keluarga bahagia setiap bangun pagi."
+    ],
+    "checklistEn": [
+      "Mission 1: Pray attentively before commencing school lessons and prior to meals.",
+      "Mission 2: Maintain peaceful silence without disturbing family/friends during worship.",
+      "Mission 3: Offer daily gratitude for health and family blessings each morning."
+    ],
+    "activities": [
+      {
+        "q": "Sikap tubuh yang benar dan terpuji saat sedang berdoa kepada Tuhan adalah...",
+        "options": [
+          "Khidmat, tenang, menunduk sopan, dan tidak bercanda",
+          "Sambil berlari ke sana kemari",
+          "Sambil mengobrol dengan teman",
+          "Bermain lempar kertas"
+        ],
+        "answer": "Khidmat, tenang, menunduk sopan, dan tidak bercanda",
+        "hint": "Menghormati keagungan Tuhan Yang Maha Esa dengan segenap hati."
+      },
+      {
+        "q": "Sebelum kita menyantap makanan yang disediakan Ibu, kewajiban kita adalah...",
+        "options": [
+          "Mencuci tangan bersih dan berdoa bersyukur",
+          "Langsung makan terburu-buru",
+          "Mencela makanannya",
+          "Membongkar piring"
+        ],
+        "answer": "Mencuci tangan bersih dan berdoa bersyukur",
+        "hint": "Mensyukuri rezeki berkah makanan bergizi yang disiapkan orang tua."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Proper, respectful posture during prayer to the Creator:",
+        "options": [
+          "Reverent, peaceful, bowed respectfully without chattering",
+          "Running around loudly",
+          "Gossiping with friends",
+          "Throwing toys"
+        ],
+        "answer": "Reverent, peaceful, bowed respectfully without chattering",
+        "hint": "Honoring God with a humble, grateful heart."
+      }
+    ]
+  },
+  {
+    "id": "agama-tolong-menolong",
+    "title": "Menolong Sesama Tanpa Pamrih & Menyayangi Teman",
+    "titleEn": "Helping Others Selflessly & Caring for Friends",
+    "desc": "Tuhan mengajarkan kita untuk saling tolong-menolong dalam kebaikan. Ketika melihat teman yang terjatuh di halaman sekolah, teman yang lupa membawa pensil, atau adik yang kesulitan mengikat tali sepatu, bantulah dengan senyuman tulus tanpa meminta imbalan!",
+    "descEn": "All spiritual teachings urge selfless charity and kindness. When a classmate trips, lacks a pencil, or a sibling struggles with shoelaces, reach out warmly without asking anything in return!",
+    "checklist": [
+      "Misi 1: Membantu membangkitkan teman yang tersandung di lapangan dan menghiburnya.",
+      "Misi 2: Meminjamkan alat tulis kepada kawan sebangku yang membutuhkan dengan ikhlas.",
+      "Misi 3: Membantu orang tua merapikan mainan atau menyapu lantai rumah secara sukarela."
+    ],
+    "checklistEn": [
+      "Mission 1: Help up a friend who tripped in the playground and offer comforting words.",
+      "Mission 2: Share and lend pencils kindly to a seatmate in need.",
+      "Mission 3: Help parents gather toys or sweep room floors enthusiastically at home."
+    ],
+    "activities": [
+      {
+        "q": "Jika melihat teman terjatuh di halaman sekolah hingga lututnya tergores, kita sebaiknya...",
+        "options": [
+          "Segera menolongnya berdiri dan mengantarnya ke ruang UKS",
+          "Menertawakannya beramai-ramai",
+          "Membiarkannya menangis sendirian",
+          "Memotretnya"
+        ],
+        "answer": "Segera menolongnya berdiri dan mengantarnya ke ruang UKS",
+        "hint": "Tolong-menolong adalah budi pekerti mulia yang diajarkan semua agama."
+      },
+      {
+        "q": "Membantu orang lain dengan \"ikhlas tanpa pamrih\" artinya...",
+        "options": [
+          "Membantu tulus dari hati tanpa meminta uang atau pujian",
+          "Membantu hanya jika dibayar",
+          "Membantu sambil marah-marah",
+          "Membantu hanya di depan kamera"
+        ],
+        "answer": "Membantu tulus dari hati tanpa meminta uang atau pujian",
+        "hint": "Kebaikan sejati bersumber dari cinta kasih murni dalam sanubari."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "When a friend trips in the yard, what is the virtuous action?",
+        "options": [
+          "Help them stand up gently and guide them to medical room",
+          "Laugh at them loudly",
+          "Walk away ignoring",
+          "Tease them"
+        ],
+        "answer": "Help them stand up gently and guide them to medical room",
+        "hint": "Caring for companions reflects moral beauty."
+      }
+    ]
+  }
   ]
 };

@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v2-0';
+var CACHE_VERSION = 'anabhidev-smart-study-v2-2';
 
 var PRECACHE = [
   './',
@@ -43,6 +43,8 @@ var PRECACHE = [
   './js/data/pjok.js',
   './js/data/agama.js',
   './js/data/kokurikuler.js',
+  './js/data/globe-paths.js',
+  './js/data/map-vector-data.js',
   './assets/favicon.svg',
   './assets/icon-192-2.png',
   './assets/icon-512-2.png',

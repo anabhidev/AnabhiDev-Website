@@ -16,6 +16,8 @@ import { SENI_RUPA_DATA } from '../data/seni-rupa.js';
 import { PJOK_DATA } from '../data/pjok.js';
 import { AGAMA_DATA } from '../data/agama.js';
 import { KOKURIKULER_DATA } from '../data/kokurikuler.js';
+import { REAL_INDONESIA_PATHS, REAL_BALI_PATHS } from '../data/map-vector-data.js';
+import { GLOBE_COUNTRIES, GLOBE_LABELS } from '../data/globe-paths.js';
 import { GeoEngine, GlobeVisualizer } from '../engine/geo-engine.js';
 import { MathLessonView } from './lesson-view.js';
 import { QuizRunner } from './quiz-runner.js';
@@ -488,98 +490,66 @@ export class SubjectViewComponent {
               </span>
             </div>
 
-            <!-- Visual 2D SVG Map of Indonesia -->
+            <!-- Visual 2D SVG Map of Indonesia (Authentic Administrative Boundaries) -->
             <div class="peta-2d-canvas-box" style="margin-bottom:16px;">
-              <svg class="svg-map-frame" viewBox="0 0 940 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              <svg class="svg-map-frame" viewBox="0 0 700 234" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                 <!-- Lautan / Background perairan -->
-                <rect width="940" height="380" rx="16" fill="currentColor" style="color:var(--surface); opacity:0.6;"/>
+                <rect width="700" height="234" rx="14" fill="currentColor" style="color:var(--surface); opacity:0.6;"/>
                 <defs>
-                  <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.08"/>
-                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.18"/>
+                  <linearGradient id="oceanGradId" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.1"/>
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.22"/>
                   </linearGradient>
-                  <filter id="shadowIsland" x="-10%" y="-10%" width="130%" height="130%">
-                    <feDropShadow dx="1" dy="3" stdDeviation="3" flood-opacity="0.25"/>
-                  </filter>
                 </defs>
-                <rect width="940" height="380" rx="16" fill="url(#oceanGrad)"/>
+                <rect width="700" height="234" rx="14" fill="url(#oceanGradId)"/>
 
                 <!-- Garis Khatulistiwa 0 Derajat -->
-                <line x1="20" y1="138" x2="920" y2="138" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.65"/>
-                <text x="30" y="132" fill="#ef4444" font-size="11" font-weight="700" letter-spacing="1">GARIS KHATULISTIWA (EQUATOR 0°)</text>
+                <line x1="10" y1="82" x2="690" y2="82" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.65"/>
+                <text x="18" y="78" fill="#ef4444" font-size="9" font-weight="750" letter-spacing="0.8">GARIS KHATULISTIWA (EQUATOR 0°)</text>
 
                 <!-- Arah Mata Angin Kompas -->
-                <g transform="translate(890, 42)" opacity="0.75">
-                  <circle cx="0" cy="0" r="18" fill="var(--card)" stroke="var(--line)" stroke-width="1.5"/>
-                  <path d="M 0 -12 L 4 0 L 0 3 L -4 0 Z" fill="#ef4444"/>
-                  <path d="M 0 12 L 4 0 L 0 3 L -4 0 Z" fill="var(--muted)"/>
-                  <text x="0" y="-14" text-anchor="middle" font-size="9.5" font-weight="900" fill="#ef4444">U</text>
+                <g transform="translate(675, 24)" opacity="0.8">
+                  <circle cx="0" cy="0" r="14" fill="var(--card)" stroke="var(--line)" stroke-width="1.2"/>
+                  <path d="M 0 -9 L 3 0 L 0 2 L -3 0 Z" fill="#ef4444"/>
+                  <path d="M 0 9 L 3 0 L 0 2 L -3 0 Z" fill="var(--muted)"/>
+                  <text x="0" y="-10.5" text-anchor="middle" font-size="7.5" font-weight="900" fill="#ef4444">U</text>
                 </g>
 
-                <!-- Pulau Sumatra -->
-                <g class="svg-island-interactive ${island === 'Sumatra' ? 'active' : ''}" data-island="Sumatra" filter="url(#shadowIsland)">
-                  <path d="M 39.5 53.6 L 43.1 50.8 L 47.9 66.8 L 57.6 77.2 L 67.2 92.4 L 84.1 123.6 L 94.6 137.2 L 105.1 146.4 L 115.6 160.8 L 132.5 174.4 L 148.2 196.4 L 165.1 217.2 L 180.7 236 L 202.4 256.4 L 217.5 272.8 L 222.9 285.2 L 238 290.4 L 227.7 296 L 210.3 286.4 L 199.4 266.4 L 176.5 237.2 L 149.4 206.8 L 130.7 186.4 L 115.6 162.8 L 97.6 142.4 L 79.5 119.6 L 64.4 96.8 L 51.2 78 L 39.5 53.6 Z"
-                        fill="#10b981" stroke="#047857" stroke-width="2"/>
-                  <text x="110" y="165" font-size="13" font-weight="800" fill="#064e3b" text-anchor="middle" style="pointer-events:none;">SUMATERA</text>
-                </g>
+                <!-- 34 Authentic Administrative Provinces -->
+                ${REAL_INDONESIA_PATHS.map(p => {
+                  const isMatch = island === 'Semua' || (island === 'Maluku & Papua' ? (p.island === 'Maluku' || p.island === 'Papua') : p.island.toLowerCase().includes(normIsland));
+                  const cls = `svg-province-interactive ${isMatch && island !== 'Semua' ? 'active-province' : ''}`;
+                  const stroke = isMatch && island !== 'Semua' ? '#ffb21b' : '#ffffff';
+                  const strokeWidth = isMatch && island !== 'Semua' ? '1.5' : '0.6';
+                  const opacity = isMatch ? '1' : '0.45';
+                  return `
+                    <path class="${cls}"
+                          data-province-name="${p.name}"
+                          data-province-island="${p.island}"
+                          d="${p.d}"
+                          fill="${p.color}"
+                          stroke="${stroke}"
+                          stroke-width="${strokeWidth}"
+                          opacity="${opacity}">
+                      <title>${p.name} (${p.island})</title>
+                    </path>
+                  `;
+                }).join('')}
 
-                <!-- Pulau Jawa -->
-                <g class="svg-island-interactive ${island === 'Jawa' ? 'active' : ''}" data-island="Jawa" filter="url(#shadowIsland)">
-                  <path d="M 226.5 289.6 L 260.8 288.4 L 297 290.8 L 334.3 293.6 L 372.3 295.2 L 410.2 300 L 444.6 304.8 L 478.9 308.8 L 515 311.2 L 536.7 312 L 547.6 312 L 545.2 316.8 L 521 318.4 L 484.9 319.2 L 442.2 319.2 L 401.8 318.4 L 360.8 317.6 L 320.5 315.2 L 278.9 313.6 L 253 310.4 L 230.1 306.4 L 224.1 298.4 Z"
-                        fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
-                  <text x="380" y="312" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" style="pointer-events:none;">JAWA</text>
-                </g>
-
-                <!-- Pulau Kalimantan -->
-                <g class="svg-island-interactive ${island === 'Kalimantan' ? 'active' : ''}" data-island="Kalimantan" filter="url(#shadowIsland)">
-                  <path d="M 300.8 190.4 L 315.9 164.8 L 336.3 147.2 L 358 132 L 388.7 114.4 L 417.6 102 L 443.5 98 L 464 104.4 L 477.3 118.8 L 485.7 137.2 L 482.1 158.4 L 468.8 178 L 459.8 198 L 461 218 L 452.6 237.2 L 434.5 250 L 414 256.4 L 389.9 256.4 L 368.2 250 L 345.9 238 L 327.9 220 L 311 202 Z"
-                        fill="#059669" stroke="#065f46" stroke-width="2"/>
-                  <text x="395" y="180" font-size="13" font-weight="800" fill="#022c22" text-anchor="middle" style="pointer-events:none;">KALIMANTAN</text>
-                </g>
-
-                <!-- Pulau Sulawesi -->
-                <g class="svg-island-interactive ${island === 'Sulawesi' ? 'active' : ''}" data-island="Sulawesi" filter="url(#shadowIsland)">
-                  <path d="M 490 120 L 518 116 L 542 118 L 570 125 L 565 138 L 540 144 L 522 150 L 518 174 L 545 186 L 568 192 L 562 205 L 535 200 L 518 205 L 522 232 L 535 258 L 515 264 L 504 235 L 500 195 L 482 178 L 485 145 Z"
-                        fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
-                  <text x="548" y="172" font-size="12.5" font-weight="800" fill="#1e3a8a" text-anchor="middle" style="pointer-events:none;">SULAWESI</text>
-                </g>
-
-                <!-- Kepulauan Bali & Nusa Tenggara -->
-                <g class="svg-island-interactive ${island === 'Bali & Nusa Tenggara' ? 'active' : ''}" data-island="Bali & Nusa Tenggara" filter="url(#shadowIsland)">
-                  <!-- Bali -->
-                  <path d="M 548 313 L 562 312 L 567 318 L 558 325 L 546 322 Z" fill="#ec4899" stroke="#be185d" stroke-width="1.8"/>
-                  <text x="556" y="306" font-size="10" font-weight="800" fill="#9d174d" text-anchor="middle" style="pointer-events:none;">BALI</text>
-                  <!-- Lombok & Sumbawa (NTB) -->
-                  <path d="M 572 314 L 602 312 L 625 316 L 620 326 L 595 328 L 570 324 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
-                  <!-- Flores, Sumba & Timor (NTT) -->
-                  <path d="M 632 315 L 685 314 L 690 324 L 635 326 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
-                  <path d="M 620 335 L 655 334 L 652 344 L 618 343 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
-                  <path d="M 700 328 L 740 325 L 745 335 L 705 342 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.8"/>
-                  <text x="645" y="348" font-size="10.5" font-weight="800" fill="#881337" text-anchor="middle" style="pointer-events:none;">NUSA TENGGARA</text>
-                </g>
-
-                <!-- Kepulauan Maluku -->
-                <g class="svg-island-interactive ${island === 'Maluku & Papua' ? 'active' : ''}" data-island="Maluku & Papua" filter="url(#shadowIsland)">
-                  <!-- Halmahera -->
-                  <path d="M 685 95 L 702 92 L 705 115 L 720 122 L 712 135 L 698 128 L 688 145 L 678 138 L 688 120 L 680 108 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
-                  <!-- Buru, Seram, Ambon -->
-                  <path d="M 662 188 L 682 186 L 680 200 L 660 198 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
-                  <path d="M 692 188 L 742 186 L 740 198 L 690 198 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="1.8"/>
-                  <text x="696" y="174" font-size="11" font-weight="800" fill="#155e75" text-anchor="middle" style="pointer-events:none;">MALUKU</text>
-                </g>
-
-                <!-- Pulau Papua -->
-                <g class="svg-island-interactive ${island === 'Maluku & Papua' ? 'active' : ''}" data-island="Maluku & Papua" filter="url(#shadowIsland)">
-                  <path d="M 735 150 L 760 142 L 782 152 L 778 175 L 760 178 L 755 192 L 775 198 L 795 200 L 840 202 L 890 205 L 890 290 L 840 286 L 798 278 L 775 258 L 760 228 L 745 198 L 730 175 Z"
-                        fill="#8b5cf6" stroke="#6d28d9" stroke-width="2"/>
-                  <text x="825" y="240" font-size="14" font-weight="800" fill="#4c1d95" text-anchor="middle" style="pointer-events:none;">PAPUA</text>
-                </g>
+                <!-- Label Kepulauan Utama -->
+                <text x="80" y="110" font-size="9.5" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">SUMATERA</text>
+                <text x="215" y="200" font-size="9.5" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">JAWA</text>
+                <text x="270" y="80" font-size="9.5" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">KALIMANTAN</text>
+                <text x="370" y="105" font-size="9" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">SULAWESI</text>
+                <text x="300" y="215" font-size="8" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">BALI & NT</text>
+                <text x="475" y="115" font-size="8.5" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">MALUKU</text>
+                <text x="590" y="150" font-size="10.5" font-weight="800" fill="var(--ink)" opacity="0.85" style="pointer-events:none; text-shadow:0 1px 2px #fff;">PAPUA</text>
               </svg>
 
               <!-- Legend Bar di Bawah Peta 2D -->
               <div class="peta-2d-legend-bar">
-                <span>💡 <strong>Tips:</strong> Klik pulau langsung pada gambar peta di atas atau pilih filter di bawah.</span>
-                <span>✨ <strong>Wilayah:</strong> 38 Provinsi · 3 Zona Waktu (WIB, WITA, WIT) · > 17.500 Pulau</span>
+                <span>💡 <strong>Tips:</strong> Klik batas provinsi langsung pada peta di atas untuk menjelajahi profilnya.</span>
+                <span>🇮🇩 <strong>Atlas Vektor Asli:</strong> 34 Batas Provinsi Resmi · Garis Khatulistiwa · 3 Zona Waktu</span>
               </div>
             </div>
 
@@ -603,7 +573,7 @@ export class SubjectViewComponent {
             <!-- Grid Provinsi Indonesia (Bersih tanpa undefined & tanpa tombol link globe) -->
             <div class="provinces-grid">
               ${list.map((p, idx) => `
-                <div class="province-card" id="provCard_${p.id}">
+                <div class="province-card" id="provCard_${p.id}" data-province-name="${p.name}">
                   <div>
                     <div class="province-header">
                       <span class="province-no" style="font-size:22px; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--surface); border-radius:50%;">
@@ -656,7 +626,7 @@ export class SubjectViewComponent {
               </span>
             </div>
 
-            <!-- Visual 2D SVG Map of Bali -->
+            <!-- Visual 2D SVG Map of Bali (Authentic Regency Boundaries) -->
             <div class="peta-2d-canvas-box" style="margin-bottom:20px;">
               <svg class="svg-map-frame" viewBox="0 0 760 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                 <!-- Lautan sekeliling Bali -->
@@ -667,109 +637,45 @@ export class SubjectViewComponent {
                     <stop offset="100%" stop-color="#0369a1" stop-opacity="0.2"/>
                   </linearGradient>
                   <filter id="baliShadow" x="-5%" y="-5%" width="120%" height="120%">
-                    <feDropShadow dx="1" dy="3" stdDeviation="3" flood-opacity="0.2"/>
+                    <feDropShadow dx="1" dy="2" stdDeviation="2.5" flood-opacity="0.2"/>
                   </filter>
                 </defs>
                 <rect width="760" height="480" rx="16" fill="url(#baliOceanGrad)"/>
 
                 <!-- Label Lautan & Selat -->
-                <text x="380" y="45" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">LAUT BALI (UTARA)</text>
-                <text x="50" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(-90 50 240)" letter-spacing="1">SELAT BALI (BARAT)</text>
-                <text x="720" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(90 720 240)" letter-spacing="1">SELAT LOMBOK (TIMUR)</text>
-                <text x="380" y="465" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">SAMUDRA HINDIA (SELATAN)</text>
+                <text x="380" y="38" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">LAUT BALI (UTARA)</text>
+                <text x="35" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(-90 35 240)" letter-spacing="1">SELAT BALI (BARAT)</text>
+                <text x="730" y="240" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle" transform="rotate(90 730 240)" letter-spacing="1">SELAT LOMBOK (TIMUR)</text>
+                <text x="380" y="470" font-size="12" font-weight="700" fill="var(--muted)" text-anchor="middle" letter-spacing="2">SAMUDRA HINDIA (SELATAN)</text>
 
-                <!-- 1. Buleleng (Utara) -->
-                <path class="svg-regency-interactive" data-regency="Buleleng" filter="url(#baliShadow)"
-                      d="M 120 160 L 220 110 L 360 85 L 500 95 L 600 135 L 580 170 L 460 150 L 350 145 L 240 165 L 140 185 Z"
-                      fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
-                <text x="360" y="125" font-size="12" font-weight="800" fill="#075985" text-anchor="middle" style="pointer-events:none;">BULELENG (Singaraja)</text>
+                <!-- 9 Authentic Regencies & City -->
+                ${REAL_BALI_PATHS.map(r => `
+                  <g class="svg-regency-interactive" data-regency="${r.name}" filter="url(#baliShadow)">
+                    <path d="${r.d}" fill="${r.color}" stroke="#ffffff" stroke-width="1.6"/>
+                    <text x="${r.cx}" y="${r.cy}" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle" style="pointer-events:none; text-shadow:0 1px 4px rgba(255,255,255,0.95);">${r.name}</text>
+                    <title>${r.name} - Klik untuk melihat profil</title>
+                  </g>
+                `).join('')}
 
-                <!-- 2. Jembrana (Barat) -->
-                <path class="svg-regency-interactive" data-regency="Jembrana" filter="url(#baliShadow)"
-                      d="M 60 210 L 140 185 L 240 165 L 230 220 L 180 255 L 80 245 Z"
-                      fill="#34d399" stroke="#059669" stroke-width="2"/>
-                <text x="140" y="225" font-size="11.5" font-weight="800" fill="#065f46" text-anchor="middle" style="pointer-events:none;">JEMBRANA (Negara)</text>
-
-                <!-- 3. Tabanan (Barat Daya & Tengah) -->
-                <path class="svg-regency-interactive" data-regency="Tabanan" filter="url(#baliShadow)"
-                      d="M 240 165 L 350 145 L 340 230 L 300 295 L 220 285 L 180 255 L 230 220 Z"
-                      fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
-                <text x="265" y="235" font-size="11.5" font-weight="800" fill="#78350f" text-anchor="middle" style="pointer-events:none;">TABANAN</text>
-
-                <!-- 4. Badung (Tengah Memanjang ke Selatan) -->
-                <path class="svg-regency-interactive" data-regency="Badung" filter="url(#baliShadow)"
-                      d="M 350 145 L 390 150 L 380 235 L 410 285 L 415 350 L 390 420 L 360 415 L 375 345 L 340 290 L 340 230 Z"
-                      fill="#f87171" stroke="#dc2626" stroke-width="2"/>
-                <text x="365" y="325" font-size="10.5" font-weight="800" fill="#7f1d1d" text-anchor="middle" style="pointer-events:none;">BADUNG</text>
-
-                <!-- 5. Denpasar (Kota Madya Pesisir Tenggara) -->
-                <path class="svg-regency-interactive" data-regency="Denpasar" filter="url(#baliShadow)"
-                      d="M 410 285 L 455 290 L 460 335 L 415 350 Z"
-                      fill="#ec4899" stroke="#be185d" stroke-width="2"/>
-                <text x="435" y="320" font-size="10" font-weight="800" fill="#831843" text-anchor="middle" style="pointer-events:none;">DENPASAR</text>
-
-                <!-- 6. Gianyar (Timur Tengah) -->
-                <path class="svg-regency-interactive" data-regency="Gianyar" filter="url(#baliShadow)"
-                      d="M 390 150 L 445 155 L 470 230 L 455 290 L 410 285 L 380 235 Z"
-                      fill="#a78bfa" stroke="#7c3aed" stroke-width="2"/>
-                <text x="425" y="225" font-size="11" font-weight="800" fill="#4c1d95" text-anchor="middle" style="pointer-events:none;">GIANYAR</text>
-
-                <!-- 7. Bangli (Pegunungan Tengah) -->
-                <path class="svg-regency-interactive" data-regency="Bangli" filter="url(#baliShadow)"
-                      d="M 445 155 L 485 150 L 515 220 L 470 230 Z"
-                      fill="#818cf8" stroke="#4f46e5" stroke-width="2"/>
-                <text x="480" y="195" font-size="11" font-weight="800" fill="#312e81" text-anchor="middle" style="pointer-events:none;">BANGLI</text>
-
-                <!-- 8. Karangasem (Ujung Timur / Gunung Agung) -->
-                <path class="svg-regency-interactive" data-regency="Karangasem" filter="url(#baliShadow)"
-                      d="M 500 115 L 600 135 L 670 190 L 640 255 L 545 245 L 515 220 L 530 145 Z"
-                      fill="#fb923c" stroke="#ea580c" stroke-width="2"/>
-                <text x="585" y="195" font-size="12" font-weight="800" fill="#7c2d12" text-anchor="middle" style="pointer-events:none;">KARANGASEM (Amlapura)</text>
-
-                <!-- 9. Klungkung (Daratan + Nusa Penida) -->
-                <g class="svg-regency-interactive" data-regency="Klungkung" filter="url(#baliShadow)">
-                  <path d="M 470 230 L 545 245 L 525 285 L 460 275 Z" fill="#2dd4bf" stroke="#0d9488" stroke-width="2"/>
-                  <path d="M 550 330 L 610 325 L 625 365 L 565 375 Z" fill="#2dd4bf" stroke="#0d9488" stroke-width="2"/>
-                  <text x="495" y="260" font-size="10.5" font-weight="800" fill="#134e4a" text-anchor="middle" style="pointer-events:none;">KLUNGKUNG</text>
-                  <text x="585" y="355" font-size="10" font-weight="800" fill="#134e4a" text-anchor="middle" style="pointer-events:none;">Nusa Penida</text>
-                </g>
-
-                <!-- Pin Landmark Ikonik Bali -->
-                <!-- Pura Tanah Lot -->
-                <g class="svg-landmark-pin" data-landmark="Pura Tanah Lot" transform="translate(260, 290)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">1</text>
-                </g>
-                <!-- Uluwatu -->
-                <g class="svg-landmark-pin" data-landmark="Pura Luhur Uluwatu" transform="translate(365, 415)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">2</text>
-                </g>
-                <!-- Besakih -->
-                <g class="svg-landmark-pin" data-landmark="Pura Agung Besakih" transform="translate(560, 168)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">3</text>
-                </g>
-                <!-- Danau Beratan -->
-                <g class="svg-landmark-pin" data-landmark="Danau & Pura Ulun Danu Beratan" transform="translate(345, 142)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">4</text>
-                </g>
-                <!-- Jatiluwih -->
-                <g class="svg-landmark-pin" data-landmark="Terasering Sawah Jatiluwih" transform="translate(295, 195)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">5</text>
-                </g>
-                <!-- Tirta Empul -->
-                <g class="svg-landmark-pin" data-landmark="Pura Tirta Empul" transform="translate(435, 185)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">6</text>
-                </g>
-                <!-- Ubud Monkey Forest -->
-                <g class="svg-landmark-pin" data-landmark="Mandala Suci Wenara Wana (Monkey Forest)" transform="translate(415, 245)">
-                  <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                  <text x="0" y="3.5" font-size="9" font-weight="900" fill="#fff" text-anchor="middle">7</text>
-                </g>
+                <!-- Pin Landmark Ikonik Bali (Calibrated to Authentic Coastline) -->
+                ${landmarks.map((lm, idx) => {
+                  const pinCoords = [
+                    { x: 350, y: 292 }, // 1. Tanah Lot
+                    { x: 395, y: 442 }, // 2. Uluwatu
+                    { x: 585, y: 185 }, // 3. Besakih
+                    { x: 380, y: 155 }, // 4. Danau Beratan
+                    { x: 350, y: 195 }, // 5. Jatiluwih
+                    { x: 505, y: 215 }, // 6. Tirta Empul
+                    { x: 480, y: 265 }  // 7. Ubud Monkey Forest
+                  ][idx] || { x: 400, y: 250 };
+                  return `
+                    <g class="svg-landmark-pin" data-landmark="${lm.name}" transform="translate(${pinCoords.x}, ${pinCoords.y})">
+                      <circle cx="0" cy="0" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+                      <text x="0" y="3.5" font-size="9" font-weight="900" fill="#ffffff" text-anchor="middle">${idx + 1}</text>
+                      <title>${idx + 1}. ${lm.name} (${lm.reg})</title>
+                    </g>
+                  `;
+                }).join('')}
               </svg>
 
               <!-- Legend Bar Bali -->
@@ -786,7 +692,7 @@ export class SubjectViewComponent {
             </div>
             <div class="bali-grid" style="margin-top:10px;">
               ${bali.regions.map(r => `
-                <div class="bali-region-card" id="baliCard_${r.name.replace(/\s+/g, '_')}">
+                <div class="bali-region-card" id="baliCard_${r.name.replace(/\s+/g, '_')}" data-regency="${r.name}">
                   <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
                     <span class="region-type">${r.type}</span>
                     <span style="font-size:24px;">${r.icon}</span>
@@ -843,6 +749,8 @@ export class SubjectViewComponent {
             title: isEn ? 'Asia Continent' : 'Benua Asia',
             icon: '🌏',
             filter: 'Asia',
+            vb: '1050 80 950 620',
+            vbX: 1050, vbY: 80, vbW: 950, vbH: 620,
             stats: [
               { label: isEn ? 'Area' : 'Luas Wilayah', val: '44,58 juta km² (Terbesar)' },
               { label: isEn ? 'Population' : 'Populasi', val: '> 4,7 Miliar (Terpadat)' },
@@ -855,6 +763,8 @@ export class SubjectViewComponent {
             title: isEn ? 'Europe Continent' : 'Benua Eropa',
             icon: '🏰',
             filter: 'Eropa',
+            vb: '900 40 480 380',
+            vbX: 900, vbY: 40, vbW: 480, vbH: 380,
             stats: [
               { label: isEn ? 'Area' : 'Luas Wilayah', val: '10,18 juta km²' },
               { label: isEn ? 'Population' : 'Populasi', val: '± 750 Juta' },
@@ -867,6 +777,8 @@ export class SubjectViewComponent {
             title: isEn ? 'Africa Continent' : 'Benua Afrika',
             icon: '🦁',
             filter: 'Afrika',
+            vb: '840 280 540 560',
+            vbX: 840, vbY: 280, vbW: 540, vbH: 560,
             stats: [
               { label: isEn ? 'Area' : 'Luas Wilayah', val: '30,37 juta km² (Ke-2 Terbesar)' },
               { label: isEn ? 'Population' : 'Populasi', val: '± 1,4 Miliar' },
@@ -879,6 +791,8 @@ export class SubjectViewComponent {
             title: isEn ? 'Americas Continent' : 'Benua Amerika',
             icon: '🗽',
             filter: 'Amerika',
+            vb: '140 60 840 880',
+            vbX: 140, vbY: 60, vbW: 840, vbH: 880,
             stats: [
               { label: isEn ? 'Area' : 'Luas Wilayah', val: '42,55 juta km²' },
               { label: isEn ? 'Population' : 'Populasi', val: '± 1 Miliar' },
@@ -891,6 +805,8 @@ export class SubjectViewComponent {
             title: isEn ? 'Oceania & Australia' : 'Benua Oseania & Australia',
             icon: '🦘',
             filter: 'Oseania',
+            vb: '1480 440 540 460',
+            vbX: 1480, vbY: 440, vbW: 540, vbH: 460,
             stats: [
               { label: isEn ? 'Area' : 'Luas Wilayah', val: '8,52 juta km² (Terkecil)' },
               { label: isEn ? 'Population' : 'Populasi', val: '± 45 Juta' },
@@ -904,6 +820,15 @@ export class SubjectViewComponent {
         const cfg = continentConfig[region];
         const countries = (GEO_DATA.countries || []).filter(c => c.continent.toLowerCase().includes(cfg.filter.toLowerCase()));
 
+        const CONTINENT_COUNTRIES_MAP = {
+          asia: ['afghanistan', 'armenia', 'azerbaijan', 'bahrain', 'bangladesh', 'bhutan', 'brunei', 'cambodia', 'china', 'cyprus', 'georgia', 'india', 'indonesia', 'iran', 'iraq', 'israel', 'japan', 'jordan', 'kazakhstan', 'kuwait', 'kyrgyzstan', 'laos', 'lebanon', 'malaysia', 'maldives', 'mongolia', 'myanmar', 'nepal', 'north korea', 'oman', 'pakistan', 'palestine', 'philippines', 'qatar', 'saudi arabia', 'singapore', 'south korea', 'sri lanka', 'syria', 'taiwan', 'tajikistan', 'thailand', 'timor-leste', 'turkey', 'turkmenistan', 'united arab emirates', 'uzbekistan', 'vietnam', 'yemen'],
+          europe: ['albania', 'andorra', 'austria', 'belarus', 'belgium', 'bosnia and herz.', 'bulgaria', 'croatia', 'czechia', 'czech rep.', 'denmark', 'estonia', 'finland', 'france', 'germany', 'greece', 'hungary', 'iceland', 'ireland', 'italy', 'kosovo', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'malta', 'moldova', 'monaco', 'montenegro', 'netherlands', 'north macedonia', 'norway', 'poland', 'portugal', 'romania', 'russia', 'san marino', 'serbia', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland', 'ukraine', 'united kingdom', 'vatican'],
+          africa: ['algeria', 'angola', 'benin', 'botswana', 'burkina faso', 'burundi', 'cabo verde', 'cameroon', 'central african rep.', 'chad', 'comoros', 'congo', 'dem. rep. congo', 'djibouti', 'egypt', 'eq. guinea', 'eritrea', 'eswatini', 'ethiopia', 'gabon', 'gambia', 'ghana', 'guinea', 'guinea-bissau', 'ivory coast', 'cote d\'ivoire', 'kenya', 'lesotho', 'liberia', 'libya', 'madagascar', 'malawi', 'mali', 'mauritania', 'mauritius', 'morocco', 'mozambique', 'namibia', 'niger', 'nigeria', 'rwanda', 'sao tome and principe', 'senegal', 'seychelles', 'sierra leone', 'somalia', 'somaliland', 'south africa', 'south sudan', 'sudan', 'tanzania', 'togo', 'tunisia', 'uganda', 'w. sahara', 'zambia', 'zimbabwe'],
+          americas: ['antigua and barbuda', 'argentina', 'bahamas', 'barbados', 'belize', 'bolivia', 'brazil', 'canada', 'chile', 'colombia', 'costa rica', 'cuba', 'dominica', 'dominican rep.', 'ecuador', 'el salvador', 'grenada', 'guatemala', 'guyana', 'haiti', 'honduras', 'jamaica', 'mexico', 'nicaragua', 'panama', 'paraguay', 'peru', 'saint kitts and nevis', 'saint lucia', 'saint vincent and the grenadines', 'suriname', 'trinidad and tobago', 'united states of america', 'uruguay', 'venezuela', 'greenland', 'falkland is.'],
+          oceania: ['australia', 'fiji', 'kiribati', 'marshall islands', 'micronesia', 'nauru', 'new zealand', 'palau', 'papua new guinea', 'samoa', 'solomon is.', 'tonga', 'tuvalu', 'vanuatu', 'new caledonia']
+        };
+        const continentCountryList = CONTINENT_COUNTRIES_MAP[region] || [];
+
         return `
           <div class="interactive-map-panel">
             <div class="interactive-map-header">
@@ -914,6 +839,45 @@ export class SubjectViewComponent {
               <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--surface); font-weight:700;">
                 🌍 Atlas Regional 2D
               </span>
+            </div>
+
+            <!-- Visual 2D SVG Map of Continent (Authentic Vectors) -->
+            <div class="peta-2d-canvas-box" style="margin-bottom:16px;">
+              <svg class="svg-map-frame" viewBox="${cfg.vb}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Lautan Background -->
+                <defs>
+                  <linearGradient id="${region}OceanGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.22"/>
+                  </linearGradient>
+                </defs>
+                <rect x="${cfg.vbX}" y="${cfg.vbY}" width="${cfg.vbW}" height="${cfg.vbH}" fill="url(#${region}OceanGrad)"/>
+
+                <!-- Countries in Vector Map -->
+                ${GLOBE_COUNTRIES.map(c => {
+                  const isThisContinent = continentCountryList.includes(c.name.toLowerCase()) || countries.some(fc => (fc.nameEn || fc.name).toLowerCase() === c.name.toLowerCase() || c.name.toLowerCase().includes((fc.nameEn || fc.name).toLowerCase()));
+                  const cls = isThisContinent ? 'svg-country-interactive highlighted' : 'svg-country-interactive dimmed';
+                  const fill = isThisContinent ? c.fill : '#475569';
+                  const stroke = isThisContinent ? '#ffffff' : '#334155';
+                  const strokeWidth = isThisContinent ? '1' : '0.4';
+                  const opacity = isThisContinent ? '1' : '0.28';
+                  return `
+                    <path class="${cls}"
+                          data-country-name="${c.name}"
+                          d="${c.d}"
+                          fill="${fill}"
+                          stroke="${stroke}"
+                          stroke-width="${strokeWidth}"
+                          opacity="${opacity}">
+                      <title>${c.name}</title>
+                    </path>
+                  `;
+                }).join('')}
+              </svg>
+              <div class="peta-2d-legend-bar">
+                <span>💡 <strong>Tips:</strong> Klik negara berwarna di peta atau kartu di bawah untuk melihat ibu kota dan keunikan budayanya.</span>
+                <span>✨ <strong>Wilayah:</strong> ${cfg.title} (${countries.length} Negara Pilihan)</span>
+              </div>
             </div>
 
             <!-- Banner Statistik Benua -->
@@ -929,7 +893,7 @@ export class SubjectViewComponent {
             <div class="eyebrow" style="margin-top:20px;"><span class="no">🗺️</span><span class="lbl">${isEn ? 'Featured Countries in this Continent' : 'Daftar Negara Pilihan di Benua Ini'}</span></div>
             <div class="country-grid" style="margin-top:12px;">
               ${countries.map(c => `
-                <div class="country-card">
+                <div class="country-card" data-country-name="${c.name}">
                   <div>
                     <div class="country-card-header">
                       <span class="country-flag-icon">${c.flag}</span>
@@ -974,6 +938,53 @@ export class SubjectViewComponent {
               <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--surface); font-weight:700;">
                 🌐 Ringkasan Dunia 2D
               </span>
+            </div>
+
+            <!-- Visual 2D SVG Map of Planet Earth (All 177 Countries & Oceans) -->
+            <div class="peta-2d-canvas-box" style="margin-bottom:20px;">
+              <svg class="svg-map-frame" viewBox="0 0 2048 1024" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Lautan Luas Dunia -->
+                <rect width="2048" height="1024" rx="16" fill="currentColor" style="color:var(--surface); opacity:0.6;"/>
+                <defs>
+                  <linearGradient id="worldOceanGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.25"/>
+                  </linearGradient>
+                </defs>
+                <rect width="2048" height="1024" rx="16" fill="url(#worldOceanGrad)"/>
+
+                <!-- Garis Khatulistiwa Equator 0° -->
+                <line x1="0" y1="512" x2="2048" y2="512" stroke="#ef4444" stroke-width="2" stroke-dasharray="8,6" opacity="0.75"/>
+                <text x="30" y="504" fill="#ef4444" font-size="16" font-weight="800" letter-spacing="1">GARIS KHATULISTIWA (EQUATOR 0°)</text>
+
+                <!-- Garis Meridian Utama 0° (Greenwich) -->
+                <line x1="1024" y1="0" x2="1024" y2="1024" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.6"/>
+                <text x="1034" y="32" fill="#3b82f6" font-size="14" font-weight="800" letter-spacing="1">PRIME MERIDIAN (0°)</text>
+
+                <!-- 177 Authentic Countries Vectors -->
+                ${GLOBE_COUNTRIES.map(c => `
+                  <path class="svg-country-interactive"
+                        data-country-name="${c.name}"
+                        d="${c.d}"
+                        fill="${c.fill}"
+                        stroke="#ffffff"
+                        stroke-width="0.8"
+                        opacity="0.95">
+                    <title>${c.name}</title>
+                  </path>
+                `).join('')}
+
+                <!-- Great Oceans & Regional Labels -->
+                ${GLOBE_LABELS.map(lbl => `
+                  <text x="${lbl.x}" y="${lbl.y}" font-size="${lbl.size}" font-weight="800" fill="${lbl.fill}" text-anchor="middle" letter-spacing="2" style="pointer-events:none; text-shadow:0 1px 4px rgba(0,0,0,0.5);">${lbl.text}</text>
+                `).join('')}
+              </svg>
+
+              <!-- Legend Bar Peta Dunia -->
+              <div class="peta-2d-legend-bar">
+                <span>🌐 <strong>Atlas Dunia Vektor Lengkap:</strong> 177 Negara · 7 Benua · 5 Samudra Luas · Garis Khatulistiwa 0°</span>
+                <span>💡 <strong>Eksplorasi:</strong> Arahkan kursor atau sentuh negara untuk melihat namanya.</span>
+              </div>
             </div>
 
             <!-- Ringkasan 7 Benua -->
@@ -1285,6 +1296,31 @@ export class SubjectViewComponent {
       });
     });
 
+    // 3b. Interactive SVG Provinces in Indonesia Map (Klik langsung batas provinsi di peta asli)
+    const svgProvinces = this.container.querySelectorAll('.svg-province-interactive[data-province-name]');
+    svgProvinces.forEach(el => {
+      el.addEventListener('click', () => {
+        const provName = el.getAttribute('data-province-name');
+        svgProvinces.forEach(p => p.classList.remove('active-province'));
+        el.classList.add('active-province');
+
+        const allCards = this.container.querySelectorAll('.province-card');
+        let targetCard = null;
+        allCards.forEach(c => {
+          const cardProv = c.getAttribute('data-province-name') || '';
+          if (cardProv.toLowerCase() === provName.toLowerCase() || c.textContent.toLowerCase().includes(provName.toLowerCase())) {
+            targetCard = c;
+          }
+        });
+
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.style.boxShadow = '0 0 0 3.5px var(--teal)';
+          setTimeout(() => { targetCard.style.boxShadow = ''; }, 2000);
+        }
+      });
+    });
+
     // 4. Interactive SVG Regencies in Bali Map (Klik langsung kabupaten di peta Bali)
     const svgRegencies = this.container.querySelectorAll('.svg-regency-interactive[data-regency]');
     svgRegencies.forEach(el => {
@@ -1293,11 +1329,12 @@ export class SubjectViewComponent {
         svgRegencies.forEach(r => r.classList.remove('active'));
         el.classList.add('active');
 
-        const targetCard = this.container.querySelector(`[id^="baliCard_"][id*="${reg}"]`);
+        const targetCard = this.container.querySelector(`[id^="baliCard_"][id*="${reg}"]`) ||
+          Array.from(this.container.querySelectorAll('.bali-region-card')).find(c => c.textContent.toLowerCase().includes(reg.toLowerCase()));
         if (targetCard) {
           targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          targetCard.style.boxShadow = '0 0 0 3px var(--teal)';
-          setTimeout(() => { targetCard.style.boxShadow = ''; }, 1800);
+          targetCard.style.boxShadow = '0 0 0 3.5px var(--teal)';
+          setTimeout(() => { targetCard.style.boxShadow = ''; }, 2000);
         }
       });
     });
@@ -1311,10 +1348,32 @@ export class SubjectViewComponent {
         allLmCards.forEach(c => {
           if (c.textContent.includes(lmName)) {
             c.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            c.style.boxShadow = '0 0 0 3px #ef4444';
-            setTimeout(() => { c.style.boxShadow = ''; }, 1800);
+            c.style.boxShadow = '0 0 0 3.5px #ef4444';
+            setTimeout(() => { c.style.boxShadow = ''; }, 2000);
           }
         });
+      });
+    });
+
+    // 6. Interactive SVG Countries in Continent & World Maps (Klik negara pada peta)
+    const svgCountries = this.container.querySelectorAll('.svg-country-interactive[data-country-name]');
+    svgCountries.forEach(el => {
+      el.addEventListener('click', () => {
+        const cName = el.getAttribute('data-country-name');
+        const allCountryCards = this.container.querySelectorAll('.country-card');
+        let targetCard = null;
+        allCountryCards.forEach(c => {
+          const cardCountry = c.getAttribute('data-country-name') || '';
+          if (cardCountry.toLowerCase() === cName.toLowerCase() || c.textContent.toLowerCase().includes(cName.toLowerCase())) {
+            targetCard = c;
+          }
+        });
+
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.style.boxShadow = '0 0 0 3.5px var(--teal)';
+          setTimeout(() => { targetCard.style.boxShadow = ''; }, 2000);
+        }
       });
     });
   }

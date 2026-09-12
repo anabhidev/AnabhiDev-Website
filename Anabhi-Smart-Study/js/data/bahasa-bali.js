@@ -288,6 +288,114 @@ export const BAHASA_BALI_DATA = {
                 "hint": "Famous fragrant tropical blossom of Bali 🌺"
         }
 ]
-    }
+    },
+    {
+      "id": "bali-bebadetan",
+    "title": "Paribasa Bali: Bebadetan (Teka-Teki Ceria)",
+    "titleEn": "Balinese Riddles: Bebadetan",
+    "desc": "Bebadetan inggih punika sesimbingan utawi cecimpedan teka-teki mabasa Bali sane ngicenin kalecegan nalar lan rasa bungah. Conto: \"Apa ke anak cerik ngemu getih?\" Pasaur: Tabia (cabe)! \"Apa ke memene maring-ring, pianakne ngelanting?\" Pasaur: Punyan biu!",
+    "descEn": "Bebadetan are traditional Balinese riddles that spark laughter and witty deductive thinking among children. Examples include riddles describing chili peppers, bananas, and coconut trees!",
+    "checklist": [
+      "Misi 1: Tebak 2 bebadetan ceria sareng rerama ring jeroan.",
+      "Misi 2: Eja kruna pasaur bebadetan: TABIA (cabe), BIU (pisang), lan NYUH (kelapa).",
+      "Misi 3: Gendingang sasimbingan cerik puniki sareng kanca-kanca ring kelas."
+    ],
+    "checklistEn": [
+      "Mission 1: Guess 2 cheerful Balinese riddles together with parents at home.",
+      "Mission 2: Spell the answer words: TABIA (chili), BIU (banana), and NYUH (coconut).",
+      "Mission 3: Share these humorous traditional riddles with school friends."
+    ],
+    "activities": [
+      {
+        "q": "Teka-teki Bali: \"Anak cerik ngemu getih\" pasaur pastikannyane inggih punika...",
+        "options": [
+          "Tabia (cabe barak) 🌶️",
+          "Batu",
+          "Don kayu",
+          "Air"
+        ],
+        "answer": "Tabia (cabe barak) 🌶️",
+        "hint": "Bentukne cenik barak, rasane lalah nyelekket!"
+      },
+      {
+        "q": "\"Bebadetan\" ring basa Indonesia mateges...",
+        "options": [
+          "Teka-teki atau tebak-tebakan ceria",
+          "Lagu tidur",
+          "Buku tulis",
+          "Kamus"
+        ],
+        "answer": "Teka-teki atau tebak-tebakan ceria",
+        "hint": "Bermain tebak-tebakan jenaka khas budaya Bali."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "Balinese riddle \"Anak cerik ngemu getih\" refers to...",
+        "options": [
+          "Tabia (red chili) 🌶️",
+          "Rock",
+          "Wood",
+          "Water"
+        ],
+        "answer": "Tabia (red chili) 🌶️",
+        "hint": "Tiny red and very spicy!"
+      }
+    ]
+  },
+  {
+    "id": "bali-upacara-melasti",
+    "title": "Upacara Tradisi Bali: Melasti & Pawai Ogoh-Ogoh",
+    "titleEn": "Balinese Cultural Celebrations: Melasti & Ogoh-Ogoh",
+    "desc": "Sadurung rahina Nyepi, umat Hindu ring Bali ngamargiang Upacara Melasti nuju segara utawi danu anggen nyuciang pratima lan sarwa prabot suci. Ri kala wengi Pengerupukan, alit-alite seneng pisan nyaksiang pawai patung Ogoh-ogoh sane megah!",
+    "descEn": "Prior to Nyepi, Balinese communities perform the holy Melasti procession towards beaches or sacred lakes for spiritual purification. On Pengerupukan eve, massive artistic Ogoh-ogoh statues are joyfully paraded!",
+    "checklist": [
+      "Misi 1: Ngaruruh arti Upacara Melasti (nyuciang bhuana alit lan bhuana agung nuju segara).",
+      "Misi 2: Menggambar miniatur Ogoh-ogoh sane kreatif ring buku gambar.",
+      "Misi 3: Menjaga karesikan lan ketertiban ri kala nonton pawai budaya adat Bali."
+    ],
+    "checklistEn": [
+      "Mission 1: Learn the essence of Melasti (sacred purification ritual at the sea).",
+      "Mission 2: Sketch a miniature creative Ogoh-ogoh drawing in your art book.",
+      "Mission 3: Keep environment clean and courteous while watching cultural parades."
+    ],
+    "activities": [
+      {
+        "q": "Genah sane katuju ri kala Upacara Melasti inggih punika...",
+        "options": [
+          "Segara (pantai) utawi danu 🌊",
+          "Pasar",
+          "Bioskop",
+          "Lapangan bola"
+        ],
+        "answer": "Segara (pantai) utawi danu 🌊",
+        "hint": "Mencari tirta amerta pembersih di perairan laut suci."
+      },
+      {
+        "q": "Patung raksasa ageng sane kaarak ri kala wengi Pengerupukan mawasta...",
+        "options": [
+          "Ogoh-ogoh 👹",
+          "Barong",
+          "Rangda",
+          "Topeng"
+        ],
+        "answer": "Ogoh-ogoh 👹",
+        "hint": "Karya seni patung bambu dan kertas kreasi pemuda banjar."
+      }
+    ],
+    "activitiesEn": [
+      {
+        "q": "The holy destination for the Melasti ritual is the...",
+        "options": [
+          "Sea (beach) or lake 🌊",
+          "Shopping mall",
+          "Cinema",
+          "Office"
+        ],
+        "answer": "Sea (beach) or lake 🌊",
+        "hint": "Sacred waters for spiritual purification."
+      }
+    ]
+  }
   ]
 };
