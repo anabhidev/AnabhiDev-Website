@@ -8,6 +8,8 @@
 
 import { MATH_DATA } from '../data/math-data.js';
 import { MathEngine } from '../engine/math-engine.js';
+import { TtsEngine } from '../engine/tts-engine.js';
+import { AudioFx } from '../engine/audio-fx.js';
 import { appState } from '../state.js';
 import { store } from '../store.js';
 import { t } from '../data/i18n.js';
@@ -45,6 +47,16 @@ export class MathLessonView {
         <div class="math-hero-badge">🧰 ${t('mathFlagshipBadge', lang)}</div>
         <h2 class="section-title">${isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title}</h2>
         <p class="section-sub">${isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle}</p>
+      </div>
+
+      <!-- Action Bar Cetak LKS Matematika & TTS -->
+      <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
+        <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button">
+          🧮 ${isEn ? 'Print Math Worksheet (Ten-Frames & Number Line PDF)' : 'Cetak Lembar Kerja Matematika (Kotak 10 & Garis Bilangan PDF A4)'}
+        </button>
+        <button class="btn btn-tts" id="btnTtsMathProblem" data-tts-text="${isEn ? `How much is ${a} plus ${b}? Let us calculate using the ${solution.methodName} method.` : `Berapa ${a} ditambah ${b}? Mari kita hitung bersama menggunakan strategi ${solution.methodName}.`}" type="button" style="padding:8px 14px; font-size:13px;">
+          🔊 ${isEn ? 'Listen Math Problem' : 'Dengarkan Soal Berhitung'}
+        </button>
       </div>
 
       <!-- Kotak Kontrol Bilangan & Preset Soal Flagship -->
@@ -855,6 +867,24 @@ export class MathLessonView {
   }
 
   attachEvents() {
+    // Tombol Cetak Lembar Kerja Matematika (PDF A4)
+    const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+    if (btnPrintMath) {
+      btnPrintMath.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openMathLks();
+      });
+    }
+
+    // Tombol TTS Pembacaan Soal Matematika
+    const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
+    if (btnTtsMath) {
+      btnTtsMath.addEventListener('click', () => {
+        const lang = appState.get().lang || 'id';
+        const text = btnTtsMath.getAttribute('data-tts-text');
+        TtsEngine.speak(text, lang, btnTtsMath);
+      });
+    }
+
     // Preset Level Tabs (Kelas 1 SD Filter)
     const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
     levelBtns.forEach(btn => {
@@ -974,6 +1004,8 @@ export class MathLessonView {
           this.practiceAnswered = true;
           store.completeLesson('matematika:' + p.id);
           MathEngine.recordProblemSolved(p.a, p.b, p.recommended ? p.recommended[0] : 'general');
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
           feedbackBanner.className = 'feedback-banner success show';
           feedbackBanner.innerHTML = `🎉 <strong>Yesss! ${p.answer}! Tepat Sekali!</strong> Kamu hebat!`;
           this.render();

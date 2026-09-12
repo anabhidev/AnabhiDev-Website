@@ -17,6 +17,7 @@ import { SubjectViewComponent } from './components/subject-view.js';
 import { ChallengeViewComponent } from './components/challenge-view.js';
 import { ProgressViewComponent } from './components/progress-view.js';
 import { AiTutorModalComponent } from './components/ai-modal.js';
+import { LksModalComponent } from './components/lks-modal.js';
 
 class App {
   constructor() {
@@ -28,12 +29,14 @@ class App {
     this.videoModalEl = document.getElementById('videoModal');
 
     // Komponen UI
+    this.lksModal = new LksModalComponent();
+    window.lksModal = this.lksModal;
     this.aiModal = new AiTutorModalComponent();
     window.aiTutorModal = this.aiModal;
     this.topbar = new TopbarComponent(this.topbarEl);
     this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
     this.videoModal = new VideoModalComponent(this.videoModalEl);
-    this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal);
+    this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
     this.challengeView = new ChallengeViewComponent(this.mainEl);
     this.progressView = new ProgressViewComponent(this.mainEl);
 

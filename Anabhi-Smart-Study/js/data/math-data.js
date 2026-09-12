@@ -204,14 +204,18 @@ export const MATH_DATA = {
   // Preset Pilihan Cepat Soal Flagship & Variasi (Termasuk Level Khusus Kelas 1 SD)
   presetExamples: [
     // --- Level 1: Sahabat 10 (Kelas 1 SD) ---
+    { a: 6, b: 4, level: 'sd1', label: '6 + 4 (Pas 10 Sempurna)', labelEn: '6 + 4 (Make 10 Perfect)' },
     { a: 7, b: 5, level: 'sd1', label: '7 + 5 (Kawan 10 Dasar)', labelEn: '7 + 5 (Make 10 Basic)', highlight: true },
     { a: 8, b: 6, level: 'sd1', label: '8 + 6 (Bikin 10 Ceria)', labelEn: '8 + 6 (Make 10 Fun)' },
     { a: 9, b: 4, level: 'sd1', label: '9 + 4 (Hampir 10)', labelEn: '9 + 4 (Near 10)' },
     { a: 8, b: 7, level: 'sd1', label: '8 + 7 (Dobel + 1)', labelEn: '8 + 7 (Doubles + 1)' },
+    { a: 9, b: 5, level: 'sd1', label: '9 + 5 (Lompat 10)', labelEn: '9 + 5 (Jump 10)' },
     // --- Level 2: Menembus Puluhan (Kelas 1 SD) ---
+    { a: 12, b: 6, level: 'sd1', label: '12 + 6 (Satuan Sahabat)', labelEn: '12 + 6 (Friendly Units)' },
     { a: 15, b: 8, level: 'sd1', label: '15 + 8 (Lompat Puluhan)', labelEn: '15 + 8 (Jump Tens)' },
     { a: 24, b: 13, level: 'sd1', label: '24 + 13 (Puluhan Bersahabat)', labelEn: '24 + 13 (Friendly Tens)' },
     { a: 36, b: 19, level: 'sd1', label: '36 + 19 (Dekat 20)', labelEn: '36 + 19 (Near 20)' },
+    { a: 25, b: 25, level: 'sd1', label: '25 + 25 (Pas Setengah Ratus)', labelEn: '25 + 25 (Double 25)' },
     // --- Level 3: Mahir Ratusan & Flagship Soal ---
     { a: 67, b: 59, level: 'master', label: '67 + 59 (Flagship Master)', labelEn: '67 + 59 (Flagship Master)', highlight: true },
     { a: 68, b: 32, level: 'master', label: '68 + 32 (Pas 100 Bulat)', labelEn: '68 + 32 (Make 100)' },
@@ -329,6 +333,226 @@ export const MATH_DATA = {
       ],
       explanation: '58 + 30 = 88. Lalu 88 - 1 = 87!',
       explanationEn: '58 + 30 = 88. Then 88 - 1 = 87!'
+    },
+    {
+      id: 'p6',
+      a: 6,
+      b: 4,
+      answer: 10,
+      question: '6 + 4 = ?',
+      story: 'Siti memetik 6 apel merah manis, lalu adik memetik 4 apel hijau segar. Berapa buah apel mereka seluruhnya?',
+      storyEn: 'Siti picked 6 sweet red apples, and little brother picked 4 fresh green apples. How many apples do they have altogether?',
+      recommended: ['tens-frames', 'number-bonds'],
+      hints: [
+        '💡 Petunjuk 1: Coba isi Kotak 10 dengan 6 apel merah terlebih dahulu.',
+        '💡 Petunjuk 2: Masih ada 4 slot kosong di kotak tersebut. Masukkan 4 apel hijau!',
+        '💡 Petunjuk 3: Kotak 10 langsung terisi penuh! Jadi 6 + 4 = 10 bulat sempurna! 🎉'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Fill the Ten-Frame with 6 red apples first.',
+        '💡 Hint 2: There are 4 empty slots left. Place the 4 green apples in!',
+        '💡 Hint 3: The Ten-Frame is completely full! So 6 + 4 = 10 perfectly! 🎉'
+      ],
+      explanation: '6 dan 4 adalah pasangan Kawan 10 yang langsung menggenapkan 10 penuh!',
+      explanationEn: '6 and 4 are Friends of 10 partners that instantly fill a ten!'
+    },
+    {
+      id: 'p7',
+      a: 9,
+      b: 5,
+      answer: 14,
+      question: '9 + 5 = ?',
+      story: 'Rani memiliki 9 pensil warna di meja belajarnya, lalu Ibu memberinya hadiah 5 pensil warna baru. Berapa pensil warna Rani sekarang?',
+      storyEn: 'Rani has 9 colored pencils on her desk, then Mom gifts her 5 new colored pencils. How many colored pencils does Rani have now?',
+      recommended: ['tens-frames', 'compensation', 'number-line'],
+      hints: [
+        '💡 Petunjuk 1: Angka 9 cuma butuh 1 kawan lagi untuk genap jadi 10.',
+        '💡 Petunjuk 2: Pinjam 1 dari 5, sehingga 9 menjadi 10 penuh! Angka 5 tersisa 4.',
+        '💡 Petunjuk 3: 10 ditambah sisa 4 hasilnya adalah 14!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Number 9 only needs 1 friend to become a full 10.',
+        '💡 Hint 2: Borrow 1 from 5, so 9 becomes 10! 5 has 4 left.',
+        '💡 Hint 3: 10 plus remaining 4 equals 14!'
+      ],
+      explanation: '9 + 1 = 10. Sisa 4. Maka 10 + 4 = 14!',
+      explanationEn: '9 + 1 = 10. Remaining 4. Thus 10 + 4 = 14!'
+    },
+    {
+      id: 'p8',
+      a: 8,
+      b: 7,
+      answer: 15,
+      question: '8 + 7 = ?',
+      story: 'Di taman bunga ada 8 kupu-kupu kuning dan 7 kupu-kupu biru yang sedang terbang ceria. Berapa kupu-kupu yang ada di taman?',
+      storyEn: 'In the flower garden there are 8 yellow butterflies and 7 blue butterflies fluttering merrily. How many butterflies are in the garden?',
+      recommended: ['doubles', 'tens-frames', 'number-line'],
+      hints: [
+        '💡 Petunjuk 1: Coba gunakan jurus Kembar! Kita tahu 7 + 7 = 14.',
+        '💡 Petunjuk 2: Karena 8 itu 7 + 1, tambahkan 1 pada hasil kembar: 14 + 1.',
+        '💡 Petunjuk 3: Hasilnya adalah 15! Sangat cerdas dan cepat!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Try the Doubles trick! We know 7 + 7 = 14.',
+        '💡 Hint 2: Since 8 is 7 + 1, add 1 to the doubles total: 14 + 1.',
+        '💡 Hint 3: The result is 15! Super smart and quick!'
+      ],
+      explanation: 'Jurus Dobel + 1: 7 + 7 = 14, lalu 14 + 1 = 15!',
+      explanationEn: 'Doubles + 1 trick: 7 + 7 = 14, then 14 + 1 = 15!'
+    },
+    {
+      id: 'p9',
+      a: 14,
+      b: 6,
+      answer: 20,
+      question: '14 + 6 = ?',
+      story: 'Budi sudah mengumpulkan 14 stiker pahlawan nusantara, lalu ia mendapat 6 stiker lagi dari Ayah. Berapa stiker Budi sekarang?',
+      storyEn: 'Budi collected 14 national hero stickers, then received 6 more stickers from Dad. How many stickers does Budi have now?',
+      recommended: ['number-bonds', 'tens-frames'],
+      hints: [
+        '💡 Petunjuk 1: Lihat satuannya: 4 dan 6 adalah pasangan serasi Kawan 10.',
+        '💡 Petunjuk 2: 4 + 6 = 10 bulat.',
+        '💡 Petunjuk 3: Gabungkan 10 yang baru dengan 10 di depan angka 14: 10 + 10 = 20! 🌟'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Check the units: 4 and 6 are perfect Friends of 10.',
+        '💡 Hint 2: 4 + 6 = 10 round.',
+        '💡 Hint 3: Combine with the 10 from 14: 10 + 10 = 20! 🌟'
+      ],
+      explanation: '14 + 6 = 10 + (4 + 6) = 10 + 10 = 20!',
+      explanationEn: '14 + 6 = 10 + (4 + 6) = 10 + 10 = 20!'
+    },
+    {
+      id: 'p10',
+      a: 19,
+      b: 12,
+      answer: 31,
+      question: '19 + 12 = ?',
+      story: 'Di dalam toples ada 19 permen stroberi manis dan 12 permen jeruk segar. Berapa jumlah semua permen di dalam toples?',
+      storyEn: 'Inside the jar there are 19 sweet strawberry candies and 12 fresh orange candies. How many candies are there in total?',
+      recommended: ['compensation', 'decomposition', 'number-line'],
+      hints: [
+        '💡 Petunjuk 1: 19 hampir jadi 20 (cuma butuh 1 lagi).',
+        '💡 Petunjuk 2: Pindahkan 1 permen dari 12 ke 19, sehingga menjadi 20 + 11.',
+        '💡 Petunjuk 3: 20 + 11 = 31! Cepat dan mudah dihitung di kepala!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: 19 is almost 20 (needs just 1).',
+        '💡 Hint 2: Shift 1 candy from 12 to 19, becoming 20 + 11.',
+        '💡 Hint 3: 20 + 11 = 31! Fast and effortless in mental math!'
+      ],
+      explanation: 'Kompensasi: 19 + 1 = 20. Lalu 20 + 11 = 31!',
+      explanationEn: 'Compensation: 19 + 1 = 20. Then 20 + 11 = 31!'
+    },
+    {
+      id: 'p11',
+      a: 25,
+      b: 15,
+      answer: 40,
+      question: '25 + 15 = ?',
+      story: 'Made menabung 25 koin di celengan ayamnya, kemudian Kakek memberinya 15 koin tambahan. Berapa koin di celengan Made sekarang?',
+      storyEn: 'Made saved 25 coins in his piggy bank, then Grandpa gave him 15 more coins. How many coins are in Made’s piggy bank now?',
+      recommended: ['number-bonds', 'decomposition'],
+      hints: [
+        '💡 Petunjuk 1: Gabungkan satuannya dulu: 5 + 5 = 10.',
+        '💡 Petunjuk 2: Jumlahkan puluhannya: 20 + 10 = 30.',
+        '💡 Petunjuk 3: Satukan keduanya: 30 + 10 = 40! Bulat sempurna!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Add the units first: 5 + 5 = 10.',
+        '💡 Hint 2: Add the tens: 20 + 10 = 30.',
+        '💡 Hint 3: Put them together: 30 + 10 = 40! Perfectly round!'
+      ],
+      explanation: '(20 + 10) + (5 + 5) = 30 + 10 = 40!',
+      explanationEn: '(20 + 10) + (5 + 5) = 30 + 10 = 40!'
+    },
+    {
+      id: 'p12',
+      a: 38,
+      b: 9,
+      answer: 47,
+      question: '38 + 9 = ?',
+      story: 'Di rak buku kelas ada 38 buku cerita, lalu Bu Guru membawa 9 buku ensiklopedia baru. Berapa buku di rak sekarang?',
+      storyEn: 'On the classroom bookshelf there are 38 storybooks, then Teacher brings 9 new encyclopedias. How many books are on the shelf now?',
+      recommended: ['compensation', 'number-line'],
+      hints: [
+        '💡 Petunjuk 1: 9 hampir jadi 10! Hitung 38 + 10 dulu.',
+        '💡 Petunjuk 2: 38 + 10 = 48.',
+        '💡 Petunjuk 3: Karena tadi melebihkan 1, sekarang kurangi 1: 48 - 1 = 47!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: 9 is almost 10! Add 38 + 10 first.',
+        '💡 Hint 2: 38 + 10 = 48.',
+        '💡 Hint 3: Since we added 1 extra, subtract 1: 48 - 1 = 47!'
+      ],
+      explanation: '38 + 10 = 48. Lalu 48 - 1 = 47!',
+      explanationEn: '38 + 10 = 48. Then 48 - 1 = 47!'
+    },
+    {
+      id: 'p13',
+      a: 45,
+      b: 25,
+      answer: 70,
+      question: '45 + 25 = ?',
+      story: 'Paman memanen 45 buah mangga harum manis dan 25 buah jeruk bali dari kebun buah. Berapa total buah panen paman?',
+      storyEn: 'Uncle harvested 45 sweet mangoes and 25 pomelos from the orchard. What is the total fruit harvest?',
+      recommended: ['decomposition', 'number-bonds'],
+      hints: [
+        '💡 Petunjuk 1: Pasangan 5 + 5 selalu menghasilkan 10.',
+        '💡 Petunjuk 2: Puluhannya adalah 40 + 20 = 60.',
+        '💡 Petunjuk 3: 60 + 10 = 70! Berhasil!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Pair 5 + 5 always makes 10.',
+        '💡 Hint 2: Tens are 40 + 20 = 60.',
+        '💡 Hint 3: 60 + 10 = 70! Success!'
+      ],
+      explanation: '45 + 25 = (40 + 20) + (5 + 5) = 60 + 10 = 70!',
+      explanationEn: '45 + 25 = (40 + 20) + (5 + 5) = 60 + 10 = 70!'
+    },
+    {
+      id: 'p14',
+      a: 33,
+      b: 27,
+      answer: 60,
+      question: '33 + 27 = ?',
+      story: 'Di arena bermain ada 33 balok susun warna biru dan 27 balok warna kuning. Berapa balok susun semuanya?',
+      storyEn: 'In the play area there are 33 blue building blocks and 27 yellow blocks. How many building blocks are there altogether?',
+      recommended: ['number-bonds', 'make-hundred', 'decomposition'],
+      hints: [
+        '💡 Petunjuk 1: Lihat satuannya: 3 + 7 = 10 pas!',
+        '💡 Petunjuk 2: Puluhannya: 30 + 20 = 50.',
+        '💡 Petunjuk 3: 50 + 10 = 60 pas tanpa sisa!'
+      ],
+      hintsEn: [
+        '💡 Hint 1: Check units: 3 + 7 = 10 exactly!',
+        '💡 Hint 2: Tens: 30 + 20 = 50.',
+        '💡 Hint 3: 50 + 10 = 60 without remainder!'
+      ],
+      explanation: '33 + 27 = (30 + 20) + (3 + 7) = 50 + 10 = 60!',
+      explanationEn: '33 + 27 = (30 + 20) + (3 + 7) = 50 + 10 = 60!'
+    },
+    {
+      id: 'p15',
+      a: 75,
+      b: 25,
+      answer: 100,
+      question: '75 + 25 = ?',
+      story: 'Lani memiliki 75 butir kelereng kaca kristal, lalu Kakak menghadiahkan 25 butir lagi. Berapa jumlah kelereng Lani seluruhnya?',
+      storyEn: 'Lani has 75 crystal glass marbles, then big sister gifts her 25 more. How many marbles does Lani have in total?',
+      recommended: ['make-hundred', 'number-bonds'],
+      hints: [
+        '💡 Petunjuk 1: 75 dan 25 adalah pasangan emas menuju 100.',
+        '💡 Petunjuk 2: Bayangkan uang koin 75 sen ditambah 25 sen.',
+        '💡 Petunjuk 3: Tepat menjadi 100 bulat sempurna! 💯'
+      ],
+      hintsEn: [
+        '💡 Hint 1: 75 and 25 are the golden pair making 100.',
+        '💡 Hint 2: Imagine coins 75 cents plus 25 cents.',
+        '💡 Hint 3: Exactly makes a perfect 100! 💯'
+      ],
+      explanation: '75 + 25 = 100 bulat sempurna! Pasangan kawan seratus.',
+      explanationEn: '75 + 25 = 100 perfectly! Friends of 100 pair.'
     }
   ],
 

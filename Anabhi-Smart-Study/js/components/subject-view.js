@@ -19,6 +19,7 @@ import { KOKURIKULER_DATA } from '../data/kokurikuler.js';
 import { REAL_INDONESIA_PATHS, REAL_BALI_PATHS } from '../data/map-vector-data.js';
 import { GLOBE_COUNTRIES, GLOBE_LABELS } from '../data/globe-paths.js';
 import { GeoEngine, GlobeVisualizer } from '../engine/geo-engine.js';
+import { TtsEngine } from '../engine/tts-engine.js';
 import { MathLessonView } from './lesson-view.js';
 import { QuizRunner } from './quiz-runner.js';
 import { appState } from '../state.js';
@@ -26,9 +27,10 @@ import { store } from '../store.js';
 import { t } from '../data/i18n.js';
 
 export class SubjectViewComponent {
-  constructor(container, videoModal) {
+  constructor(container, videoModal, lksModal = null) {
     this.container = container;
     this.videoModal = videoModal;
+    this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
     this.globeVis = null;
     this.selectedContinent = 'Semua';
     this.searchCountryQuery = '';
@@ -485,9 +487,17 @@ export class SubjectViewComponent {
                   ${isEn ? 'Click on any island on the vector map or choose a button below to explore provinces and unique facts.' : 'Sentuh atau klik pulau pada peta vektor 2D di bawah ini untuk menjelajahi keunikan dan ibu kota provinsi.'}
                 </p>
               </div>
-              <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:700;">
-                🗺️ ${isEn ? '2D Vector Atlas' : 'Peta Vektor 2D Interaktif'}
-              </span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-lks-subject-full" id="btnPrintIndonesiaLks" type="button" style="padding:6px 12px; font-size:12px;">
+                  🎨 ${isEn ? 'Print Coloring Map (PDF A4)' : 'Cetak Lembar Mewarnai Peta (PDF A4)'}
+                </button>
+                <button class="btn-tts" data-tts-text="${isEn ? 'Indonesia is an archipelago of 38 provinces with 5 large islands and the Equator line.' : 'Indonesia adalah negara kepulauan terbesar di dunia dengan 5 pulau besar dan dilintasi garis khatulistiwa.'}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                  🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                </button>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:700;">
+                  🗺️ ${isEn ? '2D Vector Atlas' : 'Peta Vektor 2D Interaktif'}
+                </span>
+              </div>
             </div>
 
             <!-- Visual 2D SVG Map of Indonesia (Authentic Administrative Boundaries) -->
@@ -621,9 +631,17 @@ export class SubjectViewComponent {
                   ${isEn ? 'Explore the Island of Gods by clicking regencies or landmark pins directly on the 2D map below.' : 'Jelajahi Pulau Dewata dengan mengklik kabupaten atau pin landmark langsung pada peta 2D di bawah.'}
                 </p>
               </div>
-              <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:linear-gradient(135deg, #ffedd5, #fed7aa); color:#9a3412; font-weight:800;">
-                🌺 Peta Vektor 2D Bali
-              </span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-lks-subject-full" id="btnPrintBaliLks" type="button" style="padding:6px 12px; font-size:12px;">
+                  🎨 ${isEn ? 'Print Bali Worksheet (PDF A4)' : 'Cetak Lembar Peta Bali (PDF A4)'}
+                </button>
+                <button class="btn-tts" data-tts-text="${isEn ? 'Bali is the Island of Gods with 8 regencies, 1 city, and world famous temples and Subak system.' : 'Pulau Bali memiliki 8 kabupaten, 1 kota madya Denpasar, sistem pengairan Subak warisan dunia, dan pura suci.'}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                  🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                </button>
+                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:linear-gradient(135deg, #ffedd5, #fed7aa); color:#9a3412; font-weight:800;">
+                  🌺 Peta Vektor 2D Bali
+                </span>
+              </div>
             </div>
 
             <!-- Visual 2D SVG Map of Bali (Authentic Regency Boundaries) -->
@@ -1376,6 +1394,30 @@ export class SubjectViewComponent {
         }
       });
     });
+
+    // 7. Tombol Cetak Lembar Mewarnai Peta Indonesia & Bali
+    const btnPrintIndo = this.container.querySelector('#btnPrintIndonesiaLks');
+    if (btnPrintIndo) {
+      btnPrintIndo.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openGeographyMapLks('indonesia');
+      });
+    }
+
+    const btnPrintBali = this.container.querySelector('#btnPrintBaliLks');
+    if (btnPrintBali) {
+      btnPrintBali.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openGeographyMapLks('bali');
+      });
+    }
+
+    // 8. Tombol TTS di Peta Regional
+    const regionTtsBtns = this.container.querySelectorAll('.geo-region-content .btn-tts');
+    regionTtsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-tts-text');
+        TtsEngine.speak(text, lang, btn);
+      });
+    });
   }
 
   // ==========================================================
@@ -1416,19 +1458,40 @@ export class SubjectViewComponent {
         <p class="section-sub">${subtitle}</p>
       </div>
 
+      <!-- Action Bar: Cetak Buku Kerja LKS Lengkap & Audio Pengantar -->
+      <div class="subject-action-bar">
+        <button class="btn-lks-subject-full" id="btnPrintFullSubjectLks" type="button">
+          📑 ${isEn ? 'Print Full Workbook (10 Topics PDF)' : 'Cetak Buku Lembar Kerja (LKS 10 Topik PDF)'}
+        </button>
+        <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${title.replace(/"/g, '&quot;')}. ${subtitle.replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
+          🔊 ${isEn ? 'Listen Subject Overview' : 'Dengarkan Pengantar Mapel'}
+        </button>
+      </div>
+
       <div style="display:flex; flex-direction:column; gap:24px;">
         ${subjectData.topics.map((top, idx) => {
           const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
           const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
           const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
+          const ttsSpeechText = `${topTitle}. ${topDesc}`.replace(/"/g, '&quot;');
 
           return `
             <div class="quiz-box">
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <span class="no" style="background:var(--navy); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
-                  ${isEn ? 'Topic' : 'Topik'} ${idx + 1}
-                </span>
-                <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="no" style="background:var(--navy); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
+                    ${isEn ? 'Topic' : 'Topik'} ${idx + 1}
+                  </span>
+                  <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button class="btn-tts" data-tts-text="${ttsSpeechText}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                    🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                  </button>
+                  <button class="btn btn-print-single-topic" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px;">
+                    📄 ${isEn ? 'Print Worksheet' : 'Cetak LKS'}
+                  </button>
+                </div>
               </div>
               <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
                 ${topDesc}
@@ -1453,6 +1516,32 @@ export class SubjectViewComponent {
       </div>
     `;
 
+    // Event listener untuk cetak buku kerja lengkap
+    const btnPrintFull = this.container.querySelector('#btnPrintFullSubjectLks');
+    if (btnPrintFull) {
+      btnPrintFull.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openFullSubject(subjectId);
+      });
+    }
+
+    // Event listener untuk tombol cetak per topik
+    const singleTopicBtns = this.container.querySelectorAll('.btn-print-single-topic');
+    singleTopicBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+        (this.lksModal || window.lksModal)?.openTopic(subjectId, idx);
+      });
+    });
+
+    // Event listener untuk tombol TTS (Speech)
+    const ttsBtns = this.container.querySelectorAll('.btn-tts');
+    ttsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-tts-text');
+        TtsEngine.speak(text, lang, btn);
+      });
+    });
+
     // Render kuis di tiap topik
     subjectData.topics.forEach(top => {
       // Untuk bahasa-inggris, gunakan top.activities aslinya sesuai user request ("kecuali pelajaran bahasa inggris")
@@ -1473,4 +1562,5 @@ export class SubjectViewComponent {
     });
   }
 }
+
 

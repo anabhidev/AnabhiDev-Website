@@ -1304,104 +1304,108 @@ export const GEO_DATA = {
     ]
   },
 
-  // 5. Kuis Geografi Interaktif
+  // 5. Kuis Geografi Interaktif (6 Seri Kuis · 60 Butir Soal Komprehensif)
   quizzes: [
     {
-        "id": "quiz-world-capitals",
-        "title": "Kuis 4: Tebak Ibu Kota Negara di Dunia",
-        "desc": "Jelajahi dunia! Seberapa hebat kamu mengingat ibu kota negara-negara sahabat?",
-        "questions": [
-            {
-                "q": "Apa ibu kota negara Jepang?",
-                "options": [
-                    "Tokyo",
-                    "Kyoto",
-                    "Osaka",
-                    "Sapporo"
-                ],
-                "answer": "Tokyo",
-                "hint": "Kota metropolitan terbesar dengan Menara Tokyo yang terkenal."
-            },
-            {
-                "q": "Apa ibu kota negara Arab Saudi?",
-                "options": [
-                    "Riyadh",
-                    "Jeddah",
-                    "Makkah",
-                    "Madinah"
-                ],
-                "answer": "Riyadh",
-                "hint": "Pusat pemerintahan dan ekonomi kerajaan di tengah gurun Nejd."
-            },
-            {
-                "q": "Apa ibu kota negara Inggris (Britania Raya)?",
-                "options": [
-                    "London",
-                    "Manchester",
-                    "Liverpool",
-                    "Edinburgh"
-                ],
-                "answer": "London",
-                "hint": "Kota bersejarah tempat Menara Big Ben dan jam raksasanya berdentang."
-            },
-            {
-                "q": "Apa ibu kota negara Mesir di Afrika?",
-                "options": [
-                    "Kairo",
-                    "Iskandariyah",
-                    "Giza",
-                    "Luxor"
-                ],
-                "answer": "Kairo",
-                "hint": "Kota di tepi Sungai Nil dekat dengan piramida megah."
-            },
-            {
-                "q": "Apa ibu kota negara Australia?",
-                "options": [
-                    "Canberra",
-                    "Sydney",
-                    "Melbourne",
-                    "Brisbane"
-                ],
-                "answer": "Canberra",
-                "hint": "Bukan Sydney atau Melbourne, melainkan kota terencana yang indah di pedalaman!"
-            }
-        ]
+      id: 'quiz-earth-science',
+      title: 'Kuis 1: Bentuk Bumi, Samudra, & Benua',
+      desc: 'Yuk uji pemahamanmu tentang bentuk bola Bumi, samudra biru, dan benua di dunia!',
+      questions: [
+        { q: 'Bumi tempat tinggal kita berbentuk seperti apa ya?', options: ['Bulat seperti bola', 'Datar seperti piring', 'Segitiga seperti piramida', 'Kotak seperti kubus'], answer: 'Bulat seperti bola', hint: 'Para astronaut dari luar angkasa melihat Bumi bundar berkilau bagaikan kelereng biru.' },
+        { q: 'Sebagian besar (sekitar 70%) permukaan Bumi tertutup oleh...', options: ['Air dan lautan', 'Pasir gurun', 'Gedung pencakar langit', 'Hutan pinus'], answer: 'Air dan lautan', hint: 'Lautan luas membuat planet kita dijuluki Planet Biru (The Blue Marble).' },
+        { q: 'Perputaran Bumi pada porosnya yang menyebabkan siang dan malam disebut...', options: ['Rotasi Bumi', 'Revolusi Bumi', 'Gerhana Matahari', 'Pasang Surut'], answer: 'Rotasi Bumi', hint: 'Bumi berputar sekali putaran penuh setiap 24 jam.' },
+        { q: 'Garis khayal yang membelah Bumi tepat di tengah menjadi belahan Utara dan Selatan adalah...', options: ['Garis Khatulistiwa (Equator)', 'Garis Pantai', 'Garis Batas Kota', 'Garis Horizon'], answer: 'Garis Khatulistiwa (Equator)', hint: 'Indonesia dilintasi garis ini, contohnya di Kota Pontianak dan Bonjol.' },
+        { q: 'Samudra terluas dan terdalam di permukaan Bumi adalah...', options: ['Samudra Pasifik', 'Samudra Atlantik', 'Samudra Hindia', 'Samudra Arktik'], answer: 'Samudra Pasifik', hint: 'Samudra ini membentang luas di sebelah timur kepulauan Indonesia.' },
+        { q: 'Benua terbesar di dunia tempat negara Indonesia berada adalah Benua...', options: ['Asia', 'Eropa', 'Afrika', 'Australia'], answer: 'Asia', hint: 'Benua ini memiliki populasi penduduk terbanyak di dunia.' },
+        { q: 'Kutub Selatan Bumi terletak di benua berselimut es abadi yang bernama...', options: ['Antartika', 'Australia', 'Amerika Selatan', 'Afrika'], answer: 'Antartika', hint: 'Tempat tinggal favorit koloni burung pinguin kaisar yang menggemaskan.' },
+        { q: 'Bumi mengelilingi sebuah bintang besar penghasil cahaya dan panas yang bernama...', options: ['Matahari', 'Bulan', 'Bintang Kejora', 'Komet'], answer: 'Matahari', hint: 'Pusat tata surya kita yang terbit di timur dan terbenam di barat.' },
+        { q: 'Udara yang menyelimuti dan melindungi Bumi dari batuan luar angkasa disebut...', options: ['Atmosfer', 'Litosfer', 'Biosfer', 'Hidrosfer'], answer: 'Atmosfer', hint: 'Lapisan gas pelindung yang mengandung oksigen untuk kita bernapas.' },
+        { q: 'Alat penunjuk arah mata angin yang jarumnya selalu mengarah ke kutub utara adalah...', options: ['Kompas', 'Jam Dinding', 'Termometer', 'Timbangan'], answer: 'Kompas', hint: 'Menggunakan gaya magnet bumi untuk membantu pelaut dan penjelajah.' }
+      ]
     },
     {
       id: 'quiz-prov-capital',
-      title: 'Kuis 1: Tebak Ibu Kota Provinsi',
-      desc: 'Uji hafalanmu tentang ibu kota dari 38 provinsi di Indonesia!',
+      title: 'Kuis 2: Tebak Ibu Kota 38 Provinsi Indonesia',
+      desc: 'Uji hafalanmu tentang ibu kota dari 38 provinsi di seluruh kepulauan nusantara!',
       questions: [
         { q: 'Apa ibu kota Provinsi Jawa Timur?', options: ['Surabaya', 'Malang', 'Bandung', 'Semarang'], answer: 'Surabaya', hint: 'Kota Pahlawan yang terkenal dengan Tugu Pahlawan!' },
-        { q: 'Apa ibu kota Provinsi Bali?', options: ['Singaraja', 'Denpasar', 'Gianyar', 'Mangupura'], answer: 'Denpasar', hint: 'Kota di tengah Bali yang memiliki Monumen Bajra Sandhi.' },
-        { q: 'Apa ibu kota Provinsi Sumatera Barat?', options: ['Bukittinggi', 'Padang', 'Medan', 'Pekanbaru'], answer: 'Padang', hint: 'Kota asal kuliner rendang yang mendunia!' },
-        { q: 'Apa ibu kota Provinsi Papua Pegunungan?', options: ['Jayapura', 'Wamena', 'Merauke', 'Nabire'], answer: 'Wamena', hint: 'Kota sejuk di Lembah Baliem.' },
-        { q: 'Apa ibu kota Provinsi Kalimantan Timur?', options: ['Balikpapan', 'Samarinda', 'Pontianak', 'Banjarmasin'], answer: 'Samarinda', hint: 'Kota di tepi Sungai Mahakam.' }
+        { q: 'Apa ibu kota Provinsi Bali?', options: ['Denpasar', 'Singaraja', 'Gianyar', 'Mangupura'], answer: 'Denpasar', hint: 'Kota di tengah Bali yang memiliki Monumen Bajra Sandhi.' },
+        { q: 'Apa ibu kota Provinsi Sumatera Barat?', options: ['Padang', 'Bukittinggi', 'Medan', 'Pekanbaru'], answer: 'Padang', hint: 'Kota asal kuliner rendang yang mendunia!' },
+        { q: 'Apa ibu kota Provinsi Papua Pegunungan?', options: ['Wamena', 'Jayapura', 'Merauke', 'Nabire'], answer: 'Wamena', hint: 'Kota sejuk di Lembah Baliem pegunungan tengah Papua.' },
+        { q: 'Apa ibu kota Provinsi Kalimantan Timur?', options: ['Samarinda', 'Balikpapan', 'Pontianak', 'Banjarmasin'], answer: 'Samarinda', hint: 'Kota di tepi Sungai Mahakam.' },
+        { q: 'Apa ibu kota Provinsi Jawa Barat?', options: ['Bandung', 'Bogor', 'Cirebon', 'Bekasi'], answer: 'Bandung', hint: 'Kota Kembang yang terkenal dengan Gedung Sate.' },
+        { q: 'Apa ibu kota Provinsi Jawa Tengah?', options: ['Semarang', 'Surakarta', 'Magelang', 'Pekalongan'], answer: 'Semarang', hint: 'Kota bersejarah dengan Lawang Sewu dan lumpia gurih.' },
+        { q: 'Apa ibu kota Provinsi Aceh di ujung barat Indonesia?', options: ['Banda Aceh', 'Sabang', 'Lhokseumawe', 'Langsa'], answer: 'Banda Aceh', hint: 'Kota Serambi Mekkah dengan Masjid Raya Baiturrahman yang megah.' },
+        { q: 'Apa ibu kota Provinsi Sumatera Utara?', options: ['Medan', 'Pematangsiantar', 'Sibolga', 'Binjai'], answer: 'Medan', hint: 'Kota metropolitan terbesar di pulau Sumatera dekat Danau Toba.' },
+        { q: 'Apa ibu kota Provinsi Papua di pesisir Teluk Yos Sudarso?', options: ['Jayapura', 'Biak', 'Sorong', 'Timika'], answer: 'Jayapura', hint: 'Ibu kota provinsi induk di tanah Papua dengan Jembatan Youtefa yang merah indah.' }
       ]
     },
     {
       id: 'quiz-city-province',
-      title: 'Kuis 2: Tebak Asal Provinsi Kota Terkenal',
+      title: 'Kuis 3: Tebak Asal Provinsi Kota Terkenal',
       desc: 'Kota-kota ini sangat terkenal, tapi bukan ibu kota provinsi! Di mana ya lokasinya?',
       questions: [
         { q: 'Kota Malang yang sejuk dan terkenal dengan buah apel berada di provinsi mana?', options: ['Jawa Timur', 'Jawa Barat', 'Jawa Tengah', 'DI Yogyakarta'], answer: 'Jawa Timur', hint: 'Kota ini dekat dengan Gunung Bromo dan berhawa sejuk.' },
         { q: 'Kota Surakarta (Solo) yang terkenal dengan keraton dan batiknya berada di provinsi mana?', options: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat', 'Banten'], answer: 'Jawa Tengah', hint: 'Berada di dekat Yogyakarta, terkenal dengan lagu Bengawan Solo.' },
         { q: 'Kota Bukittinggi dengan ikon Jam Gadang berada di provinsi mana?', options: ['Sumatera Barat', 'Riau', 'Sumatera Utara', 'Jambi'], answer: 'Sumatera Barat', hint: 'Kawasan Minangkabau berhawa sejuk di pegunungan Bukit Barisan.' },
         { q: 'Kota Singaraja yang terkenal di Bali Utara berada di kabupaten apa?', options: ['Buleleng', 'Badung', 'Tabanan', 'Jembrana'], answer: 'Buleleng', hint: 'Daerah pesisir utara tempat pantai Lovina lumba-lumba berada.' },
-        { q: 'Kota Labuan Bajo gerbang menuju pulau Komodo berada di provinsi mana?', options: ['Nusa Tenggara Timur', 'Nusa Tenggara Barat', 'Bali', 'Maluku'], answer: 'Nusa Tenggara Timur', hint: 'Singkatannya NTT, terkenal dengan tenun ikatnya.' }
+        { q: 'Kota Labuan Bajo gerbang menuju pulau Komodo berada di provinsi mana?', options: ['Nusa Tenggara Timur', 'Nusa Tenggara Barat', 'Bali', 'Maluku'], answer: 'Nusa Tenggara Timur', hint: 'Singkatannya NTT, terkenal dengan tenun ikat dan satwa komodo.' },
+        { q: 'Kota Bogor yang dijuluki Kota Hujan dan punya Kebun Raya megah berada di provinsi...', options: ['Jawa Barat', 'DKI Jakarta', 'Banten', 'Jawa Tengah'], answer: 'Jawa Barat', hint: 'Terdapat Istana Kepresidenan Bogor dengan rusa tutul yang jinak.' },
+        { q: 'Kota Sabang dengan Titik Nol Kilometer Indonesia berada di pulau Weh, provinsi...', options: ['Aceh', 'Sumatera Utara', 'Riau', 'Kepulauan Riau'], answer: 'Aceh', hint: 'Titik paling barat dari kepulauan Republik Indonesia tercinta.' },
+        { q: 'Kota Balikpapan yang terkenal dengan kilang minyak dan beruang madu berada di provinsi...', options: ['Kalimantan Timur', 'Kalimantan Selatan', 'Kalimantan Barat', 'Kalimantan Tengah'], answer: 'Kalimantan Timur', hint: 'Pintu gerbang udara menuju Ibu Kota Nusantara (IKN).' },
+        { q: 'Kota Ternate dengan Gunung Gamalama dan cengkih rempahnya berada di provinsi...', options: ['Maluku Utara', 'Maluku', 'Papua Barat', 'Sulawesi Utara'], answer: 'Maluku Utara', hint: 'Pernah menjadi pusat Kesultanan Ternate kepulauan rempah dunia.' },
+        { q: 'Kota Bau-Bau dengan Benteng Keraton Buton terluas di dunia berada di provinsi...', options: ['Sulawesi Tenggara', 'Sulawesi Selatan', 'Sulawesi Tengah', 'Gorontalo'], answer: 'Sulawesi Tenggara', hint: 'Terletak di Pulau Buton pesisir tenggara pulau Sulawesi.' }
       ]
     },
     {
       id: 'quiz-bali-regions',
-      title: 'Kuis 3: Jelajah Bali 8 Kabupaten & 1 Kota',
-      desc: 'Cocokkan nama kabupaten di Bali dengan pusat pemerintahannya!',
+      title: 'Kuis 4: Jelajah Bali 8 Kabupaten & 1 Kota',
+      desc: 'Cocokkan nama kabupaten di Bali dengan pusat pemerintahan dan keunikannya!',
       questions: [
-        { q: 'Ibu kota / pusat pemerintahan Kabupaten Badung adalah...', options: ['Mangupura', 'Kuta', 'Denpasar', 'Gianyar'], answer: 'Mangupura', hint: 'Pusat pemerintahannya bernama Mangupura di Sempidi.' },
+        { q: 'Ibu kota / pusat pemerintahan Kabupaten Badung adalah...', options: ['Mangupura', 'Kuta', 'Denpasar', 'Gianyar'], answer: 'Mangupura', hint: 'Pusat pemerintahannya bernama Mangupura di kawasan Sempidi.' },
         { q: 'Ibu kota / pusat pemerintahan Kabupaten Buleleng adalah...', options: ['Singaraja', 'Lovina', 'Seririt', 'Tabanan'], answer: 'Singaraja', hint: 'Pernah menjadi ibu kota Sunda Kecil pada masa lampau.' },
-        { q: 'Ibu kota / pusat pemerintahan Kabupaten Jembrana adalah...', options: ['Negara', 'Gilimanuk', 'Tabanan', 'Amlapura'], answer: 'Negara', hint: 'Kota Negara yang terkenal dengan tradisi Makepung.' },
+        { q: 'Ibu kota / pusat pemerintahan Kabupaten Jembrana adalah...', options: ['Negara', 'Gilimanuk', 'Tabanan', 'Amlapura'], answer: 'Negara', hint: 'Kota Negara yang terkenal dengan tradisi pacuan kerbau Makepung.' },
         { q: 'Ibu kota / pusat pemerintahan Kabupaten Karangasem adalah...', options: ['Amlapura', 'Candidasa', 'Klungkung', 'Bangli'], answer: 'Amlapura', hint: 'Pusat pemerintahan di timur Bali di bawah kaki Gunung Agung.' },
-        { q: 'Satu-satunya kabupaten di Bali yang TIDAK memiliki wilayah pantai adalah...', options: ['Bangli', 'Gianyar', 'Tabanan', 'Klungkung'], answer: 'Bangli', hint: 'Kabupaten di dataran tinggi yang memiliki Danau Batur.' }
+        { q: 'Satu-satunya kabupaten di Bali yang TIDAK memiliki wilayah pantai adalah...', options: ['Bangli', 'Gianyar', 'Tabanan', 'Klungkung'], answer: 'Bangli', hint: 'Kabupaten di dataran tinggi yang memiliki Danau Batur dan Desa Penglipuran.' },
+        { q: 'Kabupaten Tabanan terkenal sebagai lumbung beras pulau Bali dengan objek wisata...', options: ['Tanah Lot & Jatiluwih', 'Pantai Sanur', 'Tanjung Benoa', 'Tirta Empul'], answer: 'Tanah Lot & Jatiluwih', hint: 'Pura di atas bongkahan batu karang laut dan hamparan sawah berundak Subak.' },
+        { q: 'Kabupaten Gianyar terkenal sebagai pusat seni ukir, lukis, dan budaya dengan pusat di...', options: ['Ubud', 'Nusa Dua', 'Kintamani', 'Jimbaran'], answer: 'Ubud', hint: 'Desa wisata seni dunia tempat berkumpulnya seniman lukis dan tari.' },
+        { q: 'Kabupaten Klungkung meliputi wilayah daratan dan kepulauan indah yang bernama...', options: ['Nusa Penida & Lembongan', 'Pulau Menjangan', 'Pulau Serangan', 'Kepulauan Seribu'], answer: 'Nusa Penida & Lembongan', hint: 'Pulau dengan tebing karang pantai Kelingking yang berbentuk kepala dinosaurus T-Rex.' },
+        { q: 'Satu-satunya daerah dengan status "Kota" otonom di Provinsi Bali adalah Kota...', options: ['Denpasar', 'Singaraja', 'Semarapura', 'Tabanan'], answer: 'Denpasar', hint: 'Ibu kota provinsi Bali yang memiliki Lapangan Puputan dan Monumen Bajra Sandhi.' },
+        { q: 'Sistem pengairan sawah tradisional Bali yang diakui UNESCO sebagai warisan dunia adalah...', options: ['Subak', 'Irigasi Tetes', 'Bendungan Gajah', 'Terasering Modern'], answer: 'Subak', hint: 'Sistem gotong royong para petani Bali yang berlandaskan Tri Hita Karana.' }
+      ]
+    },
+    {
+      id: 'quiz-world-capitals',
+      title: 'Kuis 5: Tebak Ibu Kota Negara di Dunia',
+      desc: 'Jelajahi dunia! Seberapa hebat kamu mengingat ibu kota negara-negara sahabat?',
+      questions: [
+        { q: 'Apa ibu kota negara Jepang?', options: ['Tokyo', 'Kyoto', 'Osaka', 'Sapporo'], answer: 'Tokyo', hint: 'Kota metropolitan terbesar dengan Menara Tokyo yang terkenal.' },
+        { q: 'Apa ibu kota negara Arab Saudi?', options: ['Riyadh', 'Jeddah', 'Makkah', 'Madinah'], answer: 'Riyadh', hint: 'Pusat pemerintahan dan ekonomi kerajaan di tengah kawasan Nejd.' },
+        { q: 'Apa ibu kota negara Inggris (Britania Raya)?', options: ['London', 'Manchester', 'Liverpool', 'Edinburgh'], answer: 'London', hint: 'Kota bersejarah tempat Menara Big Ben dan jam raksasanya berdentang.' },
+        { q: 'Apa ibu kota negara Mesir di benua Afrika?', options: ['Kairo', 'Iskandariyah', 'Giza', 'Luxor'], answer: 'Kairo', hint: 'Kota di tepi Sungai Nil dekat dengan piramida megah.' },
+        { q: 'Apa ibu kota negara Australia?', options: ['Canberra', 'Sydney', 'Melbourne', 'Brisbane'], answer: 'Canberra', hint: 'Bukan Sydney atau Melbourne, melainkan kota terencana yang indah di pedalaman!' },
+        { q: 'Apa ibu kota negara Prancis di benua Eropa?', options: ['Paris', 'Lyon', 'Marseille', 'Nice'], answer: 'Paris', hint: 'Kota romantis tempat Menara Eiffel dan Museum Louvre berada.' },
+        { q: 'Apa ibu kota negara Amerika Serikat?', options: ['Washington, D.C.', 'New York', 'Los Angeles', 'Chicago'], answer: 'Washington, D.C.', hint: 'Bukan New York, melainkan distrik ibu kota tempat Gedung Putih (White House) berada.' },
+        { q: 'Apa ibu kota negara Jerman di Eropa Tengah?', options: ['Berlin', 'Munchen', 'Frankfurt', 'Hamburg'], answer: 'Berlin', hint: 'Kota bersejarah dengan Gerbang Brandenburg yang megah.' },
+        { q: 'Apa ibu kota negara Korea Selatan di Asia Timur?', options: ['Seoul', 'Busan', 'Incheon', 'Daegu'], answer: 'Seoul', hint: 'Kota modern di tepi Sungai Han dengan Istana Gyeongbokgung.' },
+        { q: 'Apa ibu kota negara India di Asia Selatan?', options: ['New Delhi', 'Mumbai', 'Kolkata', 'Chennai'], answer: 'New Delhi', hint: 'Pusat pemerintahan India dengan Gerbang India (India Gate) yang ikonik.' }
+      ]
+    },
+    {
+      id: 'quiz-world-landmarks',
+      title: 'Kuis 6: Landmark Ikonik Nusantara & Dunia',
+      desc: 'Kenali monumen, candi, dan keajaiban arsitektur paling menakjubkan di Bumi!',
+      questions: [
+        { q: 'Candi Buddha terbesar di dunia yang terletak di Magelang, Jawa Tengah adalah...', options: ['Candi Borobudur', 'Candi Prambanan', 'Candi Mendut', 'Candi Penataran'], answer: 'Candi Borobudur', hint: 'Monumen batu megah berundak dengan ratusan stupa dan relief Buddha.' },
+        { q: 'Monumen setinggi 132 meter dengan lidah api berlapis emas di Jakarta adalah...', options: ['Monas (Monumen Nasional)', 'Tugu Pahlawan', 'Tugu Muda', 'Monumen Pancasila'], answer: 'Monas (Monumen Nasional)', hint: 'Ikon kota Jakarta yang dibangun untuk mengenang perjuangan kemerdekaan Indonesia.' },
+        { q: 'Pura terbesar dan tertua di lereng Gunung Agung pulau Bali adalah...', options: ['Pura Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Ulun Danu'], answer: 'Pura Besakih', hint: 'Dikenal sebagai "Ibu dari Seluruh Pura" (Mother Temple) di Bali.' },
+        { q: 'Jam menara raksasa ikon kebanggaan kota Bukittinggi, Sumatera Barat bernama...', options: ['Jam Gadang', 'Big Ben', 'Jam Istana', 'Menara Jam Menara'], answer: 'Jam Gadang', hint: 'Kata "Gadang" dalam bahasa Minangkabau berarti "Besar".' },
+        { q: 'Menara besi setinggi 330 meter yang menjadi simbol kota Paris di Prancis adalah...', options: ['Menara Eiffel', 'Menara Pisa', 'Menara Tokyo', 'Menara Kembar Petronas'], answer: 'Menara Eiffel', hint: 'Dirancang oleh insinyur ternama Gustave Eiffel.' },
+        { q: 'Bangunan makam batu berbentuk segitiga raksasa peninggalan Firaun di Mesir adalah...', options: ['Piramida Giza', 'Sphinx', 'Koloseum', 'Parthenon'], answer: 'Piramida Giza', hint: 'Salah satu keajaiban dunia kuno yang berdiri kokoh ribuan tahun di tepi gurun pasir.' },
+        { q: 'Patung raksasa Dewi Kemerdekaan pemegang obor di pelabuhan kota New York adalah...', options: ['Patung Liberty', 'Patung Kristus Penebus', 'Patung GWK', 'Patung Sphinx'], answer: 'Patung Liberty', hint: 'Hadiah persahabatan dari rakyat Prancis untuk Amerika Serikat.' },
+        { q: 'Makam megah dari marmer putih berkilau di kota Agra, India adalah...', options: ['Taj Mahal', 'Benteng Merah', 'Hawa Mahal', 'Qutub Minar'], answer: 'Taj Mahal', hint: 'Mahakarya arsitektur cinta abadi yang dibangun oleh Kaisar Shah Jahan.' },
+        { q: 'Bangunan pertahanan terpanjang di dunia yang melintasi pegunungan di Asia Timur adalah...', options: ['Tembok Besar Tiongkok', 'Tembok Berlin', 'Tembok Konstantinopel', 'Benteng Belgica'], answer: 'Tembok Besar Tiongkok', hint: 'Membentang ribuan kilometer melintasi bukit dan lembah pegunungan.' },
+        { q: 'Gedung pertunjukan dengan atap berbentuk layar kapal putih di tepi teluk Australia adalah...', options: ['Sydney Opera House', 'Harbour Bridge', 'Melbourne Tower', 'Canberra Hall'], answer: 'Sydney Opera House', hint: 'Karya arsitektur modern ikonik di kota pelabuhan Sydney.' }
       ]
     }
   ]

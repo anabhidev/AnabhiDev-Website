@@ -146,18 +146,87 @@ Generated : 10 September 2026, 10:18:00
    3. PRINT STYLESHEET (SOP Kategori 14 & Blueprint B)
    ============================================================ */
 @media print {
-  .topbar, .sidebar, .drawer-scrim, .video-modal-backdrop, .btn, .iconbtn, .btn-pwa-install {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  body, html {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11.5pt !important;
+  }
+
+  .topbar, .sidebar, .drawer-scrim, .video-modal-backdrop, .btn, .iconbtn, .btn-pwa-install,
+  .lks-modal-toolbar, .app-footer, .metadata-source-box, .geo-nav-tabs, .globe-stage-card,
+  .btn-tts, #aiTutorModal {
     display: none !important;
   }
+
+  /* When LKS Modal is printing */
+  .lks-modal-overlay {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    inset: auto !important;
+  }
+
+  .lks-modal-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  .lks-modal-body {
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    display: block !important;
+  }
+
+  .lks-sheet-container {
+    max-width: 100% !important;
+    gap: 0 !important;
+    display: block !important;
+  }
+
+  .lks-paper-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 0 15mm 0 !important;
+    page-break-after: always;
+    break-inside: avoid;
+  }
+
+  .lks-page-break {
+    page-break-after: always;
+    break-before: page;
+    height: 0;
+  }
+
   .shell {
     display: block;
     padding-top: 0;
   }
+
   #main {
     padding: 0;
   }
+
   .section, .quiz-box, .subject-card {
     break-inside: avoid;
   }
 }
+
 

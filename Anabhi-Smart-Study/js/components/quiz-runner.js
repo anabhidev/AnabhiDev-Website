@@ -9,6 +9,8 @@
 import { store } from '../store.js';
 import { appState } from '../state.js';
 import { t } from '../data/i18n.js';
+import { TtsEngine } from '../engine/tts-engine.js';
+import { AudioFx } from '../engine/audio-fx.js';
 
 export class QuizRunner {
   constructor(container, quizData, onComplete) {
@@ -27,6 +29,7 @@ export class QuizRunner {
     const lang = appState.get().lang || 'id';
     const q = this.quiz.questions[this.currentIndex];
     const isLast = this.currentIndex === this.quiz.questions.length - 1;
+    const isEn = (lang === 'en');
 
     this.container.innerHTML = `
       <div class="quiz-box">
@@ -42,7 +45,12 @@ export class QuizRunner {
           </div>
         </div>
 
-        <div class="quiz-question">${q.q}</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+          <div class="quiz-question" style="margin:0; flex:1;">${q.q}</div>
+          <button class="btn-tts" id="btnTtsQuizQuestion" type="button" title="${isEn ? 'Read question aloud' : 'Dengarkan soal bersuara'}">
+            🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+          </button>
+        </div>
 
         <div class="quiz-options">
           ${q.options.map(opt => `
@@ -82,6 +90,15 @@ export class QuizRunner {
     const nextBtn = this.container.querySelector('#btnNextQuestion');
     const hintBtn = this.container.querySelector('#btnToggleHint');
     const hintPanel = this.container.querySelector('#hintPanel');
+    const ttsBtn = this.container.querySelector('#btnTtsQuizQuestion');
+
+    if (ttsBtn) {
+      ttsBtn.addEventListener('click', () => {
+        const lang = appState.get().lang || 'id';
+        const fullQuestionText = `${q.q}. ${lang === 'en' ? 'Choices are' : 'Pilihan jawabannya'}: ${q.options.join(', ')}`;
+        TtsEngine.speak(fullQuestionText, lang, ttsBtn);
+      });
+    }
 
     if (hintBtn) {
       hintBtn.addEventListener('click', () => {
@@ -113,6 +130,8 @@ export class QuizRunner {
           btn.classList.add('correct');
           feedbackBanner.className = 'feedback-banner success show';
           feedbackBanner.innerHTML = t('quizCorrectFeedback', currentLang);
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
         } else {
           btn.classList.add('wrong');
           btn.querySelector('span').textContent = '❌';
@@ -134,6 +153,8 @@ export class QuizRunner {
           this.render();
         } else {
           // Kuis Selesai!
+          AudioFx.playFanfare();
+          AudioFx.triggerConfetti(this.container);
           store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
           this.showCompletionScreen();
         }

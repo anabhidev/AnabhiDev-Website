@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v2-2';
+var CACHE_VERSION = 'anabhidev-smart-study-v2-3';
 
 var PRECACHE = [
   './',
@@ -24,6 +24,9 @@ var PRECACHE = [
   './js/data/i18n.js',
   './js/engine/math-engine.js',
   './js/engine/geo-engine.js',
+  './js/engine/tts-engine.js',
+  './js/engine/audio-fx.js',
+  './js/components/lks-modal.js',
   './js/components/sidebar.js',
   './js/components/topbar.js',
   './js/components/subject-view.js',

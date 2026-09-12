@@ -109,7 +109,7 @@ export const KOKURIKULER_DATA = {
       ]
     },
     {
-      id: 'p5-anti-bullying',
+      id: 'p5-anti-bullying'
       title: 'P5 Bangunlah Jiwa Raganya: Sahabat Hebat Anti-Bullying',
       titleEn: 'P5 Wellbeing: Kind Friends Against Bullying',
       desc: 'Setiap anak berhak belajar dan bermain di sekolah dengan rasa aman dan gembira. Tolak perundungan (bullying): STOP mengejek nama orang tua, STOP memanggil julukan buruk, STOP mengucilkan kawan, dan STOP bermain kasar! Jadilah pembela kebaikan (upstander) yang melindungi teman!',
@@ -126,7 +126,9 @@ export const KOKURIKULER_DATA = {
       ],
       activities: [
         { q: 'Jika kamu melihat seorang teman baru diejek atau disoraki oleh anak lain, sikap terbaikmu adalah...', options: ['Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', 'Ikut-ikutan mengejek agar dianggap hebat', 'Merekamnya sambil tertawa', 'Menyuruh teman tersebut menangis'], answer: 'Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', hint: 'Jadilah upstander pemberani yang membela teman yang tertindas.' },
-        { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' }
+        { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' },
+        { q: "Tindakan yang BUKAN merupakan bullying (perundungan) adalah...", options: ["Mengajak teman bermain bersama secara ramah","Mengejek nama orang tua teman","Mendorong teman sampai menangis","Menyembunyikan sepatu teman"], answer: "Mengajak teman bermain bersama secara ramah", hint: "Sahabat sejati selalu merangkul dan membuat teman merasa aman dan gembira 🤝" },
+        { q: "Jika melihat teman yang dipojokkan atau diejek anak lain, sikap kita adalah...", options: ["Membela dan melaporkan kepada bapak/ibu guru","Ikut menonton dan menertawakan","Merekam di ponsel","Membiarkannya saja"], answer: "Membela dan melaporkan kepada bapak/ibu guru", hint: "Menjadi pembela kebaikan (Upstander) menghentikan aksi perundungan." }
       ],
       activitiesEn: [
         { q: 'If you witness a classmate being teased or excluded, what is the upstander action?', options: ['Stand by their side, invite them over, and notify a teacher', 'Join in the cruel laughter', 'Record it for amusement', 'Tell them it is their fault'], answer: 'Stand by their side, invite them over, and notify a teacher', hint: 'An upstander protects and seeks supportive adult help.' }

@@ -2710,7 +2710,7 @@
     subtitleEn: 'Explore phonics, rhythmic syllables, proper sentence structures, and magical Indonesian folklore! 📖',
     topics: [
       {
-        id: 'bi-vokal-konsonan',
+        id: 'bi-vokal-konsonan'
         title: 'Mengenal Huruf Vokal & Konsonan',
         titleEn: 'Introduction to Vowels & Consonants',
         desc: 'Ada 5 huruf vokal bernyanyi nyaring: A, I, U, E, O. Huruf vokal membuat suara kata menjadi terbuka dan jelas terdengar. Sahabatnya adalah 21 huruf konsonan (B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X, Y, Z) yang membentuk ragam bunyi ketika dipadukan!',
@@ -2728,7 +2728,9 @@
         activities: [
           { q: 'Manakah kelompok huruf vokal yang benar?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Huruf vokal adalah huruf hidup yang bersuara nyaring!' },
           { q: 'Huruf pertama pada kata "ELANG" dan "EMBER" adalah huruf vokal...', options: ['E', 'A', 'I', 'O'], answer: 'E', hint: 'E-L-A-N-G bersuara /e/ atau /é/.' },
-          { q: 'Ada berapa huruf vokal pada kata "INDONESIA"?', options: ['5 vokal (I, O, E, I, A)', '3 vokal', '2 vokal', '7 vokal'], answer: '5 vokal (I, O, E, I, A)', hint: 'Hitung huruf I, O, E, I, dan A yang ada di kata Indonesia.' }
+          { q: 'Ada berapa huruf vokal pada kata "INDONESIA"?', options: ['5 vokal (I, O, E, I, A)', '3 vokal', '2 vokal', '7 vokal'], answer: '5 vokal (I, O, E, I, A)', hint: 'Hitung huruf I, O, E, I, dan A yang ada di kata Indonesia.' },
+          { q: "Huruf yang BUKAN merupakan huruf vokal adalah...", options: ["B","A","I","U"], answer: "B", hint: "Huruf B adalah konsonan bibir." },
+          { q: "Lengkapi huruf vokal yang hilang: K - ... - C - I - N - G", options: ["U (menjadi KUCING)","O","E","A"], answer: "U (menjadi KUCING)", hint: "Hewan berbulu lucu yang bersuara \"meong-meong\" 🐱" }
         ],
         activitiesEn: [
           { q: 'Which of the following is the correct vowel group?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Vowels are open vocal sounds with clear voices!' },
@@ -2736,7 +2738,7 @@
         ]
       },
       {
-        id: 'bi-suku-kata',
+        id: 'bi-suku-kata'
         title: 'Mengeja Suku Kata Pola KV & KVK',
         titleEn: 'Spelling Syllables (CV & CVC Patterns)',
         desc: 'Suku kata adalah ketukan bunyi saat kita mengucapkan sebuah kata. Pola KV (Konsonan-Vokal) seperti BA-JU, KU-DA, RO-TI. Pola KVK (Konsonan-Vokal-Konsonan) seperti PEN-SIL, RUM-PUT, RUM-AH. Mengeja suku kata membuat kita membaca lebih lancar dan percaya diri!',
@@ -2754,7 +2756,9 @@
         activities: [
           { q: 'BO + LA bila digabungkan dibaca...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'Benda bulat yang sering ditendang saat main sepak bola ⚽' },
           { q: 'Kata "PELANGI" terdiri dari berapa suku kata?', options: ['3 suku kata (pe - la - ngi)', '2 suku kata', '4 suku kata', '1 suku kata'], answer: '3 suku kata (pe - la - ngi)', hint: 'Hitung ketukan saat kamu mengucapkan: pe... la... ngi!' },
-          { q: 'Suku kata yang tepat untuk melengkapi kata "SE-PA-..." adalah...', options: ['TU (menjadi SEPATU)', 'KO', 'RI', 'NA'], answer: 'TU (menjadi SEPATU)', hint: 'Alas kaki yang kita pakai saat berangkat ke sekolah 👟' }
+          { q: 'Suku kata yang tepat untuk melengkapi kata "SE-PA-..." adalah...', options: ['TU (menjadi SEPATU)', 'KO', 'RI', 'NA'], answer: 'TU (menjadi SEPATU)', hint: 'Alas kaki yang kita pakai saat berangkat ke sekolah 👟' },
+          { q: "Kata yang hanya terdiri dari 1 suku kata adalah...", options: ["CAT","BUKU","MEJA","PENSIL"], answer: "CAT", hint: "Ucapkan hanya dengan satu kali ketukan bunyi bibir." },
+          { q: "Pemisahan suku kata yang benar untuk kata \"MAKANAN\" adalah...", options: ["MA - KA - NAN","MAK - AN - AN","MA - KAN - AN","MAKA - NAN"], answer: "MA - KA - NAN", hint: "Pola ketukan: ma... ka... nan (3 suku kata)." }
         ],
         activitiesEn: [
           { q: 'BO + LA combined is read as...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'A round ball used in soccer ⚽' },
@@ -2762,7 +2766,7 @@
         ]
       },
       {
-        id: 'bi-susun-kalimat',
+        id: 'bi-susun-kalimat'
         title: 'Menyusun Kalimat Ceria Berpola S-P-O',
         titleEn: 'Structuring Sentences (Subject - Predicate - Object)',
         desc: 'Kalimat lengkap yang runtut terdiri dari: Subjek (siapa pelakunya), Predikat (apa kegiatannya / kata kerja), dan Objek (benda yang dikenai kegiatan). Contoh: "Rani (S) menyiram (P) bunga (O)". Kalimat yang baik diawali huruf kapital dan diakhiri tanda titik!',
@@ -2780,14 +2784,16 @@
         activities: [
           { q: 'Susun kata acak berikut: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Letakkan orang yang melakukan kegiatan (Subjek) di depan.' },
           { q: 'Pada kalimat "Ibu memasak nasi", kata "memasak" bertindak sebagai...', options: ['Predikat (kata kerja)', 'Subjek', 'Objek', 'Tanda baca'], answer: 'Predikat (kata kerja)', hint: 'Memasak adalah tindakan atau kegiatan yang dilakukan Ibu.' },
-          { q: 'Manakah kalimat berikut yang paling lengkap dan benar?', options: ['Siti menyapu halaman.', 'Menyapu halaman Siti.', 'Halaman menyapu Siti.', 'Siti halaman.'], answer: 'Siti menyapu halaman.', hint: 'Urutan: Subjek (Siti) + Predikat (menyapu) + Objek (halaman).' }
+          { q: 'Manakah kalimat berikut yang paling lengkap dan benar?', options: ['Siti menyapu halaman.', 'Menyapu halaman Siti.', 'Halaman menyapu Siti.', 'Siti halaman.'], answer: 'Siti menyapu halaman.', hint: 'Urutan: Subjek (Siti) + Predikat (menyapu) + Objek (halaman).' },
+          { q: "Manakah kata kerja (Predikat) dalam kalimat: \"Adik minum susu\"?", options: ["minum","Adik","susu","pagi"], answer: "minum", hint: "Kata kerja menunjukkan tindakan yang dilakukan Adik." },
+          { q: "Susun kata acak berikut: [di taman] - [bermain] - [Edo]", options: ["Edo bermain di taman.","Di taman Edo bermain.","Bermain Edo di taman.","Taman di bermain Edo."], answer: "Edo bermain di taman.", hint: "Urutan: Subjek (Edo) + Predikat (bermain) + Keterangan (di taman)." }
         ],
         activitiesEn: [
           { q: 'Arrange the scrambled words: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subject comes first: who is doing the reading action?' }
         ]
       },
       {
-        id: 'bi-tanda-baca',
+        id: 'bi-tanda-baca'
         title: 'Tanda Baca & Huruf Kapital',
         titleEn: 'Punctuation Marks & Capital Letters',
         desc: 'Huruf kapital dipakai di awal kalimat, nama orang (Dayu, Edo), hari (Senin, Selasa), dan nama tempat (Jakarta, Bali). Tanda titik (.) digunakan untuk mengakhiri kalimat berita. Tanda tanya (?) untuk bertanya. Tanda seru (!) untuk perintah atau ungkapan penuh semangat!',
@@ -2805,14 +2811,16 @@
         activities: [
           { q: 'Tanda baca yang tepat untuk kalimat: "Siapa nama sahabat barumu..." adalah...', options: ['Tanda tanya (?)', 'Tanda titik (.)', 'Tanda seru (!)', 'Tanda koma (,)'], answer: 'Tanda tanya (?)', hint: 'Kata "Siapa" menunjukkan kalimat pertanyaan.' },
           { q: 'Penulisan huruf kapital yang benar pada nama orang dan tempat adalah...', options: ['Made berlibur ke Denpasar.', 'made berlibur ke denpasar.', 'Made berlibur Ke denpasar.', 'made Berlibur ke Denpasar.'], answer: 'Made berlibur ke Denpasar.', hint: 'Nama orang (Made) dan nama kota (Denpasar) diawali huruf kapital.' },
-          { q: 'Tanda seru (!) biasanya dipakai untuk kalimat...', options: ['Perintah atau ajakan penuh semangat', 'Pertanyaan ingin tahu', 'Kalimat berita santai', 'Kalimat berhitung'], answer: 'Perintah atau ajakan penuh semangat', hint: 'Contoh: "Jagalah kebersihan kelas kita!"' }
+          { q: 'Tanda seru (!) biasanya dipakai untuk kalimat...', options: ['Perintah atau ajakan penuh semangat', 'Pertanyaan ingin tahu', 'Kalimat berita santai', 'Kalimat berhitung'], answer: 'Perintah atau ajakan penuh semangat', hint: 'Contoh: "Jagalah kebersihan kelas kita!"' },
+          { q: "Tanda titik (.) diletakkan di...", options: ["Akhir kalimat berita","Awal kalimat","Tengah kata","Sebelum huruf vokal"], answer: "Akhir kalimat berita", hint: "Tanda titik menandakan kalimat telah selesai dibaca." },
+          { q: "Huruf pertama pada awal kalimat selalu ditulis menggunakan...", options: ["Huruf kapital (huruf besar)","Huruf kecil","Angka","Tanda koma"], answer: "Huruf kapital (huruf besar)", hint: "Contoh: \"Buku itu berwarna biru.\"" }
         ],
         activitiesEn: [
           { q: 'Which punctuation mark fits best: "Where is my pencil..."?', options: ['Question mark (?)', 'Period (.)', 'Exclamation mark (!)', 'Comma (,)'], answer: 'Question mark (?)', hint: 'It asks an inquiry question.' }
         ]
       },
       {
-        id: 'bi-pantun-puisi',
+        id: 'bi-pantun-puisi'
         title: 'Puisi Ceria & Pantun Anak Nusantara',
         titleEn: 'Children Poetry & Indonesian Pantun',
         desc: 'Puisi dan pantun adalah karya sastra indah penuh irama. Pantun anak jenaka biasanya bersajak a-b-a-b, terdiri dari 4 baris: baris 1-2 adalah sampiran yang memikat, dan baris 3-4 adalah isi yang menyampaikan nasehat kebaikan atau canda riang!',
@@ -2829,14 +2837,16 @@
         ],
         activities: [
           { q: 'Perhatikan pantun ini: "Pohon beringin daunnya lebat / Tempat berteduh di waktu siang / Ayo kawan belajar giat / Agar masa depan gilang-gemilang". Baris yang merupakan ISI nasehat adalah...', options: ['Baris ke-3 dan ke-4', 'Baris ke-1 dan ke-2', 'Hanya baris ke-1', 'Hanya baris ke-2'], answer: 'Baris ke-3 dan ke-4', hint: 'Nasehat pantun selalu berada di dua baris terakhir (baris 3 dan 4).' },
-          { q: 'Rima bunyi akhir pada bait pantun tradisional umumnya berpola...', options: ['a - b - a - b', 'a - a - a - b', 'b - b - b - a', 'bebas tanpa rima'], answer: 'a - b - a - b', hint: 'Bunyi baris 1 seirama baris 3, bunyi baris 2 seirama baris 4.' }
+          { q: 'Rima bunyi akhir pada bait pantun tradisional umumnya berpola...', options: ['a - b - a - b', 'a - a - a - b', 'b - b - b - a', 'bebas tanpa rima'], answer: 'a - b - a - b', hint: 'Bunyi baris 1 seirama baris 3, bunyi baris 2 seirama baris 4.' },
+          { q: "Bait puisi dibaca dengan lafal yang jelas dan ekspresi yang...", options: ["Sesuai perasaan isi puisi","Cemberut dan marah","Berbisik sangat pelan","Tertawa tanpa henti"], answer: "Sesuai perasaan isi puisi", hint: "Jika puisinya gembira, wajah kita tersenyum ceria." },
+          { q: "Lengkapi rima pantun: \"Pergi ke pasar beli semangka / Jangan lupa membeli ...\"", options: ["nangka","batu","meja","sepatu"], answer: "nangka", hint: "Semangka berima bunyi akhir sama dengan nangka (ka - ka)." }
         ],
         activitiesEn: [
           { q: 'In traditional Indonesian Pantun, which lines contain the core advice / message?', options: ['Lines 3 and 4', 'Lines 1 and 2', 'Line 1 only', 'Line 2 only'], answer: 'Lines 3 and 4', hint: 'The moral message is always found in the concluding couplet (lines 3 & 4).' }
         ]
       },
       {
-        id: 'bi-dongeng-fabel',
+        id: 'bi-dongeng-fabel'
         title: 'Membaca Pemahaman & Fabel Nusantara',
         titleEn: 'Reading Comprehension & Animal Fables',
         desc: 'Fabel adalah cerita dongeng di mana hewan-hewan dapat berbicara dan bertingkah seperti manusia. Membaca fabel membantu kita memahami karakter tokoh, alur awal-tengah-akhir, dan memetik pesan budi pekerti yang luhur!',
@@ -2853,7 +2863,9 @@
         ],
         activities: [
           { q: 'Cerita dongeng dengan tokoh hewan yang bertingkah laku seperti manusia disebut...', options: ['Fabel', 'Legenda', 'Mite', 'Biografi'], answer: 'Fabel', hint: 'Fabel adalah kisah hewan jenaka penuh pesan moral.' },
-          { q: 'Dalam fabel "Semut dan Belalang", Semut rajin mengumpulkan makanan saat musim kemarau, sedangkan Belalang malas dan hanya bernyanyi. Sikap Semut mengajarkan kita untuk...', options: ['Rajin bekerja dan mempersiapkan masa depan', 'Malas-malasan setiap hari', 'Menghabiskan makanan sekaligus', 'Mengejek teman lain'], answer: 'Rajin bekerja dan mempersiapkan masa depan', hint: 'Semut yang rajin tidak akan kelaparan saat musim dingin tiba 🐜' }
+          { q: 'Dalam fabel "Semut dan Belalang", Semut rajin mengumpulkan makanan saat musim kemarau, sedangkan Belalang malas dan hanya bernyanyi. Sikap Semut mengajarkan kita untuk...', options: ['Rajin bekerja dan mempersiapkan masa depan', 'Malas-malasan setiap hari', 'Menghabiskan makanan sekaligus', 'Mengejek teman lain'], answer: 'Rajin bekerja dan mempersiapkan masa depan', hint: 'Semut yang rajin tidak akan kelaparan saat musim dingin tiba 🐜' },
+          { q: "Dalam fabel \"Kelinci dan Kura-Kura\", sifat kura-kura yang patut ditiru adalah...", options: ["Gigih dan pantang menyerah","Sombong dan suka mengejek","Malas dan suka tidur","Mudah marah"], answer: "Gigih dan pantang menyerah", hint: "Kura-kura terus berjalan tekun hingga mencapai garis akhir 🐢" },
+          { q: "Ciri khas cerita dongeng fabel adalah tokoh utamanya berupa...", options: ["Hewan yang bertingkah seperti manusia","Robot canggih","Batu ajaib","Pesawat terbang"], answer: "Hewan yang bertingkah seperti manusia", hint: "Fabel adalah kisah hewan yang bisa berbicara dan berpikir." }
         ],
         activitiesEn: [
           { q: 'What do we call fictional stories where animal characters speak and behave like people?', options: ['Fable', 'Biography', 'Encyclopedia', 'Atlas'], answer: 'Fable', hint: 'Aesop and folklore animal tales are known as fables.' }
@@ -2861,7 +2873,7 @@
       }
   ,
       {
-        id: 'bi-kata-ajaib',
+        id: 'bi-kata-ajaib'
         title: '4 Kata Ajaib: Tolong, Maaf, Terima Kasih, & Permisi',
         titleEn: '4 Magic Words: Please, Sorry, Thank You, & Excuse Me',
         desc: 'Ada 4 kata ajaib yang membuat semua orang tersenyum dan senang: "Tolong" saat butuh bantuan, "Maaf" saat berbuat salah atau tidak sengaja, "Terima Kasih" saat menerima kebaikan, dan "Permisi" saat lewat di depan orang lain. Membiasakan kata ajaib sejak Kelas 1 SD menjadikan kita anak berbudi pekerti luhur!',
@@ -2909,8 +2921,10 @@
                   ],
                   "answer": "Permisi, Pak Guru",
                   "hint": "Kata santun untuk meminta izin lewat."
-          }
-  ],
+          },
+          { q: "Ketika tidak sengaja menyenggol tempat pensil teman hingga jatuh, kita mengucapkan...", options: ["Maaf","Tolong","Terima kasih","Permisi"], answer: "Maaf", hint: "Mengakui kekeliruan dengan tulus adalah sikap pemberani." },
+          { q: "Sebelum lewat di depan orang tua yang sedang duduk, kata santun yang diucapkan adalah...", options: ["Permisi","Halo","Awas","Tolong"], answer: "Permisi", hint: "Kata \"Permisi\" sambil membungkukkan badan sedikit menunjukkan sopan santun." }
+        ],
         activitiesEn: [
           {
                   "q": "When you accidentally bump into a friend, you should say...",
@@ -3313,7 +3327,7 @@
       }
   ,
       {
-        id: 'en-fruits-food',
+        id: 'en-fruits-food'
         title: 'Delicious Fruits & Healthy Food',
         titleEn: 'Delicious Fruits & Healthy Food',
         desc: 'Eating colorful fruits keeps our body energetic and strong! Let us learn their English names: Red Apple 🍎, Yellow Banana 🍌, Juicy Orange 🍊, Sweet Mango 🥭, and Crispy Watermelon 🍉. For healthy meals: White Rice 🍚, Fresh Milk 🥛, and Warm Bread 🍞!',
@@ -3361,8 +3375,10 @@
                   ],
                   "answer": "milk",
                   "hint": "A white nutritious drink that strengthens bones 🥛"
-          }
-  ],
+          },
+          { q: "Which fruit is long, yellow, and loved by monkeys?", options: ["Banana","Apple","Watermelon","Grape"], answer: "Banana", hint: "Sweet yellow fruit rich in potassium 🍌" },
+          { q: "Drinking fresh water every day keeps our body...", options: ["Healthy and energized","Sick","Sleepy","Tired"], answer: "Healthy and energized", hint: "Water is essential for growing children 💧" }
+        ],
         activitiesEn: [
           {
                   "q": "What is the English name for \"Apel Merah\"?",
@@ -4086,7 +4102,7 @@
         ]
       },
       {
-        id: 'bali-kruna-aran',
+        id: 'bali-kruna-aran'
         title: 'Kruna Aran ring Jeroan (Benda di Rumah)',
         titleEn: 'Balinese Nouns for Household Objects',
         desc: 'Kruna aran adalah kata benda dalam bahasa Bali. Di jeroan (rumah), ada meja (méja), kursi (kursi), pintu (jelanan), jendela (jendela/kori), tempat tidur (pedeman/pesarean), dan dapur (pawaregan). Mengenal kruna aran memperkaya kosakata harian!',
@@ -4103,14 +4119,16 @@
         ],
         activities: [
           { q: 'Pintu rumah dalam bahasa Bali halus/lumrah sering disebut...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'Akses keluar masuk ruangan atau pekarangan rumah.' },
-          { q: 'Tempat memasak makanan di rumah (dapur) dalam bahasa Bali disebut...', options: ['Pawaregan', 'Bale dauh', 'Bale daja', 'Jaba'], answer: 'Pawaregan', hint: 'Ruangan tempat menyiapkan masakan lezat.' }
+          { q: 'Tempat memasak makanan di rumah (dapur) dalam bahasa Bali disebut...', options: ['Pawaregan', 'Bale dauh', 'Bale daja', 'Jaba'], answer: 'Pawaregan', hint: 'Ruangan tempat menyiapkan masakan lezat.' },
+          { q: "Basa Bali alus untuk kata \"Buku\" atau tempat mencatat sastra adalah...", options: ["Cakepan / Buku","Meja","Korsi","Jendela"], answer: "Cakepan / Buku", hint: "Cakepan dados genah nyurat aksara lan sastra 📚" },
+          { q: "Piranti anggen melajah ring jeroan sakadi \"Pencil\" ring Basa Bali kawastanin...", options: ["Potlot / Pensil","Blakas","Arit","Sumpit"], answer: "Potlot / Pensil", hint: "Piranti anggen nyurat ring buku tulis." }
         ],
         activitiesEn: [
           { q: 'The entrance door or gate in Balinese is referred to as...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'The gateway or doorway.' }
         ]
       },
       {
-        id: 'bali-wilangan',
+        id: 'bali-wilangan'
         title: 'Wilangan Angka Basa Bali (1 - 20)',
         titleEn: 'Balinese Numbers & Counting (1 to 20)',
         desc: 'Berhitung dalam bahasa Bali sangat unik dan berirama: 1 (Sa/Besik), 2 (Dua), 3 (Telu), 4 (Papat), 5 (Lima), 6 (Nem), 7 (Pitu), 8 (Kutus), 9 (Sia), 10 (Dasa). Selanjutnya 11 (Solas), 12 (Roras), hingga 20 (Duang dasa)!',
@@ -4128,14 +4146,16 @@
         activities: [
           { q: 'Angka 3 dalam wilangan bahasa Bali disebut...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: '1=Sa, 2=Dua, 3=Telu.' },
           { q: 'Angka 10 dalam bahasa Bali adalah...', options: ['Dasa', 'Solas', 'Kutus', 'Sia'], answer: 'Dasa', hint: 'Sepuluh dalam bahasa Bali.' },
-          { q: 'Angka 11 dalam bahasa Bali disebut...', options: ['Solas', 'Roras', 'Telulas', 'Patbelas'], answer: 'Solas', hint: 'Sebelas diucapkan solas.' }
+          { q: 'Angka 11 dalam bahasa Bali disebut...', options: ['Solas', 'Roras', 'Telulas', 'Patbelas'], answer: 'Solas', hint: 'Sebelas diucapkan solas.' },
+          { q: "Angka 7 (tujuh) ring Basa Bali kawastanin...", options: ["Pitu","Nem","Kutus","Sia"], answer: "Pitu", hint: "Urutan: lima (5), nem (6), pitu (7), kutus (8)." },
+          { q: "Angka 10 (sepuluh) ring Basa Bali kawastanin...", options: ["Dasa","Dasa Nem","Solas","Roras"], answer: "Dasa", hint: "Dasa inggih punika angka sepuluh (10)." }
         ],
         activitiesEn: [
           { q: 'Number 3 in Balinese counting is called...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: 'Sa (1), Dua (2), Telu (3).' }
         ]
       },
       {
-        id: 'bali-gending-rare',
+        id: 'bali-gending-rare'
         title: 'Gending Rare (Tembang Ceria Anak Bali)',
         titleEn: 'Gending Rare (Traditional Balinese Children Songs)',
         desc: 'Gending rare adalah lagu dolanan tradisional anak-anak Bali yang dinyanyikan saat bermain di bawah sinar bulan purnama atau saat santai. Lagu terkenalnya: "Putri Cening Ayu", "Meong-meong", dan "Dadong Dauh" yang sarat nasehat bakti kepada orang tua!',
@@ -4152,14 +4172,16 @@
         ],
         activities: [
           { q: 'Gending rare yang menceritakan kucing mengejar tikus (biku) yang nakal adalah...', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Liriknya: "Meong-meong, alih ja bikule..." 🐱' },
-          { q: 'Tembang "Putri Cening Ayu" menceritakan nasehat seorang ibu yang hendak pergi ke...', options: ['Peken (Pasar)', 'Carik (Sawah)', 'Pasih (Pantai)', 'Gunung'], answer: 'Peken (Pasar)', hint: 'Lirik: "Putri cening ayu, ngijeng cening jumah, meme luas kapeken..."' }
+          { q: 'Tembang "Putri Cening Ayu" menceritakan nasehat seorang ibu yang hendak pergi ke...', options: ['Peken (Pasar)', 'Carik (Sawah)', 'Pasih (Pantai)', 'Gunung'], answer: 'Peken (Pasar)', hint: 'Lirik: "Putri cening ayu, ngijeng cening jumah, meme luas kapeken..."' },
+          { q: "Gending rare \"Ratu Anom\" ngicenin paplajahan indik...", options: ["Tresna asih lan bhakti ring rerama","Maburuh","Megadang","Ngulgul timpal"], answer: "Tresna asih lan bhakti ring rerama", hint: "Gending sane melodi nembang indik anak cenik sane jemet ring umah." },
+          { q: "Sasolahan gending rare \"Meong-Meong\" kasarengin antuk buron sane...", options: ["Meong ngelincang Bikul (kucing ngejar tikus)","Bebek ngelincang Siap","Bojog ngelincang Macan","Cicing ngelincang Kambing"], answer: "Meong ngelincang Bikul (kucing ngejar tikus)", hint: "Meong-meong alih ja bikule, bikul gede-gede buin mokoh-mokoh 🐱🐭" }
         ],
         activitiesEn: [
           { q: 'Which Balinese children song depicts a cat chasing a mischievous mouse?', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Lyrical line: "Meong-meong, alih ja bikule..." 🐱' }
         ]
       },
       {
-        id: 'bali-rahina-nyepi',
+        id: 'bali-rahina-nyepi'
         title: 'Pura, Upacara, & Rahina Suci Nyepi',
         titleEn: 'Temples, Ceremonies, & Sacred Nyepi Day',
         desc: 'Pulau Bali terkenal dengan ribuan Pura megah dan upacara tradisi yang asri. Saat menyambut Tahun Baru Saka (Hari Raya Nyepi), umat Hindu melaksanakan Catur Brata Penyepian: Amati Geni (tidak menyalakan api/lampu), Amati Karya (tidak bekerja), Amati Lelungan (tidak bepergian), dan Amati Lelanguan (tidak bersenang-senang)!',
@@ -4176,7 +4198,9 @@
         ],
         activities: [
           { q: 'Salah satu bagian dari Catur Brata Penyepian yang artinya tidak menyalakan api/lampu adalah...', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni artinya api atau sumber cahaya penerangan.' },
-          { q: 'Ibu dari seluruh Pura di Bali yang berdiri megah di lereng Gunung Agung adalah...', options: ['Pura Agung Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Tirta Empul'], answer: 'Pura Agung Besakih', hint: 'Terletak di Kabupaten Karangasem.' }
+          { q: 'Ibu dari seluruh Pura di Bali yang berdiri megah di lereng Gunung Agung adalah...', options: ['Pura Agung Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Tirta Empul'], answer: 'Pura Agung Besakih', hint: 'Terletak di Kabupaten Karangasem.' },
+          { q: "Amati Lelungan ring Catur Brata Penyepian mateges...", options: ["Nenten dados melali / nenten medal saking jeroan","Nenten dados ngendihang api","Nenten dados megending","Nenten dados ngeraos"], answer: "Nenten dados melali / nenten medal saking jeroan", hint: "Menenangkan diri di dalam rumah selama 24 jam penuh." },
+          { q: "Amati Lelanguan mateges...", options: ["Nenten dados ngamargiang kasenengan utawi pesta","Nenten dados ngendihang lampu","Nenten dados medem","Nenten dados ngajeng"], answer: "Nenten dados ngamargiang kasenengan utawi pesta", hint: "Tidak bersenang-senang atau mengadakan hiburan hura-hura." }
         ],
         activitiesEn: [
           { q: 'Which observance of Nyepi\'s Catur Brata means refraining from lighting fire and lamps?', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni signifies fire or artificial light.' }
@@ -4868,7 +4892,7 @@
     subtitleEn: 'Stay vibrant and energetic! Master locomotor drills, rhythmic gymnastics, clean hygiene, and balanced nutrition! ⚽',
     topics: [
       {
-        id: 'pjok-lokomotor',
+        id: 'pjok-lokomotor'
         title: 'Gerak Dasar Lokomotor (Berpindah Tempat)',
         titleEn: 'Locomotor Skills (Traveling Movements)',
         desc: 'Gerak LOKOMOTOR adalah gerakan tubuh yang menyebabkan berpindah tempat dari satu titik ke titik lain. Contoh utamanya: BERJALAN santai, BERLARI kencang, MELOMPAT dengan tolakan dua kaki, dan MENCONGKANG (gallop) lincah seperti kuda berlari!',
@@ -4885,14 +4909,16 @@
         ],
         activities: [
           { q: 'Gerakan tubuh yang membuat kita berpindah tempat disebut gerak...', options: ['Lokomotor', 'Non-lokomotor', 'Manipulatif', 'Statik'], answer: 'Lokomotor', hint: 'Lokomotor berarti bergerak berpindah posisi (contoh: berjalan dan berlari).' },
-          { q: 'Saat berlari cepat, ayunan kedua tangan yang benar adalah...', options: ['Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', 'Diam di samping pinggang', 'Diangkat lurus ke atas kepala', 'Dimasukkan ke dalam saku celana'], answer: 'Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', hint: 'Ayunan lengan seirama membantu keseimbangan dan menambah dorongan lari.' }
+          { q: 'Saat berlari cepat, ayunan kedua tangan yang benar adalah...', options: ['Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', 'Diam di samping pinggang', 'Diangkat lurus ke atas kepala', 'Dimasukkan ke dalam saku celana'], answer: 'Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', hint: 'Ayunan lengan seirama membantu keseimbangan dan menambah dorongan lari.' },
+          { q: "Contoh gerak lokomotor (gerakan yang berpindah tempat) adalah...", options: ["Berlari dan melompat ke depan","Menggelengkan kepala di tempat","Mengayunkan lengan saat duduk","Membungkuk di kursi"], answer: "Berlari dan melompat ke depan", hint: "Gerak lokomotor memindahkan tubuh dari satu titik ke titik lain." },
+          { q: "Saat melakukan gerakan melompat, bagian tubuh yang bertugas menolak dan mendarat adalah...", options: ["Kedua kaki dengan lutut mengeper","Kepala","Punggung","Tangan kiri"], answer: "Kedua kaki dengan lutut mengeper", hint: "Mengeperkan lutut mencegah cedera pada persendian kaki 🦵" }
         ],
         activitiesEn: [
           { q: 'Body movements that transport you across from one location to another are called...', options: ['Locomotor', 'Non-locomotor', 'Manipulative', 'Static'], answer: 'Locomotor', hint: 'Walking and running travel through space.' }
         ]
       },
       {
-        id: 'pjok-non-lokomotor',
+        id: 'pjok-non-lokomotor'
         title: 'Gerak Dasar Non-Lokomotor (Tanpa Berpindah)',
         titleEn: 'Non-Locomotor Skills (Stationary Movements)',
         desc: 'Gerak NON-LOKOMOTOR adalah gerakan tubuh yang dilakukan di tempat tanpa berpindah posisi. Contoh: MEMBUNGKUK menyentuh ujung sepatu, MELIUKKAN badan ke kanan dan kiri, MEMUTAR pinggang, serta MENGAYUN lengan untuk peregangan otot agar lentur dan terhindar dari cedera!',
@@ -4909,14 +4935,16 @@
         ],
         activities: [
           { q: 'Manakah di bawah ini yang merupakan contoh gerak non-lokomotor?', options: ['Meliukkan badan ke samping di tempat', 'Berlari mengelilingi lapangan', 'Melompat melewati rintangan kardus', 'Berenang menyeberangi kolam'], answer: 'Meliukkan badan ke samping di tempat', hint: 'Non-lokomotor dilakukan diam di tempat tanpa melangkah berpindah.' },
-          { q: 'Apa manfaat melakukan gerakan peregangan otot sebelum berolahraga?', options: ['Mencegah cedera otot dan membuat tubuh lebih lentur', 'Membuat tubuh cepat lelah', 'Menurunkan detak jantung mendadak', 'Agar bisa tidur saat olahraga'], answer: 'Mencegah cedera otot dan membuat tubuh lebih lentur', hint: 'Peregangan menyiapkan otot dan sendi agar siap bergerak aktif.' }
+          { q: 'Apa manfaat melakukan gerakan peregangan otot sebelum berolahraga?', options: ['Mencegah cedera otot dan membuat tubuh lebih lentur', 'Membuat tubuh cepat lelah', 'Menurunkan detak jantung mendadak', 'Agar bisa tidur saat olahraga'], answer: 'Mencegah cedera otot dan membuat tubuh lebih lentur', hint: 'Peregangan menyiapkan otot dan sendi agar siap bergerak aktif.' },
+          { q: "Gerakan memutar pinggang dan membungkuk di tempat termasuk gerak...", options: ["Non-lokomotor","Lokomotor","Manipulatif","Terbang"], answer: "Non-lokomotor", hint: "Gerak non-lokomotor dilakukan tanpa berpindah tempat." },
+          { q: "Manfaat melakukan peregangan non-lokomotor sebelum olahraga adalah...", options: ["Mencegah kram dan menyiapkan otot tubuh","Membuat mengantuk","Membuat lapar","Bisa langsung tidur"], answer: "Mencegah kram dan menyiapkan otot tubuh", hint: "Pemanasan melenturkan otot dan sendi agar siap bergerak lincah." }
         ],
         activitiesEn: [
           { q: 'Which of the following is an example of stationary non-locomotor movement?', options: ['Swaying torso sideways in place', 'Sprinting across field', 'Jumping hurdles', 'Swimming across pool'], answer: 'Swaying torso sideways in place', hint: 'Non-locomotor stays rooted in one place.' }
         ]
       },
       {
-        id: 'pjok-manipulatif',
+        id: 'pjok-manipulatif'
         title: 'Gerak Dasar Manipulatif (Menggunakan Alat)',
         titleEn: 'Manipulative Skills (Ball & Object Control)',
         desc: 'Gerak MANIPULATIF melibatkan penguasaan anggota tubuh terhadap suatu benda atau alat olahraga (seperti bola atau raket). Keterampilan dasarnya: MELEMPAR bola ke sasaran, MENANGKAP bola dengan kedua tangan lentur, MENENDANG bola ke gawang, dan MENGGIRING bola!',
@@ -4933,14 +4961,16 @@
         ],
         activities: [
           { q: 'Menendang, melempar, dan menangkap bola termasuk ke dalam kelompok gerak...', options: ['Manipulatif', 'Lokomotor', 'Non-lokomotor', 'Non-aktif'], answer: 'Manipulatif', hint: 'Manipulatif menggunakan benda atau objek luar sebagai alat olahraga 🎾' },
-          { q: 'Saat hendak menangkap bola lemparan dari teman, posisi kedua telapak tangan yang benar adalah...', options: ['Terbuka membentuk mangkuk menghadap ke arah datangnya bola', 'Mengepal kaku ke bawah', 'Disilangkan di belakang punggung', 'Menutup kedua mata'], answer: 'Terbuka membentuk mangkuk menghadap ke arah datangnya bola', hint: 'Jari-jari lentur siap meredam benturan bola.' }
+          { q: 'Saat hendak menangkap bola lemparan dari teman, posisi kedua telapak tangan yang benar adalah...', options: ['Terbuka membentuk mangkuk menghadap ke arah datangnya bola', 'Mengepal kaku ke bawah', 'Disilangkan di belakang punggung', 'Menutup kedua mata'], answer: 'Terbuka membentuk mangkuk menghadap ke arah datangnya bola', hint: 'Jari-jari lentur siap meredam benturan bola.' },
+          { q: "Gerak manipulatif adalah gerak yang melibatkan penggunaan...", options: ["Alat atau benda (seperti bola, simpai, raket)","Hanya mata","Hanya suara","Angin sepoi"], answer: "Alat atau benda (seperti bola, simpai, raket)", hint: "Contohnya menendang bola, melempar, dan menangkap bola ⚽" },
+          { q: "Saat menangkap bola lemparan teman, pandangan mata kita harus...", options: ["Fokus memperhatikan arah datangnya bola","Melihat ke atas langit","Menutup kedua mata rapat-rapat","Melihat sepatu teman"], answer: "Fokus memperhatikan arah datangnya bola", hint: "Konsentrasi melihat bola memastikan bola tertangkap aman dengan kedua tangan." }
         ],
         activitiesEn: [
           { q: 'Kicking, tossing, and catching a ball belong to which category of movement skills?', options: ['Manipulative', 'Locomotor', 'Non-locomotor', 'Static'], answer: 'Manipulative', hint: 'Involves handling external sport gear or balls 🎾' }
         ]
       },
       {
-        id: 'pjok-senam-irama',
+        id: 'pjok-senam-irama'
         title: 'Aktivitas Senam Irama / Ritmik Ceria',
         titleEn: 'Rhythmic Gymnastics & Musical Movement',
         desc: 'Senam Irama memadukan gerakan langkah kaki dan ayunan lengan yang selaras mengikuti irama ketukan musik atau hitungan ceria. Senam ini melatih koordinasi otak kiri dan kanan, kelenturan tubuh, rasa percaya diri, serta memupuk keceriaan bersama kawan!',
@@ -4957,14 +4987,16 @@
         ],
         activities: [
           { q: 'Unsur terpenting yang memandu gerakan pada senam irama adalah...', options: ['Ketukan irama musik atau tempo hitungan', 'Berat beban alat', 'Kecepatan lari kencang', 'Ketinggian lompatan'], answer: 'Ketukan irama musik atau tempo hitungan', hint: 'Gerakan harus selaras dan kompak dengan ritme musik 🎶' },
-          { q: 'Senam irama yang dilakukan bersama teman-teman sekelas melatih rasa...', options: ['Kekompakan dan kebersamaan', 'Egois ingin menang sendiri', 'Rasa malas bergerak', 'Kecurigaan'], answer: 'Kekompakan dan kebersamaan', hint: 'Senam bersama menumbuhkan harmoni dan persahabatan.' }
+          { q: 'Senam irama yang dilakukan bersama teman-teman sekelas melatih rasa...', options: ['Kekompakan dan kebersamaan', 'Egois ingin menang sendiri', 'Rasa malas bergerak', 'Kecurigaan'], answer: 'Kekompakan dan kebersamaan', hint: 'Senam bersama menumbuhkan harmoni dan persahabatan.' },
+          { q: "Senam irama (ritmik) diiringi oleh ketukan musik yang...", options: ["Gembira dan berirama riang","Sedih dan menangis","Sunyi tanpa suara","Mengejutkan"], answer: "Gembira dan berirama riang", hint: "Irama musik ceria membuat gerakan tubuh jadi bersemangat dan kompak 🎵" },
+          { q: "Kekompakan gerak pada senam irama beregu melatih rasa...", options: ["Kebersamaan dan disiplin gerak","Persaingan bermusuhan","Kecurangan","Malas"], answer: "Kebersamaan dan disiplin gerak", hint: "Bergerak bersama menciptakan harmoni yang indah dan sehat." }
         ],
         activitiesEn: [
           { q: 'What is the most crucial pacing element in rhythmic aerobic exercise?', options: ['Musical rhythm and count tempo', 'Heavy barbell weight', 'Max sprint speed', 'Jump height'], answer: 'Musical rhythm and count tempo', hint: 'Movement syncs with the musical beat 🎶' }
         ]
       },
       {
-        id: 'pjok-kebersihan-diri',
+        id: 'pjok-kebersihan-diri'
         title: 'Menjaga Kebersihan Diri & Cuci Tangan 6 Langkah',
         titleEn: 'Personal Hygiene & 6-Step Handwashing',
         desc: 'Tubuh yang sehat berawal dari kebersihan diri: Mandi 2 kali sehari memakai sabun, sikat gigi pagi setelah sarapan dan malam sebelum tidur, serta memotong kuku kotor. Cuci tangan 6 langkah memakai sabun dan air mengalir selama 20 detik membasmi kuman dan virus penyakit!',
@@ -4981,14 +5013,16 @@
         ],
         activities: [
           { q: 'Berapa durasi waktu minimal yang disarankan dokter saat mencuci tangan pakai sabun?', options: ['20 detik', '2 detik', '1 menit tanpa henti', 'Hanya celup air saja'], answer: '20 detik', hint: 'Cukup untuk menyanyikan lagu "Selamat Ulang Tahun" 2 kali 🧼' },
-          { q: 'Kapan waktu yang paling tepat untuk menyikat gigi agar terhindar dari gigi berlubang?', options: ['Pagi setelah sarapan dan malam sebelum tidur', 'Hanya seminggu sekali', 'Hanya saat sakit gigi', 'Tengah malam saat tidur'], answer: 'Pagi setelah sarapan dan malam sebelum tidur', hint: 'Membersihkan sisa makanan agar kuman tidak merusak lapisan gigi.' }
+          { q: 'Kapan waktu yang paling tepat untuk menyikat gigi agar terhindar dari gigi berlubang?', options: ['Pagi setelah sarapan dan malam sebelum tidur', 'Hanya seminggu sekali', 'Hanya saat sakit gigi', 'Tengah malam saat tidur'], answer: 'Pagi setelah sarapan dan malam sebelum tidur', hint: 'Membersihkan sisa makanan agar kuman tidak merusak lapisan gigi.' },
+          { q: "Lama waktu yang dianjurkan saat mencuci tangan dengan sabun adalah...", options: ["Minimal 20 detik dengan 6 langkah bersih","Hanya 1 detik","1 jam penuh","Tanpa air"], answer: "Minimal 20 detik dengan 6 langkah bersih", hint: "20 detik memastikan kuman dan bakteri mati terbilas busa sabun 🧼" },
+          { q: "Menggosok gigi sebaiknya dilakukan secara teratur minimal...", options: ["2 kali sehari (pagi setelah makan & malam sebelum tidur)","1 bulan sekali","Setahun sekali","Hanya saat hari libur"], answer: "2 kali sehari (pagi setelah makan & malam sebelum tidur)", hint: "Gigi yang bersih bebas dari kuman perusak dan gigi berlubang 🦷" }
         ],
         activitiesEn: [
           { q: 'What is the recommended minimum duration for effective handwashing with soap?', options: ['20 seconds', '2 seconds', '10 minutes', 'Just a quick splash'], answer: '20 seconds', hint: 'Equal to singing the "Happy Birthday" song twice 🧼' }
         ]
       },
       {
-        id: 'pjok-gizi-seimbang',
+        id: 'pjok-gizi-seimbang'
         title: 'Gizi Seimbang: Isi Piringku & Istirahat Cukup',
         titleEn: 'Balanced Nutrition (Isi Piringku) & Quality Sleep',
         desc: 'Prinsip "Isi Piringku" mengajarkan porsi gizi seimbang dalam satu piring makan: 1/3 Makanan Pokok (nasi/kentang/ubi), 1/3 Sayuran segar, 1/6 Lauk-pauk berprotein (ikan/telur/tahu), dan 1/6 Buah-buahan manis alami. Minum air putih 8 gelas sehari dan tidur 8-9 jam agar tubuh tumbuh optimal!',
@@ -5005,7 +5039,9 @@
         ],
         activities: [
           { q: 'Dalam pedoman gizi seimbang "Isi Piringku", sumber energi makanan pokok contohnya adalah...', options: ['Nasi, jagung, dan ubi', 'Permen manis dan lolipop', 'Keripik asin pedas', 'Minuman soda bersoda'], answer: 'Nasi, jagung, dan ubi', hint: 'Karbohidrat kompleks yang memberikan tenaga belajar dan bermain 🍚' },
-          { q: 'Berapa jam waktu tidur malam yang dianjurkan untuk anak usia sekolah dasar agar tumbuh tinggi dan cerdas?', options: ['8 sampai 9 jam', 'Hanya 2 jam', '15 jam seharian', 'Tidak perlu tidur'], answer: '8 sampai 9 jam', hint: 'Tidur cukup memulihkan stamina dan memicu hormon pertumbuhan.' }
+          { q: 'Berapa jam waktu tidur malam yang dianjurkan untuk anak usia sekolah dasar agar tumbuh tinggi dan cerdas?', options: ['8 sampai 9 jam', 'Hanya 2 jam', '15 jam seharian', 'Tidak perlu tidur'], answer: '8 sampai 9 jam', hint: 'Tidur cukup memulihkan stamina dan memicu hormon pertumbuhan.' },
+          { q: "Zat makanan yang berfungsi sebagai sumber tenaga utama tubuh adalah...", options: ["Karbohidrat (nasi, jagung, kentang, roti)","Garam dapur","Minyak jelantah","Es batu"], answer: "Karbohidrat (nasi, jagung, kentang, roti)", hint: "Karbohidrat memberi kita energi untuk berlari dan belajar seharian 🍚" },
+          { q: "Sayur-sayuran hijau dan buah-buahan segar kaya akan...", options: ["Vitamin, mineral, dan serat pencernaan","Lemak jahat","Gula buatan","Bahan pengawet"], answer: "Vitamin, mineral, dan serat pencernaan", hint: "Serat dan vitamin membuat daya tahan tubuh kuat dan tidak mudah sakit 🥦" }
         ],
         activitiesEn: [
           { q: 'In the balanced nutrition plate guide, which food serves as a healthy staple carbohydrate?', options: ['Steamed rice, corn, and sweet potato', 'Cotton candy and lollipops', 'Processed spicy crisps', 'Fizzy soda drinks'], answer: 'Steamed rice, corn, and sweet potato', hint: 'Wholesome carbohydrates fuel active play and study 🍚' }
@@ -5013,7 +5049,7 @@
       }
   ,
       {
-        id: 'pjok-keseimbangan',
+        id: 'pjok-keseimbangan'
         title: 'Latihan Keseimbangan Tubuh: Sikap Bangau & Jinjit',
         titleEn: 'Body Balance Training: Crane Stand & Tip-Toe Walking',
         desc: 'Keseimbangan tubuh yang kuat mencegah kita mudah terjatuh saat berlari atau bermain. Ada keseimbangan diam (statis) seperti berdiri satu kaki meniru burung bangau dengan kedua tangan direntangkan. Ada pula keseimbangan bergerak (dinamis) seperti berjalan jinjit di atas garis lurus tanpa oleng!',
@@ -5061,8 +5097,10 @@
                   ],
                   "answer": "Aman, rata, dan tidak licin",
                   "hint": "Keselamatan adalah hal paling utama saat berolahraga."
-          }
-  ],
+          },
+          { q: "Saat mempraktikkan sikap bangau (berdiri 1 kaki), kedua lengan kita...", options: ["Direntangkan ke samping untuk menjaga keseimbangan","Dimasukkan ke kantong celana","Ditutup ke telinga","Ditaruh di belakang"], answer: "Direntangkan ke samping untuk menjaga keseimbangan", hint: "Rentangan tangan berfungsi sebagai penyeimbang titik berat tubuh 🦩" },
+          { q: "Latihan berjalan jinjit di atas garis lurus melatih kekuatan otot...", options: ["Betis dan pergelangan kaki","Leher","Jari tangan","Gigi"], answer: "Betis dan pergelangan kaki", hint: "Otot betis menopang berat badan saat tumit terangkat tinggi." }
+        ],
         activitiesEn: [
           {
                   "q": "Standing poised on one foot with arms outstretched mimics the posture of a...",
@@ -5769,7 +5807,7 @@
         ]
       },
       {
-        id: 'p5-anti-bullying',
+        id: 'p5-anti-bullying'
         title: 'P5 Bangunlah Jiwa Raganya: Sahabat Hebat Anti-Bullying',
         titleEn: 'P5 Wellbeing: Kind Friends Against Bullying',
         desc: 'Setiap anak berhak belajar dan bermain di sekolah dengan rasa aman dan gembira. Tolak perundungan (bullying): STOP mengejek nama orang tua, STOP memanggil julukan buruk, STOP mengucilkan kawan, dan STOP bermain kasar! Jadilah pembela kebaikan (upstander) yang melindungi teman!',
@@ -5786,7 +5824,9 @@
         ],
         activities: [
           { q: 'Jika kamu melihat seorang teman baru diejek atau disoraki oleh anak lain, sikap terbaikmu adalah...', options: ['Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', 'Ikut-ikutan mengejek agar dianggap hebat', 'Merekamnya sambil tertawa', 'Menyuruh teman tersebut menangis'], answer: 'Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', hint: 'Jadilah upstander pemberani yang membela teman yang tertindas.' },
-          { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' }
+          { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' },
+          { q: "Tindakan yang BUKAN merupakan bullying (perundungan) adalah...", options: ["Mengajak teman bermain bersama secara ramah","Mengejek nama orang tua teman","Mendorong teman sampai menangis","Menyembunyikan sepatu teman"], answer: "Mengajak teman bermain bersama secara ramah", hint: "Sahabat sejati selalu merangkul dan membuat teman merasa aman dan gembira 🤝" },
+          { q: "Jika melihat teman yang dipojokkan atau diejek anak lain, sikap kita adalah...", options: ["Membela dan melaporkan kepada bapak/ibu guru","Ikut menonton dan menertawakan","Merekam di ponsel","Membiarkannya saja"], answer: "Membela dan melaporkan kepada bapak/ibu guru", hint: "Menjadi pembela kebaikan (Upstander) menghentikan aksi perundungan." }
         ],
         activitiesEn: [
           { q: 'If you witness a classmate being teased or excluded, what is the upstander action?', options: ['Stand by their side, invite them over, and notify a teacher', 'Join in the cruel laughter', 'Record it for amusement', 'Tell them it is their fault'], answer: 'Stand by their side, invite them over, and notify a teacher', hint: 'An upstander protects and seeks supportive adult help.' }
@@ -8386,6 +8426,872 @@
   }
   
 
+  // --- Source: js/engine/tts-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Child-Friendly Text-to-Speech (TTS) Engine
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Web Speech API Native, Zero Quota, 100% Offline)
+  // ================================================================
+  
+  const TtsEngine = {
+    speaking: false,
+    currentBtn: null,
+  
+    isSupported() {
+      return typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+    },
+  
+    speak(text, lang = 'id', btnEl = null) {
+      if (!this.isSupported()) {
+        console.warn('[TTS] Web Speech API tidak didukung di peramban ini.');
+        return;
+      }
+  
+      // Jika sedang membaca dan tombol yang sama diklik lagi -> STOP
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        if (this.currentBtn) {
+          this.resetBtn(this.currentBtn);
+        }
+        if (this.currentBtn === btnEl) {
+          this.currentBtn = null;
+          this.speaking = false;
+          return;
+        }
+      }
+  
+      if (!text || !text.trim()) return;
+  
+      // Bersihkan teks dari markup HTML sederhana jika ada
+      const cleanText = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      const utter = new SpeechSynthesisUtterance(cleanText);
+  
+      // Konfigurasi bahasa dan vokal ramah anak SD
+      const isEn = (lang === 'en');
+      utter.lang = isEn ? 'en-US' : 'id-ID';
+      utter.rate = isEn ? 0.88 : 0.85; // Bicara sedikit lebih pelan dan artikulatif untuk anak Kelas 1 SD
+      utter.pitch = 1.08;              // Nada sedikit ceria bersahabat
+  
+      // Pilih suara optimal jika tersedia di browser
+      try {
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          const targetLang = isEn ? 'en' : 'id';
+          const match = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
+          if (match) utter.voice = match;
+        }
+      } catch (e) {}
+  
+      if (btnEl) {
+        this.currentBtn = btnEl;
+        if (!btnEl.getAttribute('data-original-html')) {
+          btnEl.setAttribute('data-original-html', btnEl.innerHTML);
+        }
+        btnEl.classList.add('tts-speaking');
+        btnEl.setAttribute('aria-label', isEn ? 'Stop reading' : 'Berhenti membaca');
+        btnEl.innerHTML = '⏹️';
+      }
+  
+      utter.onend = () => {
+        if (btnEl) this.resetBtn(btnEl);
+        this.currentBtn = null;
+        this.speaking = false;
+      };
+  
+      utter.onerror = () => {
+        if (btnEl) this.resetBtn(btnEl);
+        this.currentBtn = null;
+        this.speaking = false;
+      };
+  
+      this.speaking = true;
+      window.speechSynthesis.speak(utter);
+    },
+  
+    resetBtn(btn) {
+      btn.classList.remove('tts-speaking');
+      const orig = btn.getAttribute('data-original-html');
+      if (orig) btn.innerHTML = orig;
+      btn.setAttribute('aria-label', 'Dengarkan suara');
+    },
+  
+    stop() {
+      if (this.isSupported()) {
+        window.speechSynthesis.cancel();
+      }
+      if (this.currentBtn) {
+        this.resetBtn(this.currentBtn);
+        this.currentBtn = null;
+      }
+      this.speaking = false;
+    }
+  };
+  
+  
+
+  // --- Source: js/engine/audio-fx.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Child Educational Sound Effects & Confetti
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Web Audio API Synthesizer, 100% Offline & Lightweight)
+  // ================================================================
+  
+  const AudioFx = {
+    ctx: null,
+  
+    getContext() {
+      if (typeof window === 'undefined') return null;
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          this.ctx = new AudioCtx();
+        }
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      return this.ctx;
+    },
+  
+    // Nada ceria sukses (Ting-Ting!)
+    playSuccess() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        // Nada 1: C5 (523.25 Hz)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'triangle';
+        osc1.frequency.setValueAtTime(523.25, now);
+        gain1.gain.setValueAtTime(0.15, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.25);
+  
+        // Nada 2: G5 (783.99 Hz)
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(783.99, now + 0.12);
+        gain2.gain.setValueAtTime(0.2, now + 0.12);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.12);
+        osc2.stop(now + 0.45);
+      } catch (e) {}
+    },
+  
+    // Fanfare juara saat menyelesaikan kuis/topik
+    playFanfare() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        const now = ctx.currentTime;
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const start = now + (idx * 0.1);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, start);
+          gain.gain.setValueAtTime(0.18, start);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(start);
+          osc.stop(start + 0.35);
+        });
+      } catch (e) {}
+    },
+  
+    // Efek visual konfeti ceria di layar
+    triggerConfetti(containerEl = document.body) {
+      if (typeof document === 'undefined') return;
+      const emojis = ['⭐', '🌟', '✨', '🎉', '🎈', '🏆', '💯', '🌸'];
+      const count = 22;
+      const fragment = document.createDocumentFragment();
+  
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.className = 'edu-confetti-particle';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        const left = Math.random() * 92 + 4; // 4% - 96%
+        const duration = (Math.random() * 1.2 + 1.2).toFixed(2); // 1.2s - 2.4s
+        const delay = (Math.random() * 0.3).toFixed(2);
+        const size = Math.floor(Math.random() * 14 + 18); // 18px - 32px
+  
+        el.style.cssText = `
+          position: fixed;
+          left: ${left}vw;
+          bottom: -20px;
+          font-size: ${size}px;
+          pointer-events: none;
+          z-index: 9999;
+          animation: confettiFloatUp ${duration}s ease-out ${delay}s forwards;
+        `;
+        fragment.appendChild(el);
+  
+        setTimeout(() => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, (parseFloat(duration) + parseFloat(delay) + 0.3) * 1000);
+      }
+  
+      containerEl.appendChild(fragment);
+    }
+  };
+  
+  
+
+  // --- Source: js/components/lks-modal.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · LKS (Lembar Kerja Siswa / LKPD) Printable PDF Component
+  // Development · Anabhi Dev
+  // Version   : 1.0 (A4 Print-Ready, Full Workbook & Topic Worksheets)
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  class LksModalComponent {
+    constructor() {
+      this.modalEl = null;
+      this.fontSizeMode = 'normal'; // 'normal' | 'large'
+      this.initModal();
+    }
+  
+    initModal() {
+      let el = document.getElementById('lksModal');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'lksModal';
+        el.className = 'video-modal-overlay lks-modal-overlay';
+        el.style.display = 'none';
+        document.body.appendChild(el);
+      }
+      this.modalEl = el;
+      this.attachOverlayClose();
+    }
+  
+    attachOverlayClose() {
+      this.modalEl.addEventListener('click', (e) => {
+        if (e.target === this.modalEl) {
+          this.close();
+        }
+      });
+  
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.modalEl.style.display === 'flex') {
+          this.close();
+        }
+      });
+    }
+  
+    close() {
+      this.modalEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  
+    getSubjectData(subjectId) {
+      if (subjectId === 'bahasa-indonesia') return BAHASA_INDONESIA_DATA;
+      if (subjectId === 'bahasa-inggris') return ENGLISH_DATA;
+      if (subjectId === 'pancasila') return PANCASILA_DATA;
+      if (subjectId === 'bahasa-bali') return BAHASA_BALI_DATA;
+      if (subjectId === 'seni-rupa') return SENI_RUPA_DATA;
+      if (subjectId === 'pjok') return PJOK_DATA;
+      if (subjectId === 'agama') return AGAMA_DATA;
+      if (subjectId === 'kokurikuler') return KOKURIKULER_DATA;
+      if (subjectId === 'geografi') return GEO_DATA;
+      if (subjectId === 'matematika') return MATH_DATA;
+      return null;
+    }
+  
+    // Buka LKS untuk 1 topik spesifik
+    openTopic(subjectId, topicIndex = 0) {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const meta = SUBJECTS.find(s => s.id === subjectId) || { name: subjectId, icon: '📚' };
+      const subjectData = this.getSubjectData(subjectId);
+      if (!subjectData || !subjectData.topics || !subjectData.topics[topicIndex]) return;
+  
+      const topic = subjectData.topics[topicIndex];
+      const htmlContent = this.generateSingleTopicLksHtml(subjectId, meta, topic, topicIndex, isEn);
+  
+      this.renderModal(htmlContent, `${meta.icon} LKPD ${getSubjectName(meta, lang)} - Topik ${topicIndex + 1}`);
+    }
+  
+    // Buka LKS untuk seluruh topik dalam 1 mapel (Workbook Lengkap)
+    openFullSubject(subjectId) {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const meta = SUBJECTS.find(s => s.id === subjectId) || { name: subjectId, icon: '📚' };
+      const subjectData = this.getSubjectData(subjectId);
+      if (!subjectData || !subjectData.topics) return;
+  
+      const sheetsHtml = subjectData.topics.map((topic, idx) => {
+        return this.generateSingleTopicLksHtml(subjectId, meta, topic, idx, isEn, true);
+      }).join('<div class="lks-page-break"></div>');
+  
+      this.renderModal(sheetsHtml, `📑 BUKU KERJA LKPD LENGKAP: ${getSubjectName(meta, lang)} (10 Topik)`);
+    }
+  
+    // Buka LKS Mewarnai Peta Geografi (Indonesia / Bali)
+    openGeographyMapLks(mapType = 'indonesia') {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      let htmlContent = '';
+      let title = '';
+  
+      if (mapType === 'indonesia') {
+        title = 'Peta Mewarnai & Mengenal 34 Provinsi Indonesia';
+        htmlContent = this.generateIndonesiaMapLksHtml(isEn);
+      } else {
+        title = 'Peta Mewarnai & Mengenal Kabupaten Pulau Bali';
+        htmlContent = this.generateBaliMapLksHtml(isEn);
+      }
+  
+      this.renderModal(htmlContent, `🗺️ ${title}`);
+    }
+  
+    // Buka LKS Matematika Kelas 1 SD (Kotak 10 & Garis Bilangan)
+    openMathLks() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const htmlContent = this.generateMathLksHtml(isEn);
+      this.renderModal(htmlContent, '🧮 LKPD Matematika Ceria: Kotak 10 Frame & Garis Bilangan');
+    }
+  
+    renderModal(contentHtml, titleText) {
+      this.modalEl.innerHTML = `
+        <div class="lks-modal-dialog" role="dialog" aria-modal="true">
+          <!-- Sticky Action Header Toolbar -->
+          <div class="lks-modal-toolbar">
+            <div class="lks-toolbar-left">
+              <span class="lks-toolbar-icon">📄</span>
+              <div>
+                <strong class="lks-toolbar-title">${titleText}</strong>
+                <div class="lks-toolbar-sub">Standar Kurikulum Merdeka Fase A · Kelas 1 SD · Siap Cetak A4</div>
+              </div>
+            </div>
+            <div class="lks-toolbar-actions">
+              <button class="btn btn-lks-size" id="btnLksToggleSize" type="button" title="Ganti ukuran teks">
+                🔤 ${this.fontSizeMode === 'large' ? 'Teks Normal' : 'Teks Besar'}
+              </button>
+              <button class="btn primary btn-lks-print" id="btnLksPrint" type="button">
+                🖨️ Cetak / Simpan PDF
+              </button>
+              <button class="iconbtn btn-lks-close" id="btnLksClose" type="button" aria-label="Tutup">
+                ✕
+              </button>
+            </div>
+          </div>
+  
+          <!-- Scrollable Printable Paper Container -->
+          <div class="lks-modal-body" id="lksModalBody">
+            <div class="lks-sheet-container ${this.fontSizeMode === 'large' ? 'font-large' : ''}">
+              ${contentHtml}
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.modalEl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+  
+      // Event Handlers
+      const closeBtn = this.modalEl.querySelector('#btnLksClose');
+      if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+  
+      const printBtn = this.modalEl.querySelector('#btnLksPrint');
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
+  
+      const sizeBtn = this.modalEl.querySelector('#btnLksToggleSize');
+      if (sizeBtn) {
+        sizeBtn.addEventListener('click', () => {
+          this.fontSizeMode = (this.fontSizeMode === 'normal') ? 'large' : 'normal';
+          const container = this.modalEl.querySelector('.lks-sheet-container');
+          if (container) {
+            container.classList.toggle('font-large', this.fontSizeMode === 'large');
+          }
+          sizeBtn.innerHTML = `🔤 ${this.fontSizeMode === 'large' ? 'Teks Normal' : 'Teks Besar'}`;
+        });
+      }
+    }
+  
+    // Template HTML Resmi 1 Topik LKPD
+    generateSingleTopicLksHtml(subjectId, meta, topic, topicIndex, isEn, isWorkbook = false) {
+      const subjectTitle = (isEn && meta.nameEn) ? meta.nameEn : meta.name;
+      const topTitle = (isEn && topic.titleEn) ? topic.titleEn : topic.title;
+      const topDesc = (isEn && topic.descEn) ? topic.descEn : topic.desc;
+      const checklist = (isEn && topic.checklistEn) ? topic.checklistEn : topic.checklist;
+      // Pengecualian bahasa-inggris
+      const activities = (isEn && topic.activitiesEn) ? topic.activitiesEn : topic.activities;
+  
+      return `
+        <div class="lks-paper-sheet">
+          <!-- KOP RESMI LEMBAR KERJA PESERTA DIDIK -->
+          <div class="lks-kop">
+            <div class="lks-kop-logo">
+              <span style="font-size:38px;">🎓</span>
+            </div>
+            <div class="lks-kop-center">
+              <h2 class="lks-kop-instansi">SEKOLAH DASAR (SD) · KURIKULUM MERDEKA</h2>
+              <h1 class="lks-kop-title">LEMBAR KERJA PESERTA DIDIK (LKPD)</h1>
+              <div class="lks-kop-sub">Media Belajar Ceria Anabhi Dev Smart Study — Fase A (Kelas 1 SD)</div>
+            </div>
+            <div class="lks-kop-logo">
+              <span style="font-size:38px;">🇮🇩</span>
+            </div>
+          </div>
+          <div class="lks-kop-divider"></div>
+  
+          <!-- TABEL IDENTITAS PESERTA DIDIK -->
+          <table class="lks-identity-table">
+            <tr>
+              <td style="width:16%;"><strong>Nama Siswa</strong></td>
+              <td style="width:40%;">: ................................................................</td>
+              <td style="width:18%;"><strong>Hari / Tanggal</strong></td>
+              <td style="width:26%;">: ....................................</td>
+            </tr>
+            <tr>
+              <td><strong>Kelas / Fase</strong></td>
+              <td>: 1 (Satu) SD / Fase A</td>
+              <td><strong>Mata Pelajaran</strong></td>
+              <td>: ${meta.icon} ${subjectTitle}</td>
+            </tr>
+            <tr>
+              <td><strong>Topik / Materi</strong></td>
+              <td colspan="3">: <strong>Topik ${topicIndex + 1}: ${topTitle}</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Capaian</strong></td>
+              <td>: Mandiri, Bernalar Kritis, & Berbudi Pekerti</td>
+              <td><strong>Nilai & Paraf</strong></td>
+              <td>: ⭐⭐⭐⭐⭐ &nbsp; [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+            </tr>
+          </table>
+  
+          <!-- BAGIAN A: RANGKUMAN MATERI CERIA -->
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN A · PANDUAN & RANGKUMAN KONSEP</div>
+            <p class="lks-summary-text">
+              ${topDesc}
+            </p>
+          </div>
+  
+          <!-- BAGIAN B: LEMBAR MISI MANDIRI (CHECKLIST & TULIS PENSIL) -->
+          ${checklist && checklist.length > 0 ? `
+            <div class="lks-section">
+              <div class="lks-section-badge">BAGIAN B · MISI MANDIRI SISWA (LKS)</div>
+              <div class="lks-instruction">
+                <em>Petunjuk: Bacalah setiap misi dengan teliti. Beri tanda centang (✔) pada kotak jika telah selesai, lalu tuliskan pengalamanmu di garis titik-titik!</em>
+              </div>
+              <div class="lks-checklist-group">
+                ${checklist.map((item, idx) => `
+                  <div class="lks-checklist-item">
+                    <div class="lks-checkbox-box">[ &nbsp; ]</div>
+                    <div class="lks-checklist-content">
+                      <strong>Misi ${idx + 1}:</strong> ${item}
+                      <div class="lks-writing-lines">
+                        <div class="lks-line">........................................................................................................................................................</div>
+                        <div class="lks-line">........................................................................................................................................................</div>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+  
+          <!-- BAGIAN C: LEMBAR TANTANGAN KUIS & EVALUASI CERIA -->
+          ${activities && activities.length > 0 ? `
+            <div class="lks-section">
+              <div class="lks-section-badge">BAGIAN C · TANTANGAN CERIA & LATIHAN PEMAHAMAN</div>
+              <div class="lks-instruction">
+                <em>Petunjuk: Pilihlah jawaban yang paling benar dengan memberi tanda silang (X) pada huruf pilihan, atau tulislah jawabanmu dengan rapi!</em>
+              </div>
+              <div class="lks-quiz-group">
+                ${activities.map((act, qIdx) => `
+                  <div class="lks-quiz-item">
+                    <div class="lks-quiz-question">
+                      <strong>${qIdx + 1}.</strong> ${act.q}
+                    </div>
+                    <div class="lks-quiz-options">
+                      ${act.options ? act.options.map((opt, optIdx) => {
+                        const letter = ['A', 'B', 'C', 'D'][optIdx] || '-';
+                        return `
+                          <div class="lks-option-row">
+                            <span class="lks-opt-circle">( ${letter} )</span>
+                            <span class="lks-opt-text">${opt}</span>
+                          </div>
+                        `;
+                      }).join('') : ''}
+                    </div>
+                    <div class="lks-answer-box">
+                      <span>Jawaban Siswa: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+  
+          <!-- BAGIAN D: RUANG GAMBAR / KREASI MANDIRI SISWA -->
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN D · RUANG KREASI, MENGGAMBAR, & MEWARNAI</div>
+            <div class="lks-instruction">
+              <em>Petunjuk: Gambarlah objek, benda, hewan, atau kegiatan yang berhubungan dengan materi ini, lalu beri warna yang indah!</em>
+            </div>
+            <div class="lks-drawing-canvas-box">
+              <span class="lks-drawing-hint">✏️ Ruang Gambar & Coretan Pensil Warna Ceria</span>
+            </div>
+          </div>
+  
+          <!-- BAGIAN E: PARAF DAN APRESIASI ORANG TUA / GURU -->
+          <div class="lks-footer-sign-table">
+            <div class="lks-sign-box">
+              <div>Mengetahui,</div>
+              <div class="lks-sign-role">Orang Tua / Wali Siswa</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+            <div class="lks-sign-center">
+              <div class="lks-motto-box">
+                🌟 "Pintar, Berani, Jujur, dan Gembira Belajar!"
+              </div>
+            </div>
+            <div class="lks-sign-box">
+              <div>Diverifikasi oleh,</div>
+              <div class="lks-sign-role">Guru Kelas 1 SD</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  
+    // Template LKS Mewarnai Peta Indonesia
+    generateIndonesiaMapLksHtml(isEn) {
+      return `
+        <div class="lks-paper-sheet">
+          <div class="lks-kop">
+            <div class="lks-kop-logo"><span style="font-size:38px;">🗺️</span></div>
+            <div class="lks-kop-center">
+              <h2 class="lks-kop-instansi">SEKOLAH DASAR · MODUL GEOGRAFI NUSANTARA</h2>
+              <h1 class="lks-kop-title">LEMBAR KERJA: MENGENAL & MEWARNAI PETA INDONESIA</h1>
+              <div class="lks-kop-sub">Pendidikan Geografi & Wawasan Kebangsaan — Fase A (Kelas 1 SD)</div>
+            </div>
+            <div class="lks-kop-logo"><span style="font-size:38px;">🇮🇩</span></div>
+          </div>
+          <div class="lks-kop-divider"></div>
+  
+          <table class="lks-identity-table">
+            <tr>
+              <td style="width:16%;"><strong>Nama Siswa</strong></td>
+              <td style="width:40%;">: ................................................................</td>
+              <td style="width:18%;"><strong>Hari / Tanggal</strong></td>
+              <td style="width:26%;">: ....................................</td>
+            </tr>
+            <tr>
+              <td><strong>Kelas / Fase</strong></td>
+              <td>: 1 (Satu) SD / Fase A</td>
+              <td><strong>Materi</strong></td>
+              <td>: 5 Pulau Besar & Garis Khatulistiwa</td>
+            </tr>
+          </table>
+  
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN A · PETA VEKTOR RESMI INDONESIA (34 PROVINSI)</div>
+            <div class="lks-instruction">
+              <em>Petunjuk: Warnai 5 pulau besar dengan warna krayon yang berbeda: Sumatera (Hijau), Jawa (Kuning), Kalimantan (Oranye), Sulawesi (Merah Muda), Papua (Biru). Tebalkan Garis Khatulistiwa dengan pensil warna merah!</em>
+            </div>
+            
+            <div class="lks-map-outline-container">
+              <svg class="svg-map-frame" viewBox="0 0 700 234" xmlns="http://www.w3.org/2000/svg" style="background:#ffffff; border:1px solid #1e293b; border-radius:8px;">
+                <!-- Garis Khatulistiwa tebal untuk ditiru siswa -->
+                <line x1="0" y1="82" x2="700" y2="82" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4"/>
+                <text x="350" y="76" font-size="10" font-weight="800" fill="#b91c1c" text-anchor="middle">--- GARIS KHATULISTIWA (EKUATOR 0°) ---</text>
+  
+                <!-- Mawar Kompas Utara -->
+                <g transform="translate(660, 40)">
+                  <circle cx="0" cy="0" r="14" fill="#f8fafc" stroke="#334155" stroke-width="1.2"/>
+                  <polygon points="0,-12 3,0 -3,0" fill="#0f172a"/>
+                  <polygon points="0,12 3,0 -3,0" fill="#94a3b8"/>
+                  <text x="0" y="-14" font-size="9" font-weight="900" fill="#0f172a" text-anchor="middle">U</text>
+                </g>
+  
+                <!-- 34 Official Boundaries (Outlines for Coloring) -->
+                ${REAL_INDONESIA_PATHS.map(p => `
+                  <path d="${p.d}" fill="#ffffff" stroke="#1e293b" stroke-width="1.1"/>
+                `).join('')}
+              </svg>
+            </div>
+          </div>
+  
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN B · TANTANGAN MENGENAL IBU KOTA & KEPULAUAN</div>
+            <div class="lks-quiz-group">
+              <div class="lks-quiz-item">
+                <div class="lks-quiz-question">1. Sebutkan nama pulau tempat kamu dan keluargamu tinggal!</div>
+                <div class="lks-line">Jawaban: ............................................................................................................................</div>
+              </div>
+              <div class="lks-quiz-item">
+                <div class="lks-quiz-question">2. Hubungkan nama pulau besar dengan julukan/ikon faunanya:</div>
+                <div style="font-size:12px; margin-left:14px; line-height:1.8;">
+                  • Pulau Sumatera &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;➔ &nbsp; [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ] &nbsp; Burung Cendrawasih Emas<br>
+                  • Pulau Kalimantan &nbsp;&nbsp;&nbsp;➔ &nbsp; [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ] &nbsp; Badak Bercula Satu & Harimau Loreng<br>
+                  • Pulau Papua &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;➔ &nbsp; [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ] &nbsp; Orangutan Hutan Hujan Tropis
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="lks-footer-sign-table">
+            <div class="lks-sign-box">
+              <div>Paraf Orang Tua</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+            <div class="lks-sign-center">
+              <div class="lks-motto-box">🇮🇩 Aku Cinta Tanah Air Indonesia!</div>
+            </div>
+            <div class="lks-sign-box">
+              <div>Nilai & Paraf Guru</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  
+    // Template LKS Mewarnai Peta Bali
+    generateBaliMapLksHtml(isEn) {
+      return `
+        <div class="lks-paper-sheet">
+          <div class="lks-kop">
+            <div class="lks-kop-logo"><span style="font-size:38px;">🏝️</span></div>
+            <div class="lks-kop-center">
+              <h2 class="lks-kop-instansi">SEKOLAH DASAR · MUATAN LOKAL PULAU BALI</h2>
+              <h1 class="lks-kop-title">LEMBAR KERJA: PETA KABUPATEN & LANDMARK BALI</h1>
+              <div class="lks-kop-sub">Media Pembelajaran Budaya & Geografi Daerah — Kelas 1 SD</div>
+            </div>
+            <div class="lks-kop-logo"><span style="font-size:38px;">🌺</span></div>
+          </div>
+          <div class="lks-kop-divider"></div>
+  
+          <table class="lks-identity-table">
+            <tr>
+              <td style="width:16%;"><strong>Nama Siswa</strong></td>
+              <td style="width:40%;">: ................................................................</td>
+              <td style="width:18%;"><strong>Hari / Tanggal</strong></td>
+              <td style="width:26%;">: ....................................</td>
+            </tr>
+            <tr>
+              <td><strong>Kelas / Fase</strong></td>
+              <td>: 1 (Satu) SD / Fase A</td>
+              <td><strong>Materi</strong></td>
+              <td>: 8 Kabupaten & 1 Kota Denpasar</td>
+            </tr>
+          </table>
+  
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN A · PETA OUTLINE 9 WILAYAH ADMINISTRATIF BALI</div>
+            <div class="lks-instruction">
+              <em>Petunjuk: Warnai kabupaten di Pulau Bali dengan krayon warna-warni! Beri tanda bintang (★) di daerah tempat tinggalmu, dan beri tanda titik merah pada letak Pura Besakih dan Pura Tanah Lot!</em>
+            </div>
+  
+            <div class="lks-map-outline-container">
+              <svg class="svg-map-frame" viewBox="0 0 760 480" xmlns="http://www.w3.org/2000/svg" style="background:#ffffff; border:1px solid #1e293b; border-radius:8px;">
+                ${REAL_BALI_PATHS.map(r => `
+                  <path d="${r.d}" fill="#ffffff" stroke="#0f172a" stroke-width="1.3"/>
+                  <text x="${r.cx}" y="${r.cy}" font-size="11" font-weight="800" fill="#334155" text-anchor="middle">${r.name}</text>
+                `).join('')}
+              </svg>
+            </div>
+          </div>
+  
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN B · TANYA JAWAB BUDAYA BALI</div>
+            <div class="lks-quiz-group">
+              <div class="lks-quiz-item">
+                <div class="lks-quiz-question">1. Apa nama ibu kota Provinsi Bali?</div>
+                <div class="lks-line">Jawaban: ............................................................................................................................</div>
+              </div>
+              <div class="lks-quiz-item">
+                <div class="lks-quiz-question">2. Sistem pengairan sawah gotong royong warisan leluhur Bali yang diakui dunia adalah:</div>
+                <div class="lks-line">Jawaban: ............................................................................................................................</div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="lks-footer-sign-table">
+            <div class="lks-sign-box">
+              <div>Paraf Orang Tua</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+            <div class="lks-sign-center">
+              <div class="lks-motto-box">🌺 Tri Hita Karana: Harmonis & Rukun</div>
+            </div>
+            <div class="lks-sign-box">
+              <div>Nilai & Paraf Guru</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  
+    // Template LKS Matematika Kelas 1 SD
+    generateMathLksHtml(isEn) {
+      return `
+        <div class="lks-paper-sheet">
+          <div class="lks-kop">
+            <div class="lks-kop-logo"><span style="font-size:38px;">🧮</span></div>
+            <div class="lks-kop-center">
+              <h2 class="lks-kop-instansi">SEKOLAH DASAR · KURIKULUM MERDEKA MATEMATIKA</h2>
+              <h1 class="lks-kop-title">LEMBAR KERJA: KOTAK 10 FRAME & GARIS BILANGAN</h1>
+              <div class="lks-kop-sub">Strategi Visual Penjumlahan Ceria — Fase A (Kelas 1 SD)</div>
+            </div>
+            <div class="lks-kop-logo"><span style="font-size:38px;">✨</span></div>
+          </div>
+          <div class="lks-kop-divider"></div>
+  
+          <table class="lks-identity-table">
+            <tr>
+              <td style="width:16%;"><strong>Nama Siswa</strong></td>
+              <td style="width:40%;">: ................................................................</td>
+              <td style="width:18%;"><strong>Hari / Tanggal</strong></td>
+              <td style="width:26%;">: ....................................</td>
+            </tr>
+            <tr>
+              <td><strong>Kelas / Fase</strong></td>
+              <td>: 1 (Satu) SD / Fase A</td>
+              <td><strong>Materi</strong></td>
+              <td>: Penjumlahan Dasar Menuju 10</td>
+            </tr>
+          </table>
+  
+          <!-- Latihan Kotak 10 Frame -->
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN A · LATIHAN KOTAK 10 FRAME (TEN-FRAMES)</div>
+            <div class="lks-instruction">
+              <em>Petunjuk: Gambarlah lingkaran hitam (●) sebanyak angka pertama di Kotak 1, lalu lengkapi dengan lingkaran silang (⊗) dari angka kedua sampai Kotak 1 PENUH jadi 10!</em>
+            </div>
+  
+            <div class="lks-math-problem-box">
+              <strong>Soal 1: &nbsp; 7 + 5 = .......</strong>
+              <div style="display:flex; gap:20px; align-items:center; margin-top:8px;">
+                <div>
+                  <div style="font-size:11px; margin-bottom:3px;">Kotak 1 (Isi 7 lingkaran):</div>
+                  <table class="lks-ten-frame-grid">
+                    <tr><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+                    <tr><td>●</td><td>●</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                  </table>
+                </div>
+                <div style="font-size:24px; font-weight:800;">+</div>
+                <div>
+                  <div style="font-size:11px; margin-bottom:3px;">Kotak 2 (Sisa setelah genapkan 10):</div>
+                  <table class="lks-ten-frame-grid">
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                  </table>
+                </div>
+              </div>
+              <div style="margin-top:10px; font-size:13px;">
+                Jadi, 7 + 5 diubah menjadi: <strong>10 + ....... = .......</strong>
+              </div>
+            </div>
+  
+            <div class="lks-math-problem-box" style="margin-top:14px;">
+              <strong>Soal 2: &nbsp; 8 + 6 = .......</strong>
+              <div style="display:flex; gap:20px; align-items:center; margin-top:8px;">
+                <div>
+                  <div style="font-size:11px; margin-bottom:3px;">Kotak 1:</div>
+                  <table class="lks-ten-frame-grid">
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                  </table>
+                </div>
+                <div style="font-size:24px; font-weight:800;">+</div>
+                <div>
+                  <div style="font-size:11px; margin-bottom:3px;">Kotak 2:</div>
+                  <table class="lks-ten-frame-grid">
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                  </table>
+                </div>
+              </div>
+              <div style="margin-top:10px; font-size:13px;">
+                Jadi, 8 + 6 diubah menjadi: <strong>10 + ....... = .......</strong>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Latihan Garis Bilangan Lompat Kodok -->
+          <div class="lks-section">
+            <div class="lks-section-badge">BAGIAN B · GARIS BILANGAN LOMPAT KODOK CERIA (🐸)</div>
+            <div class="lks-instruction">
+              <em>Petunjuk: Mulailah dari angka pertama, lalu gambar busur lompatan kodok ke kanan sebanyak angka kedua!</em>
+            </div>
+  
+            <div class="lks-math-problem-box">
+              <strong>Soal 3: &nbsp; 6 + 4 = .......</strong>
+              <div class="lks-numberline-canvas">
+                <svg viewBox="0 0 600 70" width="100%" height="70" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="20" y1="45" x2="580" y2="45" stroke="#0f172a" stroke-width="2"/>
+                  <polygon points="585,45 575,40 575,50" fill="#0f172a"/>
+                  ${[0,1,2,3,4,5,6,7,8,9,10,11,12].map(n => {
+                    const x = 30 + n * 44;
+                    return `
+                      <line x1="${x}" y1="40" x2="${x}" y2="50" stroke="#0f172a" stroke-width="1.8"/>
+                      <text x="${x}" y="64" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">${n}</text>
+                    `;
+                  }).join('')}
+                </svg>
+              </div>
+              <div style="margin-top:6px; font-size:12.5px;">Kodok melompat dari 6 sejauh 4 langkah mendarat di angka: <strong>.......</strong></div>
+            </div>
+          </div>
+  
+          <div class="lks-footer-sign-table">
+            <div class="lks-sign-box">
+              <div>Paraf Orang Tua</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+            <div class="lks-sign-center">
+              <div class="lks-motto-box">⭐ Aku Jago Berhitung Matematika!</div>
+            </div>
+            <div class="lks-sign-box">
+              <div>Nilai & Paraf Guru</div>
+              <div class="lks-sign-line">( ............................................ )</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+  
+  
+
   // --- Source: js/components/ai-modal.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -9178,6 +10084,8 @@
   
   
   
+  
+  
   class QuizRunner {
     constructor(container, quizData, onComplete) {
       this.container = container;
@@ -9195,6 +10103,7 @@
       const lang = appState.get().lang || 'id';
       const q = this.quiz.questions[this.currentIndex];
       const isLast = this.currentIndex === this.quiz.questions.length - 1;
+      const isEn = (lang === 'en');
   
       this.container.innerHTML = `
         <div class="quiz-box">
@@ -9210,7 +10119,12 @@
             </div>
           </div>
   
-          <div class="quiz-question">${q.q}</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+            <div class="quiz-question" style="margin:0; flex:1;">${q.q}</div>
+            <button class="btn-tts" id="btnTtsQuizQuestion" type="button" title="${isEn ? 'Read question aloud' : 'Dengarkan soal bersuara'}">
+              🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+            </button>
+          </div>
   
           <div class="quiz-options">
             ${q.options.map(opt => `
@@ -9250,6 +10164,15 @@
       const nextBtn = this.container.querySelector('#btnNextQuestion');
       const hintBtn = this.container.querySelector('#btnToggleHint');
       const hintPanel = this.container.querySelector('#hintPanel');
+      const ttsBtn = this.container.querySelector('#btnTtsQuizQuestion');
+  
+      if (ttsBtn) {
+        ttsBtn.addEventListener('click', () => {
+          const lang = appState.get().lang || 'id';
+          const fullQuestionText = `${q.q}. ${lang === 'en' ? 'Choices are' : 'Pilihan jawabannya'}: ${q.options.join(', ')}`;
+          TtsEngine.speak(fullQuestionText, lang, ttsBtn);
+        });
+      }
   
       if (hintBtn) {
         hintBtn.addEventListener('click', () => {
@@ -9281,6 +10204,8 @@
             btn.classList.add('correct');
             feedbackBanner.className = 'feedback-banner success show';
             feedbackBanner.innerHTML = t('quizCorrectFeedback', currentLang);
+            AudioFx.playSuccess();
+            AudioFx.triggerConfetti(this.container);
           } else {
             btn.classList.add('wrong');
             btn.querySelector('span').textContent = '❌';
@@ -9302,6 +10227,8 @@
             this.render();
           } else {
             // Kuis Selesai!
+            AudioFx.playFanfare();
+            AudioFx.triggerConfetti(this.container);
             store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
             this.showCompletionScreen();
           }
@@ -9366,6 +10293,8 @@
   
   
   
+  
+  
   class MathLessonView {
     constructor(container, videoModal) {
       this.container = container;
@@ -9399,6 +10328,16 @@
           <div class="math-hero-badge">🧰 ${t('mathFlagshipBadge', lang)}</div>
           <h2 class="section-title">${isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title}</h2>
           <p class="section-sub">${isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle}</p>
+        </div>
+  
+        <!-- Action Bar Cetak LKS Matematika & TTS -->
+        <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
+          <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button">
+            🧮 ${isEn ? 'Print Math Worksheet (Ten-Frames & Number Line PDF)' : 'Cetak Lembar Kerja Matematika (Kotak 10 & Garis Bilangan PDF A4)'}
+          </button>
+          <button class="btn btn-tts" id="btnTtsMathProblem" data-tts-text="${isEn ? `How much is ${a} plus ${b}? Let us calculate using the ${solution.methodName} method.` : `Berapa ${a} ditambah ${b}? Mari kita hitung bersama menggunakan strategi ${solution.methodName}.`}" type="button" style="padding:8px 14px; font-size:13px;">
+            🔊 ${isEn ? 'Listen Math Problem' : 'Dengarkan Soal Berhitung'}
+          </button>
         </div>
   
         <!-- Kotak Kontrol Bilangan & Preset Soal Flagship -->
@@ -10209,6 +11148,24 @@
     }
   
     attachEvents() {
+      // Tombol Cetak Lembar Kerja Matematika (PDF A4)
+      const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+      if (btnPrintMath) {
+        btnPrintMath.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openMathLks();
+        });
+      }
+  
+      // Tombol TTS Pembacaan Soal Matematika
+      const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
+      if (btnTtsMath) {
+        btnTtsMath.addEventListener('click', () => {
+          const lang = appState.get().lang || 'id';
+          const text = btnTtsMath.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btnTtsMath);
+        });
+      }
+  
       // Preset Level Tabs (Kelas 1 SD Filter)
       const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
       levelBtns.forEach(btn => {
@@ -10328,6 +11285,8 @@
             this.practiceAnswered = true;
             store.completeLesson('matematika:' + p.id);
             MathEngine.recordProblemSolved(p.a, p.b, p.recommended ? p.recommended[0] : 'general');
+            AudioFx.playSuccess();
+            AudioFx.triggerConfetti(this.container);
             feedbackBanner.className = 'feedback-banner success show';
             feedbackBanner.innerHTML = `🎉 <strong>Yesss! ${p.answer}! Tepat Sekali!</strong> Kamu hebat!`;
             this.render();
@@ -10449,10 +11408,12 @@
   
   
   
+  
   class SubjectViewComponent {
-    constructor(container, videoModal) {
+    constructor(container, videoModal, lksModal = null) {
       this.container = container;
       this.videoModal = videoModal;
+      this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
       this.globeVis = null;
       this.selectedContinent = 'Semua';
       this.searchCountryQuery = '';
@@ -10909,9 +11870,17 @@
                     ${isEn ? 'Click on any island on the vector map or choose a button below to explore provinces and unique facts.' : 'Sentuh atau klik pulau pada peta vektor 2D di bawah ini untuk menjelajahi keunikan dan ibu kota provinsi.'}
                   </p>
                 </div>
-                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:700;">
-                  🗺️ ${isEn ? '2D Vector Atlas' : 'Peta Vektor 2D Interaktif'}
-                </span>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <button class="btn btn-lks-subject-full" id="btnPrintIndonesiaLks" type="button" style="padding:6px 12px; font-size:12px;">
+                    🎨 ${isEn ? 'Print Coloring Map (PDF A4)' : 'Cetak Lembar Mewarnai Peta (PDF A4)'}
+                  </button>
+                  <button class="btn-tts" data-tts-text="${isEn ? 'Indonesia is an archipelago of 38 provinces with 5 large islands and the Equator line.' : 'Indonesia adalah negara kepulauan terbesar di dunia dengan 5 pulau besar dan dilintasi garis khatulistiwa.'}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                    🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                  </button>
+                  <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:700;">
+                    🗺️ ${isEn ? '2D Vector Atlas' : 'Peta Vektor 2D Interaktif'}
+                  </span>
+                </div>
               </div>
   
               <!-- Visual 2D SVG Map of Indonesia (Authentic Administrative Boundaries) -->
@@ -11045,9 +12014,17 @@
                     ${isEn ? 'Explore the Island of Gods by clicking regencies or landmark pins directly on the 2D map below.' : 'Jelajahi Pulau Dewata dengan mengklik kabupaten atau pin landmark langsung pada peta 2D di bawah.'}
                   </p>
                 </div>
-                <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:linear-gradient(135deg, #ffedd5, #fed7aa); color:#9a3412; font-weight:800;">
-                  🌺 Peta Vektor 2D Bali
-                </span>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <button class="btn btn-lks-subject-full" id="btnPrintBaliLks" type="button" style="padding:6px 12px; font-size:12px;">
+                    🎨 ${isEn ? 'Print Bali Worksheet (PDF A4)' : 'Cetak Lembar Peta Bali (PDF A4)'}
+                  </button>
+                  <button class="btn-tts" data-tts-text="${isEn ? 'Bali is the Island of Gods with 8 regencies, 1 city, and world famous temples and Subak system.' : 'Pulau Bali memiliki 8 kabupaten, 1 kota madya Denpasar, sistem pengairan Subak warisan dunia, dan pura suci.'}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                    🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                  </button>
+                  <span class="subject-badge" style="font-size:12px; padding:6px 14px; background:linear-gradient(135deg, #ffedd5, #fed7aa); color:#9a3412; font-weight:800;">
+                    🌺 Peta Vektor 2D Bali
+                  </span>
+                </div>
               </div>
   
               <!-- Visual 2D SVG Map of Bali (Authentic Regency Boundaries) -->
@@ -11800,6 +12777,30 @@
           }
         });
       });
+  
+      // 7. Tombol Cetak Lembar Mewarnai Peta Indonesia & Bali
+      const btnPrintIndo = this.container.querySelector('#btnPrintIndonesiaLks');
+      if (btnPrintIndo) {
+        btnPrintIndo.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openGeographyMapLks('indonesia');
+        });
+      }
+  
+      const btnPrintBali = this.container.querySelector('#btnPrintBaliLks');
+      if (btnPrintBali) {
+        btnPrintBali.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openGeographyMapLks('bali');
+        });
+      }
+  
+      // 8. Tombol TTS di Peta Regional
+      const regionTtsBtns = this.container.querySelectorAll('.geo-region-content .btn-tts');
+      regionTtsBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btn);
+        });
+      });
     }
   
     // ==========================================================
@@ -11840,19 +12841,40 @@
           <p class="section-sub">${subtitle}</p>
         </div>
   
+        <!-- Action Bar: Cetak Buku Kerja LKS Lengkap & Audio Pengantar -->
+        <div class="subject-action-bar">
+          <button class="btn-lks-subject-full" id="btnPrintFullSubjectLks" type="button">
+            📑 ${isEn ? 'Print Full Workbook (10 Topics PDF)' : 'Cetak Buku Lembar Kerja (LKS 10 Topik PDF)'}
+          </button>
+          <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${title.replace(/"/g, '&quot;')}. ${subtitle.replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
+            🔊 ${isEn ? 'Listen Subject Overview' : 'Dengarkan Pengantar Mapel'}
+          </button>
+        </div>
+  
         <div style="display:flex; flex-direction:column; gap:24px;">
           ${subjectData.topics.map((top, idx) => {
             const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
             const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
             const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
+            const ttsSpeechText = `${topTitle}. ${topDesc}`.replace(/"/g, '&quot;');
   
             return `
               <div class="quiz-box">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                  <span class="no" style="background:var(--navy); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
-                    ${isEn ? 'Topic' : 'Topik'} ${idx + 1}
-                  </span>
-                  <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="no" style="background:var(--navy); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
+                      ${isEn ? 'Topic' : 'Topik'} ${idx + 1}
+                    </span>
+                    <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <button class="btn-tts" data-tts-text="${ttsSpeechText}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                      🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                    </button>
+                    <button class="btn btn-print-single-topic" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px;">
+                      📄 ${isEn ? 'Print Worksheet' : 'Cetak LKS'}
+                    </button>
+                  </div>
                 </div>
                 <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
                   ${topDesc}
@@ -11877,6 +12899,32 @@
         </div>
       `;
   
+      // Event listener untuk cetak buku kerja lengkap
+      const btnPrintFull = this.container.querySelector('#btnPrintFullSubjectLks');
+      if (btnPrintFull) {
+        btnPrintFull.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openFullSubject(subjectId);
+        });
+      }
+  
+      // Event listener untuk tombol cetak per topik
+      const singleTopicBtns = this.container.querySelectorAll('.btn-print-single-topic');
+      singleTopicBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+          (this.lksModal || window.lksModal)?.openTopic(subjectId, idx);
+        });
+      });
+  
+      // Event listener untuk tombol TTS (Speech)
+      const ttsBtns = this.container.querySelectorAll('.btn-tts');
+      ttsBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btn);
+        });
+      });
+  
       // Render kuis di tiap topik
       subjectData.topics.forEach(top => {
         // Untuk bahasa-inggris, gunakan top.activities aslinya sesuai user request ("kecuali pelajaran bahasa inggris")
@@ -11897,6 +12945,7 @@
       });
     }
   }
+  
   
   
 
@@ -12183,6 +13232,7 @@
   
   
   
+  
   class App {
     constructor() {
       this.topbarEl = document.getElementById('topbar');
@@ -12193,12 +13243,14 @@
       this.videoModalEl = document.getElementById('videoModal');
   
       // Komponen UI
+      this.lksModal = new LksModalComponent();
+      window.lksModal = this.lksModal;
       this.aiModal = new AiTutorModalComponent();
       window.aiTutorModal = this.aiModal;
       this.topbar = new TopbarComponent(this.topbarEl);
       this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
       this.videoModal = new VideoModalComponent(this.videoModalEl);
-      this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal);
+      this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
       this.challengeView = new ChallengeViewComponent(this.mainEl);
       this.progressView = new ProgressViewComponent(this.mainEl);
   
