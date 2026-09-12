@@ -5,8 +5,8 @@
      MFB-CAREER — Miss Fish Bali Official Career & Talent Portal
      HTML5 · CSS3 · Vanilla JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 1.2
-     Generated : 11 September 2026, 20:30:00
+     Version   : 1.4
+     Generated : 12 September 2026, 15:30:00 WITA
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1857,7 +1857,7 @@ h1, h2, h3, h4 {
     </div>
 
     <div class="drawer-footer">
-      <button class="btn-gold" style="flex: 1;" onclick="applyForRole()">Apply via ClickUp Form →</button>
+      <button class="btn-gold" style="flex: 1;" onclick="applyForRole()">Apply for this Role →</button>
       <button class="btn-outline-gold" id="drawerShareWaBtn" onclick="shareSelectedRoleWhatsApp()" style="display: inline-flex; align-items: center; gap: 6px;" title="Bagikan Lowongan ke WhatsApp">
         <span>📲</span> Share
       </button>
@@ -1867,96 +1867,169 @@ h1, h2, h3, h4 {
 </div>
 
 <!-- ================================================================
-     ClickUp Official Application Modal & Handoff
+     Native Candidate Application Modal & Intake Engine
      ================================================================ -->
 <div class="role-drawer-overlay" id="clickupApplyModal" onclick="if(event.target===this)closeClickupModal()" style="justify-content: center; align-items: center; padding: 20px;">
-  <div style="background: #171717; border: 1px solid var(--gold-border); border-radius: var(--radius-lg); max-width: 620px; width: 100%; padding: 32px 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.85); position: relative; max-height: 90vh; overflow-y: auto;">
+  <div style="background: #171717; border: 1px solid var(--gold-border); border-radius: var(--radius-lg); max-width: 680px; width: 100%; padding: 32px 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.85); position: relative; max-height: 90vh; overflow-y: auto;">
     <button onclick="closeClickupModal()" style="position: absolute; right: 18px; top: 18px; font-size: 22px; color: var(--gold); background: transparent; border: none; cursor: pointer;" aria-label="Close Modal">✕</button>
     
-    <div style="text-align: center; margin-bottom: 20px;">
-      <div class="eyebrow" style="margin-bottom: 4px;">Official Recruitment Pipeline</div>
-      <h2 style="font-size: 24px; color: #ffffff; margin-bottom: 6px;" id="applyModalTitle">Lamar Posisi di Miss Fish Bali</h2>
-      <p style="font-size: 13px; color: var(--text-muted); margin: 0 auto; max-width: 460px;">
-        Lamaran Anda dicatat dan diverifikasi langsung ke dalam sistem rekrutmen ClickUp resmi Miss Fish Bali.
-      </p>
-    </div>
-
-    <!-- ClickUp Form Direct Handoff Box -->
-    <div style="background: linear-gradient(135deg, rgba(223, 190, 153, 0.16), rgba(25, 25, 25, 0.95)); border: 1px solid var(--gold); border-radius: 12px; padding: 20px; margin-bottom: 22px; text-align: center;">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">
-        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
-        <span>ClickUp Official Candidate Form</span>
-      </div>
-      <div style="font-size: 16px; font-weight: 850; color: #ffffff; margin-bottom: 6px;" id="clickupTargetRoleName">
-        Formulir Lamaran Resmi ClickUp
-      </div>
-      <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5;">
-        Buka formulir resmi ClickUp untuk mengisi biodata, mengunggah CV / Portfolio, dan memilih ketersediaan jadwal tasting / wawancara.
-      </p>
-      <a id="btnOpenClickUpForm" href="https://forms.clickup.com/f/36423984/MFB-CAREER-2026" target="_blank" rel="noopener noreferrer" class="btn-gold" style="display: inline-flex; width: 100%; justify-content: center; align-items: center; gap: 8px; padding: 13px 20px; font-weight: 850; font-size: 14px; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 16px rgba(223, 190, 153, 0.25);">
-        <span>📋</span> Buka Formulir Lamaran ClickUp Resmi ↗
-      </a>
-      <div style="margin-top: 10px; font-size: 11.5px; color: var(--text-muted);">
-        Formulir terenkripsi aman · Langsung masuk antrean review HR (&lt; 3 hari)
-      </div>
-    </div>
-
-    <!-- Divider -->
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-      <div style="flex: 1; height: 1px; background: var(--line);"></div>
-      <span style="font-size: 11.5px; font-weight: 750; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">Atau Kirim Cepat via Form Web</span>
-      <div style="flex: 1; height: 1px; background: var(--line);"></div>
-    </div>
-
-    <form id="publicCandidateForm" onsubmit="handleCandidateSubmit(event)" style="display: flex; flex-direction: column; gap: 13px;">
-      <div>
-        <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">NAMA LENGKAP *</label>
-        <input type="text" id="candidateNameInput" required placeholder="cth. Putu Ari Wijaya" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+    <!-- 1. Active Application Form Container -->
+    <div id="candidateFormContainer">
+      <div style="text-align: center; margin-bottom: 22px;">
+        <div class="eyebrow" style="margin-bottom: 4px;">Miss Fish Bali · Official Talent Intake</div>
+        <h2 style="font-size: 24px; color: #ffffff; margin-bottom: 6px;" id="applyModalTitle">Submit Your Application</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin: 0 auto; max-width: 480px; line-height: 1.5;">
+          Join our culinary and nightlife family in Canggu, Bali. Complete the form below to enter our executive recruitment pipeline.
+        </p>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="background: rgba(223, 190, 153, 0.08); border: 1px solid var(--gold-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <div>
-          <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">ALAMAT EMAIL *</label>
-          <input type="email" id="candidateEmailInput" required placeholder="putu@example.com" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          <span style="font-size: 11px; text-transform: uppercase; color: var(--gold); font-weight: 800; letter-spacing: 0.1em;">Posisi Lowongan:</span>
+          <div style="font-size: 15px; font-weight: 850; color: #ffffff;" id="clickupTargetRoleName">Posisi Lowongan Terpilih</div>
         </div>
+        <span style="background: rgba(16, 185, 129, 0.18); border: 1px solid #10b981; color: #10b981; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px;">
+          ✓ Verified Intake
+        </span>
+      </div>
+
+      <form id="publicCandidateForm" onsubmit="handleCandidateSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
         <div>
-          <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">NO. WHATSAPP *</label>
-          <input type="tel" id="candidatePhoneInput" required placeholder="+62 812..." style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          <label for="candidateNameInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">NAMA LENGKAP *</label>
+          <input type="text" id="candidateNameInput" required placeholder="cth. Putu Ari Wijaya" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
         </div>
-      </div>
 
-      <div>
-        <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">POSISI YANG DILAMAR</label>
-        <input type="text" id="applyModalRoleInput" readonly style="width: 100%; background: #222; border: 1px solid var(--gold-border); border-radius: 8px; padding: 11px 14px; color: var(--gold); font-size: 13.5px; font-weight: 750; outline: none;">
-      </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="candidateEmailInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">ALAMAT EMAIL *</label>
+            <input type="email" id="candidateEmailInput" required placeholder="putu@example.com" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          </div>
+          <div>
+            <label for="candidatePhoneInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">NO. WHATSAPP *</label>
+            <input type="tel" id="candidatePhoneInput" required placeholder="+62 812 3456 7890" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          </div>
+        </div>
 
-      <div>
-        <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">PENGALAMAN RELEVAN</label>
-        <select id="candidateExpSelect" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
-          <option value="1-2">1 – 2 Tahun</option>
-          <option value="3-5" selected>3 – 5 Tahun</option>
-          <option value="5+">5+ Tahun (Senior / Lead)</option>
-        </select>
-      </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="applyModalRoleInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">POSISI YANG DILAMAR</label>
+            <input type="text" id="applyModalRoleInput" readonly style="width: 100%; background: #222; border: 1px solid var(--gold-border); border-radius: 8px; padding: 11px 14px; color: var(--gold); font-size: 13px; font-weight: 750; outline: none;">
+          </div>
+          <div>
+            <label for="candidateExpSelect" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">PENGALAMAN RELEVAN *</label>
+            <select id="candidateExpSelect" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13px; outline: none;">
+              <option value="< 1 Year">&lt; 1 Tahun (Junior / Fresh)</option>
+              <option value="1 – 2 Years">1 – 2 Tahun</option>
+              <option value="3 – 5 Years" selected>3 – 5 Tahun</option>
+              <option value="5+ Years">5+ Tahun (Senior / Lead)</option>
+            </select>
+          </div>
+        </div>
 
-      <div>
-        <label style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">LINK CV / PORTFOLIO (Google Drive / LinkedIn) *</label>
-        <input type="url" id="candidateCvUrlInput" required placeholder="https://linkedin.com/in/... atau drive.google.com/..." style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
-      </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="candidateSalaryInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">EKSPEKTASI GAJI / BULAN</label>
+            <input type="text" id="candidateSalaryInput" placeholder="cth. Rp 8,500,000" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          </div>
+          <div>
+            <label for="candidateAvailabilitySelect" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">KESIAPAN MULAI KERJA *</label>
+            <select id="candidateAvailabilitySelect" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13px; outline: none;">
+              <option value="Immediately" selected>Langsung Siap Kerja (Immediately)</option>
+              <option value="1 Week Notice">1 Minggu Notice</option>
+              <option value="2 Weeks Notice">2 Minggu Notice</option>
+              <option value="1 Month Notice">1 Bulan Notice</option>
+            </select>
+          </div>
+        </div>
 
-      <div style="display: flex; gap: 10px; margin-top: 8px;">
-        <button type="submit" class="btn-gold" style="flex: 1; justify-content: center; padding: 12px;">
-          Kirim Lamaran Sekarang →
+        <div>
+          <label for="candidateCurrentCompanyInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">PERUSAHAAN / RESTORAN TERAKHIR</label>
+          <input type="text" id="candidateCurrentCompanyInput" placeholder="cth. Boutique Beach Club Canggu (Opsional)" style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+        </div>
+
+        <div>
+          <label for="candidateCvUrlInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">LINK CV / RESUME (Google Drive / Dropbox / LinkedIn) *</label>
+          <input type="url" id="candidateCvUrlInput" required placeholder="https://drive.google.com/file/... atau linkedin.com/in/..." style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Pastikan link Google Drive disetel ke "Anyone with the link can view".</div>
+        </div>
+
+        <div>
+          <label for="candidatePortfolioUrlInput" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">LINK PORTFOLIO / INSTAGRAM KERJA (Opsional)</label>
+          <input type="url" id="candidatePortfolioUrlInput" placeholder="https://instagram.com/... atau behance.net/..." style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none;">
+        </div>
+
+        <div>
+          <label for="candidateCoverLetter" style="display: block; font-size: 11.5px; font-weight: 750; color: var(--gold); margin-bottom: 5px;">MENGAPA ANDA INGIN BERGABUNG DENGAN MISS FISH BALI? *</label>
+          <textarea id="candidateCoverLetter" required rows="3" placeholder="Ceritakan singkat tentang pengalaman Anda, kecintaan pada Japanese hospitality / culinary, dan mengapa Anda sosok yang tepat..." style="width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px; color: #fff; font-size: 13.5px; outline: none; resize: vertical; font-family: inherit;"></textarea>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 4px;">
+          <input type="checkbox" id="candidateConsent" required style="margin-top: 3px; accent-color: var(--gold);">
+          <label for="candidateConsent" style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            Saya menyatakan bahwa seluruh data yang diisi adalah benar dan mengizinkan tim HR Miss Fish Bali untuk memproses berkas lamaran ini.
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 8px;">
+          <button type="submit" id="btnSubmitApp" class="btn-gold" style="flex: 1; justify-content: center; padding: 13px; font-weight: 850; font-size: 14px;">
+            Kirim Berkas Lamaran Resmi →
+          </button>
+          <a id="applyModalDirectWaBtn" href="https://wa.me/6281228805646" target="_blank" rel="noopener noreferrer" class="btn-outline-gold" style="padding: 13px 18px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="Chat WhatsApp HR">
+            <span>💬</span> WA HR
+          </a>
+        </div>
+
+        <div style="font-size: 11px; color: #888; text-align: center; margin-top: 4px;">
+          🔒 Seluruh data lamaran dienkripsi dan diproses secara rahasia oleh HR Desk Miss Fish Bali.
+        </div>
+      </form>
+    </div>
+
+    <!-- 2. Submission Success Screen (Initially Hidden) -->
+    <div id="candidateSuccessContainer" style="display: none; text-align: center; padding: 16px 8px;">
+      <div style="width: 72px; height: 72px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; color: #10b981; font-size: 34px; display: grid; place-items: center; margin: 0 auto 18px;">
+        ✓
+      </div>
+      <div class="eyebrow" style="color: #10b981; margin-bottom: 6px;">Lamaran Berhasil Diterima</div>
+      <h2 style="font-size: 24px; color: #ffffff; margin-bottom: 8px;" id="successApplicantTitle">Terima Kasih, Pelamar!</h2>
+      <p style="font-size: 13.5px; color: var(--text-muted); max-width: 480px; margin: 0 auto 24px; line-height: 1.6;">
+        Berkas lamaran Anda telah berhasil dicatat dalam database rekrutmen resmi Miss Fish Bali. Simpan ID Pelamar Anda berikut:
+      </p>
+
+      <!-- Candidate ID Highlight Box -->
+      <div style="background: linear-gradient(135deg, rgba(223, 190, 153, 0.16), rgba(25, 25, 25, 0.95)); border: 1.5px solid var(--gold); border-radius: 12px; padding: 20px; max-width: 460px; margin: 0 auto 24px; text-align: center;">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">
+          Official Candidate Tracking ID
+        </div>
+        <div style="font-family: monospace; font-size: 22px; font-weight: 850; color: #ffffff; letter-spacing: 0.05em; margin-bottom: 12px;" id="successCandidateId">
+          MFB-HR-20260912-XXXXXX
+        </div>
+        <button class="btn-outline-gold" id="btnCopyCandId" onclick="copyCandidateId()" style="padding: 6px 18px; font-size: 12px; margin: 0 auto;">
+          📋 Salin ID Pelamar
         </button>
-        <a id="applyModalDirectWaBtn" href="https://wa.me/6281228805646" target="_blank" rel="noopener noreferrer" class="btn-outline-gold" style="padding: 12px 18px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="Chat WhatsApp HR">
-          <span>💬</span> WA HR
-        </a>
       </div>
 
-      <div style="font-size: 11px; color: #888; text-align: center; margin-top: 4px;">
-        🔒 Seluruh berkas dijaga kerahasiaannya dan diproses eksklusif oleh HR Miss Fish Bali.
+      <!-- Timeline Next Steps -->
+      <div style="background: #111; border: 1px solid var(--line); border-radius: 10px; padding: 18px; max-width: 480px; margin: 0 auto 24px; text-align: left;">
+        <div style="font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; margin-bottom: 10px;">
+          Tahap &amp; Timeline Seleksi:
+        </div>
+        <div style="font-size: 12.5px; color: #d0c8be; line-height: 1.7; display: flex; flex-direction: column; gap: 8px;">
+          <div><strong>1. Initial Screening:</strong> Tim HR meninjau CV &amp; portfolio (1 – 3 hari kerja).</div>
+          <div><strong>2. Direct Contact:</strong> Kandidat terpilih akan dihubungi via WhatsApp / Email resmi.</div>
+          <div><strong>3. Practical Trial:</strong> Sesi wawancara langsung &amp; tasting trial di Miss Fish Canggu.</div>
+        </div>
       </div>
-    </form>
+
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <a id="successWaBtn" href="https://wa.me/6281228805646" target="_blank" rel="noopener noreferrer" class="btn-gold" style="padding: 12px 24px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <span>💬</span> Chat WhatsApp HR Desk
+        </a>
+        <button class="btn-outline-gold" onclick="closeClickupModal()" style="padding: 12px 22px;">
+          Tutup &amp; Selesai
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1988,7 +2061,13 @@ function updateClickUpFormHandoff(roleTitle, dept, formUrl) {
 
 // Google Sheets Live Integration Configuration
 const GOOGLE_SHEETS_CONFIG = {
-  WEBAPP_URL: '', // Connect to AIReports_v1.5.gs exec URL: 'https://script.google.com/macros/s/.../exec?action=getPublicVacancies'
+  WEBAPP_URL: (function() {
+    try {
+      return (localStorage.getItem('mfb_gas_webapp_url') || '').trim();
+    } catch(e) {
+      return '';
+    }
+  })(), // Dynamically connects to AIReports_v1.6.gs Web App exec URL
   SYNC_ACTIVE: true
 };
 
@@ -2000,7 +2079,8 @@ async function fetchVacanciesFromGoogleSheets() {
   }
   try {
     if (badge) badge.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#dfbe99;"></span> <span>Menyinkronkan data lowongan dari Google Sheets...</span>';
-    const res = await fetch(GOOGLE_SHEETS_CONFIG.WEBAPP_URL);
+    const fetchUrl = GOOGLE_SHEETS_CONFIG.WEBAPP_URL + (GOOGLE_SHEETS_CONFIG.WEBAPP_URL.includes('?') ? '&' : '?') + 'action=getPublicVacancies';
+    const res = await fetch(fetchUrl);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
@@ -2586,12 +2666,28 @@ function calculateMatchedRole(answers) {
   return { job, score, reason };
 }
 
-// ClickUp Apply Modal
+// Native Application Modal Controller
 function applyForRole() {
   if (!selectedRole) return;
   closeRoleDrawer();
+  
+  // Reset views
+  const formBox = document.getElementById('candidateFormContainer');
+  const successBox = document.getElementById('candidateSuccessContainer');
+  if (formBox) formBox.style.display = 'block';
+  if (successBox) successBox.style.display = 'none';
+  
+  // Set position values
   document.getElementById('applyModalRoleInput').value = selectedRole.title;
-  document.getElementById('applyModalTitle').textContent = `Apply: ${selectedRole.title}`;
+  document.getElementById('applyModalTitle').textContent = `Lamar: ${selectedRole.title}`;
+  document.getElementById('clickupTargetRoleName').textContent = `${selectedRole.title} (${selectedRole.dept})`;
+  
+  // Update WA direct link
+  const waBtn = document.getElementById('applyModalDirectWaBtn');
+  if (waBtn) {
+    waBtn.href = 'https://wa.me/6281228805646?text=' + encodeURIComponent('Halo Tim HR Miss Fish Bali, saya ingin menanyakan proses lamaran untuk posisi: ' + selectedRole.title);
+  }
+  
   document.getElementById('clickupApplyModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -2601,11 +2697,109 @@ function closeClickupModal() {
   document.body.style.overflow = '';
 }
 
-function handleCandidateSubmit(e) {
+async function handleCandidateSubmit(e) {
   e.preventDefault();
-  alert('Thank you! Your application has been transmitted securely into our ClickUp recruitment pipeline. Our HR team will contact you within 3 business days.');
-  closeClickupModal();
+  const submitBtn = document.getElementById('btnSubmitApp');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>⏳</span> Memproses Berkas...';
+  }
+
+  const fullName = document.getElementById('candidateNameInput').value.trim();
+  const email = document.getElementById('candidateEmailInput').value.trim();
+  const phone = document.getElementById('candidatePhoneInput').value.trim();
+  const positionTitle = document.getElementById('applyModalRoleInput').value.trim();
+  const positionId = selectedRole ? selectedRole.id : 'mfb-general';
+  const dept = selectedRole ? selectedRole.dept : 'General';
+  const exp = document.getElementById('candidateExpSelect').value;
+  const salary = document.getElementById('candidateSalaryInput').value.trim();
+  const availability = document.getElementById('candidateAvailabilitySelect').value;
+  const company = document.getElementById('candidateCurrentCompanyInput').value.trim();
+  const cvUrl = document.getElementById('candidateCvUrlInput').value.trim();
+  const portfolioUrl = document.getElementById('candidatePortfolioUrlInput').value.trim();
+  const coverLetter = document.getElementById('candidateCoverLetter').value.trim();
+
+  // Generate standard Candidate ID format: MFB-HR-YYYYMMDD-XXXXXX
+  const now = new Date();
+  const dateStr = now.getFullYear().toString() +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    String(now.getDate()).padStart(2, '0');
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let randomSuffix = '';
+  for (let i = 0; i < 6; i++) {
+    randomSuffix += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  let candidateId = `MFB-HR-${dateStr}-${randomSuffix}`;
+
+  const payload = {
+    action: 'submitApplication',
+    candidate_id: candidateId,
+    fullName: fullName,
+    email: email,
+    phone: phone,
+    positionId: positionId,
+    positionTitle: positionTitle,
+    department: dept,
+    experienceYears: exp,
+    expectedSalary: salary || 'Competitive',
+    earliestStartDate: availability,
+    currentCompany: company,
+    resumeUrl: cvUrl,
+    portfolioUrl: portfolioUrl,
+    coverLetter: coverLetter,
+    source: 'Career Website'
+  };
+
+  if (GOOGLE_SHEETS_CONFIG.WEBAPP_URL) {
+    try {
+      const res = await fetch(GOOGLE_SHEETS_CONFIG.WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (json && json.success && json.candidate_id) {
+        candidateId = json.candidate_id;
+      }
+    } catch (err) {
+      console.warn('[MFB-Career] Apps Script submit fallback to local ID:', err);
+    }
+  }
+
+  // Display Luxury Success Screen
+  document.getElementById('candidateFormContainer').style.display = 'none';
+  const successBox = document.getElementById('candidateSuccessContainer');
+  successBox.style.display = 'block';
+
+  document.getElementById('successApplicantTitle').textContent = `Terima Kasih, ${fullName}!`;
+  document.getElementById('successCandidateId').textContent = candidateId;
+
+  const waSuccessBtn = document.getElementById('successWaBtn');
+  if (waSuccessBtn) {
+    const waMsg = `Halo Tim HR Miss Fish Bali, saya telah mengirimkan lamaran untuk posisi *${positionTitle}* dengan ID Pelamar: *${candidateId}*.`;
+    waSuccessBtn.href = `https://wa.me/6281228805646?text=${encodeURIComponent(waMsg)}`;
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Kirim Berkas Lamaran Resmi →';
+  }
   e.target.reset();
+}
+
+function copyCandidateId() {
+  const idEl = document.getElementById('successCandidateId');
+  const copyBtn = document.getElementById('btnCopyCandId');
+  if (!idEl) return;
+  const text = idEl.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    if (copyBtn) {
+      copyBtn.textContent = '✓ ID Pelamar Tersalin!';
+      setTimeout(() => { copyBtn.textContent = '📋 Salin ID Pelamar'; }, 2500);
+    }
+  }).catch(() => {
+    if (copyBtn) copyBtn.textContent = 'Tersalin: ' + text;
+  });
 }
 
 // FAQ Accordion
