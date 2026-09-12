@@ -1,0 +1,80 @@
+# ================================================================
+# AnabhiDev-MP — Mahadaya Partners Website
+# _headers · Cloudflare Pages / Netlify header rules
+# Development · Anabhi Dev
+# Version   : 1.0
+# Generated : 8 September 2026, 10:20:00
+# ================================================================
+# Catatan: berkas ini hanya dibaca oleh Cloudflare Pages dan Netlify.
+# Kalau hosting-nya Apache/Nginx/cPanel, aturan yang sama perlu
+# dipindahkan ke .htaccess atau konfigurasi server — file ini diabaikan.
+
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+
+# CSP — situs ini tidak punya inline <script>, tapi masih memakai style="..."
+# inline di beberapa tempat, sehingga style-src masih butuh 'unsafe-inline'.
+# script-src sudah bisa ketat karena seluruh JS ada di js/main.js.
+# Google Maps di halaman kontak butuh frame-src google.com.
+# Sejak font di-self-host, fonts.googleapis.com dan fonts.gstatic.com sudah
+# tidak dibutuhkan lagi — font-src cukup 'self'.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; frame-src https://www.google.com; connect-src 'self'; form-action 'self' https://wa.me; base-uri 'self'; object-src 'none'; frame-ancestors 'self'
+
+# HTML: selalu revalidate supaya perubahan konten langsung terlihat.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Aset ber-version-query (?v=YYYYMMDDx) — aman di-cache selamanya karena
+# setiap perubahan isi selalu disertai perubahan URL (SOP kategori 1).
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Foto tim/logo diganti dengan nama berkas yang sama — pakai durasi pendek
+# supaya revalidate otomatis tanpa harus ingat menaikkan version query.
+/assets/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Font ber-version-query dan tidak pernah berubah isinya — cache selamanya.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Turunan foto: nama berkas sudah memuat slug + lebar, dan URL-nya ber-version-query.
+# Ganti foto = slug baru, jadi aman di-cache selamanya.
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# OG image dibaca scraper WhatsApp/Facebook/LinkedIn dan jarang berubah.
+/assets/og-image.jpg
+  Cache-Control: public, max-age=604800
+
+# Ikon situs: URL-nya wajib stabil (SOP kategori 2) dan isinya nyaris tidak
+# pernah berubah, jadi aman di-cache panjang tanpa version query.
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
+/favicon-96.png
+  Cache-Control: public, max-age=604800
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/llms.txt
+  Cache-Control: public, max-age=3600
