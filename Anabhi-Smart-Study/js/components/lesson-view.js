@@ -13,11 +13,14 @@ import { AudioFx } from '../engine/audio-fx.js';
 import { appState } from '../state.js';
 import { store } from '../store.js';
 import { t } from '../data/i18n.js';
+import { QuizRunner } from './quiz-runner.js';
 
 export class MathLessonView {
-  constructor(container, videoModal) {
+  constructor(container, videoModal, lksModal = null) {
     this.container = container;
     this.videoModal = videoModal;
+    this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
+    this.activeMainTab = 'curriculum'; // 'curriculum' (10 Unit SD 1) | 'toolbox' (14 Jurus)
     this.currentPracticeIndex = 0;
     this.practiceHintLevel = 0;
     this.practiceAnswered = false;
@@ -42,13 +45,161 @@ export class MathLessonView {
     const progress = MathEngine.getProgress();
 
     this.container.innerHTML = `
-      <!-- Header Matematika Flagship / Math Toolbox -->
+      <!-- Header Matematika Flagship / Kurikulum SD Kelas 1 -->
       <div class="section-header">
-        <div class="math-hero-badge">🧰 ${t('mathFlagshipBadge', lang)}</div>
-        <h2 class="section-title">${isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title}</h2>
-        <p class="section-sub">${isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle}</p>
+        <div class="math-hero-badge">
+          ${this.activeMainTab === 'curriculum' ? '📚 Kurikulum Merdeka SD Kelas 1' : '🧰 ' + t('mathFlagshipBadge', lang)}
+        </div>
+        <h2 class="section-title">
+          ${this.activeMainTab === 'curriculum'
+            ? (isEn ? 'Mathematics — 10 Grade 1 Learning Units' : 'Matematika — 10 Unit Materi SD Kelas 1')
+            : (isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title)}
+        </h2>
+        <p class="section-sub">
+          ${this.activeMainTab === 'curriculum'
+            ? (isEn ? 'Counting 1–20, place value, addition, subtraction, patterns, shapes, measurement, data, and daily stories!' : 'Membilang 1–20, nilai tempat puluhan & satuan, penjumlahan, pengurangan, pola, bangun datar & ruang, pengukuran, data, dan cerita matematika!')
+            : (isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle)}
+        </p>
       </div>
 
+      <!-- Main Switcher: Unit Materi SD Kelas 1 vs Math Toolbox -->
+      <div class="math-main-tabs" role="tablist" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+        <button class="btn ${this.activeMainTab === 'curriculum' ? 'primary' : ''}" id="btnTabMathCurriculum" type="button" style="font-size:13.5px; font-weight:800; padding:10px 18px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;">
+          <span>📚</span> ${isEn ? 'Grade 1 Units (10 Topics)' : 'Unit Materi SD Kelas 1 (10 Unit)'}
+        </button>
+        <button class="btn ${this.activeMainTab === 'toolbox' ? 'primary' : ''}" id="btnTabMathToolbox" type="button" style="font-size:13.5px; font-weight:800; padding:10px 18px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;">
+          <span>🧰</span> ${isEn ? 'Math Toolbox (14 Thinking Tools)' : 'Math Toolbox (14 Jurus Berhitung)'}
+        </button>
+      </div>
+
+      <!-- Konten Tab Aktif -->
+      ${this.activeMainTab === 'curriculum'
+        ? this.renderCurriculumContent(lang, isEn)
+        : this.renderToolboxContent(a, b, solution, activeMethod, progress, lang, isEn)}
+
+      <!-- 4 Slot Video YouTube Matematika -->
+      ${availableVideos.length > 0 ? `
+        <div class="section" style="margin-top:44px;">
+          <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
+          <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${t('videosHeaderTitle', lang) || 'Trik Berhitung Asyik di YouTube'}</h3>
+          <div class="video-grid">
+            ${availableVideos.map(v => `
+              <div class="video-card">
+                <div>
+                  <span class="subject-badge">${v.ageFit}</span>
+                  <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
+                  <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+                  <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button" style="flex:1;">
+                    ${t('playVideo', lang) || 'Putar Video'}
+                  </button>
+                  <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; padding:8px 12px; font-size:12px;" title="Tonton langsung di YouTube">
+                    ↗
+                  </a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+    `;
+
+    this.attachEvents();
+  }
+
+  renderCurriculumContent(lang, isEn) {
+    const topics = MATH_DATA.topics || [];
+    return `
+      <!-- Action Bar Cetak LKS Lengkap & TTS -->
+      <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
+        <button class="btn-lks-subject-full" id="btnPrintFullMathLks" type="button">
+          📑 ${isEn ? 'Print Full Math Workbook (10 Topics PDF)' : 'Cetak Buku Kerja Matematika (LKS 10 Topik PDF)'}
+        </button>
+        <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button" style="background:var(--card); color:var(--ink); border:1px solid var(--border);">
+          🧮 ${isEn ? 'Print Ten-Frames & Number Line' : 'Cetak Kotak 10 & Garis Bilangan'}
+        </button>
+        <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${(isEn ? 'Mathematics Grade 1 Semester 1. Counting 1 to 20, place value, addition, subtraction, shapes, measurement, data, and story problems.' : 'Matematika SD Kelas 1 Semester 1. Membilang bilangan 1 sampai 20, nilai tempat puluhan dan satuan, penjumlahan, pengurangan, pola, bentuk bangun, pengukuran, data, dan cerita matematika.').replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
+          🔊 ${isEn ? 'Listen Overview' : 'Dengarkan Pengantar'}
+        </button>
+      </div>
+
+      <!-- 10 Kartu Unit Kurikulum Merdeka -->
+      <div style="display:flex; flex-direction:column; gap:24px;">
+        ${topics.map((top, idx) => {
+          const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
+          const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
+          const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
+          const funFactText = top.funFact ? (isEn ? '. Did you know: ' : '. Tahukah kamu: ') + top.funFact : '';
+          const ttsSpeechText = `${topTitle}. ${topDesc}${funFactText}`.replace(/"/g, '&quot;');
+
+          return `
+            <div class="quiz-box">
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="no" style="background:var(--teal, #0d9488); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
+                    ${top.unitCode || `MAT-0${idx + 1}`}
+                  </span>
+                  <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <button class="btn-tts" data-tts-text="${ttsSpeechText}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                    🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                  </button>
+                  <button class="btn btn-print-single-topic" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px;">
+                    📄 ${isEn ? 'Print Worksheet' : 'Cetak LKS'}
+                  </button>
+                  <button class="btn btn-try-in-toolbox" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px; background:var(--teal-soft); color:var(--teal-soft-ink); border:1px solid var(--teal);">
+                    🧰 ${isEn ? 'Try in Toolbox' : 'Buka di Toolbox'}
+                  </button>
+                </div>
+              </div>
+              <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
+                ${topDesc}
+              </p>
+
+              ${top.keyPoints && top.keyPoints.length > 0 ? `
+                <div style="background:var(--card-bg, #fff); border:1px solid var(--border); border-left:4px solid var(--teal, #0d9488); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+                  <strong style="font-size:13px; color:var(--teal-soft-ink, #0f766e); display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                    📌 ${isEn ? 'Key Concepts to Master:' : 'Konsep Kunci Materi:'}
+                  </strong>
+                  <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.5;">
+                    ${top.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+
+              ${top.funFact ? `
+                <div style="background:var(--gold-soft, #fef9c3); border:1px solid var(--gold-border, #fef08a); border-radius:10px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:flex-start; gap:10px;">
+                  <span style="font-size:20px; line-height:1;">💡</span>
+                  <div style="font-size:12.5px; color:var(--ink); line-height:1.5;">
+                    <strong style="color:var(--amber, #d97706);">${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${top.funFact}
+                  </div>
+                </div>
+              ` : ''}
+
+              ${checklist ? `
+                <div style="background:var(--paper); border-radius:12px; padding:14px; margin-bottom:16px;">
+                  <strong style="font-size:13px; display:block; margin-bottom:8px;">${isEn ? 'Independent Mission:' : 'Misi Mandiri:'}</strong>
+                  <ul style="margin:0; padding-left:20px; font-size:13px; color:var(--ink);">
+                    ${checklist.map(item => `<li>${item}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+
+              <!-- Mini Quiz / 10 Pertanyaan Interaktif Unit -->
+              ${top.activities ? `
+                <div class="topic-activity-wrap" id="math_act_${top.id}"></div>
+              ` : ''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  renderToolboxContent(a, b, solution, activeMethod, progress, lang, isEn) {
+    return `
       <!-- Action Bar Cetak LKS Matematika & TTS -->
       <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
         <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button">
@@ -126,7 +277,7 @@ export class MathLessonView {
         </div>
       </div>
 
-      <!-- Tab Switcher 9 Metode Berpikir -->
+      <!-- Tab Switcher 14 Metode Berpikir -->
       <div class="method-tabs" role="tablist">
         ${MATH_DATA.methods.map(m => `
           <button class="method-tab-btn ${activeMethod === m.id && this.viewMode === 'visual' ? 'active' : ''}" data-method="${m.id}" role="tab" type="button">
@@ -146,36 +297,7 @@ export class MathLessonView {
 
       <!-- Progress & Badges Showcase -->
       ${this.renderProgressBadges(progress, lang)}
-
-      <!-- 4 Slot Video YouTube Matematika -->
-      ${availableVideos.length > 0 ? `
-        <div class="section" style="margin-top:44px;">
-          <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
-          <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${t('videosHeaderTitle', lang) || 'Trik Berhitung Asyik di YouTube'}</h3>
-          <div class="video-grid">
-            ${availableVideos.map(v => `
-              <div class="video-card">
-                <div>
-                  <span class="subject-badge">${v.ageFit}</span>
-                  <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
-                  <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-                  <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button" style="flex:1;">
-                    ${t('playVideo', lang) || 'Putar Video'}
-                  </button>
-                  <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; padding:8px 12px; font-size:12px;" title="Tonton langsung di YouTube">
-                    ↗
-                  </a>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      ` : ''}
     `;
-
-    this.attachEvents();
   }
 
   renderSmartRecommendation(a, b, sol, lang = 'id') {
@@ -1196,23 +1318,117 @@ export class MathLessonView {
   }
 
   attachEvents() {
-    // Tombol Cetak Lembar Kerja Matematika (PDF A4)
-    const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
-    if (btnPrintMath) {
-      btnPrintMath.addEventListener('click', () => {
-        (this.lksModal || window.lksModal)?.openMathLks();
+    // 0. Main Switcher Tabs (Curriculum vs Toolbox)
+    const btnTabCurriculum = this.container.querySelector('#btnTabMathCurriculum');
+    const btnTabToolbox = this.container.querySelector('#btnTabMathToolbox');
+    if (btnTabCurriculum) {
+      btnTabCurriculum.addEventListener('click', () => {
+        this.activeMainTab = 'curriculum';
+        this.render();
+      });
+    }
+    if (btnTabToolbox) {
+      btnTabToolbox.addEventListener('click', () => {
+        this.activeMainTab = 'toolbox';
+        this.render();
       });
     }
 
-    // Tombol TTS Pembacaan Soal Matematika
-    const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
-    if (btnTtsMath) {
-      btnTtsMath.addEventListener('click', () => {
-        const lang = appState.get().lang || 'id';
-        const text = btnTtsMath.getAttribute('data-tts-text');
-        TtsEngine.speak(text, lang, btnTtsMath);
+    if (this.activeMainTab === 'curriculum') {
+      // 1. Cetak Buku Kerja Lengkap 10 Topik
+      const btnPrintFull = this.container.querySelector('#btnPrintFullMathLks');
+      if (btnPrintFull) {
+        btnPrintFull.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openFullSubject('matematika');
+        });
+      }
+
+      // 2. Cetak Kotak 10 & Garis Bilangan
+      const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+      if (btnPrintMath) {
+        btnPrintMath.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openMathLks();
+        });
+      }
+
+      // 3. Tombol Cetak per Topik
+      const singleTopicBtns = this.container.querySelectorAll('.btn-print-single-topic');
+      singleTopicBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+          (this.lksModal || window.lksModal)?.openTopic('matematika', idx);
+        });
       });
-    }
+
+      // 4. Tombol Coba di Toolbox
+      const tryBtns = this.container.querySelectorAll('.btn-try-in-toolbox');
+      tryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+          this.activeMainTab = 'toolbox';
+          if (idx === 0) appState.set({ mathA: 8, mathB: 5 });
+          else if (idx === 1) appState.set({ mathA: 10, mathB: 6 });
+          else if (idx === 2) appState.set({ mathA: 6, mathB: 4 });
+          else if (idx === 3) appState.set({ mathA: 67, mathB: 59 });
+          else if (idx === 4) appState.set({ mathA: 15, mathB: 5 });
+          else if (idx === 5) appState.set({ mathA: 8, mathB: 8 });
+          else if (idx === 6) appState.set({ mathA: 12, mathB: 8 });
+          else if (idx === 7) appState.set({ mathA: 7, mathB: 5 });
+          else if (idx === 8) appState.set({ mathA: 9, mathB: 3 });
+          else if (idx === 9) appState.set({ mathA: 14, mathB: 6 });
+          this.render();
+          window.scrollTo({ top: 120, behavior: 'smooth' });
+        });
+      });
+
+      // 5. Tombol TTS Pengantar & per Topik
+      const ttsBtns = this.container.querySelectorAll('.btn-tts');
+      ttsBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = appState.get().lang || 'id';
+          const text = btn.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btn);
+        });
+      });
+
+      // 6. Mount QuizRunner untuk setiap unit 1-10
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      (MATH_DATA.topics || []).forEach(top => {
+        const wrap = this.container.querySelector(`#math_act_${top.id}`);
+        if (wrap) {
+          const activities = (isEn && top.activitiesEn && top.activitiesEn.length >= (top.activities ? top.activities.length : 0)) ? top.activitiesEn : top.activities;
+          if (activities) {
+            const fakeQuiz = {
+              id: top.id,
+              title: (isEn && top.titleEn) ? top.titleEn : top.title,
+              questions: activities
+            };
+            new QuizRunner(wrap, fakeQuiz, () => {
+              store.completeLesson(`matematika:${top.id}`);
+            });
+          }
+        }
+      });
+    } else {
+      // Event bindings untuk Math Toolbox
+      // Tombol Cetak Lembar Kerja Matematika (PDF A4)
+      const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+      if (btnPrintMath) {
+        btnPrintMath.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openMathLks();
+        });
+      }
+
+      // Tombol TTS Pembacaan Soal Matematika
+      const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
+      if (btnTtsMath) {
+        btnTtsMath.addEventListener('click', () => {
+          const lang = appState.get().lang || 'id';
+          const text = btnTtsMath.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btnTtsMath);
+        });
+      }
 
     // Preset Level Tabs (Kelas 1 SD Filter)
     const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
@@ -1411,6 +1627,7 @@ export class MathLessonView {
           this.render();
         }
       });
+    }
     }
 
     // Video Play Buttons (Safe modal + Error 153 resilience)

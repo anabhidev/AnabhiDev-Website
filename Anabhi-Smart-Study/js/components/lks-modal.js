@@ -17,6 +17,7 @@ import { KOKURIKULER_DATA } from '../data/kokurikuler.js';
 import { GEO_DATA } from '../data/geo-data.js';
 import { MATH_DATA } from '../data/math-data.js';
 import { REAL_INDONESIA_PATHS, REAL_BALI_PATHS } from '../data/map-vector-data.js';
+import { SOURCE_BOOKS_REGISTRY, CURRICULUM_LEGAL_DISCLAIMER } from '../data/source-registry.js';
 import { appState } from '../state.js';
 
 export class LksModalComponent {
@@ -125,6 +126,59 @@ export class LksModalComponent {
     const isEn = lang === 'en';
     const htmlContent = this.generateMathLksHtml(isEn);
     this.renderModal(htmlContent, '🧮 LKPD Matematika Ceria: Kotak 10 Frame & Garis Bilangan');
+  }
+
+  // Buka Dialog Register 12 Buku Sumber & Penyelarasan Kurikulum Merdeka
+  openSourceRegistry() {
+    const lang = appState.get().lang || 'id';
+    const isEn = lang === 'en';
+    const disclaimer = isEn ? CURRICULUM_LEGAL_DISCLAIMER.en : CURRICULUM_LEGAL_DISCLAIMER.id;
+
+    const htmlContent = `
+      <div style="padding:16px 20px;">
+        <div style="background:var(--teal-soft); border:1px solid var(--teal); border-radius:12px; padding:16px; margin-bottom:20px;">
+          <strong style="color:var(--teal-soft-ink); font-size:14px; display:flex; align-items:center; gap:8px;">
+            <span>ℹ️</span> ${isEn ? 'Curriculum Alignment & Legal Attribution Statement' : 'Pernyataan Penyelarasan Kurikulum & Hak Cipta'}
+          </strong>
+          <p style="margin:8px 0 0; font-size:13px; color:var(--ink); line-height:1.6;">
+            "${disclaimer}"
+          </p>
+        </div>
+
+        <h3 style="font-size:17px; font-weight:800; margin:0 0 14px; color:var(--ink);">
+          ${isEn ? '12 Class 1 Semester 1 Reference Books (SRC-01 to SRC-12)' : '12 Buku Modul Pendamping Belajar Siswa (SRC-01 s/d SRC-12)'}
+        </h3>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+          ${SOURCE_BOOKS_REGISTRY.map(src => `
+            <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span class="no" style="background:var(--navy); color:#fff; font-size:11px; font-weight:800; border-radius:6px; padding:2px 6px;">
+                    ${src.id}
+                  </span>
+                  <span class="subject-badge" style="font-size:10.5px;">
+                    ${src.publisher}
+                  </span>
+                </div>
+                <h4 style="margin:0 0 6px; font-size:15px; font-weight:800; color:var(--ink);">${src.title}</h4>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+                  <span>Kelas ${src.grade} · Semester ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                </div>
+                <p style="font-size:12px; color:var(--ink); line-height:1.5; margin:0; background:var(--paper); padding:8px 10px; border-radius:8px;">
+                  <strong>Cakupan:</strong> ${src.scope}
+                </p>
+              </div>
+              <div style="margin-top:12px; font-size:11px; color:var(--teal); font-weight:700;">
+                ✓ Terintegrasi dalam Materi Pembelajaran
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    this.renderModal(htmlContent, isEn ? '📚 Class 1 Semester 1 Reference Curriculum Registry' : '📚 Register Buku Sumber & Kurikulum Merdeka Kelas 1');
   }
 
   renderModal(contentHtml, titleText) {

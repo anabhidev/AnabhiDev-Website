@@ -737,9 +737,9 @@
       accentColor: '#056268',
       accentLight: '#e9f8f8',
       accentBorder: '#5be0df',
-      description: 'Bongkar angka dengan trik seru! Ada 9 jurus berhitung asyik.',
-      descriptionEn: 'Explore numbers with fun tricks! 9 exciting calculation tools.',
-      topicsCount: 9,
+      description: '10 Unit materi SD Kelas 1 & Math Toolbox 14 jurus berhitung seru!',
+      descriptionEn: '10 Grade 1 curriculum units & Math Toolbox 14 fun calculation tools!',
+      topicsCount: 10,
       order: 1
     },
     {
@@ -920,6 +920,193 @@
     if (!sub) return '';
     return (lang === 'en' && sub.descriptionEn) ? sub.descriptionEn : sub.description;
   }
+  
+
+  // --- Source: js/data/source-registry.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Official Source Books & Curriculum Registry
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Class 1 Semester 1 Curriculum Alignment)
+  // Generated : 13 September 2026, 21:00:00
+  // ================================================================
+  
+  const SOURCE_BOOKS_REGISTRY = [
+    {
+      id: 'SRC-01',
+      subjectId: 'pancasila',
+      title: 'Modul Pembelajaran Pendidikan Pancasila',
+      grade: 1,
+      semester: 1,
+      publisher: 'EKSIS',
+      series: 'Modul Pembelajaran Kurikulum Merdeka',
+      photoCover: '01_Pendidikan_Pancasila.png',
+      status: 'curriculum-aligned',
+      scope: 'Identitas diri, aturan keluarga & sekolah, gotong royong, 5 simbol sila Garuda Pancasila, dan pengamalan nilai luhur.'
+    },
+    {
+      id: 'SRC-02',
+      subjectId: 'matematika',
+      title: 'Modul Pembelajaran Matematika',
+      grade: 1,
+      semester: 1,
+      publisher: 'EKSIS',
+      series: 'Modul Pembelajaran Kurikulum Merdeka',
+      photoCover: '02_Matematika.png',
+      status: 'curriculum-aligned',
+      scope: 'Bilangan 1–20, nilai tempat puluhan & satuan, penjumlahan & pengurangan dasar, pola, bentuk bangun, pengukuran, dan data sederhana.'
+    },
+    {
+      id: 'SRC-03',
+      subjectId: 'pjok',
+      title: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
+      grade: 1,
+      semester: 1,
+      publisher: 'eXis',
+      series: 'Buku Pendamping PJOK Kurikulum Merdeka',
+      photoCover: '03_PJOK.png',
+      status: 'curriculum-aligned',
+      scope: 'Gerak lokomotor, non-lokomotor, manipulatif, sikap tubuh, keseimbangan statis & dinamis, gerak berirama, dan pola hidup sehat.'
+    },
+    {
+      id: 'SRC-04',
+      subjectId: 'agama',
+      title: 'Pendidikan Agama Hindu dan Budi Pekerti',
+      grade: 1,
+      semester: 1,
+      publisher: 'BISA / Modul Pembelajaran',
+      series: 'Buku Pendamping Agama Hindu SD',
+      photoCover: '04_Agama_Hindu.png',
+      status: 'curriculum-aligned',
+      scope: 'Mengenal Ida Sang Hyang Widhi Wasa, sembahyang & doa harian, Tri Kaya Parisudha (berpikir, berkata, berbuat baik), tatakrama, dan cerita keteladanan.'
+    },
+    {
+      id: 'SRC-05',
+      subjectId: 'cali-stung',
+      title: 'Cali Stung — Membaca, Menulis, Berhitung',
+      grade: 1,
+      semester: 1,
+      publisher: 'Permata',
+      series: 'Fondasi Literasi & Numerasi Dasar',
+      photoCover: '05_Cali_Stung.png',
+      status: 'reinforcement-companion',
+      scope: 'Pelatihan cepat 5 menit untuk penguatan literasi huruf/kata/kalimat dan numerasi berhitung dasar.'
+    },
+    {
+      id: 'SRC-06',
+      subjectId: 'seni-rupa',
+      title: 'Modul Cerdas Seni Rupa',
+      grade: 1,
+      semester: 1,
+      publisher: 'Warna Mukti Grafika',
+      series: 'Modul Cerdas Kurikulum Merdeka',
+      photoCover: '06_Seni_Rupa.png',
+      status: 'curriculum-aligned',
+      scope: 'Unsur rupa: garis, bentuk bidang, warna primer & sekunder, tekstur, menggambar imajinatif, kolase, dan apresiasi karya.'
+    },
+    {
+      id: 'SRC-07',
+      subjectId: 'bahasa-indonesia',
+      title: 'Modul Pembelajaran Bahasa Indonesia',
+      grade: 1,
+      semester: 1,
+      publisher: 'EKSIS',
+      series: 'Modul Pembelajaran Kurikulum Merdeka',
+      photoCover: '07_Bahasa_Indonesia.png',
+      status: 'curriculum-aligned',
+      scope: 'Mengenal huruf vokal & konsonan, fonik, membaca suku kata KV & KVK, membaca kata bergambar, kalimat S-P-O, dan memahami cerita fabel.'
+    },
+    {
+      id: 'SRC-08',
+      subjectId: 'seni-rupa',
+      title: 'Modul Cerdas Seni Rupa (Edisi Pengayaan)',
+      grade: 1,
+      semester: 1,
+      publisher: 'Warna Mukti Grafika',
+      series: 'Modul Cerdas Pengayaan',
+      photoCover: '08_Seni_Rupa_2.png',
+      status: 'curriculum-aligned',
+      scope: 'Eksplorasi bentuk geometris di alam sekitar, kreasi pola berulang, dan mewarnai ekspresif.'
+    },
+    {
+      id: 'SRC-09',
+      subjectId: 'bahasa-bali',
+      title: 'SANTUN — Palajahan Basa Bali',
+      grade: 1,
+      semester: 1,
+      publisher: 'eXis / SANTUN',
+      series: 'Buku Interaktif Pendamping KKG Bahasa Bali',
+      photoCover: '09_SANTUN_Basa_Bali.png',
+      status: 'curriculum-aligned',
+      scope: 'Salam harian basa Bali, kruna aran keluarga & sekolah, kruna warna, wilangan angka basa Bali, dan tatakrama krama alus.'
+    },
+    {
+      id: 'SRC-10',
+      subjectId: 'maxxi',
+      title: 'MAXXI SD/MI Semester 1 — Pendamping Tematik Terpadu',
+      grade: 1,
+      semester: 1,
+      publisher: 'Maxxi',
+      series: 'Pendamping Integrasi Tematik',
+      photoCover: '10_Maxxi.png',
+      status: 'reinforcement-companion',
+      scope: 'Tantangan integratif lintas mata pelajaran: Matematika, Bahasa Indonesia, Pancasila, PJOK, Seni Rupa, dan Geografi.'
+    },
+    {
+      id: 'SRC-11',
+      subjectId: 'agama',
+      title: 'Pendidikan Agama Hindu dan Budi Pekerti (Buku Pendamping 2)',
+      grade: 1,
+      semester: 1,
+      publisher: 'BISA / Modul Pembelajaran',
+      series: 'Modul Pembelajaran Agama Hindu',
+      photoCover: '11_Agama_Hindu_2.png',
+      status: 'curriculum-aligned',
+      scope: 'Kebersihan tempat suci, sikap doa asana & pranayama sederhana, serta kasih sayang kepada sesama makhluk hidup ciptaan Tuhan.'
+    },
+    {
+      id: 'SRC-12',
+      subjectId: 'bahasa-inggris',
+      title: 'Modul Cerdas Bahasa Inggris',
+      grade: 1,
+      semester: 1,
+      publisher: 'Warna Mukti Grafika',
+      series: 'Modul Cerdas English for Elementary',
+      photoCover: '12_Bahasa_Inggris.png',
+      status: 'curriculum-aligned',
+      scope: 'Greetings & magic words, numbers 1–10, rainbow colors, my loving family, classroom supplies, cute animals, and simple commands.'
+    },
+    {
+      id: 'SRC-APP-01',
+      subjectId: 'geografi',
+      title: 'Atlas Geografi Digital & Jelajah 38 Provinsi Nusantara',
+      grade: 1,
+      semester: 1,
+      publisher: 'Anabhi Dev Edu',
+      series: 'Aplikasi Khusus Smart Study',
+      photoCover: null,
+      status: 'app-special-module',
+      scope: 'Bentuk planet Bumi bulat, 6 benua, 38 provinsi Indonesia resmi, modul khusus 8 kabupaten + 1 kota Bali, dan kota-kota terkenal non-ibu kota.'
+    },
+    {
+      id: 'SRC-APP-02',
+      subjectId: 'kokurikuler',
+      title: 'Misi Kokurikuler & Karakter Mandiri Anak',
+      grade: 1,
+      semester: 1,
+      publisher: 'Anabhi Dev Edu',
+      series: 'Aplikasi Khusus Smart Study',
+      photoCover: null,
+      status: 'app-special-module',
+      scope: 'Proyek kebersihan mandiri, proyek merawat tanaman, mini market sekolah, dan pengenalan budaya lokal ramah lingkungan.'
+    }
+  ];
+  
+  const CURRICULUM_LEGAL_DISCLAIMER = {
+    id: 'Materi disusun secara orisinal untuk AnabhiDev Smart Study dengan mempertimbangkan kesesuaian materi Kurikulum Merdeka (Fase A SD Kelas 1) dan buku-buku modul pendamping yang digunakan siswa di sekolah.',
+    en: 'Content is originally developed for AnabhiDev Smart Study in alignment with Kurikulum Merdeka (Phase A Grade 1 Elementary) and standard classroom workbook curriculum specifications.'
+  };
+  
   
 
   // --- Source: js/data/math-data.js ---
@@ -1554,6 +1741,416 @@
       { id: 'badge-jarimatika', name: 'Master Jarimatika', icon: '🖐️', desc: 'Berhitung cepat dengan 10 jari tangan ajaib', descEn: 'Fast finger math with magic 10 fingers' },
       { id: 'badge-pyramid', name: 'Pyramid Architect', icon: '🔺', desc: 'Menyusun piramida dinding bilangan', descEn: 'Built number wall pyramid bricks' },
       { id: 'badge-dotarray', name: 'Pattern Spotter', icon: '🟣', desc: 'Melihat pola terstruktur larik titik', descEn: 'Spotted structured patterns in dot array' }
+    ],
+  
+    // ================================================================
+    // 10 UNIT KURIKULUM MERDEKA SD KELAS 1 SEMESTER 1 (MAT-01 s/d MAT-10)
+    // Sesuai Master Content Spec v1.0 & Buku Sumber SRC-02 (EKSIS)
+    // ================================================================
+    topics: [
+      {
+        id: 'mat-01-bilangan',
+        unitCode: 'MAT-01',
+        title: 'Mengenal Bilangan 1 sampai 20',
+        titleEn: 'Discovering Numbers 1 to 20',
+        desc: 'Mari membilang benda secara urut dari 1 sampai 20! Kita belajar mencocokkan jumlah benda dengan lambang bilangannya, membandingkan kumpulan benda (lebih banyak, lebih sedikit, atau sama banyak), serta mengurutkan angka dari yang terkecil maupun terbesar.',
+        descEn: 'Let us count objects smoothly from 1 to 20! We match physical quantities with numerals, compare groups (greater, smaller, equal), and order numbers forwards and backwards.',
+        funFact: '💡 Tahukah kamu? Jari tangan dan kakimu berjumlah tepat 20! Kakek nenek moyang zaman dahulu menggunakan seluruh jari tangan dan kaki untuk menghitung hingga dua puluh!',
+        keyPoints: [
+          'Membilang benda secara runtut dari 1 hingga 20 tanpa ada yang terlewat.',
+          'Mengenal lambang bilangan 1 sampai 20 dan cara menulisnya dengan benar.',
+          'Membandingkan banyak benda menggunakan kata "lebih banyak", "lebih sedikit", atau "sama banyak".',
+          'Menentukan bilangan sebelum, sesudah, dan di antara dua bilangan.'
+        ],
+        checklist: [
+          'Misi 1: Hitung 15 benda di sekitarmu (misal pensil warna atau balok mainan) dengan suara lantang.',
+          'Misi 2: Tuliskan angka 1 sampai 20 secara urut dan rapi di buku kotak-kotak.',
+          'Misi 3: Buat dua kelompok kelereng: 8 kelereng dan 12 kelereng, lalu tunjukkan mana yang lebih banyak.'
+        ],
+        checklistEn: [
+          'Mission 1: Count 15 objects around you (like colored pencils or blocks) aloud.',
+          'Mission 2: Write numerals 1 through 20 neatly in your grid notebook.',
+          'Mission 3: Form two groups of marbles (8 and 12) and point out which one is greater.'
+        ],
+        activities: [
+          { q: 'Ada 5 buah apel merah dan 8 buah jeruk manis di meja. Buah manakah yang LEBIH BANYAK?', options: ['Jeruk manis (ada 8)', 'Apel merah (ada 5)', 'Sama banyak', 'Tidak ada yang banyak'], answer: 'Jeruk manis (ada 8)', hint: '8 lebih besar nilainya daripada 5! 🍊' },
+          { q: 'Berapa jumlah jari tangan lengkap pada kedua belah tanganmu?', type: 'number-input', answer: '10', options: ['10', '5', '8', '20'], hint: 'Satu tangan ada 5 jari, dua tangan ada 5 + 5 = 10 jari 🖐️🖐️' },
+          { q: 'Bilangan yang terletak tepat DI ANTARA angka 13 dan 15 adalah...', options: ['14', '12', '16', '11'], answer: '14', hint: 'Hitung berurutan: 13, ..., 15! Ya, angka 14!' },
+          { q: 'Lambang bilangan dari kata "tujuh belas" adalah...', options: ['17', '71', '16', '7'], answer: '17', hint: 'Angka 1 di depan (puluhan) dan angka 7 di belakang.' },
+          { q: 'Urutkan bilangan berikut dari yang TERKECIL: [8, 3, 12, 5]', options: ['3, 5, 8, 12', '12, 8, 5, 3', '3, 8, 5, 12', '5, 3, 8, 12'], answer: '3, 5, 8, 12', hint: 'Mulai dari angka paling sedikit: 3, lalu 5, lalu 8, dan paling besar 12.' },
+          { q: 'Bilangan yang muncul tepat SEBELUM angka 20 adalah...', options: ['19', '18', '21', '10'], answer: '19', hint: 'Mundur satu langkah dari 20: dapat 19!' },
+          { q: 'Kelompok A punya 9 balon, kelompok B punya 9 balon. Hubungan kedua kelompok balon adalah...', options: ['Sama banyak', 'A lebih banyak dari B', 'B lebih banyak dari A', 'A lebih sedikit'], answer: 'Sama banyak', hint: 'Karena kedua angka nilainya sama-sama 9 🎈' },
+          { q: 'Hitung mundur dari 5: 5, 4, 3, 2, ...', type: 'number-input', answer: '1', options: ['1', '0', '6', '3'], hint: 'Langkah terakhir sebelum habis adalah angka 1!' },
+          { q: 'Manakah kumpulan bilangan yang berurutan MAJU dengan benar?', options: ['15, 16, 17, 18', '15, 17, 16, 18', '18, 17, 16, 15', '11, 13, 12, 14'], answer: '15, 16, 17, 18', hint: 'Bertambah satu demi satu secara tertib!' },
+          { q: 'Made memiliki 6 kelereng, sedangkan Dayu memiliki 11 kelereng. Pernyataan yang TEPAT adalah...', options: ['Kelereng Made lebih sedikit dari kelereng Dayu', 'Kelereng Made lebih banyak dari kelereng Dayu', 'Kelereng mereka sama banyak', 'Kelereng Dayu ada 6'], answer: 'Kelereng Made lebih sedikit dari kelereng Dayu', hint: 'Angka 6 lebih kecil daripada angka 11.' }
+        ],
+        activitiesEn: [
+          { q: 'There are 5 red apples and 8 sweet oranges on the table. Which fruit is MORE in quantity?', options: ['Sweet oranges (8)', 'Red apples (5)', 'Equal amount', 'None'], answer: 'Sweet oranges (8)', hint: '8 is greater than 5! 🍊' },
+          { q: 'What is the total number of fingers on both hands combined?', type: 'number-input', answer: '10', options: ['10', '5', '8', '20'], hint: '5 on the left and 5 on the right: 5 + 5 = 10 🖐️🖐️' },
+          { q: 'Which number sits exactly BETWEEN 13 and 15?', options: ['14', '12', '16', '11'], answer: '14', hint: 'Count in sequence: 13, 14, 15!' }
+        ]
+      },
+      {
+        id: 'mat-02-puluhan-satuan',
+        unitCode: 'MAT-02',
+        title: 'Puluhan dan Satuan (Nilai Tempat)',
+        titleEn: 'Tens and Ones (Place Value)',
+        desc: 'Setiap bilangan dua angka memiliki nilai tempat! Sepuluh kubus satuan diikat menjadi 1 batang puluhan. Angka 14 artinya 1 puluhan (10) dan 4 satuan (4). Memahami nilai tempat adalah kunci rahasia menjadi juara berhitung!',
+        descEn: 'Every two-digit number has place value! Ten ones bundle together into 1 rod of ten. The number 14 means 1 ten (10) and 4 ones (4). Mastering place value is the secret superpower to mental math!',
+        funFact: '💡 Tahukah kamu? Sistem basis sepuluh (puluhan) digunakan di seluruh dunia karena kita memiliki 10 jari tangan yang menjadi sempoa alami pertama manusia!',
+        keyPoints: [
+          'Kumpulan 10 satuan bernilai sama dengan 1 puluhan.',
+          'Bilangan 11 sampai 19 terdiri dari 1 puluhan dan beberapa satuan.',
+          'Bilangan 20 terdiri dari 2 puluhan dan 0 satuan.',
+          'Nilai tempat menentukan besar nilai dari setiap angka.'
+        ],
+        checklist: [
+          'Misi 1: Ambil 10 batang lidi/sedotan dan ikat dengan karet menjadi 1 ikatan puluhan.',
+          'Misi 2: Susun angka 16 menggunakan 1 ikatan puluhan dan 6 batang lidi satuan lepas.',
+          'Misi 3: Jelaskan kepada orang tua nilai angka 1 pada bilangan 17 adalah bernilai 10.'
+        ],
+        checklistEn: [
+          'Mission 1: Gather 10 craft sticks and tie them with a rubber band into 1 bundle of ten.',
+          'Mission 2: Construct the number 16 using 1 bundle of ten and 6 loose one-sticks.',
+          'Mission 3: Explain to your parents that the digit 1 in 17 has a place value of 10.'
+        ],
+        activities: [
+          { q: 'Bilangan 16 terdiri dari ... puluhan dan ... satuan.', options: ['1 puluhan dan 6 satuan', '6 puluhan dan 1 satuan', '10 puluhan dan 6 satuan', '16 puluhan dan 0 satuan'], answer: '1 puluhan dan 6 satuan', hint: 'Angka 1 bernilai 10 (puluhan) dan angka 6 bernilai 6 (satuan) 🧱' },
+          { q: '1 puluhan + 8 satuan sama dengan bilangan...', type: 'number-input', answer: '18', options: ['18', '19', '81', '28'], hint: '10 ditambah 8 menghasilkan 18!' },
+          { q: 'Pada bilangan 15, angka 1 menempati nilai tempat...', options: ['Puluhan (nilainya 10)', 'Satuan (nilainya 1)', 'Ratusan', 'Nol'], answer: 'Puluhan (nilainya 10)', hint: 'Angka di sebelah kiri pada bilangan dua angka adalah puluhan.' },
+          { q: 'Pada bilangan 17, angka 7 menempati nilai tempat...', options: ['Satuan (nilainya 7)', 'Puluhan (nilainya 70)', 'Belasan', 'Ratusan'], answer: 'Satuan (nilainya 7)', hint: 'Angka di sebelah kanan adalah satuan.' },
+          { q: 'Ada 1 ikatan puluhan (10 pensil) dan 4 pensil lepas. Berapa total pensil semuanya?', type: 'number-input', answer: '14', options: ['14', '15', '41', '10'], hint: '10 + 4 = 14 pensil ✏️' },
+          { q: 'Bilangan 20 terdiri dari ... puluhan dan ... satuan.', options: ['2 puluhan dan 0 satuan', '1 puluhan dan 10 satuan', '0 puluhan dan 2 satuan', '20 puluhan'], answer: '2 puluhan dan 0 satuan', hint: 'Dua ikatan sepuluh penuh bernilai 20 tanpa ada satuan lepas.' },
+          { q: 'Bentuk panjang dari bilangan 19 adalah...', options: ['10 + 9', '1 + 9', '90 + 1', '10 + 19'], answer: '10 + 9', hint: 'Pisahkan puluhannya (10) dan satuannya (9).' },
+          { q: 'Manakah di antara bilangan berikut yang nilai satuannya adalah 3?', options: ['13', '31', '30', '3'], answer: '13', hint: 'Perhatikan angka yang menempati posisi satuan di sebelah kanan.' },
+          { q: 'Jika kamu punya 1 puluhan donat dan 0 satuan donat, berapa banyak donatmu?', type: 'number-input', answer: '10', options: ['10', '1', '100', '0'], hint: '1 puluhan = 10 donat manis 🍩' },
+          { q: 'Berapa nilai angka 2 pada bilangan 20?', options: ['20', '2', '200', '0'], answer: '20', hint: 'Karena menempati nilai puluhan, 2 puluhan bernilai 20.' }
+        ],
+        activitiesEn: [
+          { q: 'The number 16 is composed of ... tens and ... ones.', options: ['1 ten and 6 ones', '6 tens and 1 one', '10 tens and 6 ones', '16 tens'], answer: '1 ten and 6 ones', hint: 'The digit 1 means 10, and digit 6 means 6 🧱' }
+        ]
+      },
+      {
+        id: 'mat-03-penjumlahan-dasar',
+        unitCode: 'MAT-03',
+        title: 'Penjumlahan Dasar (Konkret & Gambar)',
+        titleEn: 'Basic Addition (Concrete & Visual)',
+        desc: 'Penjumlahan adalah menggabungkan dua kelompok benda menjadi satu kelompok yang lebih banyak. Simbol tambah (+) artinya digabungkan, dan tanda sama dengan (=) menunjukkan jumlah totalnya. Mari menghitung dengan benda nyata, jari tangan, dan gambar buah ceria!',
+        descEn: 'Addition means combining two sets of items into one larger group. The plus sign (+) means put together, and the equals sign (=) shows the grand total. Let us count with real items, fingers, and cheerful visuals!',
+        funFact: '💡 Tahukah kamu? Simbol tambah (+) berasal dari kata Latin "et" yang artinya "dan". Lambang ini dirancang agar kita bisa menulis penggabungan dengan cepat!',
+        keyPoints: [
+          'Menjumlahkan artinya menggabungkan atau menyatukan kumpulan benda.',
+          'Simbol "+" dibaca "ditambah", simbol "=" dibaca "sama dengan".',
+          'Menjumlahkan dengan angka 0 hasilnya tetap bilangan itu sendiri (contoh: 7 + 0 = 7).',
+          'Fakta penjumlahan kembar: 1+1=2, 2+2=4, 3+3=6, 4+4=8, 5+5=10.'
+        ],
+        checklist: [
+          'Misi 1: Ambil 3 sendok di tangan kiri dan 4 sendok di tangan kanan, hitung totalnya (3 + 4 = 7).',
+          'Misi 2: Hafalkan fakta penjumlahan kembar dari 1+1 hingga 5+5 dengan bertepuk tangan.',
+          'Misi 3: Tuliskan 3 kalimat penjumlahan sederhana bertema buah kesukaan di buku latihanmu.'
+        ],
+        checklistEn: [
+          'Mission 1: Hold 3 spoons in your left hand and 4 spoons in your right hand, count total (3 + 4 = 7).',
+          'Mission 2: Memorize doubles facts from 1+1 up to 5+5 clapping to the rhythm.',
+          'Mission 3: Write down 3 simple addition equations about favorite fruits.'
+        ],
+        activities: [
+          { q: 'Ada 4 bola merah digabung dengan 3 bola kuning. Berapa jumlah bola seluruhnya?', type: 'number-input', answer: '7', options: ['7', '8', '6', '9'], hint: 'Hitung maju dari 4: 5, 6, 7! Total ada 7 bola ⚽' },
+          { q: '5 + 5 = ...', type: 'number-input', answer: '10', options: ['10', '9', '11', '8'], hint: 'Sepasang tangan lengkap dengan sepuluh jemari: 5 + 5 = 10! 🖐️🖐️' },
+          { q: 'Simbol matematika untuk "ditambah" atau "digabungkan" adalah...', options: ['+', '-', '=', 'x'], answer: '+', hint: 'Tanda tambah berbentuk silang tegak lurus (+).' },
+          { q: 'Siti memetik 6 bunga melati, lalu memetik lagi 4 bunga melati. Berapa total bunga Siti?', type: 'number-input', answer: '10', options: ['10', '9', '11', '8'], hint: '6 + 4 adalah pasangan emas sahabat sepuluh (Make Ten) 🌸' },
+          { q: '8 + 0 = ...', type: 'number-input', answer: '8', options: ['8', '0', '80', '18'], hint: 'Menambah dengan nol (tidak menambah apa pun) hasilnya tetap sama: 8!' },
+          { q: 'Edo punya 5 kelereng. Diberi Ayah 2 kelereng lagi. Kalimat matematika yang TEPAT adalah...', options: ['5 + 2 = 7', '5 - 2 = 3', '5 + 7 = 12', '2 + 7 = 9'], answer: '5 + 2 = 7', hint: 'Kelereng awal (5) ditambah pemberian Ayah (2) menjadi 7.' },
+          { q: '7 + 3 = ...', type: 'number-input', answer: '10', options: ['10', '9', '11', '8'], hint: 'Hitung maju 3 langkah dari 7: 8, 9, 10! 🔟' },
+          { q: 'Di piring ada 6 kue donat. Ibu menaruh 6 kue donat lagi. Berapa jumlah donat semuanya?', type: 'number-input', answer: '12', options: ['12', '11', '13', '10'], hint: 'Jurus kembar: 6 + 6 = 12! 🍩' },
+          { q: '9 + 4 = ...', type: 'number-input', answer: '13', options: ['13', '12', '14', '15'], hint: 'Pinjam 1 dari 4 untuk genapkan 9 jadi 10, lalu 10 + 3 = 13!' },
+          { q: 'Made memelihara 8 ikan mas koki. Paman memberi 5 ikan mas lagi. Berapa total ikan Made sekarang?', type: 'number-input', answer: '13', options: ['13', '12', '14', '11'], hint: '8 + 5 = 8 + 2 (jadi 10) + 3 = 13 ekor ikan 🐟' }
+        ],
+        activitiesEn: [
+          { q: 'There are 4 red balls and 3 yellow balls. How many balls are there altogether?', type: 'number-input', answer: '7', options: ['7', '8', '6', '9'], hint: 'Count on from 4: 5, 6, 7! ⚽' },
+          { q: '5 + 5 = ...', type: 'number-input', answer: '10', options: ['10', '9', '11', '8'], hint: 'Two complete hands of fingers: 5 + 5 = 10! 🖐️' }
+        ]
+      },
+      {
+        id: 'mat-04-strategi-berhitung',
+        unitCode: 'MAT-04',
+        title: 'Penjumlahan dengan Strategi Berpikir (Math Toolbox)',
+        titleEn: 'Addition Strategies (Math Toolbox)',
+        desc: 'Matematika itu fleksibel dan asyik! Jangan hanya menghitung satu per satu dengan jari. Gunakan Math Toolbox: Jurus Make Ten (Bikin Sepuluh), Pecah Angka puluhan & satuan, Jurus Kompensasi (bulatkan lalu kurangi lebihnya), dan Lompat Garis Bilangan!',
+        descEn: 'Math is playful and flexible! Do not get stuck counting one by one on fingers. Use our Math Toolbox: Make Ten trick, Split Numbers into tens and ones, Compensation trick, and Number Line leaps!',
+        funFact: '💡 Tahukah kamu? Para ilmuwan dan astronot hebat tidak menghitung satu per satu, mereka menggunakan strategi pola angka persis seperti yang kamu pelajari di Math Toolbox!',
+        keyPoints: [
+          'Strategi Hitung Maju: simpan angka besar di kepala, hitung maju angka kecilnya.',
+          'Strategi Make Ten: pinjam sebagian angka untuk menggenapkan angka utama menjadi 10.',
+          'Strategi Pecah Angka: pisahkan puluhan dan satuan, jumlahkan masing-masing kelompok.',
+          'Strategi Kompensasi: bulatkan angka 9 menjadi 10, lalu kurangkan 1 di akhir.'
+        ],
+        checklist: [
+          'Misi 1: Coba selesaikan 8 + 5 dengan jurus Make Ten (pinjam 2 dari 5 sehingga 8 jadi 10, lalu 10 + 3 = 13).',
+          'Misi 2: Buka tab "Math Toolbox" di bagian atas dan coba klik jurus Pecah Angka pada angka 67 + 59.',
+          'Misi 3: Ceritakan kepada ayah atau ibu jurus berhitung mana yang paling kamu sukai.'
+        ],
+        checklistEn: [
+          'Mission 1: Solve 8 + 5 using the Make Ten trick (borrow 2 from 5 to round 8 to 10, then 10 + 3 = 13).',
+          'Mission 2: Open the "Math Toolbox" tab above and explore the Split Numbers visualizer on 67 + 59.',
+          'Mission 3: Share with your parents which thinking tool feels most comfortable in your mind.'
+        ],
+        activities: [
+          { q: 'Bagaimana cara cerdas menghitung 8 + 5 dengan jurus Make Ten (Bikin Sepuluh)?', options: ['8 pinjam 2 dari 5 jadi 10, sisa 3, jadi 10 + 3 = 13', 'Hitung jari dari 1 sampai 13', 'Kurangkan 8 dengan 5', 'Tebak angkanya'], answer: '8 pinjam 2 dari 5 jadi 10, sisa 3, jadi 10 + 3 = 13', hint: 'Pasangan 8 menuju 10 adalah 2. Angka 5 dipecah menjadi 2 dan 3 🔟' },
+          { q: 'Untuk menghitung 9 + 6 dengan jurus Kompensasi, cara tercepatnya adalah...', options: ['Hitung 10 + 6 = 16, lalu kurangi 1 jadi 15', 'Hitung 9 + 1 lalu tambah 2', 'Tulis bersusun panjang di kertas', 'Tunggu kalkulator'], answer: 'Hitung 10 + 6 = 16, lalu kurangi 1 jadi 15', hint: 'Karena 9 hampir 10! Tambah 10 dulu lalu kurangi 1 ⚡' },
+          { q: 'Menghitung 12 + 7 dengan jurus Pecah Angka: puluhannya adalah 10, satuannya adalah 2 + 7 = 9. Jadi totalnya adalah...', type: 'number-input', answer: '19', options: ['19', '18', '20', '17'], hint: '10 + 9 = 19!' },
+          { q: 'Pada garis bilangan, jika kamu mulai berdiri di angka 7 lalu melompat MAJU 4 langkah, kamu akan mendarat di angka...', type: 'number-input', answer: '11', options: ['11', '10', '12', '9'], hint: '7 melompat 4 langkah maju: 8, 9, 10, 11 📏' },
+          { q: 'Pasangan angka yang menjadi "sahabat sepuluh" (menghasilkan jumlah 10) adalah...', options: ['7 dan 3', '7 dan 4', '6 dan 5', '8 dan 3'], answer: '7 dan 3', hint: '7 + 3 = 10 pas!' },
+          { q: 'Hitung dengan jurus kembar terdekat: 7 + 8 = (7 + 7) + 1 = ...', type: 'number-input', answer: '15', options: ['15', '14', '16', '13'], hint: '7 + 7 = 14, ditambah 1 lagi menjadi 15!' },
+          { q: 'Berapakah angka yang harus dipinjam dari angka 6 agar angka 9 menjadi 10 bulat?', type: 'number-input', answer: '1', options: ['1', '2', '3', '0'], hint: '9 hanya butuh 1 kawan lagi untuk genap menjadi 10.' },
+          { q: '14 + 5 dihitung dengan mudah: simpan puluhan 10, jumlahkan 4 + 5 = 9, hasilnya adalah...', type: 'number-input', answer: '19', options: ['19', '18', '20', '17'], hint: '10 + 9 = 19!' },
+          { q: '9 + 9 dihitung cepat dengan jurus kembar: (10 + 10) - 2 = ...', type: 'number-input', answer: '18', options: ['18', '19', '17', '20'], hint: '20 dikurangi 2 adalah 18!' },
+          { q: 'Pada soal flagship 67 + 59, jika puluhannya digabung (60 + 50 = 110) dan satuannya digabung (7 + 9 = 16), berapa total akhirnya?', type: 'number-input', answer: '126', options: ['126', '125', '136', '116'], hint: '110 + 16 = 126 bulat sempurna! 🎯' }
+        ],
+        activitiesEn: [
+          { q: 'How do you smartly compute 8 + 5 using the Make Ten strategy?', options: ['8 takes 2 from 5 to make 10, leaving 3, so 10 + 3 = 13', 'Count by ones slowly', 'Subtract 5 from 8', 'Guess randomly'], answer: '8 takes 2 from 5 to make 10, leaving 3, so 10 + 3 = 13', hint: '8 + 2 = 10, and 10 + 3 = 13 🔟' }
+        ]
+      },
+      {
+        id: 'mat-05-pengurangan-dasar',
+        unitCode: 'MAT-05',
+        title: 'Pengurangan Dasar (Mengambil & Selisih)',
+        titleEn: 'Basic Subtraction (Take Away & Difference)',
+        desc: 'Pengurangan artinya mengambil sebagian benda sehingga jumlahnya berkurang, mencari sisa, atau mencari selisih jarak antara dua bilangan. Simbol kurang (-) dibaca dikurangi. Di garis bilangan, pengurangan adalah melangkah MUNDUR ke arah kiri!',
+        descEn: 'Subtraction means taking away a portion of items to find what remains, or measuring the gap difference between two values. The minus sign (-) means subtract. On a number line, subtracting means stepping BACKWARDS to the left!',
+        funFact: '💡 Tahukah kamu? Jika kamu mengurangkan suatu bilangan dengan bilangan itu sendiri (contoh: 8 - 8), hasilnya selalu NOL (0) kosong!',
+        keyPoints: [
+          'Pengurangan menyatakan proses mengambil, sisa, atau selisih.',
+          'Simbol "-" dibaca "dikurangi".',
+          'Mengurangi dengan nol hasilnya tidak berubah (contoh: 9 - 0 = 9).',
+          'Pada garis bilangan, pengurangan bergerak mundur ke arah kiri.'
+        ],
+        checklist: [
+          'Misi 1: Ambil 8 butir permen, makan atau simpan 3 butir, hitung sisa permenmu (8 - 3 = 5).',
+          'Misi 2: Gambarkan garis bilangan dari 0 sampai 10 di kertas, lalu buat lompatan mundur dari 9 mundur 4 langkah.',
+          'Misi 3: Coba buktikan bahwa 15 - 5 selalu menghasilkan puluhan bulat 10.'
+        ],
+        checklistEn: [
+          'Mission 1: Place 8 candies on a tray, take away 3, count what remains (8 - 3 = 5).',
+          'Mission 2: Draw a 0-10 number line and sketch backwards leaps from 9 back by 4.',
+          'Mission 3: Verify that 15 - 5 cleanly leaves a round ten 10.'
+        ],
+        activities: [
+          { q: 'Ada 8 buah pisang di meja makan. Dimakan adik 3 buah. Berapa sisa pisang sekarang?', type: 'number-input', answer: '5', options: ['5', '6', '4', '7'], hint: 'Hitung mundur 3 langkah dari 8: 7, 6, 5! Sisa 5 pisang 🍌' },
+          { q: '10 - 4 = ...', type: 'number-input', answer: '6', options: ['6', '5', '7', '4'], hint: 'Ingat kawan sepuluh: 4 berkawan dengan 6 untuk jadi 10!' },
+          { q: 'Simbol matematika untuk pengurangan atau "dikurangi" adalah...', options: ['-', '+', '=', 'x'], answer: '-', hint: 'Tanda strip mendatar (-).' },
+          { q: 'Jika kamu berdiri di angka 9 pada garis bilangan lalu melangkah MUNDUR 3 langkah, kamu berada di angka...', type: 'number-input', answer: '6', options: ['6', '7', '5', '8'], hint: 'Mundur dari 9: 8, 7, 6! 📏' },
+          { q: '15 - 5 = ...', type: 'number-input', answer: '10', options: ['10', '5', '15', '0'], hint: 'Ambil semua satuannya (5), tersisa puluhannya yaitu 10!' },
+          { q: 'Rani membawa 12 pensil warna. Sebanyak 2 pensil warna patah. Berapa pensil warna yang masih utuh?', type: 'number-input', answer: '10', options: ['10', '11', '9', '8'], hint: '12 - 2 = 10 pensil utuh ✏️' },
+          { q: 'Berapakah selisih antara bilangan 9 dan 4?', type: 'number-input', answer: '5', options: ['5', '6', '4', '13'], hint: 'Selisih artinya kurangkan angka besar dengan angka kecil: 9 - 4 = 5.' },
+          { q: '14 - 4 = ...', type: 'number-input', answer: '10', options: ['10', '8', '9', '6'], hint: '14 dikurangi satuannya (4) langsung menjadi 10!' },
+          { q: '7 - 0 = ...', type: 'number-input', answer: '7', options: ['7', '0', '70', '6'], hint: 'Mengurangkan dengan nol tidak mengubah apa pun, hasilnya tetap 7.' },
+          { q: 'Budi memiliki 16 kelereng. Saat bermain ia kalah 6 butir. Berapa kelereng Budi yang tersisa?', type: 'number-input', answer: '10', options: ['10', '12', '8', '6'], hint: '16 - 6 = 10 butir kelereng tersisa.' }
+        ],
+        activitiesEn: [
+          { q: 'There are 8 bananas on the table. Your sibling eats 3. How many bananas remain?', type: 'number-input', answer: '5', options: ['5', '6', '4', '7'], hint: 'Count backwards from 8: 7, 6, 5! 🍌' }
+        ]
+      },
+      {
+        id: 'mat-06-pola-gambar-bilangan',
+        unitCode: 'MAT-06',
+        title: 'Mengenal Pola Gambar & Bilangan',
+        titleEn: 'Patterns & Sequences (Visual & Numeric)',
+        desc: 'Pola adalah susunan benda, bentuk, warna, atau bilangan yang berulang secara teratur. Misalnya pola warna: Merah - Kuning - Merah - Kuning. Atau pola bilangan loncat: 2, 4, 6, 8 (loncat 2). Menemukan pola membuat kita bisa menebak kelanjutannya dengan tepat!',
+        descEn: 'A pattern is an orderly repeating sequence of objects, shapes, colors, or numbers. For example: Red - Yellow - Red - Yellow. Or skip counting: 2, 4, 6, 8 (+2 each step). Spotting patterns helps us predict the future!',
+        funFact: '💡 Tahukah kamu? Kulit zebra, kelopak bunga matahari, dan cangkang kerang di pantai semuanya memiliki pola matematika yang sangat teratur dan menakjubkan!',
+        keyPoints: [
+          'Pola berulang memiliki aturan susunan yang teratur dan konsisten.',
+          'Pola bentuk dapat bergantian (contoh: lingkaran - segitiga - lingkaran - segitiga).',
+          'Pola bilangan loncat 2: bertambah 2 secara teratur (2, 4, 6, 8, 10).',
+          'Pola bilangan loncat 5: bertambah 5 secara teratur (5, 10, 15, 20).'
+        ],
+        checklist: [
+          'Misi 1: Susun pensil warna dan penghapus dengan pola: pensil - penghapus - pensil - penghapus di mejamu.',
+          'Misi 2: Sebutkan bilangan loncat 2 dari 2 sampai 10 sambil melompat riang di lantai.',
+          'Misi 3: Buat pola gambar sendiri menggunakan stiker atau gambar bintang dan bulan di buku catatan.'
+        ],
+        checklistEn: [
+          'Mission 1: Arrange pencils and erasers in an AB pattern: pencil - eraser - pencil - eraser.',
+          'Mission 2: Recite skip-counting by 2s from 2 to 10 while hopping on floor squares.',
+          'Mission 3: Create your own visual pattern using star and moon doodles in your sketchbook.'
+        ],
+        activities: [
+          { q: 'Perhatikan pola berikut: 🔴 - 🔺 - 🔴 - 🔺 - ... Bentuk apakah berikutnya?', options: ['🔴 (Lingkaran Merah)', '🔺 (Segitiga Merah)', '🟩 (Persegi Hijau)', '⭐ (Bintang)'], answer: '🔴 (Lingkaran Merah)', hint: 'Pola bergantian: lingkaran, segitiga, lingkaran, segitiga, lalu lingkaran lagi!' },
+          { q: 'Lanjutkan pola bilangan loncat 2 berikut: 2, 4, 6, ...', type: 'number-input', answer: '8', options: ['8', '7', '9', '10'], hint: 'Setiap langkah bertambah 2: 6 + 2 = 8!' },
+          { q: 'Perhatikan pola warna: Biru - Kuning - Biru - Kuning - ... Warna selanjutnya adalah...', options: ['Biru', 'Kuning', 'Merah', 'Hijau'], answer: 'Biru', hint: 'Setelah kuning, pola kembali lagi ke warna biru 🔵' },
+          { q: 'Lengkapi pola bilangan maju: 10, 11, 12, ...', type: 'number-input', answer: '13', options: ['13', '14', '15', '12'], hint: 'Bertambah 1 secara urut: setelah 12 adalah 13!' },
+          { q: 'Perhatikan pola: 🟩 - 🟩 - 🟡 - 🟩 - 🟩 - ... Bentuk berikutnya adalah...', options: ['🟡 (Kuning)', '🟩 (Hijau)', '🔴 (Merah)', '🔺 (Segitiga)'], answer: '🟡 (Kuning)', hint: 'Pola: dua hijau, satu kuning, dua hijau, maka berikutnya satu kuning!' },
+          { q: 'Lanjutkan pola bilangan loncat 5 berikut: 5, 10, 15, ...', type: 'number-input', answer: '20', options: ['20', '18', '25', '16'], hint: '15 ditambah 5 adalah 20!' },
+          { q: 'Perhatikan pola hitung mundur: 10, 9, 8, ... Angka berikutnya adalah...', type: 'number-input', answer: '7', options: ['7', '6', '9', '5'], hint: 'Mundur berkurang 1: setelah 8 adalah 7.' },
+          { q: 'Lengkapi pola bilangan ganjil: 1, 3, 5, ...', type: 'number-input', answer: '7', options: ['7', '6', '8', '9'], hint: 'Loncat 2 langkah: 5 + 2 = 7!' },
+          { q: 'Manakah deret yang membentuk pola loncat 2 yang BENAR?', options: ['4, 6, 8, 10', '4, 5, 6, 7', '4, 7, 9, 10', '2, 5, 8, 11'], answer: '4, 6, 8, 10', hint: 'Selisih antarangka selalu pas 2.' },
+          { q: 'Perhatikan pola gerak: Tepuk tangan - Hentak kaki - Tepuk tangan - Hentak kaki - ... Gerakan berikutnya adalah...', options: ['Tepuk tangan 👏', 'Duduk diam', 'Melompat', 'Tidur'], answer: 'Tepuk tangan 👏', hint: 'Kembali lagi ke gerakan awal yaitu tepuk tangan!' }
+        ],
+        activitiesEn: [
+          { q: 'Observe pattern: 🔴 - 🔺 - 🔴 - 🔺 - ... Which shape comes next?', options: ['🔴 (Red Circle)', '🔺 (Red Triangle)', '🟩 (Square)', '⭐ (Star)'], answer: '🔴 (Red Circle)', hint: 'Alternating sequence: circle, triangle, circle, triangle, then circle!' }
+        ]
+      },
+      {
+        id: 'mat-07-bangun-datar-ruang',
+        unitCode: 'MAT-07',
+        title: 'Bentuk Bangun Datar & Bangun Ruang',
+        titleEn: '2D Shapes and 3D Solids',
+        desc: 'Bentuk ada di mana-mana di sekitar kita! Bangun datar memiliki permukaan rata: Lingkaran (bulat seperti uang koin), Segitiga (punya 3 sudut lancip), Persegi (4 sisi sama panjang), dan Persegi Panjang (seperti papan tulis). Bangun ruang memiliki isi volume: Balok (kardus), Kubus (dadu), Tabung (kaleng susu), dan Bola!',
+        descEn: 'Shapes surround us everywhere! 2D flat shapes include Circles (round like coins), Triangles (3 pointy corners), Squares (4 equal sides), and Rectangles (like classroom doors). 3D solids occupy space: Cubes (dice), Prisms/Boxes, Cylinders (cans), and Spheres (soccer balls)!',
+        funFact: '💡 Tahukah kamu? Roda sepeda dan mobil berbentuk lingkaran sempurna agar bisa menggelinding mulus tanpa tersendat-sendat!',
+        keyPoints: [
+          'Lingkaran: bentuk bulat tanpa sudut tajam.',
+          'Segitiga: bangun datar dengan 3 sisi dan 3 sudut.',
+          'Persegi: bangun datar dengan 4 sisi yang sama panjangnya.',
+          'Bangun ruang di sekitar kita: kubus (dadu), balok (kotak sepatu), tabung (kaleng), dan bola (bola sepak).'
+        ],
+        checklist: [
+          'Misi 1: Cari 3 benda di rumahmu yang berbentuk lingkaran (misal: piring, tutup botol, jam dinding).',
+          'Misi 2: Gambar sebuah rumah sederhana menggunakan kombinasi segitiga (atap) dan persegi (dinding).',
+          'Misi 3: Temukan satu kardus bekas (balok) dan raba setiap sisi permukaannya.'
+        ],
+        checklistEn: [
+          'Mission 1: Find 3 circular items at home (e.g. plate, bottle cap, wall clock).',
+          'Mission 2: Draw a simple house using a triangle (roof) and square (walls).',
+          'Mission 3: Touch and inspect a cardboard box (rectangular prism) and feel its flat faces.'
+        ],
+        activities: [
+          { q: 'Uang logam koin dan permukaan piring makan memiliki bentuk bangun datar...', options: ['Lingkaran ⭕', 'Segitiga 🔺', 'Persegi ⏹️', 'Bintang ⭐'], answer: 'Lingkaran ⭕', hint: 'Bentuk bundar mulus tanpa sudut siku-siku.' },
+          { q: 'Papan tulis di depan kelas dan daun pintu umumnya berbentuk bangun datar...', options: ['Persegi panjang', 'Lingkaran', 'Segitiga', 'Oval'], answer: 'Persegi panjang', hint: 'Memiliki 2 sisi panjang dan 2 sisi pendek.' },
+          { q: 'Dadu untuk bermain ular tangga berbentuk bangun ruang...', options: ['Kubus', 'Balok', 'Tabung', 'Bola'], answer: 'Kubus', hint: 'Semua keenam sisi mukanya berbentuk persegi sama besar 🎲' },
+          { q: 'Kaleng susu kental manis dan drum minyak memiliki bentuk...', options: ['Tabung', 'Bola', 'Kubus', 'Kerucut'], answer: 'Tabung', hint: 'Memiliki alas dan tutup berbentuk lingkaran yang sejajar.' },
+          { q: 'Berapa jumlah sisi pada bangun datar segitiga?', type: 'number-input', answer: '3', options: ['3', '4', '2', '5'], hint: 'Segitiga memiliki tepat 3 garis sisi dan 3 sudut lancip 🔺' },
+          { q: 'Bola yang digunakan pemain sepak bola di lapangan berbentuk bangun ruang...', options: ['Bola', 'Kubus', 'Balok', 'Tabung'], answer: 'Bola', hint: 'Bentuk bulat bundar yang bisa menggelinding ke segala arah ⚽' },
+          { q: 'Bangun datar yang memiliki 4 sisi sama panjang dan 4 sudut siku-siku adalah...', options: ['Persegi (bujur sangkar)', 'Lingkaran', 'Segitiga', 'Trapesium'], answer: 'Persegi (bujur sangkar)', hint: 'Keempat sisinya sama persis panjangnya ⏹️' },
+          { q: 'Kardus wadah pasta gigi atau kotak sepatu berbentuk...', options: ['Balok', 'Bola', 'Tabung', 'Kerucut'], answer: 'Balok', hint: 'Kotak persegi panjang yang memiliki ruang di dalamnya 📦' },
+          { q: 'Topi ulang tahun berbentuk bangun ruang...', options: ['Kerucut', 'Balok', 'Kubus', 'Tabung'], answer: 'Kerucut', hint: 'Bawahnya lingkaran dan meruncing lancip ke ujung atas.' },
+          { q: 'Berapa banyak sudut tajam pada bangun lingkaran?', type: 'number-input', answer: '0', options: ['0', '1', '4', '3'], hint: 'Lingkaran melengkung mulus penuh tanpa sudut sama sekali!' }
+        ],
+        activitiesEn: [
+          { q: 'A metal coin and dining plate are shaped like which 2D geometric figure?', options: ['Circle ⭕', 'Triangle 🔺', 'Square ⏹️', 'Star ⭐'], answer: 'Circle ⭕', hint: 'Round without corners.' }
+        ]
+      },
+      {
+        id: 'mat-08-pengukuran-sederhana',
+        unitCode: 'MAT-08',
+        title: 'Pengukuran Sederhana (Panjang, Berat, Waktu)',
+        titleEn: 'Simple Measurement (Length, Weight, Time)',
+        desc: 'Kita bisa membandingkan dan mengukur banyak hal! Mengukur panjang dengan satuan jengkal jari, langkah kaki, atau klip kertas. Membandingkan berat: lebih berat atau lebih ringan. Mengenal waktu sehari-hari: pagi saat matahari terbit, siang saat terik, malam saat bintang bersinar, dan membaca jam bulat!',
+        descEn: 'We can measure and compare our surroundings! Measuring length using hand-spans, footsteps, or paper clips. Comparing weight: heavier or lighter. Understanding everyday time: morning at sunrise, noon at lunchtime, night under starry skies, and reading o’clock time on clocks!',
+        funFact: '💡 Tahukah kamu? Jengkal tangan adalah ukuran kuno tertua manusia yang dihitung dari ujung ibu jari sampai ujung jari kelingking saat direntangkan lebar-lebar!',
+        keyPoints: [
+          'Panjang benda dapat dibandingkan: lebih panjang, lebih pendek, atau sama panjang.',
+          'Satuan panjang tak baku: jengkal tangan, depa, langkah kaki, dan batang korek api.',
+          'Berat benda dapat dibandingkan: lebih berat atau lebih ringan menggunakan timbangan sederhana.',
+          'Waktu: pagi, siang, sore, malam, serta membaca jam bulat (pukul 07.00 saat sekolah dimulai).'
+        ],
+        checklist: [
+          'Misi 1: Ukur panjang meja belajarmu menggunakan rentangan jengkal tanganmu.',
+          'Misi 2: Pegang satu buah buku tebal di tangan kiri dan satu pensil di tangan kanan, rasakan mana yang lebih berat.',
+          'Misi 3: Lihat jam dinding di rumahmu saat jarum panjang menunjuk tepat di angka 12.'
+        ],
+        checklistEn: [
+          'Mission 1: Measure your desk length using outstretched hand-spans.',
+          'Mission 2: Hold a heavy textbook in your left hand and a pencil in your right hand to feel weight difference.',
+          'Mission 3: Check your wall clock when the minute hand points straight up at 12.'
+        ],
+        activities: [
+          { q: 'Mengukur panjang meja dengan merentangkan ujung ibu jari ke ujung jari kelingking disebut mengukur dengan satuan...', options: ['Jengkal tangan', 'Langkah kaki', 'Depa', 'Tali'], answer: 'Jengkal tangan', hint: 'Rentangan jemari telapak tangan disebut jengkal 🖐️' },
+          { q: 'Panjang penggaris besi 30 cm ... daripada pensil tulis pendek.', options: ['Lebih panjang', 'Lebih pendek', 'Sama panjang', 'Lebih ringan'], answer: 'Lebih panjang', hint: 'Penggaris 30 cm jauh lebih panjang dari pensil 📏' },
+          { q: 'Antara buah semangka besar dan buah apel kecil, manakah yang LEBIH BERAT?', options: ['Buah semangka besar', 'Buah apel kecil', 'Sama beratnya', 'Keduanya melayang'], answer: 'Buah semangka besar', hint: 'Semangka besar padat air dan terasa sangat berat saat diangkat 🍉' },
+          { q: 'Pada jam dinding, jika jarum pendek menunjuk angka 7 dan jarum panjang menunjuk angka 12, menunjukkan pukul...', options: ['07.00', '12.07', '07.12', '12.00'], answer: '07.00', hint: 'Jarum pendek menunjukkan jam, jarum panjang di 12 artinya tepat jam bulat (pukul 07.00) ⏰' },
+          { q: 'Waktu yang tepat untuk sarapan pagi dan berangkat ke sekolah adalah waktu...', options: ['Pagi hari', 'Malam hari', 'Tengah malam', 'Sore hari menjelang tidur'], answer: 'Pagi hari', hint: 'Pagi hari saat matahari mulai bersinar cerah ☀️' },
+          { q: 'Balon karet berisi udara terasa ... daripada batu kali berukuran sama.', options: ['Lebih ringan', 'Lebih berat', 'Sama berat', 'Lebih keras'], answer: 'Lebih ringan', hint: 'Balon sangat ringan dan mudah melayang ditiup angin 🎈' },
+          { q: 'Panjang buku tulis diukur dengan 4 klip kertas. Buku gambar diukur dengan 7 klip kertas. Maka buku gambar...', options: ['Lebih panjang dari buku tulis', 'Lebih pendek dari buku tulis', 'Sama panjang', 'Tidak bisa dibandingkan'], answer: 'Lebih panjang dari buku tulis', hint: '7 klip kertas lebih banyak daripada 4 klip kertas.' },
+          { q: 'Alat penunjuk waktu yang menempel di dinding rumah kita adalah...', options: ['Jam dinding', 'Termometer', 'Penggaris', 'Timbangan'], answer: 'Jam dinding', hint: 'Jam dinding memiliki jarum jam dan menit untuk melihat waktu 🕒' },
+          { q: 'Pohon kelapa yang menjulang tinggi ... daripada pohon cabai di kebun.', options: ['Lebih tinggi', 'Lebih pendek', 'Sama tinggi', 'Lebih kecil'], answer: 'Lebih tinggi', hint: 'Pohon kelapa bisa tumbuh setinggi belasan meter 🌴' },
+          { q: 'Saat jarum pendek dan jarum panjang keduanya menunjuk tepat di angka 12 di siang hari, menunjukkan pukul...', options: ['12.00 siang', '06.00 sore', '01.00 siang', '10.00 pagi'], answer: '12.00 siang', hint: 'Tepat tengah hari saat waktu makan siang 🕛' }
+        ],
+        activitiesEn: [
+          { q: 'Measuring table length with your outstretched hand from thumb to pinky is called measuring with...', options: ['Hand-span', 'Footstep', 'Arm-span', 'Rope'], answer: 'Hand-span', hint: 'Hand-span uses your open palm fingers 🖐️' }
+        ]
+      },
+      {
+        id: 'mat-09-data-diagram-gambar',
+        unitCode: 'MAT-09',
+        title: 'Data & Diagram Gambar Sederhana',
+        titleEn: 'Simple Data & Pictograms',
+        desc: 'Data adalah kumpulan informasi seru! Kita bisa mencatat buah kesukaan teman-teman di kelas lalu menampilkannya dalam Diagram Gambar (Piktogram) atau garis hitung Turus (Tally). Dengan melihat gambar diagram, kita bisa langsung tahu buah apa yang paling disukai dan berapa jumlahnya!',
+        descEn: 'Data is a collection of fun information! We survey our classmates’ favorite fruits and present them in cheerful Pictograms or Tally marks. Reading pictures makes it effortless to see which fruit wins and count total votes!',
+        funFact: '💡 Tahukah kamu? Piktogram adalah salah satu bentuk tulisan pertama di dunia yang digunakan bangsa Mesir kuno (hieroglif) ribuan tahun lalu!',
+        keyPoints: [
+          'Data adalah kumpulan informasi atau catatan fakta.',
+          'Diagram gambar (piktogram) menyajikan data menggunakan gambar atau simbol objek.',
+          'Membaca piktogram: menghitung berapa banyak gambar pada setiap baris.',
+          'Menentukan data yang paling banyak (terbanyak), paling sedikit, dan jumlah total.'
+        ],
+        checklist: [
+          'Misi 1: Tanyakan buah kesukaan kepada 4 anggota keluargamu di rumah (apel, pisang, jeruk, atau mangga).',
+          'Misi 2: Gambarkan satu buah apel untuk setiap orang yang memilih apel di kertas latihanmu.',
+          'Misi 3: Buat garis turus (tally) hitungan 1 sampai 5 (empat garis tegak, satu garis coret miring).'
+        ],
+        checklistEn: [
+          'Mission 1: Ask 4 family members which fruit they love most (apple, banana, orange, or mango).',
+          'Mission 2: Draw one apple icon for each vote on your exercise paper.',
+          'Mission 3: Practice drawing tally marks for 5 (four vertical sticks, one diagonal slash).'
+        ],
+        activities: [
+          { q: 'Perhatikan data piktogram buah favorit: Apel (🍎🍎🍎🍎🍎 ada 5), Jeruk (🍊🍊🍊 ada 3), Pisang (🍌🍌🍌🍌 ada 4). Buah apakah yang PALING BANYAK disukai?', options: ['Apel (5 anak)', 'Jeruk (3 anak)', 'Pisang (4 anak)', 'Semua sama'], answer: 'Apel (5 anak)', hint: 'Apel memiliki gambar terbanyak yaitu 5 buah apel 🍎' },
+          { q: 'Dari data di atas, buah apakah yang PALING SEDIKIT disukai anak-anak?', options: ['Jeruk (3 anak)', 'Apel', 'Pisang', 'Mangga'], answer: 'Jeruk (3 anak)', hint: 'Jeruk hanya memiliki 3 gambar 🍊' },
+          { q: 'Berapa banyak anak yang menyukai buah pisang?', type: 'number-input', answer: '4', options: ['4', '5', '3', '6'], hint: 'Hitung gambar pisang: ada 4 buah pisang 🍌' },
+          { q: 'Berapa total seluruh anak yang memilih buah pada piktogram (5 apel + 3 jeruk + 4 pisang)?', type: 'number-input', answer: '12', options: ['12', '10', '15', '11'], hint: '5 + 3 = 8, lalu 8 + 4 = 12 anak!' },
+          { q: 'Empat garis tegak lurus dicoret satu garis miring (IIII/) dalam turus melambangkan bilangan...', type: 'number-input', answer: '5', options: ['5', '4', '6', '10'], hint: 'Satu ikatan turus lengkap melambangkan angka 5.' },
+          { q: 'Data warna kesukaan: Biru dipilih 6 anak, Merah dipilih 4 anak. Berapa selisih anak pemilih biru dan merah?', type: 'number-input', answer: '2', options: ['2', '10', '4', '1'], hint: '6 dikurangi 4 = 2 anak.' },
+          { q: 'Penyajian data yang menggunakan gambar-gambar kecil yang lucu disebut diagram...', options: ['Diagram gambar (piktogram)', 'Diagram lingkaran rumit', 'Diagram angka acak', 'Peta buta'], answer: 'Diagram gambar (piktogram)', hint: 'Piktogram menggunakan gambar untuk mewakili jumlah benda.' },
+          { q: 'Di halaman sekolah terparkir: 4 sepeda merah dan 3 sepeda biru. Berapa sepeda seluruhnya?', type: 'number-input', answer: '7', options: ['7', '8', '6', '1'], hint: '4 + 3 = 7 sepeda 🚲' },
+          { q: 'Jika 1 gambar bintang ⭐ mewakili 1 anak berprestasi, maka 3 gambar bintang mewakili ... anak.', type: 'number-input', answer: '3', options: ['3', '1', '6', '4'], hint: 'Tiap bintang = 1 anak, jadi 3 bintang = 3 anak.' },
+          { q: 'Manfaat utama membuat diagram data adalah...', options: ['Informasi menjadi rapi dan mudah dibaca sekilas', 'Membuat kertas jadi kotor', 'Menghilangkan data', 'Menyembunyikan angka'], answer: 'Informasi menjadi rapi dan mudah dibaca sekilas', hint: 'Diagram membantu kita memahami data secara cepat dan visual!' }
+        ],
+        activitiesEn: [
+          { q: 'Look at fruit survey: Apples (5), Oranges (3), Bananas (4). Which fruit is the MOST popular?', options: ['Apples (5)', 'Oranges (3)', 'Bananas (4)', 'Equal'], answer: 'Apples (5)', hint: 'Apples received the highest count of 5 votes 🍎' }
+        ]
+      },
+      {
+        id: 'mat-10-cerita-matematika',
+        unitCode: 'MAT-10',
+        title: 'Cerita Matematika Sehari-hari',
+        titleEn: 'Everyday Math Story Problems',
+        desc: 'Matematika ada di setiap cerita petualangan kita! Belajar memahami kata kunci cerita: "diberi lagi", "membeli lagi", atau "datang lagi" artinya DITAMBAHKAN (+). Sedangkan kata "dimakan", "diberikan kepada teman", "pecah", atau "hilang" artinya DIKURANGI (-). Ayo jadi detektif cerita matematika!',
+        descEn: 'Math lives inside every daily adventure! Spot the clue words: "received more", "bought more", or "joined in" mean ADD (+). Words like "eaten", "gave away", "broken", or "lost" mean SUBTRACT (-). Let us become clever math story detectives!',
+        funFact: '💡 Tahukah kamu? Semua ilmuwan dan insinyur pembuat roket luar angkasa mengawali karir hebat mereka dengan memecahkan soal cerita matematika sederhana waktu masih SD!',
+        keyPoints: [
+          'Membaca cerita matematika secara perlahan dan membayangkan kejadiannya.',
+          'Mencari kata kunci penjumlahan: "membeli lagi", "diberi", "datang lagi", "total".',
+          'Mencari kata kunci pengurangan: "dimakan", "hilang", "diberikan", "sisa", "selisih".',
+          'Menuliskan kalimat matematika lalu menghitung hasilnya dengan cermat.'
+        ],
+        checklist: [
+          'Misi 1: Buat 1 soal cerita penjumlahan tentang bekal makanan yang kamu bawa ke sekolah.',
+          'Misi 2: Buat 1 soal cerita pengurangan tentang kelereng atau permen yang kamu bagikan ke adik.',
+          'Misi 3: Bacakan ceritamu kepada teman sebangku atau orang tua dan minta mereka menebak jawabannya.'
+        ],
+        checklistEn: [
+          'Mission 1: Invent 1 addition story about lunchbox snacks you bring to school.',
+          'Mission 2: Invent 1 subtraction story about marbles or candies shared with your sibling.',
+          'Mission 3: Tell your math story aloud to your parents and invite them to solve it.'
+        ],
+        activities: [
+          { q: 'Siti membawa 4 potong kue bolu. Ibu memberinya 3 potong kue bolu lagi. Berapa potong kue bolu Siti sekarang?', type: 'number-input', answer: '7', options: ['7', '8', '6', '1'], hint: 'Diberi lagi artinya ditambah: 4 + 3 = 7 potong kue 🧁' },
+          { q: 'Made memiliki 10 butir kelereng. Ia memberikan 3 butir kelereng kepada adiknya. Sisa kelereng Made adalah...', type: 'number-input', answer: '7', options: ['7', '8', '6', '13'], hint: 'Diberikan artinya berkurang: 10 - 3 = 7 butir kelereng.' },
+          { q: 'Di dahan pohon ada 6 ekor burung pipit sedang bernyanyi. Lalu terbang datang 4 ekor burung pipit lagi. Berapa jumlah burung di pohon sekarang?', type: 'number-input', answer: '10', options: ['10', '9', '11', '2'], hint: 'Datang lagi artinya dijumlahkan: 6 + 4 = 10 ekor burung 🐦' },
+          { q: 'Di dalam kotak ada 12 pensil warna. Sebanyak 2 pensil patah saat terjatuh. Berapa pensil yang masih siap dipakai?', type: 'number-input', answer: '10', options: ['10', '14', '9', '8'], hint: '12 - 2 = 10 pensil warna ✏️' },
+          { q: 'Lani menanam 7 bibit bunga mawar di pot merah, dan Kakak menanam 5 bibit bunga melati di pot putih. Berapa total bibit bunga mereka berdua?', type: 'number-input', answer: '12', options: ['12', '11', '13', '10'], hint: '7 + 5 = 12 bibit bunga indah 🌸' },
+          { q: 'Ayah memetik 15 buah mangga harum manis dari pohon. Diberikan kepada tetangga sebelah 5 buah. Berapa sisa mangga Ayah?', type: 'number-input', answer: '10', options: ['10', '11', '9', '20'], hint: '15 - 5 = 10 buah mangga manis 🥭' },
+          { q: 'Budi memiliki 8 stiker dinosaurus. Saat menang kuis ia mendapat hadiah 6 stiker lagi. Berapa stiker Budi seluruhnya sekarang?', type: 'number-input', answer: '14', options: ['14', '13', '15', '12'], hint: '8 + 6 = 8 + 2 + 4 = 14 stiker! 🦖' },
+          { q: 'Di dalam toples ada 9 permen rasa jeruk. Paman memasukkan 3 permen rasa stroberi. Ada berapa permen di dalam toples?', type: 'number-input', answer: '12', options: ['12', '11', '13', '6'], hint: '9 + 3 = 12 permen manis 🍬' },
+          { q: 'Ibu memanggang 14 kue donat cokelat. Dimakan adik dan kakak sebanyak 4 kue donat. Berapa sisa donat Ibu di piring?', type: 'number-input', answer: '10', options: ['10', '12', '9', '8'], hint: '14 - 4 = 10 kue donat 🍩' },
+          { q: 'Dayu memiliki pita merah sepanjang 8 jengkal tangan dan pita kuning sepanjang 6 jengkal tangan. Jika kedua pita disambung, berapa jengkal panjang pita Dayu?', type: 'number-input', answer: '14', options: ['14', '12', '15', '13'], hint: 'Disambung artinya dijumlahkan: 8 + 6 = 14 jengkal tangan 🎀' }
+        ],
+        activitiesEn: [
+          { q: 'Siti brings 4 sponge cakes. Mom gives her 3 more sponge cakes. How many cakes does Siti have now?', type: 'number-input', answer: '7', options: ['7', '8', '6', '1'], hint: 'Given more means add: 4 + 3 = 7 cakes 🧁' }
+        ]
+      }
     ]
   };
   
@@ -6241,6 +6838,224 @@
   };
   
 
+  // --- Source: js/data/integrated-challenges.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Integrated Reinforcement Data
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Cali Stung 5-Menit & MAXXI Mixed Challenge)
+  // Aligned with Source Books: SRC-05 (Cali Stung) & SRC-10 (MAXXI)
+  // ================================================================
+  
+  const CALI_STUNG_DATA = {
+    id: 'cali-stung-5min',
+    title: 'Latihan Cepat 5 Menit — Cali Stung',
+    titleEn: '5-Minute Rapid Drill — Cali Stung (Literacy & Numeracy)',
+    subtitle: 'Latihan kilat penguatan fondasi: 5 soal membaca + 5 soal menulis + 5 soal berhitung!',
+    subtitleEn: 'Quick foundational boost: 5 reading + 5 writing + 5 math questions!',
+    sourceId: 'SRC-05',
+    questions: [
+      // --- 5 Soal Membaca (Reading) ---
+      {
+        q: '[Membaca 1] Manakah huruf vokal pada kata "BOLA"?',
+        options: ['O dan A', 'B dan L', 'B, O, L, A', 'Hanya O'],
+        answer: 'O dan A',
+        hint: 'Huruf vokal adalah huruf bernyanyi A, I, U, E, O ⚽',
+        category: 'membaca'
+      },
+      {
+        q: '[Membaca 2] Gabungan suku kata BA + JU jika dirangkai dibaca...',
+        options: ['BAJU', 'JUBA', 'BAJI', 'BUTA'],
+        answer: 'BAJU',
+        hint: 'Pakaian yang kita pakai sehari-hari 👕',
+        category: 'membaca'
+      },
+      {
+        q: '[Membaca 3] Kata "SEKOLAH" tempat kita belajar terdiri dari ... suku kata.',
+        options: ['3 suku kata (SE - KO - LAH)', '2 suku kata', '4 suku kata', '1 suku kata'],
+        answer: '3 suku kata (SE - KO - LAH)',
+        hint: 'Tepuk tangan saat mengeja: SE... KO... LAH! 🏫',
+        category: 'membaca'
+      },
+      {
+        q: '[Membaca 4] Huruf awal dari nama hewan berbelalai panjang "GAJAH" adalah...',
+        options: ['G', 'J', 'A', 'H'],
+        answer: 'G',
+        hint: 'G - A - J - A - H diawali huruf G 🐘',
+        category: 'membaca'
+      },
+      {
+        q: '[Membaca 5] Lawan kata dari kata "BERSIH" adalah...',
+        options: ['KOTOR', 'WANGI', 'INDAH', 'RAPI'],
+        answer: 'KOTOR',
+        hint: 'Jika tidak dibersihkan, lantai akan menjadi kotor.',
+        category: 'membaca'
+      },
+  
+      // --- 5 Soal Menulis (Writing) ---
+      {
+        q: '[Menulis 1] Lengkapi huruf yang hilang agar menjadi alat tulis: P - E - N - ... - I - L',
+        options: ['S (menjadi PENSIL)', 'K', 'T', 'B'],
+        answer: 'S (menjadi PENSIL)',
+        hint: 'Alat tulis berujung grafit untuk menggambar dan menulis ✏️',
+        category: 'menulis'
+      },
+      {
+        q: '[Menulis 2] Lengkapi suku kata agar menjadi nama hewan berbulu lucu: KU - ...',
+        options: ['CING (menjadi KUCING)', 'KU', 'DA', 'DE'],
+        answer: 'CING (menjadi KUCING)',
+        hint: 'Hewan peliharaan yang bersuara "meong-meong" 🐱',
+        category: 'menulis'
+      },
+      {
+        q: '[Menulis 3] Susun huruf acak berikut [U - K - B - U] menjadi kata bermakna...',
+        options: ['BUKU', 'KUBU', 'UBUK', 'BKKU'],
+        answer: 'BUKU',
+        hint: 'Lembaran kertas bacaan yang menjadi jendela ilmu 📖',
+        category: 'menulis'
+      },
+      {
+        q: '[Menulis 4] Tanda baca yang wajib diletakkan di akhir kalimat berita "Rani membaca buku" adalah...',
+        options: ['Tanda titik (.)', 'Tanda tanya (?)', 'Tanda seru (!)', 'Tanda koma (,)'],
+        answer: 'Tanda titik (.)',
+        hint: 'Titik mengakhiri kalimat pernyataan dengan tenang.',
+        category: 'menulis'
+      },
+      {
+        q: '[Menulis 5] Penulisan nama orang yang benar menggunakan huruf kapital di awal adalah...',
+        options: ['Budi', 'budi', 'bUdi', 'budI'],
+        answer: 'Budi',
+        hint: 'Nama orang selalu diawali huruf besar/kapital.',
+        category: 'menulis'
+      },
+  
+      // --- 5 Soal Berhitung (Numeracy) ---
+      {
+        q: '[Berhitung 1] Ada 6 apel merah ditambah 4 apel hijau di keranjang. Total apel seluruhnya ada...',
+        type: 'number-input',
+        answer: '10',
+        options: ['10', '9', '11', '8'],
+        hint: '6 + 4 adalah pasangan emas sahabat sepuluh! 🍎',
+        category: 'berhitung'
+      },
+      {
+        q: '[Berhitung 2] Bilangan yang terletak tepat SETELAH angka 17 adalah...',
+        type: 'number-input',
+        answer: '18',
+        options: ['18', '16', '19', '20'],
+        hint: 'Hitung maju satu langkah dari 17: 18!',
+        category: 'berhitung'
+      },
+      {
+        q: '[Berhitung 3] 1 puluhan + 5 satuan sama dengan bilangan...',
+        type: 'number-input',
+        answer: '15',
+        options: ['15', '51', '10', '25'],
+        hint: '10 ditambah 5 menghasilkan 15 🧱',
+        category: 'berhitung'
+      },
+      {
+        q: '[Berhitung 4] Ibu punya 9 butir telur, pecah 3 butir saat memasak. Telur yang utuh tersisa...',
+        type: 'number-input',
+        answer: '6',
+        options: ['6', '7', '5', '12'],
+        hint: 'Hitung mundur 3 langkah dari 9: 8, 7, 6! 🥚',
+        category: 'berhitung'
+      },
+      {
+        q: '[Berhitung 5] Lanjutkan pola bilangan loncat dua berikut: 2, 4, 6, ...',
+        type: 'number-input',
+        answer: '8',
+        options: ['8', '7', '9', '10'],
+        hint: 'Setiap langkah bertambah 2: 6 + 2 = 8!',
+        category: 'berhitung'
+      }
+    ]
+  };
+  
+  const MAXXI_CHALLENGE_DATA = {
+    id: 'maxxi-tematik-terpadu',
+    title: 'Tantangan Tematik Terpadu MAXXI',
+    titleEn: 'MAXXI Integrated Thematic Challenge',
+    subtitle: 'Uji ketangkasan belajar lintas mata pelajaran: Matematika, Bahasa, Pancasila, PJOK, Seni, & Geografi!',
+    subtitleEn: 'Cross-subject mastery: Math, Literacy, Civics, Physical Ed, Arts, & Geography!',
+    sourceId: 'SRC-10',
+    questions: [
+      {
+        q: 'Rani membawa 5 buah jeruk ke sekolah. Di waktu istirahat, Rani membagikan 2 buah jeruk secara adil kepada temannya yang lupa bekal. Berapa sisa jeruk Rani sekarang?',
+        scenario: '🍎 Nilai Kebaikan: Berbagi bekal mencerminkan kepedulian sosial, sekaligus melatih kemampuan berhitung pengurangan.',
+        options: ['3 buah jeruk (5 - 2 = 3)', '7 buah jeruk', '2 buah jeruk', '0 jeruk'],
+        answer: '3 buah jeruk (5 - 2 = 3)',
+        hint: 'Berbagi bekal adalah sikap mulia (Sila ke-5), dan 5 dikurangi 2 menghasilkan 3 🍊'
+      },
+      {
+        q: 'Lengkapilah kalimat berikut dengan suku kata yang tepat: "Pohon rindang di taman menghasilkan udara yang se-..."',
+        scenario: '🌳 Literasi & Lingkungan: Pepohonan hijau menyerap polusi udara dan menghasilkan oksigen segar bagi manusia.',
+        options: ['se-gar', 'se-dih', 'se-mpit', 'se-ring'],
+        answer: 'se-gar',
+        hint: 'Udara segar membuat pernapasan dan tubuh kita bugar!'
+      },
+      {
+        q: 'Made melakukan gerak lokomotor melompat sejauh 4 meter, lalu melompat lagi 3 meter ke depan. Berapa meter total lompatan Made?',
+        scenario: '🏃 PJOK & Berhitung: Mengukur jarak gerakan melompat menggunakan penjumlahan dasar.',
+        options: ['7 meter (4 + 3 = 7)', '8 meter', '1 meter', '12 meter'],
+        answer: '7 meter (4 + 3 = 7)',
+        hint: '4 meter digabung 3 meter menghasilkan 7 meter 🐸'
+      },
+      {
+        q: 'Warna apakah yang kita gunakan pada peta atlas untuk melukiskan birunya lautan nusantara yang luas?',
+        scenario: '🗺️ Seni Rupa & Geografi: Peta menggunakan warna simbolik konvensional untuk daratan dan perairan.',
+        options: ['Warna Biru', 'Warna Kuning', 'Warna Cokelat', 'Warna Hitam'],
+        answer: 'Warna Biru',
+        hint: 'Air laut memantulkan warna biru langit yang indah 🌊'
+      },
+      {
+        q: 'Regu piket kelas terdiri dari 4 murid. Mereka membagi tugas secara adil: 2 murid menyapu lantai dan 2 murid merapikan meja guru. Sikap ini mencerminkan pengamalan sila ke-...',
+        scenario: '🦅 Pendidikan Pancasila: Bekerja sama dan berbagi tugas piket secara merata.',
+        options: ['Kelima (Keadilan Sosial & Gotong Royong)', 'Pertama', 'Kedua', 'Ketiga'],
+        answer: 'Kelima (Keadilan Sosial & Gotong Royong)',
+        hint: 'Membagi tugas secara adil dan bekerja sama untuk kebersihan kelas ✨'
+      },
+      {
+        q: 'How much is "three" plus "four" in English?',
+        scenario: '🇬🇧 Bahasa Inggris & Matematika: Menghitung penjumlahan dalam kosakata bahasa Inggris internasional.',
+        options: ['Seven (7)', 'Six (6)', 'Eight (8)', 'Five (5)'],
+        answer: 'Seven (7)',
+        hint: 'Three (3) + Four (4) = Seven (7)!'
+      },
+      {
+        q: 'Kain tradisional khas Bali yang bermotif kotak-kotak catur hitam dan putih yang melambangkan keseimbangan alam disebut kain...',
+        scenario: '🌴 Muatan Lokal Bahasa Bali & Seni Budaya: Mengenal warisan luhur budaya nusantara.',
+        options: ['Kain Poleng', 'Kain Sutra', 'Kain Batik Solo', 'Kain Songket'],
+        answer: 'Kain Poleng',
+        hint: 'Kain poleng melambangkan konsep keseimbangan hidup Rwa Bhineda 🏁'
+      },
+      {
+        q: 'Perhatikan pola hiasan mading kelas: ⭐ Bintang - 🌙 Bulan - ⭐ Bintang - 🌙 Bulan - ... Hiasan berikutnya adalah...',
+        scenario: '🎨 Pola Kreatif & Bentuk: Mengenal urutan berulang secara teratur.',
+        options: ['⭐ Bintang', '🌙 Bulan', '☀️ Matahari', '☁️ Awan'],
+        answer: '⭐ Bintang',
+        hint: 'Pola bergantian bintang dan bulan, setelah bulan kembali ke bintang!'
+      },
+      {
+        q: 'Budi mencuci tangan memakai sabun dan air mengalir selama 20 detik sebelum makan siang pada pukul 12.00. Mengapa kita wajib cuci tangan dengan sabun?',
+        scenario: '🧼 Kesehatan Jasmani: Pola hidup bersih dan sehat (PHBS) mencegah penyakit masuk ke tubuh.',
+        options: ['Agar kuman dan bakteri mati bersih', 'Supaya tangan licin saja', 'Hanya bermain air', 'Biar wangi sebentar'],
+        answer: 'Agar kuman dan bakteri mati bersih',
+        hint: 'Sabun membasmi kuman dan virus berbahaya sebelum kita menyentuh makanan.'
+      },
+      {
+        q: 'Dalam dongeng fabel, Kura-kura menang lomba lari melawan Kelinci karena ia tekun dan pantang menyerah. Pesan moral yang patut kita teladani adalah...',
+        scenario: '📖 Membaca Pemahaman & Karakter: Fabel mengajarkan nilai budi pekerti luhur bagi anak.',
+        options: ['Tetap gigih berusaha dan tidak boleh sombong', 'Menyerah jika saingan cepat', 'Mengejek teman lain', 'Tidur di tengah jalan'],
+        answer: 'Tetap gigih berusaha dan tidak sombong',
+        hint: 'Ketekunan dan kerendahan hati selalu mengalahkan kesombongan 🐢'
+      }
+    ]
+  };
+  
+  
+
   // --- Source: js/data/globe-paths.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -9134,6 +9949,7 @@
   
   
   
+  
   class LksModalComponent {
     constructor() {
       this.modalEl = null;
@@ -9240,6 +10056,59 @@
       const isEn = lang === 'en';
       const htmlContent = this.generateMathLksHtml(isEn);
       this.renderModal(htmlContent, '🧮 LKPD Matematika Ceria: Kotak 10 Frame & Garis Bilangan');
+    }
+  
+    // Buka Dialog Register 12 Buku Sumber & Penyelarasan Kurikulum Merdeka
+    openSourceRegistry() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const disclaimer = isEn ? CURRICULUM_LEGAL_DISCLAIMER.en : CURRICULUM_LEGAL_DISCLAIMER.id;
+  
+      const htmlContent = `
+        <div style="padding:16px 20px;">
+          <div style="background:var(--teal-soft); border:1px solid var(--teal); border-radius:12px; padding:16px; margin-bottom:20px;">
+            <strong style="color:var(--teal-soft-ink); font-size:14px; display:flex; align-items:center; gap:8px;">
+              <span>ℹ️</span> ${isEn ? 'Curriculum Alignment & Legal Attribution Statement' : 'Pernyataan Penyelarasan Kurikulum & Hak Cipta'}
+            </strong>
+            <p style="margin:8px 0 0; font-size:13px; color:var(--ink); line-height:1.6;">
+              "${disclaimer}"
+            </p>
+          </div>
+  
+          <h3 style="font-size:17px; font-weight:800; margin:0 0 14px; color:var(--ink);">
+            ${isEn ? '12 Class 1 Semester 1 Reference Books (SRC-01 to SRC-12)' : '12 Buku Modul Pendamping Belajar Siswa (SRC-01 s/d SRC-12)'}
+          </h3>
+  
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+            ${SOURCE_BOOKS_REGISTRY.map(src => `
+              <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span class="no" style="background:var(--navy); color:#fff; font-size:11px; font-weight:800; border-radius:6px; padding:2px 6px;">
+                      ${src.id}
+                    </span>
+                    <span class="subject-badge" style="font-size:10.5px;">
+                      ${src.publisher}
+                    </span>
+                  </div>
+                  <h4 style="margin:0 0 6px; font-size:15px; font-weight:800; color:var(--ink);">${src.title}</h4>
+                  <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+                    <span>Kelas ${src.grade} · Semester ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                  </div>
+                  <p style="font-size:12px; color:var(--ink); line-height:1.5; margin:0; background:var(--paper); padding:8px 10px; border-radius:8px;">
+                    <strong>Cakupan:</strong> ${src.scope}
+                  </p>
+                </div>
+                <div style="margin-top:12px; font-size:11px; color:var(--teal); font-weight:700;">
+                  ✓ Terintegrasi dalam Materi Pembelajaran
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+  
+      this.renderModal(htmlContent, isEn ? '📚 Class 1 Semester 1 Reference Curriculum Registry' : '📚 Register Buku Sumber & Kurikulum Merdeka Kelas 1');
     }
   
     renderModal(contentHtml, titleText) {
@@ -10551,10 +11420,10 @@
   // --- Source: js/components/quiz-runner.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
-  // JavaScript · ES Module · Reusable Quiz Engine Component
+  // JavaScript · ES Module · Reusable Child-Friendly Question Engine
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 10:25:00
+  // Version   : 2.0 (Interactive Multi-Type & Encouraging Feedback)
+  // Generated : 13 September 2026, 21:05:00
   // ================================================================
   
   
@@ -10570,6 +11439,7 @@
       this.onComplete = onComplete;
       this.currentIndex = 0;
       this.score = 0;
+      this.attemptsThisQ = 0;
       this.answered = false;
       this.showHint = false;
   
@@ -10578,133 +11448,276 @@
   
     render() {
       const lang = appState.get().lang || 'id';
+      const isEn = (lang === 'en');
       const q = this.quiz.questions[this.currentIndex];
       const isLast = this.currentIndex === this.quiz.questions.length - 1;
-      const isEn = (lang === 'en');
+      const qType = q.type || (q.options && q.options.length === 2 && (q.options.includes('Benar') || q.options.includes('True')) ? 'true-false' : 'multiple-choice');
   
       this.container.innerHTML = `
-        <div class="quiz-box">
+        <div class="quiz-box" style="border-radius:18px; box-shadow:var(--shadow-soft);">
           <div class="quiz-header">
             <div>
-              <span class="subject-badge">${this.quiz.title}</span>
-              <div style="font-size:12px; color:var(--muted); margin-top:4px;">
+              <span class="subject-badge" style="font-size:11.5px; font-weight:800;">${this.quiz.title}</span>
+              <div style="font-size:12px; color:var(--muted); margin-top:4px; font-weight:600;">
                 ${t('practiceQuestionPrefix', lang)} ${this.currentIndex + 1} ${t('of', lang)} ${this.quiz.questions.length}
               </div>
             </div>
-            <div style="font-weight:800; color:var(--teal); font-size:13.5px;">
-              ${t('scoreLabel', lang)} ${this.score}
+            <div style="font-weight:850; color:var(--teal); font-size:14px; background:var(--teal-soft); padding:4px 12px; border-radius:999px;">
+              ⭐ ${t('scoreLabel', lang)} ${this.score}
             </div>
           </div>
   
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
-            <div class="quiz-question" style="margin:0; flex:1;">${q.q}</div>
-            <button class="btn-tts" id="btnTtsQuizQuestion" type="button" title="${isEn ? 'Read question aloud' : 'Dengarkan soal bersuara'}">
+          ${q.scenario ? `
+            <div class="scenario-card-prompt" style="background:var(--paper); border-left:4px solid var(--gold); border-radius:12px; padding:12px 16px; margin:10px 0 14px; font-size:13.5px; line-height:1.6; color:var(--ink);">
+              <strong>🎭 ${isEn ? 'Daily Scenario:' : 'Skenario Cerita:'}</strong> ${q.scenario}
+            </div>
+          ` : ''}
+  
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:16px;">
+            <div class="quiz-question" style="margin:0; font-size:16px; font-weight:800; line-height:1.5; color:var(--ink); flex:1;">
+              ${q.q}
+            </div>
+            <button class="btn-tts" id="btnTtsQuizQuestion" type="button" title="${isEn ? 'Read question aloud' : 'Dengarkan soal bersuara'}" style="flex:0 0 auto;">
               🔊 ${isEn ? 'Listen' : 'Dengarkan'}
             </button>
           </div>
   
-          <div class="quiz-options">
-            ${q.options.map(opt => `
-              <button class="quiz-opt-btn" data-answer="${opt}" type="button">
-                <span>⚪</span>
-                <span>${opt}</span>
-              </button>
-            `).join('')}
-          </div>
+          ${this.renderQuestionInput(q, qType, isEn)}
   
           ${q.hint ? `
-            <button class="btn" id="btnToggleHint" type="button" style="font-size:12px; padding:6px 12px; min-height:36px;">
-              ${this.showHint ? t('hideHintBtn', lang) : t('showHintBtn', lang)}
-            </button>
-            <div class="hint-panel ${this.showHint ? 'show' : ''}" id="hintPanel">
+            <div style="margin-top:12px; display:flex; align-items:center; gap:8px;">
+              <button class="btn" id="btnToggleHint" type="button" style="font-size:12px; padding:6px 14px; min-height:36px; border-radius:10px;">
+                💡 ${this.showHint ? (isEn ? 'Hide Hint' : 'Tutup Petunjuk') : (isEn ? 'Need a Hint?' : 'Butuh Petunjuk?')}
+              </button>
+            </div>
+            <div class="hint-panel ${this.showHint ? 'show' : ''}" id="hintPanel" style="margin-top:10px; background:var(--paper); border-left:4px solid var(--teal); border-radius:10px; padding:10px 14px; font-size:13px; line-height:1.5;">
               ${q.hint}
             </div>
           ` : ''}
   
-          <div class="feedback-banner" id="feedbackBanner"></div>
+          <div class="feedback-banner" id="feedbackBanner" style="margin-top:16px; border-radius:12px;"></div>
   
-          <div style="margin-top:20px; display:flex; justify-content:flex-end;">
-            <button class="btn primary" id="btnNextQuestion" type="button" style="display:none;">
-              ${isLast ? t('finishQuizBtn', lang) : t('nextQBtn', lang)}
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <button class="btn" id="btnRetryQuestion" type="button" style="display:none; font-size:12.5px; padding:6px 14px;">
+              🔄 ${isEn ? 'Try Again' : 'Coba Lagi'}
+            </button>
+            <button class="btn primary" id="btnNextQuestion" type="button" style="display:none; margin-left:auto; font-size:13px; font-weight:800; padding:8px 20px;">
+              ${isLast ? (isEn ? 'Finish & Collect Stars 🎉' : 'Selesai & Kumpulkan Bintang 🎉') : (isEn ? 'Next Question ➔' : 'Soal Berikutnya ➔')}
             </button>
           </div>
         </div>
       `;
   
-      this.attachEvents();
+      this.attachEvents(q, qType, isEn);
     }
   
-    attachEvents() {
-      const q = this.quiz.questions[this.currentIndex];
-      const optionBtns = this.container.querySelectorAll('.quiz-opt-btn');
+    renderQuestionInput(q, qType, isEn) {
+      if (qType === 'input' || qType === 'number-input') {
+        return `
+          <div class="quiz-input-block" style="display:flex; gap:10px; margin:16px 0; align-items:center;">
+            <input type="text"
+                   id="quizCustomInput"
+                   class="quiz-text-input"
+                   placeholder="${isEn ? 'Type your answer here...' : 'Ketik jawabanmu di sini...'}"
+                   autocomplete="off"
+                   style="flex:1; max-width:320px; padding:12px 16px; border-radius:12px; border:2px solid var(--line); font-size:15px; font-weight:700; color:var(--ink); background:var(--card); outline:none;">
+            <button class="btn primary" id="btnSubmitCustomInput" type="button" style="padding:12px 20px; font-size:14px; font-weight:800;">
+              ${isEn ? 'Check Answer' : 'Cek Jawaban'}
+            </button>
+          </div>
+        `;
+      }
+  
+      if (qType === 'true-false') {
+        return `
+          <div class="quiz-options true-false-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;">
+            ${(q.options || ['Benar', 'Salah']).map(opt => {
+              const isTrue = opt.toLowerCase().includes('benar') || opt.toLowerCase().includes('true');
+              return `
+                <button class="quiz-opt-btn tf-btn" data-answer="${opt}" type="button" style="padding:16px 12px; text-align:center; font-size:16px; font-weight:800; border-radius:14px;">
+                  <span style="font-size:24px; display:block; margin-bottom:4px;">${isTrue ? '👍' : '👎'}</span>
+                  <span>${opt}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+  
+      // Default multiple choice
+      const options = q.options || [];
+      return `
+        <div class="quiz-options" style="display:flex; flex-direction:column; gap:10px; margin:16px 0;">
+          ${options.map((opt, optIdx) => `
+            <button class="quiz-opt-btn" data-answer="${opt}" type="button" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:14px; text-align:left;">
+              <span class="opt-bullet" style="width:26px; height:26px; border-radius:50%; background:var(--surface); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; color:var(--muted);">
+                ${String.fromCharCode(65 + optIdx)}
+              </span>
+              <span class="opt-text" style="font-size:14.5px; font-weight:650; color:var(--ink); flex:1;">${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+  
+    attachEvents(q, qType, isEn) {
       const feedbackBanner = this.container.querySelector('#feedbackBanner');
       const nextBtn = this.container.querySelector('#btnNextQuestion');
+      const retryBtn = this.container.querySelector('#btnRetryQuestion');
       const hintBtn = this.container.querySelector('#btnToggleHint');
       const hintPanel = this.container.querySelector('#hintPanel');
       const ttsBtn = this.container.querySelector('#btnTtsQuizQuestion');
   
+      // TTS Button
       if (ttsBtn) {
         ttsBtn.addEventListener('click', () => {
           const lang = appState.get().lang || 'id';
-          const fullQuestionText = `${q.q}. ${lang === 'en' ? 'Choices are' : 'Pilihan jawabannya'}: ${q.options.join(', ')}`;
-          TtsEngine.speak(fullQuestionText, lang, ttsBtn);
+          let readText = q.q;
+          if (q.scenario) readText = `${q.scenario}. ${readText}`;
+          if (q.options && q.options.length > 0) {
+            readText += `. ${isEn ? 'Choices are' : 'Pilihannya'}: ${q.options.join(', ')}`;
+          }
+          TtsEngine.speak(readText, lang, ttsBtn);
         });
       }
   
+      // Hint Toggle
       if (hintBtn) {
         hintBtn.addEventListener('click', () => {
           this.showHint = !this.showHint;
-          hintPanel.classList.toggle('show', this.showHint);
-          const curLang = appState.get().lang || 'id';
-          hintBtn.textContent = this.showHint ? t('hideHintBtn', curLang) : t('showHintBtn', curLang);
+          if (hintPanel) hintPanel.classList.toggle('show', this.showHint);
+          hintBtn.textContent = `💡 ${this.showHint ? (isEn ? 'Hide Hint' : 'Tutup Petunjuk') : (isEn ? 'Need a Hint?' : 'Butuh Petunjuk?')}`;
         });
       }
   
+      // Evaluation Logic
+      const evaluateAnswer = (selectedText) => {
+        if (this.answered) return;
+  
+        const normUser = String(selectedText).trim().toLowerCase();
+        const normCorrect = String(q.answer).trim().toLowerCase();
+        const isCorrect = normUser === normCorrect || (q.acceptedAnswers && q.acceptedAnswers.map(a => a.toLowerCase()).includes(normUser));
+  
+        this.attemptsThisQ++;
+  
+        if (isCorrect) {
+          if (this.attemptsThisQ === 1) {
+            this.score++;
+          }
+          this.answered = true;
+          feedbackBanner.className = 'feedback-banner success show';
+          feedbackBanner.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:24px;">🎉</span>
+              <div>
+                <strong>${isEn ? 'Awesome! Correct answer!' : 'Mantap! Jawabanmu benar sekali!'}</strong>
+                <div style="font-size:12.5px; opacity:0.9; margin-top:2px;">
+                  ${q.explanation || (isEn ? 'Great job mastering this concept! ⭐' : 'Hebat, kamu sudah memahami konsep ini! ⭐')}
+                </div>
+              </div>
+            </div>
+          `;
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
+          if (nextBtn) nextBtn.style.display = 'inline-flex';
+          if (retryBtn) retryBtn.style.display = 'none';
+        } else {
+          feedbackBanner.className = 'feedback-banner warning show';
+          feedbackBanner.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:24px;">💡</span>
+              <div>
+                <strong>${isEn ? 'Almost there! Give it another try.' : 'Belum tepat. Yuk coba perhatikan lagi!'}</strong>
+                <div style="font-size:12.5px; opacity:0.9; margin-top:2px;">
+                  ${isEn ? 'Take your time, read the hint below to discover the key.' : 'Santai saja, baca petunjuk di bawah untuk menemukan jawabannya.'}
+                </div>
+              </div>
+            </div>
+          `;
+          AudioFx.playGentleWrong();
+  
+          // Auto-show hint after attempt
+          if (q.hint && hintPanel && !this.showHint) {
+            this.showHint = true;
+            hintPanel.classList.add('show');
+            if (hintBtn) hintBtn.textContent = `💡 ${isEn ? 'Hide Hint' : 'Tutup Petunjuk'}`;
+          }
+  
+          if (retryBtn) retryBtn.style.display = 'inline-flex';
+        }
+      };
+  
+      // Multiple Choice & True/False buttons
+      const optionBtns = this.container.querySelectorAll('.quiz-opt-btn');
       optionBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           if (this.answered) return;
-  
           const selected = btn.getAttribute('data-answer');
-          const isCorrect = selected === q.answer;
   
           optionBtns.forEach(b => {
-            b.disabled = true;
-            if (b.getAttribute('data-answer') === q.answer) {
-              b.classList.add('correct');
-              b.querySelector('span').textContent = '✅';
-            }
+            b.classList.remove('selected', 'correct', 'wrong');
           });
   
-          const currentLang = appState.get().lang || 'id';
-          if (isCorrect) {
-            this.score++;
+          const normSelected = String(selected).trim().toLowerCase();
+          const normAns = String(q.answer).trim().toLowerCase();
+  
+          if (normSelected === normAns) {
             btn.classList.add('correct');
-            feedbackBanner.className = 'feedback-banner success show';
-            feedbackBanner.innerHTML = t('quizCorrectFeedback', currentLang);
-            AudioFx.playSuccess();
-            AudioFx.triggerConfetti(this.container);
+            optionBtns.forEach(b => { b.disabled = true; });
           } else {
             btn.classList.add('wrong');
-            btn.querySelector('span').textContent = '❌';
-            feedbackBanner.className = 'feedback-banner warning show';
-            feedbackBanner.innerHTML = `${t('quizWrongFeedback', currentLang)} <u>${q.answer}</u>. ${currentLang === 'en' ? 'Keep trying!' : 'Semangat terus!'}`;
-            AudioFx.playGentleWrong();
           }
   
-          this.answered = true;
-          nextBtn.style.display = 'inline-flex';
+          evaluateAnswer(selected);
         });
       });
   
+      // Custom text/number input
+      const inputField = this.container.querySelector('#quizCustomInput');
+      const submitInputBtn = this.container.querySelector('#btnSubmitCustomInput');
+      if (submitInputBtn && inputField) {
+        submitInputBtn.addEventListener('click', () => {
+          const val = inputField.value.trim();
+          if (!val) return;
+          evaluateAnswer(val);
+        });
+        inputField.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            const val = inputField.value.trim();
+            if (val) evaluateAnswer(val);
+          }
+        });
+      }
+  
+      // Retry Button
+      if (retryBtn) {
+        retryBtn.addEventListener('click', () => {
+          this.answered = false;
+          feedbackBanner.className = 'feedback-banner';
+          feedbackBanner.innerHTML = '';
+          retryBtn.style.display = 'none';
+          optionBtns.forEach(b => {
+            b.disabled = false;
+            b.classList.remove('selected', 'correct', 'wrong');
+          });
+          if (inputField) {
+            inputField.value = '';
+            inputField.focus();
+          }
+        });
+      }
+  
+      // Next Button
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
           if (this.currentIndex < this.quiz.questions.length - 1) {
             this.currentIndex++;
+            this.attemptsThisQ = 0;
             this.answered = false;
             this.showHint = false;
             this.render();
           } else {
-            // Kuis Selesai!
+            // Finished Quiz
             AudioFx.playFanfare();
             AudioFx.triggerConfetti(this.container);
             store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
@@ -10716,20 +11729,37 @@
   
     showCompletionScreen() {
       const currentLang = appState.get().lang || 'id';
+      const isEn = (currentLang === 'en');
       const isPerfect = this.score === this.quiz.questions.length;
+      const earnedStars = isPerfect ? 10 : Math.max(2, this.score * 2);
+  
       this.container.innerHTML = `
-        <div class="quiz-box" style="text-align:center; padding:36px 20px;">
-          <div style="font-size:52px; margin-bottom:12px;">${isPerfect ? '🏆' : '🌟'}</div>
-          <h3 style="font-size:22px; margin:0 0 8px;">${t('quizFinishedTitle', currentLang)}</h3>
-          <p style="font-size:14px; color:var(--muted); margin:0 0 18px;">
-            ${isPerfect ? t('quizFinishedPerfect', currentLang) : t('quizFinishedGood', currentLang)}
+        <div class="quiz-box" style="text-align:center; padding:40px 24px; border-radius:20px; box-shadow:var(--shadow);">
+          <div style="font-size:56px; margin-bottom:12px;">${isPerfect ? '🏆' : '🌟'}</div>
+          <h3 style="font-size:24px; margin:0 0 8px; font-weight:850; color:var(--ink);">
+            ${isPerfect ? (isEn ? 'Sensational Score! 🌟' : 'Luar Biasa, Nilai Sempurna! 🌟') : (isEn ? 'Great Effort, Champion!' : 'Hebat Sekali, Sobat Juara!')}
+          </h3>
+          <p style="font-size:14.5px; color:var(--muted); margin:0 auto 20px; max-width:480px; line-height:1.6;">
+            ${isPerfect 
+              ? (isEn ? 'You answered all questions correctly and unlocked maximum stars!' : 'Kamu berhasil menjawab seluruh soal dengan tepat dan meraih bintang prestasi penuh!')
+              : (isEn ? 'Every practice makes your mind stronger and more curious. Keep learning!' : 'Setiap latihan membuat pikiranmu semakin tajam dan berani mencoba. Terus semangat!')}
           </p>
-          <div style="font-size:26px; font-weight:850; color:var(--teal); margin-bottom:20px;">
-            ${t('scoreLabel', currentLang)} ${this.score} / ${this.quiz.questions.length}
+  
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:2px solid var(--line); border-radius:16px; padding:12px 24px; margin-bottom:24px;">
+            <span style="font-size:28px;">⭐</span>
+            <div style="text-align:left;">
+              <div style="font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase;">${isEn ? 'Stars Awarded' : 'Bintang Diperoleh'}</div>
+              <strong style="font-size:22px; color:var(--teal); font-weight:900;">+${earnedStars} Stars (${this.score} / ${this.quiz.questions.length})</strong>
+            </div>
           </div>
+  
           <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-            <button class="btn" id="btnRetryQuiz" type="button">${t('retryQuizBtn', currentLang)}</button>
-            <button class="btn primary" id="btnFinishQuiz" type="button">${t('continueNextSubjectBtn', currentLang)}</button>
+            <button class="btn" id="btnRetryQuiz" type="button" style="padding:10px 20px; font-size:13.5px; border-radius:12px;">
+              🔄 ${t('retryQuizBtn', currentLang)}
+            </button>
+            <button class="btn primary" id="btnFinishQuiz" type="button" style="padding:10px 24px; font-size:13.5px; font-weight:800; border-radius:12px;">
+              ${t('continueNextSubjectBtn', currentLang)} ➔
+            </button>
           </div>
         </div>
       `;
@@ -10739,6 +11769,7 @@
         retryBtn.addEventListener('click', () => {
           this.currentIndex = 0;
           this.score = 0;
+          this.attemptsThisQ = 0;
           this.answered = false;
           this.showHint = false;
           this.render();
@@ -10753,7 +11784,6 @@
       }
     }
   }
-  
   
 
   // --- Source: js/components/lesson-view.js ---
@@ -10773,10 +11803,13 @@
   
   
   
+  
   class MathLessonView {
-    constructor(container, videoModal) {
+    constructor(container, videoModal, lksModal = null) {
       this.container = container;
       this.videoModal = videoModal;
+      this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
+      this.activeMainTab = 'curriculum'; // 'curriculum' (10 Unit SD 1) | 'toolbox' (14 Jurus)
       this.currentPracticeIndex = 0;
       this.practiceHintLevel = 0;
       this.practiceAnswered = false;
@@ -10801,13 +11834,161 @@
       const progress = MathEngine.getProgress();
   
       this.container.innerHTML = `
-        <!-- Header Matematika Flagship / Math Toolbox -->
+        <!-- Header Matematika Flagship / Kurikulum SD Kelas 1 -->
         <div class="section-header">
-          <div class="math-hero-badge">🧰 ${t('mathFlagshipBadge', lang)}</div>
-          <h2 class="section-title">${isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title}</h2>
-          <p class="section-sub">${isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle}</p>
+          <div class="math-hero-badge">
+            ${this.activeMainTab === 'curriculum' ? '📚 Kurikulum Merdeka SD Kelas 1' : '🧰 ' + t('mathFlagshipBadge', lang)}
+          </div>
+          <h2 class="section-title">
+            ${this.activeMainTab === 'curriculum'
+              ? (isEn ? 'Mathematics — 10 Grade 1 Learning Units' : 'Matematika — 10 Unit Materi SD Kelas 1')
+              : (isEn && MATH_DATA.titleEn ? MATH_DATA.titleEn : MATH_DATA.title)}
+          </h2>
+          <p class="section-sub">
+            ${this.activeMainTab === 'curriculum'
+              ? (isEn ? 'Counting 1–20, place value, addition, subtraction, patterns, shapes, measurement, data, and daily stories!' : 'Membilang 1–20, nilai tempat puluhan & satuan, penjumlahan, pengurangan, pola, bangun datar & ruang, pengukuran, data, dan cerita matematika!')
+              : (isEn && MATH_DATA.subtitleEn ? MATH_DATA.subtitleEn : MATH_DATA.subtitle)}
+          </p>
         </div>
   
+        <!-- Main Switcher: Unit Materi SD Kelas 1 vs Math Toolbox -->
+        <div class="math-main-tabs" role="tablist" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+          <button class="btn ${this.activeMainTab === 'curriculum' ? 'primary' : ''}" id="btnTabMathCurriculum" type="button" style="font-size:13.5px; font-weight:800; padding:10px 18px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;">
+            <span>📚</span> ${isEn ? 'Grade 1 Units (10 Topics)' : 'Unit Materi SD Kelas 1 (10 Unit)'}
+          </button>
+          <button class="btn ${this.activeMainTab === 'toolbox' ? 'primary' : ''}" id="btnTabMathToolbox" type="button" style="font-size:13.5px; font-weight:800; padding:10px 18px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;">
+            <span>🧰</span> ${isEn ? 'Math Toolbox (14 Thinking Tools)' : 'Math Toolbox (14 Jurus Berhitung)'}
+          </button>
+        </div>
+  
+        <!-- Konten Tab Aktif -->
+        ${this.activeMainTab === 'curriculum'
+          ? this.renderCurriculumContent(lang, isEn)
+          : this.renderToolboxContent(a, b, solution, activeMethod, progress, lang, isEn)}
+  
+        <!-- 4 Slot Video YouTube Matematika -->
+        ${availableVideos.length > 0 ? `
+          <div class="section" style="margin-top:44px;">
+            <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
+            <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${t('videosHeaderTitle', lang) || 'Trik Berhitung Asyik di YouTube'}</h3>
+            <div class="video-grid">
+              ${availableVideos.map(v => `
+                <div class="video-card">
+                  <div>
+                    <span class="subject-badge">${v.ageFit}</span>
+                    <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
+                    <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
+                  </div>
+                  <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+                    <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button" style="flex:1;">
+                      ${t('playVideo', lang) || 'Putar Video'}
+                    </button>
+                    <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; padding:8px 12px; font-size:12px;" title="Tonton langsung di YouTube">
+                      ↗
+                    </a>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+  
+      this.attachEvents();
+    }
+  
+    renderCurriculumContent(lang, isEn) {
+      const topics = MATH_DATA.topics || [];
+      return `
+        <!-- Action Bar Cetak LKS Lengkap & TTS -->
+        <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
+          <button class="btn-lks-subject-full" id="btnPrintFullMathLks" type="button">
+            📑 ${isEn ? 'Print Full Math Workbook (10 Topics PDF)' : 'Cetak Buku Kerja Matematika (LKS 10 Topik PDF)'}
+          </button>
+          <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button" style="background:var(--card); color:var(--ink); border:1px solid var(--border);">
+            🧮 ${isEn ? 'Print Ten-Frames & Number Line' : 'Cetak Kotak 10 & Garis Bilangan'}
+          </button>
+          <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${(isEn ? 'Mathematics Grade 1 Semester 1. Counting 1 to 20, place value, addition, subtraction, shapes, measurement, data, and story problems.' : 'Matematika SD Kelas 1 Semester 1. Membilang bilangan 1 sampai 20, nilai tempat puluhan dan satuan, penjumlahan, pengurangan, pola, bentuk bangun, pengukuran, data, dan cerita matematika.').replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
+            🔊 ${isEn ? 'Listen Overview' : 'Dengarkan Pengantar'}
+          </button>
+        </div>
+  
+        <!-- 10 Kartu Unit Kurikulum Merdeka -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          ${topics.map((top, idx) => {
+            const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
+            const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
+            const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
+            const funFactText = top.funFact ? (isEn ? '. Did you know: ' : '. Tahukah kamu: ') + top.funFact : '';
+            const ttsSpeechText = `${topTitle}. ${topDesc}${funFactText}`.replace(/"/g, '&quot;');
+  
+            return `
+              <div class="quiz-box">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="no" style="background:var(--teal, #0d9488); color:#fff; border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800;">
+                      ${top.unitCode || `MAT-0${idx + 1}`}
+                    </span>
+                    <h3 style="margin:0; font-size:18px; font-weight:800;">${topTitle}</h3>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <button class="btn-tts" data-tts-text="${ttsSpeechText}" type="button" title="${isEn ? 'Read aloud' : 'Dengarkan suara'}">
+                      🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                    </button>
+                    <button class="btn btn-print-single-topic" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px;">
+                      📄 ${isEn ? 'Print Worksheet' : 'Cetak LKS'}
+                    </button>
+                    <button class="btn btn-try-in-toolbox" data-topic-idx="${idx}" type="button" style="font-size:12px; padding:4px 10px; min-height:28px; background:var(--teal-soft); color:var(--teal-soft-ink); border:1px solid var(--teal);">
+                      🧰 ${isEn ? 'Try in Toolbox' : 'Buka di Toolbox'}
+                    </button>
+                  </div>
+                </div>
+                <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
+                  ${topDesc}
+                </p>
+  
+                ${top.keyPoints && top.keyPoints.length > 0 ? `
+                  <div style="background:var(--card-bg, #fff); border:1px solid var(--border); border-left:4px solid var(--teal, #0d9488); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+                    <strong style="font-size:13px; color:var(--teal-soft-ink, #0f766e); display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                      📌 ${isEn ? 'Key Concepts to Master:' : 'Konsep Kunci Materi:'}
+                    </strong>
+                    <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.5;">
+                      ${top.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+  
+                ${top.funFact ? `
+                  <div style="background:var(--gold-soft, #fef9c3); border:1px solid var(--gold-border, #fef08a); border-radius:10px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:flex-start; gap:10px;">
+                    <span style="font-size:20px; line-height:1;">💡</span>
+                    <div style="font-size:12.5px; color:var(--ink); line-height:1.5;">
+                      <strong style="color:var(--amber, #d97706);">${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${top.funFact}
+                    </div>
+                  </div>
+                ` : ''}
+  
+                ${checklist ? `
+                  <div style="background:var(--paper); border-radius:12px; padding:14px; margin-bottom:16px;">
+                    <strong style="font-size:13px; display:block; margin-bottom:8px;">${isEn ? 'Independent Mission:' : 'Misi Mandiri:'}</strong>
+                    <ul style="margin:0; padding-left:20px; font-size:13px; color:var(--ink);">
+                      ${checklist.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+  
+                <!-- Mini Quiz / 10 Pertanyaan Interaktif Unit -->
+                ${top.activities ? `
+                  <div class="topic-activity-wrap" id="math_act_${top.id}"></div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+  
+    renderToolboxContent(a, b, solution, activeMethod, progress, lang, isEn) {
+      return `
         <!-- Action Bar Cetak LKS Matematika & TTS -->
         <div class="subject-action-bar" style="margin-top:0; margin-bottom:20px;">
           <button class="btn-lks-subject-full" id="btnPrintMathLksBtn" type="button">
@@ -10885,7 +12066,7 @@
           </div>
         </div>
   
-        <!-- Tab Switcher 9 Metode Berpikir -->
+        <!-- Tab Switcher 14 Metode Berpikir -->
         <div class="method-tabs" role="tablist">
           ${MATH_DATA.methods.map(m => `
             <button class="method-tab-btn ${activeMethod === m.id && this.viewMode === 'visual' ? 'active' : ''}" data-method="${m.id}" role="tab" type="button">
@@ -10905,36 +12086,7 @@
   
         <!-- Progress & Badges Showcase -->
         ${this.renderProgressBadges(progress, lang)}
-  
-        <!-- 4 Slot Video YouTube Matematika -->
-        ${availableVideos.length > 0 ? `
-          <div class="section" style="margin-top:44px;">
-            <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
-            <h3 style="font-size:20px; font-weight:800; margin:0 0 12px;">${t('videosHeaderTitle', lang) || 'Trik Berhitung Asyik di YouTube'}</h3>
-            <div class="video-grid">
-              ${availableVideos.map(v => `
-                <div class="video-card">
-                  <div>
-                    <span class="subject-badge">${v.ageFit}</span>
-                    <h4 style="margin:8px 0 4px; font-size:15px; font-weight:800;">${v.title}</h4>
-                    <p style="margin:0; font-size:12px; color:var(--muted);">${v.description}</p>
-                  </div>
-                  <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-                    <button class="btn primary btn-play-video" data-title="${v.title}" data-url="${v.url}" type="button" style="flex:1;">
-                      ${t('playVideo', lang) || 'Putar Video'}
-                    </button>
-                    <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; padding:8px 12px; font-size:12px;" title="Tonton langsung di YouTube">
-                      ↗
-                    </a>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        ` : ''}
       `;
-  
-      this.attachEvents();
     }
   
     renderSmartRecommendation(a, b, sol, lang = 'id') {
@@ -11955,23 +13107,117 @@
     }
   
     attachEvents() {
-      // Tombol Cetak Lembar Kerja Matematika (PDF A4)
-      const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
-      if (btnPrintMath) {
-        btnPrintMath.addEventListener('click', () => {
-          (this.lksModal || window.lksModal)?.openMathLks();
+      // 0. Main Switcher Tabs (Curriculum vs Toolbox)
+      const btnTabCurriculum = this.container.querySelector('#btnTabMathCurriculum');
+      const btnTabToolbox = this.container.querySelector('#btnTabMathToolbox');
+      if (btnTabCurriculum) {
+        btnTabCurriculum.addEventListener('click', () => {
+          this.activeMainTab = 'curriculum';
+          this.render();
+        });
+      }
+      if (btnTabToolbox) {
+        btnTabToolbox.addEventListener('click', () => {
+          this.activeMainTab = 'toolbox';
+          this.render();
         });
       }
   
-      // Tombol TTS Pembacaan Soal Matematika
-      const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
-      if (btnTtsMath) {
-        btnTtsMath.addEventListener('click', () => {
-          const lang = appState.get().lang || 'id';
-          const text = btnTtsMath.getAttribute('data-tts-text');
-          TtsEngine.speak(text, lang, btnTtsMath);
+      if (this.activeMainTab === 'curriculum') {
+        // 1. Cetak Buku Kerja Lengkap 10 Topik
+        const btnPrintFull = this.container.querySelector('#btnPrintFullMathLks');
+        if (btnPrintFull) {
+          btnPrintFull.addEventListener('click', () => {
+            (this.lksModal || window.lksModal)?.openFullSubject('matematika');
+          });
+        }
+  
+        // 2. Cetak Kotak 10 & Garis Bilangan
+        const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+        if (btnPrintMath) {
+          btnPrintMath.addEventListener('click', () => {
+            (this.lksModal || window.lksModal)?.openMathLks();
+          });
+        }
+  
+        // 3. Tombol Cetak per Topik
+        const singleTopicBtns = this.container.querySelectorAll('.btn-print-single-topic');
+        singleTopicBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+            (this.lksModal || window.lksModal)?.openTopic('matematika', idx);
+          });
         });
-      }
+  
+        // 4. Tombol Coba di Toolbox
+        const tryBtns = this.container.querySelectorAll('.btn-try-in-toolbox');
+        tryBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-topic-idx'), 10);
+            this.activeMainTab = 'toolbox';
+            if (idx === 0) appState.set({ mathA: 8, mathB: 5 });
+            else if (idx === 1) appState.set({ mathA: 10, mathB: 6 });
+            else if (idx === 2) appState.set({ mathA: 6, mathB: 4 });
+            else if (idx === 3) appState.set({ mathA: 67, mathB: 59 });
+            else if (idx === 4) appState.set({ mathA: 15, mathB: 5 });
+            else if (idx === 5) appState.set({ mathA: 8, mathB: 8 });
+            else if (idx === 6) appState.set({ mathA: 12, mathB: 8 });
+            else if (idx === 7) appState.set({ mathA: 7, mathB: 5 });
+            else if (idx === 8) appState.set({ mathA: 9, mathB: 3 });
+            else if (idx === 9) appState.set({ mathA: 14, mathB: 6 });
+            this.render();
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+          });
+        });
+  
+        // 5. Tombol TTS Pengantar & per Topik
+        const ttsBtns = this.container.querySelectorAll('.btn-tts');
+        ttsBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const lang = appState.get().lang || 'id';
+            const text = btn.getAttribute('data-tts-text');
+            TtsEngine.speak(text, lang, btn);
+          });
+        });
+  
+        // 6. Mount QuizRunner untuk setiap unit 1-10
+        const lang = appState.get().lang || 'id';
+        const isEn = lang === 'en';
+        (MATH_DATA.topics || []).forEach(top => {
+          const wrap = this.container.querySelector(`#math_act_${top.id}`);
+          if (wrap) {
+            const activities = (isEn && top.activitiesEn && top.activitiesEn.length >= (top.activities ? top.activities.length : 0)) ? top.activitiesEn : top.activities;
+            if (activities) {
+              const fakeQuiz = {
+                id: top.id,
+                title: (isEn && top.titleEn) ? top.titleEn : top.title,
+                questions: activities
+              };
+              new QuizRunner(wrap, fakeQuiz, () => {
+                store.completeLesson(`matematika:${top.id}`);
+              });
+            }
+          }
+        });
+      } else {
+        // Event bindings untuk Math Toolbox
+        // Tombol Cetak Lembar Kerja Matematika (PDF A4)
+        const btnPrintMath = this.container.querySelector('#btnPrintMathLksBtn');
+        if (btnPrintMath) {
+          btnPrintMath.addEventListener('click', () => {
+            (this.lksModal || window.lksModal)?.openMathLks();
+          });
+        }
+  
+        // Tombol TTS Pembacaan Soal Matematika
+        const btnTtsMath = this.container.querySelector('#btnTtsMathProblem');
+        if (btnTtsMath) {
+          btnTtsMath.addEventListener('click', () => {
+            const lang = appState.get().lang || 'id';
+            const text = btnTtsMath.getAttribute('data-tts-text');
+            TtsEngine.speak(text, lang, btnTtsMath);
+          });
+        }
   
       // Preset Level Tabs (Kelas 1 SD Filter)
       const levelBtns = this.container.querySelectorAll('.level-pill-btn[data-level]');
@@ -12171,6 +13417,7 @@
           }
         });
       }
+      }
   
       // Video Play Buttons (Safe modal + Error 153 resilience)
       const playBtns = this.container.querySelectorAll('.btn-play-video');
@@ -12238,7 +13485,7 @@
       }
   
       if (subjectId === 'matematika') {
-        const mathView = new MathLessonView(this.container, this.videoModal);
+        const mathView = new MathLessonView(this.container, this.videoModal, this.lksModal);
         mathView.render();
         return;
       }
@@ -13902,23 +15149,39 @@
   // --- Source: js/components/challenge-view.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
-  // JavaScript · ES Module · Daily Challenge Component
+  // JavaScript · ES Module · Daily Challenge & Integrated Reinforcement Component
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 10:40:00
+  // Version   : 2.0 (Cali Stung 5-Menit, MAXXI Challenge, & Source Books Registry)
   // ================================================================
   
   
   
   
   
+  
+  
+  
   class ChallengeViewComponent {
-    constructor(container) {
+    constructor(container, lksModal = null) {
       this.container = container;
+      this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
+      this.activeSpecialQuiz = null; // null | 'cali-stung' | 'maxxi'
     }
   
     render() {
       const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+  
+      if (this.activeSpecialQuiz === 'cali-stung') {
+        this.renderSpecialQuiz(CALI_STUNG_DATA, lang, isEn);
+        return;
+      }
+  
+      if (this.activeSpecialQuiz === 'maxxi') {
+        this.renderSpecialQuiz(MAXXI_CHALLENGE_DATA, lang, isEn);
+        return;
+      }
+  
       const dc = store.data.dailyChallenge || { completedCount: 0, targetCount: 3, claimed: false };
       const pct = Math.min(100, Math.round((dc.completedCount / dc.targetCount) * 100));
   
@@ -13926,30 +15189,30 @@
         {
           id: 'c1',
           icon: '🧮',
-          title: lang === 'en' ? 'Quick Calculation Practice' : 'Latihan Hitung Cepat',
-          desc: lang === 'en' ? 'Try one addition trick in the Mathematics module.' : 'Coba satu jurus penjumlahan di modul Matematika.',
+          title: isEn ? 'Quick Calculation Practice' : 'Latihan Hitung Cepat',
+          desc: isEn ? 'Try one addition trick in the Mathematics module.' : 'Coba satu jurus penjumlahan di modul Matematika.',
           done: dc.completedCount >= 1,
-          actionLabel: lang === 'en' ? 'Open Math' : 'Buka Matematika',
+          actionLabel: isEn ? 'Open Math' : 'Buka Matematika',
           route: 'subject',
           subjectId: 'matematika'
         },
         {
           id: 'c2',
           icon: '🌍',
-          title: lang === 'en' ? 'Explore 1 Indonesian Province' : 'Jelajah 1 Provinsi Indonesia',
-          desc: lang === 'en' ? 'Find out the capital of your favorite province.' : 'Cari tahu ibu kota salah satu provinsi favoritmu.',
+          title: isEn ? 'Explore 1 Indonesian Province' : 'Jelajah 1 Provinsi Indonesia',
+          desc: isEn ? 'Find out the capital of your favorite province.' : 'Cari tahu ibu kota salah satu provinsi favoritmu.',
           done: dc.completedCount >= 2,
-          actionLabel: lang === 'en' ? 'Open Geography' : 'Buka Geografi',
+          actionLabel: isEn ? 'Open Geography' : 'Buka Geografi',
           route: 'subject',
           subjectId: 'geografi'
         },
         {
           id: 'c3',
           icon: '📖',
-          title: lang === 'en' ? 'Cheerful Greeting of the Day' : 'Sapaan Ceria Hari Ini',
-          desc: lang === 'en' ? 'Learn a greeting in English or Balinese.' : 'Pelajari salam dalam bahasa Inggris atau bahasa Bali.',
+          title: isEn ? 'Cheerful Greeting of the Day' : 'Sapaan Ceria Hari Ini',
+          desc: isEn ? 'Learn a greeting in English or Balinese.' : 'Pelajari salam dalam bahasa Inggris atau bahasa Bali.',
           done: dc.completedCount >= 3,
-          actionLabel: lang === 'en' ? 'Open English' : 'Buka B. Inggris',
+          actionLabel: isEn ? 'Open English' : 'Buka B. Inggris',
           route: 'subject',
           subjectId: 'bahasa-inggris'
         }
@@ -13964,7 +15227,7 @@
           <p class="section-sub">${t('challengeSub', lang)}</p>
         </div>
   
-        <!-- Kartu Progress Tantangan -->
+        <!-- Kartu Progress Tantangan Harian -->
         <div class="quiz-box" style="background:linear-gradient(135deg, var(--card), var(--paper));">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
             <strong style="font-size:16px;">${t('todayTargetPrefix', lang)} ${dc.completedCount} ${t('of', lang)} ${dc.targetCount} ${t('doneCountLabel', lang)}</strong>
@@ -13986,7 +15249,7 @@
           `}
         </div>
   
-        <!-- Daftar 3 Tugas Tantangan -->
+        <!-- Daftar 3 Tugas Tantangan Harian -->
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin-top:24px;">
           ${challengeTasks.map(task => `
             <div class="quiz-box" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; ${task.done ? 'border-color:var(--green); background:var(--green-soft);' : ''}">
@@ -14008,9 +15271,126 @@
             </div>
           `).join('')}
         </div>
+  
+        <!-- Bagian Modul Penguatan Integratif (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+        <div class="section" style="margin-top:40px;">
+          <div class="eyebrow"><span class="no">⚡</span><span class="lbl">${isEn ? 'INTEGRATED REINFORCEMENT' : 'PENGUATAN TEMATIK TERPADU'}</span></div>
+          <h3 style="font-size:20px; font-weight:800; margin:0 0 16px;">
+            ${isEn ? 'Class 1 Core Literacy & Thematic Modules' : 'Pelatihan Khusus & Penguatan Fondasi Belajar'}
+          </h3>
+  
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px;">
+            <!-- Kartu Cali Stung 5-Menit -->
+            <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-left:4px solid #b24a1b; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span style="font-size:32px;">⚡</span>
+                  <span class="subject-badge" style="background:#fdf1eb; color:#b24a1b; border-color:#f89a6b;">
+                    SRC-05 · Cali Stung
+                  </span>
+                </div>
+                <h4 style="margin:0 0 8px; font-size:17px; font-weight:800; color:var(--ink);">
+                  ${isEn ? CALI_STUNG_DATA.titleEn : CALI_STUNG_DATA.title}
+                </h4>
+                <p style="margin:0 0 12px; font-size:13px; color:var(--muted); line-height:1.5;">
+                  ${isEn ? CALI_STUNG_DATA.subtitleEn : CALI_STUNG_DATA.subtitle}
+                </p>
+                <div style="font-size:12px; color:var(--ink); background:var(--paper); border-radius:8px; padding:8px 10px;">
+                  ✓ 5 Membaca Fonik & Kata · ✓ 5 Menulis & Ejaan · ✓ 5 Berhitung Ceria
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <button class="btn primary" id="btnStartCaliStung" type="button" style="width:100%; font-size:13.5px; font-weight:800;">
+                  🚀 ${isEn ? 'Start 5-Minute Drill' : 'Mulai Latihan 5 Menit'}
+                </button>
+              </div>
+            </div>
+  
+            <!-- Kartu MAXXI Tematik Terpadu -->
+            <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-left:4px solid #1d7198; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span style="font-size:32px;">🏆</span>
+                  <span class="subject-badge" style="background:#e8f4fa; color:#1d7198; border-color:#5ce3de;">
+                    SRC-10 · MAXXI SD 1
+                  </span>
+                </div>
+                <h4 style="margin:0 0 8px; font-size:17px; font-weight:800; color:var(--ink);">
+                  ${isEn ? MAXXI_CHALLENGE_DATA.titleEn : MAXXI_CHALLENGE_DATA.title}
+                </h4>
+                <p style="margin:0 0 12px; font-size:13px; color:var(--muted); line-height:1.5;">
+                  ${isEn ? MAXXI_CHALLENGE_DATA.subtitleEn : MAXXI_CHALLENGE_DATA.subtitle}
+                </p>
+                <div style="font-size:12px; color:var(--ink); background:var(--paper); border-radius:8px; padding:8px 10px;">
+                  ✓ 10 Soal Skenario Tematik (Matematika + Literasi + Pancasila + PJOK + Seni)
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <button class="btn primary" id="btnStartMaxxi" type="button" style="width:100%; font-size:13.5px; font-weight:800; background:#1d7198; border-color:#1d7198;">
+                  ⭐ ${isEn ? 'Start MAXXI Challenge' : 'Mulai Tantangan MAXXI'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Banner Register 12 Buku Sumber & Modul Kurikulum (SRC-01 s/d SRC-12) -->
+        <div class="quiz-box" style="margin-top:28px; background:var(--teal-soft); border:1px solid var(--teal); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; border-radius:14px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <span style="font-size:32px;">📚</span>
+            <div>
+              <strong style="font-size:15px; color:var(--teal-soft-ink); display:block;">
+                ${isEn ? '12 Reference Curriculum Source Books (SRC-01 to SRC-12)' : '12 Buku Modul Sumber & Penyelarasan Kurikulum Merdeka'}
+              </strong>
+              <span style="font-size:12.5px; color:var(--ink);">
+                ${isEn ? 'Explore publisher info, curriculum scope, and official alignment policy.' : 'Lihat daftar buku fisik murid, penerbit resmi, dan cakupan materi Fase A.'}
+              </span>
+            </div>
+          </div>
+          <button class="btn" id="btnOpenSourceRegistry" type="button" style="font-size:13px; font-weight:800; background:#fff; color:var(--teal); border-color:var(--teal); padding:8px 16px;">
+            📖 ${isEn ? 'View Source Registry' : 'Buka Daftar Buku Sumber'}
+          </button>
+        </div>
       `;
   
       this.attachEvents();
+    }
+  
+    renderSpecialQuiz(quizData, lang, isEn) {
+      this.container.innerHTML = `
+        <div style="margin-bottom:16px;">
+          <button class="btn" id="btnBackToChallengeMenu" type="button" style="font-size:13px; font-weight:700; padding:6px 14px; display:inline-flex; align-items:center; gap:6px;">
+            ← ${isEn ? 'Back to Challenges Menu' : 'Kembali ke Menu Tantangan'}
+          </button>
+        </div>
+  
+        <div class="section-header" style="margin-bottom:20px;">
+          <div class="math-hero-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal);">
+            ${quizData.sourceId || 'SPECIAL'} · ${isEn ? 'Interactive Challenge' : 'Tantangan Interaktif'}
+          </div>
+          <h2 class="section-title">${isEn && quizData.titleEn ? quizData.titleEn : quizData.title}</h2>
+          <p class="section-sub">${isEn && quizData.subtitleEn ? quizData.subtitleEn : quizData.subtitle}</p>
+        </div>
+  
+        <div id="specialQuizContainer"></div>
+      `;
+  
+      const wrap = this.container.querySelector('#specialQuizContainer');
+      if (wrap) {
+        new QuizRunner(wrap, quizData, () => {
+          store.incrementDailyChallenge();
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
+        });
+      }
+  
+      const backBtn = this.container.querySelector('#btnBackToChallengeMenu');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          this.activeSpecialQuiz = null;
+          this.render();
+        });
+      }
     }
   
     attachEvents() {
@@ -14022,9 +15402,33 @@
           appState.navigate(route, subject);
         });
       });
+  
+      const btnCali = this.container.querySelector('#btnStartCaliStung');
+      if (btnCali) {
+        btnCali.addEventListener('click', () => {
+          this.activeSpecialQuiz = 'cali-stung';
+          this.render();
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+        });
+      }
+  
+      const btnMaxxi = this.container.querySelector('#btnStartMaxxi');
+      if (btnMaxxi) {
+        btnMaxxi.addEventListener('click', () => {
+          this.activeSpecialQuiz = 'maxxi';
+          this.render();
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+        });
+      }
+  
+      const btnSources = this.container.querySelector('#btnOpenSourceRegistry');
+      if (btnSources) {
+        btnSources.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openSourceRegistry();
+        });
+      }
     }
   }
-  
   
 
   // --- Source: js/components/progress-view.js ---
@@ -14201,7 +15605,7 @@
       this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
       this.videoModal = new VideoModalComponent(this.videoModalEl);
       this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
-      this.challengeView = new ChallengeViewComponent(this.mainEl);
+      this.challengeView = new ChallengeViewComponent(this.mainEl, this.lksModal);
       this.progressView = new ProgressViewComponent(this.mainEl);
   
       this.initPWA();
@@ -14374,14 +15778,14 @@
             <div class="subject-card" data-subject-id="matematika" style="cursor:pointer; border:2px solid var(--teal); background:var(--card); padding:24px;">
               <div class="subject-card-top" style="margin-bottom:14px;">
                 <div class="subject-icon" style="background:var(--teal-soft); color:var(--teal-soft-ink); font-size:28px;">🧮</div>
-                <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">Flagship v2.0</span>
+                <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">10 Unit SD 1 & Math Toolbox</span>
               </div>
-              <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Math Toolbox — One Problem, Many Ways!' : 'Math Toolbox — Satu Soal, Banyak Cara!'}</h3>
+              <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Mathematics — 10 Units & Math Toolbox!' : 'Matematika — 10 Unit SD 1 & Math Toolbox!'}</h3>
               <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
-                ${isEn ? 'Master multi-strategy thinking: Number Bonds, Compensation, Number Line, Base-Ten Blocks, and Soroban Abacus!' : 'Kuasai 9 jurus berpikir fleksibel: Pecah Angka, Number Bonds, Bikin 100, Kompensasi, Garis Bilangan, Balok Satuan, hingga Sempoa Soroban!'}
+                ${isEn ? '10 Grade 1 Curriculum Units + 14 Multi-Strategy Thinking Tools: Number Bonds, Compensation, Number Line, Base-Ten Blocks, Rekenrek, and Jarimatika!' : '10 Unit Kurikulum SD Kelas 1 + 14 Jurus Berpikir Fleksibel: Pecah Angka, Number Bonds, Bikin 100, Kompensasi, Garis Bilangan, Rekenrek, Jarimatika, hingga Sempoa!'}
               </p>
               <div class="subject-card-footer" style="padding-top:12px; border-top:1px solid var(--line);">
-                <span style="font-weight:700; color:var(--teal);">${isEn ? '9 Thinking Strategies' : '9 Jurus Berpikir'}</span>
+                <span style="font-weight:700; color:var(--teal);">${isEn ? '10 Units & 14 Tools' : '10 Unit & 14 Jurus'}</span>
                 <span style="font-weight:800; color:var(--ink);">${isEn ? 'Explore Math ➔' : 'Eksplorasi Matematika ➔'}</span>
               </div>
             </div>

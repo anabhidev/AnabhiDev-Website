@@ -37,7 +37,7 @@ class App {
     this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
     this.videoModal = new VideoModalComponent(this.videoModalEl);
     this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
-    this.challengeView = new ChallengeViewComponent(this.mainEl);
+    this.challengeView = new ChallengeViewComponent(this.mainEl, this.lksModal);
     this.progressView = new ProgressViewComponent(this.mainEl);
 
     this.initPWA();
@@ -210,14 +210,14 @@ class App {
           <div class="subject-card" data-subject-id="matematika" style="cursor:pointer; border:2px solid var(--teal); background:var(--card); padding:24px;">
             <div class="subject-card-top" style="margin-bottom:14px;">
               <div class="subject-icon" style="background:var(--teal-soft); color:var(--teal-soft-ink); font-size:28px;">🧮</div>
-              <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">Flagship v2.0</span>
+              <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">10 Unit SD 1 & Math Toolbox</span>
             </div>
-            <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Math Toolbox — One Problem, Many Ways!' : 'Math Toolbox — Satu Soal, Banyak Cara!'}</h3>
+            <h3 style="font-size:20px; font-weight:850; margin:0 0 8px;">${isEn ? 'Mathematics — 10 Units & Math Toolbox!' : 'Matematika — 10 Unit SD 1 & Math Toolbox!'}</h3>
             <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
-              ${isEn ? 'Master multi-strategy thinking: Number Bonds, Compensation, Number Line, Base-Ten Blocks, and Soroban Abacus!' : 'Kuasai 9 jurus berpikir fleksibel: Pecah Angka, Number Bonds, Bikin 100, Kompensasi, Garis Bilangan, Balok Satuan, hingga Sempoa Soroban!'}
+              ${isEn ? '10 Grade 1 Curriculum Units + 14 Multi-Strategy Thinking Tools: Number Bonds, Compensation, Number Line, Base-Ten Blocks, Rekenrek, and Jarimatika!' : '10 Unit Kurikulum SD Kelas 1 + 14 Jurus Berpikir Fleksibel: Pecah Angka, Number Bonds, Bikin 100, Kompensasi, Garis Bilangan, Rekenrek, Jarimatika, hingga Sempoa!'}
             </p>
             <div class="subject-card-footer" style="padding-top:12px; border-top:1px solid var(--line);">
-              <span style="font-weight:700; color:var(--teal);">${isEn ? '9 Thinking Strategies' : '9 Jurus Berpikir'}</span>
+              <span style="font-weight:700; color:var(--teal);">${isEn ? '10 Units & 14 Tools' : '10 Unit & 14 Jurus'}</span>
               <span style="font-weight:800; color:var(--ink);">${isEn ? 'Explore Math ➔' : 'Eksplorasi Matematika ➔'}</span>
             </div>
           </div>

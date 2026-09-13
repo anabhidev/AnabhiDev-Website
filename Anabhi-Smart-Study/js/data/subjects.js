@@ -20,9 +20,9 @@ export const SUBJECTS = [
     accentColor: '#056268',
     accentLight: '#e9f8f8',
     accentBorder: '#5be0df',
-    description: 'Bongkar angka dengan trik seru! Ada 9 jurus berhitung asyik.',
-    descriptionEn: 'Explore numbers with fun tricks! 9 exciting calculation tools.',
-    topicsCount: 9,
+    description: '10 Unit materi SD Kelas 1 & Math Toolbox 14 jurus berhitung seru!',
+    descriptionEn: '10 Grade 1 curriculum units & Math Toolbox 14 fun calculation tools!',
+    topicsCount: 10,
     order: 1
   },
   {

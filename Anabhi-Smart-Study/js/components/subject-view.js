@@ -48,7 +48,7 @@ export class SubjectViewComponent {
     }
 
     if (subjectId === 'matematika') {
-      const mathView = new MathLessonView(this.container, this.videoModal);
+      const mathView = new MathLessonView(this.container, this.videoModal, this.lksModal);
       mathView.render();
       return;
     }
