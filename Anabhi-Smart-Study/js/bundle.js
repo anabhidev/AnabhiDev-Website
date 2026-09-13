@@ -2,8 +2,8 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // Standalone Bundle (Compatible with file:/// and http/https)
 // Development · Anabhi Dev
-// Version   : 2.0 (High Contrast Audit & Bilingual ID/EN)
-// Generated : 11 September 2026
+// Version   : 2.9 (Math Visual 14 Methods & 800+ Questions)
+// Generated : 13 September 2026
 // ================================================================
 
 (function () {
@@ -1123,6 +1123,54 @@
         summaryEn: 'Visual Ten-Frame manipulatives designed for 1st graders to intuitively spot Make-10 pairs and leftover units!',
         whyGood: 'Sangat cocok untuk anak Kelas 1 SD karena dapat menghitung benda nyata dan melihat kapan kotak terisi penuh 10.',
         whyGoodEn: 'Perfect for 1st graders to count concrete objects and visualize when a frame reaches a full ten.'
+      },
+      {
+        id: 'rekenrek',
+        name: 'Rekenrek Belanda',
+        nameEn: 'Rekenrek Rack',
+        badge: 'Sempoa 2-Warna',
+        badgeEn: 'Dutch 2-Color Rack',
+        icon: '🔴⚪',
+        summary: 'Sempoa 2-warna (5 Merah & 5 Putih) dari Belanda. Latih mata melihat Kawan 5 dan 10 seketika tanpa menghitung satu per satu!',
+        summaryEn: 'Dutch 2-color counting rack (5 Red & 5 White beads). Subitize groups of 5 and 10 instantly without one-by-one counting!',
+        whyGood: 'Standar kurikulum Belanda & Singapura yang melatih kecepatan visualisasi kuantitas 5 dan 10 di kepala anak.',
+        whyGoodEn: 'Dutch & Singapore curriculum gold standard training children to instantly visualize quantities of 5 and 10.'
+      },
+      {
+        id: 'jarimatika',
+        name: 'Jarimatika Ajaib',
+        nameEn: 'Finger Math',
+        badge: 'Jari Tangan 1–99',
+        badgeEn: 'Fingers 1–99',
+        icon: '🖐️',
+        summary: 'Berhitung super cepat dengan 10 jari ajaib: Tangan kiri bernilai Puluhan (Jempol=50, 4 jari=10) dan Tangan kanan Satuan (Jempol=5, 4 jari=1)!',
+        summaryEn: 'Super fast math with 10 magic fingers: Left hand represents Tens (Thumb=50, fingers=10) & Right hand Ones (Thumb=5, fingers=1)!',
+        whyGood: 'Alat peraga alami yang selalu dibawa ke mana pun anak pergi tanpa perlu alat tulis.',
+        whyGoodEn: 'A natural, portable manipulative that children always carry with them everywhere without needing paper.'
+      },
+      {
+        id: 'number-pyramid',
+        name: 'Piramida Bilangan',
+        nameEn: 'Number Pyramid',
+        badge: 'Dinding Balok',
+        badgeEn: 'Brick Wall Math',
+        icon: '🔺',
+        summary: 'Dinding balok susun piramida Cambridge: Setiap balok di atas adalah hasil penjumlahan dari dua balok tepat di bawahnya!',
+        summaryEn: 'Cambridge brick wall pyramid: Each brick above is the exact sum of the two bricks directly supporting it below!',
+        whyGood: 'Mengasah logika spasial, relasi bagian-ke-keseluruhan (part-whole), dan pemecahan masalah bertahap.',
+        whyGoodEn: 'Sharpens spatial logic, part-to-whole relationships, and structured multi-step problem solving.'
+      },
+      {
+        id: 'dot-array',
+        name: 'Larik Titik Pola',
+        nameEn: 'Dot Array Grid',
+        badge: 'Montessori & Pola',
+        badgeEn: 'Pattern Array',
+        icon: '🟣',
+        summary: 'Susunan titik terstruktur per baris 10 (dibagi 5+5). Memperlihatkan pola genap/ganjil, puluhan penuh, dan jembatan ke perkalian!',
+        summaryEn: 'Structured dot array in rows of 10 (grouped 5+5). Clearly shows even/odd patterns, full tens, and bridges to multiplication!',
+        whyGood: 'Sangat disukai anak tipe visual karena angka terlihat sebagai formasi keteraturan geometri yang rapi.',
+        whyGoodEn: 'Loved by visual learners because numbers appear as neat, geometric regular formations.'
       }
     ],
   
@@ -1501,7 +1549,11 @@
       { id: 'badge-line', name: 'Number Line Rider', icon: '📏', desc: 'Melompat chunk di Garis Bilangan', descEn: 'Made chunk jumps on Number Line' },
       { id: 'badge-blocks', name: 'Block Master', icon: '🧱', desc: 'Menata balok dan regrouping', descEn: 'Regrouped Base-Ten blocks' },
       { id: 'badge-comp', name: 'Balance Wizard', icon: '⚖️', desc: 'Menguasai jurus Kompensasi', descEn: 'Mastered Compensation trick' },
-      { id: 'badge-abacus', name: 'Abacus Explorer', icon: '🧮', desc: 'Menjelajahi sempoa Soroban', descEn: 'Explored Soroban abacus beads' }
+      { id: 'badge-abacus', name: 'Abacus Explorer', icon: '🧮', desc: 'Menjelajahi sempoa Soroban', descEn: 'Explored Soroban abacus beads' },
+      { id: 'badge-rekenrek', name: 'Rekenrek Champion', icon: '🔴⚪', desc: 'Menghitung dengan Sempoa Belanda 2-warna', descEn: 'Counted with Dutch 2-color Rekenrek' },
+      { id: 'badge-jarimatika', name: 'Master Jarimatika', icon: '🖐️', desc: 'Berhitung cepat dengan 10 jari tangan ajaib', descEn: 'Fast finger math with magic 10 fingers' },
+      { id: 'badge-pyramid', name: 'Pyramid Architect', icon: '🔺', desc: 'Menyusun piramida dinding bilangan', descEn: 'Built number wall pyramid bricks' },
+      { id: 'badge-dotarray', name: 'Pattern Spotter', icon: '🟣', desc: 'Melihat pola terstruktur larik titik', descEn: 'Spotted structured patterns in dot array' }
     ]
   };
   
@@ -6618,6 +6670,10 @@
       const mentalMath = this.getMentalMathSteps(numA, numB, lang);
       const soroban = this.getSorobanSteps(numA, numB, lang);
       const tensFrame = this.getTensFrameSteps(numA, numB, lang);
+      const rekenrek = this.getRekenrekSteps(numA, numB, lang);
+      const jarimatika = this.getJarimatikaSteps(numA, numB, lang);
+      const numberPyramid = this.getNumberPyramidSteps(numA, numB, lang);
+      const dotArray = this.getDotArraySteps(numA, numB, lang);
   
       const recommended = this.recommendStrategies(numA, numB);
   
@@ -6640,7 +6696,13 @@
         barModel,
         mentalMath,
         soroban,
-        tensFrame
+        tensFrame,
+        rekenrek,
+        jarimatika,
+        numberPyramid,
+        'number-pyramid': numberPyramid,
+        dotArray,
+        'dot-array': dotArray
       };
     }
   
@@ -7082,6 +7144,234 @@
     }
   
     // -------------------------------------------------------------
+    // STRATEGY 11: Rekenrek (Dutch 2-Color Counting Rack 5 & 10)
+    // -------------------------------------------------------------
+    static getRekenrekSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const sum = a + b;
+      const tensA = Math.floor(a / 10);
+      const uA = a % 10;
+      const tensB = Math.floor(b / 10);
+      const uB = b % 10;
+  
+      // Unit rod 1 (Operand A units)
+      const redA = Math.min(uA, 5);
+      const whiteA = Math.max(0, uA - 5);
+  
+      // Unit rod 2 (Operand B units)
+      const redB = Math.min(uB, 5);
+      const whiteB = Math.max(0, uB - 5);
+  
+      const combinedRed = redA + redB;
+      const combinedWhite = whiteA + whiteB;
+      const fullTensRods = tensA + tensB;
+      const newTensFromUnits = (uA + uB >= 10) ? 1 : 0;
+      const totalTens = fullTensRods + newTensFromUnits;
+      const finalUnits = (uA + uB) % 10;
+  
+      return {
+        id: 'rekenrek',
+        title: isEn ? 'Rekenrek (Dutch 2-Color Counting Rack)' : 'Rekenrek (Sempoa 2-Warna Belanda)',
+        badge: isEn ? 'Subitizing 5s & 10s' : 'Kawan 5 & 10 Seketika',
+        a,
+        b,
+        sum,
+        tensA,
+        tensB,
+        uA,
+        uB,
+        redA,
+        whiteA,
+        redB,
+        whiteB,
+        combinedRed,
+        combinedWhite,
+        fullTensRods,
+        newTensFromUnits,
+        totalTens,
+        finalUnits,
+        rod1: { activeRed: redA, activeWhite: whiteA, inactiveRed: 5 - redA, inactiveWhite: 5 - whiteA },
+        rod2: { activeRed: redB, activeWhite: whiteB, inactiveRed: 5 - redB, inactiveWhite: 5 - whiteB },
+        principle: isEn
+          ? 'Rekenrek groups beads into 5 Red + 5 White. Eye subitizing spots 5+5=10 immediately without counting individual beads!'
+          : 'Rekenrek mengelompokkan 5 Merah + 5 Putih. Mata anak langsung melihat 5+5=10 seketika tanpa perlu mencacah satu per satu!',
+        explanation: isEn
+          ? `Top rod displays ${uA} beads (${redA} red, ${whiteA} white). Bottom rod displays ${uB} beads (${redB} red, ${whiteB} white). Group the reds: ${redA} + ${redB} = ${combinedRed}. Add the whites: ${whiteA} + ${whiteB} = ${combinedWhite}. Plus ${fullTensRods} tens rods = ${sum}!`
+          : `Kawat atas menggeser ${uA} manik (${redA} merah, ${whiteA} putih). Kawat bawah menggeser ${uB} manik (${redB} merah, ${whiteB} putih). Gabungkan merah: ${redA} + ${redB} = ${combinedRed}. Tambahkan putih: ${whiteA} + ${whiteB} = ${combinedWhite}. Ditambah ${fullTensRods} kawat puluhan = ${sum}! 🎉`
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 12: Jarimatika (Magic Finger Math 1–99)
+    // -------------------------------------------------------------
+    static getJarimatikaSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const sum = a + b;
+      const hundreds = Math.floor(sum / 100) * 100;
+      const tA = Math.floor((a % 100) / 10) * 10;
+      const uA = a % 10;
+      const tB = Math.floor((b % 100) / 10) * 10;
+      const uB = b % 10;
+      const tSum = Math.floor((sum % 100) / 10) * 10;
+      const uSum = sum % 10;
+  
+      const getHandConfig = (tensVal, unitsVal) => ({
+        left: {
+          thumb: tensVal >= 50,
+          fingers: Math.floor((tensVal % 50) / 10),
+          val: tensVal
+        },
+        right: {
+          thumb: unitsVal >= 5,
+          fingers: unitsVal % 5,
+          val: unitsVal
+        }
+      });
+  
+      const handA = getHandConfig(tA, uA);
+      const handB = getHandConfig(tB, uB);
+      const handSum = getHandConfig(tSum, uSum);
+  
+      return {
+        id: 'jarimatika',
+        title: isEn ? 'Jarimatika (Magic 10-Finger Math)' : 'Jarimatika (Jari Tangan Ajaib 1–99)',
+        badge: isEn ? 'Fingers 1–99' : 'Jari Ajaib 1–99',
+        a,
+        b,
+        sum,
+        hundreds,
+        tA,
+        uA,
+        tB,
+        uB,
+        tSum,
+        uSum,
+        handA,
+        handB,
+        handSum,
+        principle: isEn
+          ? 'Left Hand is Tens (thumb = 50, 4 fingers = 10 each). Right Hand is Ones (thumb = 5, 4 fingers = 1 each).'
+          : 'Tangan Kiri adalah Puluhan (jempol bernilai 50, 4 jari bernilai 10). Tangan Kanan adalah Satuan (jempol bernilai 5, 4 jari bernilai 1).',
+        steps: [
+          {
+            title: isEn ? `1. Form ${a} on Both Hands` : `1. Pasang ${a} di kedua tangan`,
+            desc: isEn
+              ? `Left hand sets ${tA} (thumb ${handA.left.thumb ? 'OPEN (50)' : 'folded'} + ${handA.left.fingers} fingers). Right hand sets ${uA} (thumb ${handA.right.thumb ? 'OPEN (5)' : 'folded'} + ${handA.right.fingers} fingers).`
+              : `Tangan kiri pasang ${tA} (jempol ${handA.left.thumb ? 'BUKA (50)' : 'lipat'} + ${handA.left.fingers} jari tegak). Tangan kanan pasang ${uA} (jempol ${handA.right.thumb ? 'BUKA (5)' : 'lipat'} + ${handA.right.fingers} jari tegak).`
+          },
+          {
+            title: isEn ? `2. Add ${b} Using Finger Rules` : `2. Tambahkan ${b} dengan aturan jari`,
+            desc: isEn
+              ? `Add tens +${tB} to left hand. Add ones +${uB} to right hand (when right hand crosses 9, fold fingers and carry +1 ten finger to the left hand!).`
+              : `Buka puluhan +${tB} di tangan kiri. Buka satuan +${uB} di tangan kanan (jika jari kanan melewati 9, kuncupkan dan tambahkan +1 jari puluhan di tangan kiri!).`
+          },
+          {
+            title: isEn ? `3. Read the Result (${sum})` : `3. Baca formasi jari akhir (${sum})`,
+            desc: isEn
+              ? `Left hand shows ${tSum}, Right hand shows ${uSum}${hundreds > 0 ? `, plus ${hundreds} carried hundreds` : ''}. Final total = ${sum}!`
+              : `Tangan kiri terbaca ${tSum}, Tangan kanan terbaca ${uSum}${hundreds > 0 ? `, ditambah simpanan ${hundreds}` : ''}. Hasil akhir = ${sum}! ✨`
+          }
+        ]
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 13: Number Pyramid (Wall of Bricks)
+    // -------------------------------------------------------------
+    static getNumberPyramidSteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const sum = a + b;
+      const tA = Math.floor(a / 10) * 10;
+      const uA = a % 10;
+      const tB = Math.floor(b / 10) * 10;
+      const uB = b % 10;
+  
+      const tensCombined = tA + tB;
+      const onesCombined = uA + uB;
+  
+      return {
+        id: 'number-pyramid',
+        title: isEn ? 'Number Pyramid (Wall of Bricks)' : 'Piramida Bilangan (Dinding Balok)',
+        badge: isEn ? 'Part-Whole Wall' : 'Dinding Balok Logika',
+        a,
+        b,
+        sum,
+        tA,
+        uA,
+        tB,
+        uB,
+        tensCombined,
+        onesCombined,
+        peak: sum,
+        principle: isEn
+          ? 'In a number pyramid, every upper brick is the sum of the two bricks directly supporting it.'
+          : 'Pada piramida bilangan, setiap balok di atas adalah hasil penjumlahan dari dua balok penyangga tepat di bawahnya.',
+        explanation: isEn
+          ? `Foundation bricks break ${a} into [${tA}, ${uA}] and ${b} into [${tB}, ${uB}]. Mid-layer combines tens (${tA}+${tB}=${tensCombined}) and ones (${uA}+${uB}=${onesCombined}). Top brick seals the total: ${tensCombined} + ${onesCombined} = ${sum}!`
+          : `Balok fondasi memecah ${a} jadi [${tA}, ${uA}] dan ${b} jadi [${tB}, ${uB}]. Balok tingkat tengah menggabungkan puluhan (${tA}+${tB}=${tensCombined}) dan satuan (${uA}+${uB}=${onesCombined}). Balok puncak menyatukan total: ${tensCombined} + ${onesCombined} = ${sum}! 🏆`
+      };
+    }
+  
+    // -------------------------------------------------------------
+    // STRATEGY 14: Dot Array Grid (Montessori & Pattern)
+    // -------------------------------------------------------------
+    static getDotArraySteps(a, b, lang = 'id') {
+      const isEn = lang === 'en';
+      const sum = a + b;
+      const fullTensRows = Math.floor(sum / 10);
+      const remainderDots = sum % 10;
+      const tensA = Math.floor(a / 10);
+      const unitsA = a % 10;
+      const tensB = Math.floor(b / 10);
+      const unitsB = b % 10;
+  
+      // Generate structured dot rows (up to 15 rows max for rendering)
+      const totalRows = Math.min(Math.ceil(sum / 10) || 1, 15);
+      const rows = [];
+      let remA = a;
+      let remB = b;
+  
+      for (let r = 0; r < totalRows; r++) {
+        const rowSlots = [];
+        for (let c = 0; c < 10; c++) {
+          if (remA > 0) {
+            rowSlots.push({ source: 'a', color: '#0ea5e9', active: true });
+            remA--;
+          } else if (remB > 0) {
+            rowSlots.push({ source: 'b', color: '#f59e0b', active: true });
+            remB--;
+          } else {
+            rowSlots.push({ empty: true });
+          }
+        }
+        rows.push(rowSlots);
+      }
+  
+      return {
+        id: 'dot-array',
+        title: isEn ? 'Dot Array Grid (Pattern & Structure)' : 'Larik Titik Pola (Struktur & Kelompok)',
+        badge: isEn ? 'Pattern Array' : 'Larik Pola Terstruktur',
+        a,
+        b,
+        sum,
+        fullTensRows,
+        remainderDots,
+        tensA,
+        unitsA,
+        tensB,
+        unitsB,
+        rows,
+        hasRemainder: remainderDots > 0,
+        principle: isEn
+          ? 'Arranging dots in 10-wide arrays (5+5) displays full tens visually and bridges into multiplication arrays.'
+          : 'Menyusun titik dalam larik lebar 10 (5+5) memperlihatkan puluhan penuh dan menjadi jembatan menuju konsep perkalian.',
+        explanation: isEn
+          ? `${a} dots (blue) and ${b} dots (yellow) fill ${fullTensRows} full rows of 10 with ${remainderDots} leftover dots. Total: ${sum}!`
+          : `${a} titik (biru) dan ${b} titik (kuning) mengisi ${fullTensRows} baris puluhan penuh dan menyisakan ${remainderDots} titik. Total: ${sum}! 🎈`
+      };
+    }
+  
+    // -------------------------------------------------------------
     // SMART STRATEGY RECOMMENDATION
     // -------------------------------------------------------------
     static recommendStrategies(a, b) {
@@ -7091,6 +7381,7 @@
   
       if (a <= 20 && b <= 20) {
         recs.push('tens-frame');
+        recs.push('rekenrek');
       }
   
       if (a + b === 100 || (a + b) % 100 === 0) {
@@ -7102,6 +7393,10 @@
         if (!recs.includes('compensation')) recs.push('compensation');
       }
   
+      if (a < 100 && b < 100 && !recs.includes('jarimatika')) recs.push('jarimatika');
+      if (!recs.includes('number-pyramid')) recs.push('number-pyramid');
+      if (!recs.includes('dot-array')) recs.push('dot-array');
+      if (!recs.includes('rekenrek')) recs.push('rekenrek');
       if (!recs.includes('tens-frame')) recs.push('tens-frame');
       if (!recs.includes('decomposition')) recs.push('decomposition');
       if (!recs.includes('number-line')) recs.push('number-line');
@@ -7116,6 +7411,34 @@
       const total = a + b;
   
       switch (strategyId) {
+        case 'rekenrek':
+          return [
+            '💡 Petunjuk 1 (Amati): Perhatikan manik merah (5) dan putih (5) pada kedua kawat Rekenrek.',
+            '💡 Petunjuk 2 (Arahkan): Satukan kelompok manik merah: 5 merah atas + 5 merah bawah langsung membentuk 10 penuh!',
+            '💡 Petunjuk 3 (Jawaban Dekat): Tambahkan sisa manik putih ke kelompok 10 tersebut: hasilnya adalah ' + total + '!'
+          ];
+  
+        case 'jarimatika':
+          return [
+            '💡 Petunjuk 1 (Amati): Tangan kiri adalah puluhan (jempol 50, jari 10) dan tangan kanan adalah satuan (jempol 5, jari 1).',
+            '💡 Petunjuk 2 (Arahkan): Bentuk angka ' + a + ' di kedua tangan, lalu tambahkan gerakan jari untuk ' + b + '.',
+            '💡 Petunjuk 3 (Jawaban Dekat): Jika jari satuan melebihi 9, lipat jari kanan dan simpan +1 jari puluhan di tangan kiri: hasilnya adalah ' + total + '!'
+          ];
+  
+        case 'number-pyramid':
+          return [
+            '💡 Petunjuk 1 (Amati): Pecah angka ' + a + ' dan ' + b + ' ke dalam 4 balok fondasi (puluhan & satuan).',
+            '💡 Petunjuk 2 (Arahkan): Jumlahkan dua balok puluhan di tingkat tengah, lalu jumlahkan dua balok satuan di sebelahnya.',
+            '💡 Petunjuk 3 (Jawaban Dekat): Satukan kedua balok tingkat tengah menuju puncak piramida: hasilnya adalah ' + total + '!'
+          ];
+  
+        case 'dot-array':
+          return [
+            '💡 Petunjuk 1 (Amati): Lihat susunan titik dalam baris-baris berukuran 10 (dibagi 5+5).',
+            '💡 Petunjuk 2 (Arahkan): Hitung berapa baris 10 penuh yang terbentuk oleh titik biru dan kuning.',
+            '💡 Petunjuk 3 (Jawaban Dekat): Satukan baris-baris 10 penuh dengan sisa titik di baris paling bawah: hasilnya adalah ' + total + '!'
+          ];
+  
         case 'compensation':
           return [
             '💡 Petunjuk 1 (Amati): Coba perhatikan angka ' + b + '. Apakah ada angka bulat yang sangat dekat dengannya?',
@@ -11119,6 +11442,335 @@
                 2. Ambil <strong>${tf.needToMake10}</strong> ${iconB} dari angka kedua untuk <strong>menggenapkan kotak pertama jadi 10 PENUH</strong>! 🔟<br>
                 3. Di kotak kedua masih tersisa <strong>${tf.finalUnits}</strong> ${iconB}.<br>
                 4. Gabungkan: <strong>${tf.totalTens * 10} + ${tf.finalUnits} = ${tf.sum}</strong>! Super mudah tanpa menghitung jari satu per satu! 🎈
+              </div>
+            </div>
+          `;
+        }
+  
+        // 11. Rekenrek (Sempoa 2-Warna Belanda)
+        case 'rekenrek': {
+          const rek = sol.rekenrek;
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🔴⚪</span> ${rek.title}</h3>
+              <span class="subject-badge">${rek.badge}</span>
+            </div>
+  
+            <div class="round-strategy-banner" style="background:rgba(239,68,68,0.07); border-color:rgba(239,68,68,0.3); color:var(--ink); margin-bottom:18px;">
+              🔴⚪ <strong>${isEn ? 'Subitizing 5 & 10 Principle:' : 'Kekuatan Visual 5 & 10:'}</strong> ${rek.principle}
+            </div>
+  
+            <!-- Rekenrek Frame Container -->
+            <div class="rekenrek-frame-box">
+              ${rek.fullTensRods > 0 ? `
+                <div class="rekenrek-tens-banner">
+                  <span>🔟 <strong>${isEn ? 'Full Tens Rods:' : 'Batang Puluhan Penuh:'}</strong> ${rek.fullTensRods} × 10 = ${rek.fullTensRods * 10}</span>
+                  <span class="subject-badge" style="background:#10b981; color:#fff;">+${rek.fullTensRods * 10}</span>
+                </div>
+              ` : ''}
+  
+              <!-- Kawat 1: Satuan Operand A -->
+              <div class="rekenrek-rod-row">
+                <div class="rekenrek-rod-label">
+                  <strong>${isEn ? 'Top Rod (A)' : 'Kawat Atas (A)'}</strong>
+                  <span>${rek.uA} ${isEn ? 'beads' : 'manik'}</span>
+                </div>
+                <div class="rekenrek-wire">
+                  <div class="wire-line"></div>
+                  <!-- Sisi Kiri (Aktif) -->
+                  <div class="bead-cluster active-side">
+                    ${Array(rek.rod1.activeRed).fill(0).map(() => `<div class="rekenrek-bead red" title="Merah (5-group)"></div>`).join('')}
+                    ${Array(rek.rod1.activeWhite).fill(0).map(() => `<div class="rekenrek-bead white" title="Putih"></div>`).join('')}
+                  </div>
+                  <!-- Celah Pemisah / Separator -->
+                  <div class="wire-gap"></div>
+                  <!-- Sisi Kanan (Istirahat/Tidak Aktif) -->
+                  <div class="bead-cluster resting-side">
+                    ${Array(rek.rod1.inactiveRed).fill(0).map(() => `<div class="rekenrek-bead red inactive" title="Merah"></div>`).join('')}
+                    ${Array(rek.rod1.inactiveWhite).fill(0).map(() => `<div class="rekenrek-bead white inactive" title="Putih"></div>`).join('')}
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Kawat 2: Satuan Operand B -->
+              <div class="rekenrek-rod-row">
+                <div class="rekenrek-rod-label">
+                  <strong>${isEn ? 'Bottom Rod (B)' : 'Kawat Bawah (B)'}</strong>
+                  <span>${rek.uB} ${isEn ? 'beads' : 'manik'}</span>
+                </div>
+                <div class="rekenrek-wire">
+                  <div class="wire-line"></div>
+                  <!-- Sisi Kiri (Aktif) -->
+                  <div class="bead-cluster active-side">
+                    ${Array(rek.rod2.activeRed).fill(0).map(() => `<div class="rekenrek-bead red" title="Merah (5-group)"></div>`).join('')}
+                    ${Array(rek.rod2.activeWhite).fill(0).map(() => `<div class="rekenrek-bead white" title="Putih"></div>`).join('')}
+                  </div>
+                  <!-- Celah Pemisah / Separator -->
+                  <div class="wire-gap"></div>
+                  <!-- Sisi Kanan (Istirahat/Tidak Aktif) -->
+                  <div class="bead-cluster resting-side">
+                    ${Array(rek.rod2.inactiveRed).fill(0).map(() => `<div class="rekenrek-bead red inactive" title="Merah"></div>`).join('')}
+                    ${Array(rek.rod2.inactiveWhite).fill(0).map(() => `<div class="rekenrek-bead white inactive" title="Putih"></div>`).join('')}
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Kartu Sintesis Rekenrek -->
+              <div class="rekenrek-summary-grid">
+                <div class="rek-stat-card">
+                  <div class="stat-lbl">${isEn ? 'Combined Red Beads' : 'Gabungan Manik Merah'}</div>
+                  <div class="stat-val red">${rek.redA} + ${rek.redB} = ${rek.combinedRed}</div>
+                  <div class="stat-sub">${rek.combinedRed >= 10 ? (isEn ? '🎉 Full 10 made from reds!' : '🎉 5+5 Genap 10 Penuh!') : (isEn ? 'Red 5-blocks' : 'Blok 5 Merah')}</div>
+                </div>
+                <div class="rek-stat-card">
+                  <div class="stat-lbl">${isEn ? 'Combined White Beads' : 'Gabungan Manik Putih'}</div>
+                  <div class="stat-val">${rek.whiteA} + ${rek.whiteB} = ${rek.combinedWhite}</div>
+                  <div class="stat-sub">${isEn ? 'Remainder units' : 'Sisa satuan putih'}</div>
+                </div>
+                <div class="rek-stat-card highlight">
+                  <div class="stat-lbl">${isEn ? 'Grand Total' : 'Total Akhir'}</div>
+                  <div class="stat-val teal">${rek.sum}</div>
+                  <div class="stat-sub">${rek.totalTens} ${isEn ? 'Tens' : 'Puluhan'} + ${rek.finalUnits} ${isEn ? 'Ones' : 'Satuan'}</div>
+                </div>
+              </div>
+  
+              <!-- Panduan Berpikir Rekenrek -->
+              <div class="math-guide-box">
+                🧒 <strong>${isEn ? 'How Champions See This:' : 'Cara Berpikir Sahabat Juara:'}</strong><br>
+                ${rek.explanation}
+              </div>
+            </div>
+          `;
+        }
+  
+        // 12. Jarimatika (Jari Tangan Ajaib 1–99)
+        case 'jarimatika': {
+          const jari = sol.jarimatika;
+          const renderHandCard = (title, hand, valLabel) => `
+            <div class="jarimatika-hand-card">
+              <div class="hand-card-header">${title}</div>
+              <div class="hands-pair-row">
+                <!-- Tangan Kiri (Puluhan) -->
+                <div class="hand-box left-hand">
+                  <div class="hand-side-tag">👈 ${isEn ? 'Left: Tens' : 'Kiri: Puluhan'}</div>
+                  <div class="fingers-display">
+                    <div class="finger-col thumb ${hand.left.thumb ? 'open' : 'folded'}" title="${isEn ? 'Thumb (Value 50)' : 'Jempol (Nilai 50)'}">
+                      <span class="finger-icon">👍</span>
+                      <span class="finger-val">50</span>
+                    </div>
+                    ${[1, 2, 3, 4].map(idx => `
+                      <div class="finger-col ${idx <= hand.left.fingers ? 'open' : 'folded'}" title="${isEn ? `Finger ${idx} (Value 10)` : `Jari ${idx} (Nilai 10)`}">
+                        <span class="finger-icon">☝️</span>
+                        <span class="finger-val">10</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div class="hand-val-badge">${isEn ? 'Tens:' : 'Puluhan:'} <strong>${hand.left.val}</strong></div>
+                </div>
+  
+                <!-- Tangan Kanan (Satuan) -->
+                <div class="hand-box right-hand">
+                  <div class="hand-side-tag">👉 ${isEn ? 'Right: Ones' : 'Kanan: Satuan'}</div>
+                  <div class="fingers-display">
+                    <div class="finger-col thumb ${hand.right.thumb ? 'open' : 'folded'}" title="${isEn ? 'Thumb (Value 5)' : 'Jempol (Nilai 5)'}">
+                      <span class="finger-icon">👍</span>
+                      <span class="finger-val">5</span>
+                    </div>
+                    ${[1, 2, 3, 4].map(idx => `
+                      <div class="finger-col ${idx <= hand.right.fingers ? 'open' : 'folded'}" title="${isEn ? `Finger ${idx} (Value 1)` : `Jari ${idx} (Nilai 1)`}">
+                        <span class="finger-icon">☝️</span>
+                        <span class="finger-val">1</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div class="hand-val-badge">${isEn ? 'Ones:' : 'Satuan:'} <strong>${hand.right.val}</strong></div>
+                </div>
+              </div>
+              <div class="hand-total-banner">
+                ${valLabel}
+              </div>
+            </div>
+          `;
+  
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🖐️</span> ${jari.title}</h3>
+              <span class="subject-badge">${jari.badge}</span>
+            </div>
+  
+            <div class="round-strategy-banner" style="background:rgba(255,178,27,0.08); border-color:#ffb21b; color:var(--ink); margin-bottom:18px;">
+              🖐️ <strong>${isEn ? '10-Finger Math Rule:' : 'Kaidah Jari Ajaib:'}</strong> ${jari.principle}
+            </div>
+  
+            <div class="jarimatika-board">
+              <!-- 3 Formasi Jari: Angka A, Angka B, dan Total -->
+              <div class="jarimatika-cards-grid">
+                ${renderHandCard(isEn ? `Form 1: Number ${jari.a}` : `1. Pasang Angka ${jari.a}`, jari.handA, `${isEn ? 'Value' : 'Nilai'}: ${jari.a}`)}
+                ${renderHandCard(isEn ? `Form 2: Add Number ${jari.b}` : `2. Tambah Angka ${jari.b}`, jari.handB, `${isEn ? 'Value' : 'Nilai'}: ${jari.b}`)}
+                ${renderHandCard(isEn ? `Form 3: Final Total (${jari.sum})` : `3. Formasi Akhir (${jari.sum})`, jari.handSum, `🎉 Total: ${jari.sum}`)}
+              </div>
+  
+              <!-- Langkah-Langkah Panduan Jarimatika -->
+              <div class="jarimatika-steps-list" style="margin-top:18px;">
+                ${jari.steps.map((st) => `
+                  <div class="pv-tile" style="text-align:left; padding:14px 18px; margin-bottom:10px;">
+                    <div class="tile-title" style="color:var(--teal);">${st.title}</div>
+                    <div style="font-size:13.5px; color:var(--ink); line-height:1.5;">${st.desc}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+  
+        // 13. Piramida Bilangan (Number Wall / Oxford Brick Pyramid)
+        case 'number-pyramid': {
+          const pyr = sol.numberPyramid;
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🔺</span> ${pyr.title}</h3>
+              <span class="subject-badge">${pyr.badge}</span>
+            </div>
+  
+            <div class="round-strategy-banner" style="background:rgba(16,185,129,0.08); border-color:#10b981; color:var(--ink); margin-bottom:18px;">
+              🔺 <strong>${isEn ? 'Pyramid Rule:' : 'Aturan Piramida Bilangan:'}</strong> ${pyr.principle}
+            </div>
+  
+            <div class="pyramid-frame-box">
+              <!-- Puncak Piramida (Tingkat 1 - Puncak Hero) -->
+              <div class="pyramid-tier tier-peak">
+                <div class="pyramid-brick brick-peak">
+                  <div class="brick-tag">${isEn ? 'Peak Total' : 'Puncak Total'}</div>
+                  <div class="brick-val">${pyr.peak}</div>
+                  <div class="brick-sub">${pyr.tensCombined} + ${pyr.onesCombined}</div>
+                </div>
+              </div>
+  
+              <div class="pyramid-connector">⬇️ ⬆️</div>
+  
+              <!-- Tingkat 2 (Balok Gabungan Puluhan & Satuan) -->
+              <div class="pyramid-tier tier-mid">
+                <div class="pyramid-brick brick-mid">
+                  <div class="brick-tag">${isEn ? 'Combined Tens' : 'Gabungan Puluhan'}</div>
+                  <div class="brick-val">${pyr.tensCombined}</div>
+                  <div class="brick-sub">${pyr.tA} + ${pyr.tB}</div>
+                </div>
+                <div class="pyramid-brick brick-mid">
+                  <div class="brick-tag">${isEn ? 'Combined Ones' : 'Gabungan Satuan'}</div>
+                  <div class="brick-val">${pyr.onesCombined}</div>
+                  <div class="brick-sub">${pyr.uA} + ${pyr.uB}</div>
+                </div>
+              </div>
+  
+              <div class="pyramid-connector">⬇️ ⬆️</div>
+  
+              <!-- Tingkat 3 (Fondasi 4 Balok Pecah Nilai Tempat) -->
+              <div class="pyramid-tier tier-base">
+                <div class="pyramid-brick brick-base">
+                  <div class="brick-tag">${isEn ? 'Tens A' : 'Puluhan A'}</div>
+                  <div class="brick-val">${pyr.tA}</div>
+                </div>
+                <div class="pyramid-brick brick-base">
+                  <div class="brick-tag">${isEn ? 'Ones A' : 'Satuan A'}</div>
+                  <div class="brick-val">${pyr.uA}</div>
+                </div>
+                <div class="pyramid-brick brick-base">
+                  <div class="brick-tag">${isEn ? 'Tens B' : 'Puluhan B'}</div>
+                  <div class="brick-val">${pyr.tB}</div>
+                </div>
+                <div class="pyramid-brick brick-base">
+                  <div class="brick-tag">${isEn ? 'Ones B' : 'Satuan B'}</div>
+                  <div class="brick-val">${pyr.uB}</div>
+                </div>
+              </div>
+  
+              <!-- Penjelasan Logika Runtun -->
+              <div class="math-guide-box" style="margin-top:20px;">
+                🧒 <strong>${isEn ? 'Logic Flow:' : 'Alur Logika Berpikir:'}</strong><br>
+                ${pyr.explanation}
+              </div>
+            </div>
+          `;
+        }
+  
+        // 14. Larik Titik Pola (Dot Array Grid)
+        case 'dot-array': {
+          const dot = sol.dotArray;
+          return `
+            <div class="method-header">
+              <h3 class="method-title"><span>🟣</span> ${dot.title}</h3>
+              <span class="subject-badge">${dot.badge}</span>
+            </div>
+  
+            <div class="round-strategy-banner" style="background:rgba(147,51,234,0.08); border-color:#9333ea; color:var(--ink); margin-bottom:18px;">
+              🟣 <strong>${isEn ? 'Array Structure:' : 'Struktur Keteraturan Larik Titik:'}</strong> ${dot.principle}
+            </div>
+  
+            <div class="dot-array-frame-box">
+              <!-- Legend Warna -->
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                  <span class="dot-legend-chip" style="background:rgba(14,165,233,0.15); color:#0ea5e9; border:1px solid #0ea5e9;">
+                    🔵 <strong>${isEn ? `Operand A (${dot.a})` : `Angka A (${dot.a})`}</strong>
+                  </span>
+                  <span class="dot-legend-chip" style="background:rgba(245,158,11,0.15); color:#d97706; border:1px solid #f59e0b;">
+                    🟡 <strong>${isEn ? `Operand B (${dot.b})` : `Angka B (${dot.b})`}</strong>
+                  </span>
+                </div>
+                <div style="font-size:12.5px; font-weight:800; color:var(--muted);">
+                  ${dot.fullTensRows} ${isEn ? 'Full Tens Rows' : 'Baris 10 Penuh'} + ${dot.remainderDots} ${isEn ? 'Leftover' : 'Sisa'}
+                </div>
+              </div>
+  
+              <!-- Visual Larik Titik -->
+              <div class="dot-array-grid-container">
+                ${dot.rows.map((row, rIdx) => `
+                  <div class="dot-array-row">
+                    <div class="dot-row-label">#${rIdx + 1}</div>
+                    <!-- Grup 5 Pertama -->
+                    <div class="dot-five-group">
+                      ${row.slice(0, 5).map(cell => `
+                        <div class="dot-chip ${cell.active ? 'active' : 'empty'} ${cell.source || ''}" style="${cell.active ? `background:${cell.color};` : ''}"></div>
+                      `).join('')}
+                    </div>
+                    <!-- Spasi Pemisah 5+5 -->
+                    <div class="dot-group-separator"></div>
+                    <!-- Grup 5 Kedua -->
+                    <div class="dot-five-group">
+                      ${row.slice(5, 10).map(cell => `
+                        <div class="dot-chip ${cell.active ? 'active' : 'empty'} ${cell.source || ''}" style="${cell.active ? `background:${cell.color};` : ''}"></div>
+                      `).join('')}
+                    </div>
+                    <div class="dot-row-status">
+                      ${row.filter(c => c.active).length === 10 ? '🔟 10' : `${row.filter(c => c.active).length}`}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+  
+              <!-- Kotak Ringkasan Larik Titik -->
+              <div class="rekenrek-summary-grid" style="margin-top:20px;">
+                <div class="rek-stat-card">
+                  <div class="stat-lbl">${isEn ? 'Full Tens Made' : 'Puluhan Terbentuk'}</div>
+                  <div class="stat-val teal">${dot.fullTensRows} × 10 = ${dot.fullTensRows * 10}</div>
+                  <div class="stat-sub">${dot.fullTensRows} ${isEn ? 'complete rows of 10' : 'baris terisi penuh'}</div>
+                </div>
+                <div class="rek-stat-card">
+                  <div class="stat-lbl">${isEn ? 'Remainder Dots' : 'Sisa Titik'}</div>
+                  <div class="stat-val">${dot.remainderDots}</div>
+                  <div class="stat-sub">${dot.hasRemainder ? (isEn ? 'Units in last row' : 'Satuan di baris terakhir') : (isEn ? 'No remainder' : 'Pas tanpa sisa')}</div>
+                </div>
+                <div class="rek-stat-card highlight">
+                  <div class="stat-lbl">${isEn ? 'Total Calculation' : 'Total Akhir'}</div>
+                  <div class="stat-val teal">${dot.sum}</div>
+                  <div class="stat-sub">${dot.fullTensRows * 10} + ${dot.remainderDots} = ${dot.sum}</div>
+                </div>
+              </div>
+  
+              <!-- Panduan Berpikir -->
+              <div class="math-guide-box" style="margin-top:16px;">
+                🧒 <strong>${isEn ? 'Pattern Observation:' : 'Pengamatan Pola Geometri:'}</strong><br>
+                ${dot.explanation}
               </div>
             </div>
           `;

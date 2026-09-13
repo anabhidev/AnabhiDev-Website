@@ -117,21 +117,23 @@ Generated : 10 September 2026, 13:00:00
   color: var(--ink);
 }
 
-/* Strategy Grid & Tabs */
+/* Strategy Grid & Tabs — Multi-Row Wrapping (2-3 Baris Elegan, 0 Scroll Samping) */
 .method-tabs {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  margin-bottom: 20px;
-  scrollbar-width: thin;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-bottom: 22px;
+  overflow-x: visible;
+  padding-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .method-tab-btn {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   font-size: 12.5px;
   font-weight: 750;
   color: var(--muted);
@@ -140,8 +142,9 @@ Generated : 10 September 2026, 13:00:00
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 44px;
-  transition: all 0.15s ease;
+  min-height: 42px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .method-tab-btn:hover {
@@ -746,4 +749,499 @@ Generated : 10 September 2026, 13:00:00
   color: var(--teal-soft-ink);
   border-color: var(--teal);
 }
+
+/* ============================================================
+   11. Rekenrek (Sempoa 2-Warna Belanda)
+   ============================================================ */
+.rekenrek-frame-box {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 18px;
+  border: 2px solid var(--line);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.rekenrek-tens-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--ink);
+}
+
+.rekenrek-rod-row {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.rekenrek-rod-label {
+  min-width: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rekenrek-rod-label strong {
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.rekenrek-rod-label span {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.rekenrek-wire {
+  flex: 1;
+  position: relative;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+}
+
+.wire-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  background: linear-gradient(180deg, #94a3b8, #cbd5e1);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.bead-cluster {
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+  align-items: center;
+}
+
+.wire-gap {
+  flex: 1;
+  min-width: 28px;
+}
+
+.rekenrek-bead {
+  width: 30px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: default;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 -3px 4px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.rekenrek-bead:hover {
+  transform: scale(1.08);
+}
+
+.rekenrek-bead.red {
+  background: radial-gradient(circle at 35% 35%, #f87171, #dc2626 70%, #991b1b 100%);
+  border: 1px solid #b91c1c;
+}
+
+.rekenrek-bead.white {
+  background: radial-gradient(circle at 35% 35%, #ffffff, #f1f5f9 60%, #cbd5e1 100%);
+  border: 1px solid #94a3b8;
+}
+
+.rekenrek-bead.inactive {
+  opacity: 0.45;
+  filter: saturate(0.6);
+}
+
+.rekenrek-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.rek-stat-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+
+.rek-stat-card.highlight {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.stat-lbl {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.stat-val {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.stat-val.red {
+  color: #ef4444;
+}
+
+.stat-val.teal {
+  color: var(--teal-soft-ink);
+}
+
+.stat-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.math-guide-box {
+  margin-top: 14px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+/* ============================================================
+   12. Jarimatika (Jari Tangan Ajaib 1–99)
+   ============================================================ */
+.jarimatika-board {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 18px;
+  border: 2px solid var(--line);
+}
+
+.jarimatika-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.jarimatika-hand-card {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hand-card-header {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: var(--ink);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.hands-pair-row {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  justify-content: center;
+}
+
+.hand-box {
+  flex: 1;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hand-side-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.fingers-display {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 64px;
+  margin-bottom: 8px;
+}
+
+.finger-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.2s ease;
+  padding: 4px 3px;
+  border-radius: 6px;
+}
+
+.finger-col.open {
+  background: rgba(255, 178, 27, 0.18);
+  border: 1.5px solid #ffb21b;
+  transform: translateY(-4px);
+}
+
+.finger-col.folded {
+  opacity: 0.35;
+  filter: grayscale(0.8);
+}
+
+.finger-icon {
+  font-size: 18px;
+}
+
+.finger-val {
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.hand-val-badge {
+  font-size: 11px;
+  color: var(--ink);
+  background: var(--surface);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.hand-total-banner {
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 850;
+  color: var(--teal);
+  background: var(--teal-soft);
+  padding: 5px 14px;
+  border-radius: 999px;
+  text-align: center;
+  width: calc(100% - 20px);
+}
+
+/* ============================================================
+   13. Piramida Bilangan (Number Wall Pyramid)
+   ============================================================ */
+.pyramid-frame-box {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 18px;
+  border: 2px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pyramid-tier {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+.pyramid-brick {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.pyramid-brick:hover {
+  transform: translateY(-2px);
+}
+
+.brick-peak {
+  flex: 0 1 240px;
+  background: linear-gradient(135deg, rgba(0, 206, 201, 0.15), rgba(255, 178, 27, 0.15));
+  border-color: var(--teal);
+}
+
+.brick-peak .brick-val {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--teal);
+}
+
+.tier-mid .pyramid-brick {
+  flex: 1;
+  max-width: 220px;
+  background: var(--card);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.tier-mid .brick-val {
+  font-size: 24px;
+  font-weight: 850;
+  color: #10b981;
+}
+
+.tier-base .pyramid-brick {
+  flex: 1;
+  max-width: 130px;
+  background: var(--paper);
+}
+
+.tier-base .brick-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.brick-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.brick-sub {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.pyramid-connector {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 6px 0;
+  letter-spacing: 4px;
+}
+
+/* ============================================================
+   14. Larik Titik Pola (Dot Array Grid)
+   ============================================================ */
+.dot-array-frame-box {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 18px;
+  border: 2px solid var(--line);
+}
+
+.dot-legend-chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 750;
+}
+
+.dot-array-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--card);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+.dot-array-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  background: var(--paper);
+  border-radius: 10px;
+}
+
+.dot-row-label {
+  font-size: 11.5px;
+  font-weight: 850;
+  color: var(--muted);
+  min-width: 32px;
+}
+
+.dot-five-group {
+  display: flex;
+  gap: 6px;
+}
+
+.dot-group-separator {
+  width: 14px;
+  height: 2px;
+  background: var(--line);
+}
+
+.dot-chip {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.dot-chip.active {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  animation: popCounter 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dot-chip.empty {
+  border: 1.5px dashed var(--line);
+  background: var(--surface);
+}
+
+.dot-row-status {
+  margin-left: auto;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+[data-theme="dark"] .rekenrek-wire {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="dark"] .wire-line {
+  background: linear-gradient(180deg, #64748b, #475569);
+}
+
+[data-theme="dark"] .rekenrek-bead.white {
+  background: radial-gradient(circle at 35% 35%, #ffffff, #e2e8f0 60%, #94a3b8 100%);
+  border-color: #64748b;
+}
+
+[data-theme="dark"] .brick-peak {
+  background: linear-gradient(135deg, rgba(0, 206, 201, 0.2), rgba(255, 178, 27, 0.2));
+}
+
 

@@ -198,6 +198,54 @@ export const MATH_DATA = {
       summaryEn: 'Visual Ten-Frame manipulatives designed for 1st graders to intuitively spot Make-10 pairs and leftover units!',
       whyGood: 'Sangat cocok untuk anak Kelas 1 SD karena dapat menghitung benda nyata dan melihat kapan kotak terisi penuh 10.',
       whyGoodEn: 'Perfect for 1st graders to count concrete objects and visualize when a frame reaches a full ten.'
+    },
+    {
+      id: 'rekenrek',
+      name: 'Rekenrek Belanda',
+      nameEn: 'Rekenrek Rack',
+      badge: 'Sempoa 2-Warna',
+      badgeEn: 'Dutch 2-Color Rack',
+      icon: '🔴⚪',
+      summary: 'Sempoa 2-warna (5 Merah & 5 Putih) dari Belanda. Latih mata melihat Kawan 5 dan 10 seketika tanpa menghitung satu per satu!',
+      summaryEn: 'Dutch 2-color counting rack (5 Red & 5 White beads). Subitize groups of 5 and 10 instantly without one-by-one counting!',
+      whyGood: 'Standar kurikulum Belanda & Singapura yang melatih kecepatan visualisasi kuantitas 5 dan 10 di kepala anak.',
+      whyGoodEn: 'Dutch & Singapore curriculum gold standard training children to instantly visualize quantities of 5 and 10.'
+    },
+    {
+      id: 'jarimatika',
+      name: 'Jarimatika Ajaib',
+      nameEn: 'Finger Math',
+      badge: 'Jari Tangan 1–99',
+      badgeEn: 'Fingers 1–99',
+      icon: '🖐️',
+      summary: 'Berhitung super cepat dengan 10 jari ajaib: Tangan kiri bernilai Puluhan (Jempol=50, 4 jari=10) dan Tangan kanan Satuan (Jempol=5, 4 jari=1)!',
+      summaryEn: 'Super fast math with 10 magic fingers: Left hand represents Tens (Thumb=50, fingers=10) & Right hand Ones (Thumb=5, fingers=1)!',
+      whyGood: 'Alat peraga alami yang selalu dibawa ke mana pun anak pergi tanpa perlu alat tulis.',
+      whyGoodEn: 'A natural, portable manipulative that children always carry with them everywhere without needing paper.'
+    },
+    {
+      id: 'number-pyramid',
+      name: 'Piramida Bilangan',
+      nameEn: 'Number Pyramid',
+      badge: 'Dinding Balok',
+      badgeEn: 'Brick Wall Math',
+      icon: '🔺',
+      summary: 'Dinding balok susun piramida Cambridge: Setiap balok di atas adalah hasil penjumlahan dari dua balok tepat di bawahnya!',
+      summaryEn: 'Cambridge brick wall pyramid: Each brick above is the exact sum of the two bricks directly supporting it below!',
+      whyGood: 'Mengasah logika spasial, relasi bagian-ke-keseluruhan (part-whole), dan pemecahan masalah bertahap.',
+      whyGoodEn: 'Sharpens spatial logic, part-to-whole relationships, and structured multi-step problem solving.'
+    },
+    {
+      id: 'dot-array',
+      name: 'Larik Titik Pola',
+      nameEn: 'Dot Array Grid',
+      badge: 'Montessori & Pola',
+      badgeEn: 'Pattern Array',
+      icon: '🟣',
+      summary: 'Susunan titik terstruktur per baris 10 (dibagi 5+5). Memperlihatkan pola genap/ganjil, puluhan penuh, dan jembatan ke perkalian!',
+      summaryEn: 'Structured dot array in rows of 10 (grouped 5+5). Clearly shows even/odd patterns, full tens, and bridges to multiplication!',
+      whyGood: 'Sangat disukai anak tipe visual karena angka terlihat sebagai formasi keteraturan geometri yang rapi.',
+      whyGoodEn: 'Loved by visual learners because numbers appear as neat, geometric regular formations.'
     }
   ],
 
@@ -576,6 +624,10 @@ export const MATH_DATA = {
     { id: 'badge-line', name: 'Number Line Rider', icon: '📏', desc: 'Melompat chunk di Garis Bilangan', descEn: 'Made chunk jumps on Number Line' },
     { id: 'badge-blocks', name: 'Block Master', icon: '🧱', desc: 'Menata balok dan regrouping', descEn: 'Regrouped Base-Ten blocks' },
     { id: 'badge-comp', name: 'Balance Wizard', icon: '⚖️', desc: 'Menguasai jurus Kompensasi', descEn: 'Mastered Compensation trick' },
-    { id: 'badge-abacus', name: 'Abacus Explorer', icon: '🧮', desc: 'Menjelajahi sempoa Soroban', descEn: 'Explored Soroban abacus beads' }
+    { id: 'badge-abacus', name: 'Abacus Explorer', icon: '🧮', desc: 'Menjelajahi sempoa Soroban', descEn: 'Explored Soroban abacus beads' },
+    { id: 'badge-rekenrek', name: 'Rekenrek Champion', icon: '🔴⚪', desc: 'Menghitung dengan Sempoa Belanda 2-warna', descEn: 'Counted with Dutch 2-color Rekenrek' },
+    { id: 'badge-jarimatika', name: 'Master Jarimatika', icon: '🖐️', desc: 'Berhitung cepat dengan 10 jari tangan ajaib', descEn: 'Fast finger math with magic 10 fingers' },
+    { id: 'badge-pyramid', name: 'Pyramid Architect', icon: '🔺', desc: 'Menyusun piramida dinding bilangan', descEn: 'Built number wall pyramid bricks' },
+    { id: 'badge-dotarray', name: 'Pattern Spotter', icon: '🟣', desc: 'Melihat pola terstruktur larik titik', descEn: 'Spotted structured patterns in dot array' }
   ]
 };
