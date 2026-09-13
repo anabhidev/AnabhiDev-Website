@@ -2,7 +2,7 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // JavaScript · ES Module · AI Tutor Modal Component
 // Development · Anabhi Dev
-// Version   : 2.5 (Gemini 3.5 Flash-Lite & Pop-Up Interactive Dialog)
+// Version   : 2.6 (GAS Script Properties & Gemini 3.5 Flash-Lite)
 // ================================================================
 
 import { appState } from '../state.js';
@@ -10,7 +10,8 @@ import { t } from '../data/i18n.js';
 
 export var GEMINI_CONFIG = {
   MODEL    : 'gemini-3.5-flash-lite',
-  ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/'
+  ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/',
+  GAS_URL  : '' // Diisi URL Web App GAS (script.google.com/macros/s/.../exec)
 };
 
 if (typeof window !== 'undefined') {
@@ -63,7 +64,7 @@ export class AiTutorModalComponent {
   open(initialPrompt = '') {
     this.render();
     this.modalEl.style.display = 'flex';
-    // Trigger reflow for smooth transition
+    // Trigger reflow for smooth animation
     void this.modalEl.offsetHeight;
     this.modalEl.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -89,6 +90,29 @@ export class AiTutorModalComponent {
     document.body.style.overflow = '';
   }
 
+  // Google Apps Script (GAS) URL
+  getGasUrl() {
+    return localStorage.getItem('anabhi_gas_url') ||
+           (typeof window !== 'undefined' && window.GEMINI_CONFIG && window.GEMINI_CONFIG.GAS_URL) ||
+           GEMINI_CONFIG.GAS_URL || '';
+  }
+
+  setGasUrl(url) {
+    if (url && url.trim()) {
+      const u = url.trim();
+      localStorage.setItem('anabhi_gas_url', u);
+      if (typeof window !== 'undefined' && window.GEMINI_CONFIG) {
+        window.GEMINI_CONFIG.GAS_URL = u;
+      }
+    } else {
+      localStorage.removeItem('anabhi_gas_url');
+      if (typeof window !== 'undefined' && window.GEMINI_CONFIG) {
+        window.GEMINI_CONFIG.GAS_URL = '';
+      }
+    }
+  }
+
+  // Direct Local API Key (Cadangan bila tidak memakai GAS)
   getApiKey() {
     if (typeof window !== 'undefined' && window.GEMINI_API_KEY) {
       return window.GEMINI_API_KEY;
@@ -144,41 +168,85 @@ export class AiTutorModalComponent {
     }
   }
 
+  // Status backend aktif: GAS vs Direct Key vs Cloudflare
+  getBackendStatus() {
+    const gasUrl = this.getGasUrl();
+    if (gasUrl && gasUrl.includes('/exec')) {
+      return { mode: 'gas', label: '🟢 GAS Backend Aktif (Script Properties)', desc: 'Kunci API tersimpan aman di Google Apps Script' };
+    }
+    const directKey = this.getApiKey();
+    if (directKey) {
+      return { mode: 'direct', label: '🟢 Direct API Key Aktif', desc: 'Menggunakan API Key lokal' };
+    }
+    return { mode: 'none', label: '🟡 Perlu Pengaturan Backend', desc: 'Masukkan URL Web App GAS atau API Key di pengaturan' };
+  }
+
   async testConnection() {
-    const key = this.getApiKey();
-    if (!key) {
-      this.statusMessage = { type: 'error', text: 'Kunci API belum diisi. Masukkan API Key terlebih dahulu!' };
+    const gasUrl = this.getGasUrl();
+    const localKey = this.getApiKey();
+
+    this.statusMessage = { type: 'info', text: 'Menguji koneksi ke AI backend...' };
+    this.render();
+
+    // 1. Uji GAS jika URL ada
+    if (gasUrl && gasUrl.includes('/exec')) {
+      try {
+        const resp = await fetch(gasUrl, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'ask_ai',
+            prompt: 'Tes koneksi satu kata: Aktif!',
+            subject: 'Umum',
+            model: this.getModel()
+          })
+        });
+        if (resp.ok) {
+          const resJson = await resp.json();
+          if (resJson.ok) {
+            this.statusMessage = { type: 'success', text: `✅ Berhasil! Google Apps Script (${this.getModel()}) merespons dengan lancar!` };
+          } else {
+            this.statusMessage = { type: 'error', text: `❌ Pesan dari GAS: ${resJson.error || 'Gagal'}` };
+          }
+        } else {
+          this.statusMessage = { type: 'error', text: `❌ HTTP ${resp.status} saat menghubungi URL Web App GAS.` };
+        }
+      } catch (e) {
+        this.statusMessage = { type: 'error', text: `❌ Gagal menghubungi GAS: ${e.message}` };
+      }
       this.render();
       return;
     }
 
-    const endpoint = this.getEndpoint().replace(/\/?$/, '/');
-    const model = this.getModel();
-    const url = `${endpoint}${model}:generateContent?key=${key}`;
+    // 2. Uji Direct API Key jika ada
+    if (localKey) {
+      const endpoint = this.getEndpoint().replace(/\/?$/, '/');
+      const model = this.getModel();
+      const url = `${endpoint}${model}:generateContent?key=${localKey}`;
 
-    this.statusMessage = { type: 'info', text: `Menghubungkan ke ${model}...` };
-    this.render();
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: 'Tes koneksi satu kata: Aktif!' }] }],
+            generationConfig: { maxOutputTokens: 20 }
+          })
+        });
 
-    try {
-      const resp = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: 'Jawab satu kata saja: "Aktif!"' }] }],
-          generationConfig: { maxOutputTokens: 20 }
-        })
-      });
-
-      if (resp.ok) {
-        this.statusMessage = { type: 'success', text: `✅ Berhasil! Model "${model}" aktif dan siap digunakan.` };
-      } else {
-        const errJson = await resp.json().catch(() => ({}));
-        const msg = errJson.error?.message || `HTTP ${resp.status}`;
-        this.statusMessage = { type: 'error', text: `❌ Gagal: ${msg}` };
+        if (resp.ok) {
+          this.statusMessage = { type: 'success', text: `✅ Berhasil! Model direct "${model}" aktif.` };
+        } else {
+          const errJson = await resp.json().catch(() => ({}));
+          this.statusMessage = { type: 'error', text: `❌ Gagal: ${errJson.error?.message || `HTTP ${resp.status}`}` };
+        }
+      } catch (e) {
+        this.statusMessage = { type: 'error', text: `❌ Kendala Jaringan: ${e.message}` };
       }
-    } catch (e) {
-      this.statusMessage = { type: 'error', text: `❌ Kendala Jaringan: ${e.message}` };
+      this.render();
+      return;
     }
+
+    this.statusMessage = { type: 'error', text: 'Masukkan Web App URL GAS atau API Key terlebih dahulu!' };
     this.render();
   }
 
@@ -234,30 +302,41 @@ export class AiTutorModalComponent {
 
     try {
       let reply = '';
+      const gasUrl = this.getGasUrl();
       const localKey = this.getApiKey();
 
-      // 1. Coba Cloudflare Function /api/ai-tutor jika di-host di Cloudflare Pages dan tanpa key lokal
-      if (!localKey && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      // ── METODE 1: Google Apps Script (GAS) Backend — [Rekomendasi Utama Anabhi Dev] ──
+      // Kunci GEMINI_API_KEY tersimpan aman di Script Properties script.google.com!
+      if (gasUrl && gasUrl.includes('/exec')) {
         try {
-          const cfResp = await fetch('/api/ai-tutor', {
+          const resp = await fetch(gasUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+              action: 'ask_ai',
               prompt: questionText,
               subject: currentSub,
-              studentGrade: 'Kelas 1–3 SD'
+              model: this.getModel()
             })
           });
-          if (cfResp.ok) {
-            const data = await cfResp.json();
-            reply = data.reply;
+
+          if (resp.ok) {
+            const data = await resp.json();
+            if (data.ok) {
+              reply = data.reply || data.text || '';
+            } else if (data.error) {
+              throw new Error(data.error);
+            }
+          } else {
+            throw new Error(`GAS HTTP ${resp.status}`);
           }
-        } catch (e) {
-          // Cloudflare function fallback
+        } catch (gasErr) {
+          Logger_warn('GAS error, trying fallback:', gasErr);
+          // Jika GAS gagal dan ada direct localKey, lanjutkan ke fallback
+          if (!localKey) throw gasErr;
         }
       }
 
-      // 2. Jika ada localKey, panggil langsung Google Gemini API menggunakan GEMINI_CONFIG
+      // ── METODE 2: Direct Google Gemini API (Cadangan / Testing Lokal) ──
       if (!reply && localKey) {
         const endpoint = this.getEndpoint().replace(/\/?$/, '/');
         const model = this.getModel();
@@ -293,25 +372,49 @@ Panduan Menjawab:
           reply = gData.candidates?.[0]?.content?.parts?.[0]?.text || '';
         } else {
           const errText = await gResp.text();
-          throw new Error(`Google Gemini API (${gResp.status}): ${errText}`);
+          throw new Error(`Gemini API (${gResp.status}): ${errText}`);
         }
+      }
+
+      // ── METODE 3: Cloudflare Pages Function /api/ai-tutor (Jika di-host di Cloudflare) ──
+      if (!reply && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+        try {
+          const cfResp = await fetch('/api/ai-tutor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: questionText,
+              subject: currentSub,
+              studentGrade: 'Kelas 1–3 SD'
+            })
+          });
+          if (cfResp.ok) {
+            const data = await cfResp.json();
+            reply = data.reply;
+          }
+        } catch (e) {}
       }
 
       if (!reply) {
         reply = `Halo Sahabat Juara! 🌟 Untuk mengaktifkan Kakak Belajar AI:
 
-1. Klik tombol **🔑 Masukkan API Key** di atas chat ini.
-2. Tempelkan Google Gemini API Key milik Kakak (bisa didapatkan gratis di [Google AI Studio](https://aistudio.google.com)).
-3. Model default yang digunakan adalah **${this.getModel()}**.
+1. **Cara Resmi (Google Apps Script / GAS)**:
+   - Pasang berkas \`gas/Code.gs\` di [script.google.com](https://script.google.com).
+   - Masukkan \`GEMINI_API_KEY\` di **Project Settings ➔ Script Properties**.
+   - Deploy sebagai Web App ("Anyone"), lalu masukkan URL-nya di menu **⚙️ Pengaturan** pojok atas dialog ini.
+   - *Kunci aman 100% dan anak tidak perlu memasukkan API key apa pun!*
 
-Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
+2. **Cara Cepat (Direct Key)**:
+   - Buka menu **⚙️ Pengaturan** di atas dan masukkan API Key Gemini Anda secara langsung.
+
+Kakak AI siap membimbing belajar materi apa saja!`;
       }
 
       this.messages.push({ role: 'ai', text: reply });
     } catch (err) {
       this.messages.push({
         role: 'ai',
-        text: `Wah, terjadi kendala saat menghubungi Kakak AI: ${err.message}. Silakan periksa koneksi internet atau Gemini API Key milikmu.`
+        text: `Wah, terjadi kendala saat menghubungi Kakak AI: ${err.message}. Silakan periksa koneksi internet atau pengaturan backend di tombol ⚙️ Pengaturan.`
       });
     } finally {
       this.isLoading = false;
@@ -331,14 +434,14 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
     const state = appState.get();
     const lang = state.lang || 'id';
     const isEn = lang === 'en';
+    const gasUrl = this.getGasUrl();
     const apiKey = this.getApiKey();
     const currentModel = this.getModel();
-    const currentEndpoint = this.getEndpoint();
-    const hasKey = Boolean(apiKey);
+    const status = this.getBackendStatus();
 
     this.modalEl.innerHTML = `
       <div class="ai-modal-dialog">
-        <!-- Modal Header Mewah & Status Model -->
+        <!-- Modal Header Mewah -->
         <div class="ai-modal-header">
           <div class="ai-header-info">
             <span class="ai-avatar-badge">🤖</span>
@@ -348,24 +451,24 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
                 <span class="ai-model-pill">${currentModel}</span>
               </h3>
               <div class="ai-header-subtitle">
-                ${hasKey ? '🟢 Siap Membimbing · Powered by Google Gemini' : '🟡 Masukkan API Key untuk Mengaktifkan'}
+                ${status.label}
               </div>
             </div>
           </div>
 
           <div class="ai-header-actions">
-            <button class="ai-btn-header" id="btnAiToggleSettings" type="button" title="Pengaturan Kunci API & Model">
-              ⚙️ <span>${hasKey ? 'Pengaturan' : 'Input Key'}</span>
+            <button class="ai-btn-header" id="btnAiToggleSettings" type="button" title="Pengaturan GAS &amp; API Key">
+              ⚙️ <span>Pengaturan</span>
             </button>
             <button class="ai-btn-close" id="btnAiCloseModal" type="button" aria-label="Tutup Dialog">✕</button>
           </div>
         </div>
 
-        <!-- Panel Pengaturan API Key & Model (Collapsible) -->
+        <!-- Panel Pengaturan Backend: Google Apps Script & Direct Key (Collapsible) -->
         <div class="ai-settings-drawer" id="aiSettingsDrawer" style="display: ${this.showSettings ? 'flex' : 'none'};">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h4 class="ai-settings-title">🔑 Konfigurasi Google Gemini API</h4>
-            ${hasKey ? `<button class="btn" id="btnClearKey" type="button" style="padding:4px 10px; font-size:11px; background:#ef4444; color:#fff; border:none; border-radius:8px;">Hapus Kunci</button>` : ''}
+            <h4 class="ai-settings-title">⚙️ Konfigurasi Backend &amp; Gemini AI</h4>
+            <span style="font-size:11.5px; color:var(--muted);">${status.desc}</span>
           </div>
 
           ${this.statusMessage ? `
@@ -378,63 +481,56 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
             </div>
           ` : ''}
 
-          <div class="ai-settings-grid">
-            <div>
-              <label class="ai-field-label" for="inputApiKey">Gemini API Key (AIzaSy...):</label>
-              <div class="ai-input-with-action">
-                <input class="ai-input" id="inputApiKey" type="password" placeholder="Tempel API Key di sini..." value="${apiKey}">
-                <button class="btn" id="btnToggleKeyVisibility" type="button" style="padding:6px 10px; font-size:12px;" title="Lihat/Sembunyikan">👁️</button>
-              </div>
+          <!-- Pilihan 1: Google Apps Script (Rekomendasi Utama) -->
+          <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px;">
+            <label class="ai-field-label" for="inputGasUrl">
+              🚀 <strong>Metode 1: Google Apps Script (GAS) Web App URL [Rekomendasi Aman]</strong>
+            </label>
+            <div style="font-size:11.5px; color:var(--muted); margin-bottom:8px; line-height:1.5;">
+              Kunci <code>GEMINI_API_KEY</code> disimpan di <strong>Script Properties</strong> (script.google.com). Pengunjung web tidak perlu memasukkan API key!
             </div>
-
-            <div>
-              <label class="ai-field-label" for="selectModel">Pilihan Model Gemini:</label>
-              <select class="ai-input" id="selectModel" style="cursor:pointer;">
-                <option value="gemini-3.5-flash-lite" ${currentModel === 'gemini-3.5-flash-lite' ? 'selected' : ''}>gemini-3.5-flash-lite (Rekomendasi Utama Cepat &amp; Hemat)</option>
-                <option value="gemini-2.5-flash-lite" ${currentModel === 'gemini-2.5-flash-lite' ? 'selected' : ''}>gemini-2.5-flash-lite (Sangat Cepat)</option>
-                <option value="gemini-2.0-flash" ${currentModel === 'gemini-2.0-flash' ? 'selected' : ''}>gemini-2.0-flash (Multimodal Serbaguna)</option>
-                <option value="gemini-1.5-flash" ${currentModel === 'gemini-1.5-flash' ? 'selected' : ''}>gemini-1.5-flash (Versi Sebelumnya)</option>
-              </select>
+            <div class="ai-input-with-action">
+              <input class="ai-input" id="inputGasUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec" value="${gasUrl}">
+              ${gasUrl ? `<button class="btn" id="btnClearGas" type="button" style="padding:6px 10px; font-size:11.5px;">Hapus</button>` : ''}
             </div>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
-            <div style="font-size:11.5px; color:var(--muted);">
-              Belum punya API key? <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color:var(--teal); font-weight:700; text-decoration:underline;">Dapatkan gratis di Google AI Studio ↗</a>
+          <!-- Pilihan 2: Direct Local Key (Cadangan) -->
+          <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px;">
+            <label class="ai-field-label" for="inputApiKey">
+              🔑 <strong>Metode 2: Direct API Key (Khusus Testing Komputer Lokal)</strong>
+            </label>
+            <div style="font-size:11.5px; color:var(--muted); margin-bottom:8px;">
+              Jika belum deploy GAS, masukkan kunci langsung dari Google AI Studio (AIzaSy...).
             </div>
+            <div class="ai-input-with-action">
+              <input class="ai-input" id="inputApiKey" type="password" placeholder="Tempel AIzaSy... API Key di sini" value="${apiKey}">
+              <button class="btn" id="btnToggleKeyVisibility" type="button" style="padding:6px 10px; font-size:12px;" title="Lihat/Sembunyikan">👁️</button>
+              ${apiKey ? `<button class="btn" id="btnClearKey" type="button" style="padding:6px 10px; font-size:11.5px;">Hapus</button>` : ''}
+            </div>
+          </div>
+
+          <!-- Model & Action Bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:2px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:12px; font-weight:750; color:var(--muted);">Model:</span>
+              <select class="ai-input" id="selectModel" style="padding:6px 10px; font-size:12px; width:auto; cursor:pointer;">
+                <option value="gemini-3.5-flash-lite" ${currentModel === 'gemini-3.5-flash-lite' ? 'selected' : ''}>gemini-3.5-flash-lite (Default)</option>
+                <option value="gemini-2.5-flash-lite" ${currentModel === 'gemini-2.5-flash-lite' ? 'selected' : ''}>gemini-2.5-flash-lite</option>
+                <option value="gemini-2.0-flash" ${currentModel === 'gemini-2.0-flash' ? 'selected' : ''}>gemini-2.0-flash</option>
+              </select>
+            </div>
+
             <div style="display:flex; gap:8px;">
-              <button class="btn" id="btnTestConnection" type="button" style="padding:6px 12px; font-size:12px;">🧪 Tes Koneksi</button>
-              <button class="btn primary" id="btnSaveConfig" type="button" style="padding:6px 16px; font-size:12px; font-weight:800;">Simpan Pengaturan</button>
+              <button class="btn" id="btnTestConnection" type="button" style="padding:7px 14px; font-size:12px;">🧪 Tes Koneksi</button>
+              <button class="btn primary" id="btnSaveConfig" type="button" style="padding:7px 18px; font-size:12px; font-weight:800;">Simpan</button>
             </div>
           </div>
         </div>
 
         <!-- Chat History Area -->
         <div class="ai-chat-history" id="aiChatHistory">
-          <!-- Setup Banner jika Belum Ada API Key -->
-          ${!hasKey ? `
-            <div class="ai-setup-card">
-              <h4 class="ai-setup-title">
-                <span>🔑</span> ${isEn ? 'Enter Gemini API Key to Start' : 'Masukkan Google Gemini API Key'}
-              </h4>
-              <p class="ai-setup-desc">
-                ${isEn 
-                  ? 'To activate the interactive AI Tutor with <strong>gemini-3.5-flash-lite</strong>, enter your Gemini API Key below. The key is securely stored in your local browser.' 
-                  : 'Untuk mengaktifkan Kakak Belajar Pintar menggunakan model <strong>gemini-3.5-flash-lite</strong>, masukkan API Key Anda di bawah ini. Kunci tersimpan secara lokal dan aman di browser Kakak.'}
-              </p>
-              <div class="ai-setup-input-wrap">
-                <input class="ai-input" id="inputSetupKey" type="password" placeholder="Tempel AIzaSy... API Key di sini">
-                <button class="btn primary" id="btnSaveSetupKey" type="button" style="padding:8px 18px; font-weight:800; font-size:12.5px;">
-                  Simpan &amp; Aktifkan 🚀
-                </button>
-              </div>
-              <div style="font-size:11.5px; color:var(--muted);">
-                Gratis dan cepat! Dapatkan kunci di <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color:var(--teal); font-weight:700; text-decoration:underline;">Google AI Studio (aistudio.google.com) ↗</a>
-              </div>
-            </div>
-          ` : ''}
-
-          <!-- Empty State & Pertanyaan Pembuka -->
+          <!-- Empty State & Pertanyaan Pembuka (Bersih & Ramah Anak) -->
           ${this.messages.length === 0 ? `
             <div class="ai-empty-state">
               <span class="ai-empty-star">🌟</span>
@@ -530,14 +626,16 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
       });
     }
 
-    // Simpan Konfigurasi dari Drawer
+    // Simpan Konfigurasi (GAS URL + Direct Key + Model)
     const btnSaveConfig = this.modalEl.querySelector('#btnSaveConfig');
+    const inputGasUrl = this.modalEl.querySelector('#inputGasUrl');
     const selectModel = this.modalEl.querySelector('#selectModel');
     if (btnSaveConfig) {
       btnSaveConfig.addEventListener('click', () => {
+        if (inputGasUrl) this.setGasUrl(inputGasUrl.value);
         if (inputApiKey) this.setApiKey(inputApiKey.value);
         if (selectModel) this.setModel(selectModel.value);
-        this.statusMessage = { type: 'success', text: `✅ Pengaturan berhasil disimpan! Model: ${this.getModel()}` };
+        this.statusMessage = { type: 'success', text: `✅ Pengaturan tersimpan! Backend: ${this.getBackendStatus().label}` };
         setTimeout(() => {
           this.showSettings = false;
           this.statusMessage = null;
@@ -547,15 +645,24 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
       });
     }
 
-    // Tes Koneksi API
+    // Tes Koneksi
     const btnTest = this.modalEl.querySelector('#btnTestConnection');
     if (btnTest) {
       btnTest.addEventListener('click', () => {
-        if (inputApiKey && inputApiKey.value.trim()) {
-          this.setApiKey(inputApiKey.value.trim());
-        }
+        if (inputGasUrl && inputGasUrl.value.trim()) this.setGasUrl(inputGasUrl.value.trim());
+        if (inputApiKey && inputApiKey.value.trim()) this.setApiKey(inputApiKey.value.trim());
         if (selectModel) this.setModel(selectModel.value);
         this.testConnection();
+      });
+    }
+
+    // Hapus GAS URL
+    const btnClearGas = this.modalEl.querySelector('#btnClearGas');
+    if (btnClearGas) {
+      btnClearGas.addEventListener('click', () => {
+        this.setGasUrl('');
+        this.statusMessage = { type: 'info', text: 'URL Web App GAS dihapus.' };
+        this.render();
       });
     }
 
@@ -563,29 +670,9 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
     const btnClearKey = this.modalEl.querySelector('#btnClearKey');
     if (btnClearKey) {
       btnClearKey.addEventListener('click', () => {
-        if (confirm('Apakah Kakak yakin ingin menghapus API Key yang tersimpan?')) {
-          this.setApiKey('');
-          this.statusMessage = { type: 'info', text: 'Kunci API telah dihapus.' };
-          this.render();
-        }
-      });
-    }
-
-    // Simpan dari Setup Card Utama
-    const btnSaveSetup = this.modalEl.querySelector('#btnSaveSetupKey');
-    const inputSetupKey = this.modalEl.querySelector('#inputSetupKey');
-    if (btnSaveSetup && inputSetupKey) {
-      btnSaveSetup.addEventListener('click', () => {
-        const val = inputSetupKey.value.trim();
-        if (!val) {
-          alert('Silakan masukkan atau tempel Gemini API Key terlebih dahulu!');
-          return;
-        }
-        this.setApiKey(val);
+        this.setApiKey('');
+        this.statusMessage = { type: 'info', text: 'API Key lokal dihapus.' };
         this.render();
-      });
-      inputSetupKey.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') btnSaveSetup.click();
       });
     }
 
@@ -626,5 +713,11 @@ Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
         }
       });
     }
+  }
+}
+
+function Logger_warn(...args) {
+  if (typeof console !== 'undefined' && console.warn) {
+    console.warn(...args);
   }
 }
