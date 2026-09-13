@@ -90,3 +90,4 @@ bundleContent += `
 const outputPath = path.join(rootDir, 'js/bundle.js');
 fs.writeFileSync(outputPath, bundleContent, 'utf8');
 console.log(`Successfully built standalone bundle: ${outputPath} (${(bundleContent.length / 1024).toFixed(1)} KB)`);
+
