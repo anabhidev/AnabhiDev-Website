@@ -105,6 +105,10 @@ export class SidebarComponent {
           <span class="icon">📈</span>
           <span class="label">${t('progress', lang)}</span>
         </button>
+        <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
+          <span class="icon">🤖</span>
+          <span class="label">${lang === 'en' ? 'Ask AI Tutor' : 'Tanya Kakak AI'}</span>
+        </button>
       </nav>
 
       <!-- Footer Kredit Resmi (Standar Coding 1.5 Bagian 6) -->
@@ -127,12 +131,26 @@ export class SidebarComponent {
       });
     }
 
-    const navItems = this.sidebar.querySelectorAll('.nav-item');
+    const sidebarAiBtn = this.sidebar.querySelector('#sidebarAiTutorBtn');
+    if (sidebarAiBtn) {
+      sidebarAiBtn.addEventListener('click', () => {
+        if (appState.get().drawerOpen) {
+          appState.toggleDrawer(false);
+        }
+        if (window.aiTutorModal) {
+          window.aiTutorModal.open();
+        }
+      });
+    }
+
+    const navItems = this.sidebar.querySelectorAll('.nav-item[data-route]');
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         const route = item.getAttribute('data-route');
         const subjectId = item.getAttribute('data-subject-id');
-        appState.navigate(route, subjectId);
+        if (route) {
+          appState.navigate(route, subjectId);
+        }
       });
     });
   }

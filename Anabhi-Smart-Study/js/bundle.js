@@ -10643,17 +10643,28 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · AI Tutor Modal Component
   // Development · Anabhi Dev
-  // Version   : 2.3 (Gemini 1.5 Flash Cloudflare & Local Key Support)
+  // Version   : 2.5 (Gemini 3.5 Flash-Lite & Pop-Up Interactive Dialog)
   // ================================================================
   
   
   
+  
+  var GEMINI_CONFIG = {
+    MODEL    : 'gemini-3.5-flash-lite',
+    ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/'
+  };
+  
+  if (typeof window !== 'undefined') {
+    window.GEMINI_CONFIG = window.GEMINI_CONFIG || GEMINI_CONFIG;
+  }
   
   class AiTutorModalComponent {
     constructor() {
       this.modalEl = null;
       this.messages = [];
       this.isLoading = false;
+      this.showSettings = false;
+      this.statusMessage = null;
       this.initModal();
     }
   
@@ -10662,10 +10673,12 @@
       if (!el) {
         el = document.createElement('div');
         el.id = 'aiTutorModal';
-        el.className = 'video-modal-overlay';
-        el.style.display = 'none';
         document.body.appendChild(el);
       }
+      el.className = 'ai-modal-overlay';
+      el.setAttribute('role', 'dialog');
+      el.setAttribute('aria-modal', 'true');
+      el.setAttribute('aria-label', 'Kakak Belajar Pintar');
       this.modalEl = el;
       this.attachOverlayClose();
     }
@@ -10676,12 +10689,30 @@
           this.close();
         }
       });
+  
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen()) {
+          this.close();
+        }
+      });
+    }
+  
+    isOpen() {
+      return this.modalEl && this.modalEl.classList.contains('active');
     }
   
     open(initialPrompt = '') {
       this.render();
       this.modalEl.style.display = 'flex';
+      // Trigger reflow for smooth transition
+      void this.modalEl.offsetHeight;
+      this.modalEl.classList.add('active');
       document.body.style.overflow = 'hidden';
+  
+      setTimeout(() => {
+        const input = this.modalEl.querySelector('#aiUserInput');
+        if (input) input.focus();
+      }, 150);
   
       if (initialPrompt && initialPrompt.trim()) {
         this.sendQuestion(initialPrompt.trim());
@@ -10689,20 +10720,146 @@
     }
   
     close() {
-      this.modalEl.style.display = 'none';
+      if (!this.modalEl) return;
+      this.modalEl.classList.remove('active');
+      setTimeout(() => {
+        if (!this.modalEl.classList.contains('active')) {
+          this.modalEl.style.display = 'none';
+        }
+      }, 220);
       document.body.style.overflow = '';
     }
   
     getApiKey() {
+      if (typeof window !== 'undefined' && window.GEMINI_API_KEY) {
+        return window.GEMINI_API_KEY;
+      }
       return localStorage.getItem('anabhi_gemini_api_key') || '';
     }
   
     setApiKey(key) {
       if (key && key.trim()) {
         localStorage.setItem('anabhi_gemini_api_key', key.trim());
+        if (typeof window !== 'undefined') {
+          window.GEMINI_API_KEY = key.trim();
+        }
       } else {
         localStorage.removeItem('anabhi_gemini_api_key');
+        if (typeof window !== 'undefined') {
+          delete window.GEMINI_API_KEY;
+        }
       }
+    }
+  
+    getModel() {
+      const saved = localStorage.getItem('anabhi_gemini_model');
+      if (saved) return saved;
+      const globalConfig = typeof window !== 'undefined' ? window.GEMINI_CONFIG : null;
+      return (globalConfig && globalConfig.MODEL) || GEMINI_CONFIG.MODEL;
+    }
+  
+    setModel(modelName) {
+      if (modelName && modelName.trim()) {
+        const m = modelName.trim();
+        localStorage.setItem('anabhi_gemini_model', m);
+        if (typeof window !== 'undefined' && window.GEMINI_CONFIG) {
+          window.GEMINI_CONFIG.MODEL = m;
+        }
+      }
+    }
+  
+    getEndpoint() {
+      const saved = localStorage.getItem('anabhi_gemini_endpoint');
+      if (saved) return saved;
+      const globalConfig = typeof window !== 'undefined' ? window.GEMINI_CONFIG : null;
+      return (globalConfig && globalConfig.ENDPOINT) || GEMINI_CONFIG.ENDPOINT;
+    }
+  
+    setEndpoint(url) {
+      if (url && url.trim()) {
+        const u = url.trim();
+        localStorage.setItem('anabhi_gemini_endpoint', u);
+        if (typeof window !== 'undefined' && window.GEMINI_CONFIG) {
+          window.GEMINI_CONFIG.ENDPOINT = u;
+        }
+      }
+    }
+  
+    async testConnection() {
+      const key = this.getApiKey();
+      if (!key) {
+        this.statusMessage = { type: 'error', text: 'Kunci API belum diisi. Masukkan API Key terlebih dahulu!' };
+        this.render();
+        return;
+      }
+  
+      const endpoint = this.getEndpoint().replace(/\/?$/, '/');
+      const model = this.getModel();
+      const url = `${endpoint}${model}:generateContent?key=${key}`;
+  
+      this.statusMessage = { type: 'info', text: `Menghubungkan ke ${model}...` };
+      this.render();
+  
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: 'Jawab satu kata saja: "Aktif!"' }] }],
+            generationConfig: { maxOutputTokens: 20 }
+          })
+        });
+  
+        if (resp.ok) {
+          this.statusMessage = { type: 'success', text: `✅ Berhasil! Model "${model}" aktif dan siap digunakan.` };
+        } else {
+          const errJson = await resp.json().catch(() => ({}));
+          const msg = errJson.error?.message || `HTTP ${resp.status}`;
+          this.statusMessage = { type: 'error', text: `❌ Gagal: ${msg}` };
+        }
+      } catch (e) {
+        this.statusMessage = { type: 'error', text: `❌ Kendala Jaringan: ${e.message}` };
+      }
+      this.render();
+    }
+  
+    formatMarkdown(text) {
+      if (!text) return '';
+      let safe = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+  
+      // Bold **text**
+      safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      // Italic *text*
+      safe = safe.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  
+      // List and paragraphs
+      const lines = safe.split('\n');
+      let inList = false;
+      let html = '';
+  
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('• ')) {
+          if (!inList) {
+            html += '<ul>';
+            inList = true;
+          }
+          html += `<li>${trimmed.replace(/^[-*•]\s*/, '')}</li>`;
+        } else {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          if (trimmed.length > 0) {
+            html += `<p>${trimmed}</p>`;
+          }
+        }
+      }
+      if (inList) html += '</ul>';
+      return html || safe;
     }
   
     async sendQuestion(questionText) {
@@ -10714,12 +10871,13 @@
       this.messages.push({ role: 'user', text: questionText });
       this.isLoading = true;
       this.render();
+      this.scrollToBottom();
   
       try {
         let reply = '';
         const localKey = this.getApiKey();
   
-        // Coba panggil Cloudflare Pages Function /api/ai-tutor bila ada atau bila tanpa local key
+        // 1. Coba Cloudflare Function /api/ai-tutor jika di-host di Cloudflare Pages dan tanpa key lokal
         if (!localKey && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
           try {
             const cfResp = await fetch('/api/ai-tutor', {
@@ -10728,7 +10886,7 @@
               body: JSON.stringify({
                 prompt: questionText,
                 subject: currentSub,
-                studentGrade: 'Kelas 1 SD'
+                studentGrade: 'Kelas 1–3 SD'
               })
             });
             if (cfResp.ok) {
@@ -10736,55 +10894,78 @@
               reply = data.reply;
             }
           } catch (e) {
-            // Cloudflare endpoint not available or local testing
+            // Cloudflare function fallback
           }
         }
   
-        // Jika belum terjawab dan ada localKey, panggil langsung Google Gemini API
+        // 2. Jika ada localKey, panggil langsung Google Gemini API menggunakan GEMINI_CONFIG
         if (!reply && localKey) {
-          const sysMsg = 'Kamu adalah Kakak Belajar Pintar dari Anabhi Dev Smart Study untuk siswa SD. Berikan penjelasan yang ramah, santun, ceria, edukatif dengan analogi sederhana. JANGAN langsung membocorkan jawaban soal ujian, melainkan pandu langkah berpikirnya. Mata pelajaran: ' + currentSub;
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${localKey}`;
-          
+          const endpoint = this.getEndpoint().replace(/\/?$/, '/');
+          const model = this.getModel();
+          const geminiUrl = `${endpoint}${model}:generateContent?key=${localKey}`;
+  
+          const sysMsg = `Kamu adalah "Kakak Belajar Pintar" dari Anabhi Dev Smart Study, tutor interaktif yang ramah, santun, ceria, dan edukatif untuk siswa SD (Sekolah Dasar Kelas 1 sampai Kelas 3).
+  Mata Pelajaran Saat Ini: ${currentSub}.
+  Panduan Menjawab:
+  1. Gunakan bahasa Indonesia yang hangat, bersahabat, penuh pujian dan dorongan semangat belajar!
+  2. Jelaskan materi dengan analogi benda sehari-hari atau cerita singkat yang mudah dibayangkan anak-anak.
+  3. JANGAN langsung membocorkan jawaban soal ujian secara instan; berikan petunjuk (clue) logis dan ajak anak berpikir langkah demi langkah ("Satu Soal Banyak Cara").
+  4. Susun respon dengan rapi, gunakan baris baru, poin-poin sederhana, dan emoji yang ceria.`;
+  
           const gResp = await fetch(geminiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [
-                { role: 'user', parts: [{ text: `${sysMsg}\n\nPertanyaan Anak: "${questionText}"` }] }
+                {
+                  role: 'user',
+                  parts: [{ text: `${sysMsg}\n\nPertanyaan Siswa:\n"${questionText}"` }]
+                }
               ],
-              generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
+              generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 800
+              }
             })
           });
   
           if (gResp.ok) {
             const gData = await gResp.json();
-            reply = gData.candidates?.[0]?.content?.parts?.[0]?.text;
+            reply = gData.candidates?.[0]?.content?.parts?.[0]?.text || '';
           } else {
             const errText = await gResp.text();
-            throw new Error('Gemini API Error: ' + errText);
+            throw new Error(`Google Gemini API (${gResp.status}): ${errText}`);
           }
         }
   
         if (!reply) {
           reply = `Halo Sahabat Juara! 🌟 Untuk mengaktifkan Kakak Belajar AI:
-  1. **Di Cloudflare Pages**: Tambahkan Environment Variable 'GEMINI_API_KEY' di Cloudflare Dashboard (Settings ➔ Environment variables).
-  2. **Di Komputer Lokal**: Klik tombol ⚙️ Pengaturan di pojok atas dialog ini dan masukkan Gemini API Key milikmu.
   
-  Kakak siap membantu menjelaskan materi pelajaran apa saja!`;
+  1. Klik tombol **🔑 Masukkan API Key** di atas chat ini.
+  2. Tempelkan Google Gemini API Key milik Kakak (bisa didapatkan gratis di [Google AI Studio](https://aistudio.google.com)).
+  3. Model default yang digunakan adalah **${this.getModel()}**.
+  
+  Setelah tersimpan, Kakak siap menjawab dan menemani belajar kapan saja!`;
         }
   
         this.messages.push({ role: 'ai', text: reply });
       } catch (err) {
         this.messages.push({
           role: 'ai',
-          text: 'Wah, terjadi kendala saat menghubungi AI: ' + err.message + '. Silakan periksa koneksi internet atau Gemini API Key.'
+          text: `Wah, terjadi kendala saat menghubungi Kakak AI: ${err.message}. Silakan periksa koneksi internet atau Gemini API Key milikmu.`
         });
       } finally {
         this.isLoading = false;
         this.render();
+        this.scrollToBottom();
+      }
+    }
+  
+    scrollToBottom() {
+      setTimeout(() => {
         const chatBox = this.modalEl.querySelector('#aiChatHistory');
         if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-      }
+      }, 50);
     }
   
     render() {
@@ -10792,98 +10973,173 @@
       const lang = state.lang || 'id';
       const isEn = lang === 'en';
       const apiKey = this.getApiKey();
+      const currentModel = this.getModel();
+      const currentEndpoint = this.getEndpoint();
+      const hasKey = Boolean(apiKey);
   
       this.modalEl.innerHTML = `
-        <div class="video-modal-dialog" style="max-width:680px; width:92%; max-height:88vh; display:flex; flex-direction:column; padding:0; overflow:hidden; border-radius:24px; border:2px solid var(--teal);">
-          <!-- Modal Header -->
-          <div style="background:var(--navy); color:#fff; padding:18px 24px; display:flex; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span style="font-size:26px;">🤖</span>
-              <div>
-                <h3 style="margin:0; font-size:17px; font-weight:850; color:#fff;">
-                  ${isEn ? 'Smart AI Tutor — Ask Anything!' : 'Kakak Belajar Pintar — Tanya Seputar Pelajaran'}
+        <div class="ai-modal-dialog">
+          <!-- Modal Header Mewah & Status Model -->
+          <div class="ai-modal-header">
+            <div class="ai-header-info">
+              <span class="ai-avatar-badge">🤖</span>
+              <div class="ai-header-titles">
+                <h3 class="ai-header-title">
+                  ${isEn ? 'Smart AI Tutor — Study Companion' : 'Kakak Belajar Pintar — Tanya AI'}
+                  <span class="ai-model-pill">${currentModel}</span>
                 </h3>
-                <span style="font-size:11.5px; opacity:0.85;">Powered by Google Gemini · Anabhi Dev Smart Study</span>
+                <div class="ai-header-subtitle">
+                  ${hasKey ? '🟢 Siap Membimbing · Powered by Google Gemini' : '🟡 Masukkan API Key untuk Mengaktifkan'}
+                </div>
               </div>
             </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <button class="iconbtn" id="btnAiSettingsToggle" type="button" title="Pengaturan API Key" style="background:rgba(255,255,255,0.15); color:#fff; border-radius:10px; width:34px; height:34px;">⚙️</button>
-              <button class="btn-close-modal" id="btnAiClose" type="button" aria-label="Tutup" style="color:#fff; font-size:22px; width:34px; height:34px; border:none; background:transparent; cursor:pointer;">✕</button>
+  
+            <div class="ai-header-actions">
+              <button class="ai-btn-header" id="btnAiToggleSettings" type="button" title="Pengaturan Kunci API & Model">
+                ⚙️ <span>${hasKey ? 'Pengaturan' : 'Input Key'}</span>
+              </button>
+              <button class="ai-btn-close" id="btnAiCloseModal" type="button" aria-label="Tutup Dialog">✕</button>
             </div>
           </div>
   
-          <!-- Panel Pengaturan API Key (Tersembunyi secara default) -->
-          <div id="aiSettingsPanel" style="display:none; background:var(--surface); border-bottom:1px solid var(--line); padding:16px 24px;">
-            <h4 style="margin:0 0 6px; font-size:13px; font-weight:800; color:var(--ink);">🔑 Pengaturan Gemini API Key</h4>
-            <p style="margin:0 0 10px; font-size:12px; color:var(--muted); line-height:1.5;">
-              Di Cloudflare Pages, kunci aman disimpan di <strong>Environment Variables (GEMINI_API_KEY)</strong>. Untuk testing di komputer lokal, Kakak bisa memasukkan API Key di bawah:
-            </p>
-            <div style="display:flex; gap:8px;">
-              <input type="password" id="inputLocalGeminiKey" placeholder="Tempel AIzaSy... API Key di sini" value="${apiKey}" style="flex:1; padding:8px 12px; border-radius:10px; border:1px solid var(--line); font-size:12.5px; background:var(--card); color:var(--ink);">
-              <button class="btn primary" id="btnSaveLocalKey" type="button" style="padding:6px 14px; font-size:12px;">Simpan Kunci</button>
+          <!-- Panel Pengaturan API Key & Model (Collapsible) -->
+          <div class="ai-settings-drawer" id="aiSettingsDrawer" style="display: ${this.showSettings ? 'flex' : 'none'};">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h4 class="ai-settings-title">🔑 Konfigurasi Google Gemini API</h4>
+              ${hasKey ? `<button class="btn" id="btnClearKey" type="button" style="padding:4px 10px; font-size:11px; background:#ef4444; color:#fff; border:none; border-radius:8px;">Hapus Kunci</button>` : ''}
+            </div>
+  
+            ${this.statusMessage ? `
+              <div style="padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; ${
+                this.statusMessage.type === 'success' ? 'background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0;' :
+                this.statusMessage.type === 'error' ? 'background:#fef2f2; color:#991b1b; border:1px solid #fecaca;' :
+                'background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;'
+              }">
+                ${this.statusMessage.text}
+              </div>
+            ` : ''}
+  
+            <div class="ai-settings-grid">
+              <div>
+                <label class="ai-field-label" for="inputApiKey">Gemini API Key (AIzaSy...):</label>
+                <div class="ai-input-with-action">
+                  <input class="ai-input" id="inputApiKey" type="password" placeholder="Tempel API Key di sini..." value="${apiKey}">
+                  <button class="btn" id="btnToggleKeyVisibility" type="button" style="padding:6px 10px; font-size:12px;" title="Lihat/Sembunyikan">👁️</button>
+                </div>
+              </div>
+  
+              <div>
+                <label class="ai-field-label" for="selectModel">Pilihan Model Gemini:</label>
+                <select class="ai-input" id="selectModel" style="cursor:pointer;">
+                  <option value="gemini-3.5-flash-lite" ${currentModel === 'gemini-3.5-flash-lite' ? 'selected' : ''}>gemini-3.5-flash-lite (Rekomendasi Utama Cepat &amp; Hemat)</option>
+                  <option value="gemini-2.5-flash-lite" ${currentModel === 'gemini-2.5-flash-lite' ? 'selected' : ''}>gemini-2.5-flash-lite (Sangat Cepat)</option>
+                  <option value="gemini-2.0-flash" ${currentModel === 'gemini-2.0-flash' ? 'selected' : ''}>gemini-2.0-flash (Multimodal Serbaguna)</option>
+                  <option value="gemini-1.5-flash" ${currentModel === 'gemini-1.5-flash' ? 'selected' : ''}>gemini-1.5-flash (Versi Sebelumnya)</option>
+                </select>
+              </div>
+            </div>
+  
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
+              <div style="font-size:11.5px; color:var(--muted);">
+                Belum punya API key? <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color:var(--teal); font-weight:700; text-decoration:underline;">Dapatkan gratis di Google AI Studio ↗</a>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn" id="btnTestConnection" type="button" style="padding:6px 12px; font-size:12px;">🧪 Tes Koneksi</button>
+                <button class="btn primary" id="btnSaveConfig" type="button" style="padding:6px 16px; font-size:12px; font-weight:800;">Simpan Pengaturan</button>
+              </div>
             </div>
           </div>
   
-          <!-- Chat History -->
-          <div id="aiChatHistory" style="flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:16px; min-height:240px; max-height:420px; background:var(--card);">
+          <!-- Chat History Area -->
+          <div class="ai-chat-history" id="aiChatHistory">
+            <!-- Setup Banner jika Belum Ada API Key -->
+            ${!hasKey ? `
+              <div class="ai-setup-card">
+                <h4 class="ai-setup-title">
+                  <span>🔑</span> ${isEn ? 'Enter Gemini API Key to Start' : 'Masukkan Google Gemini API Key'}
+                </h4>
+                <p class="ai-setup-desc">
+                  ${isEn 
+                    ? 'To activate the interactive AI Tutor with <strong>gemini-3.5-flash-lite</strong>, enter your Gemini API Key below. The key is securely stored in your local browser.' 
+                    : 'Untuk mengaktifkan Kakak Belajar Pintar menggunakan model <strong>gemini-3.5-flash-lite</strong>, masukkan API Key Anda di bawah ini. Kunci tersimpan secara lokal dan aman di browser Kakak.'}
+                </p>
+                <div class="ai-setup-input-wrap">
+                  <input class="ai-input" id="inputSetupKey" type="password" placeholder="Tempel AIzaSy... API Key di sini">
+                  <button class="btn primary" id="btnSaveSetupKey" type="button" style="padding:8px 18px; font-weight:800; font-size:12.5px;">
+                    Simpan &amp; Aktifkan 🚀
+                  </button>
+                </div>
+                <div style="font-size:11.5px; color:var(--muted);">
+                  Gratis dan cepat! Dapatkan kunci di <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color:var(--teal); font-weight:700; text-decoration:underline;">Google AI Studio (aistudio.google.com) ↗</a>
+                </div>
+              </div>
+            ` : ''}
+  
+            <!-- Empty State & Pertanyaan Pembuka -->
             ${this.messages.length === 0 ? `
-              <div style="text-align:center; padding:30px 10px; color:var(--muted);">
-                <span style="font-size:42px; display:block; margin-bottom:12px;">🌟</span>
-                <strong style="display:block; font-size:16px; color:var(--ink); margin-bottom:6px;">
-                  ${isEn ? 'Hello! What do you want to learn today?' : 'Halo Sobat Juara! Mau tanya apa hari ini?'}
+              <div class="ai-empty-state">
+                <span class="ai-empty-star">🌟</span>
+                <strong class="ai-empty-title">
+                  ${isEn ? 'Hello Champion! What do you want to explore today?' : 'Halo Sahabat Juara! Mau tanya apa hari ini?'}
                 </strong>
-                <p style="font-size:13px; margin:0 0 16px; line-height:1.6;">
-                  ${isEn ? 'I can explain math tricks, nature wonders, history, or help guide your homework step by step!' : 'Kakak AI siap membimbingmu memahami cara cepat berhitung, mengenal rahasia alam bumi, cerita rakyat, dan konsep pelajaran!'}
+                <p class="ai-empty-desc">
+                  ${isEn
+                    ? 'Ask about quick math methods ("One Problem, Many Ways"), geography facts, science wonders, or Indonesian language!'
+                    : 'Kakak AI siap membimbingmu memahami trik cepat berhitung 14 jurus ("Satu Soal Banyak Cara"), peta nusantara, bumi dan antariksa, hingga cerita rakyat!'}
                 </p>
   
                 <!-- Quick starter chips -->
-                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;">
-                  <button class="region-chip starter-q-chip" data-q="Jelasin dong kak trik berhitung cepat 67 + 59!" type="button" style="font-size:12px;">
+                <div class="ai-starters-grid">
+                  <button class="region-chip starter-q-chip" data-q="Jelaskan cara cepat berhitung 67 + 59 dengan jurus Kompensasi Belanda!" type="button">
                     🧮 Trik 67 + 59
                   </button>
-                  <button class="region-chip starter-q-chip" data-q="Kenapa bumi berbentuk bola dan tampak biru dari luar angkasa?" type="button" style="font-size:12px;">
+                  <button class="region-chip starter-q-chip" data-q="Kenapa bumi berbentuk bulat pepat dan tampak biru dari luar angkasa?" type="button">
                     🌍 Kenapa Bumi Bulat?
                   </button>
-                  <button class="region-chip starter-q-chip" data-q="Apa saja tradisi unik dan tempat terkenal di Pulau Bali?" type="button" style="font-size:12px;">
+                  <button class="region-chip starter-q-chip" data-q="Apa saja tradisi unik dan tempat terkenal di Pulau Bali?" type="button">
                     🏝️ Budaya Pulau Bali
                   </button>
-                  <button class="region-chip starter-q-chip" data-q="Bagaimana cara menyusun kalimat S-P-O yang benar?" type="button" style="font-size:12px;">
+                  <button class="region-chip starter-q-chip" data-q="Bagaimana cara menyusun kalimat S-P-O (Subjek - Predikat - Objek) yang benar?" type="button">
                     📖 Pola Kalimat S-P-O
                   </button>
                 </div>
               </div>
             ` : ''}
   
+            <!-- Daftar Pesan Percakapan -->
             ${this.messages.map(m => `
-              <div style="display:flex; gap:10px; align-items:flex-start; ${m.role === 'user' ? 'justify-content:flex-end;' : 'justify-content:flex-start;'}">
-                ${m.role === 'ai' ? '<span style="font-size:24px;">🤖</span>' : ''}
-                <div style="max-width:82%; padding:12px 16px; border-radius:18px; font-size:13.5px; line-height:1.65; ${
-                  m.role === 'user' 
-                    ? 'background:var(--teal); color:#071a2b; font-weight:600; border-bottom-right-radius:4px;' 
-                    : 'background:var(--surface); color:var(--ink); border:1px solid var(--line); border-bottom-left-radius:4px; white-space:pre-wrap;'
-                }">
-                  ${m.text}
+              <div class="ai-msg-row ${m.role}">
+                ${m.role === 'ai' ? '<span class="ai-msg-avatar">🤖</span>' : ''}
+                <div class="ai-bubble ${m.role}">
+                  ${m.role === 'ai' ? this.formatMarkdown(m.text) : m.text}
                 </div>
-                ${m.role === 'user' ? '<span style="font-size:24px;">🧒</span>' : ''}
+                ${m.role === 'user' ? '<span class="ai-msg-avatar">🧒</span>' : ''}
               </div>
             `).join('')}
   
+            <!-- Loading Indicator -->
             ${this.isLoading ? `
-              <div style="display:flex; gap:10px; align-items:center;">
-                <span style="font-size:24px;">🤖</span>
-                <div style="background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:10px 18px; font-size:13px; color:var(--muted);">
-                  ✨ Kakak AI sedang merangkai penjelasan ceria...
+              <div class="ai-loading-box">
+                <span class="ai-msg-avatar">🤖</span>
+                <div class="ai-loading-bubble">
+                  <span>Kakak AI sedang merangkai penjelasan ceria</span>
+                  <div class="ai-loading-dots">
+                    <span></span><span></span><span></span>
+                  </div>
                 </div>
               </div>
             ` : ''}
           </div>
   
           <!-- Chat Input Bar -->
-          <div style="padding:14px 20px; background:var(--surface); border-top:1px solid var(--line); display:flex; gap:10px; align-items:center;">
-            <input type="text" id="aiUserInput" placeholder="${isEn ? 'Ask a question about your lesson...' : 'Ketik pertanyaan belajarmu di sini...'}" style="flex:1; padding:10px 16px; border-radius:14px; border:1px solid var(--line); font-size:13.5px; background:var(--card); color:var(--ink);">
-            <button class="btn primary" id="btnAiSend" type="button" style="padding:10px 18px; font-weight:800; font-size:13px;">
+          <div class="ai-input-bar">
+            <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question about your lesson...' : 'Ketik pertanyaan belajarmu di sini...'}" autocomplete="off">
+            <button class="btn primary ai-btn-send" id="btnAiSend" type="button">
               ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
             </button>
+            ${this.messages.length > 0 ? `
+              <button class="iconbtn" id="btnClearChat" type="button" title="Bersihkan Percakapan" style="height:42px; min-width:42px; border-radius:12px; font-size:14px;">🗑️</button>
+            ` : ''}
           </div>
         </div>
       `;
@@ -10892,27 +11148,89 @@
     }
   
     attachEvents() {
-      const btnClose = this.modalEl.querySelector('#btnAiClose');
+      // Tombol Tutup Dialog
+      const btnClose = this.modalEl.querySelector('#btnAiCloseModal');
       if (btnClose) btnClose.addEventListener('click', () => this.close());
   
-      const btnSettings = this.modalEl.querySelector('#btnAiSettingsToggle');
-      const settingsPanel = this.modalEl.querySelector('#aiSettingsPanel');
-      if (btnSettings && settingsPanel) {
-        btnSettings.addEventListener('click', () => {
-          settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+      // Toggle Settings Drawer
+      const btnToggleSettings = this.modalEl.querySelector('#btnAiToggleSettings');
+      if (btnToggleSettings) {
+        btnToggleSettings.addEventListener('click', () => {
+          this.showSettings = !this.showSettings;
+          this.statusMessage = null;
+          this.render();
         });
       }
   
-      const btnSaveKey = this.modalEl.querySelector('#btnSaveLocalKey');
-      const inputKey = this.modalEl.querySelector('#inputLocalGeminiKey');
-      if (btnSaveKey && inputKey) {
-        btnSaveKey.addEventListener('click', () => {
-          this.setApiKey(inputKey.value);
-          alert('Kunci Gemini API berhasil disimpan!');
-          settingsPanel.style.display = 'none';
+      // Toggle Password Visibility
+      const btnToggleVis = this.modalEl.querySelector('#btnToggleKeyVisibility');
+      const inputApiKey = this.modalEl.querySelector('#inputApiKey');
+      if (btnToggleVis && inputApiKey) {
+        btnToggleVis.addEventListener('click', () => {
+          inputApiKey.type = inputApiKey.type === 'password' ? 'text' : 'password';
         });
       }
   
+      // Simpan Konfigurasi dari Drawer
+      const btnSaveConfig = this.modalEl.querySelector('#btnSaveConfig');
+      const selectModel = this.modalEl.querySelector('#selectModel');
+      if (btnSaveConfig) {
+        btnSaveConfig.addEventListener('click', () => {
+          if (inputApiKey) this.setApiKey(inputApiKey.value);
+          if (selectModel) this.setModel(selectModel.value);
+          this.statusMessage = { type: 'success', text: `✅ Pengaturan berhasil disimpan! Model: ${this.getModel()}` };
+          setTimeout(() => {
+            this.showSettings = false;
+            this.statusMessage = null;
+            this.render();
+          }, 1200);
+          this.render();
+        });
+      }
+  
+      // Tes Koneksi API
+      const btnTest = this.modalEl.querySelector('#btnTestConnection');
+      if (btnTest) {
+        btnTest.addEventListener('click', () => {
+          if (inputApiKey && inputApiKey.value.trim()) {
+            this.setApiKey(inputApiKey.value.trim());
+          }
+          if (selectModel) this.setModel(selectModel.value);
+          this.testConnection();
+        });
+      }
+  
+      // Hapus API Key
+      const btnClearKey = this.modalEl.querySelector('#btnClearKey');
+      if (btnClearKey) {
+        btnClearKey.addEventListener('click', () => {
+          if (confirm('Apakah Kakak yakin ingin menghapus API Key yang tersimpan?')) {
+            this.setApiKey('');
+            this.statusMessage = { type: 'info', text: 'Kunci API telah dihapus.' };
+            this.render();
+          }
+        });
+      }
+  
+      // Simpan dari Setup Card Utama
+      const btnSaveSetup = this.modalEl.querySelector('#btnSaveSetupKey');
+      const inputSetupKey = this.modalEl.querySelector('#inputSetupKey');
+      if (btnSaveSetup && inputSetupKey) {
+        btnSaveSetup.addEventListener('click', () => {
+          const val = inputSetupKey.value.trim();
+          if (!val) {
+            alert('Silakan masukkan atau tempel Gemini API Key terlebih dahulu!');
+            return;
+          }
+          this.setApiKey(val);
+          this.render();
+        });
+        inputSetupKey.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') btnSaveSetup.click();
+        });
+      }
+  
+      // Kirim Pesan
       const btnSend = this.modalEl.querySelector('#btnAiSend');
       const inputUser = this.modalEl.querySelector('#aiUserInput');
       const doSend = () => {
@@ -10930,6 +11248,7 @@
         });
       }
   
+      // Quick Starter Chips
       const starterChips = this.modalEl.querySelectorAll('.starter-q-chip');
       starterChips.forEach(chip => {
         chip.addEventListener('click', () => {
@@ -10937,6 +11256,17 @@
           this.sendQuestion(q);
         });
       });
+  
+      // Bersihkan Chat
+      const btnClearChat = this.modalEl.querySelector('#btnClearChat');
+      if (btnClearChat) {
+        btnClearChat.addEventListener('click', () => {
+          if (confirm('Bersihkan percakapan ini dan mulai dari awal?')) {
+            this.messages = [];
+            this.render();
+          }
+        });
+      }
     }
   }
   
@@ -11208,6 +11538,10 @@
             <span class="icon">📈</span>
             <span class="label">${t('progress', lang)}</span>
           </button>
+          <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
+            <span class="icon">🤖</span>
+            <span class="label">${lang === 'en' ? 'Ask AI Tutor' : 'Tanya Kakak AI'}</span>
+          </button>
         </nav>
   
         <!-- Footer Kredit Resmi (Standar Coding 1.5 Bagian 6) -->
@@ -11230,12 +11564,26 @@
         });
       }
   
-      const navItems = this.sidebar.querySelectorAll('.nav-item');
+      const sidebarAiBtn = this.sidebar.querySelector('#sidebarAiTutorBtn');
+      if (sidebarAiBtn) {
+        sidebarAiBtn.addEventListener('click', () => {
+          if (appState.get().drawerOpen) {
+            appState.toggleDrawer(false);
+          }
+          if (window.aiTutorModal) {
+            window.aiTutorModal.open();
+          }
+        });
+      }
+  
+      const navItems = this.sidebar.querySelectorAll('.nav-item[data-route]');
       navItems.forEach(item => {
         item.addEventListener('click', () => {
           const route = item.getAttribute('data-route');
           const subjectId = item.getAttribute('data-subject-id');
-          appState.navigate(route, subjectId);
+          if (route) {
+            appState.navigate(route, subjectId);
+          }
         });
       });
     }
