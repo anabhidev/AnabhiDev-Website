@@ -2,8 +2,8 @@
 AnabhiDev-MP — Mahadaya Partners Website
 CSS · Company Profile
 Development · Anabhi Dev
-Version   : 1.7
-Generated : 13 September 2026, 19:45:00
+Version   : 1.8
+Generated : 13 September 2026, 20:30:00
 ================================================================ */
 
 /* ── Self-hosted fonts (SOP kategori 1) ──
@@ -1645,7 +1645,8 @@ select.form-control { cursor: pointer; }
 /* ── WhatsApp FAB ── */
 .wa-fab {
   position: fixed;
-  bottom: 30px; right: 30px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  right: calc(24px + env(safe-area-inset-right, 0px));
   width: 60px; height: 60px;
   background: #25d366;
   border-radius: 50%;
@@ -1662,29 +1663,10 @@ select.form-control { cursor: pointer; }
 }
 .wa-fab svg { width: 30px; height: 30px; fill: var(--white); }
 
-/* ── Back to Top ── */
+/* ── Back to Top (Dihapus sesuai arahan user) ── */
 .back-to-top {
-  position: fixed;
-  bottom: 100px; right: 30px;
-  width: 44px; height: 44px;
-  background: var(--emerald-700);
-  color: var(--white);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 998;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s var(--ease);
+  display: none !important;
 }
-.back-to-top.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.back-to-top:hover { background: var(--emerald-600); }
 
 /* ── Responsive ── */
 @media (max-width: 1080px) {
@@ -1868,10 +1850,14 @@ select.form-control { cursor: pointer; }
   margin-bottom: 0;
 }
 
-/* ── Target sentuh minimal 44px untuk kontrol melayang (WCAG 2.2 / SOP kategori 8) ── */
+/* ── Target sentuh minimal 48px untuk kontrol melayang (WCAG 2.2 / SOP kategori 8) ── */
 @media (max-width: 480px) {
-  .wa-fab { bottom: 20px; right: 20px; width: 56px; height: 56px; }
-  .back-to-top { bottom: 86px; right: 24px; width: 44px; height: 44px; }
+  .wa-fab {
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: calc(18px + env(safe-area-inset-right, 0px));
+    width: 56px;
+    height: 56px;
+  }
 }
 
 /* ── Books Catalog ── */
@@ -2964,6 +2950,13 @@ select.form-control { cursor: pointer; }
 @media (max-width: 768px) {
   .form-grid-2 { grid-template-columns: 1fr; }
   .cert-form-box { padding: 2rem 1.25rem; }
+  .iso-portfolio-grid,
+  .problem-grid,
+  .why-mtc-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 

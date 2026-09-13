@@ -2,15 +2,14 @@
 AnabhiDev-MP — Mahadaya Partners Website
 JavaScript · Main Script
 Development · Anabhi Dev
-Version   : 1.4
-Generated : 13 September 2026, 10:00:00
+Version   : 1.5
+Generated : 13 September 2026, 20:30:00
 ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ─── Header Scroll & Back-to-Top (Unified RAF-Throttled Scroll Listener) ───
+  // ─── Header Scroll (Unified RAF-Throttled Scroll Listener) ───
   const header = document.querySelector('.site-header');
-  const backToTop = document.querySelector('.back-to-top');
 
   let scrollTicking = false;
   const updateScrollState = () => {
@@ -21,13 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         header.classList.add('scrolled');
       } else {
         header.classList.remove('scrolled');
-      }
-    }
-    if (backToTop) {
-      if (y > 500) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
       }
     }
   };
