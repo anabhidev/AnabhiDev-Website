@@ -5,8 +5,8 @@
      MFB-HR — Miss Fish Bali HR Career & Recruitment Platform
      HTML5 · CSS3 · JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 2.1
-     Generated : 13 September 2026, 20:00:00 WITA
+     Version   : 2.2
+     Generated : 13 September 2026, 20:30:00 WITA
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -2294,6 +2294,257 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
   flex-shrink: 0;
   margin-top: 1px;
 }
+
+/* ================================================================
+   AI Career Progression & 5-Year Hospitality Roadmap (admin-career)
+   ================================================================ */
+.career-hero-card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--line);
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.career-hero-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.career-hero-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  flex-shrink: 0;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.career-path-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.career-path-tab {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.career-path-tab:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.career-path-tab.active-track-craft {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.12);
+}
+.career-path-tab.active-track-mgr {
+  border-color: var(--accent);
+  background: rgba(21, 154, 147, 0.05);
+  box-shadow: 0 4px 18px rgba(21, 154, 147, 0.12);
+}
+.career-path-tab.active-track-ent {
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.05);
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.12);
+}
+.career-path-tab-icon {
+  font-size: 24px;
+  margin-bottom: 2px;
+}
+.career-path-tab-title {
+  font-size: 14px;
+  font-weight: 850;
+  color: var(--text);
+}
+.career-path-tab-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.career-path-tab.active-track-craft .career-path-tab-title { color: #d97706; }
+.career-path-tab.active-track-mgr .career-path-tab-title { color: var(--accent); }
+.career-path-tab.active-track-ent .career-path-tab-title { color: #7c3aed; }
+
+/* Timeline styling */
+.career-timeline-wrap {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 24px;
+}
+.career-timeline-wrap::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 14px;
+  bottom: 20px;
+  width: 2px;
+  background: var(--line);
+  border-radius: 1px;
+}
+.career-milestone-node {
+  position: relative;
+  margin-bottom: 24px;
+}
+.career-milestone-node:last-child {
+  margin-bottom: 0;
+}
+.career-milestone-node::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 22px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid var(--career-track-color, var(--accent));
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--surface);
+  z-index: 2;
+  transition: all 0.2s;
+}
+.career-milestone-node:hover::before {
+  background: var(--career-track-color, var(--accent));
+  transform: scale(1.15);
+}
+.career-milestone-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.career-milestone-card:hover {
+  border-color: var(--career-track-color, var(--accent));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.career-milestone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.career-milestone-period {
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--career-track-color, var(--accent));
+}
+.career-milestone-role {
+  font-size: 16.5px;
+  font-weight: 850;
+  color: var(--text);
+  margin: 3px 0;
+}
+.career-milestone-focus {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.career-salary-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.career-milestone-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.career-col-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.career-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.career-chip {
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 11.5px;
+  font-weight: 650;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.career-chip.cert {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #d97706;
+}
+.career-achieve-item {
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.5;
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.career-achieve-icon {
+  color: #10b981;
+  font-weight: 850;
+  flex-shrink: 0;
+}
+.career-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 768px) {
+  .career-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 
 <!-- Favicon & Touch Icons (Miss Fish Bali Official) -->
@@ -2359,6 +2610,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       </button>
       <button class="nav-btn" data-view="admin-salary" onclick="navTo('admin-salary')" style="border-left: 2px solid #10b981;" title="AI Hospitality Salary Benchmark &amp; Market Intelligence">
         <span class="ico">💰</span> AI Salary Benchmark
+      </button>
+      <button class="nav-btn" data-view="admin-career" onclick="navTo('admin-career')" style="border-left: 2px solid #f59e0b;" title="AI Career Progression &amp; 5-Year Hospitality Roadmap">
+        <span class="ico">🗺️</span> AI Career Roadmap
       </button>
       <button class="nav-btn" data-view="admin-analytics" onclick="navTo('admin-analytics')">
         <span class="ico">📈</span> Analytics & ClickUp
@@ -4205,6 +4459,210 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
         </div>
       </section>
 
+      <!-- ================================================================
+           SCREEN: AI CAREER PROGRESSION & 5-YEAR HOSPITALITY ROADMAP
+           ================================================================ -->
+      <section id="view-admin-career" class="view-panel">
+        <div class="section-header">
+          <div>
+            <div class="section-title" style="display: flex; align-items: center; gap: 10px;">
+              <span>🗺️ AI Career Progression &amp; 5-Year Hospitality Roadmap</span>
+              <span class="badge" style="background: rgba(245, 158, 11, 0.12); color: #d97706; border: 1px solid #f59e0b; font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 800;">Gemini 3.5 Flash Lite</span>
+            </div>
+            <div class="section-sub">Peta jalur karir berjenjang 5 tahun untuk talenta Miss Fish Bali — Meliputi Craft Mastery, Operational Leadership, dan Luxury Hospitality Consulting</div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-ghost" onclick="resetCareerForm()">
+              <span>🔄</span> Reset Form
+            </button>
+            <button class="btn btn-accent" id="btnRunCareerGen" onclick="generateCareerPath()" style="background: linear-gradient(135deg, #f59e0b, var(--accent));">
+              <span>🗺️</span> Generate Career Roadmap
+            </button>
+          </div>
+        </div>
+
+        <!-- Setup Form Grid: Left = Target Role, Track Focus & Language | Right = Candidate & CV Source -->
+        <div class="interview-setup-grid">
+          <!-- Left Card: Role, Track Focus & Language -->
+          <div class="card" style="padding: 22px;">
+            <div style="font-size: 14px; font-weight: 850; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>1. Posisi Target &amp; Preferensi Karir</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+              Pilih dari roster resmi Miss Fish Bali atau tentukan peran dan fokus track karir spesifik.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Pilih Lowongan Roster Resmi:</label>
+              <select class="select" id="carJobSelect" onchange="onCarJobSelected(this.value)" style="width: 100%;">
+                <option value="">-- Pilih Posisi Miss Fish Bali --</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Judul Peran (Target Role Override):</label>
+              <input class="input" id="carJobRole" placeholder="Kosongkan untuk deteksi otomatis dari CV/Profil" style="width: 100%;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Fokus Track Karir:</label>
+              <select class="select" id="carTrackFocus" style="width: 100%;">
+                <option value="all" selected>✨ Multi-Track (Craft + Managerial + Consulting)</option>
+                <option value="craft">🔪 Track 1: Culinary / Mixology Craft Mastery</option>
+                <option value="managerial">👔 Track 2: Operational Leadership &amp; Management</option>
+                <option value="entrepreneurial">🌟 Track 3: F&amp;B Concept Creation &amp; Consulting</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Bahasa Analisis:</label>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-accent" id="carLangAuto" onclick="setCarLang('auto')" style="padding: 6px 14px; font-size: 12px;">Auto</button>
+                <button type="button" class="btn btn-ghost" id="carLangId" onclick="setCarLang('id')" style="padding: 6px 14px; font-size: 12px;">🇮🇩 Bahasa Indonesia</button>
+                <button type="button" class="btn btn-ghost" id="carLangEn" onclick="setCarLang('en')" style="padding: 6px 14px; font-size: 12px;">🇬🇧 English</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Card: Candidate Selection & CV Source -->
+          <div class="card" style="padding: 22px;">
+            <div style="font-size: 14px; font-weight: 850; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>2. Profil Talenta &amp; Berkas CV</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+              Tautkan kandidat dari database pelamar atau unggah dokumen CV (.pdf / .docx) untuk analisis kompetensi.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Tautkan Pelamar dari Database (Opsional):</label>
+              <select class="select" id="carApplicantSelect" onchange="onCarApplicantSelected(this.value)" style="width: 100%;">
+                <option value="">-- Buat Roadmap Baru / Tanpa Pelamar Terdaftar --</option>
+              </select>
+            </div>
+
+            <!-- Tab Switcher: Upload File vs Paste Text -->
+            <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+              <button type="button" class="btn btn-accent" id="carTabUpload" onclick="switchCarCvTab('upload')" style="padding: 6px 14px; font-size: 12px;">
+                📄 Upload Dokumen (.pdf / .docx)
+              </button>
+              <button type="button" class="btn btn-ghost" id="carTabPaste" onclick="switchCarCvTab('paste')" style="padding: 6px 14px; font-size: 12px;">
+                📋 Paste Teks CV
+              </button>
+            </div>
+
+            <!-- Upload Panel -->
+            <div id="carUploadPanel">
+              <div id="carDropzone" style="border: 2px dashed var(--line); border-radius: 12px; padding: 26px 16px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--surface2);" onclick="document.getElementById('carFileInput').click()">
+                <input type="file" id="carFileInput" accept=".pdf,.docx,.doc" style="display: none;" onchange="onCarFileSelected(this)">
+                <div style="font-size: 28px; margin-bottom: 6px;">📂</div>
+                <div style="font-size: 13px; font-weight: 750; color: var(--text);">Drop file CV pelamar di sini atau klik untuk browse</div>
+                <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Mendukung format PDF &amp; Word DOCX (Maks 10MB)</div>
+              </div>
+              <div id="carFileStatus" style="display: none; margin-top: 10px; padding: 10px 14px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; font-size: 12px; color: #10b981; font-weight: 750; display: flex; align-items: center; justify-content: space-between;">
+                <span id="carFileName"></span>
+                <button type="button" class="btn btn-ghost" style="min-height: 24px; padding: 2px 8px; font-size: 11px; color: var(--danger);" onclick="removeCarFile()">Hapus</button>
+              </div>
+            </div>
+
+            <!-- Paste Panel -->
+            <div id="carPastePanel" style="display: none;">
+              <textarea class="input" id="carCvText" placeholder="Paste ringkasan riwayat kerja, skill, sertifikasi, atau teks CV pelamar di sini..." style="width: 100%; height: 140px; font-size: 12.5px; line-height: 1.5; resize: vertical;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error State Box -->
+        <div id="carErrorBox" style="display: none; margin-top: 18px; padding: 14px 18px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #ef4444; font-size: 13px; font-weight: 700;"></div>
+
+        <!-- Loading State Indicator -->
+        <div id="carLoadingState" style="display: none; margin-top: 24px; text-align: center; padding: 36px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm);">
+          <div style="width: 44px; height: 44px; border: 3px solid var(--line); border-top-color: #f59e0b; border-radius: 50%; margin: 0 auto 16px; animation: spin 0.8s linear infinite;"></div>
+          <div style="font-size: 15px; font-weight: 850; color: var(--text); margin-bottom: 6px;">Menyusun Roadmap Karir 5 Tahun &amp; Milestones...</div>
+          <div style="font-size: 12.5px; color: var(--muted);">Mengevaluasi kompetensi talenta, jalur craft mastery, target sertifikasi, dan trajektori kompensasi Miss Fish Bali.</div>
+        </div>
+
+        <!-- Results Section Container -->
+        <div id="carResultsSection" style="display: none; margin-top: 24px;">
+          <!-- Result Toolbar: Copy, Export PDF, Save to Candidate -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 18px;">🎯</span>
+              <h3 style="font-size: 17px; font-weight: 850; margin: 0; color: var(--text);">Hasil Perencanaan Karir 5 Tahun</h3>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn btn-ghost" onclick="copyCareerReport()" title="Salin roadmap karir ke clipboard">
+                <span>📋</span> Salin Roadmap
+              </button>
+              <button class="btn btn-ghost" onclick="exportCareerPDF()" title="Cetak / Download lembar Career Development Plan PDF resmi">
+                <span>🖨️</span> Cetak / PDF Plan
+              </button>
+              <button class="btn btn-accent" onclick="saveCareerToCandidate()" title="Simpan ringkasan roadmap ke dossier pelamar aktif">
+                <span>💾</span> Simpan ke Dossier
+              </button>
+            </div>
+          </div>
+
+          <!-- Current Profile Card -->
+          <div class="career-hero-card">
+            <div class="career-hero-profile">
+              <div class="career-hero-avatar">👤</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <h3 id="carDetectedRole" style="font-size: 18px; font-weight: 850; margin: 0; color: var(--text);">—</h3>
+                  <span id="carDetectedLevel" class="badge" style="background: rgba(245, 158, 11, 0.15); color: #d97706; border: 1px solid #f59e0b; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 800;">—</span>
+                </div>
+                <div id="carCandidateName" style="font-size: 12.5px; color: var(--muted); margin-top: 3px;">Talenta Miss Fish Bali · Evaluasi Jalur Karir Jangka Panjang</div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.06em;">STANDAR HOSPITALITY</div>
+              <div style="font-size: 13.5px; font-weight: 800; color: var(--accent);">Miss Fish Bali Luxury Standard</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Path Switcher Tabs -->
+          <div class="career-path-tabs" id="carPathTabs"></div>
+
+          <!-- Active Path Description -->
+          <div class="card" style="padding: 16px 20px; margin-bottom: 22px; background: var(--surface2); border: 1px solid var(--line); border-left: 4px solid var(--career-track-color, var(--accent));">
+            <div style="font-size: 11px; font-weight: 850; text-transform: uppercase; color: var(--career-track-color, var(--accent)); letter-spacing: 0.08em; margin-bottom: 4px;">
+              FOKUS OPERASIONAL JALUR KARIR INI
+            </div>
+            <div id="carPathDesc" style="font-size: 13.5px; color: var(--text); line-height: 1.6; font-style: italic;"></div>
+          </div>
+
+          <!-- Vertical 5-Year Timeline Container -->
+          <div class="career-timeline-wrap" id="carTimelineContainer"></div>
+
+          <!-- Bottom Grid: Skill Gaps & Immediate Actions -->
+          <div class="career-bottom-grid">
+            <!-- Left: Skill Gaps -->
+            <div class="card" style="padding: 22px; border-top: 4px solid #ef4444;">
+              <div style="font-size: 13.5px; font-weight: 850; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>⚠️ Area Pengembangan &amp; Skill Gaps Saat Ini</span>
+              </div>
+              <div id="carSkillGaps" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
+            <!-- Right: Immediate Actions -->
+            <div class="card" style="padding: 22px; border-top: 4px solid #10b981;">
+              <div style="font-size: 13.5px; font-weight: 850; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>🚀 Aksi Segera 90 Hari Pertama (Immediate Actions)</span>
+              </div>
+              <div id="carImmediateActions" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+          </div>
+
+          <!-- Executive Career Advice Narrative -->
+          <div class="card" id="carNarrativeCard" style="padding: 24px; margin-top: 20px; border-left: 4px solid var(--accent); background: var(--surface);">
+            <div style="font-size: 14.5px; font-weight: 850; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>💡 Panduan Strategis Konsultan Karir Hospitality</span>
+            </div>
+            <div id="carNarrative" style="font-size: 13.5px; line-height: 1.75; color: var(--text);"></div>
+          </div>
+        </div>
+      </section>
+
   <!-- SCREEN 9: AI RECRUITMENT REPORTS & INTELLIGENCE (GEMINI 3.5 FLASH LITE) -->
   <section id="view-admin-ai-reports" class="view-panel">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
@@ -4770,6 +5228,7 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" onclick="navTo('admin-interview');toggleDrawer()">🎤 AI Interview Studio</button>
       <button class="nav-btn" onclick="navTo('admin-ats');toggleDrawer()">🔍 AI ATS CV Scanner</button>
       <button class="nav-btn" onclick="navTo('admin-salary');toggleDrawer()">💰 AI Salary Benchmark</button>
+      <button class="nav-btn" onclick="navTo('admin-career');toggleDrawer()">🗺️ AI Career Roadmap</button>
       <button class="nav-btn" onclick="navTo('admin-analytics');toggleDrawer()">📈 Analytics & ClickUp</button>
       <button class="nav-btn" onclick="navTo('admin-ai-reports');toggleDrawer()">✨ AI Intelligence</button>
     </nav>
@@ -5407,6 +5866,7 @@ const viewTitles = {
   'admin-interview': { title: 'AI Smart Interview Studio', sub: 'Competency Assessment & Candidate Interview Guide · Gemini AI' },
   'admin-ats': { title: 'AI ATS CV Scanner', sub: 'In-Depth Candidate Resume Audit & Keyword Compatibility · Gemini AI' },
   'admin-salary': { title: 'AI Salary Benchmark', sub: 'Hospitality Compensation Intelligence & Regional Analysis · Gemini AI' },
+  'admin-career': { title: 'AI Career Progression Roadmap', sub: '5-Year Hospitality Career Path & Professional Milestones · Gemini AI' },
   'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' },
   'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' }
 };
@@ -5454,6 +5914,7 @@ function navTo(viewId) {
   if (viewId === 'admin-interview') initAdminInterview();
   if (viewId === 'admin-ats') initAdminAts();
   if (viewId === 'admin-salary') initAdminSalary();
+  if (viewId === 'admin-career') initAdminCareer();
   if (viewId === 'admin-analytics') updateGasGatewayUI();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -5741,6 +6202,9 @@ function renderAdminJobs() {
             <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; border: 1px solid #10b981; color: #10b981;" onclick="openSalaryForJob('${esc(j.title)}')" title="Buka AI Salary Benchmark untuk posisi ini">
               💰 Salary Intel
             </button>
+            <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; border: 1px solid #f59e0b; color: #d97706;" onclick="openCareerForJob('${esc(j.title)}')" title="Buka AI Career Roadmap untuk posisi ini">
+              🗺️ Career Path
+            </button>
             <button class="btn ${isActive ? 'btn-ghost' : 'btn-accent'}" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;" onclick="toggleJobStatus(${j.id})" title="${isActive ? 'Jeda lowongan ini' : 'Aktifkan lowongan ini'}">
               ${isActive ? '⏸️ Jeda' : '▶️ Aktifkan'}
             </button>
@@ -5968,6 +6432,9 @@ function filterAdminApplicants() {
           </button>
           <button class="btn btn-ghost" style="min-height: 34px; padding: 4px 8px; font-size: 11.5px; border: 1px solid #10b981; color: #10b981;" onclick="openSalaryForApplicant(${a.id})" title="Benchmark gaji &amp; kompensasi pasar untuk pelamar ini">
             💰 Gaji
+          </button>
+          <button class="btn btn-ghost" style="min-height: 34px; padding: 4px 8px; font-size: 11.5px; border: 1px solid #f59e0b; color: #d97706;" onclick="openCareerForApplicant(${a.id})" title="Rencanakan peta karir 5 tahun untuk pelamar ini">
+            🗺️ Karir
           </button>
           ${a.clickupSyncStatus === 'SYNCED' 
             ? `<button class="btn btn-ghost" style="min-height: 34px; padding: 4px 10px; font-size: 11.5px; font-weight: 750; border: 1px solid rgba(0, 137, 123, 0.45); color: #00897b;" onclick="openSyncConfirmationModal(${a.id})" title="Re-sync candidate to ClickUp ATS">
@@ -6260,6 +6727,9 @@ function renderCandidateDetailBody(cand) {
           </button>
           <button class="btn btn-ghost" style="min-height: 34px; padding: 6px 14px; font-size: 12px; border: 1px solid #10b981; color: #10b981; font-weight: 750;" onclick="openSalaryForApplicant(${cand.id})" title="Buka AI Salary Benchmark untuk mengukur posisi remunerasi pelamar ini">
             <span>💰</span> Salary Benchmark ↗
+          </button>
+          <button class="btn btn-ghost" style="min-height: 34px; padding: 6px 14px; font-size: 12px; border: 1px solid #f59e0b; color: #d97706; font-weight: 750;" onclick="openCareerForApplicant(${cand.id})" title="Buka AI Career Roadmap untuk merencanakan jalur karir 5 tahun pelamar ini">
+            <span>🗺️</span> Roadmap Karir ↗
           </button>
         </div>
       </div>
@@ -7868,6 +8338,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdminInterview();
   initAdminAts();
   initAdminSalary();
+  initAdminCareer();
 
   // Initialize interactive charts
   setTimeout(() => {
@@ -11719,6 +12190,1009 @@ function resetSalaryForm() {
   hideSalError();
 
   toast('↺ Form AI Salary Benchmark telah direset.');
+}
+
+// ================================================================
+// AI CAREER PROGRESSION & 5-YEAR HOSPITALITY ROADMAP
+// Dual-Mode: Live GAS Web App (action: 'career_path')
+// Standalone Fallback: High-Fidelity Bali Luxury F&B Heuristic Engine
+// ================================================================
+let carCurrentData = null;
+let carExtractedCvText = '';
+let carCurrentCvTab = 'upload';
+let carSelectedCandidateId = null;
+let carActivePathId = null;
+let carCurrentLang = 'auto';
+
+function initAdminCareer() {
+  // 1. Populate Roster Vacancy dropdown
+  const jobSelect = document.getElementById('carJobSelect');
+  if (jobSelect && jobSelect.options.length <= 1) {
+    jobsData.forEach(j => {
+      const opt = document.createElement('option');
+      opt.value = j.id;
+      opt.textContent = `${j.title} (${j.dept}) — ${j.salary}`;
+      jobSelect.appendChild(opt);
+    });
+  }
+
+  // 2. Populate Applicants dropdown
+  const appSelect = document.getElementById('carApplicantSelect');
+  if (appSelect) {
+    const currentVal = appSelect.value;
+    appSelect.innerHTML = '<option value="">-- Buat Roadmap Baru / Tanpa Pelamar Terdaftar --</option>';
+    applicantsData.forEach(cand => {
+      const opt = document.createElement('option');
+      opt.value = cand.id;
+      opt.textContent = `${cand.name} — ${cand.position} (${cand.experience || 'Hospitality'})`;
+      appSelect.appendChild(opt);
+    });
+    if (currentVal) appSelect.value = currentVal;
+  }
+
+  // 3. Dropzone Drag & Drop Handlers
+  const dz = document.getElementById('carDropzone');
+  if (dz && !dz.dataset.bound) {
+    dz.dataset.bound = 'true';
+    dz.addEventListener('dragover', e => {
+      e.preventDefault();
+      dz.style.borderColor = 'var(--accent)';
+      dz.style.background = 'rgba(21, 154, 147, 0.08)';
+    });
+    dz.addEventListener('dragleave', () => {
+      dz.style.borderColor = 'var(--line)';
+      dz.style.background = 'var(--surface2)';
+    });
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.style.borderColor = 'var(--line)';
+      dz.style.background = 'var(--surface2)';
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleCarFile(e.dataTransfer.files[0]);
+      }
+    });
+  }
+}
+
+function onCarJobSelected(jobId) {
+  if (!jobId) return;
+  const id = parseInt(jobId);
+  const job = jobsData.find(j => j.id === id);
+  if (!job) return;
+
+  const roleInput = document.getElementById('carJobRole');
+  if (roleInput) roleInput.value = job.title;
+
+  toast(`✓ Posisi terpilih: ${job.title} (${job.dept})`);
+}
+
+function onCarApplicantSelected(candId) {
+  if (!candId) {
+    carSelectedCandidateId = null;
+    return;
+  }
+  const id = parseInt(candId);
+  const cand = applicantsData.find(c => c.id === id);
+  if (!cand) return;
+
+  carSelectedCandidateId = id;
+
+  const roleInput = document.getElementById('carJobRole');
+  if (roleInput && !roleInput.value.trim()) {
+    roleInput.value = cand.position;
+  }
+
+  // Find matching job in roster if possible
+  const jobSelect = document.getElementById('carJobSelect');
+  if (jobSelect) {
+    const matchedJob = jobsData.find(j => j.title.toLowerCase().includes(cand.position.toLowerCase()) || cand.position.toLowerCase().includes(j.title.toLowerCase()));
+    if (matchedJob) jobSelect.value = matchedJob.id;
+  }
+
+  // Fill CV text box with candidate background dossier
+  const cvText = document.getElementById('carCvText');
+  if (cvText) {
+    const summary = cand.summary || cand.cover_letter || '';
+    const exp = cand.experience || cand.experience_years || '';
+    const notesStr = (cand.notes || []).map(n => `[${n.author}]: ${n.text}`).join('\n');
+
+    cvText.value = `NAMA KANDIDAT: ${cand.name}\nPOSISI: ${cand.position}\nPENGALAMAN: ${exp}\nPERUSAHAAN: ${cand.currentCompany || 'Luxury Hospitality Bali'}\nEKSPEKTASI GAJI: ${cand.expectedSalary || 'Competitive'}\n\nMOTIVASI / RINGKASAN:\n${summary}\n\nCATATAN REKRUTMEN:\n${notesStr}`;
+  }
+
+  toast(`✓ Profil pelamar "${cand.name}" berhasil ditautkan.`);
+}
+
+function openCareerForApplicant(candId) {
+  navTo('admin-career');
+  setTimeout(() => {
+    const appSelect = document.getElementById('carApplicantSelect');
+    if (appSelect) {
+      appSelect.value = candId;
+      onCarApplicantSelected(candId);
+    }
+  }, 100);
+}
+
+function openCareerForJob(jobTitleOrId) {
+  navTo('admin-career');
+  setTimeout(() => {
+    const jobSelect = document.getElementById('carJobSelect');
+    if (jobSelect) {
+      let found = null;
+      if (typeof jobTitleOrId === 'number') {
+        found = jobsData.find(j => j.id === jobTitleOrId);
+      } else {
+        found = jobsData.find(j => j.title.toLowerCase() === String(jobTitleOrId).toLowerCase() || j.title.toLowerCase().includes(String(jobTitleOrId).toLowerCase()));
+      }
+      if (found) {
+        jobSelect.value = found.id;
+        onCarJobSelected(found.id);
+      } else {
+        const roleInput = document.getElementById('carJobRole');
+        if (roleInput) roleInput.value = jobTitleOrId;
+      }
+    }
+  }, 100);
+}
+
+function switchCarCvTab(mode) {
+  carCurrentCvTab = mode;
+  const btnUpload = document.getElementById('carTabUpload');
+  const btnPaste = document.getElementById('carTabPaste');
+  const panelUpload = document.getElementById('carUploadPanel');
+  const panelPaste = document.getElementById('carPastePanel');
+
+  if (mode === 'upload') {
+    btnUpload.className = 'btn btn-accent';
+    btnPaste.className = 'btn btn-ghost';
+    panelUpload.style.display = 'block';
+    panelPaste.style.display = 'none';
+  } else {
+    btnUpload.className = 'btn btn-ghost';
+    btnPaste.className = 'btn btn-accent';
+    panelUpload.style.display = 'none';
+    panelPaste.style.display = 'block';
+  }
+}
+
+function onCarFileSelected(input) {
+  if (input.files && input.files[0]) {
+    handleCarFile(input.files[0]);
+  }
+}
+
+async function handleCarFile(file) {
+  if (!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['pdf', 'docx', 'doc'].includes(ext)) {
+    showCarError('Format file tidak didukung. Harap upload dokumen .PDF atau .DOCX.');
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showCarError('Ukuran file terlalu besar (Maksimal 10MB).');
+    return;
+  }
+
+  hideCarError();
+  const fileStatus = document.getElementById('carFileStatus');
+  const fileName = document.getElementById('carFileName');
+  if (fileStatus) fileStatus.style.display = 'flex';
+  if (fileName) fileName.textContent = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+
+  try {
+    if (ext === 'pdf') {
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+      let fullText = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+      }
+      carExtractedCvText = fullText.trim();
+    } else {
+      const buf = await file.arrayBuffer();
+      const res = await mammoth.extractRawText({ arrayBuffer: buf });
+      carExtractedCvText = (res.value || '').trim();
+    }
+    toast(`✓ Dokumen "${file.name}" berhasil diekstrak.`);
+  } catch (err) {
+    showCarError(`Gagal membaca isi dokumen: ${err.message}`);
+  }
+}
+
+function removeCarFile() {
+  carExtractedCvText = '';
+  const fileInput = document.getElementById('carFileInput');
+  const fileStatus = document.getElementById('carFileStatus');
+  if (fileInput) fileInput.value = '';
+  if (fileStatus) fileStatus.style.display = 'none';
+}
+
+function setCarLang(lang) {
+  carCurrentLang = lang;
+  ['carLangAuto', 'carLangId', 'carLangEn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.className = 'btn btn-ghost';
+  });
+  if (lang === 'auto') {
+    const b = document.getElementById('carLangAuto');
+    if (b) b.className = 'btn btn-accent';
+  } else if (lang === 'id') {
+    const b = document.getElementById('carLangId');
+    if (b) b.className = 'btn btn-accent';
+  } else if (lang === 'en') {
+    const b = document.getElementById('carLangEn');
+    if (b) b.className = 'btn btn-accent';
+  }
+}
+
+function showCarError(msg) {
+  const el = document.getElementById('carErrorBox');
+  if (el) {
+    el.textContent = `❌ ${msg}`;
+    el.style.display = 'block';
+  }
+}
+
+function hideCarError() {
+  const el = document.getElementById('carErrorBox');
+  if (el) el.style.display = 'none';
+}
+
+async function generateCareerPath() {
+  hideCarError();
+
+  const roleInput = document.getElementById('carJobRole');
+  let targetRole = roleInput ? roleInput.value.trim() : '';
+
+  // Fallback to selected job if role input is empty
+  const jobSelect = document.getElementById('carJobSelect');
+  if (!targetRole && jobSelect && jobSelect.value) {
+    const j = jobsData.find(x => x.id === parseInt(jobSelect.value));
+    if (j) targetRole = j.title;
+  }
+
+  // Gathe CV content
+  let cvText = '';
+  if (carCurrentCvTab === 'upload' && carExtractedCvText) {
+    cvText = carExtractedCvText;
+  } else {
+    const cvInput = document.getElementById('carCvText');
+    if (cvInput) cvText = cvInput.value.trim();
+  }
+
+  // Check applicant data if available
+  let cand = null;
+  if (carSelectedCandidateId) {
+    cand = applicantsData.find(c => c.id === carSelectedCandidateId);
+    if (!targetRole && cand) targetRole = cand.position;
+  }
+
+  if (!targetRole && !cvText) {
+    showCarError('Harap tentukan Judul Peran Target atau masukkan teks / dokumen CV kandidat terlebih dahulu.');
+    return;
+  }
+
+  const trackFocus = document.getElementById('carTrackFocus') ? document.getElementById('carTrackFocus').value : 'all';
+
+  const loading = document.getElementById('carLoadingState');
+  const results = document.getElementById('carResultsSection');
+  const btn = document.getElementById('btnRunCareerGen');
+
+  if (loading) loading.style.display = 'block';
+  if (results) results.style.display = 'none';
+  if (btn) btn.disabled = true;
+
+  try {
+    let finalData = null;
+
+    // Check if live GAS Web App is accessible
+    const gasUrl = (typeof GAS_WEB_APP_URL !== 'undefined' && GAS_WEB_APP_URL && !GAS_WEB_APP_URL.includes('AKfycbxYOUR'))
+      ? GAS_WEB_APP_URL
+      : 'https://script.google.com/macros/s/AKfycbxpiujXorRb-u3GfzljEgI_Pml6WfGQ4M59VuHMOoHLFHYZcz08niCZXJGYIeZZaNee/exec';
+
+    try {
+      const resp = await fetch(gasUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'career_path',
+          cvText: cvText || `Target Role: ${targetRole}`,
+          targetRole: targetRole,
+          language: carCurrentLang
+        })
+      });
+
+      if (resp.ok) {
+        const json = await resp.json();
+        if (json && json.success && json.data && json.data.paths && json.data.paths.length > 0) {
+          finalData = json.data;
+        }
+      }
+    } catch (_) {
+      // Offline fallback
+    }
+
+    if (!finalData) {
+      finalData = runLocalSimulationCareerPath(targetRole, cvText, carCurrentLang, cand, trackFocus);
+    }
+
+    carCurrentData = finalData;
+    renderCareerResults(finalData);
+  } catch (err) {
+    showCarError(`Terjadi kesalahan dalam membuat roadmap karir: ${err.message}`);
+  } finally {
+    if (loading) loading.style.display = 'none';
+    if (btn) btn.disabled = false;
+  }
+}
+
+// Standalone High-Fidelity Bali Luxury F&B Heuristic Engine for Career Roadmap
+function runLocalSimulationCareerPath(roleInput, cvText, lang, cand, trackFocus) {
+  const text = (roleInput + ' ' + cvText + ' ' + (cand ? cand.position + ' ' + (cand.summary || '') : '')).toLowerCase();
+
+  const isKitchen = /sushi|chef|cook|kitchen|culinary|robata|commis|demi|cdp|omakase|raw|knife|dapur|itamae|food/i.test(text);
+  const isBar = /bar|mixolog|bartender|beverage|cocktail|sommelier|wine|spirits|flair|minuman/i.test(text);
+  const isFoh = /waiter|waitress|host|hostess|service|captain|floor|guest|foh|dining|server/i.test(text);
+  const isMarketing = /marketing|social|media|content|brand|creative|pr|public|event/i.test(text);
+
+  let primaryRole = roleInput.trim();
+  if (!primaryRole) {
+    if (isKitchen) primaryRole = 'Sushi Chef / Demi CDP';
+    else if (isBar) primaryRole = 'Senior Mixologist';
+    else if (isFoh) primaryRole = 'Floor Captain / Head Host';
+    else if (isMarketing) primaryRole = 'Lifestyle Marketing Specialist';
+    else primaryRole = 'Hospitality Professional';
+  }
+
+  let currentLevel = 'Mid-Level Specialist';
+  if (/fresh|entry|trainee|apprentice|magang|0-1/i.test(text)) currentLevel = 'Entry / Junior Level';
+  else if (/head|lead|manager|supervisor|senior|5\+/i.test(text)) currentLevel = 'Senior Lead / Section Head';
+
+  const isEn = lang === 'en';
+
+  // 1. Track 1: Craft Mastery
+  const craftTrack = {
+    id: 'craft',
+    title: isKitchen 
+      ? (isEn ? 'Track 1: Omakase & Culinary Craft Mastery' : 'Jalur 1: Omakase & Culinary Craft Mastery')
+      : isBar 
+      ? (isEn ? 'Track 1: Japanese Mixology & Beverage Artistry' : 'Jalur 1: Japanese Mixology & Beverage Artistry')
+      : (isEn ? 'Track 1: Omotenashi Service & Guest Experience Craft' : 'Jalur 1: Omotenashi Service & Guest Experience Craft'),
+    icon: isKitchen ? '🔪' : isBar ? '🍸' : '🎯',
+    description: isKitchen
+      ? (isEn ? 'Deep specialization in Edomae sashimi slicing, dry-aging techniques, Binchotan charcoal zoning, and luxury Omakase course pacing.' : 'Penguasaan mendalam seni potong sashimi Edomae, teknik fish dry-aging, pengaturan suhu Binchotan, dan ritme Omakase service eksklusif.')
+      : isBar
+      ? (isEn ? 'Mastery of Japanese cocktail balancing, clarified ice carving, artisanal syrup reductions, and bespoke Canggu cocktail pairings.' : 'Spesialisasi racikan koktail Jepang, seni ukir es kristal balok, teknik klarifikasi minuman, dan pairing koktail eksklusif.')
+      : (isEn ? 'Excellence in Japanese Omotenashi hospitality, VIP VIP table reservation psychology, and bespoke dining curation.' : 'Dedikasi pada filosofi Omotenashi Jepang, antisipasi kebutuhan VIP tamu tanpa diminta, dan manajemen alur reservasi Canggu.'),
+    milestones: [
+      {
+        period: isEn ? 'Year 1 (Months 1–12): Technical Precision' : 'Tahun 1 (Bulan 1–12): Presisi Teknik & Konsistensi',
+        role: isKitchen ? 'Senior Sushi Chef / Demi Chef de Partie' : isBar ? 'Head Mixologist (Cocktail Section)' : 'Head Host / Senior Captain',
+        focus: isKitchen
+          ? 'Standardisasi potongan sashimi Nigiri, tata kelola penyimpanan ikan suhu presisi, dan eksekusi Omakase 14-courses.'
+          : isBar
+          ? 'Konsistensi shaker technique, standardisasi garnish botani lokal Bali, dan kontrol cost alkohol botol bar.'
+          : 'Standar sambutan Omotenashi, penguasaan POS Cloud dan koordinasi alur meja VIP dining.',
+        salary_range: 'Rp 8.000.000 – Rp 11.500.000 / bln (+ SC)',
+        skills: isKitchen 
+          ? ['Yanagiba Knife Technique', 'Fish Dry-Aging', 'HACCP Temperature Control', 'Omakase Counter Etiquette']
+          : isBar
+          ? ['Ice Carving Craft', 'Japanese Shaker Motion', 'Inventory FIFO', 'Craft Cordials Infusion']
+          : ['Omotenashi Anticipation', 'SevenRooms / POS', 'Allergen Protocol', 'VIP Conflict De-escalation'],
+        certifications: ['HACCP Level 2 Food Safety', 'ServSafe Food Handler Certification'],
+        achievements: [
+          'Mempertahankan 0% keluhan kualitas potongan selama peak high season.',
+          'Menurunkan waste bahan baku sebesar 11% melalui protokol prep harian yang ketat.'
+        ]
+      },
+      {
+        period: isEn ? 'Years 2–3: Menu Innovation & Section Mastery' : 'Tahun 2–3: Inovasi Menu & Kepemimpinan Seksi',
+        role: isKitchen ? 'Sous Chef (Japanese Specialty)' : isBar ? 'Beverage Specialist & Bar Supervisor' : 'Floor Supervisor & Guest Relations Lead',
+        focus: isKitchen
+          ? 'Riset pairing bahan segar seasonal Bali dengan metode fermentasi Jepang; mentoring koki junior.'
+          : isBar
+          ? 'Penyusunan Signature Cocktail Menu musiman berkonsep zero-waste; kurasi wine pairing dining.'
+          : 'Penyusunan SOP alur rotasi meja 150+ pax malam minggu; melatih staf FOH dalam conversational English.',
+        salary_range: 'Rp 12.000.000 – Rp 16.500.000 / bln (+ SC)',
+        skills: isKitchen
+          ? ['Omakase Menu Engineering', 'Kitchen Prime Cost Control', 'Team Mentorship', 'Supplier Auditing']
+          : isBar
+          ? ['Zero-Waste Beverage Design', 'Beverage Margin Optimization', 'Sommelier Basics', 'Supplier Negotiation']
+          : ['Floor Pacing & Seating Strategy', 'Guest Retention CRM', 'Cross-Department Communication'],
+        certifications: isKitchen 
+          ? ['Japanese Culinary Academy Advance', 'HACCP Manager Certification']
+          : isBar
+          ? ['WSET Level 2 Award in Spirits', 'Court of Master Sommeliers Intro']
+          : ['Hospitality Leadership Excellence', 'WSET Level 1 in Wine'],
+        achievements: [
+          'Menciptakan 3 menu signature terlaris dengan kontribusi margin keuntungan kotor 68%.',
+          'Membimbing 4 staf junior hingga berhasil promosi ke level independen.'
+        ]
+      },
+      {
+        period: isEn ? 'Years 4–5: Master Craft & Executive Direction' : 'Tahun 4–5: Master Craft & Pengarah Artistik',
+        role: isKitchen ? 'Master Itamae / Head Culinary Specialist' : isBar ? 'Bar Director & Beverage Architect' : 'Service Director & Hospitality Lead',
+        focus: isKitchen
+          ? 'Menjadi wajah reputasi kuliner Miss Fish Bali; menyajikan private dining untuk VIP internasional dan kurasi pop-up kolaborasi.'
+          : isBar
+          ? 'Memposisikan bar Miss Fish Bali ke dalam daftar bar bergengsi Asia 50 Best; program guest bartender global.'
+          : 'Menjaga standar kualitas pengalaman 5-star di seluruh outlet; program retensi tamu loyal internasional.',
+        salary_range: 'Rp 18.000.000 – Rp 26.000.000 / bln (+ SC)',
+        skills: [
+          'Brand Signature Philosophy', 'Global Hospitality Trends', 'Executive Mentorship', 'Media & VIP Persona'
+        ],
+        certifications: ['Advanced Culinary / Sommelier Masterclass', 'Luxury Hospitality Leadership Certificate'],
+        achievements: [
+          'Membawa outlet meraih penghargaan Hospitality Excellence dan ulasan bintang 5 konsisten.',
+          'Membangun standar kerja mandiri dengan retensi staf tertinggi di industri F&B Bali.'
+        ]
+      }
+    ]
+  };
+
+  // 2. Track 2: Operational & FOH Leadership
+  const mgmtTrack = {
+    id: 'managerial',
+    title: isEn ? 'Track 2: Operational Leadership & Restaurant Management' : 'Jalur 2: Operational Leadership & Restaurant Management',
+    icon: '👔',
+    description: isEn 
+      ? 'Focused on P&L management, daily team scheduling, guest satisfaction KPIs, staff turnover reduction, and overall dining room velocity.'
+      : 'Fokus pada manajemen P&L restoran, efisiensi jadwal kerja tim, kepuasan tamu, perputaran meja dinamis, dan penurunan turnover staf.',
+    milestones: [
+      {
+        period: isEn ? 'Year 1 (Months 1–12): Team Coordination' : 'Tahun 1 (Bulan 1–12): Koordinasi Operasional & Shift',
+        role: 'Assistant Floor Supervisor / Section Head',
+        focus: 'Pengawasan alur shift harian, briefing konsistensi menu, verifikasi closing checklist, dan input stok harian.',
+        salary_range: 'Rp 7.500.000 – Rp 10.500.000 / bln (+ SC)',
+        skills: ['Daily Roster Scheduling', 'Opening/Closing SOP', 'POS Audit', 'Team Motivation'],
+        certifications: ['Supervisory Skills in Hospitality', 'Food Safety Supervisor'],
+        achievements: [
+          'Mencapai 100% kepatuhan closing time tanpa lembur yang tidak terencana.',
+          'Menyelesaikan 15 kasus feedback tamu di meja dengan penyelesaian positif seketika.'
+        ]
+      },
+      {
+        period: isEn ? 'Years 2–3: P&L Optimization & Guest Velocity' : 'Tahun 2–3: Optimalisasi P&L & Kecepatan Layanan',
+        role: 'Assistant Restaurant General Manager',
+        focus: 'Manajemen cost operasional (COGS & labor), evaluasi performa staf bulanan, dan koordinasi promosi dengan tim marketing.',
+        salary_range: 'Rp 13.000.000 – Rp 18.500.000 / bln (+ SC)',
+        skills: ['P&L Management', 'Labor Cost Optimization', 'Performance Reviews', 'Vendor Negotiations'],
+        certifications: ['Certified Restaurant Manager (CRM)', 'Hospitality Financial Management'],
+        achievements: [
+          'Mempertahankan prime cost di bawah 58% secara konsisten sepanjang tahun fiskal.',
+          'Menurunkan tingkat turnover staf lantai sebesar 24% melalui sistem reward internal.'
+        ]
+      },
+      {
+        period: isEn ? 'Years 4–5: General Management & Multi-Unit Scale' : 'Tahun 4–5: General Management & Ekspansi Restoran',
+        role: 'Restaurant General Manager / Operations Director',
+        focus: 'Tanggung jawab penuh atas revenue, budget tahunan, ekspansi konsep baru Miss Fish Bali, dan hubungan kemitraan strategis.',
+        salary_range: 'Rp 22.000.000 – Rp 35.000.000 / bln (+ SC & Profit Share)',
+        skills: ['Strategic Budgeting', 'Multi-Outlet Scalability', 'Executive Leadership', 'Investor Reporting'],
+        certifications: ['Executive Hospitality Management', 'Advanced Hospitality P&L'],
+        achievements: [
+          'Memimpin restoran mencatatkan rekor EBITDA tahunan tertinggi sejak berdiri.',
+          'Mengawasi pembukaan unit baru tepat waktu dan sesuai budget proyek.'
+        ]
+      }
+    ]
+  };
+
+  // 3. Track 3: Entrepreneurship & Hospitality Consulting
+  const entTrack = {
+    id: 'entrepreneurial',
+    title: isEn ? 'Track 3: F&B Concept Creation & Hospitality Consulting' : 'Jalur 3: F&B Concept Creation & Hospitality Consulting',
+    icon: '✨',
+    description: isEn 
+      ? 'Leveraging specialized Bali luxury dining experience into boutique concept development, pop-up events, and regional F&B advisory.'
+      : 'Memanfaatkan keahlian dining mewah Bali menjadi kreasi konsep boutique restoran, event pop-up eksklusif, dan konsultan F&B regional.',
+    milestones: [
+      {
+        period: isEn ? 'Year 1 (Months 1–12): Concept Mastery & Personal Brand' : 'Tahun 1 (Bulan 1–12): Penguasaan Konsep & Brand Pribadi',
+        role: 'Concept Specialist & Signature Host / Creator',
+        focus: 'Mendokumentasikan karya estetika piring / koktail, membangun jaringan relasi industri kuliner Bali, dan mendalami data preferensi tamu.',
+        salary_range: 'Rp 9.000.000 – Rp 13.000.000 / bln (+ SC)',
+        skills: ['Food/Beverage Aesthetics', 'Hospitality Storytelling', 'Social Media Influence', 'Concept Research'],
+        certifications: ['Brand Strategy Essentials', 'Visual Merchandising for F&B'],
+        achievements: [
+          'Konten presentasi menu viral di media sosial menjangkau 200k+ organic views.',
+          'Menginisiasi 2 malam kolaborasi tasting khusus yang tiketnya terjual habis (sold-out).'
+        ]
+      },
+      {
+        period: isEn ? 'Years 2–3: Independent Advisory & Pop-up Curation' : 'Tahun 2–3: Penasihat Kuliner & Kurator Event Pop-Up',
+        role: 'Hospitality Concept Lead & Project Consultant',
+        focus: 'Menyusun proposal konsep F&B untuk investor baru, merancang flow dapur/bar hemat ruang, dan standarisasi menu restoran baru.',
+        salary_range: 'Rp 16.000.000 – Rp 24.000.000 / bln (Retainer + Advisory Fees)',
+        skills: ['Kitchen/Bar Ergonomics Design', 'Brand Bible Formulation', 'Feasibility Study', 'Project Management'],
+        certifications: ['Hospitality Project Management', 'Commercial Kitchen Design Workshop'],
+        achievements: [
+          'Berhasil merancang dan meluncurkan 1 konsep dining baru dari tahap konsep hingga hari pembukaan.',
+          'Menghemat biaya instalasi perlengkapan dapur sebesar 15% melalui re-layout ergonomis.'
+        ]
+      },
+      {
+        period: isEn ? 'Years 4–5: Boutique Partner & Regional Concept Director' : 'Tahun 4–5: Mitra Bisnis Boutique & Direktur Konsep Regional',
+        role: 'F&B Partner & Regional Hospitality Consultant',
+        focus: 'Memiliki kepemilikan saham ekuitas / profit share dalam lini bisnis kuliner baru; penasihat ekspansi restoran di Bali, Jakarta, dan Asia Tenggara.',
+        salary_range: 'Rp 28.000.000 – Rp 45.000.000+ / bln (+ Equity Dividends)',
+        skills: ['Equity Structuring', 'Cross-Border F&B Expansion', 'Franchise / License Architecture', 'Luxury Brand Positioning'],
+        certifications: ['Corporate Governance in Hospitality', 'Strategic Hospitality Alliances'],
+        achievements: [
+          'Menjadi mitra pendiri konsep kuliner pemenang penghargaan dengan 3 cabang regional.',
+          'Diundang sebagai pembicara dan mentor dalam forum industri perhotelan dan kuliner Asia.'
+        ]
+      }
+    ]
+  };
+
+  let paths = [craftTrack, mgmtTrack, entTrack];
+  if (trackFocus === 'craft') paths = [craftTrack];
+  else if (trackFocus === 'managerial') paths = [mgmtTrack];
+  else if (trackFocus === 'entrepreneurial') paths = [entTrack];
+
+  return {
+    current_role: primaryRole,
+    current_level: currentLevel,
+    candidate_name: cand ? cand.name : (roleInput ? `Kandidat ${roleInput}` : 'Talenta Baru'),
+    paths: paths,
+    skill_gaps: isKitchen ? [
+      'Pemahaman mendalam tentang teknik Fish Dry-Aging dan kontrol kelembaban lemari aging.',
+      'Sertifikasi resmi keamanan pangan internasional (HACCP Level 2 / ServSafe Manager).',
+      'Penguasaan metrik kitchen prime cost (COGS maksimal 28-32%) dalam fluktuasi harga pasar Bali.',
+      'Pengalaman memimpin briefing bilingual (Inggris - Indonesia) untuk operasional multi-kultural.'
+    ] : isBar ? [
+      'Teknik klarifikasi koktail modern (agar-agar, centrifuge, milk-washing).',
+      'Sertifikasi keahlian spirits resmi (WSET Level 2 Spirits / Sommelier Introductory).',
+      'Perhitungan pour cost akurat per porsi koktail untuk menjaga margin minuman di atas 75%.',
+      'Seni ukir balok es bening (clear ice carving) untuk presentasi koktail kelas atas.'
+    ] : [
+      'Penguasaan sistem reservasi modern SevenRooms / OpenTable untuk optimasi perputaran meja (table turns).',
+      'SOP penanganan komplain tamu VIP internasional dengan pendekatan Zanshin & Omotenashi.',
+      'Kemampuan analisis laporan revenue harian (RevPASH - Revenue Per Available Seat Hour).',
+      'Keahlian mentoring dan transfer knowledge ke staf junior lokal.'
+    ],
+    immediate_actions: [
+      'Jadwalkan review teknis 1-on-1 dengan Head of Department untuk menetapkan KPI kuartal pertama.',
+      'Ikuti program sertifikasi higienitas pangan (HACCP) yang difasilitasi oleh manajemen Miss Fish Bali.',
+      'Buat jurnal harian catatan teknik kerja, efisiensi prep time, dan minimasi waste pada workstation.',
+      'Ikuti rotasi cross-training minimal 2 minggu di seksi terkait untuk memperluas perspektif operasional.'
+    ],
+    narrative: isEn
+      ? `For a professional in the role of ${primaryRole}, the luxury dining landscape of Bali—particularly the high-energy, design-forward Canggu corridor—presents rapid progression opportunities. Miss Fish Bali values meticulous precision, Japanese cultural respect (Omotenashi and Zanshin), and high guest empathy. By mastering core technical craft in Year 1 and intentionally stepping into team leadership and cost control by Year 2–3, you can position yourself for top-tier remuneration, managerial autonomy, and industry-wide prestige within 5 years.`
+      : `Bagi talenta di bidang ${primaryRole}, lanskap industri hospitality Canggu dan Seminyak menawarkan akselerasi karir yang sangat dinamis. Standar Miss Fish Bali menuntut kombinasi disiplin teknik Jepang tingkat tinggi dengan kehangatan keramahan Bali. Dengan memfokuskan tahun pertama pada presisi pengerjaan dan efisiensi waktu, lalu melangkah ke kepemimpinan seksi serta kontrol biaya di tahun kedua, Anda memiliki fondasi kuat untuk mencapai posisi kepemimpinan senior dengan paket remunerasi dan service charge tertinggi di industri kuliner Bali dalam kurun waktu 5 tahun.`
+  };
+}
+
+function renderCareerResults(data) {
+  if (!data) return;
+
+  // Header profile
+  const roleEl = document.getElementById('carDetectedRole');
+  const levelEl = document.getElementById('carDetectedLevel');
+  const nameEl = document.getElementById('carCandidateName');
+
+  if (roleEl) roleEl.textContent = data.current_role || 'Hospitality Specialist';
+  if (levelEl) levelEl.textContent = data.current_level || 'Mid-Level Specialist';
+  if (nameEl) nameEl.textContent = `${data.candidate_name || 'Talenta Terpilih'} · Rekomendasi Peta Karir Berjenjang 5 Tahun`;
+
+  // Render Path Switcher Tabs
+  const tabsContainer = document.getElementById('carPathTabs');
+  if (tabsContainer) {
+    tabsContainer.innerHTML = '';
+    const paths = data.paths || [];
+
+    paths.forEach((path, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'career-path-tab';
+      btn.dataset.pathId = path.id;
+      btn.onclick = () => switchCareerActivePath(path.id);
+
+      btn.innerHTML = `
+        <div class="career-path-tab-icon">${esc(path.icon || '🎯')}</div>
+        <div class="career-path-tab-title">${esc(path.title || 'Jalur Karir')}</div>
+        <div class="career-path-tab-desc">${esc(path.description || '').slice(0, 85)}...</div>
+      `;
+      tabsContainer.appendChild(btn);
+    });
+
+    if (paths.length > 0) {
+      switchCareerActivePath(paths[0].id);
+    }
+  }
+
+  // Render Skill Gaps
+  const gapsEl = document.getElementById('carSkillGaps');
+  if (gapsEl) {
+    gapsEl.innerHTML = '';
+    (data.skill_gaps || []).forEach(gap => {
+      const item = document.createElement('div');
+      item.className = 'career-achieve-item';
+      item.innerHTML = `
+        <span style="color: #ef4444; font-weight: 850; flex-shrink: 0;">⚠️</span>
+        <span>${esc(gap)}</span>
+      `;
+      gapsEl.appendChild(item);
+    });
+  }
+
+  // Render Immediate Actions
+  const actionsEl = document.getElementById('carImmediateActions');
+  if (actionsEl) {
+    actionsEl.innerHTML = '';
+    (data.immediate_actions || []).forEach(action => {
+      const item = document.createElement('div');
+      item.className = 'career-achieve-item';
+      item.innerHTML = `
+        <span class="career-achieve-icon">✓</span>
+        <span>${esc(action)}</span>
+      `;
+      actionsEl.appendChild(item);
+    });
+  }
+
+  // Render Narrative
+  const narEl = document.getElementById('carNarrative');
+  if (narEl) {
+    narEl.innerHTML = `<p style="margin: 0; line-height: 1.75;">${esc(data.narrative || '')}</p>`;
+  }
+
+  const resultsSection = document.getElementById('carResultsSection');
+  if (resultsSection) {
+    resultsSection.style.display = 'block';
+    setTimeout(() => {
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function switchCareerActivePath(pathId) {
+  if (!carCurrentData || !carCurrentData.paths) return;
+  carActivePathId = pathId;
+
+  const path = carCurrentData.paths.find(p => p.id === pathId) || carCurrentData.paths[0];
+  if (!path) return;
+
+  // Determine path color theme
+  let trackColor = '#f59e0b';
+  let activeClass = 'active-track-craft';
+  if (path.id === 'managerial') {
+    trackColor = 'var(--accent)';
+    activeClass = 'active-track-mgr';
+  } else if (path.id === 'entrepreneurial') {
+    trackColor = '#8b5cf6';
+    activeClass = 'active-track-ent';
+  }
+
+  // Update tabs active styling
+  document.querySelectorAll('.career-path-tab').forEach(t => {
+    t.classList.remove('active-track-craft', 'active-track-mgr', 'active-track-ent');
+    if (t.dataset.pathId === path.id) {
+      t.classList.add(activeClass);
+    }
+  });
+
+  // Update path description
+  const descEl = document.getElementById('carPathDesc');
+  if (descEl) descEl.textContent = path.description || '';
+
+  // Render timeline milestones
+  const timelineEl = document.getElementById('carTimelineContainer');
+  if (timelineEl) {
+    timelineEl.innerHTML = '';
+    timelineEl.style.setProperty('--career-track-color', trackColor);
+
+    (path.milestones || []).forEach(ms => {
+      const node = document.createElement('div');
+      node.className = 'career-milestone-node';
+      node.style.setProperty('--career-track-color', trackColor);
+
+      const skillChips = (ms.skills || []).map(s => `<span class="career-chip">${esc(s)}</span>`).join('');
+      const certChips = (ms.certifications || []).map(c => `<span class="career-chip cert">🏅 ${esc(c)}</span>`).join('');
+      const achieveItems = (ms.achievements || []).map(a => `
+        <div class="career-achieve-item">
+          <span class="career-achieve-icon">✓</span>
+          <span>${esc(a)}</span>
+        </div>
+      `).join('');
+
+      node.innerHTML = `
+        <div class="career-milestone-card" style="border-top: 3px solid ${trackColor};">
+          <div class="career-milestone-header">
+            <div>
+              <div class="career-milestone-period" style="color: ${trackColor};">${esc(ms.period || 'Periode')}</div>
+              <div class="career-milestone-role">${esc(ms.role || 'Target Role')}</div>
+            </div>
+            ${ms.salary_range ? `<div class="career-salary-tag"><span>💰</span> ${esc(ms.salary_range)}</div>` : ''}
+          </div>
+          <div class="career-milestone-focus">${esc(ms.focus || '')}</div>
+          <div class="career-milestone-cols">
+            <div>
+              <div class="career-col-label"><span>⚡</span> Kompetensi &amp; Keahlian Inti</div>
+              <div class="career-chips-wrap">${skillChips || '<span style="font-size:11px;color:var(--muted);">-</span>'}</div>
+            </div>
+            <div>
+              <div class="career-col-label"><span>🏅</span> Target Sertifikasi Profesional</div>
+              <div class="career-chips-wrap">${certChips || '<span style="font-size:11px;color:var(--muted);">-</span>'}</div>
+            </div>
+          </div>
+          ${achieveItems ? `
+            <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);">
+              <div class="career-col-label"><span>🎯</span> Target Pencapaian Kinerja (Key Performance Indicators)</div>
+              <div>${achieveItems}</div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+      timelineEl.appendChild(node);
+    });
+  }
+}
+
+function copyCareerReport() {
+  if (!carCurrentData) {
+    toast('Belum ada data roadmap karir untuk disalin.');
+    return;
+  }
+
+  const activePath = (carCurrentData.paths || []).find(p => p.id === carActivePathId) || (carCurrentData.paths || [])[0];
+
+  let text = `MISS FISH BALI — 5-YEAR CAREER PROGRESSION ROADMAP\n`;
+  text += `Dibuat pada: ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}\n`;
+  text += `Talenta: ${carCurrentData.candidate_name} | Posisi Awal: ${carCurrentData.current_role} (${carCurrentData.current_level})\n`;
+  text += `--------------------------------------------------------\n\n`;
+
+  if (activePath) {
+    text += `JALUR TERPILIH: ${activePath.title}\n`;
+    text += `Deskripsi: ${activePath.description}\n\n`;
+    text += `MILESTONES 5 TAHUN:\n`;
+    (activePath.milestones || []).forEach((ms, idx) => {
+      text += `\n[${idx + 1}] ${ms.period} — ${ms.role}\n`;
+      text += `    Fokus: ${ms.focus}\n`;
+      text += `    Kompensasi: ${ms.salary_range || '-'}\n`;
+      text += `    Skills: ${(ms.skills || []).join(', ')}\n`;
+      text += `    Sertifikasi: ${(ms.certifications || []).join(', ')}\n`;
+      text += `    Pencapaian: ${(ms.achievements || []).join('; ')}\n`;
+    });
+  }
+
+  text += `\n--------------------------------------------------------\n`;
+  text += `AREA PENGEMBANGAN / SKILL GAPS:\n`;
+  (carCurrentData.skill_gaps || []).forEach(g => text += `• ${g}\n`);
+
+  text += `\nAKSI SEGERA 90 HARI PERTAMA:\n`;
+  (carCurrentData.immediate_actions || []).forEach(a => text += `• ${a}\n`);
+
+  text += `\nCATATAN KONSULTAN KARIR:\n${carCurrentData.narrative || '-'}\n`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    toast('✓ Roadmap karir berhasil disalin ke clipboard!');
+  }).catch(() => {
+    toast('Gagal menyalin teks ke clipboard.');
+  });
+}
+
+function exportCareerPDF() {
+  if (!carCurrentData) {
+    toast('Belum ada data roadmap karir untuk dicetak.');
+    return;
+  }
+
+  const printWindow = window.open('', '_blank', 'width=900,height=960');
+  if (!printWindow) {
+    toast('Popup blocker aktif. Harap izinkan pop-up untuk mencetak PDF.');
+    return;
+  }
+
+  const activePath = (carCurrentData.paths || []).find(p => p.id === carActivePathId) || (carCurrentData.paths || [])[0];
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const milestonesRows = (activePath ? activePath.milestones || [] : []).map(ms => `
+    <tr style="border-bottom: 1px solid #e2ebe8;">
+      <td style="padding: 10px 12px; font-weight: 700; color: #102c2d; font-size: 11px; vertical-align: top; width: 18%;">
+        ${ms.period}
+      </td>
+      <td style="padding: 10px 12px; vertical-align: top; width: 22%;">
+        <div style="font-weight: 800; font-size: 12px; color: #102c2d;">${ms.role}</div>
+        <div style="font-size: 10.5px; color: #159a93; font-weight: 700; margin-top: 3px;">${ms.salary_range || '-'}</div>
+      </td>
+      <td style="padding: 10px 12px; font-size: 11px; color: #334e4e; vertical-align: top; line-height: 1.45; width: 30%;">
+        ${ms.focus}
+        <div style="margin-top: 4px; font-size: 10px; color: #6e8282;"><strong>Skills:</strong> ${(ms.skills || []).join(', ')}</div>
+      </td>
+      <td style="padding: 10px 12px; font-size: 10.5px; color: #334e4e; vertical-align: top; width: 30%;">
+        <div style="font-weight: 700; color: #d97706; margin-bottom: 3px;">🏅 ${(ms.certifications || []).join(', ')}</div>
+        <ul style="margin: 0; padding-left: 14px; font-size: 10px; color: #445c5c;">
+          ${(ms.achievements || []).map(a => `<li>${a}</li>`).join('')}
+        </ul>
+      </td>
+    </tr>
+  `).join('');
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Career Development Plan — ${carCurrentData.candidate_name} · Miss Fish Bali</title>
+      <style>
+        @page { size: A4; margin: 15mm; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #173234; background: #fff; line-height: 1.5; font-size: 12px; margin: 0; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #102c2d; padding-bottom: 14px; margin-bottom: 20px; }
+        .brand { font-size: 20px; font-weight: 900; letter-spacing: 0.08em; color: #102c2d; }
+        .sub-brand { font-size: 11px; color: #159a93; font-weight: 700; letter-spacing: 0.05em; }
+        .doc-title { text-align: right; }
+        .doc-title h1 { margin: 0; font-size: 16px; font-weight: 800; color: #102c2d; }
+        .doc-title p { margin: 2px 0 0; font-size: 11px; color: #6e8282; }
+        .meta-box { background: #f4f7f6; border: 1px solid #d6e3e0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; font-size: 11px; }
+        .meta-item strong { display: block; font-size: 9.5px; color: #6e8282; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th { background: #102c2d; color: #fff; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; text-align: left; }
+        .section-title { font-size: 13px; font-weight: 800; color: #102c2d; margin-bottom: 8px; border-left: 3px solid #159a93; padding-left: 8px; text-transform: uppercase; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .box { background: #fdfdfd; border: 1px solid #d6e3e0; border-radius: 6px; padding: 12px 14px; font-size: 11px; }
+        .box ul { margin: 0; padding-left: 16px; }
+        .box li { margin-bottom: 4px; }
+        .signatures { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; text-align: center; }
+        .sig-line { border-top: 1px solid #102c2d; margin-top: 48px; padding-top: 6px; font-size: 11px; font-weight: 700; color: #102c2d; }
+        .sig-sub { font-size: 9.5px; color: #6e8282; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <div class="brand">MISS FISH BALI</div>
+          <div class="sub-brand">PEOPLE &amp; CULTURE · TALENT DEVELOPMENT</div>
+        </div>
+        <div class="doc-title">
+          <h1>5-YEAR CAREER DEVELOPMENT PLAN</h1>
+          <p>Hospitality Progression Roadmap · Gemini AI Intel</p>
+        </div>
+      </div>
+
+      <div class="meta-box">
+        <div class="meta-item">
+          <strong>NAMA TALENTA / KANDIDAT</strong>
+          ${carCurrentData.candidate_name}
+        </div>
+        <div class="meta-item">
+          <strong>POSISI AWAL &amp; SENIORITAS</strong>
+          ${carCurrentData.current_role} (${carCurrentData.current_level})
+        </div>
+        <div class="meta-item">
+          <strong>TANGGAL PENETAPAN</strong>
+          ${dateStr}
+        </div>
+      </div>
+
+      <div class="section-title">PETA TAHAPAN JALUR KARIR: ${activePath ? activePath.title : 'General Track'}</div>
+      <p style="font-size: 11px; color: #556e6e; margin: 0 0 12px 0; font-style: italic;">
+        ${activePath ? activePath.description : ''}
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>PERIODE</th>
+            <th>TARGET POSISI &amp; GAJI</th>
+            <th>FOKUS OPERASIONAL &amp; SKILLS</th>
+            <th>SERTIFIKASI &amp; TARGET PRESTASI</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${milestonesRows}
+        </tbody>
+      </table>
+
+      <div class="grid-2">
+        <div class="box" style="border-left: 3px solid #ef4444;">
+          <div style="font-weight: 800; color: #c53030; margin-bottom: 6px; font-size: 11.5px;">⚠️ AREA PENGEMBANGAN / SKILL GAPS</div>
+          <ul>
+            ${(carCurrentData.skill_gaps || []).map(g => `<li>${g}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="box" style="border-left: 3px solid #10b981;">
+          <div style="font-weight: 800; color: #047857; margin-bottom: 6px; font-size: 11.5px;">🚀 AKSI SEGERA (90 HARI PERTAMA)</div>
+          <ul>
+            ${(carCurrentData.immediate_actions || []).map(a => `<li>${a}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+
+      <div class="box" style="margin-bottom: 20px; background: #f4f7f6;">
+        <div style="font-weight: 800; color: #159a93; margin-bottom: 4px; font-size: 11px;">PANDUAN KONSULTAN KARIR HOSPITALITY</div>
+        <div style="font-size: 11px; line-height: 1.6; color: #334e4e;">${carCurrentData.narrative || '-'}</div>
+      </div>
+
+      <div class="signatures">
+        <div>
+          <div class="sig-line">${carCurrentData.candidate_name}</div>
+          <div class="sig-sub">Karyawan / Talenta</div>
+        </div>
+        <div>
+          <div class="sig-line">Head of Department</div>
+          <div class="sig-sub">Department Supervisor / Chef</div>
+        </div>
+        <div>
+          <div class="sig-line">HR &amp; General Manager</div>
+          <div class="sig-sub">Miss Fish Bali Management</div>
+        </div>
+      </div>
+
+      <script>
+        window.onload = function() { window.print(); };
+      <\/script>
+    </body>
+    </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+}
+
+function saveCareerToCandidate() {
+  if (!carSelectedCandidateId || !carCurrentData) {
+    toast('Pilih pelamar terdaftar terlebih dahulu untuk menyimpan ke dossier.');
+    return;
+  }
+  const cand = applicantsData.find(c => c.id === carSelectedCandidateId);
+  if (!cand) {
+    toast('Pelamar tidak ditemukan di database.');
+    return;
+  }
+
+  const now = new Date();
+  const timeStr = `${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}, ${now.toTimeString().slice(0, 5)} WITA`;
+
+  const activePath = (carCurrentData.paths || []).find(p => p.id === carActivePathId) || (carCurrentData.paths || [])[0];
+  const pathTitle = activePath ? activePath.title : 'Hospitality Roadmap';
+
+  if (!cand.notes) cand.notes = [];
+  cand.notes.unshift({
+    author: 'AI Career Roadmap',
+    time: timeStr,
+    text: `Roadmap 5 Tahun Ditetapkan: [${pathTitle}]. Target Akhir: ${activePath && activePath.milestones ? activePath.milestones[activePath.milestones.length - 1].role : 'Senior Leadership'}. Rekomendasi Sertifikasi: ${(carCurrentData.skill_gaps || []).slice(0, 2).join('; ')}.`
+  });
+
+  filterAdminApplicants();
+  renderAdminDashboard();
+  toast(`✓ Roadmap karir berhasil disimpan ke dossier "${cand.name}"!`);
+}
+
+function resetCareerForm() {
+  carCurrentData = null;
+  carExtractedCvText = '';
+  carSelectedCandidateId = null;
+  carActivePathId = null;
+
+  const roleInput = document.getElementById('carJobRole');
+  const jobSelect = document.getElementById('carJobSelect');
+  const appSelect = document.getElementById('carApplicantSelect');
+  const trackFocus = document.getElementById('carTrackFocus');
+  const cvText = document.getElementById('carCvText');
+  const fileInput = document.getElementById('carFileInput');
+  const fileStatus = document.getElementById('carFileStatus');
+  const results = document.getElementById('carResultsSection');
+  const loading = document.getElementById('carLoadingState');
+
+  if (roleInput) roleInput.value = '';
+  if (jobSelect) jobSelect.value = '';
+  if (appSelect) appSelect.value = '';
+  if (trackFocus) trackFocus.value = 'all';
+  if (cvText) cvText.value = '';
+  if (fileInput) fileInput.value = '';
+  if (fileStatus) fileStatus.style.display = 'none';
+  if (results) results.style.display = 'none';
+  if (loading) loading.style.display = 'none';
+  hideCarError();
+  setCarLang('auto');
+
+  toast('↺ Form AI Career Roadmap telah direset.');
 }
 
 </script>
