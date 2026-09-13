@@ -47,14 +47,18 @@ Generated : 10 September 2026, 10:15:00
 .globe-stage-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: 32px;
+  border-radius: 26px;
+  padding: 36px 30px;
   box-shadow: var(--shadow);
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
-  gap: 32px;
+  grid-template-columns: 1.32fr 0.68fr;
+  gap: 36px;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .globe-canvas-wrap {
@@ -63,15 +67,15 @@ Generated : 10 September 2026, 10:15:00
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, #0e2942 0%, #081a2c 65%, #030b14 100%);
   background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f1f5f9 55%, #e2e8f0 100%);
   border-radius: 24px;
   padding: 24px 20px 20px;
-  border: 1px solid rgba(92, 227, 222, 0.25);
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.15);
   border: 1px solid var(--line);
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04), var(--shadow);
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .globe-canvas-wrap {
@@ -83,11 +87,13 @@ Generated : 10 September 2026, 10:15:00
 .globe-canvas-stack {
   position: relative;
   width: 100%;
-  max-width: 660px;
+  max-width: min(100%, min(68vh, 780px));
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 #globeCanvas {
@@ -169,33 +175,47 @@ Generated : 10 September 2026, 10:15:00
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 24px;
-  padding: 28px;
+  padding: 28px 24px;
   box-shadow: var(--shadow);
   margin-bottom: 24px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-/* Peta 2D Interaktif (Visual SVG Maps) */
+/* Peta 2D Interaktif (Visual SVG Maps) — Box Besar, Megah, & Responsif Layar */
 .peta-2d-canvas-box {
-  background: #e3f2fd;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 12px;
-  margin-bottom: 24px;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: radial-gradient(circle at 50% 40%, #e0f2fe 0%, #bae6fd 60%, #7dd3fc 100%);
+  border: 1.5px solid rgba(2, 132, 199, 0.25);
+  border-radius: 22px;
+  padding: 16px 14px 12px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(2, 132, 199, 0.12);
   overflow: hidden;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 
 [data-theme="dark"] .peta-2d-canvas-box {
-  background: #091e33;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: radial-gradient(circle at 50% 40%, #0c2744 0%, #06182c 60%, #020b16 100%);
+  border-color: rgba(91, 224, 223, 0.25);
+  box-shadow: inset 0 2px 16px rgba(0, 0, 0, 0.5), 0 6px 22px rgba(0, 0, 0, 0.4);
 }
 
 .svg-map-frame {
   width: 100%;
   height: auto;
   display: block;
-  max-height: 440px;
+  max-height: min(65vh, 600px);
+  object-fit: contain;
 }
 
 .svg-island-interactive {
@@ -282,12 +302,16 @@ Generated : 10 September 2026, 10:15:00
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 12px;
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 11.5px;
   color: var(--muted);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .interactive-map-header {
@@ -313,9 +337,11 @@ Generated : 10 September 2026, 10:15:00
 
 .island-nav-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
   gap: 12px;
   margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .island-card-btn {
@@ -349,9 +375,11 @@ Generated : 10 September 2026, 10:15:00
 
 .bali-landmarks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   gap: 14px;
   margin-top: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bali-landmark-item {
@@ -587,6 +615,8 @@ Generated : 10 September 2026, 10:15:00
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.15s ease, border-color 0.15s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 240px;
 }
 
 .province-card:hover {
@@ -648,6 +678,8 @@ Generated : 10 September 2026, 10:15:00
   padding: 20px;
   box-shadow: var(--shadow-soft);
   border-left: 5px solid #ffb21b;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 180px;
 }
 
 .bali-region-card .region-type {
@@ -710,6 +742,8 @@ Generated : 10 September 2026, 10:15:00
   justify-content: space-between;
   gap: 16px;
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
 }
 
 .country-card:hover {
@@ -829,19 +863,94 @@ Generated : 10 September 2026, 10:15:00
   cursor: pointer;
 }
 
+@media (max-width: 950px) {
+  .globe-stage-card {
+    grid-template-columns: 1fr;
+    padding: 24px 18px;
+    gap: 24px;
+  }
+}
+
 @media (max-width: 850px) {
   .globe-stage-card {
     grid-template-columns: 1fr;
-    padding: 20px 16px;
+    padding: 20px 14px;
     gap: 20px;
   }
   .globe-canvas-wrap {
-    padding: 18px 12px;
+    padding: 16px 12px;
+    width: 100%;
+    max-width: 100%;
   }
-  #globeCanvas {
-    max-width: 260px;
+  .globe-canvas-stack {
+    max-width: min(100%, min(58vh, 500px));
+    width: 100%;
+  }
+  #globeCanvas,
+  #globeOverlay {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+  }
+  .interactive-map-panel {
+    padding: 16px 12px;
+    border-radius: 18px;
+  }
+  .peta-2d-canvas-box {
+    padding: 10px 8px 8px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+  .svg-map-frame {
+    max-height: min(58vh, 460px);
+  }
+  .peta-2d-legend-bar {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  .island-nav-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 135px), 1fr));
+    gap: 8px;
   }
   .country-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .globe-stage-card {
+    padding: 14px 8px;
+    border-radius: 18px;
+    gap: 16px;
+  }
+  .globe-canvas-wrap {
+    padding: 10px 6px;
+    border-radius: 14px;
+  }
+  .globe-canvas-stack {
+    max-width: min(100%, min(50vh, 360px));
+  }
+  .interactive-map-panel {
+    padding: 12px 6px;
+    border-radius: 14px;
+  }
+  .peta-2d-canvas-box {
+    padding: 6px 4px 4px;
+    border-radius: 12px;
+  }
+  .svg-map-frame {
+    max-height: min(52vh, 340px);
+  }
+  .island-card-btn {
+    padding: 10px 8px;
+  }
+  .island-card-btn strong {
+    font-size: 12.5px;
+  }
+  .bali-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -671,10 +671,10 @@ export class GlobeVisualizer {
     const aspect = w / h;
     const pMat = this.createPerspectiveMatrix(fov, aspect, 0.01, 100.0);
 
-    // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar (diameter ~440px di kanvas 720)
-    const dist = 3.65 / this.zoom;
+    // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar dan megah (diameter ~504px di kanvas 720)
+    const dist = 3.32 / this.zoom;
     let mvMat = this.createIdentityMatrix();
-    mvMat = this.mat4Translate(mvMat, 0.08, 0.18, -dist);
+    mvMat = this.mat4Translate(mvMat, 0.08, 0.16, -dist);
     // Kemiringan pandangan pengguna (pitch)
     mvMat = this.mat4RotateX(mvMat, this.tilt * Math.PI / 180);
     // Kemiringan sumbu bumi asli 23.5° (tilted ke kanan seperti foto referensi)
@@ -710,9 +710,9 @@ export class GlobeVisualizer {
     const ctx = this.ctx;
     const w = canvas.width;
     const h = canvas.height;
-    const cx = w / 2 + 18;
-    const cy = h / 2 - 35;
-    const r = 210 * this.zoom;
+    const cx = w / 2 + 21;
+    const cy = h / 2 - 42;
+    const r = 250 * this.zoom;
 
     ctx.clearRect(0, 0, w, h);
 
@@ -778,10 +778,10 @@ export class GlobeVisualizer {
 
     ctx.clearRect(0, 0, w, h);
 
-    // Koordinat pusat bola bumi pada panggung (ukuran besar)
-    const cx = w / 2 + 18;
-    const cy = h / 2 - 35;
-    const r = 212 * this.zoom;
+    // Koordinat pusat bola bumi pada panggung (ukuran besar & megah)
+    const cx = w / 2 + 21;
+    const cy = h / 2 - 42;
+    const r = 250 * this.zoom;
 
     // Sudut kemiringan sumbu bumi asli 23.5°
     const tiltAngle = this.axialTilt * Math.PI / 180;
@@ -795,28 +795,28 @@ export class GlobeVisualizer {
     const southY = cy + r * cosA;
 
     // Radius busur meridian logam (sedikit di luar bola)
-    const rArch = r + 28;
+    const rArch = r + 26;
     const archThick = 20;
 
     // -------------------------------------------------------------
     // 1. Bayangan Dudukan Meja (Tabletop Shadow)
     // -------------------------------------------------------------
     const baseCenterX = cx;
-    const baseCenterY = h - 68;
-    const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 200);
+    const baseCenterY = h - 56;
+    const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 210);
     shadowGrad.addColorStop(0, 'rgba(3, 10, 20, 0.55)');
     shadowGrad.addColorStop(0.5, 'rgba(5, 15, 30, 0.25)');
     shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = shadowGrad;
     ctx.beginPath();
-    ctx.ellipse(baseCenterX, baseCenterY + 14, 200, 28, 0, 0, Math.PI * 2);
+    ctx.ellipse(baseCenterX, baseCenterY + 14, 210, 26, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // -------------------------------------------------------------
     // 2. Kaki Penyangga Bundar Bertingkat (Chrome Tiered Pedestal Base)
     // -------------------------------------------------------------
     // Piringan Bawah Terlebar
-    const baseW = 168;
+    const baseW = 180;
     const baseH = 26;
     const baseGrad1 = ctx.createLinearGradient(baseCenterX - baseW, baseCenterY, baseCenterX + baseW, baseCenterY);
     baseGrad1.addColorStop(0, '#475569');

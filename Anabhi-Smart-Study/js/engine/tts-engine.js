@@ -8,12 +8,26 @@
 export const TtsEngine = {
   speaking: false,
   currentBtn: null,
+  speechRate: 0.85, // Default ramah anak kelas 1 SD (0.85x santai & artikulatif)
 
   isSupported() {
     return typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
   },
 
-  speak(text, lang = 'id', btnEl = null) {
+  setRate(rate) {
+    this.speechRate = Math.max(0.7, Math.min(1.2, rate));
+  },
+
+  getRate() {
+    return this.speechRate || 0.85;
+  },
+
+  toggleRate() {
+    this.speechRate = (this.speechRate <= 0.88) ? 1.0 : 0.85;
+    return this.speechRate;
+  },
+
+  speak(text, lang = 'id', btnEl = null, customRate = null) {
     if (!this.isSupported()) {
       console.warn('[TTS] Web Speech API tidak didukung di peramban ini.');
       return;
@@ -41,7 +55,8 @@ export const TtsEngine = {
     // Konfigurasi bahasa dan vokal ramah anak SD
     const isEn = (lang === 'en');
     utter.lang = isEn ? 'en-US' : 'id-ID';
-    utter.rate = isEn ? 0.88 : 0.85; // Bicara sedikit lebih pelan dan artikulatif untuk anak Kelas 1 SD
+    const baseRate = customRate || this.speechRate || 0.85;
+    utter.rate = isEn ? baseRate * 1.03 : baseRate; // Kecepatan artikulatif terkontrol
     utter.pitch = 1.08;              // Nada sedikit ceria bersahabat
 
     // Pilih suara optimal jika tersedia di browser
@@ -96,6 +111,22 @@ export const TtsEngine = {
       this.currentBtn = null;
     }
     this.speaking = false;
+  },
+
+  initVoices() {
+    if (this.isSupported()) {
+      try {
+        window.speechSynthesis.getVoices();
+        if (typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
+          window.speechSynthesis.onvoiceschanged = () => {
+            try { window.speechSynthesis.getVoices(); } catch (e) {}
+          };
+        }
+      } catch (e) {}
+    }
   }
 };
+
+TtsEngine.initVoices();
+
 

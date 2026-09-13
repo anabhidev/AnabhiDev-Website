@@ -466,6 +466,20 @@ export class SubjectViewComponent {
             list = list.filter(p => p.island.toLowerCase().includes(normIsland));
           }
         }
+        if (this.provSearchQuery && this.provSearchQuery.trim()) {
+          const q = this.provSearchQuery.trim().toLowerCase();
+          const matchedCityProvinces = (GEO_DATA.famousNonCapitalCities || [])
+            .filter(c => c.name.toLowerCase().includes(q) || (c.desc && c.desc.toLowerCase().includes(q)))
+            .map(c => c.province.toLowerCase());
+
+          list = list.filter(p =>
+            p.name.toLowerCase().includes(q) ||
+            p.capital.toLowerCase().includes(q) ||
+            p.island.toLowerCase().includes(q) ||
+            p.funFact.toLowerCase().includes(q) ||
+            matchedCityProvinces.includes(p.name.toLowerCase())
+          );
+        }
         const islands = [
           { id: 'Semua', name: isEn ? 'All Archipelago (38)' : 'Semua Nusantara (38)', count: 38 },
           { id: 'Sumatra', name: 'Sumatera', count: 10 },
@@ -525,7 +539,7 @@ export class SubjectViewComponent {
                   <text x="0" y="-10.5" text-anchor="middle" font-size="7.5" font-weight="900" fill="#ef4444">U</text>
                 </g>
 
-                <!-- 34 Authentic Administrative Provinces -->
+                <!-- 38 Authentic Administrative Provinces -->
                 ${REAL_INDONESIA_PATHS.map(p => {
                   const isMatch = island === 'Semua' || (island === 'Maluku & Papua' ? (p.island === 'Maluku' || p.island === 'Papua') : p.island.toLowerCase().includes(normIsland));
                   const cls = `svg-province-interactive ${isMatch && island !== 'Semua' ? 'active-province' : ''}`;
@@ -559,7 +573,7 @@ export class SubjectViewComponent {
               <!-- Legend Bar di Bawah Peta 2D -->
               <div class="peta-2d-legend-bar">
                 <span>💡 <strong>Tips:</strong> Klik batas provinsi langsung pada peta di atas untuk menjelajahi profilnya.</span>
-                <span>🇮🇩 <strong>Atlas Vektor Asli:</strong> 34 Batas Provinsi Resmi · Garis Khatulistiwa · 3 Zona Waktu</span>
+                <span>🇮🇩 <strong>Atlas Vektor Asli:</strong> 38 Provinsi Resmi Indonesia · Garis Khatulistiwa · 3 Zona Waktu</span>
               </div>
             </div>
 
@@ -571,6 +585,23 @@ export class SubjectViewComponent {
                   <span>${isl.count} ${isEn ? 'Provinces' : 'Provinsi'}</span>
                 </button>
               `).join('')}
+            </div>
+
+            <!-- Pencarian Cepat Provinsi & Kota Indonesia -->
+            <div class="geo-search-box-wrap" style="margin: 16px 0 18px;">
+              <div style="position:relative; width:100%;">
+                <input type="text"
+                       id="geoProvSearchInput"
+                       class="geo-search-input"
+                       placeholder="${isEn ? '🔍 Search province, capital, or famous city (e.g. Malang, Padang, Wamena, Bandung)...' : '🔍 Cari provinsi, ibu kota, atau kota terkenal (contoh: Malang, Padang, Wamena, Denpasar, Bandung)...'}"
+                       value="${this.provSearchQuery || ''}"
+                       autocomplete="off"
+                       style="width:100%; padding:12px 18px 12px 42px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-size:13.5px; color:var(--ink); box-shadow:var(--shadow-sm); outline:none;">
+                <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">🔍</span>
+                ${this.provSearchQuery ? `
+                  <button id="btnClearProvSearch" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="Hapus pencarian">✕</button>
+                ` : ''}
+              </div>
             </div>
 
             <!-- Ringkasan Wilayah Terpilih -->
@@ -1418,6 +1449,84 @@ export class SubjectViewComponent {
         TtsEngine.speak(text, lang, btn);
       });
     });
+
+    // 9. Pencarian Cepat Provinsi & Kota Indonesia Real-Time
+    const provSearchInput = this.container.querySelector('#geoProvSearchInput');
+    if (provSearchInput) {
+      provSearchInput.addEventListener('input', (e) => {
+        this.provSearchQuery = e.target.value;
+        const grid = this.container.querySelector('.provinces-grid');
+        if (grid) {
+          let filtered = GEO_DATA.provinces || [];
+          const isl = this.selectedMapIsland || 'Semua';
+          const nIsl = isl.toLowerCase().replace('sumatera', 'sumatra');
+          if (isl !== 'Semua') {
+            if (isl === 'Maluku & Papua') {
+              filtered = filtered.filter(p => p.island === 'Kepulauan Maluku' || p.island === 'Papua');
+            } else {
+              filtered = filtered.filter(p => p.island.toLowerCase().includes(nIsl));
+            }
+          }
+          const q = this.provSearchQuery.trim().toLowerCase();
+          if (q) {
+            const matchedCityProvinces = (GEO_DATA.famousNonCapitalCities || [])
+              .filter(c => c.name.toLowerCase().includes(q) || (c.desc && c.desc.toLowerCase().includes(q)))
+              .map(c => c.province.toLowerCase());
+
+            filtered = filtered.filter(p =>
+              p.name.toLowerCase().includes(q) ||
+              p.capital.toLowerCase().includes(q) ||
+              p.island.toLowerCase().includes(q) ||
+              p.funFact.toLowerCase().includes(q) ||
+              matchedCityProvinces.includes(p.name.toLowerCase())
+            );
+          }
+          grid.innerHTML = filtered.map(p => `
+            <div class="province-card" id="provCard_${p.id}" data-province-name="${p.name}">
+              <div>
+                <div class="province-header">
+                  <span class="province-no" style="font-size:22px; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--surface); border-radius:50%;">
+                    ${p.icon || '🏛️'}
+                  </span>
+                  <span class="subject-badge">${p.island}</span>
+                </div>
+                <h4 class="province-name">${p.name}</h4>
+                <div class="capital-row">
+                  <span>🏛️ ${lang === 'en' ? 'Capital City' : 'Ibu Kota'}:</span>
+                  <strong>${p.capital}</strong>
+                </div>
+                <div class="country-landmark-box" style="margin-top:10px;">
+                  <span class="landmark-tag">✨ ${lang === 'en' ? 'Unique Fact' : 'Fakta Unik & Ciri Khas'}</span>
+                  <p class="landmark-text" style="font-size:12.5px; line-height:1.55; margin:4px 0 0;">${p.funFact}</p>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+          // Highlight matching SVG paths in real-time
+          const svgPaths = this.container.querySelectorAll('.svg-province-interactive');
+          svgPaths.forEach(path => {
+            const pName = path.getAttribute('data-province-name') || '';
+            const isMatch = !q || filtered.some(f => f.name.toLowerCase() === pName.toLowerCase());
+            path.style.opacity = isMatch ? '1' : '0.22';
+            path.style.stroke = (q && isMatch) ? '#ffb21b' : '#ffffff';
+            path.style.strokeWidth = (q && isMatch) ? '1.8' : '0.6';
+          });
+        }
+      });
+    }
+
+    const btnClearSearch = this.container.querySelector('#btnClearProvSearch');
+    if (btnClearSearch) {
+      btnClearSearch.addEventListener('click', () => {
+        this.provSearchQuery = '';
+        const contentEl = this.container.querySelector('#geoRegionContent');
+        if (contentEl) {
+          contentEl.innerHTML = this.getRegionContentHtml('indonesia', lang);
+          this.attachRegionContentEvents();
+        }
+      });
+    }
   }
 
   // ==========================================================
@@ -1466,6 +1575,9 @@ export class SubjectViewComponent {
         <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${title.replace(/"/g, '&quot;')}. ${subtitle.replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
           🔊 ${isEn ? 'Listen Subject Overview' : 'Dengarkan Pengantar Mapel'}
         </button>
+        <button class="btn" id="btnToggleTtsSpeed" type="button" style="padding:8px 14px; font-size:13px; font-weight:750;" title="${isEn ? 'Adjust reading speech rate' : 'Atur kecepatan membaca suara'}">
+          ${TtsEngine.getRate() > 0.9 ? '⚡ 1.0x (Normal)' : '🐢 0.85x (Santai)'}
+        </button>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:24px;">
@@ -1473,7 +1585,8 @@ export class SubjectViewComponent {
           const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
           const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
           const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
-          const ttsSpeechText = `${topTitle}. ${topDesc}`.replace(/"/g, '&quot;');
+          const funFactText = top.funFact ? (isEn ? '. Did you know: ' : '. Tahukah kamu: ') + top.funFact : '';
+          const ttsSpeechText = `${topTitle}. ${topDesc}${funFactText}`.replace(/"/g, '&quot;');
 
           return `
             <div class="quiz-box">
@@ -1496,6 +1609,26 @@ export class SubjectViewComponent {
               <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
                 ${topDesc}
               </p>
+
+              ${top.keyPoints && top.keyPoints.length > 0 ? `
+                <div style="background:var(--card-bg, #fff); border:1px solid var(--border); border-left:4px solid var(--teal, #0d9488); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+                  <strong style="font-size:13px; color:var(--teal-soft-ink, #0f766e); display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                    📌 ${isEn ? 'Key Concepts to Master:' : 'Konsep Kunci Materi:'}
+                  </strong>
+                  <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.5;">
+                    ${top.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+
+              ${top.funFact ? `
+                <div style="background:var(--gold-soft, #fef9c3); border:1px solid var(--gold-border, #fef08a); border-radius:10px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:flex-start; gap:10px;">
+                  <span style="font-size:20px; line-height:1;">💡</span>
+                  <div style="font-size:12.5px; color:var(--ink); line-height:1.5;">
+                    <strong style="color:var(--amber, #d97706);">${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${top.funFact}
+                  </div>
+                </div>
+              ` : ''}
 
               ${checklist ? `
                 <div style="background:var(--paper); border-radius:12px; padding:14px; margin-bottom:16px;">
@@ -1542,10 +1675,20 @@ export class SubjectViewComponent {
       });
     });
 
+    // Event listener untuk tombol pengatur kecepatan suara
+    const btnSpeed = this.container.querySelector('#btnToggleTtsSpeed');
+    if (btnSpeed) {
+      btnSpeed.addEventListener('click', () => {
+        const newRate = TtsEngine.toggleRate();
+        btnSpeed.innerHTML = newRate > 0.9 ? '⚡ 1.0x (Normal)' : '🐢 0.85x (Santai)';
+        TtsEngine.speak(isEn ? `Speech speed set to ${newRate > 0.9 ? 'normal' : 'relaxed'}` : `Kecepatan suara diatur ke ${newRate > 0.9 ? 'normal' : 'santai'}`, lang);
+      });
+    }
+
     // Render kuis di tiap topik
     subjectData.topics.forEach(top => {
-      // Untuk bahasa-inggris, gunakan top.activities aslinya sesuai user request ("kecuali pelajaran bahasa inggris")
-      const activities = (isEn && top.activitiesEn) ? top.activitiesEn : top.activities;
+      // Pastikan seluruh 10 butir pertanyaan selalu dimuat lengkap
+      const activities = (isEn && top.activitiesEn && top.activitiesEn.length >= (top.activities ? top.activities.length : 0)) ? top.activitiesEn : top.activities;
       if (activities) {
         const wrap = this.container.querySelector(`#act_${top.id}`);
         if (wrap) {

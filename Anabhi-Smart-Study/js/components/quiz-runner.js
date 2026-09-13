@@ -137,6 +137,7 @@ export class QuizRunner {
           btn.querySelector('span').textContent = '❌';
           feedbackBanner.className = 'feedback-banner warning show';
           feedbackBanner.innerHTML = `${t('quizWrongFeedback', currentLang)} <u>${q.answer}</u>. ${currentLang === 'en' ? 'Keep trying!' : 'Semangat terus!'}`;
+          AudioFx.playGentleWrong();
         }
 
         this.answered = true;

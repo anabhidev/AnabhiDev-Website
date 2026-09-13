@@ -247,6 +247,19 @@ export class LksModalComponent {
           <p class="lks-summary-text">
             ${topDesc}
           </p>
+          ${topic.keyPoints && topic.keyPoints.length > 0 ? `
+            <div style="margin-top:10px; background:#f0fdf4; border-left:3px solid #16a34a; padding:8px 12px; border-radius:4px; font-size:12px; color:#14532d;">
+              <strong>📌 ${isEn ? 'Key Concepts to Remember:' : 'Poin Kunci yang Harus Diingat:'}</strong>
+              <ul style="margin:4px 0 0; padding-left:18px;">
+                ${topic.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${topic.funFact ? `
+            <div style="margin-top:8px; background:#eff6ff; border-left:3px solid #2563eb; padding:8px 12px; border-radius:4px; font-size:12px; color:#1e3a8a;">
+              <strong>💡 ${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${topic.funFact}
+            </div>
+          ` : ''}
         </div>
 
         <!-- BAGIAN B: LEMBAR MISI MANDIRI (CHECKLIST & TULIS PENSIL) -->

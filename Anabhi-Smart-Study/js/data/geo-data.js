@@ -1304,7 +1304,7 @@ export const GEO_DATA = {
     ]
   },
 
-  // 5. Kuis Geografi Interaktif (6 Seri Kuis · 60 Butir Soal Komprehensif)
+  // 5. Kuis Geografi Interaktif (8 Seri Kuis · 80 Butir Soal Komprehensif)
   quizzes: [
     {
       id: 'quiz-earth-science',
@@ -1406,6 +1406,40 @@ export const GEO_DATA = {
         { q: 'Makam megah dari marmer putih berkilau di kota Agra, India adalah...', options: ['Taj Mahal', 'Benteng Merah', 'Hawa Mahal', 'Qutub Minar'], answer: 'Taj Mahal', hint: 'Mahakarya arsitektur cinta abadi yang dibangun oleh Kaisar Shah Jahan.' },
         { q: 'Bangunan pertahanan terpanjang di dunia yang melintasi pegunungan di Asia Timur adalah...', options: ['Tembok Besar Tiongkok', 'Tembok Berlin', 'Tembok Konstantinopel', 'Benteng Belgica'], answer: 'Tembok Besar Tiongkok', hint: 'Membentang ribuan kilometer melintasi bukit dan lembah pegunungan.' },
         { q: 'Gedung pertunjukan dengan atap berbentuk layar kapal putih di tepi teluk Australia adalah...', options: ['Sydney Opera House', 'Harbour Bridge', 'Melbourne Tower', 'Canberra Hall'], answer: 'Sydney Opera House', hint: 'Karya arsitektur modern ikonik di kota pelabuhan Sydney.' }
+      ]
+    },
+    {
+      id: 'quiz-straits-seas',
+      title: 'Kuis 7: Selat, Teluk, & Laut Nusantara',
+      desc: 'Jelajahi perairan biru kepulauan Indonesia: selat, teluk, danau, dan sungai legendaris!',
+      questions: [
+        { q: 'Selat yang memisahkan Pulau Jawa dan Pulau Sumatra adalah...', options: ['Selat Sunda', 'Selat Bali', 'Selat Malaka', 'Selat Makassar'], answer: 'Selat Sunda', hint: 'Di tengah selat ini berdiri gagah Gunung Anak Krakatau.' },
+        { q: 'Selat penyeberangan feri dari pelabuhan Ketapang (Banyuwangi) ke Gilimanuk (Bali) adalah...', options: ['Selat Bali', 'Selat Lombok', 'Selat Madura', 'Selat Karimata'], answer: 'Selat Bali', hint: 'Selat sempit yang menghubungkan ujung timur Jawa dengan pulau dewata Bali.' },
+        { q: 'Selat perairan internasional tersibuk yang terletak di antara Pulau Sumatra dan Semenanjung Malaya adalah...', options: ['Selat Malaka', 'Selat Sunda', 'Selat Makassar', 'Selat Gaspar'], answer: 'Selat Malaka', hint: 'Jalur pelayaran rempah kuno yang ramai kapal dagang dunia.' },
+        { q: 'Danau vulkanik terbesar di Indonesia dan Asia Tenggara yang punya pulau Samosir di tengahnya adalah...', options: ['Danau Toba', 'Danau Singkarak', 'Danau Poso', 'Danau Matano'], answer: 'Danau Toba', hint: 'Terletak di Provinsi Sumatera Utara, terbentuk dari letusan gunung purba mahadahsyat.' },
+        { q: 'Sungai terpanjang di Indonesia yang mengalir sepanjang 1.143 km di Kalimantan Barat adalah...', options: ['Sungai Kapuas', 'Sungai Mahakam', 'Sungai Musi', 'Sungai Barito'], answer: 'Sungai Kapuas', hint: 'Sungai megah yang bermuara di dekat Kota Pontianak khatulistiwa.' },
+        { q: 'Selat luas yang memisahkan Pulau Kalimantan dan Pulau Sulawesi adalah...', options: ['Selat Makassar', 'Selat Sunda', 'Selat Bali', 'Selat Ombai'], answer: 'Selat Makassar', hint: 'Jalur perairan dalam tempat kota pelabuhan Balikpapan dan Makassar berada.' },
+        { q: 'Teluk perairan luas di Papua yang menjadi habitat hiu paus jinak adalah...', options: ['Teluk Cenderawasih', 'Teluk Tomini', 'Teluk Bone', 'Teluk Bintuni'], answer: 'Teluk Cenderawasih', hint: 'Taman Nasional Laut terbesar di Indonesia di kawasan Nabire Papua Tengah.' },
+        { q: 'Laut yang terletak di sebelah utara Pulau Jawa dan menghubungkan banyak pelabuhan nusantara adalah...', options: ['Laut Jawa', 'Laut Banda', 'Laut Arafura', 'Laut Flores'], answer: 'Laut Jawa', hint: 'Laut dangkal yang kaya akan hasil ikan dan jalur pelayaran antarpulau.' },
+        { q: 'Danau indah di tanah Papua yang terkenal dengan tradisi festival budaya dan lukisan kulit kayu adalah...', options: ['Danau Sentani', 'Danau Toba', 'Danau Maninjau', 'Danau Ranau'], answer: 'Danau Sentani', hint: 'Danau berlatar Pegunungan Cycloop di dekat Kota Jayapura.' },
+        { q: 'Laut terdalam di Indonesia yang memiliki palung laut sedalam lebih dari 7.000 meter adalah...', options: ['Laut Banda', 'Laut Jawa', 'Laut Bali', 'Laut Natuna'], answer: 'Laut Banda', hint: 'Dikelilingi gugusan Kepulauan Maluku yang kaya terumbu karang.' }
+      ]
+    },
+    {
+      id: 'quiz-endemic-wildlife',
+      title: 'Kuis 8: Satwa Endemik & Keajaiban Alam Nusantara',
+      desc: 'Mengenal fauna langka khas Indonesia dari Sabang sampai Merauke!',
+      questions: [
+        { q: 'Kadal raksasa purba terbesar di dunia yang hanya ada di Nusa Tenggara Timur adalah...', options: ['Komodo', 'Biawak Air', 'Iguana', 'Buaya Muara'], answer: 'Komodo', hint: 'Hidup di Taman Nasional Komodo dan Pulau Rinca.' },
+        { q: 'Kera besar berbulu kemerahan yang cerdas dan hidup di pepohonan Kalimantan dan Sumatra adalah...', options: ['Orangutan', 'Gorila', 'Simpanse', 'Bekantan'], answer: 'Orangutan', hint: 'Namanya berasal dari bahasa Melayu yang berarti "Manusia Hutan".' },
+        { q: 'Burung dengan bulu keemasan yang elok dari hutan Papua dan dijuluki "Burung Surga" adalah...', options: ['Burung Cenderawasih', 'Burung Merak', 'Burung Enggang', 'Burung Kakaktua'], answer: 'Burung Cenderawasih', hint: 'Simbol kebanggaan masyarakat Papua (Bird of Paradise).' },
+        { q: 'Satwa langka bercula satu yang dilindungi di Taman Nasional Ujung Kulon, Banten adalah...', options: ['Badak Jawa', 'Gajah Sumatra', 'Tapir', 'Banteng Jawa'], answer: 'Badak Jawa', hint: 'Salah satu mamalia paling langka di muka bumi dengan satu cula di hidungnya.' },
+        { q: 'Bunga raksasa beraroma menyengat tanpa batang dan daun yang menjadi ikon Bengkulu adalah...', options: ['Rafflesia arnoldii', 'Bunga Melati', 'Bunga Anggrek', 'Bunga Mawar'], answer: 'Rafflesia arnoldii', hint: 'Bunga tunggal terbesar di dunia dengan kelopak merah berbintik putih.' },
+        { q: 'Burung unik dari Sulawesi yang mengubur telurnya di pasir pantai hangat untuk dierami panas bumi adalah...', options: ['Burung Maleo', 'Burung Kasuari', 'Burung Jalak', 'Burung Kenari'], answer: 'Burung Maleo', hint: 'Memiliki jambul hitam di kepala dan telur berukuran sangat besar.' },
+        { q: 'Kera berhidung panjang besar yang hidup di pohon bakau tepi sungai Kalimantan adalah...', options: ['Bekantan', 'Lutung', 'Owa', 'Kukang'], answer: 'Bekantan', hint: 'Satwa endemik berbulu oranye kecokelatan maskot fauna Kalimantan Selatan.' },
+        { q: 'Harimau loreng berukuran paling ramping yang habitat aslinya di pedalaman hutan Sumatra adalah...', options: ['Harimau Sumatra', 'Harimau Benggala', 'Harimau Siberia', 'Singa Afrika'], answer: 'Harimau Sumatra', hint: 'Satu-satunya subspesies harimau Indonesia yang masih bertahan di alam liar.' },
+        { q: 'Satwa mamalia laut pemakan rumput laut yang dijuluki "Ikan Duyung" di perairan nusantara adalah...', options: ['Dugong', 'Lumba-lumba', 'Paus Biru', 'Pesut Mahakam'], answer: 'Dugong', hint: 'Hewan mamalia herbivora laut yang berenang tenang di padang lamun.' },
+        { q: 'Sapi hutan liar berbadan kekar dengan tanduk lurus meruncing ke belakang khas Sulawesi adalah...', options: ['Anoa', 'Banteng', 'Kerbau Rawa', 'Kambing Hutan'], answer: 'Anoa', hint: 'Sering dijuluki kerbau kerdil endemik hutan hujan Sulawesi.' }
       ]
     }
   ]

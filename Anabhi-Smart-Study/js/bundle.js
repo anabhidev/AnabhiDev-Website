@@ -1129,14 +1129,18 @@
     // Preset Pilihan Cepat Soal Flagship & Variasi (Termasuk Level Khusus Kelas 1 SD)
     presetExamples: [
       // --- Level 1: Sahabat 10 (Kelas 1 SD) ---
+      { a: 6, b: 4, level: 'sd1', label: '6 + 4 (Pas 10 Sempurna)', labelEn: '6 + 4 (Make 10 Perfect)' },
       { a: 7, b: 5, level: 'sd1', label: '7 + 5 (Kawan 10 Dasar)', labelEn: '7 + 5 (Make 10 Basic)', highlight: true },
       { a: 8, b: 6, level: 'sd1', label: '8 + 6 (Bikin 10 Ceria)', labelEn: '8 + 6 (Make 10 Fun)' },
       { a: 9, b: 4, level: 'sd1', label: '9 + 4 (Hampir 10)', labelEn: '9 + 4 (Near 10)' },
       { a: 8, b: 7, level: 'sd1', label: '8 + 7 (Dobel + 1)', labelEn: '8 + 7 (Doubles + 1)' },
+      { a: 9, b: 5, level: 'sd1', label: '9 + 5 (Lompat 10)', labelEn: '9 + 5 (Jump 10)' },
       // --- Level 2: Menembus Puluhan (Kelas 1 SD) ---
+      { a: 12, b: 6, level: 'sd1', label: '12 + 6 (Satuan Sahabat)', labelEn: '12 + 6 (Friendly Units)' },
       { a: 15, b: 8, level: 'sd1', label: '15 + 8 (Lompat Puluhan)', labelEn: '15 + 8 (Jump Tens)' },
       { a: 24, b: 13, level: 'sd1', label: '24 + 13 (Puluhan Bersahabat)', labelEn: '24 + 13 (Friendly Tens)' },
       { a: 36, b: 19, level: 'sd1', label: '36 + 19 (Dekat 20)', labelEn: '36 + 19 (Near 20)' },
+      { a: 25, b: 25, level: 'sd1', label: '25 + 25 (Pas Setengah Ratus)', labelEn: '25 + 25 (Double 25)' },
       // --- Level 3: Mahir Ratusan & Flagship Soal ---
       { a: 67, b: 59, level: 'master', label: '67 + 59 (Flagship Master)', labelEn: '67 + 59 (Flagship Master)', highlight: true },
       { a: 68, b: 32, level: 'master', label: '68 + 32 (Pas 100 Bulat)', labelEn: '68 + 32 (Make 100)' },
@@ -1254,6 +1258,226 @@
         ],
         explanation: '58 + 30 = 88. Lalu 88 - 1 = 87!',
         explanationEn: '58 + 30 = 88. Then 88 - 1 = 87!'
+      },
+      {
+        id: 'p6',
+        a: 6,
+        b: 4,
+        answer: 10,
+        question: '6 + 4 = ?',
+        story: 'Siti memetik 6 apel merah manis, lalu adik memetik 4 apel hijau segar. Berapa buah apel mereka seluruhnya?',
+        storyEn: 'Siti picked 6 sweet red apples, and little brother picked 4 fresh green apples. How many apples do they have altogether?',
+        recommended: ['tens-frames', 'number-bonds'],
+        hints: [
+          '💡 Petunjuk 1: Coba isi Kotak 10 dengan 6 apel merah terlebih dahulu.',
+          '💡 Petunjuk 2: Masih ada 4 slot kosong di kotak tersebut. Masukkan 4 apel hijau!',
+          '💡 Petunjuk 3: Kotak 10 langsung terisi penuh! Jadi 6 + 4 = 10 bulat sempurna! 🎉'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Fill the Ten-Frame with 6 red apples first.',
+          '💡 Hint 2: There are 4 empty slots left. Place the 4 green apples in!',
+          '💡 Hint 3: The Ten-Frame is completely full! So 6 + 4 = 10 perfectly! 🎉'
+        ],
+        explanation: '6 dan 4 adalah pasangan Kawan 10 yang langsung menggenapkan 10 penuh!',
+        explanationEn: '6 and 4 are Friends of 10 partners that instantly fill a ten!'
+      },
+      {
+        id: 'p7',
+        a: 9,
+        b: 5,
+        answer: 14,
+        question: '9 + 5 = ?',
+        story: 'Rani memiliki 9 pensil warna di meja belajarnya, lalu Ibu memberinya hadiah 5 pensil warna baru. Berapa pensil warna Rani sekarang?',
+        storyEn: 'Rani has 9 colored pencils on her desk, then Mom gifts her 5 new colored pencils. How many colored pencils does Rani have now?',
+        recommended: ['tens-frames', 'compensation', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: Angka 9 cuma butuh 1 kawan lagi untuk genap jadi 10.',
+          '💡 Petunjuk 2: Pinjam 1 dari 5, sehingga 9 menjadi 10 penuh! Angka 5 tersisa 4.',
+          '💡 Petunjuk 3: 10 ditambah sisa 4 hasilnya adalah 14!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Number 9 only needs 1 friend to become a full 10.',
+          '💡 Hint 2: Borrow 1 from 5, so 9 becomes 10! 5 has 4 left.',
+          '💡 Hint 3: 10 plus remaining 4 equals 14!'
+        ],
+        explanation: '9 + 1 = 10. Sisa 4. Maka 10 + 4 = 14!',
+        explanationEn: '9 + 1 = 10. Remaining 4. Thus 10 + 4 = 14!'
+      },
+      {
+        id: 'p8',
+        a: 8,
+        b: 7,
+        answer: 15,
+        question: '8 + 7 = ?',
+        story: 'Di taman bunga ada 8 kupu-kupu kuning dan 7 kupu-kupu biru yang sedang terbang ceria. Berapa kupu-kupu yang ada di taman?',
+        storyEn: 'In the flower garden there are 8 yellow butterflies and 7 blue butterflies fluttering merrily. How many butterflies are in the garden?',
+        recommended: ['doubles', 'tens-frames', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: Coba gunakan jurus Kembar! Kita tahu 7 + 7 = 14.',
+          '💡 Petunjuk 2: Karena 8 itu 7 + 1, tambahkan 1 pada hasil kembar: 14 + 1.',
+          '💡 Petunjuk 3: Hasilnya adalah 15! Sangat cerdas dan cepat!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Try the Doubles trick! We know 7 + 7 = 14.',
+          '💡 Hint 2: Since 8 is 7 + 1, add 1 to the doubles total: 14 + 1.',
+          '💡 Hint 3: The result is 15! Super smart and quick!'
+        ],
+        explanation: 'Jurus Dobel + 1: 7 + 7 = 14, lalu 14 + 1 = 15!',
+        explanationEn: 'Doubles + 1 trick: 7 + 7 = 14, then 14 + 1 = 15!'
+      },
+      {
+        id: 'p9',
+        a: 14,
+        b: 6,
+        answer: 20,
+        question: '14 + 6 = ?',
+        story: 'Budi sudah mengumpulkan 14 stiker pahlawan nusantara, lalu ia mendapat 6 stiker lagi dari Ayah. Berapa stiker Budi sekarang?',
+        storyEn: 'Budi collected 14 national hero stickers, then received 6 more stickers from Dad. How many stickers does Budi have now?',
+        recommended: ['number-bonds', 'tens-frames'],
+        hints: [
+          '💡 Petunjuk 1: Lihat satuannya: 4 dan 6 adalah pasangan serasi Kawan 10.',
+          '💡 Petunjuk 2: 4 + 6 = 10 bulat.',
+          '💡 Petunjuk 3: Gabungkan 10 yang baru dengan 10 di depan angka 14: 10 + 10 = 20! 🌟'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Check the units: 4 and 6 are perfect Friends of 10.',
+          '💡 Hint 2: 4 + 6 = 10 round.',
+          '💡 Hint 3: Combine with the 10 from 14: 10 + 10 = 20! 🌟'
+        ],
+        explanation: '14 + 6 = 10 + (4 + 6) = 10 + 10 = 20!',
+        explanationEn: '14 + 6 = 10 + (4 + 6) = 10 + 10 = 20!'
+      },
+      {
+        id: 'p10',
+        a: 19,
+        b: 12,
+        answer: 31,
+        question: '19 + 12 = ?',
+        story: 'Di dalam toples ada 19 permen stroberi manis dan 12 permen jeruk segar. Berapa jumlah semua permen di dalam toples?',
+        storyEn: 'Inside the jar there are 19 sweet strawberry candies and 12 fresh orange candies. How many candies are there in total?',
+        recommended: ['compensation', 'decomposition', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: 19 hampir jadi 20 (cuma butuh 1 lagi).',
+          '💡 Petunjuk 2: Pindahkan 1 permen dari 12 ke 19, sehingga menjadi 20 + 11.',
+          '💡 Petunjuk 3: 20 + 11 = 31! Cepat dan mudah dihitung di kepala!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: 19 is almost 20 (needs just 1).',
+          '💡 Hint 2: Shift 1 candy from 12 to 19, becoming 20 + 11.',
+          '💡 Hint 3: 20 + 11 = 31! Fast and effortless in mental math!'
+        ],
+        explanation: 'Kompensasi: 19 + 1 = 20. Lalu 20 + 11 = 31!',
+        explanationEn: 'Compensation: 19 + 1 = 20. Then 20 + 11 = 31!'
+      },
+      {
+        id: 'p11',
+        a: 25,
+        b: 15,
+        answer: 40,
+        question: '25 + 15 = ?',
+        story: 'Made menabung 25 koin di celengan ayamnya, kemudian Kakek memberinya 15 koin tambahan. Berapa koin di celengan Made sekarang?',
+        storyEn: 'Made saved 25 coins in his piggy bank, then Grandpa gave him 15 more coins. How many coins are in Made’s piggy bank now?',
+        recommended: ['number-bonds', 'decomposition'],
+        hints: [
+          '💡 Petunjuk 1: Gabungkan satuannya dulu: 5 + 5 = 10.',
+          '💡 Petunjuk 2: Jumlahkan puluhannya: 20 + 10 = 30.',
+          '💡 Petunjuk 3: Satukan keduanya: 30 + 10 = 40! Bulat sempurna!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Add the units first: 5 + 5 = 10.',
+          '💡 Hint 2: Add the tens: 20 + 10 = 30.',
+          '💡 Hint 3: Put them together: 30 + 10 = 40! Perfectly round!'
+        ],
+        explanation: '(20 + 10) + (5 + 5) = 30 + 10 = 40!',
+        explanationEn: '(20 + 10) + (5 + 5) = 30 + 10 = 40!'
+      },
+      {
+        id: 'p12',
+        a: 38,
+        b: 9,
+        answer: 47,
+        question: '38 + 9 = ?',
+        story: 'Di rak buku kelas ada 38 buku cerita, lalu Bu Guru membawa 9 buku ensiklopedia baru. Berapa buku di rak sekarang?',
+        storyEn: 'On the classroom bookshelf there are 38 storybooks, then Teacher brings 9 new encyclopedias. How many books are on the shelf now?',
+        recommended: ['compensation', 'number-line'],
+        hints: [
+          '💡 Petunjuk 1: 9 hampir jadi 10! Hitung 38 + 10 dulu.',
+          '💡 Petunjuk 2: 38 + 10 = 48.',
+          '💡 Petunjuk 3: Karena tadi melebihkan 1, sekarang kurangi 1: 48 - 1 = 47!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: 9 is almost 10! Add 38 + 10 first.',
+          '💡 Hint 2: 38 + 10 = 48.',
+          '💡 Hint 3: Since we added 1 extra, subtract 1: 48 - 1 = 47!'
+        ],
+        explanation: '38 + 10 = 48. Lalu 48 - 1 = 47!',
+        explanationEn: '38 + 10 = 48. Then 48 - 1 = 47!'
+      },
+      {
+        id: 'p13',
+        a: 45,
+        b: 25,
+        answer: 70,
+        question: '45 + 25 = ?',
+        story: 'Paman memanen 45 buah mangga harum manis dan 25 buah jeruk bali dari kebun buah. Berapa total buah panen paman?',
+        storyEn: 'Uncle harvested 45 sweet mangoes and 25 pomelos from the orchard. What is the total fruit harvest?',
+        recommended: ['decomposition', 'number-bonds'],
+        hints: [
+          '💡 Petunjuk 1: Pasangan 5 + 5 selalu menghasilkan 10.',
+          '💡 Petunjuk 2: Puluhannya adalah 40 + 20 = 60.',
+          '💡 Petunjuk 3: 60 + 10 = 70! Berhasil!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Pair 5 + 5 always makes 10.',
+          '💡 Hint 2: Tens are 40 + 20 = 60.',
+          '💡 Hint 3: 60 + 10 = 70! Success!'
+        ],
+        explanation: '45 + 25 = (40 + 20) + (5 + 5) = 60 + 10 = 70!',
+        explanationEn: '45 + 25 = (40 + 20) + (5 + 5) = 60 + 10 = 70!'
+      },
+      {
+        id: 'p14',
+        a: 33,
+        b: 27,
+        answer: 60,
+        question: '33 + 27 = ?',
+        story: 'Di arena bermain ada 33 balok susun warna biru dan 27 balok warna kuning. Berapa balok susun semuanya?',
+        storyEn: 'In the play area there are 33 blue building blocks and 27 yellow blocks. How many building blocks are there altogether?',
+        recommended: ['number-bonds', 'make-hundred', 'decomposition'],
+        hints: [
+          '💡 Petunjuk 1: Lihat satuannya: 3 + 7 = 10 pas!',
+          '💡 Petunjuk 2: Puluhannya: 30 + 20 = 50.',
+          '💡 Petunjuk 3: 50 + 10 = 60 pas tanpa sisa!'
+        ],
+        hintsEn: [
+          '💡 Hint 1: Check units: 3 + 7 = 10 exactly!',
+          '💡 Hint 2: Tens: 30 + 20 = 50.',
+          '💡 Hint 3: 50 + 10 = 60 without remainder!'
+        ],
+        explanation: '33 + 27 = (30 + 20) + (3 + 7) = 50 + 10 = 60!',
+        explanationEn: '33 + 27 = (30 + 20) + (3 + 7) = 50 + 10 = 60!'
+      },
+      {
+        id: 'p15',
+        a: 75,
+        b: 25,
+        answer: 100,
+        question: '75 + 25 = ?',
+        story: 'Lani memiliki 75 butir kelereng kaca kristal, lalu Kakak menghadiahkan 25 butir lagi. Berapa jumlah kelereng Lani seluruhnya?',
+        storyEn: 'Lani has 75 crystal glass marbles, then big sister gifts her 25 more. How many marbles does Lani have in total?',
+        recommended: ['make-hundred', 'number-bonds'],
+        hints: [
+          '💡 Petunjuk 1: 75 dan 25 adalah pasangan emas menuju 100.',
+          '💡 Petunjuk 2: Bayangkan uang koin 75 sen ditambah 25 sen.',
+          '💡 Petunjuk 3: Tepat menjadi 100 bulat sempurna! 💯'
+        ],
+        hintsEn: [
+          '💡 Hint 1: 75 and 25 are the golden pair making 100.',
+          '💡 Hint 2: Imagine coins 75 cents plus 25 cents.',
+          '💡 Hint 3: Exactly makes a perfect 100! 💯'
+        ],
+        explanation: '75 + 25 = 100 bulat sempurna! Pasangan kawan seratus.',
+        explanationEn: '75 + 25 = 100 perfectly! Friends of 100 pair.'
       }
     ],
   
@@ -2589,104 +2813,142 @@
       ]
     },
   
-    // 5. Kuis Geografi Interaktif
+    // 5. Kuis Geografi Interaktif (8 Seri Kuis · 80 Butir Soal Komprehensif)
     quizzes: [
       {
-          "id": "quiz-world-capitals",
-          "title": "Kuis 4: Tebak Ibu Kota Negara di Dunia",
-          "desc": "Jelajahi dunia! Seberapa hebat kamu mengingat ibu kota negara-negara sahabat?",
-          "questions": [
-              {
-                  "q": "Apa ibu kota negara Jepang?",
-                  "options": [
-                      "Tokyo",
-                      "Kyoto",
-                      "Osaka",
-                      "Sapporo"
-                  ],
-                  "answer": "Tokyo",
-                  "hint": "Kota metropolitan terbesar dengan Menara Tokyo yang terkenal."
-              },
-              {
-                  "q": "Apa ibu kota negara Arab Saudi?",
-                  "options": [
-                      "Riyadh",
-                      "Jeddah",
-                      "Makkah",
-                      "Madinah"
-                  ],
-                  "answer": "Riyadh",
-                  "hint": "Pusat pemerintahan dan ekonomi kerajaan di tengah gurun Nejd."
-              },
-              {
-                  "q": "Apa ibu kota negara Inggris (Britania Raya)?",
-                  "options": [
-                      "London",
-                      "Manchester",
-                      "Liverpool",
-                      "Edinburgh"
-                  ],
-                  "answer": "London",
-                  "hint": "Kota bersejarah tempat Menara Big Ben dan jam raksasanya berdentang."
-              },
-              {
-                  "q": "Apa ibu kota negara Mesir di Afrika?",
-                  "options": [
-                      "Kairo",
-                      "Iskandariyah",
-                      "Giza",
-                      "Luxor"
-                  ],
-                  "answer": "Kairo",
-                  "hint": "Kota di tepi Sungai Nil dekat dengan piramida megah."
-              },
-              {
-                  "q": "Apa ibu kota negara Australia?",
-                  "options": [
-                      "Canberra",
-                      "Sydney",
-                      "Melbourne",
-                      "Brisbane"
-                  ],
-                  "answer": "Canberra",
-                  "hint": "Bukan Sydney atau Melbourne, melainkan kota terencana yang indah di pedalaman!"
-              }
-          ]
+        id: 'quiz-earth-science',
+        title: 'Kuis 1: Bentuk Bumi, Samudra, & Benua',
+        desc: 'Yuk uji pemahamanmu tentang bentuk bola Bumi, samudra biru, dan benua di dunia!',
+        questions: [
+          { q: 'Bumi tempat tinggal kita berbentuk seperti apa ya?', options: ['Bulat seperti bola', 'Datar seperti piring', 'Segitiga seperti piramida', 'Kotak seperti kubus'], answer: 'Bulat seperti bola', hint: 'Para astronaut dari luar angkasa melihat Bumi bundar berkilau bagaikan kelereng biru.' },
+          { q: 'Sebagian besar (sekitar 70%) permukaan Bumi tertutup oleh...', options: ['Air dan lautan', 'Pasir gurun', 'Gedung pencakar langit', 'Hutan pinus'], answer: 'Air dan lautan', hint: 'Lautan luas membuat planet kita dijuluki Planet Biru (The Blue Marble).' },
+          { q: 'Perputaran Bumi pada porosnya yang menyebabkan siang dan malam disebut...', options: ['Rotasi Bumi', 'Revolusi Bumi', 'Gerhana Matahari', 'Pasang Surut'], answer: 'Rotasi Bumi', hint: 'Bumi berputar sekali putaran penuh setiap 24 jam.' },
+          { q: 'Garis khayal yang membelah Bumi tepat di tengah menjadi belahan Utara dan Selatan adalah...', options: ['Garis Khatulistiwa (Equator)', 'Garis Pantai', 'Garis Batas Kota', 'Garis Horizon'], answer: 'Garis Khatulistiwa (Equator)', hint: 'Indonesia dilintasi garis ini, contohnya di Kota Pontianak dan Bonjol.' },
+          { q: 'Samudra terluas dan terdalam di permukaan Bumi adalah...', options: ['Samudra Pasifik', 'Samudra Atlantik', 'Samudra Hindia', 'Samudra Arktik'], answer: 'Samudra Pasifik', hint: 'Samudra ini membentang luas di sebelah timur kepulauan Indonesia.' },
+          { q: 'Benua terbesar di dunia tempat negara Indonesia berada adalah Benua...', options: ['Asia', 'Eropa', 'Afrika', 'Australia'], answer: 'Asia', hint: 'Benua ini memiliki populasi penduduk terbanyak di dunia.' },
+          { q: 'Kutub Selatan Bumi terletak di benua berselimut es abadi yang bernama...', options: ['Antartika', 'Australia', 'Amerika Selatan', 'Afrika'], answer: 'Antartika', hint: 'Tempat tinggal favorit koloni burung pinguin kaisar yang menggemaskan.' },
+          { q: 'Bumi mengelilingi sebuah bintang besar penghasil cahaya dan panas yang bernama...', options: ['Matahari', 'Bulan', 'Bintang Kejora', 'Komet'], answer: 'Matahari', hint: 'Pusat tata surya kita yang terbit di timur dan terbenam di barat.' },
+          { q: 'Udara yang menyelimuti dan melindungi Bumi dari batuan luar angkasa disebut...', options: ['Atmosfer', 'Litosfer', 'Biosfer', 'Hidrosfer'], answer: 'Atmosfer', hint: 'Lapisan gas pelindung yang mengandung oksigen untuk kita bernapas.' },
+          { q: 'Alat penunjuk arah mata angin yang jarumnya selalu mengarah ke kutub utara adalah...', options: ['Kompas', 'Jam Dinding', 'Termometer', 'Timbangan'], answer: 'Kompas', hint: 'Menggunakan gaya magnet bumi untuk membantu pelaut dan penjelajah.' }
+        ]
       },
       {
         id: 'quiz-prov-capital',
-        title: 'Kuis 1: Tebak Ibu Kota Provinsi',
-        desc: 'Uji hafalanmu tentang ibu kota dari 38 provinsi di Indonesia!',
+        title: 'Kuis 2: Tebak Ibu Kota 38 Provinsi Indonesia',
+        desc: 'Uji hafalanmu tentang ibu kota dari 38 provinsi di seluruh kepulauan nusantara!',
         questions: [
           { q: 'Apa ibu kota Provinsi Jawa Timur?', options: ['Surabaya', 'Malang', 'Bandung', 'Semarang'], answer: 'Surabaya', hint: 'Kota Pahlawan yang terkenal dengan Tugu Pahlawan!' },
-          { q: 'Apa ibu kota Provinsi Bali?', options: ['Singaraja', 'Denpasar', 'Gianyar', 'Mangupura'], answer: 'Denpasar', hint: 'Kota di tengah Bali yang memiliki Monumen Bajra Sandhi.' },
-          { q: 'Apa ibu kota Provinsi Sumatera Barat?', options: ['Bukittinggi', 'Padang', 'Medan', 'Pekanbaru'], answer: 'Padang', hint: 'Kota asal kuliner rendang yang mendunia!' },
-          { q: 'Apa ibu kota Provinsi Papua Pegunungan?', options: ['Jayapura', 'Wamena', 'Merauke', 'Nabire'], answer: 'Wamena', hint: 'Kota sejuk di Lembah Baliem.' },
-          { q: 'Apa ibu kota Provinsi Kalimantan Timur?', options: ['Balikpapan', 'Samarinda', 'Pontianak', 'Banjarmasin'], answer: 'Samarinda', hint: 'Kota di tepi Sungai Mahakam.' }
+          { q: 'Apa ibu kota Provinsi Bali?', options: ['Denpasar', 'Singaraja', 'Gianyar', 'Mangupura'], answer: 'Denpasar', hint: 'Kota di tengah Bali yang memiliki Monumen Bajra Sandhi.' },
+          { q: 'Apa ibu kota Provinsi Sumatera Barat?', options: ['Padang', 'Bukittinggi', 'Medan', 'Pekanbaru'], answer: 'Padang', hint: 'Kota asal kuliner rendang yang mendunia!' },
+          { q: 'Apa ibu kota Provinsi Papua Pegunungan?', options: ['Wamena', 'Jayapura', 'Merauke', 'Nabire'], answer: 'Wamena', hint: 'Kota sejuk di Lembah Baliem pegunungan tengah Papua.' },
+          { q: 'Apa ibu kota Provinsi Kalimantan Timur?', options: ['Samarinda', 'Balikpapan', 'Pontianak', 'Banjarmasin'], answer: 'Samarinda', hint: 'Kota di tepi Sungai Mahakam.' },
+          { q: 'Apa ibu kota Provinsi Jawa Barat?', options: ['Bandung', 'Bogor', 'Cirebon', 'Bekasi'], answer: 'Bandung', hint: 'Kota Kembang yang terkenal dengan Gedung Sate.' },
+          { q: 'Apa ibu kota Provinsi Jawa Tengah?', options: ['Semarang', 'Surakarta', 'Magelang', 'Pekalongan'], answer: 'Semarang', hint: 'Kota bersejarah dengan Lawang Sewu dan lumpia gurih.' },
+          { q: 'Apa ibu kota Provinsi Aceh di ujung barat Indonesia?', options: ['Banda Aceh', 'Sabang', 'Lhokseumawe', 'Langsa'], answer: 'Banda Aceh', hint: 'Kota Serambi Mekkah dengan Masjid Raya Baiturrahman yang megah.' },
+          { q: 'Apa ibu kota Provinsi Sumatera Utara?', options: ['Medan', 'Pematangsiantar', 'Sibolga', 'Binjai'], answer: 'Medan', hint: 'Kota metropolitan terbesar di pulau Sumatera dekat Danau Toba.' },
+          { q: 'Apa ibu kota Provinsi Papua di pesisir Teluk Yos Sudarso?', options: ['Jayapura', 'Biak', 'Sorong', 'Timika'], answer: 'Jayapura', hint: 'Ibu kota provinsi induk di tanah Papua dengan Jembatan Youtefa yang merah indah.' }
         ]
       },
       {
         id: 'quiz-city-province',
-        title: 'Kuis 2: Tebak Asal Provinsi Kota Terkenal',
+        title: 'Kuis 3: Tebak Asal Provinsi Kota Terkenal',
         desc: 'Kota-kota ini sangat terkenal, tapi bukan ibu kota provinsi! Di mana ya lokasinya?',
         questions: [
           { q: 'Kota Malang yang sejuk dan terkenal dengan buah apel berada di provinsi mana?', options: ['Jawa Timur', 'Jawa Barat', 'Jawa Tengah', 'DI Yogyakarta'], answer: 'Jawa Timur', hint: 'Kota ini dekat dengan Gunung Bromo dan berhawa sejuk.' },
           { q: 'Kota Surakarta (Solo) yang terkenal dengan keraton dan batiknya berada di provinsi mana?', options: ['Jawa Tengah', 'Jawa Timur', 'Jawa Barat', 'Banten'], answer: 'Jawa Tengah', hint: 'Berada di dekat Yogyakarta, terkenal dengan lagu Bengawan Solo.' },
           { q: 'Kota Bukittinggi dengan ikon Jam Gadang berada di provinsi mana?', options: ['Sumatera Barat', 'Riau', 'Sumatera Utara', 'Jambi'], answer: 'Sumatera Barat', hint: 'Kawasan Minangkabau berhawa sejuk di pegunungan Bukit Barisan.' },
           { q: 'Kota Singaraja yang terkenal di Bali Utara berada di kabupaten apa?', options: ['Buleleng', 'Badung', 'Tabanan', 'Jembrana'], answer: 'Buleleng', hint: 'Daerah pesisir utara tempat pantai Lovina lumba-lumba berada.' },
-          { q: 'Kota Labuan Bajo gerbang menuju pulau Komodo berada di provinsi mana?', options: ['Nusa Tenggara Timur', 'Nusa Tenggara Barat', 'Bali', 'Maluku'], answer: 'Nusa Tenggara Timur', hint: 'Singkatannya NTT, terkenal dengan tenun ikatnya.' }
+          { q: 'Kota Labuan Bajo gerbang menuju pulau Komodo berada di provinsi mana?', options: ['Nusa Tenggara Timur', 'Nusa Tenggara Barat', 'Bali', 'Maluku'], answer: 'Nusa Tenggara Timur', hint: 'Singkatannya NTT, terkenal dengan tenun ikat dan satwa komodo.' },
+          { q: 'Kota Bogor yang dijuluki Kota Hujan dan punya Kebun Raya megah berada di provinsi...', options: ['Jawa Barat', 'DKI Jakarta', 'Banten', 'Jawa Tengah'], answer: 'Jawa Barat', hint: 'Terdapat Istana Kepresidenan Bogor dengan rusa tutul yang jinak.' },
+          { q: 'Kota Sabang dengan Titik Nol Kilometer Indonesia berada di pulau Weh, provinsi...', options: ['Aceh', 'Sumatera Utara', 'Riau', 'Kepulauan Riau'], answer: 'Aceh', hint: 'Titik paling barat dari kepulauan Republik Indonesia tercinta.' },
+          { q: 'Kota Balikpapan yang terkenal dengan kilang minyak dan beruang madu berada di provinsi...', options: ['Kalimantan Timur', 'Kalimantan Selatan', 'Kalimantan Barat', 'Kalimantan Tengah'], answer: 'Kalimantan Timur', hint: 'Pintu gerbang udara menuju Ibu Kota Nusantara (IKN).' },
+          { q: 'Kota Ternate dengan Gunung Gamalama dan cengkih rempahnya berada di provinsi...', options: ['Maluku Utara', 'Maluku', 'Papua Barat', 'Sulawesi Utara'], answer: 'Maluku Utara', hint: 'Pernah menjadi pusat Kesultanan Ternate kepulauan rempah dunia.' },
+          { q: 'Kota Bau-Bau dengan Benteng Keraton Buton terluas di dunia berada di provinsi...', options: ['Sulawesi Tenggara', 'Sulawesi Selatan', 'Sulawesi Tengah', 'Gorontalo'], answer: 'Sulawesi Tenggara', hint: 'Terletak di Pulau Buton pesisir tenggara pulau Sulawesi.' }
         ]
       },
       {
         id: 'quiz-bali-regions',
-        title: 'Kuis 3: Jelajah Bali 8 Kabupaten & 1 Kota',
-        desc: 'Cocokkan nama kabupaten di Bali dengan pusat pemerintahannya!',
+        title: 'Kuis 4: Jelajah Bali 8 Kabupaten & 1 Kota',
+        desc: 'Cocokkan nama kabupaten di Bali dengan pusat pemerintahan dan keunikannya!',
         questions: [
-          { q: 'Ibu kota / pusat pemerintahan Kabupaten Badung adalah...', options: ['Mangupura', 'Kuta', 'Denpasar', 'Gianyar'], answer: 'Mangupura', hint: 'Pusat pemerintahannya bernama Mangupura di Sempidi.' },
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Badung adalah...', options: ['Mangupura', 'Kuta', 'Denpasar', 'Gianyar'], answer: 'Mangupura', hint: 'Pusat pemerintahannya bernama Mangupura di kawasan Sempidi.' },
           { q: 'Ibu kota / pusat pemerintahan Kabupaten Buleleng adalah...', options: ['Singaraja', 'Lovina', 'Seririt', 'Tabanan'], answer: 'Singaraja', hint: 'Pernah menjadi ibu kota Sunda Kecil pada masa lampau.' },
-          { q: 'Ibu kota / pusat pemerintahan Kabupaten Jembrana adalah...', options: ['Negara', 'Gilimanuk', 'Tabanan', 'Amlapura'], answer: 'Negara', hint: 'Kota Negara yang terkenal dengan tradisi Makepung.' },
+          { q: 'Ibu kota / pusat pemerintahan Kabupaten Jembrana adalah...', options: ['Negara', 'Gilimanuk', 'Tabanan', 'Amlapura'], answer: 'Negara', hint: 'Kota Negara yang terkenal dengan tradisi pacuan kerbau Makepung.' },
           { q: 'Ibu kota / pusat pemerintahan Kabupaten Karangasem adalah...', options: ['Amlapura', 'Candidasa', 'Klungkung', 'Bangli'], answer: 'Amlapura', hint: 'Pusat pemerintahan di timur Bali di bawah kaki Gunung Agung.' },
-          { q: 'Satu-satunya kabupaten di Bali yang TIDAK memiliki wilayah pantai adalah...', options: ['Bangli', 'Gianyar', 'Tabanan', 'Klungkung'], answer: 'Bangli', hint: 'Kabupaten di dataran tinggi yang memiliki Danau Batur.' }
+          { q: 'Satu-satunya kabupaten di Bali yang TIDAK memiliki wilayah pantai adalah...', options: ['Bangli', 'Gianyar', 'Tabanan', 'Klungkung'], answer: 'Bangli', hint: 'Kabupaten di dataran tinggi yang memiliki Danau Batur dan Desa Penglipuran.' },
+          { q: 'Kabupaten Tabanan terkenal sebagai lumbung beras pulau Bali dengan objek wisata...', options: ['Tanah Lot & Jatiluwih', 'Pantai Sanur', 'Tanjung Benoa', 'Tirta Empul'], answer: 'Tanah Lot & Jatiluwih', hint: 'Pura di atas bongkahan batu karang laut dan hamparan sawah berundak Subak.' },
+          { q: 'Kabupaten Gianyar terkenal sebagai pusat seni ukir, lukis, dan budaya dengan pusat di...', options: ['Ubud', 'Nusa Dua', 'Kintamani', 'Jimbaran'], answer: 'Ubud', hint: 'Desa wisata seni dunia tempat berkumpulnya seniman lukis dan tari.' },
+          { q: 'Kabupaten Klungkung meliputi wilayah daratan dan kepulauan indah yang bernama...', options: ['Nusa Penida & Lembongan', 'Pulau Menjangan', 'Pulau Serangan', 'Kepulauan Seribu'], answer: 'Nusa Penida & Lembongan', hint: 'Pulau dengan tebing karang pantai Kelingking yang berbentuk kepala dinosaurus T-Rex.' },
+          { q: 'Satu-satunya daerah dengan status "Kota" otonom di Provinsi Bali adalah Kota...', options: ['Denpasar', 'Singaraja', 'Semarapura', 'Tabanan'], answer: 'Denpasar', hint: 'Ibu kota provinsi Bali yang memiliki Lapangan Puputan dan Monumen Bajra Sandhi.' },
+          { q: 'Sistem pengairan sawah tradisional Bali yang diakui UNESCO sebagai warisan dunia adalah...', options: ['Subak', 'Irigasi Tetes', 'Bendungan Gajah', 'Terasering Modern'], answer: 'Subak', hint: 'Sistem gotong royong para petani Bali yang berlandaskan Tri Hita Karana.' }
+        ]
+      },
+      {
+        id: 'quiz-world-capitals',
+        title: 'Kuis 5: Tebak Ibu Kota Negara di Dunia',
+        desc: 'Jelajahi dunia! Seberapa hebat kamu mengingat ibu kota negara-negara sahabat?',
+        questions: [
+          { q: 'Apa ibu kota negara Jepang?', options: ['Tokyo', 'Kyoto', 'Osaka', 'Sapporo'], answer: 'Tokyo', hint: 'Kota metropolitan terbesar dengan Menara Tokyo yang terkenal.' },
+          { q: 'Apa ibu kota negara Arab Saudi?', options: ['Riyadh', 'Jeddah', 'Makkah', 'Madinah'], answer: 'Riyadh', hint: 'Pusat pemerintahan dan ekonomi kerajaan di tengah kawasan Nejd.' },
+          { q: 'Apa ibu kota negara Inggris (Britania Raya)?', options: ['London', 'Manchester', 'Liverpool', 'Edinburgh'], answer: 'London', hint: 'Kota bersejarah tempat Menara Big Ben dan jam raksasanya berdentang.' },
+          { q: 'Apa ibu kota negara Mesir di benua Afrika?', options: ['Kairo', 'Iskandariyah', 'Giza', 'Luxor'], answer: 'Kairo', hint: 'Kota di tepi Sungai Nil dekat dengan piramida megah.' },
+          { q: 'Apa ibu kota negara Australia?', options: ['Canberra', 'Sydney', 'Melbourne', 'Brisbane'], answer: 'Canberra', hint: 'Bukan Sydney atau Melbourne, melainkan kota terencana yang indah di pedalaman!' },
+          { q: 'Apa ibu kota negara Prancis di benua Eropa?', options: ['Paris', 'Lyon', 'Marseille', 'Nice'], answer: 'Paris', hint: 'Kota romantis tempat Menara Eiffel dan Museum Louvre berada.' },
+          { q: 'Apa ibu kota negara Amerika Serikat?', options: ['Washington, D.C.', 'New York', 'Los Angeles', 'Chicago'], answer: 'Washington, D.C.', hint: 'Bukan New York, melainkan distrik ibu kota tempat Gedung Putih (White House) berada.' },
+          { q: 'Apa ibu kota negara Jerman di Eropa Tengah?', options: ['Berlin', 'Munchen', 'Frankfurt', 'Hamburg'], answer: 'Berlin', hint: 'Kota bersejarah dengan Gerbang Brandenburg yang megah.' },
+          { q: 'Apa ibu kota negara Korea Selatan di Asia Timur?', options: ['Seoul', 'Busan', 'Incheon', 'Daegu'], answer: 'Seoul', hint: 'Kota modern di tepi Sungai Han dengan Istana Gyeongbokgung.' },
+          { q: 'Apa ibu kota negara India di Asia Selatan?', options: ['New Delhi', 'Mumbai', 'Kolkata', 'Chennai'], answer: 'New Delhi', hint: 'Pusat pemerintahan India dengan Gerbang India (India Gate) yang ikonik.' }
+        ]
+      },
+      {
+        id: 'quiz-world-landmarks',
+        title: 'Kuis 6: Landmark Ikonik Nusantara & Dunia',
+        desc: 'Kenali monumen, candi, dan keajaiban arsitektur paling menakjubkan di Bumi!',
+        questions: [
+          { q: 'Candi Buddha terbesar di dunia yang terletak di Magelang, Jawa Tengah adalah...', options: ['Candi Borobudur', 'Candi Prambanan', 'Candi Mendut', 'Candi Penataran'], answer: 'Candi Borobudur', hint: 'Monumen batu megah berundak dengan ratusan stupa dan relief Buddha.' },
+          { q: 'Monumen setinggi 132 meter dengan lidah api berlapis emas di Jakarta adalah...', options: ['Monas (Monumen Nasional)', 'Tugu Pahlawan', 'Tugu Muda', 'Monumen Pancasila'], answer: 'Monas (Monumen Nasional)', hint: 'Ikon kota Jakarta yang dibangun untuk mengenang perjuangan kemerdekaan Indonesia.' },
+          { q: 'Pura terbesar dan tertua di lereng Gunung Agung pulau Bali adalah...', options: ['Pura Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Ulun Danu'], answer: 'Pura Besakih', hint: 'Dikenal sebagai "Ibu dari Seluruh Pura" (Mother Temple) di Bali.' },
+          { q: 'Jam menara raksasa ikon kebanggaan kota Bukittinggi, Sumatera Barat bernama...', options: ['Jam Gadang', 'Big Ben', 'Jam Istana', 'Menara Jam Menara'], answer: 'Jam Gadang', hint: 'Kata "Gadang" dalam bahasa Minangkabau berarti "Besar".' },
+          { q: 'Menara besi setinggi 330 meter yang menjadi simbol kota Paris di Prancis adalah...', options: ['Menara Eiffel', 'Menara Pisa', 'Menara Tokyo', 'Menara Kembar Petronas'], answer: 'Menara Eiffel', hint: 'Dirancang oleh insinyur ternama Gustave Eiffel.' },
+          { q: 'Bangunan makam batu berbentuk segitiga raksasa peninggalan Firaun di Mesir adalah...', options: ['Piramida Giza', 'Sphinx', 'Koloseum', 'Parthenon'], answer: 'Piramida Giza', hint: 'Salah satu keajaiban dunia kuno yang berdiri kokoh ribuan tahun di tepi gurun pasir.' },
+          { q: 'Patung raksasa Dewi Kemerdekaan pemegang obor di pelabuhan kota New York adalah...', options: ['Patung Liberty', 'Patung Kristus Penebus', 'Patung GWK', 'Patung Sphinx'], answer: 'Patung Liberty', hint: 'Hadiah persahabatan dari rakyat Prancis untuk Amerika Serikat.' },
+          { q: 'Makam megah dari marmer putih berkilau di kota Agra, India adalah...', options: ['Taj Mahal', 'Benteng Merah', 'Hawa Mahal', 'Qutub Minar'], answer: 'Taj Mahal', hint: 'Mahakarya arsitektur cinta abadi yang dibangun oleh Kaisar Shah Jahan.' },
+          { q: 'Bangunan pertahanan terpanjang di dunia yang melintasi pegunungan di Asia Timur adalah...', options: ['Tembok Besar Tiongkok', 'Tembok Berlin', 'Tembok Konstantinopel', 'Benteng Belgica'], answer: 'Tembok Besar Tiongkok', hint: 'Membentang ribuan kilometer melintasi bukit dan lembah pegunungan.' },
+          { q: 'Gedung pertunjukan dengan atap berbentuk layar kapal putih di tepi teluk Australia adalah...', options: ['Sydney Opera House', 'Harbour Bridge', 'Melbourne Tower', 'Canberra Hall'], answer: 'Sydney Opera House', hint: 'Karya arsitektur modern ikonik di kota pelabuhan Sydney.' }
+        ]
+      },
+      {
+        id: 'quiz-straits-seas',
+        title: 'Kuis 7: Selat, Teluk, & Laut Nusantara',
+        desc: 'Jelajahi perairan biru kepulauan Indonesia: selat, teluk, danau, dan sungai legendaris!',
+        questions: [
+          { q: 'Selat yang memisahkan Pulau Jawa dan Pulau Sumatra adalah...', options: ['Selat Sunda', 'Selat Bali', 'Selat Malaka', 'Selat Makassar'], answer: 'Selat Sunda', hint: 'Di tengah selat ini berdiri gagah Gunung Anak Krakatau.' },
+          { q: 'Selat penyeberangan feri dari pelabuhan Ketapang (Banyuwangi) ke Gilimanuk (Bali) adalah...', options: ['Selat Bali', 'Selat Lombok', 'Selat Madura', 'Selat Karimata'], answer: 'Selat Bali', hint: 'Selat sempit yang menghubungkan ujung timur Jawa dengan pulau dewata Bali.' },
+          { q: 'Selat perairan internasional tersibuk yang terletak di antara Pulau Sumatra dan Semenanjung Malaya adalah...', options: ['Selat Malaka', 'Selat Sunda', 'Selat Makassar', 'Selat Gaspar'], answer: 'Selat Malaka', hint: 'Jalur pelayaran rempah kuno yang ramai kapal dagang dunia.' },
+          { q: 'Danau vulkanik terbesar di Indonesia dan Asia Tenggara yang punya pulau Samosir di tengahnya adalah...', options: ['Danau Toba', 'Danau Singkarak', 'Danau Poso', 'Danau Matano'], answer: 'Danau Toba', hint: 'Terletak di Provinsi Sumatera Utara, terbentuk dari letusan gunung purba mahadahsyat.' },
+          { q: 'Sungai terpanjang di Indonesia yang mengalir sepanjang 1.143 km di Kalimantan Barat adalah...', options: ['Sungai Kapuas', 'Sungai Mahakam', 'Sungai Musi', 'Sungai Barito'], answer: 'Sungai Kapuas', hint: 'Sungai megah yang bermuara di dekat Kota Pontianak khatulistiwa.' },
+          { q: 'Selat luas yang memisahkan Pulau Kalimantan dan Pulau Sulawesi adalah...', options: ['Selat Makassar', 'Selat Sunda', 'Selat Bali', 'Selat Ombai'], answer: 'Selat Makassar', hint: 'Jalur perairan dalam tempat kota pelabuhan Balikpapan dan Makassar berada.' },
+          { q: 'Teluk perairan luas di Papua yang menjadi habitat hiu paus jinak adalah...', options: ['Teluk Cenderawasih', 'Teluk Tomini', 'Teluk Bone', 'Teluk Bintuni'], answer: 'Teluk Cenderawasih', hint: 'Taman Nasional Laut terbesar di Indonesia di kawasan Nabire Papua Tengah.' },
+          { q: 'Laut yang terletak di sebelah utara Pulau Jawa dan menghubungkan banyak pelabuhan nusantara adalah...', options: ['Laut Jawa', 'Laut Banda', 'Laut Arafura', 'Laut Flores'], answer: 'Laut Jawa', hint: 'Laut dangkal yang kaya akan hasil ikan dan jalur pelayaran antarpulau.' },
+          { q: 'Danau indah di tanah Papua yang terkenal dengan tradisi festival budaya dan lukisan kulit kayu adalah...', options: ['Danau Sentani', 'Danau Toba', 'Danau Maninjau', 'Danau Ranau'], answer: 'Danau Sentani', hint: 'Danau berlatar Pegunungan Cycloop di dekat Kota Jayapura.' },
+          { q: 'Laut terdalam di Indonesia yang memiliki palung laut sedalam lebih dari 7.000 meter adalah...', options: ['Laut Banda', 'Laut Jawa', 'Laut Bali', 'Laut Natuna'], answer: 'Laut Banda', hint: 'Dikelilingi gugusan Kepulauan Maluku yang kaya terumbu karang.' }
+        ]
+      },
+      {
+        id: 'quiz-endemic-wildlife',
+        title: 'Kuis 8: Satwa Endemik & Keajaiban Alam Nusantara',
+        desc: 'Mengenal fauna langka khas Indonesia dari Sabang sampai Merauke!',
+        questions: [
+          { q: 'Kadal raksasa purba terbesar di dunia yang hanya ada di Nusa Tenggara Timur adalah...', options: ['Komodo', 'Biawak Air', 'Iguana', 'Buaya Muara'], answer: 'Komodo', hint: 'Hidup di Taman Nasional Komodo dan Pulau Rinca.' },
+          { q: 'Kera besar berbulu kemerahan yang cerdas dan hidup di pepohonan Kalimantan dan Sumatra adalah...', options: ['Orangutan', 'Gorila', 'Simpanse', 'Bekantan'], answer: 'Orangutan', hint: 'Namanya berasal dari bahasa Melayu yang berarti "Manusia Hutan".' },
+          { q: 'Burung dengan bulu keemasan yang elok dari hutan Papua dan dijuluki "Burung Surga" adalah...', options: ['Burung Cenderawasih', 'Burung Merak', 'Burung Enggang', 'Burung Kakaktua'], answer: 'Burung Cenderawasih', hint: 'Simbol kebanggaan masyarakat Papua (Bird of Paradise).' },
+          { q: 'Satwa langka bercula satu yang dilindungi di Taman Nasional Ujung Kulon, Banten adalah...', options: ['Badak Jawa', 'Gajah Sumatra', 'Tapir', 'Banteng Jawa'], answer: 'Badak Jawa', hint: 'Salah satu mamalia paling langka di muka bumi dengan satu cula di hidungnya.' },
+          { q: 'Bunga raksasa beraroma menyengat tanpa batang dan daun yang menjadi ikon Bengkulu adalah...', options: ['Rafflesia arnoldii', 'Bunga Melati', 'Bunga Anggrek', 'Bunga Mawar'], answer: 'Rafflesia arnoldii', hint: 'Bunga tunggal terbesar di dunia dengan kelopak merah berbintik putih.' },
+          { q: 'Burung unik dari Sulawesi yang mengubur telurnya di pasir pantai hangat untuk dierami panas bumi adalah...', options: ['Burung Maleo', 'Burung Kasuari', 'Burung Jalak', 'Burung Kenari'], answer: 'Burung Maleo', hint: 'Memiliki jambul hitam di kepala dan telur berukuran sangat besar.' },
+          { q: 'Kera berhidung panjang besar yang hidup di pohon bakau tepi sungai Kalimantan adalah...', options: ['Bekantan', 'Lutung', 'Owa', 'Kukang'], answer: 'Bekantan', hint: 'Satwa endemik berbulu oranye kecokelatan maskot fauna Kalimantan Selatan.' },
+          { q: 'Harimau loreng berukuran paling ramping yang habitat aslinya di pedalaman hutan Sumatra adalah...', options: ['Harimau Sumatra', 'Harimau Benggala', 'Harimau Siberia', 'Singa Afrika'], answer: 'Harimau Sumatra', hint: 'Satu-satunya subspesies harimau Indonesia yang masih bertahan di alam liar.' },
+          { q: 'Satwa mamalia laut pemakan rumput laut yang dijuluki "Ikan Duyung" di perairan nusantara adalah...', options: ['Dugong', 'Lumba-lumba', 'Paus Biru', 'Pesut Mahakam'], answer: 'Dugong', hint: 'Hewan mamalia herbivora laut yang berenang tenang di padang lamun.' },
+          { q: 'Sapi hutan liar berbadan kekar dengan tanduk lurus meruncing ke belakang khas Sulawesi adalah...', options: ['Anoa', 'Banteng', 'Kerbau Rawa', 'Kambing Hutan'], answer: 'Anoa', hint: 'Sering dijuluki kerbau kerdil endemik hutan hujan Sulawesi.' }
         ]
       }
     ]
@@ -2699,7 +2961,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Bahasa Indonesia Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Kurikulum Merdeka Fase A/B)
+  // Version   : 2.5 (Comprehensive Curriculum, Fun Facts, Key Points, & 100 Questions)
   // ================================================================
   
   const BAHASA_INDONESIA_DATA = {
@@ -2710,11 +2972,17 @@
     subtitleEn: 'Explore phonics, rhythmic syllables, proper sentence structures, and magical Indonesian folklore! 📖',
     topics: [
       {
-        id: 'bi-vokal-konsonan'
+        id: 'bi-vokal-konsonan',
         title: 'Mengenal Huruf Vokal & Konsonan',
         titleEn: 'Introduction to Vowels & Consonants',
         desc: 'Ada 5 huruf vokal bernyanyi nyaring: A, I, U, E, O. Huruf vokal membuat suara kata menjadi terbuka dan jelas terdengar. Sahabatnya adalah 21 huruf konsonan (B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X, Y, Z) yang membentuk ragam bunyi ketika dipadukan!',
         descEn: 'There are 5 singing vowels: A, I, U, E, O which produce open and vibrant sounds. They partner with 21 consonant letters to form meaningful words and melodious sentences!',
+        funFact: '💡 Tahukah kamu? Tanpa huruf vokal (A, I, U, E, O), bibir dan lidah kita tidak bisa membuka suara untuk berbicara dengan jelas!',
+        keyPoints: [
+          'Huruf vokal ada 5: A, I, U, E, O yang bersuara nyaring dan terbuka.',
+          'Huruf konsonan ada 21 huruf pelengkap abjad dari B sampai Z.',
+          'Menggabungkan vokal dan konsonan melahirkan ribuan kata indah bahasa Indonesia.'
+        ],
         checklist: [
           'Misi 1: Ucapkan 5 huruf vokal (A - I - U - E - O) dengan suara lantang dan artikulasi bibir yang tepat.',
           'Misi 2: Temukan 3 benda di dalam rumahmu yang diawali huruf vokal (misal: apel, ember, obat).',
@@ -2729,8 +2997,13 @@
           { q: 'Manakah kelompok huruf vokal yang benar?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Huruf vokal adalah huruf hidup yang bersuara nyaring!' },
           { q: 'Huruf pertama pada kata "ELANG" dan "EMBER" adalah huruf vokal...', options: ['E', 'A', 'I', 'O'], answer: 'E', hint: 'E-L-A-N-G bersuara /e/ atau /é/.' },
           { q: 'Ada berapa huruf vokal pada kata "INDONESIA"?', options: ['5 vokal (I, O, E, I, A)', '3 vokal', '2 vokal', '7 vokal'], answer: '5 vokal (I, O, E, I, A)', hint: 'Hitung huruf I, O, E, I, dan A yang ada di kata Indonesia.' },
-          { q: "Huruf yang BUKAN merupakan huruf vokal adalah...", options: ["B","A","I","U"], answer: "B", hint: "Huruf B adalah konsonan bibir." },
-          { q: "Lengkapi huruf vokal yang hilang: K - ... - C - I - N - G", options: ["U (menjadi KUCING)","O","E","A"], answer: "U (menjadi KUCING)", hint: "Hewan berbulu lucu yang bersuara \"meong-meong\" 🐱" }
+          { q: 'Huruf yang BUKAN merupakan huruf vokal adalah...', options: ['B', 'A', 'I', 'U'], answer: 'B', hint: 'Huruf B adalah konsonan bibir.' },
+          { q: 'Lengkapi huruf vokal yang hilang: K - ... - C - I - N - G', options: ['U (menjadi KUCING)', 'O', 'E', 'A'], answer: 'U (menjadi KUCING)', hint: 'Hewan berbulu lucu yang bersuara "meong-meong" 🐱' },
+          { q: 'Kata "APEL" diawali oleh huruf vokal...', options: ['A', 'P', 'E', 'L'], answer: 'A', hint: 'Huruf pertama di urutan abjad alfabet alfabetis.' },
+          { q: 'Manakah huruf vokal yang berbentuk lingkaran bundar seperti donat?', options: ['O', 'U', 'A', 'I'], answer: 'O', hint: 'Bentuknya bulat penuh dan bibir kita membulat saat mengucapkannya.' },
+          { q: 'Pada kata "BUKU", huruf vokal yang digunakan adalah...', options: ['U (ada 2 huruf U)', 'A', 'I', 'O'], answer: 'U (ada 2 huruf U)', hint: 'B-U-K-U memiliki vokal kembar U.' },
+          { q: 'Huruf konsonan pertama dalam abjad alfabet adalah huruf...', options: ['B', 'A', 'C', 'D'], answer: 'B', hint: 'Karena huruf A adalah vokal, maka konsonan pertamanya adalah B.' },
+          { q: 'Kata "IKAN" berenang di air diawali dengan huruf vokal...', options: ['I', 'A', 'K', 'N'], answer: 'I', hint: 'Huruf tegak lurus dengan titik di atasnya saat huruf kecil.' }
         ],
         activitiesEn: [
           { q: 'Which of the following is the correct vowel group?', options: ['A, I, U, E, O', 'B, C, D, F, G', 'A, B, C, D, E', 'K, L, M, N, O'], answer: 'A, I, U, E, O', hint: 'Vowels are open vocal sounds with clear voices!' },
@@ -2738,11 +3011,17 @@
         ]
       },
       {
-        id: 'bi-suku-kata'
+        id: 'bi-suku-kata',
         title: 'Mengeja Suku Kata Pola KV & KVK',
         titleEn: 'Spelling Syllables (CV & CVC Patterns)',
         desc: 'Suku kata adalah ketukan bunyi saat kita mengucapkan sebuah kata. Pola KV (Konsonan-Vokal) seperti BA-JU, KU-DA, RO-TI. Pola KVK (Konsonan-Vokal-Konsonan) seperti PEN-SIL, RUM-PUT, RUM-AH. Mengeja suku kata membuat kita membaca lebih lancar dan percaya diri!',
         descEn: 'A syllable is a single beat of speech sound. Combining Consonant-Vowel (CV like ba-ju) and Consonant-Vowel-Consonant (CVC like pen-sil) helps build reading fluency rapidly!',
+        funFact: '💡 Tahukah kamu? Setiap kali kamu bertepuk tangan saat mengucapkan kata atau namamu, kamu sedang menghitung jumlah suku katanya!',
+        keyPoints: [
+          'Suku kata adalah satu ketukan bunyi saat kata diucapkan dengan lancar.',
+          'Pola KV (Konsonan-Vokal) contohnya: BA-TU, SA-PI, ME-JA.',
+          'Pola KVK (Konsonan-Vokal-Konsonan) contohnya: PEN-SIL, RUM-AH.'
+        ],
         checklist: [
           'Misi 1: Tepuk tangan sesuai jumlah suku kata saat mengucapkan namamu sendiri (contoh: Bi-ma = 2 tepukan).',
           'Misi 2: Eja dan tuliskan 4 kata berpola KV-KV (misal: sa-pi, ma-ta, bo-la, bu-ku) di buku latihan.',
@@ -2757,8 +3036,13 @@
           { q: 'BO + LA bila digabungkan dibaca...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'Benda bulat yang sering ditendang saat main sepak bola ⚽' },
           { q: 'Kata "PELANGI" terdiri dari berapa suku kata?', options: ['3 suku kata (pe - la - ngi)', '2 suku kata', '4 suku kata', '1 suku kata'], answer: '3 suku kata (pe - la - ngi)', hint: 'Hitung ketukan saat kamu mengucapkan: pe... la... ngi!' },
           { q: 'Suku kata yang tepat untuk melengkapi kata "SE-PA-..." adalah...', options: ['TU (menjadi SEPATU)', 'KO', 'RI', 'NA'], answer: 'TU (menjadi SEPATU)', hint: 'Alas kaki yang kita pakai saat berangkat ke sekolah 👟' },
-          { q: "Kata yang hanya terdiri dari 1 suku kata adalah...", options: ["CAT","BUKU","MEJA","PENSIL"], answer: "CAT", hint: "Ucapkan hanya dengan satu kali ketukan bunyi bibir." },
-          { q: "Pemisahan suku kata yang benar untuk kata \"MAKANAN\" adalah...", options: ["MA - KA - NAN","MAK - AN - AN","MA - KAN - AN","MAKA - NAN"], answer: "MA - KA - NAN", hint: "Pola ketukan: ma... ka... nan (3 suku kata)." }
+          { q: 'Kata yang hanya terdiri dari 1 suku kata adalah...', options: ['CAT', 'BUKU', 'MEJA', 'PENSIL'], answer: 'CAT', hint: 'Ucapkan hanya dengan satu kali ketukan bunyi bibir.' },
+          { q: 'Pemisahan suku kata yang benar untuk kata "MAKANAN" adalah...', options: ['MA - KA - NAN', 'MAK - AN - AN', 'MA - KAN - AN', 'MAKA - NAN'], answer: 'MA - KA - NAN', hint: 'Pola ketukan: ma... ka... nan (3 suku kata).' },
+          { q: 'Kata "MATAHARI" terdiri dari berapa suku kata?', options: ['4 suku kata (ma - ta - ha - ri)', '2 suku kata', '3 suku kata', '5 suku kata'], answer: '4 suku kata (ma - ta - ha - ri)', hint: 'Tepuk tanganmu empat kali: ma... ta... ha... ri!' },
+          { q: 'Gabungan suku kata KU + DA + NIL menghasilkan kata...', options: ['KUDANIL', 'KUDALI', 'DANILKU', 'KUDANILA'], answer: 'KUDANIL', hint: 'Hewan mamalia besar bercula dan suka berendam di air sungai.' },
+          { q: 'Suku kata pertama dari kata "SEKOLAH" tempat kita belajar adalah...', options: ['SE', 'KO', 'LAH', 'EK'], answer: 'SE', hint: 'Ketukan pertama: SE - KO - LAH.' },
+          { q: 'Pola suku kata pada kata "BU - KU" adalah...', options: ['KV - KV (Konsonan-Vokal)', 'KVK - KVK', 'V - KV', 'KV - KVK'], answer: 'KV - KV (Konsonan-Vokal)', hint: 'B(konsonan)+U(vokal) dan K(konsonan)+U(vokal).' },
+          { q: 'Lengkapi suku kata agar menjadi alat tulis: PEN - ...', options: ['SIL (menjadi PENSIL)', 'SI', 'LU', 'RA'], answer: 'SIL (menjadi PENSIL)', hint: 'Pola KVK kedua yang menghasilkan kata PENSIL ✏️' }
         ],
         activitiesEn: [
           { q: 'BO + LA combined is read as...', options: ['BOLA', 'BALO', 'LOBI', 'BOLA-BOLA'], answer: 'BOLA', hint: 'A round ball used in soccer ⚽' },
@@ -2766,11 +3050,17 @@
         ]
       },
       {
-        id: 'bi-susun-kalimat'
+        id: 'bi-susun-kalimat',
         title: 'Menyusun Kalimat Ceria Berpola S-P-O',
         titleEn: 'Structuring Sentences (Subject - Predicate - Object)',
         desc: 'Kalimat lengkap yang runtut terdiri dari: Subjek (siapa pelakunya), Predikat (apa kegiatannya / kata kerja), dan Objek (benda yang dikenai kegiatan). Contoh: "Rani (S) menyiram (P) bunga (O)". Kalimat yang baik diawali huruf kapital dan diakhiri tanda titik!',
         descEn: 'A clear complete sentence consists of Subject (who), Predicate (action verb), and Object (the recipient of action). Example: "Rani waters flowers". It starts with a capital letter and finishes with a period!',
+        funFact: '💡 Tahukah kamu? Pola S-P-O adalah rumus ajaib bahasa Indonesia yang membuat ceritamu selalu jelas, rapi, dan mudah dipahami teman-teman!',
+        keyPoints: [
+          'Subjek (S): Siapa yang melakukan kegiatan (contoh: Siti, Ayah, Kucing).',
+          'Predikat (P): Kata kerja tindakan yang dilakukan (contoh: membaca, memasak, mencuci).',
+          'Objek (O): Benda yang menjadi sasaran (contoh: buku, nasi, sepeda).'
+        ],
         checklist: [
           'Misi 1: Buat 1 kalimat tentang kegiatan pagimu menggunakan pola Subjek + Predikat + Objek.',
           'Misi 2: Garis bawahi mana kata kerjanya (Predikat) pada kalimat yang kamu buat.',
@@ -2785,19 +3075,30 @@
           { q: 'Susun kata acak berikut: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Letakkan orang yang melakukan kegiatan (Subjek) di depan.' },
           { q: 'Pada kalimat "Ibu memasak nasi", kata "memasak" bertindak sebagai...', options: ['Predikat (kata kerja)', 'Subjek', 'Objek', 'Tanda baca'], answer: 'Predikat (kata kerja)', hint: 'Memasak adalah tindakan atau kegiatan yang dilakukan Ibu.' },
           { q: 'Manakah kalimat berikut yang paling lengkap dan benar?', options: ['Siti menyapu halaman.', 'Menyapu halaman Siti.', 'Halaman menyapu Siti.', 'Siti halaman.'], answer: 'Siti menyapu halaman.', hint: 'Urutan: Subjek (Siti) + Predikat (menyapu) + Objek (halaman).' },
-          { q: "Manakah kata kerja (Predikat) dalam kalimat: \"Adik minum susu\"?", options: ["minum","Adik","susu","pagi"], answer: "minum", hint: "Kata kerja menunjukkan tindakan yang dilakukan Adik." },
-          { q: "Susun kata acak berikut: [di taman] - [bermain] - [Edo]", options: ["Edo bermain di taman.","Di taman Edo bermain.","Bermain Edo di taman.","Taman di bermain Edo."], answer: "Edo bermain di taman.", hint: "Urutan: Subjek (Edo) + Predikat (bermain) + Keterangan (di taman)." }
+          { q: 'Manakah kata kerja (Predikat) dalam kalimat: "Adik minum susu"?', options: ['minum', 'Adik', 'susu', 'pagi'], answer: 'minum', hint: 'Kata kerja menunjukkan tindakan yang dilakukan Adik.' },
+          { q: 'Susun kata acak berikut: [di taman] - [bermain] - [Edo]', options: ['Edo bermain di taman.', 'Di taman Edo bermain.', 'Bermain Edo di taman.', 'Taman di bermain Edo.'], answer: 'Edo bermain di taman.', hint: 'Urutan: Subjek (Edo) + Predikat (bermain) + Keterangan (di taman).' },
+          { q: 'Siapakah Subjek dalam kalimat "Kucing mengejar tikus"?', options: ['Kucing', 'mengejar', 'tikus', 'lari'], answer: 'Kucing', hint: 'Subjek adalah pelaku yang melakukan aksi mengejar.' },
+          { q: 'Kata yang berkedudukan sebagai Objek dalam kalimat "Ayah mencuci mobil" adalah...', options: ['mobil', 'Ayah', 'mencuci', 'bersih'], answer: 'mobil', hint: 'Objek adalah benda yang dicuci oleh Ayah.' },
+          { q: 'Kalimat yang baik selalu diawali dengan huruf...', options: ['Huruf kapital', 'Huruf kecil', 'Angka romawi', 'Tanda koma'], answer: 'Huruf kapital', hint: 'Huruf besar atau kapital wajib di awal kalimat.' },
+          { q: 'Susun kata: [segar] - [memetik] - [Lani] - [apel]', options: ['Lani memetik apel segar.', 'Apel segar memetik Lani.', 'Memetik apel Lani segar.', 'Segar Lani memetik apel.'], answer: 'Lani memetik apel segar.', hint: 'Subjek (Lani) + Predikat (memetik) + Objek (apel segar).' },
+          { q: 'Manakah di bawah ini yang merupakan contoh kata kerja (Predikat)?', options: ['Berlari', 'Sepeda', 'Bintang', 'Kuning'], answer: 'Berlari', hint: 'Berlari adalah tindakan fisik tubuh yang bergerak cepat.' }
         ],
         activitiesEn: [
           { q: 'Arrange the scrambled words: [membaca] - [buku] - [Budi]', options: ['Budi membaca buku', 'Buku Budi membaca', 'Membaca Budi buku', 'Budi buku membaca'], answer: 'Budi membaca buku', hint: 'Subject comes first: who is doing the reading action?' }
         ]
       },
       {
-        id: 'bi-tanda-baca'
+        id: 'bi-tanda-baca',
         title: 'Tanda Baca & Huruf Kapital',
         titleEn: 'Punctuation Marks & Capital Letters',
         desc: 'Huruf kapital dipakai di awal kalimat, nama orang (Dayu, Edo), hari (Senin, Selasa), dan nama tempat (Jakarta, Bali). Tanda titik (.) digunakan untuk mengakhiri kalimat berita. Tanda tanya (?) untuk bertanya. Tanda seru (!) untuk perintah atau ungkapan penuh semangat!',
         descEn: 'Capital letters are used at sentence beginnings, names of people, days, and places. Use a period (.) for statements, a question mark (?) for inquiries, and an exclamation mark (!) for commands and enthusiasm!',
+        funFact: '💡 Tahukah kamu? Tanda titik (.) seperti lampu merah saat membaca buku, memberi aba-aba agar kita berhenti sejenak dan mengambil napas dengan tenang!',
+        keyPoints: [
+          'Huruf kapital wajib di awal kalimat, nama orang, hari, bulan, dan nama kota.',
+          'Tanda titik (.) digunakan di akhir kalimat berita atau pernyataan.',
+          'Tanda tanya (?) di akhir pertanyaan, dan tanda seru (!) untuk seruan riang atau perintah.'
+        ],
         checklist: [
           'Misi 1: Tulis namamu dan nama kota tempat tinggalmu dengan huruf kapital di awal kata.',
           'Misi 2: Tulis satu kalimat tanya menggunakan kata tanya "Di mana" atau "Kapan" diakhiri tanda tanya (?).',
@@ -2812,19 +3113,30 @@
           { q: 'Tanda baca yang tepat untuk kalimat: "Siapa nama sahabat barumu..." adalah...', options: ['Tanda tanya (?)', 'Tanda titik (.)', 'Tanda seru (!)', 'Tanda koma (,)'], answer: 'Tanda tanya (?)', hint: 'Kata "Siapa" menunjukkan kalimat pertanyaan.' },
           { q: 'Penulisan huruf kapital yang benar pada nama orang dan tempat adalah...', options: ['Made berlibur ke Denpasar.', 'made berlibur ke denpasar.', 'Made berlibur Ke denpasar.', 'made Berlibur ke Denpasar.'], answer: 'Made berlibur ke Denpasar.', hint: 'Nama orang (Made) dan nama kota (Denpasar) diawali huruf kapital.' },
           { q: 'Tanda seru (!) biasanya dipakai untuk kalimat...', options: ['Perintah atau ajakan penuh semangat', 'Pertanyaan ingin tahu', 'Kalimat berita santai', 'Kalimat berhitung'], answer: 'Perintah atau ajakan penuh semangat', hint: 'Contoh: "Jagalah kebersihan kelas kita!"' },
-          { q: "Tanda titik (.) diletakkan di...", options: ["Akhir kalimat berita","Awal kalimat","Tengah kata","Sebelum huruf vokal"], answer: "Akhir kalimat berita", hint: "Tanda titik menandakan kalimat telah selesai dibaca." },
-          { q: "Huruf pertama pada awal kalimat selalu ditulis menggunakan...", options: ["Huruf kapital (huruf besar)","Huruf kecil","Angka","Tanda koma"], answer: "Huruf kapital (huruf besar)", hint: "Contoh: \"Buku itu berwarna biru.\"" }
+          { q: 'Tanda titik (.) diletakkan di...', options: ['Akhir kalimat berita', 'Awal kalimat', 'Tengah kata', 'Sebelum huruf vokal'], answer: 'Akhir kalimat berita', hint: 'Tanda titik menandakan kalimat telah selesai dibaca.' },
+          { q: 'Huruf pertama pada awal kalimat selalu ditulis menggunakan...', options: ['Huruf kapital (huruf besar)', 'Huruf kecil', 'Angka', 'Tanda koma'], answer: 'Huruf kapital (huruf besar)', hint: 'Contoh: "Buku itu berwarna biru."' },
+          { q: 'Manakah penulisan nama hari yang benar menggunakan huruf kapital?', options: ['Hari Senin', 'hari senin', 'Hari senin', 'hari SENIN'], answer: 'Hari Senin', hint: 'Nama hari diawali huruf besar seperti Senin, Selasa, Rabu.' },
+          { q: 'Kalimat ajakan: "Mari kita rapikan meja kelas..." sebaiknya diakhiri tanda...', options: ['Tanda seru (!)', 'Tanda tanya (?)', 'Tanda titik dua (:)', 'Tanda petik (")'], answer: 'Tanda seru (!)', hint: 'Kalimat ajakan penuh semangat menggunakan tanda seru.' },
+          { q: 'Manakah kalimat yang penulisan huruf kapitalnya tepat?', options: ['Ibu pergi ke Surabaya.', 'ibu Pergi ke surabaya.', 'Ibu pergi Ke surabaya.', 'ibu pergi ke Surabaya.'], answer: 'Ibu pergi ke Surabaya.', hint: 'Awal kalimat (Ibu) dan nama kota (Surabaya) berhuruf kapital.' },
+          { q: 'Fungsi utama dari tanda tanya (?) adalah...', options: ['Menandai pertanyaan yang butuh jawaban', 'Mengakhiri cerita tidur', 'Memisahkan kata-kata belanjaan', 'Membuat tulisan berkedip'], answer: 'Menandai pertanyaan yang butuh jawaban', hint: 'Dipakai pada kalimat tanya seperti Apa, Siapa, Di mana.' },
+          { q: 'Bentuk tanda baca titik (.) yang tepat adalah...', options: ['Satu titik kecil bulat di garis bawah (.)', 'Garis miring (/)', 'Tanda strip (-)', 'Tanda panah (->)'], answer: 'Satu titik kecil bulat di garis bawah (.)', hint: 'Titik tunggal di akhir kalimat.' }
         ],
         activitiesEn: [
           { q: 'Which punctuation mark fits best: "Where is my pencil..."?', options: ['Question mark (?)', 'Period (.)', 'Exclamation mark (!)', 'Comma (,)'], answer: 'Question mark (?)', hint: 'It asks an inquiry question.' }
         ]
       },
       {
-        id: 'bi-pantun-puisi'
+        id: 'bi-pantun-puisi',
         title: 'Puisi Ceria & Pantun Anak Nusantara',
         titleEn: 'Children Poetry & Indonesian Pantun',
         desc: 'Puisi dan pantun adalah karya sastra indah penuh irama. Pantun anak jenaka biasanya bersajak a-b-a-b, terdiri dari 4 baris: baris 1-2 adalah sampiran yang memikat, dan baris 3-4 adalah isi yang menyampaikan nasehat kebaikan atau canda riang!',
         descEn: 'Poetry and pantun celebrate the rhythm of language. Indonesian pantun typically follows an a-b-a-b rhyme scheme across 4 lines: 2 introductory lines and 2 advice or joyful concluding lines!',
+        funFact: '💡 Tahukah kamu? Seni pantun nusantara telah diakui oleh UNESCO sebagai Warisan Budaya Takbenda Dunia karena keindahan rima dan nasehat luhurnya!',
+        keyPoints: [
+          'Pantun terdiri dari 4 baris dengan rima akhir berpola a-b-a-b.',
+          'Baris 1 dan 2 disebut sampiran, baris 3 dan 4 disebut isi nasehat.',
+          'Puisi dibaca dengan penghayatan, lafal yang jelas, dan senyuman ramah.'
+        ],
         checklist: [
           'Misi 1: Baca pantun anak di bawah dengan intonasi ceria di hadapan anggota keluargamu.',
           'Misi 2: Temukan kata yang bersajak sama (rima akhir) pada baris pertama dan ketiga.',
@@ -2838,19 +3150,31 @@
         activities: [
           { q: 'Perhatikan pantun ini: "Pohon beringin daunnya lebat / Tempat berteduh di waktu siang / Ayo kawan belajar giat / Agar masa depan gilang-gemilang". Baris yang merupakan ISI nasehat adalah...', options: ['Baris ke-3 dan ke-4', 'Baris ke-1 dan ke-2', 'Hanya baris ke-1', 'Hanya baris ke-2'], answer: 'Baris ke-3 dan ke-4', hint: 'Nasehat pantun selalu berada di dua baris terakhir (baris 3 dan 4).' },
           { q: 'Rima bunyi akhir pada bait pantun tradisional umumnya berpola...', options: ['a - b - a - b', 'a - a - a - b', 'b - b - b - a', 'bebas tanpa rima'], answer: 'a - b - a - b', hint: 'Bunyi baris 1 seirama baris 3, bunyi baris 2 seirama baris 4.' },
-          { q: "Bait puisi dibaca dengan lafal yang jelas dan ekspresi yang...", options: ["Sesuai perasaan isi puisi","Cemberut dan marah","Berbisik sangat pelan","Tertawa tanpa henti"], answer: "Sesuai perasaan isi puisi", hint: "Jika puisinya gembira, wajah kita tersenyum ceria." },
-          { q: "Lengkapi rima pantun: \"Pergi ke pasar beli semangka / Jangan lupa membeli ...\"", options: ["nangka","batu","meja","sepatu"], answer: "nangka", hint: "Semangka berima bunyi akhir sama dengan nangka (ka - ka)." }
+          { q: 'Bait puisi dibaca dengan lafal yang jelas dan ekspresi yang...', options: ['Sesuai perasaan isi puisi', 'Cemberut dan marah', 'Berbisik sangat pelan', 'Tertawa tanpa henti'], answer: 'Sesuai perasaan isi puisi', hint: 'Jika puisinya gembira, wajah kita tersenyum ceria.' },
+          { q: 'Lengkapi rima pantun: "Pergi ke pasar beli semangka / Jangan lupa membeli ..."', options: ['nangka', 'batu', 'meja', 'sepatu'], answer: 'nangka', hint: 'Semangka berima bunyi akhir sama dengan nangka (ka - ka).' },
+          { q: 'Dua baris pertama dalam pantun berfungsi sebagai...', options: ['Sampiran (pengantar rima)', 'Isi nasehat', 'Judul buku', 'Daftar pustaka'], answer: 'Sampiran (pengantar rima)', hint: 'Sampiran mengantarkan bunyi rima menuju baris isi.' },
+          { q: 'Membaca puisi di panggung dengan gaya dan penghayatan indah disebut...', options: ['Deklamasi puisi', 'Pidato resmi', 'Menyanyi opera', 'Mengeja huruf'], answer: 'Deklamasi puisi', hint: 'Mendeklamasikan puisi tanpa membawa teks naskah.' },
+          { q: 'Lengkapi pantun: "Berenang-renang anak ikan / Lompat tinggi ke atas batu / Jangan lupa kawan-kawan / Selalu rajin membantu ..."', options: ['ibu', 'teman', 'tetangga', 'paman'], answer: 'ibu', hint: 'Kata "batu" (baris 2) berima dengan "ibu" (baris 4) berakhiran -u.' },
+          { q: 'Jika puisi bertema tentang keindahan alam pegunungan, ekspresi wajah kita adalah...', options: ['Takjub dan tersenyum gembira', 'Menangis sedih', 'Marah dan cemberut', 'Mengantuk'], answer: 'Takjub dan tersenyum gembira', hint: 'Alam yang indah membuat hati bahagia dan bersyukur.' },
+          { q: 'Bunyi akhir baris pertama pada pantun berpola a-b-a-b seirama dengan baris ke-...', options: ['Baris ke-3', 'Baris ke-2', 'Baris ke-4', 'Baris pertama saja'], answer: 'Baris ke-3', hint: 'Pola persajakan: baris 1 sama dengan baris 3 (a dengan a).' },
+          { q: 'Pantun yang berisi kelucuan dan tawa ceria untuk menghibur anak disebut pantun...', options: ['Pantun jenaka / anak-anak', 'Pantun duka', 'Pantun adat', 'Pantun perpisahan'], answer: 'Pantun jenaka / anak-anak', hint: 'Jenaka artinya lucu dan mengundang senyum.' }
         ],
         activitiesEn: [
           { q: 'In traditional Indonesian Pantun, which lines contain the core advice / message?', options: ['Lines 3 and 4', 'Lines 1 and 2', 'Line 1 only', 'Line 2 only'], answer: 'Lines 3 and 4', hint: 'The moral message is always found in the concluding couplet (lines 3 & 4).' }
         ]
       },
       {
-        id: 'bi-dongeng-fabel'
+        id: 'bi-dongeng-fabel',
         title: 'Membaca Pemahaman & Fabel Nusantara',
         titleEn: 'Reading Comprehension & Animal Fables',
         desc: 'Fabel adalah cerita dongeng di mana hewan-hewan dapat berbicara dan bertingkah seperti manusia. Membaca fabel membantu kita memahami karakter tokoh, alur awal-tengah-akhir, dan memetik pesan budi pekerti yang luhur!',
         descEn: 'Fables are charming stories where animals talk and act like humans. Reading fables sharpens comprehension, teaches narrative sequencing, and imparts memorable moral virtues!',
+        funFact: '💡 Tahukah kamu? Fabel adalah dongeng tertua di dunia yang dipakai para kakek dan nenek moyang kita untuk mengajarkan budi pekerti lewat tingkah lucu para satwa!',
+        keyPoints: [
+          'Fabel adalah cerita fiksi dengan tokoh binatang yang dapat berbicara.',
+          'Tokoh protagonis memiliki sifat baik dan suka menolong.',
+          'Setiap cerita fabel menyimpan pesan moral berharga bagi kehidupan.'
+        ],
         checklist: [
           'Misi 1: Baca dongeng fabel "Kancil dan Buaya" atau fabel pilihanmu bersama orang tua.',
           'Misi 2: Tuliskan siapa nama tokoh yang cerdik atau baik hati dalam cerita tersebut.',
@@ -2864,91 +3188,57 @@
         activities: [
           { q: 'Cerita dongeng dengan tokoh hewan yang bertingkah laku seperti manusia disebut...', options: ['Fabel', 'Legenda', 'Mite', 'Biografi'], answer: 'Fabel', hint: 'Fabel adalah kisah hewan jenaka penuh pesan moral.' },
           { q: 'Dalam fabel "Semut dan Belalang", Semut rajin mengumpulkan makanan saat musim kemarau, sedangkan Belalang malas dan hanya bernyanyi. Sikap Semut mengajarkan kita untuk...', options: ['Rajin bekerja dan mempersiapkan masa depan', 'Malas-malasan setiap hari', 'Menghabiskan makanan sekaligus', 'Mengejek teman lain'], answer: 'Rajin bekerja dan mempersiapkan masa depan', hint: 'Semut yang rajin tidak akan kelaparan saat musim dingin tiba 🐜' },
-          { q: "Dalam fabel \"Kelinci dan Kura-Kura\", sifat kura-kura yang patut ditiru adalah...", options: ["Gigih dan pantang menyerah","Sombong dan suka mengejek","Malas dan suka tidur","Mudah marah"], answer: "Gigih dan pantang menyerah", hint: "Kura-kura terus berjalan tekun hingga mencapai garis akhir 🐢" },
-          { q: "Ciri khas cerita dongeng fabel adalah tokoh utamanya berupa...", options: ["Hewan yang bertingkah seperti manusia","Robot canggih","Batu ajaib","Pesawat terbang"], answer: "Hewan yang bertingkah seperti manusia", hint: "Fabel adalah kisah hewan yang bisa berbicara dan berpikir." }
+          { q: 'Dalam fabel "Kelinci dan Kura-Kura", sifat kura-kura yang patut ditiru adalah...', options: ['Gigih dan pantang menyerah', 'Sombong dan suka mengejek', 'Malas dan suka tidur', 'Mudah marah'], answer: 'Gigih dan pantang menyerah', hint: 'Kura-kura terus berjalan tekun hingga mencapai garis akhir 🐢' },
+          { q: 'Ciri khas cerita dongeng fabel adalah tokoh utamanya berupa...', options: ['Hewan yang bertingkah seperti manusia', 'Robot canggih', 'Batu ajaib', 'Pesawat terbang'], answer: 'Hewan yang bertingkah seperti manusia', hint: 'Fabel adalah kisah hewan yang bisa berbicara dan berpikir.' },
+          { q: 'Tokoh Kancil dalam fabel nusantara terkenal karena wataknya yang...', options: ['Cerdik dan banyak akal', 'Malas bergerak', 'Suka berkelahi', 'Penakut'], answer: 'Cerdik dan banyak akal', hint: 'Kancil selalu menggunakan kecerdikan akalnya untuk mencari solusi.' },
+          { q: 'Mengapa Kelinci yang berlari kencang akhirnya kalah dari Kura-kura?', options: ['Kelinci sombong dan tertidur di bawah pohon', 'Kelinci tersesat di hutan', 'Kelinci kakinya terluka', 'Kura-kura naik sepeda'], answer: 'Kelinci sombong dan tertidur di bawah pohon', hint: 'Kesombongan membuat Kelinci meremehkan lawan.' },
+          { q: 'Dalam fabel "Gagak yang Cerdas", Gagak memasukkan kerikil ke kendi air agar airnya...', options: ['Naik ke atas sehingga bisa diminum', 'Menjadi dingin', 'Berubah warna', 'Tumpah ke tanah'], answer: 'Naik ke atas sehingga bisa diminum', hint: 'Gagak pantang menyerah dan menggunakan akal cerdas.' },
+          { q: 'Fabel tentang burung Merpati yang menjatuhkan daun untuk menolong Semut tenggelam mengajarkan...', options: ['Tolong menolong tanpa pamrih', 'Mencari keuntungan sendiri', 'Menjauhi teman yang kesusahan', 'Meminta imbalan uang'], answer: 'Tolong menolong tanpa pamrih', hint: 'Kebaikan kecil bisa menyelamatkan nyawa sahabat.' },
+          { q: 'Pesan kebaikan yang ingin disampaikan pengarang fabel kepada pembaca disebut...', options: ['Amanat / pesan moral', 'Daftar isi', 'Kata pengantar', 'Cetakan buku'], answer: 'Amanat / pesan moral', hint: 'Pelajaran hidup berharga yang kita petik dari cerita.' },
+          { q: 'Hewan yang dalam fabel sering digambarkan sebagai sahabat yang setia dan jujur adalah...', options: ['Anjing peliharaan', 'Serigala licik', 'Ular berbisa', 'Buaya ganas'], answer: 'Anjing peliharaan', hint: 'Hewan berkaki empat yang setia menjaga tuannya.' }
         ],
         activitiesEn: [
           { q: 'What do we call fictional stories where animal characters speak and behave like people?', options: ['Fable', 'Biography', 'Encyclopedia', 'Atlas'], answer: 'Fable', hint: 'Aesop and folklore animal tales are known as fables.' }
         ]
-      }
-  ,
+      },
       {
-        id: 'bi-kata-ajaib'
+        id: 'bi-kata-ajaib',
         title: '4 Kata Ajaib: Tolong, Maaf, Terima Kasih, & Permisi',
         titleEn: '4 Magic Words: Please, Sorry, Thank You, & Excuse Me',
         desc: 'Ada 4 kata ajaib yang membuat semua orang tersenyum dan senang: "Tolong" saat butuh bantuan, "Maaf" saat berbuat salah atau tidak sengaja, "Terima Kasih" saat menerima kebaikan, dan "Permisi" saat lewat di depan orang lain. Membiasakan kata ajaib sejak Kelas 1 SD menjadikan kita anak berbudi pekerti luhur!',
         descEn: 'There are 4 magical words that bring smiles and warmth everywhere: "Please" when asking for help, "Sorry" when making an accidental mistake, "Thank you" when receiving kindness, and "Excuse me" when passing by others. Practicing these words makes us wonderful polite learners!',
+        funFact: '💡 Tahukah kamu? Kata "Tolong", "Maaf", "Terima Kasih", dan "Permisi" dijuluki kata ajaib karena memiliki kekuatan melunakkan hati yang kesal menjadi senyuman manis!',
+        keyPoints: [
+          'Ucapkan "Tolong" sebelum meminta bantuan kepada siapa pun.',
+          'Ucapkan "Maaf" secara tulus saat melakukan kesalahan atau ketidaksengajaan.',
+          'Ucapkan "Terima Kasih" atas setiap bantuan, dan "Permisi" saat lewat di depan orang lain.'
+        ],
         checklist: [
-          "Misi 1: Ucapkan \"Terima kasih\" kepada Ibu atau Ayah saat disiapkan sarapan pagi yang lezat.",
-          "Misi 2: Praktikkan kata \"Tolong\" dengan suara santun saat meminta bantuan mengambilkan buku.",
-          "Misi 3: Buat kartu gambar bertuliskan \"4 KATA AJAIB\" dan tempelkan di dekat meja belajarmu."
-  ],
+          'Misi 1: Ucapkan "Terima kasih" kepada Ibu atau Ayah saat disiapkan sarapan pagi yang lezat.',
+          'Misi 2: Praktikkan kata "Tolong" dengan suara santun saat meminta bantuan mengambilkan buku.',
+          'Misi 3: Buat kartu gambar bertuliskan "4 KATA AJAIB" dan tempelkan di dekat meja belajarmu.'
+        ],
         checklistEn: [
-          "Mission 1: Say \"Thank you\" warmly to your parents when they prepare your meal.",
-          "Mission 2: Practice saying \"Please\" politely when requesting assistance.",
-          "Mission 3: Create a cheerful drawing card showing the \"4 Magic Words\" near your desk."
-  ],
+          'Mission 1: Say "Thank you" warmly to your parents when they prepare your meal.',
+          'Mission 2: Practice saying "Please" politely when requesting assistance.',
+          'Mission 3: Create a cheerful drawing card showing the "4 Magic Words" near your desk.'
+        ],
         activities: [
-          {
-                  "q": "Saat Budi tidak sengaja menjatuhkan pensil milik Siti, kata ajaib yang harus diucapkan Budi adalah...",
-                  "options": [
-                          "Maaf",
-                          "Terima kasih",
-                          "Tolong",
-                          "Biarin saja"
-                  ],
-                  "answer": "Maaf",
-                  "hint": "Gunakan kata ini ketika kita berbuat salah atau ada ketidaksengajaan."
-          },
-          {
-                  "q": "Ketika Kadek diberi kue bolu lezat oleh nenek, Kadek mengucapkan...",
-                  "options": [
-                          "Terima kasih, Nenek!",
-                          "Tolong!",
-                          "Permisi!",
-                          "Maaf!"
-                  ],
-                  "answer": "Terima kasih, Nenek!",
-                  "hint": "Ungkapan rasa syukur atas kebaikan orang lain."
-          },
-          {
-                  "q": "Saat kita hendak berjalan lewat di depan guru yang sedang berbincang, kita bersikap membungkuk dan berkata...",
-                  "options": [
-                          "Permisi, Pak Guru",
-                          "Awas minggir",
-                          "Tolong",
-                          "Diam"
-                  ],
-                  "answer": "Permisi, Pak Guru",
-                  "hint": "Kata santun untuk meminta izin lewat."
-          },
-          { q: "Ketika tidak sengaja menyenggol tempat pensil teman hingga jatuh, kita mengucapkan...", options: ["Maaf","Tolong","Terima kasih","Permisi"], answer: "Maaf", hint: "Mengakui kekeliruan dengan tulus adalah sikap pemberani." },
-          { q: "Sebelum lewat di depan orang tua yang sedang duduk, kata santun yang diucapkan adalah...", options: ["Permisi","Halo","Awas","Tolong"], answer: "Permisi", hint: "Kata \"Permisi\" sambil membungkukkan badan sedikit menunjukkan sopan santun." }
+          { q: 'Saat Budi tidak sengaja menjatuhkan pensil milik Siti, kata ajaib yang harus diucapkan Budi adalah...', options: ['Maaf', 'Terima kasih', 'Tolong', 'Biarin saja'], answer: 'Maaf', hint: 'Gunakan kata ini ketika kita berbuat salah atau ada ketidaksengajaan.' },
+          { q: 'Ketika Kadek diberi kue bolu lezat oleh nenek, Kadek mengucapkan...', options: ['Terima kasih, Nenek!', 'Tolong!', 'Permisi!', 'Maaf!'], answer: 'Terima kasih, Nenek!', hint: 'Ungkapan rasa syukur atas kebaikan orang lain.' },
+          { q: 'Saat kita hendak berjalan lewat di depan guru yang sedang berbincang, kita bersikap membungkuk dan berkata...', options: ['Permisi, Pak Guru', 'Awas minggir', 'Tolong', 'Diam'], answer: 'Permisi, Pak Guru', hint: 'Kata santun untuk meminta izin lewat.' },
+          { q: 'Ketika tidak sengaja menyenggol tempat pensil teman hingga jatuh, kita mengucapkan...', options: ['Maaf', 'Tolong', 'Terima kasih', 'Permisi'], answer: 'Maaf', hint: 'Mengakui kekeliruan dengan tulus adalah sikap pemberani.' },
+          { q: 'Sebelum lewat di depan orang tua yang sedang duduk, kata santun yang diucapkan adalah...', options: ['Permisi', 'Halo', 'Awas', 'Tolong'], answer: 'Permisi', hint: 'Kata "Permisi" sambil membungkukkan badan sedikit menunjukkan sopan santun.' },
+          { q: 'Saat meminta teman mengambilkan buku di rak atas yang tidak terjangkau tanganmu, kamu berkata...', options: ['"Tolong bantu ambilkan buku itu, ya."', '"Ambilkan sekarang!"', '"Cepat ambil!"', '"Buku itu punyaku!"'], answer: '"Tolong bantu ambilkan buku itu, ya."', hint: 'Awali permohonan dengan kata Tolong bernada lembut.' },
+          { q: 'Mengucapkan kata "Terima kasih" setelah ditolong akan membuat orang yang menolong merasa...', options: ['Dihargai dan senang', 'Marah dan jengkel', 'Bosan dan malas', 'Rugi waktu'], answer: 'Dihargai dan senang', hint: 'Rasa syukur membuat hati semua orang hangat.' },
+          { q: 'Jika tidak sengaja menumpahkan air minum di meja makan, sikap yang tepat adalah...', options: ['Meminta maaf lalu segera membersihkan meja', 'Menyalahkan adik', 'Pura-pura tidak tahu', 'Langsung kabur bermain'], answer: 'Meminta maaf lalu segera membersihkan meja', hint: 'Bertanggung jawab dengan lap bersih dan kata maaf yang tulus.' },
+          { q: 'Kata ajaib saat hendak meminjam gunting kertas milik teman adalah...', options: ['"Bolehkah tolong pinjam guntingmu sebentar?"', '"Sini pinjam guntingnya!"', '"Guntingmu kuambil ya!"', '"Jangan pelit!"'], answer: '"Bolehkah tolong pinjam guntingmu sebentar?"', hint: 'Meminta izin dengan sopan dan ramah.' },
+          { q: 'Membiasakan 4 kata ajaib dalam kehidupan sehari-hari menunjukkan bahwa kita anak yang...', options: ['Berbudi pekerti luhur dan santun', 'Penakut dan pemalu', 'Suka pamer kata', 'Tidak berani bicara'], answer: 'Berbudi pekerti luhur dan santun', hint: 'Kesantunan adalah mahkota kemuliaan akhlak anak hebat.' }
         ],
         activitiesEn: [
-          {
-                  "q": "When you accidentally bump into a friend, you should say...",
-                  "options": [
-                          "Sorry",
-                          "Thank you",
-                          "Please",
-                          "Go away"
-                  ],
-                  "answer": "Sorry",
-                  "hint": "Say this to express regret when an accident occurs."
-          },
-          {
-                  "q": "When grandmother gives you a delicious treat, you say...",
-                  "options": [
-                          "Thank you, Grandma!",
-                          "Please!",
-                          "Excuse me!",
-                          "Sorry!"
-                  ],
-                  "answer": "Thank you, Grandma!",
-                  "hint": "Show gratitude for kindness received."
-          }
-  ]
+          { q: 'When you accidentally bump into a friend, you should say...', options: ['Sorry', 'Thank you', 'Please', 'Go away'], answer: 'Sorry', hint: 'Say this to express regret when an accident occurs.' },
+          { q: 'When grandmother gives you a delicious treat, you say...', options: ['Thank you, Grandma!', 'Please!', 'Excuse me!', 'Sorry!'], answer: 'Thank you, Grandma!', hint: 'Show gratitude for kindness received.' }
+        ]
       },
       {
         id: 'bi-cerita-bergambar',
@@ -2956,206 +3246,115 @@
         titleEn: 'Reading Picture Books & Discovering Moral Lessons',
         desc: 'Cerita bergambar membantu imajinasi kita terbang tinggi! Gambar menunjukkan suasana tempat dan ekspresi wajah tokoh, sedangkan tulisan menceritakan alur kisahnya. Dari setiap cerita, kita bisa belajar mana perbuatan baik yang patut ditiru dan mana perbuatan buruk yang harus dihindari.',
         descEn: 'Picture books ignite our imagination! Vibrant illustrations show character emotions and magical settings, while words guide the story plot. Through every tale, we discover valuable moral wisdom to live by every day.',
+        funFact: '💡 Tahukah kamu? Membaca buku bergambar melatih otak kanan membayangkan warna visual dan otak kiri merangkai alur cerita dengan hebat!',
+        keyPoints: [
+          'Gambar visual menunjukkan suasana latar dan emosi wajah tokoh cerita.',
+          'Teks tulisan menceritakan urutan kejadian dari awal, tengah, sampai akhir.',
+          'Tokoh protagonis yang baik hati patut kita jadikan teladan sehari-hari.'
+        ],
         checklist: [
-          "Misi 1: Ambil buku cerita bergambar favoritmu dan bacalah satu halaman dengan suara lantang dan intonasi tepat.",
-          "Misi 2: Ceritakan kembali kepada Ayah/Ibu siapa tokoh utama cerita tersebut dan apa sifat baiknya.",
-          "Misi 3: Gambarkan adegan paling seru dari cerita tersebut di buku gambarmu."
-  ],
+          'Misi 1: Ambil buku cerita bergambar favoritmu dan bacalah satu halaman dengan suara lantang dan intonasi tepat.',
+          'Misi 2: Ceritakan kembali kepada Ayah/Ibu siapa tokoh utama cerita tersebut dan apa sifat baiknya.',
+          'Misi 3: Gambarkan adegan paling seru dari cerita tersebut di buku gambarmu.'
+        ],
         checklistEn: [
-          "Mission 1: Pick your favorite picture book and read one page aloud with cheerful expressions.",
-          "Mission 2: Retell the main character and their good habits to your parents.",
-          "Mission 3: Draw your favorite scene from the story in your drawing book."
-  ],
+          'Mission 1: Pick your favorite picture book and read one page aloud with cheerful expressions.',
+          'Mission 2: Retell the main character and their good habits to your parents.',
+          'Mission 3: Draw your favorite scene from the story in your drawing book.'
+        ],
         activities: [
-          {
-                  "q": "Dalam cerita \"Semut dan Belalang\", Semut rajin mengumpulkan makanan sedangkan Belalang hanya bermain. Pesan baiknya adalah...",
-                  "options": [
-                          "Rajin bekerja dan mempersiapkan masa depan",
-                          "Bermain terus sepanjang hari",
-                          "Tidak mau berbagi makanan",
-                          "Tidur seharian di pohon"
-                  ],
-                  "answer": "Rajin bekerja dan mempersiapkan masa depan",
-                  "hint": "Semut tidak kelaparan saat musim hujan karena rajin bekerja."
-          },
-          {
-                  "q": "Tokoh yang memiliki sifat baik dan suka menolong dalam cerita disebut tokoh...",
-                  "options": [
-                          "Protagonis (tokoh baik)",
-                          "Antagonis (tokoh jahat)",
-                          "Penonton",
-                          "Penulis"
-                  ],
-                  "answer": "Protagonis (tokoh baik)",
-                  "hint": "Tokoh teladan yang dicintai pembaca."
-          },
-          {
-                  "q": "Unsur cerita yang menceritakan kapan dan di mana peristiwa terjadi dinamakan...",
-                  "options": [
-                          "Latar (tempat & waktu)",
-                          "Judul",
-                          "Penerbit",
-                          "Halaman"
-                  ],
-                  "answer": "Latar (tempat & waktu)",
-                  "hint": "Contoh: di hutan lebat pada pagi hari yang cerah."
-          }
-  ],
+          { q: 'Dalam cerita "Semut dan Belalang", Semut rajin mengumpulkan makanan sedangkan Belalang hanya bermain. Pesan baiknya adalah...', options: ['Rajin bekerja dan mempersiapkan masa depan', 'Bermain terus sepanjang hari', 'Tidak mau berbagi makanan', 'Tidur seharian di pohon'], answer: 'Rajin bekerja dan mempersiapkan masa depan', hint: 'Semut tidak kelaparan saat musim hujan karena rajin bekerja.' },
+          { q: 'Tokoh yang memiliki sifat baik dan suka menolong dalam cerita disebut tokoh...', options: ['Protagonis (tokoh baik)', 'Antagonis (tokoh jahat)', 'Penonton', 'Penulis'], answer: 'Protagonis (tokoh baik)', hint: 'Tokoh teladan yang dicintai pembaca.' },
+          { q: 'Unsur cerita yang menceritakan kapan dan di mana peristiwa terjadi dinamakan...', options: ['Latar (tempat & waktu)', 'Judul', 'Penerbit', 'Halaman'], answer: 'Latar (tempat & waktu)', hint: 'Contoh: di hutan lebat pada pagi hari yang cerah.' },
+          { q: 'Tokoh yang memiliki sifat jahat atau suka mengganggu dalam dongeng disebut tokoh...', options: ['Antagonis', 'Protagonis', 'Sutradara', 'Penata rias'], answer: 'Antagonis', hint: 'Tokoh penentang yang menjadi lawan dari tokoh baik.' },
+          { q: 'Bagian awal sebuah cerita buku bergambar biasanya menceritakan tentang...', options: ['Pengenalan tokoh dan tempat kejadian', 'Penyelesaian masalah', 'Daftar nama penerbit', 'Penutup cerita'], answer: 'Pengenalan tokoh dan tempat kejadian', hint: 'Awal cerita memperkenalkan siapa tokohnya dan di mana dia tinggal.' },
+          { q: 'Jika ilustrasi memperlihatkan tokoh tersenyum lebar dengan mata berbinar-binar, tokoh tersebut sedang...', options: ['Gembira dan bahagia', 'Sedih dan berduka', 'Takut pada petir', 'Marah besar'], answer: 'Gembira dan bahagia', hint: 'Senyuman lebar mencerminkan suasana hati riang gembira.' },
+          { q: 'Bagian cerita tempat masalah memuncak dan menjadi sangat seru disebut bagian...', options: ['Konflik / puncak masalah', 'Sampul belakang', 'Kata pengantar', 'Daftar pustaka'], answer: 'Konflik / puncak masalah', hint: 'Klimaks atau puncak ketegangan cerita.' },
+          { q: 'Nama orang yang menggambar ilustrasi warna-warni pada buku cerita disebut...', options: ['Ilustrator', 'Penerbit', 'Percetakan', 'Kolektor'], answer: 'Ilustrator', hint: 'Ilustrator menggambar adegan cerita agar hidup dan menarik.' },
+          { q: 'Judul buku cerita biasanya ditaruh di...', options: ['Sampul depan paling atas', 'Halaman paling belakang', 'Bawah meja', 'Buku tulis teman'], answer: 'Sampul depan paling atas', hint: 'Sampul depan menampilkan judul besar dan gambar utama.' },
+          { q: 'Membaca buku cerita bergambar secara teratur melatih kita untuk...', options: ['Kaya kosakata, kreatif, dan imajinatif', 'Cepat bosan di kelas', 'Malas menulis', 'Meniru tokoh jahat'], answer: 'Kaya kosakata, kreatif, dan imajinatif', hint: 'Buku adalah jendela dunia dan sumber inspirasi anak hebat.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "In the fable of the Ant and the Grasshopper, the hardworking Ant teaches us to...",
-                  "options": [
-                          "Work hard and prepare for tomorrow",
-                          "Play all day and sleep",
-                          "Never share anything",
-                          "Ignore our goals"
-                  ],
-                  "answer": "Work hard and prepare for tomorrow",
-                  "hint": "Diligent preparation brings safety and happiness."
-          }
-  ]
+          { q: 'In the fable of the Ant and the Grasshopper, the hardworking Ant teaches us to...', options: ['Work hard and prepare for tomorrow', 'Play all day and sleep', 'Never share anything', 'Ignore our goals'], answer: 'Work hard and prepare for tomorrow', hint: 'Diligent preparation brings safety and happiness.' }
+        ]
       },
       {
-        "id": "bi-kalimat-tanya",
-      "title": "Kalimat Tanya & 6 Kata Ajaib Tanya (5W1H)",
-      "titleEn": "Question Sentences & Question Words",
-      "desc": "Kalimat tanya digunakan untuk mencari tahu hal yang belum kita ketahui. Selalu diakhiri dengan tanda tanya (?). Ada 6 kata tanya sakti: APA (benda/kejadian), SIAPA (orang), DI MANA (tempat), KAPAN (waktu), MENGAPA (alasan), dan BAGAIMANA (cara/keadaan)!",
-      "descEn": "Question sentences help us discover new knowledge and are always sealed with a question mark (?). We use: WHAT (objects/events), WHO (people), WHERE (places), WHEN (time), WHY (reasons), and HOW (manners/states)!",
-      "checklist": [
-        "Misi 1: Gunakan kata \"Siapa\" untuk menanyakan nama lengkap teman barumu di kelas.",
-        "Misi 2: Cari dan lingkari tanda tanya (?) pada buku cerita kesukaanmu.",
-        "Misi 3: Susunlah 3 kalimat tanya sopan yang ditujukan kepada Ayah, Ibu, atau Bapak/Ibu Guru."
-      ],
-      "checklistEn": [
-        "Mission 1: Use the word \"Who\" to politely ask a new classmate their name.",
-        "Mission 2: Find and circle question marks (?) in your favorite storybook.",
-        "Mission 3: Formulate 3 respectful questions addressed to your parents or teacher."
-      ],
-      "activities": [
-        {
-          "q": "Kata tanya yang tepat untuk menanyakan nama seseorang adalah...",
-          "options": [
-            "Siapa",
-            "Kapan",
-            "Berapa",
-            "Di mana"
-          ],
-          "answer": "Siapa",
-          "hint": "\"... namamu?\" -> Siapa namamu?"
-        },
-        {
-          "q": "Tanda baca yang wajib ditaruh di akhir kalimat tanya adalah...",
-          "options": [
-            "Tanda tanya (?)",
-            "Tanda titik (.)",
-            "Tanda seru (!)",
-            "Tanda koma (,)"
-          ],
-          "answer": "Tanda tanya (?)",
-          "hint": "Bentuknya seperti kait payung dengan titik di bawahnya ❓"
-        },
-        {
-          "q": "\"... kamu tinggal?\" Kata tanya yang tepat untuk menanyakan tempat tinggal adalah...",
-          "options": [
-            "Di mana",
-            "Siapa",
-            "Mengapa",
-            "Kapan"
-          ],
-          "answer": "Di mana",
-          "hint": "Menanyakan lokasi atau tempat keberadaan rumah 🏡"
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Which word asks for a person's name?",
-          "options": [
-            "Who",
-            "When",
-            "How much",
-            "Where"
-          ],
-          "answer": "Who",
-          "hint": "\"Who are you?\" asks about a person."
-        },
-        {
-          "q": "What punctuation ends every question?",
-          "options": [
-            "Question mark (?)",
-            "Period (.)",
-            "Exclamation mark (!)",
-            "Comma (,)"
-          ],
-          "answer": "Question mark (?)",
-          "hint": "It curves like an umbrella handle ❓"
-        }
-      ]
-    },
-    {
-      "id": "bi-cerita-pengalaman",
-      "title": "Bercerita Pengalaman Diri & Membuat Kartu Ceria",
-      "titleEn": "Sharing Personal Experiences & Crafting Cheerful Cards",
-      "desc": "Setiap anak memiliki pengalaman seru yang berharga, seperti membantu ibu memasak, bermain bola bersama teman, atau memelihara kucing. Menceritakan pengalaman melatih keberanian berbicara di depan kelas dan menumbuhkan rasa percaya diri!",
-      "descEn": "Every child holds delightful personal stories, like cooking with mom, playing soccer with pals, or caring for pets. Sharing real experiences cultivates classroom confidence and expressive storytelling!",
-      "checklist": [
-        "Misi 1: Ceritakan kegiatan pagimu hari ini dalam 3 kalimat berurutan (bangun tidur - mandi - sarapan).",
-        "Misi 2: Buatlah kartu ucapan terima kasih berhias bunga untuk Ibu atau Ayah tercinta.",
-        "Misi 3: Tuliskan cita-cita impianmu dengan huruf tegak yang rapi di buku catatan."
-      ],
-      "checklistEn": [
-        "Mission 1: Describe your morning routine today in 3 sequential sentences.",
-        "Mission 2: Craft a colorful thank-you card with flowers for your beloved parents.",
-        "Mission 3: Write down your dream future profession neatly in your notebook."
-      ],
-      "activities": [
-        {
-          "q": "Saat menceritakan pengalaman di depan kelas, sikap tubuh kita sebaiknya...",
-          "options": [
-            "Berdiri tegak, tersenyum, dan suara jelas terdengar",
-            "Menunduk dan berbisik malu",
-            "Membelakangi teman-teman",
-            "Tertawa berlebihan tanpa bicara"
-          ],
-          "answer": "Berdiri tegak, tersenyum, dan suara jelas terdengar",
-          "hint": "Percaya diri dan ramah membuat pendengar senang mendengarkan ceritamu!"
-        },
-        {
-          "q": "Tulisan \"Terima kasih Ayah dan Ibu atas kasih sayangnya\" cocok ditulis di dalam...",
-          "options": [
-            "Kartu ucapan kasih sayang",
-            "Buku nota belanjaan",
-            "Kamus bahasa",
-            "Tiket karcis"
-          ],
-          "answer": "Kartu ucapan kasih sayang",
-          "hint": "Ungkapan tulus untuk orang tua yang merawat kita ❤️"
-        },
-        {
-          "q": "Urutan bercerita yang runtut dimulai dari...",
-          "options": [
-            "Awal kejadian, jalannya peristiwa, lalu akhir cerita",
-            "Akhir cerita dulu baru awal",
-            "Acak sesuka hati",
-            "Hanya bagian lucunya saja"
-          ],
-          "answer": "Awal kejadian, jalannya peristiwa, lalu akhir cerita",
-          "hint": "Kronologis: ada permulaan, isi kegiatan, dan kesan penutup."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "When sharing a story in front of class, we should...",
-          "options": [
-            "Stand straight, smile, and speak clearly",
-            "Hide our face and whisper",
-            "Turn our back to friends",
-            "Run out of class"
-          ],
-          "answer": "Stand straight, smile, and speak clearly",
-          "hint": "Confidence and warmth captivate your audience!"
-        }
-      ]
-    }
+        id: 'bi-kalimat-tanya',
+        title: 'Kalimat Tanya & 6 Kata Ajaib Tanya (5W1H)',
+        titleEn: 'Question Sentences & Question Words',
+        desc: 'Kalimat tanya digunakan untuk mencari tahu hal yang belum kita ketahui. Selalu diakhiri dengan tanda tanya (?). Ada 6 kata tanya sakti: APA (benda/kejadian), SIAPA (orang), DI MANA (tempat), KAPAN (waktu), MENGAPA (alasan), dan BAGAIMANA (cara/keadaan)!',
+        descEn: 'Question sentences help us discover new knowledge and are always sealed with a question mark (?). We use: WHAT (objects/events), WHO (people), WHERE (places), WHEN (time), WHY (reasons), and HOW (manners/states)!',
+        funFact: '💡 Tahukah kamu? Ilmuwan terhebat di dunia seperti Albert Einstein selalu banyak bertanya dengan rasa ingin tahu tinggi sejak kecil!',
+        keyPoints: [
+          'Kata tanya "Apa" untuk benda/peristiwa, dan "Siapa" untuk orang.',
+          'Kata tanya "Di mana" untuk tempat, dan "Kapan" untuk waktu.',
+          'Kata tanya "Mengapa" untuk alasan, dan "Bagaimana" untuk cara atau keadaan.'
+        ],
+        checklist: [
+          'Misi 1: Gunakan kata "Siapa" untuk menanyakan nama lengkap teman barumu di kelas.',
+          'Misi 2: Cari dan lingkari tanda tanya (?) pada buku cerita kesukaanmu.',
+          'Misi 3: Susunlah 3 kalimat tanya sopan yang ditujukan kepada Ayah, Ibu, atau Bapak/Ibu Guru.'
+        ],
+        checklistEn: [
+          'Mission 1: Use the word "Who" to politely ask a new classmate their name.',
+          'Mission 2: Find and circle question marks (?) in your favorite storybook.',
+          'Mission 3: Formulate 3 respectful questions addressed to your parents or teacher.'
+        ],
+        activities: [
+          { q: 'Kata tanya yang tepat untuk menanyakan nama seseorang adalah...', options: ['Siapa', 'Kapan', 'Berapa', 'Di mana'], answer: 'Siapa', hint: '"... namamu?" -> Siapa namamu?' },
+          { q: 'Tanda baca yang wajib ditaruh di akhir kalimat tanya adalah...', options: ['Tanda tanya (?)', 'Tanda titik (.)', 'Tanda seru (!)', 'Tanda koma (,)'], answer: 'Tanda tanya (?)', hint: 'Bentuknya seperti kait payung dengan titik di bawahnya ❓' },
+          { q: '"... kamu tinggal?" Kata tanya yang tepat untuk menanyakan tempat tinggal adalah...', options: ['Di mana', 'Siapa', 'Mengapa', 'Kapan'], answer: 'Di mana', hint: 'Menanyakan lokasi atau tempat keberadaan rumah 🏡' },
+          { q: 'Kata tanya untuk menanyakan waktu pelaksanaan upacara bendera hari Senin adalah...', options: ['Kapan', 'Berapa', 'Siapa', 'Mengapa'], answer: 'Kapan', hint: 'Kapan menanyakan jam, hari, atau tanggal.' },
+          { q: '"... caramu melipat origami burung bangau?" Kata tanya yang tepat adalah...', options: ['Bagaimana', 'Kapan', 'Berapa', 'Di mana'], answer: 'Bagaimana', hint: 'Bagaimana menanyakan langkah-langkah atau cara melakukan sesuatu.' },
+          { q: 'Kata tanya "Mengapa" digunakan untuk menanyakan...', options: ['Alasan atau penyebab terjadinya sesuatu', 'Nama benda di tas', 'Jumlah buah apel', 'Lokasi rumah sakit'], answer: 'Alasan atau penyebab terjadinya sesuatu', hint: 'Jawaban untuk pertanyaan "Mengapa" biasanya diawali kata "Karena...".' },
+          { q: '"... harga satu buah buku gambar ini?" Kata tanya yang tepat adalah...', options: ['Berapa', 'Siapa', 'Di mana', 'Bagaimana'], answer: 'Berapa', hint: 'Berapa digunakan untuk menanyakan jumlah bilangan atau harga.' },
+          { q: 'Contoh kalimat tanya yang sopan saat menanyakan kabar kesehatan teman adalah...', options: ['"Bagaimana kabarmu hari ini, teman?"', '"Kamu sakit ya?"', '"Kenapa mukamu pucat?"', '"Mau beli obat tidak?"'], answer: '"Bagaimana kabarmu hari ini, teman?"', hint: 'Gunakan kata Bagaimana dengan nada perhatian dan ramah.' },
+          { q: 'Manakah kalimat tanya berikut yang susunannya tepat?', options: ['Di mana letak perpustakaan sekolah kita?', 'Perpustakaan letak di mana sekolah kita?', 'Sekolah kita letak perpustakaan di mana!', 'Di mana perpustakaan letak sekolah.'], answer: 'Di mana letak perpustakaan sekolah kita?', hint: 'Awali dengan kata tanya Di mana dan akhiri dengan tanda tanya (?)' },
+          { q: 'Bentuk tanda tanya (?) menyerupai bentuk...', options: ['Gagang payung terbalik dengan titik di bawah', 'Tiang bendera lurus', 'Kotak kubus', 'Lingkaran bulat'], answer: 'Gagang payung terbalik dengan titik di bawah', hint: 'Lengkungan indah dengan titik bulat penutup ❓' }
+        ],
+        activitiesEn: [
+          { q: 'Which word asks for a person\'s name?', options: ['Who', 'When', 'How much', 'Where'], answer: 'Who', hint: '"Who are you?" asks about a person.' },
+          { q: 'What punctuation ends every question?', options: ['Question mark (?)', 'Period (.)', 'Exclamation mark (!)', 'Comma (,)'], answer: 'Question mark (?)', hint: 'It curves like an umbrella handle ❓' }
+        ]
+      },
+      {
+        id: 'bi-cerita-pengalaman',
+        title: 'Bercerita Pengalaman Diri & Membuat Kartu Ceria',
+        titleEn: 'Sharing Personal Experiences & Crafting Cheerful Cards',
+        desc: 'Setiap anak memiliki pengalaman seru yang berharga, seperti membantu ibu memasak, bermain bola bersama teman, atau memelihara kucing. Menceritakan pengalaman melatih keberanian berbicara di depan kelas dan menumbuhkan rasa percaya diri!',
+        descEn: 'Every child holds delightful personal stories, like cooking with mom, playing soccer with pals, or caring for pets. Sharing real experiences cultivates classroom confidence and expressive storytelling!',
+        funFact: '💡 Tahukah kamu? Setiap kali kamu berani maju ke depan kelas untuk menceritakan pengalamanmu, rasa percaya dirimu bertambah kuat berkali-kali lipat!',
+        keyPoints: [
+          'Ceritakan pengalaman secara runtut: awal kejadian, jalannya peristiwa, dan penutup.',
+          'Berdiri tegak, tersenyum, dan gunakan intonasi suara yang jelas terdengar.',
+          'Pengalaman seru dan kartu ucapan buatan sendiri adalah hadiah kasih sayang terindah.'
+        ],
+        checklist: [
+          'Misi 1: Ceritakan kegiatan pagimu hari ini dalam 3 kalimat berurutan (bangun tidur - mandi - sarapan).',
+          'Misi 2: Buatlah kartu ucapan terima kasih berhias bunga untuk Ibu atau Ayah tercinta.',
+          'Misi 3: Tuliskan cita-cita impianmu dengan huruf tegak yang rapi di buku catatan.'
+        ],
+        checklistEn: [
+          'Mission 1: Describe your morning routine today in 3 sequential sentences.',
+          'Mission 2: Craft a colorful thank-you card with flowers for your beloved parents.',
+          'Mission 3: Write down your dream future profession neatly in your notebook.'
+        ],
+        activities: [
+          { q: 'Saat menceritakan pengalaman di depan kelas, sikap tubuh kita sebaiknya...', options: ['Berdiri tegak, tersenyum, dan suara jelas terdengar', 'Menunduk dan berbisik malu', 'Membelakangi teman-teman', 'Tertawa berlebihan tanpa bicara'], answer: 'Berdiri tegak, tersenyum, dan suara jelas terdengar', hint: 'Percaya diri dan ramah membuat pendengar senang mendengarkan ceritamu!' },
+          { q: 'Tulisan "Terima kasih Ayah dan Ibu atas kasih sayangnya" cocok ditulis di dalam...', options: ['Kartu ucapan kasih sayang', 'Buku nota belanjaan', 'Kamus bahasa', 'Tiket karcis'], answer: 'Kartu ucapan kasih sayang', hint: 'Ungkapan tulus untuk orang tua yang merawat kita ❤️' },
+          { q: 'Urutan bercerita yang runtut dimulai dari...', options: ['Awal kejadian, jalannya peristiwa, lalu akhir cerita', 'Akhir cerita dulu baru awal', 'Acak sesuka hati', 'Hanya bagian lucunya saja'], answer: 'Awal kejadian, jalannya peristiwa, lalu akhir cerita', hint: 'Kronologis: ada permulaan, isi kegiatan, dan kesan penutup.' },
+          { q: 'Pengalaman menyenangkan saat berlibur bersama keluarga membuat hati kita merasa...', options: ['Gembira dan bersyukur', 'Kesal dan marah', 'Bosan dan malas', 'Takut dan cemas'], answer: 'Gembira dan bersyukur', hint: 'Kebersamaan dengan keluarga adalah nikmat yang membahagiakan.' },
+          { q: 'Ketika teman sedang bercerita di depan kelas, sikap pendengar yang baik adalah...', options: ['Mendengarkan dengan tenang dan penuh perhatian', 'Mengobrol sendiri dengan teman sebangku', 'Mengejek suara teman', 'Berlari keluar ruangan'], answer: 'Mendengarkan dengan tenang dan penuh perhatian', hint: 'Sikap menghargai sesama teman adalah tanda anak hebat.' },
+          { q: 'Kartu ucapan hari ulang tahun untuk sahabat biasanya dihias dengan gambar...', options: ['Balon warna-warni, kue tart, dan pita ceria', 'Batu kali dan lumpur', 'Papan tulis kosong', 'Batu bata merah'], answer: 'Balon warna-warni, kue tart, dan pita ceria', hint: 'Hiasan pesta yang mencerminkan keceriaan ulang tahun.' },
+          { q: 'Menceritakan pengalaman membantu Ibu merapikan tempat tidur melatih kita bersikap...', options: ['Mandiri dan bertanggung jawab', 'Manja dan bergantung pada orang lain', 'Malas bergerak', 'Suka menyuruh orang lain'], answer: 'Mandiri dan bertanggung jawab', hint: 'Anak mandiri bangga bisa merapikan kamarnya sendiri.' },
+          { q: 'Bercerita secara runtut dan urut dari awal hingga selesai disebut juga bercerita secara...', options: ['Kronologis (berurutan)', 'Terbalik', 'Melompat-lompat', 'Rahasia'], answer: 'Kronologis (berurutan)', hint: 'Kronologis berarti sesuai alur waktu kejadian.' },
+          { q: 'Setelah selesai bercerita di depan kelas, kalimat penutup yang santun adalah...', options: ['"Terima kasih atas perhatian teman-teman semua."', '"Sudah ya, aku mau duduk."', '"Kalian jangan ribut."', '"Bagus tidak ceritaku?"'], answer: '"Terima kasih atas perhatian teman-teman semua."', hint: 'Mengucapkan terima kasih menutup cerita dengan penuh hormat.' },
+          { q: 'Menulis pengalaman harian di buku harian atau catatan ceria bermanfaat untuk...', options: ['Melatih keterampilan menulis dan mengingat momen indah', 'Menghabiskan kertas buku', 'Membuat tangan lelah', 'Menyembunyikan buku'], answer: 'Melatih keterampilan menulis dan mengingat momen indah', hint: 'Menulis adalah cara terbaik mengabadikan kenangan dan ide.' }
+        ],
+        activitiesEn: [
+          { q: 'When sharing a story in front of class, we should...', options: ['Stand straight, smile, and speak clearly', 'Hide our face and whisper', 'Turn our back to friends', 'Run out of class'], answer: 'Stand straight, smile, and speak clearly', hint: 'Confidence and warmth captivate your audience!' }
+        ]
+      }
     ]
   };
   
@@ -3165,7 +3364,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · English Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Global Vocabulary)
+  // Version   : 2.5 (Comprehensive LKS, Fun Facts, Key Points, & 100 Questions)
   // ================================================================
   
   const ENGLISH_DATA = {
@@ -3181,6 +3380,12 @@
         titleEn: 'Warm Greetings & Everyday Politeness',
         desc: 'Polite greetings make everyone smile! Use "Good morning" at sunrise, "Good afternoon" after noon, and "Good night" before sleeping. Always remember magic words: "Please", "Thank you", and "Excuse me"!',
         descEn: 'Polite greetings make everyone smile! Use "Good morning" at sunrise, "Good afternoon" after noon, and "Good night" before sleeping. Always remember magic words: "Please", "Thank you", and "Excuse me"!',
+        funFact: '💡 Fun Fact: Saying "Good morning" with a bright smile releases happy hormones in your brain and makes people around you smile too!',
+        keyPoints: [
+          'Say "Good morning" before noon, "Good afternoon" during the day, and "Good night" at bedtime.',
+          'Use the magic words: "Please" to ask, "Thank you" to appreciate, and "Sorry" to apologize.',
+          'Always answer "How are you?" with "I am fine, thank you!"'
+        ],
         checklist: [
           'Mission 1: Greet three friends or family members with "Good morning" with a warm smile.',
           'Mission 2: Say "Thank you very much!" whenever someone hands you food or helps you.',
@@ -3194,7 +3399,14 @@
         activities: [
           { q: 'How do you greet your teacher at 7:30 in the morning?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning is when the sun begins to rise ☀️' },
           { q: 'What is the magic word when you receive a nice gift?', options: ['Thank you', 'Please', 'Sorry', 'Excuse me'], answer: 'Thank you', hint: 'Express your gratitude with "Thank you"!' },
-          { q: 'What do you say when you accidentally bump into someone?', options: ['I am sorry / Excuse me', 'Good morning', 'You are welcome', 'Goodbye'], answer: 'I am sorry / Excuse me', hint: 'Say sorry politely when making a mistake.' }
+          { q: 'What do you say when you accidentally bump into someone?', options: ['I am sorry / Excuse me', 'Good morning', 'You are welcome', 'Goodbye'], answer: 'I am sorry / Excuse me', hint: 'Say sorry politely when making a mistake.' },
+          { q: 'What do you say before going to sleep at night?', options: ['Good night', 'Good morning', 'Good afternoon', 'Hello'], answer: 'Good night', hint: 'We say this under the sparkling stars 🌙' },
+          { q: 'When a friend asks "How are you?", the best friendly reply is...', options: ['"I am fine, thank you!"', '"Go away"', '"I am sleeping"', '"No thank you"'], answer: '"I am fine, thank you!"', hint: 'Polite answer sharing positive energy!' },
+          { q: 'When you want to ask a friend for a pencil, you say: "Can I borrow your pencil, ...?"', options: ['please', 'bye', 'night', 'now'], answer: 'please', hint: 'Magic word for asking assistance politely.' },
+          { q: 'When someone says "Thank you!", your kind response is...', options: ['"You are welcome!"', '"No way!"', '"Goodbye!"', '"Sorry!"'], answer: '"You are welcome!"', hint: 'Polite reply meaning "sama-sama".' },
+          { q: 'How do you wave goodbye to classmates after school?', options: ['"Goodbye! See you tomorrow!"', '"Good morning!"', '"Excuse me!"', '"Happy new year!"'], answer: '"Goodbye! See you tomorrow!"', hint: 'Friendly farewell at the school gate 👋' },
+          { q: 'What greeting fits at 2:00 in the afternoon?', options: ['Good afternoon', 'Good morning', 'Good night', 'Breakfast time'], answer: 'Good afternoon', hint: 'After 12:00 noon until sunset.' },
+          { q: 'A warm friendly one-word greeting to friends is...', options: ['Hello! / Hi!', 'Stop!', 'Wait!', 'No!'], answer: 'Hello! / Hi!', hint: 'Short and sweet universal greeting 😊' }
         ],
         activitiesEn: [
           { q: 'How do you greet your teacher at 7:30 in the morning?', options: ['Good morning', 'Good night', 'Good evening', 'Goodbye'], answer: 'Good morning', hint: 'Morning is when the sun begins to rise ☀️' },
@@ -3207,6 +3419,12 @@
         titleEn: 'Rainbow Colors & Geometric Shapes',
         desc: 'Our world is filled with vibrant colors: Red, Blue, Yellow, Green, Purple, and Orange! Match them with shapes like Circle (round like a coin), Square (four equal sides), Triangle (three sharp corners), and Star (sparkling in the sky)!',
         descEn: 'Our world is filled with vibrant colors: Red, Blue, Yellow, Green, Purple, and Orange! Match them with shapes like Circle (round like a coin), Square (four equal sides), Triangle (three sharp corners), and Star (sparkling in the sky)!',
+        funFact: '💡 Fun Fact: When red and yellow colors dance together, they make orange! Red and blue make magical royal purple!',
+        keyPoints: [
+          'Primary colors are Red, Blue, and Yellow.',
+          'A Circle is round ⭕, a Triangle has 3 corners 🔺, and a Square has 4 equal sides ⏹️.',
+          'Always put color words before the noun: "A blue sky", "A red strawberry".'
+        ],
         checklist: [
           'Mission 1: Find 1 red item, 1 blue item, and 1 yellow item in your study room.',
           'Mission 2: Draw a yellow star ⭐ and a green triangle 🔺 on your sketchpad.',
@@ -3220,7 +3438,14 @@
         activities: [
           { q: 'What color is the fresh summer grass?', options: ['Green', 'Red', 'Blue', 'Black'], answer: 'Green', hint: 'Leaves and grass are vivid green 🌿' },
           { q: 'Which shape is round like a full moon or a clock?', options: ['Circle', 'Square', 'Triangle', 'Rectangle'], answer: 'Circle', hint: 'A circle has no straight edges or corners ⭕' },
-          { q: 'A ripe red apple is described as...', options: ['A red apple', 'A blue apple', 'A green circle', 'A yellow banana'], answer: 'A red apple', hint: 'Red is the color of ripe strawberries and apples 🍎' }
+          { q: 'A ripe red apple is described as...', options: ['A red apple', 'A blue apple', 'A green circle', 'A yellow banana'], answer: 'A red apple', hint: 'Red is the color of ripe strawberries and apples 🍎' },
+          { q: 'What color is the bright sunshine in children\'s drawings?', options: ['Yellow', 'Purple', 'Brown', 'Gray'], answer: 'Yellow', hint: 'Yellow sunbeams shine bright ☀️' },
+          { q: 'Which shape has three corners and three straight sides?', options: ['Triangle 🔺', 'Circle ⭕', 'Square ⏹️', 'Oval'], answer: 'Triangle 🔺', hint: 'Like a delicious slice of pizza or party hat!' },
+          { q: 'What color do you get by mixing Blue and Yellow paints?', options: ['Green', 'Red', 'Pink', 'White'], answer: 'Green', hint: 'Blue ocean + Yellow sun = Green grass!' },
+          { q: 'A shape that has 4 equal sides is a...', options: ['Square', 'Circle', 'Triangle', 'Star'], answer: 'Square', hint: 'All four sides are identical in length ⏹️' },
+          { q: 'What color is the ocean water on a sunny day?', options: ['Blue', 'Orange', 'Yellow', 'Green'], answer: 'Blue', hint: 'Deep sparkling blue sea 🌊' },
+          { q: 'What shape twinkles high up in the night sky?', options: ['Star ⭐', 'Square', 'Line', 'Cone'], answer: 'Star ⭐', hint: '"Twinkle, twinkle, little star!"' },
+          { q: 'Which fruit is famous for sharing its exact name with its bright color?', options: ['Orange 🍊', 'Apple', 'Banana', 'Grape'], answer: 'Orange 🍊', hint: 'Juicy orange citrus fruit!' }
         ],
         activitiesEn: [
           { q: 'What color is the fresh summer grass?', options: ['Green', 'Red', 'Blue', 'Black'], answer: 'Green', hint: 'Leaves and grass are vivid green 🌿' },
@@ -3233,6 +3458,12 @@
         titleEn: 'My Loving Family & Cute Pets',
         desc: 'Meet our dearest family members: Father, Mother, Brother, Sister, Grandfather, and Grandmother. And meet lovely pets: Cat (purring kitten), Dog (faithful puppy), Rabbit (long-eared bunny), and Fish (swimming in water)!',
         descEn: 'Meet our dearest family members: Father, Mother, Brother, Sister, Grandfather, and Grandmother. And meet lovely pets: Cat (purring kitten), Dog (faithful puppy), Rabbit (long-eared bunny), and Fish (swimming in water)!',
+        funFact: '💡 Fun Fact: Dogs can understand up to 250 words and gestures in English! They are truly our faithful canine best friends!',
+        keyPoints: [
+          'Parents: Father (Dad) and Mother (Mom).',
+          'Siblings: Brother (saudara laki-laki) and Sister (saudara perempuan).',
+          'Pets: Cat (meow), Dog (woof), Rabbit (hop), Bird (chirp), and Goldfish (swim).'
+        ],
         checklist: [
           'Mission 1: Draw your happy family portrait and write "Father", "Mother", and "Me" below.',
           'Mission 2: Imitate the sound of a pet Cat ("Meow") and a pet Dog ("Woof woof").',
@@ -3246,7 +3477,14 @@
         activities: [
           { q: 'Who is your mother\'s mother?', options: ['Grandmother', 'Sister', 'Aunt', 'Brother'], answer: 'Grandmother', hint: 'The warm grandmother who tells wonderful stories 👵' },
           { q: 'Which animal says "Woof! Woof!" and wags its tail?', options: ['Dog', 'Cat', 'Bird', 'Fish'], answer: 'Dog', hint: 'Man\'s best four-legged friend 🐕' },
-          { q: '"My younger sister" means...', options: ['Adik perempuanku', 'Kakak laki-lakiku', 'Ayahku', 'Ibuku'], answer: 'Adik perempuanku', hint: 'Sister means saudara perempuan.' }
+          { q: '"My younger sister" means...', options: ['Adik perempuanku', 'Kakak laki-lakiku', 'Ayahku', 'Ibuku'], answer: 'Adik perempuanku', hint: 'Sister means saudara perempuan.' },
+          { q: 'What English word means "Ayah"?', options: ['Father', 'Mother', 'Brother', 'Grandmother'], answer: 'Father', hint: 'Dad / Father.' },
+          { q: 'A cute pet that purrs softly and says "Meow" is a...', options: ['Cat', 'Cow', 'Horse', 'Duck'], answer: 'Cat', hint: 'Furry playful feline companion 🐱' },
+          { q: 'Who is your father\'s father?', options: ['Grandfather', 'Uncle', 'Brother', 'Son'], answer: 'Grandfather', hint: 'Grandpa / Grandfather 👴' },
+          { q: 'Which cute pet has long soft ears and loves crunchy carrots?', options: ['Rabbit 🐰', 'Dog', 'Tiger', 'Lion'], answer: 'Rabbit 🐰', hint: 'Bunnies love to hop and munch carrots!' },
+          { q: '"I have one brother and one sister." How many siblings is that?', options: ['Two (2)', 'One (1)', 'Three (3)', 'Five (5)'], answer: 'Two (2)', hint: '1 + 1 = 2 siblings.' },
+          { q: 'Where do pet goldfish swim peacefully?', options: ['In an aquarium / fishbowl', 'On a tree', 'In a bed', 'In a shoe'], answer: 'In an aquarium / fishbowl', hint: 'Clean water tank with bubbles 🐠' },
+          { q: 'Complete the sentence: "I ... my lovely family."', options: ['love', 'sleep', 'cry', 'run'], answer: 'love', hint: 'Heartfelt affection for family ❤️' }
         ],
         activitiesEn: [
           { q: 'Who is your mother\'s mother?', options: ['Grandmother', 'Sister', 'Aunt', 'Brother'], answer: 'Grandmother', hint: 'The warm grandmother who tells wonderful stories 👵' },
@@ -3259,6 +3497,12 @@
         titleEn: 'Classroom Objects & School Bag',
         desc: 'Let\'s unpack our school backpack: Pencil (to write), Eraser / Rubber (to wipe errors), Ruler (to draw straight lines), Book (to read), Notebook (to write notes), and Scissors (for craft paper)!',
         descEn: 'Let\'s unpack our school backpack: Pencil (to write), Eraser / Rubber (to wipe errors), Ruler (to draw straight lines), Book (to read), Notebook (to write notes), and Scissors (for craft paper)!',
+        funFact: '💡 Fun Fact: The word "pencil" comes from a Latin word meaning "little tail" because ancient writing brushes looked like tiny animal tails!',
+        keyPoints: [
+          'Writing tools: Pencil, Pen, Crayon, and Marker.',
+          'Classroom tools: Eraser, Ruler, Scissors, and Glue.',
+          'Furniture: Desk (meja belajar), Chair (kursi), and Whiteboard (papan tulis).'
+        ],
         checklist: [
           'Mission 1: Check your pencil case and count your pencils in English (1, 2, 3...).',
           'Mission 2: Point to your eraser and say: "This is my eraser."',
@@ -3271,7 +3515,15 @@
         ],
         activities: [
           { q: 'What object do you use to erase pencil marks on paper?', options: ['Eraser', 'Ruler', 'Sharpener', 'Scissors'], answer: 'Eraser', hint: 'It rubs away pencil mistakes cleanly ✏️' },
-          { q: 'Where do you pack your textbooks, pencil case, and bottle?', options: ['School bag / Backpack', 'Plate', 'Shoe', 'Pillow'], answer: 'School bag / Backpack', hint: 'You carry it on your shoulders to school 🎒' }
+          { q: 'Where do you pack your textbooks, pencil case, and bottle?', options: ['School bag / Backpack', 'Plate', 'Shoe', 'Pillow'], answer: 'School bag / Backpack', hint: 'You carry it on your shoulders to school 🎒' },
+          { q: 'What tool helps you draw a perfectly straight line?', options: ['Ruler 📏', 'Eraser', 'Glue', 'Brush'], answer: 'Ruler 📏', hint: 'It has centimeter and inch numbers on it.' },
+          { q: 'What do you sit on during lesson time in class?', options: ['Chair', 'Desk', 'Window', 'Floor'], answer: 'Chair', hint: 'A comfortable four-legged seat 🪑' },
+          { q: 'Where does the teacher write with markers for the whole class to see?', options: ['Whiteboard / Blackboard', 'Wall', 'Door', 'Ceiling'], answer: 'Whiteboard / Blackboard', hint: 'Big board at the front of the classroom.' },
+          { q: 'What tool cuts colored craft paper safely?', options: ['Scissors ✂️', 'Pen', 'Book', 'Ruler'], answer: 'Scissors ✂️', hint: 'Two blades for cutting shapes.' },
+          { q: 'A small box or pouch that holds your pencils and pens is a...', options: ['Pencil case', 'Lunchbox', 'Shoebox', 'Toybox'], answer: 'Pencil case', hint: 'Keeps writing tools organized.' },
+          { q: 'You read exciting stories from a...', options: ['Book 📖', 'Chair', 'Bottle', 'Table'], answer: 'Book 📖', hint: 'Pages bound together with pictures and words.' },
+          { q: 'What tool sharpens your blunt wooden pencil point?', options: ['Pencil sharpener', 'Ruler', 'Eraser', 'Glue stick'], answer: 'Pencil sharpener', hint: 'Makes pencil tips pointed and sharp.' },
+          { q: 'Complete: "I write notes in my school ..."', options: ['notebook', 'plate', 'shoe', 'hat'], answer: 'notebook', hint: 'Paper pad for writing class lessons 📓' }
         ],
         activitiesEn: [
           { q: 'What object do you use to erase pencil marks on paper?', options: ['Eraser', 'Ruler', 'Sharpener', 'Scissors'], answer: 'Eraser', hint: 'It rubs away pencil mistakes cleanly ✏️' }
@@ -3283,6 +3535,12 @@
         titleEn: 'Numbers 1 to 20 & Action Verbs',
         desc: 'Counting is energetic and exciting: One, Two, Three, Four, Five... up to Twenty! Combine numbers with joyful actions: Walk, Run, Jump, Dance, Sing, Read, Write, and Sleep!',
         descEn: 'Counting is energetic and exciting: One, Two, Three, Four, Five... up to Twenty! Combine numbers with joyful actions: Walk, Run, Jump, Dance, Sing, Read, Write, and Sleep!',
+        funFact: '💡 Fun Fact: Number 7 is often considered the most popular lucky number around the world—there are 7 days in a week and 7 colors in a rainbow!',
+        keyPoints: [
+          'Numbers 1 to 10: One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten.',
+          'Numbers 11 to 20: Eleven, Twelve, Thirteen, Fourteen... Twenty.',
+          'Action verbs: Walk 🚶, Run 🏃, Jump 🦘, Dance 💃, Sing 🎤, Sleep 😴.'
+        ],
         checklist: [
           'Mission 1: Count your 10 fingers aloud in English: One to Ten.',
           'Mission 2: Jump three times while shouting: "One! Two! Three! Jump!"',
@@ -3295,7 +3553,15 @@
         ],
         activities: [
           { q: 'What number comes directly after "NINE"?', options: ['TEN (10)', 'EIGHT (8)', 'SEVEN (7)', 'ELEVEN (11)'], answer: 'TEN (10)', hint: '8, 9, ... what comes next?' },
-          { q: 'Which action verb means moving fast on your feet?', options: ['Run', 'Sleep', 'Sit', 'Eat'], answer: 'Run', hint: 'Athletes run swiftly in track races 🏃' }
+          { q: 'Which action verb means moving fast on your feet?', options: ['Run', 'Sleep', 'Sit', 'Eat'], answer: 'Run', hint: 'Athletes run swiftly in track races 🏃' },
+          { q: 'How do you say the number "15" in English?', options: ['Fifteen', 'Fifty', 'Five', 'Twelve'], answer: 'Fifteen', hint: '10 + 5 is fifteen.' },
+          { q: 'Which action verb means leaping high into the air?', options: ['Jump', 'Sit', 'Sleep', 'Write'], answer: 'Jump', hint: 'Frogs and kangaroos jump high 🦘' },
+          { q: 'What number comes directly before "SEVEN"?', options: ['SIX (6)', 'EIGHT (8)', 'FIVE (5)', 'NINE (9)'], answer: 'SIX (6)', hint: '5, 6, 7...' },
+          { q: 'Which action verb means creating music with your voice?', options: ['Sing', 'Walk', 'Climb', 'Cook'], answer: 'Sing', hint: '"Sing a happy song!" 🎤' },
+          { q: 'How many days are in one full week?', options: ['Seven (7)', 'Five (5)', 'Ten (10)', 'Twelve (12)'], answer: 'Seven (7)', hint: 'Monday to Sunday = 7 days.' },
+          { q: 'Which action verb means resting with eyes closed at night?', options: ['Sleep', 'Run', 'Dance', 'Swim'], answer: 'Sleep', hint: 'Sweet dreams in cozy bed 😴' },
+          { q: 'What is 10 plus 10 in English?', options: ['Twenty (20)', 'Twelve (12)', 'Thirty (30)', 'Ten (10)'], answer: 'Twenty (20)', hint: 'Double ten makes twenty!' },
+          { q: 'Complete: "Fish love to ... in blue water."', options: ['swim', 'fly', 'run', 'climb'], answer: 'swim', hint: 'Moving smoothly through water 🏊' }
         ],
         activitiesEn: [
           { q: 'What number comes directly after "NINE"?', options: ['TEN (10)', 'EIGHT (8)', 'SEVEN (7)', 'ELEVEN (11)'], answer: 'TEN (10)', hint: '8, 9, ... what comes next?' }
@@ -3307,6 +3573,12 @@
         titleEn: 'Healthy Food & Daily Routine',
         desc: 'Fuel your day with nutritious food: Bread, Milk, Egg, Rice, Vegetables, and Fruits! Follow a sparkling daily routine: Wake up, Brush teeth, Wash face, Eat breakfast, and Study hard!',
         descEn: 'Fuel your day with nutritious food: Bread, Milk, Egg, Rice, Vegetables, and Fruits! Follow a sparkling daily routine: Wake up, Brush teeth, Wash face, Eat breakfast, and Study hard!',
+        funFact: '💡 Fun Fact: Eating a rainbow of colorful vegetables and fruits gives your body superpowers to fight off sneezes and stay energized!',
+        keyPoints: [
+          'Morning routine: Wake up early, wash face, brush teeth, and eat breakfast.',
+          'Healthy foods: Rice, Bread, Egg, Milk, Fruits, and Green Vegetables.',
+          'Drink plenty of clean water every single day!'
+        ],
         checklist: [
           'Mission 1: Name 2 fruits you enjoy eating in English (e.g. Apple, Banana, Orange).',
           'Mission 2: Say: "I brush my teeth twice a day" before going to bed.',
@@ -3319,90 +3591,58 @@
         ],
         activities: [
           { q: 'What healthy white drink comes from dairy cows?', options: ['Milk', 'Soda', 'Coffee', 'Tea'], answer: 'Milk', hint: 'Rich in calcium for strong bones and teeth 🥛' },
-          { q: 'What do you do right after waking up in the morning?', options: ['Brush teeth and wash face', 'Go to sleep', 'Play video games', 'Watch TV until noon'], answer: 'Brush teeth and wash face', hint: 'Keep fresh hygiene at dawn 🪥' }
+          { q: 'What do you do right after waking up in the morning?', options: ['Brush teeth and wash face', 'Go to sleep', 'Play video games', 'Watch TV until noon'], answer: 'Brush teeth and wash face', hint: 'Keep fresh hygiene at dawn 🪥' },
+          { q: 'What meal do we eat in the morning before going to school?', options: ['Breakfast', 'Lunch', 'Dinner', 'Supper'], answer: 'Breakfast', hint: 'Morning energy meal 🍳' },
+          { q: 'What oval food comes from chickens and is great fried or boiled?', options: ['Egg 🥚', 'Apple', 'Carrot', 'Bread'], answer: 'Egg 🥚', hint: 'Nutritious morning protein.' },
+          { q: 'What meal do we eat in the middle of the day at school?', options: ['Lunch', 'Breakfast', 'Midnight snack', 'Dinner'], answer: 'Lunch', hint: 'Noon meal in lunchbox 🍱' },
+          { q: 'Drinking 6 to 8 glasses of fresh ... every day keeps us healthy.', options: ['Water 💧', 'Soda', 'Syrup', 'Ice tea'], answer: 'Water 💧', hint: 'Pure water hydrates our muscles and brain.' },
+          { q: 'Carrots, broccoli, and spinach are called...', options: ['Vegetables 🥦', 'Candies', 'Chocolates', 'Cookies'], answer: 'Vegetables 🥦', hint: 'Healthy greens packed with vitamins!' },
+          { q: 'Before eating meals with our hands, we must always...', options: ['Wash our hands with soap 🧼', 'Run outside', 'Rub our eyes', 'Shout loudly'], answer: 'Wash our hands with soap 🧼', hint: 'Soap washes germs away cleanly.' },
+          { q: 'What food is baked in ovens and made into delicious sandwiches?', options: ['Bread 🍞', 'Ice cube', 'Soup', 'Tea'], answer: 'Bread 🍞', hint: 'Warm wheat slices.' },
+          { q: 'What is the evening meal shared with family at night called?', options: ['Dinner', 'Breakfast', 'Morning tea', 'Dessert'], answer: 'Dinner', hint: 'Evening dinner together 🍽️' }
         ],
         activitiesEn: [
           { q: 'What healthy white drink comes from dairy cows?', options: ['Milk', 'Soda', 'Coffee', 'Tea'], answer: 'Milk', hint: 'Rich in calcium for strong bones and teeth 🥛' }
         ]
-      }
-  ,
+      },
       {
-        id: 'en-fruits-food'
+        id: 'en-fruits-food',
         title: 'Delicious Fruits & Healthy Food',
         titleEn: 'Delicious Fruits & Healthy Food',
         desc: 'Eating colorful fruits keeps our body energetic and strong! Let us learn their English names: Red Apple 🍎, Yellow Banana 🍌, Juicy Orange 🍊, Sweet Mango 🥭, and Crispy Watermelon 🍉. For healthy meals: White Rice 🍚, Fresh Milk 🥛, and Warm Bread 🍞!',
         descEn: 'Eating colorful fruits keeps our body energetic and strong! Let us learn their English names: Red Apple 🍎, Yellow Banana 🍌, Juicy Orange 🍊, Sweet Mango 🥭, and Crispy Watermelon 🍉. For healthy meals: White Rice 🍚, Fresh Milk 🥛, and Warm Bread 🍞!',
+        funFact: '💡 Fun Fact: Watermelons are 92% water! That is why they are the crispiest, coolest treat on a warm sunny day!',
+        keyPoints: [
+          'Fruits have bright colors: Red Apple, Yellow Banana, Orange, and Green Grapes.',
+          'Fruits provide natural vitamins that keep our skin glowing and eyes sharp.',
+          'Saying preferences: "I like sweet mangoes", "She likes fresh watermelon".'
+        ],
         checklist: [
-          "Mission 1: Point to 3 fruits at home and say their English names aloud.",
-          "Mission 2: Practice saying the sentence: \"I like to eat sweet apples and fresh bananas!\"",
-          "Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K."
-  ],
+          'Mission 1: Point to 3 fruits at home and say their English names aloud.',
+          'Mission 2: Practice saying the sentence: "I like to eat sweet apples and fresh bananas!"',
+          'Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K.'
+        ],
         checklistEn: [
-          "Mission 1: Point to 3 fruits at home and say their English names aloud.",
-          "Mission 2: Practice saying the sentence: \"I like to eat sweet apples and fresh bananas!\"",
-          "Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K."
-  ],
+          'Mission 1: Point to 3 fruits at home and say their English names aloud.',
+          'Mission 2: Practice saying the sentence: "I like to eat sweet apples and fresh bananas!"',
+          'Mission 3: Spell out the words: A-P-P-L-E and M-I-L-K.'
+        ],
         activities: [
-          {
-                  "q": "What is the English name for \"Apel Merah\"?",
-                  "options": [
-                          "Red Apple",
-                          "Yellow Banana",
-                          "Green Grapes",
-                          "Orange Juice"
-                  ],
-                  "answer": "Red Apple",
-                  "hint": "The fruit is crunchy, sweet, and red 🍎"
-          },
-          {
-                  "q": "Monkeys love to eat this yellow fruit. It is called a...",
-                  "options": [
-                          "Banana",
-                          "Watermelon",
-                          "Strawberry",
-                          "Pineapple"
-                  ],
-                  "answer": "Banana",
-                  "hint": "Yellow curved fruit that tastes sweet 🍌"
-          },
-          {
-                  "q": "\"I drink fresh ... every morning.\" The correct word is...",
-                  "options": [
-                          "milk",
-                          "pencil",
-                          "chair",
-                          "book"
-                  ],
-                  "answer": "milk",
-                  "hint": "A white nutritious drink that strengthens bones 🥛"
-          },
-          { q: "Which fruit is long, yellow, and loved by monkeys?", options: ["Banana","Apple","Watermelon","Grape"], answer: "Banana", hint: "Sweet yellow fruit rich in potassium 🍌" },
-          { q: "Drinking fresh water every day keeps our body...", options: ["Healthy and energized","Sick","Sleepy","Tired"], answer: "Healthy and energized", hint: "Water is essential for growing children 💧" }
+          { q: 'What is the English name for "Apel Merah"?', options: ['Red Apple', 'Yellow Banana', 'Green Grapes', 'Orange Juice'], answer: 'Red Apple', hint: 'The fruit is crunchy, sweet, and red 🍎' },
+          { q: 'Monkeys love to eat this yellow fruit. It is called a...', options: ['Banana', 'Watermelon', 'Strawberry', 'Pineapple'], answer: 'Banana', hint: 'Yellow curved fruit that tastes sweet 🍌' },
+          { q: '"I drink fresh ... every morning." The correct word is...', options: ['milk', 'pencil', 'chair', 'book'], answer: 'milk', hint: 'A white nutritious drink that strengthens bones 🥛' },
+          { q: 'Which fruit is long, yellow, and loved by monkeys?', options: ['Banana', 'Apple', 'Watermelon', 'Grape'], answer: 'Banana', hint: 'Sweet yellow fruit rich in potassium 🍌' },
+          { q: 'Drinking fresh water every day keeps our body...', options: ['Healthy and energized', 'Sick', 'Sleepy', 'Tired'], answer: 'Healthy and energized', hint: 'Water is essential for growing children 💧' },
+          { q: 'Which large green fruit is bright red and juicy inside with black seeds?', options: ['Watermelon 🍉', 'Mango', 'Orange', 'Lemon'], answer: 'Watermelon 🍉', hint: 'Huge summer fruit that is super refreshing!' },
+          { q: 'Small purple or green sweet berries that grow in bunches are...', options: ['Grapes 🍇', 'Bananas', 'Pineapples', 'Coconuts'], answer: 'Grapes 🍇', hint: 'Juicy round cluster berries.' },
+          { q: 'What yellow tropical fruit has sweet orange flesh inside?', options: ['Mango 🥭', 'Strawberry', 'Cherry', 'Apple'], answer: 'Mango 🥭', hint: 'Indonesian favorite: Harum Manis mango.' },
+          { q: 'A tiny red heart-shaped berry with tiny seeds on its skin is a...', options: ['Strawberry 🍓', 'Watermelon', 'Coconut', 'Melon'], answer: 'Strawberry 🍓', hint: 'Delicious with ice cream and cakes.' },
+          { q: 'What is the staple white food eaten by millions in Indonesia every day?', options: ['Rice 🍚', 'Pizza', 'Burger', 'Candy'], answer: 'Rice 🍚', hint: 'Steamed warm white rice.' }
         ],
         activitiesEn: [
-          {
-                  "q": "What is the English name for \"Apel Merah\"?",
-                  "options": [
-                          "Red Apple",
-                          "Yellow Banana",
-                          "Green Grapes",
-                          "Orange Juice"
-                  ],
-                  "answer": "Red Apple",
-                  "hint": "The fruit is crunchy, sweet, and red 🍎"
-          },
-          {
-                  "q": "Monkeys love to eat this yellow fruit. It is called a...",
-                  "options": [
-                          "Banana",
-                          "Watermelon",
-                          "Strawberry",
-                          "Pineapple"
-                  ],
-                  "answer": "Banana",
-                  "hint": "Yellow curved fruit that tastes sweet 🍌"
-          }
-  ]
+          { q: 'What is the English name for "Apel Merah"?', options: ['Red Apple', 'Yellow Banana', 'Green Grapes', 'Orange Juice'], answer: 'Red Apple', hint: 'The fruit is crunchy, sweet, and red 🍎' },
+          { q: 'Monkeys love to eat this yellow fruit. It is called a...', options: ['Banana', 'Watermelon', 'Strawberry', 'Pineapple'], answer: 'Banana', hint: 'Yellow curved fruit that tastes sweet 🍌' }
+        ]
       },
       {
         id: 'en-body-parts',
@@ -3410,228 +3650,117 @@
         titleEn: 'My Body Parts & 5 Senses',
         desc: 'Our body is a miraculous gift! We have two Eyes 👀 to see rainbow colors, two Ears 👂 to hear bird songs, one Nose 👃 to smell fresh flowers, one Mouth 👄 to speak polite words, and two Hands ✋ to help our friends!',
         descEn: 'Our body is a miraculous gift! We have two Eyes 👀 to see rainbow colors, two Ears 👂 to hear bird songs, one Nose 👃 to smell fresh flowers, one Mouth 👄 to speak polite words, and two Hands ✋ to help our friends!',
+        funFact: '💡 Fun Fact: Your eyes can blink around 15 to 20 times every minute to keep them sparkling, moist, and clean naturally!',
+        keyPoints: [
+          '5 Senses: Eyes to see, Ears to hear, Nose to smell, Tongue to taste, Skin to touch.',
+          'Face parts: Head, Hair, Eyes, Ears, Nose, Mouth, and Teeth.',
+          'Limbs: Arms, Hands, Fingers, Legs, Knees, and Toes.'
+        ],
         checklist: [
-          "Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.",
-          "Mission 2: Count your fingers in English from 1 to 10 proudly.",
-          "Mission 3: Say aloud: \"I see with my eyes, I hear with my ears, I smile with my mouth!\""
-  ],
+          'Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.',
+          'Mission 2: Count your fingers in English from 1 to 10 proudly.',
+          'Mission 3: Say aloud: "I see with my eyes, I hear with my ears, I smile with my mouth!"'
+        ],
         checklistEn: [
-          "Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.",
-          "Mission 2: Count your fingers in English from 1 to 10 proudly.",
-          "Mission 3: Say aloud: \"I see with my eyes, I hear with my ears, I smile with my mouth!\""
-  ],
+          'Mission 1: Touch your head, shoulders, knees, and toes while singing the classic rhyme.',
+          'Mission 2: Count your fingers in English from 1 to 10 proudly.',
+          'Mission 3: Say aloud: "I see with my eyes, I hear with my ears, I smile with my mouth!"'
+        ],
         activities: [
-          {
-                  "q": "We use our ... to see colorful stars in the sky.",
-                  "options": [
-                          "eyes",
-                          "ears",
-                          "feet",
-                          "elbows"
-                  ],
-                  "answer": "eyes",
-                  "hint": "Two organs on our face that can open and close 👀"
-          },
-          {
-                  "q": "We use our ... to listen to good stories and music.",
-                  "options": [
-                          "ears",
-                          "nose",
-                          "knees",
-                          "hands"
-                  ],
-                  "answer": "ears",
-                  "hint": "Located on the left and right sides of our head 👂"
-          },
-          {
-                  "q": "How many fingers do you have on both hands?",
-                  "options": [
-                          "10 fingers",
-                          "5 fingers",
-                          "20 fingers",
-                          "8 fingers"
-                  ],
-                  "answer": "10 fingers",
-                  "hint": "Count: 1, 2, 3, 4, 5 on one hand, and 5 on the other hand!"
-          }
-  ],
+          { q: 'We use our ... to see colorful stars in the sky.', options: ['eyes', 'ears', 'feet', 'elbows'], answer: 'eyes', hint: 'Two organs on our face that can open and close 👀' },
+          { q: 'We use our ... to listen to good stories and music.', options: ['ears', 'nose', 'knees', 'hands'], answer: 'ears', hint: 'Located on the left and right sides of our head 👂' },
+          { q: 'How many fingers do you have on both hands?', options: ['10 fingers', '5 fingers', '20 fingers', '8 fingers'], answer: '10 fingers', hint: 'Count: 1, 2, 3, 4, 5 on one hand, and 5 on the other hand!' },
+          { q: 'We use our ... to smell fragrant roses and bakery bread.', options: ['nose 👃', 'eyes', 'ears', 'feet'], answer: 'nose 👃', hint: 'In the center of our face.' },
+          { q: 'We smile and speak polite English with our...', options: ['mouth 👄', 'knee', 'elbow', 'shoulder'], answer: 'mouth 👄', hint: 'Lips and teeth are inside.' },
+          { q: 'What do we use to brush our white shiny teeth?', options: ['Toothbrush 🪥', 'Comb', 'Pencil', 'Spoon'], answer: 'Toothbrush 🪥', hint: 'With minty toothpaste.' },
+          { q: 'How many legs do humans walk with?', options: ['Two (2) legs 🦵', 'Four (4)', 'Six (6)', 'One (1)'], answer: 'Two (2) legs 🦵', hint: 'Left leg and right leg.' },
+          { q: 'The joints in the middle of our legs that help us bend and jump are...', options: ['Knees', 'Eyes', 'Ears', 'Nose'], answer: 'Knees', hint: '"Head, shoulders, knees, and toes!"' },
+          { q: 'We clap our ... when we are happy and we know it!', options: ['hands 👏', 'noses', 'ears', 'shoulders'], answer: 'hands 👏', hint: 'Two hands clapping with joy!' },
+          { q: 'What grows on the top of our head that we comb neatly?', options: ['Hair', 'Grass', 'Leaves', 'Feathers'], answer: 'Hair', hint: 'Shiny black or brown hair 💇' }
+        ],
         activitiesEn: [
-          {
-                  "q": "We use our ... to see colorful stars in the sky.",
-                  "options": [
-                          "eyes",
-                          "ears",
-                          "feet",
-                          "elbows"
-                  ],
-                  "answer": "eyes",
-                  "hint": "Two organs on our face that can open and close 👀"
-          },
-          {
-                  "q": "How many fingers do you have on both hands?",
-                  "options": [
-                          "10 fingers",
-                          "5 fingers",
-                          "20 fingers",
-                          "8 fingers"
-                  ],
-                  "answer": "10 fingers",
-                  "hint": "Count: 1 to 10 on both hands!"
-          }
-  ]
+          { q: 'We use our ... to see colorful stars in the sky.', options: ['eyes', 'ears', 'feet', 'elbows'], answer: 'eyes', hint: 'Two organs on our face that can open and close 👀' },
+          { q: 'How many fingers do you have on both hands?', options: ['10 fingers', '5 fingers', '20 fingers', '8 fingers'], answer: '10 fingers', hint: 'Count: 1 to 10 on both hands!' }
+        ]
       },
       {
-        "id": "en-animals-zoo",
-      "title": "Wild Animals & Farm Friends",
-      "titleEn": "Wild Animals & Farm Friends",
-      "desc": "Animals live in nature, on peaceful farms, and in zoos! Farm animals like cows (moo!), ducks (quack!), and sheep (baa!) help us. Wild animals like roaring lions, tall giraffes, and mighty elephants roam majestic grasslands!",
-      "descEn": "Animals thrive on peaceful farms and in the wild! Learn names and sounds: cows moo, ducks quack, sheep baa, while lions roar and elephants trumpet in safari lands!",
-      "checklist": [
-        "Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.",
-        "Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.",
-        "Mission 3: Draw a safari animal and write: \"This is a [lion/elephant]!\""
-      ],
-      "checklistEn": [
-        "Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.",
-        "Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.",
-        "Mission 3: Draw a safari animal and write: \"This is a [lion/elephant]!\""
-      ],
-      "activities": [
-        {
-          "q": "What sound does a duck make in English?",
-          "options": [
-            "Quack! Quack!",
-            "Moo! Moo!",
-            "Meow! Meow!",
-            "Roar! Roar!"
-          ],
-          "answer": "Quack! Quack!",
-          "hint": "Ducks swim in ponds and quack merrily 🦆"
-        },
-        {
-          "q": "Which animal has a very long neck to reach tall tree leaves?",
-          "options": [
-            "Giraffe",
-            "Elephant",
-            "Rabbit",
-            "Monkey"
-          ],
-          "answer": "Giraffe",
-          "hint": "The tallest yellow spotted mammal in the savanna 🦒"
-        },
-        {
-          "q": "\"An ELEPHANT is very...\"",
-          "options": [
-            "Big and strong",
-            "Tiny and small",
-            "Flying in the sky",
-            "Swimming like a fish"
-          ],
-          "answer": "Big and strong",
-          "hint": "Elephants have long trunks and huge ears 🐘"
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "What sound does a duck make?",
-          "options": [
-            "Quack! Quack!",
-            "Moo! Moo!",
-            "Meow! Meow!",
-            "Roar! Roar!"
-          ],
-          "answer": "Quack! Quack!",
-          "hint": "Ducks say quack 🦆"
-        },
-        {
-          "q": "Which animal has a long neck?",
-          "options": [
-            "Giraffe",
-            "Elephant",
-            "Rabbit",
-            "Turtle"
-          ],
-          "answer": "Giraffe",
-          "hint": "The tall yellow mammal 🦒"
-        }
-      ]
-    },
-    {
-      "id": "en-weather-seasons",
-      "title": "Weather, Seasons & Clothes to Wear",
-      "titleEn": "Weather, Seasons & Clothes to Wear",
-      "desc": "The sky changes every day! It can be sunny (warm sunshine), rainy (bring an umbrella!), cloudy (clouds cover the sun), or windy (leaves fly around!). We wear warm jackets when it is cold and t-shirts when it is hot!",
-      "descEn": "Observe the sky outside! Learn weather words: sunny, rainy, cloudy, windy, and match with proper attire like raincoats, hats, t-shirts, and shoes!",
-      "checklist": [
-        "Mission 1: Look out the window and describe today's weather: \"Today is sunny/rainy!\"",
-        "Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).",
-        "Mission 3: Sing the English song: \"Rain, rain, go away, come again another day!\""
-      ],
-      "checklistEn": [
-        "Mission 1: Look out the window and describe today's weather: \"Today is sunny/rainy!\"",
-        "Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).",
-        "Mission 3: Sing the English song: \"Rain, rain, go away, come again another day!\""
-      ],
-      "activities": [
-        {
-          "q": "When it is RAINING heavily, we should bring an...",
-          "options": [
-            "Umbrella ☂️",
-            "Ice cream 🍦",
-            "Sunglasses 🕶️",
-            "Fan"
-          ],
-          "answer": "Umbrella ☂️",
-          "hint": "An umbrella shields us from raindrops!"
-        },
-        {
-          "q": "On a bright SUNNY day, the sky is bright and we see the...",
-          "options": [
-            "Sun ☀️",
-            "Snow ❄️",
-            "Stars at noon",
-            "Thunder"
-          ],
-          "answer": "Sun ☀️",
-          "hint": "The golden sun shines brightly in the blue sky."
-        },
-        {
-          "q": "\"Put on your ... to protect your feet when walking outside.\"",
-          "options": [
-            "Shoes 👟",
-            "Hat 🧢",
-            "Gloves",
-            "Scarf"
-          ],
-          "answer": "Shoes 👟",
-          "hint": "We wear comfortable shoes on our feet."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "When it rains, carry an...",
-          "options": [
-            "Umbrella ☂️",
-            "Ice cream",
-            "Sunglasses",
-            "Pillow"
-          ],
-          "answer": "Umbrella ☂️",
-          "hint": "Shields from rain!"
-        },
-        {
-          "q": "Sunny day features the bright...",
-          "options": [
-            "Sun ☀️",
-            "Snow",
-            "Raincoat",
-            "Flashlight"
-          ],
-          "answer": "Sun ☀️",
-          "hint": "Golden ball in the sky!"
-        }
-      ]
-    }
+        id: 'en-animals-zoo',
+        title: 'Wild Animals & Farm Friends',
+        titleEn: 'Wild Animals & Farm Friends',
+        desc: 'Animals live in nature, on peaceful farms, and in zoos! Farm animals like cows (moo!), ducks (quack!), and sheep (baa!) help us. Wild animals like roaring lions, tall giraffes, and mighty elephants roam majestic grasslands!',
+        descEn: 'Animals thrive on peaceful farms and in the wild! Learn names and sounds: cows moo, ducks quack, sheep baa, while lions roar and elephants trumpet in safari lands!',
+        funFact: '💡 Fun Fact: Elephants can recognize their own reflections in a mirror! They also have incredible memory and never forget their friends!',
+        keyPoints: [
+          'Farm animals: Cow (moo), Duck (quack), Sheep (baa), Chicken (cluck).',
+          'Wild safari animals: Lion (roars), Elephant (trunk), Giraffe (long neck), Monkey (climbs).',
+          'Treat all animals with kindness and gentle care.'
+        ],
+        checklist: [
+          'Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.',
+          'Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.',
+          'Mission 3: Draw a safari animal and write: "This is a [lion/elephant]!"'
+        ],
+        checklistEn: [
+          'Mission 1: Imitate the sounds of 4 animals (cow, cat, duck, lion) with your friends.',
+          'Mission 2: Spell and write 5 animal words (cat, dog, cow, lion, duck) in your notebook.',
+          'Mission 3: Draw a safari animal and write: "This is a [lion/elephant]!"'
+        ],
+        activities: [
+          { q: 'What sound does a duck make in English?', options: ['Quack! Quack!', 'Moo! Moo!', 'Meow! Meow!', 'Roar! Roar!'], answer: 'Quack! Quack!', hint: 'Ducks swim in ponds and quack merrily 🦆' },
+          { q: 'Which animal has a very long neck to reach tall tree leaves?', options: ['Giraffe', 'Elephant', 'Rabbit', 'Monkey'], answer: 'Giraffe', hint: 'The tallest yellow spotted mammal in the savanna 🦒' },
+          { q: '"An ELEPHANT is very..."', options: ['Big and strong', 'Tiny and small', 'Flying in the sky', 'Swimming like a fish'], answer: 'Big and strong', hint: 'Elephants have long trunks and huge ears 🐘' },
+          { q: 'Which big cat is crowned the "King of the Jungle" and roars loudly?', options: ['Lion 🦁', 'Mouse', 'Duck', 'Sheep'], answer: 'Lion 🦁', hint: 'Majestic golden mane.' },
+          { q: 'Which playful animal loves swinging from tree branches and eats bananas?', options: ['Monkey 🐒', 'Hippo', 'Horse', 'Pig'], answer: 'Monkey 🐒', hint: 'Acrobatic agile climber.' },
+          { q: 'Which farm animal gives fresh white milk and says "Moo"?', options: ['Cow 🐄', 'Cat', 'Dog', 'Lion'], answer: 'Cow 🐄', hint: 'Spotted dairy friend in green pastures.' },
+          { q: 'What animal lays eggs in nests and says "Cluck cluck"?', options: ['Chicken / Hen 🐔', 'Cow', 'Horse', 'Sheep'], answer: 'Chicken / Hen 🐔', hint: 'Farm bird with feathers.' },
+          { q: 'Which striped black-and-white animal looks like a painted horse?', options: ['Zebra 🦓', 'Giraffe', 'Elephant', 'Dog'], answer: 'Zebra 🦓', hint: 'Famous black and white stripes.' },
+          { q: 'Which big animal has thick white fur and lives in icy cold snowy Arctic?', options: ['Polar bear 🐻‍❄️', 'Monkey', 'Giraffe', 'Parrot'], answer: 'Polar bear 🐻‍❄️', hint: 'Strong white arctic swimmer.' },
+          { q: 'Which bird can swim gracefully in cold oceans and waddles on ice?', options: ['Penguin 🐧', 'Eagle', 'Owl', 'Duck'], answer: 'Penguin 🐧', hint: 'Black and white tuxedo bird.' }
+        ],
+        activitiesEn: [
+          { q: 'What sound does a duck make?', options: ['Quack! Quack!', 'Moo! Moo!', 'Meow! Meow!', 'Roar! Roar!'], answer: 'Quack! Quack!', hint: 'Ducks say quack 🦆' },
+          { q: 'Which animal has a long neck?', options: ['Giraffe', 'Elephant', 'Rabbit', 'Turtle'], answer: 'Giraffe', hint: 'The tall yellow mammal 🦒' }
+        ]
+      },
+      {
+        id: 'en-weather-seasons',
+        title: 'Weather, Seasons & Clothes to Wear',
+        titleEn: 'Weather, Seasons & Clothes to Wear',
+        desc: 'The sky changes every day! It can be sunny (warm sunshine), rainy (bring an umbrella!), cloudy (clouds cover the sun), or windy (leaves fly around!). We wear warm jackets when it is cold and t-shirts when it is hot!',
+        descEn: 'Observe the sky outside! Learn weather words: sunny, rainy, cloudy, windy, and match with proper attire like raincoats, hats, t-shirts, and shoes!',
+        funFact: '💡 Fun Fact: Rainbows appear when golden sunlight shines through falling raindrops like tiny sparkling prisms in the blue sky!',
+        keyPoints: [
+          'Weather words: Sunny ☀️, Rainy 🌧️, Cloudy ☁️, Windy 💨, Stormy ⚡.',
+          'Clothes: T-shirt and shorts for hot days; Jacket, coat, and socks for cold days.',
+          'Rainy gear: Umbrella and Raincoat keep us dry and happy!'
+        ],
+        checklist: [
+          'Mission 1: Look out the window and describe today\'s weather: "Today is sunny/rainy!"',
+          'Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).',
+          'Mission 3: Sing the English song: "Rain, rain, go away, come again another day!"'
+        ],
+        checklistEn: [
+          'Mission 1: Look out the window and describe today\'s weather: "Today is sunny/rainy!"',
+          'Mission 2: Identify 3 clothes you wear to school (shirt, skirt/shorts, shoes).',
+          'Mission 3: Sing the English song: "Rain, rain, go away, come again another day!"'
+        ],
+        activities: [
+          { q: 'When it is RAINING heavily, we should bring an...', options: ['Umbrella ☂️', 'Ice cream 🍦', 'Sunglasses 🕶️', 'Fan'], answer: 'Umbrella ☂️', hint: 'An umbrella shields us from raindrops!' },
+          { q: 'On a bright SUNNY day, the sky is bright and we see the...', options: ['Sun ☀️', 'Snow ❄️', 'Stars at noon', 'Thunder'], answer: 'Sun ☀️', hint: 'The golden sun shines brightly in the blue sky.' },
+          { q: '"Put on your ... to protect your feet when walking outside."', options: ['Shoes 👟', 'Hat 🧢', 'Gloves', 'Scarf'], answer: 'Shoes 👟', hint: 'We wear comfortable shoes on our feet.' },
+          { q: 'When the wind blows strongly and trees sway, the weather is...', options: ['Windy 💨', 'Hot', 'Silent', 'Dark'], answer: 'Windy 💨', hint: 'Kites fly high on windy days!' },
+          { q: 'What do you wear on your head on a bright sunny day?', options: ['Hat / Cap 🧢', 'Shoes', 'Pants', 'Socks'], answer: 'Hat / Cap 🧢', hint: 'Shields eyes and face from sun rays.' },
+          { q: 'When clouds cover the sky and hide the sun, it is...', options: ['Cloudy ☁️', 'Sunny', 'Snowing', 'Fire'], answer: 'Cloudy ☁️', hint: 'Fluffy gray or white clouds everywhere.' },
+          { q: 'What warm clothing do you wear when it feels very chilly or cold?', options: ['Jacket / Sweater 🧥', 'Swimsuit', 'Slippers', 'Sunglasses'], answer: 'Jacket / Sweater 🧥', hint: 'Keeps chest and arms cozy warm.' },
+          { q: 'What waterproof coat keeps your clothes dry during a rainstorm?', options: ['Raincoat 🧥', 'Pajamas', 'T-shirt', 'Vest'], answer: 'Raincoat 🧥', hint: 'Water glides right off a raincoat.' },
+          { q: 'What colorful arch sometimes shines across the sky after rain?', options: ['Rainbow 🌈', 'Cloud', 'Kite', 'Moon'], answer: 'Rainbow 🌈', hint: '7 colors: Red, Orange, Yellow, Green, Blue, Indigo, Violet!' },
+          { q: 'Complete the sentence: "Today is a beautiful ... day with blue sky!"', options: ['sunny ☀️', 'dark', 'sleeping', 'sour'], answer: 'sunny ☀️', hint: 'Warm and bright day.' }
+        ],
+        activitiesEn: [
+          { q: 'When it rains, carry an...', options: ['Umbrella ☂️', 'Ice cream', 'Sunglasses', 'Pillow'], answer: 'Umbrella ☂️', hint: 'Shields from rain!' },
+          { q: 'Sunny day features the bright...', options: ['Sun ☀️', 'Snow', 'Raincoat', 'Flashlight'], answer: 'Sun ☀️', hint: 'Golden ball in the sky!' }
+        ]
+      }
     ]
   };
   
@@ -3641,7 +3770,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Pendidikan Pancasila Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Karakter Pelajar Pancasila)
+  // Version   : 2.5 (10 Topics, Fun Facts, Key Points, & 100 Questions)
   // ================================================================
   
   const PANCASILA_DATA = {
@@ -3657,6 +3786,12 @@
         titleEn: 'The 5 Pancasila Shield Symbols & Meaning',
         desc: 'Burung Garuda adalah lambang negara kita yang perkasa. Di dadanya terdapat perisai dengan 5 simbol mulia: Sila 1 Bintang Emas (Ketuhanan), Sila 2 Rantai Emas (Kemanusiaan), Sila 3 Pohon Beringin (Persatuan), Sila 4 Kepala Banteng (Musyawarah), dan Sila 5 Padi & Kapas (Keadilan Sosial)!',
         descEn: 'Garuda Pancasila is our proud national emblem. On its chest is a shield bearing 5 sacred symbols: Golden Star (Faith), Gold Chain (Humanity), Banyan Tree (Unity), Bull Head (Deliberation), and Rice & Cotton (Social Justice)!',
+        funFact: '💡 Tahukah kamu? Jumlah helai bulu burung Garuda melambangkan hari kemerdekaan Indonesia: 17 bulu sayap, 8 bulu ekor, 19 bulu pangkal ekor, dan 45 bulu leher (17-8-1945)!',
+        keyPoints: [
+          'Sila 1 (Bintang Emas): Ketuhanan Yang Maha Esa.',
+          'Sila 2 (Rantai Emas) & Sila 3 (Pohon Beringin): Kemanusiaan dan Persatuan Indonesia.',
+          'Sila 4 (Kepala Banteng) & Sila 5 (Padi dan Kapas): Musyawarah mufakat dan Keadilan sosial.'
+        ],
         checklist: [
           'Misi 1: Hafalkan bunyi 5 sila Pancasila dengan intonasi lantang dan sikap berdiri tegap.',
           'Misi 2: Gambar perisai Pancasila dan warnai simbol Bintang Emas di buku gambarmu.',
@@ -3670,7 +3805,14 @@
         activities: [
           { q: 'Simbol sila pertama "Ketuhanan Yang Maha Esa" adalah...', options: ['Bintang Emas', 'Rantai Emas', 'Pohon Beringin', 'Kepala Banteng'], answer: 'Bintang Emas', hint: 'Bintang emas bersudut lima di perisai tengah burung Garuda ⭐' },
           { q: 'Padi dan Kapas melambangkan sila ke...', options: ['Kelima (5)', 'Pertama (1)', 'Kedua (2)', 'Ketiga (3)'], answer: 'Kelima (5)', hint: 'Keadilan sosial bagi seluruh rakyat Indonesia.' },
-          { q: 'Semboyan yang dicengkeram oleh kaki burung Garuda adalah...', options: ['Bhinneka Tunggal Ika', 'Tut Wuri Handayani', 'Bersatu Kita Teguh', 'Garuda Jaya'], answer: 'Bhinneka Tunggal Ika', hint: 'Artinya: Berbeda-beda tetapi tetap satu jua 🇮🇩' }
+          { q: 'Semboyan yang dicengkeram oleh kaki burung Garuda adalah...', options: ['Bhinneka Tunggal Ika', 'Tut Wuri Handayani', 'Bersatu Kita Teguh', 'Garuda Jaya'], answer: 'Bhinneka Tunggal Ika', hint: 'Artinya: Berbeda-beda tetapi tetap satu jua 🇮🇩' },
+          { q: 'Simbol sila kedua "Kemanusiaan yang Adil dan Beradab" adalah...', options: ['Rantai Emas', 'Pohon Beringin', 'Bintang', 'Padi dan Kapas'], answer: 'Rantai Emas', hint: 'Gelang-gelang rantai yang saling mengikat erat tanpa putus ⛓️' },
+          { q: 'Pohon Beringin yang rindang dan kuat melambangkan sila ke-...', options: ['Ketiga (Persatuan Indonesia)', 'Pertama', 'Keempat', 'Kelima'], answer: 'Ketiga (Persatuan Indonesia)', hint: 'Pohon besar tempat seluruh rakyat Indonesia berteduh dengan damai 🌳' },
+          { q: 'Simbol sila keempat "Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan..." adalah...', options: ['Kepala Banteng', 'Bintang', 'Rantai', 'Kapas'], answer: 'Kepala Banteng', hint: 'Banteng suka berkumpul dan bermusyawarah bersama 🐂' },
+          { q: 'Padi melambangkan makanan pokok dan kapas melambangkan...', options: ['Sandang / pakaian yang nyaman', 'Uang koin', 'Gedung sekolah', 'Sepatu lari'], answer: 'Sandang / pakaian yang nyaman', hint: 'Kebutuhan pokok pangan dan sandang seluruh rakyat.' },
+          { q: 'Warna dasar perisai pada simbol Bintang Emas adalah warna...', options: ['Hitam pekat', 'Merah terang', 'Putih bersih', 'Kuning emas'], answer: 'Hitam pekat', hint: 'Warna hitam menggambarkan keagungan alam semesta ciptaan Tuhan.' },
+          { q: 'Berapa jumlah mata rantai pada lambang sila kedua Pancasila?', options: ['17 mata rantai (lingkaran dan persegi)', '5 mata rantai', '10 mata rantai', '50 mata rantai'], answer: '17 mata rantai (lingkaran dan persegi)', hint: 'Menghubungkan pria (persegi) dan wanita (lingkaran) yang saling bersatu.' },
+          { q: 'Di manakah burung Garuda mencengkeram pita bertuliskan "Bhinneka Tunggal Ika"?', options: ['Pada kedua cengkeraman cakaran kakinya', 'Di atas kepalanya', 'Di paruhnya', 'Di sayap kanannya'], answer: 'Pada kedua cengkeraman cakaran kakinya', hint: 'Kedua kaki Garuda mencengkeram pita putih dengan kokoh.' }
         ],
         activitiesEn: [
           { q: 'What is the symbol of the 1st principle "Belief in the One and Only God"?', options: ['Golden Star', 'Gold Chain', 'Banyan Tree', 'Bull Head'], answer: 'Golden Star', hint: 'A golden five-pointed star in the center of the shield ⭐' }
@@ -3682,6 +3824,12 @@
         titleEn: 'Applying Pancasila Values in Daily Life',
         desc: 'Pancasila bukan hanya dihafal, tapi diamalkan! Berdoa sebelum makan dan belajar adalah contoh Sila 1. Menghibur teman yang bersedih adalah Sila 2. Rukun bermain tanpa bertengkar adalah Sila 3. Memilih ketua kelas dengan musyawarah adalah Sila 4. Berbagi bekal makanan secara adil adalah Sila 5!',
         descEn: 'Pancasila comes alive through our daily actions: Praying before meals (Principle 1), Comforting friends (Principle 2), Playing harmoniously (Principle 3), Voting for class leader (Principle 4), and Sharing fairly (Principle 5)!',
+        funFact: '💡 Tahukah kamu? Setiap perbuatan baik yang kamu lakukan, dari tersenyum ramah hingga membuang sampah, sudah merupakan pengamalan nyata dari Pancasila!',
+        keyPoints: [
+          'Sila 1: Rajin berdoa dan menghormati teman yang berbeda agama beribadah.',
+          'Sila 2: Berbagi kasih sayang dan menolong siapa pun yang kesusahan.',
+          'Sila 3, 4, 5: Cinta tanah air, musyawarah bersama, dan bersikap adil.'
+        ],
         checklist: [
           'Misi 1: Berdoa dengan khusyuk sebelum mulai belajar dan sebelum tidur malam.',
           'Misi 2: Bantu saudaramu atau teman yang sedang kesulitan merapikan peralatan bermain.',
@@ -3694,173 +3842,171 @@
         ],
         activities: [
           { q: 'Berdoa dengan tertib sebelum memulai pelajaran di kelas merupakan contoh pengamalan sila ke...', options: ['Pertama (1)', 'Kedua (2)', 'Ketiga (3)', 'Keempat (4)'], answer: 'Pertama (1)', hint: 'Sila pertama berkaitan dengan ibadah dan rasa syukur kepada Tuhan.' },
-          { q: 'Ketika ada teman yang terjatuh saat lari di halaman sekolah, sikapmu adalah...', options: ['Menolongnya berdiri dan membawanya ke UKS', 'Menertawakannya', 'Pura-pura tidak melihat', 'Menyalahkannya'], answer: 'Menolongnya berdiri dan membawanya ke UKS', hint: 'Sikap kemanusiaan yang adil dan beradab (Sila ke-2).' }
+          { q: 'Ketika ada teman yang terjatuh saat lari di halaman sekolah, sikapmu adalah...', options: ['Menolongnya berdiri dan membawanya ke UKS', 'Menertawakannya', 'Pura-pura tidak melihat', 'Menyalahkannya'], answer: 'Menolongnya berdiri dan membawanya ke UKS', hint: 'Sikap kemanusiaan yang adil dan beradab (Sila ke-2).' },
+          { q: 'Bermain bersama teman tanpa membeda-bedakan asal daerah dan warna kulit merupakan pengamalan sila ke...', options: ['Ketiga (3 - Persatuan Indonesia)', 'Pertama', 'Keempat', 'Kedua'], answer: 'Ketiga (3 - Persatuan Indonesia)', hint: 'Menjaga persaudaraan dan kerukunan nusantara.' },
+          { q: 'Memilih ketua kelas dengan cara musyawarah dan pemungutan suara bersama adalah wujud sila ke...', options: ['Keempat (4)', 'Pertama (1)', 'Kedua (2)', 'Ketiga (3)'], answer: 'Keempat (4)', hint: 'Musyawarah mufakat dipimpin oleh kebijaksanaan.' },
+          { q: 'Membagi tugas piket kebersihan kelas secara adil dan merata kepada seluruh murid adalah wujud sila ke...', options: ['Kelima (5 - Keadilan Sosial)', 'Pertama', 'Kedua', 'Ketiga'], answer: 'Kelima (5 - Keadilan Sosial)', hint: 'Keadilan sosial berarti tidak ada yang diberatkan sendirian.' },
+          { q: 'Menghormati teman yang sedang berpuasa atau beribadah merupakan pengamalan sikap...', options: ['Toleransi beragama (Sila ke-1)', 'Mencari perhatian', 'Ikut-ikutan', 'Pura-pura'], answer: 'Toleransi beragama (Sila ke-1)', hint: 'Saling menghormati kebebasan beribadah.' },
+          { q: 'Sikap tidak memaksakan kehendak sendiri kepada teman saat bermain mencerminkan sila ke...', options: ['Keempat (4)', 'Pertama', 'Kedua', 'Ketiga'], answer: 'Keempat (4)', hint: 'Musyawarah menghargai suara bersama.' },
+          { q: 'Menghargai hasil karya gambar teman yang dipajang di mading kelas adalah contoh pengamalan sila ke...', options: ['Kelima (5)', 'Pertama', 'Kedua', 'Ketiga'], answer: 'Kelima (5)', hint: 'Sila ke-5 mengajarkan kita menghargai karya orang lain.' },
+          { q: 'Bangga mengenakan baju batik buatan pengrajin Indonesia merupakan perwujudan cinta tanah air sesuai sila ke...', options: ['Ketiga (3)', 'Kedua', 'Pertama', 'Keempat'], answer: 'Ketiga (3)', hint: 'Bangga dengan produk dan budaya bangsa Indonesia.' },
+          { q: 'Menjenguk teman sekelas yang sedang sakit di rumah sakit adalah wujud nyata sila ke...', options: ['Kedua (2 - Kemanusiaan)', 'Pertama', 'Keempat', 'Kelima'], answer: 'Kedua (2 - Kemanusiaan)', hint: 'Rasa empati dan kasih sayang sesama manusia.' }
         ],
         activitiesEn: [
-          { q: 'Praying respectfully before studying at school exemplifies which principle?', options: ['First (1st)', 'Second (2nd)', 'Third (3rd)', 'Fourth (4th)'], answer: 'First (1st)', hint: 'The first principle relates to reverence for God.' }
+          { q: 'Praying peacefully before starting study reflects which Pancasila principle?', options: ['First (1)', 'Second (2)', 'Third (3)', 'Fourth (4)'], answer: 'First (1)', hint: 'Faith and gratitude to God.' }
         ]
       },
       {
-        id: 'pan-hak-kewajiban',
-        title: 'Hak & Kewajiban Anak di Rumah & Sekolah',
-        titleEn: 'Children\'s Rights & Responsibilities',
-        desc: 'Hak adalah sesuatu yang berhak kita terima dengan layak (seperti hak mendapat kasih sayang, makan sehat, dan belajar). Kewajiban adalah tugas yang harus kita laksanakan dengan penuh tanggung jawab (seperti menghormati orang tua, belajar tekun, dan menjaga kebersihan kamar)!',
-        descEn: 'Rights are what every child deserves to receive (love, nutritious food, safe education). Responsibilities are duties we must honor (respecting elders, studying diligently, keeping our space clean)!',
+        id: 'pan-aturan',
+        title: 'Aturan Tertib di Rumah & di Sekolah',
+        titleEn: 'Orderly Rules at Home & at School',
+        desc: 'Aturan dibuat agar hidup kita tertib, aman, dan nyaman. Aturan di rumah contohnya: merapikan tempat tidur, meletakkan sepatu di rak, dan meminta izin sebelum bermain. Aturan di sekolah contohnya: datang tepat waktu, memakai seragam lengkap, dan antre saat mencuci tangan!',
+        descEn: 'Rules exist to keep our lives safe, harmonious, and orderly. Home rules: making beds, shelving shoes, and asking permission before outdoor play. School rules: arriving punctually, wearing uniforms, and queuing politely!',
+        funFact: '💡 Tahukah kamu? Budaya antre dengan sabar adalah tanda bangsa maju dan beradab yang menghargai hak orang lain!',
+        keyPoints: [
+          'Aturan di rumah disepakati bersama orang tua demi kenyamanan keluarga.',
+          'Aturan di sekolah ditaati seluruh siswa agar kegiatan belajar berjalan lancar.',
+          'Mematuhi aturan melatih kita menjadi pribadi yang disiplin dan bertanggung jawab.'
+        ],
         checklist: [
           'Misi 1: Rapikan tempat tidurmu sendiri setelah bangun pagi tanpa disuruh.',
-          'Misi 2: Sebutkan 2 hak anak di rumah (hak mendapat kasih sayang dan perlindungan).',
-          'Misi 3: Buat jadwal harian antara waktu belajar, membantu orang tua, dan bermain.'
+          'Misi 2: Letakkan sepatu dan tas sekolah pada tempatnya yang rapi sepulang sekolah.',
+          'Misi 3: Budayakan mengantre dengan sabar saat membeli jajan di kantin atau mencuci tangan.'
         ],
         checklistEn: [
-          'Mission 1: Make your own bed neatly after waking up without reminders.',
-          'Mission 2: Name two rights of children at home (love and protection).',
-          'Mission 3: Draft a balanced daily timetable for study, chores, and play.'
+          'Mission 1: Tidy up your own bed upon waking up in the morning without being asked.',
+          'Mission 2: Place your school shoes and backpack neatly in their designated spot.',
+          'Mission 3: Practice patient queuing when washing hands or purchasing snacks.'
         ],
         activities: [
-          { q: 'Mendapatkan kasih sayang dari orang tua dan bimbingan guru di sekolah adalah contoh...', options: ['Hak anak', 'Kewajiban anak', 'Hukuman anak', 'Permintaan sepihak'], answer: 'Hak anak', hint: 'Hak adalah sesuatu yang patut diterima anak untuk tumbuh kembang.' },
-          { q: 'Manakah yang merupakan KEWAJIBAN siswa di sekolah?', options: ['Belajar tekun dan mematuhi tata tertib', 'Bermain terus sepanjang hari', 'Mengotori meja kelas', 'Pulang sebelum bel berbunyi'], answer: 'Belajar tekun dan mematuhi tata tertib', hint: 'Kewajiban adalah tanggung jawab murid di lingkungan sekolah.' }
+          { q: 'Jika kita tidak mematuhi aturan tertib di rumah dan sekolah, akibatnya adalah...', options: ['Suasana menjadi kacau dan tidak nyaman', 'Semua orang menjadi gembira', 'Rumah menjadi sangat bersih', 'Nilai ujian otomatis tinggi'], answer: 'Suasana menjadi kacau dan tidak nyaman', hint: 'Aturan menjaga ketenangan dan keteraturan bersama.' },
+          { q: 'Saat jam istirahat sekolah berbunyi, aturan makan bekal yang baik adalah...', options: ['Cuci tangan dulu, berdoa, lalu makan dengan tenang', 'Makan sambil berlari mengejar teman', 'Membuang bungkus makanan di bawah meja', 'Merebut makanan teman'], answer: 'Cuci tangan dulu, berdoa, lalu makan dengan tenang', hint: 'Kebiasaan makan sehat dan beradab.' },
+          { q: 'Aturan memakai seragam sekolah yang rapi dan bersepatu hitam bertujuan melatih...', options: ['Disiplin dan kerapian diri', 'Kekayaan', 'Kekuatan fisik', 'Kecepatan berlari'], answer: 'Disiplin dan kerapian diri', hint: 'Kerapian seragam mencerminkan kepribadian yang tertata.' },
+          { q: 'Ketika hendak bermain ke rumah tetangga di sore hari, aturan yang benar adalah...', options: ['Meminta izin dan berpamitan kepada orang tua', 'Langsung pergi tanpa memberi kabar', 'Menangis di depan pintu', 'Mengunci rumah dari luar'], answer: 'Meminta izin dan berpamitan kepada orang tua', hint: 'Agar orang tua tidak cemas mencari keberadaanmu.' },
+          { q: 'Contoh aturan belajar di rumah pada malam hari adalah...', options: ['Menyiapkan buku pelajaran untuk esok hari dan tidur tepat waktu', 'Menonton televisi sampai larut malam', 'Bermain game di ponsel hingga mengantuk', 'Menumpuk buku di lantai'], answer: 'Menyiapkan buku pelajaran untuk esok hari dan tidur tepat waktu', hint: 'Menyiapkan diri untuk hari esok yang ceria.' },
+          { q: 'Saat mencuci tangan di wastafel sekolah dan ada banyak teman, kita harus...', options: ['Antre berbaris dengan tertib menunggu giliran', 'Menerobos barisan dari depan', 'Menyiram teman dengan air', 'Berteriak menyuruh teman minggir'], answer: 'Antre berbaris dengan tertib menunggu giliran', hint: 'Menghargai teman yang datang lebih dulu.' },
+          { q: 'Sepulang dari sekolah, sepatu yang kita lepas sebaiknya diletakkan di...', options: ['Rak sepatu secara rapi berpasangan', 'Tengah pintu masuk rumah', 'Atas meja makan', 'Halaman rumput tetangga'], answer: 'Rak sepatu secara rapi berpasangan', hint: 'Menjaga kebersihan dan kerapian rumah.' },
+          { q: 'Siapakah yang wajib mematuhi aturan tata tertib di dalam kelas?', options: ['Seluruh siswa dan warga kelas', 'Hanya ketua kelas', 'Hanya murid yang duduk di depan', 'Hanya guru piket'], answer: 'Seluruh siswa dan warga kelas', hint: 'Aturan berlaku adil bagi semua orang tanpa kecuali.' },
+          { q: 'Jika kita meminjam mainan milik adik atau teman, aturan yang benar adalah...', options: ['Merawatnya dengan hati-hati dan mengembalikan setelah selesai', 'Merusaknya lalu membuangnya', 'Membawa pulang dan mengaku miliknya', 'Menyembunyikannya di lemari'], answer: 'Merawatnya dengan hati-hati dan mengembalikan setelah selesai', hint: 'Amanah menjaga barang pinjaman.' },
+          { q: 'Anak yang senantiasa menaati aturan di rumah dan di sekolah akan tumbuh menjadi anak yang...', options: ['Disiplin, bertanggung jawab, dan dipercaya orang lain', 'Penakut', 'Suka menyendiri', 'Mudah menyerah'], answer: 'Disiplin, bertanggung jawab, dan dipercaya orang lain', hint: 'Karakter unggul anak berprestasi.' }
         ],
         activitiesEn: [
-          { q: 'Receiving parental love and teacher guidance is an example of...', options: ['A child\'s right', 'A child\'s punishment', 'A chore', 'An option'], answer: 'A child\'s right', hint: 'Rights protect children and foster growth.' }
-        ]
-      },
-      {
-        id: 'pan-tertib-antre',
-        title: 'Aturan, Tata Tertib, & Budaya Antre',
-        titleEn: 'Classroom Rules & Patient Queuing Culture',
-        desc: 'Aturan dibuat agar hidup kita tertib, aman, dan nyaman. Contoh aturan di sekolah: datang tepat waktu, mendengarkan guru saat menjelaskan, dan mengantre giliran saat mencuci tangan atau di kantin dengan sabar tanpa saling dorong!',
-        descEn: 'Rules exist to maintain harmony, safety, and mutual peace. Examples include arriving on time, listening attentively to teachers, and patiently queuing without pushing!',
-        checklist: [
-          'Misi 1: Praktikkan berdiri tertib di barisan saat upacara bendera atau antre masuk kelas.',
-          'Misi 2: Angkat tangan kanan dengan sopan saat ingin bertanya atau berpendapat di kelas.',
-          'Misi 3: Ingatkan teman dengan ramah jika ada yang lupa mencuci tangan sebelum makan.'
-        ],
-        checklistEn: [
-          'Mission 1: Stand patiently in line during morning assembly or when entering class.',
-          'Mission 2: Raise your right hand politely before speaking or answering questions.',
-          'Mission 3: Kindly remind classmates to wash hands with soap before mealtime.'
-        ],
-        activities: [
-          { q: 'Saat membeli makanan di kantin sekolah yang sedang ramai, sikap tertib yang benar adalah...', options: ['Mengantre dengan sabar di belakang teman', 'Menyerobot ke baris paling depan', 'Mendorong teman di depan', 'Berteriak memanggil penjual'], answer: 'Mengantre dengan sabar di belakang teman', hint: 'Budaya antre melatih kesabaran dan menghargai hak orang lain.' },
-          { q: 'Mengapa di kelas perlu ada aturan dan tata tertib bersama?', options: ['Agar suasana belajar menjadi aman, tertib, dan nyaman', 'Agar murid merasa takut', 'Agar guru bisa beristirahat', 'Hanya sebagai hiasan dinding'], answer: 'Agar suasana belajar menjadi aman, tertib, dan nyaman', hint: 'Tata tertib menjaga keteraturan bersama seluruh murid.' }
-        ],
-        activitiesEn: [
-          { q: 'When buying food at a busy school canteen, what is the proper civic behavior?', options: ['Queue patiently behind others', 'Cut to the front', 'Push other students', 'Yell loudly'], answer: 'Queue patiently behind others', hint: 'Queuing shows respect and emotional maturity.' }
-        ]
-      },
-      {
-        id: 'pan-keberagaman',
-        title: 'Bhinneka Tunggal Ika & Keragaman Teman',
-        titleEn: 'Unity in Diversity (Bhinneka Tunggal Ika)',
-        desc: 'Indonesia kaya akan keberagaman suku bangsa (Jawa, Sunda, Batak, Bali, Dayak, Papua, dll), bahasa daerah, dan agama. Meskipun berbeda suku dan warna kulit, semboyan kita tetap "Bhinneka Tunggal Ika" — Berbeda-beda tetapi tetap satu jua!',
-        descEn: 'Indonesia embraces rich ethnic diversity across hundreds of tribes, regional dialects, and faiths. Despite differences, our motto "Bhinneka Tunggal Ika" binds us as one unified family!',
-        checklist: [
-          'Misi 1: Tanyakan kepada 3 teman sekelas dari suku atau daerah asal manakah orang tuanya.',
-          'Misi 2: Pelajari 1 kata sapaan bahasa daerah sahabatmu (misal: "Sampurasun" atau "Om Swastyastu").',
-          'Misi 3: Tulis pesan persahabatan: "Kita semua sahabat satu Indonesia".'
-        ],
-        checklistEn: [
-          'Mission 1: Ask 3 classmates about their cultural or ancestral home islands.',
-          'Mission 2: Learn 1 traditional regional greeting word from a classmate.',
-          'Mission 3: Pen a friendship note: "We are all proud brothers and sisters of Indonesia".'
-        ],
-        activities: [
-          { q: 'Apa arti semboyan nasional "Bhinneka Tunggal Ika"?', options: ['Berbeda-beda tetapi tetap satu jua', 'Bersatu kita teguh bercerai kita runtuh', 'Maju tak gentar membela yang benar', 'Adil dan makmur sejahtera'], answer: 'Berbeda-beda tetapi tetap satu jua', hint: 'Walau berbeda suku, agama, dan budaya, bangsa Indonesia tetap bersatu 🇮🇩' },
-          { q: 'Jika sahabat barumu berasal dari daerah yang berbeda logat bahasanya, sikapmu adalah...', options: ['Menghargai dan senang berteman dengannya', 'Mengejek logatnya', 'Menjauhinya', 'Menyuruhnya berganti logat'], answer: 'Menghargai dan senang berteman dengannya', hint: 'Menghargai keberagaman adalah ciri pelajar berkarakter Pancasila.' }
-        ],
-        activitiesEn: [
-          { q: 'What is the translation of "Bhinneka Tunggal Ika"?', options: ['Unity in Diversity (Different yet one)', 'Strength in silence', 'Victory through peace', 'Ever onward'], answer: 'Unity in Diversity (Different yet one)', hint: 'It honors mutual solidarity amid diverse backgrounds.' }
+          { q: 'What happens if we disobey rules at home and school?', options: ['Chaos and accidents occur', 'Everything becomes better', 'Teachers get happier', 'Class becomes quiet'], answer: 'Chaos and accidents occur', hint: 'Rules keep harmony and safety.' }
         ]
       },
       {
         id: 'pan-gotong-royong',
-        title: 'Gotong Royong & Peduli Lingkungan',
-        titleEn: 'Gotong Royong & Environmental Stewardship',
-        desc: 'Gotong royong adalah warisan budaya luhur bangsa Indonesia di mana pekerjaan dilakukan bersama-sama secara sukarela. Pekerjaan berat seperti membersihkan selokan atau piket kelas menjadi ringan dan cepat selesai jika dikerjakan bersama!',
-        descEn: 'Gotong royong is Indonesia\'s timeless tradition of communal voluntary teamwork. Heavy chores such as classroom cleaning or garden tending become swift and delightful when carried out together!',
+        title: 'Gotong Royong & Kerja Sama Ceria',
+        titleEn: 'Mutual Cooperation & Teamwork Joy',
+        desc: 'Gotong royong adalah warisan pusaka nenek moyang bangsa Indonesia. "Berat sama dipikul, ringan sama dijinjing!" Dengan bekerja sama, pekerjaan seberat apa pun akan terasa lebih ringan, cepat selesai, dan menumbuhkan rasa persaudaraan yang erat.',
+        descEn: 'Gotong royong is Indonesia\'s proud collaborative tradition. "Heavy together we carry, light together we bear!" By cooperating, massive tasks become breezy, fast, and bond joyful friendships.',
+        funFact: '💡 Tahukah kamu? Kata "Gotong Royong" sangat dikagumi di seluruh dunia karena membuktikan bahwa bangsa Indonesia selalu mengutamakan persaudaraan dan kebersamaan!',
+        keyPoints: [
+          '"Berat sama dipikul, ringan sama dijinjing" adalah semboyan gotong royong.',
+          'Kerja sama membuat pekerjaan berat menjadi ringan dan cepat selesai.',
+          'Gotong royong menumbuhkan rasa persaudaraan dan kehangatan antarwarga.'
+        ],
         checklist: [
-          'Misi 1: Laksanakan piket kelas dengan penuh semangat bersama regu piketmu.',
-          'Misi 2: Pungut sampah yang tercecer di halaman sekolah dan masukkan ke tempat sampah yang sesuai.',
-          'Misi 3: Bersihkan meja makan dan cuci piringmu sendiri setelah selesai makan di rumah.'
+          'Misi 1: Bantu orang tuamu membersihkan ruang tamu atau menyiram tanaman di kebun sore ini.',
+          'Misi 2: Bekerja sama kompak dengan teman regu piket kelas membersihkan papan tulis.',
+          'Misi 3: Berbagi alat warna atau pensil dengan teman yang lupa membawa peralatan belajarnya.'
         ],
         checklistEn: [
-          'Mission 1: Perform your classroom cleaning duty with enthusiasm alongside your team.',
-          'Mission 2: Pick up stray litter on the school yard and place it into the correct bin.',
-          'Mission 3: Clear the dining table and wash your personal cup after dinner at home.'
+          'Mission 1: Help your parents clean the living room or water garden plants this evening.',
+          'Mission 2: Work harmoniously with your cleaning team to erase the whiteboard and sweep floor.',
+          'Mission 3: Share colored pencils with a classmate who forgot theirs today.'
         ],
         activities: [
-          { q: 'Manfaat utama dari kegiatan gotong royong membersihkan kelas adalah...', options: ['Pekerjaan berat menjadi ringan dan cepat selesai', 'Membuat anak-anak bertengkar', 'Menghabiskan waktu sia-sia', 'Membuat kelas semakin kotor'], answer: 'Pekerjaan berat menjadi ringan dan cepat selesai', hint: 'Kerja sama membuat pekerjaan besar terasa ringan.' },
-          { q: 'Contoh nyata semangat gotong royong di lingkungan sekolah adalah...', options: ['Bekerja sama menyiram tanaman di kebun sekolah', 'Mengerjakan ujian bersama secara menyontek', 'Meninggalkan sampah di laci meja', 'Mendorong teman saat bermain'], answer: 'Bekerja sama menyiram tanaman di kebun sekolah', hint: 'Gotong royong selalu untuk hal-hal positif dan bermanfaat bagi lingkungan.' }
+          { q: 'Pekerjaan berat yang dikerjakan secara gotong royong bersama-sama akan terasa...', options: ['Lebih ringan dan cepat selesai', 'Makin berat dan melelahkan', 'Lama sekali selesainya', 'Membuat orang berkelahi'], answer: 'Lebih ringan dan cepat selesai', hint: 'Banyak tangan yang membantu membuat beban terbagi ringan.' },
+          { q: 'Peribahasa Indonesia yang menggambarkan semangat gotong royong adalah...', options: ['Berat sama dipikul, ringan sama dijinjing', 'Air beriak tanda tak dalam', 'Bagai katak dalam tempurung', 'Ada udang di balik batu'], answer: 'Berat sama dipikul, ringan sama dijinjing', hint: 'Susah dan senang dijalani bersama-sama.' },
+          { q: 'Contoh kegiatan gotong royong di lingkungan sekolah adalah...', options: ['Kerja bakti membersihkan taman dan selokan sekolah', 'Mengerjakan soal ulangan secara bersamaan', 'Berebut mainan di taman', 'Mengejek teman yang piket'], answer: 'Kerja bakti membersihkan taman dan selokan sekolah', hint: 'Gotong royong untuk kebersihan dan keindahan bersama.' },
+          { q: 'Kegiatan gotong royong membangun rumah atau membersihkan desa di Jawa dikenal dengan istilah...', options: ['Gugur Gunung / Sambatan', 'Subak', 'Ngaben', 'Sekaten'], answer: 'Gugur Gunung / Sambatan', hint: 'Tradisi gotong royong tolong menolong sesama warga desa.' },
+          { q: 'Ketika regu piket kelas bekerja sama membersihkan ruangan, kelas akan menjadi...', options: ['Bersih, wangi, dan nyaman untuk belajar', 'Kotor dan berdebu', 'Penuh sampah di kolong meja', 'Gelap gulita'], answer: 'Bersih, wangi, dan nyaman untuk belajar', hint: 'Kelas yang bersih meningkatkan semangat belajar.' },
+          { q: 'Manakah kegiatan di bawah ini yang BUKAN merupakan contoh kerja sama yang baik?', options: ['Bekerja sama saat ulangan harian (mencontek)', 'Bekerja sama membersihkan selokan', 'Bekerja sama menyiram tanaman', 'Bekerja sama merapikan buku'], answer: 'Bekerja sama saat ulangan harian (mencontek)', hint: 'Ulangan harus dikerjakan sendiri dengan jujur dan mandiri.' },
+          { q: 'Manfaat utama dari membiasakan gotong royong sejak dini adalah...', options: ['Mempererat tali persaudaraan dan kerukunan', 'Mendapatkan uang banyak', 'Bisa menyuruh orang lain bekerja', 'Terkenal di televisi'], answer: 'Mempererat tali persaudaraan dan kerukunan', hint: 'Persatuan dan kasih sayang terjalin erat.' },
+          { q: 'Ketika melihat seorang kakek membawa barang belanjaan yang sangat berat, sikap kita sebaiknya...', options: ['Membantu membawakan sebagian barangnya dengan sopan', 'Menertawakan langkah kakek', 'Berlari melewatinya begitu saja', 'Pura-pura tidak melihat'], answer: 'Membantu membawakan sebagian barangnya dengan sopan', hint: 'Tolong menolong dengan tulus kepada sesama manusia.' },
+          { q: 'Dalam regu kerja bakti, jika ada teman yang bertubuh kecil dan belum kuat mengangkat meja, tugas yang cocok adalah...', options: ['Mengelap kaca jendela atau menyapu lantai', 'Menyuruhnya pulang', 'Memarahinya karena tidak kuat', 'Meninggalkannya sendirian'], answer: 'Mengelap kaca jendela atau menyapu lantai', hint: 'Membagi tugas sesuai kemampuan dengan penuh pengertian.' },
+          { q: 'Tradisi gotong royong di Bali yang dilakukan warga desa adat dalam upacara dan kebersihan disebut...', options: ['Ngayah', 'Subak', 'Mekepung', 'Tari Kecak'], answer: 'Ngayah', hint: 'Bekerja tulus ikhlas tanpa pamrih demi kebaikan bersama di Bali.' }
         ],
         activitiesEn: [
-          { q: 'What is the main benefit of communal gotong royong teamwork?', options: ['Heavy tasks become light and finish faster', 'Causes chaos', 'Wastes time', 'Makes spaces dirtier'], answer: 'Heavy tasks become light and finish faster', hint: 'Cooperation lightens any heavy load.' }
+          { q: 'When a heavy task is completed collaboratively through gotong royong, it feels...', options: ['Much lighter and finishes quickly', 'Heavier and tiring', 'Impossible', 'Annoying'], answer: 'Much lighter and finishes quickly', hint: 'Many hands make light work.' }
         ]
-      }
-  ,
+      },
       {
-        id: 'pp-musyawarah-cilik',
-        title: 'Musyawarah Cilik & Menghargai Pendapat Teman',
-        titleEn: 'Junior Deliberation & Respecting Friends’ Opinions',
-        desc: 'Sila ke-4 Pancasila mengajarkan kita untuk bermusyawarah saat mengambil keputusan bersama. Di kelas, anak-anak berdiskusi secara tertib, mendengarkan saat teman lain berbicara tanpa memotong, dan menerima hasil kesepakatan bersama dengan hati gembira!',
-        descEn: 'The 4th principle of Pancasila teaches us democratic deliberation. In the classroom, children discuss peacefully, listen patiently without interrupting, and cheerfully support agreed decisions!',
+        id: 'pan-hak-kewajiban',
+        title: 'Hak & Kewajiban Anak Mandiri',
+        titleEn: 'Rights & Duties of Independent Children',
+        desc: 'Hak adalah sesuatu yang berhak kita terima, sedangkan Kewajiban adalah tugas yang wajib kita laksanakan dengan penuh tanggung jawab. Hak anak: disayangi orang tua, mendapat makanan bergizi, dan belajar di sekolah. Kewajiban anak: berbakti pada orang tua, rajin belajar, dan menjaga kebersihan!',
+        descEn: 'Rights are protections we deserve to receive, while Duties are responsibilities we must fulfill. Children\'s rights: being loved, eating nutritious meals, and schooling. Children\'s duties: honoring parents, studying, and keeping tidy!',
+        funFact: '💡 Tahukah kamu? Keseimbangan antara hak dan kewajiban seperti dua roda sepeda—keduanya harus berputar bersama agar hidup kita melaju dengan lancar!',
+        keyPoints: [
+          'Hak adalah hal yang kita dapatkan (contoh: kasih sayang, pendidikan, makanan bergizi).',
+          'Kewajiban adalah tugas yang harus kita lakukan (contoh: rajin belajar, membantu orang tua).',
+          'Kewajiban harus dilaksanakan terlebih dahulu dengan ikhlas sebelum menuntut hak.'
+        ],
         checklist: [
-          "Misi 1: Dengarkan teman berbicara sampai selesai tanpa menyela saat diskusi kelompok.",
-          "Misi 2: Angkat tanganmu terlebih dahulu sebelum menyampaikan usul atau pendapat di kelas.",
-          "Misi 3: Berikan tepuk tangan hangat untuk ide bagus yang disampaikan oleh sahabatmu."
-  ],
+          'Misi 1: Laksanakan kewajibanmu belajar mengulang pelajaran hari ini selama 20 menit.',
+          'Misi 2: Nikmati hakmu bermain gembira di halaman rumah setelah selesai mengerjakan PR.',
+          'Misi 3: Berterima kasih kepada orang tua atas makanan lezat dan kasih sayang yang kamu terima.'
+        ],
         checklistEn: [
-          "Mission 1: Listen to your friend until they finish speaking without interrupting.",
-          "Mission 2: Raise your hand politely before sharing ideas in class discussions.",
-          "Mission 3: Applaud warmly for creative ideas shared by your classmates."
-  ],
+          'Mission 1: Fulfill your duty by reviewing school lessons for 20 mindful minutes.',
+          'Mission 2: Enjoy your right to play joyfully in the garden after completing homework.',
+          'Mission 3: Express gratitude to your parents for nourishing meals and tender loving care.'
+        ],
         activities: [
-          {
-                  "q": "Sikap yang benar saat teman sedang menyampaikan pendapatnya adalah...",
-                  "options": [
-                          "Mendengarkan dengan tenang dan tertib",
-                          "Mengobrol sendiri dengan teman lain",
-                          "Mengejek pendapat teman",
-                          "Memotong pembicaraannya"
-                  ],
-                  "answer": "Mendengarkan dengan tenang dan tertib",
-                  "hint": "Hormati teman yang sedang mendapat giliran berbicara."
-          },
-          {
-                  "q": "Musyawarah untuk mufakat merupakan pengamalan Pancasila sila ke-...",
-                  "options": [
-                          "4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)",
-                          "1",
-                          "2",
-                          "3"
-                  ],
-                  "answer": "4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)",
-                  "hint": "Disimbolkan dengan lambang Kepala Banteng yang gagah."
-          },
-          {
-                  "q": "Setelah keputusan musyawarah kelas disepakati bersama, sikap kita adalah...",
-                  "options": [
-                          "Melaksanakan keputusan dengan ikhlas dan gembira",
-                          "Menolak karena bukan ide kita",
-                          "Marah-marah",
-                          "Pulang ke rumah"
-                  ],
-                  "answer": "Melaksanakan keputusan dengan ikhlas dan gembira",
-                  "hint": "Keputusan bersama harus ditaati demi kebaikan seluruh warga kelas."
-          }
-  ],
+          { q: 'Mendapatkan kasih sayang dari ayah dan ibu di rumah merupakan contoh...', options: ['Hak anak', 'Kewajiban anak', 'Hukuman anak', 'Pekerjaan anak'], answer: 'Hak anak', hint: 'Sesuatu yang berhak didapatkan dan dinikmati setiap anak.' },
+          { q: 'Membantu orang tua merapikan kamar tidur dan rajin belajar merupakan contoh...', options: ['Kewajiban anak', 'Hak anak', 'Hadiah lomba', 'Paksaan teman'], answer: 'Kewajiban anak', hint: 'Tanggung jawab yang harus dilakukan oleh anak berbakti.' },
+          { q: 'Antara hak dan kewajiban, sikap yang benar adalah melaksanakannya secara...', options: ['Seimbang dan bertanggung jawab', 'Hanya menuntut hak saja', 'Hanya kewajiban tanpa hak', 'Meninggalkan keduanya'], answer: 'Seimbang dan bertanggung jawab', hint: 'Keduanya harus seimbang bagaikan dua sayap burung.' },
+          { q: 'Di sekolah, hak yang berhak diterima oleh setiap siswa adalah...', options: ['Mendapatkan bimbingan dan ilmu dari guru', 'Merusak fasilitas kelas', 'Membentak teman', 'Terlambat setiap hari'], answer: 'Mendapatkan bimbingan dan ilmu dari guru', hint: 'Hak atas pendidikan yang layak dan bermutu.' },
+          { q: 'Kewajiban utama seorang murid saat jam pelajaran sedang berlangsung adalah...', options: ['Mendengarkan penjelasan guru dengan tertib', 'Bermain game di ponsel', 'Tidur di meja', 'Berteriak di jendela'], answer: 'Mendengarkan penjelasan guru dengan tertib', hint: 'Menghormati guru yang sedang mengajar.' },
+          { q: 'Mendapatkan makanan sehat dan bergizi untuk tumbuh kembang tubuh adalah...', options: ['Hak anak yang dipenuhi orang tua', 'Kewajiban anak', 'Hadiah ulang tahun', 'Hukuman'], answer: 'Hak anak yang dipenuhi orang tua', hint: 'Nutrisi penting agar tubuh tumbuh sehat dan bugar.' },
+          { q: 'Kewajiban kita terhadap fasilitas umum seperti taman bermain anak adalah...', options: ['Menjaga kebersihan dan tidak merusak ayunan', 'Mencoret-coret bangku taman', 'Mencabut bunga hias', 'Membuang sampah sembarangan'], answer: 'Menjaga kebersihan dan tidak merusak ayunan', hint: 'Merawat fasilitas agar awet dan bisa dinikmati semua anak.' },
+          { q: 'Sebelum meminta hak untuk bermain di luar, kewajiban yang sebaiknya kita selesaikan adalah...', options: ['Menyelesaikan PR dan tugas belajar', 'Tidur seharian', 'Menangis', 'Menonton TV'], answer: 'Menyelesaikan PR dan tugas belajar', hint: 'Selesaikan tugas dulu, baru bermain dengan tenang.' },
+          { q: 'Hak untuk mengemukakan pendapat dalam musyawarah pemilihan ketua kelas dimiliki oleh...', options: ['Seluruh siswa di dalam kelas tersebut', 'Hanya murid yang paling pintar', 'Hanya ketua kelas lama', 'Hanya siswa laki-laki'], answer: 'Seluruh siswa di dalam kelas tersebut', hint: 'Setiap warga kelas memiliki hak suara yang setara.' },
+          { q: 'Anak yang selalu melaksanakan kewajibannya dengan jujur dan disiplin akan disayangi oleh...', options: ['Orang tua, guru, dan teman-temannya', 'Hanya bonekanya', 'Orang asing', 'Tidak ada yang suka'], answer: 'Orang tua, guru, dan teman-temannya', hint: 'Anak yang berbakti dan disiplin adalah kebanggaan keluarga.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "The best attitude when a classmate is speaking is to...",
-                  "options": [
-                          "Listen calmly and respectfully",
-                          "Chat with someone else loudly",
-                          "Laugh at their idea",
-                          "Interrupt them immediately"
-                  ],
-                  "answer": "Listen calmly and respectfully",
-                  "hint": "Show respect while others speak."
-          }
-  ]
+          { q: 'Receiving loving care and nutritious meals from parents is a child\'s...', options: ['Right', 'Duty', 'Punishment', 'Burden'], answer: 'Right', hint: 'Every child deserves love and protection.' }
+        ]
+      },
+      {
+        id: 'pp-musyawarah-kelas',
+        title: 'Musyawarah Kelas & Menghargai Pendapat',
+        titleEn: 'Classroom Deliberation & Respecting Opinions',
+        desc: 'Musyawarah adalah berdiskusi bersama untuk mencapai mufakat (kesepakatan bulat). Di kelas 1 SD, kita belajar mengangkat tangan sebelum berbicara, mendengarkan teman yang sedang menyampaikan ide, dan menerima hasil keputusan bersama dengan hati gembira!',
+        descEn: 'Deliberation means conversing collaboratively to achieve consensus. In 1st grade, we learn raising hands before speaking, listening attentively to classmates, and gladly accepting shared decisions!',
+        funFact: '💡 Tahukah kamu? Budaya musyawarah mufakat di Indonesia sudah ada sejak ratusan tahun lalu di balai-balai desa seluruh nusantara!',
+        keyPoints: [
+          'Musyawarah mufakat adalah cara terbaik menyelesaikan perbedaan pendapat.',
+          'Angkat tangan dan bicaralah secara sopan saat giliranmu tiba.',
+          'Hormati pendapat teman lain dan patuhi keputusan bersama dengan ikhlas.'
+        ],
+        checklist: [
+          'Misi 1: Praktikkan mengangkat tangan kanan dengan tenang sebelum menjawab pertanyaan Bu Guru.',
+          'Misi 2: Dengarkan teman sebangkumu menceritakan mainan favoritnya tanpa memotong pembicaraan.',
+          'Misi 3: Diskusikan bersama teman kelompokmu untuk memilih nama kelompok yang keren.'
+        ],
+        checklistEn: [
+          'Mission 1: Practice raising your right hand gently before answering teacher\'s questions.',
+          'Mission 2: Listen patiently to your seatmate describing their favorite toy without interrupting.',
+          'Mission 3: Deliberate with your group mates to pick an awesome team name.'
+        ],
+        activities: [
+          { q: 'Ketika ada teman yang sedang berbicara menyampaikan pendapat di depan kelas, sikap kita adalah...', options: ['Mendengarkan dengan tenang dan penuh hormat', 'Mengobrol keras dengan teman lain', 'Menertawakan idenya', 'Langsung memotong pembicaraannya'], answer: 'Mendengarkan dengan tenang dan penuh hormat', hint: 'Menghargai orang yang sedang berbicara adalah sopan santun utama.' },
+          { q: 'Setelah keputusan musyawarah kelas disepakati bersama, sikap kita adalah...', options: ['Melaksanakan keputusan dengan ikhlas dan gembira', 'Menolak karena bukan ide kita', 'Marah-marah', 'Pulang ke rumah'], answer: 'Melaksanakan keputusan dengan ikhlas dan gembira', hint: 'Keputusan bersama harus ditaati demi kebaikan seluruh warga kelas.' },
+          { q: 'Tujuan utama dari musyawarah kelas adalah untuk mencapai...', options: ['Mufakat (kesepakatan bersama)', 'Pertengkaran', 'Pemenang hadiah', 'Kemenangan pribadi'], answer: 'Mufakat (kesepakatan bersama)', hint: 'Mufakat berarti semua pihak setuju dengan rukun.' },
+          { q: 'Cara yang sopan untuk menyampaikan ide saat musyawarah kelas adalah...', options: ['Mengangkat tangan terlebih dahulu dan menunggu dipersilakan', 'Berteriak paling kencang', 'Memukul meja kelas', 'Menyela saat guru bicara'], answer: 'Mengangkat tangan terlebih dahulu dan menunggu dipersilakan', hint: 'Tertib dan santun menunjukkan anak beradab.' },
+          { q: 'Musyawarah mufakat merupakan pengamalan Pancasila sila ke-...', options: ['Keempat (4)', 'Pertama', 'Kedua', 'Ketiga'], answer: 'Keempat (4)', hint: 'Sila ke-4 bersimbol Kepala Banteng.' },
+          { q: 'Jika pendapat kita tidak terpilih dalam musyawarah, sikap yang bijaksana adalah...', options: ['Berlapang dada dan mendukung keputusan yang terpilih', 'Menangis di pojok kelas', 'Merusak spidol kelas', 'Membenci teman yang usul'], answer: 'Berlapang dada dan mendukung keputusan yang terpilih', hint: 'Jiwa besar mengutamakan kepentingan bersama.' },
+          { q: 'Ketika memilih warna taplak meja kelas, cara terbaik menentukan pilihannya adalah...', options: ['Musyawarah dan pemungutan suara (voting)', 'Baku hantam', 'Ditentukan murid yang paling kaya', 'Diundi acak sesuka hati'], answer: 'Musyawarah dan pemungutan suara (voting)', hint: 'Demokrasi musyawarah yang adil dan terbuka.' },
+          { q: 'Dalam musyawarah, semua murid memiliki hak yang sama untuk...', options: ['Menyampaikan pendapat dan saran', 'Menyuruh teman lain diam', 'Mengatur kelas sendiri', 'Membeli perlengkapan'], answer: 'Menyampaikan pendapat dan saran', hint: 'Setiap suara didengarkan dengan setara.' },
+          { q: 'Kata yang tepat saat kita ingin memberikan masukan dalam diskusi adalah...', options: ['"Mohon izin memberi saran..." dengan santun', '"Ide kalian semua jelek!"', '"Dengarkan aku saja!"', '"Minggir semua!"'], answer: '"Mohon izin memberi saran..." dengan santun', hint: 'Bahasa santun membuat saran kita diterima dengan baik.' },
+          { q: 'Musyawarah kelas yang berjalan tertib dan damai akan menciptakan suasana kelas yang...', options: ['Rukun, kompak, dan penuh persaudaraan', 'Bising dan kacau', 'Menakutkan', 'Membosankan'], answer: 'Rukun, kompak, dan penuh persaudaraan', hint: 'Kebersamaan yang harmonis dan menyenangkan.' }
+        ],
+        activitiesEn: [
+          { q: 'The best attitude when a classmate is speaking is to...', options: ['Listen calmly and respectfully', 'Chat with someone else loudly', 'Laugh at their idea', 'Interrupt them immediately'], answer: 'Listen calmly and respectfully', hint: 'Show respect while others speak.' }
+        ]
       },
       {
         id: 'pp-fasilitas-sekolah',
@@ -3868,195 +4014,152 @@
         titleEn: 'Caring for School Facilities & Shared Spaces',
         desc: 'Sekolah adalah rumah kedua kita. Meja, kursi, papan tulis, buku perpustakaan, dan toilet adalah fasilitas bersama yang harus dijaga dengan penuh kasih sayang. Tidak mencoret-coret meja dan selalu membuang sampah pada tempatnya adalah wujud cinta kepada sekolah.',
         descEn: 'School is our joyful second home. Desks, chairs, library books, and playgrounds are shared treasures. Refraining from writing on desks and always placing trash into bins reflects our deep respect for our community.',
+        funFact: '💡 Tahukah kamu? Meja dan kursi sekolah yang bersih dan rapi membuat konsentrasi belajarmu meningkat hingga dua kali lipat lebih fokus!',
+        keyPoints: [
+          'Fasilitas sekolah adalah milik bersama yang harus dijaga dan dirawat.',
+          'Buang sampah pada tempat sampah dan matikan keran air setelah digunakan.',
+          'Menjaga kebersihan sekolah adalah tanggung jawab seluruh warga sekolah.'
+        ],
         checklist: [
-          "Misi 1: Periksa laci meja belajarmu, pastikan bersih dari sampah kertas atau plastik.",
-          "Misi 2: Matikan keran air wastafel setelah selesai mencuci tangan agar air tidak terbuang percuma.",
-          "Misi 3: Kembalikan buku perpustakaan sekolah tepat waktu ke rak yang rapi."
-  ],
+          'Misi 1: Periksa laci meja belajarmu, pastikan bersih dari sampah kertas atau plastik.',
+          'Misi 2: Matikan keran air wastafel setelah selesai mencuci tangan agar air tidak terbuang percuma.',
+          'Misi 3: Kembalikan buku perpustakaan sekolah tepat waktu ke rak yang rapi.'
+        ],
         checklistEn: [
-          "Mission 1: Check your classroom desk drawer and keep it free of litter.",
-          "Mission 2: Turn off the water tap firmly after washing hands to conserve water.",
-          "Mission 3: Return library books punctually and gently place them on the shelf."
-  ],
+          'Mission 1: Check your classroom desk drawer and keep it free of litter.',
+          'Mission 2: Turn off the water tap firmly after washing hands to conserve water.',
+          'Mission 3: Return library books punctually and gently place them on the shelf.'
+        ],
         activities: [
-          {
-                  "q": "Mencoret-coret dinding atau meja sekolah dengan spidol adalah perbuatan yang...",
-                  "options": [
-                          "Tidak terpuji dan merusak fasilitas",
-                          "Hebat dan keren",
-                          "Patut dicontoh",
-                          "Membuat sekolah makin bersih"
-                  ],
-                  "answer": "Tidak terpuji dan merusak fasilitas",
-                  "hint": "Fasilitas sekolah harus dirawat agar rapi dan nyaman digunakan semua anak."
-          },
-          {
-                  "q": "Setelah selesai membaca buku cerita di perpustakaan sekolah, buku harus...",
-                  "options": [
-                          "Dikembalikan ke rak buku secara rapi",
-                          "Ditinggal tergeletak di lantai",
-                          "Dibawa pulang tanpa izin",
-                          "Dirobek halamannya"
-                  ],
-                  "answer": "Dikembalikan ke rak buku secara rapi",
-                  "hint": "Agar teman lain mudah menemukannya saat ingin membaca."
-          },
-          {
-                  "q": "Menjaga kebersihan dan keasrian lingkungan sekolah adalah tanggung jawab...",
-                  "options": [
-                          "Seluruh warga sekolah (siswa, guru, dan penjaga)",
-                          "Hanya tukang kebun saja",
-                          "Hanya kepala sekolah",
-                          "Hanya ketua kelas"
-                  ],
-                  "answer": "Seluruh warga sekolah (siswa, guru, dan penjaga)",
-                  "hint": "Semua orang yang belajar dan bekerja di sekolah wajib bergotong royong."
-          }
-  ],
+          { q: 'Mencoret-coret dinding atau meja sekolah dengan spidol adalah perbuatan yang...', options: ['Tidak terpuji dan merusak fasilitas', 'Hebat dan keren', 'Patut dicontoh', 'Membuat sekolah makin bersih'], answer: 'Tidak terpuji dan merusak fasilitas', hint: 'Fasilitas sekolah harus dirawat agar rapi dan nyaman digunakan semua anak.' },
+          { q: 'Setelah selesai membaca buku cerita di perpustakaan sekolah, buku harus...', options: ['Dikembalikan ke rak buku secara rapi', 'Ditinggal tergeletak di lantai', 'Dibawa pulang tanpa izin', 'Dirobek halamannya'], answer: 'Dikembalikan ke rak buku secara rapi', hint: 'Agar teman lain mudah menemukannya saat ingin membaca.' },
+          { q: 'Menjaga kebersihan dan keasrian lingkungan sekolah adalah tanggung jawab...', options: ['Seluruh warga sekolah (siswa, guru, dan penjaga)', 'Hanya tukang kebun saja', 'Hanya kepala sekolah', 'Hanya ketua kelas'], answer: 'Seluruh warga sekolah (siswa, guru, dan penjaga)', hint: 'Semua orang yang belajar dan bekerja di sekolah wajib bergotong royong.' },
+          { q: 'Jika melihat keran air wastafel masih menyala dan menetes terus, tindakanmu adalah...', options: ['Segera mematikan keran air rapat-rapat', 'Membiarkannya meluap', 'Bermain air basah-basahan', 'Menertawakannya'], answer: 'Segera mematikan keran air rapat-rapat', hint: 'Hemat air dan peduli fasilitas sekolah.' },
+          { q: 'Sampah bungkus makanan bekal harus dibuang ke...', options: ['Tempat sampah yang tersedia', 'Bawah kolong meja kelas', 'Pot bunga taman', 'Belakang pintu kelas'], answer: 'Tempat sampah yang tersedia', hint: 'Kebersihan adalah sebagian dari iman.' },
+          { q: 'Ketika menggunakan toilet sekolah, sikap tertib yang wajib dilakukan adalah...', options: ['Menyiram toilet sampai bersih dengan air yang cukup', 'Meninggalkannya kotor', 'Mencoret pintu toilet', 'Membuang tisu ke lantai'], answer: 'Menyiram toilet sampai bersih dengan air yang cukup', hint: 'Toilet bersih menjaga kita dari kuman penyakit.' },
+          { q: 'Fasilitas ayunan dan perosotan di halaman sekolah sebaiknya digunakan secara...', options: ['Bergantian dengan tertib dan hati-hati', 'Berebut saling dorong', 'Dirusak talinya', 'Diduduki ramai-ramai melebihi kapasitas'], answer: 'Bergantian dengan tertib dan hati-hati', hint: 'Bermain aman mencegah kecelakaan cedera.' },
+          { q: 'Tanaman bunga di taman sekolah harus kita...', options: ['Siram secara teratur dan rawat keindahannya', 'Petik daunnya sampai gundul', 'Injak-injak akarnya', 'Siram dengan air sabun'], answer: 'Siram secara teratur dan rawat keindahannya', hint: 'Tanaman hijau membuat udara sekolah segar.' },
+          { q: 'Menjaga kebersihan meja dan laci kelas dari sarang nyamuk termasuk penerapan cinta...', options: ['Lingkungan sekolah yang sehat', 'Bermain kotor', 'Membuat guru repot', 'Mencari alasan'], answer: 'Lingkungan sekolah yang sehat', hint: 'Laci bersih bebas nyamuk demam berdarah.' },
+          { q: 'Jika kita melihat ada teman yang tidak sengaja menjatuhkan buku di koridor, kita...', options: ['Membantu memungutnya dan menyerahkannya dengan ramah', 'Menginjak bukunya', 'Menertawakannya', 'Menendang buku itu'], answer: 'Membantu memungutnya dan menyerahkannya dengan ramah', hint: 'Sikap peduli dan saling membantu di sekolah.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "Doodling on school walls and classroom desks is...",
-                  "options": [
-                          "Disrespectful and damages shared property",
-                          "Cool and funny",
-                          "Encouraged by teachers",
-                          "Helpful"
-                  ],
-                  "answer": "Disrespectful and damages shared property",
-                  "hint": "Shared school facilities should be treasured."
-          }
-  ]
+          { q: 'Doodling on school walls and classroom desks is...', options: ['Disrespectful and damages shared property', 'Cool and funny', 'Encouraged by teachers', 'Helpful'], answer: 'Disrespectful and damages shared property', hint: 'Shared school facilities should be treasured.' }
+        ]
       },
       {
-        "id": "pancasila-bendera-lagu",
-      "title": "Bangga Sebagai Anak Indonesia: Bendera & Lagu Kebangsaan",
-      "titleEn": "Proud Indonesian Children: National Flag & Anthem",
-      "desc": "Bendera negara kita adalah Sang Merah Putih. Merah melambangkan keberanian membela kebenaran, dan putih melambangkan kesucian hati serta budi luhur. Lagu kebangsaan Indonesia Raya ciptaan W.R. Supratman kita nyanyikan dengan sikap tegap dan penuh rasa hormat!",
-      "descEn": "Our national flag is the Red and White (Sang Merah Putih). Red embodies courage and righteousness, while white symbolizes purity of heart. We sing Indonesia Raya with dignity, standing tall and proud!",
-      "checklist": [
-        "Misi 1: Berdiri tegap sempurna dan tidak bercanda saat lagu Indonesia Raya berkumandang.",
-        "Misi 2: Gambarlah Bendera Merah Putih dengan posisi warna merah di bagian atas dan putih di bagian bawah.",
-        "Misi 3: Hafalkan bait pertama lagu kebangsaan Indonesia Raya dengan nada yang khidmat."
-      ],
-      "checklistEn": [
-        "Mission 1: Stand upright attentively without chatting when the national anthem plays.",
-        "Mission 2: Draw the Red & White flag with red on top and white on bottom.",
-        "Mission 3: Memorize the first stanza of Indonesia Raya with heartfelt pride."
-      ],
-      "activities": [
-        {
-          "q": "Posisi warna yang benar pada bendera Sang Merah Putih adalah...",
-          "options": [
-            "Merah di atas, Putih di bawah",
-            "Putih di atas, Merah di bawah",
-            "Merah di kiri, Putih di kanan",
-            "Biru di atas, Merah di bawah"
-          ],
-          "answer": "Merah di atas, Putih di bawah",
-          "hint": "Merah di atas bermakna api keberanian menaungi kesucian jiwa 🇮🇩"
-        },
-        {
-          "q": "Pencipta lagu kebangsaan Indonesia Raya adalah pahlawan nasional...",
-          "options": [
-            "Wage Rudolf (W.R.) Supratman",
-            "Ir. Soekarno",
-            "Moh. Hatta",
-            "Ki Hajar Dewantara"
-          ],
-          "answer": "Wage Rudolf (W.R.) Supratman",
-          "hint": "Beliau memainkan biola saat lagu pertama kali diperdengarkan pada Sumpah Pemuda 1928."
-        },
-        {
-          "q": "Sikap yang benar saat upacara bendera hari Senin adalah...",
-          "options": [
-            "Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat",
-            "Duduk mengobrol dengan teman",
-            "Bermain ponsel",
-            "Berlari-larian di lapangan"
-          ],
-          "answer": "Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat",
-          "hint": "Menghormati jasa para pahlawan yang telah memperjuangkan kemerdekaan."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Correct position of Indonesian flag colors:",
-          "options": [
-            "Red on top, White on bottom",
-            "White on top, Red on bottom",
-            "Green and Yellow",
-            "Blue on top"
-          ],
-          "answer": "Red on top, White on bottom",
-          "hint": "Red on top, white beneath 🇮🇩"
-        }
-      ]
-    },
-    {
-      "id": "pancasila-sopan-santun",
-      "title": "Tata Krama, Sopan Santun, & Menghormati yang Lebih Tua",
-      "titleEn": "Good Manners, Politeness, & Respecting Elders",
-      "desc": "Sopan santun adalah cermin budi pekerti luhur bangsa Indonesia. Kita wajib menghormati orang tua, guru, kakek-nenek, dan kakak, serta menyayangi adik. Berpamitan saat pergi, memberi salam saat bertemu, dan bertutur kata santun mencerminkan pribadi berakhlak mulia!",
-      "descEn": "Politeness mirrors noble character. We respect parents, teachers, grandparents, and care gently for younger siblings. Saying greetings, bidding farewell, and using polite speech honors our community!",
-      "checklist": [
-        "Misi 1: Berpamitan dan mencium tangan Ayah serta Ibu sebelum berangkat ke sekolah.",
-        "Misi 2: Ucapkan salam \"Selamat Pagi/Siang\" saat berpapasan dengan Bapak/Ibu Guru di koridor.",
-        "Misi 3: Tidak memotong pembicaraan ketika orang tua atau orang yang lebih tua sedang berbicara."
-      ],
-      "checklistEn": [
-        "Mission 1: Kiss parents' hands and bid polite farewell before departing for school.",
-        "Mission 2: Greet your teachers warmly whenever passing by them in the school hallway.",
-        "Mission 3: Listen respectfully without interrupting when elders are conversing."
-      ],
-      "activities": [
-        {
-          "q": "Sebelum berangkat sekolah, kebiasaan baik yang wajib kita lakukan kepada orang tua adalah...",
-          "options": [
-            "Berpamitan sopan dan memohon doa restu",
-            "Langsung lari tanpa bicara",
-            "Meminta uang jajan berlebihan sambil marah",
-            "Pura-pura tidur"
-          ],
-          "answer": "Berpamitan sopan dan memohon doa restu",
-          "hint": "Doa restu orang tua membuat langkah belajar kita berkah dan lancar!"
-        },
-        {
-          "q": "Ketika bertemu guru di halaman sekolah, ucapan yang santun adalah...",
-          "options": [
-            "\"Selamat pagi Ibu/Bapak Guru!\" sambil tersenyum",
-            "\"Hai kamu!\"",
-            "Lewat begitu saja tanpa menoleh",
-            "Menutup muka"
-          ],
-          "answer": "\"Selamat pagi Ibu/Bapak Guru!\" sambil tersenyum",
-          "hint": "Guru adalah orang tua kita selama berada di sekolah 🏫"
-        },
-        {
-          "q": "Jika tidak sengaja berjalan di depan orang yang lebih tua yang sedang duduk, kita mengucapkan...",
-          "options": [
-            "\"Permisi, numpang lewat...\" sambil sedikit membungkuk",
-            "\"Awas, minggir!\"",
-            "\"Jangan halangi jalanku\"",
-            "Diam saja"
-          ],
-          "answer": "\"Permisi, numpang lewat...\" sambil sedikit membungkuk",
-          "hint": "Sikap sopan dan santun khas adat nusantara."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Before leaving for school, we should...",
-          "options": [
-            "Say goodbye politely to parents",
-            "Run away silently",
-            "Shout angrily",
-            "Hide under bed"
-          ],
-          "answer": "Say goodbye politely to parents",
-          "hint": "Polite farewell shows love!"
-        }
-      ]
-    }
+        id: 'pancasila-bendera-lagu',
+        title: 'Bangga Sebagai Anak Indonesia: Bendera & Lagu Kebangsaan',
+        titleEn: 'Proud Indonesian Children: National Flag & Anthem',
+        desc: 'Bendera negara kita adalah Sang Merah Putih. Merah melambangkan keberanian membela kebenaran, dan putih melambangkan kesucian hati serta budi luhur. Lagu kebangsaan Indonesia Raya ciptaan W.R. Supratman kita nyanyikan dengan sikap tegap dan penuh rasa hormat!',
+        descEn: 'Our national flag is the Red and White (Sang Merah Putih). Red embodies courage and righteousness, while white symbolizes purity of heart. We sing Indonesia Raya with dignity, standing tall and proud!',
+        funFact: '💡 Tahukah kamu? Bendera Sang Merah Putih pertama kali dijahit dengan penuh cinta dan tetesan air mata oleh Ibu Fatmawati Soekarno pada tahun 1945!',
+        keyPoints: [
+          'Warna Bendera Merah Putih: Merah di atas (keberanian), Putih di bawah (kesucian).',
+          'Lagu Kebangsaan "Indonesia Raya" diciptakan oleh pahlawan W.R. Supratman.',
+          'Saat lagu Indonesia Raya berkumandang, berdirilah tegak dengan sikap hormat sempurna.'
+        ],
+        checklist: [
+          'Misi 1: Berdiri tegap sempurna dan tidak bercanda saat lagu Indonesia Raya berkumandang.',
+          'Misi 2: Gambarlah Bendera Merah Putih dengan posisi warna merah di bagian atas dan putih di bagian bawah.',
+          'Misi 3: Hafalkan bait pertama lagu kebangsaan Indonesia Raya dengan nada yang khidmat.'
+        ],
+        checklistEn: [
+          'Mission 1: Stand upright attentively without chatting when the national anthem plays.',
+          'Mission 2: Draw the Red & White flag with red on top and white on bottom.',
+          'Mission 3: Memorize the first stanza of Indonesia Raya with heartfelt pride.'
+        ],
+        activities: [
+          { q: 'Posisi warna yang benar pada bendera Sang Merah Putih adalah...', options: ['Merah di atas, Putih di bawah', 'Putih di atas, Merah di bawah', 'Merah di kiri, Putih di kanan', 'Biru di atas, Merah di bawah'], answer: 'Merah di atas, Putih di bawah', hint: 'Merah di atas bermakna api keberanian menaungi kesucian jiwa 🇮🇩' },
+          { q: 'Pencipta lagu kebangsaan Indonesia Raya adalah pahlawan nasional...', options: ['Wage Rudolf (W.R.) Supratman', 'Ir. Soekarno', 'Moh. Hatta', 'Ki Hajar Dewantara'], answer: 'Wage Rudolf (W.R.) Supratman', hint: 'Beliau memainkan biola saat lagu pertama kali diperdengarkan pada Sumpah Pemuda 1928.' },
+          { q: 'Sikap yang benar saat upacara bendera hari Senin adalah...', options: ['Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat', 'Duduk mengobrol dengan teman', 'Bermain ponsel', 'Berlari-larian di lapangan'], answer: 'Berdiri tegap, pandangan ke arah bendera, tertib dan khidmat', hint: 'Menghormati jasa para pahlawan yang telah memperjuangkan kemerdekaan.' },
+          { q: 'Makna luhur dari warna MERAH pada bendera negara kita adalah...', options: ['Keberanian membela kebenaran', 'Kemarahan', 'Panasnya api', 'Warna bunga mawar'], answer: 'Keberanian membela kebenaran', hint: 'Merah adalah simbol keberanian para pejuang bangsa.' },
+          { q: 'Makna luhur dari warna PUTIH pada bendera negara kita adalah...', options: ['Kesucian hati dan ketulusan budi', 'Awan mendung', 'Warna salju', 'Kertas kosong'], answer: 'Kesucian hati dan ketulusan budi', hint: 'Putih melambangkan jiwa yang bersih dan suci.' },
+          { q: 'Siapakah pahlawan wanita yang menjahit bendera pusaka pertama Sang Merah Putih?', options: ['Ibu Fatmawati', 'R.A. Kartini', 'Cut Nyak Dien', 'Dewi Sartika'], answer: 'Ibu Fatmawati', hint: 'Istri dari proklamator Bung Karno.' },
+          { q: 'Pada tanggal berapakah bangsa Indonesia merayakan Hari Kemerdekaan setiap tahun?', options: ['17 Agustus', '1 Januari', '2 Mei', '10 November'], answer: '17 Agustus', hint: 'Proklamasi Kemerdekaan Indonesia dibacakan pada 17 Agustus 1945.' },
+          { q: 'Hari Pahlawan Nasional untuk mengenang pertempuran Surabaya diperingati setiap tanggal...', options: ['10 November', '21 April', '1 Juni', '25 Desember'], answer: '10 November', hint: 'Perjuangan arek-arek Suroboyo di bawah komando Bung Tomo.' },
+          { q: 'Ketika bendera Merah Putih dinaikkan ke puncak tiang, kita memberikan penghormatan dengan...', options: ['Mengangkat tangan kanan memberi hormat dengan tegap', 'Bertepuk tangan riuh', 'Membungkuk sampai ke tanah', 'Menutup kedua mata'], answer: 'Mengangkat tangan kanan memberi hormat dengan tegap', hint: 'Sikap hormat militer dan pramuka yang khidmat.' },
+          { q: 'Rasa bangga sebagai anak Indonesia diwujudkan dengan cara...', options: ['Rajin belajar, mencintai budaya bangsa, dan rukun sesama teman', 'Malu berbahasa Indonesia', 'Hanya menyukai barang impor', 'Mengejek tarian daerah'], answer: 'Rajin belajar, mencintai budaya bangsa, dan rukun sesama teman', hint: 'Anak Indonesia hebat pembawa kemajuan nusantara.' }
+        ],
+        activitiesEn: [
+          { q: 'Correct position of Indonesian flag colors:', options: ['Red on top, White on bottom', 'White on top, Red on bottom', 'Green and Yellow', 'Blue on top'], answer: 'Red on top, White on bottom', hint: 'Red on top, white beneath 🇮🇩' }
+        ]
+      },
+      {
+        id: 'pancasila-sopan-santun',
+        title: 'Tata Krama, Sopan Santun, & Menghormati yang Lebih Tua',
+        titleEn: 'Good Manners, Politeness, & Respecting Elders',
+        desc: 'Sopan santun adalah cermin budi pekerti luhur bangsa Indonesia. Kita wajib menghormati orang tua, guru, kakek-nenek, dan kakak, serta menyayangi adik. Berpamitan saat pergi, memberi salam saat bertemu, dan bertutur kata santun mencerminkan pribadi berakhlak mulia!',
+        descEn: 'Politeness mirrors noble character. We respect parents, teachers, grandparents, and care gently for younger siblings. Saying greetings, bidding farewell, and using polite speech honors our community!',
+        funFact: '💡 Tahukah kamu? Senyum ramah, salam hangat, dan sapaan sopan dijuluki gerakan 3S (Senyum, Salam, Sapa) yang menjadi ciri khas kehangatan masyarakat Indonesia!',
+        keyPoints: [
+          'Budayakan 3S: Senyum, Salam, dan Sapa saat bertemu guru, orang tua, dan teman.',
+          'Mencium tangan dan berpamitan kepada orang tua sebelum bepergian.',
+          'Berbicara dengan tutur kata yang lembut, tidak berteriak, dan menghargai orang tua.'
+        ],
+        checklist: [
+          'Misi 1: Berpamitan dan mencium tangan Ayah serta Ibu sebelum berangkat ke sekolah.',
+          'Misi 2: Ucapkan salam "Selamat Pagi/Siang" saat berpapasan dengan Bapak/Ibu Guru di koridor.',
+          'Misi 3: Tidak memotong pembicaraan ketika orang tua atau orang yang lebih tua sedang berbicara.'
+        ],
+        checklistEn: [
+          'Mission 1: Kiss parents\' hands and bid polite farewell before departing for school.',
+          'Mission 2: Greet your teachers warmly whenever passing by them in the school hallway.',
+          'Mission 3: Listen respectfully without interrupting when elders are conversing.'
+        ],
+        activities: [
+          { q: 'Sebelum berangkat sekolah, kebiasaan baik yang wajib kita lakukan kepada orang tua adalah...', options: ['Berpamitan sopan dan memohon doa restu', 'Langsung lari tanpa bicara', 'Meminta uang jajan berlebihan sambil marah', 'Pura-pura tidur'], answer: 'Berpamitan sopan dan memohon doa restu', hint: 'Doa restu orang tua membuat langkah belajar kita berkah dan lancar!' },
+          { q: 'Ketika bertemu guru di halaman sekolah, ucapan yang santun adalah...', options: ['"Selamat pagi Ibu/Bapak Guru!" sambil tersenyum', '"Hai kamu!"', 'Lewat begitu saja tanpa menoleh', 'Menutup muka'], answer: '"Selamat pagi Ibu/Bapak Guru!" sambil tersenyum', hint: 'Guru adalah orang tua kita selama berada di sekolah 🏫' },
+          { q: 'Jika tidak sengaja berjalan di depan orang yang lebih tua yang sedang duduk, kita mengucapkan...', options: ['"Permisi, numpang lewat..." sambil sedikit membungkuk', '"Awas, minggir!"', '"Jangan halangi jalanku"', 'Diam saja'], answer: '"Permisi, numpang lewat..." sambil sedikit membungkuk', hint: 'Sikap sopan dan santun khas adat nusantara.' },
+          { q: 'Ketika orang tua atau guru sedang berbicara menasehati kita, sikap yang tepat adalah...', options: ['Mendengarkan dengan tenang dan patuh', 'Membantah sambil berteriak', 'Menutup telinga dengan bantal', 'Lari ke kamar'], answer: 'Mendengarkan dengan tenang dan patuh', hint: 'Nasehat orang tua demi kebaikan masa depan kita.' },
+          { q: 'Tata krama saat bertamu ke rumah tetangga atau teman adalah...', options: ['Mengetuk pintu perlahan dan mengucapkan salam', 'Langsung masuk dan membuka kulkas', 'Mendobrak pintu rumah', 'Berteriak di depan jendela'], answer: 'Mengetuk pintu perlahan dan mengucapkan salam', hint: 'Menghormati privasi pemilik rumah.' },
+          { q: 'Jika kita dipanggil oleh Ayah atau Ibu dari ruangan sebelah, jawaban santun kita adalah...', options: ['"Iya, Ibu/Ayah, saya segera datang."', '"Nanti dulu ah!"', '"Apaan sih berisik!"', 'Pura-pura tuli'], answer: '"Iya, Ibu/Ayah, saya segera datang."', hint: 'Segera menyahut dengan nada lembut dan berbakti.' },
+          { q: 'Sikap yang benar terhadap adik kandung yang masih balita adalah...', options: ['Menyayangi, membimbing, dan mengajaknya bermain ceria', 'Sering mencubitnya', 'Merebut mainannya sampai menangis', 'Menguncinya di kamar'], answer: 'Menyayangi, membimbing, dan mengajaknya bermain ceria', hint: 'Kakak yang baik selalu melindungi adik kecilnya.' },
+          { q: 'Saat duduk di kursi bus angkutan umum dan melihat ada ibu hamil atau lansia berdiri, kita sebaiknya...', options: ['Mempersilakan ibu atau lansia tersebut duduk di kursi kita', 'Pura-pura tidur memejamkan mata', 'Memasang wajah cemberut', 'Menolak memberi tempat'], answer: 'Mempersilakan ibu atau lansia tersebut duduk di kursi kita', hint: 'Kursi prioritas dan etika santun di ruang publik.' },
+          { q: 'Mengucapkan kata "Tolong" dan "Terima Kasih" saat meminta bantuan merupakan contoh anak yang...', options: ['Memiliki tata krama dan sopan santun tinggi', 'Penakut dan lemah', 'Banyak bicara', 'Pemalas'], answer: 'Memiliki tata krama dan sopan santun tinggi', hint: 'Menghormati orang lain dengan adab mulia.' },
+          { q: 'Tata krama saat makan bersama keluarga di meja makan adalah...', options: ['Duduk tertib, berdoa, dan tidak berbicara saat mulut penuh makanan', 'Mengecap keras bersuara', 'Memilih makanan terbaik untuk diri sendiri', 'Berdiri di atas kursi'], answer: 'Duduk tertib, berdoa, dan tidak berbicara saat mulut penuh makanan', hint: 'Adab makan yang anggun dan higienis.' }
+        ],
+        activitiesEn: [
+          { q: 'Before leaving for school, we should...', options: ['Say goodbye politely to parents', 'Run away silently', 'Shout angrily', 'Hide under bed'], answer: 'Say goodbye politely to parents', hint: 'Polite farewell shows love!' }
+        ]
+      },
+      {
+        id: 'pancasila-keragaman',
+        title: 'Mengenal Keragaman Suku, Agama, & Budaya Nusantara',
+        titleEn: 'Embracing Cultural Diversity: Bhinneka Tunggal Ika',
+        desc: 'Indonesia adalah negara kepulauan yang kaya raya! Ada ratusan suku bangsa: Jawa, Sunda, Batak, Minang, Bali, Dayak, Bugis, Papua, dan banyak lagi. Ada 6 agama resmi yang hidup rukun berdampingan. Semboyan Bhinneka Tunggal Ika menyatukan kita dalam bingkai persatuan yang indah!',
+        descEn: 'Indonesia is a magnificent archipelago with hundreds of ethnic heritages: Javanese, Sundanese, Balinese, Dayak, Papuan, and more! 6 official faiths live harmoniously under our sacred motto: Bhinneka Tunggal Ika (Unity in Diversity)!',
+        funFact: '💡 Tahukah kamu? Indonesia memiliki lebih dari 700 bahasa daerah yang unik dan ribuan tarian tradisional yang memukau mata dunia!',
+        keyPoints: [
+          'Bhinneka Tunggal Ika artinya berbeda-beda tetapi tetap satu jua.',
+          'Ada 6 agama resmi di Indonesia yang saling menghormati dan hidup rukun.',
+          'Keragaman suku, pakaian adat, dan rumah adat adalah kekayaan bangsa kita.'
+        ],
+        checklist: [
+          'Misi 1: Tanyakan kepada orang tuamu dari suku bangsa mana kakek dan nenekmu berasal.',
+          'Misi 2: Hafalkan arti semboyan "Bhinneka Tunggal Ika" (Berbeda-beda tetapi tetap satu jua).',
+          'Misi 3: Warnai gambar pakaian adat nusantara dengan pensil warna-warni yang indah.'
+        ],
+        checklistEn: [
+          'Mission 1: Inquire from your parents which ethnic cultures your ancestors represent.',
+          'Mission 2: Memorize the meaning of "Bhinneka Tunggal Ika" (Unity in Diversity).',
+          'Mission 3: Color traditional Indonesian attire illustrations with vibrant hues.'
+        ],
+        activities: [
+          { q: 'Semboyan bangsa Indonesia "Bhinneka Tunggal Ika" memiliki arti...', options: ['Berbeda-beda tetapi tetap satu jua', 'Bersatu kita teguh', 'Maju bersama kita bisa', 'Indonesia tanah airku'], answer: 'Berbeda-beda tetapi tetap satu jua', hint: 'Meskipun berbeda suku dan agama, kita tetap satu bangsa Indonesia 🇮🇩' },
+          { q: 'Ada berapa agama resmi yang diakui dan hidup rukun di Indonesia?', options: ['6 agama resmi', '2 agama', '10 agama', '1 agama'], answer: '6 agama resmi', hint: 'Islam, Kristen Protestan, Katolik, Hindu, Buddha, dan Khonghucu.' },
+          { q: 'Rumah adat khas Minangkabau di Sumatera Barat dengan atap runcing bertanduk kerbau adalah...', options: ['Rumah Gadang', 'Rumah Joglo', 'Rumah Tongkonan', 'Rumah Honai'], answer: 'Rumah Gadang', hint: 'Atap lengkung indah menyerupai tanduk kerbau (gonjong).' },
+          { q: 'Rumah adat suku Jawa yang memiliki pendopo luas di bagian depannya adalah...', options: ['Rumah Joglo', 'Rumah Honai', 'Rumah Panggung', 'Rumah Gadang'], answer: 'Rumah Joglo', hint: 'Arsitektur kayu jati khas Jawa Tengah dan Jawa Timur.' },
+          { q: 'Rumah adat berbentuk jamur bulat dengan atap jerami khas masyarakat Papua adalah...', options: ['Rumah Honai', 'Rumah Gadang', 'Rumah Betang', 'Rumah Sasak'], answer: 'Rumah Honai', hint: 'Rumah mungil tanpa jendela yang hangat di pegunungan Papua.' },
+          { q: 'Baju kurung dan kebaya serta kain batik merupakan contoh kekayaan pakaian...', options: ['Pakaian adat nusantara', 'Pakaian tidur', 'Pakaian selam', 'Pakaian olahraga luar negeri'], answer: 'Pakaian adat nusantara', hint: 'Kekayaan wastra tekstil tradisional Indonesia.' },
+          { q: 'Sikap yang benar jika kita memiliki teman sekelas yang berbeda suku dan bahasa daerah adalah...', options: ['Berteman akrab dan saling belajar budaya dengan gembira', 'Mengejek logat bicaranya', 'Menolak bermain dengannya', 'Menjauhinya'], answer: 'Berteman akrab dan saling belajar budaya dengan gembira', hint: 'Perbedaan memperkaya pengetahuan dan persahabatan kita.' },
+          { q: 'Kitab kuno karangan Mpu Tantular tempat semboyan Bhinneka Tunggal Ika pertama kali tertulis adalah...', options: ['Kitab Sutasoma (Kerajaan Majapahit)', 'Kitab Negarakertagama', 'Buku Atlas', 'Kamus'], answer: 'Kitab Sutasoma (Kerajaan Majapahit)', hint: 'Kitab sastra klasik Jawa Kuno pada abad ke-14.' },
+          { q: 'Alat musik bambu asal Jawa Barat yang dimainkan dengan cara digetarkan dan diakui UNESCO adalah...', options: ['Angklung', 'Gamelan', 'Sasando', 'Kolintang'], answer: 'Angklung', hint: 'Tabung bambu bernada merdu yang dimainkan beramai-ramai.' },
+          { q: 'Keragaman budaya dan suku bangsa Indonesia bukanlah alasan untuk terpecah, melainkan...', options: ['Kekayaan pusaka pemersatu bangsa Indonesia', 'Kelemahan negara', 'Penyebab pertengkaran', 'Beban bersama'], answer: 'Kekayaan pusaka pemersatu bangsa Indonesia', hint: 'Bersatu dalam keberagaman yang kokoh dan damai.' }
+        ],
+        activitiesEn: [
+          { q: 'What is the profound meaning of "Bhinneka Tunggal Ika"?', options: ['Unity in Diversity (Different yet united as one)', 'Always be the fastest', 'East and west', 'Together we conquer'], answer: 'Unity in Diversity (Different yet united as one)', hint: 'Our sacred national motto 🇮🇩' }
+        ]
+      }
     ]
   };
   
@@ -4066,7 +4169,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Bahasa Bali Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Kearifan Lokal Dewata)
+  // Version   : 2.5 (10 Topics, Fun Facts, Key Points, & 100 Questions)
   // ================================================================
   
   const BAHASA_BALI_DATA = {
@@ -4082,6 +4185,12 @@
         titleEn: 'Balinese Greetings & Politeness (Tata Krama)',
         desc: 'Masyarakat Bali menjunjung tinggi tata krama bertutur kata. Salam panganjali "Om Swastyastu" diucapkan dengan cakupan tangan di dada saat bertemu. Ucapkan "Matur suksma" untuk berterima kasih, "Mewali" untuk membalas terima kasih, dan "Rahajeng semeng" untuk selamat pagi!',
         descEn: 'Balinese society honors courteous speech. The universal greeting "Om Swastyastu" is offered with hands folded in front of the heart. Say "Matur suksma" for thank you and "Mewali" for you are welcome!',
+        funFact: '💡 Fakta Ceria: Sikap mencakupkan kedua telapak tangan di dada saat mengucapkan "Om Swastyastu" disebut sikap Anjali, simbol saling mendoakan keselamatan dan kedamaian suci!',
+        keyPoints: [
+          'Salam panganjali "Om Swastyastu" diucapkan dengan cakupan tangan di dada (anjali).',
+          'Ucapkan "Matur suksma" untuk berterima kasih, dan balas dengan kata "Mewali".',
+          'Sapaan waktu: Rahajeng semeng (pagi), Rahajeng tengai (siang), Rahajeng wengi (malam).'
+        ],
         checklist: [
           'Misi 1: Latih salam "Om Swastyastu" dengan menangkupkan kedua telapak tangan di depan dada.',
           'Misi 2: Ucapkan "Matur suksma" saat menerima sesuatu dari orang tua atau gurumu.',
@@ -4095,18 +4204,31 @@
         activities: [
           { q: 'Salam Panganjali umat Hindu dan masyarakat Bali saat bertegur sapa adalah...', options: ['Om Swastyastu', 'Matur suksma', 'Sampurasun', 'Horas'], answer: 'Om Swastyastu', hint: 'Diucapkan dengan menangkupkan kedua tangan di depan dada 🙏' },
           { q: 'Bila seseorang berbuat baik atau memberi bantuan, kita mengucapkan...', options: ['Matur suksma', 'Rahajeng wengi', 'Ampura', 'Nggih'], answer: 'Matur suksma', hint: 'Matur suksma artinya terima kasih banyak.' },
-          { q: '"Rahajeng semeng" dalam bahasa Indonesia artinya...', options: ['Selamat pagi', 'Selamat siang', 'Selamat malam', 'Selamat jalan'], answer: 'Selamat pagi', hint: 'Semeng artinya waktu pagi hari saat matahari terbit.' }
+          { q: '"Rahajeng semeng" dalam bahasa Indonesia artinya...', options: ['Selamat pagi', 'Selamat siang', 'Selamat malam', 'Selamat jalan'], answer: 'Selamat pagi', hint: 'Semeng artinya waktu pagi hari saat matahari terbit.' },
+          { q: 'Kata santun untuk membalas ucapan terima kasih ("Matur suksma") adalah...', options: ['Mewali (sama-sama)', 'Sing dadi', 'Ten', 'Ampura'], answer: 'Mewali (sama-sama)', hint: 'Mewali artinya kembali atau sama-sama.' },
+          { q: 'Jika kita tidak sengaja melakukan kesalahan, kata maaf dalam bahasa Bali adalah...', options: ['Ampura', 'Matur suksma', 'Rahajeng', 'Mewali'], answer: 'Ampura', hint: 'Nunas ampura artinya memohon maaf.' },
+          { q: 'Salam penutup perpisahan umat Hindu Bali yang memohon kedamaian adalah...', options: ['Om Shanti, Shanti, Shanti, Om', 'Om Swastyastu', 'Matur suksma', 'Sampai jumpa'], answer: 'Om Shanti, Shanti, Shanti, Om', hint: 'Shanti berarti damai di hati, damai di dunia, dan damai selalu.' },
+          { q: '"Rahajeng wengi" diucapkan pada waktu...', options: ['Malam hari', 'Pagi hari', 'Siang hari', 'Sore hari'], answer: 'Malam hari', hint: 'Wengi mateges peteng / malam hari saat bintang bersinar 🌙' },
+          { q: 'Jawaban santun yang berarti "Iya / Benar" dalam bahasa Bali alus adalah...', options: ['Inggih / Nggih', 'Sing', 'Tusing', 'Tidong'], answer: 'Inggih / Nggih', hint: 'Inggih adalah kata persetujuan yang sangat sopan.' },
+          { q: 'Kata santun yang berarti "Tidak" dalam bahasa Bali alus adalah...', options: ['Nenten', 'Tusing', 'Sing ja', 'Biarin'], answer: 'Nenten', hint: 'Nenten adalah ragam bahasa Bali alus untuk kata tidak.' },
+          { q: 'Sikap tangan saat mengucapkan salam Om Swastyastu disebut sikap...', options: ['Cakupan tangan Anjali di depan dada', 'Melambaikan tangan', 'Mengepalkan tangan', 'Berkacak pinggang'], answer: 'Cakupan tangan Anjali di depan dada', hint: 'Menangkupkan kedua telapak tangan dengan takzim.' }
         ],
         activitiesEn: [
           { q: 'The traditional Balinese welcoming greeting with folded hands is...', options: ['Om Swastyastu', 'Matur suksma', 'Sampurasun', 'Horas'], answer: 'Om Swastyastu', hint: 'Offered with hands pressed gently at heart level 🙏' }
         ]
       },
       {
-        id: 'bali-kruna-aran'
+        id: 'bali-kruna-aran',
         title: 'Kruna Aran ring Jeroan (Benda di Rumah)',
         titleEn: 'Balinese Nouns for Household Objects',
         desc: 'Kruna aran adalah kata benda dalam bahasa Bali. Di jeroan (rumah), ada meja (méja), kursi (kursi), pintu (jelanan), jendela (jendela/kori), tempat tidur (pedeman/pesarean), dan dapur (pawaregan). Mengenal kruna aran memperkaya kosakata harian!',
         descEn: 'Kruna aran refers to nouns in Balinese. Common house items include jelanan (door), pedeman (bed), and pawaregan (kitchen). Learning these nouns builds conversational confidence!',
+        funFact: '💡 Fakta Ceria: Rumah tradisional Bali tidak hanya terdiri dari satu gedung besar, melainkan beberapa bale terpisah yang ditata harmonis sesuai arah mata angin suci!',
+        keyPoints: [
+          'Kruna aran adalah sebutan untuk kata benda dalam bahasa Bali.',
+          'Jelanan = pintu, Pedeman = tempat tidur, Pawaregan = dapur.',
+          'Mengenal nama benda di rumah memudahkan kita berbicara santun sehari-hari.'
+        ],
         checklist: [
           'Misi 1: Tunjuk pintu rumahmu dan sebutkan kruna Balinya ("Jelanan").',
           'Misi 2: Sebutkan sebutan dapur tradisional Bali ("Pawaregan") kepada orang tuamu.',
@@ -4120,19 +4242,31 @@
         activities: [
           { q: 'Pintu rumah dalam bahasa Bali halus/lumrah sering disebut...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'Akses keluar masuk ruangan atau pekarangan rumah.' },
           { q: 'Tempat memasak makanan di rumah (dapur) dalam bahasa Bali disebut...', options: ['Pawaregan', 'Bale dauh', 'Bale daja', 'Jaba'], answer: 'Pawaregan', hint: 'Ruangan tempat menyiapkan masakan lezat.' },
-          { q: "Basa Bali alus untuk kata \"Buku\" atau tempat mencatat sastra adalah...", options: ["Cakepan / Buku","Meja","Korsi","Jendela"], answer: "Cakepan / Buku", hint: "Cakepan dados genah nyurat aksara lan sastra 📚" },
-          { q: "Piranti anggen melajah ring jeroan sakadi \"Pencil\" ring Basa Bali kawastanin...", options: ["Potlot / Pensil","Blakas","Arit","Sumpit"], answer: "Potlot / Pensil", hint: "Piranti anggen nyurat ring buku tulis." }
+          { q: 'Basa Bali alus untuk kata "Buku" atau tempat mencatat sastra adalah...', options: ['Cakepan / Buku', 'Meja', 'Korsi', 'Jendela'], answer: 'Cakepan / Buku', hint: 'Cakepan dados genah nyurat aksara lan sastra 📚' },
+          { q: 'Piranti anggen melajah ring jeroan sakadi "Pencil" ring Basa Bali kawastanin...', options: ['Potlot / Pensil', 'Blakas', 'Arit', 'Sumpit'], answer: 'Potlot / Pensil', hint: 'Piranti anggen nyurat ring buku tulis.' },
+          { q: 'Tempat tidur atau ranjang peristirahatan dalam bahasa Bali disebut...', options: ['Pedeman / Pesarean', 'Pewaregan', 'Natah', 'Pemedal'], answer: 'Pedeman / Pesarean', hint: 'Genah medem ri kala wengi.' },
+          { q: 'Halaman tengah rumah tempat bermain anak-anak dalam bahasa Bali disebut...', options: ['Natah', 'Pewaregan', 'Gedong', 'Jineng'], answer: 'Natah', hint: 'Pekarangan tengah pekarangan rumah Bali.' },
+          { q: 'Lumbung padi tradisional tempat menyimpan gabah padi di Bali disebut...', options: ['Jineng / Klumpu', 'Bale dangin', 'Pawaregan', 'Jelanan'], answer: 'Jineng / Klumpu', hint: 'Bangunan panggung bertiang empat untuk menyimpan bulir padi.' },
+          { q: 'Air minum yang jernih dan segar dalam bahasa Bali disebut...', options: ['Yeh / Toya', 'Api', 'Angin', 'Batu'], answer: 'Yeh / Toya', hint: 'Toya adalah bahasa Bali alus untuk air.' },
+          { q: 'Kain tradisional yang dipakai melingkar di pinggang saat upacara di Bali disebut...', options: ['Kamen', 'Kemeja', 'Celana jeans', 'Jas'], answer: 'Kamen', hint: 'Kain wastra batik atau songket Bali.' },
+          { q: 'Ikat kepala tradisional yang dikenakan anak laki-laki dan pria Bali bernama...', options: ['Udeng', 'Topi koboi', 'Peci hitam', 'Helm'], answer: 'Udeng', hint: 'Ikat kepala khas dengan lekukan simpul di dahi.' }
         ],
         activitiesEn: [
           { q: 'The entrance door or gate in Balinese is referred to as...', options: ['Jelanan / Kori', 'Pawaregan', 'Pedeman', 'Pelinggih'], answer: 'Jelanan / Kori', hint: 'The gateway or doorway.' }
         ]
       },
       {
-        id: 'bali-wilangan'
+        id: 'bali-wilangan',
         title: 'Wilangan Angka Basa Bali (1 - 20)',
         titleEn: 'Balinese Numbers & Counting (1 to 20)',
         desc: 'Berhitung dalam bahasa Bali sangat unik dan berirama: 1 (Sa/Besik), 2 (Dua), 3 (Telu), 4 (Papat), 5 (Lima), 6 (Nem), 7 (Pitu), 8 (Kutus), 9 (Sia), 10 (Dasa). Selanjutnya 11 (Solas), 12 (Roras), hingga 20 (Duang dasa)!',
         descEn: 'Counting in Balinese has a rhythmic flow: Sa (1), Dua (2), Telu (3), Papat (4), Lima (5), Nem (6), Pitu (7), Kutus (8), Sia (9), Dasa (10), Solas (11), Roras (12)... up to Duang dasa (20)!',
+        funFact: '💡 Fakta Ceria: Angka 8 dalam bahasa Bali disebut "Kutus" dan angka 11 disebut "Solas", memiliki irama pelafalan yang sangat unik dan menyenangkan saat dilagukan!',
+        keyPoints: [
+          'Angka 1 sampai 5: Sa (1), Dua (2), Telu (3), Papat (4), Lima (5).',
+          'Angka 6 sampai 10: Nem (6), Pitu (7), Kutus (8), Sia (9), Dasa (10).',
+          'Belasan berakhiran "-las": Solas (11), Roras (12), Telulas (13)... Duang Dasa (20).'
+        ],
         checklist: [
           'Misi 1: Hitung jarimu dari 1 sampai 10 memakai wilangan Bali: Sa, Dua, Telu, Papat, Lima...',
           'Misi 2: Ucapkan angka 8 dalam bahasa Bali ("Kutus") dengan jelas.',
@@ -4147,19 +4281,30 @@
           { q: 'Angka 3 dalam wilangan bahasa Bali disebut...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: '1=Sa, 2=Dua, 3=Telu.' },
           { q: 'Angka 10 dalam bahasa Bali adalah...', options: ['Dasa', 'Solas', 'Kutus', 'Sia'], answer: 'Dasa', hint: 'Sepuluh dalam bahasa Bali.' },
           { q: 'Angka 11 dalam bahasa Bali disebut...', options: ['Solas', 'Roras', 'Telulas', 'Patbelas'], answer: 'Solas', hint: 'Sebelas diucapkan solas.' },
-          { q: "Angka 7 (tujuh) ring Basa Bali kawastanin...", options: ["Pitu","Nem","Kutus","Sia"], answer: "Pitu", hint: "Urutan: lima (5), nem (6), pitu (7), kutus (8)." },
-          { q: "Angka 10 (sepuluh) ring Basa Bali kawastanin...", options: ["Dasa","Dasa Nem","Solas","Roras"], answer: "Dasa", hint: "Dasa inggih punika angka sepuluh (10)." }
+          { q: 'Angka 7 (tujuh) ring Basa Bali kawastanin...', options: ['Pitu', 'Nem', 'Kutus', 'Sia'], answer: 'Pitu', hint: 'Urutan: lima (5), nem (6), pitu (7), kutus (8).' },
+          { q: 'Angka 10 (sepuluh) ring Basa Bali kawastanin...', options: ['Dasa', 'Dasa Nem', 'Solas', 'Roras'], answer: 'Dasa', hint: 'Dasa inggih punika angka sepuluh (10).' },
+          { q: 'Angka 8 (delapan) dalam bahasa Bali disebut...', options: ['Kutus', 'Nem', 'Sia', 'Papat'], answer: 'Kutus', hint: 'Kutus inggih punika wilangan kutus (8).' },
+          { q: 'Angka 4 (empat) dalam bahasa Bali disebut...', options: ['Papat', 'Telu', 'Lima', 'Dua'], answer: 'Papat', hint: 'Papat inggih punika angka 4.' },
+          { q: 'Angka 12 (dua belas) dalam bahasa Bali diucapkan...', options: ['Roras', 'Solas', 'Telulas', 'Duang Dasa'], answer: 'Roras', hint: 'Dua + belas menjadi Roras.' },
+          { q: 'Angka 20 (dua puluh) dalam bahasa Bali disebut...', options: ['Duang Dasa', 'Dasa', 'Solas', 'Telung Dasa'], answer: 'Duang Dasa', hint: 'Dua puluhan diucapkan Duang Dasa.' },
+          { q: 'Angka 9 (sembilan) dalam bahasa Bali disebut...', options: ['Sia', 'Kutus', 'Pitu', 'Dasa'], answer: 'Sia', hint: 'Sia adalah sebutan bilangan 9.' }
         ],
         activitiesEn: [
           { q: 'Number 3 in Balinese counting is called...', options: ['Telu', 'Papat', 'Pitu', 'Nem'], answer: 'Telu', hint: 'Sa (1), Dua (2), Telu (3).' }
         ]
       },
       {
-        id: 'bali-gending-rare'
+        id: 'bali-gending-rare',
         title: 'Gending Rare (Tembang Ceria Anak Bali)',
         titleEn: 'Gending Rare (Traditional Balinese Children Songs)',
         desc: 'Gending rare adalah lagu dolanan tradisional anak-anak Bali yang dinyanyikan saat bermain di bawah sinar bulan purnama atau saat santai. Lagu terkenalnya: "Putri Cening Ayu", "Meong-meong", dan "Dadong Dauh" yang sarat nasehat bakti kepada orang tua!',
         descEn: 'Gending rare are joyful traditional folksongs sung by Balinese children during playtime under moonlight. Famous tunes include "Putri Cening Ayu" and "Meong-meong", teaching kindness and affection!',
+        funFact: '💡 Fakta Ceria: Gending Rare biasanya dinyanyikan anak-anak Bali di halaman rumah (natah) saat bulan purnama terang benderang sambil bermain kejar-kejaran!',
+        keyPoints: [
+          'Gending Rare adalah nyanyian ceria dolanan tradisional anak-anak Bali.',
+          'Lagu "Putri Cening Ayu" mengajarkan anak menjaga rumah saat ibu ke pasar.',
+          'Lagu "Meong-meong" mengiringi permainan kucing menangkap tikus nakal.'
+        ],
         checklist: [
           'Misi 1: Dengarkan atau nyanyikan bait pertama tembang "Putri Cening Ayu".',
           'Misi 2: Tirukan lirik lagu "Meong-meong alih jek bikule" sambil bertepuk tangan.',
@@ -4173,19 +4318,31 @@
         activities: [
           { q: 'Gending rare yang menceritakan kucing mengejar tikus (biku) yang nakal adalah...', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Liriknya: "Meong-meong, alih ja bikule..." 🐱' },
           { q: 'Tembang "Putri Cening Ayu" menceritakan nasehat seorang ibu yang hendak pergi ke...', options: ['Peken (Pasar)', 'Carik (Sawah)', 'Pasih (Pantai)', 'Gunung'], answer: 'Peken (Pasar)', hint: 'Lirik: "Putri cening ayu, ngijeng cening jumah, meme luas kapeken..."' },
-          { q: "Gending rare \"Ratu Anom\" ngicenin paplajahan indik...", options: ["Tresna asih lan bhakti ring rerama","Maburuh","Megadang","Ngulgul timpal"], answer: "Tresna asih lan bhakti ring rerama", hint: "Gending sane melodi nembang indik anak cenik sane jemet ring umah." },
-          { q: "Sasolahan gending rare \"Meong-Meong\" kasarengin antuk buron sane...", options: ["Meong ngelincang Bikul (kucing ngejar tikus)","Bebek ngelincang Siap","Bojog ngelincang Macan","Cicing ngelincang Kambing"], answer: "Meong ngelincang Bikul (kucing ngejar tikus)", hint: "Meong-meong alih ja bikule, bikul gede-gede buin mokoh-mokoh 🐱🐭" }
+          { q: 'Gending rare "Ratu Anom" ngicenin paplajahan indik...', options: ['Tresna asih lan bhakti ring rerama', 'Maburuh', 'Megadang', 'Ngulgul timpal'], answer: 'Tresna asih lan bhakti ring rerama', hint: 'Gending sane melodi nembang indik anak cenik sane jemet ring umah.' },
+          { q: 'Sasolahan gending rare "Meong-Meong" kasarengin antuk buron sane...', options: ['Meong ngelincang Bikul (kucing ngejar tikus)', 'Bebek ngelincang Siap', 'Bojog ngelincang Macan', 'Cicing ngelincang Kambing'], answer: 'Meong ngelincang Bikul (kucing ngejar tikus)', hint: 'Meong-meong alih ja bikule, bikul gede-gede buin mokoh-mokoh 🐱🐭' },
+          { q: 'Dalam lagu "Putri Cening Ayu", oleh-oleh yang dijanjikan ibu dari pasar adalah...', options: ['Jaja kuskus (kue tradisional)', 'Baju baru', 'Sepeda', 'Mainan robot'], answer: 'Jaja kuskus (kue tradisional)', hint: 'Kue kukus kelapa manis khas jajanan pasar Bali.' },
+          { q: 'Gending dolanan anak "Dadong Dauh" menceritakan seorang nenek yang memelihara...', options: ['Siap selem (ayam hitam) bertelur satu', 'Kucing belang', 'Sapi putih', 'Bebek'], answer: 'Siap selem (ayam hitam) bertelur satu', hint: 'Lirik: "Dadong Dauh, ngelah siap renggang..."' },
+          { q: 'Gending rare biasanya dinyanyikan dengan suasana hati yang...', options: ['Bungah lan liang (gembira dan ceria)', 'Sedih', 'Keweh', 'Duka'], answer: 'Bungah lan liang (gembira dan ceria)', hint: 'Lagu dolanan anak-anak yang penuh keceriaan.' },
+          { q: 'Alat musik tradisional Bali yang mengiringi nyanyian gending rare adalah...', options: ['Gamelan Bali / Baleganjur', 'Gitar listrik', 'Piano', 'Drum band'], answer: 'Gamelan Bali / Baleganjur', hint: 'Pukulan ceng-ceng dan kendang yang ritmis.' },
+          { q: 'Gending "Macepet-cepetan" melatih kelincahan dan...', options: ['Kecepatan gerak tubuh anak', 'Tidur nyenyak', 'Makan banyak', 'Duduk diam'], answer: 'Kecepatan gerak tubuh anak', hint: 'Macepet-cepetan artinya bergegas cepat.' },
+          { q: 'Menyanyikan gending rare bersama teman melestarikan...', options: ['Seni budaya luhur tradisi Bali', 'Bahasa asing', 'Permainan gawai', 'Kemarahan'], answer: 'Seni budaya luhur tradisi Bali', hint: 'Bangga melestarikan kearifan lokal pulau dewata.' }
         ],
         activitiesEn: [
           { q: 'Which Balinese children song depicts a cat chasing a mischievous mouse?', options: ['Meong-meong', 'Putri Cening Ayu', 'Macepet-cepetan', 'Ratu Anom'], answer: 'Meong-meong', hint: 'Lyrical line: "Meong-meong, alih ja bikule..." 🐱' }
         ]
       },
       {
-        id: 'bali-rahina-nyepi'
+        id: 'bali-rahina-nyepi',
         title: 'Pura, Upacara, & Rahina Suci Nyepi',
         titleEn: 'Temples, Ceremonies, & Sacred Nyepi Day',
         desc: 'Pulau Bali terkenal dengan ribuan Pura megah dan upacara tradisi yang asri. Saat menyambut Tahun Baru Saka (Hari Raya Nyepi), umat Hindu melaksanakan Catur Brata Penyepian: Amati Geni (tidak menyalakan api/lampu), Amati Karya (tidak bekerja), Amati Lelungan (tidak bepergian), dan Amati Lelanguan (tidak bersenang-senang)!',
         descEn: 'Bali is celebrated worldwide for thousands of sacred shrines. During Nyepi (Balinese Day of Silence), four contemplative observances (Catur Brata Penyepian) are practiced to cleanse nature and the human spirit!',
+        funFact: '💡 Fakta Ceria: Saat Hari Raya Nyepi, pulau Bali menjadi satu-satunya tempat di dunia di mana seluruh pulau berhenti total dari kendaraan dan lampu, membuat langit malam bertabur jutaan bintang berkilau!',
+        keyPoints: [
+          'Hari Raya Nyepi adalah perayaan Tahun Baru Saka dengan keheningan suci.',
+          'Catur Brata Penyepian: Amati Geni, Amati Karya, Amati Lelungan, Amati Lelanguan.',
+          'Pura Besakih di lereng Gunung Agung adalah Ibu dari seluruh Pura di Bali.'
+        ],
         checklist: [
           'Misi 1: Sebutkan nama Pura terbesar di Bali yang terletak di lereng Gunung Agung (Pura Besakih).',
           'Misi 2: Pahami makna "Amati Geni" saat Nyepi (tidak menyalakan lampu agar hening dan tenang).',
@@ -4199,8 +4356,14 @@
         activities: [
           { q: 'Salah satu bagian dari Catur Brata Penyepian yang artinya tidak menyalakan api/lampu adalah...', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni artinya api atau sumber cahaya penerangan.' },
           { q: 'Ibu dari seluruh Pura di Bali yang berdiri megah di lereng Gunung Agung adalah...', options: ['Pura Agung Besakih', 'Pura Tanah Lot', 'Pura Uluwatu', 'Pura Tirta Empul'], answer: 'Pura Agung Besakih', hint: 'Terletak di Kabupaten Karangasem.' },
-          { q: "Amati Lelungan ring Catur Brata Penyepian mateges...", options: ["Nenten dados melali / nenten medal saking jeroan","Nenten dados ngendihang api","Nenten dados megending","Nenten dados ngeraos"], answer: "Nenten dados melali / nenten medal saking jeroan", hint: "Menenangkan diri di dalam rumah selama 24 jam penuh." },
-          { q: "Amati Lelanguan mateges...", options: ["Nenten dados ngamargiang kasenengan utawi pesta","Nenten dados ngendihang lampu","Nenten dados medem","Nenten dados ngajeng"], answer: "Nenten dados ngamargiang kasenengan utawi pesta", hint: "Tidak bersenang-senang atau mengadakan hiburan hura-hura." }
+          { q: 'Amati Lelungan ring Catur Brata Penyepian mateges...', options: ['Nenten dados melali / nenten medal saking jeroan', 'Nenten dados ngendihang api', 'Nenten dados megending', 'Nenten dados ngeraos'], answer: 'Nenten dados melali / nenten medal saking jeroan', hint: 'Menenangkan diri di dalam rumah selama 24 jam penuh.' },
+          { q: 'Amati Lelanguan mateges...', options: ['Nenten dados ngamargiang kasenengan utawi pesta', 'Nenten dados ngendihang lampu', 'Nenten dados medem', 'Nenten dados ngajeng'], answer: 'Nenten dados ngamargiang kasenengan utawi pesta', hint: 'Tidak bersenang-senang atau mengadakan hiburan hura-hura.' },
+          { q: 'Amati Karya artinya selama Nyepi umat Hindu...', options: ['Tidak bekerja dan beristirahat menenangkan batin', 'Bekerja lembur', 'Pergi ke kantor', 'Membuka toko'], answer: 'Tidak bekerja dan beristirahat menenangkan batin', hint: 'Mengistirahatkan raga dan pikiran.' },
+          { q: 'Petugas keamanan adat desa di Bali yang berpatroli menjaga ketenangan saat Nyepi disebut...', options: ['Pecalang', 'Satpam mal', 'Polisi patroli', 'Tentara'], answer: 'Pecalang', hint: 'Penjaga adat Bali berseragam kamen poleng kotak-kotak.' },
+          { q: 'Kain motif kotak-kotak hitam putih khas Bali yang melambangkan keseimbangan alam disebut...', options: ['Kain Poleng', 'Kain Sutra', 'Kain Denim', 'Kain Wool'], answer: 'Kain Poleng', hint: 'Melambangkan Rwa Bhineda (keseimbangan baik dan buruk).' },
+          { q: 'Sehari setelah Nyepi, ada tradisi saling memaafkan yang disebut...', options: ['Ngembak Geni', 'Pengerupukan', 'Melasti', 'Kuningan'], answer: 'Ngembak Geni', hint: 'Menyalakan kembali api kehidupan dan bersilaturahmi.' },
+          { q: 'Persembahan bunga harum dalam anyaman janur persegi di Bali disebut...', options: ['Canang Sari', 'Tumpeng', 'Ketupat', 'Rujak'], answer: 'Canang Sari', hint: 'Wujud rasa syukur atas keindahan alam semesta ciptaan Hyang Widhi.' },
+          { q: 'Pura yang terletak di atas batu karang di tengah deburan ombak pantai Tabanan adalah...', options: ['Pura Tanah Lot', 'Pura Besakih', 'Pura Batur', 'Pura Lempuyang'], answer: 'Pura Tanah Lot', hint: 'Ikon pariwisata laut Bali yang sangat terkenal di dunia.' }
         ],
         activitiesEn: [
           { q: 'Which observance of Nyepi\'s Catur Brata means refraining from lighting fire and lamps?', options: ['Amati Geni', 'Amati Karya', 'Amati Lelungan', 'Amati Lelanguan'], answer: 'Amati Geni', hint: 'Geni signifies fire or artificial light.' }
@@ -4212,6 +4375,12 @@
         titleEn: 'Satua Bali (Fables & Traditional Wisdom)',
         desc: 'Satua Bali adalah cerita dongeng rakyat berbahasa Bali yang diwariskan turun-temurun. Cerita populer seperti "Satua I Siap Selem" (induk ayam hitam yang melindungi anak-anaknya dari musang I Meng) mengajarkan kasih sayang orang tua dan kecerdikan mengalahkan bahaya!',
         descEn: 'Satua Bali are folklore fables passed through oral traditions. Classic stories like "Satua I Siap Selem" (the clever black hen protecting her chicks from the wildcat) teach bravery, motherly love, and wisdom!',
+        funFact: '💡 Fakta Ceria: Satua Bali zaman dulu diceritakan oleh kakek (kaki) atau nenek (dadong) sambil memangku cucu di bale tempat tidur sebelum terlelap tidur nyenyak!',
+        keyPoints: [
+          'Satua Bali adalah dongeng fabel rakyat yang penuh petuah budi pekerti luhur.',
+          'Kisah "I Siap Selem" mengajarkan perjuangan kasih sayang ibu melindungi anak.',
+          'Membaca satua melatih kemampuan mendengar dan mencintai bahasa ibu.'
+        ],
         checklist: [
           'Misi 1: Dengarkan cerita Satua "I Siap Selem" dari orang tua atau gurumu.',
           'Misi 2: Sebutkan siapa tokoh cerdik dan pemberani dalam cerita I Siap Selem (I Mengkadut).',
@@ -4224,77 +4393,57 @@
         ],
         activities: [
           { q: 'Dalam satua Bali "I Siap Selem", tokoh Siap Selem adalah seekor...', options: ['Ayam betina berbulu hitam', 'Kucing belang', 'Bebek putih', 'Kera abu-abu'], answer: 'Ayam betina berbulu hitam', hint: 'Siap artinya ayam, selem artinya hitam.' },
-          { q: 'Pesan moral utama dari Satua I Siap Selem adalah...', options: ['Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', 'Kekuatan fisik yang jahat selalu menang', 'Malas mencari makan', 'Meninggalkan teman sendirian'], answer: 'Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', hint: 'Ibu ayam melindungi semua anak-anaknya dari bahaya.' }
+          { q: 'Pesan moral utama dari Satua I Siap Selem adalah...', options: ['Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', 'Kekuatan fisik yang jahat selalu menang', 'Malas mencari makan', 'Meninggalkan teman sendirian'], answer: 'Kasih sayang ibu yang rela berkorban dan kecerdikan menghadapi bahaya', hint: 'Ibu ayam melindungi semua anak-anaknya dari bahaya.' },
+          { q: 'Musuh yang mengejar anak-anak Siap Selem dalam dongeng adalah...', options: ['I Meng (kucing hutan/musang licik)', 'Gajah', 'Jerapah', 'Ikan mas'], answer: 'I Meng (kucing hutan/musang licik)', hint: 'Hewan pemangsa yang mengintai kandang ayam.' },
+          { q: 'Anak Siap Selem yang paling kecil dan cerdik bernama...', options: ['I Mengkadut', 'I Lutung', 'I Kancil', 'I Bojog'], answer: 'I Mengkadut', hint: 'Anak ayam bungsu yang pandai terbang menghindar.' },
+          { q: 'Dalam satua "I Lutung Teken I Kekua", I Kekua adalah seekor...', options: ['Kura-kura yang sabar dan tekun', 'Monyet nakal', 'Ayam jantan', 'Burung elang'], answer: 'Kura-kura yang sabar dan tekun', hint: 'Kekua artinya kura-kura dalam bahasa Bali 🐢' },
+          { q: 'Sifat I Lutung (kera) dalam dongeng Bali sering digambarkan sebagai tokoh yang...', options: ['Loba, serakah, dan nakal', 'Suka menolong', 'Jujur dan rajin', 'Penakut'], answer: 'Loba, serakah, dan nakal', hint: 'Lutung suka mengambil buah pisang milik Kekua.' },
+          { q: 'Satua Bali yang menceritakan persahabatan kambing dengan harimau adalah satua...', options: ['I Kambing Takutin Macan', 'I Belog', 'Pan Balang Tamak', 'Cupak Grantang'], answer: 'I Kambing Takutin Macan', hint: 'Kecerdikan kambing yang membuat macan takut.' },
+          { q: 'Tokoh jenaka dalam satua Bali yang lugu dan polos bernama...', options: ['I Belog', 'I Lutung', 'I Macan', 'I Bojog'], answer: 'I Belog', hint: 'Belog artinya polos atau kurang mengerti.' },
+          { q: 'Di manakah orang tua di Bali zaman dulu biasa bercerita satua kepada anak cucunya?', options: ['Di bale pedeman (tempat tidur) sebelum tidur', 'Di pasar ramai', 'Di tengah jalan', 'Di dalam mobil'], answer: 'Di bale pedeman (tempat tidur) sebelum tidur', hint: 'Dongeng pengantar tidur yang hangat.' },
+          { q: 'Nilai budi pekerti yang diajarkan dalam satua Bali adalah...', options: ['Kejujuran, keberanian, dan kasih sayang', 'Keserakahan', 'Suka berkelahi', 'Malas belajar'], answer: 'Kejujuran, keberanian, dan kasih sayang', hint: 'Pendidikan karakter luhur warisan leluhur.' }
         ],
         activitiesEn: [
           { q: 'In the Balinese fable "I Siap Selem", what creature is Siap Selem?', options: ['A black hen mother', 'A striped tiger', 'A white duck', 'A brown monkey'], answer: 'A black hen mother', hint: 'Siap means chicken, selem means black.' }
         ]
-      }
-  ,
+      },
       {
         id: 'bb-ceciren-buron',
         title: 'Ceciren Buron & Suarannyane (Nama Hewan & Suaranya)',
         titleEn: 'Animal Names & Sounds in Balinese (Ceciren Buron)',
         desc: 'Ring wewidangan Bali, akeh pisan wenten buron (hewan) sane ramah. Meong (kucing) maswara "ngeong-ngeong", Cicing (anjing) maswara "kungkung", Siap (ayam) maswara "kukuruyuk", Bebek maswara "kwek-kwek", lan Bojog (kera) sane mekedekan ring Ubud. Malajah basa Bali indik buron puniki ngulangunin pisan!',
         descEn: 'In Bali, many friendly animals live alongside people. Meong (cat) purrs "meow", Cicing (dog) barks, Siap (chicken) crows at sunrise, Bebek (duck) waddles, and Bojog (monkey) plays in Ubud forests. Learning animal names in Balinese is so colorful and enjoyable!',
+        funFact: '💡 Fakta Ceria: Anjing Kintamani asli pulau Bali diakui dunia internasional sebagai ras anjing pegunungan resmi dengan bulu tebal dan telinga tegak yang anggun!',
+        keyPoints: [
+          'Buron (hewan) sahabat manusia: Meong (kucing), Cicing (anjing), Sampi (sapi).',
+          'Suara hewan: Siap (kukuruyuk), Meong (ngeong), Bebek (kwek-kwek).',
+          'Menyayangi semua makhluk hidup ciptaan Tuhan sesuai ajaran Tri Hita Karana.'
+        ],
         checklist: [
-          "Misi 1: Tiru suara Siap (ayam jantan) lan Meong (kucing) ngangge basa Bali sane patut.",
-          "Misi 2: Sebutkan 3 wastan buron (nama hewan) sane sering kacingak ring pekarangan umah.",
-          "Misi 3: Nyanyikan gending anak-anak Bali \"Meong-meong Alih Ja Bikule\" sareng rerama."
-  ],
+          'Misi 1: Tiru suara Siap (ayam jantan) lan Meong (kucing) ngangge basa Bali sane patut.',
+          'Misi 2: Sebutkan 3 wastan buron (nama hewan) sane sering kacingak ring pekarangan umah.',
+          'Misi 3: Nyanyikan gending anak-anak Bali "Meong-meong Alih Ja Bikule" sareng rerama.'
+        ],
         checklistEn: [
-          "Mission 1: Mimic rooster (Siap) and cat (Meong) sounds cheerfully in Balinese.",
-          "Mission 2: Name 3 animals frequently spotted around Balinese house compounds.",
-          "Mission 3: Sing the traditional Balinese children song \"Meong-meong\" with your parents."
-  ],
+          'Mission 1: Mimic rooster (Siap) and cat (Meong) sounds cheerfully in Balinese.',
+          'Mission 2: Name 3 animals frequently spotted around Balinese house compounds.',
+          'Mission 3: Sing the traditional Balinese children song "Meong-meong" with your parents.'
+        ],
         activities: [
-          {
-                  "q": "Wastan buron \"Kucing\" ring Basa Bali inggih punika...",
-                  "options": [
-                          "Meong",
-                          "Bojog",
-                          "Sampi",
-                          "Bebek"
-                  ],
-                  "answer": "Meong",
-                  "hint": "Hewan berbulu lucu yang suka makan ikan 🐱"
-          },
-          {
-                  "q": "Buron sane meawak ageng, ma-tanduk, lan seneng ngamah padang mawasta...",
-                  "options": [
-                          "Sampi (Sapi)",
-                          "Kedis (Burung)",
-                          "Bikul (Tikus)",
-                          "Lelipi (Ular)"
-                  ],
-                  "answer": "Sampi (Sapi)",
-                  "hint": "Sering membantu petani membajak sawah subak 🐂"
-          },
-          {
-                  "q": "Suaran siap muani (ayam jantan) ring semeng rikala matan ai terbit inggih punika...",
-                  "options": [
-                          "Kukuruyuk!",
-                          "Meong!",
-                          "Kwek-kwek!",
-                          "Cit-cit!"
-                  ],
-                  "answer": "Kukuruyuk!",
-                  "hint": "Membangunkan anak-anak untuk mandi dan sekolah 🌅"
-          }
-  ],
+          { q: 'Wastan buron "Kucing" ring Basa Bali inggih punika...', options: ['Meong', 'Bojog', 'Sampi', 'Bebek'], answer: 'Meong', hint: 'Hewan berbulu lucu yang suka makan ikan 🐱' },
+          { q: 'Buron sane meawak ageng, ma-tanduk, lan seneng ngamah padang mawasta...', options: ['Sampi (Sapi)', 'Kedis (Burung)', 'Bikul (Tikus)', 'Lelipi (Ular)'], answer: 'Sampi (Sapi)', hint: 'Sering membantu petani membajak sawah subak 🐂' },
+          { q: 'Suaran siap muani (ayam jantan) ring semeng rikala matan ai terbit inggih punika...', options: ['Kukuruyuk!', 'Meong!', 'Kwek-kwek!', 'Cit-cit!'], answer: 'Kukuruyuk!', hint: 'Membangunkan anak-anak untuk mandi dan sekolah 🌅' },
+          { q: 'Wastan buron "Anjing" ring Basa Bali inggih punika...', options: ['Cicing / Asu', 'Bojog', 'Siap', 'Kekua'], answer: 'Cicing / Asu', hint: 'Hewan setia penjaga rumah.' },
+          { q: 'Buron sane seneng menek punyan kayu lan demen ngamah biu mawasta...', options: ['Bojog (Kera)', 'Sampi', 'Kambing', 'Kedis'], answer: 'Bojog (Kera)', hint: 'Banyak dijumpai di Hutan Monyet (Monkey Forest) Ubud 🐒' },
+          { q: 'Suaran bebek sane ngelangi ring tukad utawi carik inggih punika...', options: ['Kwek-kwek!', 'Kukuruyuk!', 'Meong!', 'Kuk-kuk!'], answer: 'Kwek-kwek!', hint: 'Bebek berparuh pipih gemar berenang.' },
+          { q: 'Buron cenik sane ma-kampid lan maswara merdu ring carang kayu mawasta...', options: ['Kedis (Burung)', 'Bikul', 'Bojog', 'Sampi'], answer: 'Kedis (Burung)', hint: 'Burung jalak Bali berbulu putih indah 🕊️' },
+          { q: 'Buron cenik sane seneng ngamah keju lan memaling jaja ring pawaregan mawasta...', options: ['Bikul (Tikus)', 'Meong', 'Cicing', 'Siap'], answer: 'Bikul (Tikus)', hint: 'Musuh alami si meong dalam gending rare.' },
+          { q: 'Buron sane ma-kelong dawa lan medem ring don ental mawasta...', options: ['Lelipi (Ular)', 'Kekua', 'Sampi', 'Bebek'], answer: 'Lelipi (Ular)', hint: 'Hewan melata tanpa kaki.' },
+          { q: 'Ajaran budi pekerti Bali untuk menyayangi hewan dan tetumbuhan adalah bagian dari...', options: ['Palemahan (Tri Hita Karana)', 'Parhyangan', 'Pawongan', 'Pura'], answer: 'Palemahan (Tri Hita Karana)', hint: 'Hubungan harmonis antara manusia dengan alam sekitar.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "The Balinese word for \"Cat\" is...",
-                  "options": [
-                          "Meong",
-                          "Bojog",
-                          "Sampi",
-                          "Bebek"
-                  ],
-                  "answer": "Meong",
-                  "hint": "A cute furry pet that purrs 🐱"
-          }
-  ]
+          { q: 'The Balinese word for "Cat" is...', options: ['Meong', 'Bojog', 'Sampi', 'Bebek'], answer: 'Meong', hint: 'A cute furry pet that purrs 🐱' }
+        ]
       },
       {
         id: 'bb-sarwa-sekar',
@@ -4302,173 +4451,114 @@
         titleEn: 'Flowers & Plants of Bali (Sarwa Sekar & Tetanduran)',
         desc: 'Pekarangan umah ring Bali asri pisan kadagingin sekar (bunga) sane miik ngalub. Wenten Sekar Jepun (Kamboja) sane mawarna putih lan kuning, Sekar Sandat sane miik sumingkir, Sekar Mawar barak, lan Sekar Pacah. Sekar-sekar puniki kaanggen canang sari pinaka rasa suksma majeng Ida Sang Hyang Widhi Wasa.',
         descEn: 'Balinese home compounds are lush with fragrant blossoms. Sekar Jepun (Frangipani) shines in radiant yellow and white, Sekar Sandat perfumes the breeze, along with vibrant red roses. These lovely flowers adorn sacred offerings expressing gratitude to Nature and the Creator.',
+        funFact: '💡 Fakta Ceria: Bunga Kamboja (Sekar Jepun) tetap menebarkan wangi semerbak meskipun sudah gugur ke tanah, melambangkan keharuman budi pekerti yang abadi!',
+        keyPoints: [
+          'Sekar Jepun (Kamboja) mawarna putih lan kuning, dados ikon sekar pulau Bali.',
+          'Warna sekar: Barak (merah), Putih, Kuning, Selem (hitam), Pelung (biru).',
+          'Bunga-bunga harum dirangkai menjadi canang sari sebagai persembahan suci.'
+        ],
         checklist: [
-          "Misi 1: Ruruh (temukan) 1 sekar Jepun sane ulung ring natahe, ambung miiknyane sane sumingkir.",
-          "Misi 2: Sebutkan 3 warna sekar sane wenten ring pekarangan umah (putih, barak, kuning).",
-          "Misi 3: Siram tetanduran sekar ring natahe saban sore mangda tetep seger lan nedeng kembang."
-  ],
+          'Misi 1: Ruruh (temukan) 1 sekar Jepun sane ulung ring natahe, ambung miiknyane sane sumingkir.',
+          'Misi 2: Sebutkan 3 warna sekar sane wenten ring pekarangan umah (putih, barak, kuning).',
+          'Misi 3: Siram tetanduran sekar ring natahe saban sore mangda tetep seger lan nedeng kembang.'
+        ],
         checklistEn: [
-          "Mission 1: Pick up a fallen Frangipani (Jepun) blossom and enjoy its sweet gentle fragrance.",
-          "Mission 2: Name 3 flower colors found in your garden (white, red, golden yellow).",
-          "Mission 3: Water the flower garden every afternoon to help the blossoms stay radiant."
-  ],
+          'Mission 1: Pick up a fallen Frangipani (Jepun) blossom and enjoy its sweet gentle fragrance.',
+          'Mission 2: Name 3 flower colors found in your garden (white, red, golden yellow).',
+          'Mission 3: Water the flower garden every afternoon to help the blossoms stay radiant.'
+        ],
         activities: [
-          {
-                  "q": "Sekar Jepun punika ring basa Indonesia kabaos bunga...",
-                  "options": [
-                          "Kamboja",
-                          "Melati",
-                          "Matahari",
-                          "Anggrek"
-                  ],
-                  "answer": "Kamboja",
-                  "hint": "Bunga khas Pulau Bali yang sering disematkan di telinga 🌺"
-          },
-          {
-                  "q": "Bunga sane warnanyane barak (merah) kabaos sekar...",
-                  "options": [
-                          "Barak",
-                          "Selem",
-                          "Pelung",
-                          "Gading"
-                  ],
-                  "answer": "Barak",
-                  "hint": "Barak = Merah dalam Basa Bali."
-          },
-          {
-                  "q": "Tetanduran ring natahe patut kasiram saban rahina mangda...",
-                  "options": [
-                          "Subur lan seger (tidak layu)",
-                          "Gering (sakit)",
-                          "Mati",
-                          "Gundul"
-                  ],
-                  "answer": "Subur lan seger (tidak layu)",
-                  "hint": "Tanaman butuh air dan sinar matahari untuk tumbuh subur."
-          }
-  ],
+          { q: 'Sekar Jepun punika ring basa Indonesia kabaos bunga...', options: ['Kamboja', 'Melati', 'Matahari', 'Anggrek'], answer: 'Kamboja', hint: 'Bunga khas Pulau Bali yang sering disematkan di telinga 🌺' },
+          { q: 'Bunga sane warnanyane barak (merah) kabaos sekar...', options: ['Barak', 'Selem', 'Pelung', 'Gading'], answer: 'Barak', hint: 'Barak = Merah dalam Basa Bali.' },
+          { q: 'Tetanduran ring natahe patut kasiram saban rahina mangda...', options: ['Subur lan seger (tidak layu)', 'Gering (sakit)', 'Mati', 'Gundul'], answer: 'Subur lan seger (tidak layu)', hint: 'Tanaman butuh air dan sinar matahari untuk tumbuh subur.' },
+          { q: 'Warna "Kuning" ring Basa Bali kawastanin...', options: ['Kuning', 'Barak', 'Selem', 'Putih'], answer: 'Kuning', hint: 'Warna kuning keemasan.' },
+          { q: 'Sekar sane mawarna selem (hitam) atau pelung (biru tua) sering dilambangkan oleh bunga...', options: ['Sekar Teleng', 'Sekar Mawar', 'Sekar Jepun', 'Sekar Sandat'], answer: 'Sekar Teleng', hint: 'Bunga telang berwarna biru pekat alami.' },
+          { q: 'Sekar Sandat ring basa Indonesia kabaos bunga...', options: ['Bunga Kenanga', 'Bunga Mawar', 'Bunga Teratai', 'Bunga Sepatu'], answer: 'Bunga Kenanga', hint: 'Bunga hijau kekuningan beraroma harum semerbak.' },
+          { q: 'Sekar Tunjung sane mentik ring telaga utawi kolam toya inggih punika...', options: ['Bunga Teratai (Lotus)', 'Bunga Mawar', 'Bunga Melati', 'Bunga Kamboja'], answer: 'Bunga Teratai (Lotus)', hint: 'Bunga suci lambang kesucian yang mekar di atas air.' },
+          { q: 'Warna "Putih" ring Basa Bali mateges...', options: ['Putih suci', 'Barak', 'Kuning', 'Selem'], answer: 'Putih suci', hint: 'Warna putih melambangkan ketulusan jiwa.' },
+          { q: 'Don kayu sane kaanggen nanding canang sari kawastanin...', options: ['Busung (janur muda)', 'Don biu tuh', 'Kertas koran', 'Plastik'], answer: 'Busung (janur muda)', hint: 'Daun kelapa muda berwarna kuning cerah.' },
+          { q: 'Upacara ring Bali sane ngaturang suksma majeng tetanduran lan pepohonan inggih punika...', options: ['Tumpek Wariga / Tumpek Bubuh', 'Tumpek Kandang', 'Tumpek Landep', 'Saraswati'], answer: 'Tumpek Wariga / Tumpek Bubuh', hint: 'Hari penghormatan kepada tumbuhan penghasil oksigen dan buah.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "The iconic Balinese flower \"Sekar Jepun\" is known in English as...",
-                  "options": [
-                          "Frangipani",
-                          "Sunflower",
-                          "Lotus",
-                          "Tulip"
-                  ],
-                  "answer": "Frangipani",
-                  "hint": "Famous fragrant tropical blossom of Bali 🌺"
-          }
-  ]
+          { q: 'The iconic Balinese flower "Sekar Jepun" is known in English as...', options: ['Frangipani', 'Sunflower', 'Lotus', 'Tulip'], answer: 'Frangipani', hint: 'Famous fragrant tropical blossom of Bali 🌺' }
+        ]
       },
       {
-        "id": "bali-bebadetan",
-      "title": "Paribasa Bali: Bebadetan (Teka-Teki Ceria)",
-      "titleEn": "Balinese Riddles: Bebadetan",
-      "desc": "Bebadetan inggih punika sesimbingan utawi cecimpedan teka-teki mabasa Bali sane ngicenin kalecegan nalar lan rasa bungah. Conto: \"Apa ke anak cerik ngemu getih?\" Pasaur: Tabia (cabe)! \"Apa ke memene maring-ring, pianakne ngelanting?\" Pasaur: Punyan biu!",
-      "descEn": "Bebadetan are traditional Balinese riddles that spark laughter and witty deductive thinking among children. Examples include riddles describing chili peppers, bananas, and coconut trees!",
-      "checklist": [
-        "Misi 1: Tebak 2 bebadetan ceria sareng rerama ring jeroan.",
-        "Misi 2: Eja kruna pasaur bebadetan: TABIA (cabe), BIU (pisang), lan NYUH (kelapa).",
-        "Misi 3: Gendingang sasimbingan cerik puniki sareng kanca-kanca ring kelas."
-      ],
-      "checklistEn": [
-        "Mission 1: Guess 2 cheerful Balinese riddles together with parents at home.",
-        "Mission 2: Spell the answer words: TABIA (chili), BIU (banana), and NYUH (coconut).",
-        "Mission 3: Share these humorous traditional riddles with school friends."
-      ],
-      "activities": [
-        {
-          "q": "Teka-teki Bali: \"Anak cerik ngemu getih\" pasaur pastikannyane inggih punika...",
-          "options": [
-            "Tabia (cabe barak) 🌶️",
-            "Batu",
-            "Don kayu",
-            "Air"
-          ],
-          "answer": "Tabia (cabe barak) 🌶️",
-          "hint": "Bentukne cenik barak, rasane lalah nyelekket!"
-        },
-        {
-          "q": "\"Bebadetan\" ring basa Indonesia mateges...",
-          "options": [
-            "Teka-teki atau tebak-tebakan ceria",
-            "Lagu tidur",
-            "Buku tulis",
-            "Kamus"
-          ],
-          "answer": "Teka-teki atau tebak-tebakan ceria",
-          "hint": "Bermain tebak-tebakan jenaka khas budaya Bali."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Balinese riddle \"Anak cerik ngemu getih\" refers to...",
-          "options": [
-            "Tabia (red chili) 🌶️",
-            "Rock",
-            "Wood",
-            "Water"
-          ],
-          "answer": "Tabia (red chili) 🌶️",
-          "hint": "Tiny red and very spicy!"
-        }
-      ]
-    },
-    {
-      "id": "bali-upacara-melasti",
-      "title": "Upacara Tradisi Bali: Melasti & Pawai Ogoh-Ogoh",
-      "titleEn": "Balinese Cultural Celebrations: Melasti & Ogoh-Ogoh",
-      "desc": "Sadurung rahina Nyepi, umat Hindu ring Bali ngamargiang Upacara Melasti nuju segara utawi danu anggen nyuciang pratima lan sarwa prabot suci. Ri kala wengi Pengerupukan, alit-alite seneng pisan nyaksiang pawai patung Ogoh-ogoh sane megah!",
-      "descEn": "Prior to Nyepi, Balinese communities perform the holy Melasti procession towards beaches or sacred lakes for spiritual purification. On Pengerupukan eve, massive artistic Ogoh-ogoh statues are joyfully paraded!",
-      "checklist": [
-        "Misi 1: Ngaruruh arti Upacara Melasti (nyuciang bhuana alit lan bhuana agung nuju segara).",
-        "Misi 2: Menggambar miniatur Ogoh-ogoh sane kreatif ring buku gambar.",
-        "Misi 3: Menjaga karesikan lan ketertiban ri kala nonton pawai budaya adat Bali."
-      ],
-      "checklistEn": [
-        "Mission 1: Learn the essence of Melasti (sacred purification ritual at the sea).",
-        "Mission 2: Sketch a miniature creative Ogoh-ogoh drawing in your art book.",
-        "Mission 3: Keep environment clean and courteous while watching cultural parades."
-      ],
-      "activities": [
-        {
-          "q": "Genah sane katuju ri kala Upacara Melasti inggih punika...",
-          "options": [
-            "Segara (pantai) utawi danu 🌊",
-            "Pasar",
-            "Bioskop",
-            "Lapangan bola"
-          ],
-          "answer": "Segara (pantai) utawi danu 🌊",
-          "hint": "Mencari tirta amerta pembersih di perairan laut suci."
-        },
-        {
-          "q": "Patung raksasa ageng sane kaarak ri kala wengi Pengerupukan mawasta...",
-          "options": [
-            "Ogoh-ogoh 👹",
-            "Barong",
-            "Rangda",
-            "Topeng"
-          ],
-          "answer": "Ogoh-ogoh 👹",
-          "hint": "Karya seni patung bambu dan kertas kreasi pemuda banjar."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "The holy destination for the Melasti ritual is the...",
-          "options": [
-            "Sea (beach) or lake 🌊",
-            "Shopping mall",
-            "Cinema",
-            "Office"
-          ],
-          "answer": "Sea (beach) or lake 🌊",
-          "hint": "Sacred waters for spiritual purification."
-        }
-      ]
-    }
+        id: 'bali-bebadetan',
+        title: 'Paribasa Bali: Bebadetan (Teka-Teki Ceria)',
+        titleEn: 'Balinese Riddles: Bebadetan',
+        desc: 'Bebadetan inggih punika sesimbingan utawi cecimpedan teka-teki mabasa Bali sane ngicenin kalecegan nalar lan rasa bungah. Conto: "Apa ke anak cerik ngemu getih?" Pasaur: Tabia (cabe)! "Apa ke memene maring-ring, pianakne ngelanting?" Pasaur: Punyan biu!',
+        descEn: 'Bebadetan are traditional Balinese riddles that spark laughter and witty deductive thinking among children. Examples include riddles describing chili peppers, bananas, and coconut trees!',
+        funFact: '💡 Fakta Ceria: Bermain bebadetan sambil duduk melingkar di bawah bale bengong melatih kecerdasan logika dan daya imajinasi anak-anak dengan penuh tawa!',
+        keyPoints: [
+          'Bebadetan adalah teka-teki jenaka berbahasa Bali sarat metafora alam.',
+          '"Anak cerik ngemu getih" = Tabia (cabe rawit merah pedas).',
+          '"Memene maring-ring, pianakne ngelanting" = Punyan biu (pohon pisang).'
+        ],
+        checklist: [
+          'Misi 1: Tebak 2 bebadetan ceria sareng rerama ring jeroan.',
+          'Misi 2: Eja kruna pasaur bebadetan: TABIA (cabe), BIU (pisang), lan NYUH (kelapa).',
+          'Misi 3: Gendingang sasimbingan cerik puniki sareng kanca-kanca ring kelas.'
+        ],
+        checklistEn: [
+          'Mission 1: Guess 2 cheerful Balinese riddles together with parents at home.',
+          'Mission 2: Spell the answer words: TABIA (chili), BIU (banana), and NYUH (coconut).',
+          'Mission 3: Share these humorous traditional riddles with school friends.'
+        ],
+        activities: [
+          { q: 'Teka-teki Bali: "Anak cerik ngemu getih" pasaur pastikannyane inggih punika...', options: ['Tabia (cabe barak) 🌶️', 'Batu', 'Don kayu', 'Air'], answer: 'Tabia (cabe barak) 🌶️', hint: 'Bentukne cenik barak, rasane lalah nyelekket!' },
+          { q: '"Bebadetan" ring basa Indonesia mateges...', options: ['Teka-teki atau tebak-tebakan ceria', 'Lagu tidur', 'Buku tulis', 'Kamus'], answer: 'Teka-teki atau tebak-tebakan ceria', hint: 'Bermain tebak-tebakan jenaka khas budaya Bali.' },
+          { q: 'Teka-teki: "Memene maring-ring, pianakne ngelanting" pasaur nyane inggih punika...', options: ['Punyan biu (pohon pisang dan buahnya)', 'Punyan kelapa', 'Punyan mangga', 'Batu gede'], answer: 'Punyan biu (pohon pisang dan buahnya)', hint: 'Batang pisang berdiri, tandan buah pisang menggantung menggelantung 🍌' },
+          { q: 'Teka-teki: "Kaki-kaki bungkok, di tengahne ada getih" pasaur nyane inggih punika...', options: ['Udang goreng', 'Kepiting', 'Katak', 'Ayam'], answer: 'Udang goreng', hint: 'Hewan air berbongkok yang berwarna merah setelah dimasak 🦐' },
+          { q: 'Teka-teki: "Anak cerik mabaju besi" pasaur nyane inggih punika...', options: ['Kakua (kura-kura)', 'Meong', 'Bojog', 'Siap'], answer: 'Kakua (kura-kura)', hint: 'Tempurung keras bagaikan baju zirah besi 🐢' },
+          { q: 'Teka-teki: "Dugasne cenik mabaju, suba kelih meculik" pasaur nyane inggih punika...', options: ['Bungbung tiing (rebung bambu)', 'Kelapa', 'Mangga', 'Pepaya'], answer: 'Bungbung tiing (rebung bambu)', hint: 'Rebung bambu yang melepaskan kelongsong saat tinggi menjadi bambu.' },
+          { q: 'Teka-teki: "Memene majujuk, panakne merayap" pasaur nyane inggih punika...', options: ['Punyan semangka / labu', 'Punyan beringin', 'Punyan kelapa', 'Batu kali'], answer: 'Punyan semangka / labu', hint: 'Batang merambat di atas tanah menjalar.' },
+          { q: 'Bebadetan ma-guna anggen melatih...', options: ['Daya nalar, kecerdikan, lan basa Bali', 'Kekuatan tinju', 'Tidur siang', 'Malas bicara'], answer: 'Daya nalar, kecerdikan, lan basa Bali', hint: 'Mengasah otak dan kosakata dengan riang.' },
+          { q: 'Jawaban teka-teki dalam bahasa Bali disebut...', options: ['Pasaur', 'Petakon', 'Sasambatan', 'Gending'], answer: 'Pasaur', hint: 'Pasaur artinya jawaban atau tanggapan.' },
+          { q: 'Pertanyaan teka-teki dalam bahasa Bali disebut...', options: ['Petakon / Cecimpedan', 'Pasaur', 'Kidang', 'Kidung'], answer: 'Petakon / Cecimpedan', hint: 'Petakon artinya pertanyaan tebakan.' }
+        ],
+        activitiesEn: [
+          { q: 'Balinese riddle "Anak cerik ngemu getih" refers to...', options: ['Tabia (red chili) 🌶️', 'Rock', 'Wood', 'Water'], answer: 'Tabia (red chili) 🌶️', hint: 'Tiny red and very spicy!' }
+        ]
+      },
+      {
+        id: 'bali-upacara-melasti',
+        title: 'Upacara Tradisi Bali: Melasti & Pawai Ogoh-Ogoh',
+        titleEn: 'Balinese Cultural Celebrations: Melasti & Ogoh-Ogoh',
+        desc: 'Sadurung rahina Nyepi, umat Hindu ring Bali ngamargiang Upacara Melasti nuju segara utawi danu anggen nyuciang pratima lan sarwa prabot suci. Ri kala wengi Pengerupukan, alit-alite seneng pisan nyaksiang pawai patung Ogoh-ogoh sane megah!',
+        descEn: 'Prior to Nyepi, Balinese communities perform the holy Melasti procession towards beaches or sacred lakes for spiritual purification. On Pengerupukan eve, massive artistic Ogoh-ogoh statues are joyfully paraded!',
+        funFact: '💡 Fakta Ceria: Patung Ogoh-ogoh dibuat dari anyaman bambu, kayu, dan kertas ramah lingkungan oleh pemuda-pemudi desa banjar dengan detail seni ukir yang sangat memukau!',
+        keyPoints: [
+          'Melasti adalah upacara penyucian diri dan pratima suci menuju laut atau danau.',
+          'Malam Pengerupukan dimeriahkan pawai Ogoh-ogoh sebagai simbol pembersihan energi negatif.',
+          'Selalu menjaga kebersihan, ketertiban, dan keselamatan saat menonton pawai budaya.'
+        ],
+        checklist: [
+          'Misi 1: Ngaruruh arti Upacara Melasti (nyuciang bhuana alit lan bhuana agung nuju segara).',
+          'Misi 2: Menggambar miniatur Ogoh-ogoh sane kreatif ring buku gambar.',
+          'Misi 3: Menjaga karesikan lan ketertiban ri kala nonton pawai budaya adat Bali.'
+        ],
+        checklistEn: [
+          'Mission 1: Learn the essence of Melasti (sacred purification ritual at the sea).',
+          'Mission 2: Sketch a miniature creative Ogoh-ogoh drawing in your art book.',
+          'Mission 3: Keep environment clean and courteous while watching cultural parades.'
+        ],
+        activities: [
+          { q: 'Genah sane katuju ri kala Upacara Melasti inggih punika...', options: ['Segara (pantai) utawi danu 🌊', 'Pasar', 'Bioskop', 'Lapangan bola'], answer: 'Segara (pantai) utawi danu 🌊', hint: 'Mencari tirta amerta pembersih di perairan laut suci.' },
+          { q: 'Patung raksasa ageng sane kaarak ri kala wengi Pengerupukan mawasta...', options: ['Ogoh-ogoh 👹', 'Barong', 'Rangda', 'Topeng'], answer: 'Ogoh-ogoh 👹', hint: 'Karya seni patung bambu dan kertas kreasi pemuda banjar.' },
+          { q: 'Maksud utama dari pawai patung Ogoh-ogoh di malam Pengerupukan adalah...', options: ['Menetralisir energi negatif (Bhuta Kala) agar alam damai', 'Menakut-nakuti adik', 'Pamer mainan', 'Merusak jalan raya'], answer: 'Menetralisir energi negatif (Bhuta Kala) agar alam damai', hint: 'Penyucian bhuana agung menjelang keheningan Nyepi.' },
+          { q: 'Peralatan suci yang diiring menuju laut saat Melasti diusung oleh para warga dengan busana adat...', options: ['Putih kuning yang bersih dan rapi', 'Hitam pekat seram', 'Kaos oblong', 'Baju renang'], answer: 'Putih kuning yang bersih dan rapi', hint: 'Busana adat kepura bernuansa putih kuning lambang kesucian.' },
+          { q: 'Tirta suci pembersih yang dimohon dari segara saat upacara Melasti disebut...', options: ['Tirta Amerta (air suci kehidupan)', 'Air sirup', 'Air soda', 'Air teh'], answer: 'Tirta Amerta (air suci kehidupan)', hint: 'Tirta suci pembersih kekotoran batin dan alam semesta.' },
+          { q: 'Suara tabuhan gamelan yang mengiringi pawai Ogoh-ogoh adalah musik...', options: ['Baleganjur yang bersemangat', 'Musik pop lambat', 'Keroncong tidur', 'Suling pelan'], answer: 'Baleganjur yang bersemangat', hint: 'Irama gong, ceng-ceng kopyak, dan kendang dinamis.' },
+          { q: 'Bahan dasar utama yang ramah lingkungan untuk merakit Ogoh-ogoh adalah...', options: ['Ulat-ulatan tiing (anyaman bambu) dan kertas', 'Plastik sekali pakai', 'Besi tua', 'Kaca tajam'], answer: 'Ulat-ulatan tiing (anyaman bambu) dan kertas', hint: 'Bahan alami yang mudah diurai tanah.' },
+          { q: 'Sikap anak-anak saat menonton pawai Ogoh-ogoh di jalan raya adalah...', options: ['Tertib di trotoar pinggir jalan dan tidak melempar sampah', 'Menerobos barisan pengarak', 'Berteriak mengejek', 'Membuang botol ke jalan'], answer: 'Tertib di trotoar pinggir jalan dan tidak melempar sampah', hint: 'Menonton aman dan menjaga kebersihan kota.' },
+          { q: 'Tempat berkumpul pemuda banjar untuk bersama-sama membuat patung Ogoh-ogoh adalah...', options: ['Bale Banjar', 'Rumah sakit', 'Kantor pos', 'Pelabuhan'], answer: 'Bale Banjar', hint: 'Pusat kegiatan adat dan kemasyarakatan banjar di Bali.' },
+          { q: 'Upacara Melasti dan pawai Ogoh-ogoh adalah bukti bahwa budaya Bali sangat kaya akan nilai...', options: ['Gotong royong, kreativitas seni, dan kesucian spiritual', 'Permusuhan', 'Keserakahan', 'Pemborosan'], answer: 'Gotong royong, kreativitas seni, dan kesucian spiritual', hint: 'Warisan peradaban luhur pulau dewata.' }
+        ],
+        activitiesEn: [
+          { q: 'The holy destination for the Melasti ritual is the...', options: ['Sea (beach) or lake 🌊', 'Shopping mall', 'Cinema', 'Office'], answer: 'Sea (beach) or lake 🌊', hint: 'Sacred waters for spiritual purification.' }
+        ]
+      }
     ]
   };
   
@@ -4478,7 +4568,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Seni Rupa Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Eksplorasi Visual Kreatif)
+  // Version   : 2.5 (10 Topics, Fun Facts, Key Points, & 100 Questions)
   // ================================================================
   
   const SENI_RUPA_DATA = {
@@ -4494,6 +4584,12 @@
         titleEn: 'Art Elements: Points, Lines, & Shapes',
         desc: 'Semua karya gambar berawal dari sebuah TITIK kecil. Ketika titik ditarik bergerak, jadilah GARIS (lurus, lengkung, bergelombang, zig-zag, spiral). Ketika ujung garis bertemu kembali, terbentuklah BIDANG datar yang indah!',
         descEn: 'Every great masterpiece begins with a tiny POINT. Connecting points creates dynamic LINES (straight, curvy, wavy, zig-zag, spiral). Closing lines together yields flat 2D SHAPES!',
+        funFact: '💡 Fakta Ceria: Pelukis legendaris dunia sering menyebut garis sebagai "titik yang sedang berjalan-jalan di atas kertas"!',
+        keyPoints: [
+          'Titik adalah unsur seni rupa paling awal dan paling sederhana.',
+          'Garis adalah jejak titik yang bergerak (lurus, lengkung, zig-zag, bergelombang).',
+          'Bidang terbentuk saat ujung garis bertemu dan mengurung sebuah area tertutup.'
+        ],
         checklist: [
           'Misi 1: Buat 5 jenis garis berbeda (garis lurus, gelombang ombak, zig-zag petir, spiral obat nyamuk, dan putus-putus).',
           'Misi 2: Hubungkan 4 garis lurus sama panjang untuk membentuk bidang bujur sangkar.',
@@ -4506,7 +4602,15 @@
         ],
         activities: [
           { q: 'Garis yang bentuknya naik turun tajam seperti kilatan petir disebut garis...', options: ['Zig-zag', 'Lengkung', 'Lurus mendatar', 'Lingkaran'], answer: 'Zig-zag', hint: 'Garis zig-zag bersudut lancip dan tegas ⚡' },
-          { q: 'Unsur seni rupa paling awal dan paling sederhana adalah...', options: ['Titik', 'Warna', 'Ruang', 'Tekstur'], answer: 'Titik', hint: 'Titik adalah tanda terkecil tempat mulainya sebuah goresan pensil.' }
+          { q: 'Unsur seni rupa paling awal dan paling sederhana adalah...', options: ['Titik', 'Warna', 'Ruang', 'Tekstur'], answer: 'Titik', hint: 'Titik adalah tanda terkecil tempat mulainya sebuah goresan pensil.' },
+          { q: 'Garis yang mengalir naik turun lembut menyerupai riak ombak di laut disebut garis...', options: ['Bergelombang', 'Zig-zag', 'Patah-patah', 'Spiral'], answer: 'Bergelombang', hint: 'Bentuknya melengkung halus seperti deburan ombak 🌊' },
+          { q: 'Jika empat garis lurus sama panjang dihubungkan keempat sudutnya, akan terbentuk bidang...', options: ['Persegi / bujur sangkar', 'Lingkaran', 'Segitiga', 'Trapesium'], answer: 'Persegi / bujur sangkar', hint: 'Memiliki 4 sisi sama panjang dan 4 sudut siku-siku ⏹️' },
+          { q: 'Garis yang berputar-putar melingkar ke arah tengah seperti rumah siput disebut garis...', options: ['Spiral', 'Lurus', 'Putus-putus', 'Sejajar'], answer: 'Spiral', hint: 'Pola melingkar yang berpusat di tengah 🌀' },
+          { q: 'Bidang yang hanya memiliki satu garis lengkung tertutup tanpa sudut sama sekali adalah...', options: ['Lingkaran', 'Segitiga', 'Persegi', 'Bintang'], answer: 'Lingkaran', hint: 'Bulat sempurna seperti uang logam ⭕' },
+          { q: 'Garis yang berdiri tegak lurus dari atas ke bawah disebut garis...', options: ['Vertikal', 'Horizontal', 'Diagonal', 'Gelombang'], answer: 'Vertikal', hint: 'Seperti tiang bendera yang berdiri kokoh ke atas.' },
+          { q: 'Garis yang mendatar lurus dari kiri ke kanan seperti permukaan air tenang disebut garis...', options: ['Horizontal', 'Vertikal', 'Miring', 'Spiral'], answer: 'Horizontal', hint: 'Garis cakrawala di batas laut dan langit.' },
+          { q: 'Bidang datar yang memiliki tiga sisi dan tiga sudut lancip adalah...', options: ['Segitiga 🔺', 'Persegi', 'Lingkaran', 'Segi lima'], answer: 'Segitiga 🔺', hint: 'Bentuk seperti potongan kue martabak atau piramida.' },
+          { q: 'Teknik menggambar dengan kumpulan titik-titik kecil yang rapat dan renggang disebut teknik...', options: ['Pointilis (titik-titik)', 'Arsir silang', 'Blok hitam', 'Cap jari'], answer: 'Pointilis (titik-titik)', hint: 'Berasal dari kata "point" yang artinya titik.' }
         ],
         activitiesEn: [
           { q: 'A sharp, angled back-and-forth line resembling lightning is called a...', options: ['Zig-zag line', 'Curvy line', 'Horizontal line', 'Circular line'], answer: 'Zig-zag line', hint: 'Zig-zags feature sharp points ⚡' }
@@ -4518,6 +4622,12 @@
         titleEn: 'Color Wheel: Primary & Secondary Colors',
         desc: 'Warna Primer adalah warna pokok murni yang tidak bisa dibuat dari warna lain: MERAH, KUNING, dan BIRU. Jika dicampur berpasangan, terciptalah Warna Sekunder: Merah + Kuning = JINGGA (Oranye), Kuning + Biru = HIJAU, Merah + Biru = UNGU!',
         descEn: 'Primary colors are pure foundational pigments: RED, YELLOW, and BLUE. Blending them pairs creates Secondary colors: Red + Yellow = ORANGE, Yellow + Blue = GREEN, Red + Blue = PURPLE!',
+        funFact: '💡 Fakta Ceria: Dengan hanya 3 tabung cat warna primer (Merah, Kuning, Biru) ditambah Putih, kamu bisa menciptakan ratusan warna pelangi yang berbeda!',
+        keyPoints: [
+          'Warna primer adalah warna dasar murni: Merah, Kuning, dan Biru.',
+          'Warna sekunder adalah hasil percampuran dua warna primer.',
+          'Merah + Kuning = Jingga, Kuning + Biru = Hijau, Merah + Biru = Ungu.'
+        ],
         checklist: [
           'Misi 1: Campurkan cat air / krayon kuning dan biru untuk membuktikan bahwa hasilnya menjadi hijau segar.',
           'Misi 2: Warnai gambar matahari terbenam dengan perpaduan warna jingga dan merah menyala.',
@@ -4531,7 +4641,14 @@
         activities: [
           { q: 'Manakah yang termasuk kelompok 3 warna primer?', options: ['Merah, Kuning, Biru', 'Hijau, Ungu, Jingga', 'Hitam, Putih, Abu-abu', 'Cokelat, Merah muda, Emas'], answer: 'Merah, Kuning, Biru', hint: 'Tiga warna pokok dasar yang menjadi asal mula warna lainnya 🎨' },
           { q: 'Jika warna MERAH dicampur dengan warna KUNING, akan menghasilkan warna...', options: ['Jingga (Oranye)', 'Hijau', 'Ungu', 'Cokelat'], answer: 'Jingga (Oranye)', hint: 'Warna hangat seperti buah jeruk matang 🍊' },
-          { q: 'Warna HIJAU daun dihasilkan dari percampuran warna...', options: ['Kuning dan Biru', 'Merah dan Biru', 'Merah dan Kuning', 'Putih dan Hitam'], answer: 'Kuning dan Biru', hint: 'Campuran warna cerah sinar matahari (kuning) dan langit (biru).' }
+          { q: 'Warna HIJAU daun dihasilkan dari percampuran warna...', options: ['Kuning dan Biru', 'Merah dan Biru', 'Merah dan Kuning', 'Putih dan Hitam'], answer: 'Kuning dan Biru', hint: 'Campuran warna cerah sinar matahari (kuning) dan langit (biru).' },
+          { q: 'Jika warna MERAH dicampur dengan warna BIRU, akan menghasilkan warna sekunder...', options: ['Ungu', 'Hijau', 'Jingga', 'Cokelat'], answer: 'Ungu', hint: 'Warna anggun seperti buah anggur dan terong 🍇' },
+          { q: 'Warna yang dihasilkan jika cat merah dicampur dengan cat putih adalah...', options: ['Merah muda (Pink)', 'Merah tua', 'Cokelat', 'Kuning'], answer: 'Merah muda (Pink)', hint: 'Warna putih menerangkan warna merah menjadi pink lembut.' },
+          { q: 'Warna hitam dan putih dalam seni rupa sering disebut sebagai warna...', options: ['Netral', 'Primer', 'Sekunder', 'Tersier'], answer: 'Netral', hint: 'Warna netral digunakan untuk menggelapkan atau menerangkan warna.' },
+          { q: 'Warna pelangi yang melambangkan kehangatan api dan semangat adalah...', options: ['Merah', 'Biru', 'Hijau', 'Nila'], answer: 'Merah', hint: 'Warna merah memberi kesan berani dan hangat.' },
+          { q: 'Warna yang memberi kesan sejuk, tenang, dan damai seperti air laut adalah...', options: ['Biru', 'Merah', 'Kuning', 'Jingga'], answer: 'Biru', hint: 'Warna dingin (cool color) yang menenangkan pikiran.' },
+          { q: 'Warna buah lemon matang dan bunga matahari adalah warna primer...', options: ['Kuning', 'Merah', 'Biru', 'Cokelat'], answer: 'Kuning', hint: 'Warna cerah yang paling bersinar terang.' },
+          { q: 'Alat untuk mencampurkan cat air sebelum dioleskan ke kertas adalah...', options: ['Palet cat air', 'Kuas cat', 'Tempat pensil', 'Penggaris'], answer: 'Palet cat air', hint: 'Wadah cekung tempat menaruh dan mencampur warna 🎨' }
         ],
         activitiesEn: [
           { q: 'Which trio constitutes the primary colors?', options: ['Red, Yellow, Blue', 'Green, Purple, Orange', 'Black, White, Gray', 'Brown, Pink, Gold'], answer: 'Red, Yellow, Blue', hint: 'The fundamental root colors 🎨' }
@@ -4543,6 +4660,12 @@
         titleEn: 'Collage & Mosaic with Natural Materials',
         desc: 'Kolase adalah teknik menempel berbagai macam bahan (daun kering, ranting kecil, biji jagung, cangkang telur) pada bidang gambar. Mozaik menempel kepingan bahan sejenis yang disusun rapi membentuk pola indah. Keduanya melatih motorik halus dan cinta lingkungan!',
         descEn: 'Collage involves pasting varied textured materials (dry leaves, twigs, corn seeds, eggshells) onto canvas. Mosaic places uniform small pieces neatly into patterned artworks, nurturing fine motor dexterity!',
+        funFact: '💡 Fakta Ceria: Kulit telur ayam yang sudah dibersihkan bisa dipecah menjadi mozaik retakan unik yang sangat artistik dan bernilai seni tinggi!',
+        keyPoints: [
+          'Kolase menempelkan bermacam-macam bahan berbeda (daun, biji, kertas).',
+          'Mozaik menyusun kepingan-kepingan bahan sejenis yang dipotong seragam.',
+          'Gunakan lem secukupnya agar karya menempel kuat dan bersih rapi.'
+        ],
         checklist: [
           'Misi 1: Kumpulkan 5 helai daun kering yang gugur di halaman dengan beragam ukuran.',
           'Misi 2: Buat bentuk ikan atau kura-kura dari susunan daun kering yang ditempel dengan lem.',
@@ -4555,7 +4678,15 @@
         ],
         activities: [
           { q: 'Karya seni rupa yang dibuat dengan menempelkan berbagai bahan alam pada gambar disebut...', options: ['Kolase', 'Patung', 'Seni Grafis', 'Pahat'], answer: 'Kolase', hint: 'Teknik tempel bahan alami seperti daun, biji, dan kertas.' },
-          { q: 'Bahan alam manakah di sekitar rumah yang bisa dipakai untuk membuat kolase?', options: ['Daun kering dan biji-bijian', 'Limbah plastik kotor', 'Batu bata berat', 'Kaca tajam berbahaya'], answer: 'Daun kering dan biji-bijian', hint: 'Pilihlah bahan alami yang aman, bersih, dan ramah lingkungan 🍂' }
+          { q: 'Bahan alam manakah di sekitar rumah yang bisa dipakai untuk membuat kolase?', options: ['Daun kering dan biji-bijian', 'Limbah plastik kotor', 'Batu bata berat', 'Kaca tajam berbahaya'], answer: 'Daun kering dan biji-bijian', hint: 'Pilihlah bahan alami yang aman, bersih, dan ramah lingkungan 🍂' },
+          { q: 'Perekat yang digunakan untuk menempelkan biji dan daun kering pada kertas adalah...', options: ['Lem kertas / lem kayu', 'Air biasa', 'Minyak goreng', 'Pasir'], answer: 'Lem kertas / lem kayu', hint: 'Lem putih atau lem bening yang daya rekatnya kuat.' },
+          { q: 'Seni menyusun kepingan-kepingan kecil bahan sejenis (seperti kertas warna potong kotak) disebut...', options: ['Mozaik', 'Patung', 'Anyaman', 'Lukisan dinding'], answer: 'Mozaik', hint: 'Kepingan-kepingan kecil dirangkai membentuk gambar utuh.' },
+          { q: 'Biji-bijian yang sering digunakan untuk kolase karena warnanya kuning cerah adalah...', options: ['Biji jagung', 'Biji kedelai hitam', 'Biji semangka', 'Biji cabai'], answer: 'Biji jagung', hint: 'Butiran biji jagung pipil kuning keemasan 🌽' },
+          { q: 'Sebelum ditempelkan pada kertas gambar, cangkang telur sebaiknya...', options: ['Dicuci bersih, dikeringkan, lalu dipecah kecil-kecil', 'Dibiarkan kotor dan basah', 'Digoreng di minyak', 'Dibuang ke selokan'], answer: 'Dicuci bersih, dikeringkan, lalu dipecah kecil-kecil', hint: 'Kebersihan bahan menjaga karya awet dan tidak berbau.' },
+          { q: 'Alat bantu untuk mengoleskan lem dengan rapi agar tangan tidak kotor adalah...', options: ['Stik es krim / kuas lem', 'Sendok makan', 'Gunting tajam', 'Penggaris besi'], answer: 'Stik es krim / kuas lem', hint: 'Peralatan sederhana perata lem.' },
+          { q: 'Membuat kolase dari dedaunan kering yang gugur di taman melatih kita untuk...', options: ['Memanfaatkan bahan alam tanpa merusak lingkungan', 'Menebang pohon', 'Membuang-buang kertas', 'Membakar sampah'], answer: 'Memanfaatkan bahan alam tanpa merusak lingkungan', hint: 'Pemanfaatan barang alami ramah lingkungan.' },
+          { q: 'Agar hasil kolase tidak mudah lepas dan terkelupas, setelah diberi lem sebaiknya...', options: ['Ditekan perlahan dan diangin-anginkan hingga kering', 'Langsung ditarik-tarik', 'Disiram air', 'Ditiup api'], answer: 'Ditekan perlahan dan diangin-anginkan hingga kering', hint: 'Biarkan lem mengering secara alami.' },
+          { q: 'Keterampilan fisik yang paling dilatih saat menata biji-biji kecil dalam mozaik adalah...', options: ['Motorik halus jemari dan kesabaran', 'Kekuatan berlari kencang', 'Kekuatan menendang', 'Kekuatan berenang'], answer: 'Motorik halus jemari dan kesabaran', hint: 'Jemari menjadi lincah dan teliti memegang benda kecil.' }
         ],
         activitiesEn: [
           { q: 'The art technique of pasting organic items like dried leaves and seeds is called...', options: ['Collage', 'Sculpture', 'Lithography', 'Etching'], answer: 'Collage', hint: 'Collage assembles pasted mixed textures.' }
@@ -4567,6 +4698,12 @@
         titleEn: 'Geometric Shapes vs Organic Nature Forms',
         desc: 'Bentuk GEOMETRIS adalah bentuk teratur yang diukur matematis: persegi, lingkaran, segitiga, trapesium. Bentuk ORGANIS adalah bentuk alami yang mengalir bebas tanpa batas lurus, seperti bentuk awan di langit, tetesan air, daun monstera, dan kontur batu karang!',
         descEn: 'GEOMETRIC shapes have precise regular measurements: squares, circles, triangles. ORGANIC shapes flow freely without rigid boundaries, echoing clouds, water droplets, and jungle foliage!',
+        funFact: '💡 Fakta Ceria: Di alam semesta, hampir tidak ada bentuk garis lurus yang kaku! Bunga, buah, dan awan semuanya tumbuh dalam bentuk organis yang melengkung indah!',
+        keyPoints: [
+          'Bentuk geometris memiliki ukuran pasti dan garis tegas: persegi, segitiga, lingkaran.',
+          'Bentuk organis berbentuk bebas, luwes, dan terinspirasi dari alam ciptaan Tuhan.',
+          'Menggabungkan bentuk geometris dan organis membuat gambar pemandangan makin hidup.'
+        ],
         checklist: [
           'Misi 1: Gambar sebuah rumah yang tersusun dari gabungan bentuk geometris (atap segitiga, dinding kotak, jendela bundar).',
           'Misi 2: Gambar bentuk organis tetesan air hujan 💧 dan awan bergelombang ☁️ di buku gambarmu.',
@@ -4579,7 +4716,15 @@
         ],
         activities: [
           { q: 'Manakah di bawah ini yang merupakan contoh bentuk organis dari alam?', options: ['Bentuk awan di langit dan daun pohon', 'Bentuk kubus dan segitiga sama sisi', 'Bentuk balok penggaris', 'Bentuk meja persegi panjang'], answer: 'Bentuk awan di langit dan daun pohon', hint: 'Bentuk organis mengalir bebas dan tidak kaku seperti alam semesta.' },
-          { q: 'Roda sepeda dan uang koin memiliki bentuk dasar geometris...', options: ['Lingkaran', 'Persegi', 'Segitiga', 'Trapesium'], answer: 'Lingkaran', hint: 'Bentuk bulat tanpa sudut ⭕' }
+          { q: 'Roda sepeda dan uang koin memiliki bentuk dasar geometris...', options: ['Lingkaran', 'Persegi', 'Segitiga', 'Trapesium'], answer: 'Lingkaran', hint: 'Bentuk bulat tanpa sudut ⭕' },
+          { q: 'Pintu kelas dan papan tulis di sekolah memiliki bentuk geometris...', options: ['Persegi panjang', 'Lingkaran', 'Segitiga', 'Oval'], answer: 'Persegi panjang', hint: 'Memiliki 2 sisi panjang dan 2 sisi lebar.' },
+          { q: 'Tetesan air hujan yang jatuh dari langit memiliki bentuk...', options: ['Organis melengkung bebas 💧', 'Kotak kubus', 'Piramida tajam', 'Segi delapan'], answer: 'Organis melengkung bebas 💧', hint: 'Tetesan air mengalir luwes alami.' },
+          { q: 'Bentuk atap rumah tradisional pada gambar anak-anak biasanya menggunakan bentuk...', options: ['Segitiga 🔺', 'Lingkaran bundar', 'Garis putus-putus', 'Bintang'], answer: 'Segitiga 🔺', hint: 'Miring ke kiri dan kanan agar air hujan mengalir turun.' },
+          { q: 'Sayap kupu-kupu yang berlekuk indah dan corak belang harimau termasuk bentuk...', options: ['Organis alami', 'Geometris kaku', 'Kotak simetris', 'Kubik'], answer: 'Organis alami', hint: 'Corak alami pada satwa liar.' },
+          { q: 'Sebuah tenda kemah pramuka memiliki bentuk dasar bangun geometris...', options: ['Prisma segitiga', 'Bola bundar', 'Tabung silinder', 'Kerucut es krim'], answer: 'Prisma segitiga', hint: 'Tenda kerucut segitiga.' },
+          { q: 'Bentuk buah pisang yang melengkung alami merupakan contoh bentuk...', options: ['Organis', 'Geometris buatan', 'Garis lurus', 'Kubus'], answer: 'Organis', hint: 'Melengkung luwes mengikuti pertumbuhan buah.' },
+          { q: 'Buku tulis dan penghapus balok memiliki bentuk geometris...', options: ['Persegi panjang / balok', 'Bintang', 'Lingkaran', 'Segitiga'], answer: 'Persegi panjang / balok', hint: 'Benda buatan manusia yang bertepi lurus.' },
+          { q: 'Mengapa seniman suka memadukan bentuk geometris dan organis?', options: ['Agar karya seni terlihat seimbang, kaya, dan tidak membosankan', 'Karena wajib oleh aturan', 'Agar kertas cepat habis', 'Hanya untuk coba-coba'], answer: 'Agar karya seni terlihat seimbang, kaya, dan tidak membosankan', hint: 'Kombinasi keteraturan dan kebebasan alam menghasilkan keindahan harmoni.' }
         ],
         activitiesEn: [
           { q: 'Which of the following is an organic form found in nature?', options: ['Clouds and tree leaves', 'Cubes and equilateral triangles', 'Plastic rulers', 'Square tiles'], answer: 'Clouds and tree leaves', hint: 'Organic shapes are fluid and non-geometric.' }
@@ -4591,6 +4736,12 @@
         titleEn: 'Indonesian Batik Patterns & Cultural Motifs',
         desc: 'Batik adalah mahakarya warisan budaya dunia Indonesia (UNESCO). Tiap daerah punya motif khas penuh doa: Motif Kawung (bulat lonjong seperti buah kolang-kaling melambangkan kesucian hati), Mega Mendung Cirebon (awan bertingkat pembawa kesejukan), dan Parang (ombak samudra pantang menyerah)!',
         descEn: 'Batik is an internationally recognized Indonesian cultural treasure (UNESCO). Renowned motifs include Kawung (purity of heart), Mega Mendung (cooling cloud horizons), and Parang (resilience like ocean waves)!',
+        funFact: '💡 Fakta Ceria: Setiap tanggal 2 Oktober, seluruh rakyat Indonesia bangga mengenakan pakaian batik untuk merayakan Hari Batik Nasional!',
+        keyPoints: [
+          'Batik adalah warisan budaya dunia takbenda asli Indonesia yang diakui UNESCO.',
+          'Motif Kawung berbentuk lonjong teratur melambangkan kesucian dan ketulusan hati.',
+          'Motif Mega Mendung Cirebon berbentuk awan bertingkat pembawa keteduhan.'
+        ],
         checklist: [
           'Misi 1: Amati pakaian batik yang ada di rumahmu, lalu perhatikan motif polanya yang berulang.',
           'Misi 2: Rancang motif batik Kawung sederhana di atas kertas kotak berpetak.',
@@ -4603,7 +4754,15 @@
         ],
         activities: [
           { q: 'Motif batik Mega Mendung yang berbentuk gumpalan awan bertingkat berasal dari daerah...', options: ['Cirebon', 'Yogyakarta', 'Solo', 'Papua'], answer: 'Cirebon', hint: 'Cirebon di pesisir utara Jawa Barat terkenal dengan Mega Mendung ☁️' },
-          { q: 'Batik telah diakui oleh badan dunia PBB sebagai Warisan Budaya Dunia asli milik bangsa...', options: ['Indonesia', 'Inggris', 'Jepang', 'Australia'], answer: 'Indonesia', hint: 'Ditetapkan oleh UNESCO pada 2 Oktober 2009 🇮🇩' }
+          { q: 'Batik telah diakui oleh badan dunia PBB sebagai Warisan Budaya Dunia asli milik bangsa...', options: ['Indonesia', 'Inggris', 'Jepang', 'Australia'], answer: 'Indonesia', hint: 'Ditetapkan oleh UNESCO pada 2 Oktober 2009 🇮🇩' },
+          { q: 'Motif batik Kawung memiliki bentuk dasar yang menyerupai buah...', options: ['Kolang-kaling / aren yang dibelah empat', 'Buah apel', 'Buah semangka', 'Buah durian'], answer: 'Buah kolang-kaling / aren yang dibelah empat', hint: 'Empat bulatan lonjong teratur melambangkan empat penjuru mata angin.' },
+          { q: 'Alat tradisional dari tembaga bergagang kayu untuk menorehkan cairan lilin malam pada kain batik adalah...', options: ['Canting', 'Kuas cat', 'Pisau ukir', 'Spatula'], answer: 'Canting', hint: 'Alat bercucuk kecil tempat mengalirkan lilin malam cair.' },
+          { q: 'Bahan cair panas yang digunakan untuk merintang warna pada proses membatik disebut...', options: ['Lilin malam', 'Minyak tanah', 'Air gula', 'Cat minyak'], answer: 'Lilin malam', hint: 'Lilin malam menahan warna agar tidak meresap ke kain.' },
+          { q: 'Motif batik Parang yang berbentuk garis diagonal menyerupai ombak karang melambangkan...', options: ['Semangat pantang menyerah dan keteguhan hati', 'Kemalasan', 'Ketakutan', 'Kesedihan'], answer: 'Semangat pantang menyerah dan keteguhan hati', hint: 'Ombak laut yang tak pernah lelah menghantam karang.' },
+          { q: 'Hari Batik Nasional di Indonesia diperingati setiap tanggal...', options: ['2 Oktober', '17 Agustus', '21 April', '1 Januari'], answer: '2 Oktober', hint: 'Hari saat UNESCO menetapkan batik sebagai warisan dunia.' },
+          { q: 'Kain mori putih yang dibatik dengan tangan menggunakan canting disebut batik...', options: ['Batik tulis', 'Batik cetak mesin', 'Batik sablon', 'Batik digital'], answer: 'Batik tulis', hint: 'Dikerjakan dengan ketelitian tangan yang penuh kesabaran.' },
+          { q: 'Warna klasik batik tradisional Jawa Tengah yang berasal dari pewarna kayu alami adalah...', options: ['Cokelat soga dan biru nila', 'Merah menyala neon', 'Hijau stabilo', 'Kuning terang'], answer: 'Cokelat soga dan biru nila', hint: 'Warna tanah yang teduh dan alami.' },
+          { q: 'Motif batik dari Papua sering menampilkan corak khas daerahnya yaitu...', options: ['Burung Cendrawasih dan tifa', 'Menara Eiffel', 'Kuda nil', 'Gedung pencakar langit'], answer: 'Burung Cendrawasih dan tifa', hint: 'Burung surga berbulu emas khas tanah Papua 🦜' }
         ],
         activitiesEn: [
           { q: 'The iconic Mega Mendung layered cloud batik motif originates from...', options: ['Cirebon', 'Yogyakarta', 'Solo', 'Papua'], answer: 'Cirebon', hint: 'Cirebon on the northern coast of West Java ☁️' }
@@ -4615,6 +4774,12 @@
         titleEn: '3D Art: Sculpting with Modeling Clay & Playdough',
         desc: 'Karya seni rupa Tiga Dimensi (3D) memiliki panjang, lebar, dan tinggi (volume), sehingga bisa dilihat dan disentuh dari segala arah! Membentuk plastisin menjadi patung hewan kecil (kucing, kura-kura, burung) melatih kekuatan jari dan imajinasi spasial anak!',
         descEn: 'Three-Dimensional (3D) artwork possesses length, width, and depth (volume), allowing it to be viewed from all sides. Molding clay into miniature animals sharpens finger muscles and spatial creativity!',
+        funFact: '💡 Fakta Ceria: Membuat patung dengan plastisin atau tanah liat melatih otot-otot kecil di jarimu sehingga tulisan tanganmu saat menulis pensil menjadi jauh lebih rapi dan kuat!',
+        keyPoints: [
+          'Karya 3 Dimensi memiliki volume (panjang, lebar, dan tinggi) serta dapat dilihat dari berbagai sudut.',
+          'Plastisin, clay, dan lempung adalah bahan lunak yang mudah dibentuk dengan tangan.',
+          'Teknik dasar: memilin, membulatkan, memipihkan, dan menyambung bagian.'
+        ],
         checklist: [
           'Misi 1: Remas dan bentuk bola plastisin menjadi bulat sempurna dengan kedua telapak tanganmu.',
           'Misi 2: Buat patung kura-kura mini lengkap dengan tempurung bertekstur dan empat kaki.',
@@ -4626,78 +4791,20 @@
           'Mission 3: Share a creative short story about your sculpted tortoise to family or peers.'
         ],
         activities: [
-          { q: 'Ciri utama dari karya seni rupa tiga dimensi (3D) adalah...', options: ['Memiliki panjang, lebar, volume/tinggi, serta dapat dilihat dari segala sisi', 'Hanya bisa dilihat dari depan saja', 'Hanya memiliki warna hitam dan putih', 'Tidak bisa disentuh tangan'], answer: 'Memiliki panjang, lebar, volume/tinggi, serta dapat dilihat dari segala sisi', hint: 'Karya 3D memiliki ruang dan volume nyata seperti patung dan guci.' },
-          { q: 'Bahan lunak buatan yang mudah dibentuk berulang kali dengan tangan untuk membuat miniatur patung adalah...', options: ['Plastisin / Clay', 'Batu kali keras', 'Kaca bening', 'Besi baja'], answer: 'Plastisin / Clay', hint: 'Lunak, warna-warni, dan aman dimainkan anak-anak.' }
+          { q: 'Bahan plastisin atau clay memiliki sifat...', options: ['Lunak dan mudah dibentuk', 'Keras seperti batu', 'Cair seperti air', 'Tajam'], answer: 'Lunak dan mudah dibentuk', hint: 'Bisa ditekan dan ditarik sesuka hati tanpa patah.' },
+          { q: 'Karya seni rupa yang memiliki panjang, lebar, dan tinggi serta dapat dilihat dari segala arah disebut karya...', options: ['Tiga Dimensi (3D)', 'Dua Dimensi (2D)', 'Satu Dimensi', 'Garis maya'], answer: 'Tiga Dimensi (3D)', hint: 'Memiliki volume nyata seperti patung dan vas bunga 🏺' },
+          { q: 'Gerakan memutar plastisin di antara kedua telapak tangan akan menghasilkan bentuk...', options: ['Bola bulat (lingkaran 3D)', 'Balok persegi', 'Segitiga pipih', 'Lembaran kertas'], answer: 'Bola bulat (lingkaran 3D)', hint: 'Gerakan menggelindingkan di telapak tangan menghasilkan bulatan halus.' },
+          { q: 'Gerakan menggulung plastisin di atas meja maju mundur akan menghasilkan bentuk...', options: ['Silinder panjang seperti ular / sosis', 'Piring datar', 'Kubus dadu', 'Bintang'], answer: 'Silinder panjang seperti ular / sosis', hint: 'Teknik memilin menghasilkan bentuk tabung memanjang.' },
+          { q: 'Bahan alam dari dalam bumi yang kenyal dan bisa dibentuk menjadi gerabah dan keramik adalah...', options: ['Tanah liat / lempung', 'Pasir pantai kering', 'Batu kali', 'Kerikil'], answer: 'Tanah liat / lempung', hint: 'Bahan alami pembuat kendi dan celengan gerabah.' },
+          { q: 'Alat bantu dari plastik atau kayu untuk mengukir dan membuat guratan pada plastisin disebut...', options: ['Butsir / pisau pemodel', 'Gergaji besi', 'Palu batu', 'Cangkul'], answer: 'Butsir / pisau pemodel', hint: 'Alat ukir tumpul yang aman untuk anak-anak.' },
+          { q: 'Untuk membuat mata patung ikan mini dari plastisin, kita membuat...', options: ['Dua butir bulatan kecil berwarna hitam putih', 'Garis panjang', 'Kotak besar', 'Daun'], answer: 'Dua butir bulatan kecil berwarna hitam putih', hint: 'Bulatan mungil yang ditempelkan di kedua sisi kepala ikan.' },
+          { q: 'Kelebihan membuat patung dari bahan plastisin adalah...', options: ['Warna-warni, tidak mudah kering, dan bisa dibentuk ulang', 'Mudah pecah', 'Cepat berjamur', 'Sangat keras'], answer: 'Warna-warni, tidak mudah kering, dan bisa dibentuk ulang', hint: 'Bisa dibongkar pasang dan digunakan berulang kali.' },
+          { q: 'Patung pahlawan yang berdiri megah di taman kota termasuk contoh karya seni rupa...', options: ['Tiga Dimensi (3D)', 'Dua Dimensi (2D)', 'Seni lukis kanvas', 'Kolase kertas'], answer: 'Tiga Dimensi (3D)', hint: 'Bisa dilihat dari depan, belakang, dan samping.' },
+          { q: 'Setelah selesai bermain dan membentuk plastisin, kebiasaan baik yang harus dilakukan adalah...', options: ['Mencuci tangan dengan sabun hingga bersih dan merapikan plastisin', 'Langsung makan camilan', 'Mengusap mata', 'Membiarkan meja kotor'], answer: 'Mencuci tangan dengan sabun hingga bersih dan merapikan plastisin', hint: 'Menjaga kebersihan dan higienitas diri.' }
         ],
         activitiesEn: [
-          { q: 'What defines a three-dimensional (3D) artwork?', options: ['It possesses length, width, and volume/depth viewable from all angles', 'It is strictly flat', 'It has only one flat side', 'It cannot be touched'], answer: 'It possesses length, width, and volume/depth viewable from all angles', hint: '3D pieces occupy tangible spatial volume.' }
+          { q: 'Rolling dough between both palms creates a smooth...', options: ['Sphere (round ball)', 'Sharp triangle', 'Flat paper', 'Box'], answer: 'Sphere (round ball)', hint: 'Like rolling a tiny bouncy ball.' }
         ]
-      }
-  ,
-      {
-        id: 'sr-lempung-plastisin',
-        title: 'Membentuk Lempung Lunak & Plastisin Warna-Warni',
-        titleEn: 'Sculpting Colorful Clay & Soft Dough',
-        desc: 'Bermain plastisin dan lempung lunak (clay) sangat menyenangkan! Jari-jemari kita belajar meremas, memilin menjadi silinder panjang seperti cacing, membulatkan seperti bakso, dan menekan pipih. Kita bisa membentuk miniatur buah jeruk, kura-kura mungil, atau mangkuk kecil buatan sendiri!',
-        descEn: 'Shaping soft clay and playdough is pure sensory joy! Children practice rolling clay into smooth spheres, snake-like coils, and gentle slabs. We can sculpt miniature fruits, tiny friendly turtles, or adorable miniature cups with our own hands!',
-        checklist: [
-          "Misi 1: Pilin plastisin menjadi 5 bulatan kecil lalu susun berderet membentuk ulat lucu.",
-          "Misi 2: Campur plastisin warna kuning dan biru sedikit demi sedikit, amati perubahan warnanya menjadi hijau!",
-          "Misi 3: Letakkan hasil kreasi miniatur plastisinmu di atas tatakan karton dan tunjukkan kepada keluarga."
-  ],
-        checklistEn: [
-          "Mission 1: Roll dough into 5 small balls and line them up to make an adorable caterpillar.",
-          "Mission 2: Knead blue and yellow dough together and watch them transform magically into green!",
-          "Mission 3: Display your clay sculpture on a small cardboard pedestal for your family to admire."
-  ],
-        activities: [
-          {
-                  "q": "Teknik meremas dan memutar plastisin di antara dua telapak tangan akan menghasilkan bentuk...",
-                  "options": [
-                          "Bulat (bola)",
-                          "Segitiga",
-                          "Garis lurus",
-                          "Bintang"
-                  ],
-                  "answer": "Bulat (bola)",
-                  "hint": "Seperti gerakan saat membuat bulatan adonan bakso."
-          },
-          {
-                  "q": "Jika kita mencampurkan lempung warna merah dengan lempung warna kuning, akan menghasilkan warna baru yaitu...",
-                  "options": [
-                          "Oranye (Jingga)",
-                          "Hijau",
-                          "Ungu",
-                          "Hitam"
-                  ],
-                  "answer": "Oranye (Jingga)",
-                  "hint": "Warna hangat seperti buah jeruk 🍊"
-          },
-          {
-                  "q": "Bahan plastisin atau clay memiliki sifat...",
-                  "options": [
-                          "Lunak dan mudah dibentuk",
-                          "Keras seperti batu",
-                          "Cair seperti air",
-                          "Tajam"
-                  ],
-                  "answer": "Lunak dan mudah dibentuk",
-                  "hint": "Bisa ditekan dan ditarik sesuka hati tanpa patah."
-          }
-  ],
-        activitiesEn: [
-          {
-                  "q": "Rolling dough between both palms creates a smooth...",
-                  "options": [
-                          "Sphere (round ball)",
-                          "Sharp triangle",
-                          "Flat paper",
-                          "Box"
-                  ],
-                  "answer": "Sphere (round ball)",
-                  "hint": "Like rolling a tiny bouncy ball."
-          }
-  ]
       },
       {
         id: 'sr-cap-cetak-alami',
@@ -4705,173 +4812,152 @@
         titleEn: 'Natural Printmaking with Banana Stems & Leaves',
         desc: 'Alam di sekitar kita menyediakan kuas dan cetakan yang unik! Potongan pelepah pisang memiliki pori-pori seperti bunga mawar. Potongan belimbing menghasilkan cetakan bintang emas. Daun yang berurat tegas menghasilkan tekstur guratan daun yang memesona jika diolesi cat air lalu dicapkan ke kertas putih.',
         descEn: 'Mother Nature provides extraordinary organic stamps! Sliced banana stems reveal rose-like petal pores. Starfruit slices create shimmering golden stars. Veined leaves produce intricate forest textures when pressed onto art paper with watercolors.',
+        funFact: '💡 Fakta Ceria: Seni cap cetak grafis adalah cikal bakal dari mesin cetak buku modern yang kini ada di seluruh dunia!',
+        keyPoints: [
+          'Pelepah pisang menghasilkan motif cap bunga mekar berpori alami.',
+          'Potongan melintang buah belimbing menghasilkan cap bentuk bintang ⭐.',
+          'Oleskan cat air secara pas (tidak terlalu basah) agar cap tercetak tajam dan rapi.'
+        ],
         checklist: [
-          "Misi 1: Carilah sehelai daun kering yang urat daunnya menonjol di halaman rumah.",
-          "Misi 2: Oleskan cat air tipis-tipis pada permukaan urat daun, lalu tekan secara perlahan di kertas putih.",
-          "Misi 3: Buat pola berulang dari cap pelepah pisang membentuk taman bunga yang mekar indah."
-  ],
+          'Misi 1: Carilah sehelai daun kering yang urat daunnya menonjol di halaman rumah.',
+          'Misi 2: Oleskan cat air tipis-tipis pada permukaan urat daun, lalu tekan secara perlahan di kertas putih.',
+          'Misi 3: Buat pola berulang dari cap pelepah pisang membentuk taman bunga yang mekar indah.'
+        ],
         checklistEn: [
-          "Mission 1: Find a fallen leaf with prominent veins in the garden.",
-          "Mission 2: Brush watercolor lightly across the leaf veins and press gently onto drawing paper.",
-          "Mission 3: Stamp repeated banana stem prints to compose an enchanting blooming meadow."
-  ],
+          'Mission 1: Find a fallen leaf with prominent veins in the garden.',
+          'Mission 2: Brush watercolor lightly across the leaf veins and press gently onto drawing paper.',
+          'Mission 3: Stamp repeated banana stem prints to compose an enchanting blooming meadow.'
+        ],
         activities: [
-          {
-                  "q": "Potongan melintang buah belimbing yang dicapkan pada kertas gambar akan menghasilkan bentuk...",
-                  "options": [
-                          "Bintang ⭐",
-                          "Lingkaran ⚪",
-                          "Segitiga 🔺",
-                          "Garis lurus ➖"
-                  ],
-                  "answer": "Bintang ⭐",
-                  "hint": "Buah belimbing memiliki 5 sayap runcing seperti bintang."
-          },
-          {
-                  "q": "Saat mencetak cap daun dengan cat air, cat yang dioleskan sebaiknya...",
-                  "options": [
-                          "Pas dan tidak terlalu basah/berlebihan",
-                          "Sangat tebal sampai banjir",
-                          "Kering total tanpa air",
-                          "Minyak goreng"
-                  ],
-                  "answer": "Pas dan tidak terlalu basah/berlebihan",
-                  "hint": "Cat yang pas membuat guratan urat daun tercetak jelas dan rapi."
-          },
-          {
-                  "q": "Bahan alam yang dapat digunakan untuk membuat karya seni cetak cap adalah...",
-                  "options": [
-                          "Pelepah pisang, daun, dan kentang",
-                          "Kaca tajam",
-                          "Batu bata kasar",
-                          "Paku besi"
-                  ],
-                  "answer": "Pelepah pisang, daun, dan kentang",
-                  "hint": "Bahan alami yang lunak, aman, dan bertekstur indah."
-          }
-  ],
+          { q: 'Potongan melintang buah belimbing yang dicapkan pada kertas gambar akan menghasilkan bentuk...', options: ['Bintang ⭐', 'Lingkaran ⚪', 'Segitiga 🔺', 'Garis lurus ➖'], answer: 'Bintang ⭐', hint: 'Buah belimbing memiliki 5 sayap runcing seperti bintang.' },
+          { q: 'Saat mencetak cap daun dengan cat air, cat yang dioleskan sebaiknya...', options: ['Pas dan tidak terlalu basah/berlebihan', 'Sangat tebal sampai banjir', 'Kering total tanpa air', 'Minyak goreng'], answer: 'Pas dan tidak terlalu basah/berlebihan', hint: 'Cat yang pas membuat guratan urat daun tercetak jelas dan rapi.' },
+          { q: 'Bahan alam yang dapat digunakan untuk membuat karya seni cetak cap adalah...', options: ['Pelepah pisang, daun, dan kentang', 'Kaca tajam', 'Batu bata kasar', 'Paku besi'], answer: 'Pelepah pisang, daun, dan kentang', hint: 'Bahan alami yang lunak, aman, dan bertekstur indah.' },
+          { q: 'Potongan ujung pelepah daun pisang yang dicelupkan ke cat merah menghasilkan bentuk cap...', options: ['Bunga mawar merekah', 'Mobil balap', 'Buku tulis', 'Pesawat terbang'], answer: 'Bunga mawar merekah', hint: 'Pori-pori batang pisang menyerupai helai mahkota bunga.' },
+          { q: 'Permukaan daun yang diolesi cat agar urat daunnya tercetak jelas adalah permukaan...', options: ['Bagian belakang daun yang uratnya menonjol', 'Bagian atas daun yang licin', 'Tangkai daun yang keras', 'Akar daun'], answer: 'Bagian belakang daun yang uratnya menonjol', hint: 'Urat daun di punggung daun memberi tekstur cetakan tegas.' },
+          { q: 'Umbi sayuran yang mudah diukir menjadi cetakan cap aneka bentuk adalah...', options: ['Kentang dan wortel', 'Bayam', 'Kangkung', 'Taoge'], answer: 'Kentang dan wortel', hint: 'Daging umbi kentang padat dan mudah dipotong pola.' },
+          { q: 'Mengulang cetakan cap secara beraturan ke kanan dan ke bawah akan membentuk...', options: ['Pola ragam hias berulang (pattern)', 'Coretan berantakan', 'Kertas sobek', 'Lumpur'], answer: 'Pola ragam hias berulang (pattern)', hint: 'Pengulangan ritmis menciptakan keindahan pola kain.' },
+          { q: 'Alat perata cat air untuk membasahi cap bahan alam adalah...', options: ['Spons / kuas lukis', 'Sendok besi', 'Gunting', 'Kawat'], answer: 'Spons / kuas lukis', hint: 'Spons busa membantu cat menempel rata pada penampang cap.' },
+          { q: 'Karya seni cap cetak termasuk cabang seni rupa...', options: ['Seni grafis cetak tinggi', 'Seni patung', 'Seni tari', 'Seni musik'], answer: 'Seni grafis cetak tinggi', hint: 'Mencetak gambar dari permukaan yang timbul.' },
+          { q: 'Setelah selesai mencetak cap bahan alam, kertas gambar sebaiknya...', options: ['Dibiarkan mendatar hingga cat benar-benar kering', 'Langsung dilipat', 'Digulung basah-basah', 'Dicuci dengan air keran'], answer: 'Dibiarkan mendatar hingga cat benar-benar kering', hint: 'Menjaga gambar tidak luntur dan tidak saling menempel.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "A cross-section slice of starfruit stamped on paper creates a shape of a...",
-                  "options": [
-                          "Star ⭐",
-                          "Square",
-                          "Circle",
-                          "Triangle"
-                  ],
-                  "answer": "Star ⭐",
-                  "hint": "Starfruit features 5 distinct ridges."
-          }
-  ]
+          { q: 'A cross-section slice of starfruit stamped on paper creates a shape of a...', options: ['Star ⭐', 'Square', 'Circle', 'Triangle'], answer: 'Star ⭐', hint: 'Starfruit features 5 distinct ridges.' }
+        ]
       },
       {
-        "id": "seni-origami-kertas",
-      "title": "Seni Melipat Kertas (Origami Ceria: Perahu & Burung)",
-      "titleEn": "Paper Folding Art (Origami: Boats & Birds)",
-      "desc": "Melipat kertas adalah seni tradisional yang mengasah ketelitian tangan dan koordinasi mata. Dari selembar kertas persegi warna-warni, kita bisa membuat perahu layar yang bisa mengapung, kodok yang bisa melompat, atau burung bangau yang cantik!",
-      "descEn": "Origami sharpens fine-motor precision and spatial thinking. Transform a single colorful square sheet into a floating sailboat, a leaping frog, or an elegant swan without using scissors or glue!",
-      "checklist": [
-        "Misi 1: Lipat perahu kertas sederhana lalu uji apakah bisa terapung di mangkuk air.",
-        "Misi 2: Buat lipatan kepala anjing atau kucing lucu dan beri mata dengan spidol hitam.",
-        "Misi 3: Pastikan setiap garis lipatan ditekan rapi dengan ujung kuku agar bentuknya simetris."
-      ],
-      "checklistEn": [
-        "Mission 1: Fold a simple paper sailboat and test if it floats in a bowl of water.",
-        "Mission 2: Craft a cute origami cat/dog face and draw whiskers with a marker.",
-        "Mission 3: Crease every fold crisply with your fingernail for symmetrical perfection."
-      ],
-      "activities": [
-        {
-          "q": "Bentuk kertas dasar yang paling sering dipakai dalam seni melipat origami adalah...",
-          "options": [
-            "Persegi / bujur sangkar sama sisi 🟧",
-            "Lingkaran bundar",
-            "Bintang",
-            "Garis lurus"
-          ],
-          "answer": "Persegi / bujur sangkar sama sisi 🟧",
-          "hint": "Kertas origami memiliki keempat sisi yang sama panjang."
-        },
-        {
-          "q": "Keterampilan yang dilatih saat melipat kertas origami adalah...",
-          "options": [
-            "Ketelitian, kesabaran, dan motorik halus tangan",
-            "Berlari cepat",
-            "Bicara keras",
-            "Menendang bola"
-          ],
-          "answer": "Ketelitian, kesabaran, dan motorik halus tangan",
-          "hint": "Jari jemari menjadi terampil, luwes, dan sabar menekuk kertas."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "The most common paper shape used in origami is...",
-          "options": [
-            "Square with equal sides 🟧",
-            "Circle",
-            "Triangle",
-            "Wavy strip"
-          ],
-          "answer": "Square with equal sides 🟧",
-          "hint": "Four identical sides and corners."
-        }
-      ]
-    },
-    {
-      "id": "seni-apresiasi-karya",
-      "title": "Apresiasi Karya Seni: Memamerkan Gambar Sendiri",
-      "titleEn": "Art Appreciation: Exhibiting & Presenting Artwork",
-      "desc": "Setiap goresan gambar anak-anak memiliki cerita dan keunikan tersendiri. Menjelaskan gambar sendiri di depan teman melatih rasa percaya diri. Menghargai karya teman dengan kata-kata pujian yang baik menumbuhkan rasa persahabatan!",
-      "descEn": "Every artwork is an authentic expression of imagination. Presenting your own drawing in front of friends fosters pride, while offering genuine compliments to classmates nurtures warm artistic fellowship!",
-      "checklist": [
-        "Misi 1: Pilih 1 gambar terbaik buatanmu dan ceritakan maknanya kepada Ayah atau Ibu.",
-        "Misi 2: Berikan 1 kata pujian tulus (\"Gambarmu indah sekali warnanya!\") kepada teman sekelas.",
-        "Misi 3: Buat bingkai tepi sederhana dari kertas karton untuk memajang karyamu di dinding kamar."
-      ],
-      "checklistEn": [
-        "Mission 1: Select your best drawing and explain its story proudly to your parents.",
-        "Mission 2: Give a sincere compliment to a classmate's artwork.",
-        "Mission 3: Craft a simple border frame out of cardboard to display on your bedroom wall."
-      ],
-      "activities": [
-        {
-          "q": "Sikap yang baik ketika teman sedang memamerkan hasil gambarnya adalah...",
-          "options": [
-            "Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi",
-            "Mengejek gambarnya jelek",
-            "Mengabaikan sambil bermain sendiri",
-            "Merobek gambarnya"
-          ],
-          "answer": "Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi",
-          "hint": "Saling menghargai membuat semua anak makin semangat berkarya! 👏"
-        },
-        {
-          "q": "Kumpulan hasil karya seni dan lembar tugas siswa yang disimpan rapi disebut...",
-          "options": [
-            "Portofolio karya seni",
-            "Koran bekas",
-            "Katalog belanja",
-            "Buku telepon"
-          ],
-          "answer": "Portofolio karya seni",
-          "hint": "Koleksi dokumentasi kemajuan belajar anak dari awal hingga akhir semester."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "How should we react when a friend exhibits their artwork?",
-          "options": [
-            "Listen warmly and applaud enthusiastically 👏",
-            "Tease them meanly",
-            "Rip their paper",
-            "Look away"
-          ],
-          "answer": "Listen warmly and applaud enthusiastically 👏",
-          "hint": "Kind encouragement inspires everyone!"
-        }
-      ]
-    }
+        id: 'seni-origami-kertas',
+        title: 'Seni Melipat Kertas (Origami Ceria: Perahu & Burung)',
+        titleEn: 'Paper Folding Art (Origami: Boats & Birds)',
+        desc: 'Melipat kertas adalah seni tradisional yang mengasah ketelitian tangan dan koordinasi mata. Dari selembar kertas persegi warna-warni, kita bisa membuat perahu layar yang bisa mengapung, kodok yang bisa melompat, atau burung bangau yang cantik!',
+        descEn: 'Origami sharpens fine-motor precision and spatial thinking. Transform a single colorful square sheet into a floating sailboat, a leaping frog, or an elegant swan without using scissors or glue!',
+        funFact: '💡 Fakta Ceria: Kata "Origami" berasal dari bahasa Jepang: "Ori" artinya melipat, dan "Kami" artinya kertas. Seni ini mengajarkan kesabaran dan ketepatan!',
+        keyPoints: [
+          'Kertas origami berbentuk bujur sangkar (persegi sama sisi).',
+          'Lipatan harus ditekan rapi dengan ujung kuku agar lipatan tegas dan presisi.',
+          'Seni melipat kertas tidak membutuhkan lem atau gunting.'
+        ],
+        checklist: [
+          'Misi 1: Lipat perahu kertas sederhana lalu uji apakah bisa terapung di mangkuk air.',
+          'Misi 2: Buat lipatan kepala anjing atau kucing lucu dan beri mata dengan spidol hitam.',
+          'Misi 3: Pastikan setiap garis lipatan ditekan rapi dengan ujung kuku agar bentuknya simetris.'
+        ],
+        checklistEn: [
+          'Mission 1: Fold a simple paper sailboat and test if it floats in a bowl of water.',
+          'Mission 2: Craft a cute origami cat/dog face and draw whiskers with a marker.',
+          'Mission 3: Crease every fold crisply with your fingernail for symmetrical perfection.'
+        ],
+        activities: [
+          { q: 'Bentuk kertas dasar yang paling sering dipakai dalam seni melipat origami adalah...', options: ['Persegi / bujur sangkar sama sisi 🟧', 'Lingkaran bundar', 'Bintang', 'Garis lurus'], answer: 'Persegi / bujur sangkar sama sisi 🟧', hint: 'Kertas origami memiliki keempat sisi yang sama panjang.' },
+          { q: 'Keterampilan yang dilatih saat melipat kertas origami adalah...', options: ['Ketelitian, kesabaran, dan motorik halus tangan', 'Berlari cepat', 'Bicara keras', 'Menendang bola'], answer: 'Ketelitian, kesabaran, dan motorik halus tangan', hint: 'Jari jemari menjadi terampil, luwes, dan sabar menekuk kertas.' },
+          { q: 'Negara asal yang mempopulerkan seni melipat kertas origami adalah...', options: ['Jepang 🇯🇵', 'Inggris', 'Brazil', 'Mesir'], answer: 'Jepang 🇯🇵', hint: 'Negara sakura di Asia Timur.' },
+          { q: 'Agar hasil lipatan origami rapi dan tidak mudah terbuka, setiap garis lipatan harus...', options: ['Ditekan kuat dan rapi dengan ujung kuku / jari', 'Ditiup', 'Dibakar', 'Dipotong'], answer: 'Ditekan kuat dan rapi dengan ujung kuku / jari', hint: 'Membuat lipatan lipit yang tegas dan rapi.' },
+          { q: 'Bentuk origami sederhana yang bisa mengapung di permukaan baskom air adalah origami...', options: ['Perahu layar ⛵', 'Gajah', 'Pohon', 'Meja'], answer: 'Perahu layar ⛵', hint: 'Bentuk perahu dengan lambung kedap air.' },
+          { q: 'Origami hewan yang bisa melompat saat bagian belakangnya ditekan jari adalah origami...', options: ['Katak / kodok melompat 🐸', 'Kura-kura', 'Burung hantu', 'Ular'], answer: 'Katak / kodok melompat 🐸', hint: 'Lipatan pegas di punggung katak.' },
+          { q: 'Simbol origami burung bangau (Orizuru) di Jepang dipercaya melambangkan...', options: ['Kedamaian, doa kesembuhan, dan umur panjang', 'Kemarahan', 'Pertengkaran', 'Kekalahan'], answer: 'Kedamaian, doa kesembuhan, dan umur panjang', hint: 'Tradisi melipat 1.000 bangau kertas pembawa damai.' },
+          { q: 'Ciri khas seni origami tradisional adalah membuat bentuk indah TANPA menggunakan...', options: ['Gunting dan lem perekat', 'Kertas', 'Jari tangan', 'Meja'], answer: 'Gunting dan lem perekat', hint: 'Hanya mengandalkan keterampilan melipat kertas murni.' },
+          { q: 'Origami kepala anjing dapat diselesaikan dengan menambahkan gambar mata dan hidung menggunakan...', options: ['Spidol hitam atau krayon', 'Cat dinding', 'Kapur tulis basah', 'Minyak'], answer: 'Spidol hitam atau krayon', hint: 'Memberi detail ekspresi lucu pada wajah hewan.' },
+          { q: 'Warna-warni kertas origami yang cerah membantu anak mengenali...', options: ['Variasi warna dan koordinasi visual motorik', 'Rasa makanan', 'Suara kendaraan', 'Aroma buah'], answer: 'Variasi warna dan koordinasi visual motorik', hint: 'Mata dan tangan bekerja sama dengan lincah.' }
+        ],
+        activitiesEn: [
+          { q: 'The most common paper shape used in origami is...', options: ['Square with equal sides 🟧', 'Circle', 'Triangle', 'Wavy strip'], answer: 'Square with equal sides 🟧', hint: 'Four identical sides and corners.' }
+        ]
+      },
+      {
+        id: 'seni-apresiasi-karya',
+        title: 'Apresiasi Karya Seni: Memamerkan Gambar Sendiri',
+        titleEn: 'Art Appreciation: Exhibiting & Presenting Artwork',
+        desc: 'Setiap goresan gambar anak-anak memiliki cerita dan keunikan tersendiri. Menjelaskan gambar sendiri di depan teman melatih rasa percaya diri. Menghargai karya teman dengan kata-kata pujian yang baik menumbuhkan rasa persahabatan!',
+        descEn: 'Every artwork is an authentic expression of imagination. Presenting your own drawing in front of friends fosters pride, while offering genuine compliments to classmates nurtures warm artistic fellowship!',
+        funFact: '💡 Fakta Ceria: Galeri seni terbesar di dunia (seperti Museum Louvre) selalu memajang karya seniman dengan pencahayaan yang indah dan bingkai kayu yang megah!',
+        keyPoints: [
+          'Apresiasi seni adalah sikap menghargai, menikmati, dan menilai keindahan sebuah karya.',
+          'Berikan pujian yang tulus dan santun terhadap hasil karya teman sekelas.',
+          'Portofolio seni mendokumentasikan perkembangan kreasi belajarmu sepanjang semester.'
+        ],
+        checklist: [
+          'Misi 1: Pilih 1 gambar terbaik buatanmu dan ceritakan maknanya kepada Ayah atau Ibu.',
+          'Misi 2: Berikan 1 kata pujian tulus ("Gambarmu indah sekali warnanya!") kepada teman sekelas.',
+          'Misi 3: Buat bingkai tepi sederhana dari kertas karton untuk memajang karyamu di dinding kamar.'
+        ],
+        checklistEn: [
+          'Mission 1: Select your best drawing and explain its story proudly to your parents.',
+          'Mission 2: Give a sincere compliment to a classmate\'s artwork.',
+          'Mission 3: Craft a simple border frame out of cardboard to display on your bedroom wall.'
+        ],
+        activities: [
+          { q: 'Sikap yang baik ketika teman sedang memamerkan hasil gambarnya adalah...', options: ['Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi', 'Mengejek gambarnya jelek', 'Mengabaikan sambil bermain sendiri', 'Merobek gambarnya'], answer: 'Mendengarkan dengan ramah dan memberi tepuk tangan apresiasi', hint: 'Saling menghargai membuat semua anak makin semangat berkarya! 👏' },
+          { q: 'Kumpulan hasil karya seni dan lembar tugas siswa yang disimpan rapi disebut...', options: ['Portofolio karya seni', 'Koran bekas', 'Katalog belanja', 'Buku telepon'], answer: 'Portofolio karya seni', hint: 'Koleksi dokumentasi kemajuan belajar anak dari awal hingga akhir semester.' },
+          { q: 'Kegiatan memajang karya seni di dinding kelas agar bisa dilihat dan dinikmati bersama disebut...', options: ['Pameran karya seni', 'Upacara bendera', 'Lomba lari', 'Ronda malam'], answer: 'Pameran karya seni', hint: 'Pameran menyajikan keindahan karya cipta anak.' },
+          { q: 'Kalimat pujian yang santun untuk mengapresiasi gambar pelangi teman adalah...', options: ['"Wah, perpaduan warna pelangimu indah dan cerah sekali!"', '"Gambarmu biasa saja."', '"Aku bisa gambar lebih bagus!"', '"Warna apa itu aneh."'], answer: '"Wah, perpaduan warna pelangimu indah dan cerah sekali!"', hint: 'Memberi semangat dan apresiasi tulus.' },
+          { q: 'Bingkai atau figura pada sebuah lukisan berfungsi untuk...', options: ['Melindungi dan memperindah tampilan karya lukis', 'Menutupi gambar', 'Membuat gambar kotor', 'Menambah berat lukisan'], answer: 'Melindungi dan memperindah tampilan karya lukis', hint: 'Bingkai rapi membuat karya terlihat anggun di dinding.' },
+          { q: 'Saat menjelaskan karyamu di depan kelas, hal yang kamu ceritakan adalah...', options: ['Alasan memilih tema gambar, warna yang dipakai, dan cerita di balik gambar', 'Berapa harga pensil warnamu', 'Teman yang kamu benci', 'Menu sarapan pagi'], answer: 'Alasan memilih tema gambar, warna yang dipakai, dan cerita di balik gambar', hint: 'Membagikan pesan dan imajinasi karya.' },
+          { q: 'Tempat umum tempat masyarakat melihat koleksi lukisan dan patung karya seniman terkenal disebut...', options: ['Galeri seni / Museum seni', 'Stasiun kereta', 'Terminal bus', 'Pasar ikan'], answer: 'Galeri seni / Museum seni', hint: 'Museum dan galeri memamerkan keindahan seni rupa.' },
+          { q: 'Menghargai keberagaman gaya gambar setiap teman di kelas merupakan cerminan anak yang...', options: ['Berjiwa besar, berbudaya, dan toleran', 'Sombong', 'Penakut', 'Pemberontak'], answer: 'Berjiwa besar, berbudaya, dan toleran', hint: 'Setiap anak memiliki keunikan imajinasi masing-masing.' },
+          { q: 'Tanda tangan atau nama pembuat gambar biasanya dibubuhkan di bagian...', options: ['Sudut kanan atau kiri bawah karya', 'Tepat di tengah menutupi gambar', 'Di belakang bingkai terkunci', 'Di meja guru'], answer: 'Sudut kanan atau kiri bawah karya', hint: 'Identitas seniman pembuat mahakarya.' },
+          { q: 'Apresiasi karya seni melatih kepekaan rasa dan kecintaan terhadap...', options: ['Keindahan ciptaan Tuhan dan karya sesama manusia', 'Kekayaan materi', 'Pertengkaran', 'Kemalasan'], answer: 'Keindahan ciptaan Tuhan dan karya sesama manusia', hint: 'Menumbuhkan rasa estetika dan budi luhur.' }
+        ],
+        activitiesEn: [
+          { q: 'How should we react when a friend exhibits their artwork?', options: ['Listen warmly and applaud enthusiastically 👏', 'Tease them meanly', 'Rip their paper', 'Look away'], answer: 'Listen warmly and applaud enthusiastically 👏', hint: 'Kind encouragement inspires everyone!' }
+        ]
+      },
+      {
+        id: 'sr-finger-painting',
+        title: 'Lukisan Jari (Finger Painting) & Tekstur Warna Ceria',
+        titleEn: 'Finger Painting & Vibrant Color Textures',
+        desc: 'Finger painting adalah kegiatan melukis langsung menggunakan jari-jemari tangan tanpa menggunakan kuas! Mengoleskan cat pasta yang aman dan kental dengan ujung jari melatih sensorik peraba, kelenturan otot tangan, dan keberanian anak berekspresi bebas di atas kertas gambar.',
+        descEn: 'Finger painting unleashes sensory freedom! Using child-safe non-toxic finger pastes directly with palms and fingertips builds tactile sensory awareness, fine-motor coordination, and fearless artistic expression!',
+        funFact: '💡 Fakta Ceria: Melukis dengan jari adalah salah satu metode seni paling menyenangkan di dunia yang terbukti meningkatkan kebahagiaan dan menurunkan stres pada anak!',
+        keyPoints: [
+          'Melukis jari menggunakan cat pasta ramah anak yang aman dan mudah dibersihkan air.',
+          'Gunakan ujung jemari untuk membuat bintik dan garis, serta telapak tangan untuk bidang luas.',
+          'Cuci tangan dengan sabun hingga bersih setelah asyik berkarya.'
+        ],
+        checklist: [
+          'Misi 1: Buat cetakan cap telapak tanganmu (handprint) dengan cat air warna cerah di atas kertas.',
+          'Misi 2: Tambahkan mata, paruh, dan kaki menggunakan spidol agar cap telapak tanganmu berubah menjadi burung merak yang indah.',
+          'Misi 3: Buat pohon bunga sakura menggunakan tutulan ujung jari telunjukmu dengan cat warna merah muda.'
+        ],
+        checklistEn: [
+          'Mission 1: Make a vibrant colorful handprint on white art paper.',
+          'Mission 2: Add eyes, beak, and feathers with a marker to transform the handprint into a peacock.',
+          'Mission 3: Stamp delicate pink blossom petals using your index fingertip to create a cherry tree.'
+        ],
+        activities: [
+          { q: 'Melukis langsung menggunakan jari-jemari tangan tanpa kuas disebut seni...', options: ['Finger painting (lukisan jari)', 'Origami', 'Kolase', 'Batik tulis'], answer: 'Finger painting (lukisan jari)', hint: 'Finger artinya jari tangan dalam bahasa Inggris 🖐️' },
+          { q: 'Cat yang digunakan untuk finger painting pada anak kelas 1 SD harus bersifat...', options: ['Aman, tidak beracun (non-toxic), dan mudah dicuci air', 'Cat minyak berbau tajam', 'Cat besi panas', 'Tinta permanen'], answer: 'Aman, tidak beracun (non-toxic), dan mudah dicuci air', hint: 'Cat ramah anak yang higienis dan aman di kulit.' },
+          { q: 'Cap telapak tangan (handprint) yang ditarik ke atas dapat dikreasikan menjadi bentuk...', options: ['Pohon rindang atau burung merak 🦚', 'Sepeda motor', 'Gedung bertingkat', 'Batu bata'], answer: 'Pohon rindang atau burung merak 🦚', hint: 'Jari-jemari tangan menjadi ranting pohon atau ekor merak yang mekar.' },
+          { q: 'Bagian jari yang cocok digunakan untuk membuat bintik-bintik kelopak bunga kecil adalah...', options: ['Ujung jari telunjuk', 'Siku tangan', 'Lengan', 'Punggung tangan'], answer: 'Ujung jari telunjuk', hint: 'Tutulan ujung jari menghasilkan bulatan kelopak bunga cantik.' },
+          { q: 'Sensasi yang dirasakan saat bermain finger painting melatih sistem...', options: ['Sensorik peraba kulit dan motorik halus', 'Kekuatan berlari', 'Penciuman tajam', 'Pendengaran'], answer: 'Sensorik peraba kulit dan motorik halus', hint: 'Meraba tekstur pasta cat yang lembut dan licin.' },
+          { q: 'Sebelum mulai melukis dengan jari, agar seragam sekolah tidak kotor kita sebaiknya memakai...', options: ['Celemek lukis (apron)', 'Jaket tebal', 'Jas hujan', 'Mantel bulu'], answer: 'Celemek lukis (apron)', hint: 'Celemek kain melindungi pakaian dari cipratan cat.' },
+          { q: 'Membuat garis ombak meliuk pada finger painting dapat dilakukan dengan gerakan...', options: ['Menggesekkan beberapa jari bersamaan membentuk gelombang', 'Memukul-mukul kertas', 'Meremas kertas', 'Meniup kertas'], answer: 'Menggesekkan beberapa jari bersamaan membentuk gelombang', hint: 'Goresan jari serempak menciptakan tekstur air.' },
+          { q: 'Kertas yang paling baik untuk finger painting adalah...', options: ['Kertas gambar tebal yang tidak mudah robek saat basah', 'Kertas tisu tipis', 'Koran bekas tipis', 'Kertas minyak'], answer: 'Kertas gambar tebal yang tidak mudah robek saat basah', hint: 'Kertas karton atau buku gambar tebal menampung cat basah dengan baik.' },
+          { q: 'Setelah selesai melukis dengan jari, hal penting yang wajib dilakukan adalah...', options: ['Mencuci tangan dengan air mengalir dan sabun hingga bersih', 'Menyeka tangan ke baju', 'Menyentuh wajah teman', 'Langsung makan kue'], answer: 'Mencuci tangan dengan air mengalir dan sabun hingga bersih', hint: 'Menjaga tangan selalu bersih dan sehat.' },
+          { q: 'Finger painting memberi kebebasan kepada anak untuk...', options: ['Mengekspresikan imajinasi dan keberanian berkarya', 'Merusak perabotan rumah', 'Mengotori dinding kamar', 'Bermain air kotor'], answer: 'Mengekspresikan imajinasi dan keberanian berkarya', hint: 'Kreativitas tanpa batas yang membahagiakan jiwa.' }
+        ],
+        activitiesEn: [
+          { q: 'Painting directly with fingertips and palms without brushes is called...', options: ['Finger painting 🖐️', 'Origami', 'Mosaic', 'Sculpting'], answer: 'Finger painting 🖐️', hint: 'Expressive tactile art using fingers!' }
+        ]
+      }
     ]
   };
   
@@ -4881,7 +4967,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · PJOK Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Kebugaran Jasmani Anak)
+  // Version   : 2.1 (Comprehensive LKS, 100 Flagship Questions & Kebugaran Jasmani Anak)
   // ================================================================
   
   const PJOK_DATA = {
@@ -4892,11 +4978,17 @@
     subtitleEn: 'Stay vibrant and energetic! Master locomotor drills, rhythmic gymnastics, clean hygiene, and balanced nutrition! ⚽',
     topics: [
       {
-        id: 'pjok-lokomotor'
+        id: 'pjok-lokomotor',
         title: 'Gerak Dasar Lokomotor (Berpindah Tempat)',
         titleEn: 'Locomotor Skills (Traveling Movements)',
         desc: 'Gerak LOKOMOTOR adalah gerakan tubuh yang menyebabkan berpindah tempat dari satu titik ke titik lain. Contoh utamanya: BERJALAN santai, BERLARI kencang, MELOMPAT dengan tolakan dua kaki, dan MENCONGKANG (gallop) lincah seperti kuda berlari!',
         descEn: 'LOCOMOTOR movements transport your body across space from one spot to another. Core fundamentals include WALKING upright, RUNNING swiftly, JUMPING off two feet, and GALLOPING like a playful pony!',
+        funFact: 'Saat kamu berlari dan melompat, tubuhmu melepaskan hormon endorfin alami yang membuat otak cerdas, hati gembira, dan tidur lebih nyenyak!',
+        keyPoints: [
+          'Gerak lokomotor memindahkan tubuh dari satu tempat ke tempat lain.',
+          'Contoh utama: berjalan tegak, berlari kencang, melompat, meloncat, dan menderap.',
+          'Saat berlari, ayunkan kedua lengan seirama ke depan dan ke belakang dengan rileks.'
+        ],
         checklist: [
           'Misi 1: Praktikkan berjalan lurus di atas satu garis lantai sepanjang 5 meter dengan pandangan ke depan.',
           'Misi 2: Lakukan lari pelan (jogging) di tempat selama 30 detik untuk pemanasan.',
@@ -4910,19 +5002,32 @@
         activities: [
           { q: 'Gerakan tubuh yang membuat kita berpindah tempat disebut gerak...', options: ['Lokomotor', 'Non-lokomotor', 'Manipulatif', 'Statik'], answer: 'Lokomotor', hint: 'Lokomotor berarti bergerak berpindah posisi (contoh: berjalan dan berlari).' },
           { q: 'Saat berlari cepat, ayunan kedua tangan yang benar adalah...', options: ['Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', 'Diam di samping pinggang', 'Diangkat lurus ke atas kepala', 'Dimasukkan ke dalam saku celana'], answer: 'Mengayun teratur ke depan dan ke belakang berlawanan arah langkah kaki', hint: 'Ayunan lengan seirama membantu keseimbangan dan menambah dorongan lari.' },
-          { q: "Contoh gerak lokomotor (gerakan yang berpindah tempat) adalah...", options: ["Berlari dan melompat ke depan","Menggelengkan kepala di tempat","Mengayunkan lengan saat duduk","Membungkuk di kursi"], answer: "Berlari dan melompat ke depan", hint: "Gerak lokomotor memindahkan tubuh dari satu titik ke titik lain." },
-          { q: "Saat melakukan gerakan melompat, bagian tubuh yang bertugas menolak dan mendarat adalah...", options: ["Kedua kaki dengan lutut mengeper","Kepala","Punggung","Tangan kiri"], answer: "Kedua kaki dengan lutut mengeper", hint: "Mengeperkan lutut mencegah cedera pada persendian kaki 🦵" }
+          { q: 'Contoh gerak lokomotor (gerakan yang berpindah tempat) adalah...', options: ['Berlari dan melompat ke depan', 'Menggelengkan kepala di tempat', 'Mengayunkan lengan saat duduk', 'Membungkuk di kursi'], answer: 'Berlari dan melompat ke depan', hint: 'Gerak lokomotor memindahkan tubuh dari satu titik ke titik lain.' },
+          { q: 'Saat melakukan gerakan melompat, bagian tubuh yang bertugas menolak dan mendarat adalah...', options: ['Kedua kaki dengan lutut mengeper', 'Kepala', 'Punggung', 'Tangan kiri'], answer: 'Kedua kaki dengan lutut mengeper', hint: 'Mengeperkan lutut mencegah cedera pada persendian kaki 🦵' },
+          { q: 'Arah pandangan mata saat kita berjalan lurus ke depan adalah...', options: ['Lurus ke depan menuju arah tujuan', 'Menatap ke atas awan', 'Menengok ke belakang terus-menerus', 'Menutup mata'], answer: 'Lurus ke depan menuju arah tujuan', hint: 'Pandangan lurus ke depan menjaga langkah tetap lurus dan tidak menabrak rintangan.' },
+          { q: 'Gerakan melangkah dengan kedua kaki bergantian secara santai disebut...', options: ['Berjalan', 'Meluncur', 'Terbang', 'Berenang'], answer: 'Berjalan', hint: 'Berjalan adalah gerakan dasar berpindah tempat yang paling sering kita lakukan sehari-hari.' },
+          { q: 'Perbedaan utama antara berjalan dan berlari adalah...', options: ['Pada saat berlari ada saat di mana kedua kaki melayang di udara', 'Berjalan lebih melelahkan', 'Berlari tidak menggunakan kaki', 'Berjalan selalu mundur'], answer: 'Pada saat berlari ada saat di mana kedua kaki melayang di udara', hint: 'Fase melayang sekejap membedakan lari dari jalan santai.' },
+          { q: 'Gerakan meloncat dengan tolakan satu kaki lalu mendarat dengan kaki yang sama disebut...', options: ['Engklek (Hop)', 'Roll depan', 'Push up', 'Kayang'], answer: 'Engklek (Hop)', hint: 'Melompat dengan satu kaki sering dimainkan dalam permainan engklek.' },
+          { q: 'Ketika mendarat setelah melompat, kedua lutut ditekuk sedikit (mengeper) bertujuan untuk...', options: ['Meredam benturan agar sendi tidak cedera', 'Supaya langsung terjatuh', 'Membuat bunyi keras', 'Agar melompat lagi tanpa henti'], answer: 'Meredam benturan agar sendi tidak cedera', hint: 'Lutut mengeper bertindak seperti pegas peredam guncangan yang aman.' },
+          { q: 'Sebelum melakukan aktivitas lari cepat, kita wajib melakukan...', options: ['Pemanasan dan peregangan otot', 'Makan mie instan panas', 'Tidur di lapangan', 'Minum air es sebanyak-banyaknya'], answer: 'Pemanasan dan peregangan otot', hint: 'Pemanasan menaikkan suhu tubuh dan menyiapkan otot agar terhindar dari cedera.' }
         ],
         activitiesEn: [
-          { q: 'Body movements that transport you across from one location to another are called...', options: ['Locomotor', 'Non-locomotor', 'Manipulative', 'Static'], answer: 'Locomotor', hint: 'Walking and running travel through space.' }
+          { q: 'Body movements that transport you across from one location to another are called...', options: ['Locomotor', 'Non-locomotor', 'Manipulative', 'Static'], answer: 'Locomotor', hint: 'Walking and running travel through space.' },
+          { q: 'Which of the following is a classic locomotor movement?', options: ['Running across the yard', 'Bending waist in place', 'Rolling wrists', 'Sitting still'], answer: 'Running across the yard', hint: 'Locomotor means traveling from one spot to another.' }
         ]
       },
       {
-        id: 'pjok-non-lokomotor'
+        id: 'pjok-non-lokomotor',
         title: 'Gerak Dasar Non-Lokomotor (Tanpa Berpindah)',
         titleEn: 'Non-Locomotor Skills (Stationary Movements)',
         desc: 'Gerak NON-LOKOMOTOR adalah gerakan tubuh yang dilakukan di tempat tanpa berpindah posisi. Contoh: MEMBUNGKUK menyentuh ujung sepatu, MELIUKKAN badan ke kanan dan kiri, MEMUTAR pinggang, serta MENGAYUN lengan untuk peregangan otot agar lentur dan terhindar dari cedera!',
         descEn: 'NON-LOCOMOTOR movements are performed right in place without moving from your base. Core examples include BENDING down to toes, SWAYING side to side, TWISTING the torso, and STRETCHING limbs to prevent cramps!',
+        funFact: 'Peregangan otot non-lokomotor selama 5 menit sebelum olahraga terbukti melancarkan sirkulasi darah ke otak sehingga belajar jadi lebih konsentrasi!',
+        keyPoints: [
+          'Gerak non-lokomotor dilakukan diam di tempat tanpa berpindah pijakan.',
+          'Contoh: membungkuk, memutar leher/pinggang, meliuk, menekuk lutut, dan mengayun lengan.',
+          'Sangat penting dilakukan saat pemanasan (warming-up) dan pendinginan (cooling-down).'
+        ],
         checklist: [
           'Misi 1: Berdiri tegak, bungkukkan badan perlahan dan sentuh ujung jari kaki tanpa menekuk lutut selama 8 hitungan.',
           'Misi 2: Rentangkan kedua tangan ke samping dan liukkan badan ke kiri dan kanan seperti pohon tertiup angin.',
@@ -4936,19 +5041,32 @@
         activities: [
           { q: 'Manakah di bawah ini yang merupakan contoh gerak non-lokomotor?', options: ['Meliukkan badan ke samping di tempat', 'Berlari mengelilingi lapangan', 'Melompat melewati rintangan kardus', 'Berenang menyeberangi kolam'], answer: 'Meliukkan badan ke samping di tempat', hint: 'Non-lokomotor dilakukan diam di tempat tanpa melangkah berpindah.' },
           { q: 'Apa manfaat melakukan gerakan peregangan otot sebelum berolahraga?', options: ['Mencegah cedera otot dan membuat tubuh lebih lentur', 'Membuat tubuh cepat lelah', 'Menurunkan detak jantung mendadak', 'Agar bisa tidur saat olahraga'], answer: 'Mencegah cedera otot dan membuat tubuh lebih lentur', hint: 'Peregangan menyiapkan otot dan sendi agar siap bergerak aktif.' },
-          { q: "Gerakan memutar pinggang dan membungkuk di tempat termasuk gerak...", options: ["Non-lokomotor","Lokomotor","Manipulatif","Terbang"], answer: "Non-lokomotor", hint: "Gerak non-lokomotor dilakukan tanpa berpindah tempat." },
-          { q: "Manfaat melakukan peregangan non-lokomotor sebelum olahraga adalah...", options: ["Mencegah kram dan menyiapkan otot tubuh","Membuat mengantuk","Membuat lapar","Bisa langsung tidur"], answer: "Mencegah kram dan menyiapkan otot tubuh", hint: "Pemanasan melenturkan otot dan sendi agar siap bergerak lincah." }
+          { q: 'Gerakan memutar pinggang dan membungkuk di tempat termasuk gerak...', options: ['Non-lokomotor', 'Lokomotor', 'Manipulatif', 'Terbang'], answer: 'Non-lokomotor', hint: 'Gerak non-lokomotor dilakukan tanpa berpindah tempat.' },
+          { q: 'Manfaat melakukan peregangan non-lokomotor sebelum olahraga adalah...', options: ['Mencegah kram dan menyiapkan otot tubuh', 'Membuat mengantuk', 'Membuat lapar', 'Bisa langsung tidur'], answer: 'Mencegah kram dan menyiapkan otot tubuh', hint: 'Pemanasan melenturkan otot dan sendi agar siap bergerak lincah.' },
+          { q: 'Gerakan meliukkan badan ke kanan dan ke kiri menyerupai gerakan...', options: ['Pohon yang tertiup angin sepoi-sepoi', 'Mobil balap berkecepatan tinggi', 'Pesawat lepas landas', 'Katak melompat ke air'], answer: 'Pohon yang tertiup angin sepoi-sepoi', hint: 'Gerakan gemulai melatih kelenturan otot pinggang dan punggung.' },
+          { q: 'Gerakan memutar kedua bahu ke depan dan belakang bermanfaat untuk melenturkan sendi...', options: ['Bahu dan lengan atas', 'Pergelangan kaki', 'Jari kelingking', 'Gigi'], answer: 'Bahu dan lengan atas', hint: 'Sendi peluru di bahu menjadi lemas dan rileks.' },
+          { q: 'Saat membungkukkan badan untuk menyentuh ujung jari kaki, posisi lutut sebaiknya...', options: ['Tetap lurus dan tidak ditekuk berlebihan', 'Ditekuk rapat sampai jongkok', 'Diangkat satu ke atas', 'Disilangkan kaku'], answer: 'Tetap lurus dan tidak ditekuk berlebihan', hint: 'Lutut yang lurus meregangkan otot paha belakang (hamstring) dengan baik.' },
+          { q: 'Gerakan mengayunkan kedua lengan ke atas dan ke bawah di tempat melatih kelenturan...', options: ['Sendi bahu dan dada', 'Ibu jari kaki', 'Telinga', 'Lutut'], answer: 'Sendi bahu dan dada', hint: 'Ayunan lengan membuka rongga dada untuk pernapasan lega.' },
+          { q: 'Latihan menolehkan kepala ke kanan dan ke kiri secara perlahan bertujuan melenturkan otot...', options: ['Leher', 'Betis', 'Perut', 'Telapak tangan'], answer: 'Leher', hint: 'Peregangan leher yang lembut mencegah leher kaku atau salah urat.' },
+          { q: 'Gerakan pendinginan (cooling-down) setelah selesai berolahraga berat berfungsi untuk...', options: ['Menormalkan detak jantung dan melemaskan otot yang tegang', 'Membuat badan berkeringat lebih banyak', 'Membuat pusing', 'Agar bisa makan banyak permen'], answer: 'Menormalkan detak jantung dan melemaskan otot yang tegang', hint: 'Pendinginan mengembalikan tubuh ke kondisi rileks dan segar kembali.' }
         ],
         activitiesEn: [
-          { q: 'Which of the following is an example of stationary non-locomotor movement?', options: ['Swaying torso sideways in place', 'Sprinting across field', 'Jumping hurdles', 'Swimming across pool'], answer: 'Swaying torso sideways in place', hint: 'Non-locomotor stays rooted in one place.' }
+          { q: 'Which of the following is an example of stationary non-locomotor movement?', options: ['Swaying torso sideways in place', 'Sprinting across field', 'Jumping hurdles', 'Swimming across pool'], answer: 'Swaying torso sideways in place', hint: 'Non-locomotor stays rooted in one place.' },
+          { q: 'Why do we stretch before exercising?', options: ['To prevent muscle cramps and increase flexibility', 'To get tired quickly', 'To stop breathing', 'To fall asleep'], answer: 'To prevent muscle cramps and increase flexibility', hint: 'Stretching warms up joints and tissues.' }
         ]
       },
       {
-        id: 'pjok-manipulatif'
+        id: 'pjok-manipulatif',
         title: 'Gerak Dasar Manipulatif (Menggunakan Alat)',
         titleEn: 'Manipulative Skills (Ball & Object Control)',
         desc: 'Gerak MANIPULATIF melibatkan penguasaan anggota tubuh terhadap suatu benda atau alat olahraga (seperti bola atau raket). Keterampilan dasarnya: MELEMPAR bola ke sasaran, MENANGKAP bola dengan kedua tangan lentur, MENENDANG bola ke gawang, dan MENGGIRING bola!',
         descEn: 'MANIPULATIVE movements develop coordination when interacting with equipment like balls and racquets. Fundamental drills include THROWING accurately, CATCHING with soft hands, KICKING toward targets, and DRIBBLING smoothly!',
+        funFact: 'Menangkap bola melatih koordinasi mata dan tangan (hand-eye coordination). Otakmu menghitung kecepatan dan lintasan bola hanya dalam sepersekian detik!',
+        keyPoints: [
+          'Gerak manipulatif adalah gerak yang memakai alat atau benda (bola, raket, tongkat, simpai).',
+          'Contoh utama: melempar, menangkap, menendang, menyundul, memukul, dan menggiring bola.',
+          'Fokus mata selalu tertuju pada arah gerak bola agar kontrol akurat dan aman.'
+        ],
         checklist: [
           'Misi 1: Lempar bola plastik kecil ke atas dan tangkap kembali dengan kedua tangan sebanyak 5 kali tanpa jatuh.',
           'Misi 2: Tendang bola pelan ke arah sasaran botol plastik dari jarak 3 meter.',
@@ -4962,19 +5080,32 @@
         activities: [
           { q: 'Menendang, melempar, dan menangkap bola termasuk ke dalam kelompok gerak...', options: ['Manipulatif', 'Lokomotor', 'Non-lokomotor', 'Non-aktif'], answer: 'Manipulatif', hint: 'Manipulatif menggunakan benda atau objek luar sebagai alat olahraga 🎾' },
           { q: 'Saat hendak menangkap bola lemparan dari teman, posisi kedua telapak tangan yang benar adalah...', options: ['Terbuka membentuk mangkuk menghadap ke arah datangnya bola', 'Mengepal kaku ke bawah', 'Disilangkan di belakang punggung', 'Menutup kedua mata'], answer: 'Terbuka membentuk mangkuk menghadap ke arah datangnya bola', hint: 'Jari-jari lentur siap meredam benturan bola.' },
-          { q: "Gerak manipulatif adalah gerak yang melibatkan penggunaan...", options: ["Alat atau benda (seperti bola, simpai, raket)","Hanya mata","Hanya suara","Angin sepoi"], answer: "Alat atau benda (seperti bola, simpai, raket)", hint: "Contohnya menendang bola, melempar, dan menangkap bola ⚽" },
-          { q: "Saat menangkap bola lemparan teman, pandangan mata kita harus...", options: ["Fokus memperhatikan arah datangnya bola","Melihat ke atas langit","Menutup kedua mata rapat-rapat","Melihat sepatu teman"], answer: "Fokus memperhatikan arah datangnya bola", hint: "Konsentrasi melihat bola memastikan bola tertangkap aman dengan kedua tangan." }
+          { q: 'Gerak manipulatif adalah gerak yang melibatkan penggunaan...', options: ['Alat atau benda (seperti bola, simpai, raket)', 'Hanya mata', 'Hanya suara', 'Angin sepoi'], answer: 'Alat atau benda (seperti bola, simpai, raket)', hint: 'Contohnya menendang bola, melempar, dan menangkap bola ⚽' },
+          { q: 'Saat menangkap bola lemparan teman, pandangan mata kita harus...', options: ['Fokus memperhatikan arah datangnya bola', 'Melihat ke atas langit', 'Menutup kedua mata rapat-rapat', 'Melihat sepatu teman'], answer: 'Fokus memperhatikan arah datangnya bola', hint: 'Konsentrasi melihat bola memastikan bola tertangkap aman dengan kedua tangan.' },
+          { q: 'Bagian kaki yang paling tepat digunakan untuk mengoper bola pendek dengan akurat adalah...', options: ['Kaki bagian dalam', 'Ujung jari kaki', 'Tumit belakang', 'Lutut'], answer: 'Kaki bagian dalam', hint: 'Kaki bagian dalam memiliki bidang datar yang lebar sehingga operan bola terarah dan stabil.' },
+          { q: 'Gerakan memantulkan bola ke lantai berulang-ulang menggunakan satu tangan pada permainan basket disebut...', options: ['Menggiring bola (Dribbling)', 'Menendang', 'Melompat', 'Menyelam'], answer: 'Menggiring bola (Dribbling)', hint: 'Dribbling melatih kepekaan sentuhan telapak tangan terhadap pantulan bola.' },
+          { q: 'Alat olahraga yang dipukul menggunakan raket pada permainan bulu tangkis adalah...', options: ['Kok (shuttlecock)', 'Bola kasti', 'Batu bata', 'Bola basket'], answer: 'Kok (shuttlecock)', hint: 'Kok bulu tangkis yang ringan melayang di udara saat dipukul raket 🏸' },
+          { q: 'Saat melempar bola mendatar ke dada teman, dorongan tenaga berasal dari...', options: ['Ayunkan lengan ke depan dibantu tolakan badan', 'Hanya kepala', 'Kaki diam kaku', 'Menarik napas saja'], answer: 'Ayunkan lengan ke depan dibantu tolakan badan', hint: 'Koordinasi langkah kaki dan ayunan lengan menghasilkan lemparan terarah.' },
+          { q: 'Permainan kasti merupakan contoh permainan beregu yang memadukan keterampilan gerak...', options: ['Melempar, menangkap, memukul bola, dan berlari', 'Berenang dan menyelam', 'Tidur di rumput', 'Menari balet'], answer: 'Melempar, menangkap, memukul bola, dan berlari', hint: 'Kasti melatih kerja sama regu dan ketangkasan manipulatif.' },
+          { q: 'Agar bola tidak mudah lepas dari genggaman saat menangkap, jari-jari tangan harus...', options: ['Terbuka rileks dan meredam laju bola dengan lentur', 'Mengepal keras seperti batu', 'Kaku lurus tanpa ditekuk', 'Bersembunyi di saku'], answer: 'Terbuka rileks dan meredam laju bola dengan lentur', hint: 'Tangan bertindak seperti sarung tangan lentur yang menyerap kejutan bola.' }
         ],
         activitiesEn: [
-          { q: 'Kicking, tossing, and catching a ball belong to which category of movement skills?', options: ['Manipulative', 'Locomotor', 'Non-locomotor', 'Static'], answer: 'Manipulative', hint: 'Involves handling external sport gear or balls 🎾' }
+          { q: 'Kicking, tossing, and catching a ball belong to which category of movement skills?', options: ['Manipulative', 'Locomotor', 'Non-locomotor', 'Static'], answer: 'Manipulative', hint: 'Involves handling external sport gear or balls 🎾' },
+          { q: 'How should hands be positioned to catch an incoming flying ball?', options: ['Open like a cupped bowl facing the ball', 'Clenched into hard fists', 'Hidden behind your back', 'Covering both eyes'], answer: 'Open like a cupped bowl facing the ball', hint: 'Soft cupped hands cushion the impact safely.' }
         ]
       },
       {
-        id: 'pjok-senam-irama'
+        id: 'pjok-senam-irama',
         title: 'Aktivitas Senam Irama / Ritmik Ceria',
         titleEn: 'Rhythmic Gymnastics & Musical Movement',
         desc: 'Senam Irama memadukan gerakan langkah kaki dan ayunan lengan yang selaras mengikuti irama ketukan musik atau hitungan ceria. Senam ini melatih koordinasi otak kiri dan kanan, kelenturan tubuh, rasa percaya diri, serta memupuk keceriaan bersama kawan!',
         descEn: 'Rhythmic gymnastics blends footwork and sweeping arm gestures synchronized to upbeat musical tempos. It builds bilateral brain coordination, cardiovascular endurance, and social joy!',
+        funFact: 'Bergerak mengikuti musik ceria memicu otak menghasilkan hormon dopamin yang membuatmu merasa bahagia, bersemangat, dan tidak mudah cemas!',
+        keyPoints: [
+          'Senam irama memadukan langkah kaki, ayunan lengan, dan ketukan irama musik.',
+          'Unsur penting: kelenturan, ketepatan ketukan musik, kontinuitas gerak, dan kekompakan.',
+          'Membiasakan tubuh bergerak lincah dan berirama riang bersama kawan sebaya.'
+        ],
         checklist: [
           'Misi 1: Langkah kaki ke samping kanan dan kiri secara bergantian mengikuti ketukan musik 1-2-3-4.',
           'Misi 2: Ayunkan kedua lengan ke atas dan ke bawah seirama dengan langkah kakimu.',
@@ -4988,19 +5119,32 @@
         activities: [
           { q: 'Unsur terpenting yang memandu gerakan pada senam irama adalah...', options: ['Ketukan irama musik atau tempo hitungan', 'Berat beban alat', 'Kecepatan lari kencang', 'Ketinggian lompatan'], answer: 'Ketukan irama musik atau tempo hitungan', hint: 'Gerakan harus selaras dan kompak dengan ritme musik 🎶' },
           { q: 'Senam irama yang dilakukan bersama teman-teman sekelas melatih rasa...', options: ['Kekompakan dan kebersamaan', 'Egois ingin menang sendiri', 'Rasa malas bergerak', 'Kecurigaan'], answer: 'Kekompakan dan kebersamaan', hint: 'Senam bersama menumbuhkan harmoni dan persahabatan.' },
-          { q: "Senam irama (ritmik) diiringi oleh ketukan musik yang...", options: ["Gembira dan berirama riang","Sedih dan menangis","Sunyi tanpa suara","Mengejutkan"], answer: "Gembira dan berirama riang", hint: "Irama musik ceria membuat gerakan tubuh jadi bersemangat dan kompak 🎵" },
-          { q: "Kekompakan gerak pada senam irama beregu melatih rasa...", options: ["Kebersamaan dan disiplin gerak","Persaingan bermusuhan","Kecurangan","Malas"], answer: "Kebersamaan dan disiplin gerak", hint: "Bergerak bersama menciptakan harmoni yang indah dan sehat." }
+          { q: 'Senam irama (ritmik) diiringi oleh ketukan musik yang...', options: ['Gembira dan berirama riang', 'Sedih dan menangis', 'Sunyi tanpa suara', 'Mengejutkan'], answer: 'Gembira dan berirama riang', hint: 'Irama musik ceria membuat gerakan tubuh jadi bersemangat dan kompak 🎵' },
+          { q: 'Kekompakan gerak pada senam irama beregu melatih rasa...', options: ['Kebersamaan dan disiplin gerak', 'Persaingan bermusuhan', 'Kecurangan', 'Malas'], answer: 'Kebersamaan dan disiplin gerak', hint: 'Bergerak bersama menciptakan harmoni yang indah dan sehat.' },
+          { q: 'Contoh gerakan langkah kaki sederhana dalam senam irama adalah...', options: ['Langkah tunggal ke kanan dan ke kiri (single step)', 'Duduk bersila diam', 'Tidur telentang', 'Bersembunyi di balik pintu'], answer: 'Langkah tunggal ke kanan dan ke kiri (single step)', hint: 'Langkah ke kanan lalu dirapatkan, kemudian ke kiri lalu dirapatkan.' },
+          { q: 'Saat senam irama, gerakan tubuh sebaiknya dilakukan secara...', options: ['Luwes, rileks, dan tidak kaku', 'Kaku seperti patung batu', 'Marah-marah', 'Sambil memejamkan mata'], answer: 'Luwes, rileks, dan tidak kaku', hint: 'Kelenturan dan keluwesan membuat senam indah dipandang dan menyehatkan sendi.' },
+          { q: 'Jika tidak ada pemutar musik, senam irama dapat diiringi oleh...', options: ['Ketukan tepukan tangan atau hitungan satu-dua-tiga-empat', 'Klakson mobil bising', 'Suara petir', 'Angin kencang'], answer: 'Ketukan tepukan tangan atau hitungan satu-dua-tiga-empat', hint: 'Tepukan tangan guru atau murid menjadi panduan irama tempo yang teratur 👏' },
+          { q: 'Senam pagi ceria di halaman sekolah sebaiknya dilakukan pada waktu...', options: ['Pagi hari saat udara sejuk dan matahari bersinar hangat', 'Tengah malam saat gelap', 'Siang hari terik panas menyengat', 'Saat hujan badai petir'], answer: 'Pagi hari saat udara sejuk dan matahari bersinar hangat', hint: 'Sinar matahari pagi merangsang pembentukan vitamin D untuk kekuatan tulang.' },
+          { q: 'Gerakan senam yang dilakukan terus menerus tanpa terputus disebut asas...', options: ['Kontinuitas gerak', 'Kelesuan gerak', 'Ketidakteraturan', 'Keheningan'], answer: 'Kontinuitas gerak', hint: 'Gerakan mengalir indah menyambung dari awal sampai pendinginan.' },
+          { q: 'Setelah selesai senam irama dengan penuh semangat, perasaan yang kita rasakan adalah...', options: ['Gembira, segar, dan berenergi positif', 'Benci dan marah', 'Ingin berkelahi', 'Bosan belajar'], answer: 'Gembira, segar, dan berenergi positif', hint: 'Senam memicu kebugaran fisik dan keceriaan jiwa.' }
         ],
         activitiesEn: [
-          { q: 'What is the most crucial pacing element in rhythmic aerobic exercise?', options: ['Musical rhythm and count tempo', 'Heavy barbell weight', 'Max sprint speed', 'Jump height'], answer: 'Musical rhythm and count tempo', hint: 'Movement syncs with the musical beat 🎶' }
+          { q: 'What is the most crucial pacing element in rhythmic aerobic exercise?', options: ['Musical rhythm and count tempo', 'Heavy barbell weight', 'Max sprint speed', 'Jump height'], answer: 'Musical rhythm and count tempo', hint: 'Movement syncs with the musical beat 🎶' },
+          { q: 'Rhythmic movement to cheerful tunes promotes feelings of...', options: ['Joy, vitality, and positive energy', 'Anger and stress', 'Sleepiness', 'Boredom'], answer: 'Joy, vitality, and positive energy', hint: 'Music and exercise release happy endorphins!' }
         ]
       },
       {
-        id: 'pjok-kebersihan-diri'
+        id: 'pjok-kebersihan-diri',
         title: 'Menjaga Kebersihan Diri & Cuci Tangan 6 Langkah',
         titleEn: 'Personal Hygiene & 6-Step Handwashing',
         desc: 'Tubuh yang sehat berawal dari kebersihan diri: Mandi 2 kali sehari memakai sabun, sikat gigi pagi setelah sarapan dan malam sebelum tidur, serta memotong kuku kotor. Cuci tangan 6 langkah memakai sabun dan air mengalir selama 20 detik membasmi kuman dan virus penyakit!',
         descEn: 'Vibrant health blooms from clean hygiene habits: Showering twice daily, brushing teeth morning and night, and clipping fingernails. Proper 6-step handwashing with soap for 20 seconds eliminates germs!',
+        funFact: 'Di telapak tangan kita yang tampak bersih bisa bersarang ribuan mikroorganisme kuman. Mencuci tangan pakai sabun selama 20 detik melenyapkan hingga 99% kuman tersebut!',
+        keyPoints: [
+          'Mandi minimal 2 kali sehari memakai sabun dan keramas rambut secara berkala.',
+          'Menggosok gigi minimal 2 kali sehari: pagi setelah sarapan dan malam sebelum tidur.',
+          'Mencuci tangan 6 langkah pakai sabun di air mengalir selama minimal 20 detik.'
+        ],
         checklist: [
           'Misi 1: Praktikkan 6 langkah cuci tangan pakai sabun (telapak, punggung tangan, sela jari, kunci jari, putar ibu jari, dan ujung kuku).',
           'Misi 2: Sikat gigimu secara menyeluruh dengan pasta gigi berfluoride sebelum tidur malam ini.',
@@ -5014,19 +5158,32 @@
         activities: [
           { q: 'Berapa durasi waktu minimal yang disarankan dokter saat mencuci tangan pakai sabun?', options: ['20 detik', '2 detik', '1 menit tanpa henti', 'Hanya celup air saja'], answer: '20 detik', hint: 'Cukup untuk menyanyikan lagu "Selamat Ulang Tahun" 2 kali 🧼' },
           { q: 'Kapan waktu yang paling tepat untuk menyikat gigi agar terhindar dari gigi berlubang?', options: ['Pagi setelah sarapan dan malam sebelum tidur', 'Hanya seminggu sekali', 'Hanya saat sakit gigi', 'Tengah malam saat tidur'], answer: 'Pagi setelah sarapan dan malam sebelum tidur', hint: 'Membersihkan sisa makanan agar kuman tidak merusak lapisan gigi.' },
-          { q: "Lama waktu yang dianjurkan saat mencuci tangan dengan sabun adalah...", options: ["Minimal 20 detik dengan 6 langkah bersih","Hanya 1 detik","1 jam penuh","Tanpa air"], answer: "Minimal 20 detik dengan 6 langkah bersih", hint: "20 detik memastikan kuman dan bakteri mati terbilas busa sabun 🧼" },
-          { q: "Menggosok gigi sebaiknya dilakukan secara teratur minimal...", options: ["2 kali sehari (pagi setelah makan & malam sebelum tidur)","1 bulan sekali","Setahun sekali","Hanya saat hari libur"], answer: "2 kali sehari (pagi setelah makan & malam sebelum tidur)", hint: "Gigi yang bersih bebas dari kuman perusak dan gigi berlubang 🦷" }
+          { q: 'Lama waktu yang dianjurkan saat mencuci tangan dengan sabun adalah...', options: ['Minimal 20 detik dengan 6 langkah bersih', 'Hanya 1 detik', '1 jam penuh', 'Tanpa air'], answer: 'Minimal 20 detik dengan 6 langkah bersih', hint: '20 detik memastikan kuman dan bakteri mati terbilas busa sabun 🧼' },
+          { q: 'Menggosok gigi sebaiknya dilakukan secara teratur minimal...', options: ['2 kali sehari (pagi setelah makan & malam sebelum tidur)', '1 bulan sekali', 'Setahun sekali', 'Hanya saat hari libur'], answer: '2 kali sehari (pagi setelah makan & malam sebelum tidur)', hint: 'Gigi yang bersih bebas dari kuman perusak dan gigi berlubang 🦷' },
+          { q: 'Mengapa kuku tangan yang panjang dan hitam kotor harus segera dipotong rapi?', options: ['Karena menjadi sarang telur cacing dan kuman penyakit yang bisa masuk ke perut', 'Supaya kuku tidak bisa tumbuh lagi', 'Agar tangan terasa berat', 'Hanya agar terlihat cantik'], answer: 'Karena menjadi sarang telur cacing dan kuman penyakit yang bisa masuk ke perut', hint: 'Kotoran di bawah kuku sangat mudah mencemari makanan yang kita pegang.' },
+          { q: 'Kita wajib mencuci tangan menggunakan sabun terutama pada saat...', options: ['Sebelum makan dan setelah buang air di toilet', 'Hanya saat difoto', 'Setelah bangun tidur siang saja', 'Saat sedang kehujanan'], answer: 'Sebelum makan dan setelah buang air di toilet', hint: 'Mencegah kuman dari toilet atau debu luar masuk ke dalam saluran pencernaan.' },
+          { q: 'Langkah mencuci tangan yang benar membersihkan bagian...', options: ['Telapak, punggung tangan, sela-sela jari, kuncian jari, ibu jari, dan ujung kuku', 'Hanya ujung satu jari', 'Cukup pergelangan baju', 'Cukup celup sebentar ke ember'], answer: 'Telapak, punggung tangan, sela-sela jari, kuncian jari, ibu jari, dan ujung kuku', hint: '6 langkah memastikan seluruh penjuru tangan bebas kuman.' },
+          { q: 'Pakaian seragam sekolah yang sudah kotor dan basah oleh keringat sebaiknya...', options: ['Segera dilepas dan dimasukkan ke keranjang cucian', 'Dipakai tidur sampai esok hari', 'Ditaruh di atas kasur', 'Dipakai seminggu penuh'], answer: 'Segera dilepas dan dimasukkan ke keranjang cucian', hint: 'Pakaian basah berkeringat menjadi sarang jamur kulit dan menimbulkan gatal-gatal.' },
+          { q: 'Alat pribadi yang TIDAK boleh dipinjamkan atau digunakan bergantian dengan orang lain demi kesehatan adalah...', options: ['Sikat gigi dan handuk mandi', 'Buku cerita', 'Pensil gambar', 'Penghapus karet'], answer: 'Sikat gigi dan handuk mandi', hint: 'Sikat gigi dan handuk membawa kuman pribadi dan air liur yang berpotensi menularkan penyakit.' },
+          { q: 'Mandi menggunakan air bersih dan sabun minimal 2 kali sehari bermanfaat untuk...', options: ['Menghilangkan daki kotoran, bau badan, dan menyegarkan tubuh', 'Membuat kulit berkeriput', 'Membuat cepat lapar', 'Menghabiskan persediaan sabun'], answer: 'Menghilangkan daki kotoran, bau badan, dan menyegarkan tubuh', hint: 'Mandi teratur membuat kulit bersih, harum, dan percaya diri.' }
         ],
         activitiesEn: [
-          { q: 'What is the recommended minimum duration for effective handwashing with soap?', options: ['20 seconds', '2 seconds', '10 minutes', 'Just a quick splash'], answer: '20 seconds', hint: 'Equal to singing the "Happy Birthday" song twice 🧼' }
+          { q: 'What is the recommended minimum duration for effective handwashing with soap?', options: ['20 seconds', '2 seconds', '10 minutes', 'Just a quick splash'], answer: '20 seconds', hint: 'Equal to singing the "Happy Birthday" song twice 🧼' },
+          { q: 'Why must overgrown fingernails be clipped neatly and regularly?', options: ['To remove trapped dirt and disease germs', 'To stop nails from growing', 'To look taller', 'No reason'], answer: 'To remove trapped dirt and disease germs', hint: 'Germs under nails easily contaminate meals.' }
         ]
       },
       {
-        id: 'pjok-gizi-seimbang'
+        id: 'pjok-gizi-seimbang',
         title: 'Gizi Seimbang: Isi Piringku & Istirahat Cukup',
         titleEn: 'Balanced Nutrition (Isi Piringku) & Quality Sleep',
         desc: 'Prinsip "Isi Piringku" mengajarkan porsi gizi seimbang dalam satu piring makan: 1/3 Makanan Pokok (nasi/kentang/ubi), 1/3 Sayuran segar, 1/6 Lauk-pauk berprotein (ikan/telur/tahu), dan 1/6 Buah-buahan manis alami. Minum air putih 8 gelas sehari dan tidur 8-9 jam agar tubuh tumbuh optimal!',
         descEn: 'The "Isi Piringku" guide balances every plate: 1/3 Staple carbs (rice/potatoes), 1/3 Fresh greens & veggies, 1/6 Healthy protein (fish/eggs/tofu), and 1/6 Fresh fruit! Hydrate with 8 glasses of water and rest 8-9 hours every night!',
+        funFact: 'Wortel berwarna jingga cerah karena mengandung zat beta-karoten yang diubah tubuh menjadi Vitamin A untuk menjaga mata tetap jernih dan tajam melihat!',
+        keyPoints: [
+          'Panduan Isi Piringku: 1/3 karbohidrat pokok, 1/3 sayuran, 1/6 lauk protein, 1/6 buah segar.',
+          'Protein (ikan, telur, tahu, tempe) berguna untuk pertumbuhan dan perbaikan sel tubuh.',
+          'Minum minimal 6-8 gelas air putih setiap hari untuk mencegah dehidrasi tubuh.'
+        ],
         checklist: [
           'Misi 1: Amati piring makan siangmu dan sebutkan mana sayuran serta lauk proteinnya.',
           'Misi 2: Minum minimal 6-8 gelas air putih bersih sepanjang hari hari ini.',
@@ -5040,254 +5197,176 @@
         activities: [
           { q: 'Dalam pedoman gizi seimbang "Isi Piringku", sumber energi makanan pokok contohnya adalah...', options: ['Nasi, jagung, dan ubi', 'Permen manis dan lolipop', 'Keripik asin pedas', 'Minuman soda bersoda'], answer: 'Nasi, jagung, dan ubi', hint: 'Karbohidrat kompleks yang memberikan tenaga belajar dan bermain 🍚' },
           { q: 'Berapa jam waktu tidur malam yang dianjurkan untuk anak usia sekolah dasar agar tumbuh tinggi dan cerdas?', options: ['8 sampai 9 jam', 'Hanya 2 jam', '15 jam seharian', 'Tidak perlu tidur'], answer: '8 sampai 9 jam', hint: 'Tidur cukup memulihkan stamina dan memicu hormon pertumbuhan.' },
-          { q: "Zat makanan yang berfungsi sebagai sumber tenaga utama tubuh adalah...", options: ["Karbohidrat (nasi, jagung, kentang, roti)","Garam dapur","Minyak jelantah","Es batu"], answer: "Karbohidrat (nasi, jagung, kentang, roti)", hint: "Karbohidrat memberi kita energi untuk berlari dan belajar seharian 🍚" },
-          { q: "Sayur-sayuran hijau dan buah-buahan segar kaya akan...", options: ["Vitamin, mineral, dan serat pencernaan","Lemak jahat","Gula buatan","Bahan pengawet"], answer: "Vitamin, mineral, dan serat pencernaan", hint: "Serat dan vitamin membuat daya tahan tubuh kuat dan tidak mudah sakit 🥦" }
+          { q: 'Zat makanan yang berfungsi sebagai sumber tenaga utama tubuh adalah...', options: ['Karbohidrat (nasi, jagung, kentang, roti)', 'Garam dapur', 'Minyak jelantah', 'Es batu'], answer: 'Karbohidrat (nasi, jagung, kentang, roti)', hint: 'Karbohidrat memberi kita energi untuk berlari dan belajar seharian 🍚' },
+          { q: 'Sayur-sayuran hijau dan buah-buahan segar kaya akan...', options: ['Vitamin, mineral, dan serat pencernaan', 'Lemak jahat', 'Gula buatan', 'Bahan pengawet'], answer: 'Vitamin, mineral, dan serat pencernaan', hint: 'Serat dan vitamin membuat daya tahan tubuh kuat dan tidak mudah sakit 🥦' },
+          { q: 'Zat pembangun yang sangat dibutuhkan tubuh anak untuk tumbuh tinggi dan memperbaiki sel rusak adalah...', options: ['Protein (ikan, telur, ayam, tempe, tahu)', 'Pewarna sintetik', 'Minyak goreng berlebih', 'Kapur tulis'], answer: 'Protein (ikan, telur, ayam, tempe, tahu)', hint: 'Protein seperti ikan dan telur adalah nutrisi juara untuk otot dan pertumbuhan.' },
+          { q: 'Ikan laut segar sangat baik dikonsumsi anak karena banyak mengandung zat...', options: ['Omega-3 dan protein tinggi untuk kecerdasan otak', 'Pemanis buatan', 'Pewarna kimia', 'Zat beracun'], answer: 'Omega-3 dan protein tinggi untuk kecerdasan otak', hint: 'Nutrisi omega-3 menunjang daya ingat dan perkembangan sel otak.' },
+          { q: 'Jika tubuh kita kekurangan cairan air minum (dehidrasi), tanda yang kita rasakan adalah...', options: ['Mulut kering, tubuh terasa lemas, dan sulit konsentrasi', 'Badan semakin segar', 'Mata bersinar terang', 'Suara bertambah merdu'], answer: 'Mulut kering, tubuh terasa lemas, dan sulit konsentrasi', hint: 'Minum air putih secukupnya memulihkan kebugaran cairan tubuh.' },
+          { q: 'Minuman terbaik dan paling sehat untuk diminum setiap hari bagi anak-anak adalah...', options: ['Air putih bersih yang matang', 'Minuman bersoda yang manis', 'Kopi hitam kental', 'Sirup berpengawet'], answer: 'Air putih bersih yang matang', hint: 'Air putih murni membersihkan racun tubuh dan tidak merusak ginjal 💧' },
+          { q: 'Susu sapi atau susu kedelai kaya akan kalsium yang sangat berguna untuk...', options: ['Memperkuat tulang dan gigi', 'Membuat kuku jadi biru', 'Membuat rambut rontok', 'Membuat badan cepat lelah'], answer: 'Memperkuat tulang dan gigi', hint: 'Kalsium adalah bahan pembentuk utama tulang rangka yang kokoh.' },
+          { q: 'Akibat yang ditimbulkan jika kita terlalu sering mengonsumsi makanan yang terlalu banyak gula dan permen adalah...', options: ['Gigi berlubang dan risiko obesitas', 'Gigi menjadi sekuat baja', 'Nilai ulangan langsung 100', 'Tubuh kebal terhadap semua kuman'], answer: 'Gigi berlubang dan risiko obesitas', hint: 'Gula sisa permen dimakan kuman asam yang melubangi lapisan email gigi.' }
         ],
         activitiesEn: [
-          { q: 'In the balanced nutrition plate guide, which food serves as a healthy staple carbohydrate?', options: ['Steamed rice, corn, and sweet potato', 'Cotton candy and lollipops', 'Processed spicy crisps', 'Fizzy soda drinks'], answer: 'Steamed rice, corn, and sweet potato', hint: 'Wholesome carbohydrates fuel active play and study 🍚' }
+          { q: 'In the balanced nutrition plate guide, which food serves as a healthy staple carbohydrate?', options: ['Steamed rice, corn, and sweet potato', 'Cotton candy and lollipops', 'Processed spicy crisps', 'Fizzy soda drinks'], answer: 'Steamed rice, corn, and sweet potato', hint: 'Wholesome carbohydrates fuel active play and study 🍚' },
+          { q: 'Which food group builds strong muscles and repairs body tissues?', options: ['Proteins like fish, eggs, and tofu', 'Sugary candies', 'Artificial syrups', 'Deep fried chips'], answer: 'Proteins like fish, eggs, and tofu', hint: 'Proteins are the essential building blocks of our body.' }
         ]
-      }
-  ,
+      },
       {
-        id: 'pjok-keseimbangan'
+        id: 'pjok-keseimbangan',
         title: 'Latihan Keseimbangan Tubuh: Sikap Bangau & Jinjit',
         titleEn: 'Body Balance Training: Crane Stand & Tip-Toe Walking',
         desc: 'Keseimbangan tubuh yang kuat mencegah kita mudah terjatuh saat berlari atau bermain. Ada keseimbangan diam (statis) seperti berdiri satu kaki meniru burung bangau dengan kedua tangan direntangkan. Ada pula keseimbangan bergerak (dinamis) seperti berjalan jinjit di atas garis lurus tanpa oleng!',
         descEn: 'A resilient sense of balance prevents falls during joyful games. Static balance involves holding poses like the graceful Crane Stand on one foot with arms outstretched. Dynamic balance involves walking tip-toe along a chalk line with poised composure!',
+        funFact: 'Alat keseimbangan tubuh manusia terletak di dalam telinga bagian dalam (sistem vestibular) dan cairan koklea yang bekerja sama dengan mata dan otot kaki!',
+        keyPoints: [
+          'Keseimbangan statis dilakukan saat posisi tubuh diam (contoh: berdiri satu kaki, sikap kapal terbang).',
+          'Keseimbangan dinamis dilakukan saat tubuh bergerak (contoh: berjalan di atas balok titian, berjalan jinjit).',
+          'Merentangkan kedua tangan ke samping membantu menjaga pusat gravitasi tubuh tetap stabil.'
+        ],
         checklist: [
-          "Misi 1: Praktikkan sikap berdiri burung bangau (satu kaki ditekuk) selama 10 hitungan tanpa bergoyang.",
-          "Misi 2: Berjalan jinjit di atas lantai lurus sejauh 3 meter dengan kedua tangan direntangkan ke samping.",
-          "Misi 3: Lakukan gerakan menarik napas panjang dan hembuskan perlahan untuk mendinginkan tubuh."
-  ],
+          'Misi 1: Praktikkan sikap berdiri burung bangau (satu kaki ditekuk) selama 10 hitungan tanpa bergoyang.',
+          'Misi 2: Berjalan jinjit di atas lantai lurus sejauh 3 meter dengan kedua tangan direntangkan ke samping.',
+          'Misi 3: Lakukan gerakan menarik napas panjang dan hembuskan perlahan untuk mendinginkan tubuh.'
+        ],
         checklistEn: [
-          "Mission 1: Hold the Crane Stand pose on one foot for 10 calm seconds without wobbling.",
-          "Mission 2: Walk tip-toe along a straight floor tile seam for 3 meters with arms spread wide.",
-          "Mission 3: Take deep relaxing breaths to cool down after balance exercises."
-  ],
+          'Mission 1: Hold the Crane Stand pose on one foot for 10 calm seconds without wobbling.',
+          'Mission 2: Walk tip-toe along a straight floor tile seam for 3 meters with arms spread wide.',
+          'Mission 3: Take deep relaxing breaths to cool down after balance exercises.'
+        ],
         activities: [
-          {
-                  "q": "Berdiri dengan satu kaki ditekuk dan kedua tangan direntangkan ke samping meniru gerakan...",
-                  "options": [
-                          "Burung Bangau",
-                          "Katak melompat",
-                          "Kuda berlari",
-                          "Ikan berenang"
-                  ],
-                  "answer": "Burung Bangau",
-                  "hint": "Burung anggun berkaki panjang yang sering berdiri tenang di tepi sawah."
-          },
-          {
-                  "q": "Tujuan utama dari merentangkan kedua tangan saat berjalan di titian atau garis lurus adalah...",
-                  "options": [
-                          "Menjaga keseimbangan tubuh agar tidak oleng/jatuh",
-                          "Mengejar layang-layang",
-                          "Mendinginkan ketiak",
-                          "Terbang ke awan"
-                  ],
-                  "answer": "Menjaga keseimbangan tubuh agar tidak oleng/jatuh",
-                  "hint": "Tangan bertindak sebagai penyeimbang beban kiri dan kanan."
-          },
-          {
-                  "q": "Latihan keseimbangan dilakukan di tempat yang...",
-                  "options": [
-                          "Aman, rata, dan tidak licin",
-                          "Tangga yang curam",
-                          "Lantai basah berlumut",
-                          "Jalan raya ramai kendaraan"
-                  ],
-                  "answer": "Aman, rata, dan tidak licin",
-                  "hint": "Keselamatan adalah hal paling utama saat berolahraga."
-          },
-          { q: "Saat mempraktikkan sikap bangau (berdiri 1 kaki), kedua lengan kita...", options: ["Direntangkan ke samping untuk menjaga keseimbangan","Dimasukkan ke kantong celana","Ditutup ke telinga","Ditaruh di belakang"], answer: "Direntangkan ke samping untuk menjaga keseimbangan", hint: "Rentangan tangan berfungsi sebagai penyeimbang titik berat tubuh 🦩" },
-          { q: "Latihan berjalan jinjit di atas garis lurus melatih kekuatan otot...", options: ["Betis dan pergelangan kaki","Leher","Jari tangan","Gigi"], answer: "Betis dan pergelangan kaki", hint: "Otot betis menopang berat badan saat tumit terangkat tinggi." }
+          { q: 'Berdiri dengan satu kaki ditekuk dan kedua tangan direntangkan ke samping meniru gerakan...', options: ['Burung Bangau', 'Katak melompat', 'Kuda berlari', 'Ikan berenang'], answer: 'Burung Bangau', hint: 'Burung anggun berkaki panjang yang sering berdiri tenang di tepi sawah.' },
+          { q: 'Tujuan utama dari merentangkan kedua tangan saat berjalan di titian atau garis lurus adalah...', options: ['Menjaga keseimbangan tubuh agar tidak oleng/jatuh', 'Mengejar layang-layang', 'Mendinginkan ketiak', 'Terbang ke awan'], answer: 'Menjaga keseimbangan tubuh agar tidak oleng/jatuh', hint: 'Tangan bertindak sebagai penyeimbang beban kiri dan kanan.' },
+          { q: 'Latihan keseimbangan dilakukan di tempat yang...', options: ['Aman, rata, dan tidak licin', 'Tangga yang curam', 'Lantai basah berlumut', 'Jalan raya ramai kendaraan'], answer: 'Aman, rata, dan tidak licin', hint: 'Keselamatan adalah hal paling utama saat berolahraga.' },
+          { q: 'Saat mempraktikkan sikap bangau (berdiri 1 kaki), kedua lengan kita...', options: ['Direntangkan ke samping untuk menjaga keseimbangan', 'Dimasukkan ke kantong celana', 'Ditutup ke telinga', 'Ditaruh di belakang'], answer: 'Direntangkan ke samping untuk menjaga keseimbangan', hint: 'Rentangan tangan berfungsi sebagai penyeimbang titik berat tubuh 🦩' },
+          { q: 'Latihan berjalan jinjit di atas garis lurus melatih kekuatan otot...', options: ['Betis dan pergelangan kaki', 'Leher', 'Jari tangan', 'Gigi'], answer: 'Betis dan pergelangan kaki', hint: 'Otot betis menopang berat badan saat tumit terangkat tinggi.' },
+          { q: 'Sikap tubuh berdiri satu kaki sambil mencondongkan badan ke depan dan satu kaki lurus ke belakang disebut...', options: ['Sikap kapal terbang', 'Sikap duduk bersila', 'Sikap tidur telungkup', 'Sikap kayang melengkung'], answer: 'Sikap kapal terbang', hint: 'Badan lurus mendatar menyerupai pesawat terbang yang melayang di angkasa.' },
+          { q: 'Keseimbangan tubuh saat posisi diam di tempat tanpa berpindah disebut keseimbangan...', options: ['Statis', 'Dinamis', 'Mekanik', 'Elektronik'], answer: 'Statis', hint: 'Statis berarti diam tidak bergerak berpindah posisi.' },
+          { q: 'Keseimbangan saat tubuh sedang berjalan melintasi sebilah papan balok titian disebut keseimbangan...', options: ['Dinamis', 'Statis', 'Beku', 'Pasif'], answer: 'Dinamis', hint: 'Dinamis berarti keseimbangan yang dikendalikan saat tubuh bergerak maju.' },
+          { q: 'Saat berlatih berjalan di atas balok titian, jika merasa sedikit oleng ke kiri, gerakan penyeimbangnya adalah...', options: ['Condongkan lengan dan berat badan sedikit ke arah kanan', 'Langsung melompat ke bawah sambil berteriak', 'Menutup mata rapat-rapat', 'Menekuk leher ke bawah'], answer: 'Condongkan lengan dan berat badan sedikit ke arah kanan', hint: 'Menyeimbangkan kembali pusat titik berat ke posisi tengah.' },
+          { q: 'Manfaat melatih keseimbangan tubuh sejak usia dini adalah...', options: ['Tubuh menjadi tangkas, lincah, dan tidak mudah terjatuh', 'Mendapat mainan baru secara gratis', 'Bisa terbang tanpa sayap', 'Tidak perlu makan sayuran lagi'], answer: 'Tubuh menjadi tangkas, lincah, dan tidak mudah terjatuh', hint: 'Koordinasi motorik yang matang melindungi tubuh dari cedera tersandung.' }
         ],
         activitiesEn: [
-          {
-                  "q": "Standing poised on one foot with arms outstretched mimics the posture of a...",
-                  "options": [
-                          "Graceful Crane",
-                          "Jumping frog",
-                          "Galloping horse",
-                          "Swimming fish"
-                  ],
-                  "answer": "Graceful Crane",
-                  "hint": "A tall marsh bird known for steady balance."
-          }
-  ]
+          { q: 'Standing poised on one foot with arms outstretched mimics the posture of a...', options: ['Graceful Crane', 'Jumping frog', 'Galloping horse', 'Swimming fish'], answer: 'Graceful Crane', hint: 'A tall marsh bird known for steady balance.' },
+          { q: 'Why do we spread both arms sideways when walking along a balance beam?', options: ['To maintain body balance and prevent falling', 'To fly like a bird', 'To catch butterflies', 'To look taller'], answer: 'To maintain body balance and prevent falling', hint: 'Outstretched arms stabilize your center of gravity.' }
+        ]
       },
       {
         id: 'pjok-makanan-sehat',
-        title: 'Piring Makanku Sehat: Gizi Seimbang & Air Putih',
-        titleEn: 'My Healthy Plate: Balanced Nutrition & Fresh Water',
-        desc: 'Agar tubuh anak Kelas 1 SD tumbuh tinggi, cerdas, dan jarang sakit, kita perlu menyantap makanan bergizi seimbang! Panduan "Isi Piringku": sepertiga makanan pokok (nasi/kentang), sepertiga sayuran segar (bayam/wortel), dan sepertiganya lauk pauk (telur/ikan/tempe) plus buah manis, serta minum 6-8 gelas air putih setiap hari!',
-        descEn: 'To grow energetic, clever, and robust, 1st graders enjoy balanced nutritious plates! The "Healthy Plate" guide: 1/3 whole grains, 1/3 crisp greens, and 1/3 protein (eggs/fish/tempeh) topped with juicy fruits and 6-8 glasses of fresh water daily!',
+        title: 'Memilih Makanan Bersih & Jajanan Sehat Sekolah',
+        titleEn: 'Choosing Clean Food & Healthy School Snacks',
+        desc: 'Di sekolah, kita harus pintar memilih jajanan yang higienis dan sehat! Ciri jajanan aman: tertutup rapi terhindar dari lalat dan debu, warnanya alami tidak mencolok, tidak berbau tengik, dan penjualnya bersih memakai penjepit makanan. Hindari makanan berpengawet berlebih atau berpemanis buatan!',
+        descEn: 'At school, smart students pick hygienic, nutritious snacks! Safe foods are neatly covered from flies and dust, naturally colored without neon artificial dyes, fresh-smelling, and served with clean utensils. Avoid fake sweeteners and unhealthy preservatives!',
+        funFact: 'Makanan dengan pewarna tekstil sintetis berbahaya (seperti rhodamin B) warnanya terlihat menyala neon dan tidak mudah hilang jika dicuci dengan air!',
+        keyPoints: [
+          'Pilihlah jajanan yang tertutup bersih, tidak dihinggapi lalat, dan jauh dari selokan kotor.',
+          'Hindari jajanan berwarna mencolok neon atau yang rasanya terlalu gurih micin berlebihan.',
+          'Membawa bekal sehat buatan ibu dari rumah adalah pilihan paling bersih, hemat, dan bergizi.'
+        ],
         checklist: [
-          "Misi 1: Habiskan porsi sayur hijau (bayam, brokoli, atau wortel) saat makan siang hari ini.",
-          "Misi 2: Bawa botol minum air putih ke sekolah dan minum secara teratur setelah berolahraga.",
-          "Misi 3: Cuci tangan dengan sabun di air mengalir sebelum memegang makanan."
-  ],
+          'Misi 1: Bawa kotak bekal makanan sehat (misal: roti gandum, telur rebus, atau buah potong) ke sekolah.',
+          'Misi 2: Periksa wadah jajanan di kantin: pastikan tertutup rapat dalam etalase kaca yang bersih.',
+          'Misi 3: Buang bungkus makanan atau botol minumanmu ke tempat sampah yang sesuai.'
+        ],
         checklistEn: [
-          "Mission 1: Enjoy your portion of colorful vegetables with your lunch today.",
-          "Mission 2: Carry a reusable water bottle to school and hydrate regularly during exercise.",
-          "Mission 3: Wash hands thoroughly with soap under running water before every meal."
-  ],
+          'Mission 1: Bring a clean lunchbox with homemade healthy snacks to school.',
+          'Mission 2: Inspect canteen food stalls: ensure snacks are shielded inside clean glass cases.',
+          'Mission 3: Dispose of snack wrappers responsibly into designated waste bins.'
+        ],
         activities: [
-          {
-                  "q": "Makanan yang kaya akan vitamin dan serat untuk kesehatan mata dan pencernaan adalah...",
-                  "options": [
-                          "Sayuran hijau dan buah-buahan segar",
-                          "Permen manis dan chiki",
-                          "Minuman soda bersoda",
-                          "Gorengan minyak jelantah"
-                  ],
-                  "answer": "Sayuran hijau dan buah-buahan segar",
-                  "hint": "Wortel, bayam, apel, dan pepaya menyehatkan tubuh."
-          },
-          {
-                  "q": "Berapa gelas air putih yang disarankan diminum oleh anak setiap hari?",
-                  "options": [
-                          "6 sampai 8 gelas air putih",
-                          "Hanya 1 sendok",
-                          "100 gelas",
-                          "Tidak perlu minum sama sekali"
-                  ],
-                  "answer": "6 sampai 8 gelas air putih",
-                  "hint": "Tubuh kita membutuhkan air agar tidak lemas dan dehidrasi."
-          },
-          {
-                  "q": "Sebelum makan, kita wajib mencuci tangan menggunakan...",
-                  "options": [
-                          "Sabun dan air bersih yang mengalir",
-                          "Cukup dilap ke celana",
-                          "Tisu kotor",
-                          "Air kopi"
-                  ],
-                  "answer": "Sabun dan air bersih yang mengalir",
-                  "hint": "Kuman dan bakteri di tangan mati oleh sabun."
-          }
-  ],
+          { q: 'Makanan yang kaya akan vitamin dan serat untuk kesehatan mata dan pencernaan adalah...', options: ['Sayuran hijau dan buah-buahan segar', 'Permen manis dan chiki', 'Minuman soda bersoda', 'Gorengan minyak jelantah'], answer: 'Sayuran hijau dan buah-buahan segar', hint: 'Wortel, bayam, apel, dan pepaya menyehatkan tubuh.' },
+          { q: 'Berapa gelas air putih yang disarankan diminum oleh anak setiap hari?', options: ['6 sampai 8 gelas air putih', 'Hanya 1 sendok', '100 gelas', 'Tidak perlu minum sama sekali'], answer: '6 sampai 8 gelas air putih', hint: 'Tubuh kita membutuhkan air agar tidak lemas dan dehidrasi.' },
+          { q: 'Sebelum makan, kita wajib mencuci tangan menggunakan...', options: ['Sabun dan air bersih yang mengalir', 'Cukup dilap ke celana', 'Tisu kotor', 'Air kopi'], answer: 'Sabun dan air bersih yang mengalir', hint: 'Kuman dan bakteri di tangan mati oleh sabun.' },
+          { q: 'Ciri jajanan di kantin sekolah yang bersih dan higienis adalah...', options: ['Tertutup rapi di dalam etalase kaca dan tidak dihinggapi lalat', 'Ditaruh di lantai terbuka dekat selokan', 'Dihinggapi banyak lalat hijau', 'Warnanya merah menyala mencurigakan'], answer: 'Tertutup rapi di dalam etalase kaca dan tidak dihinggapi lalat', hint: 'Lalat membawa kuman diare dari kotoran luar ke makanan terbuka.' },
+          { q: 'Bahaya yang dapat timbul bila kita jajan sembarangan di pinggir jalan yang kotor adalah...', options: ['Sakit perut, diare, dan keracunan makanan', 'Badan bertambah tinggi secara ajaib', 'Menjadi juara kelas', 'Gigi tumbuh emas'], answer: 'Sakit perut, diare, dan keracunan makanan', hint: 'Bakteri jahat pada makanan basi atau kotor menginfeksi usus pencernaan.' },
+          { q: 'Manfaat membawa bekal makanan sendiri dari rumah yang disiapkan orang tua adalah...', options: ['Terjamin kebersihannya, bergizi seimbang, dan lebih hemat', 'Membuat tas terasa berat sekali', 'Bisa pamer barang mahal', 'Hanya membuang waktu'], answer: 'Terjamin kebersihannya, bergizi seimbang, dan lebih hemat', hint: 'Masakan rumah dimasak dengan bahan higienis dan penuh kasih sayang keluarga.' },
+          { q: 'Minuman kemasan yang rasanya sangat manis buatan dan berwarna tajam sebaiknya...', options: ['Dibatasi dan dihindari agar ginjal dan gigi tetap sehat', 'Diminum 10 botol setiap jam', 'Dijadikan obat tidur', 'Dipakai mencuci muka'], answer: 'Dibatasi dan dihindari agar ginjal dan gigi tetap sehat', hint: 'Pemanis buatan berlebih membebani fungsi ginjal dan merusak gigi.' },
+          { q: 'Tanda makanan yang sudah basi atau kadaluarsa dan TIDAK boleh dimakan adalah...', options: ['Berbau asam/tengik, berlendir, dan ditumbuhi jamur berbulu', 'Masih hangat dan harum', 'Tampak segar renyah', 'Tersimpan rapi di kulkas'], answer: 'Berbau asam/tengik, berlendir, dan ditumbuhi jamur berbulu', hint: 'Makanan berlendir dan berjamur mengandung racun mikotoksin yang berbahaya.' },
+          { q: 'Saat membeli makanan ringan di warung, tanggal penting yang harus dicek pada kemasan adalah...', options: ['Tanggal kedaluwarsa (Expired Date)', 'Tanggal ulang tahun penjual', 'Nomor telepon toko', 'Warna bungkusnya'], answer: 'Tanggal kedaluwarsa (Expired Date)', hint: 'Makanan yang lewat tanggal kedaluwarsa sudah tidak aman dikonsumsi.' },
+          { q: 'Gorengan yang digoreng memakai minyak jelantah hitam pekat berulang kali dapat menyebabkan...', options: ['Radang tenggorokan dan batuk', 'Tenggorokan bertambah sejuk', 'Suara menjadi merdu', 'Napas terasa harum'], answer: 'Radang tenggorokan dan batuk', hint: 'Minyak jelantah yang rusak mengandung senyawa karsinogenik yang mengiritasi pita suara.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "Foods rich in vital vitamins and dietary fiber for strong health are...",
-                  "options": [
-                          "Fresh vegetables and juicy fruits",
-                          "Sugary candies and soda",
-                          "Greasy deep-fried chips",
-                          "Ice pops only"
-                  ],
-                  "answer": "Fresh vegetables and juicy fruits",
-                  "hint": "Natural garden produce nourishes our organs."
-          }
-  ]
+          { q: 'Foods rich in vital vitamins and dietary fiber for strong health are...', options: ['Fresh vegetables and juicy fruits', 'Sugary candies and soda', 'Greasy deep-fried chips', 'Ice pops only'], answer: 'Fresh vegetables and juicy fruits', hint: 'Natural garden produce nourishes our organs.' },
+          { q: 'Which is a clear sign of safe, hygienic school snacks?', options: ['Covered neatly inside clean display cases free from flies', 'Left open on dirty sidewalks', 'Swarmed by bluebottle flies', 'Colored with neon dyes'], answer: 'Covered neatly inside clean display cases free from flies', hint: 'Flies transfer harmful enteric bacteria to food.' }
+        ]
       },
       {
-        "id": "pjok-aktivitas-air",
-      "title": "Pengenalan Aktivitas Air & Keselamatan Kolam",
-      "titleEn": "Water Activities & Swimming Pool Safety",
-      "desc": "Bermain air sangat menyenangkan dan menyegarkan tubuh! Namun kita harus selalu berhati-hati di sekitar kolam renang: jangan pernah berlari di tepi kolam yang licin, selalu didampingi orang tua/guru, lakukan pemanasan sebelum masuk air, dan belajar bernapas dengan teknik bubbling!",
-      "descEn": "Splashing in water is delightful and healthy! However, pool safety is essential: never run on slippery wet decks, always swim under adult supervision, warm up properly, and practice blowing rhythmic bubbles!",
-      "checklist": [
-        "Misi 1: Hafalkan aturan penting kolam renang: berjalan hati-hati, tidak boleh berlari di lantai basah.",
-        "Misi 2: Lakukan pemanasan peregangan tangan dan kaki selama 5 menit sebelum masuk air.",
-        "Misi 3: Latihan meniup gelembung air (bubbling) di baskom atau kolam dangkal bersama orang tua."
-      ],
-      "checklistEn": [
-        "Mission 1: Remember vital safety rules: walk cautiously, never run on wet pool decks.",
-        "Mission 2: Perform 5 minutes of arm and leg stretching exercises before entering water.",
-        "Mission 3: Practice blowing rhythmic water bubbles in shallow water with adult supervision."
-      ],
-      "activities": [
-        {
-          "q": "Mengapa dilarang berlari di lantai sekitar tepi kolam renang?",
-          "options": [
-            "Karena lantainya basah dan licin, rawan terpeleset jatuh",
-            "Supaya tidak berkeringat",
-            "Supaya kolamnya sepi",
-            "Hanya larangan tanpa alasan"
-          ],
-          "answer": "Karena lantainya basah dan licin, rawan terpeleset jatuh",
-          "hint": "Keselamatan nomor satu! Berjalanlah dengan tenang di area basah."
-        },
-        {
-          "q": "Sebelum menceburkan diri ke dalam air kolam, kita wajib melakukan...",
-          "options": [
-            "Pemanasan dan peregangan otot",
-            "Makan makanan berat",
-            "Tidur terlentang",
-            "Minum soda"
-          ],
-          "answer": "Pemanasan dan peregangan otot",
-          "hint": "Pemanasan mencegah otot mengalami kram saat berenang."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Why is running prohibited near the swimming pool deck?",
-          "options": [
-            "The wet tiles are slippery and risky for falling",
-            "To avoid sweating",
-            "To keep it quiet",
-            "No reason"
-          ],
-          "answer": "The wet tiles are slippery and risky for falling",
-          "hint": "Safety first: always walk calmly on wet surfaces."
-        }
-      ]
-    },
-    {
-      "id": "pjok-pola-tidur",
-      "title": "Istirahat Cukup & Pola Tidur Sehat Anak Sekolah",
-      "titleEn": "Adequate Rest & Healthy Sleep Habits for Schoolers",
-      "desc": "Setelah seharian belajar dan berolahraga, tubuh kita membutuhkan istirahat untuk memulihkan energi dan tumbuh tinggi. Anak usia SD membutuhkan tidur nyenyak selama 9–10 jam setiap malam. Tidur tepat waktu membuat kita bangun segar, ceria, dan tidak mengantuk di kelas!",
-      "descEn": "After a lively day of learning and sports, our body repairs tissues and grows taller during sleep. Primary schoolers need 9–10 hours of sound sleep each night. Early bedtime yields energized morning vigor!",
-      "checklist": [
-        "Misi 1: Pasang jam tidur malam teratur, maksimal pukul 20.30–21.00 sudah terlelap.",
-        "Misi 2: Menggosok gigi dan mematikan gawai/layar ponsel minimal 30 menit sebelum tidur.",
-        "Misi 3: Merapikan selimut dan bantal sendiri begitu bangun pagi dengan rasa syukur."
-      ],
-      "checklistEn": [
-        "Mission 1: Set a regular bedtime schedule, falling asleep peacefully by 8:30–9:00 PM.",
-        "Mission 2: Brush your teeth and turn off all digital screens 30 minutes before sleep.",
-        "Mission 3: Make your bed and fold blankets independently upon waking up."
-      ],
-      "activities": [
-        {
-          "q": "Berapa jam durasi tidur malam yang ideal untuk anak usia SD Kelas 1?",
-          "options": [
-            "9 sampai 10 jam setiap malam",
-            "Hanya 3 jam",
-            "15 jam sepanjang hari",
-            "1 jam saja"
-          ],
-          "answer": "9 sampai 10 jam setiap malam",
-          "hint": "Tidur yang cukup membantu pertumbuhan tulang, otak, dan daya tahan tubuh."
-        },
-        {
-          "q": "Akibat buruk jika sering begadang dan tidur larut malam adalah...",
-          "options": [
-            "Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar",
-            "Makin pintar",
-            "Tubuh makin kuat",
-            "Nilai selalu 100"
-          ],
-          "answer": "Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar",
-          "hint": "Kurang tidur membuat daya tangkap otak melambat dan mudah mengantuk."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Ideal night sleep duration for Grade 1 children is...",
-          "options": [
-            "9 to 10 hours every night",
-            "3 hours",
-            "15 hours non-stop",
-            "1 hour"
-          ],
-          "answer": "9 to 10 hours every night",
-          "hint": "Sleep fuels brain and body development."
-        }
-      ]
-    }
+        id: 'pjok-aktivitas-air',
+        title: 'Pengenalan Aktivitas Air & Keselamatan Kolam',
+        titleEn: 'Water Activities & Swimming Pool Safety',
+        desc: 'Bermain air sangat menyenangkan dan menyegarkan tubuh! Namun kita harus selalu berhati-hati di sekitar kolam renang: jangan pernah berlari di tepi kolam yang licin, selalu didampingi orang tua/guru, lakukan pemanasan sebelum masuk air, dan belajar bernapas dengan teknik bubbling!',
+        descEn: 'Splashing in water is delightful and healthy! However, pool safety is essential: never run on slippery wet decks, always swim under adult supervision, warm up properly, and practice blowing rhythmic bubbles!',
+        funFact: 'Teknik "bubbling" (membuang napas lewat hidung atau mulut di dalam air hingga muncul gelembung) adalah rahasia perenang hebat agar tidak kemasukan air di hidung!',
+        keyPoints: [
+          'Selalu didampingi orang dewasa (guru/orang tua) saat beraktivitas di sekitar kolam renang.',
+          'Dilarang berlari di tepi kolam karena ubin lantai basah sangat licin dan berbahaya.',
+          'Wajib melakukan pemanasan sebelum masuk air untuk mencegah kram otot di dalam air.'
+        ],
+        checklist: [
+          'Misi 1: Hafalkan aturan penting kolam renang: berjalan hati-hati, tidak boleh berlari di lantai basah.',
+          'Misi 2: Lakukan pemanasan peregangan tangan dan kaki selama 5 menit sebelum masuk air.',
+          'Misi 3: Latihan meniup gelembung air (bubbling) di baskom atau kolam dangkal bersama orang tua.'
+        ],
+        checklistEn: [
+          'Mission 1: Remember vital safety rules: walk cautiously, never run on wet pool decks.',
+          'Mission 2: Perform 5 minutes of arm and leg stretching exercises before entering water.',
+          'Mission 3: Practice blowing rhythmic water bubbles in shallow water with adult supervision.'
+        ],
+        activities: [
+          { q: 'Mengapa dilarang berlari di lantai sekitar tepi kolam renang?', options: ['Karena lantainya basah dan licin, rawan terpeleset jatuh', 'Supaya tidak berkeringat', 'Supaya kolamnya sepi', 'Hanya larangan tanpa alasan'], answer: 'Karena lantainya basah dan licin, rawan terpeleset jatuh', hint: 'Keselamatan nomor satu! Berjalanlah dengan tenang di area basah.' },
+          { q: 'Sebelum menceburkan diri ke dalam air kolam, kita wajib melakukan...', options: ['Pemanasan dan peregangan otot', 'Makan makanan berat', 'Tidur terlentang', 'Minum soda'], answer: 'Pemanasan dan peregangan otot', hint: 'Pemanasan mencegah otot mengalami kram saat berenang.' },
+          { q: 'Saat anak Kelas 1 SD belajar berenang di kolam, kedalaman kolam yang dipilih adalah...', options: ['Kolam dangkal yang setinggi pinggang anak', 'Kolam dalam untuk penyelam profesional', 'Lautan lepas yang berombak besar', 'Air terjun yang deras'], answer: 'Kolam dangkal yang setinggi pinggang anak', hint: 'Kolam dangkal membuat anak bisa berdiri dengan aman menjejak dasar kolam.' },
+          { q: 'Alat bantu keselamatan yang biasa digunakan anak pemula saat belajar mengapung di air adalah...', options: ['Pelampung (ban renang atau papan luncur)', 'Batu kali yang berat', 'Payung hujan', 'Sepatu bot kulit'], answer: 'Pelampung (ban renang atau papan luncur)', hint: 'Pelampung berisi udara membantu tubuh tetap mengambang di atas permukaan air 🛟' },
+          { q: 'Latihan meniupkan napas ke dalam air hingga mengeluarkan gelembung busa disebut teknik...', options: ['Bubbling (membuang napas di air)', 'Melompat indah', 'Dribbling', 'Smash'], answer: 'Bubbling (membuang napas di air)', hint: 'Bubbling melatih ritme pernapasan yang benar sebelum berenang.' },
+          { q: 'Bolehkah anak-anak berenang sendirian tanpa pengawasan guru atau orang dewasa?', options: ['Tidak boleh sama sekali, wajib selalu didampingi orang dewasa', 'Boleh saja jika sudah merasa hebat', 'Boleh asal sembunyi-sembunyi', 'Boleh saat malam hari'], answer: 'Tidak boleh sama sekali, wajib selalu didampingi orang dewasa', hint: 'Pendampingan orang tua/guru menjamin keselamatan seketika jika terjadi bahaya.' },
+          { q: 'Tindakan yang TIDAK boleh dilakukan saat berada di kolam renang bersama teman adalah...', options: ['Saling dorong atau menenggelamkan kepala teman secara paksa', 'Mendengarkan instruksi pelatih renang', 'Berlatih menendang air perlahan', 'Membilas badan sebelum masuk kolam'], answer: 'Saling dorong atau menenggelamkan kepala teman secara paksa', hint: 'Mendorong atau bercanda kasar di air sangat berbahaya dan dapat memicu tenggelam.' },
+          { q: 'Setelah selesai berenang di kolam umum, langkah kebersihan yang wajib dilakukan adalah...', options: ['Segera membilas badan dan keramas dengan sabun mandi bersih', 'Langsung pulang tanpa berganti pakaian basah', 'Tidur di pinggir kolam berangin', 'Makan es krim tanpa mencuci tangan'], answer: 'Segera membilas badan dan keramas dengan sabun mandi bersih', hint: 'Membilas kaporit kolam melindungi kesehatan kulit dan rambut dari iritasi.' },
+          { q: 'Jika saat di dalam air tiba-tiba kaki terasa kram sakit, tindakan pertama yang tepat adalah...', options: ['Tetap tenang, pegang tepi kolam atau pelampung, dan panggil pertolongan guru', 'Panik dan berteriak sekuat tenaga sambil mengayuh liar', 'Menyelam ke dasar kolam', 'Menangis tersedu-sedu tanpa meminta bantuan'], answer: 'Tetap tenang, pegang tepi kolam atau pelampung, dan panggil pertolongan guru', hint: 'Ketenangan menjaga tubuh tetap mengapung sementara bantuan segera datang.' },
+          { q: 'Pakaian yang tepat dan nyaman digunakan saat beraktivitas di kolam renang adalah...', options: ['Baju renang berbahan lentur dan tidak menyerap air berat', 'Jaket tebal musim dingin berbulu', 'Baju tidur berbahan wol tebal', 'Pakaian pesta berbahan kaku'], answer: 'Baju renang berbahan lentur dan tidak menyerap air berat', hint: 'Baju renang memudahkan pergerakan tubuh meluncur di air.' }
+        ],
+        activitiesEn: [
+          { q: 'Why is running prohibited near the swimming pool deck?', options: ['The wet tiles are slippery and risky for falling', 'To avoid sweating', 'To keep it quiet', 'No reason'], answer: 'The wet tiles are slippery and risky for falling', hint: 'Safety first: always walk calmly on wet surfaces.' },
+          { q: 'Before entering the swimming pool, what essential routine must be performed?', options: ['Warm-up muscle stretches', 'Eating a heavy feast', 'Sleeping on the deck', 'Drinking iced soda'], answer: 'Warm-up muscle stretches', hint: 'Stretching prevents dangerous cramps in water.' }
+        ]
+      },
+      {
+        id: 'pjok-pola-tidur',
+        title: 'Istirahat Cukup & Pola Tidur Sehat Anak Sekolah',
+        titleEn: 'Adequate Rest & Healthy Sleep Habits for Schoolers',
+        desc: 'Setelah seharian belajar dan berolahraga, tubuh kita membutuhkan istirahat untuk memulihkan energi dan tumbuh tinggi. Anak usia SD membutuhkan tidur nyenyak selama 9–10 jam setiap malam. Tidur tepat waktu membuat kita bangun segar, ceria, dan tidak mengantuk di kelas!',
+        descEn: 'After a lively day of learning and sports, our body repairs tissues and grows taller during sleep. Primary schoolers need 9–10 hours of sound sleep each night. Early bedtime yields energized morning vigor!',
+        funFact: 'Hormon pertumbuhan manusia (HGH) paling banyak diproduksi tubuh saat anak tertidur lelap di malam hari antara pukul 22.00 sampai 02.00 pagi!',
+        keyPoints: [
+          'Anak usia Kelas 1 SD membutuhkan tidur malam selama 9 hingga 10 jam teratur.',
+          'Hindari menatap layar HP atau televisi minimal 30 menit sebelum tidur agar otak rileks.',
+          'Bangun pagi dengan segar membuat pikiran jernih, sarapan nyaman, dan tidak terlambat sekolah.'
+        ],
+        checklist: [
+          'Misi 1: Pasang jam tidur malam teratur, maksimal pukul 20.30–21.00 sudah terlelap.',
+          'Misi 2: Menggosok gigi dan mematikan gawai/layar ponsel minimal 30 menit sebelum tidur.',
+          'Misi 3: Merapikan selimut dan bantal sendiri begitu bangun pagi dengan rasa syukur.'
+        ],
+        checklistEn: [
+          'Mission 1: Set a regular bedtime schedule, falling asleep peacefully by 8:30–9:00 PM.',
+          'Mission 2: Brush your teeth and turn off all digital screens 30 minutes before sleep.',
+          'Mission 3: Make your bed and fold blankets independently upon waking up.'
+        ],
+        activities: [
+          { q: 'Berapa jam durasi tidur malam yang ideal untuk anak usia SD Kelas 1?', options: ['9 sampai 10 jam setiap malam', 'Hanya 3 jam', '15 jam sepanjang hari', '1 jam saja'], answer: '9 sampai 10 jam setiap malam', hint: 'Tidur yang cukup membantu pertumbuhan tulang, otak, dan daya tahan tubuh.' },
+          { q: 'Akibat buruk jika sering begadang dan tidur larut malam adalah...', options: ['Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar', 'Makin pintar', 'Tubuh makin kuat', 'Nilai selalu 100'], answer: 'Bangun kesiangan, tubuh lemas, dan sulit konsentrasi belajar', hint: 'Kurang tidur membuat daya tangkap otak melambat dan mudah mengantuk.' },
+          { q: 'Kegiatan yang sangat baik dilakukan sebelum tidur malam adalah...', options: ['Menggosok gigi, mencuci kaki, dan berdoa dengan tenang', 'Bermain game aksi tembak-tembakan di gawai', 'Minum kopi panas kental', 'Makan keripik pedas di kasur'], answer: 'Menggosok gigi, mencuci kaki, dan berdoa dengan tenang', hint: 'Rutinitas tenang menenangkan gelombang otak menuju tidur lelap.' },
+          { q: 'Cahaya biru (blue light) dari layar ponsel atau televisi sebelum tidur dapat mengakibatkan...', options: ['Otak mengira masih siang sehingga kita susah tidur (insomnia)', 'Mata bertambah tajam di kegelapan', 'Gigi menjadi bersih', 'Tidur bertambah lelap'], answer: 'Otak mengira masih siang sehingga kita susah tidur (insomnia)', hint: 'Matikan gawai 30 menit sebelum tidur agar hormon melatonin tidur bekerja optimal.' },
+          { q: 'Waktu tidur malam yang paling tepat bagi anak sekolah dasar adalah sekitar pukul...', options: ['20.30 sampai 21.00 malam', '02.00 dini hari', '05.00 pagi menjelang subuh', 'Tengah malam pukul 00.00'], answer: '20.30 sampai 21.00 malam', hint: 'Tidur awal memastikan durasi 9-10 jam terpenuhi saat bangun pagi pukul 05.30.' },
+          { q: 'Saat tidur malam yang lelap, tubuh kita melakukan proses penting yaitu...', options: ['Memperbaiki sel-sel tubuh dan memicu pelepasan hormon pertumbuhan', 'Berhenti bernapas sama sekali', 'Membuat tulang mengecil', 'Menghilangkan semua ingatan belajar'], answer: 'Memperbaiki sel-sel tubuh dan memicu pelepasan hormon pertumbuhan', hint: 'Tidur adalah waktu emas perbaikan organ tubuh dan pemulihan stamina.' },
+          { q: 'Sikap mandiri yang terpuji dilakukan segera setelah kita membuka mata bangun tidur pagi adalah...', options: ['Merapikan selimut, bantal, dan tempat tidur sendiri', 'Menangis keras-keras memanggil ibu', 'Langsung bermain HP berjam-jam', 'Tidur kembali sampai siang'], answer: 'Merapikan selimut, bantal, dan tempat tidur sendiri', hint: 'Melatih kedisiplinan dan tanggung jawab kebersihan kamar tidur sejak kecil 🛏️' },
+          { q: 'Udara kamar tidur yang sehat sebaiknya memiliki jendela atau ventilasi agar...', options: ['Sirkulasi udara segar berganti dengan lancar', 'Nyamuk bisa bebas berpesta', 'Kamar selalu berdebu tebal', 'Hawa panas terperangkap selamanya'], answer: 'Sirkulasi udara segar berganti dengan lancar', hint: 'Oksigen segar membuat pernapasan saat tidur tetap bersih dan plong.' },
+          { q: 'Manfaat bangun pagi dengan tubuh bugar adalah...', options: ['Punya waktu cukup untuk mandi, sarapan santai, dan tidak terburu-buru ke sekolah', 'Terlambat masuk kelas', 'Mendapat hukuman dari guru piket', 'Ketinggalan pelajaran pertama'], answer: 'Punya waktu cukup untuk mandi, sarapan santai, dan tidak terburu-buru ke sekolah', hint: 'Bangun pagi memberikan ketenangan jiwa dan persiapan matang menyambut hari baru.' },
+          { q: 'Jika merasa sangat lelah setelah berolahraga berat di siang hari yang terik, bentuk istirahat yang baik adalah...', options: ['Duduk di tempat teduh yang sejuk dan tidur siang sejenak', 'Langsung mandi air es yang dingin membeku', 'Makan makanan super pedas', 'Berlari maraton lagi tanpa henti'], answer: 'Duduk di tempat teduh yang sejuk dan tidur siang sejenak', hint: 'Istirahat sejenak memulihkan suhu tubuh dan detak jantung yang cepat.' }
+        ],
+        activitiesEn: [
+          { q: 'Ideal night sleep duration for Grade 1 children is...', options: ['9 to 10 hours every night', '3 hours', '15 hours non-stop', '1 hour'], answer: '9 to 10 hours every night', hint: 'Sleep fuels brain and body development.' },
+          { q: 'What is the negative consequence of staying up late into midnight?', options: ['Waking up late, feeling lethargic, and losing focus in class', 'Getting smarter instantly', 'Growing superhuman muscles', 'Scoring 100 without studying'], answer: 'Waking up late, feeling lethargic, and losing focus in class', hint: 'Lack of rest impairs cognitive speed and memory.' }
+        ]
+      }
     ]
   };
   
@@ -5297,7 +5376,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Pendidikan Agama & Budi Pekerti Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Nilai Universal Kebaikan)
+  // Version   : 2.1 (Comprehensive LKS, 100 Flagship Questions & Nilai Universal Kebaikan)
   // ================================================================
   
   const AGAMA_DATA = {
@@ -5313,6 +5392,12 @@
         titleEn: 'Gratitude for the Wonders of Creation',
         desc: 'Tuhan Yang Maha Esa menciptakan alam semesta yang indah: matahari yang menghangatkan bumi, udara bersih untuk bernapas, air jernih untuk minum, serta tubuh yang sehat dan sempurna. Rasa syukur diwujudkan dengan menjaga kesehatan, beribadah rajin, dan memelihara alam sekitar!',
         descEn: 'God created the majestic cosmos: warming sunlight, fresh air to breathe, crystalline water, and healthy human bodies. We honor creation through heartfelt prayers, joyful gratitude, and caring for nature!',
+        funFact: 'Setiap hari jantung manusia berdetak sekitar 100.000 kali tanpa henti memompa darah ke seluruh tubuh; sebuah anugerah agung Tuhan yang patut kita syukuri!',
+        keyPoints: [
+          'Tuhan Yang Maha Esa adalah Sang Pencipta seluruh alam semesta beserta isinya.',
+          'Tubuh yang sehat, panca indra, dan nafas hidup adalah anugerah terbesar yang wajib disyukuri.',
+          'Rasa syukur diwujudkan dengan rajin beribadah, berbuat baik, dan merawat kelestarian alam.'
+        ],
         checklist: [
           'Misi 1: Ucapkan doa syukur saat bangun di pagi hari atas nafas dan hari baru yang cerah.',
           'Misi 2: Sebutkan 3 ciptaan Tuhan yang paling kamu kagumi saat melihat pemandangan alam (misal: gunung, laut, burung).',
@@ -5325,10 +5410,19 @@
         ],
         activities: [
           { q: 'Cara terbaik menunjukkan rasa syukur atas nikmat tubuh yang sehat adalah...', options: ['Menjaga kesehatan dengan makan teratur dan berolahraga', 'Malas mandi dan makan sembarangan', 'Begadang main game sampai larut', 'Mengeluh setiap hari'], answer: 'Menjaga kesehatan dengan makan teratur dan berolahraga', hint: 'Merawat tubuh adalah amanah dan ungkapan terima kasih kepada Tuhan.' },
-          { q: 'Matahari terbit di timur memberikan kehangatan dan vitamin D. Matahari adalah ciptaan...', options: ['Tuhan Yang Maha Kuasa', 'Pabrik manusia', 'Robot antariksa', 'Komputer canggih'], answer: 'Tuhan Yang Maha Kuasa', hint: 'Seluruh tata surya dan benda langit diciptakan oleh Tuhan Yang Maha Esa ☀️' }
+          { q: 'Matahari terbit di timur memberikan kehangatan dan vitamin D. Matahari adalah ciptaan...', options: ['Tuhan Yang Maha Kuasa', 'Pabrik manusia', 'Robot antariksa', 'Komputer canggih'], answer: 'Tuhan Yang Maha Kuasa', hint: 'Seluruh tata surya dan benda langit diciptakan oleh Tuhan Yang Maha Esa ☀️' },
+          { q: 'Sikap hati yang selalu berterima kasih atas anugerah dan rezeki dari Tuhan disebut sikap...', options: ['Bersyukur', 'Kikir', 'Iri dengki', 'Sombong'], answer: 'Bersyukur', hint: 'Bersyukur membuat hati tenang, lapang, dan selalu bahagia.' },
+          { q: 'Contoh ciptaan Tuhan yang bernyawa dan dapat bergerak lincah adalah...', options: ['Kucing dan burung merpati', 'Mobil balap dan sepeda motor', 'Buku dan pensil warna', 'Meja belajar kayu'], answer: 'Kucing dan burung merpati', hint: 'Hewan dan tumbuhan adalah makhluk hidup ciptaan Tuhan.' },
+          { q: 'Saat menikmati hembusan angin sejuk dan melihat pemandangan gunung yang asri, kita sebaiknya...', options: ['Mengagumi kebesaran ciptaan Tuhan dengan rasa takzim', 'Mengotori lereng gunung dengan puntung rokok', 'Merusak tanaman yang tumbuh', 'Mengeluh cuaca terlalu tenang'], answer: 'Mengagumi kebesaran ciptaan Tuhan dengan rasa takzim', hint: 'Keindahan alam mencerminkan keagungan Sang Maha Pencipta.' },
+          { q: 'Ungkapan rasa syukur sebelum menyantap makanan yang dihidangkan di meja adalah dengan cara...', options: ['Berdoa dengan khidmat memohon keberkahan rezeki', 'Langsung menyambar makanan tanpa cuci tangan', 'Mencela rasa sayur yang kurang asin', 'Membuang nasi ke lantai'], answer: 'Berdoa dengan khidmat memohon keberkahan rezeki', hint: 'Berdoa sebelum makan adalah wujud terima kasih atas rezeki hari ini.' },
+          { q: 'Panca indra kita seperti mata untuk melihat dan telinga untuk mendengar adalah anugerah Tuhan yang harus kita gunakan untuk...', options: ['Melihat kebaikan dan mendengarkan nasehat bijak', 'Mengintip rahasia orang lain', 'Mendengarkan gosip buruk', 'Menonton video yang tidak pantas'], answer: 'Melihat kebaikan dan mendengarkan nasehat bijak', hint: 'Memanfaatkan anugerah indra untuk hal-hal yang diridhoi Tuhan.' },
+          { q: 'Perilaku yang BUKAN merupakan wujud rasa syukur kepada Tuhan adalah...', options: ['Menghambur-hamburkan makanan lalu membuangnya ke tong sampah', 'Merawat tanaman di pekarangan rumah', 'Menolong teman yang sedang kesulitan', 'Menjaga kebersihan tubuh'], answer: 'Menghambur-hamburkan makanan lalu membuangnya ke tong sampah', hint: 'Membuang-buang makanan (mubazir) adalah perbuatan yang tidak disukai Tuhan.' },
+          { q: 'Ketika kita bangun di pagi hari dalam keadaan sehat dan bugar, ucapan pertama yang kita panjatkan adalah...', options: ['Doa syukur dan terima kasih kepada Tuhan Yang Maha Esa', 'Teriakan marah karena harus sekolah', 'Keluhan ingin tidur lagi seharian', 'Menuntut uang saku banyak'], answer: 'Doa syukur dan terima kasih kepada Tuhan Yang Maha Esa', hint: 'Setiap hembusan nafas di pagi hari adalah berkah hidup yang baru.' },
+          { q: 'Menghemat air bersih di rumah dengan mematikan kran saat tidak dipakai merupakan bukti bahwa kita...', options: ['Mensyukuri dan menyayangi anugerah air ciptaan Tuhan', 'Takut dimarahi tukang ledeng', 'Tidak suka mandi', 'Ingin rumah berantakan'], answer: 'Mensyukuri dan menyayangi anugerah air ciptaan Tuhan', hint: 'Air adalah sumber kehidupan suci yang harus dijaga bersama.' }
         ],
         activitiesEn: [
-          { q: 'What is the most sincere way to show gratitude for a healthy body?', options: ['Caring for physical health with nutritious meals and active exercise', 'Neglecting hygiene and skipping meals', 'Staying up all night gaming', 'Complaining constantly'], answer: 'Caring for physical health with nutritious meals and active exercise', hint: 'Treating your body kindly honors divine creation.' }
+          { q: 'What is the most sincere way to show gratitude for a healthy body?', options: ['Caring for physical health with nutritious meals and active exercise', 'Neglecting hygiene and skipping meals', 'Staying up all night gaming', 'Complaining constantly'], answer: 'Caring for physical health with nutritious meals and active exercise', hint: 'Treating your body kindly honors divine creation.' },
+          { q: 'The sun, fresh air, and blooming flowers are created by...', options: ['The Almighty Creator (God)', 'Computer factories', 'Robots', 'Cars'], answer: 'The Almighty Creator (God)', hint: 'The whole natural universe is a divine masterpiece.' }
         ]
       },
       {
@@ -5337,6 +5431,12 @@
         titleEn: 'Noble Character: Devotion to Parents & Teachers',
         desc: 'Ayah dan ibu telah merawat kita dengan penuh kasih sayang sejak bayi. Guru mendidik dan mengajarkan kita ilmu pengetahuan dengan sabar. Berbakti kepada orang tua dan guru dilakukan dengan bertutur kata santun, mendengarkan nasehat baik, dan tidak membantah dengan kasar!',
         descEn: 'Parents nurture us with unconditional love from infancy. Teachers patiently illuminate our minds with wisdom. We honor them through polite words, heedful obedience to wholesome advice, and respectful helpfulness!',
+        funFact: 'Tersenyum dan mencium tangan kedua orang tua saat berpamitan berangkat sekolah menyalurkan energi doa dan ketenangan hati yang membuat hari belajarmu menyenangkan!',
+        keyPoints: [
+          'Menghormati orang tua (birrul walidain / matru pitru bhakti) adalah perintah utama semua agama.',
+          'Guru adalah orang tua kita di sekolah yang membimbing kita menjadi anak cerdas dan berakhlak.',
+          'Berbicara kepada orang tua dan guru harus menggunakan nada suara lembut dan kata-kata santun.'
+        ],
         checklist: [
           'Misi 1: Ucapkan terima kasih dan peluk ayah atau ibumu hari ini dengan tulus.',
           'Misi 2: Dengarkan nasehat guru di kelas tanpa memotong pembicaraan dengan gaduh.',
@@ -5349,10 +5449,19 @@
         ],
         activities: [
           { q: 'Saat orang tua atau guru sedang menasehati kita demi kebaikan, sikap yang santun adalah...', options: ['Mendengarkan dengan tenang dan penuh rasa hormat', 'Membantah sambil berteriak', 'Menutup telinga dan lari', 'Mengejek nasehatnya'], answer: 'Mendengarkan dengan tenang dan penuh rasa hormat', hint: 'Mendengarkan dengan hormat adalah tanda anak berbakti dan berbudi luhur.' },
-          { q: 'Bagaimana cara berbakti kepada orang tua saat di rumah?', options: ['Membantu merapikan rumah dan berbicara dengan nada lembut', 'Meminta uang jajan berlebihan', 'Membuat rumah berantakan', 'Malas belajar'], answer: 'Membantu merapikan rumah dan berbicara dengan nada lembut', hint: 'Membantu meringankan beban orang tua mendatangkan keberkahan.' }
+          { q: 'Bagaimana cara berbakti kepada orang tua saat di rumah?', options: ['Membantu merapikan rumah dan berbicara dengan nada lembut', 'Meminta uang jajan berlebihan', 'Membuat rumah berantakan', 'Malas belajar'], answer: 'Membantu merapikan rumah dan berbicara dengan nada lembut', hint: 'Membantu meringankan beban orang tua mendatangkan keberkahan.' },
+          { q: 'Ketika hendak berangkat ke sekolah, sikap sopan santun yang kita lakukan kepada orang tua adalah...', options: ['Berpamitan, mencium tangan, dan memohon doa restu', 'Langsung lari keluar tanpa berucap kata', 'Membanting pintu kamar', 'Menuntut dibelikan motor balap'], answer: 'Berpamitan, mencium tangan, dan memohon doa restu', hint: 'Doa restu orang tua melapangkan langkah kita dalam menuntut ilmu.' },
+          { q: 'Guru di sekolah bertugas sebagai...', options: ['Orang tua kedua yang mendidik dan membimbing siswa', 'Penjual tiket', 'Wasit pertandingan saja', 'Orang asing'], answer: 'Orang tua kedua yang mendidik dan membimbing siswa', hint: 'Guru mendidik dengan sabar agar kita memiliki masa depan cerah.' },
+          { q: 'Bila guru sedang menjelaskan pelajaran di depan kelas, sikap siswa yang baik adalah...', options: ['Memperhatikan dengan tenang dan mencatat hal penting', 'Mengobrol keras dengan teman sebangku', 'Tidur di atas meja', 'Bermain pesawat kertas'], answer: 'Memperhatikan dengan tenang dan mencatat hal penting', hint: 'Menghormati guru yang sedang mengajar membuka pintu ilmu yang berkah.' },
+          { q: 'Jika tidak sengaja berbuat kesalahan kepada ibu, tindakan terpuji yang harus segera kita ambil adalah...', options: ['Meminta maaf dengan tulus dan berjanji tidak mengulanginya', 'Menyalahkan adik yang masih kecil', 'Pura-pura pingsan', 'Kabur dari rumah'], answer: 'Meminta maaf dengan tulus dan berjanji tidak mengulanginya', hint: 'Meminta maaf dengan tulus menunjukkan kebesaran jiwa dan cinta pada ibu.' },
+          { q: 'Contoh perbuatan membantu ayah di rumah yang sesuai kemampuan anak Kelas 1 SD adalah...', options: ['Membantu menyiram tanaman di pot halaman atau mengambilkan sandal', 'Mengendarai mobil di jalan raya', 'Memperbaiki atap genteng yang bocor', 'Menebang pohon besar'], answer: 'Membantu menyiram tanaman di pot halaman atau mengambilkan sandal', hint: 'Bantuan kecil yang ikhlas sangat membahagiakan hati ayah.' },
+          { q: 'Saat berbicara dengan orang tua, intonasi suara yang tepat adalah...', options: ['Lembut, sopan, dan tidak meninggikan nada suara', 'Membentak-bentak seperti petir', 'Berbisik mencurigakan', 'Sambil memalingkan muka'], answer: 'Lembut, sopan, dan tidak meninggikan nada suara', hint: 'Tutur kata yang lembut adalah akhlak mulia yang utama.' },
+          { q: 'Jika berpapasan dengan bapak atau ibu guru di koridor sekolah, kita sebaiknya...', options: ['Tersenyum ramah dan mengucapkan salam dengan santun', 'Berpura-pura tidak melihat dan menunduk', 'Lari menjauh ketakutan', 'Mengejek dari belakang'], answer: 'Tersenyum ramah dan mengucapkan salam dengan santun', hint: 'Menyapa guru dengan santun mempererat jalinan kasih sayang di sekolah.' },
+          { q: 'Doa terbaik yang selalu kita panjatkan untuk kedua orang tua kita adalah memohon agar...', options: ['Orang tua selalu diberi kesehatan, umur berkah, dan dilindungi Tuhan', 'Orang tua membelikan mainan mahal setiap jam', 'Orang tua tidak memeriksa buku rapor', 'Orang tua tidur terus'], answer: 'Orang tua selalu diberi kesehatan, umur berkah, dan dilindungi Tuhan', hint: 'Doa anak yang saleh dan berbudi luhur adalah hadiah termulia bagi orang tua.' }
         ],
         activitiesEn: [
-          { q: 'When parents or teachers provide thoughtful advice, how should a well-mannered student respond?', options: ['Listen respectfully and calmly', 'Shout back angrily', 'Plug ears and storm out', 'Mock the guidance'], answer: 'Listen respectfully and calmly', hint: 'Respectful listening embodies noble character.' }
+          { q: 'When parents or teachers provide thoughtful advice, how should a well-mannered student respond?', options: ['Listen respectfully and calmly', 'Shout back angrily', 'Plug ears and storm out', 'Mock the guidance'], answer: 'Listen respectfully and calmly', hint: 'Respectful listening embodies noble character.' },
+          { q: 'What is a polite custom before departing for school in the morning?', options: ['Bidding farewell warmly and seeking parental blessings', 'Slamming doors without speaking', 'Demanding money aggressively', 'Sneaking away quietly'], answer: 'Bidding farewell warmly and seeking parental blessings', hint: 'Parental blessings bring peace and success.' }
         ]
       },
       {
@@ -5361,6 +5470,12 @@
         titleEn: 'Compassion for Living Beings & Animal Welfare',
         desc: 'Hewan dan tumbuhan adalah sesama makhluk ciptaan Tuhan. Kucing, burung, ikan, dan pohon berhak hidup nyaman di bumi. Tidak boleh menyiksa hewan, tidak memetik bunga sembarangan, memberi makan hewan peliharaan, dan menyiram tanaman adalah wujud kasih sayang universal!',
         descEn: 'Animals and plants are our fellow earthly cohabitants created by God. Pets and wildlife deserve kindness. Refraining from harming animals, watering potted plants, and preserving green foliage manifests universal empathy!',
+        funFact: 'Tumbuhan menghasilkan oksigen murni (O2) yang kita hirup setiap detik melalui proses fotosintesis. Merawat satu pohon sama artinya dengan menyediakan nafas segar bagi ribuan makhluk hidup!',
+        keyPoints: [
+          'Semua makhluk hidup (hewan dan tumbuhan) diciptakan oleh Tuhan dan berhak hidup damai.',
+          'Dilarang keras menyakiti, mengurung tanpa makan, atau menyiksa hewan apa pun.',
+          'Merawat tanaman dan membuang sampah pada tempatnya menjaga kelestarian bumi amanah Tuhan.'
+        ],
         checklist: [
           'Misi 1: Beri makan atau minum hewan peliharaanmu (atau kucing liar sekitar rumah) dengan ramah.',
           'Misi 2: Siram tanaman di pot atau halaman rumahmu di sore hari yang sejuk.',
@@ -5373,10 +5488,19 @@
         ],
         activities: [
           { q: 'Jika melihat anak kucing yang kelaparan di pinggir jalan, tindakan mulia yang patut dilakukan adalah...', options: ['Memberinya sedikit makanan atau susu dan memperlakukannya lembut', 'Menendang atau melemparinya batu', 'Menakut-nakutinya dengan suara keras', 'Membiarkannya kehujanan'], answer: 'Memberinya sedikit makanan atau susu dan memperlakukannya lembut', hint: 'Menyayangi hewan adalah perbuatan terpuji yang dicintai Tuhan 🐱' },
-          { q: 'Mengapa kita perlu menyiram tanaman di sekitar pekarangan rumah kita?', options: ['Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', 'Agar tanaman cepat mati', 'Agar halaman becek berlumpur', 'Hanya membuang waktu'], answer: 'Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', hint: 'Tanaman yang subur memberi kesejukan dan keindahan lingkungan.' }
+          { q: 'Mengapa kita perlu menyiram tanaman di sekitar pekarangan rumah kita?', options: ['Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', 'Agar tanaman cepat mati', 'Agar halaman becek berlumpur', 'Hanya membuang waktu'], answer: 'Agar tanaman tumbuh subur dan menghasilkan udara segar oksigen', hint: 'Tanaman yang subur memberi kesejukan dan keindahan lingkungan.' },
+          { q: 'Tindakan yang dilarang keras karena menyakiti ciptaan Tuhan adalah...', options: ['Menembak burung liar dengan katapel atau menyiksa anak ayam', 'Memberi makan ikan di kolam', 'Menanam bunga di taman sekolah', 'Membersihkan kandang kelinci'], answer: 'Menembak burung liar dengan katapel atau menyiksa anak ayam', hint: 'Menyakiti hewan tak berdaya adalah perbuatan dosa yang melukai hati.' },
+          { q: 'Jika memelihara burung atau kelinci di rumah, kewajiban kita setiap hari adalah...', options: ['Memberi makan, minum bersih, dan membersihkan kandangnya secara rutin', 'Membiarkannya kelaparan berhari-hari', 'Menguncinya di ruang gelap tanpa ventilasi', 'Mengabaikannya sama sekali'], answer: 'Memberi makan, minum bersih, dan membersihkan kandangnya secara rutin', hint: 'Memelihara hewan menuntut tanggung jawab penuh atas kesejahteraan satwa tersebut.' },
+          { q: 'Bila melihat bunga yang sedang mekar indah di taman sekolah, sikap yang bijaksana adalah...', options: ['Mengagumi keindahannya dan membiarkannya tetap mekar di tangkainya', 'Memetiknya lalu meremasnya hingga hancur', 'Menginjak kelopak bunganya', 'Menyiramnya dengan air sabun panas'], answer: 'Mengagumi keindahannya dan membiarkannya tetap mekar di tangkainya', hint: 'Membiarkan bunga mekar memperindah lingkungan dan menyediakan nektar bagi lebah madu 🌸' },
+          { q: 'Membuang sampah plastik ke dalam sungai dapat mengakibatkan...', options: ['Sungai tercemar, air berbau busuk, dan ikan-ikan mati keracunan', 'Sungai menjadi bersih berkilau', 'Ikan bertambah gemuk dan sehat', 'Air sungai menjadi manis'], answer: 'Sungai tercemar, air berbau busuk, dan ikan-ikan mati keracunan', hint: 'Menjaga kebersihan sungai adalah wujud menjaga kelestarian alam ciptaan Tuhan.' },
+          { q: 'Pohon-pohon rindang di hutan berfungsi menahan air hujan agar tidak terjadi bencana...', options: ['Banjir bandang dan tanah longsor', 'Gempa bumi', 'Gerhana matahari', 'Pelangi indah'], answer: 'Banjir bandang dan tanah longsor', hint: 'Akar pohon mengikat butiran tanah dan menyerap air limpasan hujan.' },
+          { q: 'Dalam ajaran kearifan lokal Bali, konsep hidup selaras dengan sesama manusia, alam lingkungan, dan Tuhan disebut...', options: ['Tri Hita Karana', 'Tri Murti', 'Panca Sradha', 'Catur Asrama'], answer: 'Tri Hita Karana', hint: 'Palemahan mengajarkan hubungan harmonis penuh kasih sayang dengan alam semesta.' },
+          { q: 'Sarang burung di dahan pohon yang berisi telur sebaiknya...', options: ['Dijaga jangan sampai diganggu atau dirusak', 'Diambil telurnya untuk dilempar ke aspal', 'Dipotong rantingnya agar jatuh', 'Diusir induknya'], answer: 'Dijaga jangan sampai diganggu atau dirusak', hint: 'Melindungi sarang hewan menjaga kelestarian populasi satwa di alam liar.' },
+          { q: 'Semut yang sedang berjalan beriringan di tanah sebaiknya...', options: ['Dibiarkan lewat tanpa sengaja diinjak atau dibakar', 'Disiram air mendidih untuk bersenang-senang', 'Ditusuk dengan lidi', 'Dimusnahkan semua'], answer: 'Dibiarkan lewat tanpa sengaja diinjak atau dibakar', hint: 'Semut adalah makhluk kecil pekerja keras yang juga bertasbih kepada Sang Pencipta.' }
         ],
         activitiesEn: [
-          { q: 'If you encounter a hungry little kitten, what is the compassionate action?', options: ['Offer a bowl of clean water or food gently', 'Kick pebbles at it', 'Shout to terrorize it', 'Trap it in the cold rain'], answer: 'Offer a bowl of clean water or food gently', hint: 'Gentleness to animals reflects pure kindness 🐱' }
+          { q: 'If you encounter a hungry little kitten, what is the compassionate action?', options: ['Offer a bowl of clean water or food gently', 'Kick pebbles at it', 'Shout to terrorize it', 'Trap it in the cold rain'], answer: 'Offer a bowl of clean water or food gently', hint: 'Gentleness to animals reflects pure kindness 🐱' },
+          { q: 'Why should blooming garden flowers be left on their branches?', options: ['To maintain natural beauty and nourish honeybees', 'To throw at passing cars', 'To step on them', 'No reason'], answer: 'To maintain natural beauty and nourish honeybees', hint: 'Flowers provide sweet nectar for pollinating insects.' }
         ]
       },
       {
@@ -5385,6 +5509,12 @@
         titleEn: '6 Recognized Religions & Sacred Places of Worship',
         desc: 'Indonesia mengakui 6 agama resmi yang hidup rukun berdampingan: Islam (Masjid), Kristen Protestan (Gereja), Katolik (Gereja), Hindu (Pura), Buddha (Vihara), dan Konghucu (Klenteng/Litang). Semua agama mengajarkan kebaikan, kejujuran, dan persaudaraan sejati!',
         descEn: 'Indonesia officially recognizes 6 faiths coexisting in harmony: Islam (Mosque), Protestantism (Church), Catholicism (Church), Hinduism (Pura), Buddhism (Vihara), and Confucianism (Klenteng). All religions advocate truth, peace, and love!',
+        funFact: 'Di Jakarta, Masjid Istiqlal yang megah dan Gereja Katedral berdiri berdampingan dan dihubungkan oleh "Terowongan Silaturahmi" sebagai simbol persaudaraan sejati bangsa!',
+        keyPoints: [
+          'Enam agama resmi: Islam, Kristen Protestan, Katolik, Hindu, Buddha, dan Konghucu.',
+          'Tempat ibadah masing-masing: Masjid, Gereja, Pura, Vihara, dan Klenteng/Litang.',
+          'Semua agama mengajarkan budi pekerti luhur, cinta kasih, dan persaudaraan antarsesama.'
+        ],
         checklist: [
           'Misi 1: Sebutkan nama tempat ibadah untuk agamamu sendiri dan letaknya di kotamu.',
           'Misi 2: Pasangkan 3 agama dengan tempat ibadahnya (Islam-Masjid, Hindu-Pura, Kristen-Gereja).',
@@ -5398,10 +5528,18 @@
         activities: [
           { q: 'Tempat ibadah suci bagi umat Hindu di Bali dan nusantara disebut...', options: ['Pura', 'Masjid', 'Gereja', 'Vihara'], answer: 'Pura', hint: 'Pura dengan candi bentar yang anggun nan asri 🛕' },
           { q: 'Umat Islam melaksanakan ibadah sholat berjamaah di...', options: ['Masjid', 'Pura', 'Klenteng', 'Candi'], answer: 'Masjid', hint: 'Masjid dengan kubah megah dan menara azan 🕌' },
-          { q: 'Vihara adalah tempat ibadah suci bagi pemeluk agama...', options: ['Buddha', 'Konghucu', 'Katolik', 'Islam'], answer: 'Buddha', hint: 'Pemeluk agama Buddha beribadah di Vihara.' }
+          { q: 'Vihara adalah tempat ibadah suci bagi pemeluk agama...', options: ['Buddha', 'Konghucu', 'Katolik', 'Islam'], answer: 'Buddha', hint: 'Pemeluk agama Buddha beribadah di Vihara.' },
+          { q: 'Tempat ibadah suci bagi umat Kristen Protestan dan Katolik adalah...', options: ['Gereja', 'Masjid', 'Pura', 'Klenteng'], answer: 'Gereja', hint: 'Umat Kristiani melaksanakan kebaktian dan misa kudus di Gereja ⛪' },
+          { q: 'Klenteng atau Litang merupakan tempat peribadatan suci bagi pemeluk agama...', options: ['Konghucu', 'Hindu', 'Islam', 'Protestan'], answer: 'Konghucu', hint: 'Tempat ibadah Konghucu yang berhiaskan warna merah keemasan.' },
+          { q: 'Kitab suci yang menjadi pedoman hidup bagi umat Islam adalah...', options: ['Al-Qur\'an', 'Weda', 'Alkitab (Injil)', 'Tripitaka'], answer: 'Al-Qur\'an', hint: 'Kitab suci Al-Qur\'an diturunkan kepada Nabi Muhammad SAW.' },
+          { q: 'Kitab suci yang menjadi pedoman ajaran suci bagi umat Hindu adalah...', options: ['Weda', 'Al-Qur\'an', 'Alkitab', 'Si Shu'], answer: 'Weda', hint: 'Catur Weda memuat kidung suci dan petunjuk kebenaran spiritual.' },
+          { q: 'Kitab suci bagi umat Kristen Protestan dan Katolik disebut...', options: ['Alkitab', 'Tripitaka', 'Al-Qur\'an', 'Weda'], answer: 'Alkitab', hint: 'Alkitab terdiri dari Perjanjian Lama dan Perjanjian Baru.' },
+          { q: 'Kitab suci pedoman bagi umat beragama Buddha adalah...', options: ['Tripitaka', 'Weda', 'Al-Qur\'an', 'Injil'], answer: 'Tripitaka', hint: 'Tripitaka berarti Tiga Keranjang Ajaran Suci Sang Buddha.' },
+          { q: 'Meskipun berbeda agama dan tempat ibadah, ajaran luhur yang sama-sama diajarkan oleh semua agama adalah...', options: ['Saling mengasihi, berbuat jujur, dan menolong sesama', 'Memusuhi orang yang berbeda', 'Boleh berbohong jika tidak ketahuan', 'Meremehkan orang miskin'], answer: 'Saling mengasihi, berbuat jujur, dan menolong sesama', hint: 'Semua agama mengarahkan manusia menuju budi pekerti mulia dan perdamaian.' }
         ],
         activitiesEn: [
-          { q: 'The sacred place of worship for Hindu communities in Bali and Indonesia is...', options: ['Pura', 'Mosque', 'Church', 'Vihara'], answer: 'Pura', hint: 'Pura shrines featuring ornate split gates 🛕' }
+          { q: 'The sacred place of worship for Hindu communities in Bali and Indonesia is...', options: ['Pura', 'Mosque', 'Church', 'Vihara'], answer: 'Pura', hint: 'Pura shrines featuring ornate split gates 🛕' },
+          { q: 'Followers of Islam perform congregation prayers in a...', options: ['Mosque (Masjid)', 'Pura', 'Klenteng', 'Cathedral'], answer: 'Mosque (Masjid)', hint: 'Mosques feature domed roofs and minarets 🕌' }
         ]
       },
       {
@@ -5410,6 +5548,12 @@
         titleEn: 'Interfaith Tolerance & Respecting Differences',
         desc: 'Toleransi adalah sikap saling menghormati dan menghargai keyakinan orang lain tanpa membeda-bedakan. Saat teman sedang berpuasa atau beribadah, kita tidak boleh mengganggunya. Kita saling mengucapkan selamat hari raya dan tetap bermain bersama dengan ceria!',
         descEn: 'Tolerance means deeply respecting others\' spiritual beliefs without prejudice. When friends observe fasting or prayers, we offer quiet respect. We exchange heartfelt festive greetings and remain great buddies!',
+        funFact: 'Semboyan bangsa kita "Bhinneka Tunggal Ika" berasal dari kitab Sutasoma karya Mpu Tantular pada zaman Majapahit, yang berarti berbeda-beda tetapi tetap satu!',
+        keyPoints: [
+          'Toleransi berarti menghormati keyakinan, ibadah, dan hari raya pemeluk agama lain.',
+          'Menjaga ketenangan saat orang lain beribadah dan tidak memaksakan kehendak.',
+          'Semua anak Indonesia bersaudara dalam bingkai persatuan Bhinneka Tunggal Ika.'
+        ],
         checklist: [
           'Misi 1: Jaga ketenangan saat temanmu yang berbeda agama sedang khusyuk berdoa.',
           'Misi 2: Berikan ucapan selamat hari raya (Idul Fitri, Natal, Nyepi, Waisak, Imlek) kepada temanmu saat perayaannya.',
@@ -5422,10 +5566,19 @@
         ],
         activities: [
           { q: 'Ketika tetangga atau temanmu sedang melaksanakan ibadah di rumahnya, sikap toleransi yang tepat adalah...', options: ['Menjaga ketenangan dan tidak menyetel musik keras-keras', 'Berteriak di depan pintu rumahnya', 'Mengajak main bola di depan jendelanya', 'Membunyikan klakson kencang'], answer: 'Menjaga ketenangan dan tidak menyetel musik keras-keras', hint: 'Menghargai waktu ibadah orang lain menciptakan lingkungan yang damai dan rukun.' },
-          { q: 'Bolehkah kita memilih-milih teman bermain hanya berdasarkan agamanya saja?', options: ['Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', 'Boleh saja sesuka hati', 'Hanya bermain dengan tetangga sebelah', 'Harus memusuhi teman yang berbeda'], answer: 'Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', hint: 'Semua anak Indonesia adalah sahabat yang sederajat.' }
+          { q: 'Bolehkah kita memilih-milih teman bermain hanya berdasarkan agamanya saja?', options: ['Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', 'Boleh saja sesuka hati', 'Hanya bermain dengan tetangga sebelah', 'Harus memusuhi teman yang berbeda'], answer: 'Tidak boleh, kita harus berteman rukun dengan semua anak tanpa membeda-bedakan', hint: 'Semua anak Indonesia adalah sahabat yang sederajat.' },
+          { q: 'Saat teman Muslim sedang menjalankan ibadah puasa di bulan Ramadan, sikap kita saat makan di dekatnya adalah...', options: ['Makan dengan sopan dan tidak sengaja menggoda atau memamerkan makanan', 'Menyodorkan es krim tepat ke wajahnya', 'Menyuruhnya membatalkan puasa', 'Mengejeknya karena menahan lapar'], answer: 'Makan dengan sopan dan tidak sengaja menggoda atau memamerkan makanan', hint: 'Menghargai teman yang sedang berpuasa mempererat tali persahabatan.' },
+          { q: 'Hari raya keagamaan yang dirayakan oleh umat Hindu di Bali dengan keheningan Catur Brata Penyepian adalah...', options: ['Hari Raya Nyepi', 'Idul Fitri', 'Natal', 'Imlek'], answer: 'Hari Raya Nyepi', hint: 'Nyepi diperingati dengan hening tanpa menyalakan lampu (Amati Geni).' },
+          { q: 'Hari raya besar yang diperingati oleh umat Kristen dan Katolik pada tanggal 25 Desember adalah...', options: ['Hari Raya Natal', 'Waisak', 'Nyepi', 'Idul Adha'], answer: 'Hari Raya Natal', hint: 'Memperingati kelahiran Yesus Kristus dengan sukacita dan damai.' },
+          { q: 'Hari raya suci yang dirayakan oleh umat Buddha untuk memperingati tiga peristiwa agung Sang Buddha adalah...', options: ['Hari Raya Waisak', 'Tahun Baru Imlek', 'Idul Fitri', 'Galungan'], answer: 'Hari Raya Waisak', hint: 'Waisak sering dipusatkan di Candi Borobudur dengan pelepasan lampion.' },
+          { q: 'Tahun Baru Imlek yang dimeriahkan pertunjukan barongsai dan lampion merah adalah perayaan umat...', options: ['Konghucu', 'Hindu', 'Islam', 'Katolik'], answer: 'Konghucu', hint: 'Imlek merayakan pergantian tahun dengan doa syukur dan reuni keluarga.' },
+          { q: 'Jika tetangga yang berbeda agama merayakan hari raya sucinya, ucapan santun kita adalah...', options: ['Memberikan ucapan selamat hari raya dengan senyuman hangat', 'Menutup pintu rapat-rapat sambil marah', 'Menghalangi tamu yang berkunjung', 'Mencibir dekorasi rumahnya'], answer: 'Memberikan ucapan selamat hari raya dengan senyuman hangat', hint: 'Saling mengucapkan selamat memperkuat kerukunan antarumat beragama.' },
+          { q: 'Makna semboyan "Bhinneka Tunggal Ika" bagi bangsa Indonesia adalah...', options: ['Meskipun berbeda-beda suku dan agama, kita tetap satu kesatuan', 'Yang mayoritas boleh menindas yang minoritas', 'Setiap daerah harus mendirikan negara sendiri', 'Hanya satu agama yang boleh diakui'], answer: 'Meskipun berbeda-beda suku dan agama, kita tetap satu kesatuan', hint: 'Perbedaan adalah kekayaan bangsa yang indah laksana pelangi.' },
+          { q: 'Manfaat membiasakan sikap toleransi sejak di bangku sekolah dasar adalah...', options: ['Tercipta suasana kelas yang aman, damai, dan penuh persahabatan', 'Bisa sering berkelahi tanpa dihukum', 'Membuat anak menjadi sombong', 'Bisa membolos sesuka hati'], answer: 'Tercipta suasana kelas yang aman, damai, dan penuh persahabatan', hint: 'Kelas yang rukun membuat semua murid bersemangat belajar bersama.' }
         ],
         activitiesEn: [
-          { q: 'When a neighbor is observing peaceful prayers at home, what is the right civic attitude?', options: ['Keep quiet and refrain from blasting loud music', 'Shout outside their doorway', 'Play soccer right at their window', 'Honk horns repeatedly'], answer: 'Keep quiet and refrain from blasting loud music', hint: 'Respecting worship hours creates community peace.' }
+          { q: 'When a neighbor is observing peaceful prayers at home, what is the right civic attitude?', options: ['Keep quiet and refrain from blasting loud music', 'Shout outside their doorway', 'Play soccer right at their window', 'Honk horns repeatedly'], answer: 'Keep quiet and refrain from blasting loud music', hint: 'Respecting worship hours creates community peace.' },
+          { q: 'Should we choose playtime friends based only on their religion?', options: ['No, we should be kind friends with all children equally', 'Yes, only play with matching beliefs', 'Exclude everyone else', 'Fight other groups'], answer: 'No, we should be kind friends with all children equally', hint: 'True friendship welcomes all companions warmly.' }
         ]
       },
       {
@@ -5434,6 +5587,12 @@
         titleEn: 'Honesty, Prayerful Reflection, & Daily Kindness',
         desc: 'Kejujuran adalah mutiara hati: berkata benar apa adanya, mengakui kesalahan bila berbuat salah, dan mengembalikan barang temuan kepada pemiliknya. Berbuat baik tidak harus menunggu kaya; tersenyum ramah, menyapa santun, dan menolong teman adalah sedekah / amal kebajikan yang mulia!',
         descEn: 'Honesty is the pearl of the heart: speaking the truth, owning up to mistakes, and returning lost items. Kindness requires no wealth; a warm smile, gentle words, and helping hands are priceless treasures of virtue!',
+        funFact: 'Orang yang terbiasa berkata jujur memiliki detak jantung yang lebih teratur dan tidur lebih tenang karena hatinya terbebas dari rasa cemas dan takut ketahuan bohong!',
+        keyPoints: [
+          'Kejujuran adalah fondasi budi pekerti: selalu berkata benar dan tidak berbohong.',
+          'Bila berbuat keliru, akuilah secara jantan dan minta maaf tanpa mencari kambing hitam.',
+          'Berbuat kebaikan kecil setiap hari (senyum ramah, berbagi makanan) dicatat sebagai amal mulia.'
+        ],
         checklist: [
           'Misi 1: Katakan hal yang sebenarnya dengan jujur kepada orang tua tanpa rasa takut.',
           'Misi 2: Jika menemukan pensil atau penghapus jatuh di kelas, serahkan kepada guru agar kembali ke pemiliknya.',
@@ -5446,77 +5605,59 @@
         ],
         activities: [
           { q: 'Ketika kamu tidak sengaja menjatuhkan penggaris teman hingga patah, sikap jujur yang benar adalah...', options: ['Meminta maaf dan berterus terang dengan jujur', 'Menuduh teman lain yang merusaknya', 'Menyembunyikannya di bawah lemari', 'Pura-pura tidak tahu dan tertawa'], answer: 'Meminta maaf dan berterus terang dengan jujur', hint: 'Anak pemberani berani berkata jujur dan bertanggung jawab.' },
-          { q: 'Perbuatan suka menolong orang lain tanpa mengharapkan pamrih pujian disebut perbuatan...', options: ['Ikhlas dan beramal kebajikan', 'Sombong', 'Pamer di media sosial', 'Terpaksa'], answer: 'Ikhlas dan beramal kebajikan', hint: 'Ikhlas artinya berbuat baik tulus karena cinta kepada Tuhan dan sesama.' }
+          { q: 'Perbuatan suka menolong orang lain tanpa mengharapkan pamrih pujian disebut perbuatan...', options: ['Ikhlas dan beramal kebajikan', 'Sombong', 'Pamer di media sosial', 'Terpaksa'], answer: 'Ikhlas dan beramal kebajikan', hint: 'Ikhlas artinya berbuat baik tulus karena cinta kepada Tuhan dan sesama.' },
+          { q: 'Jika kamu menemukan selembar uang Rp 5.000 di lantai kelas yang bukan milikmu, tindakan yang jujur adalah...', options: ['Menyerahkan uang tersebut kepada bapak/ibu guru untuk diumumkan', 'Langsung mengantonginya untuk jajan cilok', 'Membaginya dengan teman sebangku agar tutup mulut', 'Menyembunyikannya di dalam sepatu'], answer: 'Menyerahkan uang tersebut kepada bapak/ibu guru untuk diumumkan', hint: 'Bukan hak kita tidak boleh kita ambil atau nikmati.' },
+          { q: 'Orang yang suka berbohong akan menerima akibat buruk yaitu...', options: ['Tidak lagi dipercayai oleh orang lain dan dijauhi teman', 'Semakin disukai orang banyak', 'Menjadi anak paling hebat', 'Mendapat banyak hadiah'], answer: 'Tidak lagi dipercayai oleh orang lain dan dijauhi teman', hint: 'Sekali berbohong, orang akan sulit mempercayai kata-kata kita berikutnya.' },
+          { q: 'Saat mengerjakan soal ulangan atau kuis di kelas, sikap Pelajar Beriman adalah...', options: ['Percaya diri mengerjakan jujur dan tidak mencontek', 'Melihat contekan di saku baju', 'Membuka buku diam-diam saat guru lengah', 'Bertanya jawaban ke teman sebelah'], answer: 'Percaya diri mengerjakan jujur dan tidak mencontek', hint: 'Tuhan Maha Melihat segala gerak-gerik perbuatan kita walau tak ada orang tahu.' },
+          { q: 'Senyuman tulus yang kita berikan kepada teman saat berpapasan bernilai...', options: ['Kebaikan dan sedekah yang mendamaikan hati', 'Hanya gerakan bibir biasa', 'Tanda ingin mengejek', 'Tindakan sia-sia'], answer: 'Kebaikan dan sedekah yang mendamaikan hati', hint: 'Tersenyum ramah menyebarkan kehangatan dan rasa bahagia.' },
+          { q: 'Menyisihkan uang saku kita untuk disumbangkan kepada korban bencana alam melatih sifat...', options: ['Kedermawanan dan peduli terhadap penderitaan sesama', 'Ingin pamer kekayaan', 'Boros menghabiskan uang', 'Keputusasaan'], answer: 'Kedermawanan dan peduli terhadap penderitaan sesama', hint: 'Berbagi rezeki tidak akan membuat kita kekurangan, justru mendatangkan berkah.' },
+          { q: 'Sikap hati yang TIDAK mau memamerkan kebaikan atau kekayaan diri disebut...', options: ['Rendah hati (tawadhu)', 'Tinggi hati (sombong)', 'Rendah diri (minder)', 'Iri hati'], answer: 'Rendah hati (tawadhu)', hint: 'Rendah hati disukai Tuhan dan disenangi oleh semua teman.' },
+          { q: 'Bila melihat teman yang berbuat salah atau keliru, cara menasehatinya yang baik adalah...', options: ['Menasehati secara pribadi dengan kata-kata santun dan tidak mempermalukannya', 'Meneriakinya di depan umum agar dia malu', 'Mengejeknya di depan teman-teman', 'Memukulnya dengan penggaris'], answer: 'Menasehati secara pribadi dengan kata-kata santun dan tidak mempermalukannya', hint: 'Nasehat yang penuh kasih sayang lebih mudah meresap ke dalam hati.' },
+          { q: 'Kejujuran disebut sebagai "mata uang yang berlaku di mana-mana" karena...', options: ['Orang yang jujur selalu dipercaya, dihormati, dan disayangi di mana pun berada', 'Bisa ditukar dengan uang kertas asli di bank', 'Dapat membeli barang mewah tanpa bayar', 'Merupakan koin emas kuno'], answer: 'Orang yang jujur selalu dipercaya, dihormati, dan disayangi di mana pun berada', hint: 'Kejujuran adalah mahkota karakter yang paling berharga seumur hidup.' }
         ],
         activitiesEn: [
-          { q: 'If you accidentally drop a friend\'s ruler and break it, what is the honest integrity reaction?', options: ['Apologize sincerely and admit the mishap truthfully', 'Blame someone else falsely', 'Hide the pieces under the carpet', 'Pretend nothing happened'], answer: 'Apologize sincerely and admit the mishap truthfully', hint: 'Integrity means taking honest responsibility.' }
+          { q: 'If you accidentally drop a friend\'s ruler and break it, what is the honest integrity reaction?', options: ['Apologize sincerely and admit the mishap truthfully', 'Blame someone else falsely', 'Hide the pieces under the carpet', 'Pretend nothing happened'], answer: 'Apologize sincerely and admit the mishap truthfully', hint: 'Integrity means taking honest responsibility.' },
+          { q: 'What happens when someone habitually lies to their friends?', options: ['They lose trust and respect from everyone', 'They become more popular', 'They receive awards', 'Nothing changes'], answer: 'They lose trust and respect from everyone', hint: 'Lying destroys trust permanently.' }
         ]
-      }
-  ,
+      },
       {
         id: 'ag-kebersihan-ibadah',
         title: 'Menjaga Kesucian Diri & Kebersihan Tempat Ibadah',
         titleEn: 'Purity of Self & Cleanliness of Worship Sanctuaries',
         desc: 'Kebersihan adalah bagian dari keimanan. Sebelum menghadap Tuhan Yang Maha Esa untuk beribadah, kita membersihkan diri: berwudu / cuci tangan dan kaki, mengenakan pakaian yang rapi dan suci, serta menjaga keheningan tempat ibadah (Masjid, Pura, Gereja, Vihara, Klenteng) agar semua orang beribadah dengan damai.',
         descEn: 'Cleanliness is an essential facet of devotion. Before offering heartfelt prayers, we cleanse our body, put on neat attire, and lovingly maintain the tranquility of worship sanctuaries so everyone experiences divine peace.',
+        funFact: 'Pepatah universal mengajarkan "Kebersihan adalah sebagian dari iman" (An-nazhafatu minal iman). Tubuh yang suci dan wangi mencerminkan jiwa yang bening dan siap bersujud!',
+        keyPoints: [
+          'Bersuci dan membersihkan diri sebelum beribadah menghadap Tuhan adalah kewajiban.',
+          'Mengenakan pakaian yang bersih, rapi, suci dari najis/kotoran, dan sopan.',
+          'Menjaga ketenangan, kerapian sandal/sepatu, dan kebersihan rumah ibadah bersama.'
+        ],
         checklist: [
-          "Misi 1: Cuci tangan, wajah, dan kaki hingga bersih sebelum memulai ibadah dan doa bersama.",
-          "Misi 2: Susun sandal dan sepatumu secara rapi di rak pintu masuk tempat ibadah.",
-          "Misi 3: Tidak berbicara keras atau berlarian saat berada di dalam rumah ibadah yang hening."
-  ],
+          'Misi 1: Cuci tangan, wajah, dan kaki hingga bersih sebelum memulai ibadah dan doa bersama.',
+          'Misi 2: Susun sandal dan sepatumu secara rapi di rak pintu masuk tempat ibadah.',
+          'Misi 3: Tidak berbicara keras atau berlarian saat berada di dalam rumah ibadah yang hening.'
+        ],
         checklistEn: [
-          "Mission 1: Cleanse hands, face, and feet with fresh water before commencing sacred prayer.",
-          "Mission 2: Neatly align your sandals or shoes on the designated sanctuary entryway rack.",
-          "Mission 3: Maintain respectful silence and composure inside places of worship."
-  ],
+          'Mission 1: Cleanse hands, face, and feet with fresh water before commencing sacred prayer.',
+          'Mission 2: Neatly align your sandals or shoes on the designated sanctuary entryway rack.',
+          'Mission 3: Maintain respectful silence and composure inside places of worship.'
+        ],
         activities: [
-          {
-                  "q": "Sebelum masuk ke tempat ibadah untuk bersembahyang, pakaian yang kita kenakan harus...",
-                  "options": [
-                          "Bersih, rapi, dan sopan",
-                          "Kotor penuh lumpur",
-                          "Pakaian tidur robek",
-                          "Pakaian basah kuyup"
-                  ],
-                  "answer": "Bersih, rapi, dan sopan",
-                  "hint": "Sebagai wujud penghormatan dan rasa syukur kepada Tuhan."
-          },
-          {
-                  "q": "Sikap kita ketika berada di dalam rumah ibadah adalah...",
-                  "options": [
-                          "Khusyuk, tenang, dan tertib",
-                          "Bermain bola di dalam ruangan",
-                          "Berteriak-teriak memanggil teman",
-                          "Makan permen karet"
-                  ],
-                  "answer": "Khusyuk, tenang, dan tertib",
-                  "hint": "Tempat ibadah digunakan untuk berdoa dengan penuh ketulusan."
-          },
-          {
-                  "q": "Menjaga kebersihan tempat ibadah adalah kewajiban dari...",
-                  "options": [
-                          "Seluruh jemaah / umat yang beribadah",
-                          "Hanya pengurus saja",
-                          "Tidak ada yang wajib",
-                          "Orang lain"
-                  ],
-                  "answer": "Seluruh jemaah / umat yang beribadah",
-                  "hint": "Rumah ibadah adalah milik bersama untuk mendekatkan diri kepada Tuhan."
-          }
-  ],
+          { q: 'Sebelum masuk ke tempat ibadah untuk bersembahyang, pakaian yang kita kenakan harus...', options: ['Bersih, rapi, dan sopan', 'Kotor penuh lumpur', 'Pakaian tidur robek', 'Pakaian basah kuyup'], answer: 'Bersih, rapi, dan sopan', hint: 'Sebagai wujud penghormatan dan rasa syukur kepada Tuhan.' },
+          { q: 'Sikap kita ketika berada di dalam rumah ibadah adalah...', options: ['Khusyuk, tenang, dan tertib', 'Bermain bola di dalam ruangan', 'Berteriak-teriak memanggil teman', 'Makan permen karet'], answer: 'Khusyuk, tenang, dan tertib', hint: 'Tempat ibadah digunakan untuk berdoa dengan penuh ketulusan.' },
+          { q: 'Menjaga kebersihan tempat ibadah adalah kewajiban dari...', options: ['Seluruh jemaah / umat yang beribadah', 'Hanya pengurus saja', 'Tidak ada yang wajib', 'Orang lain'], answer: 'Seluruh jemaah / umat yang beribadah', hint: 'Rumah ibadah adalah milik bersama untuk mendekatkan diri kepada Tuhan.' },
+          { q: 'Sebelum melaksanakan sholat, umat Islam wajib bersuci dengan cara...', options: ['Berwudu menggunakan air bersih yang mengalir', 'Cukup menyemprot parfum', 'Mengusap baju dengan tisu', 'Mencelupkan ujung jari ke teh'], answer: 'Berwudu menggunakan air bersih yang mengalir', hint: 'Wudu menyucikan anggota badan dari hadas kecil sesuai syariat.' },
+          { q: 'Saat memasuki Pura atau tempat suci Hindu di Bali, umat mengenakan pakaian adat bersih dan melilitkan...', options: ['Selendang (senteng) di pinggang sebagai lambang pengendalian diri', 'Kain selimut tebal', 'Topeng monster', 'Tali rafia'], answer: 'Selendang (senteng) di pinggang sebagai lambang pengendalian diri', hint: 'Senteng mengikat nafsu indrawi agar pikiran fokus memuja Sang Hyang Widhi.' },
+          { q: 'Di pintu masuk tempat ibadah, sandal dan sepatu sebaiknya kita letakkan di...', options: ['Rak sepatu dengan susunan yang rapi dan teratur', 'Tengah pintu masuk agar orang tersandung', 'Dilempar ke semak-semak', 'Dibawa masuk ke atas karpet ibadah'], answer: 'Rak sepatu dengan susunan yang rapi dan teratur', hint: 'Menjaga kerapian pintu masuk mencerminkan ketertiban jemaah.' },
+          { q: 'Bolehkah kita membuang bungkus permen atau tisu di dalam ruang ibadah?', options: ['Tidak boleh, sampah harus dibuang di tempat sampah di luar ruangan', 'Boleh diselipkan di bawah karpet', 'Boleh dilempar ke sudut mimbar', 'Boleh ditinggalkan di lantai'], answer: 'Tidak boleh, sampah harus dibuang di tempat sampah di luar ruangan', hint: 'Rumah ibadah adalah tempat suci yang harus dijaga kebersihannya.' },
+          { q: 'Saat berada di dalam Gereja atau Vihara, nada bicara yang pantas adalah...', options: ['Berbisik pelan bila mendesak dan menjaga keheningan khusyuk', 'Berteriak memanggil kawan di seberang altar', 'Menyanyi lagu rock keras-keras', 'Mengobrol soal game online'], answer: 'Berbisik pelan bila mendesak dan menjaga keheningan khusyuk', hint: 'Keheningan suasana membantu semua jemaah terhubung dengan Tuhan.' },
+          { q: 'Peralatan ibadah pribadi seperti mukena, sarung, atau selendang sembahyang sebaiknya...', options: ['Dicuci rutin agar selalu wangi dan bersih dari bau apek', 'Dibiarkan kotor berbulan-bulan', 'Dipakai mengelap tumpahan kuah sayur', 'Dibiarkan lembap berjamur'], answer: 'Dicuci rutin agar selalu wangi dan bersih dari bau apek', hint: 'Peralatan ibadah yang wangi menambah kekhusyukan dan kenyamanan berdoa.' },
+          { q: 'Manfaat menjaga kebersihan dan kesucian sebelum beribadah adalah...', options: ['Ibadah menjadi khusyuk, hati tenang, dan diterima oleh Tuhan', 'Hanya agar dipuji orang lain', 'Supaya baju cepat aus', 'Agar bisa selfie di tempat ibadah'], answer: 'Ibadah menjadi khusyuk, hati tenang, dan diterima oleh Tuhan', hint: 'Tuhan itu Maha Suci dan mencintai kesucian serta kebersihan.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "Attire worn during sacred moments of prayer should always be...",
-                  "options": [
-                          "Clean, neat, and reverent",
-                          "Muddy and torn",
-                          "Sleepwear",
-                          "Dirty"
-                  ],
-                  "answer": "Clean, neat, and reverent",
-                  "hint": "Expressing heartfelt respect before God."
-          }
-  ]
+          { q: 'Attire worn during sacred moments of prayer should always be...', options: ['Clean, neat, and reverent', 'Muddy and torn', 'Sleepwear', 'Dirty'], answer: 'Clean, neat, and reverent', hint: 'Expressing heartfelt respect before God.' },
+          { q: 'Where should footwear be placed before entering worship sanctuaries?', options: ['Neatly arranged on entrance racks', 'Scattered across doorway', 'Tossed onto carpets', 'Thrown outside randomly'], answer: 'Neatly arranged on entrance racks', hint: 'Neat shoe racks keep sacred areas clean and orderly.' }
+        ]
       },
       {
         id: 'ag-amanah-janji',
@@ -5524,173 +5665,117 @@
         titleEn: 'Keeping Promises & Honoring Trusts (Being Faithful)',
         desc: 'Anak yang bertakwa dan berakhlak mulia selalu menepati janji yang diucapkan. Bila meminjam barang teman, barang itu dijaga baik-baik dan dikembalikan tepat waktu. Kejujuran dan sifat dapat dipercaya (amanah) membuat kita disayangi oleh Tuhan, disukai guru, dan memiliki banyak sahabat setia!',
         descEn: 'Children with pure upright hearts treasure their promises. When borrowing a friend’s pencil or book, they handle it gently and return it promptly. Trustworthiness earns divine blessings, teacher appreciation, and enduring lifelong friendships!',
+        funFact: 'Nabi Muhammad SAW diberi gelar terhormat "Al-Amin" oleh masyarakat karena beliau selalu berkata jujur dan memegang amanah dengan sangat setia!',
+        keyPoints: [
+          'Amanah artinya dapat dipercaya dan bertanggung jawab atas tugas atau titipan yang diberikan.',
+          'Menepati janji adalah bukti iman dan budi pekerti luhur seorang pelajar sejati.',
+          'Barang pinjaman wajib dirawat dengan hati-hati dan dikembalikan tepat pada waktunya.'
+        ],
         checklist: [
-          "Misi 1: Kembalikan buku atau mainan yang kamu pinjam dari teman sambil mengucapkan terima kasih.",
-          "Misi 2: Tepati janji membantumu merapikan mainan sendiri setelah selesai bermain di rumah.",
-          "Misi 3: Jangan membuka rahasia atau pesan titipan yang diamanahkan orang tua kepadamu."
-  ],
+          'Misi 1: Kembalikan buku atau mainan yang kamu pinjam dari teman sambil mengucapkan terima kasih.',
+          'Misi 2: Tepati janji membantumu merapikan mainan sendiri setelah selesai bermain di rumah.',
+          'Misi 3: Jangan membuka rahasia atau pesan titipan yang diamanahkan orang tua kepadamu.'
+        ],
         checklistEn: [
-          "Mission 1: Return borrowed books or pencils to your classmates with a cheerful smile.",
-          "Mission 2: Fulfill your commitment to tidy up playthings after playtime at home.",
-          "Mission 3: Honor the trusted tasks and words entrusted to you by your elders."
-  ],
+          'Mission 1: Return borrowed books or pencils to your classmates with a cheerful smile.',
+          'Mission 2: Fulfill your commitment to tidy up playthings after playtime at home.',
+          'Mission 3: Honor the trusted tasks and words entrusted to you by your elders.'
+        ],
         activities: [
-          {
-                  "q": "Bila kita berjanji kepada teman untuk belajar bersama jam 4 sore, maka kita harus...",
-                  "options": [
-                          "Datang tepat waktu sesuai janji",
-                          "Lupa dan pergi tidur",
-                          "Sengaja membatalkan tanpa kabar",
-                          "Marah-marah"
-                  ],
-                  "answer": "Datang tepat waktu sesuai janji",
-                  "hint": "Menepati janji adalah ciri anak hebat yang dapat dipercaya."
-          },
-          {
-                  "q": "Ketika meminjam penghapus milik teman, sikap yang benar adalah...",
-                  "options": [
-                          "Menggunakan dengan hati-hati lalu mengembalikan",
-                          "Menyembunyikan di tas kita",
-                          "Merobeknya menjadi dua",
-                          "Membuang ke kolam"
-                  ],
-                  "answer": "Menggunakan dengan hati-hati lalu mengembalikan",
-                  "hint": "Barang titipan atau pinjaman harus dijaga dengan penuh tanggung jawab."
-          },
-          {
-                  "q": "Sikap orang yang jujur dan dapat dipercaya disebut...",
-                  "options": [
-                          "Amanah",
-                          "Pembohong",
-                          "Penakut",
-                          "Kasar"
-                  ],
-                  "answer": "Amanah",
-                  "hint": "Sifat terpuji yang dicintai Tuhan dan sesama manusia."
-          }
-  ],
+          { q: 'Bila kita berjanji kepada teman untuk belajar bersama jam 4 sore, maka kita harus...', options: ['Datang tepat waktu sesuai janji', 'Lupa dan pergi tidur', 'Sengaja membatalkan tanpa kabar', 'Marah-marah'], answer: 'Datang tepat waktu sesuai janji', hint: 'Menepati janji adalah ciri anak hebat yang dapat dipercaya.' },
+          { q: 'Ketika meminjam penghapus milik teman, sikap yang benar adalah...', options: ['Menggunakan dengan hati-hati lalu mengembalikan', 'Menyembunyikan di tas kita', 'Merobeknya menjadi dua', 'Membuang ke kolam'], answer: 'Menggunakan dengan hati-hati lalu mengembalikan', hint: 'Barang titipan atau pinjaman harus dijaga dengan penuh tanggung jawab.' },
+          { q: 'Sikap orang yang jujur dan dapat dipercaya disebut...', options: ['Amanah', 'Pembohong', 'Penakut', 'Kasar'], answer: 'Amanah', hint: 'Sifat terpuji yang dicintai Tuhan dan sesama manusia.' },
+          { q: 'Lawan dari sifat amanah (dapat dipercaya) adalah sifat...', options: ['Khianat (mengingkari kepercayaan)', 'Sabar', 'Pemaaf', 'Dermawan'], answer: 'Khianat (mengingkari kepercayaan)', hint: 'Khianat adalah perbuatan tercela yang merusak persaudaraan.' },
+          { q: 'Jika ibu menitipkan pesan untuk disampaikan kepada bapak guru di sekolah, sikap yang amanah adalah...', options: ['Menyampaikan pesan ibu persis seperti yang dipesankan', 'Mengabaikan dan melupakannya', 'Mengarang-ngarang cerita palsu', 'Menyuruh teman lain yang tidak tahu'], answer: 'Menyampaikan pesan ibu persis seperti yang dipesankan', hint: 'Pesan titipan harus disampaikan dengan jujur dan lengkap.' },
+          { q: 'Bila tidak sengaja merusak buku cerita yang dipinjam dari perpustakaan sekolah, tindakan yang bertanggung jawab adalah...', options: ['Melapor kepada petugas perpustakaan, meminta maaf, dan menggantinya', 'Menyembunyikan buku yang sobek di rak belakang', 'Menuduh teman lain yang merusaknya', 'Membuang buku ke selokan'], answer: 'Melapor kepada petugas perpustakaan, meminta maaf, dan menggantinya', hint: 'Berani bertanggung jawab atas kekhilafan adalah tanda ksatria.' },
+          { q: 'Sebelum berjanji kepada seseorang, hal yang wajib kita pertimbangkan adalah...', options: ['Apakah kita benar-benar sanggup dan mampu memenuhinya', 'Asal berjanji manis agar orang senang sebentar', 'Berjanji palsu demi mendapat hadiah', 'Berjanji tanpa niat menepatinya'], answer: 'Apakah kita benar-benar sanggup dan mampu memenuhinya', hint: 'Jangan mudah mengobral janji jika tahu tidak akan bisa menepatinya.' },
+          { q: 'Jika terpilih menjadi ketua regu piket kelas, sikap amanah yang ditunjukkan adalah...', options: ['Memimpin teman-teman membersihkan kelas dengan adil dan memberi teladan', 'Duduk manis sambil menyuruh-nyuruh dengan galak', 'Langsung pulang mendahului yang lain', 'Menolak membersihkan papan tulis'], answer: 'Memimpin teman-teman membersihkan kelas dengan adil dan memberi teladan', hint: 'Pemimpin yang amanah ikut bekerja dan mengayomi seluruh anggota.' },
+          { q: 'Orang yang selalu menepati janji dan amanah akan memperoleh...', options: ['Kepercayaan penuh, banyak sahabat, dan pahala dari Tuhan', 'Banyak musuh di mana-mana', 'Hukuman dari guru', 'Kehilangan uang'], answer: 'Kepercayaan penuh, banyak sahabat, dan pahala dari Tuhan', hint: 'Kepercayaan adalah modal termahal dalam hubungan persahabatan.' },
+          { q: 'Pepatah mengajarkan: "Sekali lancung ke ujian, seumur hidup orang tak percaya". Maksudnya adalah...', options: ['Sekali kita berkhianat atau berbohong, orang akan sulit mempercayai kita lagi', 'Jangan pernah ikut ujian sekolah', 'Ujian selalu membuat orang takut', 'Bohong itu boleh sesekali'], answer: 'Sekali kita berkhianat atau berbohong, orang akan sulit mempercayai kita lagi', hint: 'Jagalah kepercayaan orang lain seperti menjaga kaca bening yang rapuh.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "When we promise a friend to study together at 4 PM, we should...",
-                  "options": [
-                          "Arrive punctually as committed",
-                          "Sleep and forget deliberately",
-                          "Ghost them without notice",
-                          "Complain loudly"
-                  ],
-                  "answer": "Arrive punctually as committed",
-                  "hint": "Honoring commitments reflects personal integrity."
-          }
-  ]
+          { q: 'When we promise a friend to study together at 4 PM, we should...', options: ['Arrive punctually as committed', 'Sleep and forget deliberately', 'Ghost them without notice', 'Complain loudly'], answer: 'Arrive punctually as committed', hint: 'Honoring commitments reflects personal integrity.' },
+          { q: 'A person who is reliable, honest, and preserves trusts faithfully is described as...', options: ['Trustworthy (Amanah)', 'Betrayer', 'Deceiver', 'Careless'], answer: 'Trustworthy (Amanah)', hint: 'Trustworthiness is a cherished moral pillar.' }
+        ]
       },
       {
-        "id": "agama-sikap-berdoa",
-      "title": "Tata Tertib Berdoa & Sikap Khidmat Beribadah",
-      "titleEn": "Reverence in Prayer & Respectful Worship Manner",
-      "desc": "Berdoa adalah saat kita berkomunikasi secara tulus dengan Tuhan Yang Maha Esa. Saat berdoa, kita harus menunjukkan rasa hormat: menenangkan hati, duduk dengan sikap tegak atau bersimpuh rapi, tidak bercanda atau bermain-main, dan memanjatkan doa dengan tulus!",
-      "descEn": "Prayer is an intimate communion with the Almighty Creator. Reverence requires calming our minds, maintaining respectful posture, ceasing playful chattering, and petitioning heartfelt gratitude humbly!",
-      "checklist": [
-        "Misi 1: Berdoa dengan khidmat sebelum mulai belajar di sekolah dan sebelum makan.",
-        "Misi 2: Menjaga ketenangan dan tidak mengganggu saudara/teman yang sedang beribadah.",
-        "Misi 3: Mengucapkan syukur atas berkah kesehatan dan keluarga bahagia setiap bangun pagi."
-      ],
-      "checklistEn": [
-        "Mission 1: Pray attentively before commencing school lessons and prior to meals.",
-        "Mission 2: Maintain peaceful silence without disturbing family/friends during worship.",
-        "Mission 3: Offer daily gratitude for health and family blessings each morning."
-      ],
-      "activities": [
-        {
-          "q": "Sikap tubuh yang benar dan terpuji saat sedang berdoa kepada Tuhan adalah...",
-          "options": [
-            "Khidmat, tenang, menunduk sopan, dan tidak bercanda",
-            "Sambil berlari ke sana kemari",
-            "Sambil mengobrol dengan teman",
-            "Bermain lempar kertas"
-          ],
-          "answer": "Khidmat, tenang, menunduk sopan, dan tidak bercanda",
-          "hint": "Menghormati keagungan Tuhan Yang Maha Esa dengan segenap hati."
-        },
-        {
-          "q": "Sebelum kita menyantap makanan yang disediakan Ibu, kewajiban kita adalah...",
-          "options": [
-            "Mencuci tangan bersih dan berdoa bersyukur",
-            "Langsung makan terburu-buru",
-            "Mencela makanannya",
-            "Membongkar piring"
-          ],
-          "answer": "Mencuci tangan bersih dan berdoa bersyukur",
-          "hint": "Mensyukuri rezeki berkah makanan bergizi yang disiapkan orang tua."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Proper, respectful posture during prayer to the Creator:",
-          "options": [
-            "Reverent, peaceful, bowed respectfully without chattering",
-            "Running around loudly",
-            "Gossiping with friends",
-            "Throwing toys"
-          ],
-          "answer": "Reverent, peaceful, bowed respectfully without chattering",
-          "hint": "Honoring God with a humble, grateful heart."
-        }
-      ]
-    },
-    {
-      "id": "agama-tolong-menolong",
-      "title": "Menolong Sesama Tanpa Pamrih & Menyayangi Teman",
-      "titleEn": "Helping Others Selflessly & Caring for Friends",
-      "desc": "Tuhan mengajarkan kita untuk saling tolong-menolong dalam kebaikan. Ketika melihat teman yang terjatuh di halaman sekolah, teman yang lupa membawa pensil, atau adik yang kesulitan mengikat tali sepatu, bantulah dengan senyuman tulus tanpa meminta imbalan!",
-      "descEn": "All spiritual teachings urge selfless charity and kindness. When a classmate trips, lacks a pencil, or a sibling struggles with shoelaces, reach out warmly without asking anything in return!",
-      "checklist": [
-        "Misi 1: Membantu membangkitkan teman yang tersandung di lapangan dan menghiburnya.",
-        "Misi 2: Meminjamkan alat tulis kepada kawan sebangku yang membutuhkan dengan ikhlas.",
-        "Misi 3: Membantu orang tua merapikan mainan atau menyapu lantai rumah secara sukarela."
-      ],
-      "checklistEn": [
-        "Mission 1: Help up a friend who tripped in the playground and offer comforting words.",
-        "Mission 2: Share and lend pencils kindly to a seatmate in need.",
-        "Mission 3: Help parents gather toys or sweep room floors enthusiastically at home."
-      ],
-      "activities": [
-        {
-          "q": "Jika melihat teman terjatuh di halaman sekolah hingga lututnya tergores, kita sebaiknya...",
-          "options": [
-            "Segera menolongnya berdiri dan mengantarnya ke ruang UKS",
-            "Menertawakannya beramai-ramai",
-            "Membiarkannya menangis sendirian",
-            "Memotretnya"
-          ],
-          "answer": "Segera menolongnya berdiri dan mengantarnya ke ruang UKS",
-          "hint": "Tolong-menolong adalah budi pekerti mulia yang diajarkan semua agama."
-        },
-        {
-          "q": "Membantu orang lain dengan \"ikhlas tanpa pamrih\" artinya...",
-          "options": [
-            "Membantu tulus dari hati tanpa meminta uang atau pujian",
-            "Membantu hanya jika dibayar",
-            "Membantu sambil marah-marah",
-            "Membantu hanya di depan kamera"
-          ],
-          "answer": "Membantu tulus dari hati tanpa meminta uang atau pujian",
-          "hint": "Kebaikan sejati bersumber dari cinta kasih murni dalam sanubari."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "When a friend trips in the yard, what is the virtuous action?",
-          "options": [
-            "Help them stand up gently and guide them to medical room",
-            "Laugh at them loudly",
-            "Walk away ignoring",
-            "Tease them"
-          ],
-          "answer": "Help them stand up gently and guide them to medical room",
-          "hint": "Caring for companions reflects moral beauty."
-        }
-      ]
-    }
+        id: 'agama-sikap-berdoa',
+        title: 'Tata Tertib Berdoa & Sikap Khidmat Beribadah',
+        titleEn: 'Reverence in Prayer & Respectful Worship Manner',
+        desc: 'Berdoa adalah saat kita berkomunikasi secara tulus dengan Tuhan Yang Maha Esa. Saat berdoa, kita harus menunjukkan rasa hormat: menenangkan hati, duduk dengan sikap tegak atau bersimpuh rapi, tidak bercanda atau bermain-main, dan memanjatkan doa dengan tulus!',
+        descEn: 'Prayer is an intimate communion with the Almighty Creator. Reverence requires calming our minds, maintaining respectful posture, ceasing playful chattering, and petitioning heartfelt gratitude humbly!',
+        funFact: 'Saat berdoa dengan khusyuk dan tenang, gelombang otak manusia melambat menuju gelombang alfa yang menenangkan sistem saraf dan meredakan stres!',
+        keyPoints: [
+          'Berdoa adalah sarana bersyukur, memohon petunjuk, dan perlindungan kepada Tuhan.',
+          'Sikap berdoa yang terpuji: duduk bersimpuh/tegak, menundukkan pandangan, dan khidmat.',
+          'Dilarang bermain-main, bersenda gurau, atau berbicara sendiri saat doa bersama berlangsung.'
+        ],
+        checklist: [
+          'Misi 1: Berdoa dengan khidmat sebelum mulai belajar di sekolah dan sebelum makan.',
+          'Misi 2: Menjaga ketenangan dan tidak mengganggu saudara/teman yang sedang beribadah.',
+          'Misi 3: Mengucapkan syukur atas berkah kesehatan dan keluarga bahagia setiap bangun pagi.'
+        ],
+        checklistEn: [
+          'Mission 1: Pray attentively before commencing school lessons and prior to meals.',
+          'Mission 2: Maintain peaceful silence without disturbing family/friends during worship.',
+          'Mission 3: Offer daily gratitude for health and family blessings each morning.'
+        ],
+        activities: [
+          { q: 'Sikap tubuh yang benar dan terpuji saat sedang berdoa kepada Tuhan adalah...', options: ['Khidmat, tenang, menunduk sopan, dan tidak bercanda', 'Sambil berlari ke sana kemari', 'Sambil mengobrol dengan teman', 'Bermain lempar kertas'], answer: 'Khidmat, tenang, menunduk sopan, dan tidak bercanda', hint: 'Menghormati keagungan Tuhan Yang Maha Esa dengan segenap hati.' },
+          { q: 'Sebelum kita menyantap makanan yang disediakan Ibu, kewajiban kita adalah...', options: ['Mencuci tangan bersih dan berdoa bersyukur', 'Langsung makan terburu-buru', 'Mencela makanannya', 'Membongkar piring'], answer: 'Mencuci tangan bersih dan berdoa bersyukur', hint: 'Mensyukuri rezeki berkah makanan bergizi yang disiapkan orang tua.' },
+          { q: 'Sebelum memulai pelajaran di pagi hari di kelas, seluruh siswa dipimpin untuk...', options: ['Berdoa bersama menurut agama dan keyakinan masing-masing', 'Menonton video lucu', 'Bermain kejar-kejaran', 'Tidur di meja'], answer: 'Berdoa bersama menurut agama dan keyakinan masing-masing', hint: 'Memohon kelancaran dan kemudahan dalam menyerap ilmu yang bermanfaat.' },
+          { q: 'Saat teman sekelas sedang memimpin doa di depan kelas, sikap kita yang tepat adalah...', options: ['Mengikuti doa dengan khusyuk dan tidak bersuara gaduh', 'Mengejek nada suaranya', 'Mencubit lengan kawan sebangku', 'Membuka bekal makanan'], answer: 'Mengikuti doa dengan khusyuk dan tidak bersuara gaduh', hint: 'Mendengarkan dan mengaminkan doa bersama dengan rasa takzim.' },
+          { q: 'Tujuan utama kita memanjatkan doa kepada Tuhan setiap hari adalah...', options: ['Mensyukuri anugerah hidup serta memohon perlindungan dan bimbingan-Nya', 'Memerintah Tuhan sesuai keinginan pribadi', 'Pamer kepada orang lain bahwa kita rajin', 'Supaya tidak perlu belajar giat'], answer: 'Mensyukuri anugerah hidup serta memohon perlindungan dan bimbingan-Nya', hint: 'Doa menghubungkan jiwa manusia dengan kasih sayang Sang Khalik.' },
+          { q: 'Setelah selesai berdoa, ucapan penutup yang lazim diucapkan sebagai ungkapan "Semoga terkabul" adalah...', options: ['Aamiin / Astungkara / Haleluya / Sadhu Sadhu Sadhu', 'Selesai sudah', 'Hore kita menang', 'Stop sekarang'], answer: 'Aamiin / Astungkara / Haleluya / Sadhu Sadhu Sadhu', hint: 'Kata penegasan doa dalam berbagai tradisi suci keagamaan.' },
+          { q: 'Suara yang kita gunakan saat berdoa sendirian kepada Tuhan sebaiknya...', options: ['Lembut dan tulus dari lubuk hati', 'Membentak-bentak dengan pengeras suara', 'Menjerit-jerit histeris', 'Ketus dan menuntut'], answer: 'Lembut dan tulus dari lubuk hati', hint: 'Tuhan Maha Mendengar bisikan hati hamba-Nya yang berserah diri.' },
+          { q: 'Selain berdoa memohon keberhasilan ujian, kewajiban lain yang harus kita lakukan adalah...', options: ['Belajar giat, rajin mengulang materi, dan berlatih soal', 'Hanya bermain game seharian', 'Tidur terus sampai waktu ujian tiba', 'Menyalahkan pensil'], answer: 'Belajar giat, rajin mengulang materi, dan berlatih soal', hint: 'Doa harus diiringi dengan ikhtiar (usaha nyata) yang sungguh-sungguh.' },
+          { q: 'Doa sebelum tidur malam bertujuan untuk memohon agar...', options: ['Tuhan menjaga dan melindungi kita dari mimpi buruk dan mara bahaya malam', 'Bisa bangun di waktu siang bolong', 'Mendapat mainan baru di bawah bantal', 'Semua PR sekolah hilang sendiri'], answer: 'Tuhan menjaga dan melindungi kita dari mimpi buruk dan mara bahaya malam', hint: 'Memasrahkan diri dalam perlindungan Tuhan sepanjang malam yang tenang.' },
+          { q: 'Jika doa yang kita panjatkan belum terkabul segera, sikap orang yang beriman adalah...', options: ['Tetap sabar, terus berusaha giat, dan berprasangka baik kepada Tuhan', 'Marah dan tidak mau berdoa lagi', 'Menyalahkan orang tua', 'Mengurung diri di kamar'], answer: 'Tetap sabar, terus berusaha giat, dan berprasangka baik kepada Tuhan', hint: 'Tuhan selalu memberikan yang terbaik pada waktu yang paling tepat.' }
+        ],
+        activitiesEn: [
+          { q: 'Proper, respectful posture during prayer to the Creator:', options: ['Reverent, peaceful, bowed respectfully without chattering', 'Running around loudly', 'Gossiping with friends', 'Throwing toys'], answer: 'Reverent, peaceful, bowed respectfully without chattering', hint: 'Honoring God with a humble, grateful heart.' },
+          { q: 'What routine should accompany our sincere prayers for exam success?', options: ['Diligent studying, attentive practice, and honest effort', 'Gaming all night without reading', 'Sleeping all afternoon', 'Complaining about tests'], answer: 'Diligent studying, attentive practice, and honest effort', hint: 'Prayer goes hand in hand with dedicated effort.' }
+        ]
+      },
+      {
+        id: 'agama-tolong-menolong',
+        title: 'Menolong Sesama Tanpa Pamrih & Menyayangi Teman',
+        titleEn: 'Helping Others Selflessly & Caring for Friends',
+        desc: 'Tuhan mengajarkan kita untuk saling tolong-menolong dalam kebaikan. Ketika melihat teman yang terjatuh di halaman sekolah, teman yang lupa membawa pensil, atau adik yang kesulitan mengikat tali sepatu, bantulah dengan senyuman tulus tanpa meminta imbalan!',
+        descEn: 'All spiritual teachings urge selfless charity and kindness. When a classmate trips, lacks a pencil, or a sibling struggles with shoelaces, reach out warmly without asking anything in return!',
+        funFact: 'Perbuatan menolong orang lain memicu pelepasan hormon oksitosin (hormon kasih sayang) yang membuat penolong dan yang ditolong sama-sama merasa bahagia dan damai!',
+        keyPoints: [
+          'Saling tolong-menolong dalam kebaikan adalah perintah luhur setiap ajaran agama.',
+          'Menolong harus dilandasi keikhlasan tanpa mengharapkan pujian, imbalan, atau upah.',
+          'Menebarkan kasih sayang menciptakan kerukunan persaudaraan di sekolah dan lingkungan rumah.'
+        ],
+        checklist: [
+          'Misi 1: Membantu membangkitkan teman yang tersandung di lapangan dan menghiburnya.',
+          'Misi 2: Meminjamkan alat tulis kepada kawan sebangku yang membutuhkan dengan ikhlas.',
+          'Misi 3: Membantu orang tua merapikan mainan atau menyapu lantai rumah secara sukarela.'
+        ],
+        checklistEn: [
+          'Mission 1: Help up a friend who tripped in the playground and offer comforting words.',
+          'Mission 2: Share and lend pencils kindly to a seatmate in need.',
+          'Mission 3: Help parents gather toys or sweep room floors enthusiastically at home.'
+        ],
+        activities: [
+          { q: 'Jika melihat teman terjatuh di halaman sekolah hingga lututnya tergores, kita sebaiknya...', options: ['Segera menolongnya berdiri dan mengantarnya ke ruang UKS', 'Menertawakannya beramai-ramai', 'Membiarkannya menangis sendirian', 'Memotretnya'], answer: 'Segera menolongnya berdiri dan mengantarnya ke ruang UKS', hint: 'Tolong-menolong adalah budi pekerti mulia yang diajarkan semua agama.' },
+          { q: 'Membantu orang lain dengan "ikhlas tanpa pamrih" artinya...', options: ['Membantu tulus dari hati tanpa meminta uang atau pujian', 'Membantu hanya jika dibayar', 'Membantu sambil marah-marah', 'Membantu hanya di depan kamera'], answer: 'Membantu tulus dari hati tanpa meminta uang atau pujian', hint: 'Kebaikan sejati bersumber dari cinta kasih murni dalam sanubari.' },
+          { q: 'Bila ada kawan sebangku yang lupa membawa pensil tulis saat jam belajar, tindakan terpuji kita adalah...', options: ['Meminjamkan pensil cadangan kita dengan ramah dan ikhlas', 'Mengejeknya karena pelupa', 'Menjual pensil kepadanya dengan harga mahal', 'Menyembunyikan tempat pensil kita'], answer: 'Meminjamkan pensil cadangan kita dengan ramah dan ikhlas', hint: 'Berbagi alat tulis memudahkan teman untuk tetap bisa belajar lancar.' },
+          { q: 'Ketika melihat seorang nenek tua kesulitan menyeberang jalan raya yang ramai, sikap anak budiman adalah...', options: ['Membantu menyeberangkan dengan hati-hati atau meminta tolong satpam', 'Mendahului sambil berlari kencang', 'Menertawakan langkah jalannya yang lambat', 'Menutup mata pura-pura tidak melihat'], answer: 'Membantu menyeberangkan dengan hati-hati atau meminta tolong satpam', hint: 'Menaruh hormat dan kepedulian tinggi terhadap para lansia.' },
+          { q: 'Di dalam bus atau kereta api umum, jika melihat ibu hamil atau orang tua yang berdiri, sikap santun kita adalah...', options: ['Mempersilakan mereka duduk di kursi kita dengan senyuman tulus', 'Pura-pura tertidur pulas agar tidak diminta kursinya', 'Melihat ke arah lain', 'Menaruh tas di atas kursi sebelah'], answer: 'Mempersilakan mereka duduk di kursi kita dengan senyuman tulus', hint: 'Mendahulukan orang yang lebih membutuhkan adalah wujud adab luhur.' },
+          { q: 'Peribahasa "Berat sama dipikul, ringan sama..." mengajarkan nilai gotong royong.', options: ['Dijinjing', 'Dibuang', 'Ditinggal', 'Diinjak'], answer: 'Dijinjing', hint: 'Pekerjaan yang berat terasa ringan bila dikerjakan bersama-sama secara ikhlas.' },
+          { q: 'Bila ada teman yang sedang tertimpa musibah rumahnya kebanjiran, bantuan yang dapat kita berikan adalah...', options: ['Menyumbangkan pakaian layak pakai, buku, dan mendoakannya', 'Mengejek rumahnya yang kemasukan air', 'Memotretnya untuk dijadikan lelucon', 'Menjauhi teman tersebut'], answer: 'Menyumbangkan pakaian layak pakai, buku, dan mendoakannya', hint: 'Meringankan beban penderitaan kawan memperkuat tali kemanusiaan.' },
+          { q: 'Membantu adik kandung di rumah belajar membaca atau merapikan mainan merupakan perwujudan kasih sayang kepada...', options: ['Keluarga dan saudara kandung', 'Musuh', 'Orang asing', 'Robot'], answer: 'Keluarga dan saudara kandung', hint: 'Kerukunan di dalam rumah menumbuhkan keluarga yang harmonis dan bahagia.' },
+          { q: 'Perasaan yang muncul di dalam hati kita setelah berhasil menolong orang lain yang kesusahan adalah...', options: ['Lega, bahagia, dan penuh rasa syukur', 'Menyesal dan rugi', 'Marah karena capek', 'Ingin membalas dendam'], answer: 'Lega, bahagia, dan penuh rasa syukur', hint: 'Kebahagiaan sejati hadir saat kita mampu menjadi berkah bagi sesama.' },
+          { q: 'Menolong sesama manusia tanpa membeda-bedakan suku, agama, dan warna kulit mencerminkan nilai...', options: ['Kemanusiaan universal yang adil dan beradab', 'Pilih kasih dan diskriminasi', 'Kecurangan', 'Kepalsuan'], answer: 'Kemanusiaan universal yang adil dan beradab', hint: 'Setiap manusia di muka bumi berhak mendapatkan pertolongan dan kasih sayang.' }
+        ],
+        activitiesEn: [
+          { q: 'When a friend trips in the yard, what is the virtuous action?', options: ['Help them stand up gently and guide them to medical room', 'Laugh at them loudly', 'Walk away ignoring', 'Tease them'], answer: 'Help them stand up gently and guide them to medical room', hint: 'Caring for companions reflects moral beauty.' },
+          { q: 'Helping someone selflessly means assisting them with...', options: ['Sincere love without expecting money, praise, or perks', 'A demand for repayment', 'Anger and complaints', 'Hidden selfish motives'], answer: 'Sincere love without expecting money, praise, or perks', hint: 'Genuine charity flows purely from an empathetic heart.' }
+        ]
+      }
     ]
   };
   
@@ -5700,7 +5785,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Kokurikuler / Proyek P5 Subject Data
   // Development · Anabhi Dev
-  // Version   : 2.0 (Comprehensive LKS & Proyek Pelajar Pancasila)
+  // Version   : 2.1 (Comprehensive LKS, 100 Flagship Questions & Proyek Pelajar Pancasila)
   // ================================================================
   
   const KOKURIKULER_DATA = {
@@ -5716,6 +5801,12 @@
         titleEn: 'P5 Sustainable Lifestyle: Waste Segregation Mission',
         desc: 'Bumi kita membutuhkan bantuan kita untuk tetap bersih dan hijau! Sampah ORGANIK (sisa makanan, kulit buah, daun) bisa diolah menjadi pupuk kompos penyubur tanaman. Sampah ANORGANIK (botol plastik, kaleng, kardus) dapat didaur ulang menjadi pot bunga atau tempat pensil kreatif!',
         descEn: 'Our home planet needs our mindful care! ORGANIC waste (food peels, fallen leaves) turns into nutrient-rich compost. INORGANIC recyclables (plastic bottles, tin cans, cardboard) can be upcycled into cheerful pencil holders and planters!',
+        funFact: 'Satu botol plastik membutuhkan waktu hingga 450 tahun untuk terurai di alam! Dengan mendaur ulangnya menjadi pot bunga, kita telah menyelamatkan bumi!',
+        keyPoints: [
+          'Sampah organik berasal dari makhluk hidup (daun, sisa buah) dan mudah membusuk jadi kompos.',
+          'Sampah anorganik (plastik, kaleng, kaca) sulit membusuk dan harus didaur ulang (recycle).',
+          'Prinsip 3R: Reduce (mengurangi), Reuse (menggunakan kembali), Recycle (mendaur ulang).'
+        ],
         checklist: [
           'Misi 1: Sediakan 2 kantong/tempat sampah berbeda di rumah: Hijau untuk organik dan Kuning untuk plastik.',
           'Misi 2: Kumpulkan 1 botol plastik bekas minuman, bersihkan, dan hias menjadi pot tanaman mini.',
@@ -5728,10 +5819,19 @@
         ],
         activities: [
           { q: 'Sisa kulit pisang dan dedaunan kering yang berguguran termasuk ke dalam kelompok sampah...', options: ['Organik (dapat membusuk alami)', 'Anorganik (plastik)', 'Limbah B3 beracun', 'Batu mulia'], answer: 'Organik (dapat membusuk alami)', hint: 'Organik berasal dari makhluk hidup dan dapat diolah jadi kompos 🍂' },
-          { q: 'Apa tindakan terbaik untuk memanfaatkan botol plastik air mineral bekas yang masih bersih?', options: ['Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', 'Membakarnya di pekarangan hingga berasap tebal', 'Membuangnya ke selokan atau sungai', 'Menimbunnya di dalam tanah'], answer: 'Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', hint: 'Daur ulang (Upcycling) mengurangi timbunan sampah plastik di bumi.' }
+          { q: 'Apa tindakan terbaik untuk memanfaatkan botol plastik air mineral bekas yang masih bersih?', options: ['Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', 'Membakarnya di pekarangan hingga berasap tebal', 'Membuangnya ke selokan atau sungai', 'Menimbunnya di dalam tanah'], answer: 'Mendaur ulang menjadi pot tanaman gantung atau tempat pensil', hint: 'Daur ulang (Upcycling) mengurangi timbunan sampah plastik di bumi.' },
+          { q: 'Warna tempat sampah yang lazim digunakan untuk menampung sampah organik (daun dan sisa makanan) adalah...', options: ['Warna Hijau', 'Warna Kuning', 'Warna Merah menyala', 'Warna Hitam gelap'], answer: 'Warna Hijau', hint: 'Warna hijau melambangkan dedaunan alami dan sisa hasil bumi yang dapat terurai.' },
+          { q: 'Contoh sampah yang termasuk kategori ANORGANIK adalah...', options: ['Gelas plastik, kaleng soda, dan styrofoam', 'Kulit jeruk manis', 'Nasi sisa kemarin', 'Daun mangga kering'], answer: 'Gelas plastik, kaleng soda, dan styrofoam', hint: 'Sampah anorganik dibuat dari bahan sintetis atau tambang pabrik.' },
+          { q: 'Istilah "Reuse" dalam prinsip peduli lingkungan 3R berarti...', options: ['Menggunakan kembali barang bekas untuk keperluan yang bermanfaat', 'Membeli barang baru sebanyak-banyaknya', 'Membakar sampah di malam hari', 'Membuang barang yang masih bagus'], answer: 'Menggunakan kembali barang bekas untuk keperluan yang bermanfaat', hint: 'Misalnya menggunakan botol sirup bekas sebagai wadah air minum di rumah.' },
+          { q: 'Mengapa kita dilarang membakar sampah plastik di halaman rumah?', options: ['Asap bakaran plastik menghasilkan racun dioksin yang merusak paru-paru', 'Karena apinya berwarna ungu', 'Supaya sampah tidak habis', 'Karena plastik bisa berubah jadi emas'], answer: 'Asap bakaran plastik menghasilkan racun dioksin yang merusak paru-paru', hint: 'Asap pembakaran plastik sangat berbahaya bagi pernapasan dan mencemari udara.' },
+          { q: 'Pengolahan sisa sayuran dan daun kering menjadi pupuk penyubur tanaman disebut pembuatan...', options: ['Kompos organik', 'Plastik sintetis', 'Bahan bakar solar', 'Cat tembok'], answer: 'Kompos organik', hint: 'Mikroba tanah mengurai sisa organik menjadi humus hitam yang kaya hara.' },
+          { q: 'Membawa tas belanja kain sendiri dari rumah saat berbelanja bersama ibu adalah contoh tindakan...', options: ['Reduce (mengurangi pemakaian kantong kresek plastik)', 'Boros uang belanja', 'Membuat repot', 'Merusak lingkungan'], answer: 'Reduce (mengurangi pemakaian kantong kresek plastik)', hint: 'Mengurangi sampah plastik sekali pakai langsung dari sumbernya.' },
+          { q: 'Kegiatan gotong royong membersihkan sampah berserakan di halaman sekolah secara serentak disebut...', options: ['Operasi Semut bersih lingkungan', 'Upacara bendera', 'Lomba lari cepat', 'Tidur bersama'], answer: 'Operasi Semut bersih lingkungan', hint: 'Bekerja bersama-sama laksana semut membuat halaman bersih dalam sekejap.' },
+          { q: 'Tempat sampah bertanda B3 (Bahan Berbahaya dan Beracun) biasanya digunakan untuk membuang...', options: ['Baterai bekas, pecahan kaca, dan botol obat nyamuk', 'Kulit apel', 'Kertas origami', 'Daun pisang'], answer: 'Baterai bekas, pecahan kaca, dan botol obat nyamuk', hint: 'Limbah kimia beracun dan benda tajam membutuhkan penanganan khusus yang aman.' }
         ],
         activitiesEn: [
-          { q: 'Fallen dry leaves and fruit peels belong to which waste category?', options: ['Organic (naturally compostable)', 'Inorganic (plastic)', 'Hazardous chemical', 'Mineral'], answer: 'Organic (naturally compostable)', hint: 'Organic waste decomposes into rich soil fertilizer 🍂' }
+          { q: 'Fallen dry leaves and fruit peels belong to which waste category?', options: ['Organic (naturally compostable)', 'Inorganic (plastic)', 'Hazardous chemical', 'Mineral'], answer: 'Organic (naturally compostable)', hint: 'Organic waste decomposes into rich soil fertilizer 🍂' },
+          { q: 'What does "Reuse" mean in the 3R eco-friendly lifestyle?', options: ['Repurposing used items into useful household objects', 'Buying 100 new plastic bottles', 'Burning trash in the yard', 'Throwing away good items'], answer: 'Repurposing used items into useful household objects', hint: 'Reusing extends an object’s useful lifecycle.' }
         ]
       },
       {
@@ -5740,6 +5840,12 @@
         titleEn: 'P5 Local Wisdom: Reviving Heritage Games',
         desc: 'Sebelum ada ponsel pintar, anak-anak Indonesia bermain permainan tradisional yang menyehatkan fisik dan mempererat persahabatan: Engklek (melompat dengan satu kaki di petak kotak), Egrang batok kelapa (keseimbangan kaki), Gobak Sodor (ketangkasan dan strategi tim), serta Congklak (berhitung biji kerang)!',
         descEn: 'Traditional Indonesian games build agile physical stamina and authentic social bonds: Engklek (hopscotch jumping), Coconut-shell Stilts (balance mastery), Gobak Sodor (tactical teamwork), and Congklak (mathematical shell counting)!',
+        funFact: 'Permainan tradisional Congklak telah dimainkan di Nusantara sejak ratusan tahun lalu! Lubang-lubang papan congklak melambangkan lumbung padi dan perputaran hari dalam seminggu!',
+        keyPoints: [
+          'Permainan tradisional menyehatkan tubuh, melatih kecerdasan strategi, dan memupuk kerja sama.',
+          'Contoh: Engklek (keseimbangan kaki), Gobak Sodor (kelincahan tim), Congklak (matematika ceria).',
+          'Menjunjung tinggi sportivitas: menghargai kemenangan lawan dan bermain dengan jujur tanpa curang.'
+        ],
         checklist: [
           'Misi 1: Gambar petak Engklek di lantai halaman dengan kapur tulis dan mainkan bersama teman.',
           'Misi 2: Buat sepasang egrang batok kelapa sederhana bersama ayah menggunakan tali tambang.',
@@ -5752,10 +5858,19 @@
         ],
         activities: [
           { q: 'Permainan tradisional melompat dengan satu kaki melintasi kotak-kotak berurutan yang digambar di tanah adalah...', options: ['Engklek / Sunda Manda', 'Bermain game online di HP', 'Menonton bioskop', 'Catur papan'], answer: 'Engklek / Sunda Manda', hint: 'Melatih keseimbangan kaki dan ketepatan melompat.' },
-          { q: 'Nilai karakter luhur yang kita pelajari dari permainan tradisional beregu (seperti Gobak Sodor) adalah...', options: ['Kekompakan, strategi tim, dan sikap sportif jujur', 'Boleh curang asal menang', 'Menangis jika kalah', 'Mengejek teman yang jatuh'], answer: 'Kekompakan, strategi tim, dan sikap sportif jujur', hint: 'Sportivitas dan kerja sama adalah kunci permainan yang membahagiakan.' }
+          { q: 'Nilai karakter luhur yang kita pelajari dari permainan tradisional beregu (seperti Gobak Sodor) adalah...', options: ['Kekompakan, strategi tim, dan sikap sportif jujur', 'Boleh curang asal menang', 'Menangis jika kalah', 'Mengejek teman yang jatuh'], answer: 'Kekompakan, strategi tim, dan sikap sportif jujur', hint: 'Sportivitas dan kerja sama adalah kunci permainan yang membahagiakan.' },
+          { q: 'Alat alami dari alam yang digunakan dalam permainan tradisional Egrang batok adalah...', options: ['Dua belahan tempurung kelapa tua yang dilubangi dan diberi tali tambang', 'Sepatu roda besi', 'Roda sepeda motor', 'Balok es batu'], answer: 'Dua belahan tempurung kelapa tua yang dilubangi dan diberi tali tambang', hint: 'Jari kaki menjepit tali tambang sambil menginjak tempurung kelapa yang kokoh.' },
+          { q: 'Permainan tradisional berhitung dengan mengisi 16 lubang kayu menggunakan biji sawo atau kerang kecil disebut...', options: ['Congklak (Dakon)', 'Gasing bambu', 'Layang-layang', 'Bakiak tandem'], answer: 'Congklak (Dakon)', hint: 'Congklak melatih keterampilan berhitung cepat dan ketelitian membagi biji.' },
+          { q: 'Pecahan genteng atau lempengan batu pipih yang dilemparkan ke dalam kotak engklek disebut...', options: ['Gacuk', 'Gundu', 'Kelereng', 'Kok'], answer: 'Gacuk', hint: 'Gacuk dilempar tepat ke petak tanpa mengenai garis batas.' },
+          { q: 'Permainan tradisional Gobak Sodor atau Galasin melatih ketangkasan dalam...', options: ['Berlari lincah menghindari sergapan penjaga garis', 'Berenang gaya dada', 'Mengetik cepat di komputer', 'Memasak sayur'], answer: 'Berlari lincah menghindari sergapan penjaga garis', hint: 'Pemain harus menerobos benteng garis tanpa tersentuh oleh penjaga lawan.' },
+          { q: 'Benda yang diputar menggunakan tali benang lalu dilepas berputar di atas tanah dengan bunyi mendengung adalah...', options: ['Gasing kayu / bambu', 'Kelereng kaca', 'Engklek', 'Petak umpet'], answer: 'Gasing kayu / bambu', hint: 'Gasing berputar pada ujung paku kecilnya dengan gaya sentrifugal.' },
+          { q: 'Manfaat bermain permainan tradisional bersama teman di halaman terbuka dibanding bermain gawai seharian adalah...', options: ['Tubuh aktif berkeringat sehat, mata segar, dan persahabatan semakin erat', 'Bisa menghabiskan kuota internet', 'Mata menjadi merah dan perih', 'Tubuh menjadi kaku lemas'], answer: 'Tubuh aktif berkeringat sehat, mata segar, dan persahabatan semakin erat', hint: 'Permainan luar ruang mengasah motorik dan interaksi sosial yang nyata.' },
+          { q: 'Sikap kita saat tim kita mengalami kekalahan dalam pertandingan permainan tradisional adalah...', options: ['Menerima dengan lapang dada dan menyalami tim pemenang secara sportif', 'Merusak lapangan permainan', 'Menangis guling-guling di tanah', 'Menuduh wasit curang tanpa bukti'], answer: 'Menerima dengan lapang dada dan menyalami tim pemenang secara sportif', hint: 'Kekalahan adalah pengalaman berharga untuk berlatih lebih kompak lagi.' },
+          { q: 'Permainan tradisional berjalan bersama 3 orang menggunakan sepasang papan kayu panjang berpijakan tali disebut...', options: ['Bakiak / Terompah panjang', 'Engklek', 'Kelereng', 'Bentengan'], answer: 'Bakiak / Terompah panjang', hint: 'Membutuhkan aba-aba serempak "Kanan-Kiri!" agar langkah kaki kompak seirama.' }
         ],
         activitiesEn: [
-          { q: 'The classic one-legged hopping game jumping through chalked grid boxes is...', options: ['Engklek (Hopscotch)', 'Mobile video gaming', 'Watching movies', 'Chess tournament'], answer: 'Engklek (Hopscotch)', hint: 'Trains leg strength and single-foot balancing balance.' }
+          { q: 'The classic one-legged hopping game jumping through chalked grid boxes is...', options: ['Engklek (Hopscotch)', 'Mobile video gaming', 'Watching movies', 'Chess tournament'], answer: 'Engklek (Hopscotch)', hint: 'Trains leg strength and single-foot balancing balance.' },
+          { q: 'What moral virtue is nurtured by traditional group games?', options: ['Teamwork, strategy, and honest sportsmanship', 'Cheating quietly', 'Crying when defeated', 'Teasing fallen peers'], answer: 'Teamwork, strategy, and honest sportsmanship', hint: 'Fair play and cooperation build great character.' }
         ]
       },
       {
@@ -5764,6 +5879,12 @@
         titleEn: 'P5 Junior Entrepreneurship: Smart Savings & Budgeting',
         desc: 'Menjadi anak mandiri dimulai dari bijak mengatur uang saku. Kita belajar membedakan KEBUTUHAN (hal penting seperti buku tulis, makanan sehat, dan pensil) dengan KEINGINAN (mainan mewah atau jajan berlebihan). Menabung uang logam sisa jajan di celengan membuat kita siap menghadapi masa depan!',
         descEn: 'Independence starts with financial literacy. We distinguish between NEEDS (essential textbooks, wholesome food) and WANTS (fancy trinkets, sugary snacks). Saving daily change in a piggy bank prepares us for future success!',
+        funFact: 'Di zaman kerajaan Majapahit abad ke-14 di Trowulan, masyarakat sudah membuat celengan berbentuk babi hutan dari tanah liat (terakota) untuk menyimpan koin gobog!',
+        keyPoints: [
+          'Kebutuhan adalah hal pokok yang harus dipenuhi (makanan bergizi, alat tulis belajar).',
+          'Keinginan adalah hal tambahan yang bisa ditunda (mainan mahal, permen berlebih).',
+          'Menabung sedikit demi sedikit secara konsisten ("sedikit-sedikit, lama-lama menjadi bukit").'
+        ],
         checklist: [
           'Misi 1: Buat celengan buatanmu sendiri dari kaleng biskuit bekas atau kotak kardus sepatu.',
           'Misi 2: Sisihkan uang koin Rp1.000 atau Rp2.000 dari sisa uang sakumu ke dalam celengan setiap hari.',
@@ -5776,10 +5897,19 @@
         ],
         activities: [
           { q: 'Manakah di bawah ini yang merupakan contoh KEBUTUHAN utama seorang siswa sekolah?', options: ['Buku tulis dan pensil untuk belajar', 'Mainan robot mahal keluaran terbaru', 'Baju pesta yang mewah', 'Pulsa game online'], answer: 'Buku tulis dan pensil untuk belajar', hint: 'Kebutuhan adalah barang pokok yang sangat diperlukan untuk menuntut ilmu ✏️' },
-          { q: 'Pepatah bijak nusantara mengatakan "Hemat pangkal kaya, rajin pangkal..."', options: ['Pandai', 'Malas', 'Bosan', 'Lapar'], answer: 'Pandai', hint: 'Rajin belajar membuat kita pintar dan berwawasan luas.' }
+          { q: 'Pepatah bijak nusantara mengatakan "Hemat pangkal kaya, rajin pangkal..."', options: ['Pandai', 'Malas', 'Bosan', 'Lapar'], answer: 'Pandai', hint: 'Rajin belajar membuat kita pintar dan berwawasan luas.' },
+          { q: 'Barang yang tergolong KEINGINAN yang sebaiknya ditunda jika uang saku terbatas adalah...', options: ['Mainan mobil remote kontrol mahal', 'Buku pelajaran sekolah', 'Sarapan pagi bernutrisi', 'Ongkos angkutan ke sekolah'], answer: 'Mainan mobil remote kontrol mahal', hint: 'Keinginan bersifat hiburan tambahan yang tidak mendesak.' },
+          { q: 'Tindakan terpuji yang kita lakukan terhadap uang koin sisa jajan di sekolah adalah...', options: ['Memasukkannya ke dalam celengan untuk ditabung', 'Membuangnya ke lantai karena berat', 'Menghabiskannya untuk membeli permen terus', 'Menyobek bungkusnya'], answer: 'Memasukkannya ke dalam celengan untuk ditabung', hint: 'Koin kecil yang dikumpulkan bertahun-tahun akan bernilai besar 💰' },
+          { q: 'Makna dari peribahasa "Sedikit demi sedikit, lama-lama menjadi bukit" adalah...', options: ['Tabungan kecil yang dikumpulkan rutin lama-kelamaan menjadi sangat banyak', 'Bukit pasir mudah tertiup angin', 'Bekerja sedikit saja', 'Menumpuk sampah di gunung'], answer: 'Tabungan kecil yang dikumpulkan rutin lama-kelamaan menjadi sangat banyak', hint: 'Konsistensi dan kesabaran menabung membuahkan hasil luar biasa.' },
+          { q: 'Membuat celengan sendiri dari botol bekas atau kaleng susu bekas merupakan perpaduan tema...', options: ['Kewirausahaan cilik dan daur ulang ramah lingkungan', 'Olahraga maraton', 'Belajar musik vokal', 'Tata boga memasak'], answer: 'Kewirausahaan cilik dan daur ulang ramah lingkungan', hint: 'Kreativitas memanfaatkan barang bekas menjadi celengan cantik bernilai guna.' },
+          { q: 'Jika kita ingin membeli kotak pensil baru dengan uang sendiri, cara terbaik adalah...', options: ['Menyisihkan uang jajan setiap hari secara tekun hingga cukup', 'Menangis merengek kepada orang tua di toko', 'Mengambil uang teman tanpa izin', 'Meminjam uang rentenir'], answer: 'Menyisihkan uang jajan setiap hari secara tekun hingga cukup', hint: 'Membeli barang dari hasil tabungan sendiri melatih kemandirian dan rasa bangga.' },
+          { q: 'Manfaat membiasakan pola hidup hemat sejak usia sekolah dasar adalah...', options: ['Memiliki dana cadangan untuk keperluan mendadak dan masa depan', 'Dicap anak pelit', 'Tidak punya teman bermain', 'Badan menjadi kurus'], answer: 'Memiliki dana cadangan untuk keperluan mendadak dan masa depan', hint: 'Orang yang hemat siap menghadapi kebutuhan tak terduga dengan tenang.' },
+          { q: 'Sebelum membeli suatu barang di toko, pertanyaan cerdas yang harus kita tanyakan pada diri sendiri adalah...', options: ['"Apakah aku benar-benar membutuhkannya saat ini?"', '"Apakah harganya paling mahal di toko?"', '"Berapa banyak yang bisa kubeli sampai uang habis?"', '"Apakah warnanya menyala?"'], answer: '"Apakah aku benar-benar membutuhkannya saat ini?"', hint: 'Berpikir kritis sebelum berbelanja mencegah perilaku konsumtif berlebihan.' },
+          { q: 'Sikap menghabiskan uang saku sekaligus dalam sekali jajan tanpa memikirkan hari esok disebut perilaku...', options: ['Boros', 'Hemat', 'Bijaksana', 'Mandiri'], answer: 'Boros', hint: 'Boros adalah kebiasaan buruk yang merugikan diri sendiri.' }
         ],
         activitiesEn: [
-          { q: 'Which of the following represents an essential NEED for an elementary student?', options: ['Notebooks and pencils for class', 'Expensive luxury video game gadgets', 'Designer party costumes', 'Online gaming credits'], answer: 'Notebooks and pencils for class', hint: 'Needs are essential tools for learning ✏️' }
+          { q: 'Which of the following represents an essential NEED for an elementary student?', options: ['Notebooks and pencils for class', 'Expensive luxury video game gadgets', 'Designer party costumes', 'Online gaming credits'], answer: 'Notebooks and pencils for class', hint: 'Needs are essential tools for learning ✏️' },
+          { q: 'What wisdom is taught by the proverb "A penny saved is a penny earned"?', options: ['Small regular savings accumulate into significant fortune over time', 'Spend all your money fast', 'Bury coins in dirt', 'Never spend anything at all'], answer: 'Small regular savings accumulate into significant fortune over time', hint: 'Consistency builds solid financial security.' }
         ]
       },
       {
@@ -5788,6 +5918,12 @@
         titleEn: 'P5 STEM Discovery: Rainbow Density & Fizzy Eruption',
         desc: 'Sains itu seru dan menakjubkan! Kita bisa membuat simulasi "Gunung Berapi Meletus" menggunakan soda kue dapur dicampur cuka dan pewarna merah (reaksi asam-basa menghasilkan gas karbon dioksida berbusa!), atau eksperimen "Massa Jenis Pelangi" dari larutan air gula berbagai warna!',
         descEn: 'Science is thrilling discovery! Create a foaming "Volcanic Eruption" mixing baking soda, vinegar, and red dye (an acid-base reaction producing fizzy CO2 bubbles), or demonstrate "Rainbow Density Columns" with tiered sugar-water solutions!',
+        funFact: 'Gelembung busa mendesis pada erupsi gunung buatan terjadi karena jutaan molekul gas Karbon Dioksida (CO2) berebut keluar dari larutan asam cuka dan soda kue!',
+        keyPoints: [
+          'Eksperimen sains sederhana membuktikan hukum alam dengan bahan aman di sekitar kita.',
+          'Reaksi cuka (asam) + soda kue (basa) menghasilkan gelembung gas karbon dioksida (CO2).',
+          'Massa jenis zat cair: cairan yang lebih rapat (air gula pekat) akan berada di lapisan paling bawah.'
+        ],
         checklist: [
           'Misi 1: Siapkan 1 sendok soda kue, tuangkan sedikit cuka dapur, dan amati busa gas yang mendesis meletup.',
           'Misi 2: Celupkan batang seledri atau bunga putih ke dalam air berwarna merah semalaman; amati kapilaritas batang air.',
@@ -5800,18 +5936,33 @@
         ],
         activities: [
           { q: 'Ketika bubuk soda kue dicampur dengan tetesan cuka dapur, muncul busa gas. Gas apakah itu?', options: ['Gas Karbon Dioksida (CO2)', 'Gas Racun', 'Gas Oksigen murni', 'Uap air dingin'], answer: 'Gas Karbon Dioksida (CO2)', hint: 'Reaksi kimia asam cuka dan basa soda menghasilkan gelembung CO2 yang mendesis.' },
-          { q: 'Mengapa minyak goreng selalu mengapung di atas permukaan air saat dituangkan ke dalam gelas?', options: ['Karena massa jenis minyak lebih ringan daripada air', 'Karena minyak membeku', 'Karena air mengandung garam', 'Karena minyak takut air'], answer: 'Karena massa jenis minyak lebih ringan daripada air', hint: 'Benda dengan kerapatan massa jenis lebih kecil akan selalu terapung di atas cairan yang lebih padat.' }
+          { q: 'Mengapa minyak goreng selalu mengapung di atas permukaan air saat dituangkan ke dalam gelas?', options: ['Karena massa jenis minyak lebih ringan daripada air', 'Karena minyak membeku', 'Karena air mengandung garam', 'Karena minyak takut air'], answer: 'Karena massa jenis minyak lebih ringan daripada air', hint: 'Benda dengan kerapatan massa jenis lebih kecil akan selalu terapung di atas cairan yang lebih padat.' },
+          { q: 'Bila tangkai bunga mawar putih direndam dalam air yang diberi pewarna makanan biru, maka kelopak bunga akan...', options: ['Berubah warna menjadi kebiruan karena air diserap batang (kapilaritas)', 'Langsung rontok menjadi abu', 'Berubah menjadi emas', 'Tidak terjadi perubahan apa-apa'], answer: 'Berubah warna menjadi kebiruan karena air diserap batang (kapilaritas)', hint: 'Pembuluh xilem pada batang menyalurkan air berwarna ke helai kelopak mahkota bunga.' },
+          { q: 'Eksperimen bayangan menunjukkan bahwa bayangan tubuh kita di tanah terbentuk karena...', options: ['Cahaya merambat lurus dan terhalang oleh tubuh kita', 'Cahaya berbelok melingkari tubuh', 'Tubuh kita memancarkan sinar hitam', 'Tanah menyerap udara'], answer: 'Cahaya merambat lurus dan terhalang oleh tubuh kita', hint: 'Benda gelap yang menghalangi berkas cahaya lurus akan menghasilkan bayangan di belakangnya.' },
+          { q: 'Benda yang dapat ditarik kuat oleh magnet pada percobaan gaya magnet adalah...', options: ['Paku besi dan klip kertas logam', 'Penggaris plastik', 'Buku kertas', 'Daun kering'], answer: 'Paku besi dan klip kertas logam', hint: 'Magnet menarik benda-benda feromagnetik yang mengandung unsur besi/baja 🧲' },
+          { q: 'Pada percobaan pelangi buatan dengan cermin datar dan mangkuk air, cahaya matahari diuraikan menjadi...', options: ['7 warna pelangi (Me-Ji-Ku-Hi-Bi-Ni-U)', 'Hanya 1 warna abu-abu', 'Warna hitam legam', 'Warna putih perak'], answer: '7 warna pelangi (Me-Ji-Ku-Hi-Bi-Ni-U)', hint: 'Pembiasan cahaya putih (polikromatik) menguraikan spektrum warna pelangi.' },
+          { q: 'Ketika es batu dimasukkan ke dalam gelas berisi air teh hangat, es batu akan mencair karena...', options: ['Menyerap energi panas (kalor) dari air teh', 'Kehilangan berat badan', 'Ketakutan dengan warna teh', 'Tertidur di dasar gelas'], answer: 'Menyerap energi panas (kalor) dari air teh', hint: 'Perubahan wujud padat menjadi cair dipicu oleh penyerapan kalor panas.' },
+          { q: 'Eksperimen meniup balon di atas mulut botol yang direndam dalam mangkuk air panas membuktikan bahwa...', options: ['Udara di dalam botol memuai saat dipanaskan sehingga mengisi balon', 'Botol mengecil', 'Air panas masuk ke balon', 'Balon mencair'], answer: 'Udara di dalam botol memuai saat dipanaskan sehingga mengisi balon', hint: 'Gas dan udara mengalami pemuaian volume saat suhunya dinaikkan.' },
+          { q: 'Alat pengaman yang sebaiknya dipakai saat melakukan percobaan sains sederhana di sekolah adalah...', options: ['Kacamata pelindung (goggles) dan celemek lab', 'Topi jerami pantai', 'Kacamata hitam pesta', 'Jaket wol tebal'], answer: 'Kacamata pelindung (goggles) dan celemek lab', hint: 'Melindungi mata dan seragam dari percikan zat kimia atau cairan pewarna.' },
+          { q: 'Sikap ilmiah seorang peneliti cilik saat melakukan eksperimen adalah...', options: ['Jujur mencatat hasil sesuai pengamatan dan tidak mengarang data palsu', 'Mengubah data agar terlihat hebat', 'Menyalahkan teman jika gagal', 'Menolak mencoba lagi'], answer: 'Jujur mencatat hasil sesuai pengamatan dan tidak mengarang data palsu', hint: 'Kejujuran dan ketelitian observasi adalah mahkota integritas sains.' }
         ],
         activitiesEn: [
-          { q: 'When baking soda reacts with vinegar, what gas creates the energetic bubbling foam?', options: ['Carbon Dioxide (CO2)', 'Toxic gas', 'Pure Oxygen', 'Ice vapor'], answer: 'Carbon Dioxide (CO2)', hint: 'An acid-base reaction releases bubbly carbon dioxide.' }
+          { q: 'When baking soda reacts with vinegar, what gas creates the energetic bubbling foam?', options: ['Carbon Dioxide (CO2)', 'Toxic gas', 'Pure Oxygen', 'Ice vapor'], answer: 'Carbon Dioxide (CO2)', hint: 'An acid-base reaction releases bubbly carbon dioxide.' },
+          { q: 'Why does cooking oil float on top of water in a transparent beaker?', options: ['Oil has lower density than water', 'Oil freezes into ice', 'Water hates oil', 'Oil is heavier than water'], answer: 'Oil has lower density than water', hint: 'Less dense liquids float above denser liquids.' }
         ]
       },
       {
-        id: 'p5-anti-bullying'
+        id: 'p5-anti-bullying',
         title: 'P5 Bangunlah Jiwa Raganya: Sahabat Hebat Anti-Bullying',
         titleEn: 'P5 Wellbeing: Kind Friends Against Bullying',
         desc: 'Setiap anak berhak belajar dan bermain di sekolah dengan rasa aman dan gembira. Tolak perundungan (bullying): STOP mengejek nama orang tua, STOP memanggil julukan buruk, STOP mengucilkan kawan, dan STOP bermain kasar! Jadilah pembela kebaikan (upstander) yang melindungi teman!',
         descEn: 'Every child has the absolute right to learn and thrive in an emotionally and physically safe classroom. STOP name-calling, STOP mocking appearance, STOP excluding peers, and STOP physical aggression! Be a brave, compassionate upstander!',
+        funFact: 'Kata-kata pujian dan senyuman ramah mengaktifkan pusat penghargaan di otak kawanmu, menaikkan rasa percaya dirinya hingga 40% untuk berani tampil di kelas!',
+        keyPoints: [
+          'Perundungan (bullying) adalah tindakan menyakiti teman secara sengaja, berulang, baik lisan maupun fisik.',
+          'Katakan TIDAK pada ejekan, julukan buruk, mengucilkan kawan, atau mendorong teman.',
+          'Jadilah "Upstander": segera tolong kawan yang disakiti dan laporkan kepada bapak/ibu guru.'
+        ],
         checklist: [
           'Misi 1: Tulis ikrar di selembar kertas: "Aku Pelajar Hebat, Suka Menolong & Menolak Mengejek Teman".',
           'Misi 2: Ajak teman yang sedang duduk sendirian di pojok kelas untuk bergabung bermain bersama regumu.',
@@ -5825,11 +5976,18 @@
         activities: [
           { q: 'Jika kamu melihat seorang teman baru diejek atau disoraki oleh anak lain, sikap terbaikmu adalah...', options: ['Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', 'Ikut-ikutan mengejek agar dianggap hebat', 'Merekamnya sambil tertawa', 'Menyuruh teman tersebut menangis'], answer: 'Membelanya, mengajaknya menjauh, dan melaporkan kejadian kepada guru', hint: 'Jadilah upstander pemberani yang membela teman yang tertindas.' },
           { q: 'Manakah ucapan yang mencerminkan tutur kata sahabat sejati?', options: ['"Ayo kita bermain dan belajar bersama!"', '"Kamu tidak boleh ikut main bersama kami!"', '"Lihat bajumu jelek sekali!"', '"Namamu aneh!"'], answer: '"Ayo kita bermain dan belajar bersama!"', hint: 'Kata-kata yang hangat menumbuhkan kebahagiaan bersama.' },
-          { q: "Tindakan yang BUKAN merupakan bullying (perundungan) adalah...", options: ["Mengajak teman bermain bersama secara ramah","Mengejek nama orang tua teman","Mendorong teman sampai menangis","Menyembunyikan sepatu teman"], answer: "Mengajak teman bermain bersama secara ramah", hint: "Sahabat sejati selalu merangkul dan membuat teman merasa aman dan gembira 🤝" },
-          { q: "Jika melihat teman yang dipojokkan atau diejek anak lain, sikap kita adalah...", options: ["Membela dan melaporkan kepada bapak/ibu guru","Ikut menonton dan menertawakan","Merekam di ponsel","Membiarkannya saja"], answer: "Membela dan melaporkan kepada bapak/ibu guru", hint: "Menjadi pembela kebaikan (Upstander) menghentikan aksi perundungan." }
+          { q: 'Tindakan yang BUKAN merupakan bullying (perundungan) adalah...', options: ['Mengajak teman bermain bersama secara ramah', 'Mengejek nama orang tua teman', 'Mendorong teman sampai menangis', 'Menyembunyikan sepatu teman'], answer: 'Mengajak teman bermain bersama secara ramah', hint: 'Sahabat sejati selalu merangkul dan membuat teman merasa aman dan gembira 🤝' },
+          { q: 'Jika melihat teman yang dipojokkan atau diejek anak lain, sikap kita adalah...', options: ['Membela dan melaporkan kepada bapak/ibu guru', 'Ikut menonton dan menertawakan', 'Merekam di ponsel', 'Membiarkannya saja'], answer: 'Membela dan melaporkan kepada bapak/ibu guru', hint: 'Menjadi pembela kebaikan (Upstander) menghentikan aksi perundungan.' },
+          { q: 'Contoh perundungan verbal (dengan kata-kata) yang sangat dilarang di sekolah adalah...', options: ['Memanggil teman dengan julukan hinaan fisik atau nama hewan', 'Memuji gambar kawan yang rapi', 'Menyapa selamat pagi', 'Mengucapkan terima kasih'], answer: 'Memanggil teman dengan julukan hinaan fisik atau nama hewan', hint: 'Kata-kata kasar dan ejekan melukai perasaan dan menghancurkan percaya diri.' },
+          { q: 'Jika ada anak yang mengancam atau memalak uang sakumu di sekolah, langkah aman pertama adalah...', options: ['Segera laporkan kepada guru kelas atau satpam sekolah', 'Takut dan merahasiakannya', 'Memberikan uang terus setiap hari', 'Menyerang balik dengan benda tajam'], answer: 'Segera laporkan kepada guru kelas atau satpam sekolah', hint: 'Bapak dan ibu guru akan segera melindungi dan menindak pelaku pemalakan.' },
+          { q: 'Anak yang dijauhi atau dikucilkan oleh teman sekelasnya akan merasakan...', options: ['Sedih, kesepian, dan takut datang ke sekolah', 'Sangat bahagia', 'Makin bersemangat sekolah', 'Kenyang'], answer: 'Sedih, kesepian, dan takut datang ke sekolah', hint: 'Pengucilan sosial (social exclusion) adalah bentuk perundungan yang menyakitkan.' },
+          { q: 'Istilah "Upstander" dalam gerakan anti-perundungan berarti...', options: ['Orang yang berani bertindak membela korban dan menghentikan perundungan', 'Penonton yang hanya diam melihat', 'Pelaku utama yang suka mengejek', 'Orang yang kabur sembunyi'], answer: 'Orang yang berani bertindak membela korban dan menghentikan perundungan', hint: 'Upstander berani bersuara untuk menegakkan keadilan dan persaudaraan.' },
+          { q: 'Manfaat menciptakan suasana sekolah yang bebas dari bullying adalah...', options: ['Semua murid merasa aman, gembira, dan bersemangat mengukir prestasi', 'Sekolah menjadi sepi', 'Semua anak jadi penakut', 'Guru tidak perlu mengajar lagi'], answer: 'Semua murid merasa aman, gembira, dan bersemangat mengukir prestasi', hint: 'Lingkungan yang ramah anak memicu potensi belajar optimal bagi setiap anak.' },
+          { q: 'Bila kita tidak sengaja menyenggol kawan hingga buku tulisnya jatuh, kalimat santun yang harus kita ucapkan adalah...', options: ['"Maafkan aku ya, biar kubantu ambil bukumu."', '"Makanya jangan berdiri di situ!"', '"Itu salah bukumu yang licin!"', '"Biar saja di lantai!"'], answer: '"Maafkan aku ya, biar kubantu ambil bukumu."', hint: 'Permintaan maaf yang cepat dan bantuan memulihkan keramahan seketika.' }
         ],
         activitiesEn: [
-          { q: 'If you witness a classmate being teased or excluded, what is the upstander action?', options: ['Stand by their side, invite them over, and notify a teacher', 'Join in the cruel laughter', 'Record it for amusement', 'Tell them it is their fault'], answer: 'Stand by their side, invite them over, and notify a teacher', hint: 'An upstander protects and seeks supportive adult help.' }
+          { q: 'If you witness a classmate being teased or excluded, what is the upstander action?', options: ['Stand by their side, invite them over, and notify a teacher', 'Join in the cruel laughter', 'Record it for amusement', 'Tell them it is their fault'], answer: 'Stand by their side, invite them over, and notify a teacher', hint: 'An upstander protects and seeks supportive adult help.' },
+          { q: 'Which verbal phrase expresses genuine friendly kindness?', options: ['"Come and join our game; let’s play together!"', '"You can never sit with us!"', '"Your backpack looks silly!"', '"Go away!"'], answer: '"Come and join our game; let’s play together!"', hint: 'Inclusive words make school feel welcoming for everyone.' }
         ]
       },
       {
@@ -5838,6 +5996,12 @@
         titleEn: 'P5 Urban Agriculture: School Gardening & Hydroponics',
         desc: 'Menanam tanaman adalah petualangan sains yang mengasyikkan! Dari sebutir biji kacang hijau kecil di atas kapas basah, ia akan berkecambah mengeluarkan akar putih, batang lentur, hingga helai daun hijau yang menyerap sinar matahari melalui fotosintesis. Kita belajar merawat kehidupan dengan sabar!',
         descEn: 'Planting seeds is a living science journey! Watch a mung bean sprout from moist cotton, developing roots, stems, and sun-seeking green leaves via photosynthesis. Nurturing plants teaches patience, ecology, and stewardship!',
+        funFact: 'Sistem hidroponik memungkinkan sayuran kangkung atau pakcoy tumbuh subur di dalam pipa air berlubang tanpa menggunakan tanah sama sekali!',
+        keyPoints: [
+          'Tanaman membutuhkan air, cahaya matahari, udara (karbon dioksida), dan nutrisi hara.',
+          'Berkebun melatih kesabaran, kedisiplinan menyiram rutin, dan rasa cinta pada alam.',
+          'Sayuran hijau segar hasil panen kebun sendiri lebih sehat, bebas pestisida, dan lezat.'
+        ],
         checklist: [
           'Misi 1: Siapkan wadah gelas plastik bekas, beri kapas basah, dan taburkan 5 butir biji kacang hijau.',
           'Misi 2: Letakkan di tempat yang terkena sinar matahari pagi dan basahi kapas setiap pagi.',
@@ -5850,77 +6014,59 @@
         ],
         activities: [
           { q: 'Tiga hal utama yang dibutuhkan oleh biji tanaman untuk berkecambah dan tumbuh subur adalah...', options: ['Air, udara (oksigen), dan sinar matahari yang cukup', 'Minyak goreng, susu, dan garam', 'Ruangan gelap gulita tanpa udara', 'Plastik pembungkus yang kedap udara'], answer: 'Air, udara (oksigen), dan sinar matahari yang cukup', hint: 'Air memicu perkecambahan biji dan sinar matahari memberi energi fotosintesis 🌱' },
-          { q: 'Bagian tanaman yang tumbuh ke bawah masuk ke dalam tanah untuk menyerap air dan mineral adalah...', options: ['Akar', 'Daun', 'Bunga', 'Buah'], answer: 'Akar', hint: 'Akar menopang tanaman kokoh dan menyerap air tanah.' }
+          { q: 'Bagian tanaman yang tumbuh ke bawah masuk ke dalam tanah untuk menyerap air dan mineral adalah...', options: ['Akar', 'Daun', 'Bunga', 'Buah'], answer: 'Akar', hint: 'Akar menopang tanaman kokoh dan menyerap air tanah.' },
+          { q: 'Metode menanam tanaman sayur menggunakan media air yang diberi larutan nutrisi tanpa memakai tanah disebut...', options: ['Hidroponik', 'Aeromodeling', 'Robotik', 'Fotografi'], answer: 'Hidroponik', hint: 'Hidroponik memanfaatkan pipa air berlubang dan rockwool sebagai penyangga akar 🥬' },
+          { q: 'Zat hijau daun pada tanaman yang berfungsi menyerap energi sinar matahari untuk fotosintesis adalah...', options: ['Klorofil', 'Oksigen', 'Kalsium', 'Karbon'], answer: 'Klorofil', hint: 'Klorofil memberi warna hijau segar pada daun tanaman.' },
+          { q: 'Waktu terbaik untuk menyiram tanaman di kebun sekolah agar tidak mudah layu terbakar terik adalah...', options: ['Pagi hari sebelum terik dan sore hari menjelang sejuk', 'Tepat pukul 12.00 siang saat matahari membakar', 'Tengah malam saat gelap', 'Seminggu sekali saja'], answer: 'Pagi hari sebelum terik dan sore hari menjelang sejuk', hint: 'Penyiraman pagi dan sore memberi kelembapan optimal bagi akar menyerap air.' },
+          { q: 'Bila tanaman ditaruh di dalam kardus tertutup tanpa cahaya matahari selama satu minggu, akibatnya adalah...', options: ['Daun menjadi pucat kekuningan, batang memanjang lemah (etiolasi), dan bisa mati', 'Tumbuh buah yang sangat manis', 'Batang bertambah kokoh seperti pohon beringin', 'Berbunga emas'], answer: 'Daun menjadi pucat kekuningan, batang memanjang lemah (etiolasi), dan bisa mati', hint: 'Tanpa sinar matahari, tanaman tidak dapat memasak makanan melalui fotosintesis.' },
+          { q: 'Contoh sayuran daun cepat panen yang sangat cocok ditanam di kebun sekolah adalah...', options: ['Kangkung, bayam, dan sawi pakcoy', 'Pohon durian', 'Pohon kelapa sawit', 'Pohon jati raksasa'], answer: 'Kangkung, bayam, dan sawi pakcoy', hint: 'Sayuran kangkung dan bayam dapat dipanen segar hanya dalam waktu 20-30 hari.' },
+          { q: 'Hewan kecil penggembur tanah yang sangat membantu menyuburkan tanah kebun sekolah adalah...', options: ['Cacing tanah', 'Nyamuk demam berdarah', 'Kecoak', 'Lalat hijau'], answer: 'Cacing tanah', hint: 'Lorong-lorong yang dibuat cacing melancarkan aerasi udara dan sirkulasi air tanah.' },
+          { q: 'Tindakan mencabuti rumput liar (gulma) di sekitar tanaman sayur bertujuan agar...', options: ['Zat hara dan air pupuk tidak direbut oleh tanaman liar pengganggu', 'Halaman menjadi becek berlumpur', 'Tanaman sayur cepat kering', 'Hanya membuang waktu'], answer: 'Zat hara dan air pupuk tidak direbut oleh tanaman liar pengganggu', hint: 'Menyiangi rumput liar memastikan nutrisi tanah diserap utuh oleh tanaman sayur kita.' },
+          { q: 'Manfaat mengonsumsi sayuran segar hasil panen kebun sekolah sendiri adalah...', options: ['Kaya vitamin alami, higienis, bebas pestisida kimia berbahaya, dan menyehatkan', 'Membuat gigi berwarna hijau', 'Membuat ngantuk', 'Menyebabkan batuk'], answer: 'Kaya vitamin alami, higienis, bebas pestisida kimia berbahaya, dan menyehatkan', hint: 'Sayuran organik segar dari kebun sendiri menyehatkan pencernaan dan daya tahan tubuh.' }
         ],
         activitiesEn: [
-          { q: 'What primary elements do sprouting seeds need to flourish into vibrant seedlings?', options: ['Water, air (oxygen), and adequate sunlight', 'Cooking oil, milk, and salt', 'Pitch darkness without ventilation', 'Airtight plastic wrap'], answer: 'Water, air (oxygen), and adequate sunlight', hint: 'Moisture triggers germination and sunlight powers photosynthesis 🌱' }
+          { q: 'What primary elements do sprouting seeds need to flourish into vibrant seedlings?', options: ['Water, air (oxygen), and adequate sunlight', 'Cooking oil, milk, and salt', 'Pitch darkness without ventilation', 'Airtight plastic wrap'], answer: 'Water, air (oxygen), and adequate sunlight', hint: 'Moisture triggers germination and sunlight powers photosynthesis 🌱' },
+          { q: 'What is the modern soil-less planting technique using nutrient-enriched circulating water called?', options: ['Hydroponics', 'Aerospace engineering', 'Robotics', 'Carpentry'], answer: 'Hydroponics', hint: 'Hydroponics cultivates lush greens directly in clean water channels 🥬' }
         ]
-      }
-  ,
+      },
       {
         id: 'p5-suara-demokrasi',
         title: 'Suara Demokrasi Cilik: Musyawarah Regu Piket Kelas',
         titleEn: 'Junior Democracy: Classroom Chores Team Deliberation',
         desc: 'Dalam Projek Profil Pelajar Pancasila tema "Suara Demokrasi", anak Kelas 1 SD diajak bermusyawarah secara nyata: menentukan giliran regu piket kelas, menyepakati aturan bermain saat istirahat, dan memilih ketua kelompok belajar dengan cara angkat tangan yang adil dan transparan.',
         descEn: 'In the P5 theme "Voice of Democracy", 1st grade learners experience real democratic participation: organizing classroom cleaning teams, setting fair playground rules, and electing team coordinators through honest hand-raising ballots.',
+        funFact: 'Prinsip musyawarah mufakat di Indonesia sudah ada sejak ratusan tahun lalu di balai desa adat, di mana semua warga duduk melingkar sederajat!',
+        keyPoints: [
+          'Musyawarah adalah berdiskusi bersama untuk mencapai kata sepakat (mufakat) yang adil.',
+          'Setiap anak berhak menyampaikan pendapat dengan sopan dan menghargai usulan teman lain.',
+          'Keputusan musyawarah wajib dilaksanakan bersama dengan penuh rasa tanggung jawab.'
+        ],
         checklist: [
-          "Misi 1: Usulkan satu ide permainan tradisional seru untuk dimainkan bersama saat jam istirahat.",
-          "Misi 2: Ikuti pemungutan suara pemilihan ketua kelompok dengan mengangkat tangan secara tertib.",
-          "Misi 3: Laksanakan tugas piket membersihkan papan tulis sesuai hari regu piketmu dengan riang gembira."
-  ],
+          'Misi 1: Usulkan satu ide permainan tradisional seru untuk dimainkan bersama saat jam istirahat.',
+          'Misi 2: Ikuti pemungutan suara pemilihan ketua kelompok dengan mengangkat tangan secara tertib.',
+          'Misi 3: Laksanakan tugas piket membersihkan papan tulis sesuai hari regu piketmu dengan riang gembira.'
+        ],
         checklistEn: [
-          "Mission 1: Propose a fun playground game idea during classroom morning meeting.",
-          "Mission 2: Participate in team coordinator election by raising hands orderly.",
-          "Mission 3: Fulfill your chalkboard cleaning chore on your designated duty day enthusiastically."
-  ],
+          'Mission 1: Propose a fun playground game idea during classroom morning meeting.',
+          'Mission 2: Participate in team coordinator election by raising hands orderly.',
+          'Mission 3: Fulfill your chalkboard cleaning chore on your designated duty day enthusiastically.'
+        ],
         activities: [
-          {
-                  "q": "Cara demokratis yang paling adil untuk memilih ketua kelompok belajar adalah...",
-                  "options": [
-                          "Pemungutan suara (voting) bersama seluruh anggota",
-                          "Ditentukan sendiri oleh yang paling galak",
-                          "Melempar koin ke lantai",
-                          "Berkelahi"
-                  ],
-                  "answer": "Pemungutan suara (voting) bersama seluruh anggota",
-                  "hint": "Setiap anak memiliki hak suara yang sama dan setara."
-          },
-          {
-                  "q": "Bila usulan kita tidak terpilih dalam musyawarah kelas, sikap Pelajar Pancasila adalah...",
-                  "options": [
-                          "Menerima dengan lapang dada dan mendukung yang terpilih",
-                          "Menangis di pojokan",
-                          "Merusak papan tulis",
-                          "Tidak mau masuk sekolah"
-                  ],
-                  "answer": "Menerima dengan lapang dada dan mendukung yang terpilih",
-                  "hint": "Jiwa besar dan sportivitas adalah kunci kerukunan bersama."
-          },
-          {
-                  "q": "Tujuan utama pembagian regu piket kelas adalah...",
-                  "options": [
-                          "Menjaga kebersihan kelas secara gotong royong dan adil",
-                          "Menghukum anak yang nakal",
-                          "Membuat anak capek",
-                          "Supaya tidak perlu belajar"
-                  ],
-                  "answer": "Menjaga kebersihan kelas secara gotong royong dan adil",
-                  "hint": "Pekerjaan berat menjadi ringan jika dibagi bersama."
-          }
-  ],
+          { q: 'Cara demokratis yang paling adil untuk memilih ketua kelompok belajar adalah...', options: ['Pemungutan suara (voting) bersama seluruh anggota', 'Ditentukan sendiri oleh yang paling galak', 'Melempar koin ke lantai', 'Berkelahi'], answer: 'Pemungutan suara (voting) bersama seluruh anggota', hint: 'Setiap anak memiliki hak suara yang sama dan setara.' },
+          { q: 'Bila usulan kita tidak terpilih dalam musyawarah kelas, sikap Pelajar Pancasila adalah...', options: ['Menerima dengan lapang dada dan mendukung yang terpilih', 'Menangis di pojokan', 'Merusak papan tulis', 'Tidak mau masuk sekolah'], answer: 'Menerima dengan lapang dada dan mendukung yang terpilih', hint: 'Jiwa besar dan sportivitas adalah kunci kerukunan bersama.' },
+          { q: 'Tujuan utama pembagian regu piket kelas adalah...', options: ['Menjaga kebersihan kelas secara gotong royong dan adil', 'Menghukum anak yang nakal', 'Membuat anak capek', 'Supaya tidak perlu belajar'], answer: 'Menjaga kebersihan kelas secara gotong royong dan adil', hint: 'Pekerjaan berat menjadi ringan jika dibagi bersama.' },
+          { q: 'Saat teman sedang mengemukakan pendapatnya dalam rapat kelas, sikap kita adalah...', options: ['Mendengarkan dengan tenang sampai teman selesai berbicara', 'Memotong pembicaraannya sambil berteriak', 'Mengejek idenya bodoh', 'Membunyikan peluit'], answer: 'Mendengarkan dengan tenang sampai teman selesai berbicara', hint: 'Menghormati hak bicara teman adalah cerminan budaya demokrasi beradab.' },
+          { q: 'Bila ingin menyampaikan usulan dalam musyawarah kelas, cara yang sopan adalah...', options: ['Mengangkat tangan kanan terlebih dahulu dan menunggu dipersilakan guru', 'Langsung berteriak sekencang-kencangnya', 'Menggebrak meja guru', 'Melempar penghapus'], answer: 'Mengangkat tangan kanan terlebih dahulu dan menunggu dipersilakan guru', hint: 'Mengangkat tangan secara tertib menjaga jalannya diskusi tetap tenang dan teratur 🙋‍♂️' },
+          { q: 'Musyawarah untuk mufakat merupakan pengamalan sila Pancasila ke-...', options: ['Sila ke-4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan...)', 'Sila ke-1', 'Sila ke-2', 'Sila ke-3'], answer: 'Sila ke-4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan...)', hint: 'Lambang Kepala Banteng melambangkan budaya berkumpul dan bermusyawarah.' },
+          { q: 'Kesepakatan bersama yang telah diputuskan dalam musyawarah kelas harus...', options: ['Dilaksanakan dengan ikhlas dan penuh tanggung jawab oleh seluruh siswa', 'Diabaikan jika kita tidak suka', 'Diubah diam-diam', 'Dirobek catatannya'], answer: 'Dilaksanakan dengan ikhlas dan penuh tanggung jawab oleh seluruh siswa', hint: 'Komitmen bersama menumbuhkan disiplin dan ketertiban kelas.' },
+          { q: 'Manfaat menyusun aturan kelas (kesepakatan kelas) bersama-sama adalah...', options: ['Kelas menjadi tertib, nyaman, dan semua murid tahu batasan sopan santun', 'Membuat murid merasa terkekang', 'Supaya guru tidak perlu masuk kelas', 'Supaya ada yang dihukum'], answer: 'Kelas menjadi tertib, nyaman, dan semua murid tahu batasan sopan santun', hint: 'Kesepakatan kelas yang dibuat bersama ditaati dengan kesadaran hati.' },
+          { q: 'Dalam pemilihan ketua kelas, asas "Luber" salah satunya mengandung arti "Bebas", maksudnya adalah...', options: ['Setiap siswa bebas memilih calon sesuai hati nuraninya tanpa paksaan orang lain', 'Bebas memukul teman yang berbeda pilihan', 'Bebas tidak masuk sekolah', 'Bebas merusak bilik suara'], answer: 'Setiap siswa bebas memilih calon sesuai hati nuraninya tanpa paksaan orang lain', hint: 'Tidak boleh ada paksaan atau ancaman dalam menentukan pilihan.' },
+          { q: 'Ketika dua kelompok belajar memiliki pendapat yang berbeda, cara terbaik menyelesaikan perbedaan adalah...', options: ['Duduk bersama mencari jalan tengah yang menguntungkan semua pihak', 'Adu panco menentukan siapa yang paling kuat', 'Memusuhi kelompok lawan selamanya', 'Membubarkan kelas'], answer: 'Duduk bersama mencari jalan tengah yang menguntungkan semua pihak', hint: 'Musyawarah mencari solusi terbaik yang membahagiakan semua orang.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "The fairest democratic method to select a study group leader is...",
-                  "options": [
-                          "A shared vote where every member casts a voice",
-                          "Letting the loudest kid decide alone",
-                          "Flipping a random coin",
-                          "Quarreling"
-                  ],
-                  "answer": "A shared vote where every member casts a voice",
-                  "hint": "Every learner has equal voice."
-          }
-  ]
+          { q: 'The fairest democratic method to select a study group leader is...', options: ['A shared vote where every member casts a voice', 'Letting the loudest kid decide alone', 'Flipping a random coin', 'Quarreling'], answer: 'A shared vote where every member casts a voice', hint: 'Every learner has equal voice.' },
+          { q: 'When a peer is sharing their viewpoint in a class meeting, our respectful etiquette is...', options: ['Listen calmly until they conclude speaking', 'Interrupt rudely with loud yells', 'Mock their ideas', 'Walk out'], answer: 'Listen calmly until they conclude speaking', hint: 'Respectful listening underpins genuine democracy.' }
+        ]
       },
       {
         id: 'p5-sayang-bumi',
@@ -5928,173 +6074,117 @@
         titleEn: 'I Love Mother Earth: Sprouting Mung Beans in Recycled Pots',
         desc: 'Projek sains cilik yang penuh keajaiban! Kita memanfaatkan gelas plastik bekas air mineral sebagai pot mini ramah lingkungan. Diberi kapas basah dan 5 butir biji kacang hijau. Dalam 3 hari, biji bertunas kecil, mengeluarkan akar putih halus, dan tumbuh daun hijau mungil menghadap sinar matahari!',
         descEn: 'A magical junior botanical adventure! Children repurpose clean used beverage cups as eco-friendly mini pots. Lined with moist cotton and 5 mung bean seeds, within 3 days delicate white roots emerge and bright green sprouts reach upward for sunlight!',
+        funFact: 'Kecambah kacang hijau (tauge) mengandung vitamin C dan antioksidan yang jauh lebih tinggi daripada biji keringnya karena proses perkecambahan melepaskan nutrisi aktif!',
+        keyPoints: [
+          'Daur ulang wadah plastik bekas menjadi pot mengurangi timbulan sampah di lingkungan.',
+          'Tahap pertumbuhan tanaman: biji -> berkecambah -> berakar -> berbatang -> berdaun.',
+          'Mencatat jurnal pertumbuhan melatih keterampilan observasi ilmiah dan ketelitian berhitung.'
+        ],
         checklist: [
-          "Misi 1: Siapkan 1 gelas plastik bekas yang sudah dicuci bersih dan letakkan kapas basah di dasarnya.",
-          "Misi 2: Taburkan 5 biji kacang hijau di atas kapas basah, lalu letakkan di tempat yang terkena cahaya matahari.",
-          "Misi 3: Catat dan amati tinggi tunas kacang hijau setiap pagi di buku jurnal sains cilikmu."
-  ],
+          'Misi 1: Siapkan 1 gelas plastik bekas yang sudah dicuci bersih dan letakkan kapas basah di dasarnya.',
+          'Misi 2: Taburkan 5 biji kacang hijau di atas kapas basah, lalu letakkan di tempat yang terkena cahaya matahari.',
+          'Misi 3: Catat dan amati tinggi tunas kacang hijau setiap pagi di buku jurnal sains cilikmu.'
+        ],
         checklistEn: [
-          "Mission 1: Prepare one clean recycled plastic cup and place moist cotton at the base.",
-          "Mission 2: Scatter 5 green mung bean seeds onto the cotton and set near natural window sunlight.",
-          "Mission 3: Measure and record the sprout growth height each morning in your science journal."
-  ],
+          'Mission 1: Prepare one clean recycled plastic cup and place moist cotton at the base.',
+          'Mission 2: Scatter 5 green mung bean seeds onto the cotton and set near natural window sunlight.',
+          'Mission 3: Measure and record the sprout growth height each morning in your science journal.'
+        ],
         activities: [
-          {
-                  "q": "Dua hal penting yang dibutuhkan biji kacang hijau agar bertunas subur adalah...",
-                  "options": [
-                          "Air (kelembapan) dan cahaya matahari",
-                          "Minyak goreng dan es batu",
-                          "Pasir panas tanpa air",
-                          "Gula pasir manis"
-                  ],
-                  "answer": "Air (kelembapan) dan cahaya matahari",
-                  "hint": "Air memicu perkecambahan biji dan sinar matahari memberi energi tumbuh."
-          },
-          {
-                  "q": "Memanfaatkan gelas plastik bekas air mineral untuk pot tanaman adalah contoh aksi...",
-                  "options": [
-                          "Daur ulang (Recycle) dan cinta lingkungan",
-                          "Membuang sampah sembarangan",
-                          "Merusak alam",
-                          "Membuang uang"
-                  ],
-                  "answer": "Daur ulang (Recycle) dan cinta lingkungan",
-                  "hint": "Mengurangi sampah plastik dengan menjadikannya barang bermanfaat 🌱"
-          },
-          {
-                  "q": "Bagian tumbuhan yang pertama kali muncul dari biji menembus ke bawah adalah...",
-                  "options": [
-                          "Akar halus untuk menyerap air",
-                          "Buah lebat",
-                          "Bunga mawar",
-                          "Batang raksasa"
-                  ],
-                  "answer": "Akar halus untuk menyerap air",
-                  "hint": "Akar berfungsi mencengkeram dan mencari air di dalam kapas."
-          }
-  ],
+          { q: 'Dua hal penting yang dibutuhkan biji kacang hijau agar bertunas subur adalah...', options: ['Air (kelembapan) dan cahaya matahari', 'Minyak goreng dan es batu', 'Pasir panas tanpa air', 'Gula pasir manis'], answer: 'Air (kelembapan) dan cahaya matahari', hint: 'Air memicu perkecambahan biji dan sinar matahari memberi energi tumbuh.' },
+          { q: 'Memanfaatkan gelas plastik bekas air mineral untuk pot tanaman adalah contoh aksi...', options: ['Daur ulang (Recycle) dan cinta lingkungan', 'Membuang sampah sembarangan', 'Merusak alam', 'Membuang uang'], answer: 'Daur ulang (Recycle) dan cinta lingkungan', hint: 'Mengurangi sampah plastik dengan menjadikannya barang bermanfaat 🌱' },
+          { q: 'Bagian tumbuhan yang pertama kali muncul dari biji menembus ke bawah adalah...', options: ['Akar halus untuk menyerap air', 'Buah lebat', 'Bunga mawar', 'Batang raksasa'], answer: 'Akar halus untuk menyerap air', hint: 'Akar berfungsi mencengkeram dan mencari air di dalam kapas.' },
+          { q: 'Daun pertama yang muncul dari kecambah kacang hijau disebut daun...', options: ['Kotiledon (daun lembaga)', 'Kaktus berduri', 'Pelepah pisang', 'Mahkota bunga'], answer: 'Kotiledon (daun lembaga)', hint: 'Kotiledon menyimpan cadangan makanan awal bagi kecambah mungil.' },
+          { q: 'Agar air siraman di dalam gelas plastik bekas tidak menggenang dan membuat akar busuk, yang perlu kita buat di dasar gelas adalah...', options: ['Lubang-lubang kecil pembuangan air (lubang drainase)', 'Menutupnya rapat dengan lakban', 'Mengisinya dengan semen keras', 'Mengecatnya dengan warna merah'], answer: 'Lubang-lubang kecil pembuangan air (lubang drainase)', hint: 'Drainase menjaga agar akar tidak kekurangan oksigen akibat terendam air berlebih.' },
+          { q: 'Arah pertumbuhan batang kecambah selalu membengkok ke arah datangnya...', options: ['Cahaya sinar matahari (fototropisme)', 'Suara musik keras', 'Lantai tanah', 'Angin kipas'], answer: 'Cahaya sinar matahari (fototropisme)', hint: 'Hormon auksin membuat batang tanaman berbelok mencari sinar matahari.' },
+          { q: 'Alat ukur yang kita gunakan untuk mencatat tinggi pertumbuhan batang kecambah setiap pagi adalah...', options: ['Penggaris dengan satuan sentimeter (cm)', 'Timbangan kue', 'Termometer demam', 'Jam dinding'], answer: 'Penggaris dengan satuan sentimeter (cm)', hint: 'Penggaris mengukur panjang batang dari pangkal kapas hingga pucuk daun.' },
+          { q: 'Jika kapas di dalam pot dibiarkan kering kerontang tanpa disiram selama beberapa hari, kecambah akan...', options: ['Layu, kering, dan mati kehausan', 'Berbuah mangga besar', 'Tumbuh semakin hijau segar', 'Menjadi pohon beringin'], answer: 'Layu, kering, dan mati kehausan', hint: 'Air sangat vital untuk menjaga tekanan turgor sel tumbuhan tetap tegak.' },
+          { q: 'Menghias pot gelas plastik bekas dengan gambar bunga atau pita warna-warni melatih keterampilan...', options: ['Kreativitas seni dan estetika motorik halus', 'Berenang gaya bebas', 'Berhitung perkalian rumit', 'Bernyanyi nada tinggi'], answer: 'Kreativitas seni dan estetika motorik halus', hint: 'Sentuhan seni membuat karya pot daur ulang tampak memikat dan rapi.' },
+          { q: 'Rasa bangga yang muncul saat melihat biji tanaman kita bertunas dan tumbuh tinggi adalah bentuk apresiasi terhadap...', options: ['Keajaiban kehidupan dan kerja keras merawat alam', 'Rasa malas belajar', 'Kemampuan merusak benda', 'Keinginan pamer saja'], answer: 'Keajaiban kehidupan dan kerja keras merawat alam', hint: 'Merawat tanaman menumbuhkan rasa syukur dan welas asih pada ciptaan Tuhan.' }
+        ],
         activitiesEn: [
-          {
-                  "q": "Two essential elements required for seeds to germinate into healthy sprouts are...",
-                  "options": [
-                          "Moisture (water) and sunlight",
-                          "Cooking oil and ice cubes",
-                          "Dry hot sand without water",
-                          "Sugar powder"
-                  ],
-                  "answer": "Moisture (water) and sunlight",
-                  "hint": "Water unlocks germination and light fuels growth."
-          }
-  ]
+          { q: 'Two essential elements required for seeds to germinate into healthy sprouts are...', options: ['Moisture (water) and sunlight', 'Cooking oil and ice cubes', 'Dry hot sand without water', 'Sugar powder'], answer: 'Moisture (water) and sunlight', hint: 'Water unlocks germination and light fuels growth.' },
+          { q: 'What is the botanical name of the embryonic first leaves that unfold from a sprouted seed?', options: ['Cotyledons (seed leaves)', 'Flower petals', 'Bark', 'Cactus needles'], answer: 'Cotyledons (seed leaves)', hint: 'Cotyledons nourish the baby seedling until mature foliage develops.' }
+        ]
       },
       {
-        "id": "p5-bazar-wirausaha",
-      "title": "Kewirausahaan Cilik: Bazar Minuman Sehat Jeruk Peras",
-      "titleEn": "Little Entrepreneurs: Fresh Orange Juice Stand",
-      "desc": "Belajar berwirausaha melatih kreativitas, kerja sama tim, dan kejujuran berhitung. Siswa bersama kelompok menyiapkan buah jeruk segar, memeras dengan alat manual, menghitung modal belanja, melayani pembeli dengan 3S (Senyum, Salam, Sapa), dan mencatat hasil penjualan!",
-      "descEn": "Early entrepreneurship builds teamwork, financial honesty, and customer courtesy. Students collaborate to squeeze fresh orange juice, compute ingredient costs, serve peers with warm smiles, and record earnings!",
-      "checklist": [
-        "Misi 1: Hitung modal membeli 10 buah jeruk dan gelas kertas bersama kelompokmu.",
-        "Misi 2: Praktikkan 3S (Senyum, Salam, Sapa) saat melayani teman yang membeli minuman.",
-        "Misi 3: Hitung total uang hasil penjualan dan pisahkan modal dengan keuntungan bersih."
-      ],
-      "checklistEn": [
-        "Mission 1: Calculate total ingredient expenses for 10 fresh oranges and paper cups.",
-        "Mission 2: Practice warm hospitality (Smile, Greet, Thank) when serving peer customers.",
-        "Mission 3: Tally final cash receipts and separate initial costs from net earnings."
-      ],
-      "activities": [
-        {
-          "q": "Sikap pedagang cilik yang jujur dan disenangi pembeli adalah...",
-          "options": [
-            "Melayani dengan senyuman ramah dan mengembalikan kembalian tepat",
-            "Mengurangi takaran sembunyi-sembunyi",
-            "Marah jika pembeli bertanya",
-            "Memberi kembalian palsu"
-          ],
-          "answer": "Melayani dengan senyuman ramah dan mengembalikan kembalian tepat",
-          "hint": "Kejujuran adalah modal utama dalam berwirausaha yang sukses berkah."
-        },
-        {
-          "q": "Jika modal membeli bahan Rp 10.000 dan hasil penjualan terkumpul Rp 15.000, maka kita mendapat...",
-          "options": [
-            "Keuntungan (laba) sebesar Rp 5.000",
-            "Rugi Rp 5.000",
-            "Habis modal",
-            "Tidak ada hasil"
-          ],
-          "answer": "Keuntungan (laba) sebesar Rp 5.000",
-          "hint": "Laba = Uang Hasil Penjualan dikurangi Modal Awal."
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "An honest young shopkeeper always...",
-          "options": [
-            "Serves with cheerful smiles and provides exact change",
-            "Cheats on measurements",
-            "Scolds customers",
-            "Overcharges"
-          ],
-          "answer": "Serves with cheerful smiles and provides exact change",
-          "hint": "Integrity wins customer trust!"
-        }
-      ]
-    },
-    {
-      "id": "p5-exhibition-day",
-      "title": "Pameran Portofolio & Perayaan Hari Belajar (Exhibition Day)",
-      "titleEn": "Learning Exhibition Day & Portfolio Celebration",
-      "desc": "Perayaan Belajar (Exhibition Day) adalah puncak apresiasi Projek P5 di akhir semester. Siswa mendekorasi stan pameran kelas, memajang karya kolase alam, tanaman pot daur ulang, celengan kreatif, dan mempresentasikan hasil belajarnya kepada orang tua yang hadir!",
-      "descEn": "Exhibition Day is the joyful culmination of P5 projects. Students decorate classroom display booths, exhibit nature collages, recycled planters, and handmade piggy banks, explaining their creations to visiting parents!",
-      "checklist": [
-        "Misi 1: Pilih 3 karya portofolio paling membanggakan selama belajar semester ini.",
-        "Misi 2: Hias stan pameran mejamu dengan taplak rapi dan papan nama karya bertulisan indah.",
-        "Misi 3: Sambut orang tua dan guru dengan presentasi ceria: \"Selamat datang di stanku!\""
-      ],
-      "checklistEn": [
-        "Mission 1: Curate your 3 proudest creative artifacts accomplished this school semester.",
-        "Mission 2: Decorate your display desk with neat runners and artistic label cards.",
-        "Mission 3: Welcome visiting parents and teachers with enthusiastic presentations!"
-      ],
-      "activities": [
-        {
-          "q": "Tujuan utama diadakannya Perayaan Hari Belajar (Exhibition Day) adalah...",
-          "options": [
-            "Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya",
-            "Mencari juara 1 dan menjatuhkan yang lain",
-            "Menjual barang mahal",
-            "Hanya piknik"
-          ],
-          "answer": "Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya",
-          "hint": "P5 menekankan penguatan karakter dan kebanggaan atas karya sendiri."
-        },
-        {
-          "q": "Saat orang tua berkunjung ke meja pameranmu, sikap yang tepat adalah...",
-          "options": [
-            "Menjelaskan cerita di balik karyamu dengan bangga dan santun",
-            "Kabur sembunyi di bawah meja",
-            "Meminta pulang cepat",
-            "Menangis tersedu-sedu"
-          ],
-          "answer": "Menjelaskan cerita di balik karyamu dengan bangga dan santun",
-          "hint": "Orang tua sangat senang dan bangga mendengar celoteh cerdas putranya!"
-        }
-      ],
-      "activitiesEn": [
-        {
-          "q": "Primary goal of the P5 Learning Exhibition Day:",
-          "options": [
-            "Celebrate student learning journeys and appreciate creative efforts",
-            "Compete aggressively",
-            "Sell expensive trinkets",
-            "Skip classes"
-          ],
-          "answer": "Celebrate student learning journeys and appreciate creative efforts",
-          "hint": "Affirming character, collaboration, and joyful growth."
-        }
-      ]
-    }
+        id: 'p5-bazar-wirausaha',
+        title: 'Kewirausahaan Cilik: Bazar Minuman Sehat Jeruk Peras',
+        titleEn: 'Little Entrepreneurs: Fresh Orange Juice Stand',
+        desc: 'Belajar berwirausaha melatih kreativitas, kerja sama tim, dan kejujuran berhitung. Siswa bersama kelompok menyiapkan buah jeruk segar, memeras dengan alat manual, menghitung modal belanja, melayani pembeli dengan 3S (Senyum, Salam, Sapa), dan mencatat hasil penjualan!',
+        descEn: 'Early entrepreneurship builds teamwork, financial honesty, and customer courtesy. Students collaborate to squeeze fresh orange juice, compute ingredient costs, serve peers with warm smiles, and record earnings!',
+        funFact: 'Satu gelas jeruk peras segar murni memenuhi 100% kebutuhan harian Vitamin C anak untuk memperkuat sistem imun tubuh melawan flu!',
+        keyPoints: [
+          'Wirausaha cilik melatih kreativitas, kerja sama tim, dan kejujuran dalam berdagang.',
+          'Konsep keuangan dasar: Modal (biaya beli bahan) + Laba/Untung = Harga Jual.',
+          'Budaya pelayanan santun 3S (Senyum, Salam, Sapa) dan ucapan terima kasih pada pembeli.'
+        ],
+        checklist: [
+          'Misi 1: Hitung modal membeli 10 buah jeruk dan gelas kertas bersama kelompokmu.',
+          'Misi 2: Praktikkan 3S (Senyum, Salam, Sapa) saat melayani teman yang membeli minuman.',
+          'Misi 3: Hitung total uang hasil penjualan dan pisahkan modal dengan keuntungan bersih.'
+        ],
+        checklistEn: [
+          'Mission 1: Calculate total ingredient expenses for 10 fresh oranges and paper cups.',
+          'Mission 2: Practice warm hospitality (Smile, Greet, Thank) when serving peer customers.',
+          'Mission 3: Tally final cash receipts and separate initial costs from net earnings.'
+        ],
+        activities: [
+          { q: 'Sikap pedagang cilik yang jujur dan disenangi pembeli adalah...', options: ['Melayani dengan senyuman ramah dan mengembalikan kembalian tepat', 'Mengurangi takaran sembunyi-sembunyi', 'Marah jika pembeli bertanya', 'Memberi kembalian palsu'], answer: 'Melayani dengan senyuman ramah dan mengembalikan kembalian tepat', hint: 'Kejujuran adalah modal utama dalam berwirausaha yang sukses berkah.' },
+          { q: 'Jika modal membeli bahan Rp 10.000 dan hasil penjualan terkumpul Rp 15.000, maka kita mendapat...', options: ['Keuntungan (laba) sebesar Rp 5.000', 'Rugi Rp 5.000', 'Habis modal', 'Tidak ada hasil'], answer: 'Keuntungan (laba) sebesar Rp 5.000', hint: 'Laba = Uang Hasil Penjualan dikurangi Modal Awal.' },
+          { q: 'Saat seorang pembeli datang ke stan bazar kelompokmu, sapaan santun yang diucapkan adalah...', options: ['"Selamat pagi, silakan mampir! Mau mencoba jus jeruk segar kami?"', '"Ngapain berdiri di situ? Mau beli atau tidak?!"', '"Jangan pegang-pegang dagangan kami!"', '"Sana pergi ke stan lain!"'], answer: '"Selamat pagi, silakan mampir! Mau mencoba jus jeruk segar kami?"', hint: 'Ramah tamah dan senyuman membuat pembeli merasa dihargai dan nyaman berbelanja.' },
+          { q: 'Kebersihan yang wajib dijaga oleh pedagang makanan dan minuman saat melayani pembeli adalah...', options: ['Mencuci tangan bersih dan menggunakan sarung tangan plastik/penjepit makanan', 'Menyentuh es batu dengan tangan berkeringat', 'Bersin di atas gelas dagangan', 'Memakai celemek yang penuh lumpur'], answer: 'Mencuci tangan bersih dan menggunakan sarung tangan plastik/penjepit makanan', hint: 'Higienitas produk menjaga makanan tetap steril dan mencegah penularan penyakit.' },
+          { q: 'Bila seorang pembeli membayar minuman seharga Rp 3.000 dengan uang kertas Rp 5.000, uang kembalian yang harus diberikan adalah...', options: ['Rp 2.000', 'Rp 1.000', 'Rp 3.000', 'Tidak diberi kembalian'], answer: 'Rp 2.000', hint: '5.000 - 3.000 = 2.000 rupiah.' },
+          { q: 'Media promosi sederhana yang dibuat dari kertas karton bergambar menarik untuk menarik pembeli disebut...', options: ['Poster stan / spanduk bazar', 'Surat kabar lama', 'Kertas contekan', 'Karcis parkir'], answer: 'Poster stan / spanduk bazar', hint: 'Poster warna-warni yang mencantumkan nama produk dan harga menarik minat pembeli.' },
+          { q: 'Kerja sama tim dalam kelompok bazar wirausaha dilakukan dengan cara...', options: ['Membagi tugas secara adil: ada yang memeras jeruk, ada kasir, dan ada yang melayani', 'Semua anak hanya duduk diam menonton satu teman bekerja sendirian', 'Saling berebut uang penjualan', 'Meninggalkan stan bazar kosong'], answer: 'Membagi tugas secara adil: ada yang memeras jeruk, ada kasir, dan ada yang melayani', hint: 'Pembagian peran yang jelas membuat alur penjualan lancar dan cepat.' },
+          { q: 'Keuntungan (laba) dari hasil bazar wirausaha kelas sebaiknya digunakan untuk...', options: ['Ditabung di celengan kelas atau kas kegiatan amal sekolah', 'Dibuang ke selokan', 'Dibelikan kembang api berbahaya', 'Dihabiskan untuk main game semalam'], answer: 'Ditabung di celengan kelas atau kas kegiatan amal sekolah', hint: 'Pemanfaatan laba secara bijak memberi manfaat jangka panjang bagi bersama.' },
+          { q: 'Setelah bazar sekolah selesai ditutup sore hari, kewajiban seluruh anggota stan adalah...', options: ['Gotong royong membersihkan stan dan membuang sampah ke tempatnya', 'Langsung pulang meninggalkan stan yang kotor berantakan', 'Membiarkan sisa sampah berserakan di lapangan', 'Menyuruh guru membersihkannya'], answer: 'Gotong royong membersihkan stan dan membuang sampah ke tempatnya', hint: 'Tanggung jawab kebersihan pasca kegiatan menunjukkan kedewasaan karakter.' },
+          { q: 'Nilai karakter utama yang dipelajari siswa dari kegiatan bazar kewirausahaan adalah...', options: ['Kemandirian, kejujuran, kerja sama tim, dan percaya diri', 'Sifat serakah ingin menipu', 'Rasa malu bertemu orang lain', 'Malas bekerja'], answer: 'Kemandirian, kejujuran, kerja sama tim, dan percaya diri', hint: 'Wirausaha menumbuhkan jiwa inovatif dan etos kerja yang tangguh sejak dini.' }
+        ],
+        activitiesEn: [
+          { q: 'An honest young shopkeeper always...', options: ['Serves with cheerful smiles and provides exact change', 'Cheats on measurements', 'Scolds customers', 'Overcharges'], answer: 'Serves with cheerful smiles and provides exact change', hint: 'Integrity wins customer trust!' },
+          { q: 'If total ingredients cost Rp 10,000 and total sales reach Rp 15,000, what is the net profit earned?', options: ['Profit of Rp 5,000', 'Loss of Rp 5,000', 'Zero balance', 'Negative earnings'], answer: 'Profit of Rp 5,000', hint: 'Profit = Total Revenue - Cost of Goods.' }
+        ]
+      },
+      {
+        id: 'p5-exhibition-day',
+        title: 'Pameran Portofolio & Perayaan Hari Belajar (Exhibition Day)',
+        titleEn: 'Learning Exhibition Day & Portfolio Celebration',
+        desc: 'Perayaan Belajar (Exhibition Day) adalah puncak apresiasi Projek P5 di akhir semester. Siswa mendekorasi stan pameran kelas, memajang karya kolase alam, tanaman pot daur ulang, celengan kreatif, dan mempresentasikan hasil belajarnya kepada orang tua yang hadir!',
+        descEn: 'Exhibition Day is the joyful culmination of P5 projects. Students decorate classroom display booths, exhibit nature collages, recycled planters, and handmade piggy banks, explaining their creations to visiting parents!',
+        funFact: 'Saat anak mempresentasikan karyanya sendiri di hadapan orang tua dan guru, rasa percaya diri (self-efficacy) dan kemampuan berbicara di depan publik melonjak drastis!',
+        keyPoints: [
+          'Perayaan Belajar adalah puncak unjuk hasil karya dan proses belajar proyek anak.',
+          'Siswa belajar mengkurasi portofolio terbaik dan menata meja pameran secara estetik.',
+          'Mempresentasikan cerita di balik karya dengan percaya diri, santun, dan komunikatif.'
+        ],
+        checklist: [
+          'Misi 1: Pilih 3 karya portofolio paling membanggakan selama belajar semester ini.',
+          'Misi 2: Hias stan pameran mejamu dengan taplak rapi dan papan nama karya bertulisan indah.',
+          'Misi 3: Sambut orang tua dan guru dengan presentasi ceria: "Selamat datang di stanku!"'
+        ],
+        checklistEn: [
+          'Mission 1: Curate your 3 proudest creative artifacts accomplished this school semester.',
+          'Mission 2: Decorate your display desk with neat runners and artistic label cards.',
+          'Mission 3: Welcome visiting parents and teachers with enthusiastic presentations!'
+        ],
+        activities: [
+          { q: 'Tujuan utama diadakannya Perayaan Hari Belajar (Exhibition Day) adalah...', options: ['Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya', 'Mencari juara 1 dan menjatuhkan yang lain', 'Menjual barang mahal', 'Hanya piknik'], answer: 'Mengapresiasi proses belajar siswa dan berbagi kebahagiaan karya', hint: 'P5 menekankan penguatan karakter dan kebanggaan atas karya sendiri.' },
+          { q: 'Saat orang tua berkunjung ke meja pameranmu, sikap yang tepat adalah...', options: ['Menjelaskan cerita di balik karyamu dengan bangga dan santun', 'Kabur sembunyi di bawah meja', 'Meminta pulang cepat', 'Menangis tersedu-sedu'], answer: 'Menjelaskan cerita di balik karyamu dengan bangga dan santun', hint: 'Orang tua sangat senang dan bangga mendengar celoteh cerdas putranya!' },
+          { q: 'Kumpulan hasil karya terbaik siswa yang didokumentasikan rapi selama satu semester disebut...', options: ['Portofolio belajar', 'Buku bon belanjaan', 'Koran bekas', 'Kamus tebal'], answer: 'Portofolio belajar', hint: 'Portofolio memperlihatkan rekam jejak kemajuan dan pertumbuhan keterampilan siswa.' },
+          { q: 'Kartu kecil yang diletakkan di samping hasil karya berisi nama pembuat, judul karya, dan bahan disebut...', options: ['Label keterangan karya (caption)', 'Kartu remi', 'Kupon undian', 'Uang mainan'], answer: 'Label keterangan karya (caption)', hint: 'Label membantu pengunjung memahami maksud dan media yang digunakan dalam karya.' },
+          { q: 'Kalimat pembuka yang ramah saat menyambut pengunjung stan pameran kita adalah...', options: ['"Selamat datang di stan saya! Mari saya ceritakan proses pembuatan tanaman daur ulang ini."', '"Jangan mendekat, nanti rusak!"', '"Bayar dulu baru boleh lihat!"', '"Saya sedang lelah, jangan tanya-tanya!"'], answer: '"Selamat datang di stan saya! Mari saya ceritakan proses pembuatan tanaman daur ulang ini."', hint: 'Salam pembuka yang ceria membuat pengunjung antusias mendengarkan presentasi.' },
+          { q: 'Jika pengunjung memberikan pujian "Karyamu bagus sekali!", respon santun yang kita berikan adalah...', options: ['"Terima kasih banyak atas apresiasinya, ini berkat bimbingan guru dan kerja keras saya."', '"Memang saya anak terhebat di dunia!"', '"Karya orang lain jelek semua!"', '"Biasa saja, tidak usah berlebihan!"'], answer: '"Terima kasih banyak atas apresiasinya, ini berkat bimbingan guru dan kerja keras saya."', hint: 'Menerima pujian dengan kerendahan hati dan ucapan syukur.' },
+          { q: 'Buku yang disediakan di atas meja pameran untuk menuliskan komentar dan kesan dari para pengunjung disebut...', options: ['Buku tamu dan buku pesan/kesan', 'Buku tabungan bank', 'Buku resep kue', 'Buku telepon'], answer: 'Buku tamu dan buku pesan/kesan', hint: 'Catatan kesan dan saran pengunjung menjadi motivasi berharga bagi siswa.' },
+          { q: 'Dekorasi stan pameran sebaiknya ditata secara...', options: ['Rapi, menarik, bersih, dan memudahkan pengunjung melihat karya', 'Berantakan dengan sampah berserakan di bawah meja', 'Gelap gulita tanpa penerangan', 'Ditutupi kain hitam pekat'], answer: 'Rapi, menarik, bersih, dan memudahkan pengunjung melihat karya', hint: 'Penataan yang estetis menambah nilai keindahan presentasi pameran.' },
+          { q: 'Nilai utama yang dirayakan pada Hari Perayaan Belajar (Exhibition Day) adalah apresiasi terhadap...', options: ['Proses usaha keras, ketekunan, dan pertumbuhan karakter siswa', 'Hanya hasil akhir yang sempurna tanpa cela', 'Berapa banyak uang yang dihabiskan', 'Pakaian paling mewah'], answer: 'Proses usaha keras, ketekunan, dan pertumbuhan karakter siswa', hint: 'Setiap langkah belajar dan jatuh-bangun proses berkarya layak dirayakan bersama.' },
+          { q: 'Setelah acara pameran berakhir, sikap Pelajar Pancasila terhadap stan kelas adalah...', options: ['Merapikan kembali meja, mengemas karya dengan aman, dan membersihkan ruangan bersama', 'Langsung kabur meninggalkan sampah di lantai', 'Merusak karya teman', 'Membiarkan lampu menyala semalaman'], answer: 'Merapikan kembali meja, mengemas karya dengan aman, dan membersihkan ruangan bersama', hint: 'Bertanggung jawab dari awal persiapan hingga tuntas pembersihan akhir.' }
+        ],
+        activitiesEn: [
+          { q: 'Primary goal of the P5 Learning Exhibition Day:', options: ['Celebrate student learning journeys and appreciate creative efforts', 'Compete aggressively', 'Sell expensive trinkets', 'Skip classes'], answer: 'Celebrate student learning journeys and appreciate creative efforts', hint: 'Affirming character, collaboration, and joyful growth.' },
+          { q: 'When parents and visitors stop by your exhibition desk, how should you greet them?', options: ['Warmly introduce your project artifacts and explain your learning experience', 'Hide under the desk', 'Demand cash immediately', 'Complain about assignments'], answer: 'Warmly introduce your project artifacts and explain your learning experience', hint: 'Enthusiastic presentations share pride in student work.' }
+        ]
+      }
     ]
   };
   
@@ -7850,10 +7940,10 @@
       const aspect = w / h;
       const pMat = this.createPerspectiveMatrix(fov, aspect, 0.01, 100.0);
   
-      // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar (diameter ~440px di kanvas 720)
-      const dist = 3.65 / this.zoom;
+      // Jarak kamera disesuaikan dengan posisi globe meja yang lebih besar dan megah (diameter ~504px di kanvas 720)
+      const dist = 3.32 / this.zoom;
       let mvMat = this.createIdentityMatrix();
-      mvMat = this.mat4Translate(mvMat, 0.08, 0.18, -dist);
+      mvMat = this.mat4Translate(mvMat, 0.08, 0.16, -dist);
       // Kemiringan pandangan pengguna (pitch)
       mvMat = this.mat4RotateX(mvMat, this.tilt * Math.PI / 180);
       // Kemiringan sumbu bumi asli 23.5° (tilted ke kanan seperti foto referensi)
@@ -7889,9 +7979,9 @@
       const ctx = this.ctx;
       const w = canvas.width;
       const h = canvas.height;
-      const cx = w / 2 + 18;
-      const cy = h / 2 - 35;
-      const r = 210 * this.zoom;
+      const cx = w / 2 + 21;
+      const cy = h / 2 - 42;
+      const r = 250 * this.zoom;
   
       ctx.clearRect(0, 0, w, h);
   
@@ -7957,10 +8047,10 @@
   
       ctx.clearRect(0, 0, w, h);
   
-      // Koordinat pusat bola bumi pada panggung (ukuran besar)
-      const cx = w / 2 + 18;
-      const cy = h / 2 - 35;
-      const r = 212 * this.zoom;
+      // Koordinat pusat bola bumi pada panggung (ukuran besar & megah)
+      const cx = w / 2 + 21;
+      const cy = h / 2 - 42;
+      const r = 250 * this.zoom;
   
       // Sudut kemiringan sumbu bumi asli 23.5°
       const tiltAngle = this.axialTilt * Math.PI / 180;
@@ -7974,28 +8064,28 @@
       const southY = cy + r * cosA;
   
       // Radius busur meridian logam (sedikit di luar bola)
-      const rArch = r + 28;
+      const rArch = r + 26;
       const archThick = 20;
   
       // -------------------------------------------------------------
       // 1. Bayangan Dudukan Meja (Tabletop Shadow)
       // -------------------------------------------------------------
       const baseCenterX = cx;
-      const baseCenterY = h - 68;
-      const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 200);
+      const baseCenterY = h - 56;
+      const shadowGrad = ctx.createRadialGradient(baseCenterX, baseCenterY + 14, 25, baseCenterX, baseCenterY + 14, 210);
       shadowGrad.addColorStop(0, 'rgba(3, 10, 20, 0.55)');
       shadowGrad.addColorStop(0.5, 'rgba(5, 15, 30, 0.25)');
       shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = shadowGrad;
       ctx.beginPath();
-      ctx.ellipse(baseCenterX, baseCenterY + 14, 200, 28, 0, 0, Math.PI * 2);
+      ctx.ellipse(baseCenterX, baseCenterY + 14, 210, 26, 0, 0, Math.PI * 2);
       ctx.fill();
   
       // -------------------------------------------------------------
       // 2. Kaki Penyangga Bundar Bertingkat (Chrome Tiered Pedestal Base)
       // -------------------------------------------------------------
       // Piringan Bawah Terlebar
-      const baseW = 168;
+      const baseW = 180;
       const baseH = 26;
       const baseGrad1 = ctx.createLinearGradient(baseCenterX - baseW, baseCenterY, baseCenterX + baseW, baseCenterY);
       baseGrad1.addColorStop(0, '#475569');
@@ -8437,12 +8527,26 @@
   const TtsEngine = {
     speaking: false,
     currentBtn: null,
+    speechRate: 0.85, // Default ramah anak kelas 1 SD (0.85x santai & artikulatif)
   
     isSupported() {
       return typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
     },
   
-    speak(text, lang = 'id', btnEl = null) {
+    setRate(rate) {
+      this.speechRate = Math.max(0.7, Math.min(1.2, rate));
+    },
+  
+    getRate() {
+      return this.speechRate || 0.85;
+    },
+  
+    toggleRate() {
+      this.speechRate = (this.speechRate <= 0.88) ? 1.0 : 0.85;
+      return this.speechRate;
+    },
+  
+    speak(text, lang = 'id', btnEl = null, customRate = null) {
       if (!this.isSupported()) {
         console.warn('[TTS] Web Speech API tidak didukung di peramban ini.');
         return;
@@ -8470,7 +8574,8 @@
       // Konfigurasi bahasa dan vokal ramah anak SD
       const isEn = (lang === 'en');
       utter.lang = isEn ? 'en-US' : 'id-ID';
-      utter.rate = isEn ? 0.88 : 0.85; // Bicara sedikit lebih pelan dan artikulatif untuk anak Kelas 1 SD
+      const baseRate = customRate || this.speechRate || 0.85;
+      utter.rate = isEn ? baseRate * 1.03 : baseRate; // Kecepatan artikulatif terkontrol
       utter.pitch = 1.08;              // Nada sedikit ceria bersahabat
   
       // Pilih suara optimal jika tersedia di browser
@@ -8525,8 +8630,24 @@
         this.currentBtn = null;
       }
       this.speaking = false;
+    },
+  
+    initVoices() {
+      if (this.isSupported()) {
+        try {
+          window.speechSynthesis.getVoices();
+          if (typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
+            window.speechSynthesis.onvoiceschanged = () => {
+              try { window.speechSynthesis.getVoices(); } catch (e) {}
+            };
+          }
+        } catch (e) {}
+      }
     }
   };
+  
+  TtsEngine.initVoices();
+  
   
   
 
@@ -8584,6 +8705,26 @@
         gain2.connect(ctx.destination);
         osc2.start(now + 0.12);
         osc2.stop(now + 0.45);
+      } catch (e) {}
+    },
+  
+    // Nada lembut mencoba lagi (Bumb-boing bersahabat tanpa mengecewakan anak)
+    playGentleWrong() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(349.23, now); // F4
+        osc.frequency.exponentialRampToValueAtTime(220.00, now + 0.28); // A3
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
       } catch (e) {}
     },
   
@@ -8898,6 +9039,19 @@
             <p class="lks-summary-text">
               ${topDesc}
             </p>
+            ${topic.keyPoints && topic.keyPoints.length > 0 ? `
+              <div style="margin-top:10px; background:#f0fdf4; border-left:3px solid #16a34a; padding:8px 12px; border-radius:4px; font-size:12px; color:#14532d;">
+                <strong>📌 ${isEn ? 'Key Concepts to Remember:' : 'Poin Kunci yang Harus Diingat:'}</strong>
+                <ul style="margin:4px 0 0; padding-left:18px;">
+                  ${topic.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+            ${topic.funFact ? `
+              <div style="margin-top:8px; background:#eff6ff; border-left:3px solid #2563eb; padding:8px 12px; border-radius:4px; font-size:12px; color:#1e3a8a;">
+                <strong>💡 ${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${topic.funFact}
+              </div>
+            ` : ''}
           </div>
   
           <!-- BAGIAN B: LEMBAR MISI MANDIRI (CHECKLIST & TULIS PENSIL) -->
@@ -10211,6 +10365,7 @@
             btn.querySelector('span').textContent = '❌';
             feedbackBanner.className = 'feedback-banner warning show';
             feedbackBanner.innerHTML = `${t('quizWrongFeedback', currentLang)} <u>${q.answer}</u>. ${currentLang === 'en' ? 'Keep trying!' : 'Semangat terus!'}`;
+            AudioFx.playGentleWrong();
           }
   
           this.answered = true;
@@ -11849,6 +12004,20 @@
               list = list.filter(p => p.island.toLowerCase().includes(normIsland));
             }
           }
+          if (this.provSearchQuery && this.provSearchQuery.trim()) {
+            const q = this.provSearchQuery.trim().toLowerCase();
+            const matchedCityProvinces = (GEO_DATA.famousNonCapitalCities || [])
+              .filter(c => c.name.toLowerCase().includes(q) || (c.desc && c.desc.toLowerCase().includes(q)))
+              .map(c => c.province.toLowerCase());
+  
+            list = list.filter(p =>
+              p.name.toLowerCase().includes(q) ||
+              p.capital.toLowerCase().includes(q) ||
+              p.island.toLowerCase().includes(q) ||
+              p.funFact.toLowerCase().includes(q) ||
+              matchedCityProvinces.includes(p.name.toLowerCase())
+            );
+          }
           const islands = [
             { id: 'Semua', name: isEn ? 'All Archipelago (38)' : 'Semua Nusantara (38)', count: 38 },
             { id: 'Sumatra', name: 'Sumatera', count: 10 },
@@ -11908,7 +12077,7 @@
                     <text x="0" y="-10.5" text-anchor="middle" font-size="7.5" font-weight="900" fill="#ef4444">U</text>
                   </g>
   
-                  <!-- 34 Authentic Administrative Provinces -->
+                  <!-- 38 Authentic Administrative Provinces -->
                   ${REAL_INDONESIA_PATHS.map(p => {
                     const isMatch = island === 'Semua' || (island === 'Maluku & Papua' ? (p.island === 'Maluku' || p.island === 'Papua') : p.island.toLowerCase().includes(normIsland));
                     const cls = `svg-province-interactive ${isMatch && island !== 'Semua' ? 'active-province' : ''}`;
@@ -11942,7 +12111,7 @@
                 <!-- Legend Bar di Bawah Peta 2D -->
                 <div class="peta-2d-legend-bar">
                   <span>💡 <strong>Tips:</strong> Klik batas provinsi langsung pada peta di atas untuk menjelajahi profilnya.</span>
-                  <span>🇮🇩 <strong>Atlas Vektor Asli:</strong> 34 Batas Provinsi Resmi · Garis Khatulistiwa · 3 Zona Waktu</span>
+                  <span>🇮🇩 <strong>Atlas Vektor Asli:</strong> 38 Provinsi Resmi Indonesia · Garis Khatulistiwa · 3 Zona Waktu</span>
                 </div>
               </div>
   
@@ -11954,6 +12123,23 @@
                     <span>${isl.count} ${isEn ? 'Provinces' : 'Provinsi'}</span>
                   </button>
                 `).join('')}
+              </div>
+  
+              <!-- Pencarian Cepat Provinsi & Kota Indonesia -->
+              <div class="geo-search-box-wrap" style="margin: 16px 0 18px;">
+                <div style="position:relative; width:100%;">
+                  <input type="text"
+                         id="geoProvSearchInput"
+                         class="geo-search-input"
+                         placeholder="${isEn ? '🔍 Search province, capital, or famous city (e.g. Malang, Padang, Wamena, Bandung)...' : '🔍 Cari provinsi, ibu kota, atau kota terkenal (contoh: Malang, Padang, Wamena, Denpasar, Bandung)...'}"
+                         value="${this.provSearchQuery || ''}"
+                         autocomplete="off"
+                         style="width:100%; padding:12px 18px 12px 42px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-size:13.5px; color:var(--ink); box-shadow:var(--shadow-sm); outline:none;">
+                  <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">🔍</span>
+                  ${this.provSearchQuery ? `
+                    <button id="btnClearProvSearch" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="Hapus pencarian">✕</button>
+                  ` : ''}
+                </div>
               </div>
   
               <!-- Ringkasan Wilayah Terpilih -->
@@ -12801,6 +12987,84 @@
           TtsEngine.speak(text, lang, btn);
         });
       });
+  
+      // 9. Pencarian Cepat Provinsi & Kota Indonesia Real-Time
+      const provSearchInput = this.container.querySelector('#geoProvSearchInput');
+      if (provSearchInput) {
+        provSearchInput.addEventListener('input', (e) => {
+          this.provSearchQuery = e.target.value;
+          const grid = this.container.querySelector('.provinces-grid');
+          if (grid) {
+            let filtered = GEO_DATA.provinces || [];
+            const isl = this.selectedMapIsland || 'Semua';
+            const nIsl = isl.toLowerCase().replace('sumatera', 'sumatra');
+            if (isl !== 'Semua') {
+              if (isl === 'Maluku & Papua') {
+                filtered = filtered.filter(p => p.island === 'Kepulauan Maluku' || p.island === 'Papua');
+              } else {
+                filtered = filtered.filter(p => p.island.toLowerCase().includes(nIsl));
+              }
+            }
+            const q = this.provSearchQuery.trim().toLowerCase();
+            if (q) {
+              const matchedCityProvinces = (GEO_DATA.famousNonCapitalCities || [])
+                .filter(c => c.name.toLowerCase().includes(q) || (c.desc && c.desc.toLowerCase().includes(q)))
+                .map(c => c.province.toLowerCase());
+  
+              filtered = filtered.filter(p =>
+                p.name.toLowerCase().includes(q) ||
+                p.capital.toLowerCase().includes(q) ||
+                p.island.toLowerCase().includes(q) ||
+                p.funFact.toLowerCase().includes(q) ||
+                matchedCityProvinces.includes(p.name.toLowerCase())
+              );
+            }
+            grid.innerHTML = filtered.map(p => `
+              <div class="province-card" id="provCard_${p.id}" data-province-name="${p.name}">
+                <div>
+                  <div class="province-header">
+                    <span class="province-no" style="font-size:22px; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--surface); border-radius:50%;">
+                      ${p.icon || '🏛️'}
+                    </span>
+                    <span class="subject-badge">${p.island}</span>
+                  </div>
+                  <h4 class="province-name">${p.name}</h4>
+                  <div class="capital-row">
+                    <span>🏛️ ${lang === 'en' ? 'Capital City' : 'Ibu Kota'}:</span>
+                    <strong>${p.capital}</strong>
+                  </div>
+                  <div class="country-landmark-box" style="margin-top:10px;">
+                    <span class="landmark-tag">✨ ${lang === 'en' ? 'Unique Fact' : 'Fakta Unik & Ciri Khas'}</span>
+                    <p class="landmark-text" style="font-size:12.5px; line-height:1.55; margin:4px 0 0;">${p.funFact}</p>
+                  </div>
+                </div>
+              </div>
+            `).join('');
+  
+            // Highlight matching SVG paths in real-time
+            const svgPaths = this.container.querySelectorAll('.svg-province-interactive');
+            svgPaths.forEach(path => {
+              const pName = path.getAttribute('data-province-name') || '';
+              const isMatch = !q || filtered.some(f => f.name.toLowerCase() === pName.toLowerCase());
+              path.style.opacity = isMatch ? '1' : '0.22';
+              path.style.stroke = (q && isMatch) ? '#ffb21b' : '#ffffff';
+              path.style.strokeWidth = (q && isMatch) ? '1.8' : '0.6';
+            });
+          }
+        });
+      }
+  
+      const btnClearSearch = this.container.querySelector('#btnClearProvSearch');
+      if (btnClearSearch) {
+        btnClearSearch.addEventListener('click', () => {
+          this.provSearchQuery = '';
+          const contentEl = this.container.querySelector('#geoRegionContent');
+          if (contentEl) {
+            contentEl.innerHTML = this.getRegionContentHtml('indonesia', lang);
+            this.attachRegionContentEvents();
+          }
+        });
+      }
     }
   
     // ==========================================================
@@ -12849,6 +13113,9 @@
           <button class="btn btn-tts" id="btnTtsSubjectIntro" data-tts-text="${title.replace(/"/g, '&quot;')}. ${subtitle.replace(/"/g, '&quot;')}" type="button" style="padding:8px 14px; font-size:13px;">
             🔊 ${isEn ? 'Listen Subject Overview' : 'Dengarkan Pengantar Mapel'}
           </button>
+          <button class="btn" id="btnToggleTtsSpeed" type="button" style="padding:8px 14px; font-size:13px; font-weight:750;" title="${isEn ? 'Adjust reading speech rate' : 'Atur kecepatan membaca suara'}">
+            ${TtsEngine.getRate() > 0.9 ? '⚡ 1.0x (Normal)' : '🐢 0.85x (Santai)'}
+          </button>
         </div>
   
         <div style="display:flex; flex-direction:column; gap:24px;">
@@ -12856,7 +13123,8 @@
             const topTitle = (isEn && top.titleEn) ? top.titleEn : top.title;
             const topDesc = (isEn && top.descEn) ? top.descEn : top.desc;
             const checklist = (isEn && top.checklistEn) ? top.checklistEn : top.checklist;
-            const ttsSpeechText = `${topTitle}. ${topDesc}`.replace(/"/g, '&quot;');
+            const funFactText = top.funFact ? (isEn ? '. Did you know: ' : '. Tahukah kamu: ') + top.funFact : '';
+            const ttsSpeechText = `${topTitle}. ${topDesc}${funFactText}`.replace(/"/g, '&quot;');
   
             return `
               <div class="quiz-box">
@@ -12879,6 +13147,26 @@
                 <p style="margin:0 0 16px; font-size:13.5px; color:var(--muted); line-height:1.6;">
                   ${topDesc}
                 </p>
+  
+                ${top.keyPoints && top.keyPoints.length > 0 ? `
+                  <div style="background:var(--card-bg, #fff); border:1px solid var(--border); border-left:4px solid var(--teal, #0d9488); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+                    <strong style="font-size:13px; color:var(--teal-soft-ink, #0f766e); display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                      📌 ${isEn ? 'Key Concepts to Master:' : 'Konsep Kunci Materi:'}
+                    </strong>
+                    <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.5;">
+                      ${top.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+  
+                ${top.funFact ? `
+                  <div style="background:var(--gold-soft, #fef9c3); border:1px solid var(--gold-border, #fef08a); border-radius:10px; padding:10px 14px; margin-bottom:16px; display:flex; align-items:flex-start; gap:10px;">
+                    <span style="font-size:20px; line-height:1;">💡</span>
+                    <div style="font-size:12.5px; color:var(--ink); line-height:1.5;">
+                      <strong style="color:var(--amber, #d97706);">${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}</strong> ${top.funFact}
+                    </div>
+                  </div>
+                ` : ''}
   
                 ${checklist ? `
                   <div style="background:var(--paper); border-radius:12px; padding:14px; margin-bottom:16px;">
@@ -12925,10 +13213,20 @@
         });
       });
   
+      // Event listener untuk tombol pengatur kecepatan suara
+      const btnSpeed = this.container.querySelector('#btnToggleTtsSpeed');
+      if (btnSpeed) {
+        btnSpeed.addEventListener('click', () => {
+          const newRate = TtsEngine.toggleRate();
+          btnSpeed.innerHTML = newRate > 0.9 ? '⚡ 1.0x (Normal)' : '🐢 0.85x (Santai)';
+          TtsEngine.speak(isEn ? `Speech speed set to ${newRate > 0.9 ? 'normal' : 'relaxed'}` : `Kecepatan suara diatur ke ${newRate > 0.9 ? 'normal' : 'santai'}`, lang);
+        });
+      }
+  
       // Render kuis di tiap topik
       subjectData.topics.forEach(top => {
-        // Untuk bahasa-inggris, gunakan top.activities aslinya sesuai user request ("kecuali pelajaran bahasa inggris")
-        const activities = (isEn && top.activitiesEn) ? top.activitiesEn : top.activities;
+        // Pastikan seluruh 10 butir pertanyaan selalu dimuat lengkap
+        const activities = (isEn && top.activitiesEn && top.activitiesEn.length >= (top.activities ? top.activities.length : 0)) ? top.activitiesEn : top.activities;
         if (activities) {
           const wrap = this.container.querySelector(`#act_${top.id}`);
           if (wrap) {

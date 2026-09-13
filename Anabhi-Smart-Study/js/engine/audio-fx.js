@@ -54,6 +54,26 @@ export const AudioFx = {
     } catch (e) {}
   },
 
+  // Nada lembut mencoba lagi (Bumb-boing bersahabat tanpa mengecewakan anak)
+  playGentleWrong() {
+    const ctx = this.getContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(349.23, now); // F4
+      osc.frequency.exponentialRampToValueAtTime(220.00, now + 0.28); // A3
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch (e) {}
+  },
+
   // Fanfare juara saat menyelesaikan kuis/topik
   playFanfare() {
     const ctx = this.getContext();
