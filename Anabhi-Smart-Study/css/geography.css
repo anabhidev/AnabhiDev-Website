@@ -43,18 +43,18 @@ Generated : 10 September 2026, 10:15:00
   color: #ffffff;
 }
 
-/* 1. 3D Globe Stage (Tampilan Besar & Peta Asli Fotorealistik) */
+/* 1. 3D Globe Stage (Tampilan Layar Penuh Megah & Penjelasan Lengkap di Bawah) */
 .globe-stage-card {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 26px;
-  padding: 36px 30px;
+  padding: 32px 28px;
   box-shadow: var(--shadow);
-  margin-bottom: 32px;
-  display: grid;
-  grid-template-columns: 1.32fr 0.68fr;
-  gap: 36px;
-  align-items: center;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 28px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -67,11 +67,11 @@ Generated : 10 September 2026, 10:15:00
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f1f5f9 55%, #e2e8f0 100%);
+  background: radial-gradient(circle at 50% 38%, #ffffff 0%, #f0f7ff 50%, #e2e8f0 100%);
   border-radius: 24px;
-  padding: 24px 20px 20px;
+  padding: 28px 24px 22px;
   border: 1px solid var(--line);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04), var(--shadow);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.04), var(--shadow);
   overflow: hidden;
   width: 100%;
   max-width: 100%;
@@ -79,15 +79,15 @@ Generated : 10 September 2026, 10:15:00
 }
 
 [data-theme="dark"] .globe-canvas-wrap {
-  background: radial-gradient(circle at 50% 35%, #1e293b 0%, #0f172a 65%, #020617 100%);
+  background: radial-gradient(circle at 50% 38%, #152238 0%, #0c1524 60%, #030712 100%);
   border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), var(--shadow);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.6), var(--shadow);
 }
 
 .globe-canvas-stack {
   position: relative;
   width: 100%;
-  max-width: min(100%, min(68vh, 780px));
+  max-width: min(100%, min(76vh, 880px));
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
@@ -439,17 +439,29 @@ Generated : 10 September 2026, 10:15:00
 
 .globe-controls {
   display: flex;
-  gap: 8px;
-  margin-top: 18px;
+  gap: 10px;
+  margin-top: 22px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 820px;
 }
 
 .globe-controls .btn {
-  padding: 8px 14px;
-  font-size: 12.5px;
-  min-height: 40px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 750;
+  min-height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-controls .btn:hover {
+  transform: translateY(-1px);
 }
 
 .globe-zoom-group {
@@ -462,73 +474,118 @@ Generated : 10 September 2026, 10:15:00
 }
 
 .globe-zoom-group .iconbtn {
-  height: 38px;
-  min-width: 38px;
+  height: 40px;
+  min-width: 40px;
   border-radius: 9px;
   font-size: 13px;
 }
 
 .globe-touch-tip {
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 12px;
   text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+.globe-info-copy {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+}
+
+.globe-info-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 960px;
+  margin-bottom: 22px;
 }
 
 .globe-info-copy h3 {
-  font-size: 24px;
-  margin: 0 0 12px;
+  font-size: clamp(22px, 2.5vw, 28px);
+  margin: 0 0 8px;
   font-weight: 850;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.4px;
+  color: var(--ink);
+  line-height: 1.28;
 }
 
 .globe-shape-badge {
   background: var(--teal-soft);
   color: var(--teal-soft-ink);
   border: 1px solid var(--teal);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 850;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+
+.globe-desc-text {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 960px;
 }
 
 .globe-highlight-list {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .globe-highlight-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  background: var(--paper);
-  border-radius: 14px;
-  padding: 12px 14px;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-sizing: border-box;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-highlight-item:hover {
+  border-color: var(--teal);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
 }
 
 .globe-highlight-item .icon {
-  font-size: 22px;
-  flex: 0 0 28px;
+  font-size: 26px;
+  flex: 0 0 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .globe-highlight-item strong {
   display: block;
-  font-size: 13.5px;
+  font-size: 14px;
+  font-weight: 800;
   color: var(--ink);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .globe-highlight-item p {
   margin: 0;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 /* 2. Filter Pulau & Search Bar */
@@ -865,25 +922,23 @@ Generated : 10 September 2026, 10:15:00
 
 @media (max-width: 950px) {
   .globe-stage-card {
-    grid-template-columns: 1fr;
     padding: 24px 18px;
-    gap: 24px;
+    gap: 22px;
   }
 }
 
 @media (max-width: 850px) {
   .globe-stage-card {
-    grid-template-columns: 1fr;
     padding: 20px 14px;
     gap: 20px;
   }
   .globe-canvas-wrap {
-    padding: 16px 12px;
+    padding: 18px 12px 16px;
     width: 100%;
     max-width: 100%;
   }
   .globe-canvas-stack {
-    max-width: min(100%, min(58vh, 500px));
+    max-width: min(100%, min(64vh, 600px));
     width: 100%;
   }
   #globeCanvas,
@@ -922,16 +977,25 @@ Generated : 10 September 2026, 10:15:00
 
 @media (max-width: 480px) {
   .globe-stage-card {
-    padding: 14px 8px;
-    border-radius: 18px;
+    padding: 14px 10px;
+    border-radius: 20px;
     gap: 16px;
   }
   .globe-canvas-wrap {
-    padding: 10px 6px;
-    border-radius: 14px;
+    padding: 12px 8px 12px;
+    border-radius: 16px;
   }
   .globe-canvas-stack {
-    max-width: min(100%, min(50vh, 360px));
+    max-width: min(100%, min(54vh, 380px));
+  }
+  .globe-controls .btn {
+    padding: 7px 11px;
+    font-size: 11.5px;
+    min-height: 38px;
+  }
+  .globe-highlight-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
   .interactive-map-panel {
     padding: 12px 6px;

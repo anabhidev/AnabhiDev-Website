@@ -177,13 +177,15 @@ export class SubjectViewComponent {
             </div>
 
             <div class="globe-info-copy">
-              <span class="globe-shape-badge">
-                <span>🪐</span> ${t('earthShapeBadge', lang)}
-              </span>
-              <h3>${(lang === 'en' && GEO_DATA.earthIntro.headingEn) ? GEO_DATA.earthIntro.headingEn : GEO_DATA.earthIntro.heading}</h3>
-              <p style="font-size:14px; color:var(--muted); line-height:1.65;">
-                ${(lang === 'en' && GEO_DATA.earthIntro.explanationEn) ? GEO_DATA.earthIntro.explanationEn : GEO_DATA.earthIntro.explanation}
-              </p>
+              <div class="globe-info-header">
+                <span class="globe-shape-badge">
+                  <span>🪐</span> ${t('earthShapeBadge', lang)}
+                </span>
+                <h3>${(lang === 'en' && GEO_DATA.earthIntro.headingEn) ? GEO_DATA.earthIntro.headingEn : GEO_DATA.earthIntro.heading}</h3>
+                <p class="globe-desc-text">
+                  ${(lang === 'en' && GEO_DATA.earthIntro.explanationEn) ? GEO_DATA.earthIntro.explanationEn : GEO_DATA.earthIntro.explanation}
+                </p>
+              </div>
 
               <div class="globe-highlight-list">
                 ${GEO_DATA.earthIntro.highlights.map(h => `
