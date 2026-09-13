@@ -2,8 +2,8 @@
 AnabhiDev-MP — Mahadaya Partners Website
 CSS · Company Profile
 Development · Anabhi Dev
-Version   : 1.3
-Generated : 8 September 2026, 10:20:00
+Version   : 1.6
+Generated : 13 September 2026, 15:45:00
 ================================================================ */
 
 /* ── Self-hosted fonts (SOP kategori 1) ──
@@ -102,6 +102,37 @@ Generated : 8 September 2026, 10:20:00
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { overflow-x: hidden; max-width: 100%; }
 html { scroll-behavior: smooth; }
+
+/* ── Slim Luxury Scrollbar (SOP v2.1 Kategori 13) ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.45) #03140C;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #03140C;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+  border: 1px solid rgba(3, 20, 12, 0.6);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ── Bespoke Text Selection ── */
+::selection {
+  background: #0E8F72;
+  color: #ffffff;
+}
+::-moz-selection {
+  background: #0E8F72;
+  color: #ffffff;
+}
 
 :focus-visible { outline: 2px solid var(--emerald-400); outline-offset: 2px; }
 
@@ -257,14 +288,6 @@ a:hover { color: var(--emerald-400); }
   color: var(--white);
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(3, 20, 12, 0.25);
-}
-
-.wa-fab {
-  background: #25d366 !important;
-  box-shadow: 0 4px 15px rgba(37,211,102,0.4) !important;
-}
-.wa-fab:hover {
-  background: #1ebe57 !important;
 }
 
 /* ── Header / Navigation ── */
@@ -495,65 +518,288 @@ a:hover { color: var(--emerald-400); }
   border-radius: 50%;
 }
 
-/* ── Hero beranda (varian) ──
-   Seluruh gaya blok ini sebelumnya ditulis sebagai atribut style="" inline di
-   index.html. Inline style mengalahkan media query mana pun, sehingga di HP
-   kecil (360x640) tombol CTA utama terdorong ke bawah fold dan tidak terlihat
-   tanpa scroll — masalah konversi, bukan sekadar estetika. Dipindah ke sini
-   supaya ritme vertikalnya bisa dirapatkan di layar pendek. */
-.hero-home { min-height: 90vh; min-height: 90dvh; }
-.hero-home .hero-overlay {
-  background: linear-gradient(90deg,
-    rgba(10, 20, 15, 0.95) 0%,
-    rgba(10, 20, 15, 0.70) 45%,
-    rgba(10, 20, 15, 0) 100%);
+/* ── Hero beranda (Varian Fusi D + U: Editorial Slider & Signature Bar) ──
+   Perpaduan kemewahan editorial Varian D (signature bar di dasar banner,
+   aksen hairline emas, micro-badges kredibilitas) dengan fungsionalitas
+   slider multi-slide Varian U (konten rata kiri, transisi foto halus,
+   titik navigasi minimalis). */
+.hero-home {
+  min-height: 92vh;
+  min-height: 92dvh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
 }
-.hero-home .hero-content { max-width: 650px; padding-top: 80px; text-align: left; }
+.hero-slides {
+  position: relative;
+  width: 100%;
+  min-height: inherit;
+  display: flex;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2;
+}
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-slide-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+  transition: transform 7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.hero-slide.active .hero-slide-bg img {
+  transform: scale(1);
+}
+.hero-home .hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    rgba(3, 20, 12, 0.96) 0%,
+    rgba(3, 20, 12, 0.82) 48%,
+    rgba(3, 20, 12, 0.38) 100%);
+}
+.hero-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: calc(var(--header-h) + 2rem);
+  padding-bottom: 5.5rem;
+}
+.hero-home .hero-content {
+  max-width: 680px;
+  text-align: left;
+  padding: 0;
+}
 .hero-home .badge {
-  background: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  margin-bottom: 25px;
-  letter-spacing: 2px;
-  font-weight: 600;
-  font-size: 0.8rem;
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.12);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: var(--gold-light);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  margin-bottom: 1.25rem;
+  letter-spacing: 2.2px;
+  font-weight: 700;
+  font-size: 0.76rem;
   padding: 6px 16px;
+  border-radius: 50px;
+  text-transform: uppercase;
 }
 .hero-home h1 {
-  font-size: clamp(2.1rem, 6vw, 3.8rem);
-  line-height: 1.15;
-  margin-bottom: 1.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+  line-height: 1.14;
+  color: var(--white);
+  margin-bottom: 0.75rem;
   letter-spacing: -0.5px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
+}
+/* Aksen garis emas khas Editorial Maison (D) */
+.hero-rule {
+  display: block;
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  position: relative;
+  margin: 1.25rem 0 1.5rem;
+}
+.hero-rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -2.5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
 }
 .hero-home .lead {
-  font-size: 1.15rem;
-  max-width: 550px;
-  color: var(--slate-200);
+  font-size: 1.12rem;
+  max-width: 580px;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.8;
   font-weight: 300;
-  margin-bottom: 2.8rem;
+  margin-bottom: 2.25rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
-.hero-home .hero-actions { justify-content: flex-start; gap: 1.5rem; }
+.hero-home .hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 .hero-home .btn-gold {
-  padding: 16px 32px;
+  padding: 15px 32px;
   font-size: 0.9rem;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
 }
 
-/* Layar pendek / HP kecil — rapatkan ritme vertikal supaya CTA utama tetap
-   berada di atas fold pada 360x640. */
-@media (max-height: 720px), (max-width: 480px) {
-  .hero-home .hero-content { padding-top: 24px; }
-  .hero-home .badge { margin-bottom: 14px; font-size: 0.72rem; padding: 5px 13px; letter-spacing: 1.5px; }
-  .hero-home h1 { margin-bottom: 0.85rem; line-height: 1.12; }
-  .hero-home .lead { margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.65; }
-  .hero-home .hero-actions { gap: 1rem; }
-  .hero-home .btn-gold { padding: 14px 24px; }
+/* Navigasi Dots (Varian U) */
+.hero-nav {
+  position: absolute;
+  bottom: 5.5rem;
+  right: clamp(1.5rem, 5vw, 4rem);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.35s var(--ease);
+}
+.hero-dot:hover {
+  border-color: var(--gold);
+  transform: scale(1.15);
+}
+.hero-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  width: 32px;
+  border-radius: 12px;
+}
+
+/* Signature Bar di Dasar Banner (Varian D) */
+.hero-sig {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  border-top: 1px solid rgba(212, 175, 55, 0.28);
+  background: linear-gradient(0deg, rgba(2, 12, 7, 0.96) 0%, rgba(3, 20, 12, 0.88) 70%, rgba(3, 20, 12, 0.5) 100%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 14px 0;
+}
+.hero-sig-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(14px, 2.8vw, 38px);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.hero-sig-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.hero-sig-item b {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+.hero-sig-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+/* Responsive breakpoint HP & Layar Pendek */
+@media (max-width: 992px) {
+  .hero-sig-row {
+    justify-content: center;
+    gap: 8px 18px;
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+  .hero-nav {
+    bottom: 5.6rem;
+    right: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .hero-home {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .hero-container {
+    padding-top: calc(var(--header-h) + 1.25rem);
+    padding-bottom: 7.5rem;
+  }
+  .hero-home h1 {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+    line-height: 1.18;
+  }
+  .hero-home .lead {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.6rem;
+  }
+  .hero-nav {
+    bottom: 5.8rem;
+    right: 1.25rem;
+    left: auto;
+    z-index: 15;
+  }
+  .hero-sig {
+    padding: 10px 0;
+  }
+  .hero-sig-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    padding-right: 70px; /* Jarak aman agar tidak tertutup tombol WhatsApp melayang (.wa-fab) */
+  }
+  .hero-sig-item {
+    white-space: normal;
+    gap: 6px;
+  }
+  .hero-sig-dot {
+    display: none;
+  }
+}
+@media (max-height: 700px) and (max-width: 480px) {
+  .hero-container {
+    padding-top: calc(var(--header-h) + 0.5rem);
+    padding-bottom: 6.8rem;
+  }
+  .hero-home .badge { margin-bottom: 10px; font-size: 0.7rem; padding: 4px 12px; }
+  .hero-rule { margin: 0.85rem 0 1rem; }
+  .hero-home h1 { margin-bottom: 0.6rem; font-size: 1.7rem; }
+  .hero-home .lead { margin-bottom: 1.25rem; font-size: 0.88rem; line-height: 1.55; }
+  .hero-home .btn-gold { padding: 12px 22px; font-size: 0.82rem; }
 }
 
 /* Sub-page hero (shorter) */
@@ -624,7 +870,7 @@ a:hover { color: var(--emerald-400); }
 .section-header .subtitle {
   max-width: 600px;
   margin: 0 auto;
-  color: var(--slate-500);
+  color: var(--slate-600);
   font-size: 1.05rem;
 }
 .bg-dark .section-header .subtitle { color: rgba(255, 255, 255, 0.78); }
@@ -642,7 +888,8 @@ a:hover { color: var(--emerald-400); }
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
 }
 .bg-dark .service-card .num {
-  color: rgba(212, 175, 55, 0.35);
+  color: var(--gold-light);
+  opacity: 0.85;
 }
 .bg-dark .service-card h3 {
   color: var(--white);
@@ -657,7 +904,7 @@ a:hover { color: var(--emerald-400); }
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
 }
 .bg-dark .testimonial-card::before {
-  color: rgba(212, 175, 55, 0.22);
+  color: rgba(212, 175, 55, 0.35);
 }
 .bg-dark .testimonial-text {
   color: var(--white);
@@ -666,7 +913,7 @@ a:hover { color: var(--emerald-400); }
   color: var(--gold-light);
 }
 .bg-dark .testimonial-role {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Dark Ecosystem Cards */
@@ -680,6 +927,9 @@ a:hover { color: var(--emerald-400); }
   transform: translateY(-6px);
   border-color: #5eead4;
   box-shadow: 0 24px 48px rgba(14, 143, 114, 0.25);
+}
+.bg-dark .ecosystem-card .ecosystem-badge {
+  color: var(--gold-light);
 }
 .bg-dark .ecosystem-card .ecosystem-title {
   color: var(--white);
@@ -980,17 +1230,20 @@ a:hover { color: var(--emerald-400); }
 .service-card:focus-within::before { transform: scaleX(1); }
 .service-card .num {
   font-family: 'Playfair Display', serif;
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   font-weight: 700;
-  color: rgba(212, 175, 55, 0.15); /* very soft gold */
+  color: var(--gold-deep); /* kontras 4,8:1 di atas putih — lolos WCAG AA */
   line-height: 1;
-  margin-bottom: 1rem;
-  transition: color 0.5s var(--ease);
+  margin-bottom: 0.85rem;
+  transition: all 0.4s var(--ease);
 }
 .service-card:hover .num,
-.service-card:focus-within .num { color: rgba(212, 175, 55, 0.45); }
+.service-card:focus-within .num {
+  color: var(--emerald-600);
+  transform: translateY(-2px);
+}
 .service-card h3 { margin-bottom: 1rem; color: var(--emerald-800); font-weight: 700; letter-spacing: -0.2px; }
-.service-card p { color: var(--slate-500); font-size: 0.95rem; margin-bottom: 0; line-height: 1.8; }
+.service-card p { color: var(--slate-600); font-size: 0.95rem; margin-bottom: 0; line-height: 1.8; }
 
 /* ── Why Choose Us ── */
 .why-grid {
@@ -1015,14 +1268,15 @@ a:hover { color: var(--emerald-400); }
   border-color: var(--gold);
   transform: scale(1.05);
 }
-.why-icon svg { width: 32px; height: 32px; stroke: var(--gold); fill: none; stroke-width: 1.2; transition: all 0.4s var(--ease); }
-.why-item:hover .why-icon svg { stroke-width: 1.5; }
+.why-icon svg { width: 32px; height: 32px; stroke: var(--gold-deep); fill: none; stroke-width: 1.6; transition: all 0.4s var(--ease); }
+.why-item:hover .why-icon svg { stroke-width: 1.8; }
+.bg-dark .why-icon svg { stroke: var(--gold); }
 /* h3 (not h4) so the heading sequence never skips a level — see SOP kategori 2.
    Explicit font-size keeps the previous h4 sizing. */
 .why-item h3 { font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--slate-900); }
 .bg-dark .why-item h3 { color: var(--white); }
-.why-item p { color: var(--slate-500); font-size: 0.95rem; }
-.bg-dark .why-item p { color: rgba(255,255,255,0.7); }
+.why-item p { color: var(--slate-600); font-size: 0.95rem; line-height: 1.7; }
+.bg-dark .why-item p { color: rgba(255,255,255,0.78); }
 
 /* ── Team ── */
 .team-grid {
@@ -1077,7 +1331,7 @@ a:hover { color: var(--emerald-400); }
   color: var(--emerald-800);
 }
 .team-info p {
-  color: var(--slate-500);
+  color: var(--slate-600);
   font-size: 0.88rem;
   font-weight: 500;
   margin: 0;
@@ -1186,6 +1440,8 @@ a:hover { color: var(--emerald-400); }
 
 /* ── Testimonial ── */
 .testimonial-section { background: #FAFAFA; }
+.testimonial-section.bg-dark,
+.bg-dark.testimonial-section { background: var(--surface-dark); }
 .testimonial-card {
   background: var(--white);
   padding: 4rem 3rem;
@@ -1228,7 +1484,7 @@ a:hover { color: var(--emerald-400); }
   font-size: 0.85rem;
 }
 .testimonial-role { 
-  color: var(--gold); 
+  color: var(--gold-deep); 
   font-size: 0.85rem; 
   margin-top: 5px;
 }
@@ -1295,6 +1551,8 @@ select.form-control { cursor: pointer; }
   color: rgba(255,255,255,0.68);
   padding: 5rem 0 2rem;
   border-top: 1px solid rgba(212,175,55,0.22);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 .footer-grid {
   display: grid;
@@ -1323,7 +1581,7 @@ select.form-control { cursor: pointer; }
 }
 .footer-links { list-style: none; }
 .footer-links li { margin-bottom: 0.75rem; }
-.footer-links a { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+.footer-links a { color: rgba(255,255,255,0.76); font-size: 0.9rem; }
 .footer-links a:hover { color: var(--gold); }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
@@ -1477,7 +1735,7 @@ select.form-control { cursor: pointer; }
 }
 
 @media (max-width: 768px) {
-  .hero { min-height: 85vh; min-height: 85dvh; }
+  .hero:not(.hero-home) { min-height: 85vh; min-height: 85dvh; }
   .hero-content { padding: 2rem 0; }
   .hero-decoration { display: none; }
 
@@ -1503,7 +1761,7 @@ select.form-control { cursor: pointer; }
 .top-bar .info-item svg { width: 14px; height: 14px; color: var(--gold); }
 
 /* Feature Strip */
-.feature-strip-wrapper { position: relative; z-index: 10; margin-top: -60px; padding: 0 1rem; }
+.feature-strip-wrapper { position: relative; z-index: 10; margin-top: 0; padding: 3.5rem 1rem 1rem; }
 .feature-strip { display: flex; background: var(--white); box-shadow: 0 28px 60px -28px rgba(3, 20, 12, 0.28); border-radius: 10px; overflow: hidden; max-width: 1200px; margin: 0 auto; border: 1px solid rgba(212,175,55,0.22); }
 .feature-strip-item { flex: 1; padding: 4rem 2rem; border-right: 1px solid rgba(212,175,55,0.18); text-align: center; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), background 0.4s var(--ease); background: var(--white); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
 .feature-strip-item:last-child { border-right: none; }
@@ -2137,7 +2395,7 @@ select.form-control { cursor: pointer; }
 }
 .timeline-desc {
   font-size: 0.75rem;
-  color: var(--slate-500);
+  color: var(--slate-600);
   line-height: 1.45;
   margin: 0;
 }
@@ -2301,7 +2559,7 @@ select.form-control { cursor: pointer; }
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--slate-500);
+  color: var(--slate-600);
   margin-bottom: 0.25rem;
 }
 .iso-fit-box span {
@@ -2408,7 +2666,7 @@ select.form-control { cursor: pointer; }
 }
 .industry-subtitle {
   font-size: 0.8rem;
-  color: var(--slate-500);
+  color: var(--slate-600);
   margin-bottom: 1.25rem;
   line-height: 1.4;
   min-height: 2.3em;
@@ -2559,7 +2817,8 @@ select.form-control { cursor: pointer; }
   accent-color: #0E8F72;
   cursor: pointer;
 }
-.readiness-item label {
+.readiness-item label,
+.readiness-item span {
   cursor: pointer;
   font-size: 0.95rem;
   color: var(--slate-800);

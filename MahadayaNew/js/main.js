@@ -2,23 +2,43 @@
 AnabhiDev-MP — Mahadaya Partners Website
 JavaScript · Main Script
 Development · Anabhi Dev
-Version   : 1.3
-Generated : 8 September 2026, 10:20:00
+Version   : 1.4
+Generated : 13 September 2026, 10:00:00
 ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ─── Header Scroll Effect ───
+  // ─── Header Scroll & Back-to-Top (Unified RAF-Throttled Scroll Listener) ───
   const header = document.querySelector('.site-header');
-  const handleScroll = () => {
-    if (window.scrollY > 60) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+  const backToTop = document.querySelector('.back-to-top');
+
+  let scrollTicking = false;
+  const updateScrollState = () => {
+    scrollTicking = false;
+    const y = window.scrollY;
+    if (header) {
+      if (y > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+    if (backToTop) {
+      if (y > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
     }
   };
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Run on load
+
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateScrollState);
+    }
+  }, { passive: true });
+  updateScrollState(); // Run on load
 
   // ─── Mobile Navigation Toggle ───
   const toggleBtn = document.querySelector('.mobile-toggle');
@@ -138,17 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(updateCounter);
   }
 
-  // ─── Back to Top Button ───
-  const backToTop = document.querySelector('.back-to-top');
+  // ─── Back to Top Click Action ───
   if (backToTop) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 500) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    }, { passive: true });
-
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -444,5 +455,73 @@ document.addEventListener('DOMContentLoaded', () => {
       link.classList.add('active');
     }
   });
+
+  // ─── Hero Slider Carousel (Fusi Varian D Editorial + Varian U Slider) ───
+  const heroSlider = document.querySelector('#hero-carousel');
+  if (heroSlider) {
+    const slides = heroSlider.querySelectorAll('.hero-slide');
+    const dots = heroSlider.querySelectorAll('.hero-dot');
+    let currentIdx = 0;
+    let autoTimer = null;
+    const duration = 6500; // 6.5 detik per slide
+
+    const showSlide = (idx) => {
+      currentIdx = (idx + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        const isActive = i === currentIdx;
+        slide.classList.toggle('active', isActive);
+        slide.setAttribute('aria-hidden', !isActive);
+      });
+      dots.forEach((dot, i) => {
+        const isActive = i === currentIdx;
+        dot.classList.toggle('active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    };
+
+    const nextSlide = () => showSlide(currentIdx + 1);
+
+    const startAutoPlay = () => {
+      stopAutoPlay();
+      autoTimer = setInterval(nextSlide, duration);
+    };
+
+    const stopAutoPlay = () => {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    };
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        showSlide(idx);
+        startAutoPlay();
+      });
+    });
+
+    // Pause on hover / touch
+    heroSlider.addEventListener('mouseenter', stopAutoPlay);
+    heroSlider.addEventListener('mouseleave', startAutoPlay);
+    heroSlider.addEventListener('touchstart', stopAutoPlay, { passive: true });
+    heroSlider.addEventListener('touchend', startAutoPlay, { passive: true });
+
+    // Keyboard accessibility
+    heroSlider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        showSlide(currentIdx + 1);
+        startAutoPlay();
+      } else if (e.key === 'ArrowLeft') {
+        showSlide(currentIdx - 1);
+        startAutoPlay();
+      }
+    });
+
+    // Jalankan auto-play hanya jika user tidak meminta reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion && slides.length > 1) {
+      startAutoPlay();
+    }
+  }
 
 });
