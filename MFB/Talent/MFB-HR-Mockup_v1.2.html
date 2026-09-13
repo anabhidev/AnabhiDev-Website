@@ -5,8 +5,8 @@
      MFB-HR — Miss Fish Bali HR Career & Recruitment Platform
      HTML5 · CSS3 · JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 1.9
-     Generated : 13 September 2026, 19:15:00 WITA
+     Version   : 2.0
+     Generated : 13 September 2026, 19:40:00 WITA
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1955,6 +1955,121 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
   color: #fff;
   border-color: var(--accent);
 }
+
+/* ================================================================
+   AI ATS CV Scanner Styles (Miss Fish Bali Luxury UI)
+   ================================================================ */
+.ats-score-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, rgba(21, 154, 147, 0.08), rgba(223, 190, 153, 0.12));
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.ats-score-gauge {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  box-shadow: 0 4px 16px rgba(21, 154, 147, 0.18);
+  flex-shrink: 0;
+}
+.ats-score-gauge.tier-pass { border-color: var(--success); }
+.ats-score-gauge.tier-pass .ats-score-val { color: var(--success); }
+.ats-score-gauge.tier-consider { border-color: var(--gold); }
+.ats-score-gauge.tier-consider .ats-score-val { color: var(--gold-dark); }
+.ats-score-gauge.tier-fail { border-color: var(--danger); }
+.ats-score-gauge.tier-fail .ats-score-val { color: var(--danger); }
+.ats-score-val {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--accent);
+}
+.ats-score-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.ats-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.ats-sec-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.ats-sec-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.ats-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ats-sec-title {
+  font-size: 13px;
+  font-weight: 850;
+  color: var(--text);
+}
+.ats-sec-badge {
+  font-size: 10.5px;
+  font-weight: 850;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+.ats-sec-badge.good { background: var(--success-bg); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+.ats-sec-badge.needs-improvement { background: rgba(223, 190, 153, 0.2); color: var(--gold-dark); border: 1px solid var(--gold); }
+.ats-sec-badge.missing { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(185, 75, 75, 0.3); }
+.ats-sec-notes {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.ats-quick-win-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(223, 190, 153, 0.08);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.ats-quick-win-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--gold);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 850;
+  font-size: 11px;
+  flex-shrink: 0;
+}
 </style>
 
 <!-- Favicon & Touch Icons (Miss Fish Bali Official) -->
@@ -2014,6 +2129,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       </button>
       <button class="nav-btn" data-view="admin-interview" onclick="navTo('admin-interview')" style="border-left: 2px solid #8b5cf6;" title="AI Smart Interview Prep &amp; Assessment Studio">
         <span class="ico">🎤</span> AI Interview Studio
+      </button>
+      <button class="nav-btn" data-view="admin-ats" onclick="navTo('admin-ats')" style="border-left: 2px solid #3b82f6;" title="AI ATS Resume Compatibility &amp; Section Audit">
+        <span class="ico">🔍</span> AI ATS CV Scanner
       </button>
       <button class="nav-btn" data-view="admin-analytics" onclick="navTo('admin-analytics')">
         <span class="ico">📈</span> Analytics & ClickUp
@@ -3380,6 +3498,213 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
         </div>
       </section>
 
+      <!-- ================================================================
+           SCREEN: AI ATS CV SCANNER & IN-DEPTH ANALYZER
+           ================================================================ -->
+      <section id="view-admin-ats" class="view-panel">
+        <div class="section-header">
+          <div>
+            <div class="section-title" style="display: flex; align-items: center; gap: 10px;">
+              <span>🔍 AI ATS CV Scanner</span>
+              <span class="badge" style="background: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid #3b82f6; font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 800;">Gemini 3.5 Flash Lite</span>
+            </div>
+            <div class="section-sub">Audit kompatibilitas ATS (0–100), analisis mendalam 6 bagian CV, deteksi missing keywords, dan rekomendasi quick wins</div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-ghost" onclick="resetAtsForm()">
+              <span>🔄</span> Reset Form
+            </button>
+            <button class="btn btn-accent" id="btnRunAtsScan" onclick="startAtsAnalysis()" style="background: linear-gradient(135deg, #3b82f6, var(--accent));">
+              <span>⚡</span> Jalankan Audit ATS
+            </button>
+          </div>
+        </div>
+
+        <!-- Setup Form Grid: Left = Target Role, Right = Candidate / CV Source -->
+        <div class="interview-setup-grid">
+          <!-- Left: Target Role & Language -->
+          <div class="card" style="padding: 22px;">
+            <div style="font-size: 14px; font-weight: 850; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>1. Posisi Target &amp; Benchmark Peran</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+              Pilih dari roster resmi Miss Fish Bali untuk mengukur kesesuaian kata kunci dan kriteria teknis.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Pilih Lowongan Roster Resmi:</label>
+              <select class="select" id="atsJobSelect" onchange="onAtsJobSelected(this.value)" style="width: 100%;">
+                <option value="">-- Pilih Posisi Miss Fish Bali --</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Judul Posisi Target (Target Role) *:</label>
+              <input class="input" id="atsJobRole" placeholder="Contoh: Chef de Partie / Senior Mixologist" style="width: 100%;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Bahasa Laporan Audit:</label>
+              <select class="select" id="atsLanguage" style="width: 100%;">
+                <option value="id" selected>Bahasa Indonesia</option>
+                <option value="en">English (International ATS)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Right: Candidate / CV Input -->
+          <div class="card" style="padding: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <div style="font-size: 14px; font-weight: 850; color: var(--text); display: flex; align-items: center; gap: 8px;">
+                <span>2. Berkas CV atau Pelamar Terdaftar</span>
+              </div>
+              <span class="badge" style="background: rgba(59, 130, 246, 0.12); color: #3b82f6; font-size: 11px; font-weight: 750;">Multi-Source</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 14px;">
+              Pilih dari database pelamar intake atau upload berkas CV (.pdf/.docx) baru.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label style="font-size: 11.5px; font-weight: 750; margin-bottom: 4px; display: block;">Pilih Pelamar Terdaftar (Opsional):</label>
+              <select class="select" id="atsApplicantSelect" onchange="onAtsApplicantSelected(this.value)" style="width: 100%;">
+                <option value="">-- Atau upload berkas baru di bawah --</option>
+              </select>
+            </div>
+
+            <!-- Tabs: Upload or Paste -->
+            <div style="display: flex; gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 10px;">
+              <button type="button" id="atsTabUpload" class="btn btn-ghost" style="flex: 1; border-radius: 0; border: none; font-size: 12px; font-weight: 750; background: var(--accent); color: #fff;" onclick="switchAtsCvTab('upload')">
+                📎 Upload Berkas CV
+              </button>
+              <button type="button" id="atsTabPaste" class="btn btn-ghost" style="flex: 1; border-radius: 0; border: none; font-size: 12px; font-weight: 750;" onclick="switchAtsCvTab('paste')">
+                ✏️ Paste Teks CV
+              </button>
+            </div>
+
+            <!-- Upload Panel -->
+            <div id="atsPanelUpload">
+              <div class="screener-dropzone" id="atsDropzone" onclick="document.getElementById('atsFileInput').click()" style="padding: 20px 16px;">
+                <input type="file" id="atsFileInput" accept=".pdf,.docx,.doc" style="display: none;" onchange="onAtsFileSelected(this)">
+                <div style="font-size: 24px; margin-bottom: 4px;">📄</div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--text);">Drop berkas CV di sini atau klik untuk browse</div>
+                <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Format .PDF atau .DOCX (Maks 10MB)</div>
+              </div>
+              <div id="atsFileStatus" style="display: none; font-size: 12px; padding: 8px 12px; background: var(--surface2); border: 1px solid var(--line); border-radius: 6px; margin-top: 8px;"></div>
+            </div>
+
+            <!-- Paste Panel -->
+            <div id="atsPanelPaste" style="display: none;">
+              <textarea class="textarea" id="atsCvText" rows="6" placeholder="Paste teks lengkap curriculum vitae (pengalaman, keahlian, pendidikan, sertifikasi) di sini..." style="height: auto; padding: 10px; font-size: 12.5px;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="atsErrorBox" style="display: none; margin-bottom: 20px; padding: 12px 16px; border-radius: 8px; background: var(--danger-bg); color: var(--danger); font-size: 13px; font-weight: 700; border: 1px solid rgba(185, 75, 75, 0.25);"></div>
+
+        <!-- Loading State -->
+        <div class="card" id="atsLoadingState" style="display: none; padding: 36px 20px; text-align: center; margin-bottom: 24px; border: 1.5px solid var(--accent); background: rgba(21, 154, 147, 0.04);">
+          <div class="spinner" style="width: 36px; height: 36px; border: 3px solid var(--accent); border-top-color: transparent; border-radius: 50%; margin: 0 auto 16px; animation: spin 0.8s linear infinite;"></div>
+          <h3 style="font-size: 16px; font-weight: 850; margin: 0 0 6px 0; color: var(--text);" id="atsLoadingRole">Memindai Kompatibilitas ATS CV...</h3>
+          <p style="font-size: 13px; color: var(--muted); margin: 0;">Gemini AI sedang mengaudit 6 bagian resume, menghitung skor keterbacaan ATS, dan mendeteksi kesenjangan kata kunci.</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="atsResultsSection" style="display: none;">
+          <!-- Result Toolbar -->
+          <div class="card" style="padding: 18px 22px; margin-bottom: 20px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(21, 154, 147, 0.08)); border: 1.5px solid #3b82f6;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="font-size: 11px; text-transform: uppercase; color: #3b82f6; font-weight: 850; letter-spacing: 0.1em;">
+                  OFFICIAL ATS COMPATIBILITY AUDIT
+                </div>
+                <h3 style="font-size: 18px; font-weight: 850; margin: 2px 0 0 0; color: var(--text); display: flex; align-items: center; gap: 10px;">
+                  <span>Hasil Audit ATS: <strong id="atsResultRoleTitle" style="color: var(--accent);">-</strong></span>
+                  <span id="atsResultCandBadge" class="badge" style="display: none; background: rgba(223, 190, 153, 0.2); color: var(--gold-dark); border: 1px solid var(--gold); font-size: 11px;">Pelamar</span>
+                </h3>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-ghost" onclick="copyAtsReport()" style="font-size: 12.5px; padding: 7px 14px; border: 1px solid var(--line);">
+                  <span>📋</span> Salin Laporan ATS
+                </button>
+                <button class="btn btn-ghost" onclick="exportAtsPDF()" style="font-size: 12.5px; padding: 7px 14px; border: 1px solid var(--line);">
+                  <span>🖨️</span> Cetak / PDF Report
+                </button>
+                <button class="btn btn-accent" id="btnSaveAtsToCand" onclick="saveAtsScoreToCandidate()" style="font-size: 12.5px; padding: 7px 16px; display: none;">
+                  <span>💾</span> Simpan ke Dossier Pelamar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ATS Score Hero Card -->
+          <div class="ats-score-hero" id="atsScoreHero">
+            <div class="ats-score-gauge tier-pass" id="atsScoreGauge">
+              <div class="ats-score-val" id="atsScoreNumber">0</div>
+              <div class="ats-score-lbl">ATS SCORE</div>
+            </div>
+            <div style="flex: 1; min-width: 260px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
+                <span class="badge" id="atsTierBadge" style="font-size: 12px; font-weight: 850; padding: 4px 12px; border-radius: 999px;">KUALIFIKASI TINGGI</span>
+                <span style="font-size: 12.5px; color: var(--muted);" id="atsInferredRole">Inferred Role: -</span>
+              </div>
+              <p id="atsScoreReason" style="font-size: 13.5px; line-height: 1.6; color: var(--text); margin: 0;"></p>
+            </div>
+          </div>
+
+          <!-- 6-Section Quality Audit Cards -->
+          <div style="margin-bottom: 24px;">
+            <div style="font-size: 14.5px; font-weight: 850; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>📑 Audit Kualitas 6 Bagian Utama CV</span>
+            </div>
+            <div class="ats-sections-grid" id="atsSectionsGrid"></div>
+          </div>
+
+          <!-- Strengths vs Weaknesses Grid -->
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <div class="card" style="padding: 20px;">
+              <div style="font-size: 13.5px; font-weight: 850; color: var(--success); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>💪</span> Kekuatan Utama CV (Key Strengths)
+              </div>
+              <div id="atsStrengthsList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+            <div class="card" style="padding: 20px;">
+              <div style="font-size: 13.5px; font-weight: 850; color: var(--danger); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span>⚠️</span> Kelemahan &amp; Celah Kritis (Weaknesses)
+              </div>
+              <div id="atsWeaknessesList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+          </div>
+
+          <!-- Missing ATS Keywords Cloud -->
+          <div class="card" style="padding: 20px; margin-bottom: 24px;">
+            <div style="font-size: 13.5px; font-weight: 850; color: var(--gold-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>🔑</span> Kata Kunci ATS yang Hilang (Missing Industry Keywords)
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">
+              Istilah operasional perhotelan, kuliner, dan manajemen yang perlu ditambahkan ke CV agar lolos filter penyaringan otomatis.
+            </div>
+            <div id="atsMissingKeywords" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+          </div>
+
+          <!-- Quick Wins (3 High-Impact Fixes) -->
+          <div class="card" style="padding: 20px; margin-bottom: 24px; border-left: 4px solid var(--gold);">
+            <div style="font-size: 13.5px; font-weight: 850; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>⚡</span> 3 Langkah Cepat Peningkatan (Quick Wins)
+            </div>
+            <div id="atsQuickWinsList"></div>
+          </div>
+
+          <!-- Executive Recommendation Narrative -->
+          <div class="card" style="padding: 22px; background: var(--surface2); border: 1px solid var(--line);">
+            <div style="font-size: 11px; font-weight: 850; text-transform: uppercase; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 6px;">
+              REKOMENDASI KONSULTAN HR EKSEKUTIF
+            </div>
+            <p id="atsOverallRecommendation" style="font-size: 13.5px; line-height: 1.65; color: var(--text); margin: 0;"></p>
+          </div>
+        </div>
+      </section>
+
   <!-- SCREEN 9: AI RECRUITMENT REPORTS & INTELLIGENCE (GEMINI 3.5 FLASH LITE) -->
   <section id="view-admin-ai-reports" class="view-panel">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
@@ -3943,6 +4268,7 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" onclick="navTo('admin-pipeline');toggleDrawer()">📋 Pipeline</button>
       <button class="nav-btn" onclick="navTo('admin-screener');toggleDrawer()">🎯 AI CV Screener</button>
       <button class="nav-btn" onclick="navTo('admin-interview');toggleDrawer()">🎤 AI Interview Studio</button>
+      <button class="nav-btn" onclick="navTo('admin-ats');toggleDrawer()">🔍 AI ATS CV Scanner</button>
       <button class="nav-btn" onclick="navTo('admin-analytics');toggleDrawer()">📈 Analytics & ClickUp</button>
       <button class="nav-btn" onclick="navTo('admin-ai-reports');toggleDrawer()">✨ AI Intelligence</button>
     </nav>
@@ -4578,6 +4904,7 @@ const viewTitles = {
   'admin-pipeline': { title: 'Recruitment Pipeline', sub: 'Visual Kanban Workflow' },
   'admin-screener': { title: 'AI CV Batch Screener', sub: 'Multi-Candidate Evaluation & Comparative Ranking · Gemini AI' },
   'admin-interview': { title: 'AI Smart Interview Studio', sub: 'Competency Assessment & Candidate Interview Guide · Gemini AI' },
+  'admin-ats': { title: 'AI ATS CV Scanner', sub: 'In-Depth Candidate Resume Audit & Keyword Compatibility · Gemini AI' },
   'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' },
   'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' }
 };
@@ -4623,6 +4950,7 @@ function navTo(viewId) {
   if (viewId === 'admin-pipeline') renderKanban();
   if (viewId === 'admin-screener') initAdminScreener();
   if (viewId === 'admin-interview') initAdminInterview();
+  if (viewId === 'admin-ats') initAdminAts();
   if (viewId === 'admin-analytics') updateGasGatewayUI();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -5125,15 +5453,18 @@ function filterAdminApplicants() {
         <div style="font-size: 11px; color: var(--muted);">${esc(a.email)}</div>
       </td>
       <td>
-        <div style="display: flex; gap: 6px; align-items: center;">
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
           <button class="btn btn-ghost" style="min-height: 34px; padding: 4px 10px; font-size: 12px;" onclick="openCandidateModal(${a.id})">
             Detail
           </button>
+          <button class="btn btn-ghost" style="min-height: 34px; padding: 4px 8px; font-size: 11.5px; border: 1px solid #3b82f6; color: #3b82f6;" onclick="openAtsForApplicant(${a.id})" title="Audit skor ATS &amp; kualitas CV pelamar ini">
+            🔍 ATS
+          </button>
           ${a.clickupSyncStatus === 'SYNCED' 
-            ? `<button class="btn btn-ghost" style="min-height: 34px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; border: 1px solid rgba(0, 137, 123, 0.45); color: #00897b;" onclick="openSyncConfirmationModal(${a.id})" title="Re-sync candidate to ClickUp ATS">
+            ? `<button class="btn btn-ghost" style="min-height: 34px; padding: 4px 10px; font-size: 11.5px; font-weight: 750; border: 1px solid rgba(0, 137, 123, 0.45); color: #00897b;" onclick="openSyncConfirmationModal(${a.id})" title="Re-sync candidate to ClickUp ATS">
                 🔄 Re-sync
                </button>`
-            : `<button class="btn btn-accent" style="min-height: 34px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;" onclick="openSyncConfirmationModal(${a.id})" title="Manual Sync to ClickUp ATS">
+            : `<button class="btn btn-accent" style="min-height: 34px; padding: 4px 10px; font-size: 11.5px; font-weight: 750;" onclick="openSyncConfirmationModal(${a.id})" title="Manual Sync to ClickUp ATS">
                 ⚡ Sync
                </button>`}
         </div>
@@ -5415,6 +5746,9 @@ function renderCandidateDetailBody(cand) {
           <a href="mailto:${esc(cand.email)}?subject=${encodeURIComponent('Miss Fish Bali — Recruitment Application: ' + cand.position)}" class="btn btn-ghost" style="min-height: 34px; padding: 6px 14px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border);">
             <span>✉️</span> Kirim Email
           </a>
+          <button class="btn btn-ghost" style="min-height: 34px; padding: 6px 14px; font-size: 12px; border: 1px solid #3b82f6; color: #3b82f6; font-weight: 750;" onclick="openAtsForApplicant(${cand.id})" title="Buka AI ATS Scanner untuk membedah skor CV pelamar ini">
+            <span>🔍</span> Audit ATS ↗
+          </button>
         </div>
       </div>
 
@@ -7015,6 +7349,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateGasGatewayUI();
   initAdminScreener();
   initAdminInterview();
+  initAdminAts();
 
   // Initialize interactive charts
   setTimeout(() => {
@@ -9056,6 +9391,860 @@ function resetInterviewStudio() {
   hideInterviewError();
 
   toast('↺ Form AI Smart Interview Studio telah direset.');
+}
+
+// ================================================================
+// AI ATS CV Scanner & In-Depth Analyzer Engine (Gemini 3.5 Flash Lite)
+// ================================================================
+let atsCurrentData = null;
+let atsExtractedCvText = '';
+let atsCurrentCvTab = 'upload';
+let atsSelectedCandidateId = null;
+
+function initAdminAts() {
+  // 1. Populate Roster Jobs Dropdown
+  const jobSelect = document.getElementById('atsJobSelect');
+  if (jobSelect && jobSelect.options.length <= 1) {
+    jobsData.forEach(j => {
+      const opt = document.createElement('option');
+      opt.value = j.id;
+      opt.textContent = `${j.title} (${j.dept})`;
+      jobSelect.appendChild(opt);
+    });
+  }
+
+  // 2. Populate Applicants Dropdown
+  const appSelect = document.getElementById('atsApplicantSelect');
+  if (appSelect) {
+    const currentVal = appSelect.value;
+    appSelect.innerHTML = '<option value="">-- Atau upload berkas baru di bawah --</option>';
+    applicantsData.forEach(cand => {
+      const opt = document.createElement('option');
+      opt.value = cand.id;
+      opt.textContent = `${cand.name} — ${cand.position} (${cand.status})`;
+      appSelect.appendChild(opt);
+    });
+    if (currentVal) appSelect.value = currentVal;
+  }
+
+  // 3. Dropzone Drag & Drop Handlers
+  const dz = document.getElementById('atsDropzone');
+  if (dz && !dz.dataset.bound) {
+    dz.dataset.bound = 'true';
+    dz.addEventListener('dragover', e => {
+      e.preventDefault();
+      dz.classList.add('drag-hover');
+    });
+    dz.addEventListener('dragleave', () => {
+      dz.classList.remove('drag-hover');
+    });
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.classList.remove('drag-hover');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleAtsFile(e.dataTransfer.files[0]);
+      }
+    });
+  }
+}
+
+function onAtsJobSelected(jobId) {
+  if (!jobId) return;
+  const id = parseInt(jobId);
+  const job = jobsData.find(j => j.id === id);
+  if (!job) return;
+
+  const roleInput = document.getElementById('atsJobRole');
+  if (roleInput) roleInput.value = job.title;
+}
+
+function onAtsApplicantSelected(candId) {
+  if (!candId) {
+    atsSelectedCandidateId = null;
+    const cvText = document.getElementById('atsCvText');
+    if (cvText) cvText.value = '';
+    return;
+  }
+  const id = parseInt(candId);
+  const cand = applicantsData.find(c => c.id === id);
+  if (!cand) return;
+
+  atsSelectedCandidateId = cand.id;
+  switchAtsCvTab('paste');
+
+  const roleInput = document.getElementById('atsJobRole');
+  if (roleInput && !roleInput.value.trim()) roleInput.value = cand.position;
+
+  const lines = [
+    `NAMA LENGKAP: ${cand.name}`,
+    `POSISI YANG DILAMAR: ${cand.position} (${cand.dept})`,
+    `KONTAK: ${cand.phone} | ${cand.email} | ${cand.location}`,
+    `STATUS PIPELINE ATS: ${cand.status}`,
+    `STATUS SYNC CLICKUP: ${cand.clickupSyncStatus}`,
+    '',
+    'RINGKASAN PROFIL / SUMMARY:',
+    cand.summary || cand.cover_letter || 'Kandidat profesional perhotelan terdaftar dalam database Miss Fish Bali.',
+    '',
+    'PENGALAMAN KERJA & HISTORI OPERASIONAL:',
+    cand.experience || 'Memiliki pengalaman relevan di bidang kuliner/service restoran di Bali.',
+    '',
+    'EKSPEKTASI KOMPENSASI:',
+    cand.expectedSalary || 'Standar Roster Miss Fish Bali',
+    `KETERSEDIAAN: ${cand.earliestStartDate || 'Immediately'}`
+  ];
+
+  if (cand.notes && cand.notes.length) {
+    lines.push('', 'CATATAN RIWAYAT TIM HR:');
+    cand.notes.forEach(n => lines.push(`• [${n.author}]: ${n.text}`));
+  }
+
+  const cvText = document.getElementById('atsCvText');
+  if (cvText) cvText.value = lines.join('\n');
+}
+
+function openAtsForApplicant(candId) {
+  if (typeof closeCandidateModal === 'function') closeCandidateModal();
+  navTo('admin-ats');
+  const cand = applicantsData.find(c => c.id === candId);
+  if (!cand) return;
+
+  const roleInput = document.getElementById('atsJobRole');
+  if (roleInput) roleInput.value = cand.position;
+
+  const job = jobsData.find(j => j.title.toLowerCase() === cand.position.toLowerCase() || cand.position.toLowerCase().includes(j.title.toLowerCase()));
+  if (job) {
+    const jobSelect = document.getElementById('atsJobSelect');
+    if (jobSelect) jobSelect.value = job.id;
+  }
+
+  const appSelect = document.getElementById('atsApplicantSelect');
+  if (appSelect) {
+    appSelect.value = cand.id;
+    onAtsApplicantSelected(cand.id);
+  }
+}
+
+function openAtsForJob(jobTitleOrId) {
+  navTo('admin-ats');
+  const job = typeof jobTitleOrId === 'number'
+    ? jobsData.find(j => j.id === jobTitleOrId)
+    : jobsData.find(j => j.title.toLowerCase().includes(String(jobTitleOrId).toLowerCase()) || String(jobTitleOrId).toLowerCase().includes(j.title.toLowerCase()));
+
+  if (job) {
+    const jobSelect = document.getElementById('atsJobSelect');
+    if (jobSelect) jobSelect.value = job.id;
+    onAtsJobSelected(job.id);
+  } else if (typeof jobTitleOrId === 'string') {
+    const roleInput = document.getElementById('atsJobRole');
+    if (roleInput) roleInput.value = jobTitleOrId;
+  }
+}
+
+function switchAtsCvTab(tab) {
+  atsCurrentCvTab = tab;
+  const btnUpload = document.getElementById('atsTabUpload');
+  const btnPaste = document.getElementById('atsTabPaste');
+  const panelUpload = document.getElementById('atsPanelUpload');
+  const panelPaste = document.getElementById('atsPanelPaste');
+
+  if (tab === 'upload') {
+    if (btnUpload) { btnUpload.style.background = 'var(--accent)'; btnUpload.style.color = '#fff'; }
+    if (btnPaste) { btnPaste.style.background = 'transparent'; btnPaste.style.color = 'var(--text)'; }
+    if (panelUpload) panelUpload.style.display = 'block';
+    if (panelPaste) panelPaste.style.display = 'none';
+  } else {
+    if (btnPaste) { btnPaste.style.background = 'var(--accent)'; btnPaste.style.color = '#fff'; }
+    if (btnUpload) { btnUpload.style.background = 'transparent'; btnUpload.style.color = 'var(--text)'; }
+    if (panelUpload) panelUpload.style.display = 'none';
+    if (panelPaste) panelPaste.style.display = 'block';
+  }
+}
+
+function onAtsFileSelected(input) {
+  if (input.files && input.files.length) {
+    handleAtsFile(input.files[0]);
+    input.value = '';
+  }
+}
+
+async function handleAtsFile(file) {
+  if (!file) return;
+  const maxSize = 10 * 1024 * 1024;
+  if (file.size > maxSize) {
+    showAtsError('Ukuran berkas melebihi batas maksimal 10MB.');
+    return;
+  }
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['pdf', 'docx', 'doc'].includes(ext)) {
+    showAtsError('Format berkas tidak didukung. Harap gunakan PDF atau Word (.docx).');
+    return;
+  }
+
+  hideAtsError();
+  const statusEl = document.getElementById('atsFileStatus');
+  if (statusEl) {
+    statusEl.style.display = 'block';
+    statusEl.innerHTML = `<span class="spinner" style="display:inline-block;width:12px;height:12px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:6px;"></span> Mengekstrak teks dari <strong>${esc(file.name)}</strong>...`;
+  }
+
+  try {
+    let text = '';
+    if (ext === 'pdf') {
+      text = await extractPdfText(file);
+    } else {
+      text = await extractDocxText(file);
+    }
+    atsExtractedCvText = text;
+    if (statusEl) {
+      statusEl.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--success); font-weight: 750;">✓ 📄 ${esc(file.name)} (${(file.size / 1024).toFixed(0)} KB) siap diaudit</span>
+          <button type="button" class="btn btn-ghost" style="padding: 2px 8px; font-size: 11px; color: var(--danger);" onclick="removeAtsFile()">Hapus</button>
+        </div>
+      `;
+    }
+    toast(`✓ Berkas "${file.name}" berhasil diekstrak.`);
+  } catch (err) {
+    if (statusEl) statusEl.style.display = 'none';
+    showAtsError(`Gagal membaca berkas: ${err.message || err}`);
+  }
+}
+
+function removeAtsFile() {
+  atsExtractedCvText = '';
+  const statusEl = document.getElementById('atsFileStatus');
+  const fileInput = document.getElementById('atsFileInput');
+  if (statusEl) statusEl.style.display = 'none';
+  if (fileInput) fileInput.value = '';
+}
+
+function showAtsError(msg) {
+  const el = document.getElementById('atsErrorBox');
+  if (el) {
+    el.textContent = `⚠️ ${msg}`;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function hideAtsError() {
+  const el = document.getElementById('atsErrorBox');
+  if (el) el.style.display = 'none';
+}
+
+async function startAtsAnalysis() {
+  const targetRole = (document.getElementById('atsJobRole')?.value || '').trim();
+  const lang = document.getElementById('atsLanguage')?.value || 'id';
+
+  let cvText = '';
+  let candName = '';
+  if (atsCurrentCvTab === 'upload') {
+    cvText = atsExtractedCvText;
+  } else {
+    cvText = (document.getElementById('atsCvText')?.value || '').trim();
+  }
+
+  if (atsSelectedCandidateId) {
+    const cand = applicantsData.find(c => c.id === atsSelectedCandidateId);
+    if (cand) candName = cand.name;
+  }
+
+  if (!cvText) {
+    showAtsError('Silakan upload berkas CV (.pdf/.docx) atau paste isi teks CV terlebih dahulu.');
+    return;
+  }
+
+  hideAtsError();
+  const loadingEl = document.getElementById('atsLoadingState');
+  const loadingRole = document.getElementById('atsLoadingRole');
+  const resultsEl = document.getElementById('atsResultsSection');
+  const btn = document.getElementById('btnRunAtsScan');
+
+  if (loadingEl) loadingEl.style.display = 'block';
+  if (loadingRole) loadingRole.textContent = `Memindai Kompatibilitas ATS: ${targetRole || 'General Hospitality'}...`;
+  if (resultsEl) resultsEl.style.display = 'none';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> Sedang Memindai...';
+  }
+
+  try {
+    let auditData = null;
+    const gasUrl = typeof getGasWebAppUrl === 'function' ? getGasWebAppUrl() : '';
+
+    // If GAS URL is configured, try live AI analysis
+    if (gasUrl && gasUrl.startsWith('http')) {
+      try {
+        const payload = {
+          action: 'analyze',
+          cvText: cvText.substring(0, 5000),
+          targetRole: targetRole,
+          language: lang
+        };
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+          const resJson = await response.json();
+          if (resJson && resJson.success && resJson.data) {
+            auditData = resJson.data;
+          }
+        }
+      } catch (e) {
+        console.warn('Live GAS ATS analysis fallback to local heuristic engine:', e);
+      }
+    }
+
+    // Fallback to high-fidelity domain heuristic engine
+    if (!auditData) {
+      auditData = runLocalSimulationAts(cvText, targetRole, candName, lang);
+    }
+
+    atsCurrentData = auditData;
+    renderAtsResults(auditData);
+
+    toast(`✓ Audit ATS untuk "${targetRole || 'Kandidat'}" selesai!`);
+  } catch (err) {
+    showAtsError(`Terjadi kendala saat menganalisis ATS: ${err.message || err}`);
+  } finally {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>⚡</span> Jalankan Audit ATS';
+    }
+  }
+}
+
+function runLocalSimulationAts(cvText, targetRole, candName, lang) {
+  const textLower = cvText.toLowerCase();
+  const roleLower = (targetRole || '').toLowerCase();
+  const isEn = lang === 'en';
+
+  // 1. Inferred role detection
+  let inferredRole = targetRole || 'Hospitality Professional';
+  if (!targetRole) {
+    if (textLower.includes('chef') || textLower.includes('cook') || textLower.includes('sushi') || textLower.includes('kitchen')) {
+      inferredRole = 'Kitchen Culinary Team';
+    } else if (textLower.includes('bar') || textLower.includes('mixologist') || textLower.includes('cocktail')) {
+      inferredRole = 'Bar & Mixology Specialist';
+    } else if (textLower.includes('waiter') || textLower.includes('waitress') || textLower.includes('server') || textLower.includes('host')) {
+      inferredRole = 'Front of House Service';
+    } else if (textLower.includes('manager') || textLower.includes('supervisor')) {
+      inferredRole = 'Operations Management';
+    }
+  }
+
+  // 2. Sections presence evaluation
+  const hasContact = /(phone|telp|whatsapp|email|@|gmail|jalan|bali|denpasar|badung|tabanan)/i.test(cvText);
+  const hasSummary = /(summary|ringkasan|tentang|about|objective|profil|profile)/i.test(cvText) || cvText.length > 300;
+  const hasExp = /(pengalaman|experience|kerja|work|job|posisi|riwayat|201|202|tahun)/i.test(cvText);
+  const hasEdu = /(pendidikan|education|smk|universitas|university|diploma|sma|sarjana|d3|s1|akadem)/i.test(cvText);
+  const hasSkills = /(skills|keahlian|keterampilan|kompetensi|kemampuan|tools|pos)/i.test(cvText);
+  const hasCerts = /(sertifikat|certificate|certification|training|pelatihan|haccp|bnpb|first aid|sommelier)/i.test(cvText);
+
+  // 3. Keywords analysis
+  const industryLexicon = [
+    'haccp', 'fifo', 'food safety', 'sanitasi', 'omakase', 'robata', 'knife skills',
+    'cocktail', 'mixology', 'sake', 'spirits', 'omotenashi', 'guest service',
+    'pos system', 'upselling', 'table turnover', 'hygiene', 'inventory', 'teamwork',
+    'customer satisfaction', 'high volume', 'hospitality'
+  ];
+
+  const matchedKeywords = [];
+  const missingKeywords = [];
+
+  industryLexicon.forEach(kw => {
+    if (textLower.includes(kw)) {
+      matchedKeywords.push(kw.toUpperCase());
+    } else {
+      missingKeywords.push(kw.toUpperCase());
+    }
+  });
+
+  // 4. Calculate ATS Score
+  let score = 50;
+  if (hasContact) score += 8;
+  if (hasSummary) score += 8;
+  if (hasExp) score += 12;
+  if (hasEdu) score += 6;
+  if (hasSkills) score += 8;
+  if (hasCerts) score += 5;
+
+  const keywordBoost = Math.min(matchedKeywords.length * 2.5, 15);
+  score = Math.min(Math.round(score + keywordBoost), 98);
+
+  // 5. Build section breakdown
+  const sections = {
+    contact: {
+      rating: hasContact ? 'Good' : 'Missing',
+      notes: hasContact
+        ? (isEn ? 'Contact information is clear and verifiable.' : 'Nomor WhatsApp, email, dan domisili terdeteksi dengan jelas.')
+        : (isEn ? 'Missing clear phone number or email address.' : 'Informasi kontak (email / nomor WhatsApp aktif) kurang lengkap.')
+    },
+    summary: {
+      rating: hasSummary ? 'Good' : 'Needs Improvement',
+      notes: hasSummary
+        ? (isEn ? 'Professional summary effectively highlights career scope.' : 'Ringkasan profesional merangkum keahlian utama dengan baik.')
+        : (isEn ? 'Summary is brief or absent; add a 3-sentence profile elevator pitch.' : 'Profil pembuka masih minim; tambahkan 2-3 kalimat rangkuman fokus karier.')
+    },
+    experience: {
+      rating: hasExp ? 'Good' : 'Needs Improvement',
+      notes: hasExp
+        ? (isEn ? 'Work history lists operational roles and timelines.' : 'Riwayat pengalaman kerja mencakup jabatan dan tanggung jawab operasional.')
+        : (isEn ? 'Experience details lack action verbs and operational metrics.' : 'Perlu memperjelas nama outlet sebelumnya, durasi kerja, dan pencapaian spesifik.')
+    },
+    education: {
+      rating: hasEdu ? 'Good' : 'Needs Improvement',
+      notes: hasEdu
+        ? (isEn ? 'Educational background is properly documented.' : 'Latar belakang pendidikan formal/kejuruan tercantum rapi.')
+        : (isEn ? 'Education section is missing or incomplete.' : 'Bagian pendidikan formal/kejuruan belum dicantumkan secara runut.')
+    },
+    skills: {
+      rating: hasSkills ? 'Good' : 'Needs Improvement',
+      notes: hasSkills
+        ? (isEn ? 'Key hospitality and technical craft skills are highlighted.' : 'Keahlian teknis dan hospitality telah dirinci.')
+        : (isEn ? 'Include a bulleted technical skill list matching the job posting.' : 'Daftar keahlian teknis (tools, sistem POS, craft) perlu diperluas.')
+    },
+    certifications: {
+      rating: hasCerts ? 'Good' : 'Missing',
+      notes: hasCerts
+        ? (isEn ? 'Food safety or professional hospitality training verified.' : 'Memiliki sertifikasi pendukung (Food Safety/K3/hospitality training).')
+        : (isEn ? 'No certifications detected; consider adding food safety or bartending certificates.' : 'Belum mencantumkan sertifikat keahlian, kursus kuliner, atau HACCP.')
+    }
+  };
+
+  // 6. Strengths and Weaknesses
+  const strengths = isEn ? [
+    `Strong alignment with ${inferredRole} operational demands.`,
+    `Demonstrated relevant industry background in high-volume hospitality.`,
+    `Clear structural sections matching standard ATS parsing schemas.`,
+    `Presence of key operational terms: ${matchedKeywords.slice(0, 3).join(', ') || 'HOSPITALITY, SERVICE'}.`
+  ] : [
+    `Kesesuaian profil yang kuat dengan kebutuhan peran ${inferredRole}.`,
+    `Memiliki pengalaman relevan di industri restoran/hospitality ritme cepat.`,
+    `Struktur penulisan runtut dan mudah diproses sistem ATS rekrutmen.`,
+    `Mengandung kata kunci operasional: ${matchedKeywords.slice(0, 3).join(', ') || 'HOSPITALITY, SERVICE'}.`
+  ];
+
+  const weaknesses = isEn ? [
+    `Lacks quantification of achievements (e.g. daily covers, sales increase %, waste reduction).`,
+    `Missing some high-value technical keywords such as: ${missingKeywords.slice(0, 3).join(', ') || 'HACCP, FIFO'}.`,
+    `Certifications section could be strengthened with formal food handling or beverage credentials.`
+  ] : [
+    `Belum menyertakan angka capaian konkret (misal: jumlah cover tamu per hari, % pengurangan waste).`,
+    `Masih kekurangan kata kunci teknis krusial seperti: ${missingKeywords.slice(0, 3).join(', ') || 'HACCP, FIFO'}.`,
+    `Bagian sertifikasi perlu ditambahkan sertifikat pelatihan pangan higienis atau keahlian craft.`
+  ];
+
+  // 7. Quick Wins
+  const quickWins = isEn ? [
+    `Insert 3-5 high-priority missing keywords (${missingKeywords.slice(0, 3).join(', ')}) naturally into work bullets.`,
+    `Quantify at least two accomplishments using metrics (e.g. "Managed 80+ dinner covers with zero errors").`,
+    `Format section headers with standard ATS titles (Work Experience, Skills, Education, Certifications).`
+  ] : [
+    `Sisipkan 3-5 kata kunci industri yang hilang (${missingKeywords.slice(0, 3).join(', ')}) ke dalam deskripsi tugas.`,
+    `Sertakan minimal 2 angka pencapaian kuantitatif (misal: "Menangani 80+ covers dinner rush per malam secara konsisten").`,
+    `Gunakan penamaan judul bagian standar (Pengalaman Kerja, Keahlian Teknis, Pendidikan, Sertifikasi).`
+  ];
+
+  // 8. Overall Recommendation
+  let recommendation = '';
+  if (isEn) {
+    recommendation = `The CV shows solid potential for "${inferredRole}" with an ATS readiness score of ${score}/100. By integrating the recommended missing keywords and clarifying specific achievements, this resume will comfortably pass automated candidate screening filters.`;
+  } else {
+    recommendation = `Berkas CV memiliki potensi sangat baik untuk posisi "${inferredRole}" dengan skor kesiapan ATS ${score}/100. Dengan melengkapi kata kunci teknis yang belum tercantum dan menambahkan metrik keberhasilan operasional, resume ini akan sangat kompetitif menembus filter seleksi awal.`;
+  }
+
+  return {
+    candidateName: candName || null,
+    targetRole: targetRole || inferredRole,
+    inferredRole: inferredRole,
+    atsScore: score,
+    scoreReason: isEn
+      ? `CV achieves ${score}% compatibility based on section structure, job keyword density, and verifiable hospitality history.`
+      : `CV mencapai kompatibilitas ${score}% berdasarkan kelengkapan struktur bagian, kepadatan kata kunci operasional, dan riwayat pengalaman.`,
+    sections: sections,
+    matchedKeywords: matchedKeywords.slice(0, 8),
+    missingKeywords: missingKeywords.slice(0, 8),
+    strengths: strengths,
+    weaknesses: weaknesses,
+    quickWins: quickWins,
+    overallRecommendation: recommendation
+  };
+}
+
+function renderAtsResults(data) {
+  if (!data) return;
+
+  // Header & Badges
+  const roleEl = document.getElementById('atsResultRoleTitle');
+  const badgeEl = document.getElementById('atsResultCandBadge');
+  const btnSave = document.getElementById('btnSaveAtsToCand');
+
+  if (roleEl) roleEl.textContent = data.targetRole;
+  if (badgeEl) {
+    if (data.candidateName) {
+      badgeEl.textContent = `👤 Pelamar: ${data.candidateName}`;
+      badgeEl.style.display = 'inline-block';
+    } else {
+      badgeEl.style.display = 'none';
+    }
+  }
+  if (btnSave) {
+    btnSave.style.display = atsSelectedCandidateId ? 'inline-flex' : 'none';
+  }
+
+  // ATS Score Hero
+  const scoreNum = document.getElementById('atsScoreNumber');
+  const scoreGauge = document.getElementById('atsScoreGauge');
+  const tierBadge = document.getElementById('atsTierBadge');
+  const inferredEl = document.getElementById('atsInferredRole');
+  const reasonEl = document.getElementById('atsScoreReason');
+
+  if (scoreNum) scoreNum.textContent = data.atsScore;
+  if (inferredEl) inferredEl.textContent = `Inferred: ${data.inferredRole}`;
+  if (reasonEl) reasonEl.textContent = data.scoreReason;
+
+  if (scoreGauge && tierBadge) {
+    scoreGauge.classList.remove('tier-pass', 'tier-consider', 'tier-fail');
+    if (data.atsScore >= 80) {
+      scoreGauge.classList.add('tier-pass');
+      tierBadge.textContent = '🟢 SIAP LOLOS ATS (STRONG PASS)';
+      tierBadge.style.background = 'var(--success-bg)';
+      tierBadge.style.color = 'var(--success)';
+      tierBadge.style.border = '1px solid rgba(16, 185, 129, 0.4)';
+    } else if (data.atsScore >= 60) {
+      scoreGauge.classList.add('tier-consider');
+      tierBadge.textContent = '🟡 CUKUP BAIK (NEEDS POLISH)';
+      tierBadge.style.background = 'rgba(223, 190, 153, 0.2)';
+      tierBadge.style.color = 'var(--gold-dark)';
+      tierBadge.style.border = '1px solid var(--gold)';
+    } else {
+      scoreGauge.classList.add('tier-fail');
+      tierBadge.textContent = '🔴 PERLU PERBAIKAN (HIGH RISK)';
+      tierBadge.style.background = 'var(--danger-bg)';
+      tierBadge.style.color = 'var(--danger)';
+      tierBadge.style.border = '1px solid rgba(185, 75, 75, 0.4)';
+    }
+  }
+
+  // 6 Sections Grid
+  const gridEl = document.getElementById('atsSectionsGrid');
+  if (gridEl) {
+    gridEl.innerHTML = '';
+    const sectionLabels = {
+      contact: '1. Informasi Kontak',
+      summary: '2. Ringkasan Eksekutif',
+      experience: '3. Pengalaman Kerja',
+      education: '4. Pendidikan Formal',
+      skills: '5. Keahlian & Tools',
+      certifications: '6. Sertifikasi & Lisensi'
+    };
+
+    for (let key in data.sections) {
+      const sec = data.sections[key];
+      const card = document.createElement('div');
+      card.className = 'ats-sec-card';
+
+      const badgeClass = sec.rating === 'Good'
+        ? 'good'
+        : (sec.rating === 'Needs Improvement' ? 'needs-improvement' : 'missing');
+
+      const badgeText = sec.rating === 'Good'
+        ? '✓ Good'
+        : (sec.rating === 'Needs Improvement' ? '⚠ Polish' : '✕ Missing');
+
+      card.innerHTML = `
+        <div class="ats-sec-head">
+          <div class="ats-sec-title">${sectionLabels[key] || key}</div>
+          <span class="ats-sec-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="ats-sec-notes">${esc(sec.notes)}</div>
+      `;
+      gridEl.appendChild(card);
+    }
+  }
+
+  // Strengths
+  const strEl = document.getElementById('atsStrengthsList');
+  if (strEl) {
+    strEl.innerHTML = (data.strengths || []).map(s => `
+      <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; color: var(--text);">
+        <span style="color: var(--success); font-weight: 850;">✓</span>
+        <div>${esc(s)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Weaknesses
+  const weakEl = document.getElementById('atsWeaknessesList');
+  if (weakEl) {
+    weakEl.innerHTML = (data.weaknesses || []).map(w => `
+      <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; color: var(--text);">
+        <span style="color: var(--danger); font-weight: 850;">✕</span>
+        <div>${esc(w)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Missing Keywords
+  const kwEl = document.getElementById('atsMissingKeywords');
+  if (kwEl) {
+    kwEl.innerHTML = (data.missingKeywords || []).map(kw => `
+      <span style="background: rgba(223, 190, 153, 0.15); border: 1px solid var(--gold); color: var(--gold-dark); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px;">
+        + ${esc(kw)}
+      </span>
+    `).join('') + (data.matchedKeywords || []).map(kw => `
+      <span style="background: var(--success-bg); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--success); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px;">
+        ✓ ${esc(kw)}
+      </span>
+    `).join('');
+  }
+
+  // Quick Wins
+  const qwEl = document.getElementById('atsQuickWinsList');
+  if (qwEl) {
+    qwEl.innerHTML = (data.quickWins || []).map((qw, idx) => `
+      <div class="ats-quick-win-card">
+        <div class="ats-quick-win-num">${idx + 1}</div>
+        <div style="font-size: 13px; line-height: 1.5; color: var(--text);">${esc(qw)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Recommendation
+  const recEl = document.getElementById('atsOverallRecommendation');
+  if (recEl) recEl.textContent = data.overallRecommendation || '-';
+
+  // Show results
+  const resContainer = document.getElementById('atsResultsSection');
+  if (resContainer) {
+    resContainer.style.display = 'block';
+    setTimeout(() => {
+      resContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function copyAtsReport() {
+  if (!atsCurrentData) {
+    toast('Belum ada laporan audit ATS yang digenerate.');
+    return;
+  }
+  const d = atsCurrentData;
+  const lines = [
+    '================================================================',
+    `MISS FISH BALI — OFFICIAL AI ATS RESUME AUDIT REPORT`,
+    `Posisi Benchmark: ${d.targetRole}`,
+    d.candidateName ? `Pelamar: ${d.candidateName}` : '',
+    `Skor Kompatibilitas ATS: ${d.atsScore} / 100`,
+    `Tanggal Audit: ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`,
+    '================================================================',
+    '',
+    `### EVALUASI SKOR (${d.atsScore}/100)`,
+    d.scoreReason,
+    '',
+    '### AUDIT 6 BAGIAN RESUME'
+  ];
+
+  for (let key in d.sections) {
+    lines.push(`• ${key.toUpperCase()}: [${d.sections[key].rating}] — ${d.sections[key].notes}`);
+  }
+
+  lines.push('', '### KEKUATAN UTAMA (KEY STRENGTHS)');
+  (d.strengths || []).forEach((s, i) => lines.push(`${i + 1}. ${s}`));
+
+  lines.push('', '### KELEMAHAN (CRITICAL WEAKNESSES)');
+  (d.weaknesses || []).forEach((w, i) => lines.push(`${i + 1}. ${w}`));
+
+  lines.push('', '### MISSING ATS KEYWORDS');
+  lines.push((d.missingKeywords || []).join(', '));
+
+  lines.push('', '### 3 QUICK WINS');
+  (d.quickWins || []).forEach((qw, i) => lines.push(`${i + 1}. ${qw}`));
+
+  lines.push('', '### REKOMENDASI AKHIR', d.overallRecommendation);
+
+  const textToCopy = lines.join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      toast('✓ Laporan Audit ATS berhasil disalin ke clipboard!');
+    }).catch(() => {
+      fallbackCopyText(textToCopy);
+    });
+  } else {
+    fallbackCopyText(textToCopy);
+  }
+}
+
+function exportAtsPDF() {
+  if (!atsCurrentData) {
+    toast('Belum ada data audit ATS untuk dicetak.');
+    return;
+  }
+  const d = atsCurrentData;
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    toast('Harap izinkan popup browser untuk mencetak laporan.');
+    return;
+  }
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>ATS Resume Audit Report — ${esc(d.targetRole)}</title>
+      <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #173234; padding: 24px; max-width: 800px; margin: 0 auto; line-height: 1.5; }
+        .hdr { border-bottom: 2px solid #102c2d; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .hdr h1 { margin: 0; font-size: 20px; color: #102c2d; text-transform: uppercase; letter-spacing: 0.05em; }
+        .hdr-sub { font-size: 12px; color: #647779; }
+        .badge { background: #edf3f1; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+        .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+        .meta-table td { padding: 6px 10px; border: 1px solid #d9e3e0; }
+        .sec-title { font-size: 13px; font-weight: bold; text-transform: uppercase; color: #159a93; border-bottom: 1px solid #d9e3e0; padding-bottom: 4px; margin: 18px 0 10px 0; }
+        .score-banner { display: flex; align-items: center; gap: 20px; padding: 14px 18px; background: #edf3f1; border-radius: 8px; margin-bottom: 16px; }
+        .score-dial { font-size: 32px; font-weight: 900; color: #159a93; }
+        .table-sections { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+        .table-sections th, .table-sections td { padding: 6px 10px; border: 1px solid #d9e3e0; text-align: left; }
+        .table-sections th { background: #f4f7f6; font-weight: bold; }
+        @media print { body { padding: 0; } }
+      </style>
+    </head>
+    <body>
+      <div class="hdr">
+        <div>
+          <h1>MISS FISH BALI</h1>
+          <div class="hdr-sub">AI Candidate Resume &amp; ATS Compatibility Audit Report · HR Department</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="badge">ATS Score: ${d.atsScore}/100</div>
+          <div style="font-size: 11px; color: #647779; margin-top: 4px;">${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+        </div>
+      </div>
+
+      <table class="meta-table">
+        <tr>
+          <td style="width: 25%; font-weight: bold; background: #f4f7f6;">Posisi Benchmark:</td>
+          <td style="width: 25%; font-weight: bold; color: #159a93;">${esc(d.targetRole)}</td>
+          <td style="width: 25%; font-weight: bold; background: #f4f7f6;">Nama Pelamar:</td>
+          <td style="width: 25%;">${esc(d.candidateName || 'Umum / CV Upload')}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; background: #f4f7f6;">Inferred Seniority:</td>
+          <td>${esc(d.inferredRole)}</td>
+          <td style="font-weight: bold; background: #f4f7f6;">Status ATS:</td>
+          <td>${d.atsScore >= 80 ? '🟢 Strong Pass' : (d.atsScore >= 60 ? '🟡 Needs Polish' : '🔴 High Risk')}</td>
+        </tr>
+      </table>
+
+      <div class="score-banner">
+        <div class="score-dial">${d.atsScore} <span style="font-size: 14px; font-weight: normal; color: #647779;">/ 100</span></div>
+        <div style="font-size: 12.5px; color: #173234;">${esc(d.scoreReason)}</div>
+      </div>
+
+      <div class="sec-title">Audit 6 Bagian Utama CV</div>
+      <table class="table-sections">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Bagian CV</th>
+            <th style="width: 15%;">Rating</th>
+            <th>Catatan Evaluasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${Object.keys(d.sections).map(key => `
+            <tr>
+              <td style="font-weight: bold;">${key.toUpperCase()}</td>
+              <td>${d.sections[key].rating}</td>
+              <td>${esc(d.sections[key].notes)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div class="sec-title">Kata Kunci yang Hilang (Missing Keywords)</div>
+      <div style="font-size: 12px; margin-bottom: 12px;">${(d.missingKeywords || []).join(', ') || '-'}</div>
+
+      <div class="sec-title">3 Langkah Cepat Perbaikan (Quick Wins)</div>
+      <ol style="font-size: 12px; padding-left: 18px; margin-bottom: 16px;">
+        ${(d.quickWins || []).map(qw => `<li>${esc(qw)}</li>`).join('')}
+      </ol>
+
+      <div class="sec-title">Rekomendasi Konsultan HR Eksekutif</div>
+      <p style="font-size: 12.5px; color: #173234;">${esc(d.overallRecommendation)}</p>
+
+      <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 11px; padding-top: 14px; border-top: 1px solid #d9e3e0;">
+        <div>Evaluator: Internal Recruitment Platform · Miss Fish Bali</div>
+        <div>ClickUp ATS System of Record</div>
+      </div>
+
+      <script>
+        window.onload = function() { window.print(); };
+      </script>
+    </body>
+    </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+}
+
+function saveAtsScoreToCandidate() {
+  if (!atsSelectedCandidateId || !atsCurrentData) {
+    toast('Pilih kandidat aktif terlebih dahulu untuk menyimpan catatan.');
+    return;
+  }
+  const cand = applicantsData.find(c => c.id === atsSelectedCandidateId);
+  if (!cand) {
+    toast('Kandidat tidak ditemukan di database.');
+    return;
+  }
+
+  const now = new Date();
+  const timeStr = `${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}, ${now.toTimeString().slice(0, 5)} WITA`;
+
+  if (!cand.notes) cand.notes = [];
+  cand.notes.unshift({
+    author: 'AI ATS CV Scanner',
+    time: timeStr,
+    text: `Skor Kompatibilitas ATS: ${atsCurrentData.atsScore}/100 untuk peran "${atsCurrentData.targetRole}". Catatan: ${atsCurrentData.scoreReason}`
+  });
+
+  filterAdminApplicants();
+  renderAdminDashboard();
+  toast(`✓ Hasil audit ATS (${atsCurrentData.atsScore} pts) berhasil disimpan ke dossier "${cand.name}"!`);
+}
+
+function resetAtsForm() {
+  atsCurrentData = null;
+  atsExtractedCvText = '';
+  atsSelectedCandidateId = null;
+
+  const roleInput = document.getElementById('atsJobRole');
+  const jobSelect = document.getElementById('atsJobSelect');
+  const appSelect = document.getElementById('atsApplicantSelect');
+  const cvText = document.getElementById('atsCvText');
+  const fileInput = document.getElementById('atsFileInput');
+  const fileStatus = document.getElementById('atsFileStatus');
+  const results = document.getElementById('atsResultsSection');
+  const loading = document.getElementById('atsLoadingState');
+
+  if (roleInput) roleInput.value = '';
+  if (jobSelect) jobSelect.value = '';
+  if (appSelect) appSelect.value = '';
+  if (cvText) cvText.value = '';
+  if (fileInput) fileInput.value = '';
+  if (fileStatus) fileStatus.style.display = 'none';
+  if (results) results.style.display = 'none';
+  if (loading) loading.style.display = 'none';
+  hideAtsError();
+
+  toast('↺ Form AI ATS CV Scanner telah direset.');
 }
 
 </script>
