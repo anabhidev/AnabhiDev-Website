@@ -301,10 +301,43 @@ export class QuizRunner {
           AudioFx.playFanfare();
           AudioFx.triggerConfetti(this.container);
           store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
+          this.reportScoreToBackend();
           this.showCompletionScreen();
         }
       });
     }
+  }
+
+  reportScoreToBackend() {
+    try {
+      const gasUrl = localStorage.getItem('anabhi_gas_url') ||
+                     (typeof window !== 'undefined' && window.GEMINI_CONFIG && window.GEMINI_CONFIG.GAS_URL) || '';
+      if (!gasUrl || !gasUrl.includes('/exec')) return;
+
+      const total = this.quiz.questions.length;
+      const score = this.score;
+      const accuracy = total > 0 ? Math.round((score / total) * 100) : 0;
+      const state = (typeof appState !== 'undefined' && appState.get) ? appState.get() : {};
+      const subject = state.currentSubjectId || 'Umum';
+      const studentName = localStorage.getItem('anabhi_student_name') || 'Ana';
+
+      fetch(gasUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'save_score',
+          nama: studentName,
+          subject: subject,
+          quizTitle: this.quiz.title || 'Latihan Interaktif',
+          score: score,
+          totalQuestions: total,
+          accuracy: accuracy,
+          duration: 'Selesai mandiri',
+          note: 'Latihan di Anabhi Smart Study'
+        })
+      }).catch(() => {});
+    } catch (_) {}
   }
 
   showCompletionScreen() {

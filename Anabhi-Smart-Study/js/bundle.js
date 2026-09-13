@@ -10652,7 +10652,7 @@
   var GEMINI_CONFIG = {
     MODEL    : 'gemini-3.5-flash-lite',
     ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/',
-    GAS_URL  : '' // Diisi URL Web App GAS (script.google.com/macros/s/.../exec)
+    GAS_URL  : 'https://script.google.com/macros/s/AKfycbxZdDF2Olp0HR6ypNd1EuktmE3sv3cohSBbA7b0IOrbtPVg4Bwqx6pZnIXoLKTcbQI8/exec' // Diisi URL Web App GAS (script.google.com/macros/s/.../exec)
   };
   
   if (typeof window !== 'undefined') {
@@ -12162,10 +12162,43 @@
             AudioFx.playFanfare();
             AudioFx.triggerConfetti(this.container);
             store.recordQuizResult(this.quiz.id, this.score, this.quiz.questions.length);
+            this.reportScoreToBackend();
             this.showCompletionScreen();
           }
         });
       }
+    }
+  
+    reportScoreToBackend() {
+      try {
+        const gasUrl = localStorage.getItem('anabhi_gas_url') ||
+                       (typeof window !== 'undefined' && window.GEMINI_CONFIG && window.GEMINI_CONFIG.GAS_URL) || '';
+        if (!gasUrl || !gasUrl.includes('/exec')) return;
+  
+        const total = this.quiz.questions.length;
+        const score = this.score;
+        const accuracy = total > 0 ? Math.round((score / total) * 100) : 0;
+        const state = (typeof appState !== 'undefined' && appState.get) ? appState.get() : {};
+        const subject = state.currentSubjectId || 'Umum';
+        const studentName = localStorage.getItem('anabhi_student_name') || 'Ana';
+  
+        fetch(gasUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'save_score',
+            nama: studentName,
+            subject: subject,
+            quizTitle: this.quiz.title || 'Latihan Interaktif',
+            score: score,
+            totalQuestions: total,
+            accuracy: accuracy,
+            duration: 'Selesai mandiri',
+            note: 'Latihan di Anabhi Smart Study'
+          })
+        }).catch(() => {});
+      } catch (_) {}
     }
   
     showCompletionScreen() {

@@ -11,7 +11,7 @@ import { t } from '../data/i18n.js';
 export var GEMINI_CONFIG = {
   MODEL    : 'gemini-3.5-flash-lite',
   ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/',
-  GAS_URL  : '' // Diisi URL Web App GAS (script.google.com/macros/s/.../exec)
+  GAS_URL  : 'https://script.google.com/macros/s/AKfycbxZdDF2Olp0HR6ypNd1EuktmE3sv3cohSBbA7b0IOrbtPVg4Bwqx6pZnIXoLKTcbQI8/exec' // Diisi URL Web App GAS (script.google.com/macros/s/.../exec)
 };
 
 if (typeof window !== 'undefined') {
