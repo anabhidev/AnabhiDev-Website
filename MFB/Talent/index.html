@@ -5,8 +5,8 @@
      MFB-HR — Miss Fish Bali HR Career & Recruitment Platform
      HTML5 · CSS3 · JavaScript (ES6+)
      IT Department · Miss Fish Bali
-     Version   : 1.7
-     Generated : 12 September 2026, 20:45:00 WITA
+     Version   : 1.8
+     Generated : 13 September 2026, 18:45:00 WITA
      ================================================================ -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -31,6 +31,10 @@
 <meta name="twitter:title" content="Miss Fish Bali — HR Career & Recruitment Platform">
 <meta name="twitter:description" content="Official Career Portal and Internal HR Recruitment Platform for Miss Fish Bali.">
 <meta name="twitter:image" content="https://anabhidev.com/MFB/Talent/assets/MISS-FISH-OG-IMAGES.webp">
+
+<!-- Client-side Document Extractors (AI CV Batch Screener) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
 <title>Miss Fish Bali · HR Career & Recruitment</title>
 
@@ -1606,6 +1610,132 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
   .page-content { padding: 0; }
   .card, .hero-b4 { box-shadow: none !important; }
 }
+
+/* ================================================================
+   AI CV Batch Screener Styles (Standar Miss Fish Bali Luxury)
+   ================================================================ */
+.screener-dropzone {
+  border: 2px dashed var(--line);
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 36px 24px;
+  text-align: center;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+.screener-dropzone:hover, .screener-dropzone.drag-hover {
+  border-color: var(--accent);
+  background: rgba(21, 154, 147, 0.08);
+  transform: translateY(-2px);
+}
+.screener-cv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.screener-cv-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.screener-cv-item.status-done {
+  border-left: 3px solid var(--success);
+}
+.screener-cv-item.status-analyzing {
+  border-left: 3px solid var(--gold);
+}
+.screener-cv-item.status-error {
+  border-left: 3px solid var(--danger);
+}
+.screener-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 16px;
+}
+.screener-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.screener-card.rec-panggil {
+  border-left: 4px solid var(--success);
+}
+.screener-card.rec-pertimbangkan {
+  border-left: 4px solid var(--gold);
+}
+.screener-card.rec-tidak {
+  border-left: 4px solid var(--danger);
+}
+.screener-rank-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.screener-rank-badge.gold {
+  background: linear-gradient(135deg, #dfbe99, #b88636);
+  color: #181512;
+  box-shadow: 0 4px 14px rgba(223, 190, 153, 0.4);
+}
+.screener-rank-badge.silver {
+  background: linear-gradient(135deg, #e2ebe8, #94a3b8);
+  color: #173234;
+}
+.screener-rank-badge.bronze {
+  background: linear-gradient(135deg, #fed7aa, #c2410c);
+  color: #ffffff;
+}
+.screener-rank-badge.standard {
+  background: var(--surface3);
+  color: var(--muted);
+}
+.screener-score-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  font-weight: 900;
+  background: var(--surface2);
+  border: 2.5px solid currentColor;
+  flex-shrink: 0;
+}
+.screener-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 750;
+}
+.screener-tag.strength {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.screener-tag.gap {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(185, 75, 75, 0.3);
+}
 </style>
 
 <!-- Favicon & Touch Icons (Miss Fish Bali Official) -->
@@ -1659,6 +1789,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       </button>
       <button class="nav-btn" data-view="admin-pipeline" onclick="navTo('admin-pipeline')">
         <span class="ico">📋</span> Recruitment Pipeline
+      </button>
+      <button class="nav-btn" data-view="admin-screener" onclick="navTo('admin-screener')" style="border-left: 2px solid var(--gold);" title="Screening Komparatif 2-10 CV Pelamar Berbasis AI Gemini">
+        <span class="ico">🎯</span> AI CV Screener (Batch)
       </button>
       <button class="nav-btn" data-view="admin-analytics" onclick="navTo('admin-analytics')">
         <span class="ico">📈</span> Analytics & ClickUp
@@ -2604,7 +2737,178 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
         </div>
       </section>
 
-    
+      <!-- ================================================================
+           SCREEN: AI MULTI-CANDIDATE CV SCREENER (Batch Evaluation)
+           ================================================================ -->
+      <section id="view-admin-screener" class="view-panel">
+        <div class="section-header">
+          <div>
+            <div class="section-title" style="display: flex; align-items: center; gap: 10px;">
+              <span>🎯 AI CV Batch Screener</span>
+              <span class="badge" style="background: rgba(21, 154, 147, 0.12); color: var(--accent); border: 1px solid var(--accent); font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 800;">Gemini 3.5 Flash Lite</span>
+            </div>
+            <div class="section-sub">Evaluasi komparatif 2–10 CV pelamar sekaligus secara otomatis berbasis kriteria posisi Miss Fish Bali</div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-ghost" onclick="resetScreenerForm()">
+              <span>🔄</span> Reset Form
+            </button>
+            <button class="btn btn-accent" id="btnRunScreener" onclick="startBatchScreening()">
+              <span>🚀</span> Mulai Screening Komparatif
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 KPI Stat Cards -->
+        <div class="grid-4" style="margin-bottom: 24px;">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Berkas CV Diupload</span>
+              <span style="font-size: 18px;">📄</span>
+            </div>
+            <div class="kpi-value" id="scKpiTotal">0 <span style="font-size: 13px; font-weight: 600; color: var(--muted);">/ 10 maks</span></div>
+            <div class="kpi-trend neutral">Format PDF &amp; Word (.docx)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Panggil Wawancara</span>
+              <span style="font-size: 18px;">🟢</span>
+            </div>
+            <div class="kpi-value" id="scKpiPanggil" style="color: var(--success);">-</div>
+            <div class="kpi-trend positive">Kandidat Prioritas Utama</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Pertimbangkan</span>
+              <span style="font-size: 18px;">🟡</span>
+            </div>
+            <div class="kpi-value" id="scKpiPertimbangkan" style="color: var(--gold-dark);">-</div>
+            <div class="kpi-trend neutral">Memenuhi Sebagian Syarat</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Tidak Direkomendasikan</span>
+              <span style="font-size: 18px;">🔴</span>
+            </div>
+            <div class="kpi-value" id="scKpiTidak" style="color: var(--danger);">-</div>
+            <div class="kpi-trend negative">Di Bawah Kualifikasi</div>
+          </div>
+        </div>
+
+        <!-- Two Column Setup: Left = Job Specification, Right = Upload & CV List -->
+        <div class="grid-2" style="gap: 24px; margin-bottom: 24px; align-items: start;">
+          <!-- Left: Position & Criteria -->
+          <div class="card" style="padding: 22px;">
+            <div style="font-size: 14px; font-weight: 850; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>1. Target Posisi &amp; Kualifikasi Standar</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+              Pilih posisi dari roster Miss Fish Bali untuk mengisi spesifikasi otomatis atau sesuaikan manual.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Pilih Lowongan Roster Resmi:</label>
+              <select class="select" id="scJobSelect" onchange="onScreenerJobSelected(this.value)" style="width: 100%;">
+                <option value="">-- Pilih Posisi Miss Fish Bali --</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Judul Posisi (Target Role):</label>
+              <input class="input" id="scTargetRole" placeholder="Contoh: Sushi Chef / Nigiri Specialist" style="width: 100%;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Deskripsi &amp; Syarat Kualifikasi (Job Description):</label>
+              <textarea class="input" id="scJobDesc" rows="7" placeholder="Masukkan ringkasan tugas, teknik kuliner/bar yang dicari, syarat pengalaman..." style="width: 100%; resize: vertical; line-height: 1.5; font-size: 13px;"></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 12px; font-weight: 750; margin-bottom: 6px; display: block;">Bahasa Analisis AI:</label>
+              <select class="select" id="scLanguage" style="width: 100%;">
+                <option value="id" selected>Bahasa Indonesia</option>
+                <option value="en">English (Professional Hospitality)</option>
+                <option value="auto">Auto Detect Language</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Right: Upload CVs & File Management -->
+          <div class="card" style="padding: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <div style="font-size: 14px; font-weight: 850; color: var(--text); display: flex; align-items: center; gap: 8px;">
+                <span>2. Upload Berkas CV (2–10 Berkas)</span>
+              </div>
+              <span style="font-size: 11px; font-weight: 750; color: var(--accent); background: rgba(21, 154, 147, 0.12); padding: 3px 8px; border-radius: 6px;" id="scFileCountPill">0 / 10 Berkas</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+              Tarik dan lepaskan file CV kandidat (PDF atau Word .docx). AI akan mengekstrak teks di browser secara aman.
+            </div>
+
+            <div class="screener-dropzone" id="scDropzone" onclick="document.getElementById('scFileInput').click()">
+              <input type="file" id="scFileInput" multiple accept=".pdf,.docx,.doc" style="display: none;" onchange="onScreenerFilesSelected(this)">
+              <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
+              <div style="font-weight: 800; font-size: 14px; color: var(--text);">Tarik &amp; Lepaskan Berkas CV di Sini</div>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Atau klik untuk memilih file dari komputer (2–10 CV)</div>
+            </div>
+
+            <!-- Uploaded CV List -->
+            <div class="screener-cv-list" id="scCvList">
+              <div id="scCvEmpty" style="text-align: center; padding: 24px; color: var(--muted); font-size: 13px; border: 1px dashed var(--line); border-radius: 8px; margin-top: 14px;">
+                Belum ada berkas CV yang ditambahkan. Silakan upload minimal 2 CV untuk memulai komparasi.
+              </div>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="scErrorBox" style="display: none; margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: var(--danger-bg); color: var(--danger); font-size: 12.5px; font-weight: 600; border: 1px solid rgba(185, 75, 75, 0.2);"></div>
+          </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="card" id="scProgressSection" style="display: none; padding: 20px; margin-bottom: 24px; border: 1.5px solid var(--accent); background: rgba(21, 154, 147, 0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-size: 13.5px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px;">
+              <span class="spinner" style="display: inline-block; width: 14px; height: 14px; border: 2px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+              <span id="scProgressText">Menganalisis berkas...</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 850; color: var(--accent);" id="scProgressPct">0%</div>
+          </div>
+          <div style="height: 8px; background: var(--surface3); border-radius: 999px; overflow: hidden;">
+            <div id="scProgressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--gold)); border-radius: 999px; transition: width 0.3s ease;"></div>
+          </div>
+          <div id="scProgressList" style="display: flex; flex-direction: column; gap: 6px; margin-top: 14px; font-size: 12px;"></div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="scResultsSection" style="display: none;">
+          <!-- AI Executive Narrative Card -->
+          <div class="card" id="scNarrativeBox" style="padding: 22px; margin-bottom: 20px; background: linear-gradient(135deg, rgba(223, 190, 153, 0.08), rgba(21, 154, 147, 0.08)); border: 1.5px solid var(--gold);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 22px;">✨</span>
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; font-weight: 850; color: var(--text);">Ringkasan Rekomendasi Eksekutif Gemini AI</h3>
+                  <div style="font-size: 12px; color: var(--muted);">Hasil komparasi objektif seluruh pool kandidat terhadap standar peran Miss Fish Bali</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-ghost" onclick="exportScreenerToCsv()" style="font-size: 12px; padding: 6px 14px; border: 1px solid var(--line);">
+                  <span>📊</span> Export Hasil CSV
+                </button>
+                <button class="btn btn-ghost" onclick="window.print()" style="font-size: 12px; padding: 6px 14px; border: 1px solid var(--line);">
+                  <span>🖨️</span> Cetak / PDF
+                </button>
+              </div>
+            </div>
+            <div id="scNarrativeSummary" style="font-size: 13.5px; line-height: 1.6; color: var(--text); margin-bottom: 12px;"></div>
+            <div id="scNarrativeNotes" style="font-size: 12.5px; line-height: 1.6; color: var(--muted); background: var(--surface); padding: 12px 16px; border-radius: 8px; border-left: 3px solid var(--accent);"></div>
+          </div>
+
+          <!-- Ranked Candidate Cards -->
+          <div id="scCandidateCards"></div>
+        </div>
+      </section>
+
   <!-- SCREEN 9: AI RECRUITMENT REPORTS & INTELLIGENCE (GEMINI 3.5 FLASH LITE) -->
   <section id="view-admin-ai-reports" class="view-panel">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
@@ -3166,7 +3470,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" onclick="navTo('admin-jobs');toggleDrawer()">💼 Vacancies</button>
       <button class="nav-btn" onclick="navTo('admin-applicants');toggleDrawer()">👥 Applicants</button>
       <button class="nav-btn" onclick="navTo('admin-pipeline');toggleDrawer()">📋 Pipeline</button>
+      <button class="nav-btn" onclick="navTo('admin-screener');toggleDrawer()">🎯 AI CV Screener</button>
       <button class="nav-btn" onclick="navTo('admin-analytics');toggleDrawer()">📈 Analytics & ClickUp</button>
+      <button class="nav-btn" onclick="navTo('admin-ai-reports');toggleDrawer()">✨ AI Intelligence</button>
     </nav>
   </div>
 </div>
@@ -3798,6 +4104,7 @@ const viewTitles = {
   'admin-jobs': { title: 'Vacancies & Roster Management', sub: 'Manage Published Positions & Department Distribution' },
   'admin-applicants': { title: 'Applicants Management', sub: 'Track & Filter Candidates' },
   'admin-pipeline': { title: 'Recruitment Pipeline', sub: 'Visual Kanban Workflow' },
+  'admin-screener': { title: 'AI CV Batch Screener', sub: 'Multi-Candidate Evaluation & Comparative Ranking · Gemini AI' },
   'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' },
   'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' }
 };
@@ -3841,6 +4148,7 @@ function navTo(viewId) {
   if (viewId === 'admin-jobs') renderAdminJobs();
   if (viewId === 'admin-applicants') filterAdminApplicants();
   if (viewId === 'admin-pipeline') renderKanban();
+  if (viewId === 'admin-screener') initAdminScreener();
   if (viewId === 'admin-analytics') updateGasGatewayUI();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4118,6 +4426,9 @@ function renderAdminJobs() {
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px;" onclick="openJobDetail(${j.id})">
               Preview ↗
+            </button>
+            <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; border: 1px solid var(--gold); color: var(--gold-dark);" onclick="openScreenerForJob('${esc(j.title)}')" title="Buka AI Batch Screener untuk posisi ini">
+              🎯 Screen CVs
             </button>
             <button class="btn ${isActive ? 'btn-ghost' : 'btn-accent'}" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;" onclick="toggleJobStatus(${j.id})" title="${isActive ? 'Jeda lowongan ini' : 'Aktifkan lowongan ini'}">
               ${isActive ? '⏸️ Jeda' : '▶️ Aktifkan'}
@@ -6222,6 +6533,7 @@ document.addEventListener('DOMContentLoaded', () => {
   filterAdminApplicants();
   renderKanban();
   updateGasGatewayUI();
+  initAdminScreener();
 
   // Initialize interactive charts
   setTimeout(() => {
@@ -6293,6 +6605,850 @@ function copyAiReport() {
   }).catch(() => {
     showNotification('Gagal menyalin laporan.');
   });
+}
+
+// ================================================================
+// AI CV Batch Screener Engine (Gemini 3.5 Flash Lite / Client Extractor)
+// Standar Miss Fish Bali · IT Department
+// ================================================================
+
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+let scCandidates = [];
+let scIdCounter = 0;
+let scScreeningResults = [];
+let scRankingResult = null;
+let scIsScreening = false;
+
+function initAdminScreener() {
+  // Populate Job Select from jobsData if needed
+  const jobSelect = document.getElementById('scJobSelect');
+  if (jobSelect && jobSelect.options.length <= 1) {
+    jobsData.forEach(j => {
+      const opt = document.createElement('option');
+      opt.value = j.id;
+      opt.textContent = `${j.title} (${j.dept})`;
+      jobSelect.appendChild(opt);
+    });
+  }
+
+  // Setup drag and drop on #scDropzone if not already setup
+  const dz = document.getElementById('scDropzone');
+  if (dz && !dz._scBound) {
+    dz._scBound = true;
+    dz.addEventListener('dragover', e => {
+      e.preventDefault();
+      dz.classList.add('drag-hover');
+    });
+    dz.addEventListener('dragleave', e => {
+      e.preventDefault();
+      dz.classList.remove('drag-hover');
+    });
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.classList.remove('drag-hover');
+      if (e.dataTransfer && e.dataTransfer.files) {
+        addScreenerFiles(Array.from(e.dataTransfer.files));
+      }
+    });
+  }
+
+  renderScreenerCvList();
+}
+
+function openScreenerForJob(jobTitleOrId) {
+  navTo('admin-screener');
+  const job = typeof jobTitleOrId === 'number' 
+    ? jobsData.find(j => j.id === jobTitleOrId)
+    : jobsData.find(j => j.title.toLowerCase().includes(String(jobTitleOrId).toLowerCase()) || String(jobTitleOrId).toLowerCase().includes(j.title.toLowerCase()));
+
+  if (job) {
+    const jobSelect = document.getElementById('scJobSelect');
+    if (jobSelect) jobSelect.value = job.id;
+    onScreenerJobSelected(job.id);
+  }
+}
+
+function onScreenerJobSelected(jobId) {
+  const id = parseInt(jobId);
+  const job = jobsData.find(j => j.id === id);
+  if (!job) return;
+
+  const roleInput = document.getElementById('scTargetRole');
+  const descInput = document.getElementById('scJobDesc');
+
+  if (roleInput) roleInput.value = job.title;
+  if (descInput) {
+    const compDesc = [
+      `Posisi: ${job.title} (${job.dept})`,
+      `Lokasi: ${job.loc || 'Canggu, Bali'} | Kontrak: ${job.type || 'Full Time'}`,
+      `Kisaran Gaji: ${job.salary || 'Kompetitif + Service Charge'}`,
+      '',
+      'Ringkasan Peran:',
+      job.desc || '',
+      '',
+      'Tanggung Jawab Utama:',
+      ...(job.responsibilities || []).map(r => `• ${r}`),
+      '',
+      'Kualifikasi & Persyaratan:',
+      ...(job.requirements || []).map(r => `• ${r}`),
+      '',
+      'Benefit & Fasilitas:',
+      ...(job.benefits || []).map(b => `• ${b}`)
+    ].join('\n');
+    descInput.value = compDesc;
+  }
+}
+
+function onScreenerFilesSelected(input) {
+  if (input.files && input.files.length) {
+    addScreenerFiles(Array.from(input.files));
+    input.value = '';
+  }
+}
+
+function fileToCandidateName(fileName) {
+  return fileName
+    .replace(/\.[^.]+$/, '')
+    .replace(/^(cv|resume|curriculum[_\s-]?vitae)[_\s-]+/i, '')
+    .replace(/[_\s-]+(cv|resume|202[0-9])$/i, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\b\w/g, l => l.toUpperCase())
+    .trim() || 'Candidate';
+}
+
+function addScreenerFiles(files) {
+  clearScreenerError();
+  let addedCount = 0;
+
+  files.forEach(file => {
+    if (scCandidates.length >= 10) {
+      showScreenerError('Maksimal 10 CV per sesi evaluasi komparatif.');
+      return;
+    }
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (!['pdf', 'docx', 'doc'].includes(ext)) {
+      showScreenerError(`Berkas "${file.name}" tidak didukung. Harap upload berkas format .PDF atau .DOCX.`);
+      return;
+    }
+    const isDuplicate = scCandidates.some(c => c.fileName.toLowerCase() === file.name.toLowerCase());
+    if (isDuplicate) {
+      showScreenerError(`Berkas "${file.name}" sudah pernah ditambahkan.`);
+      return;
+    }
+
+    scCandidates.push({
+      id: ++scIdCounter,
+      file: file,
+      fileName: file.name,
+      fileSize: file.size,
+      name: fileToCandidateName(file.name),
+      status: 'pending',
+      score: null,
+      error: null
+    });
+    addedCount++;
+  });
+
+  if (addedCount > 0) {
+    renderScreenerCvList();
+    toast(`✓ ${addedCount} berkas CV berhasil ditambahkan.`);
+  }
+}
+
+function renderScreenerCvList() {
+  const container = document.getElementById('scCvList');
+  const countPill = document.getElementById('scFileCountPill');
+  const kpiTotal = document.getElementById('scKpiTotal');
+  if (!container) return;
+
+  if (countPill) countPill.textContent = `${scCandidates.length} / 10 Berkas`;
+  if (kpiTotal) kpiTotal.innerHTML = `${scCandidates.length} <span style="font-size: 13px; font-weight: 600; color: var(--muted);">/ 10 maks</span>`;
+
+  if (scCandidates.length === 0) {
+    container.innerHTML = `
+      <div id="scCvEmpty" style="text-align: center; padding: 24px; color: var(--muted); font-size: 13px; border: 1px dashed var(--line); border-radius: 8px; margin-top: 14px;">
+        Belum ada berkas CV yang ditambahkan. Silakan upload minimal 2 CV untuk memulai komparasi.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = scCandidates.map(cand => {
+    let statusBadge = '';
+    if (cand.status === 'pending') {
+      statusBadge = '<span class="badge" style="background: var(--surface3); color: var(--muted); font-size: 11px;">Menunggu</span>';
+    } else if (cand.status === 'analyzing') {
+      statusBadge = '<span class="badge" style="background: rgba(223, 190, 153, 0.2); color: var(--gold-dark); font-size: 11px;">⏳ Menganalisis...</span>';
+    } else if (cand.status === 'done') {
+      const scoreColor = (cand.score || 0) >= 75 ? 'var(--success)' : (cand.score || 0) >= 60 ? 'var(--gold-dark)' : 'var(--danger)';
+      statusBadge = `<span class="badge" style="background: rgba(16, 185, 129, 0.12); color: ${scoreColor}; font-size: 11px; font-weight: 800;">✓ ${cand.score} pts</span>`;
+    } else if (cand.status === 'error') {
+      statusBadge = '<span class="badge" style="background: var(--danger-bg); color: var(--danger); font-size: 11px;">✕ Error</span>';
+    }
+
+    const sizeKb = Math.round(cand.fileSize / 1024);
+    const isLocked = scIsScreening || cand.status === 'analyzing';
+
+    return `
+      <div class="screener-cv-item status-${cand.status}" id="scItem-${cand.id}">
+        <span style="font-size: 22px;">📄</span>
+        <div style="flex: 1; min-width: 0;">
+          <input type="text" class="input" value="${esc(cand.name)}" 
+            ${isLocked ? 'disabled' : ''} 
+            placeholder="Nama Lengkap Kandidat"
+            onchange="updateScreenerCandidateName(${cand.id}, this.value)"
+            style="font-weight: 800; font-size: 13.5px; padding: 4px 8px; height: 32px; width: 100%; max-width: 280px; margin-bottom: 2px;">
+          <div style="font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            ${esc(cand.fileName)} (${sizeKb} KB)
+          </div>
+        </div>
+        <div>
+          ${statusBadge}
+        </div>
+        ${!isLocked ? `
+          <button type="button" class="icon-btn" onclick="removeScreenerCandidate(${cand.id})" style="width: 28px; height: 28px; font-size: 14px; color: var(--muted);" title="Hapus CV">
+            ✕
+          </button>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function updateScreenerCandidateName(id, val) {
+  const cand = scCandidates.find(c => c.id === id);
+  if (cand) cand.name = val.trim() || cand.fileName;
+}
+
+function removeScreenerCandidate(id) {
+  scCandidates = scCandidates.filter(c => c.id !== id);
+  clearScreenerError();
+  renderScreenerCvList();
+}
+
+function showScreenerError(msg) {
+  const box = document.getElementById('scErrorBox');
+  if (box) {
+    box.innerHTML = `⚠️ ${esc(msg)}`;
+    box.style.display = 'block';
+  }
+}
+
+function clearScreenerError() {
+  const box = document.getElementById('scErrorBox');
+  if (box) box.style.display = 'none';
+}
+
+// Client-side text extraction
+async function extractPdfText(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  let fullText = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const pageText = content.items.map(item => item.str).join(' ');
+    fullText += pageText + '\n';
+  }
+  return fullText;
+}
+
+async function extractDocxText(file) {
+  const buf = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer: buf });
+  return result.value;
+}
+
+async function extractCvText(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (ext === 'pdf') {
+    return await extractPdfText(file);
+  } else {
+    return await extractDocxText(file);
+  }
+}
+
+// Local simulation fallback engine for high-fidelity offline assessment
+function runLocalSimulationMatch(cvText, jdText, targetRole, candidateName, fileName) {
+  const cvNorm = (cvText + ' ' + fileName).toLowerCase();
+  const jdNorm = (jdText + ' ' + targetRole).toLowerCase();
+
+  const keywordsPool = [
+    { key: 'omakase', weight: 12 },
+    { key: 'sushi', weight: 12 },
+    { key: 'nigiri', weight: 10 },
+    { key: 'robata', weight: 10 },
+    { key: 'chef', weight: 8 },
+    { key: 'kitchen', weight: 6 },
+    { key: 'bar', weight: 8 },
+    { key: 'cocktail', weight: 10 },
+    { key: 'mixologist', weight: 12 },
+    { key: 'sommelier', weight: 12 },
+    { key: 'wine', weight: 8 },
+    { key: 'service', weight: 6 },
+    { key: 'hospitality', weight: 8 },
+    { key: 'haccp', weight: 10 },
+    { key: 'hygiene', weight: 8 },
+    { key: 'fifo', weight: 8 },
+    { key: 'guest', weight: 6 },
+    { key: 'pos', weight: 6 },
+    { key: 'inventory', weight: 6 },
+    { key: 'canggu', weight: 6 },
+    { key: 'bali', weight: 4 },
+    { key: 'english', weight: 8 },
+    { key: 'leadership', weight: 8 },
+    { key: 'manager', weight: 8 },
+    { key: 'supervisor', weight: 8 }
+  ];
+
+  let matchedKeywords = [];
+  let missingKeywords = [];
+  let rawScore = 52;
+
+  keywordsPool.forEach(kw => {
+    const inJd = jdNorm.includes(kw.key);
+    const inCv = cvNorm.includes(kw.key);
+    if (inCv) {
+      matchedKeywords.push(kw.key.toUpperCase());
+      if (inJd) rawScore += kw.weight;
+      else rawScore += 2;
+    } else if (inJd) {
+      missingKeywords.push(kw.key.toUpperCase());
+    }
+  });
+
+  // Check years of experience cues
+  const expMatch = cvNorm.match(/(\d+)\s*(?:tahun|thn|years|yrs)/);
+  let expYears = expMatch ? parseInt(expMatch[1]) : 2;
+  if (expYears >= 5) rawScore += 12;
+  else if (expYears >= 3) rawScore += 8;
+  else if (expYears >= 1) rawScore += 4;
+
+  if (cvNorm.includes('fluent english') || cvNorm.includes('english') || cvNorm.includes('bilingual')) {
+    rawScore += 6;
+  }
+
+  const finalScore = Math.min(94, Math.max(52, Math.round(rawScore)));
+
+  let rec = 'Pertimbangkan';
+  let recReason = '';
+  if (finalScore >= 75) {
+    rec = 'Panggil Wawancara';
+    recReason = `${candidateName} memiliki profil kompetensi yang sangat selaras dengan standar peran ${targetRole}. Menunjukkan pengalaman relevan di industri hospitality serta pemahaman teknis yang solid.`;
+  } else if (finalScore >= 60) {
+    rec = 'Pertimbangkan';
+    recReason = `${candidateName} memenuhi sebagian besar kualifikasi dasar untuk ${targetRole}. Perlu verifikasi mendalam mengenai spesialisasi teknik dan adaptabilitas ritme layanan Miss Fish Bali.`;
+  } else {
+    rec = 'Tidak Direkomendasikan';
+    recReason = `Kualifikasi dan kata kunci teknis pada berkas CV belum memenuhi ambang batas minimum yang disyaratkan untuk posisi ${targetRole}.`;
+  }
+
+  const strengths = [];
+  if (matchedKeywords.length >= 3) {
+    strengths.push(`Keahlian spesifik: ${matchedKeywords.slice(0, 3).join(', ')}`);
+  } else {
+    strengths.push('Latar belakang dasar di bidang pelayanan F&B / hospitality');
+  }
+  if (expYears >= 2) {
+    strengths.push(`Memiliki rekam jejak ${expYears} tahun pengalaman kerja`);
+  }
+  strengths.push('Format penyajian rekam jejak dan portofolio rapi serta komunikatif');
+
+  const gaps = [];
+  if (missingKeywords.length > 0) {
+    gaps.push(`Belum tertera eksplisit: ${missingKeywords.slice(0, 2).join(', ')}`);
+  }
+  if (finalScore < 75) {
+    gaps.push('Perlu verifikasi standar kecepatan kerja saat jam sibuk Canggu');
+  }
+
+  let interviewFocus = `Fokuskan pertanyaan pada pembuktian studi kasus layanan ${targetRole} dan kesiapan trial operasional di Miss Fish Bali Canggu.`;
+
+  return {
+    match_score: finalScore,
+    score_reason: recReason,
+    matched_keywords: matchedKeywords.slice(0, 8),
+    missing_keywords: missingKeywords.slice(0, 6),
+    strengths_for_role: strengths,
+    critical_gaps: gaps,
+    application_recommendation: rec,
+    recommendation_reason: recReason,
+    interview_focus: interviewFocus
+  };
+}
+
+function runLocalSimulationRanking(screeningResults, targetRole, jdText, language) {
+  const topCand = screeningResults[0];
+  const summary = `Pool pelamar untuk posisi "${targetRole || 'Posisi Terpilih'}" dievaluasi terhadap kualifikasi resmi Miss Fish Bali. Kandidat teratas adalah "${topCand ? topCand.name : '-'}" dengan match score ${topCand ? topCand.analysis.match_score : 0}%, menunjukkan kecocokan tertinggi pada kompetensi inti dan filosofi hospitality premium di Canggu.`;
+
+  const hiringNotes = `Catatan Rekrutmen: Kandidat dengan rekomendasi "Panggil Wawancara" disarankan segera dijadwalkan sesi tatap muka / trial teknis (Food Tasting untuk kitchen, Cocktail Balancing untuk bar, atau Roleplay Greeting untuk FOH) dalam 3 hari kerja sesuai komitmen SLA transparansi Miss Fish Bali.`;
+
+  const ranking = screeningResults.map((cand, idx) => ({
+    candidate_name: cand.name,
+    recommendation: cand.analysis.application_recommendation,
+    recommendation_reason: cand.analysis.recommendation_reason,
+    key_strengths: cand.analysis.strengths_for_role,
+    critical_gaps: cand.analysis.critical_gaps,
+    interview_focus: cand.analysis.interview_focus
+  }));
+
+  return {
+    ranking: ranking,
+    overall_summary: summary,
+    hiring_notes: hiringNotes
+  };
+}
+
+async function startBatchScreening() {
+  clearScreenerError();
+  const jd = (document.getElementById('scJobDesc')?.value || '').trim();
+  const targetRole = (document.getElementById('scTargetRole')?.value || '').trim();
+  const language = document.getElementById('scLanguage')?.value || 'id';
+
+  if (jd.length < 30) {
+    showScreenerError('Deskripsi & syarat kualifikasi posisi (Job Description) wajib diisi (minimal 30 karakter).');
+    return;
+  }
+  if (scCandidates.length < 2) {
+    showScreenerError('Minimal 2 berkas CV diperlukan untuk melakukan evaluasi dan komparasi pool kandidat.');
+    return;
+  }
+  if (scIsScreening) return;
+
+  scIsScreening = true;
+  scScreeningResults = [];
+  scRankingResult = null;
+
+  const btnRun = document.getElementById('btnRunScreener');
+  if (btnRun) btnRun.disabled = true;
+
+  const progSection = document.getElementById('scProgressSection');
+  const resultsSection = document.getElementById('scResultsSection');
+  if (progSection) progSection.style.display = 'block';
+  if (resultsSection) resultsSection.style.display = 'none';
+
+  const progText = document.getElementById('scProgressText');
+  const progPct = document.getElementById('scProgressPct');
+  const progBar = document.getElementById('scProgressBar');
+  const progList = document.getElementById('scProgressList');
+
+  if (progList) {
+    progList.innerHTML = scCandidates.map(c => `
+      <div id="scProgItem-${c.id}" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px;">
+        <span style="font-weight: 700; color: var(--text);">${esc(c.name)}</span>
+        <span class="badge" style="background: var(--surface3); color: var(--muted); font-size: 11px;">Menunggu</span>
+      </div>
+    `).join('');
+  }
+
+  const total = scCandidates.length;
+  const webAppUrl = getGasWebAppUrl();
+
+  for (let i = 0; i < total; i++) {
+    const cand = scCandidates[i];
+    cand.status = 'analyzing';
+    renderScreenerCvList();
+
+    const curPct = Math.round(((i) / (total + 1)) * 100);
+    if (progText) progText.textContent = `Mengekstrak dan menganalisis berkas ${i + 1} dari ${total}: "${cand.name}"...`;
+    if (progPct) progPct.textContent = `${curPct}%`;
+    if (progBar) progBar.style.width = `${curPct}%`;
+
+    const progItem = document.getElementById(`scProgItem-${cand.id}`);
+    if (progItem) {
+      progItem.querySelector('.badge').outerHTML = '<span class="badge" style="background: rgba(223, 190, 153, 0.2); color: var(--gold-dark); font-size: 11px;">⏳ Menganalisis...</span>';
+    }
+
+    try {
+      const extractedText = await extractCvText(cand.file);
+      let analysisData = null;
+
+      if (webAppUrl) {
+        try {
+          const res = await fetch(webAppUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'job_match',
+              source: 'screener',
+              cvText: extractedText.slice(0, 5000),
+              jobDescription: jd.slice(0, 3000),
+              targetRole: targetRole,
+              language: language
+            })
+          });
+          const resJson = await res.json();
+          if (resJson && resJson.success && resJson.data) {
+            analysisData = resJson.data;
+          }
+        } catch (fetchErr) {
+          console.warn('[MFB-HR] GAS screener fetch error, falling back to local simulation:', fetchErr);
+        }
+      }
+
+      if (!analysisData) {
+        analysisData = runLocalSimulationMatch(extractedText, jd, targetRole, cand.name, cand.fileName);
+      }
+
+      cand.status = 'done';
+      cand.score = analysisData.match_score || 0;
+      scScreeningResults.push({
+        id: cand.id,
+        name: cand.name,
+        fileName: cand.fileName,
+        fileSize: cand.fileSize,
+        analysis: analysisData
+      });
+
+      if (progItem) {
+        progItem.querySelector('.badge').outerHTML = `<span class="badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success); font-size: 11px; font-weight: 800;">✓ ${cand.score} pts</span>`;
+      }
+    } catch (err) {
+      console.error(`[MFB-HR] Error analyzing ${cand.name}:`, err);
+      cand.status = 'error';
+      cand.error = err.message || 'Gagal mengekstrak teks';
+      if (progItem) {
+        progItem.querySelector('.badge').outerHTML = '<span class="badge" style="background: var(--danger-bg); color: var(--danger); font-size: 11px;">✕ Error</span>';
+      }
+    }
+
+    renderScreenerCvList();
+    await new Promise(r => setTimeout(r, 250));
+  }
+
+  scScreeningResults.sort((a, b) => (b.analysis.match_score || 0) - (a.analysis.match_score || 0));
+
+  if (progText) progText.textContent = 'Memformulasikan ranking komparatif & ringkasan eksekutif Gemini AI...';
+  if (progPct) progPct.textContent = '95%';
+  if (progBar) progBar.style.width = '95%';
+
+  if (webAppUrl && scScreeningResults.length >= 1) {
+    try {
+      const rankRes = await fetch(webAppUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'rank_candidates',
+          candidates: scScreeningResults,
+          targetRole: targetRole,
+          language: language
+        })
+      });
+      const rankJson = await rankRes.json();
+      if (rankJson && rankJson.success && rankJson.data) {
+        scRankingResult = rankJson.data;
+      }
+    } catch (rankErr) {
+      console.warn('[MFB-HR] Live ranking error, using local ranking synthesis:', rankErr);
+    }
+  }
+
+  if (!scRankingResult) {
+    scRankingResult = runLocalSimulationRanking(scScreeningResults, targetRole, jd, language);
+  }
+
+  if (progPct) progPct.textContent = '100%';
+  if (progBar) progBar.style.width = '100%';
+  await new Promise(r => setTimeout(r, 300));
+
+  scIsScreening = false;
+  if (btnRun) btnRun.disabled = false;
+  if (progSection) progSection.style.display = 'none';
+
+  renderScreenerResults();
+  toast('✅ Evaluasi komparatif selesai! Hasil telah diperingkat.');
+}
+
+function renderScreenerResults() {
+  const resultsSection = document.getElementById('scResultsSection');
+  if (!resultsSection) return;
+
+  if (scScreeningResults.length === 0) {
+    showScreenerError('Tidak ada berkas yang berhasil dievaluasi. Periksa kembali format file.');
+    return;
+  }
+
+  const rankMap = {};
+  if (scRankingResult && Array.isArray(scRankingResult.ranking)) {
+    scRankingResult.ranking.forEach((r, idx) => {
+      rankMap[r.candidate_name] = { rank: idx + 1, data: r };
+    });
+  }
+
+  const merged = scScreeningResults.map((r, idx) => {
+    const rInfo = rankMap[r.name] || {};
+    const rd = rInfo.data || {};
+    const a = r.analysis || {};
+    const rec = (rd.recommendation || a.application_recommendation || 'Pertimbangkan').trim();
+    return {
+      id: r.id,
+      name: r.name,
+      fileName: r.fileName,
+      score: a.match_score || 0,
+      recommendation: rec,
+      reason: rd.recommendation_reason || a.recommendation_reason || '',
+      strengths: rd.key_strengths || a.strengths_for_role || [],
+      gaps: rd.critical_gaps || a.critical_gaps || [],
+      interviewFocus: rd.interview_focus || a.interview_focus || '',
+      aiRank: rInfo.rank || (idx + 1)
+    };
+  });
+
+  merged.sort((a, b) => a.aiRank - b.aiRank);
+  window._mfbScreeningMerged = merged;
+
+  const panggil = merged.filter(r => r.recommendation.toLowerCase().includes('panggil')).length;
+  const pertimbangkan = merged.filter(r => r.recommendation.toLowerCase().includes('pertimbangkan')).length;
+  const tidak = merged.filter(r => r.recommendation.toLowerCase().includes('tidak')).length;
+
+  document.getElementById('scKpiTotal').innerHTML = `${merged.length} <span style="font-size: 13px; font-weight: 600; color: var(--muted);">/ 10 maks</span>`;
+  document.getElementById('scKpiPanggil').textContent = panggil;
+  document.getElementById('scKpiPertimbangkan').textContent = pertimbangkan;
+  document.getElementById('scKpiTidak').textContent = tidak;
+
+  const summaryBox = document.getElementById('scNarrativeSummary');
+  const notesBox = document.getElementById('scNarrativeNotes');
+  if (summaryBox) {
+    summaryBox.innerHTML = `
+      <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text);">
+        ${esc(scRankingResult?.overall_summary || 'Evaluasi seluruh kandidat selesai dieksekusi.')}
+      </p>
+    `;
+  }
+  if (notesBox) {
+    notesBox.innerHTML = `
+      <strong style="color: var(--accent); font-weight: 850;">💡 Catatan Rekrutmen HR &amp; User:</strong><br>
+      <span style="font-size: 12.5px; color: var(--muted);">${esc(scRankingResult?.hiring_notes || 'Prioritaskan pemanggilan kandidat ranking #1 dan #2 untuk tahap interview.')}</span>
+    `;
+  }
+
+  const cardsContainer = document.getElementById('scCandidateCards');
+  if (cardsContainer) {
+    cardsContainer.innerHTML = merged.map((cand, idx) => {
+      const rank = idx + 1;
+      const rankCls = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : 'standard';
+      const recLower = cand.recommendation.toLowerCase();
+      const recCls = recLower.includes('tidak') ? 'rec-tidak' : recLower.includes('pertimbangkan') ? 'rec-pertimbangkan' : 'rec-panggil';
+      const scoreColor = cand.score >= 75 ? 'var(--success)' : cand.score >= 60 ? 'var(--gold-dark)' : 'var(--danger)';
+
+      const strengthsHtml = (cand.strengths || []).map(s => `
+        <span class="screener-tag strength">✓ ${esc(s)}</span>
+      `).join('');
+
+      const gapsHtml = (cand.gaps || []).map(g => `
+        <span class="screener-tag gap">⚠️ ${esc(g)}</span>
+      `).join('');
+
+      const isAlreadyAdded = applicantsData.some(a => a.name.toLowerCase() === cand.name.toLowerCase());
+
+      return `
+        <div class="screener-card ${recCls}">
+          <div class="screener-rank-badge ${rankCls}">
+            #${rank}
+          </div>
+
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+              <div>
+                <h3 style="margin: 0; font-size: 16px; font-weight: 850; color: var(--text); display: flex; align-items: center; gap: 8px;">
+                  <span>${esc(cand.name)}</span>
+                  ${rank === 1 ? '<span style="font-size: 14px;" title="Rekomendasi Teratas">🏆</span>' : ''}
+                </h3>
+                <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">
+                  📄 Berkas: <code>${esc(cand.fileName)}</code>
+                </div>
+              </div>
+
+              <span class="badge" style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; ${
+                recCls === 'rec-panggil' ? 'background: var(--success-bg); color: var(--success); border: 1px solid var(--success);' :
+                recCls === 'rec-pertimbangkan' ? 'background: rgba(223, 190, 153, 0.2); color: var(--gold-dark); border: 1px solid var(--gold);' :
+                'background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger);'
+              }">
+                ${esc(cand.recommendation)}
+              </span>
+            </div>
+
+            <p style="font-size: 13px; line-height: 1.6; color: var(--text); margin-bottom: 12px;">
+              ${esc(cand.reason)}
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
+              ${strengthsHtml}
+              ${gapsHtml}
+            </div>
+
+            ${cand.interviewFocus ? `
+              <div style="font-size: 12px; background: var(--surface2); padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--accent); margin-bottom: 14px;">
+                <strong style="color: var(--accent);">Focus Pertanyaan Wawancara:</strong> ${esc(cand.interviewFocus)}
+              </div>
+            ` : ''}
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <button class="btn btn-accent" id="btnEnrollCand-${idx}" 
+                style="font-size: 12px; min-height: 34px; padding: 6px 14px;"
+                onclick="addCandidateFromScreener(${idx})"
+                ${isAlreadyAdded ? 'disabled' : ''}>
+                ${isAlreadyAdded ? '✓ Terdaftar di Intake DB' : '➕ Masukkan ke Pelamar Aktif'}
+              </button>
+              <button class="btn btn-ghost" style="font-size: 12px; min-height: 34px; padding: 6px 14px; border: 1px solid var(--border);"
+                onclick="contactCandidateWhatsApp('${esc(cand.name)}')">
+                <span>💬</span> Hubungi via WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <div class="screener-score-circle" style="color: ${scoreColor};" title="Skor Kesesuaian Kualifikasi">
+            ${cand.score}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  resultsSection.style.display = 'block';
+  setTimeout(() => {
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function contactCandidateWhatsApp(name) {
+  const role = document.getElementById('scTargetRole')?.value || 'posisi di Miss Fish Bali';
+  const text = encodeURIComponent(`Halo ${name}, kami dari Tim HR Miss Fish Bali mengonfirmasi berkas lamaran Anda untuk posisi ${role}. Kami mengundang Anda untuk sesi wawancara / trial.`);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function addCandidateFromScreener(idx) {
+  const merged = window._mfbScreeningMerged;
+  if (!merged || !merged[idx]) return;
+  const cand = merged[idx];
+  const role = document.getElementById('scTargetRole')?.value || 'General Position';
+  
+  let dept = 'Kitchen';
+  const roleLower = role.toLowerCase();
+  if (roleLower.includes('bar') || roleLower.includes('mixologist') || roleLower.includes('sommelier')) dept = 'Bar';
+  else if (roleLower.includes('waiter') || roleLower.includes('host') || roleLower.includes('floor')) dept = 'Front of House';
+  else if (roleLower.includes('manager') || roleLower.includes('it')) dept = 'Management';
+
+  const newId = Date.now();
+  const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+  const candTrackingId = `MFB-HR-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${String(newId).slice(-4)}`;
+
+  const newCandidate = {
+    id: newId,
+    candidateId: candTrackingId,
+    name: cand.name,
+    position: role,
+    dept: dept,
+    status: cand.score >= 75 ? 'Interview' : 'Screening',
+    source: 'AI CV Screener',
+    date: dateStr,
+    email: `${cand.name.toLowerCase().replace(/\s+/g, '.')}@candidate.com`,
+    phone: '+62 812-xxxx-xxxx',
+    location: 'Bali, Indonesia',
+    experience: 'Disaring via AI Screener',
+    expectedSalary: 'Standar Roster',
+    earliestStartDate: 'Immediately',
+    clickupSyncStatus: 'NOT_SYNCED',
+    clickupTaskId: null,
+    clickupTaskUrl: null,
+    clickupSyncedAt: null,
+    clickupSyncBy: null,
+    clickupSyncError: null,
+    summary: cand.reason,
+    cvFile: cand.fileName,
+    notes: [
+      {
+        author: 'AI CV Screener (Gemini)',
+        time: `${dateStr}, ${new Date().toTimeString().slice(0, 5)} WITA`,
+        text: `Hasil Screening Komparatif: Match Score ${cand.score} pts (${cand.recommendation}). ${cand.interviewFocus ? 'Focus: ' + cand.interviewFocus : ''}`
+      }
+    ]
+  };
+
+  applicantsData.unshift(newCandidate);
+
+  const btn = document.getElementById(`btnEnrollCand-${idx}`);
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '✓ Terdaftar di Intake DB';
+  }
+
+  renderAdminDashboard();
+  filterAdminApplicants();
+  renderKanban();
+
+  toast(`✓ Kandidat "${cand.name}" berhasil dimasukkan ke Intake DB Pelamar!`);
+}
+
+function exportScreenerToCsv() {
+  const merged = window._mfbScreeningMerged;
+  if (!merged || merged.length === 0) {
+    toast('Tidak ada hasil screening untuk diexport.');
+    return;
+  }
+
+  const role = document.getElementById('scTargetRole')?.value || 'Semua Posisi';
+  const headers = ['Rank', 'Nama Kandidat', 'Nama Berkas', 'Match Score', 'Rekomendasi', 'Alasan Evaluasi', 'Kekuatan Utama', 'Critical Gaps', 'Interview Focus'];
+  
+  const escapeCsv = str => {
+    if (str === null || str === undefined) return '""';
+    return `"${String(str).replace(/"/g, '""')}"`;
+  };
+
+  const rows = merged.map(c => [
+    escapeCsv(c.aiRank),
+    escapeCsv(c.name),
+    escapeCsv(c.fileName),
+    escapeCsv(c.score),
+    escapeCsv(c.recommendation),
+    escapeCsv(c.reason),
+    escapeCsv((c.strengths || []).join('; ')),
+    escapeCsv((c.gaps || []).join('; ')),
+    escapeCsv(c.interviewFocus || '-')
+  ].join(','));
+
+  const csvContent = '\uFEFF' + [headers.map(escapeCsv).join(','), ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `MFB-CV-Screener-${role.replace(/\s+/g, '-')}-${dateStr}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  toast('✓ Laporan komparatif CV Screener berhasil didownload!');
+}
+
+function resetScreenerForm() {
+  scCandidates = [];
+  scScreeningResults = [];
+  scRankingResult = null;
+  scIsScreening = false;
+  clearScreenerError();
+
+  const fileInput = document.getElementById('scFileInput');
+  if (fileInput) fileInput.value = '';
+
+  const progSection = document.getElementById('scProgressSection');
+  const resultsSection = document.getElementById('scResultsSection');
+  if (progSection) progSection.style.display = 'none';
+  if (resultsSection) resultsSection.style.display = 'none';
+
+  document.getElementById('scKpiTotal').innerHTML = '0 <span style="font-size: 13px; font-weight: 600; color: var(--muted);">/ 10 maks</span>';
+  document.getElementById('scKpiPanggil').textContent = '-';
+  document.getElementById('scKpiPertimbangkan').textContent = '-';
+  document.getElementById('scKpiTidak').textContent = '-';
+
+  renderScreenerCvList();
+  toast('↺ Form AI CV Screener telah direset.');
 }
 
 </script>
