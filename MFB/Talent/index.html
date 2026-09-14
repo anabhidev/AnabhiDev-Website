@@ -3188,10 +3188,24 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
           </div>
           <select class="select" id="adminJobDeptFilter" onchange="renderAdminJobs()">
             <option value="">Semua Departemen</option>
-            <option value="Kitchen">Kitchen</option>
-            <option value="Bar">Bar &amp; Beverage</option>
-            <option value="Front of House">Front of House</option>
-            <option value="Management">Management</option>
+            <option value="Kitchen">Kitchen / Culinary</option>
+            <option value="Sushi Bar &amp; Omakase">Sushi Bar &amp; Omakase</option>
+            <option value="Pastry &amp; Bakery">Pastry &amp; Bakery</option>
+            <option value="Bar">Bar &amp; Mixology</option>
+            <option value="Sommelier &amp; Cellar">Sommelier &amp; Cellar</option>
+            <option value="Front of House">Front of House / Floor Service</option>
+            <option value="Host &amp; VIP Relations">Host &amp; VIP Relations</option>
+            <option value="Stewarding">Stewarding &amp; Hygiene</option>
+            <option value="Housekeeping">Housekeeping &amp; Facilities</option>
+            <option value="Management">Operations &amp; Management</option>
+            <option value="Purchasing &amp; Cost Control">Purchasing &amp; Cost Control</option>
+            <option value="Finance &amp; Accounting">Finance &amp; Accounting</option>
+            <option value="Human Resources">Human Resources &amp; Talent</option>
+            <option value="Sales &amp; Marketing">Sales &amp; Marketing</option>
+            <option value="IT">IT &amp; Systems</option>
+            <option value="Engineering &amp; Maintenance">Engineering &amp; Maintenance</option>
+            <option value="Security &amp; Safety">Security &amp; Safety</option>
+            <option value="Other">Lainnya / Divisi Khusus</option>
           </select>
           <select class="select" id="adminJobStatusFilter" onchange="renderAdminJobs()">
             <option value="">Semua Status Publikasi</option>
@@ -3207,7 +3221,6 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
               <tr>
                 <th>Posisi &amp; Divisi</th>
                 <th>Lokasi</th>
-                <th>Rentang Gaji</th>
                 <th>Pelamar Terdaftar</th>
                 <th>Status Publikasi</th>
                 <th>Aksi</th>
@@ -3286,6 +3299,7 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
               <tr>
                 <th>Candidate Name &amp; ID</th>
                 <th>Applied Position</th>
+                <th>Ekspektasi Gaji</th>
                 <th>Applied Date</th>
                 <th>Status</th>
                 <th>ClickUp Sync</th>
@@ -5036,14 +5050,40 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
-          <div>
-            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Expected Salary (IDR)</label>
-            <input class="input" id="newCandSalary" placeholder="e.g. Rp 7,000,000 - Rp 9,000,000">
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Expected Salary (IDR)</label>
+          <input class="input" id="newCandSalary" placeholder="e.g. Rp 7,000,000 - Rp 9,000,000">
+        </div>
+
+        <!-- Direct PDF Document Upload (ClickUp ATS Style) -->
+        <div style="margin-bottom: 16px;">
+          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">
+            📄 Dokumen CV Kandidat (Upload Langsung File PDF / Docx)
+          </label>
+          <div id="newCandCvDropzone" style="border: 2px dashed var(--line); border-radius: 8px; padding: 18px 14px; text-align: center; background: var(--surface2); cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('newCandCvFileInput').click()" ondragover="event.preventDefault(); this.style.borderColor='var(--accent)';" ondragleave="this.style.borderColor='var(--line)';" ondrop="handleCandCvFileDrop(event, this)">
+            <input type="file" id="newCandCvFileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleNewCandCvFileChange(this)">
+            <div id="newCandCvUploadPrompt">
+              <div style="font-size: 26px; margin-bottom: 4px;">📑</div>
+              <div style="font-weight: 750; font-size: 13px; color: var(--text);">Pilih File PDF CV atau Drag &amp; Drop ke Sini</div>
+              <div style="font-size: 11px; color: var(--muted); margin-top: 3px;">Format PDF, DOC, DOCX didukung (maks 15MB) · Seperti lampiran file ClickUp ATS</div>
+            </div>
+            <div id="newCandCvUploadedInfo" style="display: none; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <span class="badge" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success); font-weight: 800; font-size: 12px; padding: 6px 12px; border-radius: 6px;">
+                ✓ <span id="newCandCvFileName">document.pdf</span> (<span id="newCandCvFileSize">0 KB</span>)
+              </span>
+              <button type="button" class="btn btn-ghost" style="min-height: 28px; padding: 2px 10px; font-size: 11px; color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3);" onclick="event.stopPropagation(); removeNewCandCvFile();">
+                Hapus
+              </button>
+            </div>
           </div>
-          <div>
-            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">CV / Resume Link (Drive / URL)</label>
-            <input class="input" id="newCandResumeUrl" placeholder="https://drive.google.com/...">
+          <div style="margin-top: 8px; font-size: 11px; color: var(--muted); display: flex; align-items: center; justify-content: space-between;">
+            <span>Punya link Google Drive / Cloud CV?</span>
+            <button type="button" class="btn btn-ghost" style="min-height: 24px; padding: 0 6px; font-size: 10.5px; text-decoration: underline; color: var(--accent);" onclick="toggleNewCandDriveUrlInput()">
+              + Input Link Drive Alternatif
+            </button>
+          </div>
+          <div id="newCandDriveUrlWrap" style="display: none; margin-top: 8px;">
+            <input class="input" id="newCandResumeUrl" placeholder="https://drive.google.com/file/d/... (Opsional jika sudah upload PDF)">
           </div>
         </div>
 
@@ -5073,11 +5113,12 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
     <div class="modal-header">
       <div>
         <div class="modal-title" id="addVacancyModalTitle">➕ Tambah Lowongan Baru</div>
-        <div class="modal-sub">Publikasikan posisi baru ke Career Portal &amp; Google Sheets Vacancies Roster</div>
+        <div class="modal-sub" id="addVacancyModalSub">Publikasikan posisi baru ke Career Portal &amp; Google Sheets Vacancies Roster</div>
       </div>
       <button class="icon-btn" onclick="closeAddVacancyModal()" aria-label="Close Modal">×</button>
     </div>
     <form id="addVacancyForm" onsubmit="submitNewVacancy(event)">
+      <input type="hidden" id="editJobId" value="">
       <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
         <div style="margin-bottom: 14px;">
           <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Judul Posisi *</label>
@@ -5088,10 +5129,24 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
           <div>
             <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Departemen *</label>
             <select class="select" id="newJobDept" required>
-              <option value="Kitchen">Kitchen</option>
-              <option value="Bar">Bar &amp; Beverage</option>
-              <option value="Front of House">Front of House</option>
-              <option value="Management">Management &amp; IT</option>
+              <option value="Kitchen">Kitchen / Culinary</option>
+              <option value="Sushi Bar &amp; Omakase">Sushi Bar &amp; Omakase</option>
+              <option value="Pastry &amp; Bakery">Pastry &amp; Bakery</option>
+              <option value="Bar">Bar &amp; Beverage / Mixology</option>
+              <option value="Sommelier &amp; Cellar">Sommelier &amp; Cellar</option>
+              <option value="Front of House">Front of House / Floor Service</option>
+              <option value="Host &amp; VIP Relations">Host &amp; VIP Relations</option>
+              <option value="Stewarding">Stewarding &amp; Hygiene</option>
+              <option value="Housekeeping">Housekeeping &amp; Facilities</option>
+              <option value="Management">Operations &amp; Management</option>
+              <option value="Purchasing &amp; Cost Control">Purchasing &amp; Cost Control</option>
+              <option value="Finance &amp; Accounting">Finance &amp; Accounting</option>
+              <option value="Human Resources">Human Resources &amp; Talent</option>
+              <option value="Sales &amp; Marketing">Sales &amp; Marketing</option>
+              <option value="IT">IT &amp; Systems</option>
+              <option value="Engineering &amp; Maintenance">Engineering &amp; Maintenance</option>
+              <option value="Security &amp; Safety">Security &amp; Safety</option>
+              <option value="Other">Lainnya / Divisi Khusus</option>
             </select>
           </div>
           <div>
@@ -5110,31 +5165,51 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
             <input class="input" id="newJobLoc" value="Canggu, Bali">
           </div>
           <div>
-            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Rentang Gaji (Estimasi)</label>
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Rentang Gaji (Estimasi Internal HR)</label>
             <input class="input" id="newJobSalary" placeholder="cth: Rp 7,000,000 – Rp 9,000,000 + SC">
           </div>
         </div>
 
         <div style="margin-bottom: 14px;">
-          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Ringkasan / Headline Pekerjaan</label>
-          <textarea class="textarea" id="newJobDesc" rows="2" style="height: auto; padding: 10px; resize: vertical;" placeholder="Deskripsi singkat peran dan daya tarik posisi ini di Miss Fish Bali..."></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted);">Ringkasan / Headline Pekerjaan</label>
+            <span style="font-size: 10.5px; color: var(--accent); font-weight: 700;">Bebas · Tanpa batas kata</span>
+          </div>
+          <textarea class="textarea" id="newJobDesc" rows="3" style="height: auto; padding: 10px; resize: vertical; min-height: 80px;" placeholder="Deskripsi peran dan daya tarik posisi ini di Miss Fish Bali..." oninput="updateJobFormFieldWordCount('newJobDesc', 'newJobDescWordCount')"></textarea>
+          <div style="display: flex; justify-content: flex-end; font-size: 11px; color: var(--muted); margin-top: 3px;">
+            <span id="newJobDescWordCount">0 kata</span>
+          </div>
         </div>
 
         <div style="margin-bottom: 14px;">
-          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Tanggung Jawab Utama (1 per baris)</label>
-          <textarea class="textarea" id="newJobResp" rows="3" style="height: auto; padding: 10px; resize: vertical;" placeholder="- Mengawasi operasional stasiun pastry per resep standar&#10;- Memastikan kebersihan dan suhu penyimpanan bahan makanan"></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted);">Tanggung Jawab Utama (1 per baris)</label>
+            <span style="font-size: 10.5px; color: var(--accent); font-weight: 700;">Bebas · Tanpa batas kata</span>
+          </div>
+          <textarea class="textarea" id="newJobResp" rows="4" style="height: auto; padding: 10px; resize: vertical; min-height: 90px;" placeholder="- Mengawasi operasional stasiun per resep standar&#10;- Memastikan kebersihan dan standar kuliner Miss Fish Bali" oninput="updateJobFormFieldWordCount('newJobResp', 'newJobRespWordCount')"></textarea>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 3px;">
+            <span>Tekan Enter untuk baris bullet baru</span>
+            <span id="newJobRespWordCount">0 kata</span>
+          </div>
         </div>
 
         <div style="margin-bottom: 20px;">
-          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Kualifikasi &amp; Persyaratan (1 per baris)</label>
-          <textarea class="textarea" id="newJobReq" rows="3" style="height: auto; padding: 10px; resize: vertical;" placeholder="- Pengalaman minimal 2 tahun di pastry/bakery upscale restaurant&#10;- Berdomisili di Bali atau bersedia pindah ke Canggu"></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted);">Kualifikasi &amp; Persyaratan (1 per baris)</label>
+            <span style="font-size: 10.5px; color: var(--accent); font-weight: 700;">Bebas · Tanpa batas kata</span>
+          </div>
+          <textarea class="textarea" id="newJobReq" rows="4" style="height: auto; padding: 10px; resize: vertical; min-height: 90px;" placeholder="- Pengalaman minimal 2 tahun di restoran / beach club upscale&#10;- Berdomisili di Bali atau bersedia pindah ke Canggu" oninput="updateJobFormFieldWordCount('newJobReq', 'newJobReqWordCount')"></textarea>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 3px;">
+            <span>Tekan Enter untuk baris bullet baru</span>
+            <span id="newJobReqWordCount">0 kata</span>
+          </div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line); padding-top: 16px;">
           <button type="button" class="btn btn-ghost" onclick="closeAddVacancyModal()" style="min-height: 42px; padding: 8px 18px;">
             Batal
           </button>
-          <button type="submit" class="btn btn-accent" style="min-height: 42px; padding: 8px 24px; font-weight: 800;">
+          <button type="submit" class="btn btn-accent" id="addVacancySubmitBtn" style="min-height: 42px; padding: 8px 24px; font-weight: 800;">
             Simpan &amp; Publikasikan Lowongan
           </button>
         </div>
@@ -5840,6 +5915,23 @@ let applicantsData = [
   }
 ];
 
+// LocalStorage Persistence Hydration for Vacancies & Applicants
+try {
+  const savedJobs = localStorage.getItem('mfb_jobs_data');
+  if (savedJobs) {
+    const parsed = JSON.parse(savedJobs);
+    if (Array.isArray(parsed) && parsed.length > 0) jobsData = parsed;
+  }
+} catch (e) {}
+
+try {
+  const savedApps = localStorage.getItem('mfb_applicants_data');
+  if (savedApps) {
+    const parsed = JSON.parse(savedApps);
+    if (Array.isArray(parsed) && parsed.length > 0) applicantsData = parsed;
+  }
+} catch (e) {}
+
 // App State
 let currentView = 'public-home';
 let isAdminAuthenticated = true; // Enabled for prototype evaluation
@@ -6142,7 +6234,7 @@ function renderAdminJobs() {
   if (!tbody) return;
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 32px; color: var(--muted);">Tidak ada posisi yang cocok dengan filter pencarian.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 32px; color: var(--muted);">Tidak ada posisi yang cocok dengan filter pencarian.</td></tr>`;
     return;
   }
 
@@ -6178,9 +6270,6 @@ function renderAdminJobs() {
           <div style="font-size: 11px; color: var(--muted);">Miss Fish Bali</div>
         </td>
         <td>
-          <div style="font-weight: 700; font-size: 12.5px; color: var(--gold-dark);">${esc(j.salary || 'Competitive')}</div>
-        </td>
-        <td>
           <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);" onclick="viewApplicantsForPosition('${esc(j.title)}')" title="Lihat pelamar untuk posisi ini">
             👥 ${appCount} Pelamar →
           </button>
@@ -6190,6 +6279,9 @@ function renderAdminJobs() {
         </td>
         <td>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px; border: 1px solid var(--accent); color: var(--accent); font-weight: 750;" onclick="openEditVacancyModal(${j.id})" title="Edit detail, deskripsi, dan kualifikasi lowongan ini">
+              ✏️ Edit
+            </button>
             <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px;" onclick="openJobDetail(${j.id})">
               Preview ↗
             </button>
@@ -6240,18 +6332,85 @@ function toggleJobStatus(jobId) {
   const job = jobsData.find(j => j.id === jobId);
   if (!job) return;
   job.status = (job.status === 'Active' || !job.status) ? 'Paused' : 'Active';
+  try {
+    localStorage.setItem('mfb_jobs_data', JSON.stringify(jobsData));
+  } catch(e) {}
   renderAdminJobs();
   filterPublicJobs();
   renderHomeFeaturedJobs();
   toast(`${job.title} sekarang: ${job.status === 'Active' ? '🟢 Aktif (Live di Career Portal)' : '⏸️ Dijeda'}`);
 }
 
+function updateJobFormFieldWordCount(textareaId, counterId) {
+  const el = document.getElementById(textareaId);
+  const counter = document.getElementById(counterId);
+  if (!el || !counter) return;
+  const text = el.value.trim();
+  const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  const chars = text.length;
+  counter.textContent = `${words} kata · ${chars} karakter`;
+}
+
 function openAddVacancyModal() {
   const modal = document.getElementById('addVacancyModal');
-  if (modal) {
-    modal.classList.add('open');
-    setTimeout(() => document.getElementById('newJobTitle')?.focus(), 50);
+  if (!modal) return;
+  document.getElementById('editJobId').value = '';
+  document.getElementById('addVacancyModalTitle').innerHTML = '➕ Tambah Lowongan Baru';
+  document.getElementById('addVacancyModalSub').textContent = 'Publikasikan posisi baru ke Career Portal & Google Sheets Vacancies Roster';
+  document.getElementById('addVacancySubmitBtn').textContent = 'Simpan & Publikasikan Lowongan';
+
+  document.getElementById('addVacancyForm')?.reset();
+  document.getElementById('newJobLoc').value = 'Canggu, Bali';
+
+  updateJobFormFieldWordCount('newJobDesc', 'newJobDescWordCount');
+  updateJobFormFieldWordCount('newJobResp', 'newJobRespWordCount');
+  updateJobFormFieldWordCount('newJobReq', 'newJobReqWordCount');
+
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('newJobTitle')?.focus(), 50);
+}
+
+function openEditVacancyModal(jobId) {
+  const job = jobsData.find(j => String(j.id) === String(jobId));
+  if (!job) return;
+
+  const modal = document.getElementById('addVacancyModal');
+  if (!modal) return;
+
+  document.getElementById('editJobId').value = String(job.id);
+  document.getElementById('addVacancyModalTitle').innerHTML = `✏️ Edit Lowongan: ${esc(job.title)}`;
+  document.getElementById('addVacancyModalSub').textContent = `Perbarui rincian, deskripsi, dan kualifikasi posisi di Vacancies Roster`;
+  document.getElementById('addVacancySubmitBtn').textContent = '💾 Simpan Perubahan Lowongan';
+
+  document.getElementById('newJobTitle').value = job.title || '';
+  
+  // Select matching department or default
+  const deptSelect = document.getElementById('newJobDept');
+  if (deptSelect) {
+    let matched = false;
+    for (let opt of deptSelect.options) {
+      if (opt.value === job.dept || opt.value.toLowerCase().includes((job.dept || '').toLowerCase())) {
+        deptSelect.value = opt.value;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) deptSelect.value = 'Kitchen';
   }
+
+  document.getElementById('newJobType').value = job.type || 'Full Time';
+  document.getElementById('newJobLoc').value = job.loc || 'Canggu, Bali';
+  document.getElementById('newJobSalary').value = job.salary || '';
+  document.getElementById('newJobDesc').value = job.desc || '';
+  document.getElementById('newJobResp').value = Array.isArray(job.responsibilities) ? job.responsibilities.join('\n') : (job.responsibilities || '');
+  document.getElementById('newJobReq').value = Array.isArray(job.requirements) ? job.requirements.join('\n') : (job.requirements || '');
+
+  updateJobFormFieldWordCount('newJobDesc', 'newJobDescWordCount');
+  updateJobFormFieldWordCount('newJobResp', 'newJobRespWordCount');
+  updateJobFormFieldWordCount('newJobReq', 'newJobReqWordCount');
+
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('newJobTitle')?.focus(), 50);
 }
 
 function closeAddVacancyModal() {
@@ -6261,6 +6420,7 @@ function closeAddVacancyModal() {
 
 function submitNewVacancy(e) {
   if (e) e.preventDefault();
+  const editIdStr = (document.getElementById('editJobId')?.value || '').trim();
   const title = (document.getElementById('newJobTitle')?.value || '').trim();
   const dept = document.getElementById('newJobDept')?.value || 'Kitchen';
   const type = document.getElementById('newJobType')?.value || 'Full Time';
@@ -6275,6 +6435,36 @@ function submitNewVacancy(e) {
     return;
   }
 
+  const respArr = respText ? respText.split('\n').map(s => s.trim()).filter(Boolean) : ['Melaksanakan standar operasional dengan prima.'];
+  const reqArr = reqText ? reqText.split('\n').map(s => s.trim()).filter(Boolean) : ['Pengalaman relevan di bidang hospitality.'];
+
+  // 1. Edit Mode
+  if (editIdStr) {
+    const existingIndex = jobsData.findIndex(j => String(j.id) === String(editIdStr));
+    if (existingIndex !== -1) {
+      jobsData[existingIndex].title = title;
+      jobsData[existingIndex].dept = dept;
+      jobsData[existingIndex].type = type;
+      jobsData[existingIndex].loc = loc;
+      jobsData[existingIndex].salary = salary;
+      jobsData[existingIndex].desc = desc || jobsData[existingIndex].desc;
+      jobsData[existingIndex].responsibilities = respArr;
+      jobsData[existingIndex].requirements = reqArr;
+
+      try {
+        localStorage.setItem('mfb_jobs_data', JSON.stringify(jobsData));
+      } catch(err) {}
+
+      closeAddVacancyModal();
+      renderAdminJobs();
+      filterPublicJobs();
+      renderHomeFeaturedJobs();
+      toast(`✓ Perubahan lowongan "${title}" berhasil disimpan!`);
+      return;
+    }
+  }
+
+  // 2. Add New Mode
   const newId = Date.now();
   const newJob = {
     id: newId,
@@ -6285,13 +6475,16 @@ function submitNewVacancy(e) {
     type: type,
     status: 'Active',
     salary: salary,
-    desc: desc || `Join Miss Fish Bali as ${title}. Contribute your skills to our acclaimed hospitality experience in Canggu.`,
-    responsibilities: respText ? respText.split('\n').map(s => s.trim()).filter(Boolean) : ['Execute operational standards with excellence.'],
-    requirements: reqText ? reqText.split('\n').map(s => s.trim()).filter(Boolean) : ['Relevant hospitality experience.'],
-    benefits: ['Competitive salary + service charge', 'BPJS health coverage', 'Daily staff meals']
+    desc: desc || `Bergabunglah dengan Miss Fish Bali sebagai ${title}. Sumbangkan keahlian Anda untuk pengalaman hospitality terbaik di Canggu.`,
+    responsibilities: respArr,
+    requirements: reqArr,
+    benefits: ['Gaji kompetitif + service charge', 'Asuransi kesehatan BPJS', 'Makan harian staf dan seragam']
   };
 
   jobsData.push(newJob);
+  try {
+    localStorage.setItem('mfb_jobs_data', JSON.stringify(jobsData));
+  } catch(err) {}
 
   // Update vacancies dropdown in addCandidateModal as well
   const candPosSelect = document.getElementById('newCandPosition');
@@ -6415,6 +6608,9 @@ function filterAdminApplicants() {
         <div style="font-size: 11px; color: var(--muted);">${esc(a.location)}</div>
       </td>
       <td><strong>${esc(a.position)}</strong><br><span style="font-size: 11px; color: var(--muted);">${esc(a.dept)}</span></td>
+      <td>
+        <div style="font-weight: 750; font-size: 12.5px; color: var(--gold-dark);">${esc(a.expectedSalary || '-')}</div>
+      </td>
       <td>${esc(a.date)}</td>
       <td><span class="status ${a.status.toLowerCase()}">${esc(a.status)}</span></td>
       <td>${syncBadge}</td>
@@ -6693,6 +6889,27 @@ function renderCandidateDetailBody(cand) {
         </div>
       </div>
 
+      <!-- Interactive HR Screening Notes & Candidate Evaluation -->
+      <div class="card" style="padding: 20px; border: 1.5px solid var(--accent); background: var(--surface2); margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">📝</span>
+              <h3 style="font-size: 15px; font-weight: 850; margin: 0; color: var(--text);">Catatan Screening HR &amp; Evaluasi Kandidat</h3>
+            </div>
+            <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">Catatan ini dapat diedit kapan saja oleh HR untuk evaluasi berkala dan tersimpan permanen.</div>
+          </div>
+          <button class="btn btn-accent" style="min-height: 36px; padding: 6px 16px; font-size: 12px; font-weight: 800;" onclick="saveCandidateScreeningNotes(${cand.id})">
+            <span>💾</span> Simpan Catatan HR
+          </button>
+        </div>
+        <textarea class="textarea" id="candScreeningNotesInput" rows="4" style="height: auto; padding: 12px; font-size: 13.5px; line-height: 1.6; resize: vertical; min-height: 90px; background: var(--surface);" placeholder="Tulis catatan hasil screening telepon, impresi awal, hasil review CV, atau poin observasi HR di sini...">${esc(cand.screeningNotes || cand.summary || '')}</textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--muted); flex-wrap: wrap; gap: 8px;">
+          <span>💡 Tip: Catatan ini langsung tersinkronkan ke dossier kandidat dan timeline.</span>
+          <span id="candScreeningNotesStatus" style="color: var(--accent); font-weight: 700;">Dapat diedit bebas</span>
+        </div>
+      </div>
+
       <!-- Candidate Summary -->
       <h3 style="font-size: 16px; font-weight: 850; margin-bottom: 10px;">About the Candidate</h3>
       <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px;">
@@ -6748,46 +6965,38 @@ function renderCandidateDetailBody(cand) {
         <!-- Question 2: Relevant Hospitality Experience -->
         <div class="card" style="padding: 18px;">
           <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">
-            2. Rekam Jejak &amp; Pengalaman Hospitality
+            2. Pengalaman Kerja &amp; Kualifikasi Utama
           </div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px;">
-            ${esc(cand.experience || cand.experience_years || 'Berpengalaman')}
-          </div>
-          ${cand.currentCompany ? `<div style="font-size: 12px; color: var(--muted);">Perusahaan / Restoran Terakhir: <strong>${esc(cand.currentCompany)}</strong></div>` : ''}
-          <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">Domisili Saat Ini: <strong>${esc(cand.location || 'Bali, Indonesia')}</strong></div>
-        </div>
-
-        <!-- Question 3: Compensation & Earliest Availability -->
-        <div class="grid-2">
-          <div class="card" style="padding: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted);">
-                3. Ekspektasi Gaji Bulanan
-              </div>
-              <button class="btn btn-ghost" style="min-height: 24px; padding: 2px 8px; font-size: 10.5px; border: 1px solid #10b981; color: #10b981; font-weight: 750;" onclick="openSalaryForApplicant(${cand.id})" title="Cek posisi ekspektasi gaji ini di pasar">
-                💰 Benchmark ↗
-              </button>
-            </div>
-            <div style="font-size: 16px; font-weight: 850; color: var(--gold-dark);">${esc(cand.expectedSalary || 'Competitive / Sesuai Standar MFB')}</div>
-            <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Belum termasuk service charge &amp; tunjangan operasional.</div>
-          </div>
-          <div class="card" style="padding: 16px;">
-            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;">
-              4. Kesiapan Tanggal Mulai / Notice Period
-            </div>
-            <div style="font-size: 16px; font-weight: 850; color: var(--accent);">${esc(cand.earliestStartDate || 'Immediately')}</div>
-            <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Siap on-boarding sesuai kesepakatan tim HR.</div>
+          <div style="font-size: 13.5px; line-height: 1.6; color: var(--text);">
+            ${esc(cand.experience)}
           </div>
         </div>
 
-        <!-- Question 5: Intake Verification & Metadata -->
-        <div class="card" style="padding: 16px; background: var(--surface2);">
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">
-            5. Verifikasi &amp; Audit Pendaftaran
+        <!-- Question 3: Availability & Logistics -->
+        <div class="card" style="padding: 18px;">
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">
+            3. Ketersediaan Mulai Kerja &amp; Domisili
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 12.5px;">
-            <div><span style="color: var(--muted);">Candidate Tracking ID:</span><br><code style="font-weight: 800; color: var(--accent);">${esc(cand.candidateId || 'MFB-HR-INTAKE')}</code></div>
-            <div><span style="color: var(--muted);">Kanal Pendaftaran:</span><br><strong>${esc(cand.source || 'Career Website')}</strong></div>
+          <div style="font-size: 13.5px; color: var(--text);">
+            📍 Domisili: <strong>${esc(cand.location)}</strong> · Ketersediaan: <strong>${esc(cand.earliestStartDate || 'Immediately')}</strong>
+          </div>
+        </div>
+
+        <!-- Question 4: Remuneration Expectation -->
+        <div class="card" style="padding: 18px;">
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">
+            4. Ekspektasi Remunerasi / Gaji Bulanan
+          </div>
+          <div style="font-size: 14px; font-weight: 800; color: var(--gold-dark);">
+            💰 ${esc(cand.expectedSalary || 'Sesuai Standar Miss Fish Bali')}
+          </div>
+        </div>
+
+        <!-- Metadata Strip -->
+        <div class="card" style="padding: 14px; background: var(--surface2); font-size: 12px; color: var(--muted); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div><span style="color: var(--muted);">Sumber Aplikasi:</span><br><strong>${esc(cand.source || 'Career Website')}</strong></div>
+            <div><span style="color: var(--muted);">Status ClickUp ATS:</span><br><strong>${esc(cand.clickupSyncStatus || 'NOT_SYNCED')}</strong></div>
             <div><span style="color: var(--muted);">Waktu Pendaftaran:</span><br><strong>${esc(cand.date || 'Today')} WITA</strong></div>
             <div><span style="color: var(--muted);">Divisi &amp; Posisi:</span><br><strong>${esc(cand.dept)} · ${esc(cand.position)}</strong></div>
           </div>
@@ -6806,11 +7015,17 @@ function renderCandidateDetailBody(cand) {
             <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(21, 154, 147, 0.12); color: var(--accent); font-size: 22px; display: grid; place-items: center;">📄</div>
             <div>
               <div style="font-weight: 850; font-size: 14px;">${esc(cand.cvFile || 'Curriculum_Vitae.pdf')}</div>
-              <div style="font-size: 11.5px; color: var(--muted);">Curriculum Vitae · Candidate Document · Verified in Intake DB</div>
+              <div style="font-size: 11.5px; color: var(--muted);">
+                ${cand.resumeDataUrl ? 'Direct PDF Upload (ATS Ready)' : 'Curriculum Vitae'} · Candidate Document · Verified in Intake DB
+              </div>
             </div>
           </div>
           <div>
-            ${docUrl 
+            ${cand.resumeDataUrl 
+              ? `<a href="${cand.resumeDataUrl}" download="${esc(cand.cvFile || cand.name + '_CV.pdf')}" target="_blank" class="btn btn-accent" style="min-height: 38px; padding: 6px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 800;">
+                   <span>📄</span> Buka / Download PDF CV
+                 </a>`
+              : docUrl 
               ? `<a href="${esc(docUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-accent" style="min-height: 38px; padding: 6px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 800;">
                    <span>↗</span> Buka Dokumen CV
                  </a>`
@@ -6866,7 +7081,28 @@ function renderCandidateDetailBody(cand) {
     `;
   } else if (currentCandDetailTab === 'cand-notes') {
     container.innerHTML = `
-      <h3 style="font-size: 16px; font-weight: 850; margin-bottom: 14px;">Internal Team Notes</h3>
+      <!-- Editable HR Screening Notes Card in Notes Tab -->
+      <div class="card" style="padding: 20px; border: 1.5px solid var(--accent); background: var(--surface2); margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">📝</span>
+              <h3 style="font-size: 15px; font-weight: 850; margin: 0; color: var(--text);">Catatan Screening HR &amp; Evaluasi Utama</h3>
+            </div>
+            <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">Dapat diedit dan diperbarui kapan saja oleh HR Miss Fish Bali.</div>
+          </div>
+          <button class="btn btn-accent" style="min-height: 36px; padding: 6px 16px; font-size: 12px; font-weight: 800;" onclick="saveCandidateScreeningNotes(${cand.id})">
+            <span>💾</span> Simpan Catatan HR
+          </button>
+        </div>
+        <textarea class="textarea" id="candScreeningNotesInput" rows="4" style="height: auto; padding: 12px; font-size: 13.5px; line-height: 1.6; resize: vertical; min-height: 90px; background: var(--surface);" placeholder="Tulis catatan hasil screening telepon, impresi awal, hasil review CV, atau poin observasi HR di sini...">${esc(cand.screeningNotes || cand.summary || '')}</textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--muted); flex-wrap: wrap; gap: 8px;">
+          <span>💡 Tip: Catatan ini langsung tersinkronkan ke dossier kandidat dan timeline.</span>
+          <span id="candScreeningNotesStatus" style="color: var(--accent); font-weight: 700;">Dapat diedit bebas</span>
+        </div>
+      </div>
+
+      <h3 style="font-size: 16px; font-weight: 850; margin-bottom: 14px;">Internal Team Notes History</h3>
       <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
         ${cand.notes.map(n => `
           <div class="card" style="padding: 14px; background: var(--surface2);">
@@ -7671,10 +7907,124 @@ async function addCandidateNote(candId) {
     : 'Internal note saved to ClickUp task (Simulation)');
 }
 
+// Save Editable HR Screening Notes (Overview & Notes Tabs)
+async function saveCandidateScreeningNotes(candId) {
+  const input = document.getElementById('candScreeningNotesInput');
+  if (!input) return;
+  const text = input.value.trim();
+
+  const cand = applicantsData.find(a => a.id === candId);
+  if (!cand) return;
+
+  const nowWita = '14 Sep 2026, ' + new Date().toTimeString().slice(0, 5) + ' WITA';
+  cand.screeningNotes = text;
+  cand.summary = text || cand.summary;
+
+  // Prepend audit entry to candidate notes history
+  cand.notes.unshift({
+    author: 'HR Screening (Catatan)',
+    time: nowWita,
+    text: text ? `Catatan HR diperbarui: "${text.length > 90 ? text.slice(0, 90) + '...' : text}"` : 'Catatan screening HR dikosongkan.'
+  });
+
+  try {
+    localStorage.setItem('mfb_applicants_data', JSON.stringify(applicantsData));
+  } catch(e) {}
+
+  const statusEl = document.getElementById('candScreeningNotesStatus');
+  if (statusEl) {
+    statusEl.innerHTML = '<span style="color: var(--success); font-weight: 800;">✓ Catatan screening berhasil disimpan permanen!</span>';
+    setTimeout(() => {
+      if (statusEl) statusEl.innerHTML = '<span style="color: var(--accent); font-weight: 700;">Dapat diedit bebas</span>';
+    }, 3000);
+  }
+
+  // Live Gateway sync if URL configured
+  const webAppUrl = getGasWebAppUrl();
+  if (webAppUrl) {
+    try {
+      fetch(webAppUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'updateApplicantStatus',
+          candidate_id: cand.candidateId || `MFB-HR-${cand.id}`,
+          screening_status: cand.status,
+          notes: text,
+          hr_user: 'IT Manager / HR'
+        })
+      }).catch(err => console.warn('[MFB-HR] Notes remote sync error:', err));
+    } catch(err) {}
+  }
+
+  filterAdminApplicants();
+  renderKanban();
+  toast(`✓ Catatan screening HR untuk ${cand.name} berhasil disimpan!`);
+}
+
+// PDF Document Upload Handlers (ClickUp ATS Style)
+let newCandUploadedCvData = null; // { name, size, type, dataUrl }
+
+function handleNewCandCvFileChange(input) {
+  if (input.files && input.files[0]) {
+    processCandidateCvFile(input.files[0]);
+  }
+}
+
+function handleCandCvFileDrop(e, container) {
+  e.preventDefault();
+  container.style.borderColor = 'var(--line)';
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+    processCandidateCvFile(e.dataTransfer.files[0]);
+  }
+}
+
+function processCandidateCvFile(file) {
+  if (!file) return;
+  if (file.size > 15 * 1024 * 1024) {
+    alert('Ukuran file melebihi batas 15MB. Silakan gunakan file PDF yang lebih kecil.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    newCandUploadedCvData = {
+      name: file.name,
+      size: (file.size / 1024).toFixed(1) + ' KB',
+      type: file.type || 'application/pdf',
+      dataUrl: evt.target.result
+    };
+    const prompt = document.getElementById('newCandCvUploadPrompt');
+    const info = document.getElementById('newCandCvUploadedInfo');
+    if (prompt) prompt.style.display = 'none';
+    if (info) info.style.display = 'flex';
+    const nameEl = document.getElementById('newCandCvFileName');
+    const sizeEl = document.getElementById('newCandCvFileSize');
+    if (nameEl) nameEl.textContent = file.name;
+    if (sizeEl) sizeEl.textContent = newCandUploadedCvData.size;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeNewCandCvFile() {
+  newCandUploadedCvData = null;
+  const input = document.getElementById('newCandCvFileInput');
+  if (input) input.value = '';
+  const prompt = document.getElementById('newCandCvUploadPrompt');
+  const info = document.getElementById('newCandCvUploadedInfo');
+  if (prompt) prompt.style.display = 'block';
+  if (info) info.style.display = 'none';
+}
+
+function toggleNewCandDriveUrlInput() {
+  const wrap = document.getElementById('newCandDriveUrlWrap');
+  if (wrap) wrap.style.display = wrap.style.display === 'none' ? 'block' : 'none';
+}
+
 // Add Candidate Quick Modal (Manual HR Intake)
 function openAddCandidateModal() {
   const modal = document.getElementById('addCandidateModal');
   if (modal) {
+    removeNewCandCvFile();
     modal.classList.add('open');
     setTimeout(() => document.getElementById('newCandFullName')?.focus(), 50);
   }
@@ -7726,6 +8076,9 @@ async function handleManualAddCandidate(e) {
   const candidateTrackingId = `MFB-HR-${dateStr.replace(/-/g, '')}-${candIdSuffix}`;
   const newId = applicantsData.length > 0 ? Math.max(...applicantsData.map(a => a.id)) + 1 : 1;
 
+  const cvFileName = newCandUploadedCvData ? newCandUploadedCvData.name : (resumeUrl ? 'Candidate_CV_Document.pdf' : 'CV_Not_Provided.pdf');
+  const cvDataUrl = newCandUploadedCvData ? newCandUploadedCvData.dataUrl : null;
+
   const newCandidate = {
     id: newId,
     candidateId: candidateTrackingId,
@@ -7742,8 +8095,10 @@ async function handleManualAddCandidate(e) {
     earliestStartDate: avail,
     expectedSalary: salary,
     summary: notesText || `Direct application registered by HR for ${position}.`,
-    cvFile: resumeUrl ? 'Candidate_CV_Document.pdf' : 'CV_Not_Provided.pdf',
+    screeningNotes: notesText,
+    cvFile: cvFileName,
     resumeUrl: resumeUrl,
+    resumeDataUrl: cvDataUrl,
     portfolioUrl: '',
     clickupSyncStatus: 'NOT_SYNCED',
     clickupTaskId: null,
@@ -7794,9 +8149,14 @@ async function handleManualAddCandidate(e) {
 
   // Prepend new candidate to applicantsData
   applicantsData.unshift(newCandidate);
+  try {
+    localStorage.setItem('mfb_applicants_data', JSON.stringify(applicantsData));
+  } catch(e) {}
 
   // Reset form and modal
   document.getElementById('addCandidateForm')?.reset();
+  removeNewCandCvFile();
+
   if (btn) {
     btn.disabled = false;
     btn.innerHTML = '<span>💾</span> Save to Intake DB';
