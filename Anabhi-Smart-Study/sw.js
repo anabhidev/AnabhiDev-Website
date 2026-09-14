@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v3-1';
+var CACHE_VERSION = 'anabhidev-smart-study-v3-3';
 
 var PRECACHE = [
   './',
@@ -119,7 +119,28 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
-  // Aset statis & scripts: Cache-first
+  // Aset statis & scripts: Network-first untuk bundle.js dan css agar kode selalu mutakhir, cache fallback saat offline
+  var url = req.url || '';
+  var isScriptOrStyle = url.indexOf('/js/') !== -1 || url.indexOf('/css/') !== -1;
+
+  if (isScriptOrStyle) {
+    e.respondWith(
+      fetch(req).then(function (res) {
+        if (res && (res.status === 200 || res.type === 'opaque')) {
+          var copy = res.clone();
+          caches.open(CACHE_VERSION).then(function (c) {
+            c.put(req, copy);
+          });
+        }
+        return res;
+      }).catch(function () {
+        return caches.match(req);
+      })
+    );
+    return;
+  }
+
+  // Aset media lainnya (gambar, ikon): Cache-first
   e.respondWith(
     caches.match(req).then(function (hit) {
       if (hit) return hit;
@@ -132,7 +153,6 @@ self.addEventListener('fetch', function (e) {
         }
         return res;
       }).catch(function () {
-        // Safe fallback jika offline dan resource belum di-cache
         return null;
       });
     })
