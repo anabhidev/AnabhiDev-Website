@@ -58,7 +58,7 @@ export const SOURCE_BOOKS_REGISTRY = [
   {
     id: 'SRC-05',
     subjectId: 'cali-stung',
-    title: 'Cali Stung — Membaca, Menulis, Berhitung',
+    title: 'Calistung — Membaca, Menulis, Berhitung',
     grade: 1,
     semester: 1,
     publisher: 'Permata',

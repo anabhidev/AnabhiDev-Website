@@ -409,7 +409,7 @@
       allSubjects: 'Semua Pelajaran',
       subjectsKicker: 'Mata Pelajaran',
       companionBooksKicker: 'Buku Pendamping',
-      bookCaliStung: 'Buku Cali Stung',
+      bookCaliStung: 'Buku Calistung',
       bookMaxxi: 'Buku Maxi',
       activitiesKicker: 'Aktivitas & Rapor',
       dailyChallenge: 'Tantangan Harian',
@@ -594,7 +594,7 @@
       allSubjects: 'All Subjects',
       subjectsKicker: 'Subjects',
       companionBooksKicker: 'Companion Books',
-      bookCaliStung: 'Cali Stung Book',
+      bookCaliStung: 'Calistung Book',
       bookMaxxi: 'Maxi Book',
       activitiesKicker: 'Activities & Report',
       dailyChallenge: 'Daily Challenge',
@@ -1048,7 +1048,7 @@
     {
       id: 'SRC-05',
       subjectId: 'cali-stung',
-      title: 'Cali Stung — Membaca, Menulis, Berhitung',
+      title: 'Calistung — Membaca, Menulis, Berhitung',
       grade: 1,
       semester: 1,
       publisher: 'Permata',
@@ -6908,14 +6908,14 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Integrated Reinforcement Data
   // Development · Anabhi Dev
-  // Version   : 1.0 (Cali Stung 5-Menit & MAXXI Mixed Challenge)
-  // Aligned with Source Books: SRC-05 (Cali Stung) & SRC-10 (MAXXI)
+  // Version   : 1.0 (Calistung 5-Menit & MAXXI Mixed Challenge)
+  // Aligned with Source Books: SRC-05 (Calistung) & SRC-10 (MAXXI)
   // ================================================================
   
   const CALI_STUNG_DATA = {
     id: 'cali-stung-5min',
-    title: 'Latihan Cepat 5 Menit — Cali Stung',
-    titleEn: '5-Minute Rapid Drill — Cali Stung (Literacy & Numeracy)',
+    title: 'Latihan Cepat 5 Menit — Calistung',
+    titleEn: '5-Minute Rapid Drill — Calistung (Literacy & Numeracy)',
     subtitle: 'Latihan kilat penguatan fondasi: 5 soal membaca + 5 soal menulis + 5 soal berhitung!',
     subtitleEn: 'Quick foundational boost: 5 reading + 5 writing + 5 math questions!',
     sourceId: 'SRC-05',
@@ -11845,7 +11845,7 @@
           }).join('')}
         </nav>
   
-        <!-- Modul Buku Pendamping Siswa (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+        <!-- Modul Buku Pendamping Siswa (SRC-05 Calistung & SRC-10 MAXXI) -->
         <div class="kicker">${t('companionBooksKicker', lang)}</div>
         <nav class="nav" aria-label="Buku Pendamping">
           <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">
@@ -15865,7 +15865,7 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Daily Challenge & Integrated Reinforcement Component
   // Development · Anabhi Dev
-  // Version   : 2.0 (Cali Stung 5-Menit, MAXXI Challenge, & Source Books Registry)
+  // Version   : 2.0 (Calistung 5-Menit, MAXXI Challenge, & Source Books Registry)
   // ================================================================
   
   
@@ -15988,7 +15988,7 @@
           `).join('')}
         </div>
   
-        <!-- Bagian Modul Penguatan Integratif (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+        <!-- Bagian Modul Penguatan Integratif (SRC-05 Calistung & SRC-10 MAXXI) -->
         <div class="section" style="margin-top:40px;">
           <div class="eyebrow"><span class="no">⚡</span><span class="lbl">${isEn ? 'INTEGRATED REINFORCEMENT' : 'PENGUATAN TEMATIK TERPADU'}</span></div>
           <h3 style="font-size:20px; font-weight:800; margin:0 0 16px;">
@@ -15996,13 +15996,13 @@
           </h3>
   
           <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px;">
-            <!-- Kartu Cali Stung 5-Menit -->
+            <!-- Kartu Calistung 5-Menit -->
             <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-left:4px solid #b24a1b; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                   <span style="font-size:32px;">⚡</span>
                   <span class="subject-badge" style="background:#fdf1eb; color:#b24a1b; border-color:#f89a6b;">
-                    SRC-05 · Cali Stung
+                    SRC-05 · Calistung
                   </span>
                 </div>
                 <h4 style="margin:0 0 8px; font-size:17px; font-weight:800; color:var(--ink);">
@@ -16146,7 +16146,7 @@
     }
   
     // ============================================================
-    // STANDALONE VIEW: BUKU CALI STUNG (SRC-05)
+    // STANDALONE VIEW: BUKU CALISTUNG (SRC-05)
     // ============================================================
     renderCaliStungStandalone() {
       const lang = appState.get().lang || 'id';
@@ -16162,8 +16162,8 @@
       }
   
       const ttsIntro = isEn
-        ? 'Welcome to Cali Stung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
-        : 'Selamat datang di Buku Cali Stung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
+        ? 'Welcome to Calistung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
+        : 'Selamat datang di Buku Calistung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
   
       this.container.innerHTML = `
         <!-- Tombol Kembali & Navigasi -->
@@ -16181,7 +16181,7 @@
           </div>
         </div>
   
-        <!-- Hero Banner Buku Cali Stung dengan Foto Asli Buku -->
+        <!-- Hero Banner Buku Calistung dengan Foto Asli Buku -->
         <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
             <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
@@ -16228,7 +16228,7 @@
           </button>
         </div>
   
-        <!-- Wadah Kuis Interaktif Cali Stung -->
+        <!-- Wadah Kuis Interaktif Calistung -->
         <div id="caliStungQuizContainer"></div>
       `;
   
@@ -16776,21 +16776,21 @@
           </div>
         </section>
   
-        <!-- 4. Modul Buku Pendamping Siswa (Cali Stung & MAXXI) -->
+        <!-- 4. Modul Buku Pendamping Siswa (Calistung & MAXXI) -->
         <section style="margin-bottom:36px;">
           <div class="section-header" style="margin-bottom:18px;">
             <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
             <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
-            <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Cali Stung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Cali Stung dan MAXXI!'}</p>
+            <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Calistung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Calistung dan MAXXI!'}</p>
           </div>
   
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
-            <!-- Card Cali Stung -->
+            <!-- Card Calistung -->
             <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/05_Cali_Stung.png" alt="Cali Stung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
-                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Cali Stung</h3>
+                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Book' : 'Buku Calistung'}</h3>
                 <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
                   ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
                 </p>

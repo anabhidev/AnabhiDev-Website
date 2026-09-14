@@ -250,21 +250,21 @@ class App {
         </div>
       </section>
 
-      <!-- 4. Modul Buku Pendamping Siswa (Cali Stung & MAXXI) -->
+      <!-- 4. Modul Buku Pendamping Siswa (Calistung & MAXXI) -->
       <section style="margin-bottom:36px;">
         <div class="section-header" style="margin-bottom:18px;">
           <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
           <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
-          <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Cali Stung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Cali Stung dan MAXXI!'}</p>
+          <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Calistung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Calistung dan MAXXI!'}</p>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
-          <!-- Card Cali Stung -->
+          <!-- Card Calistung -->
           <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cali Stung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
             <div style="flex:1; min-width:0;">
               <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
-              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Cali Stung</h3>
+              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Book' : 'Buku Calistung'}</h3>
               <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
                 ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
               </p>

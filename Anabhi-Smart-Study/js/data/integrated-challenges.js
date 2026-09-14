@@ -2,14 +2,14 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // JavaScript · ES Module · Integrated Reinforcement Data
 // Development · Anabhi Dev
-// Version   : 1.0 (Cali Stung 5-Menit & MAXXI Mixed Challenge)
-// Aligned with Source Books: SRC-05 (Cali Stung) & SRC-10 (MAXXI)
+// Version   : 1.0 (Calistung 5-Menit & MAXXI Mixed Challenge)
+// Aligned with Source Books: SRC-05 (Calistung) & SRC-10 (MAXXI)
 // ================================================================
 
 export const CALI_STUNG_DATA = {
   id: 'cali-stung-5min',
-  title: 'Latihan Cepat 5 Menit — Cali Stung',
-  titleEn: '5-Minute Rapid Drill — Cali Stung (Literacy & Numeracy)',
+  title: 'Latihan Cepat 5 Menit — Calistung',
+  titleEn: '5-Minute Rapid Drill — Calistung (Literacy & Numeracy)',
   subtitle: 'Latihan kilat penguatan fondasi: 5 soal membaca + 5 soal menulis + 5 soal berhitung!',
   subtitleEn: 'Quick foundational boost: 5 reading + 5 writing + 5 math questions!',
   sourceId: 'SRC-05',

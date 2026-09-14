@@ -94,7 +94,7 @@ export class SidebarComponent {
         }).join('')}
       </nav>
 
-      <!-- Modul Buku Pendamping Siswa (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+      <!-- Modul Buku Pendamping Siswa (SRC-05 Calistung & SRC-10 MAXXI) -->
       <div class="kicker">${t('companionBooksKicker', lang)}</div>
       <nav class="nav" aria-label="Buku Pendamping">
         <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">

@@ -2,7 +2,7 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // JavaScript · ES Module · Daily Challenge & Integrated Reinforcement Component
 // Development · Anabhi Dev
-// Version   : 2.0 (Cali Stung 5-Menit, MAXXI Challenge, & Source Books Registry)
+// Version   : 2.0 (Calistung 5-Menit, MAXXI Challenge, & Source Books Registry)
 // ================================================================
 
 import { store } from '../store.js';
@@ -125,7 +125,7 @@ export class ChallengeViewComponent {
         `).join('')}
       </div>
 
-      <!-- Bagian Modul Penguatan Integratif (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+      <!-- Bagian Modul Penguatan Integratif (SRC-05 Calistung & SRC-10 MAXXI) -->
       <div class="section" style="margin-top:40px;">
         <div class="eyebrow"><span class="no">⚡</span><span class="lbl">${isEn ? 'INTEGRATED REINFORCEMENT' : 'PENGUATAN TEMATIK TERPADU'}</span></div>
         <h3 style="font-size:20px; font-weight:800; margin:0 0 16px;">
@@ -133,13 +133,13 @@ export class ChallengeViewComponent {
         </h3>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px;">
-          <!-- Kartu Cali Stung 5-Menit -->
+          <!-- Kartu Calistung 5-Menit -->
           <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-left:4px solid #b24a1b; display:flex; flex-direction:column; justify-content:space-between;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <span style="font-size:32px;">⚡</span>
                 <span class="subject-badge" style="background:#fdf1eb; color:#b24a1b; border-color:#f89a6b;">
-                  SRC-05 · Cali Stung
+                  SRC-05 · Calistung
                 </span>
               </div>
               <h4 style="margin:0 0 8px; font-size:17px; font-weight:800; color:var(--ink);">
@@ -283,7 +283,7 @@ export class ChallengeViewComponent {
   }
 
   // ============================================================
-  // STANDALONE VIEW: BUKU CALI STUNG (SRC-05)
+  // STANDALONE VIEW: BUKU CALISTUNG (SRC-05)
   // ============================================================
   renderCaliStungStandalone() {
     const lang = appState.get().lang || 'id';
@@ -299,8 +299,8 @@ export class ChallengeViewComponent {
     }
 
     const ttsIntro = isEn
-      ? 'Welcome to Cali Stung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
-      : 'Selamat datang di Buku Cali Stung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
+      ? 'Welcome to Calistung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
+      : 'Selamat datang di Buku Calistung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
 
     this.container.innerHTML = `
       <!-- Tombol Kembali & Navigasi -->
@@ -318,7 +318,7 @@ export class ChallengeViewComponent {
         </div>
       </div>
 
-      <!-- Hero Banner Buku Cali Stung dengan Foto Asli Buku -->
+      <!-- Hero Banner Buku Calistung dengan Foto Asli Buku -->
       <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
         <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
           <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
@@ -365,7 +365,7 @@ export class ChallengeViewComponent {
         </button>
       </div>
 
-      <!-- Wadah Kuis Interaktif Cali Stung -->
+      <!-- Wadah Kuis Interaktif Calistung -->
       <div id="caliStungQuizContainer"></div>
     `;
 
