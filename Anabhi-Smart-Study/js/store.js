@@ -50,29 +50,76 @@ export class ProgressStore {
     return this.data || {};
   }
 
+  getStudent() {
+    try {
+      return localStorage.getItem('anabhi_student_name') || 'Ana';
+    } catch (_) {
+      return 'Ana';
+    }
+  }
+
+  getStorageKey(studentName = null) {
+    const s = studentName || this.getStudent();
+    const key = (s && s.toLowerCase().includes('abhi')) ? 'abhi' : 'ana';
+    return `${STORAGE_KEY}-${key}`;
+  }
+
   load() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return { ...DEFAULT_STATE };
+      const student = this.getStudent();
+      const key = this.getStorageKey(student);
+      let raw = localStorage.getItem(key);
+
+      // Migrasi aman: Jika belum ada data per-siswa, salin dari data legacy jika ada
+      if (!raw) {
+        const legacyRaw = localStorage.getItem(STORAGE_KEY);
+        if (legacyRaw) {
+          raw = legacyRaw;
+          localStorage.setItem(key, raw);
+        }
+      }
+
+      if (!raw) {
+        return {
+          ...DEFAULT_STATE,
+          studentName: student,
+          stars: student === 'Ana' ? 25 : 20
+        };
+      }
+
       const parsed = JSON.parse(raw);
+      parsed.studentName = student;
       if (parsed.version !== SCHEMA_VERSION) {
-        // Safe migration if needed
-        return { ...DEFAULT_STATE, ...parsed, version: SCHEMA_VERSION };
+        return { ...DEFAULT_STATE, ...parsed, studentName: student, version: SCHEMA_VERSION };
       }
       return parsed;
     } catch (e) {
       console.warn('[Store] Gagal membaca LocalStorage, menggunakan nilai awal:', e);
-      return { ...DEFAULT_STATE };
+      return { ...DEFAULT_STATE, studentName: this.getStudent() };
     }
   }
 
   save() {
     try {
       this.data.updatedAt = new Date().toISOString();
+      const student = this.getStudent();
+      const key = this.getStorageKey(student);
+      localStorage.setItem(key, JSON.stringify(this.data));
+      // Backup ke kunci default
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
     } catch (e) {
       console.warn('[Store] Gagal menyimpan LocalStorage:', e);
     }
+  }
+
+  switchStudent(name) {
+    const newStudent = (name && name.toLowerCase().includes('abhi')) ? 'Abhi' : 'Ana';
+    try {
+      localStorage.setItem('anabhi_student_name', newStudent);
+    } catch (_) {}
+    this.data = this.load();
+    this.checkStreak();
+    return newStudent;
   }
 
   checkStreak() {

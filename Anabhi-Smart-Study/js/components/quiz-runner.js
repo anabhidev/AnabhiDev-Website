@@ -319,7 +319,7 @@ export class QuizRunner {
       const accuracy = total > 0 ? Math.round((score / total) * 100) : 0;
       const state = (typeof appState !== 'undefined' && appState.get) ? appState.get() : {};
       const subject = state.currentSubjectId || 'Umum';
-      const studentName = localStorage.getItem('anabhi_student_name') || 'Ana';
+      const studentName = (store && typeof store.getStudent === 'function') ? store.getStudent() : (localStorage.getItem('anabhi_student_name') || 'Ana');
 
       fetch(gasUrl, {
         method: 'POST',

@@ -30,6 +30,13 @@ class AppState {
       if (stored === 'dark' || stored === 'light') savedTheme = stored;
     } catch (e) {}
 
+    // Inisialisasi Profil Siswa (Default: 'Ana')
+    let savedStudent = 'Ana';
+    try {
+      const stored = localStorage.getItem('anabhi_student_name');
+      if (stored && stored.trim()) savedStudent = (stored.toLowerCase().includes('abhi')) ? 'Abhi' : 'Ana';
+    } catch (e) {}
+
     document.documentElement.setAttribute('lang', savedLang);
     document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -37,6 +44,7 @@ class AppState {
       currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects'
       currentSubjectId: null,
       currentTopicId: null,
+      currentStudent: savedStudent, // 'Ana' | 'Abhi'
       sidebarCollapsed: savedCollapse,
       drawerOpen: false,
       activeMathMethod: 'place-value',

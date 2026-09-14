@@ -6,7 +6,9 @@
 // ================================================================
 
 import { appState } from '../state.js';
+import { store } from '../store.js';
 import { t } from '../data/i18n.js';
+import { TtsEngine } from '../engine/tts-engine.js';
 
 export var GEMINI_CONFIG = {
   MODEL    : 'gemini-3.5-flash-lite',
@@ -23,9 +25,12 @@ export class AiTutorModalComponent {
     this.modalEl = null;
     this.messages = [];
     this.isLoading = false;
+    this.isListening = false;
+    this.recognition = null;
     this.showSettings = false;
     this.statusMessage = null;
     this.initModal();
+    this.initSpeech();
   }
 
   initModal() {
@@ -81,6 +86,13 @@ export class AiTutorModalComponent {
 
   close() {
     if (!this.modalEl) return;
+    if (this.recognition && this.isListening) {
+      try { this.recognition.stop(); } catch (_) {}
+      this.isListening = false;
+    }
+    if (typeof window !== 'undefined' && window.speechSynthesis && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
     this.modalEl.classList.remove('active');
     setTimeout(() => {
       if (!this.modalEl.classList.contains('active')) {
@@ -88,6 +100,89 @@ export class AiTutorModalComponent {
       }
     }, 220);
     document.body.style.overflow = '';
+  }
+
+  // 🎙️ Inisialisasi Web Speech Recognition (Bawaan Browser, 100% Gratis & Ringan)
+  initSpeech() {
+    if (typeof window === 'undefined') return;
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRec) {
+      try {
+        const rec = new SpeechRec();
+        rec.lang = 'id-ID';
+        rec.continuous = false;
+        rec.interimResults = true;
+
+        rec.onstart = () => {
+          this.isListening = true;
+          this.updateMicUi(true);
+        };
+
+        rec.onresult = (event) => {
+          let transcript = '';
+          for (let i = 0; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+          if (input && transcript) {
+            input.value = transcript;
+          }
+        };
+
+        rec.onerror = (event) => {
+          console.warn('[SpeechRec] Error:', event.error);
+          this.isListening = false;
+          this.updateMicUi(false);
+        };
+
+        rec.onend = () => {
+          this.isListening = false;
+          this.updateMicUi(false);
+          const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+          if (input) input.focus();
+        };
+
+        this.recognition = rec;
+      } catch (e) {
+        console.warn('[SpeechRec] Tidak dapat menginisialisasi suara:', e);
+      }
+    }
+  }
+
+  toggleVoice() {
+    if (!this.recognition) {
+      alert('Fitur suara mikrofon didukung di peramban Google Chrome, Edge, Safari, dan Android!');
+      return;
+    }
+    if (this.isListening) {
+      this.recognition.stop();
+    } else {
+      try {
+        const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+        if (input) input.placeholder = 'Sedang mendengarkan... Silakan bicara!';
+        this.recognition.start();
+      } catch (e) {
+        try { this.recognition.stop(); } catch (_) {}
+        this.isListening = false;
+        this.updateMicUi(false);
+      }
+    }
+  }
+
+  updateMicUi(listening) {
+    const micBtn = this.modalEl ? this.modalEl.querySelector('#btnAiVoiceMic') : null;
+    if (!micBtn) return;
+    if (listening) {
+      micBtn.classList.add('listening');
+      micBtn.innerHTML = '🔴';
+      micBtn.title = 'Mendengarkan... Silakan bicara!';
+    } else {
+      micBtn.classList.remove('listening');
+      micBtn.innerHTML = '🎙️';
+      micBtn.title = 'Bicara lewat suara (Mikrofon)';
+      const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+      if (input) input.placeholder = 'Ketik pertanyaan atau klik mic 🎙️...';
+    }
   }
 
   // Google Apps Script (GAS) URL
@@ -434,6 +529,7 @@ Kakak AI siap membimbing belajar materi apa saja!`;
     const state = appState.get();
     const lang = state.lang || 'id';
     const isEn = lang === 'en';
+    const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
     const gasUrl = this.getGasUrl();
     const apiKey = this.getApiKey();
     const currentModel = this.getModel();
@@ -533,14 +629,16 @@ Kakak AI siap membimbing belajar materi apa saja!`;
           <!-- Empty State & Pertanyaan Pembuka (Bersih & Ramah Anak) -->
           ${this.messages.length === 0 ? `
             <div class="ai-empty-state">
-              <span class="ai-empty-star">🌟</span>
+              <span class="ai-empty-star">${currentStudent === 'Abhi' ? '⚡' : '🌸'}</span>
               <strong class="ai-empty-title">
-                ${isEn ? 'Hello Champion! What do you want to explore today?' : 'Halo Sahabat Juara! Mau tanya apa hari ini?'}
+                ${isEn 
+                  ? `Hello Champion ${currentStudent}! What do you want to explore today?`
+                  : (currentStudent === 'Abhi' ? 'Halo Jagoan Abhi! ⚡ Mau tanya apa hari ini?' : 'Halo Sobat Hebat Ana! 🌸 Mau tanya apa hari ini?')}
               </strong>
               <p class="ai-empty-desc">
                 ${isEn
-                  ? 'Ask about quick math methods ("One Problem, Many Ways"), geography facts, science wonders, or Indonesian language!'
-                  : 'Kakak AI siap membimbingmu memahami trik cepat berhitung 14 jurus ("Satu Soal Banyak Cara"), peta nusantara, bumi dan antariksa, hingga cerita rakyat!'}
+                  ? 'Ask by typing or tapping the mic 🎙️! Learn 14 math calculation methods, geography maps, science wonders, or Balinese culture!'
+                  : 'Kakak AI siap membimbingmu! Ketik pertanyaanmu atau klik mic 🎙️ untuk bertanya tentang trik cepat 14 jurus berhitung, peta 38 provinsi, hingga budaya Bali!'}
               </p>
 
               <!-- Quick starter chips -->
@@ -562,13 +660,20 @@ Kakak AI siap membimbing belajar materi apa saja!`;
           ` : ''}
 
           <!-- Daftar Pesan Percakapan -->
-          ${this.messages.map(m => `
+          ${this.messages.map((m, idx) => `
             <div class="ai-msg-row ${m.role}">
               ${m.role === 'ai' ? '<span class="ai-msg-avatar">🤖</span>' : ''}
               <div class="ai-bubble ${m.role}">
                 ${m.role === 'ai' ? this.formatMarkdown(m.text) : m.text}
+                ${m.role === 'ai' ? `
+                  <div class="ai-bubble-footer" style="margin-top:8px; display:flex; justify-content:flex-end;">
+                    <button class="btn-bubble-tts" data-tts-idx="${idx}" type="button" title="Dengarkan jawaban ini bersuara" style="background:rgba(0,0,0,0.06); border:none; border-radius:8px; padding:3px 8px; font-size:11.5px; font-weight:700; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; gap:4px;">
+                      🔊 <span>Dengarkan</span>
+                    </button>
+                  </div>
+                ` : ''}
               </div>
-              ${m.role === 'user' ? '<span class="ai-msg-avatar">🧒</span>' : ''}
+              ${m.role === 'user' ? '<span class="ai-msg-avatar">' + (currentStudent === 'Abhi' ? '⚡' : '🌸') + '</span>' : ''}
             </div>
           `).join('')}
 
@@ -588,7 +693,10 @@ Kakak AI siap membimbing belajar materi apa saja!`;
 
         <!-- Chat Input Bar -->
         <div class="ai-input-bar">
-          <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question about your lesson...' : 'Ketik pertanyaan belajarmu di sini...'}" autocomplete="off">
+          <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : 'Bicara lewat suara (Mikrofon)'}">
+            ${this.isListening ? '🔴' : '🎙️'}
+          </button>
+          <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
           <button class="btn primary ai-btn-send" id="btnAiSend" type="button">
             ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
           </button>
@@ -700,6 +808,26 @@ Kakak AI siap membimbing belajar materi apa saja!`;
       chip.addEventListener('click', () => {
         const q = chip.getAttribute('data-q');
         this.sendQuestion(q);
+      });
+    });
+
+    // Tombol Mic Input Suara
+    const btnMic = this.modalEl.querySelector('#btnAiVoiceMic');
+    if (btnMic) {
+      btnMic.addEventListener('click', () => {
+        this.toggleVoice();
+      });
+    }
+
+    // Tombol Read-Aloud TTS pada Balon Jawaban AI
+    const ttsBtns = this.modalEl.querySelectorAll('.btn-bubble-tts');
+    ttsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-tts-idx'), 10);
+        const m = this.messages[idx];
+        if (m && m.text) {
+          TtsEngine.speak(m.text, 'id', btn);
+        }
       });
     });
 

@@ -19,6 +19,7 @@ export class ProgressViewComponent {
   render() {
     const s = store.data;
     const lang = appState.get().lang || 'id';
+    const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
     const completedCount = (s.completedLessons || []).length;
     const totalEstimate = 25;
     const overallPct = Math.min(100, Math.round((completedCount / totalEstimate) * 100));
@@ -26,9 +27,9 @@ export class ProgressViewComponent {
     this.container.innerHTML = `
       <div class="section-header">
         <div class="math-hero-badge" style="background:#edfbf2; color:#1e7b45; border-color:#5be08f;">
-          ${t('reportBadge', lang)}
+          ${currentStudent === 'Abhi' ? '⚡ ' : '🌸 '} ${t('reportBadge', lang)} · ${currentStudent}
         </div>
-        <h2 class="section-title">${t('reportTitle', lang)}</h2>
+        <h2 class="section-title">${t('reportTitle', lang)} (${currentStudent})</h2>
         <p class="section-sub">${t('reportSub', lang)}</p>
       </div>
 
@@ -78,8 +79,10 @@ export class ProgressViewComponent {
       <!-- Panduan Khusus Orang Tua / Pendamping -->
       <div class="quiz-box" style="margin-top:30px; border-left:5px solid var(--teal);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-          <h3 style="font-size:17px; font-weight:800; margin:0;">${t('parentSummaryTitle', lang)}</h3>
-          <span class="subject-badge">${t('parentPrivacyNotice', lang)}</span>
+          <h3 style="font-size:17px; font-weight:800; margin:0;">
+            ${currentStudent === 'Abhi' ? '⚡ Rapor Belajar Ananda Abhi' : '🌸 Rapor Belajar Ananda Ana'}
+          </h3>
+          <span class="subject-badge">Tersinkron ke Google Sheets &amp; Telegram</span>
         </div>
         <p style="font-size:13px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
           ${t('parentSummaryDesc', lang)}

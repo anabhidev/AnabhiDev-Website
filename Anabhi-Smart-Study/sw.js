@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v2-9';
+var CACHE_VERSION = 'anabhidev-smart-study-v3-0';
 
 var PRECACHE = [
   './',

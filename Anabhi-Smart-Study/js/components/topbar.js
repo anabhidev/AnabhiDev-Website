@@ -9,6 +9,7 @@
 import { appState } from '../state.js';
 import { store } from '../store.js';
 import { t } from '../data/i18n.js';
+import { AudioFx } from '../engine/audio-fx.js';
 
 export class TopbarComponent {
   constructor(container) {
@@ -45,6 +46,8 @@ export class TopbarComponent {
     const state = appState.get();
     const lang = state.lang || 'id';
     const currentTheme = state.theme || 'light';
+    const currentStudent = store.getStudent();
+    const isEn = lang === 'en';
     const showInstallBtn = !this.isStandalone && this.deferredPrompt !== null;
 
     this.container.innerHTML = `
@@ -60,14 +63,20 @@ export class TopbarComponent {
       </div>
 
       <div class="topbar-right">
-        <!-- Bintang Belajar -->
-        <div class="stat-pill" title="${t('starsTitle', lang)}">
+        <!-- Profil Siswa Aktif: Ana (🌸) / Abhi (⚡) -->
+        <button class="student-pill ${currentStudent === 'Abhi' ? 'abhi' : 'ana'}" id="studentSwitchBtn" type="button" title="${isEn ? 'Switch Student Profile: Ana / Abhi' : 'Klik untuk ganti profil siswa: Ana / Abhi'}">
+          <span class="avatar">${currentStudent === 'Abhi' ? '⚡' : '🌸'}</span>
+          <span class="name">${currentStudent}</span>
+        </button>
+
+        <!-- Bintang Belajar Siswa Aktif -->
+        <div class="stat-pill" title="${t('starsTitle', lang)} (${currentStudent})">
           <span class="icon">⭐</span>
           <span id="starCount">${s.stars || 0}</span>
         </div>
 
-        <!-- Streak Harian -->
-        <div class="stat-pill" title="${t('streakTitle', lang)}">
+        <!-- Streak Harian Siswa Aktif -->
+        <div class="stat-pill" title="${t('streakTitle', lang)} (${currentStudent})">
           <span class="icon">🔥</span>
           <span id="streakCount">${s.streakDays || 1} ${t('days', lang)}</span>
         </div>
@@ -100,6 +109,20 @@ export class TopbarComponent {
   }
 
   attachEvents() {
+    const studentBtn = this.container.querySelector('#studentSwitchBtn');
+    if (studentBtn) {
+      studentBtn.addEventListener('click', () => {
+        const curr = store.getStudent();
+        const next = curr === 'Ana' ? 'Abhi' : 'Ana';
+        store.switchStudent(next);
+        appState.set({ currentStudent: next });
+        AudioFx.playCelebration();
+        this.render();
+        // Sinkronisasi view aktif agar data bintang & nama langsung terupdate
+        appState.notify();
+      });
+    }
+
     const aiTutorBtn = this.container.querySelector('#aiTutorBtn');
     if (aiTutorBtn) {
       aiTutorBtn.addEventListener('click', () => {

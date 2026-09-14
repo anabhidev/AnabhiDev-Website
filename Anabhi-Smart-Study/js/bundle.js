@@ -43,6 +43,13 @@
         if (stored === 'dark' || stored === 'light') savedTheme = stored;
       } catch (e) {}
   
+      // Inisialisasi Profil Siswa (Default: 'Ana')
+      let savedStudent = 'Ana';
+      try {
+        const stored = localStorage.getItem('anabhi_student_name');
+        if (stored && stored.trim()) savedStudent = (stored.toLowerCase().includes('abhi')) ? 'Abhi' : 'Ana';
+      } catch (e) {}
+  
       document.documentElement.setAttribute('lang', savedLang);
       document.documentElement.setAttribute('data-theme', savedTheme);
   
@@ -50,6 +57,7 @@
         currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects'
         currentSubjectId: null,
         currentTopicId: null,
+        currentStudent: savedStudent, // 'Ana' | 'Abhi'
         sidebarCollapsed: savedCollapse,
         drawerOpen: false,
         activeMathMethod: 'place-value',
@@ -210,29 +218,76 @@
       return this.data || {};
     }
   
+    getStudent() {
+      try {
+        return localStorage.getItem('anabhi_student_name') || 'Ana';
+      } catch (_) {
+        return 'Ana';
+      }
+    }
+  
+    getStorageKey(studentName = null) {
+      const s = studentName || this.getStudent();
+      const key = (s && s.toLowerCase().includes('abhi')) ? 'abhi' : 'ana';
+      return `${STORAGE_KEY}-${key}`;
+    }
+  
     load() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return { ...DEFAULT_STATE };
+        const student = this.getStudent();
+        const key = this.getStorageKey(student);
+        let raw = localStorage.getItem(key);
+  
+        // Migrasi aman: Jika belum ada data per-siswa, salin dari data legacy jika ada
+        if (!raw) {
+          const legacyRaw = localStorage.getItem(STORAGE_KEY);
+          if (legacyRaw) {
+            raw = legacyRaw;
+            localStorage.setItem(key, raw);
+          }
+        }
+  
+        if (!raw) {
+          return {
+            ...DEFAULT_STATE,
+            studentName: student,
+            stars: student === 'Ana' ? 25 : 20
+          };
+        }
+  
         const parsed = JSON.parse(raw);
+        parsed.studentName = student;
         if (parsed.version !== SCHEMA_VERSION) {
-          // Safe migration if needed
-          return { ...DEFAULT_STATE, ...parsed, version: SCHEMA_VERSION };
+          return { ...DEFAULT_STATE, ...parsed, studentName: student, version: SCHEMA_VERSION };
         }
         return parsed;
       } catch (e) {
         console.warn('[Store] Gagal membaca LocalStorage, menggunakan nilai awal:', e);
-        return { ...DEFAULT_STATE };
+        return { ...DEFAULT_STATE, studentName: this.getStudent() };
       }
     }
   
     save() {
       try {
         this.data.updatedAt = new Date().toISOString();
+        const student = this.getStudent();
+        const key = this.getStorageKey(student);
+        localStorage.setItem(key, JSON.stringify(this.data));
+        // Backup ke kunci default
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
       } catch (e) {
         console.warn('[Store] Gagal menyimpan LocalStorage:', e);
       }
+    }
+  
+    switchStudent(name) {
+      const newStudent = (name && name.toLowerCase().includes('abhi')) ? 'Abhi' : 'Ana';
+      try {
+        localStorage.setItem('anabhi_student_name', newStudent);
+      } catch (_) {}
+      this.data = this.load();
+      this.checkStreak();
+      return newStudent;
     }
   
     checkStreak() {
@@ -10649,6 +10704,8 @@
   
   
   
+  
+  
   var GEMINI_CONFIG = {
     MODEL    : 'gemini-3.5-flash-lite',
     ENDPOINT : 'https://generativelanguage.googleapis.com/v1beta/models/',
@@ -10664,9 +10721,12 @@
       this.modalEl = null;
       this.messages = [];
       this.isLoading = false;
+      this.isListening = false;
+      this.recognition = null;
       this.showSettings = false;
       this.statusMessage = null;
       this.initModal();
+      this.initSpeech();
     }
   
     initModal() {
@@ -10722,6 +10782,13 @@
   
     close() {
       if (!this.modalEl) return;
+      if (this.recognition && this.isListening) {
+        try { this.recognition.stop(); } catch (_) {}
+        this.isListening = false;
+      }
+      if (typeof window !== 'undefined' && window.speechSynthesis && window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+      }
       this.modalEl.classList.remove('active');
       setTimeout(() => {
         if (!this.modalEl.classList.contains('active')) {
@@ -10729,6 +10796,89 @@
         }
       }, 220);
       document.body.style.overflow = '';
+    }
+  
+    // 🎙️ Inisialisasi Web Speech Recognition (Bawaan Browser, 100% Gratis & Ringan)
+    initSpeech() {
+      if (typeof window === 'undefined') return;
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRec) {
+        try {
+          const rec = new SpeechRec();
+          rec.lang = 'id-ID';
+          rec.continuous = false;
+          rec.interimResults = true;
+  
+          rec.onstart = () => {
+            this.isListening = true;
+            this.updateMicUi(true);
+          };
+  
+          rec.onresult = (event) => {
+            let transcript = '';
+            for (let i = 0; i < event.results.length; i++) {
+              transcript += event.results[i][0].transcript;
+            }
+            const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+            if (input && transcript) {
+              input.value = transcript;
+            }
+          };
+  
+          rec.onerror = (event) => {
+            console.warn('[SpeechRec] Error:', event.error);
+            this.isListening = false;
+            this.updateMicUi(false);
+          };
+  
+          rec.onend = () => {
+            this.isListening = false;
+            this.updateMicUi(false);
+            const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+            if (input) input.focus();
+          };
+  
+          this.recognition = rec;
+        } catch (e) {
+          console.warn('[SpeechRec] Tidak dapat menginisialisasi suara:', e);
+        }
+      }
+    }
+  
+    toggleVoice() {
+      if (!this.recognition) {
+        alert('Fitur suara mikrofon didukung di peramban Google Chrome, Edge, Safari, dan Android!');
+        return;
+      }
+      if (this.isListening) {
+        this.recognition.stop();
+      } else {
+        try {
+          const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+          if (input) input.placeholder = 'Sedang mendengarkan... Silakan bicara!';
+          this.recognition.start();
+        } catch (e) {
+          try { this.recognition.stop(); } catch (_) {}
+          this.isListening = false;
+          this.updateMicUi(false);
+        }
+      }
+    }
+  
+    updateMicUi(listening) {
+      const micBtn = this.modalEl ? this.modalEl.querySelector('#btnAiVoiceMic') : null;
+      if (!micBtn) return;
+      if (listening) {
+        micBtn.classList.add('listening');
+        micBtn.innerHTML = '🔴';
+        micBtn.title = 'Mendengarkan... Silakan bicara!';
+      } else {
+        micBtn.classList.remove('listening');
+        micBtn.innerHTML = '🎙️';
+        micBtn.title = 'Bicara lewat suara (Mikrofon)';
+        const input = this.modalEl ? this.modalEl.querySelector('#aiUserInput') : null;
+        if (input) input.placeholder = 'Ketik pertanyaan atau klik mic 🎙️...';
+      }
     }
   
     // Google Apps Script (GAS) URL
@@ -11075,6 +11225,7 @@
       const state = appState.get();
       const lang = state.lang || 'id';
       const isEn = lang === 'en';
+      const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
       const gasUrl = this.getGasUrl();
       const apiKey = this.getApiKey();
       const currentModel = this.getModel();
@@ -11174,14 +11325,16 @@
             <!-- Empty State & Pertanyaan Pembuka (Bersih & Ramah Anak) -->
             ${this.messages.length === 0 ? `
               <div class="ai-empty-state">
-                <span class="ai-empty-star">🌟</span>
+                <span class="ai-empty-star">${currentStudent === 'Abhi' ? '⚡' : '🌸'}</span>
                 <strong class="ai-empty-title">
-                  ${isEn ? 'Hello Champion! What do you want to explore today?' : 'Halo Sahabat Juara! Mau tanya apa hari ini?'}
+                  ${isEn 
+                    ? `Hello Champion ${currentStudent}! What do you want to explore today?`
+                    : (currentStudent === 'Abhi' ? 'Halo Jagoan Abhi! ⚡ Mau tanya apa hari ini?' : 'Halo Sobat Hebat Ana! 🌸 Mau tanya apa hari ini?')}
                 </strong>
                 <p class="ai-empty-desc">
                   ${isEn
-                    ? 'Ask about quick math methods ("One Problem, Many Ways"), geography facts, science wonders, or Indonesian language!'
-                    : 'Kakak AI siap membimbingmu memahami trik cepat berhitung 14 jurus ("Satu Soal Banyak Cara"), peta nusantara, bumi dan antariksa, hingga cerita rakyat!'}
+                    ? 'Ask by typing or tapping the mic 🎙️! Learn 14 math calculation methods, geography maps, science wonders, or Balinese culture!'
+                    : 'Kakak AI siap membimbingmu! Ketik pertanyaanmu atau klik mic 🎙️ untuk bertanya tentang trik cepat 14 jurus berhitung, peta 38 provinsi, hingga budaya Bali!'}
                 </p>
   
                 <!-- Quick starter chips -->
@@ -11203,13 +11356,20 @@
             ` : ''}
   
             <!-- Daftar Pesan Percakapan -->
-            ${this.messages.map(m => `
+            ${this.messages.map((m, idx) => `
               <div class="ai-msg-row ${m.role}">
                 ${m.role === 'ai' ? '<span class="ai-msg-avatar">🤖</span>' : ''}
                 <div class="ai-bubble ${m.role}">
                   ${m.role === 'ai' ? this.formatMarkdown(m.text) : m.text}
+                  ${m.role === 'ai' ? `
+                    <div class="ai-bubble-footer" style="margin-top:8px; display:flex; justify-content:flex-end;">
+                      <button class="btn-bubble-tts" data-tts-idx="${idx}" type="button" title="Dengarkan jawaban ini bersuara" style="background:rgba(0,0,0,0.06); border:none; border-radius:8px; padding:3px 8px; font-size:11.5px; font-weight:700; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; gap:4px;">
+                        🔊 <span>Dengarkan</span>
+                      </button>
+                    </div>
+                  ` : ''}
                 </div>
-                ${m.role === 'user' ? '<span class="ai-msg-avatar">🧒</span>' : ''}
+                ${m.role === 'user' ? '<span class="ai-msg-avatar">' + (currentStudent === 'Abhi' ? '⚡' : '🌸') + '</span>' : ''}
               </div>
             `).join('')}
   
@@ -11229,7 +11389,10 @@
   
           <!-- Chat Input Bar -->
           <div class="ai-input-bar">
-            <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question about your lesson...' : 'Ketik pertanyaan belajarmu di sini...'}" autocomplete="off">
+            <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : 'Bicara lewat suara (Mikrofon)'}">
+              ${this.isListening ? '🔴' : '🎙️'}
+            </button>
+            <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
             <button class="btn primary ai-btn-send" id="btnAiSend" type="button">
               ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
             </button>
@@ -11344,6 +11507,26 @@
         });
       });
   
+      // Tombol Mic Input Suara
+      const btnMic = this.modalEl.querySelector('#btnAiVoiceMic');
+      if (btnMic) {
+        btnMic.addEventListener('click', () => {
+          this.toggleVoice();
+        });
+      }
+  
+      // Tombol Read-Aloud TTS pada Balon Jawaban AI
+      const ttsBtns = this.modalEl.querySelectorAll('.btn-bubble-tts');
+      ttsBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-tts-idx'), 10);
+          const m = this.messages[idx];
+          if (m && m.text) {
+            TtsEngine.speak(m.text, 'id', btn);
+          }
+        });
+      });
+  
       // Bersihkan Chat
       const btnClearChat = this.modalEl.querySelector('#btnClearChat');
       if (btnClearChat) {
@@ -11372,6 +11555,7 @@
   // Version   : 1.1
   // Generated : 10 September 2026, 11:05:00
   // ================================================================
+  
   
   
   
@@ -11412,6 +11596,8 @@
       const state = appState.get();
       const lang = state.lang || 'id';
       const currentTheme = state.theme || 'light';
+      const currentStudent = store.getStudent();
+      const isEn = lang === 'en';
       const showInstallBtn = !this.isStandalone && this.deferredPrompt !== null;
   
       this.container.innerHTML = `
@@ -11427,14 +11613,20 @@
         </div>
   
         <div class="topbar-right">
-          <!-- Bintang Belajar -->
-          <div class="stat-pill" title="${t('starsTitle', lang)}">
+          <!-- Profil Siswa Aktif: Ana (🌸) / Abhi (⚡) -->
+          <button class="student-pill ${currentStudent === 'Abhi' ? 'abhi' : 'ana'}" id="studentSwitchBtn" type="button" title="${isEn ? 'Switch Student Profile: Ana / Abhi' : 'Klik untuk ganti profil siswa: Ana / Abhi'}">
+            <span class="avatar">${currentStudent === 'Abhi' ? '⚡' : '🌸'}</span>
+            <span class="name">${currentStudent}</span>
+          </button>
+  
+          <!-- Bintang Belajar Siswa Aktif -->
+          <div class="stat-pill" title="${t('starsTitle', lang)} (${currentStudent})">
             <span class="icon">⭐</span>
             <span id="starCount">${s.stars || 0}</span>
           </div>
   
-          <!-- Streak Harian -->
-          <div class="stat-pill" title="${t('streakTitle', lang)}">
+          <!-- Streak Harian Siswa Aktif -->
+          <div class="stat-pill" title="${t('streakTitle', lang)} (${currentStudent})">
             <span class="icon">🔥</span>
             <span id="streakCount">${s.streakDays || 1} ${t('days', lang)}</span>
           </div>
@@ -11467,6 +11659,20 @@
     }
   
     attachEvents() {
+      const studentBtn = this.container.querySelector('#studentSwitchBtn');
+      if (studentBtn) {
+        studentBtn.addEventListener('click', () => {
+          const curr = store.getStudent();
+          const next = curr === 'Ana' ? 'Abhi' : 'Ana';
+          store.switchStudent(next);
+          appState.set({ currentStudent: next });
+          AudioFx.playCelebration();
+          this.render();
+          // Sinkronisasi view aktif agar data bintang & nama langsung terupdate
+          appState.notify();
+        });
+      }
+  
       const aiTutorBtn = this.container.querySelector('#aiTutorBtn');
       if (aiTutorBtn) {
         aiTutorBtn.addEventListener('click', () => {
@@ -12180,7 +12386,7 @@
         const accuracy = total > 0 ? Math.round((score / total) * 100) : 0;
         const state = (typeof appState !== 'undefined' && appState.get) ? appState.get() : {};
         const subject = state.currentSubjectId || 'Umum';
-        const studentName = localStorage.getItem('anabhi_student_name') || 'Ana';
+        const studentName = (store && typeof store.getStudent === 'function') ? store.getStudent() : (localStorage.getItem('anabhi_student_name') || 'Ana');
   
         fetch(gasUrl, {
           method: 'POST',
@@ -15929,6 +16135,7 @@
     render() {
       const s = store.data;
       const lang = appState.get().lang || 'id';
+      const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
       const completedCount = (s.completedLessons || []).length;
       const totalEstimate = 25;
       const overallPct = Math.min(100, Math.round((completedCount / totalEstimate) * 100));
@@ -15936,9 +16143,9 @@
       this.container.innerHTML = `
         <div class="section-header">
           <div class="math-hero-badge" style="background:#edfbf2; color:#1e7b45; border-color:#5be08f;">
-            ${t('reportBadge', lang)}
+            ${currentStudent === 'Abhi' ? '⚡ ' : '🌸 '} ${t('reportBadge', lang)} · ${currentStudent}
           </div>
-          <h2 class="section-title">${t('reportTitle', lang)}</h2>
+          <h2 class="section-title">${t('reportTitle', lang)} (${currentStudent})</h2>
           <p class="section-sub">${t('reportSub', lang)}</p>
         </div>
   
@@ -15988,8 +16195,10 @@
         <!-- Panduan Khusus Orang Tua / Pendamping -->
         <div class="quiz-box" style="margin-top:30px; border-left:5px solid var(--teal);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-            <h3 style="font-size:17px; font-weight:800; margin:0;">${t('parentSummaryTitle', lang)}</h3>
-            <span class="subject-badge">${t('parentPrivacyNotice', lang)}</span>
+            <h3 style="font-size:17px; font-weight:800; margin:0;">
+              ${currentStudent === 'Abhi' ? '⚡ Rapor Belajar Ananda Abhi' : '🌸 Rapor Belajar Ananda Ana'}
+            </h3>
+            <span class="subject-badge">Tersinkron ke Google Sheets &amp; Telegram</span>
           </div>
           <p style="font-size:13px; color:var(--muted); line-height:1.6; margin:0 0 16px;">
             ${t('parentSummaryDesc', lang)}
