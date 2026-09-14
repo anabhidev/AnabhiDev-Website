@@ -94,6 +94,19 @@ export class SidebarComponent {
         }).join('')}
       </nav>
 
+      <!-- Modul Buku Pendamping Siswa (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+      <div class="kicker">${t('companionBooksKicker', lang)}</div>
+      <nav class="nav" aria-label="Buku Pendamping">
+        <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">
+          <span class="icon">📖</span>
+          <span class="label">${t('bookCaliStung', lang)}</span>
+        </button>
+        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${t('bookMaxxi', lang)}">
+          <span class="icon">🏆</span>
+          <span class="label">${t('bookMaxxi', lang)}</span>
+        </button>
+      </nav>
+
       <!-- Fitur Tambahan: Tantangan & Progress -->
       <div class="kicker">${t('activitiesKicker', lang)}</div>
       <nav class="nav" aria-label="Aktivitas">

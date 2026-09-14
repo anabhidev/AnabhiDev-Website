@@ -41,7 +41,7 @@ class AppState {
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     this.state = {
-      currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects'
+      currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects' | 'cali-stung' | 'maxxi'
       currentSubjectId: null,
       currentTopicId: null,
       currentStudent: savedStudent, // 'Ana' | 'Abhi'
@@ -144,6 +144,10 @@ class AppState {
       window.location.hash = '#progress';
     } else if (route === 'all-subjects') {
       window.location.hash = '#semua-pelajaran';
+    } else if (route === 'cali-stung') {
+      window.location.hash = '#cali-stung';
+    } else if (route === 'maxxi') {
+      window.location.hash = '#maxxi';
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

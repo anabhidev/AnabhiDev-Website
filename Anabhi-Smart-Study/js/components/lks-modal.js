@@ -153,7 +153,7 @@ export class LksModalComponent {
           ${SOURCE_BOOKS_REGISTRY.map(src => `
             <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                   <span class="no" style="background:var(--navy); color:#fff; font-size:11px; font-weight:800; border-radius:6px; padding:2px 6px;">
                     ${src.id}
                   </span>
@@ -161,9 +161,18 @@ export class LksModalComponent {
                     ${src.publisher}
                   </span>
                 </div>
-                <h4 style="margin:0 0 6px; font-size:15px; font-weight:800; color:var(--ink);">${src.title}</h4>
-                <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
-                  <span>Kelas ${src.grade} · Semester ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
+                  ${src.photoCover ? `
+                    <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
+                  ` : `
+                    <div style="width:52px; height:74px; background:var(--surface); border-radius:6px; display:grid; place-items:center; font-size:22px; border:1px solid var(--border); flex-shrink:0;">📚</div>
+                  `}
+                  <div style="flex:1; min-width:0;">
+                    <h4 style="margin:0 0 4px; font-size:14px; font-weight:800; color:var(--ink); line-height:1.35;">${src.title}</h4>
+                    <div style="font-size:11.5px; color:var(--muted);">
+                      <span>Kelas ${src.grade} · Sem ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                    </div>
+                  </div>
                 </div>
                 <p style="font-size:12px; color:var(--ink); line-height:1.5; margin:0; background:var(--paper); padding:8px 10px; border-radius:8px;">
                   <strong>Cakupan:</strong> ${src.scope}

@@ -83,6 +83,10 @@ class App {
         appState.set({ currentRoute: 'progress', drawerOpen: false });
       } else if (hash === '#semua-pelajaran') {
         appState.set({ currentRoute: 'all-subjects', drawerOpen: false });
+      } else if (hash === '#cali-stung') {
+        appState.set({ currentRoute: 'cali-stung', drawerOpen: false });
+      } else if (hash === '#maxxi') {
+        appState.set({ currentRoute: 'maxxi', drawerOpen: false });
       } else {
         appState.set({ currentRoute: 'home', currentSubjectId: null, drawerOpen: false });
       }
@@ -121,6 +125,12 @@ class App {
         break;
       case 'all-subjects':
         this.renderAllSubjects();
+        break;
+      case 'cali-stung':
+        this.challengeView.renderCaliStungStandalone();
+        break;
+      case 'maxxi':
+        this.challengeView.renderMaxxiStandalone();
         break;
       default:
         this.renderHome();
@@ -240,7 +250,44 @@ class App {
         </div>
       </section>
 
-      <!-- 4. Tombol Akses Cepat ke Katalog Lengkap -->
+      <!-- 4. Modul Buku Pendamping Siswa (Cali Stung & MAXXI) -->
+      <section style="margin-bottom:36px;">
+        <div class="section-header" style="margin-bottom:18px;">
+          <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
+          <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
+          <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Cali Stung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Cali Stung dan MAXXI!'}</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+          <!-- Card Cali Stung -->
+          <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cali Stung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
+              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Cali Stung</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
+                ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start 5-Min Drill ➔' : 'Mulai Latihan 5 Menit ➔'}</span>
+            </div>
+          </div>
+
+          <!-- Card Buku MAXXI -->
+          <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(29,113,152,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(29,113,152,0.25); flex-shrink:0;">
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#1d7198; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
+              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Maxi (Tematik)</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
+                ${isEn ? '10 contextual scenario challenges across 6 core subjects.' : '10 tantangan skenario kontekstual terpadu lintas 6 mata pelajaran.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#1d7198;">${isEn ? 'Start MAXXI Challenge ➔' : 'Mulai Tantangan MAXXI ➔'}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Tombol Akses Cepat ke Katalog Lengkap -->
       <section style="text-align:center; padding:24px; background:var(--surface); border:1px dashed var(--line); border-radius:18px; margin-bottom:36px;">
         <h4 style="margin:0 0 6px; font-size:16px; font-weight:800; color:var(--ink);">${isEn ? 'Looking for Other Subjects?' : 'Ingin Belajar Mata Pelajaran Lainnya?'}</h4>
         <p style="margin:0 0 14px; font-size:13px; color:var(--muted);">
@@ -251,7 +298,7 @@ class App {
         </button>
       </section>
 
-      <!-- 5. Kutipan Motivasi Pelajar -->
+      <!-- 6. Kutipan Motivasi Pelajar -->
       <blockquote style="margin:0 0 32px; padding:18px 24px; background:var(--card); border-left:4px solid var(--teal); border-radius:12px; font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.6;">
         ${isEn ? '“One problem has many ways. Never be afraid to make mistakes, because every step is a beginning of real learning!” — Anabhi Dev Smart Study' : '“Satu soal memiliki banyak cara. Jangan pernah takut salah, karena dari situlah pemikiran kreatif dan rasa ingin tahu kita berkembang!” — Anabhi Dev Smart Study'}
       </blockquote>
@@ -277,6 +324,14 @@ class App {
         appState.navigate('tantangan');
       });
     }
+
+    const companionCards = this.mainEl.querySelectorAll('.btn-open-companion');
+    companionCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const route = card.getAttribute('data-route');
+        appState.navigate(route);
+      });
+    });
 
     const btnAll = this.mainEl.querySelector('#btnOpenAllSubjects');
     if (btnAll) {

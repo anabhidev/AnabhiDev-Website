@@ -11,12 +11,14 @@ import { t } from '../data/i18n.js';
 import { CALI_STUNG_DATA, MAXXI_CHALLENGE_DATA } from '../data/integrated-challenges.js';
 import { QuizRunner } from './quiz-runner.js';
 import { AudioFx } from '../engine/audio-fx.js';
+import { TtsEngine } from '../engine/tts-engine.js';
 
 export class ChallengeViewComponent {
   constructor(container, lksModal = null) {
     this.container = container;
     this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
     this.activeSpecialQuiz = null; // null | 'cali-stung' | 'maxxi'
+    this.caliCategory = 'all';
   }
 
   render() {
@@ -275,6 +277,245 @@ export class ChallengeViewComponent {
     const btnSources = this.container.querySelector('#btnOpenSourceRegistry');
     if (btnSources) {
       btnSources.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openSourceRegistry();
+      });
+    }
+  }
+
+  // ============================================================
+  // STANDALONE VIEW: BUKU CALI STUNG (SRC-05)
+  // ============================================================
+  renderCaliStungStandalone() {
+    const lang = appState.get().lang || 'id';
+    const isEn = lang === 'en';
+    const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+    const studentFullName = currentStudent === 'Abhi' ? 'Abhinaya Kenzie (Abhi)' : 'Anjali Kirana (Ana)';
+
+    if (!this.caliCategory) this.caliCategory = 'all';
+
+    let questions = CALI_STUNG_DATA.questions || [];
+    if (this.caliCategory !== 'all') {
+      questions = questions.filter(q => q.category === this.caliCategory);
+    }
+
+    const ttsIntro = isEn
+      ? 'Welcome to Cali Stung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
+      : 'Selamat datang di Buku Cali Stung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
+
+    this.container.innerHTML = `
+      <!-- Tombol Kembali & Navigasi -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+        <button class="btn" id="btnCaliBackHome" type="button" style="font-size:13px; font-weight:700; padding:7px 15px; display:inline-flex; align-items:center; gap:6px;">
+          ← ${isEn ? 'Back to Home' : 'Kembali ke Beranda'}
+        </button>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-tts" id="btnCaliTtsIntro" data-tts-text="${ttsIntro.replace(/"/g, '&quot;')}" type="button" style="font-size:12.5px; padding:7px 14px;">
+            🔊 ${isEn ? 'Listen Intro' : 'Dengarkan Pengantar'}
+          </button>
+          <button class="btn" id="btnCaliOpenRegistry" type="button" style="font-size:12.5px; padding:7px 14px; border-color:var(--teal); color:var(--teal);">
+            📖 ${isEn ? 'Source Book Info' : 'Info Buku Cetak'}
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Banner Buku Cali Stung dengan Foto Asli Buku -->
+      <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+        <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+          <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+          <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+            SRC-05
+          </span>
+        </div>
+        <div class="book-hero-info" style="flex:1; min-width:260px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+            <span class="subject-badge" style="background:#ea580c; color:#fff; border:none; font-weight:800;">
+              ⚡ Fondasi Literasi & Numerasi
+            </span>
+            <span class="subject-badge" style="background:rgba(234,88,12,0.12); color:#ea580c; border-color:rgba(234,88,12,0.3); font-weight:700;">
+              Penerbit Permata · Kurikulum Merdeka
+            </span>
+          </div>
+          <h2 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+            ${isEn ? CALI_STUNG_DATA.titleEn : CALI_STUNG_DATA.title}
+          </h2>
+          <p style="margin:0 0 10px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+            ${isEn ? CALI_STUNG_DATA.subtitleEn : CALI_STUNG_DATA.subtitle}
+          </p>
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">
+            <span>🎒 ${isEn ? 'Student Copy:' : 'Buku Milik:'}</span>
+            <span style="color:#ea580c;">${studentFullName}</span>
+            <span style="color:var(--muted);">· Kelas 1B</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategori Filter Tab: Semua, Membaca, Menulis, Berhitung -->
+      <div class="cali-filter-tabs" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+        <button class="btn ${this.caliCategory === 'all' ? 'primary' : ''} btn-cali-filter" data-cat="all" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+          🌟 ${isEn ? 'All Drills (15 Questions)' : 'Semua Soal (15 Latihan)'}
+        </button>
+        <button class="btn ${this.caliCategory === 'membaca' ? 'primary' : ''} btn-cali-filter" data-cat="membaca" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+          📖 ${isEn ? 'Reading Phonics (5)' : 'Membaca Fonik (5 Soal)'}
+        </button>
+        <button class="btn ${this.caliCategory === 'menulis' ? 'primary' : ''} btn-cali-filter" data-cat="menulis" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+          ✏️ ${isEn ? 'Writing & Spelling (5)' : 'Menulis & Ejaan (5 Soal)'}
+        </button>
+        <button class="btn ${this.caliCategory === 'berhitung' ? 'primary' : ''} btn-cali-filter" data-cat="berhitung" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+          🔢 ${isEn ? 'Playful Math (5)' : 'Berhitung Ceria (5 Soal)'}
+        </button>
+      </div>
+
+      <!-- Wadah Kuis Interaktif Cali Stung -->
+      <div id="caliStungQuizContainer"></div>
+    `;
+
+    const wrap = this.container.querySelector('#caliStungQuizContainer');
+    if (wrap) {
+      const activeQuizSet = {
+        id: `cali-stung-${this.caliCategory}`,
+        title: `${CALI_STUNG_DATA.title} (${this.caliCategory.toUpperCase()})`,
+        questions: questions
+      };
+      new QuizRunner(wrap, activeQuizSet, () => {
+        store.incrementDailyChallenge();
+        AudioFx.playSuccess();
+        AudioFx.triggerConfetti(this.container);
+      });
+    }
+
+    const btnBack = this.container.querySelector('#btnCaliBackHome');
+    if (btnBack) {
+      btnBack.addEventListener('click', () => {
+        appState.navigate('home');
+      });
+    }
+
+    const btnTts = this.container.querySelector('#btnCaliTtsIntro');
+    if (btnTts) {
+      btnTts.addEventListener('click', () => {
+        const text = btnTts.getAttribute('data-tts-text');
+        TtsEngine.speak(text, lang, btnTts);
+      });
+    }
+
+    const btnReg = this.container.querySelector('#btnCaliOpenRegistry');
+    if (btnReg) {
+      btnReg.addEventListener('click', () => {
+        (this.lksModal || window.lksModal)?.openSourceRegistry();
+      });
+    }
+
+    const filterBtns = this.container.querySelectorAll('.btn-cali-filter');
+    filterBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        this.caliCategory = b.getAttribute('data-cat');
+        this.renderCaliStungStandalone();
+      });
+    });
+  }
+
+  // ============================================================
+  // STANDALONE VIEW: BUKU MAXXI TEMATIK TERPADU (SRC-10)
+  // ============================================================
+  renderMaxxiStandalone() {
+    const lang = appState.get().lang || 'id';
+    const isEn = lang === 'en';
+    const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+    const studentFullName = currentStudent === 'Abhi' ? 'Abhinaya Kenzie (Abhi)' : 'Anjali Kirana (Ana)';
+
+    const ttsIntro = isEn
+      ? 'Welcome to MAXXI Book: Integrated Thematic Learning for Grade 1. Let us solve 10 real-world scenario challenges across Math, Literacy, Civics, Sports, and Arts!'
+      : 'Selamat datang di Buku MAXXI: Pendamping Tematik Terpadu SD Kelas 1. Mari pecahkan 10 tantangan kontekstual seru lintas mata pelajaran Matematika, Bahasa, Pancasila, Olahraga, dan Seni!';
+
+    this.container.innerHTML = `
+      <!-- Tombol Kembali & Navigasi -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+        <button class="btn" id="btnMaxxiBackHome" type="button" style="font-size:13px; font-weight:700; padding:7px 15px; display:inline-flex; align-items:center; gap:6px;">
+          ← ${isEn ? 'Back to Home' : 'Kembali ke Beranda'}
+        </button>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-tts" id="btnMaxxiTtsIntro" data-tts-text="${ttsIntro.replace(/"/g, '&quot;')}" type="button" style="font-size:12.5px; padding:7px 14px;">
+            🔊 ${isEn ? 'Listen Intro' : 'Dengarkan Pengantar'}
+          </button>
+          <button class="btn" id="btnMaxxiOpenRegistry" type="button" style="font-size:12.5px; padding:7px 14px; border-color:#1d7198; color:#1d7198;">
+            📖 ${isEn ? 'Source Book Info' : 'Info Buku Cetak'}
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Banner Buku MAXXI dengan Foto Asli Buku -->
+      <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+        <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+          <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+          <span style="position:absolute; bottom:-8px; right:-6px; background:#1d7198; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+            SRC-10
+          </span>
+        </div>
+        <div class="book-hero-info" style="flex:1; min-width:260px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+            <span class="subject-badge" style="background:#1d7198; color:#fff; border:none; font-weight:800;">
+              🏆 Tematik Terpadu Lintas Mapel
+            </span>
+            <span class="subject-badge" style="background:rgba(29,113,152,0.12); color:#1d7198; border-color:rgba(29,113,152,0.3); font-weight:700;">
+              Deep Learning & HOTS · Kurikulum Merdeka
+            </span>
+          </div>
+          <h2 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+            ${isEn ? MAXXI_CHALLENGE_DATA.titleEn : MAXXI_CHALLENGE_DATA.title}
+          </h2>
+          <p style="margin:0 0 10px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+            ${isEn ? MAXXI_CHALLENGE_DATA.subtitleEn : MAXXI_CHALLENGE_DATA.subtitle}
+          </p>
+
+          <!-- 6 Bidang Studi Lintas Mapel -->
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🦅 Pancasila</span>
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">📖 B. Indonesia</span>
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🧮 Matematika</span>
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🇬🇧 B. Inggris</span>
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🏃 Penjasorkes</span>
+            <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🎨 Kesenian</span>
+          </div>
+
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">
+            <span>🎒 ${isEn ? 'Student Copy:' : 'Buku Milik:'}</span>
+            <span style="color:#1d7198;">${studentFullName}</span>
+            <span style="color:var(--muted);">· Kelas 1B</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wadah Kuis Interaktif MAXXI -->
+      <div id="maxxiQuizContainer"></div>
+    `;
+
+    const wrap = this.container.querySelector('#maxxiQuizContainer');
+    if (wrap) {
+      new QuizRunner(wrap, MAXXI_CHALLENGE_DATA, () => {
+        store.incrementDailyChallenge();
+        AudioFx.playSuccess();
+        AudioFx.triggerConfetti(this.container);
+      });
+    }
+
+    const btnBack = this.container.querySelector('#btnMaxxiBackHome');
+    if (btnBack) {
+      btnBack.addEventListener('click', () => {
+        appState.navigate('home');
+      });
+    }
+
+    const btnTts = this.container.querySelector('#btnMaxxiTtsIntro');
+    if (btnTts) {
+      btnTts.addEventListener('click', () => {
+        const text = btnTts.getAttribute('data-tts-text');
+        TtsEngine.speak(text, lang, btnTts);
+      });
+    }
+
+    const btnReg = this.container.querySelector('#btnMaxxiOpenRegistry');
+    if (btnReg) {
+      btnReg.addEventListener('click', () => {
         (this.lksModal || window.lksModal)?.openSourceRegistry();
       });
     }

@@ -54,7 +54,7 @@
       document.documentElement.setAttribute('data-theme', savedTheme);
   
       this.state = {
-        currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects'
+        currentRoute: 'home', // 'home' | 'subject' | 'tantangan' | 'progress' | 'all-subjects' | 'cali-stung' | 'maxxi'
         currentSubjectId: null,
         currentTopicId: null,
         currentStudent: savedStudent, // 'Ana' | 'Abhi'
@@ -157,6 +157,10 @@
         window.location.hash = '#progress';
       } else if (route === 'all-subjects') {
         window.location.hash = '#semua-pelajaran';
+      } else if (route === 'cali-stung') {
+        window.location.hash = '#cali-stung';
+      } else if (route === 'maxxi') {
+        window.location.hash = '#maxxi';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -404,6 +408,9 @@
       home: 'Beranda',
       allSubjects: 'Semua Pelajaran',
       subjectsKicker: 'Mata Pelajaran',
+      companionBooksKicker: 'Buku Pendamping',
+      bookCaliStung: 'Buku Cali Stung',
+      bookMaxxi: 'Buku Maxi',
       activitiesKicker: 'Aktivitas & Rapor',
       dailyChallenge: 'Tantangan Harian',
       progress: 'Rapor & Bintang',
@@ -586,6 +593,9 @@
       home: 'Home',
       allSubjects: 'All Subjects',
       subjectsKicker: 'Subjects',
+      companionBooksKicker: 'Companion Books',
+      bookCaliStung: 'Cali Stung Book',
+      bookMaxxi: 'Maxi Book',
       activitiesKicker: 'Activities & Report',
       dailyChallenge: 'Daily Challenge',
       progress: 'Report & Stars',
@@ -10138,7 +10148,7 @@
             ${SOURCE_BOOKS_REGISTRY.map(src => `
               <div class="quiz-box" style="margin-bottom:0; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
                 <div>
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                     <span class="no" style="background:var(--navy); color:#fff; font-size:11px; font-weight:800; border-radius:6px; padding:2px 6px;">
                       ${src.id}
                     </span>
@@ -10146,9 +10156,18 @@
                       ${src.publisher}
                     </span>
                   </div>
-                  <h4 style="margin:0 0 6px; font-size:15px; font-weight:800; color:var(--ink);">${src.title}</h4>
-                  <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
-                    <span>Kelas ${src.grade} · Semester ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                  <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
+                    ${src.photoCover ? `
+                      <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
+                    ` : `
+                      <div style="width:52px; height:74px; background:var(--surface); border-radius:6px; display:grid; place-items:center; font-size:22px; border:1px solid var(--border); flex-shrink:0;">📚</div>
+                    `}
+                    <div style="flex:1; min-width:0;">
+                      <h4 style="margin:0 0 4px; font-size:14px; font-weight:800; color:var(--ink); line-height:1.35;">${src.title}</h4>
+                      <div style="font-size:11.5px; color:var(--muted);">
+                        <span>Kelas ${src.grade} · Sem ${src.semester}</span> · <span style="font-weight:600;">${src.series}</span>
+                      </div>
+                    </div>
                   </div>
                   <p style="font-size:12px; color:var(--ink); line-height:1.5; margin:0; background:var(--paper); padding:8px 10px; border-radius:8px;">
                     <strong>Cakupan:</strong> ${src.scope}
@@ -11824,6 +11843,19 @@
               </button>
             `;
           }).join('')}
+        </nav>
+  
+        <!-- Modul Buku Pendamping Siswa (SRC-05 Cali Stung & SRC-10 MAXXI) -->
+        <div class="kicker">${t('companionBooksKicker', lang)}</div>
+        <nav class="nav" aria-label="Buku Pendamping">
+          <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">
+            <span class="icon">📖</span>
+            <span class="label">${t('bookCaliStung', lang)}</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${t('bookMaxxi', lang)}">
+            <span class="icon">🏆</span>
+            <span class="label">${t('bookMaxxi', lang)}</span>
+          </button>
         </nav>
   
         <!-- Fitur Tambahan: Tantangan & Progress -->
@@ -15843,11 +15875,13 @@
   
   
   
+  
   class ChallengeViewComponent {
     constructor(container, lksModal = null) {
       this.container = container;
       this.lksModal = lksModal || (typeof window !== 'undefined' ? window.lksModal : null);
       this.activeSpecialQuiz = null; // null | 'cali-stung' | 'maxxi'
+      this.caliCategory = 'all';
     }
   
     render() {
@@ -16110,6 +16144,245 @@
         });
       }
     }
+  
+    // ============================================================
+    // STANDALONE VIEW: BUKU CALI STUNG (SRC-05)
+    // ============================================================
+    renderCaliStungStandalone() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+      const studentFullName = currentStudent === 'Abhi' ? 'Abhinaya Kenzie (Abhi)' : 'Anjali Kirana (Ana)';
+  
+      if (!this.caliCategory) this.caliCategory = 'all';
+  
+      let questions = CALI_STUNG_DATA.questions || [];
+      if (this.caliCategory !== 'all') {
+        questions = questions.filter(q => q.category === this.caliCategory);
+      }
+  
+      const ttsIntro = isEn
+        ? 'Welcome to Cali Stung Book: Reading, Writing, and Counting for Grade 1. Let us practice 5 minutes every day!'
+        : 'Selamat datang di Buku Cali Stung: Membaca, Menulis, dan Berhitung untuk Siswa SD Kelas 1. Mari latihan kilat 5 menit bersama Kakak Pintar!';
+  
+      this.container.innerHTML = `
+        <!-- Tombol Kembali & Navigasi -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+          <button class="btn" id="btnCaliBackHome" type="button" style="font-size:13px; font-weight:700; padding:7px 15px; display:inline-flex; align-items:center; gap:6px;">
+            ← ${isEn ? 'Back to Home' : 'Kembali ke Beranda'}
+          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-tts" id="btnCaliTtsIntro" data-tts-text="${ttsIntro.replace(/"/g, '&quot;')}" type="button" style="font-size:12.5px; padding:7px 14px;">
+              🔊 ${isEn ? 'Listen Intro' : 'Dengarkan Pengantar'}
+            </button>
+            <button class="btn" id="btnCaliOpenRegistry" type="button" style="font-size:12.5px; padding:7px 14px; border-color:var(--teal); color:var(--teal);">
+              📖 ${isEn ? 'Source Book Info' : 'Info Buku Cetak'}
+            </button>
+          </div>
+        </div>
+  
+        <!-- Hero Banner Buku Cali Stung dengan Foto Asli Buku -->
+        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+          <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+              SRC-05
+            </span>
+          </div>
+          <div class="book-hero-info" style="flex:1; min-width:260px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+              <span class="subject-badge" style="background:#ea580c; color:#fff; border:none; font-weight:800;">
+                ⚡ Fondasi Literasi & Numerasi
+              </span>
+              <span class="subject-badge" style="background:rgba(234,88,12,0.12); color:#ea580c; border-color:rgba(234,88,12,0.3); font-weight:700;">
+                Penerbit Permata · Kurikulum Merdeka
+              </span>
+            </div>
+            <h2 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+              ${isEn ? CALI_STUNG_DATA.titleEn : CALI_STUNG_DATA.title}
+            </h2>
+            <p style="margin:0 0 10px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+              ${isEn ? CALI_STUNG_DATA.subtitleEn : CALI_STUNG_DATA.subtitle}
+            </p>
+            <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">
+              <span>🎒 ${isEn ? 'Student Copy:' : 'Buku Milik:'}</span>
+              <span style="color:#ea580c;">${studentFullName}</span>
+              <span style="color:var(--muted);">· Kelas 1B</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Kategori Filter Tab: Semua, Membaca, Menulis, Berhitung -->
+        <div class="cali-filter-tabs" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+          <button class="btn ${this.caliCategory === 'all' ? 'primary' : ''} btn-cali-filter" data-cat="all" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+            🌟 ${isEn ? 'All Drills (15 Questions)' : 'Semua Soal (15 Latihan)'}
+          </button>
+          <button class="btn ${this.caliCategory === 'membaca' ? 'primary' : ''} btn-cali-filter" data-cat="membaca" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+            📖 ${isEn ? 'Reading Phonics (5)' : 'Membaca Fonik (5 Soal)'}
+          </button>
+          <button class="btn ${this.caliCategory === 'menulis' ? 'primary' : ''} btn-cali-filter" data-cat="menulis" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+            ✏️ ${isEn ? 'Writing & Spelling (5)' : 'Menulis & Ejaan (5 Soal)'}
+          </button>
+          <button class="btn ${this.caliCategory === 'berhitung' ? 'primary' : ''} btn-cali-filter" data-cat="berhitung" type="button" style="font-size:13px; font-weight:800; padding:8px 16px; border-radius:10px;">
+            🔢 ${isEn ? 'Playful Math (5)' : 'Berhitung Ceria (5 Soal)'}
+          </button>
+        </div>
+  
+        <!-- Wadah Kuis Interaktif Cali Stung -->
+        <div id="caliStungQuizContainer"></div>
+      `;
+  
+      const wrap = this.container.querySelector('#caliStungQuizContainer');
+      if (wrap) {
+        const activeQuizSet = {
+          id: `cali-stung-${this.caliCategory}`,
+          title: `${CALI_STUNG_DATA.title} (${this.caliCategory.toUpperCase()})`,
+          questions: questions
+        };
+        new QuizRunner(wrap, activeQuizSet, () => {
+          store.incrementDailyChallenge();
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
+        });
+      }
+  
+      const btnBack = this.container.querySelector('#btnCaliBackHome');
+      if (btnBack) {
+        btnBack.addEventListener('click', () => {
+          appState.navigate('home');
+        });
+      }
+  
+      const btnTts = this.container.querySelector('#btnCaliTtsIntro');
+      if (btnTts) {
+        btnTts.addEventListener('click', () => {
+          const text = btnTts.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btnTts);
+        });
+      }
+  
+      const btnReg = this.container.querySelector('#btnCaliOpenRegistry');
+      if (btnReg) {
+        btnReg.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openSourceRegistry();
+        });
+      }
+  
+      const filterBtns = this.container.querySelectorAll('.btn-cali-filter');
+      filterBtns.forEach(b => {
+        b.addEventListener('click', () => {
+          this.caliCategory = b.getAttribute('data-cat');
+          this.renderCaliStungStandalone();
+        });
+      });
+    }
+  
+    // ============================================================
+    // STANDALONE VIEW: BUKU MAXXI TEMATIK TERPADU (SRC-10)
+    // ============================================================
+    renderMaxxiStandalone() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+      const studentFullName = currentStudent === 'Abhi' ? 'Abhinaya Kenzie (Abhi)' : 'Anjali Kirana (Ana)';
+  
+      const ttsIntro = isEn
+        ? 'Welcome to MAXXI Book: Integrated Thematic Learning for Grade 1. Let us solve 10 real-world scenario challenges across Math, Literacy, Civics, Sports, and Arts!'
+        : 'Selamat datang di Buku MAXXI: Pendamping Tematik Terpadu SD Kelas 1. Mari pecahkan 10 tantangan kontekstual seru lintas mata pelajaran Matematika, Bahasa, Pancasila, Olahraga, dan Seni!';
+  
+      this.container.innerHTML = `
+        <!-- Tombol Kembali & Navigasi -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+          <button class="btn" id="btnMaxxiBackHome" type="button" style="font-size:13px; font-weight:700; padding:7px 15px; display:inline-flex; align-items:center; gap:6px;">
+            ← ${isEn ? 'Back to Home' : 'Kembali ke Beranda'}
+          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-tts" id="btnMaxxiTtsIntro" data-tts-text="${ttsIntro.replace(/"/g, '&quot;')}" type="button" style="font-size:12.5px; padding:7px 14px;">
+              🔊 ${isEn ? 'Listen Intro' : 'Dengarkan Pengantar'}
+            </button>
+            <button class="btn" id="btnMaxxiOpenRegistry" type="button" style="font-size:12.5px; padding:7px 14px; border-color:#1d7198; color:#1d7198;">
+              📖 ${isEn ? 'Source Book Info' : 'Info Buku Cetak'}
+            </button>
+          </div>
+        </div>
+  
+        <!-- Hero Banner Buku MAXXI dengan Foto Asli Buku -->
+        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+          <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#1d7198; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+              SRC-10
+            </span>
+          </div>
+          <div class="book-hero-info" style="flex:1; min-width:260px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+              <span class="subject-badge" style="background:#1d7198; color:#fff; border:none; font-weight:800;">
+                🏆 Tematik Terpadu Lintas Mapel
+              </span>
+              <span class="subject-badge" style="background:rgba(29,113,152,0.12); color:#1d7198; border-color:rgba(29,113,152,0.3); font-weight:700;">
+                Deep Learning & HOTS · Kurikulum Merdeka
+              </span>
+            </div>
+            <h2 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+              ${isEn ? MAXXI_CHALLENGE_DATA.titleEn : MAXXI_CHALLENGE_DATA.title}
+            </h2>
+            <p style="margin:0 0 10px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+              ${isEn ? MAXXI_CHALLENGE_DATA.subtitleEn : MAXXI_CHALLENGE_DATA.subtitle}
+            </p>
+  
+            <!-- 6 Bidang Studi Lintas Mapel -->
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🦅 Pancasila</span>
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">📖 B. Indonesia</span>
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🧮 Matematika</span>
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🇬🇧 B. Inggris</span>
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🏃 Penjasorkes</span>
+              <span class="badge" style="background:var(--card); font-size:11px; padding:3px 8px; border:1px solid var(--border);">🎨 Kesenian</span>
+            </div>
+  
+            <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">
+              <span>🎒 ${isEn ? 'Student Copy:' : 'Buku Milik:'}</span>
+              <span style="color:#1d7198;">${studentFullName}</span>
+              <span style="color:var(--muted);">· Kelas 1B</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Wadah Kuis Interaktif MAXXI -->
+        <div id="maxxiQuizContainer"></div>
+      `;
+  
+      const wrap = this.container.querySelector('#maxxiQuizContainer');
+      if (wrap) {
+        new QuizRunner(wrap, MAXXI_CHALLENGE_DATA, () => {
+          store.incrementDailyChallenge();
+          AudioFx.playSuccess();
+          AudioFx.triggerConfetti(this.container);
+        });
+      }
+  
+      const btnBack = this.container.querySelector('#btnMaxxiBackHome');
+      if (btnBack) {
+        btnBack.addEventListener('click', () => {
+          appState.navigate('home');
+        });
+      }
+  
+      const btnTts = this.container.querySelector('#btnMaxxiTtsIntro');
+      if (btnTts) {
+        btnTts.addEventListener('click', () => {
+          const text = btnTts.getAttribute('data-tts-text');
+          TtsEngine.speak(text, lang, btnTts);
+        });
+      }
+  
+      const btnReg = this.container.querySelector('#btnMaxxiOpenRegistry');
+      if (btnReg) {
+        btnReg.addEventListener('click', () => {
+          (this.lksModal || window.lksModal)?.openSourceRegistry();
+        });
+      }
+    }
   }
   
 
@@ -16336,6 +16609,10 @@
           appState.set({ currentRoute: 'progress', drawerOpen: false });
         } else if (hash === '#semua-pelajaran') {
           appState.set({ currentRoute: 'all-subjects', drawerOpen: false });
+        } else if (hash === '#cali-stung') {
+          appState.set({ currentRoute: 'cali-stung', drawerOpen: false });
+        } else if (hash === '#maxxi') {
+          appState.set({ currentRoute: 'maxxi', drawerOpen: false });
         } else {
           appState.set({ currentRoute: 'home', currentSubjectId: null, drawerOpen: false });
         }
@@ -16374,6 +16651,12 @@
           break;
         case 'all-subjects':
           this.renderAllSubjects();
+          break;
+        case 'cali-stung':
+          this.challengeView.renderCaliStungStandalone();
+          break;
+        case 'maxxi':
+          this.challengeView.renderMaxxiStandalone();
           break;
         default:
           this.renderHome();
@@ -16493,7 +16776,44 @@
           </div>
         </section>
   
-        <!-- 4. Tombol Akses Cepat ke Katalog Lengkap -->
+        <!-- 4. Modul Buku Pendamping Siswa (Cali Stung & MAXXI) -->
+        <section style="margin-bottom:36px;">
+          <div class="section-header" style="margin-bottom:18px;">
+            <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
+            <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
+            <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Cali Stung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Cali Stung dan MAXXI!'}</p>
+          </div>
+  
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+            <!-- Card Cali Stung -->
+            <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Cali Stung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
+                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Cali Stung</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
+                  ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start 5-Min Drill ➔' : 'Mulai Latihan 5 Menit ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- Card Buku MAXXI -->
+            <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(29,113,152,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(29,113,152,0.25); flex-shrink:0;">
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#1d7198; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
+                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Maxi (Tematik)</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
+                  ${isEn ? '10 contextual scenario challenges across 6 core subjects.' : '10 tantangan skenario kontekstual terpadu lintas 6 mata pelajaran.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#1d7198;">${isEn ? 'Start MAXXI Challenge ➔' : 'Mulai Tantangan MAXXI ➔'}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- 5. Tombol Akses Cepat ke Katalog Lengkap -->
         <section style="text-align:center; padding:24px; background:var(--surface); border:1px dashed var(--line); border-radius:18px; margin-bottom:36px;">
           <h4 style="margin:0 0 6px; font-size:16px; font-weight:800; color:var(--ink);">${isEn ? 'Looking for Other Subjects?' : 'Ingin Belajar Mata Pelajaran Lainnya?'}</h4>
           <p style="margin:0 0 14px; font-size:13px; color:var(--muted);">
@@ -16504,7 +16824,7 @@
           </button>
         </section>
   
-        <!-- 5. Kutipan Motivasi Pelajar -->
+        <!-- 6. Kutipan Motivasi Pelajar -->
         <blockquote style="margin:0 0 32px; padding:18px 24px; background:var(--card); border-left:4px solid var(--teal); border-radius:12px; font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.6;">
           ${isEn ? '“One problem has many ways. Never be afraid to make mistakes, because every step is a beginning of real learning!” — Anabhi Dev Smart Study' : '“Satu soal memiliki banyak cara. Jangan pernah takut salah, karena dari situlah pemikiran kreatif dan rasa ingin tahu kita berkembang!” — Anabhi Dev Smart Study'}
         </blockquote>
@@ -16530,6 +16850,14 @@
           appState.navigate('tantangan');
         });
       }
+  
+      const companionCards = this.mainEl.querySelectorAll('.btn-open-companion');
+      companionCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const route = card.getAttribute('data-route');
+          appState.navigate(route);
+        });
+      });
   
       const btnAll = this.mainEl.querySelector('#btnOpenAllSubjects');
       if (btnAll) {
