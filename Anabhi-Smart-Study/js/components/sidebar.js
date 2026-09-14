@@ -2,8 +2,8 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // JavaScript · ES Module · Collapsible Sidebar & Mobile Drawer
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 10 September 2026, 11:08:00
+// Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+// Generated : 14 September 2026, 23:52:00
 // ================================================================
 
 import { SUBJECTS, getSubjectName } from '../data/subjects.js';
@@ -94,16 +94,32 @@ export class SidebarComponent {
         }).join('')}
       </nav>
 
-      <!-- Modul Buku Pendamping Siswa (SRC-05 Calistung & SRC-10 MAXXI) -->
-      <div class="kicker">${t('companionBooksKicker', lang)}</div>
-      <nav class="nav" aria-label="Buku Pendamping">
-        <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">
+      <!-- Learning Labs (Reading Lab, Writing Lab, Calistung, 60 Menit, MAXXI, Math Toolbox) -->
+      <div class="kicker">${isEn ? 'LEARNING LABS & DRILLS' : 'LEARNING LABS & BUKU PENDAMPING'}</div>
+      <nav class="nav" aria-label="Learning Labs">
+        <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}">
           <span class="icon">📖</span>
-          <span class="label">${t('bookCaliStung', lang)}</span>
+          <span class="label">Reading Lab (60 Jam)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${t('bookMaxxi', lang)}">
+        <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
+          <span class="icon">⚡</span>
+          <span class="label">Calistung (Drill 5-15m)</span>
+        </button>
+        <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
+          <span class="icon">🕒</span>
+          <span class="label">60 Menit (4 Pilar)</span>
+        </button>
+        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku Maxi (Tematik Sekolah)'}">
           <span class="icon">🏆</span>
-          <span class="label">${t('bookMaxxi', lang)}</span>
+          <span class="label">Buku Maxi (Tematik)</span>
+        </button>
+        <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (10 Strategies)' : 'Math Toolbox (10 Jurus Berhitung)'}">
+          <span class="icon">🧮</span>
+          <span class="label">Math Toolbox (10 Jurus)</span>
+        </button>
+        <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
+          <span class="icon">✍️</span>
+          <span class="label">Writing Lab</span>
         </button>
       </nav>
 

@@ -7121,6 +7121,600 @@
   
   
 
+  // --- Source: js/data/content-registry.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Content Registry & Master Syllabus
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Master Blueprint 4-Buku Calistung Integration)
+  // Generated : 14 September 2026, 23:25:00
+  // ================================================================
+  
+  /**
+   * CONTENT REGISTRY
+   * Single source of truth untuk seluruh kurikulum dan bank latihan:
+   * 1. READING ENGINE (60 Jam Pintar Baca Tanpa Dieja — Yuliani Yusuf)
+   * 2. CALISTUNG ENGINE (Permata 5/10/15 Menit Daily Practice)
+   * 3. 60 MENIT ENGINE (Integral Media — 4 Pilar Multi-Skill)
+   * 4. MAXXI ENGINE (Penguatan Tematik Sekolah SD Kelas 1 Sem. 1)
+   * 5. WRITING LAB (Garis, Pola, Huruf, Kata, Kalimat)
+   * 6. MATH TOOLBOX (10 Strategi Berhitung Cepat Deterministik)
+   * 
+   * Prinsip: Original, Data-Driven, Reusable, Child-Friendly, Zero-Copyright-Infringement.
+   */
+  
+  const CONTENT_REGISTRY = {
+    // ============================================================
+    // 1. READING ENGINE — 60 JAM BACA TANPA DIEJA (12 Levels)
+    // Progression: Huruf → Vokal A → Vokal I → E/O → 3 Huruf →
+    // Gabungan Suku Kata → Dua Vokal → Awalan → Sengau → Kata → Kalimat → Pemahaman
+    // ============================================================
+    reading: [
+      {
+        id: 'read-lvl-0',
+        level: 0,
+        title: 'Mengenal Huruf Vokal Ceria',
+        titleEn: 'Meet Cheerful Vowels',
+        skill: 'vowels-intro',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Mengenal bentuk dan bunyi huruf vokal bernyanyi A, I, U, E, O',
+        vocabulary: ['a', 'i', 'u', 'e', 'o'],
+        phonics: [
+          { char: 'A', sound: 'a', example: 'Apel 🍎', word: 'APEL' },
+          { char: 'I', sound: 'i', example: 'Ikan 🐟', word: 'IKAN' },
+          { char: 'U', sound: 'u', example: 'Udang 🦐', word: 'UDANG' },
+          { char: 'E', sound: 'e', example: 'Ekor 🐒', word: 'EKOR' },
+          { char: 'O', sound: 'o', example: 'Obat 💊', word: 'OBAT' }
+        ],
+        estimatedMinutes: 3,
+        difficulty: 1
+      },
+      {
+        id: 'read-lvl-1',
+        level: 1,
+        title: 'Suku Kata Bunyi A (Tanpa Dieja)',
+        titleEn: 'Syllables with Sound A (No Spelling)',
+        skill: 'vowel-a-syllables',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca suku kata vokal A secara langsung (ba, ca, da, fa, ga, ha, ja, ka, la, ma, na, pa, ra, sa, ta)',
+        syllables: ['ba', 'ca', 'da', 'ga', 'ha', 'ja', 'ka', 'la', 'ma', 'na', 'pa', 'ra', 'sa', 'ta'],
+        sampleWords: [
+          { word: 'MATA', parts: ['ma', 'ta'], emoji: '👀', hint: 'Untuk melihat' },
+          { word: 'BATA', parts: ['ba', 'ta'], emoji: '🧱', hint: 'Bahan tembok rumah' },
+          { word: 'RASA', parts: ['ra', 'sa'], emoji: '👅', hint: 'Manis, asin, gurih' },
+          { word: 'KACA', parts: ['ka', 'ca'], emoji: '🪞', hint: 'Bening untuk berkaca' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 1
+      },
+      {
+        id: 'read-lvl-2',
+        level: 2,
+        title: 'Suku Kata Bunyi I (Ceria & Nyaring)',
+        titleEn: 'Syllables with Sound I',
+        skill: 'vowel-i-syllables',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca suku kata berakhiran vokal I secara langsung tanpa dieja',
+        syllables: ['bi', 'ci', 'di', 'gi', 'hi', 'ji', 'ki', 'li', 'mi', 'ni', 'pi', 'ri', 'si', 'ti'],
+        sampleWords: [
+          { word: 'PIPI', parts: ['pi', 'pi'], emoji: '😊', hint: 'Ada di wajah kita' },
+          { word: 'GIGI', parts: ['gi', 'gi'], emoji: '🦷', hint: 'Putih dan bersih' },
+          { word: 'KAMI', parts: ['ka', 'mi'], emoji: '🤝', hint: 'Saya dan teman-teman' },
+          { word: 'TALI', parts: ['ta', 'li'], emoji: '🪢', hint: 'Untuk mengikat' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 1
+      },
+      {
+        id: 'read-lvl-3',
+        level: 3,
+        title: 'Suku Kata Bunyi U, E, dan O',
+        titleEn: 'Syllables with U, E, and O',
+        skill: 'vowel-ueo-syllables',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca suku kata dengan vokal bulat dan bibir terbuka U, E, O',
+        syllables: ['bu', 'cu', 'du', 'ku', 'mu', 'su', 'be', 'ce', 'de', 'me', 'pe', 'se', 'bo', 'co', 'do', 'mo', 'po', 'so'],
+        sampleWords: [
+          { word: 'BUKU', parts: ['bu', 'ku'], emoji: '📖', hint: 'Sumber ilmu membaca' },
+          { word: 'BOLA', parts: ['bo', 'la'], emoji: '⚽', hint: 'Bulat ditendang di lapangan' },
+          { word: 'SUSU', parts: ['su', 'su'], emoji: '🥛', hint: 'Minuman sehat bergizi' },
+          { word: 'MEJA', parts: ['me', 'ja'], emoji: '🪵', hint: 'Tempat menaruh buku' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 2
+      },
+      {
+        id: 'read-lvl-4',
+        level: 4,
+        title: 'Rangkaian 3 Huruf (Vokal di Depan)',
+        titleEn: 'Three-Letter Words (Vowel Front)',
+        skill: 'three-letter-words',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca kata 3 huruf dengan vokal awal seperti IBU, UBI, API, AKU, ADA',
+        sampleWords: [
+          { word: 'IBU', parts: ['i', 'bu'], emoji: '👩', hint: 'Mama tercinta' },
+          { word: 'UBI', parts: ['u', 'bi'], emoji: '🍠', hint: 'Makanan umbi manis gurih' },
+          { word: 'API', parts: ['a', 'pi'], emoji: '🔥', hint: 'Hangat dan menyala' },
+          { word: 'AKU', parts: ['a', 'ku'], emoji: '🧒', hint: 'Diri saya sendiri' },
+          { word: 'INI', parts: ['i', 'ni'], emoji: '👉', hint: 'Menunjuk benda dekat' }
+        ],
+        estimatedMinutes: 4,
+        difficulty: 2
+      },
+      {
+        id: 'read-lvl-5',
+        level: 5,
+        title: 'Gabungan 2 Suku Kata Bermakna',
+        titleEn: 'Combining Two Syllables into Words',
+        skill: 'two-syllable-words',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Merangkai dua suku kata terbuka menjadi kata benda dan kata kerja sehari-hari',
+        sampleWords: [
+          { word: 'BAJU', parts: ['ba', 'ju'], emoji: '👕', hint: 'Pakaian kita sehari-hari' },
+          { word: 'KAKI', parts: ['ka', 'ki'], emoji: '🦶', hint: 'Untuk berjalan dan berlari' },
+          { word: 'SAPI', parts: ['sa', 'pi'], emoji: '🐄', hint: 'Hewan penghasil susu' },
+          { word: 'KUDA', parts: ['ku', 'da'], emoji: '🐎', hint: 'Hewan berlari kencang' },
+          { word: 'ROTI', parts: ['ro', 'ti'], emoji: '🍞', hint: 'Sarapan lezat' },
+          { word: 'TOPI', parts: ['to', 'pi'], emoji: '🧢', hint: 'Pelindung kepala dari panas' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 2
+      },
+      {
+        id: 'read-lvl-6',
+        level: 6,
+        title: 'Dua Huruf Vokal Berdampingan (Diftong)',
+        titleEn: 'Adjacent Vowels & Diphthongs',
+        skill: 'diphthongs',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca diftong dan dua vokal berurutan: AI, AU, IA, UA, OI',
+        sampleWords: [
+          { word: 'PANTAI', parts: ['pan', 'tai'], emoji: '🏖️', hint: 'Tepi laut pasir indah' },
+          { word: 'PULAU', parts: ['pu', 'lau'], emoji: '🏝️', hint: 'Daratan di kelilingi laut' },
+          { word: 'SANTAI', parts: ['san', 'tai'], emoji: '😎', hint: 'Istirahat tenang' },
+          { word: 'TUPAI', parts: ['tu', 'pai'], emoji: '🐿️', hint: 'Hewan lincah pemanjat pohon' },
+          { word: 'DANAU', parts: ['da', 'nau'], emoji: '🏞️', hint: 'Genangan air luas alami' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 3
+      },
+      {
+        id: 'read-lvl-7',
+        level: 7,
+        title: 'Awalan Kata Sederhana',
+        titleEn: 'Simple Word Prefixes',
+        skill: 'word-prefixes',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Mengenal pola awalan kata berulang ba-, bi-, bu-, ma-, mi-, mu-, sa-, si-, su-',
+        sampleWords: [
+          { word: 'BERMAIN', parts: ['ber', 'ma', 'in'], emoji: '⚽', hint: 'Aktivitas seru bersama teman' },
+          { word: 'MELOMPAT', parts: ['me', 'lom', 'pat'], emoji: '🦘', hint: 'Meloncat tinggi di udara' },
+          { word: 'SEPEDA', parts: ['se', 'pe', 'da'], emoji: '🚲', hint: 'Kendaraan roda dua kayuh' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 3
+      },
+      {
+        id: 'read-lvl-8',
+        level: 8,
+        title: 'Bunyi Sengau & Konsonan Khusus (NG & NY)',
+        titleEn: 'Nasal Sounds: NG and NY',
+        skill: 'nasal-consonants',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca kata dengan bunyi sengau ng, ny, dan akhiran konsonan tertutup',
+        sampleWords: [
+          { word: 'MAKAN', parts: ['ma', 'kan'], emoji: '🍽️', hint: 'Aktivitas santap lezat' },
+          { word: 'BURUNG', parts: ['bu', 'rung'], emoji: '🐦', hint: 'Hewan terbang berbulu indah' },
+          { word: 'NYANYI', parts: ['nya', 'nyi'], emoji: '🎵', hint: 'Melantunkan lagu ceria' },
+          { word: 'BINTANG', parts: ['bin', 'tang'], emoji: '⭐', hint: 'Berkilau di langit malam' },
+          { word: 'SENANG', parts: ['se', 'nang'], emoji: '😄', hint: 'Perasaan bahagia dan gembira' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 3
+      },
+      {
+        id: 'read-lvl-9',
+        level: 9,
+        title: 'Kata Tiga Suku Kata & Benda Sekitar',
+        titleEn: 'Three-Syllable Daily Words',
+        skill: 'three-syllable-words',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca lancar kata tiga suku kata konkret yang sering ditemui',
+        sampleWords: [
+          { word: 'KERETA', parts: ['ke', 're', 'ta'], emoji: '🚆', hint: 'Kendaraan panjang di atas rel' },
+          { word: 'SEPATU', parts: ['se', 'pa', 'tu'], emoji: '👟', hint: 'Alas kaki untuk sekolah' },
+          { word: 'KEMEJA', parts: ['ke', 'me', 'ja'], emoji: '👔', hint: 'Baju berkerah rapi' },
+          { word: 'KELINCI', parts: ['ke', 'lin', 'ci'], emoji: '🐰', hint: 'Hewan telinga panjang suka wortel' },
+          { word: 'MATAHARI', parts: ['ma', 'ta', 'ha', 'ri'], emoji: '☀️', hint: 'Penerang bumi di siang hari' }
+        ],
+        estimatedMinutes: 5,
+        difficulty: 3
+      },
+      {
+        id: 'read-lvl-10',
+        level: 10,
+        title: 'Membaca Rangkaian Kalimat Pendek',
+        titleEn: 'Reading Short Sentences',
+        skill: 'short-sentences',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca kalimat pendek 3–4 kata dengan intonasi yang pas dan benar',
+        sentences: [
+          { text: 'Ibu beli roti manis.', emoji: '🍞', speech: 'Ibu beli roti manis' },
+          { text: 'Ana suka baca buku.', emoji: '📖', speech: 'Ana suka baca buku' },
+          { text: 'Abhi main bola baru.', emoji: '⚽', speech: 'Abhi main bola baru' },
+          { text: 'Sapi makan rumput hijau.', emoji: '🐄', speech: 'Sapi makan rumput hijau' },
+          { text: 'Matahari terbit pagi hari.', emoji: '🌅', speech: 'Matahari terbit pagi hari' }
+        ],
+        estimatedMinutes: 6,
+        difficulty: 4
+      },
+      {
+        id: 'read-lvl-11',
+        level: 11,
+        title: 'Pemahaman Cerita Ceria Anak',
+        titleEn: 'Reading Comprehension Stories',
+        skill: 'reading-comprehension',
+        sourceReference: '60JAM',
+        sourceStatus: 'reference-informed',
+        originalContent: true,
+        objective: 'Membaca cerita mini lalu menjawab pertanyaan pemahaman isi cerita',
+        story: {
+          title: 'Kelinci Putih dan Wortel Oranye',
+          text: 'Kiki adalah kelinci putih yang lincah. Kiki suka makan wortel segar berwarna oranye di kebun paman. Setelah makan, Kiki melompat gembira bersama temannya si Kucing Miko.',
+          questions: [
+            { q: 'Siapa nama kelinci putih di cerita?', options: ['Kiki', 'Miko', 'Paman'], answer: 'Kiki' },
+            { q: 'Apa warna wortel yang dimakan Kiki?', options: ['Oranye', 'Merah', 'Biru'], answer: 'Oranye' },
+            { q: 'Siapakah teman bermain Kiki si Kelinci?', options: ['Kucing Miko', 'Bebek Doni', 'Kambing Boni'], answer: 'Kucing Miko' }
+          ]
+        },
+        estimatedMinutes: 6,
+        difficulty: 4
+      }
+    ],
+  
+    // ============================================================
+    // 2. CALISTUNG ENGINE — PERMATA DAILY DRILL (5/10/15 Menit)
+    // READ (Membaca) + WRITE (Menulis) + COUNT (Berhitung)
+    // ============================================================
+    calistung: {
+      modes: [
+        { id: '5min', name: 'Drill Kilat 5 Menit', durationMin: 5, targetTasks: 5, badge: '⚡ Cepat Tanggap' },
+        { id: '10min', name: 'Latihan Fokus 10 Menit', durationMin: 10, targetTasks: 10, badge: '🎯 Fokus Pintar' },
+        { id: '15min', name: 'Komplit Juara 15 Menit', durationMin: 15, targetTasks: 15, badge: '🏆 Juara Teladan' }
+      ],
+      pillars: [
+        {
+          id: 'reading',
+          title: 'Membaca (Fonik & Kata)',
+          titleEn: 'Reading (Phonics & Words)',
+          icon: '📖',
+          color: '#b24a1b',
+          tasks: [
+            { q: 'Huruf vokal pada kata "SEPATU" adalah...', options: ['E, A, U', 'S, P, T', 'Hanya E dan U', 'S, E, P'], answer: 'E, A, U', hint: 'Huruf bernyanyi A, I, U, E, O' },
+            { q: 'Gabungan suku kata "BO" + "LA" dibaca...', options: ['BOLA', 'LOBE', 'BALI', 'BUTA'], answer: 'BOLA', hint: 'Benda bulat di lapangan sepak bola' },
+            { q: 'Manakah kata yang berakhiran suku kata "KU"?', options: ['BUKU', 'BOLA', 'MEJA', 'KACA'], answer: 'BUKU', hint: 'BU + KU = BUKU' },
+            { q: 'Lengkapi kata rumpang berikut: M A _ A (alat untuk melihat)', options: ['T', 'B', 'K', 'S'], answer: 'T', hint: 'M - A - T - A' },
+            { q: 'Manakah kata yang memiliki bunyi sengau "NY"?', options: ['NYANYI', 'MAKAN', 'KUDAP', 'RUMAH'], answer: 'NYANYI', hint: 'NYA - NYI' }
+          ]
+        },
+        {
+          id: 'writing',
+          title: 'Menulis & Ejaan Kata',
+          titleEn: 'Writing & Word Spelling',
+          icon: '✏️',
+          color: '#1d7198',
+          tasks: [
+            { q: 'Pilihlah susunan ejaan yang benar untuk gambar 🥛 (SUSU):', options: ['S-U-S-U', 'S-U-S-I', 'S-I-S-U', 'U-S-U-S'], answer: 'S-U-S-U', hint: 'Minuman putih menyehatkan' },
+            { q: 'Kata "RUMAH" terdiri dari ... huruf:', options: ['5 huruf', '4 huruf', '6 huruf', '3 huruf'], answer: '5 huruf', hint: 'R - U - M - A - H = 5 huruf' },
+            { q: 'Huruf kapital yang tepat untuk awal nama "ana" adalah...', options: ['Ana', 'ana', 'aNa', 'anA'], answer: 'Ana', hint: 'Nama orang diawali huruf besar (kapital)' },
+            { q: 'Lengkapi ejaan kata berikut: B _ J U (pakaian):', options: ['A', 'E', 'O', 'I'], answer: 'A', hint: 'B - A - J - U' },
+            { q: 'Tanda baca yang tepat di akhir kalimat tanya "Di mana bukumu" adalah...', options: ['?', '.', '!', ','], answer: '?', hint: 'Kalimat tanya diakhiri tanda tanya (?)' }
+          ]
+        },
+        {
+          id: 'counting',
+          title: 'Berhitung & Logika Angka',
+          titleEn: 'Math & Number Logic',
+          icon: '🔢',
+          color: '#056268',
+          tasks: [
+            { q: 'Berapakah hasil dari 7 + 5?', options: ['12', '11', '13', '14'], answer: '12', hint: '7 disimpan di kepala, buka 5 jari: 8, 9, 10, 11, 12!' },
+            { q: 'Ibu membeli 9 apel, lalu dimakan 4 apel. Sisa apel ibu adalah...', options: ['5', '4', '6', '3'], answer: '5', hint: '9 dikurangi 4 = 5 apel' },
+            { q: 'Angka berapakah yang berada tepat di antara 13 dan 15?', options: ['14', '12', '16', '15'], answer: '14', hint: 'Urutan: 13, 14, 15' },
+            { q: 'Manakah jumlah yang LEBIH BANYAK?', options: ['8 permen', '5 permen', '6 permen', '3 permen'], answer: '8 permen', hint: '8 adalah angka paling besar' },
+            { q: 'Berapakah 10 + 6?', options: ['16', '15', '17', '18'], answer: '16', hint: '1 puluhan dan 6 satuan = 16' }
+          ]
+        }
+      ]
+    },
+  
+    // ============================================================
+    // 3. 60 MENIT ENGINE — MULTI-SKILL STARTER (Integral Media)
+    // 4 Pilar: Read + Write + Count + English
+    // ============================================================
+    sixtyMin: {
+      pillars: [
+        {
+          id: 'read',
+          name: 'Membaca Lebih Cepat',
+          nameEn: 'Fast Reading Mastery',
+          icon: '📖',
+          color: '#ea580c',
+          bgSoft: '#fff7ed',
+          drills: [
+            { q: 'Bacalah kata ini: "B-U-K-U". Manakah gambar yang cocok?', options: ['📖 Buku', '🍎 Apel', '⚽ Bola', '🚗 Mobil'], answer: '📖 Buku' },
+            { q: 'Bunyi suku kata depan pada kata "KUCING" adalah...', options: ['KU', 'CI', 'KA', 'KI'], answer: 'KU' },
+            { q: 'Manakah rangkaian kata yang tepat untuk: "kuda lari kencang"?', options: ['kuda lari kencang', 'kuda jalan pelan', 'sapi makan rumput', 'burung terbang tinggi'], answer: 'kuda lari kencang' }
+          ]
+        },
+        {
+          id: 'write',
+          name: 'Menulis Lebih Mudah',
+          nameEn: 'Easy Writing Skills',
+          icon: '✏️',
+          color: '#2563eb',
+          bgSoft: '#eff6ff',
+          drills: [
+            { q: 'Manakah penulisan huruf kecil yang tepat untuk huruf "B"?', options: ['b', 'd', 'p', 'q'], answer: 'b', hint: 'Perut huruf b ada di depan bawah' },
+            { q: 'Susunlah huruf acak "O - B - L - A" menjadi nama benda bulat:', options: ['BOLA', 'LOBE', 'ALOB', 'BALO'], answer: 'BOLA' },
+            { q: 'Salinlah kata dengan benar: huruf awal kata "Sekolah" adalah...', options: ['S', 'E', 'K', 'O'], answer: 'S' }
+          ]
+        },
+        {
+          id: 'count',
+          name: '123 Berhitung Lebih Pintar',
+          nameEn: 'Clever Number Math',
+          icon: '🧮',
+          color: '#16a34a',
+          bgSoft: '#f0fdf4',
+          drills: [
+            { q: 'Hitunglah penjumlahan bintang: ⭐⭐⭐ + ⭐⭐⭐⭐ = ...', options: ['7', '6', '8', '9'], answer: '7', hint: '3 + 4 = 7 bintang' },
+            { q: 'Urutkan angka dari yang paling KECIL: 9, 3, 6, 1', options: ['1, 3, 6, 9', '9, 6, 3, 1', '3, 1, 6, 9', '1, 6, 3, 9'], answer: '1, 3, 6, 9' },
+            { q: 'Lompat 2 langkah ke depan dari angka 6 menjadi angka...', options: ['8', '7', '9', '10'], answer: '8', hint: '6 + 2 = 8' }
+          ]
+        },
+        {
+          id: 'english',
+          name: 'ABC BHS Inggris Lebih Lancar',
+          nameEn: 'Smooth English ABCs',
+          icon: '🔤',
+          color: '#7c3aed',
+          bgSoft: '#f5f3ff',
+          drills: [
+            { q: 'Sapaan "Good Morning" dalam Bahasa Indonesia berarti...', options: ['Selamat Pagi', 'Selamat Malam', 'Selamat Tinggal', 'Terima Kasih'], answer: 'Selamat Pagi' },
+            { q: 'Warna buah apel merah dalam Bahasa Inggris adalah...', options: ['Red', 'Blue', 'Green', 'Yellow'], answer: 'Red' },
+            { q: 'Kata "Cat" dalam Bahasa Indonesia artinya...', options: ['Kucing 🐱', 'Anjing 🐶', 'Burung 🐦', 'Ikan 🐟'], answer: 'Kucing 🐱' },
+            { q: 'Angka 5 dalam bahasa Inggris dibaca...', options: ['Five', 'Four', 'Six', 'Three'], answer: 'Five' }
+          ]
+        }
+      ]
+    },
+  
+    // ============================================================
+    // 4. MAXXI ENGINE — SCHOOL REINFORCEMENT (Tematik Terpadu Kelas 1)
+    // 4 Unit: Diriku, Kegemaranku, Kegiatanku, Keluargaku
+    // ============================================================
+    maxxi: {
+      units: [
+        {
+          id: 'unit-1-diriku',
+          name: 'Unit 1: Diriku',
+          nameEn: 'Unit 1: About Myself',
+          theme: 'Mengenal Identitas, Tubuh, Rasa Syukur, dan Teman Baru',
+          icon: '🧒',
+          color: '#0284c7',
+          badge: 'Tema 1 · Kurikulum Merdeka',
+          sourceStatus: 'reconstructed',
+          subjects: [
+            {
+              subject: 'Bahasa Indonesia',
+              icon: '📖',
+              q: 'Saat berkenalan dengan teman baru di kelas, sikap yang baik adalah...',
+              options: ['Tersenyum ramah dan menyebutkan nama', 'Menunduk dan tidak mau bicara', 'Berteriak keras di depan kelas', 'Pergi meninggalkan teman'],
+              answer: 'Tersenyum ramah dan menyebutkan nama',
+              hint: 'Sapa teman dengan senyum ceria! 😊'
+            },
+            {
+              subject: 'Pendidikan Pancasila',
+              icon: '🦅',
+              q: 'Meskipun setiap teman di kelas memiliki perbedaan warna kulit dan hobi, kita harus...',
+              options: ['Saling menghormati dan hidup rukun', 'Hanya bermain dengan teman yang sama', 'Mengejek perbedaannya', 'Memusuhi teman yang berbeda'],
+              answer: 'Saling menghormati dan hidup rukun',
+              hint: 'Semboyan bangsa kita: Bhinneka Tunggal Ika'
+            },
+            {
+              subject: 'Matematika',
+              icon: '🧮',
+              q: 'Setiap anak memiliki 2 tangan. Berapakah jumlah seluruh jari pada kedua tanganmu?',
+              options: ['10 jari', '5 jari', '8 jari', '12 jari'],
+              answer: '10 jari',
+              hint: '5 jari tangan kanan + 5 jari tangan kiri = 10 jari'
+            },
+            {
+              subject: 'Seni Rupa',
+              icon: '🎨',
+              q: 'Bagian wajah yang berbentuk dua lingkaran bulat adalah...',
+              options: ['Dua bola mata 👀', 'Bentuk hidung', 'Garis senyum bibir', 'Bentuk alis'],
+              answer: 'Dua bola mata 👀',
+              hint: 'Mata kita bulat untuk melihat'
+            },
+            {
+              subject: 'PJOK',
+              icon: '🏃',
+              q: 'Gerakan berpindah tempat dengan melangkahkan kaki secara cepat bergantian disebut...',
+              options: ['Berlari 🏃', 'Duduk manis', 'Tidur terlentang', 'Berdiri tegak'],
+              answer: 'Berlari 🏃',
+              hint: 'Langkah kaki lebih cepat dari jalan santai'
+            }
+          ]
+        },
+        {
+          id: 'unit-2-kegemaranku',
+          name: 'Unit 2: Kegemaranku',
+          nameEn: 'Unit 2: My Hobbies & Passions',
+          theme: 'Olahraga, Menggambar, Menari, Menyanyi, dan Gemar Membaca',
+          icon: '🎨',
+          color: '#16a34a',
+          badge: 'Tema 2 · Kurikulum Merdeka',
+          sourceStatus: 'reconstructed',
+          subjects: [
+            {
+              subject: 'Bahasa Indonesia',
+              icon: '📖',
+              q: 'Siti gemar membaca buku cerita. Tempat di sekolah yang menyediakan banyak buku adalah...',
+              options: ['Perpustakaan 📚', 'Kantin sekolah', 'Lapangan basket', 'Tempat parkir'],
+              answer: 'Perpustakaan 📚',
+              hint: 'Ruang membaca yang hening dan nyaman'
+            },
+            {
+              subject: 'Matematika',
+              icon: '🧮',
+              q: 'Edo membawa 6 bola tenis, Udin membawa 4 bola tenis. Jumlah seluruh bola adalah...',
+              options: ['10 bola', '9 bola', '11 bola', '8 bola'],
+              answer: '10 bola',
+              hint: '6 + 4 = 10'
+            },
+            {
+              subject: 'Pancasila',
+              icon: '🦅',
+              q: 'Lani gemar menari Bali, sedangkan Dayu gemar menggambar. Sikap mereka seharusnya...',
+              options: ['Saling mendukung dan menghargai kegemaran teman', 'Memaksa teman agar ikut hobinya', 'Merasa hobinya paling hebat', 'Tidak mau berteman'],
+              answer: 'Saling mendukung dan menghargai kegemaran teman',
+              hint: 'Menghargai keragaman bakat teman'
+            },
+            {
+              subject: 'Seni Rupa',
+              icon: '🎨',
+              q: 'Campuran warna cat Kuning dan Biru akan menghasilkan warna baru yaitu...',
+              options: ['Hijau 🟢', 'Ungu 🟣', 'Oranye 🟠', 'Cokelat 🟤'],
+              answer: 'Hijau 🟢',
+              hint: 'Warna daun pohon di taman'
+            },
+            {
+              subject: 'PJOK',
+              icon: '⚽',
+              q: 'Sebelum memulai olahraga berlari atau bermain bola, kita wajib melakukan gerakan...',
+              options: ['Pemanasan dan peregangan tubuh', 'Makan makanan yang banyak', 'Tidur di pinggir lapangan', 'Minum es manis berlebihan'],
+              answer: 'Pemanasan dan peregangan tubuh',
+              hint: 'Mencegah cedera otot'
+            }
+          ]
+        },
+        {
+          id: 'unit-3-kegiatanku',
+          name: 'Unit 3: Kegiatanku',
+          nameEn: 'Unit 3: My Daily Activities',
+          theme: 'Aktivitas Pagi Hari, Tertib di Sekolah, Sore Ceria, dan Malam Tenang',
+          icon: '⏰',
+          color: '#f59e0b',
+          badge: 'Tema 3 · Kurikulum Merdeka',
+          sourceStatus: 'reconstructed',
+          subjects: [
+            {
+              subject: 'Bahasa Indonesia',
+              icon: '📖',
+              q: 'Benda langit yang terbit di ufuk timur dan menandakan datangnya pagi hari adalah...',
+              options: ['Matahari ☀️', 'Bulan purnama 🌕', 'Bintang jatuh ⭐', 'Awan petir ⚡'],
+              answer: 'Matahari ☀️',
+              hint: 'Bersinar hangat di pagi hari'
+            },
+            {
+              subject: 'Pendidikan Pancasila',
+              icon: '🦅',
+              q: 'Aturan yang baik setelah bangun tidur di pagi hari adalah...',
+              options: ['Merapikan tempat tidur sendiri', 'Membiarkan selimut berserakan', 'Langsung bermain game di HP', 'Menangis berteriak'],
+              answer: 'Merapikan tempat tidur sendiri',
+              hint: 'Melatih hidup mandiri dan rapi'
+            },
+            {
+              subject: 'Matematika',
+              icon: '🧮',
+              q: 'Jarum jam panjang menunjuk angka 12, jarum pendek menunjuk angka 7. Maka saat itu pukul...',
+              options: ['Pukul 07.00', 'Pukul 12.00', 'Pukul 05.00', 'Pukul 01.00'],
+              answer: 'Pukul 07.00',
+              hint: 'Waktu bel masuk sekolah berbunyi'
+            },
+            {
+              subject: 'PJOK',
+              icon: '🚶',
+              q: 'Saat berbaris upacara bendera di hari Senin, sikap tubuh yang benar adalah...',
+              options: ['Berdiri tegak, pandangan lurus ke depan', 'Duduk santai di tanah', 'Berbincang dengan teman sebelah', 'Menggoyang-goyangkan tangan'],
+              answer: 'Berdiri tegak, pandangan lurus ke depan',
+              hint: 'Sikap siap sempurna dan khidmat'
+            }
+          ]
+        },
+        {
+          id: 'unit-4-keluargaku',
+          name: 'Unit 4: Keluargaku',
+          nameEn: 'Unit 4: My Loving Family',
+          theme: 'Keluarga Inti, Silsilah Kasih Sayang, Kerja Sama, dan Kebersamaan',
+          icon: '👨‍👩‍👧‍👦',
+          color: '#dc2626',
+          badge: 'Tema 4 · Kurikulum Merdeka',
+          sourceStatus: 'reconstructed',
+          subjects: [
+            {
+              subject: 'Pendidikan Pancasila',
+              icon: '🦅',
+              q: 'Keluarga inti di rumah biasanya terdiri dari...',
+              options: ['Ayah, Ibu, dan Anak', 'Guru dan Kepala Sekolah', 'Dokter dan Perawat', 'Sopir dan Penumpang'],
+              answer: 'Ayah, Ibu, dan Anak',
+              hint: 'Orang tua dan anak-anak tercinta'
+            },
+            {
+              subject: 'Bahasa Indonesia',
+              icon: '📖',
+              q: 'Panggilan hormat untuk orang tua perempuan yang melahirkan dan merawat kita adalah...',
+              options: ['Ibu atau Mama 👩', 'Kakak', 'Bibi', 'Adik'],
+              answer: 'Ibu atau Mama 👩',
+              hint: 'Sosok penuh kasih sayang'
+            },
+            {
+              subject: 'Matematika',
+              icon: '🧮',
+              q: 'Di meja makan ada 4 piring untuk keluarga. Ibu menambah 2 piring untuk kakek dan nenek. Total piring sekarang adalah...',
+              options: ['6 piring', '5 piring', '7 piring', '8 piring'],
+              answer: '6 piring',
+              hint: '4 + 2 = 6 piring'
+            },
+            {
+              subject: 'Seni Rupa',
+              icon: '🎨',
+              q: 'Bingkai foto keluarga yang memiliki 4 sisi sama panjang berbentuk bangun...',
+              options: ['Persegi (Kotak) ⏹️', 'Lingkaran ⏺️', 'Segitiga 🔺', 'Bintang ⭐'],
+              answer: 'Persegi (Kotak) ⏹️',
+              hint: 'Empat sudut siku-siku sama panjang'
+            }
+          ]
+        }
+      ]
+    }
+  };
+  
+
   // --- Source: js/data/globe-paths.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -9992,6 +10586,224 @@
   
   
 
+  // --- Source: js/engine/interactive-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Interactive Question & Word Engine
+  // Development · Anabhi Dev
+  // Version   : 1.0 (Master Blueprint Implementation)
+  // Generated : 14 September 2026, 23:28:00
+  // ================================================================
+  
+  
+  
+  
+  
+  class InteractiveEngine {
+    /**
+     * Render Syllable Cards (Kartu Suku Kata Bersuara)
+     * Anak bisa klik kartu untuk mendengar pelafalan fonik langsung (Audio TTS).
+     */
+    static renderSyllableCards(container, syllables = [], onCardClick = null) {
+      if (!container) return;
+  
+      container.innerHTML = `
+        <div class="syllable-card-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:12px; margin:16px 0;">
+          ${syllables.map(syl => `
+            <button class="syllable-card-btn" data-syllable="${syl}" type="button" style="
+              background:var(--card);
+              border:2px solid var(--line);
+              border-radius:14px;
+              padding:14px 8px;
+              font-size:22px;
+              font-weight:900;
+              color:var(--ink);
+              cursor:pointer;
+              transition:all 0.18s ease;
+              box-shadow:0 4px 10px rgba(0,0,0,0.04);
+              display:flex;
+              flex-direction:column;
+              align-items:center;
+              gap:4px;
+            ">
+              <span>${syl.toUpperCase()}</span>
+              <span style="font-size:10px; color:var(--muted); font-weight:700;">🔊 Dengar</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+  
+      const btns = container.querySelectorAll('.syllable-card-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const syl = btn.getAttribute('data-syllable');
+          if (!syl) return;
+  
+          // Efek visual tekan
+          btn.style.transform = 'scale(0.92)';
+          btn.style.borderColor = 'var(--teal)';
+          btn.style.background = 'var(--teal-soft)';
+          setTimeout(() => {
+            btn.style.transform = 'none';
+          }, 180);
+  
+          // Suara pelafalan
+          TtsEngine.speak(syl, 'id', 0.85);
+  
+          if (typeof onCardClick === 'function') {
+            onCardClick(syl);
+          }
+        });
+      });
+    }
+  
+    /**
+     * Render Word Builder (Penyusun Kata Suku Kata Interaktif)
+     * Contoh: Anak memilih [MA] + [TA] -> MATA!
+     */
+    static renderWordBuilder(container, targetWord, parts = [], emoji = '🌟', onComplete = null) {
+      if (!container) return;
+  
+      let selectedParts = [];
+      // Acak suku kata agar anak memilih urutan yang benar
+      const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
+  
+      function updateView() {
+        const isFull = selectedParts.length === parts.length;
+        const assembledWord = selectedParts.join('').toUpperCase();
+        const isCorrect = assembledWord === targetWord.toUpperCase();
+  
+        container.innerHTML = `
+          <div class="word-builder-box" style="background:var(--card); border:2px dashed var(--line); border-radius:20px; padding:22px; text-align:center; margin:16px 0;">
+            <div style="font-size:48px; margin-bottom:10px;">${emoji}</div>
+            <div style="font-size:14px; font-weight:700; color:var(--muted); margin-bottom:14px;">
+              Susun suku kata untuk membentuk kata: <strong style="color:var(--ink); font-size:18px;">${targetWord.toUpperCase()}</strong>
+            </div>
+  
+            <!-- Slot Hasil Rakitan -->
+            <div style="display:flex; justify-content:center; gap:10px; min-height:58px; margin-bottom:18px; align-items:center;">
+              ${parts.map((p, idx) => {
+                const currentVal = selectedParts[idx] || '';
+                return `
+                  <div style="
+                    min-width:64px;
+                    height:52px;
+                    border:2.5px solid ${currentVal ? 'var(--teal)' : 'var(--line)'};
+                    background:${currentVal ? 'var(--teal-soft)' : 'var(--paper)'};
+                    color:${currentVal ? 'var(--teal-soft-ink)' : 'transparent'};
+                    border-radius:12px;
+                    display:grid;
+                    place-items:center;
+                    font-size:22px;
+                    font-weight:900;
+                    transition:all 0.2s ease;
+                  ">
+                    ${currentVal.toUpperCase()}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+  
+            <!-- Pilihan Suku Kata Tersedia -->
+            <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+              ${shuffledParts.map((syl, i) => {
+                const alreadyUsed = selectedParts.includes(syl);
+                return `
+                  <button class="btn-part-choice" data-syl="${syl}" type="button" ${alreadyUsed ? 'disabled' : ''} style="
+                    font-size:20px;
+                    font-weight:900;
+                    padding:10px 22px;
+                    border-radius:14px;
+                    border:2px solid var(--line);
+                    background:${alreadyUsed ? 'var(--line)' : 'var(--card)'};
+                    color:${alreadyUsed ? 'var(--muted)' : 'var(--ink)'};
+                    cursor:${alreadyUsed ? 'default' : 'pointer'};
+                    box-shadow:${alreadyUsed ? 'none' : '0 4px 10px rgba(0,0,0,0.06)'};
+                    transition:all 0.15s ease;
+                  ">
+                    ${syl.toUpperCase()}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+  
+            <!-- Umpan Balik / Tombol Reset -->
+            <div style="min-height:36px; display:flex; justify-content:center; align-items:center; gap:12px;">
+              ${isFull ? (
+                isCorrect ? `
+                  <span style="font-size:16px; font-weight:800; color:var(--green);">
+                    🎉 Mantap! Kata "${targetWord.toUpperCase()}" berhasil dirangkai!
+                  </span>
+                ` : `
+                  <span style="font-size:14px; font-weight:700; color:var(--red);">
+                    Belum pas 😊, yuk coba lagi!
+                  </span>
+                  <button class="btn btn-reset-builder" type="button" style="font-size:12px; padding:4px 12px;">Ulangi ↺</button>
+                `
+              ) : `
+                <button class="btn btn-reset-builder" type="button" style="font-size:12px; padding:4px 12px; opacity:0.8;">Hapus Semua ↺</button>
+              `}
+            </div>
+          </div>
+        `;
+  
+        // Event listener tombol pilihan
+        const partBtns = container.querySelectorAll('.btn-part-choice:not([disabled])');
+        partBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const syl = btn.getAttribute('data-syl');
+            if (syl && selectedParts.length < parts.length) {
+              selectedParts.push(syl);
+              AudioFx.playTap();
+              TtsEngine.speak(syl, 'id', 0.85);
+              updateView();
+  
+              if (selectedParts.length === parts.length) {
+                const finalWord = selectedParts.join('').toUpperCase();
+                if (finalWord === targetWord.toUpperCase()) {
+                  AudioFx.playCelebration();
+                  store.addStar();
+                  setTimeout(() => {
+                    TtsEngine.speak(targetWord, 'id', 0.85);
+                    if (typeof onComplete === 'function') onComplete(targetWord);
+                  }, 400);
+                } else {
+                  AudioFx.playError();
+                }
+              }
+            }
+          });
+        });
+  
+        // Tombol reset
+        const resetBtn = container.querySelector('.btn-reset-builder');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', () => {
+            selectedParts = [];
+            AudioFx.playTap();
+            updateView();
+          });
+        }
+      }
+  
+      updateView();
+    }
+  
+    /**
+     * Helper Umpan Balik Ceria Anak Indonesia
+     */
+    static getFeedbackMessage(isCorrect) {
+      if (isCorrect) {
+        const msgs = ['Mantap! 🎉', 'Yes! Benar!', 'Keren!', 'Hebat Sekali! ⭐', 'Pintar Banget! 🌟'];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+      } else {
+        const msgs = ['Belum pas 😊', 'Coba lihat lagi ya.', 'Hampir! Yuk coba sekali lagi.', 'Semangat! Bisa kok! 💪'];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+      }
+    }
+  }
+  
+
   // --- Source: js/components/lks-modal.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -11753,8 +12565,8 @@
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Collapsible Sidebar & Mobile Drawer
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 11:08:00
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:52:00
   // ================================================================
   
   
@@ -11845,16 +12657,32 @@
           }).join('')}
         </nav>
   
-        <!-- Modul Buku Pendamping Siswa (SRC-05 Calistung & SRC-10 MAXXI) -->
-        <div class="kicker">${t('companionBooksKicker', lang)}</div>
-        <nav class="nav" aria-label="Buku Pendamping">
-          <button class="nav-item ${state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="cali-stung" data-tooltip="${t('bookCaliStung', lang)}">
+        <!-- Learning Labs (Reading Lab, Writing Lab, Calistung, 60 Menit, MAXXI, Math Toolbox) -->
+        <div class="kicker">${isEn ? 'LEARNING LABS & DRILLS' : 'LEARNING LABS & BUKU PENDAMPING'}</div>
+        <nav class="nav" aria-label="Learning Labs">
+          <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}">
             <span class="icon">📖</span>
-            <span class="label">${t('bookCaliStung', lang)}</span>
+            <span class="label">Reading Lab (60 Jam)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${t('bookMaxxi', lang)}">
+          <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
+            <span class="icon">⚡</span>
+            <span class="label">Calistung (Drill 5-15m)</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
+            <span class="icon">🕒</span>
+            <span class="label">60 Menit (4 Pilar)</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku Maxi (Tematik Sekolah)'}">
             <span class="icon">🏆</span>
-            <span class="label">${t('bookMaxxi', lang)}</span>
+            <span class="label">Buku Maxi (Tematik)</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (10 Strategies)' : 'Math Toolbox (10 Jurus Berhitung)'}">
+            <span class="icon">🧮</span>
+            <span class="label">Math Toolbox (10 Jurus)</span>
+          </button>
+          <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
+            <span class="icon">✍️</span>
+            <span class="label">Writing Lab</span>
           </button>
         </nav>
   
@@ -16523,14 +17351,1558 @@
   
   
 
+  // --- Source: js/components/reading-lab.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Reading Lab Component (Reading Acceleration Engine)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:35:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  class ReadingLabComponent {
+    constructor(container) {
+      this.container = container;
+      this.activeLevelId = 'read-lvl-1'; // Default ke Level 1 (Vokal A)
+      this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, READ, WRITE, QUIZ
+      this.levels = CONTENT_REGISTRY.reading || [];
+    }
+  
+    render(levelId = null) {
+      if (levelId) this.activeLevelId = levelId;
+      const currentLevel = this.levels.find(lvl => lvl.id === this.activeLevelId) || this.levels[1];
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+  
+      this.container.innerHTML = `
+        <div class="reading-lab-wrap">
+          <!-- Header Banner Reading Lab -->
+          <div class="book-hero-banner" style="
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(6, 182, 212, 0.12));
+            border: 1.5px solid rgba(6, 182, 212, 0.35);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+          ">
+            <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Jam Pintar Baca Tanpa Dieja" style="
+                width: 120px;
+                height: 168px;
+                object-fit: cover;
+                border-radius: 12px;
+                box-shadow: 0 10px 24px rgba(6, 182, 212, 0.28);
+                border: 2px solid #fff;
+              ">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#0891b2; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+                SRC-14
+              </span>
+            </div>
+  
+            <div style="flex:1; min-width:260px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                <span class="subject-badge" style="background:#0891b2; color:#fff; border:none; font-weight:800;">
+                  📖 Reading Acceleration Engine
+                </span>
+                <span class="subject-badge" style="background:rgba(8,145,178,0.12); color:#0891b2; border-color:rgba(8,145,178,0.3); font-weight:700;">
+                  Metode 60 Jam Baca Tanpa Dieja · 10 Menit Setiap Belajar
+                </span>
+              </div>
+              <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+                ${isEn ? 'Reading Lab — Learn to Read Without Spelling' : 'Reading Lab — Pintar Membaca Tanpa Mengeja'}
+              </h1>
+              <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+                ${isEn
+                  ? 'Target: recognize whole word sound units directly (IBU, not I-B-U). Structured across 12 levels.'
+                  : 'Prinsip: Mengenali unit bunyi suku kata & kata secara langsung (I-BU, bukan I-B-U). Disusun bertahap dalam 12 level percepatan membaca.'}
+              </p>
+              <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
+                <span>🎯 Level Aktif:</span>
+                <strong style="color:#0891b2;">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Peta 12 Level Progression (Horizontal Scroll Bar) -->
+          <div style="margin-bottom:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:13px; font-weight:800; color:var(--ink); text-transform:uppercase; letter-spacing:0.5px;">
+                🗺️ Peta 12 Level Membaca Cepat
+              </span>
+              <span style="font-size:12px; color:var(--muted);">Geser untuk memilih level ➔</span>
+            </div>
+            <div class="custom-scroll" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;">
+              ${this.levels.map(lvl => {
+                const isSelected = lvl.id === currentLevel.id;
+                return `
+                  <button class="btn-select-level" data-level-id="${lvl.id}" type="button" style="
+                    flex: 0 0 auto;
+                    min-width: 140px;
+                    background: ${isSelected ? '#0891b2' : 'var(--card)'};
+                    color: ${isSelected ? '#ffffff' : 'var(--ink)'};
+                    border: 1.5px solid ${isSelected ? '#0891b2' : 'var(--line)'};
+                    border-radius: 14px;
+                    padding: 10px 14px;
+                    text-align: left;
+                    cursor: pointer;
+                    box-shadow: ${isSelected ? '0 6px 16px rgba(8,145,178,0.3)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                    transition: all 0.2s ease;
+                  ">
+                    <div style="font-size:11px; font-weight:800; opacity:${isSelected ? '0.9' : '0.6'}; margin-bottom:2px;">
+                      LEVEL ${lvl.level}
+                    </div>
+                    <div style="font-size:13px; font-weight:800; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                      ${lvl.title}
+                    </div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+  
+          <!-- 8-Step Pedagogical Learning Flow Pill Bar -->
+          <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:24px;">
+            <div style="font-size:12px; font-weight:800; color:var(--muted); margin-bottom:8px; text-transform:uppercase;">
+              Alur Pedagogis: SEE ➔ LISTEN ➔ SAY ➔ MATCH ➔ READ ➔ WRITE ➔ QUIZ ➔ MASTERED
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn ${this.currentStep === 'SEE' ? 'primary' : ''} btn-step" data-step="SEE" type="button" style="font-size:12px; padding:6px 14px;">
+                👁️ 1. Lihat (SEE)
+              </button>
+              <button class="btn ${this.currentStep === 'LISTEN' ? 'primary' : ''} btn-step" data-step="LISTEN" type="button" style="font-size:12px; padding:6px 14px;">
+                🔊 2. Dengar (LISTEN)
+              </button>
+              <button class="btn ${this.currentStep === 'WORD_BUILD' ? 'primary' : ''} btn-step" data-step="WORD_BUILD" type="button" style="font-size:12px; padding:6px 14px;">
+                🧩 3. Rakit Kata (MATCH)
+              </button>
+              <button class="btn ${this.currentStep === 'QUIZ' ? 'primary' : ''} btn-step" data-step="QUIZ" type="button" style="font-size:12px; padding:6px 14px;">
+                ⭐ 4. Kuis Latihan
+              </button>
+            </div>
+          </div>
+  
+          <!-- Konten Interaktif Sesuai Step Aktif -->
+          <div id="readingStepContainer" style="margin-bottom:30px;"></div>
+        </div>
+      `;
+  
+      this.attachEvents(currentLevel);
+      this.renderCurrentStep(currentLevel);
+    }
+  
+    attachEvents(currentLevel) {
+      // Navigasi Level
+      const levelBtns = this.container.querySelectorAll('.btn-select-level');
+      levelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-level-id');
+          if (id) {
+            AudioFx.playTap();
+            this.activeLevelId = id;
+            this.currentStep = 'SEE';
+            this.render();
+          }
+        });
+      });
+  
+      // Navigasi Step
+      const stepBtns = this.container.querySelectorAll('.btn-step');
+      stepBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const step = btn.getAttribute('data-step');
+          if (step) {
+            AudioFx.playTap();
+            this.currentStep = step;
+            this.render();
+          }
+        });
+      });
+    }
+  
+    renderCurrentStep(level) {
+      const wrap = this.container.querySelector('#readingStepContainer');
+      if (!wrap) return;
+  
+      if (this.currentStep === 'SEE' || this.currentStep === 'LISTEN') {
+        // Step 1 & 2: Kartu Suku Kata Bersuara
+        wrap.innerHTML = `
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">
+                ${this.currentStep === 'SEE' ? '👁️ Kenali & Perhatikan Bunyi Suku Kata' : '🔊 Dengarkan Pelafalan Fonik'}
+              </h3>
+              <button class="btn btn-tts" id="btnPlayAllPhonics" type="button" style="font-size:12px; padding:6px 12px;">
+                🔊 Bunyikan Semua
+              </button>
+            </div>
+            <p style="font-size:13.5px; color:var(--muted); line-height:1.5; margin:0 0 16px;">
+              Klik kartu suku kata di bawah ini untuk mendengarkan bunyinya langsung tanpa mengeja huruf satu per satu:
+            </p>
+  
+            <div id="syllablesGrid"></div>
+  
+            ${level.sampleWords ? `
+              <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--line);">
+                <h4 style="margin:0 0 12px; font-size:15px; font-weight:800; color:var(--ink);">
+                  Contoh Kata Bermakna:
+                </h4>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:12px;">
+                  ${level.sampleWords.map(w => `
+                    <div class="word-card-clickable" data-word="${w.word}" style="
+                      background:var(--paper);
+                      border:1.5px solid var(--line);
+                      border-radius:14px;
+                      padding:12px;
+                      text-align:center;
+                      cursor:pointer;
+                      transition:all 0.2s ease;
+                    ">
+                      <div style="font-size:32px; margin-bottom:4px;">${w.emoji || '🌟'}</div>
+                      <strong style="display:block; font-size:16px; color:var(--ink);">${w.word}</strong>
+                      <span style="font-size:11px; color:var(--muted);">${w.hint || ''}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+  
+            <div style="margin-top:24px; display:flex; justify-content:flex-end;">
+              <button class="btn primary" id="btnGoToWordBuilder" type="button" style="font-size:13.5px; font-weight:800; padding:10px 20px;">
+                Lanjut ke Rakit Kata (MATCH) ➔
+              </button>
+            </div>
+          </div>
+        `;
+  
+        const sylContainer = wrap.querySelector('#syllablesGrid');
+        const syllablesToRender = level.syllables || level.vocabulary || ['ba', 'ca', 'da', 'ma', 'sa', 'ta'];
+        InteractiveEngine.renderSyllableCards(sylContainer, syllablesToRender);
+  
+        // Klik contoh kata untuk bersuara
+        const wordCards = wrap.querySelectorAll('.word-card-clickable');
+        wordCards.forEach(c => {
+          c.addEventListener('click', () => {
+            const w = c.getAttribute('data-word');
+            if (w) {
+              AudioFx.playTap();
+              TtsEngine.speak(w, 'id', 0.85);
+            }
+          });
+        });
+  
+        const playAllBtn = wrap.querySelector('#btnPlayAllPhonics');
+        if (playAllBtn) {
+          playAllBtn.addEventListener('click', () => {
+            const text = syllablesToRender.join(', ');
+            TtsEngine.speak(text, 'id', 0.8);
+          });
+        }
+  
+        const nextBtn = wrap.querySelector('#btnGoToWordBuilder');
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => {
+            this.currentStep = 'WORD_BUILD';
+            this.render();
+          });
+        }
+      } else if (this.currentStep === 'WORD_BUILD') {
+        // Step 3: Interactive Word Builder
+        const sample = (level.sampleWords && level.sampleWords[0]) || { word: 'MATA', parts: ['ma', 'ta'], emoji: '👀' };
+        wrap.innerHTML = `
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">
+                🧩 Word Builder — Rakit Suku Kata Menjadi Kata
+              </h3>
+              <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink);">
+                Metode Kata Utuh
+              </span>
+            </div>
+            <p style="font-size:13.5px; color:var(--muted); line-height:1.5; margin:0 0 16px;">
+              Pilih potongan suku kata secara berurutan untuk merangkai kata yang tepat:
+            </p>
+  
+            <div id="wordBuilderTarget"></div>
+  
+            <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn" id="btnBackToSee" type="button">← Kembali ke Kartu</button>
+              <button class="btn primary" id="btnGoToQuiz" type="button" style="font-weight:800;">
+                Lanjut ke Kuis Latihan ⭐ ➔
+              </button>
+            </div>
+          </div>
+        `;
+  
+        const builderTarget = wrap.querySelector('#wordBuilderTarget');
+        InteractiveEngine.renderWordBuilder(builderTarget, sample.word, sample.parts, sample.emoji, () => {
+          store.incrementDailyChallenge();
+        });
+  
+        wrap.querySelector('#btnBackToSee')?.addEventListener('click', () => {
+          this.currentStep = 'SEE';
+          this.render();
+        });
+        wrap.querySelector('#btnGoToQuiz')?.addEventListener('click', () => {
+          this.currentStep = 'QUIZ';
+          this.render();
+        });
+      } else if (this.currentStep === 'QUIZ') {
+        // Step 4: Mini Quiz Level Ini
+        wrap.innerHTML = `
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">
+                ⭐ Kuis Cepat: ${level.title}
+              </h3>
+              <span class="subject-badge" style="background:#fef3c7; color:#b45309;">
+                3 Latihan Interaktif
+              </span>
+            </div>
+  
+            <div id="readingQuizContainer">
+              <div class="reading-question-card" style="margin-bottom:20px;">
+                <p style="font-size:16px; font-weight:800; color:var(--ink); margin-bottom:12px;">
+                  1. Manakah kata yang dibentuk dari suku kata "MA" + "TA"?
+                </p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px;">
+                  <button class="btn quiz-opt" data-ans="correct" type="button" style="padding:12px; font-size:16px; font-weight:800;">
+                    👀 MATA
+                  </button>
+                  <button class="btn quiz-opt" data-ans="wrong" type="button" style="padding:12px; font-size:16px; font-weight:800;">
+                    🧱 BATA
+                  </button>
+                  <button class="btn quiz-opt" data-ans="wrong" type="button" style="padding:12px; font-size:16px; font-weight:800;">
+                    🧢 TOPI
+                  </button>
+                </div>
+              </div>
+  
+              <div class="feedback-banner" id="quizFeedback" style="display:none; margin-top:16px;"></div>
+            </div>
+  
+            <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn" id="btnBackToBuilder" type="button">← Kembali ke Builder</button>
+              <button class="btn primary" id="btnCompleteLevel" type="button" style="background:var(--green); border-color:var(--green); font-weight:800;">
+                🎉 Selesaikan Level & Klaim Bintang!
+              </button>
+            </div>
+          </div>
+        `;
+  
+        const opts = wrap.querySelectorAll('.quiz-opt');
+        const feedback = wrap.querySelector('#quizFeedback');
+  
+        opts.forEach(opt => {
+          opt.addEventListener('click', () => {
+            const isCorrect = opt.getAttribute('data-ans') === 'correct';
+            if (feedback) {
+              feedback.style.display = 'flex';
+              if (isCorrect) {
+                feedback.className = 'feedback-banner success show';
+                feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(true)}</strong> Pilihanmu tepat sekali!`;
+                AudioFx.playCorrect();
+                opt.style.background = 'var(--green)';
+                opt.style.color = '#fff';
+              } else {
+                feedback.className = 'feedback-banner error show';
+                feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(false)}</strong> Coba baca sekali lagi ya.`;
+                AudioFx.playError();
+              }
+            }
+          });
+        });
+  
+        wrap.querySelector('#btnBackToBuilder')?.addEventListener('click', () => {
+          this.currentStep = 'WORD_BUILD';
+          this.render();
+        });
+  
+        wrap.querySelector('#btnCompleteLevel')?.addEventListener('click', () => {
+          AudioFx.playCelebration();
+          store.addStar(5);
+          store.incrementDailyChallenge();
+          alert('Selamat! Kamu berhasil menuntaskan level ini dan mendapatkan 5 Bintang Juara! ⭐⭐⭐⭐⭐');
+        });
+      }
+    }
+  }
+  
+
+  // --- Source: js/components/calistung-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Calistung Engine (Daily Drill 5/10/15 Min)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:38:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  class CalistungEngineComponent {
+    constructor(container) {
+      this.container = container;
+      this.activeMode = '5min'; // 5min, 10min, 15min
+      this.activePillar = 'reading'; // reading, writing, counting
+      this.currentTaskIdx = 0;
+    }
+  
+    render() {
+      const data = CONTENT_REGISTRY.calistung;
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const currentPillarData = data.pillars.find(p => p.id === this.activePillar) || data.pillars[0];
+      const tasks = currentPillarData.tasks || [];
+      const currentTask = tasks[this.currentTaskIdx] || tasks[0];
+  
+      this.container.innerHTML = `
+        <div class="calistung-engine-wrap">
+          <!-- Hero Banner Calistung -->
+          <div class="book-hero-banner" style="
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.08), rgba(245, 158, 11, 0.12));
+            border: 1.5px solid rgba(234, 88, 12, 0.35);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+          ">
+            <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung Permata" style="
+                width: 120px;
+                height: 168px;
+                object-fit: cover;
+                border-radius: 12px;
+                box-shadow: 0 10px 24px rgba(234, 88, 12, 0.28);
+                border: 2px solid #fff;
+              ">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+                SRC-05
+              </span>
+            </div>
+  
+            <div style="flex:1; min-width:260px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                <span class="subject-badge" style="background:#ea580c; color:#fff; border:none; font-weight:800;">
+                  ⚡ Daily Drill Engine
+                </span>
+                <span class="subject-badge" style="background:rgba(234,88,12,0.12); color:#ea580c; border-color:rgba(234,88,12,0.3); font-weight:700;">
+                  Permata · Membaca, Menulis, Berhitung
+                </span>
+              </div>
+              <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+                ${isEn ? 'Calistung Daily Practice — 5, 10, or 15 Minutes' : 'Calistung — Latihan Cepat 5, 10, atau 15 Menit'}
+              </h1>
+              <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+                ${isEn
+                  ? 'Daily literacy and numeracy routine: 5 min Reading + 5 min Writing + 5 min Math.'
+                  : 'Latihan rutin harian penguatan fondasi: Membaca fonik, Menulis ejaan, dan Berhitung ceria.'}
+              </p>
+  
+              <!-- Mode Selector: 5 min, 10 min, 15 min -->
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                ${data.modes.map(m => `
+                  <button class="btn btn-cali-mode ${this.activeMode === m.id ? 'primary' : ''}" data-mode="${m.id}" type="button" style="font-size:12.5px; font-weight:800; padding:8px 16px; border-radius:10px;">
+                    ${m.badge} (${m.durationMin} Menit)
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+  
+          <!-- 3 Pilar Calistung Tabs -->
+          <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+            ${data.pillars.map(pil => `
+              <button class="btn btn-cali-pillar ${this.activePillar === pil.id ? 'primary' : ''}" data-pillar="${pil.id}" type="button" style="
+                font-size:14px;
+                font-weight:800;
+                padding:10px 20px;
+                border-radius:12px;
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+              ">
+                <span>${pil.icon}</span>
+                <span>${isEn ? pil.titleEn : pil.title}</span>
+              </button>
+            `).join('')}
+          </div>
+  
+          <!-- Task Card Interaktif -->
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-left:4px solid ${currentPillarData.color};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div style="font-size:13px; font-weight:800; color:${currentPillarData.color};">
+                Soal ${this.currentTaskIdx + 1} dari ${tasks.length} · ${currentPillarData.title}
+              </div>
+              <button class="btn btn-tts" id="btnSpeakCalistungTask" type="button" style="font-size:12px; padding:6px 12px;">
+                🔊 Bacakan Soal
+              </button>
+            </div>
+  
+            <h3 style="margin:0 0 16px; font-size:18px; font-weight:800; color:var(--ink); line-height:1.5;">
+              ${currentTask.q}
+            </h3>
+  
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
+              ${currentTask.options.map(opt => `
+                <button class="btn btn-cali-opt" data-opt="${opt}" type="button" style="
+                  padding: 14px 18px;
+                  font-size: 15px;
+                  font-weight: 800;
+                  text-align: left;
+                  border-radius: 12px;
+                  border: 1.5px solid var(--line);
+                  background: var(--paper);
+                  color: var(--ink);
+                  transition: all 0.18s ease;
+                ">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+  
+            <div class="feedback-banner" id="caliFeedback" style="display:none; margin-bottom:18px;"></div>
+  
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; color:var(--muted);">
+                💡 Petunjuk: ${currentTask.hint || 'Pikirkan baik-baik ya!'}
+              </span>
+              <button class="btn primary" id="btnNextCaliTask" type="button" style="font-weight:800; padding:8px 18px;">
+                ${this.currentTaskIdx < tasks.length - 1 ? 'Soal Berikutnya ➔' : 'Selesai & Buka Pilar Lain ➔'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents(currentTask, tasks);
+    }
+  
+    attachEvents(currentTask, tasks) {
+      // Mode switcher
+      const modeBtns = this.container.querySelectorAll('.btn-cali-mode');
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activeMode = btn.getAttribute('data-mode') || '5min';
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // Pillar switcher
+      const pillarBtns = this.container.querySelectorAll('.btn-cali-pillar');
+      pillarBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activePillar = btn.getAttribute('data-pillar') || 'reading';
+          this.currentTaskIdx = 0;
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // TTS speak question
+      this.container.querySelector('#btnSpeakCalistungTask')?.addEventListener('click', () => {
+        TtsEngine.speak(currentTask.q, 'id', 0.85);
+      });
+  
+      // Option click
+      const optBtns = this.container.querySelectorAll('.btn-cali-opt');
+      const feedback = this.container.querySelector('#caliFeedback');
+  
+      optBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-opt');
+          const isCorrect = selected === currentTask.answer;
+  
+          if (feedback) {
+            feedback.style.display = 'flex';
+            if (isCorrect) {
+              feedback.className = 'feedback-banner success show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(true)}</strong> Jawabanmu tepat!`;
+              AudioFx.playCorrect();
+              btn.style.background = 'var(--green)';
+              btn.style.color = '#fff';
+              store.addStar();
+            } else {
+              feedback.className = 'feedback-banner error show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(false)}</strong> Jawaban yang tepat adalah: <strong>${currentTask.answer}</strong>`;
+              AudioFx.playError();
+            }
+          }
+        });
+      });
+  
+      // Next task
+      this.container.querySelector('#btnNextCaliTask')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        if (this.currentTaskIdx < tasks.length - 1) {
+          this.currentTaskIdx++;
+          this.render();
+        } else {
+          AudioFx.playCelebration();
+          store.incrementDailyChallenge();
+          alert('🎉 Hebat! Kamu sudah menyelesaikan semua latihan pilar ini!');
+          // Pindah otomatis ke pilar berikutnya
+          if (this.activePillar === 'reading') this.activePillar = 'writing';
+          else if (this.activePillar === 'writing') this.activePillar = 'counting';
+          else this.activePillar = 'reading';
+          this.currentTaskIdx = 0;
+          this.render();
+        }
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/sixty-min-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · 60 Menit Engine (4-Pillar Multi-Skill Starter)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:42:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  class SixtyMinEngineComponent {
+    constructor(container) {
+      this.container = container;
+      this.activePillarId = 'read'; // read, write, count, english
+      this.currentDrillIdx = 0;
+    }
+  
+    render() {
+      const data = CONTENT_REGISTRY.sixtyMin;
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const currentPillar = data.pillars.find(p => p.id === this.activePillarId) || data.pillars[0];
+      const drills = currentPillar.drills || [];
+      const currentDrill = drills[this.currentDrillIdx] || drills[0];
+  
+      this.container.innerHTML = `
+        <div class="sixty-min-wrap">
+          <!-- Hero Banner 60 Menit -->
+          <div class="book-hero-banner" style="
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0.08), rgba(37, 99, 235, 0.1));
+            border: 1.5px solid rgba(22, 163, 74, 0.35);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+          ">
+            <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Menit Lancar Membaca Menulis Berhitung dan BHS Inggris" style="
+                width: 120px;
+                height: 168px;
+                object-fit: cover;
+                border-radius: 12px;
+                box-shadow: 0 10px 24px rgba(22, 163, 74, 0.28);
+                border: 2px solid #fff;
+              ">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#16a34a; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+                SRC-13
+              </span>
+            </div>
+  
+            <div style="flex:1; min-width:260px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                <span class="subject-badge" style="background:#16a34a; color:#fff; border:none; font-weight:800;">
+                  🕒 Multi-Skill Starter Engine
+                </span>
+                <span class="subject-badge" style="background:rgba(22,163,74,0.12); color:#16a34a; border-color:rgba(22,163,74,0.3); font-weight:700;">
+                  Integral Media · Ilham Arifin
+                </span>
+              </div>
+              <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+                ${isEn ? '60-Minute Rapid Multi-Skill Starter' : '60 Menit Lancar — 4 Pilar Mandiri'}
+              </h1>
+              <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+                ${isEn
+                  ? 'Comprehensive workbook starter: Reading Faster, Writing Easier, Clever Math 123, and Fluent English ABC!'
+                  : 'Belajar cepat, mudah, dan menyenangkan: Membaca lebih cepat, Menulis lebih mudah, Berhitung lebih pintar, dan Bahasa Inggris lebih lancar.'}
+              </p>
+              <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
+                <span>🎯 Pilar Aktif:</span>
+                <strong style="color:${currentPillar.color};">${currentPillar.icon} ${isEn ? currentPillar.nameEn : currentPillar.name}</strong>
+              </div>
+            </div>
+          </div>
+  
+          <!-- 4 Pilar Cards Selector -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:24px;">
+            ${data.pillars.map(p => {
+              const isSelected = p.id === this.activePillarId;
+              return `
+                <button class="btn btn-pillar-select" data-pillar="${p.id}" type="button" style="
+                  background: ${isSelected ? p.color : 'var(--card)'};
+                  color: ${isSelected ? '#ffffff' : 'var(--ink)'};
+                  border: 1.5px solid ${isSelected ? p.color : 'var(--line)'};
+                  border-radius: 14px;
+                  padding: 14px 18px;
+                  text-align: left;
+                  cursor: pointer;
+                  box-shadow: ${isSelected ? '0 8px 20px rgba(0,0,0,0.12)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                  transition: all 0.2s ease;
+                ">
+                  <div style="font-size:28px; margin-bottom:6px;">${p.icon}</div>
+                  <strong style="display:block; font-size:15px; margin-bottom:4px;">${isEn ? p.nameEn : p.name}</strong>
+                  <span style="font-size:11px; opacity:${isSelected ? '0.9' : '0.6'};">
+                    ${p.drills.length} Latihan Interaktif
+                  </span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+  
+          <!-- Drill Task Container -->
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-left:4px solid ${currentPillar.color};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div style="font-size:13px; font-weight:800; color:${currentPillar.color};">
+                Latihan ${this.currentDrillIdx + 1} dari ${drills.length} · ${currentPillar.name}
+              </div>
+              <button class="btn btn-tts" id="btnSpeakSixtyTask" type="button" style="font-size:12px; padding:6px 12px;">
+                🔊 Bacakan Pertanyaan
+              </button>
+            </div>
+  
+            <h3 style="margin:0 0 16px; font-size:18px; font-weight:800; color:var(--ink); line-height:1.5;">
+              ${currentDrill.q}
+            </h3>
+  
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
+              ${currentDrill.options.map(opt => `
+                <button class="btn btn-sixty-opt" data-opt="${opt}" type="button" style="
+                  padding: 14px 18px;
+                  font-size: 15px;
+                  font-weight: 800;
+                  text-align: left;
+                  border-radius: 12px;
+                  border: 1.5px solid var(--line);
+                  background: var(--paper);
+                  color: var(--ink);
+                  transition: all 0.18s ease;
+                ">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+  
+            <div class="feedback-banner" id="sixtyFeedback" style="display:none; margin-bottom:18px;"></div>
+  
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; color:var(--muted);">
+                💡 Petunjuk: ${currentDrill.hint || 'Pilih jawaban yang paling benar!'}
+              </span>
+              <button class="btn primary" id="btnNextSixtyDrill" type="button" style="font-weight:800; padding:8px 18px;">
+                ${this.currentDrillIdx < drills.length - 1 ? 'Latihan Berikutnya ➔' : 'Selesai Pilar Ini ➔'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents(currentDrill, drills);
+    }
+  
+    attachEvents(currentDrill, drills) {
+      // Switch pillar
+      const pillarBtns = this.container.querySelectorAll('.btn-pillar-select');
+      pillarBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activePillarId = btn.getAttribute('data-pillar') || 'read';
+          this.currentDrillIdx = 0;
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // Speak TTS
+      this.container.querySelector('#btnSpeakSixtyTask')?.addEventListener('click', () => {
+        TtsEngine.speak(currentDrill.q, 'id', 0.85);
+      });
+  
+      // Check option
+      const optBtns = this.container.querySelectorAll('.btn-sixty-opt');
+      const feedback = this.container.querySelector('#sixtyFeedback');
+  
+      optBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-opt');
+          const isCorrect = selected === currentDrill.answer;
+  
+          if (feedback) {
+            feedback.style.display = 'flex';
+            if (isCorrect) {
+              feedback.className = 'feedback-banner success show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(true)}</strong> Jawabanmu tepat!`;
+              AudioFx.playCorrect();
+              btn.style.background = 'var(--green)';
+              btn.style.color = '#fff';
+              store.addStar();
+            } else {
+              feedback.className = 'feedback-banner error show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(false)}</strong> Jawaban yang benar: <strong>${currentDrill.answer}</strong>`;
+              AudioFx.playError();
+            }
+          }
+        });
+      });
+  
+      // Next drill
+      this.container.querySelector('#btnNextSixtyDrill')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        if (this.currentDrillIdx < drills.length - 1) {
+          this.currentDrillIdx++;
+          this.render();
+        } else {
+          AudioFx.playCelebration();
+          store.incrementDailyChallenge();
+          alert('🎉 Hebat! Kamu telah menuntaskan seluruh latihan di pilar ini!');
+          // Rotasi ke pilar berikutnya
+          const order = ['read', 'write', 'count', 'english'];
+          const nextIdx = (order.indexOf(this.activePillarId) + 1) % order.length;
+          this.activePillarId = order[nextIdx];
+          this.currentDrillIdx = 0;
+          this.render();
+        }
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/maxxi-engine.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · MAXXI Engine (School Reinforcement Engine)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:45:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  
+  
+  class MaxxiEngineComponent {
+    constructor(container) {
+      this.container = container;
+      this.activeUnitId = 'unit-1-diriku';
+      this.currentSubjectIdx = 0;
+    }
+  
+    render() {
+      const data = CONTENT_REGISTRY.maxxi;
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const currentUnit = data.units.find(u => u.id === this.activeUnitId) || data.units[0];
+      const subjects = currentUnit.subjects || [];
+      const currentQuestion = subjects[this.currentSubjectIdx] || subjects[0];
+  
+      this.container.innerHTML = `
+        <div class="maxxi-engine-wrap">
+          <!-- Hero Banner MAXXI -->
+          <div class="book-hero-banner" style="
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(14, 165, 233, 0.12));
+            border: 1.5px solid rgba(2, 132, 199, 0.35);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+          ">
+            <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
+              <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI Tematik SD Kelas 1" style="
+                width: 120px;
+                height: 168px;
+                object-fit: cover;
+                border-radius: 12px;
+                box-shadow: 0 10px 24px rgba(2, 132, 199, 0.28);
+                border: 2px solid #fff;
+              ">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#0284c7; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+                SRC-10
+              </span>
+            </div>
+  
+            <div style="flex:1; min-width:260px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                <span class="subject-badge" style="background:#0284c7; color:#fff; border:none; font-weight:800;">
+                  🏆 School Reinforcement Engine
+                </span>
+                <span class="subject-badge" style="background:rgba(2,132,199,0.12); color:#0284c7; border-color:rgba(2,132,199,0.3); font-weight:700;">
+                  MAXXI Tematik Terpadu SD Kelas 1 Semester 1
+                </span>
+              </div>
+              <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+                ${isEn ? 'MAXXI — Integrated School Reinforcement' : 'MAXXI — Penguatan Tematik Sekolah Terpadu'}
+              </h1>
+              <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted); line-height:1.55;">
+                ${isEn
+                  ? 'Contextual scenario challenges across Indonesian, Math, Civics, Arts, and Physical Education.'
+                  : 'Tantangan skenario kontekstual terpadu lintas 5 mata pelajaran sekolah: B. Indonesia, Matematika, Pancasila, Seni Rupa, dan PJOK.'}
+              </p>
+              <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
+                <span>🎯 Unit Aktif:</span>
+                <strong style="color:${currentUnit.color};">${currentUnit.icon} ${isEn ? currentUnit.nameEn : currentUnit.name}</strong>
+              </div>
+            </div>
+          </div>
+  
+          <!-- 4 Thematic Units Selector -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:24px;">
+            ${data.units.map(u => {
+              const isSelected = u.id === this.activeUnitId;
+              return `
+                <button class="btn btn-unit-select" data-unit="${u.id}" type="button" style="
+                  background: ${isSelected ? u.color : 'var(--card)'};
+                  color: ${isSelected ? '#ffffff' : 'var(--ink)'};
+                  border: 1.5px solid ${isSelected ? u.color : 'var(--line)'};
+                  border-radius: 14px;
+                  padding: 14px 18px;
+                  text-align: left;
+                  cursor: pointer;
+                  box-shadow: ${isSelected ? '0 8px 20px rgba(0,0,0,0.12)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                  transition: all 0.2s ease;
+                ">
+                  <div style="font-size:28px; margin-bottom:6px;">${u.icon}</div>
+                  <strong style="display:block; font-size:15px; margin-bottom:4px;">${isEn ? u.nameEn : u.name}</strong>
+                  <span style="font-size:11px; opacity:${isSelected ? '0.9' : '0.6'}; line-height:1.3; display:block;">
+                    ${u.theme}
+                  </span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+  
+          <!-- Question Card -->
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-left:4px solid ${currentUnit.color};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:800;">
+                  ${currentQuestion.icon} ${currentQuestion.subject}
+                </span>
+                <span style="font-size:12px; color:var(--muted); font-weight:700;">
+                  Tantangan ${this.currentSubjectIdx + 1} dari ${subjects.length}
+                </span>
+              </div>
+              <button class="btn btn-tts" id="btnSpeakMaxxiTask" type="button" style="font-size:12px; padding:6px 12px;">
+                🔊 Bacakan Pertanyaan
+              </button>
+            </div>
+  
+            <h3 style="margin:0 0 16px; font-size:18px; font-weight:800; color:var(--ink); line-height:1.5;">
+              ${currentQuestion.q}
+            </h3>
+  
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
+              ${currentQuestion.options.map(opt => `
+                <button class="btn btn-maxxi-opt" data-opt="${opt}" type="button" style="
+                  padding: 14px 18px;
+                  font-size: 15px;
+                  font-weight: 800;
+                  text-align: left;
+                  border-radius: 12px;
+                  border: 1.5px solid var(--line);
+                  background: var(--paper);
+                  color: var(--ink);
+                  transition: all 0.18s ease;
+                ">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+  
+            <div class="feedback-banner" id="maxxiFeedback" style="display:none; margin-bottom:18px;"></div>
+  
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; color:var(--muted);">
+                💡 Petunjuk: ${currentQuestion.hint || 'Pikirkan solusi terbaik!'}
+              </span>
+              <button class="btn primary" id="btnNextMaxxiTask" type="button" style="font-weight:800; padding:8px 18px;">
+                ${this.currentSubjectIdx < subjects.length - 1 ? 'Soal Berikutnya ➔' : 'Selesai Unit Ini ➔'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents(currentQuestion, subjects);
+    }
+  
+    attachEvents(currentQuestion, subjects) {
+      // Switch unit
+      const unitBtns = this.container.querySelectorAll('.btn-unit-select');
+      unitBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activeUnitId = btn.getAttribute('data-unit') || 'unit-1-diriku';
+          this.currentSubjectIdx = 0;
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // TTS
+      this.container.querySelector('#btnSpeakMaxxiTask')?.addEventListener('click', () => {
+        TtsEngine.speak(currentQuestion.q, 'id', 0.85);
+      });
+  
+      // Check option
+      const optBtns = this.container.querySelectorAll('.btn-maxxi-opt');
+      const feedback = this.container.querySelector('#maxxiFeedback');
+  
+      optBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.getAttribute('data-opt');
+          const isCorrect = selected === currentQuestion.answer;
+  
+          if (feedback) {
+            feedback.style.display = 'flex';
+            if (isCorrect) {
+              feedback.className = 'feedback-banner success show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(true)}</strong> Jawabanmu tepat!`;
+              AudioFx.playCorrect();
+              btn.style.background = 'var(--green)';
+              btn.style.color = '#fff';
+              store.addStar();
+            } else {
+              feedback.className = 'feedback-banner error show';
+              feedback.innerHTML = `<strong>${InteractiveEngine.getFeedbackMessage(false)}</strong> Jawaban yang benar: <strong>${currentQuestion.answer}</strong>`;
+              AudioFx.playError();
+            }
+          }
+        });
+      });
+  
+      // Next task
+      this.container.querySelector('#btnNextMaxxiTask')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        if (this.currentSubjectIdx < subjects.length - 1) {
+          this.currentSubjectIdx++;
+          this.render();
+        } else {
+          AudioFx.playCelebration();
+          store.incrementDailyChallenge();
+          alert('🎉 Luar biasa! Kamu telah menuntaskan seluruh tantangan tematik unit ini!');
+          const order = ['unit-1-diriku', 'unit-2-kegemaranku', 'unit-3-kegiatanku', 'unit-4-keluargaku'];
+          const nextIdx = (order.indexOf(this.activeUnitId) + 1) % order.length;
+          this.activeUnitId = order[nextIdx];
+          this.currentSubjectIdx = 0;
+          this.render();
+        }
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/writing-lab.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Writing Lab Component (Canvas & Trace)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:48:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  class WritingLabComponent {
+    constructor(container) {
+      this.container = container;
+      this.activeTaskIndex = 0;
+      this.currentColor = '#056268';
+      this.tasks = [
+        { id: 'w1', title: 'Tebalkan Garis Lurus Tegak & Datar', sample: '│ ─ ┼', desc: 'Tarik garis tegak dari atas ke bawah dan garis mendatar dari kiri ke kanan.' },
+        { id: 'w2', title: 'Tebalkan Huruf Vokal A, I, U, E, O', sample: 'A a  I i  U u  E e  O o', desc: 'Tirukan bentuk huruf vokal kapital dan huruf kecil.' },
+        { id: 'w3', title: 'Menulis Suku Kata: B-A, M-A, S-A', sample: 'BA  MA  SA  TA', desc: 'Salin suku kata vokal A dengan rapi.' },
+        { id: 'w4', title: 'Menulis Kata: BUKU & BOLA', sample: 'BUKU   BOLA', desc: 'Tuliskan kata benda yang kita pelajari hari ini.' },
+        { id: 'w5', title: 'Menulis Angka 1 sampai 10', sample: '1  2  3  4  5  6  7  8  9  10', desc: 'Latih tulisan angka agar rapi dan jelas.' }
+      ];
+    }
+  
+    render() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const task = this.tasks[this.activeTaskIndex];
+  
+      this.container.innerHTML = `
+        <div class="writing-lab-wrap">
+          <!-- Banner Header Writing Lab -->
+          <div class="section-header" style="margin-bottom:20px;">
+            <div class="eyebrow"><span class="no">✍️</span><span class="lbl">WRITING LAB & LETTER TRACING</span></div>
+            <h2 class="section-title">${isEn ? 'Writing Lab — Motoric & Handwriting Practice' : 'Writing Lab — Latihan Menulis Huruf & Kata'}</h2>
+            <p class="section-sub">${isEn ? 'Trace lines, letters, words, and numbers on the child-friendly digital canvas.' : 'Latih motorik halus dengan menebalkan garis, huruf, kata, dan angka di atas kanvas interaktif.'}</p>
+          </div>
+  
+          <!-- Task Selector Tabs -->
+          <div style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px; margin-bottom:20px;">
+            ${this.tasks.map((t, idx) => {
+              const isSelected = idx === this.activeTaskIndex;
+              return `
+                <button class="btn btn-task-tab ${isSelected ? 'primary' : ''}" data-idx="${idx}" type="button" style="
+                  flex: 0 0 auto;
+                  font-size: 13px;
+                  font-weight: 800;
+                  padding: 8px 16px;
+                  border-radius: 12px;
+                ">
+                  ${t.title}
+                </button>
+              `;
+            }).join('')}
+          </div>
+  
+          <!-- Canvas Card -->
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h3 style="margin:0 0 4px; font-size:18px; font-weight:800; color:var(--ink);">${task.title}</h3>
+                <p style="margin:0; font-size:13px; color:var(--muted);">${task.desc}</p>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-tts" id="btnSpeakWritingDesc" type="button" style="font-size:12px; padding:6px 12px;">
+                  🔊 Dengarkan
+                </button>
+                <button class="btn" id="btnClearCanvas" type="button" style="font-size:12px; padding:6px 14px;">
+                  🧹 Bersihkan
+                </button>
+              </div>
+            </div>
+  
+            <!-- Panduan Tulisan Contoh (Tracing Watermark Background) -->
+            <div style="position:relative; background:#fff; border:2px dashed var(--line); border-radius:16px; overflow:hidden; touch-action:none; box-shadow:inset 0 2px 8px rgba(0,0,0,0.04);">
+              <div style="
+                position:absolute;
+                top:0; left:0; right:0; bottom:0;
+                display:grid;
+                place-items:center;
+                pointer-events:none;
+                font-family:'Courier New', monospace;
+                font-size: clamp(36px, 8vw, 68px);
+                font-weight:900;
+                color: rgba(200, 215, 230, 0.45);
+                user-select:none;
+                letter-spacing: 12px;
+              ">
+                ${task.sample}
+              </div>
+  
+              <canvas id="writingCanvas" width="800" height="340" style="width:100%; height:340px; display:block; cursor:crosshair;"></canvas>
+            </div>
+  
+            <!-- Color Palette & Tools -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
+              <div style="display:flex; gap:8px; align-items:center;">
+                <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
+                <button class="btn-color-dot" data-color="#056268" style="width:28px; height:28px; border-radius:50%; background:#056268; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#b24a1b" style="width:28px; height:28px; border-radius:50%; background:#b24a1b; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#2b5ea8" style="width:28px; height:28px; border-radius:50%; background:#2b5ea8; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#1e7b45" style="width:28px; height:28px; border-radius:50%; background:#1e7b45; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+              </div>
+  
+              <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
+                ⭐ Selesai & Dapatkan Bintang!
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.initCanvas();
+      this.attachEvents(task);
+    }
+  
+    initCanvas() {
+      const canvas = this.container.querySelector('#writingCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+  
+      // Sesuaikan resolusi fisik canvas dengan clientWidth
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = 340;
+  
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = this.currentColor;
+  
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - r.left,
+          y: clientY - r.top
+        };
+      }
+  
+      const startDraw = (e) => {
+        isDrawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+      };
+  
+      const draw = (e) => {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      };
+  
+      const stopDraw = () => {
+        isDrawing = false;
+      };
+  
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDraw);
+      canvas.addEventListener('mouseleave', stopDraw);
+  
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDraw);
+  
+      // Bersihkan canvas
+      this.container.querySelector('#btnClearCanvas')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+  
+      // Pilihan warna
+      const colorDots = this.container.querySelectorAll('.btn-color-dot');
+      colorDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          this.currentColor = dot.getAttribute('data-color') || '#056268';
+          ctx.strokeStyle = this.currentColor;
+          AudioFx.playTap();
+        });
+      });
+    }
+  
+    attachEvents(task) {
+      // Switch task
+      const tabBtns = this.container.querySelectorAll('.btn-task-tab');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activeTaskIndex = parseInt(btn.getAttribute('data-idx'), 10) || 0;
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // TTS
+      this.container.querySelector('#btnSpeakWritingDesc')?.addEventListener('click', () => {
+        TtsEngine.speak(`${task.title}. ${task.desc}`, 'id', 0.85);
+      });
+  
+      // Save writing
+      this.container.querySelector('#btnSaveWriting')?.addEventListener('click', () => {
+        AudioFx.playCelebration();
+        store.addStar(3);
+        store.incrementDailyChallenge();
+        alert('🎉 Bagus sekali tulisanmu! Kamu mendapatkan 3 Bintang Juara! ⭐⭐⭐');
+      });
+    }
+  }
+  
+
+  // --- Source: js/components/math-toolbox.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Math Toolbox Master Component (10 Strategy Families)
+  // Development · Anabhi Dev
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:50:00
+  // ================================================================
+  
+  
+  
+  
+  
+  
+  class MathToolboxComponent {
+    constructor(container) {
+      this.container = container;
+      this.numA = 67;
+      this.numB = 59;
+      this.activeStrategy = 'makeHundred'; // decomposition, makeHundred, compensation, numberLine, baseTen, mentalMath, tensFrame, rekenrek, jarimatika, numberBonds
+    }
+  
+    render() {
+      const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
+      const solved = MathEngine.solve(this.numA, this.numB, lang);
+  
+      const strategies = [
+        { id: 'makeHundred', name: 'Jurus 1: Make 100 (Jadikan Ratusan)', icon: '💯', badge: 'Flagship Blueprint' },
+        { id: 'decomposition', name: 'Jurus 2: Pecah Nilai Tempat', icon: '🧩', badge: 'Place Value' },
+        { id: 'compensation', name: 'Jurus 3: Kompensasi (Pinjam & Kembalikan)', icon: '⚖️', badge: 'Rounding' },
+        { id: 'numberLine', name: 'Jurus 4: Garis Bilangan (Lompat Angka)', icon: '📏', badge: 'Visual Jump' },
+        { id: 'baseTen', name: 'Jurus 5: Balok Basis Sepuluh', icon: '🧱', badge: 'Block Model' },
+        { id: 'mentalMath', name: 'Jurus 6: Hitung Cepat Otak (Mental Math)', icon: '🧠', badge: 'Speed Trick' },
+        { id: 'tensFrame', name: 'Jurus 7: Kotak Sepuluh (Tens Frame)', icon: '🔲', badge: 'Early Math' },
+        { id: 'rekenrek', name: 'Jurus 8: Manik-Manik Rekenrek', icon: '🔴', badge: 'Beads Count' },
+        { id: 'jarimatika', name: 'Jurus 9: Jarimatika Tangan Ceria', icon: '✋', badge: 'Finger Math' },
+        { id: 'numberBonds', name: 'Jurus 10: Ikatan Angka (Number Bonds)', icon: '🔗', badge: 'Singapore Math' }
+      ];
+  
+      const currentStratData = solved[this.activeStrategy] || solved.makeHundred;
+  
+      this.container.innerHTML = `
+        <div class="math-toolbox-wrap">
+          <!-- Header Banner Math Toolbox -->
+          <div class="book-hero-banner" style="
+            background: linear-gradient(135deg, rgba(5, 98, 104, 0.08), rgba(91, 224, 223, 0.12));
+            border: 1.5px solid rgba(91, 224, 223, 0.4);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+          ">
+            <div>
+              <div class="eyebrow"><span class="no">🧮</span><span class="lbl">MATH TOOLBOX — 10 JURUS BERHITUNG</span></div>
+              <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
+                ${isEn ? 'Interactive Math Toolbox — 10 Calculation Jurus' : 'Math Toolbox — 10 Jurus Berhitung Visual Cepat'}
+              </h1>
+              <p style="margin:0; font-size:13.5px; color:var(--muted); max-width:620px; line-height:1.55;">
+                ${isEn
+                  ? 'Deterministic arithmetic strategies. See how 67 + 59 = 126 is solved through 10 intuitive visual lenses!'
+                  : 'Aritmatika deterministik tanpa kalkulator biasa. Lihat bagaimana 67 + 59 = 126 dipecahkan lewat 10 sudut pandang cerdas!'}
+              </p>
+            </div>
+  
+            <!-- Quick Preset Buttons -->
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button class="btn btn-preset" data-a="67" data-b="59" type="button" style="font-weight:800; font-size:13px; background:var(--teal); color:#fff;">
+                ⭐ 67 + 59 (Flagship)
+              </button>
+              <button class="btn btn-preset" data-a="48" data-b="35" type="button" style="font-weight:800; font-size:13px;">
+                48 + 35
+              </button>
+              <button class="btn btn-preset" data-a="25" data-b="18" type="button" style="font-weight:800; font-size:13px;">
+                25 + 18
+              </button>
+            </div>
+          </div>
+  
+          <!-- Input Bar Penjumlahan Deterministik -->
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:24px;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label for="inputNumA" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 1:</label>
+                <input type="number" id="inputNumA" value="${this.numA}" min="1" max="999" style="
+                  width: 90px;
+                  padding: 8px 12px;
+                  font-size: 20px;
+                  font-weight: 800;
+                  text-align: center;
+                  border: 2px solid var(--line);
+                  border-radius: 12px;
+                  background: var(--paper);
+                  color: var(--ink);
+                ">
+              </div>
+  
+              <span style="font-size:24px; font-weight:900; color:var(--teal);">+</span>
+  
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label for="inputNumB" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 2:</label>
+                <input type="number" id="inputNumB" value="${this.numB}" min="1" max="999" style="
+                  width: 90px;
+                  padding: 8px 12px;
+                  font-size: 20px;
+                  font-weight: 800;
+                  text-align: center;
+                  border: 2px solid var(--line);
+                  border-radius: 12px;
+                  background: var(--paper);
+                  color: var(--ink);
+                ">
+              </div>
+  
+              <span style="font-size:24px; font-weight:900; color:var(--muted);">=</span>
+  
+              <div style="
+                background: var(--teal-soft);
+                border: 2px solid var(--teal);
+                color: var(--teal-soft-ink);
+                border-radius: 12px;
+                padding: 8px 20px;
+                font-size: 24px;
+                font-weight: 900;
+                min-width: 90px;
+                text-align: center;
+              ">
+                ${solved.sum}
+              </div>
+  
+              <button class="btn btn-tts" id="btnSpeakMathSolve" type="button" style="padding:10px 16px; font-size:13px; font-weight:700;">
+                🔊 Bunyikan Penjelasan
+              </button>
+            </div>
+          </div>
+  
+          <!-- Strategy Tabs Grid -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:24px;">
+            ${strategies.map(strat => {
+              const isSelected = strat.id === this.activeStrategy;
+              return `
+                <button class="btn btn-strat-tab" data-strat="${strat.id}" type="button" style="
+                  background: ${isSelected ? 'var(--teal)' : 'var(--card)'};
+                  color: ${isSelected ? '#ffffff' : 'var(--ink)'};
+                  border: 1.5px solid ${isSelected ? 'var(--teal)' : 'var(--line)'};
+                  border-radius: 12px;
+                  padding: 12px 14px;
+                  text-align: left;
+                  cursor: pointer;
+                  box-shadow: ${isSelected ? '0 6px 16px rgba(5,98,104,0.25)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                  transition: all 0.18s ease;
+                ">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-size:18px;">${strat.icon}</span>
+                    <span style="font-size:10px; opacity:${isSelected ? '0.9' : '0.6'}; font-weight:700;">${strat.badge}</span>
+                  </div>
+                  <strong style="font-size:13px; line-height:1.3; display:block;">${strat.name}</strong>
+                </button>
+              `;
+            }).join('')}
+          </div>
+  
+          <!-- Strategy Step Breakdown Box -->
+          <div class="quiz-box" style="background:var(--card); border:1.5px solid var(--teal); border-radius:20px; padding:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="margin:0; font-size:19px; font-weight:850; color:var(--ink);">
+                ${currentStratData.title || 'Langkah Pemecahan Jurus'}
+              </h3>
+              <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); font-weight:800;">
+                ${currentStratData.badge || 'Langkah Berhitung'}
+              </span>
+            </div>
+  
+            <div style="font-size:15px; color:var(--ink); line-height:1.8; margin-bottom:18px;">
+              ${currentStratData.step1 ? `<div style="margin-bottom:8px; padding:8px 12px; background:var(--paper); border-radius:10px;">📌 <strong>Langkah 1:</strong> ${currentStratData.step1}</div>` : ''}
+              ${currentStratData.step2 ? `<div style="margin-bottom:8px; padding:8px 12px; background:var(--paper); border-radius:10px;">📌 <strong>Langkah 2:</strong> ${currentStratData.step2}</div>` : ''}
+              ${currentStratData.step3 ? `<div style="margin-bottom:8px; padding:8px 12px; background:var(--paper); border-radius:10px;">📌 <strong>Langkah 3:</strong> ${currentStratData.step3}</div>` : ''}
+              ${currentStratData.stepFinal ? `<div style="margin-top:12px; padding:12px; background:var(--teal-soft); border-radius:12px; font-weight:800; color:var(--teal-soft-ink); font-size:16px;">🎯 <strong>Hasil Akhir:</strong> ${currentStratData.stepFinal}</div>` : ''}
+            </div>
+  
+            ${currentStratData.visual ? `
+              <div style="margin-top:16px; padding:16px; background:var(--paper); border-radius:14px; text-align:center;">
+                ${currentStratData.visual}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents(solved);
+    }
+  
+    attachEvents(solved) {
+      // Preset buttons
+      const presetBtns = this.container.querySelectorAll('.btn-preset');
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.numA = parseInt(btn.getAttribute('data-a'), 10) || 67;
+          this.numB = parseInt(btn.getAttribute('data-b'), 10) || 59;
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // Inputs
+      const inputA = this.container.querySelector('#inputNumA');
+      const inputB = this.container.querySelector('#inputNumB');
+  
+      const handleInput = () => {
+        this.numA = parseInt(inputA.value, 10) || 0;
+        this.numB = parseInt(inputB.value, 10) || 0;
+        this.render();
+      };
+  
+      inputA?.addEventListener('change', handleInput);
+      inputB?.addEventListener('change', handleInput);
+  
+      // Strategy tabs
+      const stratBtns = this.container.querySelectorAll('.btn-strat-tab');
+      stratBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.activeStrategy = btn.getAttribute('data-strat') || 'makeHundred';
+          AudioFx.playTap();
+          this.render();
+        });
+      });
+  
+      // TTS
+      this.container.querySelector('#btnSpeakMathSolve')?.addEventListener('click', () => {
+        const text = `${this.numA} ditambah ${this.numB} sama dengan ${solved.sum}. Mari kita hitung bersama!`;
+        TtsEngine.speak(text, 'id', 0.85);
+      });
+    }
+  }
+  
+
   // --- Source: js/app.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
   // JavaScript · ES Module · Main Application Router & Bootstrap
   // Development · Anabhi Dev
-  // Version   : 1.1
-  // Generated : 10 September 2026, 11:10:00
+  // Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+  // Generated : 14 September 2026, 23:55:00
   // ================================================================
+  
+  
+  
+  
+  
+  
   
   
   
@@ -16565,6 +18937,14 @@
       this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
       this.challengeView = new ChallengeViewComponent(this.mainEl, this.lksModal);
       this.progressView = new ProgressViewComponent(this.mainEl);
+  
+      // Learning Labs & Engine Khusus (Blueprint 4-Buku Calistung)
+      this.readingLab = new ReadingLabComponent(this.mainEl);
+      this.calistungEngine = new CalistungEngineComponent(this.mainEl);
+      this.sixtyMinEngine = new SixtyMinEngineComponent(this.mainEl);
+      this.maxxiEngine = new MaxxiEngineComponent(this.mainEl);
+      this.writingLab = new WritingLabComponent(this.mainEl);
+      this.mathToolbox = new MathToolboxComponent(this.mainEl);
   
       this.initPWA();
       this.initRouting();
@@ -16652,11 +19032,24 @@
         case 'all-subjects':
           this.renderAllSubjects();
           break;
+        case 'reading':
+          this.readingLab.render();
+          break;
         case 'cali-stung':
-          this.challengeView.renderCaliStungStandalone();
+        case 'calistung':
+          this.calistungEngine.render();
+          break;
+        case 'sixty-min':
+          this.sixtyMinEngine.render();
           break;
         case 'maxxi':
-          this.challengeView.renderMaxxiStandalone();
+          this.maxxiEngine.render();
+          break;
+        case 'writing':
+          this.writingLab.render();
+          break;
+        case 'math-toolbox':
+          this.mathToolbox.render();
           break;
         default:
           this.renderHome();
@@ -16776,38 +19169,94 @@
           </div>
         </section>
   
-        <!-- 4. Modul Buku Pendamping Siswa (Calistung & MAXXI) -->
+        <!-- 4. Modul Learning Labs & Buku Pendamping Siswa (6 Labs) -->
         <section style="margin-bottom:36px;">
           <div class="section-header" style="margin-bottom:18px;">
-            <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
-            <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
-            <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Calistung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Calistung dan MAXXI!'}</p>
+            <div class="eyebrow"><span class="no">🚀</span><span class="lbl">${isEn ? 'Learning Labs & Master Workbooks' : 'Learning Labs & Buku Pendamping Interaktif'}</span></div>
+            <h2 class="section-title">${isEn ? '6 Learning Labs & Specialized Engines' : '6 Modul Khusus Fondasi Belajar Cepat'}</h2>
+            <p class="section-sub">${isEn ? 'Direct access to structured reading, daily drills, multi-skills, school themes, math strategies, and handwriting!' : 'Akses langsung ke metode percepatan membaca, latihan kilat harian, 4 pilar terpadu, tematik sekolah, jurus berhitung, dan motorik menulis!'}</p>
           </div>
   
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
-            <!-- Card Calistung -->
-            <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:20px;">
+            <!-- 1. Reading Lab (60 Jam Baca Tanpa Dieja) -->
+            <div class="subject-card btn-open-companion" data-route="reading" style="cursor:pointer; border:1.5px solid rgba(8,145,178,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
-                <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
-                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Book' : 'Buku Calistung'}</h3>
-                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
-                  ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
+                <span class="subject-badge" style="background:#0891b2; color:#fff; font-size:10px; border:none; margin-bottom:4px;">📖 60 Jam · SRC-14</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Reading Lab (12 Levels)' : 'Reading Lab (12 Level)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? 'Read without spelling: syllable cards, word builder, and phonics.' : 'Pintar baca tanpa mengeja: kartu suku kata bersuara & word builder.'}
                 </p>
-                <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start 5-Min Drill ➔' : 'Mulai Latihan 5 Menit ➔'}</span>
+                <span style="font-size:12px; font-weight:800; color:#0891b2;">${isEn ? 'Open Reading Lab ➔' : 'Buka Reading Lab ➔'}</span>
               </div>
             </div>
   
-            <!-- Card Buku MAXXI -->
-            <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(29,113,152,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(29,113,152,0.25); flex-shrink:0;">
+            <!-- 2. Card Calistung (Permata Daily Drill) -->
+            <div class="subject-card btn-open-companion" data-route="calistung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
-                <span class="subject-badge" style="background:#1d7198; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
-                <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Maxi (Tematik)</h3>
-                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
-                  ${isEn ? '10 contextual scenario challenges across 6 core subjects.' : '10 tantangan skenario kontekstual terpadu lintas 6 mata pelajaran.'}
+                <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Daily Drill)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? 'Daily 5/10/15 min routine: Read + Write + Count.' : 'Latihan rutin 5, 10, atau 15 menit: Membaca, Menulis, dan Berhitung.'}
                 </p>
-                <span style="font-size:12px; font-weight:800; color:#1d7198;">${isEn ? 'Start MAXXI Challenge ➔' : 'Mulai Tantangan MAXXI ➔'}</span>
+                <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start Daily Drill ➔' : 'Mulai Daily Drill ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- 3. Card 60 Menit (4 Pilar Multi-Skill) -->
+            <div class="subject-card btn-open-companion" data-route="sixty-min" style="cursor:pointer; border:1.5px solid rgba(22,163,74,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Buku 60 Menit" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(22,163,74,0.25); flex-shrink:0;">
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#16a34a; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🕒 60 Menit · SRC-13</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? '60-Minute 4-Pillars' : 'Buku 60 Menit (4 Pilar)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? 'Read faster, write easier, clever math, and fluent English.' : 'Membaca cepat, menulis mudah, berhitung pintar, dan bahasa Inggris.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#16a34a;">${isEn ? 'Start 60-Min ➔' : 'Buka 60 Menit ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- 4. Card Buku MAXXI (Tematik Sekolah) -->
+            <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(2,132,199,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#0284c7; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku Maxi (Tematik)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? '4 units: Myself, Hobbies, Activities, and Family across 5 subjects.' : '4 unit kontekstual: Diriku, Kegemaranku, Kegiatanku, dan Keluargaku.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#0284c7;">${isEn ? 'Start MAXXI ➔' : 'Mulai MAXXI ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- 5. Card Math Toolbox -->
+            <div class="subject-card btn-open-companion" data-route="math-toolbox" style="cursor:pointer; border:1.5px solid rgba(5,98,104,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <div style="width:72px; height:100px; border-radius:8px; background:linear-gradient(135deg, var(--teal), var(--teal-soft-ink)); display:grid; place-items:center; font-size:36px; box-shadow:0 4px 12px rgba(5,98,104,0.25); flex-shrink:0; color:#fff;">
+                🧮
+              </div>
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#056268; color:#fff; font-size:10px; border:none; margin-bottom:4px;">💡 Math Toolbox</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (10 Jurus)' : 'Math Toolbox (10 Jurus)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? 'Decomposition, Make 100, Compensation, Number Line, and more!' : 'Pecah nilai tempat, Make 100 (67+59=126), garis bilangan, dan kompensasi.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#056268;">${isEn ? 'Explore Strategies ➔' : 'Eksplorasi Jurus ➔'}</span>
+              </div>
+            </div>
+  
+            <!-- 6. Card Writing Lab -->
+            <div class="subject-card btn-open-companion" data-route="writing" style="cursor:pointer; border:1.5px solid rgba(123,53,156,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+              <div style="width:72px; height:100px; border-radius:8px; background:linear-gradient(135deg, #7b359c, #a855f7); display:grid; place-items:center; font-size:36px; box-shadow:0 4px 12px rgba(123,53,156,0.25); flex-shrink:0; color:#fff;">
+                ✍️
+              </div>
+              <div style="flex:1; min-width:0;">
+                <span class="subject-badge" style="background:#7b359c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🎨 Motorik Halus</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Menulis)'}</h3>
+                <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                  ${isEn ? 'Practice lines, curves, tracing letters, words, and numbers on canvas.' : 'Tebalkan garis lurus/lengkung, huruf kapital/kecil, dan kata di kanvas digital.'}
+                </p>
+                <span style="font-size:12px; font-weight:800; color:#7b359c;">${isEn ? 'Open Canvas ➔' : 'Buka Kanvas Tulis ➔'}</span>
               </div>
             </div>
           </div>

@@ -2,8 +2,8 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // JavaScript · ES Module · Main Application Router & Bootstrap
 // Development · Anabhi Dev
-// Version   : 1.1
-// Generated : 10 September 2026, 11:10:00
+// Version   : 1.8 (SOP v2.2 & Standar Coding v1.8 Aligned)
+// Generated : 14 September 2026, 23:55:00
 // ================================================================
 
 import { SUBJECTS, getSubjectName, getSubjectBadge, getSubjectDesc } from './data/subjects.js';
@@ -18,6 +18,12 @@ import { ChallengeViewComponent } from './components/challenge-view.js';
 import { ProgressViewComponent } from './components/progress-view.js';
 import { AiTutorModalComponent } from './components/ai-modal.js';
 import { LksModalComponent } from './components/lks-modal.js';
+import { ReadingLabComponent } from './components/reading-lab.js';
+import { CalistungEngineComponent } from './components/calistung-engine.js';
+import { SixtyMinEngineComponent } from './components/sixty-min-engine.js';
+import { MaxxiEngineComponent } from './components/maxxi-engine.js';
+import { WritingLabComponent } from './components/writing-lab.js';
+import { MathToolboxComponent } from './components/math-toolbox.js';
 
 class App {
   constructor() {
@@ -39,6 +45,14 @@ class App {
     this.subjectView = new SubjectViewComponent(this.mainEl, this.videoModal, this.lksModal);
     this.challengeView = new ChallengeViewComponent(this.mainEl, this.lksModal);
     this.progressView = new ProgressViewComponent(this.mainEl);
+
+    // Learning Labs & Engine Khusus (Blueprint 4-Buku Calistung)
+    this.readingLab = new ReadingLabComponent(this.mainEl);
+    this.calistungEngine = new CalistungEngineComponent(this.mainEl);
+    this.sixtyMinEngine = new SixtyMinEngineComponent(this.mainEl);
+    this.maxxiEngine = new MaxxiEngineComponent(this.mainEl);
+    this.writingLab = new WritingLabComponent(this.mainEl);
+    this.mathToolbox = new MathToolboxComponent(this.mainEl);
 
     this.initPWA();
     this.initRouting();
@@ -126,11 +140,24 @@ class App {
       case 'all-subjects':
         this.renderAllSubjects();
         break;
+      case 'reading':
+        this.readingLab.render();
+        break;
       case 'cali-stung':
-        this.challengeView.renderCaliStungStandalone();
+      case 'calistung':
+        this.calistungEngine.render();
+        break;
+      case 'sixty-min':
+        this.sixtyMinEngine.render();
         break;
       case 'maxxi':
-        this.challengeView.renderMaxxiStandalone();
+        this.maxxiEngine.render();
+        break;
+      case 'writing':
+        this.writingLab.render();
+        break;
+      case 'math-toolbox':
+        this.mathToolbox.render();
         break;
       default:
         this.renderHome();
@@ -250,38 +277,94 @@ class App {
         </div>
       </section>
 
-      <!-- 4. Modul Buku Pendamping Siswa (Calistung & MAXXI) -->
+      <!-- 4. Modul Learning Labs & Buku Pendamping Siswa (6 Labs) -->
       <section style="margin-bottom:36px;">
         <div class="section-header" style="margin-bottom:18px;">
-          <div class="eyebrow"><span class="no">📖</span><span class="lbl">${isEn ? 'Companion Study Books' : 'Buku Modul Pendamping Siswa'}</span></div>
-          <h2 class="section-title">${isEn ? 'Official Classroom Companion Books' : 'Buku Pendamping Kelas 1B (Sesuai Buku Cetak)'}</h2>
-          <p class="section-sub">${isEn ? 'Direct access to your physical workbook drills: Calistung and MAXXI!' : 'Latihan interaktif langsung dari buku fisik yang dipegang siswa: Calistung dan MAXXI!'}</p>
+          <div class="eyebrow"><span class="no">🚀</span><span class="lbl">${isEn ? 'Learning Labs & Master Workbooks' : 'Learning Labs & Buku Pendamping Interaktif'}</span></div>
+          <h2 class="section-title">${isEn ? '6 Learning Labs & Specialized Engines' : '6 Modul Khusus Fondasi Belajar Cepat'}</h2>
+          <p class="section-sub">${isEn ? 'Direct access to structured reading, daily drills, multi-skills, school themes, math strategies, and handwriting!' : 'Akses langsung ke metode percepatan membaca, latihan kilat harian, 4 pilar terpadu, tematik sekolah, jurus berhitung, dan motorik menulis!'}</p>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
-          <!-- Card Calistung -->
-          <div class="subject-card btn-open-companion" data-route="cali-stung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-            <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:20px;">
+          <!-- 1. Reading Lab (60 Jam Baca Tanpa Dieja) -->
+          <div class="subject-card btn-open-companion" data-route="reading" style="cursor:pointer; border:1.5px solid rgba(8,145,178,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">
             <div style="flex:1; min-width:0;">
-              <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
-              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Book' : 'Buku Calistung'}</h3>
-              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
-                ${isEn ? '5-min drill: reading phonics, writing, and cheerful math.' : 'Latihan kilat 5 menit: membaca fonik, menulis ejaan, dan berhitung ceria.'}
+              <span class="subject-badge" style="background:#0891b2; color:#fff; font-size:10px; border:none; margin-bottom:4px;">📖 60 Jam · SRC-14</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Reading Lab (12 Levels)' : 'Reading Lab (12 Level)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Read without spelling: syllable cards, word builder, and phonics.' : 'Pintar baca tanpa mengeja: kartu suku kata bersuara & word builder.'}
               </p>
-              <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start 5-Min Drill ➔' : 'Mulai Latihan 5 Menit ➔'}</span>
+              <span style="font-size:12px; font-weight:800; color:#0891b2;">${isEn ? 'Open Reading Lab ➔' : 'Buka Reading Lab ➔'}</span>
             </div>
           </div>
 
-          <!-- Card Buku MAXXI -->
-          <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(29,113,152,0.3); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-            <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(29,113,152,0.25); flex-shrink:0;">
+          <!-- 2. Card Calistung (Permata Daily Drill) -->
+          <div class="subject-card btn-open-companion" data-route="calistung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
             <div style="flex:1; min-width:0;">
-              <span class="subject-badge" style="background:#1d7198; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
-              <h3 style="font-size:16.5px; font-weight:800; margin:0 0 4px; color:var(--ink);">Buku Maxi (Tematik)</h3>
-              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 10px;">
-                ${isEn ? '10 contextual scenario challenges across 6 core subjects.' : '10 tantangan skenario kontekstual terpadu lintas 6 mata pelajaran.'}
+              <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Daily Drill)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Daily 5/10/15 min routine: Read + Write + Count.' : 'Latihan rutin 5, 10, atau 15 menit: Membaca, Menulis, dan Berhitung.'}
               </p>
-              <span style="font-size:12px; font-weight:800; color:#1d7198;">${isEn ? 'Start MAXXI Challenge ➔' : 'Mulai Tantangan MAXXI ➔'}</span>
+              <span style="font-size:12px; font-weight:800; color:#ea580c;">${isEn ? 'Start Daily Drill ➔' : 'Mulai Daily Drill ➔'}</span>
+            </div>
+          </div>
+
+          <!-- 3. Card 60 Menit (4 Pilar Multi-Skill) -->
+          <div class="subject-card btn-open-companion" data-route="sixty-min" style="cursor:pointer; border:1.5px solid rgba(22,163,74,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Buku 60 Menit" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(22,163,74,0.25); flex-shrink:0;">
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#16a34a; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🕒 60 Menit · SRC-13</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? '60-Minute 4-Pillars' : 'Buku 60 Menit (4 Pilar)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Read faster, write easier, clever math, and fluent English.' : 'Membaca cepat, menulis mudah, berhitung pintar, dan bahasa Inggris.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#16a34a;">${isEn ? 'Start 60-Min ➔' : 'Buka 60 Menit ➔'}</span>
+            </div>
+          </div>
+
+          <!-- 4. Card Buku MAXXI (Tematik Sekolah) -->
+          <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(2,132,199,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#0284c7; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku Maxi (Tematik)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? '4 units: Myself, Hobbies, Activities, and Family across 5 subjects.' : '4 unit kontekstual: Diriku, Kegemaranku, Kegiatanku, dan Keluargaku.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#0284c7;">${isEn ? 'Start MAXXI ➔' : 'Mulai MAXXI ➔'}</span>
+            </div>
+          </div>
+
+          <!-- 5. Card Math Toolbox -->
+          <div class="subject-card btn-open-companion" data-route="math-toolbox" style="cursor:pointer; border:1.5px solid rgba(5,98,104,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <div style="width:72px; height:100px; border-radius:8px; background:linear-gradient(135deg, var(--teal), var(--teal-soft-ink)); display:grid; place-items:center; font-size:36px; box-shadow:0 4px 12px rgba(5,98,104,0.25); flex-shrink:0; color:#fff;">
+              🧮
+            </div>
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#056268; color:#fff; font-size:10px; border:none; margin-bottom:4px;">💡 Math Toolbox</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (10 Jurus)' : 'Math Toolbox (10 Jurus)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Decomposition, Make 100, Compensation, Number Line, and more!' : 'Pecah nilai tempat, Make 100 (67+59=126), garis bilangan, dan kompensasi.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#056268;">${isEn ? 'Explore Strategies ➔' : 'Eksplorasi Jurus ➔'}</span>
+            </div>
+          </div>
+
+          <!-- 6. Card Writing Lab -->
+          <div class="subject-card btn-open-companion" data-route="writing" style="cursor:pointer; border:1.5px solid rgba(123,53,156,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <div style="width:72px; height:100px; border-radius:8px; background:linear-gradient(135deg, #7b359c, #a855f7); display:grid; place-items:center; font-size:36px; box-shadow:0 4px 12px rgba(123,53,156,0.25); flex-shrink:0; color:#fff;">
+              ✍️
+            </div>
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#7b359c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🎨 Motorik Halus</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Menulis)'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Practice lines, curves, tracing letters, words, and numbers on canvas.' : 'Tebalkan garis lurus/lengkung, huruf kapital/kecil, dan kata di kanvas digital.'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#7b359c;">${isEn ? 'Open Canvas ➔' : 'Buka Kanvas Tulis ➔'}</span>
             </div>
           </div>
         </div>
