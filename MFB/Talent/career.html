@@ -1710,10 +1710,13 @@ h1, h2, h3, h4 {
       <div class="jobs-toolbar">
         <div class="jobs-filter-group" id="deptFilterGroup">
           <button class="job-pill-btn active" onclick="filterJobs('all')">All Roles</button>
-          <button class="job-pill-btn" onclick="filterJobs('Kitchen')">Kitchen & Sushi</button>
-          <button class="job-pill-btn" onclick="filterJobs('Bar')">Bar & Mixology</button>
-          <button class="job-pill-btn" onclick="filterJobs('Front of House')">Front of House</button>
-          <button class="job-pill-btn" onclick="filterJobs('Management')">Operations & IT</button>
+          <button class="job-pill-btn" onclick="filterJobs('Kitchen')">Kitchen</button>
+          <button class="job-pill-btn" onclick="filterJobs('Service')">Service</button>
+          <button class="job-pill-btn" onclick="filterJobs('Bar')">Bar</button>
+          <button class="job-pill-btn" onclick="filterJobs('Guest Relation')">Guest Relation</button>
+          <button class="job-pill-btn" onclick="filterJobs('IT')">IT</button>
+          <button class="job-pill-btn" onclick="filterJobs('Accounting')">Accounting</button>
+          <button class="job-pill-btn" onclick="filterJobs('General & Admin')">General &amp; Admin</button>
         </div>
 
         <div class="job-search-box">
@@ -2413,7 +2416,7 @@ let POSITIONS_DATA = [
   {
     id: 'mfb-restaurant-supervisor',
     title: 'Restaurant Floor Supervisor',
-    dept: 'Front of House',
+    dept: 'Service',
     location: 'Canggu, Bali',
     type: 'Full Time',
     salary: 'Rp 6,500,000 – Rp 8,500,000 + Service Charge',
@@ -2441,7 +2444,7 @@ let POSITIONS_DATA = [
   {
     id: 'mfb-guest-relations',
     title: 'Hostess / VIP Guest Relations',
-    dept: 'Front of House',
+    dept: 'Guest Relation',
     location: 'Canggu, Bali',
     type: 'Full Time',
     salary: 'Rp 5,500,000 – Rp 7,500,000 + Service Charge',
@@ -2469,7 +2472,7 @@ let POSITIONS_DATA = [
   {
     id: 'mfb-it-pos',
     title: 'IT & POS Systems Specialist',
-    dept: 'Management',
+    dept: 'IT',
     location: 'Canggu, Bali',
     type: 'Full Time',
     salary: 'Rp 6,500,000 – Rp 9,000,000 + Service Charge',
@@ -2497,7 +2500,7 @@ let POSITIONS_DATA = [
   {
     id: 'mfb-cost-controller',
     title: 'F&B Cost Controller & Purchasing Officer',
-    dept: 'Management',
+    dept: 'Accounting',
     location: 'Canggu, Bali',
     type: 'Full Time',
     salary: 'Rp 7,000,000 – Rp 9,500,000 + Service Charge',
@@ -2534,7 +2537,13 @@ function renderJobs() {
   if (!container) return;
 
   const filtered = POSITIONS_DATA.filter(job => {
-    const matchesDept = currentActiveDept === 'all' || job.dept === currentActiveDept;
+    const jDept = (job.dept || '').toLowerCase();
+    const actDept = currentActiveDept.toLowerCase();
+    const matchesDept = currentActiveDept === 'all' || 
+      jDept === actDept ||
+      (actDept === 'service' && (jDept.includes('service') || jDept.includes('front'))) ||
+      (actDept === 'guest relation' && (jDept.includes('guest') || jDept.includes('host'))) ||
+      (actDept === 'it' && (jDept.includes('it') || jDept.includes('system') || jDept.includes('tech')));
     const matchesSearch = currentSearchTerm === '' || 
       job.title.toLowerCase().includes(currentSearchTerm) ||
       job.summary.toLowerCase().includes(currentSearchTerm) ||
@@ -2584,7 +2593,9 @@ function renderJobs() {
 function filterJobs(dept) {
   currentActiveDept = dept;
   document.querySelectorAll('#deptFilterGroup .job-pill-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.includes(dept) || (dept === 'all' && btn.textContent.includes('All')));
+    const txt = btn.textContent.trim().toLowerCase();
+    const dLower = String(dept).toLowerCase();
+    btn.classList.toggle('active', (dept === 'all' && txt.includes('all')) || txt === dLower || txt.includes(dLower) || dLower.includes(txt));
   });
   renderJobs();
   const el = document.getElementById('positions');
