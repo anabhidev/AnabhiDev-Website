@@ -50,17 +50,17 @@ export class ReadingLabComponent {
               box-shadow: 0 10px 24px rgba(6, 182, 212, 0.28);
               border: 2px solid #fff;
             ">
-            <span style="position:absolute; bottom:-8px; right:-6px; background:#0891b2; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#0e7490; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
               SRC-14
             </span>
           </div>
 
           <div style="flex:1; min-width:260px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-              <span class="subject-badge" style="background:#0891b2; color:#fff; border:none; font-weight:800;">
+              <span class="subject-badge" style="background:#0e7490; color:#fff; border:none; font-weight:800;">
                 📖 Reading Acceleration Engine
               </span>
-              <span class="subject-badge" style="background:rgba(8,145,178,0.12); color:#0891b2; border-color:rgba(8,145,178,0.3); font-weight:700;">
+              <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); border-color:rgba(5,98,104,0.3); font-weight:700;">
                 Metode 60 Jam Baca Tanpa Dieja · 10 Menit Setiap Belajar
               </span>
             </div>
@@ -74,7 +74,7 @@ export class ReadingLabComponent {
             </p>
             <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
               <span>🎯 Level Aktif:</span>
-              <strong style="color:#0891b2;">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+              <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
             </div>
           </div>
         </div>
@@ -94,14 +94,14 @@ export class ReadingLabComponent {
                 <button class="btn-select-level" data-level-id="${lvl.id}" type="button" style="
                   flex: 0 0 auto;
                   min-width: 140px;
-                  background: ${isSelected ? '#0891b2' : 'var(--card)'};
+                  background: ${isSelected ? 'var(--teal)' : 'var(--card)'};
                   color: ${isSelected ? '#ffffff' : 'var(--ink)'};
-                  border: 1.5px solid ${isSelected ? '#0891b2' : 'var(--line)'};
+                  border: 1.5px solid ${isSelected ? 'var(--teal)' : 'var(--line)'};
                   border-radius: 14px;
                   padding: 10px 14px;
                   text-align: left;
                   cursor: pointer;
-                  box-shadow: ${isSelected ? '0 6px 16px rgba(8,145,178,0.3)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                  box-shadow: ${isSelected ? '0 6px 16px rgba(5,98,104,0.3)' : '0 2px 6px rgba(0,0,0,0.03)'};
                   transition: all 0.2s ease;
                 ">
                   <div style="font-size:11px; font-weight:800; opacity:${isSelected ? '0.9' : '0.6'}; margin-bottom:2px;">
@@ -382,3 +382,4 @@ export class ReadingLabComponent {
     }
   }
 }
+

@@ -17404,17 +17404,17 @@
                 box-shadow: 0 10px 24px rgba(6, 182, 212, 0.28);
                 border: 2px solid #fff;
               ">
-              <span style="position:absolute; bottom:-8px; right:-6px; background:#0891b2; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#0e7490; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
                 SRC-14
               </span>
             </div>
   
             <div style="flex:1; min-width:260px;">
               <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-                <span class="subject-badge" style="background:#0891b2; color:#fff; border:none; font-weight:800;">
+                <span class="subject-badge" style="background:#0e7490; color:#fff; border:none; font-weight:800;">
                   📖 Reading Acceleration Engine
                 </span>
-                <span class="subject-badge" style="background:rgba(8,145,178,0.12); color:#0891b2; border-color:rgba(8,145,178,0.3); font-weight:700;">
+                <span class="subject-badge" style="background:var(--teal-soft); color:var(--teal-soft-ink); border-color:rgba(5,98,104,0.3); font-weight:700;">
                   Metode 60 Jam Baca Tanpa Dieja · 10 Menit Setiap Belajar
                 </span>
               </div>
@@ -17428,7 +17428,7 @@
               </p>
               <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
                 <span>🎯 Level Aktif:</span>
-                <strong style="color:#0891b2;">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+                <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
               </div>
             </div>
           </div>
@@ -17448,14 +17448,14 @@
                   <button class="btn-select-level" data-level-id="${lvl.id}" type="button" style="
                     flex: 0 0 auto;
                     min-width: 140px;
-                    background: ${isSelected ? '#0891b2' : 'var(--card)'};
+                    background: ${isSelected ? 'var(--teal)' : 'var(--card)'};
                     color: ${isSelected ? '#ffffff' : 'var(--ink)'};
-                    border: 1.5px solid ${isSelected ? '#0891b2' : 'var(--line)'};
+                    border: 1.5px solid ${isSelected ? 'var(--teal)' : 'var(--line)'};
                     border-radius: 14px;
                     padding: 10px 14px;
                     text-align: left;
                     cursor: pointer;
-                    box-shadow: ${isSelected ? '0 6px 16px rgba(8,145,178,0.3)' : '0 2px 6px rgba(0,0,0,0.03)'};
+                    box-shadow: ${isSelected ? '0 6px 16px rgba(5,98,104,0.3)' : '0 2px 6px rgba(0,0,0,0.03)'};
                     transition: all 0.2s ease;
                   ">
                     <div style="font-size:11px; font-weight:800; opacity:${isSelected ? '0.9' : '0.6'}; margin-bottom:2px;">
@@ -17737,6 +17737,7 @@
     }
   }
   
+  
 
   // --- Source: js/components/calistung-engine.js ---
   // ================================================================
@@ -17793,17 +17794,17 @@
                 box-shadow: 0 10px 24px rgba(234, 88, 12, 0.28);
                 border: 2px solid #fff;
               ">
-              <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#c2410c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
                 SRC-05
               </span>
             </div>
   
             <div style="flex:1; min-width:260px;">
               <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-                <span class="subject-badge" style="background:#ea580c; color:#fff; border:none; font-weight:800;">
+                <span class="subject-badge" style="background:#c2410c; color:#fff; border:none; font-weight:800;">
                   ⚡ Daily Drill Engine
                 </span>
-                <span class="subject-badge" style="background:rgba(234,88,12,0.12); color:#ea580c; border-color:rgba(234,88,12,0.3); font-weight:700;">
+                <span class="subject-badge" style="background:rgba(194,65,12,0.12); color:#c2410c; border-color:rgba(194,65,12,0.3); font-weight:700;">
                   Permata · Membaca, Menulis, Berhitung
                 </span>
               </div>
@@ -17970,6 +17971,7 @@
     }
   }
   
+  
 
   // --- Source: js/components/sixty-min-engine.js ---
   // ================================================================
@@ -18025,17 +18027,17 @@
                 box-shadow: 0 10px 24px rgba(22, 163, 74, 0.28);
                 border: 2px solid #fff;
               ">
-              <span style="position:absolute; bottom:-8px; right:-6px; background:#16a34a; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#15803d; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
                 SRC-13
               </span>
             </div>
   
             <div style="flex:1; min-width:260px;">
               <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-                <span class="subject-badge" style="background:#16a34a; color:#fff; border:none; font-weight:800;">
+                <span class="subject-badge" style="background:#15803d; color:#fff; border:none; font-weight:800;">
                   🕒 Multi-Skill Starter Engine
                 </span>
-                <span class="subject-badge" style="background:rgba(22,163,74,0.12); color:#16a34a; border-color:rgba(22,163,74,0.3); font-weight:700;">
+                <span class="subject-badge" style="background:rgba(21,128,61,0.12); color:#15803d; border-color:rgba(21,128,61,0.3); font-weight:700;">
                   Integral Media · Ilham Arifin
                 </span>
               </div>
@@ -18195,6 +18197,7 @@
     }
   }
   
+  
 
   // --- Source: js/components/maxxi-engine.js ---
   // ================================================================
@@ -18250,17 +18253,17 @@
                 box-shadow: 0 10px 24px rgba(2, 132, 199, 0.28);
                 border: 2px solid #fff;
               ">
-              <span style="position:absolute; bottom:-8px; right:-6px; background:#0284c7; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+              <span style="position:absolute; bottom:-8px; right:-6px; background:#0369a1; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
                 SRC-10
               </span>
             </div>
   
             <div style="flex:1; min-width:260px;">
               <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-                <span class="subject-badge" style="background:#0284c7; color:#fff; border:none; font-weight:800;">
+                <span class="subject-badge" style="background:#0369a1; color:#fff; border:none; font-weight:800;">
                   🏆 School Reinforcement Engine
                 </span>
-                <span class="subject-badge" style="background:rgba(2,132,199,0.12); color:#0284c7; border-color:rgba(2,132,199,0.3); font-weight:700;">
+                <span class="subject-badge" style="background:rgba(3,105,161,0.12); color:#0369a1; border-color:rgba(3,105,161,0.3); font-weight:700;">
                   MAXXI Tematik Terpadu SD Kelas 1 Semester 1
                 </span>
               </div>
@@ -18424,6 +18427,7 @@
     }
   }
   
+  
 
   // --- Source: js/components/writing-lab.js ---
   // ================================================================
@@ -18525,12 +18529,12 @@
   
             <!-- Color Palette & Tools -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
-              <div style="display:flex; gap:8px; align-items:center;">
+              <div style="display:flex; gap:10px; align-items:center;">
                 <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
-                <button class="btn-color-dot" data-color="#056268" style="width:28px; height:28px; border-radius:50%; background:#056268; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#b24a1b" style="width:28px; height:28px; border-radius:50%; background:#b24a1b; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#2b5ea8" style="width:28px; height:28px; border-radius:50%; background:#2b5ea8; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#1e7b45" style="width:28px; height:28px; border-radius:50%; background:#1e7b45; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
               </div>
   
               <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
@@ -18574,6 +18578,7 @@
       }
   
       const startDraw = (e) => {
+        if (e.touches) e.preventDefault();
         isDrawing = true;
         const pos = getPos(e);
         lastX = pos.x;
@@ -18604,6 +18609,26 @@
       canvas.addEventListener('touchstart', startDraw, { passive: false });
       canvas.addEventListener('touchmove', draw, { passive: false });
       canvas.addEventListener('touchend', stopDraw);
+  
+      const handleResize = () => {
+        const r = canvas.getBoundingClientRect();
+        if (r.width > 0 && r.width !== canvas.width) {
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvas.width;
+          tempCanvas.height = canvas.height;
+          const tempCtx = tempCanvas.getContext('2d');
+          tempCtx.drawImage(canvas, 0, 0);
+  
+          canvas.width = r.width;
+          canvas.height = 340;
+          ctx.lineJoin = 'round';
+          ctx.lineCap = 'round';
+          ctx.lineWidth = 6;
+          ctx.strokeStyle = this.currentColor;
+          ctx.drawImage(tempCanvas, 0, 0);
+        }
+      };
+      window.addEventListener('resize', handleResize);
   
       // Bersihkan canvas
       this.container.querySelector('#btnClearCanvas')?.addEventListener('click', () => {
@@ -18647,6 +18672,7 @@
       });
     }
   }
+  
   
 
   // --- Source: js/components/math-toolbox.js ---
@@ -18888,6 +18914,7 @@
     }
   }
   
+  
 
   // --- Source: js/app.js ---
   // ================================================================
@@ -19079,13 +19106,18 @@
               </p>
             </div>
   
-            <div style="display:flex; gap:12px; flex-wrap:wrap;">
-              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+            <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+              <!-- Hero Logo Card Putih Mandiri (SOP v2.2 Blueprint B.4 & Standar Coding v1.8 Bagian 11.1) -->
+              <a href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" class="hero-logo-card" title="Anabhi Dev Portal Resmi" aria-label="Anabhi Dev Portal Resmi">
+                <img src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="160" height="52" loading="eager">
+              </a>
+  
+              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:105px;">
                 <span style="font-size:22px;">🔥</span>
                 <strong style="display:block; font-size:18px; color:var(--ink);">${progress.streakDays || 1} ${isEn ? 'Days' : 'Hari'}</strong>
                 <span style="font-size:11px; color:var(--muted);">${isEn ? 'Learning Streak' : 'Streak Semangat'}</span>
               </div>
-              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+              <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:105px;">
                 <span style="font-size:22px;">⭐</span>
                 <strong style="display:block; font-size:18px; color:var(--ink);">${progress.stars || 15}</strong>
                 <span style="font-size:11px; color:var(--muted);">${isEn ? 'Stars Collected' : 'Bintang Juara'}</span>
@@ -19134,7 +19166,7 @@
             <p class="section-sub">${isEn ? 'Explore deep conceptual visualizers for Mathematics and Geography' : 'Dilengkapi visualizer konsep mendalam untuk Matematika dan Geografi'}</p>
           </div>
   
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px;">
             <!-- Card Matematika -->
             <div class="subject-card" data-subject-id="matematika" style="cursor:pointer; border:2px solid var(--teal); background:var(--card); padding:24px;">
               <div class="subject-card-top" style="margin-bottom:14px;">
@@ -19177,7 +19209,7 @@
             <p class="section-sub">${isEn ? 'Direct access to structured reading, daily drills, multi-skills, school themes, math strategies, and handwriting!' : 'Akses langsung ke metode percepatan membaca, latihan kilat harian, 4 pilar terpadu, tematik sekolah, jurus berhitung, dan motorik menulis!'}</p>
           </div>
   
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:20px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px;">
             <!-- 1. Reading Lab (60 Jam Baca Tanpa Dieja) -->
             <div class="subject-card btn-open-companion" data-route="reading" style="cursor:pointer; border:1.5px solid rgba(8,145,178,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
               <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">

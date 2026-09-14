@@ -97,12 +97,12 @@ export class WritingLabComponent {
 
           <!-- Color Palette & Tools -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; gap:8px; align-items:center;">
+            <div style="display:flex; gap:10px; align-items:center;">
               <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
-              <button class="btn-color-dot" data-color="#056268" style="width:28px; height:28px; border-radius:50%; background:#056268; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-              <button class="btn-color-dot" data-color="#b24a1b" style="width:28px; height:28px; border-radius:50%; background:#b24a1b; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-              <button class="btn-color-dot" data-color="#2b5ea8" style="width:28px; height:28px; border-radius:50%; background:#2b5ea8; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
-              <button class="btn-color-dot" data-color="#1e7b45" style="width:28px; height:28px; border-radius:50%; background:#1e7b45; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer;"></button>
+              <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+              <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+              <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+              <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
             </div>
 
             <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
@@ -146,6 +146,7 @@ export class WritingLabComponent {
     }
 
     const startDraw = (e) => {
+      if (e.touches) e.preventDefault();
       isDrawing = true;
       const pos = getPos(e);
       lastX = pos.x;
@@ -176,6 +177,26 @@ export class WritingLabComponent {
     canvas.addEventListener('touchstart', startDraw, { passive: false });
     canvas.addEventListener('touchmove', draw, { passive: false });
     canvas.addEventListener('touchend', stopDraw);
+
+    const handleResize = () => {
+      const r = canvas.getBoundingClientRect();
+      if (r.width > 0 && r.width !== canvas.width) {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(canvas, 0, 0);
+
+        canvas.width = r.width;
+        canvas.height = 340;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = this.currentColor;
+        ctx.drawImage(tempCanvas, 0, 0);
+      }
+    };
+    window.addEventListener('resize', handleResize);
 
     // Bersihkan canvas
     this.container.querySelector('#btnClearCanvas')?.addEventListener('click', () => {
@@ -219,3 +240,4 @@ export class WritingLabComponent {
     });
   }
 }
+

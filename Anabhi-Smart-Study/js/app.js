@@ -187,13 +187,18 @@ class App {
             </p>
           </div>
 
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+            <!-- Hero Logo Card Putih Mandiri (SOP v2.2 Blueprint B.4 & Standar Coding v1.8 Bagian 11.1) -->
+            <a href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" class="hero-logo-card" title="Anabhi Dev Portal Resmi" aria-label="Anabhi Dev Portal Resmi">
+              <img src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="160" height="52" loading="eager">
+            </a>
+
+            <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:105px;">
               <span style="font-size:22px;">🔥</span>
               <strong style="display:block; font-size:18px; color:var(--ink);">${progress.streakDays || 1} ${isEn ? 'Days' : 'Hari'}</strong>
               <span style="font-size:11px; color:var(--muted);">${isEn ? 'Learning Streak' : 'Streak Semangat'}</span>
             </div>
-            <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:110px;">
+            <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:105px;">
               <span style="font-size:22px;">⭐</span>
               <strong style="display:block; font-size:18px; color:var(--ink);">${progress.stars || 15}</strong>
               <span style="font-size:11px; color:var(--muted);">${isEn ? 'Stars Collected' : 'Bintang Juara'}</span>
@@ -242,7 +247,7 @@ class App {
           <p class="section-sub">${isEn ? 'Explore deep conceptual visualizers for Mathematics and Geography' : 'Dilengkapi visualizer konsep mendalam untuk Matematika dan Geografi'}</p>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px;">
           <!-- Card Matematika -->
           <div class="subject-card" data-subject-id="matematika" style="cursor:pointer; border:2px solid var(--teal); background:var(--card); padding:24px;">
             <div class="subject-card-top" style="margin-bottom:14px;">
@@ -285,7 +290,7 @@ class App {
           <p class="section-sub">${isEn ? 'Direct access to structured reading, daily drills, multi-skills, school themes, math strategies, and handwriting!' : 'Akses langsung ke metode percepatan membaca, latihan kilat harian, 4 pilar terpadu, tematik sekolah, jurus berhitung, dan motorik menulis!'}</p>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:20px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px;">
           <!-- 1. Reading Lab (60 Jam Baca Tanpa Dieja) -->
           <div class="subject-card btn-open-companion" data-route="reading" style="cursor:pointer; border:1.5px solid rgba(8,145,178,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
             <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">

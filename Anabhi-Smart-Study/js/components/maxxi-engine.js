@@ -51,17 +51,17 @@ export class MaxxiEngineComponent {
               box-shadow: 0 10px 24px rgba(2, 132, 199, 0.28);
               border: 2px solid #fff;
             ">
-            <span style="position:absolute; bottom:-8px; right:-6px; background:#0284c7; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#0369a1; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
               SRC-10
             </span>
           </div>
 
           <div style="flex:1; min-width:260px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-              <span class="subject-badge" style="background:#0284c7; color:#fff; border:none; font-weight:800;">
+              <span class="subject-badge" style="background:#0369a1; color:#fff; border:none; font-weight:800;">
                 🏆 School Reinforcement Engine
               </span>
-              <span class="subject-badge" style="background:rgba(2,132,199,0.12); color:#0284c7; border-color:rgba(2,132,199,0.3); font-weight:700;">
+              <span class="subject-badge" style="background:rgba(3,105,161,0.12); color:#0369a1; border-color:rgba(3,105,161,0.3); font-weight:700;">
                 MAXXI Tematik Terpadu SD Kelas 1 Semester 1
               </span>
             </div>
@@ -224,3 +224,4 @@ export class MaxxiEngineComponent {
     });
   }
 }
+

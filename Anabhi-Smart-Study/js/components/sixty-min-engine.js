@@ -51,17 +51,17 @@ export class SixtyMinEngineComponent {
               box-shadow: 0 10px 24px rgba(22, 163, 74, 0.28);
               border: 2px solid #fff;
             ">
-            <span style="position:absolute; bottom:-8px; right:-6px; background:#16a34a; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#15803d; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
               SRC-13
             </span>
           </div>
 
           <div style="flex:1; min-width:260px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-              <span class="subject-badge" style="background:#16a34a; color:#fff; border:none; font-weight:800;">
+              <span class="subject-badge" style="background:#15803d; color:#fff; border:none; font-weight:800;">
                 🕒 Multi-Skill Starter Engine
               </span>
-              <span class="subject-badge" style="background:rgba(22,163,74,0.12); color:#16a34a; border-color:rgba(22,163,74,0.3); font-weight:700;">
+              <span class="subject-badge" style="background:rgba(21,128,61,0.12); color:#15803d; border-color:rgba(21,128,61,0.3); font-weight:700;">
                 Integral Media · Ilham Arifin
               </span>
             </div>
@@ -220,3 +220,4 @@ export class SixtyMinEngineComponent {
     });
   }
 }
+

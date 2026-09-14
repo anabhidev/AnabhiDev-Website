@@ -52,17 +52,17 @@ export class CalistungEngineComponent {
               box-shadow: 0 10px 24px rgba(234, 88, 12, 0.28);
               border: 2px solid #fff;
             ">
-            <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
+            <span style="position:absolute; bottom:-8px; right:-6px; background:#c2410c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px;">
               SRC-05
             </span>
           </div>
 
           <div style="flex:1; min-width:260px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-              <span class="subject-badge" style="background:#ea580c; color:#fff; border:none; font-weight:800;">
+              <span class="subject-badge" style="background:#c2410c; color:#fff; border:none; font-weight:800;">
                 ⚡ Daily Drill Engine
               </span>
-              <span class="subject-badge" style="background:rgba(234,88,12,0.12); color:#ea580c; border-color:rgba(234,88,12,0.3); font-weight:700;">
+              <span class="subject-badge" style="background:rgba(194,65,12,0.12); color:#c2410c; border-color:rgba(194,65,12,0.3); font-weight:700;">
                 Permata · Membaca, Menulis, Berhitung
               </span>
             </div>
@@ -228,3 +228,4 @@ export class CalistungEngineComponent {
     });
   }
 }
+
