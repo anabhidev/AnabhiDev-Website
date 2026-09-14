@@ -72,7 +72,19 @@
             "title": "Chef de Partie — Omakase & Hot Section",
             "description": "Lead our contemporary Japanese hot line and Robatayaki station. Work under Chef Carlos Barvo crafting exquisite plates with precision.",
             "datePosted": "2026-09-01",
+            "validThrough": "2026-12-31T23:59:59+08:00",
             "employmentType": "FULL_TIME",
+            "directApply": true,
+            "baseSalary": {
+              "@type": "MonetaryAmount",
+              "currency": "IDR",
+              "value": {
+                "@type": "QuantitativeValue",
+                "minValue": 7000000,
+                "maxValue": 9500000,
+                "unitText": "MONTH"
+              }
+            },
             "hiringOrganization": {
               "@type": "Organization",
               "name": "Miss Fish Bali",
@@ -98,7 +110,19 @@
             "title": "Sushi Chef / Nigiri Specialist",
             "description": "Master the art of Edo-mae nigiri and modern sashimi at our glowing onyx chef counter under Head Sushi Chef Putra Agustina.",
             "datePosted": "2026-09-01",
+            "validThrough": "2026-12-31T23:59:59+08:00",
             "employmentType": "FULL_TIME",
+            "directApply": true,
+            "baseSalary": {
+              "@type": "MonetaryAmount",
+              "currency": "IDR",
+              "value": {
+                "@type": "QuantitativeValue",
+                "minValue": 8000000,
+                "maxValue": 11000000,
+                "unitText": "MONTH"
+              }
+            },
             "hiringOrganization": {
               "@type": "Organization",
               "name": "Miss Fish Bali",
@@ -124,7 +148,19 @@
             "title": "Senior Mixologist & Cocktail Artisan",
             "description": "Compose boundary-pushing cocktails with Japanese botanicals, clarified bases, and rare sake under Bar Manager Rahadhie Putra.",
             "datePosted": "2026-09-01",
+            "validThrough": "2026-12-31T23:59:59+08:00",
             "employmentType": "FULL_TIME",
+            "directApply": true,
+            "baseSalary": {
+              "@type": "MonetaryAmount",
+              "currency": "IDR",
+              "value": {
+                "@type": "QuantitativeValue",
+                "minValue": 6500000,
+                "maxValue": 9000000,
+                "unitText": "MONTH"
+              }
+            },
             "hiringOrganization": {
               "@type": "Organization",
               "name": "Miss Fish Bali",
@@ -150,11 +186,18 @@
             "title": "Head Sommelier / Beverage Specialist",
             "description": "Lead our bespoke wine program alongside Ugi Sugianto. Curate pairings, educate floor staff, and recommend rare vintages to VIPs.",
             "datePosted": "2026-09-01",
+            "validThrough": "2026-12-31T23:59:59+08:00",
             "employmentType": "FULL_TIME",
-            "hiringOrganization": {
-              "@type": "Organization",
-              "name": "Miss Fish Bali",
-              "sameAs": "https://www.missfishbali.com"
+            "directApply": true,
+            "baseSalary": {
+              "@type": "MonetaryAmount",
+              "currency": "IDR",
+              "value": {
+                "@type": "QuantitativeValue",
+                "minValue": 9000000,
+                "maxValue": 13000000,
+                "unitText": "MONTH"
+              }
             },
             "jobLocation": {
               "@type": "Place",
@@ -179,6 +222,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- High Priority Branding Asset Preload for Lighthouse & Core Web Vitals LCP -->
+<link rel="preload" as="image" href="https://anabhidev.com/MFB/missfish-logo.webp" type="image/webp">
+
 <style>
 /* ================================================================
    Brand Design Tokens (Ref: https://www.missfishbali.com/)
@@ -199,9 +245,9 @@
   --gold-border: rgba(223, 190, 153, 0.2);
   
   --text: #ffffff;
-  --text-muted: #a39b8e;
+  --text-muted: #b5aca0;
   --text-sand: #181512;
-  --text-sand-muted: #5e5246;
+  --text-sand-muted: #4e4033;
   
   --success: #10b981;
   --line: rgba(223, 190, 153, 0.12);
@@ -259,12 +305,12 @@ img {
 
 /* Container */
 .container {
-  width: min(1200px, 92vw);
+  width: min(1240px, 92vw);
   margin-inline: auto;
 }
 
 .container-wide {
-  width: min(1320px, 94vw);
+  width: min(1400px, 94vw);
   margin-inline: auto;
 }
 
@@ -297,9 +343,23 @@ img {
 
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
-  line-height: 1.15;
+  line-height: 1.22;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+p, .pillar-desc, .job-summary, .mentor-bio, .sec-desc, .matcher-desc {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Buttons */
@@ -710,21 +770,44 @@ h1, h2, h3, h4 {
 }
 .jobs-filter-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .jobs-filter-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+  .jobs-filter-group::-webkit-scrollbar {
+    display: none;
+  }
+  .job-pill-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 .job-pill-btn {
-  padding: 9px 18px;
+  min-height: 40px;
+  padding: 8px 18px;
   border-radius: 999px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
-  color: #cccccc;
+  color: #d1cdc7;
   background: var(--surface);
   border: 1px solid var(--line);
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 .job-pill-btn:hover {
-  color: var(--gold);
+  color: var(--gold-light);
   border-color: var(--gold-border);
 }
 .job-pill-btn.active {
@@ -753,7 +836,7 @@ h1, h2, h3, h4 {
   outline: none;
 }
 .job-search-box input::placeholder {
-  color: #777777;
+  color: #9e9689;
 }
 
 .jobs-grid {
@@ -792,8 +875,8 @@ h1, h2, h3, h4 {
 }
 .job-type-tag {
   font-size: 11.5px;
-  color: #999;
-  background: rgba(255, 255, 255, 0.06);
+  color: #e5e5e5;
+  background: rgba(255, 255, 255, 0.08);
   padding: 4px 10px;
   border-radius: 6px;
 }
@@ -843,14 +926,14 @@ h1, h2, h3, h4 {
   color: #181512 !important;
 }
 .sec-light .sec-desc, .sec-sand .sec-desc {
-  color: #4a3e33 !important;
+  color: #3d3226 !important;
 }
 .sec-light .eyebrow, .sec-sand .eyebrow {
-  color: #8c6721 !important;
+  color: #5c3d0b !important;
 }
 .sec-light .eyebrow::before, .sec-light .eyebrow::after,
 .sec-sand .eyebrow::before, .sec-sand .eyebrow::after {
-  background: #8c6721 !important;
+  background: #5c3d0b !important;
 }
 
 /* Light Section: Pillars (#pillars) */
@@ -865,13 +948,13 @@ h1, h2, h3, h4 {
   transform: translateY(-4px);
 }
 .sec-light .pillar-num {
-  color: #b88636 !important;
+  color: #785116 !important;
 }
 .sec-light .pillar-title {
   color: #181512 !important;
 }
 .sec-light .pillar-desc {
-  color: #4a3e33 !important;
+  color: #3d3226 !important;
 }
 
 /* Light Section: Jobs Board (#positions) */
@@ -882,7 +965,7 @@ h1, h2, h3, h4 {
 }
 .sec-light .job-pill-btn:hover {
   color: #181512 !important;
-  border-color: #8c6721 !important;
+  border-color: #5c3d0b !important;
 }
 .sec-light .job-pill-btn.active {
   background: #181512 !important;
@@ -897,7 +980,7 @@ h1, h2, h3, h4 {
   color: #181512 !important;
 }
 .sec-light .job-search-box input::placeholder {
-  color: #7d7063 !important;
+  color: #635649 !important;
 }
 .sec-light .job-card {
   background: #ffffff !important;
@@ -913,23 +996,23 @@ h1, h2, h3, h4 {
   color: #181512 !important;
 }
 .sec-light .job-dept-tag {
-  color: #967126 !important;
+  color: #6d480d !important;
 }
 .sec-light .job-type-tag {
-  background: rgba(140, 103, 56, 0.1) !important;
-  color: #504439 !important;
+  background: rgba(140, 103, 56, 0.12) !important;
+  color: #3d3226 !important;
 }
 .sec-light .job-location {
-  color: #64584d !important;
+  color: #3e342b !important;
 }
 .sec-light .job-summary {
-  color: #433b33 !important;
+  color: #241e17 !important;
 }
 .sec-light .job-footer-actions {
-  border-top: 1px solid rgba(140, 103, 56, 0.15) !important;
+  border-top: 1px solid rgba(140, 103, 56, 0.18) !important;
 }
 .sec-light .job-salary-est {
-  color: #8c6721 !important;
+  color: #6d480d !important;
 }
 
 /* Miss Fish Talent Matcher Widget */
@@ -1050,22 +1133,24 @@ h1, h2, h3, h4 {
   gap: 14px;
 }
 .btn-share-icon {
-  padding: 8px 12px;
-  background: rgba(140, 103, 56, 0.1);
-  border: 1px solid rgba(140, 103, 56, 0.25);
+  min-height: 40px;
+  padding: 8px 14px;
+  background: rgba(140, 103, 56, 0.12);
+  border: 1px solid rgba(140, 103, 56, 0.28);
   border-radius: 8px;
-  color: #433b33;
-  font-size: 12px;
+  color: #2b251f;
+  font-size: 12.5px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-weight: 700;
+  gap: 6px;
+  font-weight: 750;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 .btn-share-icon:hover {
-  background: rgba(140, 103, 56, 0.2);
-  border-color: var(--gold-dark);
+  background: rgba(140, 103, 56, 0.22);
+  border-color: #785116;
   color: #181512;
 }
 
@@ -1263,7 +1348,7 @@ h1, h2, h3, h4 {
 .site-footer {
   background: var(--bg-deep);
   border-top: 1px solid var(--line);
-  padding: 80px 0 40px;
+  padding: 80px 0 calc(40px + env(safe-area-inset-bottom, 0px));
   font-size: 13.5px;
   color: var(--text-muted);
 }
@@ -1349,7 +1434,7 @@ h1, h2, h3, h4 {
   flex: 1;
 }
 .drawer-footer {
-  padding: 24px 32px;
+  padding: 24px 32px calc(24px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line);
   background: #111111;
   display: flex;
@@ -1439,7 +1524,7 @@ h1, h2, h3, h4 {
 <header class="site-nav" id="mainNav">
   <div class="container nav-inner">
     <a href="https://www.missfishbali.com" class="nav-brand" target="_blank" rel="noopener noreferrer">
-      <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali" width="160" height="52" onerror="this.onerror=null; this.src='assets/missfish-logo.webp';">
+      <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali" width="160" height="52" loading="eager" fetchpriority="high" onerror="this.onerror=null; this.src='assets/missfish-logo.webp';">
       <div style="display:none; font-family:var(--font-serif); font-size:22px; color:var(--gold); font-weight:800; letter-spacing:0.05em;">MISS FISH BALI</div>
     </a>
 
@@ -1481,7 +1566,7 @@ h1, h2, h3, h4 {
       </div>
 
       <div class="hero-showcase">
-        <img class="hero-showcase-logo" src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali" width="200" height="100" onerror="this.onerror=null; this.src='assets/missfish-logo.webp';">
+        <img class="hero-showcase-logo" src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali" width="200" height="100" loading="eager" fetchpriority="high" onerror="this.onerror=null; this.src='assets/missfish-logo.webp';">
         <div class="hero-showcase-title">Miss Fish Bali</div>
         <div class="hero-showcase-tag">People & Hospitality Artistry</div>
         <div style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
@@ -1714,9 +1799,15 @@ h1, h2, h3, h4 {
           <button class="job-pill-btn" onclick="filterJobs('Service')">Service</button>
           <button class="job-pill-btn" onclick="filterJobs('Bar')">Bar</button>
           <button class="job-pill-btn" onclick="filterJobs('Guest Relation')">Guest Relation</button>
-          <button class="job-pill-btn" onclick="filterJobs('IT')">IT</button>
+          <button class="job-pill-btn" onclick="filterJobs('Public Attendant')">Public Attendant</button>
           <button class="job-pill-btn" onclick="filterJobs('Accounting')">Accounting</button>
+          <button class="job-pill-btn" onclick="filterJobs('Engineering')">Engineering</button>
+          <button class="job-pill-btn" onclick="filterJobs('Security')">Security</button>
+          <button class="job-pill-btn" onclick="filterJobs('Human Resources')">Human Resources</button>
+          <button class="job-pill-btn" onclick="filterJobs('Creative & Marketing')">Creative &amp; Marketing</button>
+          <button class="job-pill-btn" onclick="filterJobs('IT')">IT</button>
           <button class="job-pill-btn" onclick="filterJobs('General & Admin')">General &amp; Admin</button>
+          <button class="job-pill-btn" onclick="filterJobs('Board of Director')">Board of Director</button>
         </div>
 
         <div class="job-search-box">
@@ -2541,9 +2632,17 @@ function renderJobs() {
     const actDept = currentActiveDept.toLowerCase();
     const matchesDept = currentActiveDept === 'all' || 
       jDept === actDept ||
-      (actDept === 'service' && (jDept.includes('service') || jDept.includes('front'))) ||
-      (actDept === 'guest relation' && (jDept.includes('guest') || jDept.includes('host'))) ||
-      (actDept === 'it' && (jDept.includes('it') || jDept.includes('system') || jDept.includes('tech')));
+      (actDept === 'service' && (jDept.includes('service') || jDept.includes('front') || jDept.includes('foh') || jDept === 'floor')) ||
+      (actDept === 'guest relation' && (jDept.includes('guest') || jDept.includes('host') || jDept.includes('relation') || jDept.includes('reception'))) ||
+      (actDept === 'public attendant' && (jDept.includes('attendant') || jDept.includes('steward') || jDept.includes('clean') || jDept.includes('public area'))) ||
+      (actDept === 'accounting' && (jDept.includes('account') || jDept.includes('finance') || jDept.includes('cost') || jDept.includes('purchas') || jDept.includes('tax'))) ||
+      (actDept === 'security' && (jDept.includes('security') || jDept.includes('guard') || jDept.includes('loss prevention'))) ||
+      (actDept === 'human resources' && (jDept.includes('hr') || jDept.includes('human') || jDept.includes('people') || jDept.includes('talent'))) ||
+      (actDept === 'creative & marketing' && (jDept.includes('creative') || jDept.includes('market') || jDept.includes('content') || jDept.includes('design') || jDept.includes('social'))) ||
+      (actDept === 'engineering' && (jDept.includes('eng') || jDept.includes('technician') || jDept.includes('maint'))) ||
+      (actDept === 'board of director' && (jDept.includes('director') || jDept.includes('board') || jDept.includes('bod') || jDept.includes('executive'))) ||
+      (actDept === 'general & admin' && (jDept.includes('admin') || jDept.includes('general') || jDept.includes('office'))) ||
+      (actDept === 'it' && (jDept.includes('it') || jDept.includes('system') || jDept.includes('tech') || jDept.includes('pos')));
     const matchesSearch = currentSearchTerm === '' || 
       job.title.toLowerCase().includes(currentSearchTerm) ||
       job.summary.toLowerCase().includes(currentSearchTerm) ||
