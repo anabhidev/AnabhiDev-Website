@@ -12600,6 +12600,7 @@
     render() {
       const state = appState.get();
       const lang = state.lang || 'id';
+      const isEn = lang === 'en';
   
       // Sinkronisasi kelas collapsed pada .shell
       if (state.sidebarCollapsed) {
