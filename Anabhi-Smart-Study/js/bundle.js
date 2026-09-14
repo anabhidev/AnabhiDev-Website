@@ -19032,15 +19032,15 @@
   
     bindState() {
       appState.subscribe((state) => {
-        this.topbar.render();
-        this.sidebar.render();
-        this.renderMain(state);
+        try { this.topbar.render(); } catch (err) { console.error('[App] topbar render error:', err); }
+        try { this.sidebar.render(); } catch (err) { console.error('[App] sidebar render error:', err); }
+        try { this.renderMain(state); } catch (err) { console.error('[App] renderMain error:', err); }
       });
   
       // Initial render
-      this.topbar.render();
-      this.sidebar.render();
-      this.renderMain(appState.get());
+      try { this.topbar.render(); } catch (err) { console.error('[App] initial topbar render error:', err); }
+      try { this.sidebar.render(); } catch (err) { console.error('[App] initial sidebar render error:', err); }
+      try { this.renderMain(appState.get()); } catch (err) { console.error('[App] initial renderMain error:', err); }
     }
   
     renderMain(state) {

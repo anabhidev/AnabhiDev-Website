@@ -52,7 +52,7 @@ Generated : 10 September 2026, 10:55:00
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Smart Study">
 
-  <!-- Anti-FOUC Script (SOP Website v1.9 Kategori 13 & Default Light/ID) -->
+  <!-- Anti-FOUC Script & Self-Healing Service Worker Cache Engine (SOP v1.9 & v2.2) -->
   <script>
     (function () {
       var root = document.documentElement;
@@ -68,15 +68,67 @@ Generated : 10 September 2026, 10:55:00
       } catch (e) {}
       root.setAttribute('data-theme', t);
       root.setAttribute('lang', lang);
+
+      // --- Self-Healing: Otomatis hapus cache usang & sinkronisasi Service Worker ---
+      var ACTIVE_CACHE = 'anabhidev-smart-study-v3-4';
+      if ('caches' in window) {
+        caches.keys().then(function (names) {
+          names.forEach(function (name) {
+            if (name !== ACTIVE_CACHE) {
+              caches.delete(name);
+            }
+          });
+        });
+      }
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          regs.forEach(function (reg) {
+            reg.update();
+          });
+        });
+        var reloaded = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+          if (!reloaded) {
+            reloaded = true;
+            window.location.reload();
+          }
+        });
+      }
+
+      // Fail-Safe Watchdog: Jika app shell kosong dalam 2 detik (misal akibat cache usang browser), otomatis bersihkan dan refresh
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var sidebar = document.getElementById('sidebar');
+          var main = document.getElementById('main');
+          var isBroken = (!sidebar || !sidebar.children.length) || (!main || !main.children.length);
+          if (isBroken) {
+            console.warn('[Watchdog] Deteksi layar belum ter-render, memulihkan cache secara otomatis...');
+            if ('caches' in window) {
+              caches.keys().then(function (keys) {
+                return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+              }).then(function () {
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.getRegistrations().then(function (regs) {
+                    regs.forEach(function (r) { r.unregister(); });
+                    var sep = window.location.href.indexOf('?') === -1 ? '?' : '&';
+                    window.location.replace(window.location.pathname + sep + 'v=' + Date.now() + window.location.hash);
+                  });
+                }
+              });
+            }
+          }
+        }, 2000);
+      });
     })();
   </script>
 
   <!-- Stylesheets dengan Version Query (SOP Kategori 1) -->
-  <link rel="stylesheet" href="css/base.css?v=20260915a">
-  <link rel="stylesheet" href="css/components.css?v=20260915a">
-  <link rel="stylesheet" href="css/math.css?v=20260915a">
-  <link rel="stylesheet" href="css/geography.css?v=20260915a">
-  <link rel="stylesheet" href="css/responsive.css?v=20260915a">
+  <link rel="stylesheet" href="css/base.css?v=20260915b">
+  <link rel="stylesheet" href="css/components.css?v=20260915b">
+  <link rel="stylesheet" href="css/math.css?v=20260915b">
+  <link rel="stylesheet" href="css/geography.css?v=20260915b">
+  <link rel="stylesheet" href="css/responsive.css?v=20260915b">
 
   <!-- Schema JSON-LD Structured Data (SOP Kategori 2) -->
   <script type="application/ld+json">
@@ -154,7 +206,7 @@ Generated : 10 September 2026, 10:55:00
   <div class="ai-modal-overlay" id="aiTutorModal" style="display:none;" aria-modal="true" role="dialog" aria-label="Kakak Belajar Pintar"></div>
 
   <!-- Main JavaScript Bootstrap Bundle (Compatible with file:/// and http/https) -->
-  <script defer src="js/bundle.js?v=20260915a"></script>
+  <script defer src="js/bundle.js?v=20260915b"></script>
 </body>
 </html>
 

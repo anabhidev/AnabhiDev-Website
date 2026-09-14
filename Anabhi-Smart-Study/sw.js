@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v3-3';
+var CACHE_VERSION = 'anabhidev-smart-study-v3-4';
 
 var PRECACHE = [
   './',
@@ -57,6 +57,7 @@ var PRECACHE = [
 ];
 
 self.addEventListener('install', function (e) {
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_VERSION).then(function (c) {
       return Promise.all(
@@ -66,8 +67,6 @@ self.addEventListener('install', function (e) {
           });
         })
       );
-    }).then(function () {
-      return self.skipWaiting();
     })
   );
 });
