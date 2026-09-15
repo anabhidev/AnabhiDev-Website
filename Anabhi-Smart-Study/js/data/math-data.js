@@ -41,70 +41,70 @@ export const MATH_DATA = {
     reasonEn: '25 + 75 = 100! Combined with the first 100, it leaps to 200!'
   },
 
-  // 4 Slot Video YouTube Matematika & Penjumlahan Terkurasi
+  // 9 Slot Video YouTube Matematika & Penjumlahan Terkurasi
   videoSlots: [
     {
       id: 'math-yt-1',
-      title: '1. Berhitung Cepat Jari Tanpa Sempoa (TK & SD)',
-      description: 'Jurus kilat menghitung penjumlahan hanya dengan formasi jari tangan tanpa alat bantu.',
-      url: 'https://www.youtube.com/watch?v=bdx64w2lG_Y',
-      channel: 'MA Kids Fun House',
-      ageFit: 'Kelas 1–6 SD'
-    },
-    {
-      id: 'math-yt-2',
-      title: '2. Jarimatika Jurus Zero: Trik Penjumlahan Jari',
-      description: 'Trik ceria berhitung penjumlahan dengan gerakan jari tangan ala Jarimatika super asyik.',
-      url: 'https://www.youtube.com/watch?v=3DrTPVa6yVQ',
+      title: '1. Jarimatika Jurus Zero: Trik Penjumlahan Jari (Cepat & Asyik)',
+      description: 'Trik ceria berhitung penjumlahan dengan gerakan jari tangan ala Jarimatika super asyik tanpa alat bantu.',
+      url: 'https://www.youtube.com/watch?v=3DrTPVa6yVQ&t=10s',
       channel: 'Ayo Cerdas Indonesia',
       ageFit: 'Kelas 1–6 SD'
     },
     {
+      id: 'math-yt-2',
+      title: '2. Berhitung Cepat Jari Tanpa Sempoa (TK & SD)',
+      description: 'Jurus kilat menghitung penjumlahan hanya dengan formasi jari tangan yang mudah dan menyenangkan.',
+      url: 'https://www.youtube.com/watch?v=bdx64w2lG_Y&t=46s',
+      channel: 'MA Kids Fun House',
+      ageFit: 'TK & SD'
+    },
+    {
       id: 'math-yt-3',
-      title: '3. Anak SD Kelas 1 Belajar Matematika Super Pintar',
-      description: 'Metode belajar matematika yang seru dan mudah dipahami untuk anak SD kelas 1.',
+      title: '3. Jarimatika Smart: Penjumlahan Cepat & Mudah Tanpa Sempoa',
+      description: 'Metode belajar matematika penjumlahan yang seru, ceria, dan mudah dipahami anak SD.',
       url: 'https://www.youtube.com/watch?v=EwaDjQqy-Sk',
-      channel: 'Pintar Matematika',
+      channel: 'MA Kids Fun House',
       ageFit: 'Kelas 1–3 SD'
     },
     {
       id: 'math-yt-4',
-      title: '4. Cara Menghitung Penjumlahan Bersusun Mudah',
-      description: 'Panduan langkah demi langkah menghitung penjumlahan bersusun dengan cara yang sangat mudah.',
+      title: '4. Jarimatika: Belajar Perkalian Praktis Pakai Jari',
+      description: 'Trik praktis dan asyik belajar dasar perkalian matematika hanya dengan bantuan formasi jari jemari.',
       url: 'https://www.youtube.com/watch?v=P88N7DmPiX8',
-      channel: 'Belajar Matematika Bersama',
+      channel: 'Vincdels',
       ageFit: 'Kelas 1–6 SD'
     },
     {
       id: 'math-yt-5',
-      title: '5. Belajar Pengurangan Untuk Anak SD Kelas 1',
-      description: 'Mengenalkan konsep pengurangan dasar dengan visual yang menarik dan gampang diikuti.',
+      title: '5. Trik Cepat Perkalian 2 Digit (Angka 11–99 Sembarang)',
+      description: 'Metode nalar cerdas menghitung perkalian 2 digit tanpa perlu coret-coretan panjang yang rumit.',
       url: 'https://www.youtube.com/watch?v=SuBWeBUDOq4',
-      channel: 'Edukasi Anak Hebat',
-      ageFit: 'Kelas 1 SD'
+      channel: 'Walikelas Pembelajar',
+      ageFit: 'Kelas 2–6 SD'
     },
     {
       id: 'math-yt-6',
-      title: '6. Trik Cepat Perkalian Dasar Untuk Anak SD',
-      description: 'Persiapan belajar perkalian dengan cara yang menyenangkan menggunakan jari tangan.',
+      title: '6. Trik Cepat Perkalian 2 Digit 3 Detik',
+      description: 'Teknik rahasia menghitung perkalian puluhan secepat kilat dengan logika matematika yang menyenangkan.',
       url: 'https://www.youtube.com/watch?v=lN9Rb0bdSbQ',
-      channel: 'Jagoan Matematika',
-      ageFit: 'Kelas 2–3 SD'
+      channel: 'Edu-Vid',
+      ageFit: 'Kelas 2–6 SD'
     },
     {
       id: 'math-yt-7',
-      title: '7. Kuis Matematika Seru Tebak Angka Anak TK/SD',
-      description: 'Kuis tebak-tebakan matematika yang interaktif untuk mengasah otak dengan riang gembira.',
+      title: '7. Cara Cepat Perkalian 1–10 Tanpa Menghafal',
+      description: 'Memahami pola logika perkalian 1 sampai 10 secara alami dan intuitif tanpa beban hafalan rumus.',
       url: 'https://www.youtube.com/watch?v=E7x55aTvNe0',
-      channel: 'Kuis Anak Cerdas',
-      ageFit: 'TK & SD'
+      channel: 'Walikelas Pembelajar',
+      ageFit: 'Kelas 1–4 SD'
     },
     {
       id: 'math-yt-8',
-      title: '8. Kuis Matematika Dasar: Asah Otak Penjumlahan',
-      description: 'Kuis interaktif melatih kecepatan dan ketepatan berhitung jumlah-jumlahan dasar dengan riang.',
+      title: '8. Kuis Matematika Dasar: Asah Otak Penjumlahan & Kecepatan Berhitung',
+      description: 'Kuis interaktif melatih kecepatan dan ketepatan berhitung jumlah-jumlahan dasar dengan riang gembira.',
       url: 'https://www.youtube.com/watch?v=DQYkGL0X-yA',
-      channel: 'Quiz QUPU',
+      channel: 'Quiz QUPU (Quiz Pengetahuan Umum)',
       ageFit: 'Kelas 1–6 SD'
     },
     {

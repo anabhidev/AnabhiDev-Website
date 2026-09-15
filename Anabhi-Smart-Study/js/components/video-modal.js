@@ -34,11 +34,21 @@ export class VideoModalComponent {
     const match = youtubeUrl.match(regExp);
     const videoId = (match && match[2].length === 11) ? match[2] : null;
 
+    // Ekstrak parameter waktu mulai jika ada (misal &t=10s atau ?t=46)
+    let startSeconds = null;
+    const tMatch = youtubeUrl.match(/[?&]t=([0-9]+)s?/);
+    if (tMatch && tMatch[1]) {
+      startSeconds = parseInt(tMatch[1], 10);
+    }
+
+    const timeParam = startSeconds ? `&t=${startSeconds}s` : '';
+    const embedTimeParam = startSeconds ? `&start=${startSeconds}` : '';
+
     const directUrl = videoId
-      ? `https://www.youtube.com/watch?v=${videoId}`
+      ? `https://www.youtube.com/watch?v=${videoId}${timeParam}`
       : youtubeUrl;
     const embedUrl = videoId
-      ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+      ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0${embedTimeParam}`
       : youtubeUrl;
     const thumbUrl = videoId
       ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
