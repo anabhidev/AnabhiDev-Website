@@ -12468,11 +12468,15 @@
         </div>
   
         <div class="topbar-right">
-          <!-- Profil Siswa Aktif: Ana (🌸) / Abhi (⚡) -->
-          <button class="student-pill ${currentStudent === 'Abhi' ? 'abhi' : 'ana'}" id="studentSwitchBtn" type="button" title="${isEn ? 'Switch Student Profile: Ana / Abhi' : 'Klik untuk ganti profil siswa: Ana / Abhi'}">
-            <span class="avatar">${currentStudent === 'Abhi' ? '⚡' : '🌸'}</span>
-            <span class="name">${currentStudent}</span>
-          </button>
+          <!-- Pilihan Profil Siswa (Ana / Abhi) -->
+          <div class="student-switcher" style="display:flex; background:rgba(0,0,0,0.2); border-radius:999px; padding:3px; margin-right:4px;">
+            <button class="student-toggle ${currentStudent === 'Ana' ? 'active ana' : ''}" data-student="Ana" type="button" title="${isEn ? 'Switch to Ana' : 'Pilih profil Ana'}">
+              <span class="avatar">🌸</span> Ana
+            </button>
+            <button class="student-toggle ${currentStudent === 'Abhi' ? 'active abhi' : ''}" data-student="Abhi" type="button" title="${isEn ? 'Switch to Abhi' : 'Pilih profil Abhi'}">
+              <span class="avatar">⚡</span> Abhi
+            </button>
+          </div>
   
           <!-- Bintang Belajar Siswa Aktif -->
           <div class="stat-pill" title="${t('starsTitle', lang)} (${currentStudent})">
@@ -12514,11 +12518,13 @@
     }
   
     attachEvents() {
-      const studentBtn = this.container.querySelector('#studentSwitchBtn');
-      if (studentBtn) {
-        studentBtn.addEventListener('click', () => {
+      const studentToggles = this.container.querySelectorAll('.student-toggle');
+      studentToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const next = e.currentTarget.dataset.student;
           const curr = store.getStudent();
-          const next = curr === 'Ana' ? 'Abhi' : 'Ana';
+          if (next === curr) return; // Jika sudah aktif, tidak perlu melakukan apa-apa
+  
           store.switchStudent(next);
           appState.set({ currentStudent: next });
           AudioFx.playCelebration();
@@ -12526,7 +12532,7 @@
           // Sinkronisasi view aktif agar data bintang & nama langsung terupdate
           appState.notify();
         });
-      }
+      });
   
       const aiTutorBtn = this.container.querySelector('#aiTutorBtn');
       if (aiTutorBtn) {
