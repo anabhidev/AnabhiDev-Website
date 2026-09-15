@@ -98,6 +98,22 @@ export const MATH_DATA = {
       url: 'https://www.youtube.com/watch?v=E7x55aTvNe0',
       channel: 'Kuis Anak Cerdas',
       ageFit: 'TK & SD'
+    },
+    {
+      id: 'math-yt-8',
+      title: '8. Kuis Matematika Dasar: Asah Otak Penjumlahan',
+      description: 'Kuis interaktif melatih kecepatan dan ketepatan berhitung jumlah-jumlahan dasar dengan riang.',
+      url: 'https://www.youtube.com/watch?v=DQYkGL0X-yA',
+      channel: 'Quiz QUPU',
+      ageFit: 'Kelas 1–6 SD'
+    },
+    {
+      id: 'math-yt-9',
+      title: '9. Cara Menghitung Penjumlahan Bersusun (Nilai Tempat)',
+      description: 'Panduan langkah demi langkah menghitung penjumlahan susun panjang & pendek dengan mudah dan jelas.',
+      url: 'https://www.youtube.com/watch?v=uY1Wndy5N0o',
+      channel: 'Bu Retno - Belajar Matematika',
+      ageFit: 'Kelas 1–6 SD'
     }
   ],
 
