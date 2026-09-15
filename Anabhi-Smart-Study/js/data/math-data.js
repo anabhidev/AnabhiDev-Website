@@ -61,19 +61,43 @@ export const MATH_DATA = {
     },
     {
       id: 'math-yt-3',
-      title: '3. Kuis Matematika Dasar: Asah Otak Penjumlahan',
-      description: 'Kuis interaktif melatih kecepatan dan ketepatan berhitung jumlah-jumlahan dasar dengan riang.',
-      url: 'https://www.youtube.com/watch?v=DQYkGL0X-yA',
-      channel: 'Quiz QUPU',
-      ageFit: 'Kelas 1–6 SD'
+      title: '3. Anak SD Kelas 1 Belajar Matematika Super Pintar',
+      description: 'Metode belajar matematika yang seru dan mudah dipahami untuk anak SD kelas 1.',
+      url: 'https://www.youtube.com/watch?v=EwaDjQqy-Sk',
+      channel: 'Pintar Matematika',
+      ageFit: 'Kelas 1–3 SD'
     },
     {
       id: 'math-yt-4',
-      title: '4. Cara Menghitung Penjumlahan Bersusun (Nilai Tempat)',
-      description: 'Panduan langkah demi langkah menghitung penjumlahan susun panjang & pendek dengan mudah dan jelas.',
-      url: 'https://www.youtube.com/watch?v=uY1Wndy5N0o',
-      channel: 'Bu Retno - Belajar Matematika',
+      title: '4. Cara Menghitung Penjumlahan Bersusun Mudah',
+      description: 'Panduan langkah demi langkah menghitung penjumlahan bersusun dengan cara yang sangat mudah.',
+      url: 'https://www.youtube.com/watch?v=P88N7DmPiX8',
+      channel: 'Belajar Matematika Bersama',
       ageFit: 'Kelas 1–6 SD'
+    },
+    {
+      id: 'math-yt-5',
+      title: '5. Belajar Pengurangan Untuk Anak SD Kelas 1',
+      description: 'Mengenalkan konsep pengurangan dasar dengan visual yang menarik dan gampang diikuti.',
+      url: 'https://www.youtube.com/watch?v=SuBWeBUDOq4',
+      channel: 'Edukasi Anak Hebat',
+      ageFit: 'Kelas 1 SD'
+    },
+    {
+      id: 'math-yt-6',
+      title: '6. Trik Cepat Perkalian Dasar Untuk Anak SD',
+      description: 'Persiapan belajar perkalian dengan cara yang menyenangkan menggunakan jari tangan.',
+      url: 'https://www.youtube.com/watch?v=lN9Rb0bdSbQ',
+      channel: 'Jagoan Matematika',
+      ageFit: 'Kelas 2–3 SD'
+    },
+    {
+      id: 'math-yt-7',
+      title: '7. Kuis Matematika Seru Tebak Angka Anak TK/SD',
+      description: 'Kuis tebak-tebakan matematika yang interaktif untuk mengasah otak dengan riang gembira.',
+      url: 'https://www.youtube.com/watch?v=E7x55aTvNe0',
+      channel: 'Kuis Anak Cerdas',
+      ageFit: 'TK & SD'
     }
   ],
 

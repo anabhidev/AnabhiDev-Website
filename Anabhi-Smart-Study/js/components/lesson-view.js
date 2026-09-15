@@ -77,7 +77,7 @@ export class MathLessonView {
         ? this.renderCurriculumContent(lang, isEn)
         : this.renderToolboxContent(a, b, solution, activeMethod, progress, lang, isEn)}
 
-      <!-- 4 Slot Video YouTube Matematika -->
+      <!-- Slot Video YouTube Matematika -->
       ${availableVideos.length > 0 ? `
         <div class="section" style="margin-top:44px;">
           <div class="eyebrow"><span class="no">▶</span><span class="lbl">${t('videosHeaderEyebrow', lang) || 'VIDEO PENGAYAAN'}</span></div>
