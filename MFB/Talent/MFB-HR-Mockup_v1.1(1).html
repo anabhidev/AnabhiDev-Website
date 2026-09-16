@@ -1647,13 +1647,39 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
   .login-right { flex: 1; max-width: 100%; }
 }
 
+#printDossierContainer {
+  display: none;
+}
+
 @media print {
-  .sidebar, .topbar, .topbar-actions, .btn, .toolbar, .portal-switch-btn {
+  .sidebar, .topbar, .topbar-actions, .btn, .toolbar, .portal-switch-btn, .modal-overlay, .mobile-drawer, .toast-msg {
     display: none !important;
   }
   .main-wrapper { margin-left: 0; }
   .page-content { padding: 0; }
   .card, .hero-b4 { box-shadow: none !important; }
+
+  /* Full-Page Luxury Printable Dossier & Food/Cocktail Tasting Scorecard */
+  body.printing-dossier * {
+    visibility: hidden !important;
+  }
+  body.printing-dossier .app-container {
+    display: none !important;
+  }
+  body.printing-dossier #printDossierContainer,
+  body.printing-dossier #printDossierContainer * {
+    visibility: visible !important;
+  }
+  body.printing-dossier #printDossierContainer {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    padding: 20px 24px !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
 }
 
 /* ================================================================
@@ -3306,6 +3332,22 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
             <span class="ico">🔍</span>
             <input class="input" id="adminAppSearch" placeholder="Search name, position, or email…" oninput="filterAdminApplicants()">
           </div>
+          <select class="select" id="adminDeptFilter" onchange="filterAdminApplicants()">
+            <option value="">Semua Departemen (13 Divisi)</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Service">Service</option>
+            <option value="Bar">Bar</option>
+            <option value="Board of Director">Board of Director</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Guest Relation">Guest Relation</option>
+            <option value="Public Attendant">Public Attendant</option>
+            <option value="Accounting">Accounting</option>
+            <option value="Security">Security</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Creative & Marketing">Creative &amp; Marketing</option>
+            <option value="IT">IT</option>
+            <option value="General & Admin">General &amp; Admin</option>
+          </select>
           <select class="select" id="adminPosFilter" onchange="filterAdminApplicants()">
             <option value="">All Positions (Semua Posisi)</option>
             <option value="Chef de Partie">Chef de Partie</option>
@@ -4853,7 +4895,10 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
           <div class="modal-sub" id="candidateModalSub">Position · Location</div>
         </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <button class="btn btn-ghost" onclick="printCandidateDossier()" style="min-height: 32px; padding: 4px 12px; font-size: 11.5px; border: 1px solid var(--gold); color: var(--gold-dark); font-weight: 750; display: inline-flex; align-items: center; gap: 6px;" title="Cetak Lembar Penilaian Wawancara & Tasting Dossier (Print / PDF)">
+          <span>🖨️</span> Cetak Lembar Evaluasi
+        </button>
         <span class="status new" id="candStatusBadge">New</span>
         <button class="icon-btn" onclick="closeCandidateModal()" aria-label="Close Modal">×</button>
       </div>
@@ -6695,17 +6740,20 @@ async function fetchVacanciesFromGoogleSheetsForAdmin() {
 // Filter and Render Admin Applicants Table
 function filterAdminApplicants() {
   const q = (document.getElementById('adminAppSearch')?.value || '').toLowerCase().trim();
+  const dept = (document.getElementById('adminDeptFilter')?.value || '').toLowerCase().trim();
   const pos = (document.getElementById('adminPosFilter')?.value || '').toLowerCase().trim();
   const st = document.getElementById('adminStatusFilter')?.value || '';
   const syncSt = document.getElementById('adminSyncFilter')?.value || '';
 
   const filtered = applicantsData.filter(a => {
     const matchQ = !q || (a.name + ' ' + a.position + ' ' + a.email + ' ' + (a.candidateId || '')).toLowerCase().includes(q);
+    const aDept = (a.dept || '').toLowerCase();
+    const matchDept = !dept || aDept === dept || aDept.includes(dept) || (typeof normalizeDepartment === 'function' && normalizeDepartment(a.dept).toLowerCase() === dept);
     const aPos = (a.position || '').toLowerCase();
     const matchPos = !pos || aPos === pos || aPos.includes(pos) || pos.includes(aPos);
     const matchSt = !st || a.status === st;
     const matchSync = !syncSt || a.clickupSyncStatus === syncSt;
-    return matchQ && matchPos && matchSt && matchSync;
+    return matchQ && matchDept && matchPos && matchSt && matchSync;
   });
 
   const tbody = document.getElementById('adminApplicantsTable');
@@ -7515,23 +7563,26 @@ function copyAiInterviewKit(name, position) {
   }
 }
 
-// Export Applicants to CSV with Full ClickUp ATS Audit Trail
+// Export Applicants to CSV with 13-Department & Full ClickUp ATS Audit Trail
 function exportApplicantsToCsv() {
   const q = (document.getElementById('adminAppSearch')?.value || '').toLowerCase().trim();
+  const dept = (document.getElementById('adminDeptFilter')?.value || '').trim();
   const pos = document.getElementById('adminPosFilter')?.value || '';
   const st = document.getElementById('adminStatusFilter')?.value || '';
   const syncSt = document.getElementById('adminSyncFilter')?.value || '';
 
   const candidates = applicantsData.filter(a => {
     const mQ = !q || (a.name + ' ' + a.position + ' ' + a.email + ' ' + (a.candidateId || '')).toLowerCase().includes(q);
+    const aDept = a.dept || '';
+    const mDept = !dept || aDept.toLowerCase() === dept.toLowerCase() || (typeof normalizeDepartment === 'function' && normalizeDepartment(aDept).toLowerCase() === dept.toLowerCase());
     const mPos = !pos || a.position === pos;
     const mSt = !st || a.status === st;
     const mSync = !syncSt || a.clickupSyncStatus === syncSt;
-    return mQ && mPos && mSt && mSync;
+    return mQ && mDept && mPos && mSt && mSync;
   });
 
   if (candidates.length === 0) {
-    toast('No applicants found matching current filters');
+    toast('Tidak ada pelamar yang cocok dengan filter aktif untuk diexport');
     return;
   }
 
@@ -7590,15 +7641,172 @@ function exportApplicantsToCsv() {
   const url = URL.createObjectURL(blob);
   const now = new Date();
   const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const deptSuffix = dept ? dept.replace(/[^a-zA-Z0-9]/g, '_') : 'AllDepts';
   const a = document.createElement('a');
   a.href = url;
-  a.download = `MFB-Recruitment-Applicants-${dateStr}.csv`;
+  a.download = `MFB-Recruitment-${deptSuffix}-${dateStr}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 
-  toast(`✓ Exported ${candidates.length} candidate(s) to CSV!`);
+  toast(`✓ Berhasil mengekspor ${candidates.length} data pelamar (${dept || 'Semua Departemen'}) ke format CSV!`);
+}
+
+// Print / PDF Ready Candidate Evaluation & Tasting Dossier
+function printCandidateDossier(candidateId) {
+  const targetId = candidateId || currentCandDetailId;
+  const cand = targetId ? applicantsData.find(a => a.id === targetId) : null;
+  if (!cand) {
+    toast('Pilih kandidat terlebih dahulu untuk mencetak dossier evaluasi.');
+    return;
+  }
+
+  const printContainer = document.getElementById('printDossierContainer');
+  if (!printContainer) return;
+
+  const todayStr = new Date().toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  printContainer.innerHTML = `
+    <div style="font-family: Arial, sans-serif; color: #111; line-height: 1.4; padding: 10px;">
+      <!-- Header with Logo / Letterhead -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #102c2d; padding-bottom: 14px; margin-bottom: 18px;">
+        <div>
+          <div style="font-size: 22px; font-weight: 900; letter-spacing: 0.05em; color: #102c2d;">MISS FISH BALI</div>
+          <div style="font-size: 13px; font-weight: 750; color: #b88636; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px;">
+            CANDIDATE INTERVIEW &amp; TASTING EVALUATION DOSSIER
+          </div>
+          <div style="font-size: 11px; color: #555; margin-top: 4px;">
+            Jl. Raya Semat, Canggu, Bali · Department of Human Resources · Strictly Confidential
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 11px; font-weight: 700; color: #555;">TANGGAL EVALUASI:</div>
+          <div style="font-size: 13px; font-weight: 800; color: #102c2d;">${todayStr}</div>
+          <div style="font-size: 10.5px; color: #777; margin-top: 2px;">ID: ${esc(cand.candidateId || ('MFB-HR-' + cand.id))}</div>
+        </div>
+      </div>
+
+      <!-- Candidate Snapshot Table -->
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 12px; border: 1px solid #ccc;">
+        <tbody>
+          <tr>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; width: 18%; border: 1px solid #ccc;">Nama Pelamar</td>
+            <td style="padding: 8px 12px; font-weight: 850; font-size: 13px; border: 1px solid #ccc;">${esc(cand.name)}</td>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; width: 18%; border: 1px solid #ccc;">Posisi Dilamar</td>
+            <td style="padding: 8px 12px; font-weight: 850; color: #102c2d; border: 1px solid #ccc;">${esc(cand.position)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">Departemen</td>
+            <td style="padding: 8px 12px; border: 1px solid #ccc;">${esc(cand.dept || 'Hospitality')}</td>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">Ekspektasi Gaji</td>
+            <td style="padding: 8px 12px; font-weight: 750; border: 1px solid #ccc;">${esc(cand.expectedSalary || 'Sesuai Standar MFB')}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">No. Kontak / WA</td>
+            <td style="padding: 8px 12px; border: 1px solid #ccc;">${esc(cand.phone)}</td>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">Alamat Email</td>
+            <td style="padding: 8px 12px; border: 1px solid #ccc;">${esc(cand.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">Pengalaman Kerja</td>
+            <td style="padding: 8px 12px; border: 1px solid #ccc;">${esc(cand.experience || '-')}</td>
+            <td style="padding: 8px 12px; font-weight: 700; background: #f5f5f5; border: 1px solid #ccc;">Kesiapan Mulai</td>
+            <td style="padding: 8px 12px; border: 1px solid #ccc;">${esc(cand.earliestStartDate || 'Immediately')}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Structured Evaluation Rubric (1 - 5) -->
+      <div style="font-size: 12px; font-weight: 800; color: #102c2d; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #102c2d; padding-bottom: 4px;">
+        I. RUBRIK PENILAIAN KOMPETENSI HOSPITALITY &amp; TASTING (SKALA 1 - 5)
+      </div>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 11.5px; border: 1px solid #ccc;">
+        <thead>
+          <tr style="background: #f0f0f0;">
+            <th style="padding: 8px; border: 1px solid #ccc; text-align: left; width: 38%;">Kriteria Penilaian</th>
+            <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">Deskripsi Indikator Keberhasilan</th>
+            <th style="padding: 8px; border: 1px solid #ccc; text-align: center; width: 14%;">Skor (1 - 5)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; font-weight: 700;">1. Grooming, Poise &amp; First Impression</td>
+            <td style="padding: 8px; border: 1px solid #ccc; color: #444;">Kerapian fisik, standar kebersihan fine dining, kehangatan senyum, dan etika bersikap.</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; font-size: 13px;">[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; font-weight: 700;">2. Technical Craftsmanship &amp; Speed</td>
+            <td style="padding: 8px; border: 1px solid #ccc; color: #444;">Kemahiran pisau/resep (Kitchen), racikan mixology (Bar), kelincahan sequence of service (Floor).</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; font-size: 13px;">[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; font-weight: 700;">3. English &amp; Communication Poise</td>
+            <td style="padding: 8px; border: 1px solid #ccc; color: #444;">Kelancaran komunikasi bahasa Inggris, kejelasan intonasi, dan percaya diri berinteraksi dengan tamu VIP.</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; font-size: 13px;">[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; font-weight: 700;">4. Composure Under Pressure</td>
+            <td style="padding: 8px; border: 1px solid #ccc; color: #444;">Ketenangan saat dinner rush, daya tahan fisik, ketangkasan problem-solving, dan kepatuhan SOP.</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; font-size: 13px;">[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; font-weight: 700;">5. Team Harmony &amp; Culture Fit</td>
+            <td style="padding: 8px; border: 1px solid #ccc; color: #444;">Sikap rendah hati, kemauan belajar teknik baru, dan keselarasan dengan kultur Miss Fish Bali.</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; font-size: 13px;">[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Food Tasting / Operational Observation Notes -->
+      <div style="font-size: 12px; font-weight: 800; color: #102c2d; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #102c2d; padding-bottom: 4px;">
+        II. CATATAN FOOD / COCKTAIL TASTING &amp; OBSERVASI PEWAWANCARA
+      </div>
+      <div style="border: 1px solid #ccc; min-height: 100px; padding: 10px; margin-bottom: 18px; font-size: 12px; color: #333; line-height: 1.8;">
+        ${cand.screeningNotes ? '<em>Catatan HR Awal: ' + esc(cand.screeningNotes) + '</em><br><br>' : ''}
+        .......................................................................................................................................................................................................<br>
+        .......................................................................................................................................................................................................<br>
+        .......................................................................................................................................................................................................
+      </div>
+
+      <!-- Hiring Decision -->
+      <div style="font-size: 12px; font-weight: 800; color: #102c2d; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #102c2d; padding-bottom: 4px;">
+        III. REKOMENDASI KEPUTUSAN AKHIR (PILIH SALAH SATU)
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 24px; font-size: 12px; font-weight: 750;">
+        <div style="border: 1px solid #ccc; padding: 8px 14px; border-radius: 4px; flex: 1; text-align: center;">[ &nbsp;&nbsp; ] DIREKOMENDASIKAN (HIRE)</div>
+        <div style="border: 1px solid #ccc; padding: 8px 14px; border-radius: 4px; flex: 1; text-align: center;">[ &nbsp;&nbsp; ] TRIAL / TASTING KEDUA</div>
+        <div style="border: 1px solid #ccc; padding: 8px 14px; border-radius: 4px; flex: 1; text-align: center;">[ &nbsp;&nbsp; ] SIMPAN DALAM TALENT POOL</div>
+        <div style="border: 1px solid #ccc; padding: 8px 14px; border-radius: 4px; flex: 1; text-align: center;">[ &nbsp;&nbsp; ] BELUM MEMENUHI SYARAT</div>
+      </div>
+
+      <!-- Sign-off Block -->
+      <div style="display: flex; justify-content: space-between; margin-top: 20px; font-size: 12px;">
+        <div style="width: 45%; border-top: 1px solid #333; padding-top: 6px;">
+          <strong>Tanda Tangan Pewawancara 1 (Head of Dept / Chef / Bar Lead):</strong><br><br><br>
+          Nama Lengkap: ..............................................................<br>
+          Jabatan: ..........................................................................
+        </div>
+        <div style="width: 45%; border-top: 1px solid #333; padding-top: 6px;">
+          <strong>Tanda Tangan Pewawancara 2 (HR Director / GM):</strong><br><br><br>
+          Nama Lengkap: ..............................................................<br>
+          Jabatan: ..........................................................................
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.classList.add('printing-dossier');
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      document.body.classList.remove('printing-dossier');
+    }, 500);
+  }, 100);
 }
 
 // ================================================================
@@ -13713,6 +13921,8 @@ document.addEventListener('keydown', function(e) {
 </script>
 <!-- Floating Tooltip for Charts -->
 <div id="chartTooltip" class="chart-tooltip-floating"></div>
+<!-- Full-Page Printable Candidate Dossier & Tasting Scorecard -->
+<div id="printDossierContainer" class="print-dossier-only"></div>
 </body>
 </html>
 
