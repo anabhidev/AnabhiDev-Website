@@ -34,7 +34,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://api.clickup.com https://*.supabase.co; frame-src 'self' https://forms.clickup.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://alcdn.msauth.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.msauth.net https://*.msftauth.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com https://script.google.com https://script.googleusercontent.com https://remoteok.com https://www.arbeitnow.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://api.clickup.com https://*.supabase.co; frame-src 'self' https://forms.clickup.com https://calendar.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 /*.webp
   Cache-Control: public, max-age=31536000, immutable
@@ -144,3 +144,23 @@
 /MFB/Talent/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
+
+# ── Halaman Setup & Panduan Interaktif: Selalu revalidate ───────
+/setup.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB/Talent/setup.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Cloudflare Pages Functions Edge API Proxy ──────────────────
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization
+
+/MFB/Talent/api/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization

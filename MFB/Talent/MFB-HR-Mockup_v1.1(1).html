@@ -2691,6 +2691,9 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" data-view="admin-ai-reports" onclick="navTo('admin-ai-reports')" style="border-left: 2px solid var(--accent);" title="Laporan Intelligence Rekrutmen Gemini AI (AIReports_v1.5.gs)">
         <span class="ico">✨</span> AI Intelligence (Gemini)
       </button>
+      <button class="nav-btn" data-view="admin-calendar" onclick="navTo('admin-calendar')" style="border-left: 2px solid #ea4335;" title="Google Calendar & Agenda Wawancara / Tasting">
+        <span class="ico">📅</span> Google Calendar &amp; Agenda
+      </button>
     </nav>
 
     <div class="sidebar-foot">
@@ -2716,9 +2719,12 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       </div>
 
       <div class="topbar-actions">
-      <a href="career.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-publish-career-top" style="padding:6px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(223,190,153,0.12);border-color:var(--gold);color:var(--gold);text-decoration:none;font-weight:750;" title="Buka Website Career Publik yang Siap Dipublish">
-        <span>🌐</span> Buka Publish Career ↗
-      </a>
+        <a href="setup.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-setup-top" style="padding:6px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(85,212,202,0.12);border-color:var(--accent);color:var(--accent);text-decoration:none;font-weight:750;" title="Buka Pusat Setup & Konfigurasi API Cloudflare Pages">
+          <span>⚙️</span> Setup &amp; API ↗
+        </a>
+        <a href="career.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-publish-career-top" style="padding:6px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(223,190,153,0.12);border-color:var(--gold);color:var(--gold);text-decoration:none;font-weight:750;" title="Buka Website Career Publik yang Siap Dipublish">
+          <span>🌐</span> Buka Publish Career ↗
+        </a>
         <!-- Switch between Candidate view and HR view -->
         <button class="portal-switch-btn" id="modeSwitchBtn" onclick="toggleModeSwitch()">
           <span id="modeSwitchIcon">🛡️</span>
@@ -4878,6 +4884,104 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
     </div>
   </section>
 
+      <!-- ================================================================
+           SCREEN: GOOGLE CALENDAR & INTERVIEW AGENDA
+           ================================================================ -->
+      <section id="view-admin-calendar" class="view-panel">
+        <div class="section-header">
+          <div>
+            <div class="section-title" style="display: flex; align-items: center; gap: 10px;">
+              <span>📅 Google Calendar &amp; Agenda Wawancara</span>
+              <span class="badge" style="background: rgba(234, 67, 53, 0.12); color: #ea4335; border: 1px solid #ea4335; font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 800;">Google Workspace HR</span>
+            </div>
+            <div class="section-sub">Sinkronisasi jadwal wawancara langsung, food &amp; beverage tasting Chef Carlos Barvo, dan trial shift Miss Fish Bali</div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="text-decoration:none;" title="Buka Google Calendar di tab baru">
+              <span>↗</span> Buka Google Calendar Asli
+            </a>
+            <button class="btn btn-ghost" onclick="openCalendarSettingsModal()" title="Ubah ID Kalender Google atau Zona Waktu">
+              <span>⚙️</span> Setting Kalender
+            </button>
+            <button class="btn btn-accent" onclick="openQuickScheduleModal()" style="background: linear-gradient(135deg, #ea4335, #d97706); color: #fff;">
+              <span>➕</span> Jadwalkan Wawancara / Tasting
+            </button>
+          </div>
+        </div>
+
+        <!-- 3 KPI Cards -->
+        <div class="grid-3" style="margin-bottom: 24px;">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Agenda Wawancara Aktif</span>
+              <span style="font-size: 18px;">👥</span>
+            </div>
+            <div class="kpi-value" id="calKpiInterviews">7</div>
+            <div class="kpi-trend positive">Terjadwal di Google Calendar</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Sesi Tasting &amp; Bar Trial</span>
+              <span style="font-size: 18px;">🍣</span>
+            </div>
+            <div class="kpi-value" id="calKpiTastings">3</div>
+            <div class="kpi-trend neutral">Kitchen &amp; Mixology Department</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Zona Waktu Operasional</span>
+              <span style="font-size: 18px;">⏰</span>
+            </div>
+            <div class="kpi-value" style="font-size: 24px;">WITA (UTC+8)</div>
+            <div class="kpi-trend neutral">Asia/Makassar · Canggu, Bali</div>
+          </div>
+        </div>
+
+        <!-- Main Calendar Grid: Left = Embedded Google Calendar | Right = Upcoming Interview Roster -->
+        <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; margin-bottom: 30px;">
+          
+          <!-- Left: Responsive Google Calendar Embed Container -->
+          <div class="card" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+              <div style="font-size: 14px; font-weight: 850; color: var(--text); display: flex; align-items: center; gap: 8px;">
+                <span>📆 Live Google Calendar Embed</span>
+                <span id="calCurrentIdPill" class="badge" style="background: var(--surface2); color: var(--muted); border: 1px solid var(--line); font-size: 11px;">Default HR Calendar</span>
+              </div>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn btn-ghost" style="min-height: 32px; padding: 4px 10px; font-size: 11.5px;" onclick="reloadCalendarEmbed()">
+                  🔄 Refresh
+                </button>
+              </div>
+            </div>
+
+            <!-- Calendar Iframe Frame -->
+            <div style="width: 100%; height: 560px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #ffffff;">
+              <iframe id="mainGoogleCalendarIframe" src="https://calendar.google.com/calendar/embed?src=en.indonesian%23holiday%40group.v.calendar.google.com&ctz=Asia%2FMakassar" style="border: 0; width: 100%; height: 100%;" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div style="margin-top: 10px; font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span>💡 Kalender ini tersinkronisasi langsung dengan akun Google Workspace HR Miss Fish Bali.</span>
+              <button type="button" onclick="openCalendarSettingsModal()" style="background: none; border: none; color: var(--accent); cursor: pointer; text-decoration: underline; font-size: 11.5px;">Ganti ID Kalender</button>
+            </div>
+          </div>
+
+          <!-- Right: Upcoming Interview & Tasting Sessions List -->
+          <div class="card" style="padding: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div style="font-size: 15px; font-weight: 850; color: var(--text);">
+                📋 Agenda Terdekat
+              </div>
+              <span class="badge" style="background: var(--surface2); color: var(--accent); font-size: 11px; font-weight: 800;">Minggu Ini</span>
+            </div>
+
+            <div id="upcomingAgendaList" style="display: flex; flex-direction: column; gap: 12px; max-height: 540px; overflow-y: auto; padding-right: 4px;">
+              <!-- Injected via JavaScript -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
   </main>
   </div>
 </div>
@@ -5404,7 +5508,126 @@ tr:hover td { background: rgba(0, 0, 0, 0.015); }
       <button class="nav-btn" onclick="navTo('admin-career');toggleDrawer()">🗺️ AI Career Roadmap</button>
       <button class="nav-btn" onclick="navTo('admin-analytics');toggleDrawer()">📈 Analytics & ClickUp</button>
       <button class="nav-btn" onclick="navTo('admin-ai-reports');toggleDrawer()">✨ AI Intelligence</button>
+      <button class="nav-btn" onclick="navTo('admin-calendar');toggleDrawer()">📅 Google Calendar</button>
     </nav>
+  </div>
+</div>
+
+<!-- ================================================================
+     MODAL: GOOGLE CALENDAR SETTINGS
+     ================================================================ -->
+<div class="modal-overlay" id="calendarSettingsModal" role="dialog" aria-modal="true" aria-labelledby="calSettingsTitle" onclick="if(event.target===this)closeCalendarSettingsModal()">
+  <div class="modal-box" style="max-width: 580px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="calSettingsTitle">⚙️ Pengaturan Google Calendar HR</div>
+        <div class="modal-sub">Konfigurasi Calendar ID &amp; Tampilan Kalender Wawancara</div>
+      </div>
+      <button class="icon-btn" onclick="closeCalendarSettingsModal()" aria-label="Close Modal">×</button>
+    </div>
+    <div class="modal-body" style="padding: 24px;">
+      <div style="margin-bottom: 16px;">
+        <label style="font-size: 12px; font-weight: 800; color: var(--muted); display: block; margin-bottom: 6px; text-transform: uppercase;">
+          Google Calendar ID atau Embed URL
+        </label>
+        <input class="input" id="cfgCalIdInput" placeholder="Contoh: talent@missfishgroup.com atau c_12345...@group.calendar.google.com" style="width: 100%;">
+        <div style="font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5;">
+          Temukan di Google Calendar &gt; Settings and sharing &gt; Integrate calendar &gt; Calendar ID. Pastikan kalender memiliki izin akses publik atau dibagikan ke tim HR.
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label style="font-size: 12px; font-weight: 800; color: var(--muted); display: block; margin-bottom: 6px; text-transform: uppercase;">
+          Zona Waktu Tampilan
+        </label>
+        <select class="select" id="cfgCalTzSelect" style="width: 100%;">
+          <option value="Asia/Makassar" selected>Asia/Makassar (WITA - Bali, UTC+8)</option>
+          <option value="Asia/Jakarta">Asia/Jakarta (WIB, UTC+7)</option>
+          <option value="Asia/Jayapura">Asia/Jayapura (WIT, UTC+9)</option>
+        </select>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="btn btn-ghost" onclick="resetCalendarConfigToDefault()" style="min-height: 42px; padding: 8px 18px;">
+          Reset Default
+        </button>
+        <button type="button" class="btn btn-accent" onclick="saveCalendarConfigFromModal()" style="min-height: 42px; padding: 8px 24px; font-weight: 800;">
+          <span>💾</span> Simpan Kalender
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     MODAL: QUICK SCHEDULE INTERVIEW / TASTING
+     ================================================================ -->
+<div class="modal-overlay" id="quickScheduleModal" role="dialog" aria-modal="true" aria-labelledby="quickSchedTitle" onclick="if(event.target===this)closeQuickScheduleModal()">
+  <div class="modal-box" style="max-width: 600px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="quickSchedTitle">➕ Jadwalkan Wawancara / Tasting</div>
+        <div class="modal-sub">Generate Event Google Calendar Resmi Miss Fish Bali</div>
+      </div>
+      <button class="icon-btn" onclick="closeQuickScheduleModal()" aria-label="Close Modal">×</button>
+    </div>
+    <form id="quickSchedForm" onsubmit="handleQuickScheduleSubmit(event)">
+      <div class="modal-body" style="padding: 24px;">
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Pilih Kandidat / Nama Pelamar *</label>
+          <select class="select" id="schedCandidateSelect" required onchange="onSchedCandChange(this.value)">
+            <option value="">Pilih Kandidat dari Database...</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div>
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Tipe Agenda *</label>
+            <select class="select" id="schedTypeSelect" required>
+              <option value="Wawancara HR & User">Wawancara HR &amp; User</option>
+              <option value="Food Tasting Trial (Kitchen)">Food Tasting Trial (Kitchen)</option>
+              <option value="Mixology Bar Trial">Mixology Bar Trial</option>
+              <option value="Floor Service Trial Shift">Floor Service Trial Shift</option>
+              <option value="Screening Video Call">Screening Video Call</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Interviewer / Penguji *</label>
+            <input class="input" id="schedInterviewerInput" required placeholder="cth: Chef Carlos Barvo / HR Manager">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div>
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Tanggal *</label>
+            <input class="input" type="date" id="schedDateInput" required>
+          </div>
+          <div>
+            <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Waktu (WITA) *</label>
+            <input class="input" type="time" id="schedTimeInput" required value="14:00">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Lokasi</label>
+          <input class="input" id="schedLocationInput" value="Miss Fish Bali, Jl. Raya Semat No. 88, Canggu, Bali">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 11.5px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px;">Catatan Persiapan / Menu Tasting</label>
+          <textarea class="textarea" id="schedNotesInput" rows="2" placeholder="cth: Sesi trial knife skills sushi, presentasi nigiri omakase, dan tes rasa sashimi..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn btn-ghost" onclick="closeQuickScheduleModal()" style="min-height: 42px; padding: 8px 18px;">
+            Batal
+          </button>
+          <button type="submit" class="btn btn-accent" style="min-height: 42px; padding: 8px 22px; font-weight: 800;">
+            <span>📅</span> Buka di Google Calendar &amp; Simpan
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -6130,7 +6353,8 @@ const viewTitles = {
   'admin-salary': { title: 'AI Salary Benchmark', sub: 'Hospitality Compensation Intelligence & Regional Analysis · Gemini AI' },
   'admin-career': { title: 'AI Career Progression Roadmap', sub: '5-Year Hospitality Career Path & Professional Milestones · Gemini AI' },
   'admin-analytics': { title: 'Analytics & ClickUp Integration', sub: 'Recruitment Insights & ATS SoT' },
-  'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' }
+  'admin-ai-reports': { title: 'AI Recruitment Intelligence', sub: 'Gemini 3.5 Flash Lite · Sheets & ClickUp Data' },
+  'admin-calendar': { title: 'Google Calendar & Interview Schedule', sub: 'Sinkronisasi Wawancara, Food Tasting & Trial Shift' }
 };
 
 function navTo(viewId) {
@@ -6178,6 +6402,7 @@ function navTo(viewId) {
   if (viewId === 'admin-salary') initAdminSalary();
   if (viewId === 'admin-career') initAdminCareer();
   if (viewId === 'admin-analytics') updateGasGatewayUI();
+  if (viewId === 'admin-calendar') initAdminCalendar();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -13882,6 +14107,391 @@ function resetCareerForm() {
   setCarLang('auto');
 
   toast('↺ Form AI Career Roadmap telah direset.');
+}
+
+// ================================================================
+// GOOGLE CALENDAR & INTERVIEW AGENDA CONTROLLER (Miss Fish Bali)
+// ================================================================
+
+let mfbCalendarEvents = [
+  {
+    id: 'evt-1',
+    candId: 'MFB-HR-20260910-000101',
+    name: 'Andi Pratama',
+    role: 'Restaurant Manager',
+    dept: 'Service',
+    type: 'Wawancara HR & GM',
+    date: '2026-09-17',
+    time: '14:00',
+    interviewer: 'HR Director & GM',
+    location: 'Miss Fish Bali, Jl. Raya Semat No. 88, Canggu',
+    notes: 'Diskusi leadership FOH, review KPI SevenRooms dan revenue target.'
+  },
+  {
+    id: 'evt-2',
+    candId: 'MFB-HR-20260909-000102',
+    name: 'Sari Dewi',
+    role: 'Waiter / Waitress',
+    dept: 'Service',
+    type: 'Floor Service Trial Shift',
+    date: '2026-09-18',
+    time: '17:00',
+    interviewer: 'Restaurant Manager',
+    location: 'Miss Fish Bali Main Dining Room',
+    notes: 'Trial shift operasional dinner service, sequence of service test.'
+  },
+  {
+    id: 'evt-3',
+    candId: 'MFB-HR-20260908-000103',
+    name: 'Made Sukarma',
+    role: 'Chef de Partie — Sushi & Robata',
+    dept: 'Kitchen',
+    type: 'Food Tasting Trial (Kitchen)',
+    date: '2026-09-19',
+    time: '11:00',
+    interviewer: 'Chef Carlos Barvo',
+    location: 'Miss Fish Bali Sushi Bar & Kitchen',
+    notes: 'Tasting menu: 3 macam Nigiri Omakase, 1 Robata grilled skewers, knife skill test.'
+  },
+  {
+    id: 'evt-4',
+    candId: 'MFB-HR-20260907-000104',
+    name: 'Gede Pramana',
+    role: 'Mixologist',
+    dept: 'Bar',
+    type: 'Mixology Bar Trial',
+    date: '2026-09-20',
+    time: '15:30',
+    interviewer: 'Bar Manager',
+    location: 'Miss Fish Bali Cocktail Lounge',
+    notes: 'Pembuatan 2 signature Japanese-infused cocktails & blind ingredient balance.'
+  },
+  {
+    id: 'evt-5',
+    candId: 'MFB-HR-20260906-000105',
+    name: 'Ni Luh Putu Ayu',
+    role: 'Hostess / VIP Guest Relations',
+    dept: 'Guest Relation',
+    type: 'Wawancara HR & User',
+    date: '2026-09-21',
+    time: '13:00',
+    interviewer: 'Guest Experience Lead',
+    location: 'Miss Fish Bali VIP Lounge',
+    notes: 'Simulasi SevenRooms seating, English fluency & VIP guest greeting.'
+  }
+];
+
+// Hydrate saved calendar events from localStorage
+try {
+  const savedEvts = localStorage.getItem('mfb_calendar_events');
+  if (savedEvts) {
+    const parsed = JSON.parse(savedEvts);
+    if (Array.isArray(parsed) && parsed.length > 0) mfbCalendarEvents = parsed;
+  }
+} catch (e) {}
+
+function getEffectiveCalendarId() {
+  return localStorage.getItem('mfb_google_calendar_id') || 'en.indonesian#holiday@group.v.calendar.google.com';
+}
+
+function getEffectiveCalendarTz() {
+  return localStorage.getItem('mfb_google_calendar_tz') || 'Asia/Makassar';
+}
+
+function initAdminCalendar() {
+  const iframe = document.getElementById('mainGoogleCalendarIframe');
+  const pill = document.getElementById('calCurrentIdPill');
+  const calId = getEffectiveCalendarId();
+  const tz = getEffectiveCalendarTz();
+
+  if (iframe) {
+    let src = '';
+    if (calId.startsWith('http://') || calId.startsWith('https://')) {
+      src = calId;
+    } else {
+      src = `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(calId)}&ctz=${encodeURIComponent(tz)}`;
+    }
+    iframe.src = src;
+  }
+
+  if (pill) {
+    pill.textContent = calId.includes('@') ? calId.split('@')[0] : 'Aktif';
+  }
+
+  renderUpcomingAgendaList();
+  updateCalendarKPIs();
+}
+
+function reloadCalendarEmbed() {
+  const iframe = document.getElementById('mainGoogleCalendarIframe');
+  if (iframe) {
+    const currentSrc = iframe.src;
+    iframe.src = '';
+    setTimeout(() => { iframe.src = currentSrc; }, 100);
+    toast('🔄 Merefresh Google Calendar...');
+  }
+}
+
+function updateCalendarKPIs() {
+  const interviewsEl = document.getElementById('calKpiInterviews');
+  const tastingsEl = document.getElementById('calKpiTastings');
+  if (interviewsEl) interviewsEl.textContent = mfbCalendarEvents.length;
+  if (tastingsEl) {
+    const tastingsCount = mfbCalendarEvents.filter(e => e.type.toLowerCase().includes('tasting') || e.type.toLowerCase().includes('trial')).length;
+    tastingsEl.textContent = tastingsCount;
+  }
+}
+
+function renderUpcomingAgendaList() {
+  const listEl = document.getElementById('upcomingAgendaList');
+  if (!listEl) return;
+
+  if (mfbCalendarEvents.length === 0) {
+    listEl.innerHTML = `
+      <div style="text-align: center; padding: 28px 14px; color: var(--muted); font-size: 13px;">
+        Belum ada jadwal wawancara terdaftar.<br>
+        <button class="btn btn-ghost" style="margin-top: 10px; font-size: 12px;" onclick="openQuickScheduleModal()">+ Jadwalkan Sekarang</button>
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = mfbCalendarEvents.map(evt => {
+    const deptColor = getDepartmentColor(evt.dept);
+    const gcalUrl = buildGoogleCalendarUrl(evt);
+    const isTasting = evt.type.toLowerCase().includes('tasting') || evt.type.toLowerCase().includes('trial');
+    const badgeColor = isTasting ? 'var(--gold)' : 'var(--accent)';
+
+    return `
+      <div style="background: var(--surface2); border: 1px solid var(--line); border-left: 3px solid ${deptColor}; border-radius: 10px; padding: 14px 16px; transition: all 0.2s;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px;">
+          <div>
+            <div style="font-weight: 850; font-size: 14.5px; color: var(--text);">${esc(evt.name)}</div>
+            <div style="font-size: 12px; color: ${deptColor}; font-weight: 750;">
+              ${esc(evt.role)} · <span style="color: var(--muted); font-weight: normal;">${esc(evt.dept)}</span>
+            </div>
+          </div>
+          <span class="badge" style="background: rgba(223, 190, 153, 0.15); color: ${badgeColor}; border: 1px solid rgba(223, 190, 153, 0.3); font-size: 10.5px; padding: 3px 8px; font-weight: 800; white-space: nowrap;">
+            ${isTasting ? '🍣 Tasting' : '👥 Interview'}
+          </span>
+        </div>
+
+        <div style="font-size: 12px; color: var(--muted); margin: 6px 0; display: flex; flex-direction: column; gap: 3px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span>🗓️</span> <strong>${esc(evt.date)}</strong> · ⏰ <strong>${esc(evt.time)} WITA</strong>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span>👤</span> <span>Penguji: ${esc(evt.interviewer)}</span>
+          </div>
+          ${evt.notes ? `<div style="font-size: 11.5px; color: var(--text); font-style: italic; margin-top: 2px;">"${esc(evt.notes)}"</div>` : ''}
+        </div>
+
+        <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+          <a href="${gcalUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 4px 10px; min-height: 28px; font-size: 11px; text-decoration: none; font-weight: 750;" title="Buka dan tambahkan ke Google Calendar pribadi">
+            📅 Tambah ke G-Calendar ↗
+          </a>
+          <button type="button" class="btn btn-ghost" style="padding: 4px 8px; min-height: 28px; font-size: 11px;" onclick="viewCandidateByExactName('${esc(evt.name)}')" title="Buka profil lengkap pelamar">
+            Profil
+          </button>
+          <button type="button" class="btn btn-ghost" style="padding: 4px 8px; min-height: 28px; font-size: 11px; color: var(--danger);" onclick="deleteCalendarEvent('${evt.id}')" title="Hapus dari daftar agenda">
+            ×
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function buildGoogleCalendarUrl(evt) {
+  const title = encodeURIComponent(`[Miss Fish Bali] ${evt.type}: ${evt.name} — ${evt.role}`);
+  const details = encodeURIComponent(
+    `Jadwal Rekrutmen Miss Fish Bali\n` +
+    `Kandidat: ${evt.name}\n` +
+    `Posisi: ${evt.role} (${evt.dept})\n` +
+    `Tipe: ${evt.type}\n` +
+    `Interviewer / Penguji: ${evt.interviewer}\n` +
+    `Catatan: ${evt.notes || '-'}\n` +
+    `Sistem: Miss Fish Bali HR Recruitment Platform`
+  );
+  const location = encodeURIComponent(evt.location || 'Miss Fish Bali, Jl. Raya Semat No. 88, Canggu, Bali');
+
+  // Format YYYYMMDDTHHmm00 (WITA is UTC+8)
+  const cleanDate = (evt.date || '').replace(/-/g, '');
+  const cleanTime = (evt.time || '14:00').replace(/:/g, '');
+  const startIso = `${cleanDate}T${cleanTime}00`;
+  // Add 1 hour default
+  const endHour = String(parseInt(cleanTime.slice(0, 2), 10) + 1).padStart(2, '0');
+  const endIso = `${cleanDate}T${endHour}${cleanTime.slice(2)}00`;
+
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startIso}/${endIso}&details=${details}&location=${location}&ctz=Asia/Makassar`;
+}
+
+function viewCandidateByExactName(name) {
+  const cand = applicantsData.find(a => (a.name || '').toLowerCase() === name.toLowerCase());
+  if (cand) {
+    openCandidateModal(cand.id);
+  } else {
+    navTo('admin-applicants');
+    const search = document.getElementById('adminAppSearch');
+    if (search) {
+      search.value = name;
+      filterAdminApplicants();
+    }
+  }
+}
+
+function deleteCalendarEvent(id) {
+  if (!confirm('Hapus agenda ini dari jadwal kalender?')) return;
+  mfbCalendarEvents = mfbCalendarEvents.filter(e => e.id !== id);
+  try {
+    localStorage.setItem('mfb_calendar_events', JSON.stringify(mfbCalendarEvents));
+  } catch (e) {}
+  renderUpcomingAgendaList();
+  updateCalendarKPIs();
+  toast('✓ Agenda wawancara dihapus.');
+}
+
+// Calendar Settings Modal
+function openCalendarSettingsModal() {
+  const modal = document.getElementById('calendarSettingsModal');
+  const input = document.getElementById('cfgCalIdInput');
+  const tzSelect = document.getElementById('cfgCalTzSelect');
+  if (!modal) return;
+
+  if (input) input.value = localStorage.getItem('mfb_google_calendar_id') || '';
+  if (tzSelect) tzSelect.value = localStorage.getItem('mfb_google_calendar_tz') || 'Asia/Makassar';
+
+  modal.classList.add('open');
+}
+
+function closeCalendarSettingsModal() {
+  const modal = document.getElementById('calendarSettingsModal');
+  if (modal) modal.classList.remove('open');
+}
+
+function saveCalendarConfigFromModal() {
+  const input = document.getElementById('cfgCalIdInput');
+  const tzSelect = document.getElementById('cfgCalTzSelect');
+  const val = (input?.value || '').trim();
+  const tz = tzSelect?.value || 'Asia/Makassar';
+
+  if (!val) {
+    alert('Harap masukkan Calendar ID atau URL.');
+    return;
+  }
+
+  localStorage.setItem('mfb_google_calendar_id', val);
+  localStorage.setItem('mfb_google_calendar_tz', tz);
+  closeCalendarSettingsModal();
+  initAdminCalendar();
+  toast('✓ Pengaturan Google Calendar berhasil disimpan!');
+}
+
+function resetCalendarConfigToDefault() {
+  localStorage.removeItem('mfb_google_calendar_id');
+  localStorage.removeItem('mfb_google_calendar_tz');
+  closeCalendarSettingsModal();
+  initAdminCalendar();
+  toast('↺ Kalender dikembalikan ke default.');
+}
+
+// Quick Schedule Modal
+function openQuickScheduleModal(candidateId) {
+  const modal = document.getElementById('quickScheduleModal');
+  const select = document.getElementById('schedCandidateSelect');
+  const dateInput = document.getElementById('schedDateInput');
+  if (!modal) return;
+
+  // Set default date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  if (dateInput) {
+    dateInput.value = tomorrow.toISOString().split('T')[0];
+  }
+
+  // Populate candidate options
+  if (select) {
+    select.innerHTML = '<option value="">Pilih Kandidat dari Database...</option>' + 
+      applicantsData.map(a => `<option value="${a.id}">${esc(a.name)} — ${esc(a.position)} (${esc(a.dept)})</option>`).join('');
+    if (candidateId) {
+      select.value = candidateId;
+      onSchedCandChange(candidateId);
+    }
+  }
+
+  modal.classList.add('open');
+}
+
+function closeQuickScheduleModal() {
+  const modal = document.getElementById('quickScheduleModal');
+  if (modal) modal.classList.remove('open');
+}
+
+function onSchedCandChange(candId) {
+  if (!candId) return;
+  const cand = applicantsData.find(a => String(a.id) === String(candId));
+  if (!cand) return;
+
+  const interviewerInput = document.getElementById('schedInterviewerInput');
+  const typeSelect = document.getElementById('schedTypeSelect');
+  const dept = (cand.dept || '').toLowerCase();
+
+  if (dept.includes('kitchen') || dept.includes('cook') || dept.includes('sushi')) {
+    if (interviewerInput) interviewerInput.value = 'Chef Carlos Barvo (Executive Chef)';
+    if (typeSelect) typeSelect.value = 'Food Tasting Trial (Kitchen)';
+  } else if (dept.includes('bar') || dept.includes('mixolog')) {
+    if (interviewerInput) interviewerInput.value = 'Bar Manager & Head Mixologist';
+    if (typeSelect) typeSelect.value = 'Mixology Bar Trial';
+  } else if (dept.includes('service') || dept.includes('floor')) {
+    if (interviewerInput) interviewerInput.value = 'Restaurant Manager & Floor Lead';
+    if (typeSelect) typeSelect.value = 'Floor Service Trial Shift';
+  } else {
+    if (interviewerInput) interviewerInput.value = 'HR Director / Management';
+    if (typeSelect) typeSelect.value = 'Wawancara HR & User';
+  }
+}
+
+function handleQuickScheduleSubmit(e) {
+  if (e) e.preventDefault();
+  const candId = document.getElementById('schedCandidateSelect')?.value;
+  const type = document.getElementById('schedTypeSelect')?.value || 'Wawancara';
+  const interviewer = document.getElementById('schedInterviewerInput')?.value.trim() || 'HR Team';
+  const date = document.getElementById('schedDateInput')?.value;
+  const time = document.getElementById('schedTimeInput')?.value || '14:00';
+  const location = document.getElementById('schedLocationInput')?.value.trim() || 'Miss Fish Bali';
+  const notes = document.getElementById('schedNotesInput')?.value.trim() || '';
+
+  const cand = applicantsData.find(a => String(a.id) === String(candId));
+  const candName = cand ? cand.name : 'Kandidat';
+  const candRole = cand ? cand.position : 'Posisi';
+  const candDept = cand ? cand.dept : 'General';
+
+  const newEvt = {
+    id: 'evt-' + Date.now(),
+    candId: cand ? cand.candidateId : '',
+    name: candName,
+    role: candRole,
+    dept: candDept,
+    type,
+    date,
+    time,
+    interviewer,
+    location,
+    notes
+  };
+
+  mfbCalendarEvents.unshift(newEvt);
+  try {
+    localStorage.setItem('mfb_calendar_events', JSON.stringify(mfbCalendarEvents));
+  } catch (err) {}
+
+  closeQuickScheduleModal();
+  renderUpcomingAgendaList();
+  updateCalendarKPIs();
+
+  // Generate Google Calendar Link and open it
+  const gcalUrl = buildGoogleCalendarUrl(newEvt);
+  window.open(gcalUrl, '_blank');
+  toast('✓ Agenda dibuat! Membuka Google Calendar...');
 }
 
 // Global Keyboard Accessibility & Power-User Shortcuts
