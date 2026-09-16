@@ -41,7 +41,7 @@ export const MATH_DATA = {
     reasonEn: '25 + 75 = 100! Combined with the first 100, it leaps to 200!'
   },
 
-  // 9 Slot Video YouTube Matematika & Penjumlahan Terkurasi
+  // 12 Slot Video YouTube Matematika Terkurasi (100% Valid oEmbed)
   videoSlots: [
     {
       id: 'math-yt-1',
@@ -114,6 +114,30 @@ export const MATH_DATA = {
       url: 'https://www.youtube.com/watch?v=uY1Wndy5N0o',
       channel: 'Bu Retno - Belajar Matematika',
       ageFit: 'Kelas 1–6 SD'
+    },
+    {
+      id: 'math-yt-10',
+      title: '10. Belajar Porogapit: Cara Pembagian Porogapit dengan Mudah',
+      description: 'Panduan pembagian porogapit bersusun langkah demi langkah yang sangat mudah dipahami anak SD.',
+      url: 'https://www.youtube.com/watch?v=IClNI3KhPiE',
+      channel: 'Belajar Pembagian',
+      ageFit: 'Kelas 3–6 SD'
+    },
+    {
+      id: 'math-yt-11',
+      title: '11. Penjumlahan Pecahan Campuran: Cara Cepat dan Mudah',
+      description: 'Trik cepat dan runtut menyelesaikan soal cerita penjumlahan pecahan matematika SD langkah demi langkah.',
+      url: 'https://www.youtube.com/watch?v=CbJXTx0Yxxw',
+      channel: 'Bu Retno - Belajar Matematika',
+      ageFit: 'Kelas 3–6 SD'
+    },
+    {
+      id: 'math-yt-12',
+      title: '12. Trik Hitung Cepat Perkalian 11–99',
+      description: 'Teknik nalar cerdas menghitung perkalian dua digit angka sembarang tanpa coret-coretan rumit.',
+      url: 'https://www.youtube.com/watch?v=lN2pu4z40NM',
+      channel: 'Edu-Vid',
+      ageFit: 'Kelas 2–6 SD'
     }
   ],
 

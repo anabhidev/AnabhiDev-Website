@@ -24,13 +24,16 @@ Generated : 10 September 2026, 10:08:00
   left: 0;
   right: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
 }
 
 .topbar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
+  gap: 10px;
+  flex: 0 0 auto;
+  min-width: max-content;
+  z-index: 2;
 }
 
 .hdr-title {
@@ -72,8 +75,19 @@ Generated : 10 September 2026, 10:08:00
 .topbar-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.topbar-right::-webkit-scrollbar {
+  display: none;
 }
 
 .stat-pill {
