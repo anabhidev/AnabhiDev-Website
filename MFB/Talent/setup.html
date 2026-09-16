@@ -519,7 +519,7 @@ body {
   <!-- Header Bar -->
   <header class="header-bar">
     <div class="brand-group">
-      <img src="https://anabhidev.com/MFB/missfish-logo.webp" alt="Miss Fish Bali" class="brand-logo" onerror="this.style.display='none'">
+      <img src="assets/missfish-logo.webp" alt="Miss Fish Bali" class="brand-logo" onerror="this.style.display='none'">
       <div>
         <div class="brand-title">Miss Fish Bali · Setup Center</div>
         <div class="brand-sub">Cloudflare Pages · Gemini AI · ClickUp ATS · Google Calendar</div>
@@ -585,43 +585,117 @@ body {
        ================================================================ -->
   <div id="tab-cf" class="tab-panel active">
     <div class="panel-card">
-      <div class="panel-title">☁️ Mengapa Cloudflare Pages Sangat Ideal untuk Miss Fish Bali?</div>
-      <div class="panel-desc">Dibandingkan Cloudflare Workers biasa, Cloudflare Pages adalah solusi Jamstack all-in-one yang dirancang untuk web multi-halaman berkinerja tinggi.</div>
+      <div class="panel-title">☁️ Cloudflare Pages vs Cloudflare Workers: Mana yang Tepat?</div>
+      <div class="panel-desc">
+        <strong>Keputusan Arsitektur: Cloudflare Pages adalah 100% CUKUP dan JAUH LEBIH TEPAT</strong> dibandingkan standalone Workers.
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:24px;">
+        <div style="background:var(--surface2); border:1px solid var(--accent); border-radius:12px; padding:18px;">
+          <div style="color:var(--accent); font-weight:850; font-size:15px; margin-bottom:6px;">✅ Cloudflare Pages (Rekomendasi Penuh)</div>
+          <p style="font-size:13px; color:var(--text); line-height:1.55;">
+            • <strong>All-in-One Jamstack:</strong> Menampung seluruh frontend HTML/CSS/JS/Aset secara otomatis di Anycast Edge CDN global (&lt;20ms TTFB).<br>
+            • <strong>Built-in Edge Workers (Pages Functions):</strong> File di folder <code>/functions/api/</code> (Gemini AI &amp; ClickUp) otomatis berjalan sebagai Cloudflare Worker di edge tanpa setup terpisah.<br>
+            • <strong>Native GitHub CI/CD:</strong> Setiap kali push ke branch <code>main</code>, Cloudflare otomatis build &amp; deploy dalam 10-15 detik.<br>
+            • <strong>Free Tier Melimpah:</strong> Bandwidth unlimited, 500 build/bulan, 100k requests edge function/hari gratis.
+          </p>
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--line); border-radius:12px; padding:18px; opacity:0.85;">
+          <div style="color:var(--muted); font-weight:850; font-size:15px; margin-bottom:6px;">⚠️ Cloudflare Workers Murni</div>
+          <p style="font-size:13px; color:var(--muted); line-height:1.55;">
+            • Dirancang untuk microservice API atau proxy URL.<br>
+            • Untuk melayani website HTML/CSS/gambar statis, Workers memerlukan integrasi manual dengan KV Storage atau Cloudflare R2 bucket.<br>
+            • Lebih rumit dikelola karena harus menulis script routing untuk setiap aset web.<br>
+            • <em>Kesimpulan:</em> Gunakan <strong>Cloudflare Pages</strong> karena sudah mencakup Workers di dalamnya!
+          </p>
+        </div>
+      </div>
 
       <div class="step-list">
         <div class="step-item">
           <div class="step-num">1</div>
           <div class="step-content">
-            <div class="step-heading">Koneksi Otomatis ke GitHub (Auto CI/CD)</div>
-            <div class="step-text">Setiap kali Anda melakukan <code>git push</code> ke branch <code>main</code>, Cloudflare Pages otomatis membangun dan memperbarui website secara global dalam waktu kurang dari 15 detik tanpa perlu script rilis manual.</div>
-          </div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <div class="step-heading">Kekuatan Serverless Worker Sudah Termasuk (Pages Functions)</div>
-            <div class="step-text">Semua file di dalam folder <code>/functions/api/</code> otomatis dijalankan sebagai Cloudflare Worker di edge. Anda mendapatkan backend serverless untuk Gemini &amp; ClickUp dalam satu repositori yang sama!</div>
-          </div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <div class="step-heading">Parameter Build Resmi Cloudflare Pages</div>
-            <div class="step-text">Saat menambahkan project baru di Dashboard Cloudflare Pages (<strong>Create a project &gt; Connect to Git</strong>), gunakan parameter berikut:</div>
+            <div class="step-heading">Identitas &amp; Repositori GitHub Resmi Miss Fish Bali</div>
+            <div class="step-text">
+              Platform ini dikonfigurasi resmi dengan identitas <strong>Miss Fish Bali</strong> dan email <strong>itm@missfishbali.com</strong>.<br>
+              Target Repositori: <code>https://github.com/mfb-itm/career-platform.git</code>
+            </div>
             <div class="code-block">
-              <button class="copy-btn" onclick="copyText('Framework preset: None\nBuild command: (leave blank)\nBuild output directory: .\nRoot directory: /')">Salin</button>
-<pre>Framework preset       : None
-Build command          : (kosongkan)
-Build output directory : .
-Root directory         : /</pre>
+              <button class="copy-btn" onclick="copyText('git config user.name &quot;Miss Fish Bali&quot;\ngit config user.email &quot;itm@missfishbali.com&quot;\ngit remote set-url origin https://github.com/mfb-itm/career-platform.git\ngit branch -M main\ngit add .\ngit commit -m &quot;feat(mfb): official Miss Fish Bali recruitment &amp; career platform&quot;\ngit push -u origin main')">Salin Command</button>
+<pre># 1. Set identitas Git resmi Miss Fish Bali
+git config user.name "Miss Fish Bali"
+git config user.email "itm@missfishbali.com"
+
+# 2. Hubungkan remote repository ke akun mfb-itm
+git remote set-url origin https://github.com/mfb-itm/career-platform.git
+
+# 3. Pastikan branch utama adalah main
+git branch -M main
+
+# 4. Commit &amp; Push ke GitHub
+git add .
+git commit -m "feat(mfb): official Miss Fish Bali recruitment &amp; career platform"
+git push -u origin main</pre>
+            </div>
+            <div style="font-size:12.5px; color:var(--gold); margin-top:6px;">
+              💡 <em>Tips Cepat:</em> Anda juga dapat menjalankan file script otomatis <strong>deploy-to-mfb-github.bat</strong> di folder project untuk push dalam 1 klik!
             </div>
           </div>
         </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-heading">Setup Project di Dashboard Cloudflare Pages</div>
+            <div class="step-text">
+              1. Login ke <a href="https://dash.cloudflare.com" target="_blank" style="color:var(--accent); font-weight:750;">dash.cloudflare.com</a> dengan akun Miss Fish Bali.<br>
+              2. Pada menu sebelah kiri, pilih <strong>Compute (Workers &amp; Pages)</strong> &gt; Klik <strong>Create application</strong>.<br>
+              3. Pilih tab <strong>Pages</strong> &gt; Klik <strong>Connect to Git</strong>.<br>
+              4. Hubungkan akun GitHub Anda dan pilih repositori <code>mfb-itm/career-platform</code>.<br>
+              5. Konfigurasikan <strong>Build Settings</strong> persis seperti berikut:
+            </div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyText('Framework preset: None\nBuild command: (kosongkan)\nBuild output directory: .\nRoot directory: /')">Salin Preset</button>
+<pre>Framework preset       : None
+Build command          : (kosongkan / biarkan kosong)
+Build output directory : .
+Root directory         : /</pre>
+            </div>
+            <div class="step-text" style="margin-top:8px;">
+              Folder <code>functions/api/</code> akan dideteksi secara otomatis oleh Cloudflare Pages untuk mengaktifkan API edge serverless Gemini &amp; ClickUp.
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-heading">Isi Environment Variables &amp; Secrets</div>
+            <div class="step-text">
+              Sebelum melakukan deploy pertama atau setelah project dibuat, masuk ke <strong>Settings &gt; Environment variables</strong> di Cloudflare Pages. Tambahkan key berikut:
+            </div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyText('GEMINI_API_KEY = AIzaSy...\nCLICKUP_API_TOKEN = pk_...\nCLICKUP_LIST_ID = 901301234567')">Salin Nama Env</button>
+<pre>GEMINI_API_KEY      : [API Key Google AI Studio Anda]
+CLICKUP_API_TOKEN   : [Personal API Token ClickUp Anda]
+CLICKUP_LIST_ID     : [ID List Rekrutmen ClickUp Anda]
+(Opsional) GEMINI_API_KEY_2 : [Cadangan rotasi multi-key]</pre>
+            </div>
+            <div class="step-text" style="margin-top:8px;">
+              👉 Anda dapat menggunakan <strong>Tab 5 (Env Generator &amp; Secrets)</strong> di portal ini untuk menyalin nilai rahasia dalam format siap paste.
+            </div>
+          </div>
+        </div>
+
         <div class="step-item">
           <div class="step-num">4</div>
           <div class="step-content">
-            <div class="step-heading">Custom Domain Miss Fish Bali</div>
-            <div class="step-text">Setelah terhubung, masuk ke <strong>Custom domains</strong> di Cloudflare Pages dan tambahkan misalnya: <code>career.missfishbali.com</code> atau <code>talent.missfishbali.com</code>. Sertifikat SSL akan aktif otomatis secara gratis.</div>
+            <div class="step-heading">Pasang Custom Domain Miss Fish Bali</div>
+            <div class="step-text">
+              1. Di halaman project Cloudflare Pages, buka tab <strong>Custom domains</strong>.<br>
+              2. Klik <strong>Set up a custom domain</strong> &gt; Masukkan domain pilihan, misalnya: <code>career.missfishbali.com</code> atau <code>talent.missfishbali.com</code>.<br>
+              3. Jika DNS domain <code>missfishbali.com</code> sudah berada di Cloudflare, DNS CNAME record akan dibuat otomatis dan sertifikat SSL aktif dalam hitungan menit!
+            </div>
           </div>
         </div>
       </div>
@@ -1046,3 +1120,4 @@ function toggleTheme() {
 
 </body>
 </html>
+

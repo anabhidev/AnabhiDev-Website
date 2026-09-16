@@ -1,14 +1,10 @@
 # ================================================================
-# Miss Fish Bali — anabhidev.com
+# Miss Fish Bali — Career & HR Recruitment Platform
 # File        : _headers
 # Description : Cloudflare Pages response headers.
-#               Digabung dari versi sebelumnya (Microsoft auth,
-#               Google Analytics, PDF.js/StPageFlip, Supabase,
-#               Anabhi Smart Play) DITAMBAH aturan resmi
-#               Miss Fish Bali Talent & Career (/MFB/Talent/).
 # IT Department · Miss Fish Bali
-# Version     : 1.4
-# Generated   : 11 September 2026, 17:00:00 WITA
+# Version     : 1.5
+# Generated   : 16 September 2026, 11:45:00 WITA
 # ================================================================
 #
 # YANG DIUBAH DARI v1.3:
@@ -94,30 +90,46 @@
   Access-Control-Allow-Origin: *
 
 # ════════════════════════════════════════════════════════════════
-# MISS FISH BALI TALENT & RECRUITMENT — /MFB/Talent/
+# MISS FISH BALI TALENT & RECRUITMENT — Root & Subfolder
 # ════════════════════════════════════════════════════════════════
-#
-# Folder aplikasi: https://anabhidev.com/MFB/Talent/
-# Cloudflare Pages menerapkan aturan spesifik ini untuk menimpa
-# cache global pada berkas HTML, manifest, dan Service Worker.
 
 # ── Service Worker: JANGAN PERNAH di-cache ──────────────────────
-# sw.js yang ter-cache menyebabkan pembaruan versi tidak dapat
-# diterima kandidat atau tim HR tanpa menghapus cache browser manual.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/javascript; charset=utf-8
+
 /MFB/Talent/sw.js
   Cache-Control: public, max-age=0, must-revalidate
   Content-Type: text/javascript; charset=utf-8
 
 # ── Manifest PWA: Content-Type wajib eksplisit ──────────────────
-# Cloudflare secara default mengirimkan application/json.
-# Wajib application/manifest+json agar instalasi PWA berjalan lancar.
+/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
 /MFB/Talent/manifest.json
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=0, must-revalidate
 
 # ── Halaman Web Career & Dashboard HR: Selalu revalidate ────────
-# Memastikan perubahan lowongan pekerjaan dan pipeline pelamar
-# selalu tampil secara real-time tanpa tertahan cache browser.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/career.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB-Career-Website_v1.1.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB-HR-Mockup_v1.2.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/MFB-HR-Mockup_v1.1(1).html
+  Cache-Control: public, max-age=0, must-revalidate
+
 /MFB/Talent/
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -137,10 +149,17 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 # ── Aset Statis & Gambar: Immutable 1 Tahun ─────────────────────
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /MFB/Talent/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
 # ── Font / Aset CORS jika diperlukan ───────────────────────────
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
 /MFB/Talent/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
