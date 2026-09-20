@@ -1,9 +1,9 @@
 // ================================================================
 // AnabhiDev-TIPS — Master Interactive Script for Tips
-// Navigation Controller · Smooth Scroll · Mobile Tabs · Token Visualizer
+// Reading Progress · Dynamic Scroll Spy · Smooth Nav · Token Visualizer
 // Development · Anabhi Dev
-// Version   : 2.0
-// Generated : 20 September 2026, 19:53:00 WITA
+// Version   : 2.1
+// Generated : 21 September 2026, 07:45:00 WITA
 // ================================================================
 
 function setActive(el) {
@@ -16,7 +16,9 @@ function setActive(el) {
 function scrollToSection(id, el) {
   var target = document.getElementById(id);
   if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
+    var navHeight = 64;
+    var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+    window.scrollTo({ top: targetPos, behavior: 'smooth' });
   }
   document.querySelectorAll('.mobile-bottom-item').forEach(function(i) {
     i.classList.remove('active');
@@ -25,36 +27,82 @@ function scrollToSection(id, el) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Update active nav on scroll
-  var sections = ['intro', 'devices', 'model', 'prompt', 'newchat', 'projects', 'disclaimer'];
-  
-  window.addEventListener('scroll', function () {
-    var current = 'intro';
-    sections.forEach(function (id) {
+  // 1. Create reading progress bar if not exists
+  var progressEl = document.getElementById('readingProgress');
+  if (!progressEl) {
+    progressEl = document.createElement('div');
+    progressEl.id = 'readingProgress';
+    document.body.prepend(progressEl);
+  }
+
+  // 2. Discover all section targets dynamically from nav links
+  var navLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
+  var sectionIds = navLinks.map(function (a) {
+    return a.getAttribute('href').substring(1);
+  }).filter(Boolean);
+
+  // Fallback default list if no nav links
+  if (sectionIds.length === 0) {
+    sectionIds = ['intro', 'devices', 'model', 'prompt', 'newchat', 'projects', 'disclaimer'];
+  }
+
+  // 3. Scroll Handler for Progress & Dynamic Active Spy
+  function onScroll() {
+    var winScroll = window.scrollY || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - window.innerHeight;
+    var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    if (progressEl) {
+      progressEl.style.width = scrolled + '%';
+    }
+
+    // Active Section Spy
+    var current = sectionIds[0] || 'intro';
+    sectionIds.forEach(function (id) {
       var el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 90) {
+      if (el && winScroll >= el.offsetTop - 100) {
         current = id;
       }
     });
 
-    document.querySelectorAll('.mobile-bottom-item').forEach(function (item, i) {
-      if (sections[i]) {
-        item.classList.toggle('active', sections[i] === current);
+    document.querySelectorAll('.nav-link').forEach(function (link) {
+      var targetId = link.getAttribute('href').substring(1);
+      link.classList.toggle('active', targetId === current);
+    });
+
+    document.querySelectorAll('.mobile-bottom-item').forEach(function (item) {
+      var onclickAttr = item.getAttribute('onclick') || '';
+      var match = onclickAttr.match(/scrollToSection\(['"]([^'"]+)['"]/);
+      if (match && match[1]) {
+        item.classList.toggle('active', match[1] === current);
       }
     });
+  }
 
-    document.querySelectorAll('.nav-link').forEach(function (link) {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // 4. Token Bars & Visual Meter Animation
+  var barFills = document.querySelectorAll('.token-bar-fill, .bar-fill, .model-bar-fill');
+  if (window.IntersectionObserver) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var bar = entry.target;
+          var w = bar.getAttribute('data-width') || bar.style.width;
+          bar.setAttribute('data-width', w);
+          bar.style.width = '0%';
+          requestAnimationFrame(function () {
+            setTimeout(function () {
+              bar.style.width = w;
+            }, 100);
+          });
+          observer.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    barFills.forEach(function (bar) {
+      observer.observe(bar);
     });
-  });
-
-  // Animate token bars
-  document.querySelectorAll('.token-bar-fill').forEach(function (bar) {
-    var originalWidth = bar.style.width;
-    bar.style.width = '0%';
-    setTimeout(function () {
-      bar.style.width = originalWidth;
-    }, 300);
-  });
+  }
 });
-
