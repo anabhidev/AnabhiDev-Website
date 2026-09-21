@@ -231,29 +231,164 @@ img, svg, video, canvas, iframe {
 }
 
 /* ============================================================
-   5. TATA KELOLA FOOTER FULL-WIDTH SOLID BLACK (SOP v2.2 & Standar Coding v1.8 Bagian 13)
+   5. TATA KELOLA FOOTER BODY-ONLY (Standar Coding v2.0 Bagian 13.3 & SOP v2.4)
+   Khusus Web Interactive dengan Persistent Sidebar: Footer Milik #main
    ============================================================ */
 .site-footer {
   width: 100%;
-  margin: 0;
+  margin: 60px 0 0 0;
   background: #08090c;
   color: #94a3b8;
-  padding: 36px clamp(16px, 4vw, 24px);
-  padding-left: calc(var(--sidebar-w, 260px) + clamp(20px, 4.5vw, 90px));
+  padding: 36px clamp(18px, 4vw, 40px) 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   font-size: 13px;
   line-height: 1.6;
-  transition: padding-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
-.shell.collapsed ~ .site-footer {
-  padding-left: calc(var(--sidebar-w-collapsed, 72px) + clamp(20px, 4.5vw, 90px));
+.site-footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.15s ease;
 }
 
-@media (max-width: 900px) {
+.site-footer a:hover {
+  color: #5ce3de;
+}
+
+.footer-brand {
+  margin-bottom: 28px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.brand-text {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.brand-text span {
+  color: #5ce3de;
+}
+
+.brand-sub {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-tagline {
+  margin: 0 0 16px;
+  color: #94a3b8;
+  font-size: 13px;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.footer-tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 28px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #f1f5f9;
+  margin: 0 0 12px;
+}
+
+.footer-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-link-list a {
+  font-size: 12.5px;
+  display: inline-block;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.footer-copyright {
+  margin: 0;
+}
+
+.footer-copyright strong {
+  color: #e2e8f0;
+}
+
+.footer-meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+}
+
+.meta-dot {
+  opacity: 0.5;
+}
+
+@media (max-width: 640px) {
   .site-footer {
-    padding-left: clamp(16px, 4vw, 24px);
+    padding: 24px 16px;
+    border-radius: 16px;
+    margin-top: 40px;
+  }
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
+
 
 

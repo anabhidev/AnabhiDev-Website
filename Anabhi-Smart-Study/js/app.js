@@ -172,6 +172,76 @@ class App {
     }
   }
 
+  getFooterHTML(lang = 'id') {
+    const isEn = lang === 'en';
+    return `
+      <footer class="site-footer" id="siteFooter" role="contentinfo">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="brand-text">ANABHI<span>DEV</span></span>
+            <span class="brand-sub">Smart Study Platform</span>
+          </div>
+          <p class="footer-tagline">
+            ${isEn
+              ? 'Interactive web-based educational platform for Grade 1 Elementary Kurikulum Merdeka. Integrating conceptual visualizers, structured foundational drills, gamified achievements, and an intelligent AI study tutor.'
+              : 'Platform media pembelajaran interaktif berbasis web untuk jenjang SD Kelas 1 Kurikulum Merdeka. Mengintegrasikan visualisasi konsep, drill calistung terstruktur, gamifikasi bintang, dan asisten AI cerdas.'}
+          </p>
+          <div class="footer-tech-badges">
+            <span class="tech-badge">Vanilla JS (ES6+)</span>
+            <span class="tech-badge">HTML5 Canvas</span>
+            <span class="tech-badge">PWA Ready</span>
+            <span class="tech-badge">Standalone Offline</span>
+            <span class="tech-badge">WCAG 2.2 AAA</span>
+          </div>
+        </div>
+        <div class="footer-links-grid">
+          <div class="footer-col">
+            <h3 class="footer-col-title">${isEn ? 'Study Modules' : 'Modul Belajar'}</h3>
+            <ul class="footer-link-list">
+              <li><a href="#jadwal">${isEn ? 'Grade 1B Schedule' : 'Jadwal Kelas 1B'}</a></li>
+              <li><a href="#subject/matematika">${isEn ? 'Elementary Math Grade 1' : 'Matematika SD 1'}</a></li>
+              <li><a href="#subject/geografi">${isEn ? 'Geography & 3D Globe' : 'Geografi & Globe 3D'}</a></li>
+              <li><a href="#subject/bahasa-indonesia">${isEn ? 'Indonesian Language' : 'Bahasa Indonesia'}</a></li>
+              <li><a href="#math-toolbox">${isEn ? 'Math Toolbox (14 Tools)' : 'Math Toolbox (14 Jurus)'}</a></li>
+              <li><a href="#all-subjects">${isEn ? 'All 10 Subjects Catalog' : 'Katalog 10 Pelajaran'}</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-col-title">${isEn ? 'Learning Labs' : 'Learning Labs'}</h3>
+            <ul class="footer-link-list">
+              <li><a href="#reading">${isEn ? 'Reading Lab (12 Levels)' : 'Reading Lab (12 Level)'}</a></li>
+              <li><a href="#calistung">${isEn ? 'Calistung Daily Drill' : 'Calistung Daily Drill'}</a></li>
+              <li><a href="#sixty-min">${isEn ? '60-Minute 4-Pillars' : 'Buku 60 Menit (4 Pilar)'}</a></li>
+              <li><a href="#maxxi">${isEn ? 'MAXXI Thematic Book' : 'Buku MAXXI (Tematik)'}</a></li>
+              <li><a href="#writing">${isEn ? 'Writing Lab (Fine Motor)' : 'Writing Lab (Motorik)'}</a></li>
+              <li><a href="#tantangan">${isEn ? 'Daily Quest & Missions' : 'Misi Tantangan Harian'}</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-col-title">${isEn ? 'Ecosystem & Legal' : 'Ekosistem & Legal'}</h3>
+            <ul class="footer-link-list">
+              <li><a href="https://anabhidev.com" target="_blank" rel="noopener noreferrer">Portal Resmi Anabhi Dev</a></li>
+              <li><a href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer">GitHub Open Source</a></li>
+              <li><a href="https://anabhidev.com/terms" target="_blank" rel="noopener noreferrer">Ketentuan Layanan</a></li>
+              <li><a href="https://anabhidev.com/privacy" target="_blank" rel="noopener noreferrer">Kebijakan Privasi</a></li>
+              <li><a href="https://anabhidev.com/security" target="_blank" rel="noopener noreferrer">Standar Keamanan</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">
+            &copy; 2026 <strong>Anabhi Dev</strong>. ${isEn ? 'All rights reserved.' : 'Seluruh hak cipta dilindungi undang-undang.'}
+          </p>
+          <div class="footer-meta-pill">
+            <span>Standar Coding v2.0 &amp; SOP v2.4</span>
+            <span class="meta-dot">·</span>
+            <span>Development · Anabhi Dev · 2026</span>
+          </div>
+        </div>
+      </footer>
+    `;
+  }
+
   renderHome() {
     try {
       const state = appState.get();
@@ -257,11 +327,11 @@ class App {
                 TP 2026/2027
               </span>
             </div>
-            <h3 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
+            <h2 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
               ${isWeekend
                 ? (isEn ? `Prepare for Monday: ${targetDayObj.nameEn}` : `Siap-Siap Pelajaran Hari Senin: ${targetDayObj.name}`)
                 : (isEn ? `Class Schedule for ${dayData.nameEn} (07.30 – 12.30 WITA)` : `Pelajaran Sekolah Hari ${dayData.name} (07.30 – 12.30 WITA)`)}
-            </h3>
+            </h2>
             <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
               ${targetDayObj.tagline || (isEn ? 'Stay enthusiastic and prepare your textbooks!' : 'Tetap semangat dan siapkan buku pelajaranmu!')}
             </p>
@@ -326,7 +396,7 @@ class App {
           <div>
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
               <span style="font-size:20px;">🎯</span>
-              <h3 style="margin:0; font-size:17px; font-weight:850; color:var(--ink);">${isEn ? 'Daily Quest Ready!' : 'Misi Tantangan Hari Ini Siap!'}</h3>
+              <h2 style="margin:0; font-size:17px; font-weight:850; color:var(--ink);">${isEn ? 'Daily Quest Ready!' : 'Misi Tantangan Hari Ini Siap!'}</h2>
             </div>
             <p style="margin:0; font-size:13px; color:var(--muted);">
               ${isEn ? 'Complete 3 interactive mini quizzes to earn bonus achievement points and unlock new avatars.' : 'Selesaikan 3 kuis interaktif hari ini untuk mendapatkan bonus poin bintang dan lencana pahlawan cilik.'}
@@ -490,11 +560,8 @@ class App {
         ${isEn ? '“One problem has many ways. Never be afraid to make mistakes, because every step is a beginning of real learning!” — Anabhi Dev Smart Study' : '“Satu soal memiliki banyak cara. Jangan pernah takut salah, karena dari situlah pemikiran kreatif dan rasa ingin tahu kita berkembang!” — Anabhi Dev Smart Study'}
       </blockquote>
 
-      <!-- Footer Aplikasi -->
-      <footer class="app-footer">
-        <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
-        ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
-      </footer>
+      <!-- Footer Aplikasi (Standar Coding v2.0 Bagian 13.3) -->
+      ${this.getFooterHTML(lang)}
     `;
 
     // Event listeners di dashboard beranda
@@ -679,11 +746,8 @@ class App {
       <!-- Grid Daftar Mata Pelajaran -->
       <div class="subject-grid" id="catalogGrid"></div>
 
-      <!-- Footer Aplikasi -->
-      <footer class="app-footer" style="margin-top:40px;">
-        <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
-        ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
-      </footer>
+      <!-- Footer Aplikasi (Standar Coding v2.0 Bagian 13.3) -->
+      ${this.getFooterHTML(lang)}
     `;
 
     // Pasang listener input pencarian

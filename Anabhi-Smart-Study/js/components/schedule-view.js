@@ -327,13 +327,13 @@ export class ScheduleViewComponent {
         <table class="schedule-matrix-table" style="width:100%; border-collapse:collapse; min-width:760px; font-size:12.5px;">
           <thead>
             <tr style="color:#ffffff; text-align:center; font-weight:850;">
-              <th style="background:#e11d48; padding:12px 8px; border:1px solid rgba(255,255,255,0.2); border-radius:8px 0 0 0; width:55px;">No.</th>
-              <th style="background:#ea580c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); width:110px;">WAKTU</th>
-              <th style="background:#16a34a; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SENIN</th>
-              <th style="background:#6366f1; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SELASA</th>
-              <th style="background:#0284c7; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">RABU</th>
-              <th style="background:#db2777; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">KAMIS</th>
-              <th style="background:#059669; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:0 8px 0 0;">JUMAT</th>
+              <th style="background:#be123c; padding:12px 8px; border:1px solid rgba(255,255,255,0.2); border-radius:8px 0 0 0; width:55px;">No.</th>
+              <th style="background:#c2410c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); width:110px;">WAKTU</th>
+              <th style="background:#15803d; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SENIN</th>
+              <th style="background:#4338ca; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SELASA</th>
+              <th style="background:#0369a1; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">RABU</th>
+              <th style="background:#be123c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">KAMIS</th>
+              <th style="background:#047857; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:0 8px 0 0;">JUMAT</th>
             </tr>
           </thead>
           <tbody>
@@ -414,16 +414,16 @@ export class ScheduleViewComponent {
 
   getPeriodColor(periodNo) {
     const colors = [
-      '#e11d48', // 1: Merah
-      '#ea580c', // 2: Oranye
-      '#16a34a', // 3: Hijau
-      '#f59e0b', // 4: Istirahat
-      '#0284c7', // 5: Sky
-      '#6366f1', // 6: Indigo
-      '#10b981', // 7: Emerald
-      '#f59e0b', // 8: Istirahat
-      '#db2777', // 9: Pink
-      '#8b5cf6'  // 10: Ungu
+      '#be123c', // 1: Rose 700
+      '#c2410c', // 2: Oranye 700
+      '#15803d', // 3: Hijau 700
+      '#b45309', // 4: Amber 700 (Istirahat)
+      '#0369a1', // 5: Sky 700
+      '#4338ca', // 6: Indigo 700
+      '#047857', // 7: Emerald 700
+      '#b45309', // 8: Amber 700 (Istirahat)
+      '#be123c', // 9: Rose 700
+      '#6d28d9'  // 10: Purple 700
     ];
     return colors[periodNo - 1] || '#0e2e48';
   }
@@ -492,3 +492,4 @@ export class ScheduleViewComponent {
     });
   }
 }
+

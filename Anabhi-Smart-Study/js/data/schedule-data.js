@@ -37,8 +37,8 @@ export const SCHEDULE_DATA = {
       dayIndex: 1,
       name: 'Senin',
       nameEn: 'Monday',
-      badgeColor: '#16a34a',
-      badgeBg: 'rgba(22, 163, 74, 0.12)',
+      badgeColor: '#15803d',
+      badgeBg: 'rgba(21, 128, 61, 0.12)',
       tagline: 'Awal pekan penuh berkah, nalar matematika, dan dasar budi pekerti luhur!',
       schedule: [
         { period: 1, time: '07.30 – 08.05', subjectId: 'agama', name: 'Agama dan Budi Pekerti', nameEn: 'Religious & Moral Education', icon: '🙏', tip: 'Doa harian, rasa syukur, dan budi pekerti luhur.' },
@@ -58,8 +58,8 @@ export const SCHEDULE_DATA = {
       dayIndex: 2,
       name: 'Selasa',
       nameEn: 'Tuesday',
-      badgeColor: '#6366f1',
-      badgeBg: 'rgba(99, 102, 241, 0.12)',
+      badgeColor: '#4338ca',
+      badgeBg: 'rgba(67, 56, 202, 0.12)',
       tagline: 'Tubuh sehat bugar berolahraga, cinta tanah air, dan asah logika!',
       schedule: [
         { period: 1, time: '07.30 – 08.05', subjectId: 'pjok', name: 'PJOK', nameEn: 'Physical Education (PJOK)', icon: '🏃', tip: 'Pemanasan, senam sehat, dan gerak lokomotor!' },
@@ -79,8 +79,8 @@ export const SCHEDULE_DATA = {
       dayIndex: 3,
       name: 'Rabu',
       nameEn: 'Wednesday',
-      badgeColor: '#0ea5e9',
-      badgeBg: 'rgba(14, 165, 233, 0.12)',
+      badgeColor: '#0369a1',
+      badgeBg: 'rgba(3, 105, 161, 0.12)',
       tagline: 'Kaya literasi bahasa Indonesia, lestarikan basa Bali, dan eksplorasi seni!',
       schedule: [
         { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Mengenal huruf abjad, bunyi vokal, dan konsonan.' },
@@ -100,8 +100,8 @@ export const SCHEDULE_DATA = {
       dayIndex: 4,
       name: 'Kamis',
       nameEn: 'Thursday',
-      badgeColor: '#e11d48',
-      badgeBg: 'rgba(225, 29, 72, 0.12)',
+      badgeColor: '#be123c',
+      badgeBg: 'rgba(190, 18, 60, 0.12)',
       tagline: 'Perkuat membaca mandiri, kreasi artistik, dan projek seru kolaboratif!',
       schedule: [
         { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Latihan menulis kalimat sederhana dengan huruf tegak rapi.' },
@@ -121,8 +121,8 @@ export const SCHEDULE_DATA = {
       dayIndex: 5,
       name: 'Jumat',
       nameEn: 'Friday',
-      badgeColor: '#059669',
-      badgeBg: 'rgba(5, 150, 105, 0.12)',
+      badgeColor: '#047857',
+      badgeBg: 'rgba(4, 120, 87, 0.12)',
       tagline: 'Jumat bersih ceria, penguatan karakter P5, dan English vocabulary!',
       schedule: [
         { period: 1, time: '07.30 – 08.05', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌟', tip: 'Senam pagi ceria dan gerakan peduli lingkungan sekolah.' },
@@ -235,3 +235,4 @@ export function getGroupedDailySchedule(dayKey) {
 
   return groups;
 }
+

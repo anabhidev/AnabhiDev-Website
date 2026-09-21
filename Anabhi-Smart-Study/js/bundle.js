@@ -2,12 +2,13 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // Standalone Bundle (Compatible with file:/// and http/https)
 // Development · Anabhi Dev
-// Version   : 2.9 (Math Visual 14 Methods & 800+ Questions)
-// Generated : 13 September 2026
+// Version   : 3.8 (SOP v2.4 & Standar Coding v2.0 Aligned)
+// Generated : 21 September 2026
 // ================================================================
 
 (function () {
   'use strict';
+
 
 
   // --- Source: js/state.js ---
@@ -7821,8 +7822,8 @@
         dayIndex: 1,
         name: 'Senin',
         nameEn: 'Monday',
-        badgeColor: '#16a34a',
-        badgeBg: 'rgba(22, 163, 74, 0.12)',
+        badgeColor: '#15803d',
+        badgeBg: 'rgba(21, 128, 61, 0.12)',
         tagline: 'Awal pekan penuh berkah, nalar matematika, dan dasar budi pekerti luhur!',
         schedule: [
           { period: 1, time: '07.30 – 08.05', subjectId: 'agama', name: 'Agama dan Budi Pekerti', nameEn: 'Religious & Moral Education', icon: '🙏', tip: 'Doa harian, rasa syukur, dan budi pekerti luhur.' },
@@ -7842,8 +7843,8 @@
         dayIndex: 2,
         name: 'Selasa',
         nameEn: 'Tuesday',
-        badgeColor: '#6366f1',
-        badgeBg: 'rgba(99, 102, 241, 0.12)',
+        badgeColor: '#4338ca',
+        badgeBg: 'rgba(67, 56, 202, 0.12)',
         tagline: 'Tubuh sehat bugar berolahraga, cinta tanah air, dan asah logika!',
         schedule: [
           { period: 1, time: '07.30 – 08.05', subjectId: 'pjok', name: 'PJOK', nameEn: 'Physical Education (PJOK)', icon: '🏃', tip: 'Pemanasan, senam sehat, dan gerak lokomotor!' },
@@ -7863,8 +7864,8 @@
         dayIndex: 3,
         name: 'Rabu',
         nameEn: 'Wednesday',
-        badgeColor: '#0ea5e9',
-        badgeBg: 'rgba(14, 165, 233, 0.12)',
+        badgeColor: '#0369a1',
+        badgeBg: 'rgba(3, 105, 161, 0.12)',
         tagline: 'Kaya literasi bahasa Indonesia, lestarikan basa Bali, dan eksplorasi seni!',
         schedule: [
           { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Mengenal huruf abjad, bunyi vokal, dan konsonan.' },
@@ -7884,8 +7885,8 @@
         dayIndex: 4,
         name: 'Kamis',
         nameEn: 'Thursday',
-        badgeColor: '#e11d48',
-        badgeBg: 'rgba(225, 29, 72, 0.12)',
+        badgeColor: '#be123c',
+        badgeBg: 'rgba(190, 18, 60, 0.12)',
         tagline: 'Perkuat membaca mandiri, kreasi artistik, dan projek seru kolaboratif!',
         schedule: [
           { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Latihan menulis kalimat sederhana dengan huruf tegak rapi.' },
@@ -7905,8 +7906,8 @@
         dayIndex: 5,
         name: 'Jumat',
         nameEn: 'Friday',
-        badgeColor: '#059669',
-        badgeBg: 'rgba(5, 150, 105, 0.12)',
+        badgeColor: '#047857',
+        badgeBg: 'rgba(4, 120, 87, 0.12)',
         tagline: 'Jumat bersih ceria, penguatan karakter P5, dan English vocabulary!',
         schedule: [
           { period: 1, time: '07.30 – 08.05', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌟', tip: 'Senam pagi ceria dan gerakan peduli lingkungan sekolah.' },
@@ -8019,6 +8020,7 @@
   
     return groups;
   }
+  
   
 
   // --- Source: js/data/globe-paths.js ---
@@ -18008,13 +18010,13 @@
           <table class="schedule-matrix-table" style="width:100%; border-collapse:collapse; min-width:760px; font-size:12.5px;">
             <thead>
               <tr style="color:#ffffff; text-align:center; font-weight:850;">
-                <th style="background:#e11d48; padding:12px 8px; border:1px solid rgba(255,255,255,0.2); border-radius:8px 0 0 0; width:55px;">No.</th>
-                <th style="background:#ea580c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); width:110px;">WAKTU</th>
-                <th style="background:#16a34a; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SENIN</th>
-                <th style="background:#6366f1; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SELASA</th>
-                <th style="background:#0284c7; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">RABU</th>
-                <th style="background:#db2777; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">KAMIS</th>
-                <th style="background:#059669; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:0 8px 0 0;">JUMAT</th>
+                <th style="background:#be123c; padding:12px 8px; border:1px solid rgba(255,255,255,0.2); border-radius:8px 0 0 0; width:55px;">No.</th>
+                <th style="background:#c2410c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); width:110px;">WAKTU</th>
+                <th style="background:#15803d; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SENIN</th>
+                <th style="background:#4338ca; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SELASA</th>
+                <th style="background:#0369a1; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">RABU</th>
+                <th style="background:#be123c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">KAMIS</th>
+                <th style="background:#047857; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:0 8px 0 0;">JUMAT</th>
               </tr>
             </thead>
             <tbody>
@@ -18095,16 +18097,16 @@
   
     getPeriodColor(periodNo) {
       const colors = [
-        '#e11d48', // 1: Merah
-        '#ea580c', // 2: Oranye
-        '#16a34a', // 3: Hijau
-        '#f59e0b', // 4: Istirahat
-        '#0284c7', // 5: Sky
-        '#6366f1', // 6: Indigo
-        '#10b981', // 7: Emerald
-        '#f59e0b', // 8: Istirahat
-        '#db2777', // 9: Pink
-        '#8b5cf6'  // 10: Ungu
+        '#be123c', // 1: Rose 700
+        '#c2410c', // 2: Oranye 700
+        '#15803d', // 3: Hijau 700
+        '#b45309', // 4: Amber 700 (Istirahat)
+        '#0369a1', // 5: Sky 700
+        '#4338ca', // 6: Indigo 700
+        '#047857', // 7: Emerald 700
+        '#b45309', // 8: Amber 700 (Istirahat)
+        '#be123c', // 9: Rose 700
+        '#6d28d9'  // 10: Purple 700
       ];
       return colors[periodNo - 1] || '#0e2e48';
     }
@@ -18173,6 +18175,7 @@
       });
     }
   }
+  
   
 
   // --- Source: js/components/reading-lab.js ---
@@ -19915,6 +19918,76 @@
       }
     }
   
+    getFooterHTML(lang = 'id') {
+      const isEn = lang === 'en';
+      return `
+        <footer class="site-footer" id="siteFooter" role="contentinfo">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="brand-text">ANABHI<span>DEV</span></span>
+              <span class="brand-sub">Smart Study Platform</span>
+            </div>
+            <p class="footer-tagline">
+              ${isEn
+                ? 'Interactive web-based educational platform for Grade 1 Elementary Kurikulum Merdeka. Integrating conceptual visualizers, structured foundational drills, gamified achievements, and an intelligent AI study tutor.'
+                : 'Platform media pembelajaran interaktif berbasis web untuk jenjang SD Kelas 1 Kurikulum Merdeka. Mengintegrasikan visualisasi konsep, drill calistung terstruktur, gamifikasi bintang, dan asisten AI cerdas.'}
+            </p>
+            <div class="footer-tech-badges">
+              <span class="tech-badge">Vanilla JS (ES6+)</span>
+              <span class="tech-badge">HTML5 Canvas</span>
+              <span class="tech-badge">PWA Ready</span>
+              <span class="tech-badge">Standalone Offline</span>
+              <span class="tech-badge">WCAG 2.2 AAA</span>
+            </div>
+          </div>
+          <div class="footer-links-grid">
+            <div class="footer-col">
+              <h3 class="footer-col-title">${isEn ? 'Study Modules' : 'Modul Belajar'}</h3>
+              <ul class="footer-link-list">
+                <li><a href="#jadwal">${isEn ? 'Grade 1B Schedule' : 'Jadwal Kelas 1B'}</a></li>
+                <li><a href="#subject/matematika">${isEn ? 'Elementary Math Grade 1' : 'Matematika SD 1'}</a></li>
+                <li><a href="#subject/geografi">${isEn ? 'Geography & 3D Globe' : 'Geografi & Globe 3D'}</a></li>
+                <li><a href="#subject/bahasa-indonesia">${isEn ? 'Indonesian Language' : 'Bahasa Indonesia'}</a></li>
+                <li><a href="#math-toolbox">${isEn ? 'Math Toolbox (14 Tools)' : 'Math Toolbox (14 Jurus)'}</a></li>
+                <li><a href="#all-subjects">${isEn ? 'All 10 Subjects Catalog' : 'Katalog 10 Pelajaran'}</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h3 class="footer-col-title">${isEn ? 'Learning Labs' : 'Learning Labs'}</h3>
+              <ul class="footer-link-list">
+                <li><a href="#reading">${isEn ? 'Reading Lab (12 Levels)' : 'Reading Lab (12 Level)'}</a></li>
+                <li><a href="#calistung">${isEn ? 'Calistung Daily Drill' : 'Calistung Daily Drill'}</a></li>
+                <li><a href="#sixty-min">${isEn ? '60-Minute 4-Pillars' : 'Buku 60 Menit (4 Pilar)'}</a></li>
+                <li><a href="#maxxi">${isEn ? 'MAXXI Thematic Book' : 'Buku MAXXI (Tematik)'}</a></li>
+                <li><a href="#writing">${isEn ? 'Writing Lab (Fine Motor)' : 'Writing Lab (Motorik)'}</a></li>
+                <li><a href="#tantangan">${isEn ? 'Daily Quest & Missions' : 'Misi Tantangan Harian'}</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h3 class="footer-col-title">${isEn ? 'Ecosystem & Legal' : 'Ekosistem & Legal'}</h3>
+              <ul class="footer-link-list">
+                <li><a href="https://anabhidev.com" target="_blank" rel="noopener noreferrer">Portal Resmi Anabhi Dev</a></li>
+                <li><a href="https://github.com/anabhidev" target="_blank" rel="noopener noreferrer">GitHub Open Source</a></li>
+                <li><a href="https://anabhidev.com/terms" target="_blank" rel="noopener noreferrer">Ketentuan Layanan</a></li>
+                <li><a href="https://anabhidev.com/privacy" target="_blank" rel="noopener noreferrer">Kebijakan Privasi</a></li>
+                <li><a href="https://anabhidev.com/security" target="_blank" rel="noopener noreferrer">Standar Keamanan</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p class="footer-copyright">
+              &copy; 2026 <strong>Anabhi Dev</strong>. ${isEn ? 'All rights reserved.' : 'Seluruh hak cipta dilindungi undang-undang.'}
+            </p>
+            <div class="footer-meta-pill">
+              <span>Standar Coding v2.0 &amp; SOP v2.4</span>
+              <span class="meta-dot">·</span>
+              <span>Development · Anabhi Dev · 2026</span>
+            </div>
+          </div>
+        </footer>
+      `;
+    }
+  
     renderHome() {
       try {
         const state = appState.get();
@@ -20000,11 +20073,11 @@
                   TP 2026/2027
                 </span>
               </div>
-              <h3 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
+              <h2 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
                 ${isWeekend
                   ? (isEn ? `Prepare for Monday: ${targetDayObj.nameEn}` : `Siap-Siap Pelajaran Hari Senin: ${targetDayObj.name}`)
                   : (isEn ? `Class Schedule for ${dayData.nameEn} (07.30 – 12.30 WITA)` : `Pelajaran Sekolah Hari ${dayData.name} (07.30 – 12.30 WITA)`)}
-              </h3>
+              </h2>
               <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
                 ${targetDayObj.tagline || (isEn ? 'Stay enthusiastic and prepare your textbooks!' : 'Tetap semangat dan siapkan buku pelajaranmu!')}
               </p>
@@ -20069,7 +20142,7 @@
             <div>
               <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
                 <span style="font-size:20px;">🎯</span>
-                <h3 style="margin:0; font-size:17px; font-weight:850; color:var(--ink);">${isEn ? 'Daily Quest Ready!' : 'Misi Tantangan Hari Ini Siap!'}</h3>
+                <h2 style="margin:0; font-size:17px; font-weight:850; color:var(--ink);">${isEn ? 'Daily Quest Ready!' : 'Misi Tantangan Hari Ini Siap!'}</h2>
               </div>
               <p style="margin:0; font-size:13px; color:var(--muted);">
                 ${isEn ? 'Complete 3 interactive mini quizzes to earn bonus achievement points and unlock new avatars.' : 'Selesaikan 3 kuis interaktif hari ini untuk mendapatkan bonus poin bintang dan lencana pahlawan cilik.'}
@@ -20233,11 +20306,8 @@
           ${isEn ? '“One problem has many ways. Never be afraid to make mistakes, because every step is a beginning of real learning!” — Anabhi Dev Smart Study' : '“Satu soal memiliki banyak cara. Jangan pernah takut salah, karena dari situlah pemikiran kreatif dan rasa ingin tahu kita berkembang!” — Anabhi Dev Smart Study'}
         </blockquote>
   
-        <!-- Footer Aplikasi -->
-        <footer class="app-footer">
-          <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
-          ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
-        </footer>
+        <!-- Footer Aplikasi (Standar Coding v2.0 Bagian 13.3) -->
+        ${this.getFooterHTML(lang)}
       `;
   
       // Event listeners di dashboard beranda
@@ -20422,11 +20492,8 @@
         <!-- Grid Daftar Mata Pelajaran -->
         <div class="subject-grid" id="catalogGrid"></div>
   
-        <!-- Footer Aplikasi -->
-        <footer class="app-footer" style="margin-top:40px;">
-          <strong>AnabhiDev Smart Study</strong> — ${(typeof t === 'function') ? t('pill', lang) : 'Media Belajar Interaktif SD Kelas 1'}<br>
-          ${(typeof t === 'function') ? t('developmentCredit', lang) : 'Development · Anabhi Dev'} · 2026
-        </footer>
+        <!-- Footer Aplikasi (Standar Coding v2.0 Bagian 13.3) -->
+        ${this.getFooterHTML(lang)}
       `;
   
       // Pasang listener input pencarian
@@ -20462,14 +20529,5 @@
     new App();
   }
   
-
-  // Bootstrap saat DOM siap
-  if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', () => {
-      new App();
-    });
-  } else {
-    new App();
-  }
 
 })();
