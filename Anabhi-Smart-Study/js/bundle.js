@@ -17834,6 +17834,9 @@
       `;
   
       this.attachEvents();
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     /**
@@ -19787,6 +19790,7 @@
       window.lksModal = this.lksModal;
       this.aiModal = new AiTutorModalComponent();
       window.aiTutorModal = this.aiModal;
+      window.app = this;
       this.topbar = new TopbarComponent(this.topbarEl);
       this.sidebar = new SidebarComponent(this.sidebarEl, this.scrimEl, this.shellEl);
       this.videoModal = new VideoModalComponent(this.videoModalEl);
@@ -19915,6 +19919,17 @@
           break;
         default:
           this.renderHome();
+      }
+      this.ensureFooter(state.lang || 'id');
+    }
+  
+    ensureFooter(lang = 'id') {
+      if (this.mainEl && !this.mainEl.querySelector('#siteFooter')) {
+        const temp = document.createElement('div');
+        temp.innerHTML = this.getFooterHTML(lang);
+        if (temp.firstElementChild) {
+          this.mainEl.appendChild(temp.firstElementChild);
+        }
       }
     }
   
