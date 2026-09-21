@@ -75,6 +75,11 @@ html {
   --card-shadow-hover: 0 10px 28px -4px rgba(15, 23, 42, 0.08);
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--canvas);
@@ -287,6 +292,32 @@ body {
   z-index: 2;
   max-width: 680px;
   margin: 0 auto;
+}
+
+.hero-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(244, 239, 229, 0.65);
+  text-decoration: none;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-breadcrumb:hover {
+  color: var(--gold-accent);
+  transform: translateX(-2px);
+}
+
+.hero-breadcrumb svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
 }
 
 .hero-badge {
@@ -629,7 +660,7 @@ body {
   border-radius: 14px;
   border: 1.5px solid var(--border);
   padding: 18px 16px;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -647,10 +678,18 @@ body {
 .template-card:hover,
 .workspace-card:hover,
 .usecase-card:hover,
-.pj-card:hover {
+.pj-card:hover,
+.card:hover {
   border-color: var(--blue);
-  transform: translateY(-2px);
-  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -4px rgba(8, 17, 29, 0.12), 0 0 0 1px rgba(59, 123, 245, 0.18);
+}
+
+.device-card.best:hover,
+.model-card.best:hover,
+.cmd-card.essential:hover {
+  border-color: var(--gold);
+  box-shadow: 0 14px 32px -4px rgba(201, 169, 106, 0.22), 0 0 0 1px rgba(201, 169, 106, 0.35);
 }
 
 /* ── CARD MODIFIERS (SCOPED, NEVER AS STANDALONE CHIP) ── */
@@ -1509,6 +1548,7 @@ body {
 
 .code-block,
 pre {
+  position: relative;
   background: #08111D !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
@@ -1519,6 +1559,43 @@ pre {
   line-height: 1.6;
   overflow-x: auto;
   margin-bottom: 18px;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(244, 239, 229, 0.75);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+
+.code-copy-btn:hover {
+  background: rgba(201, 169, 106, 0.2);
+  border-color: rgba(201, 169, 106, 0.5);
+  color: #FFFFFF;
+}
+
+.code-copy-btn.copied {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86EFAC;
+}
+
+.code-copy-btn svg {
+  width: 12px;
+  height: 12px;
 }
 
 code {
@@ -1541,13 +1618,23 @@ code {
 .code-comment { color: #64748B; font-style: italic; }
 .code-cmd { color: #F8FAFC; font-weight: 600; }
 
-/* ── TABLES ── */
+/* ── TABLES & WRAPPERS ── */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  box-shadow: var(--card-shadow);
+  -webkit-overflow-scrolling: touch;
+}
+
 .compare-table,
 .shortcut-table,
 .turn-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .compare-table th,
@@ -1895,3 +1982,155 @@ code {
     font-size: 11.5px;
   }
 }
+
+/* ── HERO BREADCRUMB (Luxury Editorial Back-Link) ── */
+.hero-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--gold-accent);
+  text-decoration: none;
+  background: rgba(201, 169, 106, 0.08);
+  border: 1px solid rgba(201, 169, 106, 0.22);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  transition: all 0.25s var(--ease-luxury);
+}
+
+.hero-breadcrumb:hover {
+  background: rgba(201, 169, 106, 0.18);
+  border-color: rgba(201, 169, 106, 0.5);
+  color: #FFFFFF;
+  transform: translateX(-2px);
+}
+
+.hero-breadcrumb svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+
+.hero-breadcrumb:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ── CODE COPY INTERACTION (Luxury Dev Portal Standards) ── */
+.code-block,
+.handoff-box {
+  position: relative;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: all 0.2s ease;
+  z-index: 10;
+  user-select: none;
+}
+
+.code-copy-btn:hover {
+  opacity: 1;
+  background: rgba(201, 169, 106, 0.2);
+  border-color: rgba(201, 169, 106, 0.5);
+  color: #FFFFFF;
+}
+
+.code-copy-btn.copied {
+  background: rgba(22, 163, 74, 0.25);
+  border-color: rgba(22, 163, 74, 0.6);
+  color: #4ADE80;
+}
+
+.code-copy-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Single-line command copyable */
+.cmd-code {
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.cmd-code:hover {
+  border-color: rgba(201, 169, 106, 0.5);
+  background: #0B1322;
+}
+
+.cmd-code::after {
+  content: 'Click to copy';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.cmd-code:hover::after {
+  opacity: 1;
+}
+
+.cmd-code.copied::after {
+  content: '✓ Copied!';
+  opacity: 1;
+  color: #4ADE80;
+}
+
+/* ── TABLE WRAP & RESPONSIVE SCROLL ── */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+}
+
+.table-wrap::-webkit-scrollbar,
+.turn-table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-wrap::-webkit-scrollbar-thumb,
+.turn-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(201, 169, 106, 0.35);
+  border-radius: 3px;
+}
+
+.table-wrap::-webkit-scrollbar-track,
+.turn-table-wrap::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.05);
+}
+

@@ -12,37 +12,46 @@
   var doc = document.documentElement;
 
   /* ── 1. Bilingual Language Switcher (EN / ID) ── */
-  function setLanguage(lang) {
+  function setLanguage(lang, isInitial) {
     try {
       localStorage.setItem('anabhidev_lang', lang);
     } catch (e) {}
 
+    // Avoid forced reflow on initial load if default is already English
+    if (isInitial && lang === 'en') {
+      return;
+    }
+
+    if (doc.lang === lang && !isInitial) {
+      return;
+    }
+
     doc.lang = lang;
 
-    // Update text content
-    var nodes = document.querySelectorAll('[data-' + lang + ']');
-    for (var i = 0; i < nodes.length; i++) {
-      var content = nodes[i].getAttribute('data-' + lang);
-      if (content !== null) {
-        nodes[i].innerHTML = content;
+    // Batch DOM updates inside requestAnimationFrame to prevent layout thrashing
+    requestAnimationFrame(function () {
+      var nodes = document.querySelectorAll('[data-' + lang + ']');
+      for (var i = 0; i < nodes.length; i++) {
+        var content = nodes[i].getAttribute('data-' + lang);
+        if (content !== null && nodes[i].innerHTML !== content) {
+          nodes[i].innerHTML = content;
+        }
       }
-    }
 
-    // Update accessible labels
-    var labeledNodes = document.querySelectorAll('[data-' + lang + '-label]');
-    for (var k = 0; k < labeledNodes.length; k++) {
-      var label = labeledNodes[k].getAttribute('data-' + lang + '-label');
-      if (label) {
-        labeledNodes[k].setAttribute('aria-label', label);
+      var labeledNodes = document.querySelectorAll('[data-' + lang + '-label]');
+      for (var k = 0; k < labeledNodes.length; k++) {
+        var label = labeledNodes[k].getAttribute('data-' + lang + '-label');
+        if (label && labeledNodes[k].getAttribute('aria-label') !== label) {
+          labeledNodes[k].setAttribute('aria-label', label);
+        }
       }
-    }
 
-    // Update toggle buttons state
-    var btns = document.querySelectorAll('.lang button');
-    for (var j = 0; j < btns.length; j++) {
-      var btnLang = btns[j].getAttribute('data-lang');
-      btns[j].setAttribute('aria-pressed', String(btnLang === lang));
-    }
+      var btns = document.querySelectorAll('.lang button');
+      for (var j = 0; j < btns.length; j++) {
+        var btnLang = btns[j].getAttribute('data-lang');
+        btns[j].setAttribute('aria-pressed', String(btnLang === lang));
+      }
+    });
   }
 
   // Initialize saved or browser language
@@ -56,7 +65,7 @@
     savedLang = browserLang.startsWith('id') ? 'id' : 'en';
   }
   if (savedLang === 'id' || savedLang === 'en') {
-    setLanguage(savedLang);
+    setLanguage(savedLang, true);
   }
 
   var langBox = document.querySelector('.lang');

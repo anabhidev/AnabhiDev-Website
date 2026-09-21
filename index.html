@@ -30,9 +30,8 @@
 <link rel="manifest" href="https://anabhidev.com/manifest.json">
 <meta name="theme-color" content="#08111D">
 
-<!-- Preload Critical LCP Assets -->
-<link rel="preload" as="image" href="https://anabhidev.com/founder-anabhi-dev.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="https://anabhidev.com/logo.webp" type="image/webp" fetchpriority="high">
+<!-- Preload Critical LCP Assets (Desktop Only to save mobile bandwidth) -->
+<link rel="preload" as="image" href="https://anabhidev.com/founder-anabhi-dev.webp" type="image/webp" fetchpriority="high" media="(min-width: 921px)">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anabhi Dev">
@@ -69,9 +68,8 @@
     img/work-anabhidev.webp
 -->
 
-<link rel="stylesheet" href="css/tokens.css?v=20260920a">
-<link rel="stylesheet" href="css/base.css?v=20260920a">
-<link rel="stylesheet" href="css/components.css?v=20260920a">
+<link rel="preload" as="style" href="css/app.min.css?v=20260921a">
+<link rel="stylesheet" href="css/app.min.css?v=20260921a">
 </head>
 
 <body>
@@ -84,7 +82,7 @@
     <div class="wrap">
       <header class="nav">
         <a href="https://anabhidev.com/" aria-label="Anabhi Dev — home">
-          <img class="nav-logo" src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="400" height="224" fetchpriority="high">
+          <img class="nav-logo" src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="114" height="64">
         </a>
         <nav aria-label="Main">
           <ul class="nav-links">
@@ -140,7 +138,10 @@
       </div>
       <div class="photo">
         <div class="photo-frame">
-          <img src="https://anabhidev.com/founder-anabhi-dev.webp" alt="I Gede Agus Wibawa" width="650" height="707" fetchpriority="high">
+          <img src="https://anabhidev.com/founder-anabhi-dev.webp"
+               srcset="https://anabhidev.com/founder-anabhi-dev-480.webp 480w, https://anabhidev.com/founder-anabhi-dev.webp 650w"
+               sizes="(max-width: 920px) 92vw, 470px"
+               alt="I Gede Agus Wibawa" width="650" height="707" decoding="async">
         </div>
         <div class="badge">
           <div class="badge-mark"></div>
