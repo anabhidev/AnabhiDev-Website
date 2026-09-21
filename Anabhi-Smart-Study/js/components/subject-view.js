@@ -149,6 +149,10 @@ export class SubjectViewComponent {
     } else if (activeTab === 'quizzes') {
       this.renderSelectedQuiz();
     }
+
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   getGeoTabHtml(tab, lang = 'id') {
@@ -1705,6 +1709,10 @@ export class SubjectViewComponent {
         }
       }
     });
+
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 }
 

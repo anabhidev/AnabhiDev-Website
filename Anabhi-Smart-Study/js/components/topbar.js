@@ -48,12 +48,13 @@ export class TopbarComponent {
     const currentTheme = state.theme || 'light';
     const currentStudent = store.getStudent();
     const isEn = lang === 'en';
+    const isDrawerOpen = Boolean(state.drawerOpen);
     const showInstallBtn = !this.isStandalone && this.deferredPrompt !== null;
 
     this.container.innerHTML = `
       <div class="topbar-left">
-        <button class="iconbtn" id="menuBtn" type="button" aria-label="Buka menu navigasi drawer" aria-expanded="false" aria-controls="sidebar">
-          ☰
+        <button class="iconbtn" id="menuBtn" type="button" aria-label="${isDrawerOpen ? (isEn ? 'Close navigation drawer' : 'Tutup menu navigasi drawer') : (isEn ? 'Open navigation drawer' : 'Buka menu navigasi drawer')}" aria-expanded="${isDrawerOpen ? 'true' : 'false'}" aria-controls="sidebar">
+          ${isDrawerOpen ? '✕' : '☰'}
         </button>
         <div class="hdr-title" id="topbarBrandBtn" title="Kembali ke Beranda" style="cursor:pointer;">
           <span class="app-name">Smart Study</span>

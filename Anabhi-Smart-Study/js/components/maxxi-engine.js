@@ -159,6 +159,9 @@ export class MaxxiEngineComponent {
     `;
 
     this.attachEvents(currentQuestion, subjects);
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   attachEvents(currentQuestion, subjects) {

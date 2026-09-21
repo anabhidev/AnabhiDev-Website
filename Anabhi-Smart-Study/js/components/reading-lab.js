@@ -144,6 +144,9 @@ export class ReadingLabComponent {
 
     this.attachEvents(currentLevel);
     this.renderCurrentStep(currentLevel);
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   attachEvents(currentLevel) {

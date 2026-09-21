@@ -154,6 +154,9 @@ export class SixtyMinEngineComponent {
     `;
 
     this.attachEvents(currentDrill, drills);
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   attachEvents(currentDrill, drills) {

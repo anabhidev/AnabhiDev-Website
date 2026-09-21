@@ -152,6 +152,9 @@ export class CalistungEngineComponent {
     `;
 
     this.attachEvents(currentTask, tasks);
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   attachEvents(currentTask, tasks) {

@@ -207,6 +207,9 @@ export class ChallengeViewComponent {
     `;
 
     this.attachEvents();
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   renderSpecialQuiz(quizData, lang, isEn) {
@@ -243,6 +246,10 @@ export class ChallengeViewComponent {
         this.activeSpecialQuiz = null;
         this.render();
       });
+    }
+
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
     }
   }
 

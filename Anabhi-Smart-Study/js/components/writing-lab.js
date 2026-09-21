@@ -115,6 +115,9 @@ export class WritingLabComponent {
 
     this.initCanvas();
     this.attachEvents(task);
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   initCanvas() {

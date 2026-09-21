@@ -12737,12 +12737,13 @@
       const currentTheme = state.theme || 'light';
       const currentStudent = store.getStudent();
       const isEn = lang === 'en';
+      const isDrawerOpen = Boolean(state.drawerOpen);
       const showInstallBtn = !this.isStandalone && this.deferredPrompt !== null;
   
       this.container.innerHTML = `
         <div class="topbar-left">
-          <button class="iconbtn" id="menuBtn" type="button" aria-label="Buka menu navigasi drawer" aria-expanded="false" aria-controls="sidebar">
-            ☰
+          <button class="iconbtn" id="menuBtn" type="button" aria-label="${isDrawerOpen ? (isEn ? 'Close navigation drawer' : 'Tutup menu navigasi drawer') : (isEn ? 'Open navigation drawer' : 'Buka menu navigasi drawer')}" aria-expanded="${isDrawerOpen ? 'true' : 'false'}" aria-controls="sidebar">
+            ${isDrawerOpen ? '✕' : '☰'}
           </button>
           <div class="hdr-title" id="topbarBrandBtn" title="Kembali ke Beranda" style="cursor:pointer;">
             <span class="app-name">Smart Study</span>
@@ -12941,6 +12942,9 @@
           <button class="btn-collapse-toggle" id="sidebarCollapseBtn" type="button" aria-label="Ciutkan atau perlebar sidebar" title="${state.sidebarCollapsed ? 'Perlebar Sidebar' : 'Ciutkan Sidebar'}">
             ${state.sidebarCollapsed ? '»' : '«'}
           </button>
+          <button class="btn-drawer-close" id="sidebarCloseBtn" type="button" aria-label="${isEn ? 'Close navigation drawer' : 'Tutup menu navigasi'}" title="${isEn ? 'Close menu' : 'Tutup menu'}">
+            ✕
+          </button>
         </div>
   
         <!-- Menu Utama -->
@@ -13039,6 +13043,13 @@
       if (collapseBtn) {
         collapseBtn.addEventListener('click', () => {
           appState.toggleSidebar();
+        });
+      }
+  
+      const closeBtn = this.sidebar.querySelector('#sidebarCloseBtn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          appState.toggleDrawer(false);
         });
       }
   
@@ -13764,6 +13775,9 @@
       `;
   
       this.attachEvents();
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     renderCurriculumContent(lang, isEn) {
@@ -15455,6 +15469,10 @@
       } else if (activeTab === 'quizzes') {
         this.renderSelectedQuiz();
       }
+  
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     getGeoTabHtml(tab, lang = 'id') {
@@ -17011,6 +17029,10 @@
           }
         }
       });
+  
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   }
   
@@ -17227,6 +17249,9 @@
       `;
   
       this.attachEvents();
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     renderSpecialQuiz(quizData, lang, isEn) {
@@ -17263,6 +17288,10 @@
           this.activeSpecialQuiz = null;
           this.render();
         });
+      }
+  
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
       }
     }
   
@@ -17661,6 +17690,9 @@
       `;
   
       this.attachEvents();
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents() {
@@ -18328,6 +18360,9 @@
   
       this.attachEvents(currentLevel);
       this.renderCurrentStep(currentLevel);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents(currentLevel) {
@@ -18724,6 +18759,9 @@
       `;
   
       this.attachEvents(currentTask, tasks);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents(currentTask, tasks) {
@@ -18960,6 +18998,9 @@
       `;
   
       this.attachEvents(currentDrill, drills);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents(currentDrill, drills) {
@@ -19191,6 +19232,9 @@
       `;
   
       this.attachEvents(currentQuestion, subjects);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents(currentQuestion, subjects) {
@@ -19377,6 +19421,9 @@
   
       this.initCanvas();
       this.attachEvents(task);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     initCanvas() {
@@ -19699,6 +19746,9 @@
       `;
   
       this.attachEvents(solved);
+      if (window.app && typeof window.app.ensureFooter === 'function') {
+        window.app.ensureFooter(lang);
+      }
     }
   
     attachEvents(solved) {

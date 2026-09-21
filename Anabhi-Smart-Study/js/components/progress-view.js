@@ -115,6 +115,9 @@ export class ProgressViewComponent {
     `;
 
     this.attachEvents();
+    if (window.app && typeof window.app.ensureFooter === 'function') {
+      window.app.ensureFooter(lang);
+    }
   }
 
   attachEvents() {

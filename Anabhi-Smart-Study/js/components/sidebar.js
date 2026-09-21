@@ -64,6 +64,9 @@ export class SidebarComponent {
         <button class="btn-collapse-toggle" id="sidebarCollapseBtn" type="button" aria-label="Ciutkan atau perlebar sidebar" title="${state.sidebarCollapsed ? 'Perlebar Sidebar' : 'Ciutkan Sidebar'}">
           ${state.sidebarCollapsed ? '»' : '«'}
         </button>
+        <button class="btn-drawer-close" id="sidebarCloseBtn" type="button" aria-label="${isEn ? 'Close navigation drawer' : 'Tutup menu navigasi'}" title="${isEn ? 'Close menu' : 'Tutup menu'}">
+          ✕
+        </button>
       </div>
 
       <!-- Menu Utama -->
@@ -162,6 +165,13 @@ export class SidebarComponent {
     if (collapseBtn) {
       collapseBtn.addEventListener('click', () => {
         appState.toggleSidebar();
+      });
+    }
+
+    const closeBtn = this.sidebar.querySelector('#sidebarCloseBtn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        appState.toggleDrawer(false);
       });
     }
 
