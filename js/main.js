@@ -54,18 +54,17 @@
     });
   }
 
-  // Initialize saved or browser language
+  // Initialize saved language only if explicitly stored
   var savedLang = null;
   try {
     savedLang = localStorage.getItem('anabhidev_lang');
   } catch (e) {}
 
-  if (!savedLang) {
-    var browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    savedLang = browserLang.startsWith('id') ? 'id' : 'en';
-  }
-  if (savedLang === 'id' || savedLang === 'en') {
-    setLanguage(savedLang, true);
+  if (savedLang === 'id') {
+    // Only switch language if user explicitly saved 'id', deferred after paint
+    window.addEventListener('load', function () {
+      setLanguage('id');
+    });
   }
 
   var langBox = document.querySelector('.lang');
@@ -100,46 +99,53 @@
   /* ── 3. Reveal on Scroll (Intersection Observer) ── */
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion && 'IntersectionObserver' in window) {
-    doc.classList.add('reveal-on');
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    // Defer reveal-on activation after initial frame paint to prevent forced reflow
+    requestAnimationFrame(function () {
+      doc.classList.add('reveal-on');
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    var revealItems = document.querySelectorAll('.reveal');
-    for (var r = 0; r < revealItems.length; r++) {
-      revealObserver.observe(revealItems[r]);
-    }
+      var revealItems = document.querySelectorAll('.reveal');
+      for (var r = 0; r < revealItems.length; r++) {
+        revealObserver.observe(revealItems[r]);
+      }
+    });
   }
 
   /* ── 4. Active Anchor Nav Tracking ── */
-  var hashLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  var navTargets = [];
-  for (var m = 0; m < hashLinks.length; m++) {
-    var targetEl = document.querySelector(hashLinks[m].getAttribute('href'));
-    if (targetEl) {
-      navTargets.push({ link: hashLinks[m], el: targetEl });
-    }
-  }
-
-  if (navTargets.length && 'IntersectionObserver' in window) {
-    var navObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          for (var n = 0; n < navTargets.length; n++) {
-            navTargets[n].link.classList.toggle('on', navTargets[n].el === entry.target);
-          }
+  if ('IntersectionObserver' in window) {
+    requestAnimationFrame(function () {
+      var hashLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+      var navTargets = [];
+      for (var m = 0; m < hashLinks.length; m++) {
+        var targetEl = document.querySelector(hashLinks[m].getAttribute('href'));
+        if (targetEl) {
+          navTargets.push({ link: hashLinks[m], el: targetEl });
         }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
+      }
 
-    for (var p = 0; p < navTargets.length; p++) {
-      navObserver.observe(navTargets[p].el);
-    }
+      if (navTargets.length) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              for (var n = 0; n < navTargets.length; n++) {
+                navTargets[n].link.classList.toggle('on', navTargets[n].el === entry.target);
+              }
+            }
+          });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+
+        for (var p = 0; p < navTargets.length; p++) {
+          navObserver.observe(navTargets[p].el);
+        }
+      }
+    });
   }
 })();
 
