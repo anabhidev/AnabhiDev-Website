@@ -42,7 +42,7 @@ export class ReadingLabComponent {
           flex-wrap: wrap;
         ">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Jam Pintar Baca Tanpa Dieja" style="
+            <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Jam Pintar Baca Tanpa Dieja" width="120" height="168" loading="lazy" decoding="async" style="
               width: 120px;
               height: 168px;
               object-fit: cover;

@@ -12937,7 +12937,7 @@
         <!-- Logo Anabhi Dev Saja di Atas Sidebar: Besar, Seukuran Sidebar, Tanpa Title Web (SOP 2.0) -->
         <div class="sidebar-top-branding">
           <a class="logo-box" href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi anabhidev.com">
-            <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager">
+            <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager" decoding="async">
           </a>
           <button class="btn-collapse-toggle" id="sidebarCollapseBtn" type="button" aria-label="Ciutkan atau perlebar sidebar" title="${state.sidebarCollapsed ? 'Perlebar Sidebar' : 'Ciutkan Sidebar'}">
             ${state.sidebarCollapsed ? '»' : '«'}
@@ -12999,9 +12999,9 @@
             <span class="icon">🏆</span>
             <span class="label">Buku Maxi (Tematik)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (10 Strategies)' : 'Math Toolbox (10 Jurus Berhitung)'}">
+          <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
             <span class="icon">🧮</span>
-            <span class="label">Math Toolbox (10 Jurus)</span>
+            <span class="label">Math Toolbox (14 Jurus)</span>
           </button>
           <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
             <span class="icon">✍️</span>
@@ -17851,7 +17851,7 @@
               <button class="iconbtn" id="btnClosePosterModal" type="button" aria-label="Tutup Poster" style="color:#ffffff;">✕</button>
             </div>
             <div class="schedule-poster-body">
-              <img src="${SCHEDULE_DATA.posterImage}" alt="Poster Resmi Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; border-radius:12px; display:block;" loading="lazy">
+              <img src="${SCHEDULE_DATA.posterImage}" alt="Poster Resmi Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" width="1080" height="1528" loading="lazy" decoding="async" style="width:100%; height:auto; border-radius:12px; display:block;">
             </div>
             <div class="schedule-poster-footer" style="padding:14px; display:flex; justify-content:space-between; align-items:center; background:var(--navy-deep); border-top:1px solid rgba(255,255,255,0.12);">
               <div style="font-size:12px; color:rgba(255,255,255,0.75);">
@@ -18258,7 +18258,7 @@
             flex-wrap: wrap;
           ">
             <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Jam Pintar Baca Tanpa Dieja" style="
+              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Jam Pintar Baca Tanpa Dieja" width="120" height="168" loading="lazy" decoding="async" style="
                 width: 120px;
                 height: 168px;
                 object-fit: cover;
@@ -18651,7 +18651,7 @@
             flex-wrap: wrap;
           ">
             <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-              <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung Permata" style="
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung Permata" width="120" height="168" loading="lazy" decoding="async" style="
                 width: 120px;
                 height: 168px;
                 object-fit: cover;
@@ -18887,7 +18887,7 @@
             flex-wrap: wrap;
           ">
             <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Menit Lancar Membaca Menulis Berhitung dan BHS Inggris" style="
+              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Menit Lancar Membaca Menulis Berhitung dan BHS Inggris" width="120" height="168" loading="lazy" decoding="async" style="
                 width: 120px;
                 height: 168px;
                 object-fit: cover;
@@ -19116,7 +19116,7 @@
             flex-wrap: wrap;
           ">
             <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-              <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI Tematik SD Kelas 1" style="
+              <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI Tematik SD Kelas 1" width="120" height="168" loading="lazy" decoding="async" style="
                 width: 120px;
                 height: 168px;
                 object-fit: cover;
@@ -20087,7 +20087,7 @@
             <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
               <!-- Hero Logo Card Putih Mandiri (SOP v2.2 Blueprint B.4 & Standar Coding v1.8 Bagian 11.1) -->
               <a href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" class="hero-logo-card" title="Anabhi Dev Portal Resmi" aria-label="Anabhi Dev Portal Resmi">
-                <img src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="160" height="52" loading="eager">
+                <img src="https://anabhidev.com/logo-black.webp" alt="Anabhi Dev" width="160" height="52" loading="eager" decoding="async">
               </a>
   
               <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 18px; text-align:center; min-width:105px;">
@@ -20273,7 +20273,7 @@
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px;">
             <!-- 1. Reading Lab (60 Jam Baca Tanpa Dieja) -->
             <div class="subject-card btn-open-companion" data-route="reading" style="cursor:pointer; border:1.5px solid rgba(8,145,178,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">
+              <img src="assets/img/covers/14_60Jam_PintarBaca.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Reading Lab" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(8,145,178,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#0891b2; color:#fff; font-size:10px; border:none; margin-bottom:4px;">📖 60 Jam · SRC-14</span>
                 <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Reading Lab (12 Levels)' : 'Reading Lab (12 Level)'}</h3>
@@ -20286,7 +20286,7 @@
   
             <!-- 2. Card Calistung (Permata Daily Drill) -->
             <div class="subject-card btn-open-companion" data-route="calistung" style="cursor:pointer; border:1.5px solid rgba(234,88,12,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
+              <img src="assets/img/covers/05_Cali_Stung.png" alt="Buku Calistung" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(234,88,12,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#ea580c; color:#fff; font-size:10px; border:none; margin-bottom:4px;">⚡ Permata · SRC-05</span>
                 <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Daily Drill)'}</h3>
@@ -20299,7 +20299,7 @@
   
             <!-- 3. Card 60 Menit (4 Pilar Multi-Skill) -->
             <div class="subject-card btn-open-companion" data-route="sixty-min" style="cursor:pointer; border:1.5px solid rgba(22,163,74,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Buku 60 Menit" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(22,163,74,0.25); flex-shrink:0;">
+              <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Buku 60 Menit" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(22,163,74,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#16a34a; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🕒 60 Menit · SRC-13</span>
                 <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? '60-Minute 4-Pillars' : 'Buku 60 Menit (4 Pilar)'}</h3>
@@ -20312,7 +20312,7 @@
   
             <!-- 4. Card Buku MAXXI (Tematik Sekolah) -->
             <div class="subject-card btn-open-companion" data-route="maxxi" style="cursor:pointer; border:1.5px solid rgba(2,132,199,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
-              <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
+              <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#0284c7; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
                 <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku Maxi (Tematik)'}</h3>

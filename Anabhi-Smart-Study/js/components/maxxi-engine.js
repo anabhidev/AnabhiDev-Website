@@ -43,7 +43,7 @@ export class MaxxiEngineComponent {
           flex-wrap: wrap;
         ">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI Tematik SD Kelas 1" style="
+            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI Tematik SD Kelas 1" width="120" height="168" loading="lazy" decoding="async" style="
               width: 120px;
               height: 168px;
               object-fit: cover;

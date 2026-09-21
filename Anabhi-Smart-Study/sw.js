@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v3-9';
+var CACHE_VERSION = 'anabhidev-smart-study-v4-0';
 
 var PRECACHE = [
   './',
@@ -26,7 +26,9 @@ var PRECACHE = [
   './js/engine/geo-engine.js',
   './js/engine/tts-engine.js',
   './js/engine/audio-fx.js',
+  './js/engine/interactive-engine.js',
   './js/components/lks-modal.js',
+  './js/components/ai-modal.js',
   './js/components/sidebar.js',
   './js/components/topbar.js',
   './js/components/subject-view.js',
@@ -34,9 +36,18 @@ var PRECACHE = [
   './js/components/challenge-view.js',
   './js/components/progress-view.js',
   './js/components/schedule-view.js',
+  './js/components/reading-lab.js',
+  './js/components/calistung-engine.js',
+  './js/components/sixty-min-engine.js',
+  './js/components/maxxi-engine.js',
+  './js/components/writing-lab.js',
+  './js/components/math-toolbox.js',
   './js/components/quiz-runner.js',
   './js/components/video-modal.js',
   './js/data/subjects.js',
+  './js/data/source-registry.js',
+  './js/data/content-registry.js',
+  './js/data/integrated-challenges.js',
   './js/data/schedule-data.js',
   './js/data/math-data.js',
   './js/data/geo-data.js',

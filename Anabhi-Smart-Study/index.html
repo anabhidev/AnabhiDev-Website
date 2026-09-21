@@ -71,7 +71,7 @@ Generated : 10 September 2026, 10:55:00
       root.setAttribute('lang', lang);
 
       // --- Self-Healing: Otomatis hapus cache usang & sinkronisasi Service Worker ---
-      var ACTIVE_CACHE = 'anabhidev-smart-study-v3-9';
+      var ACTIVE_CACHE = 'anabhidev-smart-study-v4-0';
       if ('caches' in window) {
         caches.keys().then(function (names) {
           names.forEach(function (name) {
@@ -124,12 +124,32 @@ Generated : 10 September 2026, 10:55:00
     })();
   </script>
 
-  <!-- Stylesheets dengan Version Query (SOP Kategori 1) -->
-  <link rel="stylesheet" href="css/base.css?v=20260921c">
-  <link rel="stylesheet" href="css/components.css?v=20260921c">
-  <link rel="stylesheet" href="css/math.css?v=20260921c">
-  <link rel="stylesheet" href="css/geography.css?v=20260921c">
-  <link rel="stylesheet" href="css/responsive.css?v=20260921c">
+  <!-- Critical Above-the-Fold CSS & Design Tokens (Core Web Vitals FCP < 0.8s) -->
+  <style id="critical-shell-css">
+    :root,[data-theme="light"]{--paper:#f4f7fa;--surface:#f4f7fa;--card:#ffffff;--ink:#112a43;--muted:#53697e;--line:#dce5ec;--line-strong:#bacddc;--navy:#173752;--navy-deep:#0e2e48;--teal:#056268;--teal-soft:#e9f8f8;--teal-soft-ink:#05585d;--gold:#ffb21b;--green:#1e7b45;--red:#b22727;--shadow:0 16px 40px rgba(20,55,80,.08);--rail-bg:#173752;--header-h:58px;--sidebar-w:260px;--sidebar-w-collapsed:72px;}
+    [data-theme="dark"]{--paper:#0b1829;--surface:#0b1829;--card:#142c3e;--ink:#e8eef7;--muted:#9ab0c2;--line:#2a4659;--navy:#0b2438;--navy-deep:#071a2b;--teal:#5be0df;--teal-soft:#10313f;--teal-soft-ink:#7fe9e7;--gold:#ffc44d;--green:#48bb78;--red:#ff7b7b;--shadow:0 18px 50px rgba(0,0,0,.42);--rail-bg:#0b2438;}
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+    .topbar{height:var(--header-h);background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px;position:fixed;z-index:95;top:0;left:0;right:0;border-bottom:1px solid rgba(255,255,255,.12);overflow:hidden;}
+    .shell{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr);padding-top:var(--header-h);transition:grid-template-columns .25s ease;}
+    .shell.collapsed{grid-template-columns:var(--sidebar-w-collapsed) minmax(0,1fr);}
+    .sidebar{position:fixed;top:var(--header-h);bottom:0;left:0;width:var(--sidebar-w);background:var(--rail-bg);color:#fff;overflow-y:auto;overflow-x:hidden;padding:14px 10px 48px;z-index:70;}
+    #main{grid-column:2;min-width:0;padding:36px clamp(18px,4vw,120px) 80px;}
+    @media (max-width:1050px){.shell,.shell.collapsed{grid-template-columns:minmax(0,1fr)!important;}.sidebar{position:fixed;top:var(--header-h);bottom:0;left:0;width:min(85vw,320px)!important;height:calc(100vh - var(--header-h));height:calc(100dvh - var(--header-h));transform:translateX(-100%);z-index:92;padding:16px 14px 28px!important;}.sidebar.open{transform:translateX(0);}.topbar{z-index:95!important;}#main{grid-column:1;padding:28px clamp(16px,4vw,36px) 60px;}}
+  </style>
+
+  <!-- Core Stylesheets dengan Version Query (SOP Kategori 1) -->
+  <link rel="stylesheet" href="css/base.css?v=20260921d">
+  <link rel="stylesheet" href="css/components.css?v=20260921d">
+  <link rel="stylesheet" href="css/responsive.css?v=20260921d">
+
+  <!-- View-Specific Stylesheets Asynchronous Preload (Non-blocking CWV) -->
+  <link rel="stylesheet" href="css/math.css?v=20260921d" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/geography.css?v=20260921d" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="css/math.css?v=20260921d">
+    <link rel="stylesheet" href="css/geography.css?v=20260921d">
+  </noscript>
 
   <!-- Schema JSON-LD Structured Data (SOP Kategori 2) -->
   <script type="application/ld+json">
@@ -192,7 +212,7 @@ Generated : 10 September 2026, 10:55:00
   <div class="ai-modal-overlay" id="aiTutorModal" style="display:none;" aria-modal="true" role="dialog" aria-label="Kakak Belajar Pintar"></div>
 
   <!-- Main JavaScript Bootstrap Bundle (Compatible with file:/// and http/https) -->
-  <script defer src="js/bundle.js?v=20260921c"></script>
+  <script defer src="js/bundle.js?v=20260921d"></script>
 </body>
 </html>
 

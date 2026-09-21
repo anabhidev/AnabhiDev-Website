@@ -59,7 +59,7 @@ export class SidebarComponent {
       <!-- Logo Anabhi Dev Saja di Atas Sidebar: Besar, Seukuran Sidebar, Tanpa Title Web (SOP 2.0) -->
       <div class="sidebar-top-branding">
         <a class="logo-box" href="https://anabhidev.com" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi anabhidev.com">
-          <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager">
+          <img src="https://anabhidev.com/logo.webp" alt="Anabhi Dev" width="512" height="180" loading="eager" decoding="async">
         </a>
         <button class="btn-collapse-toggle" id="sidebarCollapseBtn" type="button" aria-label="Ciutkan atau perlebar sidebar" title="${state.sidebarCollapsed ? 'Perlebar Sidebar' : 'Ciutkan Sidebar'}">
           ${state.sidebarCollapsed ? '»' : '«'}
@@ -121,9 +121,9 @@ export class SidebarComponent {
           <span class="icon">🏆</span>
           <span class="label">Buku Maxi (Tematik)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (10 Strategies)' : 'Math Toolbox (10 Jurus Berhitung)'}">
+        <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
           <span class="icon">🧮</span>
-          <span class="label">Math Toolbox (10 Jurus)</span>
+          <span class="label">Math Toolbox (14 Jurus)</span>
         </button>
         <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
           <span class="icon">✍️</span>

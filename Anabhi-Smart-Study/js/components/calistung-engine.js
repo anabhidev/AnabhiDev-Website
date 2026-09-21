@@ -44,7 +44,7 @@ export class CalistungEngineComponent {
           flex-wrap: wrap;
         ">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung Permata" style="
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung Permata" width="120" height="168" loading="lazy" decoding="async" style="
               width: 120px;
               height: 168px;
               object-fit: cover;

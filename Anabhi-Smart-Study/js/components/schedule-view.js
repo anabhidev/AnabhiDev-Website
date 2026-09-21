@@ -136,7 +136,7 @@ export class ScheduleViewComponent {
             <button class="iconbtn" id="btnClosePosterModal" type="button" aria-label="Tutup Poster" style="color:#ffffff;">✕</button>
           </div>
           <div class="schedule-poster-body">
-            <img src="${SCHEDULE_DATA.posterImage}" alt="Poster Resmi Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; border-radius:12px; display:block;" loading="lazy">
+            <img src="${SCHEDULE_DATA.posterImage}" alt="Poster Resmi Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" width="1080" height="1528" loading="lazy" decoding="async" style="width:100%; height:auto; border-radius:12px; display:block;">
           </div>
           <div class="schedule-poster-footer" style="padding:14px; display:flex; justify-content:space-between; align-items:center; background:var(--navy-deep); border-top:1px solid rgba(255,255,255,0.12);">
             <div style="font-size:12px; color:rgba(255,255,255,0.75);">

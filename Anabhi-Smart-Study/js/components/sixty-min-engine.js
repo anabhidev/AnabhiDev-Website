@@ -43,7 +43,7 @@ export class SixtyMinEngineComponent {
           flex-wrap: wrap;
         ">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Menit Lancar Membaca Menulis Berhitung dan BHS Inggris" style="
+            <img src="assets/img/covers/13_60Menit_Lancar.png" onerror="this.src='assets/img/covers/05_Cali_Stung.png'" alt="Cover 60 Menit Lancar Membaca Menulis Berhitung dan BHS Inggris" width="120" height="168" loading="lazy" decoding="async" style="
               width: 120px;
               height: 168px;
               object-fit: cover;
