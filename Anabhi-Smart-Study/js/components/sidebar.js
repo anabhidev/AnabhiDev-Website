@@ -73,6 +73,10 @@ export class SidebarComponent {
           <span class="icon">🏠</span>
           <span class="label">${t('home', lang)}</span>
         </button>
+        <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
+          <span class="icon">🗓️</span>
+          <span class="label">${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}</span>
+        </button>
         <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}">
           <span class="icon">📚</span>
           <span class="label">${t('allSubjects', lang)}</span>

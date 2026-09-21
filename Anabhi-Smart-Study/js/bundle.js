@@ -157,6 +157,8 @@
         window.location.hash = '#progress';
       } else if (route === 'all-subjects') {
         window.location.hash = '#semua-pelajaran';
+      } else if (route === 'jadwal') {
+        window.location.hash = '#jadwal';
       } else if (route === 'cali-stung') {
         window.location.hash = '#cali-stung';
       } else if (route === 'maxxi') {
@@ -7779,6 +7781,246 @@
   };
   
 
+  // --- Source: js/data/schedule-data.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Schedule Data (Jadwal Pelajaran Kelas 1B)
+  // Development · Anabhi Dev
+  // Version   : 2.0 (Tahun Pelajaran 2026/2027)
+  // Generated : 21 September 2026, 11:15:00 WITA
+  // ================================================================
+  
+  const SCHEDULE_DATA = {
+    academicYear: '2026/2027',
+    grade: 'Kelas 1B',
+    title: 'Jadwal Pelajaran Kelas 1B',
+    titleEn: 'Grade 1B Class Schedule',
+    subtitle: 'Tahun Pelajaran 2026/2027 · SD Kelas 1B Kurikulum Merdeka',
+    subtitleEn: 'Academic Year 2026/2027 · Grade 1B Merdeka Curriculum',
+    schoolHours: '07.30 – 12.30 WITA',
+    posterImage: 'assets/img/jadwal-kelas-1b.jpg',
+  
+    // 10 Slot Jam Pembelajaran Resmi SD Kelas 1B
+    periods: [
+      { no: 1, time: '07.30 – 08.05', duration: '35m', isBreak: false },
+      { no: 2, time: '08.05 – 08.40', duration: '35m', isBreak: false },
+      { no: 3, time: '08.40 – 09.15', duration: '35m', isBreak: false },
+      { no: 4, time: '09.15 – 09.30', duration: '15m', isBreak: true, label: 'Istirahat Pertama 🌼' },
+      { no: 5, time: '09.30 – 10.05', duration: '35m', isBreak: false },
+      { no: 6, time: '10.05 – 10.40', duration: '35m', isBreak: false },
+      { no: 7, time: '10.40 – 11.15', duration: '35m', isBreak: false },
+      { no: 8, time: '11.15 – 11.30', duration: '15m', isBreak: true, label: 'Istirahat Kedua 🌼' },
+      { no: 9, time: '11.30 – 12.05', duration: '35m', isBreak: false },
+      { no: 10, time: '12.05 – 12.30', duration: '25m', isBreak: false }
+    ],
+  
+    // Rincian Jadwal per Hari (Senin s/d Jumat)
+    days: {
+      senin: {
+        id: 'senin',
+        dayIndex: 1,
+        name: 'Senin',
+        nameEn: 'Monday',
+        badgeColor: '#16a34a',
+        badgeBg: 'rgba(22, 163, 74, 0.12)',
+        tagline: 'Awal pekan penuh berkah, nalar matematika, dan dasar budi pekerti luhur!',
+        schedule: [
+          { period: 1, time: '07.30 – 08.05', subjectId: 'agama', name: 'Agama dan Budi Pekerti', nameEn: 'Religious & Moral Education', icon: '🙏', tip: 'Doa harian, rasa syukur, dan budi pekerti luhur.' },
+          { period: 2, time: '08.05 – 08.40', subjectId: 'agama', name: 'Agama dan Budi Pekerti', nameEn: 'Religious & Moral Education', icon: '🙏', tip: 'Cerita keteladanan dan budi pekerti.' },
+          { period: 3, time: '08.40 – 09.15', subjectId: 'agama', name: 'Agama dan Budi Pekerti', nameEn: 'Religious & Moral Education', icon: '🙏', tip: 'Praktik doa dan sikap sopan santun.' },
+          { period: 4, time: '09.15 – 09.30', isBreak: true, name: 'Istirahat Pertama 🌼', note: 'Cuci tangan pakai sabun, makan bekal sehat, dan minum air putih!' },
+          { period: 5, time: '09.30 – 10.05', subjectId: 'matematika', name: 'Matematika', nameEn: 'Mathematics', icon: '🧮', tip: 'Konsep bilangan 1–20, nilai tempat, dan Math Toolbox.' },
+          { period: 6, time: '10.05 – 10.40', subjectId: 'matematika', name: 'Matematika', nameEn: 'Mathematics', icon: '🧮', tip: 'Latihan nalar berhitung asyik dan penjumlahan.' },
+          { period: 7, time: '10.40 – 11.15', subjectId: 'pancasila', name: 'Pendidikan Pancasila', nameEn: 'Pancasila Education', icon: '🇮🇩', tip: 'Mengenal simbol Garuda dan sila-sila Pancasila.' },
+          { period: 8, time: '11.15 – 11.30', isBreak: true, name: 'Istirahat Kedua 🌼', note: 'Tarik nafas segar, regangkan badan, dan rapikan alat tulis!' },
+          { period: 9, time: '11.30 – 12.05', subjectId: 'pancasila', name: 'Pendidikan Pancasila', nameEn: 'Pancasila Education', icon: '🇮🇩', tip: 'Aturan hidup rukun di rumah dan di sekolah.' },
+          { period: 10, time: '12.05 – 12.30', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🎨', tip: 'Projek penguatan karakter profil pelajar Pancasila.' }
+        ]
+      },
+      selasa: {
+        id: 'selasa',
+        dayIndex: 2,
+        name: 'Selasa',
+        nameEn: 'Tuesday',
+        badgeColor: '#6366f1',
+        badgeBg: 'rgba(99, 102, 241, 0.12)',
+        tagline: 'Tubuh sehat bugar berolahraga, cinta tanah air, dan asah logika!',
+        schedule: [
+          { period: 1, time: '07.30 – 08.05', subjectId: 'pjok', name: 'PJOK', nameEn: 'Physical Education (PJOK)', icon: '🏃', tip: 'Pemanasan, senam sehat, dan gerak lokomotor!' },
+          { period: 2, time: '08.05 – 08.40', subjectId: 'pjok', name: 'PJOK', nameEn: 'Physical Education (PJOK)', icon: '🏃', tip: 'Permainan gerak dasar dan kelincahan tubuh.' },
+          { period: 3, time: '08.40 – 09.15', subjectId: 'pjok', name: 'PJOK', nameEn: 'Physical Education (PJOK)', icon: '🏃', tip: 'Pendinginan, minum air, dan ganti pakaian bersih.' },
+          { period: 4, time: '09.15 – 09.30', isBreak: true, name: 'Istirahat Pertama 🌼', note: 'Minum air secukupnya dan nikmati camilan bernutrisi!' },
+          { period: 5, time: '09.30 – 10.05', subjectId: 'pancasila', name: 'Pendidikan Pancasila', nameEn: 'Pancasila Education', icon: '🇮🇩', tip: 'Menghargai perbedaan dan saling menyayangi sesama teman.' },
+          { period: 6, time: '10.05 – 10.40', subjectId: 'pancasila', name: 'Pendidikan Pancasila', nameEn: 'Pancasila Education', icon: '🇮🇩', tip: 'Kerja bakti dan gotong royong membersihkan kelas.' },
+          { period: 7, time: '10.40 – 11.15', subjectId: 'matematika', name: 'Matematika', nameEn: 'Mathematics', icon: '🧮', tip: 'Bongkar pasang angka (Number Bonds) & garis bilangan.' },
+          { period: 8, time: '11.15 – 11.30', isBreak: true, name: 'Istirahat Kedua 🌼', note: 'Istirahat mata sejenak dan buang sampah pada tempatnya!' },
+          { period: 9, time: '11.30 – 12.05', subjectId: 'matematika', name: 'Matematika', nameEn: 'Mathematics', icon: '🧮', tip: 'Permainan kuis berhitung ceria dan jurus cepat.' },
+          { period: 10, time: '12.05 – 12.30', isFree: true, name: 'Selesai Belajar / Pulang Ceria', note: 'Merapikan tas sekolah dan bersiap pulang!' }
+        ]
+      },
+      rabu: {
+        id: 'rabu',
+        dayIndex: 3,
+        name: 'Rabu',
+        nameEn: 'Wednesday',
+        badgeColor: '#0ea5e9',
+        badgeBg: 'rgba(14, 165, 233, 0.12)',
+        tagline: 'Kaya literasi bahasa Indonesia, lestarikan basa Bali, dan eksplorasi seni!',
+        schedule: [
+          { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Mengenal huruf abjad, bunyi vokal, dan konsonan.' },
+          { period: 2, time: '08.05 – 08.40', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Membaca suku kata dan nama-nama benda di sekitar.' },
+          { period: 3, time: '08.40 – 09.15', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Menyimak cerita dongeng anak bergambar.' },
+          { period: 4, time: '09.15 – 09.30', isBreak: true, name: 'Istirahat Pertama 🌼', note: 'Makan bekal sehat bersama teman dengan santun.' },
+          { period: 5, time: '09.30 – 10.05', subjectId: 'bahasa-bali', name: 'Bahasa Bali', nameEn: 'Balinese Language', icon: '🌺', tip: 'Mabasa Bali alus, kruna aran sarwa buron & entik-entikan.' },
+          { period: 6, time: '10.05 – 10.40', subjectId: 'bahasa-bali', name: 'Bahasa Bali', nameEn: 'Balinese Language', icon: '🌺', tip: 'Gending Rare Bali (Meyong-Meyong, Dadong Dauh).' },
+          { period: 7, time: '10.40 – 11.15', subjectId: 'seni-rupa', name: 'Seni Rupa', nameEn: 'Visual Arts', icon: '🎨', tip: 'Garis, bidang, dan warna-warni ceria.' },
+          { period: 8, time: '11.15 – 11.30', isBreak: true, name: 'Istirahat Kedua 🌼', note: 'Cuci tangan dari cat/krayon dan rapikan meja belajar.' },
+          { period: 9, time: '11.30 – 12.05', subjectId: 'seni-rupa', name: 'Seni Rupa', nameEn: 'Visual Arts', icon: '🎨', tip: 'Menggambar bebas kreasi imajinatif.' },
+          { period: 10, time: '12.05 – 12.30', isFree: true, name: 'Selesai Belajar / Pulang Ceria', note: 'Merapikan tas sekolah dan bersiap pulang!' }
+        ]
+      },
+      kamis: {
+        id: 'kamis',
+        dayIndex: 4,
+        name: 'Kamis',
+        nameEn: 'Thursday',
+        badgeColor: '#e11d48',
+        badgeBg: 'rgba(225, 29, 72, 0.12)',
+        tagline: 'Perkuat membaca mandiri, kreasi artistik, dan projek seru kolaboratif!',
+        schedule: [
+          { period: 1, time: '07.30 – 08.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Latihan menulis kalimat sederhana dengan huruf tegak rapi.' },
+          { period: 2, time: '08.05 – 08.40', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Membaca nyaring dengan intonasi yang tepat.' },
+          { period: 3, time: '08.40 – 09.15', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Tanya jawab kosakata baru bergambar.' },
+          { period: 4, time: '09.15 – 09.30', isBreak: true, name: 'Istirahat Pertama 🌼', note: 'Cuci tangan sebelum makan dan rapikan kotak bekal.' },
+          { period: 5, time: '09.30 – 10.05', subjectId: 'bahasa-indonesia', name: 'Bahasa Indonesia', nameEn: 'Indonesian Language', icon: '📖', tip: 'Menceritakan kembali gambar berseri secara berurutan.' },
+          { period: 6, time: '10.05 – 10.40', subjectId: 'seni-rupa', name: 'Seni Rupa', nameEn: 'Visual Arts', icon: '🎨', tip: 'Membuat kolase atau karya lipat kertas sederhana.' },
+          { period: 7, time: '10.40 – 11.15', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌱', tip: 'Aktivitas eksplorasi lingkungan dan kebersamaan.' },
+          { period: 8, time: '11.15 – 11.30', isBreak: true, name: 'Istirahat Kedua 🌼', note: 'Minum air putih dan periksa perlengkapan sekolah.' },
+          { period: 9, time: '11.30 – 12.05', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌱', tip: 'Projek kreativitas dan gotong royong kelompok.' },
+          { period: 10, time: '12.05 – 12.30', isFree: true, name: 'Selesai Belajar / Pulang Ceria', note: 'Merapikan tas sekolah dan bersiap pulang!' }
+        ]
+      },
+      jumat: {
+        id: 'jumat',
+        dayIndex: 5,
+        name: 'Jumat',
+        nameEn: 'Friday',
+        badgeColor: '#059669',
+        badgeBg: 'rgba(5, 150, 105, 0.12)',
+        tagline: 'Jumat bersih ceria, penguatan karakter P5, dan English vocabulary!',
+        schedule: [
+          { period: 1, time: '07.30 – 08.05', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌟', tip: 'Senam pagi ceria dan gerakan peduli lingkungan sekolah.' },
+          { period: 2, time: '08.05 – 08.40', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌟', tip: 'Projek penguatan karakter Profil Pelajar Pancasila.' },
+          { period: 3, time: '08.40 – 09.15', subjectId: 'kokurikuler', name: 'Kokurikuler', nameEn: 'Co-curricular (P5)', icon: '🌟', tip: 'Refleksi karya dan penanaman nilai akhlak mulia.' },
+          { period: 4, time: '09.15 – 09.30', isBreak: true, name: 'Istirahat Pertama 🌼', note: 'Makan bekal sehat sebelum kelas bahasa Inggris.' },
+          { period: 5, time: '09.30 – 10.05', subjectId: 'bahasa-inggris', name: 'Bahasa Inggris', nameEn: 'English Language', icon: '🇬🇧', tip: 'Greetings, colors, fruits, and cheerful alphabet songs!' },
+          { period: 6, time: '10.05 – 10.40', subjectId: 'bahasa-inggris', name: 'Bahasa Inggris', nameEn: 'English Language', icon: '🇬🇧', tip: 'Numbers 1–10 in English and interactive matching fun.' },
+          { period: 7, time: '10.40 – 11.15', isFree: true, name: 'Pulang Ceria Akhir Pekan 🎉', note: 'Selamat berakhir pekan dan selamat berkumpul bersama keluarga!' },
+          { period: 8, time: '11.15 – 11.30', isFree: true, name: '-', note: '' },
+          { period: 9, time: '11.30 – 12.05', isFree: true, name: '-', note: '' },
+          { period: 10, time: '12.05 – 12.30', isFree: true, name: '-', note: '' }
+        ]
+      }
+    }
+  };
+  
+  /**
+   * Mendapatkan jadwal berdasarkan indeks hari JavaScript (0=Minggu, 1=Senin, ..., 6=Sabtu)
+   */
+  function getScheduleByDayIndex(dayIndex) {
+    switch (dayIndex) {
+      case 1: return { key: 'senin', ...SCHEDULE_DATA.days.senin, isWeekend: false };
+      case 2: return { key: 'selasa', ...SCHEDULE_DATA.days.selasa, isWeekend: false };
+      case 3: return { key: 'rabu', ...SCHEDULE_DATA.days.rabu, isWeekend: false };
+      case 4: return { key: 'kamis', ...SCHEDULE_DATA.days.kamis, isWeekend: false };
+      case 5: return { key: 'jumat', ...SCHEDULE_DATA.days.jumat, isWeekend: false };
+      default:
+        // Akhir Pekan (Sabtu / Minggu) -> Berikan pratinjau hari Senin
+        return {
+          key: 'weekend',
+          isWeekend: true,
+          weekendName: dayIndex === 6 ? 'Sabtu' : 'Minggu',
+          nextDay: SCHEDULE_DATA.days.senin
+        };
+    }
+  }
+  
+  /**
+   * Mengelompokkan slot pelajaran yang berurutan untuk tampilan ringkasan (Grouping Block)
+   */
+  function getGroupedDailySchedule(dayKey) {
+    const day = SCHEDULE_DATA.days[dayKey];
+    if (!day) return [];
+  
+    const groups = [];
+    let currentGroup = null;
+  
+    for (const item of day.schedule) {
+      if (item.isFree && item.name === '-') continue;
+  
+      if (item.isBreak) {
+        if (currentGroup) {
+          groups.push(currentGroup);
+          currentGroup = null;
+        }
+        groups.push({
+          type: 'break',
+          name: item.name,
+          time: item.time,
+          note: item.note,
+          isBreak: true
+        });
+        continue;
+      }
+  
+      if (item.isFree) {
+        if (currentGroup) {
+          groups.push(currentGroup);
+          currentGroup = null;
+        }
+        groups.push({
+          type: 'free',
+          name: item.name,
+          time: item.time,
+          note: item.note
+        });
+        continue;
+      }
+  
+      // Mata Pelajaran
+      if (currentGroup && currentGroup.subjectId === item.subjectId) {
+        currentGroup.periodEnd = item.period;
+        currentGroup.timeEnd = item.time.split(' – ')[1] || item.time;
+        currentGroup.periodCount += 1;
+      } else {
+        if (currentGroup) {
+          groups.push(currentGroup);
+        }
+        const [start, end] = item.time.split(' – ');
+        currentGroup = {
+          type: 'subject',
+          subjectId: item.subjectId,
+          name: item.name,
+          nameEn: item.nameEn,
+          icon: item.icon,
+          tip: item.tip,
+          periodStart: item.period,
+          periodEnd: item.period,
+          timeStart: start,
+          timeEnd: end || start,
+          periodCount: 1
+        };
+      }
+    }
+  
+    if (currentGroup) {
+      groups.push(currentGroup);
+    }
+  
+    return groups;
+  }
+  
+
   // --- Source: js/data/globe-paths.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -12706,6 +12948,10 @@
             <span class="icon">🏠</span>
             <span class="label">${t('home', lang)}</span>
           </button>
+          <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
+            <span class="icon">🗓️</span>
+            <span class="label">${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}</span>
+          </button>
           <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}">
             <span class="icon">📚</span>
             <span class="label">${t('allSubjects', lang)}</span>
@@ -17432,6 +17678,503 @@
   
   
 
+  // --- Source: js/components/schedule-view.js ---
+  // ================================================================
+  // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
+  // JavaScript · ES Module · Schedule View Component (Jadwal Kelas 1B)
+  // Development · Anabhi Dev
+  // Version   : 2.0 (SOP v2.4 & Standar Coding v2.0 Aligned)
+  // Generated : 21 September 2026, 11:20:00 WITA
+  // ================================================================
+  
+  
+  
+  
+  
+  class ScheduleViewComponent {
+    constructor(containerEl) {
+      this.container = containerEl;
+      // Default tab aktif: cek hari saat ini
+      const todayIndex = new Date().getDay(); // 0=Minggu, 1=Senin, ..., 6=Sabtu
+      if (todayIndex >= 1 && todayIndex <= 5) {
+        this.activeTab = 'today';
+      } else {
+        this.activeTab = 'senin'; // Akhir pekan default ke Senin
+      }
+    }
+  
+    render() {
+      const state = appState.get();
+      const lang = state.lang || 'id';
+      const isEn = lang === 'en';
+      const todayIndex = new Date().getDay();
+      const todayData = getScheduleByDayIndex(todayIndex);
+  
+      // Tentukan hari yang dirender
+      let activeDayKey = 'senin';
+      if (this.activeTab === 'today') {
+        activeDayKey = todayData.isWeekend ? 'senin' : todayData.key;
+      } else if (['senin', 'selasa', 'rabu', 'kamis', 'jumat'].includes(this.activeTab)) {
+        activeDayKey = this.activeTab;
+      }
+  
+      this.container.innerHTML = `
+        <!-- 1. Header Hero Jadwal Pelajaran -->
+        <section class="schedule-hero-banner" style="background:linear-gradient(135deg, var(--card), var(--surface)); border:1.5px solid var(--line); border-radius:24px; padding:28px; margin-bottom:28px; box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+            <div>
+              <div class="pill" style="margin-bottom:10px; background:rgba(255, 178, 27, 0.15); border-color:rgba(255, 178, 27, 0.4); color:var(--ink);">
+                <span class="dot" style="background:#ffb21b;"></span> 🗓️ ${SCHEDULE_DATA.grade} · ${SCHEDULE_DATA.academicYear}
+              </div>
+              <h1 style="margin:0 0 8px; font-size:26px; font-weight:850; color:var(--ink); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                ${isEn ? SCHEDULE_DATA.titleEn : SCHEDULE_DATA.title}
+                <span style="font-size:12px; font-weight:800; background:var(--teal-soft); color:var(--teal-soft-ink); border:1px solid var(--teal); padding:3px 10px; border-radius:999px;">
+                  Kurikulum Merdeka
+                </span>
+              </h1>
+              <p style="margin:0; font-size:14px; color:var(--muted); max-width:680px; line-height:1.6;">
+                ${isEn ? 'Official weekly learning schedule for Grade 1B (07.30 – 12.30 WITA). Select a day below to explore class periods or view the full interactive grid.' : 'Jadwal resmi pembelajaran mingguan SD Kelas 1B (07.30 – 12.30 WITA). Pilih hari untuk melihat alur jam belajar atau buka tabel utuh dan poster resminya.'}
+              </p>
+            </div>
+  
+            <!-- Quick Action Buttons -->
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <button class="btn secondary" id="btnPrintSchedule" type="button" title="Cetak Jadwal Pelajaran" style="font-size:12.5px;">
+                🖨️ ${isEn ? 'Print Schedule' : 'Cetak Jadwal'}
+              </button>
+              <button class="btn primary" id="btnViewOriginalPoster" type="button" title="Lihat Poster Asli Berwarna" style="font-size:12.5px;">
+                🖼️ ${isEn ? 'Original Poster' : 'Poster Asli'}
+              </button>
+            </div>
+          </div>
+  
+          <!-- Banner Hari Ini (Jika Hari Sekolah Aktif) -->
+          <div style="margin-top:20px; padding:12px 18px; border-radius:14px; background:rgba(91, 224, 223, 0.12); border:1px solid var(--teal); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:22px;">⏰</span>
+              <div>
+                <strong style="font-size:13.5px; color:var(--ink);">
+                  ${todayData.isWeekend ? `Akhir Pekan (${todayData.weekendName}) — Waktunya Istirahat!` : `Hari Ini: ${todayData.name}, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`}
+                </strong>
+                <div style="font-size:12px; color:var(--muted);">
+                  ${todayData.isWeekend ? 'Persiapan materi seru untuk hari Senin esok!' : 'Jam Pembelajaran: 07.30 – 12.30 WITA'}
+                </div>
+              </div>
+            </div>
+            ${!todayData.isWeekend ? `
+              <button class="btn secondary" id="btnJumpToToday" type="button" style="padding:6px 14px; font-size:12px; font-weight:800;">
+                Lihat Hari Ini ➔
+              </button>
+            ` : ''}
+          </div>
+        </section>
+  
+        <!-- 2. Tab Navigasi Hari & Pilihan Tampilan -->
+        <nav class="schedule-tabs-nav" aria-label="Pilihan Hari Jadwal" style="margin-bottom:24px; display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="schedule-tab-btn ${this.activeTab === 'today' ? 'active' : ''}" data-tab="today" type="button">
+            🌟 ${isEn ? 'Today' : 'Hari Ini'}
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'senin' ? 'active' : ''}" data-tab="senin" type="button">
+            🟢 Senin
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'selasa' ? 'active' : ''}" data-tab="selasa" type="button">
+            🟣 Selasa
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'rabu' ? 'active' : ''}" data-tab="rabu" type="button">
+            🔵 Rabu
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'kamis' ? 'active' : ''}" data-tab="kamis" type="button">
+            🔴 Kamis
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'jumat' ? 'active' : ''}" data-tab="jumat" type="button">
+            🟢 Jumat
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'table' ? 'active' : ''}" data-tab="table" type="button" style="margin-left:auto;">
+            📊 ${isEn ? 'Full Table (5 Days)' : 'Tabel Lengkap (5 Hari)'}
+          </button>
+          <button class="schedule-tab-btn ${this.activeTab === 'poster' ? 'active' : ''}" data-tab="poster" type="button">
+            🖼️ ${isEn ? 'Poster View' : 'Poster Asli'}
+          </button>
+        </nav>
+  
+        <!-- 3. Area Konten Berdasarkan Tab Aktif -->
+        <div id="scheduleTabContent">
+          ${this.activeTab === 'table'
+            ? this.renderFullTableView(isEn)
+            : (this.activeTab === 'poster'
+              ? this.renderPosterView(isEn)
+              : this.renderDayTimeline(activeDayKey, isEn))}
+        </div>
+  
+        <!-- 4. Dialog Modal Poster Layar Penuh -->
+        <div class="schedule-poster-modal" id="schedulePosterModal" style="display:none;" aria-modal="true" role="dialog" aria-label="Poster Jadwal Pelajaran Kelas 1B">
+          <div class="schedule-poster-backdrop" id="posterBackdrop"></div>
+          <div class="schedule-poster-dialog">
+            <div class="schedule-poster-header">
+              <div style="font-weight:800; font-size:15px; color:#ffffff;">
+                🗓️ Poster Resmi Jadwal Pelajaran Kelas 1B (2026/2027)
+              </div>
+              <button class="iconbtn" id="btnClosePosterModal" type="button" aria-label="Tutup Poster" style="color:#ffffff;">✕</button>
+            </div>
+            <div class="schedule-poster-body">
+              <img src="${SCHEDULE_DATA.posterImage}" alt="Poster Resmi Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; border-radius:12px; display:block;" loading="lazy">
+            </div>
+            <div class="schedule-poster-footer" style="padding:14px; display:flex; justify-content:space-between; align-items:center; background:var(--navy-deep); border-top:1px solid rgba(255,255,255,0.12);">
+              <div style="font-size:12px; color:rgba(255,255,255,0.75);">
+                SD Kelas 1B · Tema Ornamen Khas Bali Ceria
+              </div>
+              <a href="${SCHEDULE_DATA.posterImage}" download="Jadwal_Pelajaran_Kelas_1B_2026_2027.jpg" class="btn primary" style="font-size:12px; padding:6px 14px;">
+                ⬇️ Unduh Gambar HD
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.attachEvents();
+    }
+  
+    /**
+     * Render Tampilan Timeline Harian (Grouped Subject Blocks + Rincian Jam)
+     */
+    renderDayTimeline(dayKey, isEn) {
+      const day = SCHEDULE_DATA.days[dayKey];
+      if (!day) return '';
+  
+      const groupedBlocks = getGroupedDailySchedule(dayKey);
+  
+      return `
+        <div class="schedule-day-container">
+          <!-- Header Hari Terpilih -->
+          <div class="schedule-day-header" style="background:${day.badgeBg}; border:1.5px solid ${day.badgeColor}; border-radius:18px; padding:18px 22px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:${day.badgeColor};"></span>
+                <h2 style="margin:0; font-size:22px; font-weight:850; color:var(--ink);">
+                  Hari ${day.name} ${isEn ? `(${day.nameEn})` : ''}
+                </h2>
+              </div>
+              <p style="margin:4px 0 0; font-size:13.5px; color:var(--muted);">
+                ${day.tagline}
+              </p>
+            </div>
+            <div style="font-size:12px; font-weight:800; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:999px; padding:6px 14px;">
+              ⏰ 07.30 – 12.30 WITA
+            </div>
+          </div>
+  
+          <!-- Alur Blok Pelajaran (Timeline Cards) -->
+          <div class="schedule-blocks-grid" style="display:flex; flex-direction:column; gap:14px;">
+            ${groupedBlocks.map((block, idx) => {
+              if (block.isBreak) {
+                return `
+                  <div class="schedule-break-card" style="background:linear-gradient(135deg, rgba(255, 178, 27, 0.14), rgba(255, 196, 77, 0.08)); border:1.5px dashed #ffb21b; border-radius:16px; padding:14px 20px; display:flex; align-items:center; gap:14px;">
+                    <span style="font-size:28px;">🌼</span>
+                    <div style="flex:1;">
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <strong style="font-size:15px; color:var(--ink);">${block.name}</strong>
+                        <span style="font-size:11.5px; font-weight:800; background:#ffb21b; color:#0e2e48; padding:2px 8px; border-radius:999px;">
+                          ${block.time} (15 Menit)
+                        </span>
+                      </div>
+                      <p style="margin:3px 0 0; font-size:12.5px; color:var(--muted);">
+                        ${block.note}
+                      </p>
+                    </div>
+                  </div>
+                `;
+              }
+  
+              if (block.type === 'free') {
+                return `
+                  <div class="schedule-free-card" style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 20px; display:flex; align-items:center; gap:14px;">
+                    <span style="font-size:24px;">🎉</span>
+                    <div>
+                      <strong style="font-size:14px; color:var(--ink);">${block.name}</strong>
+                      <div style="font-size:12px; color:var(--muted);">${block.note}</div>
+                    </div>
+                  </div>
+                `;
+              }
+  
+              // Blok Mata Pelajaran
+              return `
+                <div class="schedule-subject-card" style="background:var(--card); border:1.5px solid var(--line); border-radius:18px; padding:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; box-shadow:var(--shadow-soft); transition:border-color 0.2s ease, transform 0.2s ease;">
+                  <div style="display:flex; align-items:center; gap:16px; min-width:240px; flex:1;">
+                    <div style="width:54px; height:54px; border-radius:14px; background:var(--teal-soft); color:var(--teal-soft-ink); font-size:26px; display:grid; place-items:center; flex-shrink:0;">
+                      ${block.icon}
+                    </div>
+                    <div>
+                      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+                        <span style="font-size:11px; font-weight:800; background:var(--navy); color:#ffffff; padding:2px 8px; border-radius:6px;">
+                          Jam ke-${block.periodStart}${block.periodEnd > block.periodStart ? `–${block.periodEnd}` : ''}
+                        </span>
+                        <span style="font-size:12px; font-weight:800; color:var(--muted);">
+                          ⏰ ${block.timeStart} – ${block.timeEnd}
+                        </span>
+                        <span style="font-size:11px; font-weight:800; background:var(--teal-soft); color:var(--teal-soft-ink); padding:2px 7px; border-radius:6px;">
+                          ${block.periodCount} Jam Pelajaran
+                        </span>
+                      </div>
+                      <h3 style="margin:0 0 4px; font-size:17.5px; font-weight:850; color:var(--ink);">
+                        ${isEn && block.nameEn ? block.nameEn : block.name}
+                      </h3>
+                      <p style="margin:0; font-size:12.5px; color:var(--muted); line-height:1.5;">
+                        💡 ${block.tip}
+                      </p>
+                    </div>
+                  </div>
+  
+                  <!-- Tombol Langsung Belajar -->
+                  <button class="btn primary btn-launch-subject" data-subject-id="${block.subjectId}" type="button" style="flex-shrink:0; font-size:13px; padding:10px 18px;">
+                    Buka Pelajaran ➔
+                  </button>
+                </div>
+              `;
+            }).join('')}
+          </div>
+  
+          <!-- Tabel Rincian Slot 1 s/d 10 (Accordion / Runtun) -->
+          <details class="schedule-period-details" style="margin-top:28px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:14px 18px;">
+            <summary style="cursor:pointer; font-weight:800; font-size:13.5px; color:var(--ink); display:flex; align-items:center; gap:8px;">
+              <span>⏱️</span> Lihat Rincian Jam Pelajaran ke-1 s/d ke-10 (Tabel Detail Hari ${day.name})
+            </summary>
+            <div style="margin-top:14px; overflow-x:auto;">
+              <table style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+                <thead>
+                  <tr style="border-bottom:2px solid var(--line); color:var(--muted);">
+                    <th style="padding:8px 10px;">Jam Ke</th>
+                    <th style="padding:8px 10px;">Waktu</th>
+                    <th style="padding:8px 10px;">Mata Pelajaran</th>
+                    <th style="padding:8px 10px;">Keterangan & Tips Belajar</th>
+                    <th style="padding:8px 10px; text-align:right;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${day.schedule.map(item => `
+                    <tr style="border-bottom:1px solid var(--line); ${item.isBreak ? 'background:rgba(255,178,27,0.08);' : ''}">
+                      <td style="padding:10px; font-weight:800;">
+                        ${item.isBreak ? '🌼' : item.period}
+                      </td>
+                      <td style="padding:10px; white-space:nowrap; font-weight:600; color:var(--muted);">
+                        ${item.time}
+                      </td>
+                      <td style="padding:10px; font-weight:800; color:var(--ink);">
+                        ${item.isBreak ? `<span style="color:#b45309;">${item.name}</span>` : `${item.icon || '📚'} ${item.name}`}
+                      </td>
+                      <td style="padding:10px; color:var(--muted);">
+                        ${item.note || item.tip || '-'}
+                      </td>
+                      <td style="padding:10px; text-align:right;">
+                        ${item.subjectId ? `
+                          <button class="btn secondary btn-launch-subject" data-subject-id="${item.subjectId}" type="button" style="padding:4px 10px; font-size:11px; min-height:30px;">
+                            Buka ➔
+                          </button>
+                        ` : '-'}
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      `;
+    }
+  
+    /**
+     * Render Tampilan Tabel Lengkap 5 Hari (Grid 10 Baris x 5 Kolom Sesuai Poster)
+     */
+    renderFullTableView(isEn) {
+      const periods = SCHEDULE_DATA.periods;
+      const days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
+  
+      return `
+        <div class="schedule-table-wrap" style="background:var(--card); border:1.5px solid var(--line); border-radius:20px; padding:22px; box-shadow:var(--shadow); overflow-x:auto;">
+          <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h3 style="margin:0; font-size:18px; font-weight:850; color:var(--ink);">
+                📊 Tabel Matriks Jadwal Pelajaran Kelas 1B (Senin – Jumat)
+              </h3>
+              <p style="margin:4px 0 0; font-size:12.5px; color:var(--muted);">
+                Format matriks utuh sesuai poster resmi kelas 1B. Klik tombol mata pelajaran untuk langsung belajar!
+              </p>
+            </div>
+            <div style="font-size:11.5px; color:var(--muted); font-weight:700;">
+              1 Jam Pelajaran = 35 Menit · Istirahat = 15 Menit
+            </div>
+          </div>
+  
+          <table class="schedule-matrix-table" style="width:100%; border-collapse:collapse; min-width:760px; font-size:12.5px;">
+            <thead>
+              <tr style="color:#ffffff; text-align:center; font-weight:850;">
+                <th style="background:#e11d48; padding:12px 8px; border:1px solid rgba(255,255,255,0.2); border-radius:8px 0 0 0; width:55px;">No.</th>
+                <th style="background:#ea580c; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); width:110px;">WAKTU</th>
+                <th style="background:#16a34a; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SENIN</th>
+                <th style="background:#6366f1; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">SELASA</th>
+                <th style="background:#0284c7; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">RABU</th>
+                <th style="background:#db2777; padding:12px 10px; border:1px solid rgba(255,255,255,0.2);">KAMIS</th>
+                <th style="background:#059669; padding:12px 10px; border:1px solid rgba(255,255,255,0.2); border-radius:0 8px 0 0;">JUMAT</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${periods.map(period => {
+                if (period.isBreak) {
+                  return `
+                    <tr style="background:#fef3c7; color:#78350f; font-weight:850; text-align:center;">
+                      <td style="padding:10px 8px; border:1px solid var(--line); font-size:13px; font-weight:900; background:#fde68a;">${period.no}.</td>
+                      <td style="padding:10px; border:1px solid var(--line); font-size:11.5px; white-space:nowrap; background:#fde68a;">${period.time}</td>
+                      <td colspan="5" style="padding:10px; border:1px solid var(--line); letter-spacing:1px; font-size:13.5px;">
+                        🌼 ISTIRAHAT 🌼
+                      </td>
+                    </tr>
+                  `;
+                }
+  
+                return `
+                  <tr style="border-bottom:1px solid var(--line); text-align:center;">
+                    <td style="padding:10px 8px; border:1px solid var(--line); font-weight:850; color:var(--ink); background:var(--surface);">
+                      <span style="display:inline-block; width:24px; height:24px; line-height:24px; border-radius:50%; background:${this.getPeriodColor(period.no)}; color:#fff; font-size:11px;">
+                        ${period.no}
+                      </span>
+                    </td>
+                    <td style="padding:10px; border:1px solid var(--line); font-weight:700; color:var(--muted); font-size:11.5px; white-space:nowrap;">
+                      ${period.time}
+                    </td>
+                    ${days.map(dKey => {
+                      const cell = SCHEDULE_DATA.days[dKey].schedule.find(s => s.period === period.no);
+                      if (!cell || cell.isFree || cell.name === '-') {
+                        return `<td style="padding:8px; border:1px solid var(--line); color:var(--muted); font-size:11px; background:rgba(0,0,0,0.02);">-</td>`;
+                      }
+                      return `
+                        <td style="padding:8px 6px; border:1px solid var(--line);">
+                          <button class="schedule-table-cell-btn btn-launch-subject" data-subject-id="${cell.subjectId}" type="button" title="Pelajari materi ${cell.name}" style="width:100%; border:none; background:transparent; cursor:pointer; padding:4px; border-radius:8px; transition:background 0.15s ease;">
+                            <div style="font-size:14px; margin-bottom:2px;">${cell.icon || '📚'}</div>
+                            <strong style="display:block; font-size:11.5px; color:var(--ink); line-height:1.3;">
+                              ${cell.name}
+                            </strong>
+                          </button>
+                        </td>
+                      `;
+                    }).join('')}
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+  
+    /**
+     * Render Tab Poster Asli
+     */
+    renderPosterView(isEn) {
+      return `
+        <div style="background:var(--card); border:1.5px solid var(--line); border-radius:20px; padding:22px; box-shadow:var(--shadow); text-align:center;">
+          <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div style="text-align:left;">
+              <h3 style="margin:0; font-size:18px; font-weight:850; color:var(--ink);">
+                🖼️ Poster Jadwal Pelajaran Kelas 1B (2026/2027)
+              </h3>
+              <p style="margin:4px 0 0; font-size:13px; color:var(--muted);">
+                Tampilan karya visual resmi dengan ornamen pura dan bunga Jepun khas Bali.
+              </p>
+            </div>
+            <a href="${SCHEDULE_DATA.posterImage}" download="Jadwal_Pelajaran_Kelas_1B_2026_2027.jpg" class="btn primary" style="font-size:12.5px;">
+              ⬇️ Unduh Gambar Asli (HD)
+            </a>
+          </div>
+  
+          <div style="max-width:960px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:1px solid var(--line);">
+            <img src="${SCHEDULE_DATA.posterImage}" alt="Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; display:block;" loading="eager">
+          </div>
+        </div>
+      `;
+    }
+  
+    getPeriodColor(periodNo) {
+      const colors = [
+        '#e11d48', // 1: Merah
+        '#ea580c', // 2: Oranye
+        '#16a34a', // 3: Hijau
+        '#f59e0b', // 4: Istirahat
+        '#0284c7', // 5: Sky
+        '#6366f1', // 6: Indigo
+        '#10b981', // 7: Emerald
+        '#f59e0b', // 8: Istirahat
+        '#db2777', // 9: Pink
+        '#8b5cf6'  // 10: Ungu
+      ];
+      return colors[periodNo - 1] || '#0e2e48';
+    }
+  
+    attachEvents() {
+      // Navigasi Tab Hari & Tampilan
+      const tabBtns = this.container.querySelectorAll('.schedule-tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const tab = e.currentTarget.dataset.tab;
+          this.activeTab = tab;
+          this.render();
+        });
+      });
+  
+      // Tombol Cetak Jadwal
+      const printBtn = this.container.querySelector('#btnPrintSchedule');
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
+  
+      // Modal Poster Asli
+      const viewPosterBtn = this.container.querySelector('#btnViewOriginalPoster');
+      const posterModal = this.container.querySelector('#schedulePosterModal');
+      const closePosterBtn = this.container.querySelector('#btnClosePosterModal');
+      const posterBackdrop = this.container.querySelector('#posterBackdrop');
+  
+      if (viewPosterBtn && posterModal) {
+        viewPosterBtn.addEventListener('click', () => {
+          posterModal.style.display = 'grid';
+        });
+      }
+  
+      if (closePosterBtn && posterModal) {
+        closePosterBtn.addEventListener('click', () => {
+          posterModal.style.display = 'none';
+        });
+      }
+  
+      if (posterBackdrop && posterModal) {
+        posterBackdrop.addEventListener('click', () => {
+          posterModal.style.display = 'none';
+        });
+      }
+  
+      // Tombol Lompat ke Hari Ini
+      const jumpBtn = this.container.querySelector('#btnJumpToToday');
+      if (jumpBtn) {
+        jumpBtn.addEventListener('click', () => {
+          this.activeTab = 'today';
+          this.render();
+        });
+      }
+  
+      // Tombol Langsung Masuk ke Mata Pelajaran
+      const launchBtns = this.container.querySelectorAll('.btn-launch-subject');
+      launchBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const subjectId = e.currentTarget.dataset.subjectId;
+          if (subjectId) {
+            appState.navigate('subject', subjectId);
+          }
+        });
+      });
+    }
+  }
+  
+
   // --- Source: js/components/reading-lab.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
@@ -19025,6 +19768,8 @@
   
   
   
+  
+  
   class App {
     constructor() {
       this.topbarEl = document.getElementById('topbar');
@@ -19053,6 +19798,7 @@
       this.maxxiEngine = new MaxxiEngineComponent(this.mainEl);
       this.writingLab = new WritingLabComponent(this.mainEl);
       this.mathToolbox = new MathToolboxComponent(this.mainEl);
+      this.scheduleView = new ScheduleViewComponent(this.mainEl);
   
       this.initPWA();
       this.initRouting();
@@ -19097,6 +19843,8 @@
           appState.set({ currentRoute: 'progress', drawerOpen: false });
         } else if (hash === '#semua-pelajaran') {
           appState.set({ currentRoute: 'all-subjects', drawerOpen: false });
+        } else if (hash === '#jadwal') {
+          appState.set({ currentRoute: 'jadwal', drawerOpen: false });
         } else if (hash === '#cali-stung') {
           appState.set({ currentRoute: 'cali-stung', drawerOpen: false });
         } else if (hash === '#maxxi') {
@@ -19140,6 +19888,9 @@
         case 'all-subjects':
           this.renderAllSubjects();
           break;
+        case 'jadwal':
+          this.scheduleView.render();
+          break;
         case 'reading':
           this.readingLab.render();
           break;
@@ -19172,6 +19923,14 @@
         const progress = (store && typeof store.getProgress === 'function')
           ? store.getProgress()
           : (store && store.data ? store.data : {});
+  
+        // Data Jadwal Hari Ini untuk Widget Beranda (Kurikulum Merdeka 2026/2027)
+        const todayIndex = new Date().getDay(); // 0=Minggu, 1=Senin, ..., 6=Sabtu
+        const dayData = getScheduleByDayIndex(todayIndex);
+        const isWeekend = dayData.isWeekend;
+        const targetDayKey = isWeekend ? 'senin' : dayData.key;
+        const targetDayObj = isWeekend ? dayData.nextDay : dayData;
+        const groupedSchedule = getGroupedDailySchedule(targetDayKey);
   
         this.mainEl.innerHTML = `
         <!-- 1. Dashboard Pelajar Ceria (Greeting, Streak, & Bintang) -->
@@ -19221,7 +19980,90 @@
           </div>
         </section>
   
-        <!-- 2. Tantangan Hari Ini & Misi Ceria -->
+        <!-- 2. Widget Interaktif Jadwal Pelajaran Hari Ini (Kelas 1B Kurikulum Merdeka) -->
+        <section class="home-schedule-widget" style="background:var(--card); border:1.5px solid var(--line); border-radius:24px; padding:24px 28px; margin-bottom:28px; box-shadow:var(--shadow); position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg, #16a34a, #0284c7, #7b359c, #ea580c);"></div>
+  
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(22,163,74,0.15); color:#16a34a; font-size:15px;">🗓️</span>
+                <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:${isWeekend ? '#ea580c' : '#16a34a'};">
+                  ${isWeekend 
+                    ? (isEn ? `Weekend Break · Preview for Monday` : `Libur Akhir Pekan · Pratinjau Hari Senin`)
+                    : (isEn ? `Today's Class Schedule · ${dayData.nameEn}` : `Jadwal Pelajaran Hari Ini · ${dayData.name}`)}
+                </span>
+                <span class="pill" style="font-size:11px; padding:2px 8px; background:var(--teal-soft); color:var(--teal-soft-ink); border:1px solid var(--teal);">
+                  ${SCHEDULE_DATA.grade}
+                </span>
+                <span style="font-size:11px; font-weight:750; color:var(--muted); background:var(--surface); border:1px solid var(--line); padding:2px 8px; border-radius:6px;">
+                  TP 2026/2027
+                </span>
+              </div>
+              <h3 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
+                ${isWeekend
+                  ? (isEn ? `Prepare for Monday: ${targetDayObj.nameEn}` : `Siap-Siap Pelajaran Hari Senin: ${targetDayObj.name}`)
+                  : (isEn ? `Class Schedule for ${dayData.nameEn} (07.30 – 12.30 WITA)` : `Pelajaran Sekolah Hari ${dayData.name} (07.30 – 12.30 WITA)`)}
+              </h3>
+              <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
+                ${targetDayObj.tagline || (isEn ? 'Stay enthusiastic and prepare your textbooks!' : 'Tetap semangat dan siapkan buku pelajaranmu!')}
+              </p>
+            </div>
+  
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <button class="btn secondary" id="btnHomeOpenFullSchedule" type="button" style="background:var(--surface); border:1px solid var(--line); font-size:13px; font-weight:750; padding:9px 16px;">
+                ${isEn ? 'Full 5-Day Schedule 📅' : 'Lihat Jadwal 5 Hari 📅'}
+              </button>
+              <button class="btn primary" id="btnHomeOpenPoster" type="button" style="font-size:13px; font-weight:750; padding:9px 16px;">
+                ${isEn ? 'View Poster 🖼️' : 'Lihat Poster Asli 🖼️'}
+              </button>
+            </div>
+          </div>
+  
+          <!-- Subject Chips Grid / Timeline -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap:12px;">
+            ${groupedSchedule.map(grp => {
+              if (grp.type === 'break') {
+                return `
+                  <div style="background:rgba(245,158,11,0.08); border:1px dashed #f59e0b; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:20px;">🥪</span>
+                    <div style="min-width:0;">
+                      <strong style="display:block; font-size:12.5px; color:#b45309;">${grp.name}</strong>
+                      <span style="font-size:11px; color:var(--muted);">${grp.time} · Cuci tangan & bekal</span>
+                    </div>
+                  </div>
+                `;
+              }
+              const isKnownSubject = ['agama', 'pjok', 'bahasa-indonesia', 'matematika', 'pancasila', 'bahasa-bali', 'seni-rupa', 'bahasa-inggris', 'kokurikuler'].includes(grp.subjectId);
+              return `
+                <div class="schedule-home-card" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.15s ease, box-shadow 0.15s ease;">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:22px;">${grp.icon || '📖'}</span>
+                        <div>
+                          <strong style="display:block; font-size:13.5px; color:var(--ink);">${isEn && grp.nameEn ? grp.nameEn : grp.name}</strong>
+                          <span style="font-size:11px; color:var(--muted); font-weight:600;">Jam ke-${grp.periodStart === grp.periodEnd ? grp.periodStart : `${grp.periodStart}–${grp.periodEnd}`} (${grp.periodCount * 35} mnt)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:750; color:var(--teal); background:var(--card); border:1px solid var(--line); padding:3px 8px; border-radius:6px; margin-bottom:8px;">
+                      <span>🕒</span> ${grp.timeStart} – ${grp.timeEnd} WITA
+                    </div>
+                    <p style="margin:0 0 10px; font-size:11.5px; color:var(--muted); line-height:1.4;">${grp.tip || ''}</p>
+                  </div>
+                  ${isKnownSubject ? `
+                    <button class="btn btn-home-launch-subject" data-subject-id="${grp.subjectId}" type="button" style="align-self:flex-start; font-size:11.5px; padding:5px 10px; border-radius:8px; background:var(--card); border:1px solid var(--teal); color:var(--teal); font-weight:750; cursor:pointer;">
+                      ${isEn ? 'Study Subject ➔' : 'Buka Materi ➔'}
+                    </button>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </section>
+  
+        <!-- 3. Tantangan Hari Ini & Misi Ceria -->
         <section style="margin-bottom:32px;">
           <div style="background:linear-gradient(135deg, rgba(91,224,223,0.12), rgba(255,178,27,0.12)); border:1px solid var(--teal); border-radius:20px; padding:22px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
             <div>
@@ -19399,6 +20241,34 @@
       `;
   
       // Event listeners di dashboard beranda
+      const btnHomeFullSched = this.mainEl.querySelector('#btnHomeOpenFullSchedule');
+      if (btnHomeFullSched) {
+        btnHomeFullSched.addEventListener('click', () => {
+          appState.navigate('jadwal');
+        });
+      }
+  
+      const btnHomePoster = this.mainEl.querySelector('#btnHomeOpenPoster');
+      if (btnHomePoster) {
+        btnHomePoster.addEventListener('click', () => {
+          appState.navigate('jadwal');
+          setTimeout(() => {
+            const posterModal = document.getElementById('schedulePosterModal');
+            if (posterModal) posterModal.style.display = 'flex';
+          }, 120);
+        });
+      }
+  
+      const homeLaunchBtns = this.mainEl.querySelectorAll('.btn-home-launch-subject');
+      homeLaunchBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const sid = e.currentTarget.dataset.subjectId;
+          if (sid) {
+            appState.navigate('subject', sid);
+          }
+        });
+      });
+  
       const btnResume = this.mainEl.querySelector('#btnResumeLearning');
       if (btnResume) {
         btnResume.addEventListener('click', () => {

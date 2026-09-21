@@ -24,6 +24,8 @@ import { SixtyMinEngineComponent } from './components/sixty-min-engine.js';
 import { MaxxiEngineComponent } from './components/maxxi-engine.js';
 import { WritingLabComponent } from './components/writing-lab.js';
 import { MathToolboxComponent } from './components/math-toolbox.js';
+import { ScheduleViewComponent } from './components/schedule-view.js';
+import { SCHEDULE_DATA, getScheduleByDayIndex, getGroupedDailySchedule } from './data/schedule-data.js';
 
 class App {
   constructor() {
@@ -53,6 +55,7 @@ class App {
     this.maxxiEngine = new MaxxiEngineComponent(this.mainEl);
     this.writingLab = new WritingLabComponent(this.mainEl);
     this.mathToolbox = new MathToolboxComponent(this.mainEl);
+    this.scheduleView = new ScheduleViewComponent(this.mainEl);
 
     this.initPWA();
     this.initRouting();
@@ -97,6 +100,8 @@ class App {
         appState.set({ currentRoute: 'progress', drawerOpen: false });
       } else if (hash === '#semua-pelajaran') {
         appState.set({ currentRoute: 'all-subjects', drawerOpen: false });
+      } else if (hash === '#jadwal') {
+        appState.set({ currentRoute: 'jadwal', drawerOpen: false });
       } else if (hash === '#cali-stung') {
         appState.set({ currentRoute: 'cali-stung', drawerOpen: false });
       } else if (hash === '#maxxi') {
@@ -140,6 +145,9 @@ class App {
       case 'all-subjects':
         this.renderAllSubjects();
         break;
+      case 'jadwal':
+        this.scheduleView.render();
+        break;
       case 'reading':
         this.readingLab.render();
         break;
@@ -172,6 +180,14 @@ class App {
       const progress = (store && typeof store.getProgress === 'function')
         ? store.getProgress()
         : (store && store.data ? store.data : {});
+
+      // Data Jadwal Hari Ini untuk Widget Beranda (Kurikulum Merdeka 2026/2027)
+      const todayIndex = new Date().getDay(); // 0=Minggu, 1=Senin, ..., 6=Sabtu
+      const dayData = getScheduleByDayIndex(todayIndex);
+      const isWeekend = dayData.isWeekend;
+      const targetDayKey = isWeekend ? 'senin' : dayData.key;
+      const targetDayObj = isWeekend ? dayData.nextDay : dayData;
+      const groupedSchedule = getGroupedDailySchedule(targetDayKey);
 
       this.mainEl.innerHTML = `
       <!-- 1. Dashboard Pelajar Ceria (Greeting, Streak, & Bintang) -->
@@ -221,7 +237,90 @@ class App {
         </div>
       </section>
 
-      <!-- 2. Tantangan Hari Ini & Misi Ceria -->
+      <!-- 2. Widget Interaktif Jadwal Pelajaran Hari Ini (Kelas 1B Kurikulum Merdeka) -->
+      <section class="home-schedule-widget" style="background:var(--card); border:1.5px solid var(--line); border-radius:24px; padding:24px 28px; margin-bottom:28px; box-shadow:var(--shadow); position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg, #16a34a, #0284c7, #7b359c, #ea580c);"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(22,163,74,0.15); color:#16a34a; font-size:15px;">🗓️</span>
+              <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:${isWeekend ? '#ea580c' : '#16a34a'};">
+                ${isWeekend 
+                  ? (isEn ? `Weekend Break · Preview for Monday` : `Libur Akhir Pekan · Pratinjau Hari Senin`)
+                  : (isEn ? `Today's Class Schedule · ${dayData.nameEn}` : `Jadwal Pelajaran Hari Ini · ${dayData.name}`)}
+              </span>
+              <span class="pill" style="font-size:11px; padding:2px 8px; background:var(--teal-soft); color:var(--teal-soft-ink); border:1px solid var(--teal);">
+                ${SCHEDULE_DATA.grade}
+              </span>
+              <span style="font-size:11px; font-weight:750; color:var(--muted); background:var(--surface); border:1px solid var(--line); padding:2px 8px; border-radius:6px;">
+                TP 2026/2027
+              </span>
+            </div>
+            <h3 style="margin:0; font-size:20px; font-weight:850; color:var(--ink);">
+              ${isWeekend
+                ? (isEn ? `Prepare for Monday: ${targetDayObj.nameEn}` : `Siap-Siap Pelajaran Hari Senin: ${targetDayObj.name}`)
+                : (isEn ? `Class Schedule for ${dayData.nameEn} (07.30 – 12.30 WITA)` : `Pelajaran Sekolah Hari ${dayData.name} (07.30 – 12.30 WITA)`)}
+            </h3>
+            <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
+              ${targetDayObj.tagline || (isEn ? 'Stay enthusiastic and prepare your textbooks!' : 'Tetap semangat dan siapkan buku pelajaranmu!')}
+            </p>
+          </div>
+
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button class="btn secondary" id="btnHomeOpenFullSchedule" type="button" style="background:var(--surface); border:1px solid var(--line); font-size:13px; font-weight:750; padding:9px 16px;">
+              ${isEn ? 'Full 5-Day Schedule 📅' : 'Lihat Jadwal 5 Hari 📅'}
+            </button>
+            <button class="btn primary" id="btnHomeOpenPoster" type="button" style="font-size:13px; font-weight:750; padding:9px 16px;">
+              ${isEn ? 'View Poster 🖼️' : 'Lihat Poster Asli 🖼️'}
+            </button>
+          </div>
+        </div>
+
+        <!-- Subject Chips Grid / Timeline -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap:12px;">
+          ${groupedSchedule.map(grp => {
+            if (grp.type === 'break') {
+              return `
+                <div style="background:rgba(245,158,11,0.08); border:1px dashed #f59e0b; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:10px;">
+                  <span style="font-size:20px;">🥪</span>
+                  <div style="min-width:0;">
+                    <strong style="display:block; font-size:12.5px; color:#b45309;">${grp.name}</strong>
+                    <span style="font-size:11px; color:var(--muted);">${grp.time} · Cuci tangan & bekal</span>
+                  </div>
+                </div>
+              `;
+            }
+            const isKnownSubject = ['agama', 'pjok', 'bahasa-indonesia', 'matematika', 'pancasila', 'bahasa-bali', 'seni-rupa', 'bahasa-inggris', 'kokurikuler'].includes(grp.subjectId);
+            return `
+              <div class="schedule-home-card" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.15s ease, box-shadow 0.15s ease;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:22px;">${grp.icon || '📖'}</span>
+                      <div>
+                        <strong style="display:block; font-size:13.5px; color:var(--ink);">${isEn && grp.nameEn ? grp.nameEn : grp.name}</strong>
+                        <span style="font-size:11px; color:var(--muted); font-weight:600;">Jam ke-${grp.periodStart === grp.periodEnd ? grp.periodStart : `${grp.periodStart}–${grp.periodEnd}`} (${grp.periodCount * 35} mnt)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:750; color:var(--teal); background:var(--card); border:1px solid var(--line); padding:3px 8px; border-radius:6px; margin-bottom:8px;">
+                    <span>🕒</span> ${grp.timeStart} – ${grp.timeEnd} WITA
+                  </div>
+                  <p style="margin:0 0 10px; font-size:11.5px; color:var(--muted); line-height:1.4;">${grp.tip || ''}</p>
+                </div>
+                ${isKnownSubject ? `
+                  <button class="btn btn-home-launch-subject" data-subject-id="${grp.subjectId}" type="button" style="align-self:flex-start; font-size:11.5px; padding:5px 10px; border-radius:8px; background:var(--card); border:1px solid var(--teal); color:var(--teal); font-weight:750; cursor:pointer;">
+                    ${isEn ? 'Study Subject ➔' : 'Buka Materi ➔'}
+                  </button>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </section>
+
+      <!-- 3. Tantangan Hari Ini & Misi Ceria -->
       <section style="margin-bottom:32px;">
         <div style="background:linear-gradient(135deg, rgba(91,224,223,0.12), rgba(255,178,27,0.12)); border:1px solid var(--teal); border-radius:20px; padding:22px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div>
@@ -399,6 +498,34 @@ class App {
     `;
 
     // Event listeners di dashboard beranda
+    const btnHomeFullSched = this.mainEl.querySelector('#btnHomeOpenFullSchedule');
+    if (btnHomeFullSched) {
+      btnHomeFullSched.addEventListener('click', () => {
+        appState.navigate('jadwal');
+      });
+    }
+
+    const btnHomePoster = this.mainEl.querySelector('#btnHomeOpenPoster');
+    if (btnHomePoster) {
+      btnHomePoster.addEventListener('click', () => {
+        appState.navigate('jadwal');
+        setTimeout(() => {
+          const posterModal = document.getElementById('schedulePosterModal');
+          if (posterModal) posterModal.style.display = 'flex';
+        }, 120);
+      });
+    }
+
+    const homeLaunchBtns = this.mainEl.querySelectorAll('.btn-home-launch-subject');
+    homeLaunchBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const sid = e.currentTarget.dataset.subjectId;
+        if (sid) {
+          appState.navigate('subject', sid);
+        }
+      });
+    });
+
     const btnResume = this.mainEl.querySelector('#btnResumeLearning');
     if (btnResume) {
       btnResume.addEventListener('click', () => {

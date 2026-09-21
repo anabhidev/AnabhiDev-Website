@@ -144,6 +144,8 @@ class AppState {
       window.location.hash = '#progress';
     } else if (route === 'all-subjects') {
       window.location.hash = '#semua-pelajaran';
+    } else if (route === 'jadwal') {
+      window.location.hash = '#jadwal';
     } else if (route === 'cali-stung') {
       window.location.hash = '#cali-stung';
     } else if (route === 'maxxi') {

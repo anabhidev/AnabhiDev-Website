@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v3-6';
+var CACHE_VERSION = 'anabhidev-smart-study-v3-7';
 
 var PRECACHE = [
   './',
@@ -33,9 +33,11 @@ var PRECACHE = [
   './js/components/lesson-view.js',
   './js/components/challenge-view.js',
   './js/components/progress-view.js',
+  './js/components/schedule-view.js',
   './js/components/quiz-runner.js',
   './js/components/video-modal.js',
   './js/data/subjects.js',
+  './js/data/schedule-data.js',
   './js/data/math-data.js',
   './js/data/geo-data.js',
   './js/data/bahasa-indonesia.js',
@@ -52,6 +54,7 @@ var PRECACHE = [
   './assets/icon-192-2.png',
   './assets/icon-512-2.png',
   './assets/icon-512-maskable-2.png',
+  './assets/img/jadwal-kelas-1b.jpg',
   './assets/img/earth_daymap.jpg',
   './assets/img/earth_political.svg'
 ];
