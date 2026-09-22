@@ -2,8 +2,8 @@
 AnabhiDev-MP — Mahadaya Partners Website
 JavaScript · Main Script
 Development · Anabhi Dev
-Version   : 1.5
-Generated : 13 September 2026, 20:30:00
+Version   : 1.6
+Generated : 22 September 2026, 08:56:00
 ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -150,12 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(updateCounter);
   }
 
-  // ─── Back to Top Click Action ───
-  if (backToTop) {
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
 
   // ─── Contact Form → WhatsApp Handoff ───
   // Situs ini statis (tanpa backend), jadi form tidak dikirim ke server.

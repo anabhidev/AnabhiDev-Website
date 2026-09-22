@@ -2,8 +2,8 @@
 AnabhiDev-MP — Mahadaya Partners Website
 CSS · Company Profile
 Development · Anabhi Dev
-Version   : 1.8
-Generated : 13 September 2026, 20:30:00
+Version   : 1.9
+Generated : 22 September 2026, 08:56:00
 ================================================================ */
 
 /* ── Self-hosted fonts (SOP kategori 1) ──
@@ -406,8 +406,12 @@ a:hover { color: var(--emerald-400); }
   border: none;
   cursor: pointer;
   padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
   z-index: 1001;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
 }
 .mobile-toggle span {
   display: block;
@@ -607,7 +611,8 @@ a:hover { color: var(--emerald-400); }
   border-radius: 50px;
   text-transform: uppercase;
 }
-.hero-home h1 {
+.hero-home h1,
+.hero-home .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(2.1rem, 5.2vw, 3.6rem);
   line-height: 1.14;
@@ -669,6 +674,7 @@ a:hover { color: var(--emerald-400); }
   gap: 10px;
 }
 .hero-dot {
+  position: relative;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -677,6 +683,15 @@ a:hover { color: var(--emerald-400); }
   cursor: pointer;
   padding: 0;
   transition: all 0.35s var(--ease);
+}
+.hero-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 44px;
+  min-height: 44px;
 }
 .hero-dot:hover {
   border-color: var(--gold);
@@ -1690,6 +1705,10 @@ select.form-control { cursor: pointer; }
     font-size: 1.15rem;
     font-weight: 600;
     letter-spacing: 1.5px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
   }
   .main-nav .btn-nav-cta {
     margin-top: 0.5rem;
@@ -2424,6 +2443,7 @@ select.form-control { cursor: pointer; }
   align-items: center;
   justify-content: center;
 }
+.timeline-mobile-content h3,
 .timeline-mobile-content h4 {
   font-size: 1.05rem;
   margin: 0 0 0.35rem;
@@ -2741,6 +2761,7 @@ select.form-control { cursor: pointer; }
   margin-bottom: 2.5rem;
   gap: 1.5rem;
 }
+.readiness-meter-info h3,
 .readiness-meter-info h4 {
   font-size: 0.82rem;
   text-transform: uppercase;
