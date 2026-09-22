@@ -409,7 +409,7 @@ export class ScheduleViewComponent {
         </div>
 
         <div style="max-width:960px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:1px solid var(--line);">
-          <img src="${SCHEDULE_DATA.posterImage}" alt="Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; display:block;" loading="eager">
+          <img src="${SCHEDULE_DATA.posterImage}" alt="Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" width="1080" height="1528" loading="eager" decoding="async" style="width:100%; height:auto; display:block;">
         </div>
       </div>
     `;

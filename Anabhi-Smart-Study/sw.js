@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v4-0';
+var CACHE_VERSION = 'anabhidev-smart-study-v4-1';
 
 var PRECACHE = [
   './',
@@ -67,7 +67,21 @@ var PRECACHE = [
   './assets/icon-512-maskable-2.png',
   './assets/img/jadwal-kelas-1b.jpg',
   './assets/img/earth_daymap.jpg',
-  './assets/img/earth_political.svg'
+  './assets/img/earth_political.svg',
+  './assets/img/covers/01_Pendidikan_Pancasila.png',
+  './assets/img/covers/02_Matematika.png',
+  './assets/img/covers/03_PJOK.png',
+  './assets/img/covers/04_Agama_Hindu.png',
+  './assets/img/covers/05_Cali_Stung.png',
+  './assets/img/covers/06_Seni_Rupa.png',
+  './assets/img/covers/07_Bahasa_Indonesia.png',
+  './assets/img/covers/08_Seni_Rupa_2.png',
+  './assets/img/covers/09_SANTUN_Basa_Bali.png',
+  './assets/img/covers/10_Maxxi.png',
+  './assets/img/covers/11_Agama_Hindu_2.png',
+  './assets/img/covers/12_Bahasa_Inggris.png',
+  './assets/img/covers/13_60Menit_Lancar.png',
+  './assets/img/covers/14_60Jam_PintarBaca.png'
 ];
 
 self.addEventListener('install', function (e) {

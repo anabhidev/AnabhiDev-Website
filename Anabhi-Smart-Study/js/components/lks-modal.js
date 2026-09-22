@@ -163,7 +163,7 @@ export class LksModalComponent {
                 </div>
                 <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
                   ${src.photoCover ? `
-                    <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
+                    <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" width="52" height="74" loading="lazy" decoding="async" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
                   ` : `
                     <div style="width:52px; height:74px; background:var(--surface); border-radius:6px; display:grid; place-items:center; font-size:22px; border:1px solid var(--border); flex-shrink:0;">📚</div>
                   `}

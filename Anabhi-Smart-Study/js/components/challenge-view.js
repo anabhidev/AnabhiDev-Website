@@ -328,7 +328,7 @@ export class ChallengeViewComponent {
       <!-- Hero Banner Buku Calistung dengan Foto Asli Buku -->
       <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
         <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-          <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+          <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
           <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
             SRC-05
           </span>
@@ -453,7 +453,7 @@ export class ChallengeViewComponent {
       <!-- Hero Banner Buku MAXXI dengan Foto Asli Buku -->
       <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
         <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-          <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+          <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
           <span style="position:absolute; bottom:-8px; right:-6px; background:#1d7198; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
             SRC-10
           </span>

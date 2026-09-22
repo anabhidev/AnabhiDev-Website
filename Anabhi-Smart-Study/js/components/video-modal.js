@@ -74,7 +74,7 @@ export class VideoModalComponent {
         <div class="video-iframe-wrap" id="videoWrapper">
           ${isFileProtocol ? `
             <div id="filePlayerPoster" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0b1526; cursor:pointer; text-align:center; padding:16px;">
-              ${thumbUrl ? `<img src="${thumbUrl}" alt="${title}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65); transition:filter 0.2s;" />` : ''}
+              ${thumbUrl ? `<img src="${thumbUrl}" alt="${title}" width="480" height="270" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65); transition:filter 0.2s;" />` : ''}
               
               <!-- Tombol Play Merah YouTube -->
               <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px;">

@@ -11278,7 +11278,7 @@
                   </div>
                   <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
                     ${src.photoCover ? `
-                      <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
+                      <img src="assets/img/covers/${src.photoCover}" alt="${src.title}" width="52" height="74" loading="lazy" decoding="async" style="width:52px; height:74px; object-fit:cover; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.18); border:1px solid var(--border); flex-shrink:0;">
                     ` : `
                       <div style="width:52px; height:74px; background:var(--surface); border-radius:6px; display:grid; place-items:center; font-size:22px; border:1px solid var(--border); flex-shrink:0;">📚</div>
                     `}
@@ -13156,7 +13156,7 @@
           <div class="video-iframe-wrap" id="videoWrapper">
             ${isFileProtocol ? `
               <div id="filePlayerPoster" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0b1526; cursor:pointer; text-align:center; padding:16px;">
-                ${thumbUrl ? `<img src="${thumbUrl}" alt="${title}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65); transition:filter 0.2s;" />` : ''}
+                ${thumbUrl ? `<img src="${thumbUrl}" alt="${title}" width="480" height="270" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65); transition:filter 0.2s;" />` : ''}
                 
                 <!-- Tombol Play Merah YouTube -->
                 <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px;">
@@ -17370,7 +17370,7 @@
         <!-- Hero Banner Buku Calistung dengan Foto Asli Buku -->
         <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
             <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
               SRC-05
             </span>
@@ -17495,7 +17495,7 @@
         <!-- Hero Banner Buku MAXXI dengan Foto Asli Buku -->
         <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
             <span style="position:absolute; bottom:-8px; right:-6px; background:#1d7198; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
               SRC-10
             </span>
@@ -18124,7 +18124,7 @@
           </div>
   
           <div style="max-width:960px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:1px solid var(--line);">
-            <img src="${SCHEDULE_DATA.posterImage}" alt="Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" style="width:100%; height:auto; display:block;" loading="eager">
+            <img src="${SCHEDULE_DATA.posterImage}" alt="Jadwal Pelajaran Kelas 1B Tahun Pelajaran 2026/2027" width="1080" height="1528" loading="eager" decoding="async" style="width:100%; height:auto; display:block;">
           </div>
         </div>
       `;
@@ -19405,10 +19405,10 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
               <div style="display:flex; gap:10px; align-items:center;">
                 <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
-                <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
-                <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:38px; height:38px; min-width:38px; min-height:38px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
+                <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
               </div>
   
               <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
