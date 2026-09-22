@@ -610,7 +610,13 @@ export class MathToolboxComponent {
     stratBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         this.activeStrategy = btn.getAttribute('data-strat') || 'makeHundred';
-        AudioFx.playTap();
+        if (this.activeStrategy === 'soroban' || this.activeStrategy === 'rekenrek') {
+          AudioFx.playBeadClick();
+        } else if (this.activeStrategy === 'baseTen' || this.activeStrategy === 'numberPyramid') {
+          AudioFx.playBlockSnap();
+        } else {
+          AudioFx.playTap();
+        }
         this.render();
       });
     });

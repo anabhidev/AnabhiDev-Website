@@ -17,7 +17,9 @@ export class ReadingLabComponent {
   constructor(container) {
     this.container = container;
     this.activeLevelId = 'read-lvl-1'; // Default ke Level 1 (Vokal A)
-    this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, READ, WRITE, QUIZ
+    this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, QUIZ
+    this.currentSayIndex = 0;
+    this.isListening = false;
     this.levels = CONTENT_REGISTRY.reading || [];
   }
 
@@ -72,9 +74,14 @@ export class ReadingLabComponent {
                 ? 'Target: recognize whole word sound units directly (IBU, not I-B-U). Structured across 12 levels.'
                 : 'Prinsip: Mengenali unit bunyi suku kata & kata secara langsung (I-BU, bukan I-B-U). Disusun bertahap dalam 12 level percepatan membaca.'}
             </p>
-            <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
-              <span>🎯 Level Aktif:</span>
-              <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:4px;">
+              <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
+                <span>🎯 Level Aktif:</span>
+                <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+              </div>
+              <button class="btn" id="btnOpenReadingFlashcards" type="button" aria-label="Cetak Lembar Kartu Pintar Fonik A6" style="font-size:12px; font-weight:800; padding:7px 14px; background:#fff; color:#0e7490; border:1.5px solid #0e7490; border-radius:10px; box-shadow:0 2px 6px rgba(14,116,144,0.12);">
+                🎴 Cetak Kartu Pintar (Flashcard A6)
+              </button>
             </div>
           </div>
         </div>
@@ -91,7 +98,7 @@ export class ReadingLabComponent {
             ${this.levels.map(lvl => {
               const isSelected = lvl.id === currentLevel.id;
               return `
-                <button class="btn-select-level" data-level-id="${lvl.id}" type="button" style="
+                <button class="btn-select-level" data-level-id="${lvl.id}" type="button" aria-label="Pilih Level ${lvl.level}: ${lvl.title}" style="
                   flex: 0 0 auto;
                   min-width: 140px;
                   background: ${isSelected ? 'var(--teal)' : 'var(--card)'};
@@ -119,20 +126,23 @@ export class ReadingLabComponent {
         <!-- 8-Step Pedagogical Learning Flow Pill Bar -->
         <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:24px;">
           <div style="font-size:12px; font-weight:800; color:var(--muted); margin-bottom:8px; text-transform:uppercase;">
-            Alur Pedagogis: SEE ➔ LISTEN ➔ SAY ➔ MATCH ➔ READ ➔ WRITE ➔ QUIZ ➔ MASTERED
+            Alur Pedagogis: SEE ➔ LISTEN ➔ SAY ➔ MATCH ➔ QUIZ ➔ MASTERED
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn ${this.currentStep === 'SEE' ? 'primary' : ''} btn-step" data-step="SEE" type="button" style="font-size:12px; padding:6px 14px;">
+            <button class="btn ${this.currentStep === 'SEE' ? 'primary' : ''} btn-step" data-step="SEE" type="button" aria-label="Langkah 1: Lihat Huruf dan Suku Kata" style="font-size:12px; padding:6px 14px;">
               👁️ 1. Lihat (SEE)
             </button>
-            <button class="btn ${this.currentStep === 'LISTEN' ? 'primary' : ''} btn-step" data-step="LISTEN" type="button" style="font-size:12px; padding:6px 14px;">
+            <button class="btn ${this.currentStep === 'LISTEN' ? 'primary' : ''} btn-step" data-step="LISTEN" type="button" aria-label="Langkah 2: Dengar Pelafalan Fonik" style="font-size:12px; padding:6px 14px;">
               🔊 2. Dengar (LISTEN)
             </button>
-            <button class="btn ${this.currentStep === 'WORD_BUILD' ? 'primary' : ''} btn-step" data-step="WORD_BUILD" type="button" style="font-size:12px; padding:6px 14px;">
-              🧩 3. Rakit Kata (MATCH)
+            <button class="btn ${this.currentStep === 'SAY' ? 'primary' : ''} btn-step" data-step="SAY" type="button" aria-label="Langkah 3: Ucapkan dan Cek Suara" style="font-size:12px; padding:6px 14px;">
+              🎙️ 3. Ucapkan (SAY)
             </button>
-            <button class="btn ${this.currentStep === 'QUIZ' ? 'primary' : ''} btn-step" data-step="QUIZ" type="button" style="font-size:12px; padding:6px 14px;">
-              ⭐ 4. Kuis Latihan
+            <button class="btn ${this.currentStep === 'WORD_BUILD' ? 'primary' : ''} btn-step" data-step="WORD_BUILD" type="button" aria-label="Langkah 4: Rakit Potongan Kata" style="font-size:12px; padding:6px 14px;">
+              🧩 4. Rakit Kata (MATCH)
+            </button>
+            <button class="btn ${this.currentStep === 'QUIZ' ? 'primary' : ''} btn-step" data-step="QUIZ" type="button" aria-label="Langkah 5: Kuis Latihan Pemahaman" style="font-size:12px; padding:6px 14px;">
+              ⭐ 5. Kuis Latihan
             </button>
           </div>
         </div>
@@ -176,6 +186,15 @@ export class ReadingLabComponent {
         }
       });
     });
+
+    // Buka Lembar Cetak Kartu Pintar Fonik A6
+    const flashcardsBtn = this.container.querySelector('#btnOpenReadingFlashcards');
+    if (flashcardsBtn) {
+      flashcardsBtn.addEventListener('click', () => {
+        AudioFx.playTap();
+        (window.lksModal || this.lksModal)?.openFlashcardsWorksheet();
+      });
+    }
   }
 
   renderCurrentStep(level) {
@@ -226,8 +245,8 @@ export class ReadingLabComponent {
           ` : ''}
 
           <div style="margin-top:24px; display:flex; justify-content:flex-end;">
-            <button class="btn primary" id="btnGoToWordBuilder" type="button" style="font-size:13.5px; font-weight:800; padding:10px 20px;">
-              Lanjut ke Rakit Kata (MATCH) ➔
+            <button class="btn primary" id="btnGoToSay" type="button" aria-label="Lanjut ke Ucapkan Fonik" style="font-size:13.5px; font-weight:800; padding:10px 20px;">
+              Lanjut ke Ucapkan (SAY) 🎙️ ➔
             </button>
           </div>
         </div>
@@ -257,11 +276,183 @@ export class ReadingLabComponent {
         });
       }
 
-      const nextBtn = wrap.querySelector('#btnGoToWordBuilder');
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-          this.currentStep = 'WORD_BUILD';
+      const goToSayBtn = wrap.querySelector('#btnGoToSay');
+      if (goToSayBtn) {
+        goToSayBtn.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.currentStep = 'SAY';
           this.render();
+        });
+      }
+    } else if (this.currentStep === 'SAY') {
+      // Step 3: Interactive Speech Recognition & Phonics Assessment
+      const sayItems = (level.sampleWords && level.sampleWords.length > 0)
+        ? level.sampleWords
+        : (level.syllables || ['ba', 'ca', 'da']).map(s => ({ word: s.toUpperCase(), hint: `Suku kata ${s}`, emoji: '🗣️' }));
+      const currentItem = sayItems[this.currentSayIndex % sayItems.length];
+
+      wrap.innerHTML = `
+        <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); text-align:center;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">
+              🎙️ Ucapkan &amp; Cek Fonik (Voice Recognition)
+            </h3>
+            <span class="subject-badge" style="background:#edfbf2; color:#1e7b45; font-weight:800;">
+              Latihan Mandiri #${(this.currentSayIndex % sayItems.length) + 1} / ${sayItems.length}
+            </span>
+          </div>
+
+          <p style="font-size:13.5px; color:var(--muted); line-height:1.5; margin:0 0 20px;">
+            Ayo ucapkan kata di bawah ini dengan jelas! Klik tombol mikrofon, lalu bicaralah dengan percaya diri:
+          </p>
+
+          <!-- Kartu Kata Target Besar -->
+          <div style="background:linear-gradient(135deg, rgba(14, 116, 144, 0.05), rgba(6, 182, 212, 0.08)); border:2px dashed var(--teal); border-radius:20px; padding:28px 20px; margin:0 auto 20px; max-width:440px;">
+            <div style="font-size:42px; margin-bottom:6px;">${currentItem.emoji || '🗣️'}</div>
+            <div style="font-size:52px; font-weight:950; color:var(--teal); letter-spacing:2px; line-height:1.1;">
+              ${currentItem.word}
+            </div>
+            <div style="font-size:13.5px; font-weight:700; color:var(--muted); margin-top:8px;">
+              ${currentItem.hint || 'Bacalah langsung tanpa dieja'}
+            </div>
+          </div>
+
+          <!-- Tombol Aksi Suara -->
+          <div style="display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+            <button class="btn primary" id="btnTriggerSpeech" type="button" aria-label="Mulai bicara lewat mikrofon" style="font-size:15px; font-weight:850; padding:12px 28px; border-radius:14px; display:inline-flex; align-items:center; gap:8px;">
+              <span id="speechMicIcon">🎙️</span> <span id="speechMicLabel">Mulai Bicara</span>
+            </button>
+            <button class="btn" id="btnHearSampleVoice" type="button" aria-label="Dengarkan contoh pelafalan" style="font-size:13px; font-weight:750; padding:11px 18px;">
+              🔊 Dengarkan Contoh
+            </button>
+          </div>
+
+          <!-- Kotak Umpan Balik Hasil Pengucapan -->
+          <div id="speechFeedbackBox" style="min-height:48px; padding:10px 16px; border-radius:12px; background:var(--paper); border:1px solid var(--line); font-size:13.5px; font-weight:700; color:var(--muted); max-width:500px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center;">
+            Klik "Mulai Bicara" dan ucapkan kata di atas! 🌟
+          </div>
+
+          <!-- Navigasi Kata -->
+          <div style="display:flex; justify-content:center; gap:10px; margin-bottom:24px;">
+            <button class="btn" id="btnPrevSayItem" type="button" aria-label="Kata Sebelumnya">← Kata Sebelumnya</button>
+            <button class="btn" id="btnNextSayItem" type="button" aria-label="Kata Berikutnya">Kata Berikutnya ➔</button>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:16px;">
+            <button class="btn" id="btnBackToListen" type="button">← Kembali ke Dengar (LISTEN)</button>
+            <button class="btn primary" id="btnGoToWordBuilderFromSay" type="button" style="font-weight:800;">
+              Lanjut ke Rakit Kata (MATCH) ➔
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Event Listeners SAY
+      wrap.querySelector('#btnHearSampleVoice')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        TtsEngine.speak(currentItem.word, 'id', 0.85);
+      });
+
+      wrap.querySelector('#btnPrevSayItem')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        this.currentSayIndex = (this.currentSayIndex - 1 + sayItems.length) % sayItems.length;
+        this.render();
+      });
+
+      wrap.querySelector('#btnNextSayItem')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        this.currentSayIndex = (this.currentSayIndex + 1) % sayItems.length;
+        this.render();
+      });
+
+      wrap.querySelector('#btnBackToListen')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        this.currentStep = 'LISTEN';
+        this.render();
+      });
+
+      wrap.querySelector('#btnGoToWordBuilderFromSay')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        this.currentStep = 'WORD_BUILD';
+        this.render();
+      });
+
+      // Voice recognition
+      const speechBtn = wrap.querySelector('#btnTriggerSpeech');
+      const feedbackBox = wrap.querySelector('#speechFeedbackBox');
+      const micIcon = wrap.querySelector('#speechMicIcon');
+      const micLabel = wrap.querySelector('#speechMicLabel');
+
+      if (speechBtn) {
+        speechBtn.addEventListener('click', () => {
+          const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+          if (!SpeechRec) {
+            alert('Fitur input suara mikrofon didukung penuh di Google Chrome, Edge, Safari, dan Android!');
+            return;
+          }
+
+          try {
+            const rec = new SpeechRec();
+            rec.lang = 'id-ID';
+            rec.continuous = false;
+            rec.interimResults = false;
+
+            rec.onstart = () => {
+              if (micIcon) micIcon.textContent = '🔴';
+              if (micLabel) micLabel.textContent = 'Mendengarkan... Silakan bicara!';
+              if (feedbackBox) {
+                feedbackBox.style.background = '#fef3c7';
+                feedbackBox.style.color = '#b45309';
+                feedbackBox.style.borderColor = '#fde68a';
+                feedbackBox.innerHTML = '🎤 Sedang mendengarkan... Ucapkan sekarang!';
+              }
+            };
+
+            rec.onresult = (e) => {
+              const transcript = (e.results[0][0].transcript || '').trim();
+              const cleanSpoken = transcript.toLowerCase().replace(/[^a-z0-9]/g, '');
+              const cleanTarget = currentItem.word.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+              const isMatch = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
+
+              if (isMatch) {
+                AudioFx.playSuccess();
+                AudioFx.triggerConfetti();
+                store.addStars(1);
+                if (feedbackBox) {
+                  feedbackBox.style.background = '#edfbf2';
+                  feedbackBox.style.color = '#15803d';
+                  feedbackBox.style.borderColor = '#86efac';
+                  feedbackBox.innerHTML = `🎉 <strong>Luar Biasa!</strong> Pengucapanmu tepat: "<em>${transcript}</em>" (+1 ⭐)`;
+                }
+              } else {
+                AudioFx.playGentleWrong();
+                if (feedbackBox) {
+                  feedbackBox.style.background = '#fef2f2';
+                  feedbackBox.style.color = '#b91c1c';
+                  feedbackBox.style.borderColor = '#fecaca';
+                  feedbackBox.innerHTML = `Terdengar: "<em>${transcript}</em>". Ayo coba lagi ucapkan: "<strong>${currentItem.word}</strong>"!`;
+                }
+              }
+            };
+
+            rec.onerror = (err) => {
+              if (feedbackBox) {
+                feedbackBox.style.background = 'var(--paper)';
+                feedbackBox.style.color = 'var(--muted)';
+                feedbackBox.textContent = 'Belum terdengar jelas. Coba klik lagi dan bicara lebih dekat ke mikrofon! 🎙️';
+              }
+            };
+
+            rec.onend = () => {
+              if (micIcon) micIcon.textContent = '🎙️';
+              if (micLabel) micLabel.textContent = 'Mulai Bicara';
+            };
+
+            rec.start();
+          } catch (err) {
+            console.warn('[SpeechRec] Error starting:', err);
+          }
         });
       }
     } else if (this.currentStep === 'WORD_BUILD') {

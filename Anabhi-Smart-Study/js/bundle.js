@@ -2,8 +2,8 @@
 // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
 // Standalone Bundle (Compatible with file:/// and http/https)
 // Development · Anabhi Dev
-// Version   : 3.8 (SOP v2.4 & Standar Coding v2.0 Aligned)
-// Generated : 21 September 2026
+// Version   : 4.2 (Interactive Gamification, Speech-to-Text Fonik, Audio-Tactile Multisensory Engine, Flashcards & Certificate Generator)
+// Generated : 23 September 2026
 // ================================================================
 
 (function () {
@@ -10856,6 +10856,65 @@
       } catch (e) {}
     },
   
+    // Klik manik sempoa Soroban & Rekenrek (akustik tajam & renyah)
+    playBeadClick() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1200, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.04);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } catch (e) {}
+    },
+  
+    // Tap balok nilai tempat base-ten & bata piramida
+    playBlockSnap() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(240, now + 0.06);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.06);
+      } catch (e) {}
+    },
+  
+    // Suara tap tombol UI yang halus
+    playTap() {
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(680, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.035);
+      } catch (e) {}
+    },
+  
     // Efek visual konfeti ceria di layar
     triggerConfetti(containerEl = document.body) {
       if (typeof document === 'undefined') return;
@@ -11827,6 +11886,161 @@
           </div>
         </div>
       `;
+    }
+  
+    // 🎴 Lembar Kartu Pintar Edukasi (Flashcards A6 Siap Gunting A4)
+    openFlashcardsWorksheet() {
+      const cards = [
+        { tag: '🧮 KAWAN 10', title: '7 + 3 = 10', sub: 'Ten-Frame Pasangan 10', emoji: '🔟', back: '7 di kepala, 3 di jari ➔ Jadi 10 bulat!' },
+        { tag: '🧮 KAWAN 10', title: '6 + 4 = 10', sub: 'Number Bonds Ceria', emoji: '🔗', back: '6 balok + 4 balok ➔ Tepat 10!' },
+        { tag: '📖 FONIK', title: 'BA - JU ➔ BAJU', sub: 'Suku Kata Utuh', emoji: '👕', back: 'Aku memakai baju seragam sekolah yang bersih.' },
+        { tag: '📖 FONIK', title: 'BO - LA ➔ BOLA', sub: 'Suku Kata Utuh', emoji: '⚽', back: 'Ayo oper bola dan cetak gol ceria!' },
+        { tag: '🌟 ENGLISH', title: 'SUN ☀️ MATAHARI', sub: 'Everyday Words', emoji: '☀️', back: 'The sun shines bright in the morning sky.' },
+        { tag: '🌟 BALI', title: 'SEKAR 🌸 BUNGA', sub: 'Kruna Basa Bali', emoji: '🌺', back: 'Sekar cempaka miik ngalub ring natah.' },
+        { tag: '🏆 PRESTASI', title: 'JAGOAN KELAS 1', sub: 'Bintang Mandiri', emoji: '⭐', back: 'Pantang menyerah dan terus belajar setiap hari!' },
+        { tag: '🧠 LOGIKA', title: '10 + 5 = 15', sub: 'Place Value Dasar', emoji: '🧱', back: '1 batang puluhan dan 5 kubus satuan.' }
+      ];
+  
+      const htmlContent = `
+        <div class="lks-page-sheet" style="max-width:820px; margin:0 auto; background:#fff; color:#0f172a; padding:24px; border-radius:12px;">
+          <div class="lks-kop-container" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0f172a; padding-bottom:12px; margin-bottom:16px;">
+            <div>
+              <div style="font-size:11px; font-weight:800; color:#0e7490; text-transform:uppercase;">ANABHIDEV SMART STUDY · KURIKULUM MERDEKA</div>
+              <h2 style="margin:2px 0 0; font-size:20px; font-weight:900;">🎴 LEMBAR KARTU PINTAR EDUKASI (FLASHCARDS A6 SIAP GUNTING)</h2>
+            </div>
+            <div style="text-align:right; font-size:11.5px; font-weight:700;">
+              <div>Format Cetak: A4 Landscape / Portrait</div>
+              <div style="color:#059669;">✂️ 8 Kartu Belajar Mandiri</div>
+            </div>
+          </div>
+  
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:8px 14px; font-size:12px; margin-bottom:18px; display:flex; align-items:center; gap:8px;">
+            <span style="font-size:16px;">✂️</span>
+            <span><strong>Petunjuk Guru / Orang Tua:</strong> Cetak lembar ini pada kertas tebal / karton A4, lalu gunting mengikuti garis putus-putus. Kartu dapat digunakan untuk kuis tebak cepat harian!</span>
+          </div>
+  
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            ${cards.map((c, idx) => `
+              <div style="
+                border: 2px dashed #94a3b8;
+                border-radius: 14px;
+                padding: 16px;
+                background: #ffffff;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-height: 170px;
+                position: relative;
+              ">
+                <span style="position:absolute; top:-10px; right:14px; background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:1px 8px; border-radius:4px; border:1px solid #cbd5e1;">
+                  KARTU #${idx + 1}
+                </span>
+  
+                <div>
+                  <span style="display:inline-block; font-size:10.5px; font-weight:800; color:#0e7490; background:#e0f2fe; padding:2px 8px; border-radius:6px; margin-bottom:6px;">
+                    ${c.tag}
+                  </span>
+                  <div style="font-size:28px; float:right;">${c.emoji}</div>
+                  <h3 style="margin:4px 0 2px; font-size:17px; font-weight:900; color:#0f172a;">${c.title}</h3>
+                  <div style="font-size:11.5px; color:#64748b; font-weight:700;">${c.sub}</div>
+                </div>
+  
+                <div style="margin-top:12px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.4;">
+                  <strong>💡 Catatan Pintar:</strong> ${c.back}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+  
+          <div style="margin-top:20px; text-align:center; font-size:11px; color:#94a3b8;">
+            AnabhiDev Smart Study Flashcards · https://anabhidev.com/Anabhi-Smart-Study/ · Bebas Digunakan untuk Pendidikan Dasar
+          </div>
+        </div>
+      `;
+  
+      this.renderModal(htmlContent, '🎴 Lembar Kartu Pintar (Flashcards A6 Siap Gunting)');
+    }
+  
+    // 🏆 Sertifikat Apresiasi Prestasi Siswa (PDF A4)
+    openCertificateModal(studentName = 'Ana', stars = 0, streak = 1, badgesCount = 0) {
+      const htmlContent = `
+        <div class="lks-page-sheet" style="max-width:820px; margin:0 auto; background:#ffffff; color:#0f172a; padding:36px 32px; border:8px double #0d9488; border-radius:20px; text-align:center; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+          <!-- Hiasan Sudut Ornamen -->
+          <div style="font-size:13px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:#0d9488; margin-bottom:6px;">
+            ★ ANABHIDEV SMART STUDY · KURIKULUM MERDEKA FASE A ★
+          </div>
+          <h1 style="margin:0 0 10px; font-size:30px; font-weight:900; color:#042f2e; text-transform:uppercase; letter-spacing:1px;">
+            SERTIFIKAT PENGHARGAAN BELAJAR
+          </h1>
+          <div style="width:120px; height:4px; background:#0d9488; margin:0 auto 20px; border-radius:2px;"></div>
+  
+          <p style="font-size:15px; color:#475569; margin:0 0 16px; font-style:italic;">
+            Sertifikat ini dianugerahkan dengan penuh rasa bangga dan apresiasi kepada:
+          </p>
+  
+          <div style="background:linear-gradient(135deg, rgba(13, 148, 136, 0.08), rgba(20, 184, 166, 0.12)); border:2px dashed #0d9488; border-radius:14px; padding:16px; margin:0 auto 20px; max-width:540px;">
+            <h2 style="margin:0; font-size:32px; font-weight:950; color:#0f766e; text-transform:capitalize;">
+              ${studentName === 'Abhi' ? '⚡ ' : '🌸 '}${studentName}
+            </h2>
+            <div style="font-size:13px; font-weight:800; color:#042f2e; margin-top:4px;">
+              Siswa Hebat Kelas 1B SD Kurikulum Merdeka
+            </div>
+          </div>
+  
+          <p style="font-size:14px; color:#334155; line-height:1.6; max-width:620px; margin:0 auto 24px;">
+            Atas ketekunan belajar mandiri, semangat membaca tanpa dieja, keberanian memecahkan 14 jurus visual matematika, penjelajahan geografi 38 provinsi, dan pencapaian luar biasa:
+          </p>
+  
+          <!-- Prestasi Badges -->
+          <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:30px;">
+            <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+              <div style="font-size:24px;">⭐</div>
+              <div style="font-size:20px; font-weight:900; color:#0f172a;">${stars}</div>
+              <div style="font-size:11px; font-weight:700; color:#64748b;">Bintang Emas</div>
+            </div>
+  
+            <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+              <div style="font-size:24px;">🔥</div>
+              <div style="font-size:20px; font-weight:900; color:#0f172a;">${streak} Hari</div>
+              <div style="font-size:11px; font-weight:700; color:#64748b;">Streak Harian</div>
+            </div>
+  
+            <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+              <div style="font-size:24px;">🎖️</div>
+              <div style="font-size:20px; font-weight:900; color:#0f172a;">${badgesCount}</div>
+              <div style="font-size:11px; font-weight:700; color:#64748b;">Lencana Dimenangkan</div>
+            </div>
+          </div>
+  
+          <!-- Tanda Tangan Resmi -->
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:36px; padding:0 30px;">
+            <div style="text-align:center; min-width:180px;">
+              <div style="font-size:13px; font-weight:700; color:#475569; margin-bottom:56px;">
+                Mengetahui,<br>Orang Tua / Wali Murid
+              </div>
+              <div style="font-weight:800; font-size:14px; border-bottom:1.5px solid #0f172a; padding-bottom:4px;">
+                ( .................................................... )
+              </div>
+            </div>
+  
+            <div style="text-align:center;">
+              <div style="font-size:42px;">🏆</div>
+              <div style="font-size:11px; font-weight:800; color:#0d9488; text-transform:uppercase;">SEAL OF EXCELLENCE</div>
+            </div>
+  
+            <div style="text-align:center; min-width:180px;">
+              <div style="font-size:13px; font-weight:700; color:#475569; margin-bottom:56px;">
+                Denpasar, 23 September 2026<br>Guru Pendamping Belajar
+              </div>
+              <div style="font-weight:800; font-size:14px; border-bottom:1.5px solid #0f172a; padding-bottom:4px;">
+                <strong>Anabhi Dev Academy</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+  
+      this.renderModal(htmlContent, `🏆 Sertifikat Prestasi Belajar (${studentName})`);
     }
   }
   
@@ -17683,7 +17897,15 @@
             }).join('')}
           </div>
   
-          <div style="margin-top:24px; display:flex; justify-content:flex-end;">
+          <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn primary" id="btnPrintCertificate" type="button" aria-label="Cetak Sertifikat Apresiasi Belajar PDF A4" style="font-weight:800; font-size:13.5px; padding:10px 18px;">
+                🏆 Cetak Sertifikat Prestasi (PDF A4)
+              </button>
+              <button class="btn" id="btnPrintProgressSummary" type="button" aria-label="Cetak Rapor Ringkasan Belajar" style="font-weight:700; font-size:13px; padding:10px 16px;">
+                📑 Cetak Rapor Belajar (A4)
+              </button>
+            </div>
             <button class="btn" id="btnResetProgress" type="button" style="color:var(--red); border-color:var(--red-soft);">
               ${t('resetProgressBtn', lang)}
             </button>
@@ -17698,6 +17920,27 @@
     }
   
     attachEvents() {
+      const certBtn = this.container.querySelector('#btnPrintCertificate');
+      if (certBtn) {
+        certBtn.addEventListener('click', () => {
+          AudioFx.playTap();
+          const s = store.data;
+          const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+          const stars = s.stars || 0;
+          const streak = s.streakDays || 1;
+          const badgesCount = (s.badges || []).length;
+          (window.lksModal || this.lksModal)?.openCertificateModal(currentStudent, stars, streak, badgesCount);
+        });
+      }
+  
+      const printRaporBtn = this.container.querySelector('#btnPrintProgressSummary');
+      if (printRaporBtn) {
+        printRaporBtn.addEventListener('click', () => {
+          AudioFx.playTap();
+          window.print();
+        });
+      }
+  
       const resetBtn = this.container.querySelector('#btnResetProgress');
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
@@ -18235,7 +18478,9 @@
     constructor(container) {
       this.container = container;
       this.activeLevelId = 'read-lvl-1'; // Default ke Level 1 (Vokal A)
-      this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, READ, WRITE, QUIZ
+      this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, QUIZ
+      this.currentSayIndex = 0;
+      this.isListening = false;
       this.levels = CONTENT_REGISTRY.reading || [];
     }
   
@@ -18290,9 +18535,14 @@
                   ? 'Target: recognize whole word sound units directly (IBU, not I-B-U). Structured across 12 levels.'
                   : 'Prinsip: Mengenali unit bunyi suku kata & kata secara langsung (I-BU, bukan I-B-U). Disusun bertahap dalam 12 level percepatan membaca.'}
               </p>
-              <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
-                <span>🎯 Level Aktif:</span>
-                <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:4px;">
+                <div style="display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 14px; font-size:12px; font-weight:700;">
+                  <span>🎯 Level Aktif:</span>
+                  <strong style="color:var(--teal);">Level ${currentLevel.level} — ${currentLevel.title}</strong>
+                </div>
+                <button class="btn" id="btnOpenReadingFlashcards" type="button" aria-label="Cetak Lembar Kartu Pintar Fonik A6" style="font-size:12px; font-weight:800; padding:7px 14px; background:#fff; color:#0e7490; border:1.5px solid #0e7490; border-radius:10px; box-shadow:0 2px 6px rgba(14,116,144,0.12);">
+                  🎴 Cetak Kartu Pintar (Flashcard A6)
+                </button>
               </div>
             </div>
           </div>
@@ -18309,7 +18559,7 @@
               ${this.levels.map(lvl => {
                 const isSelected = lvl.id === currentLevel.id;
                 return `
-                  <button class="btn-select-level" data-level-id="${lvl.id}" type="button" style="
+                  <button class="btn-select-level" data-level-id="${lvl.id}" type="button" aria-label="Pilih Level ${lvl.level}: ${lvl.title}" style="
                     flex: 0 0 auto;
                     min-width: 140px;
                     background: ${isSelected ? 'var(--teal)' : 'var(--card)'};
@@ -18337,20 +18587,23 @@
           <!-- 8-Step Pedagogical Learning Flow Pill Bar -->
           <div style="background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:24px;">
             <div style="font-size:12px; font-weight:800; color:var(--muted); margin-bottom:8px; text-transform:uppercase;">
-              Alur Pedagogis: SEE ➔ LISTEN ➔ SAY ➔ MATCH ➔ READ ➔ WRITE ➔ QUIZ ➔ MASTERED
+              Alur Pedagogis: SEE ➔ LISTEN ➔ SAY ➔ MATCH ➔ QUIZ ➔ MASTERED
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn ${this.currentStep === 'SEE' ? 'primary' : ''} btn-step" data-step="SEE" type="button" style="font-size:12px; padding:6px 14px;">
+              <button class="btn ${this.currentStep === 'SEE' ? 'primary' : ''} btn-step" data-step="SEE" type="button" aria-label="Langkah 1: Lihat Huruf dan Suku Kata" style="font-size:12px; padding:6px 14px;">
                 👁️ 1. Lihat (SEE)
               </button>
-              <button class="btn ${this.currentStep === 'LISTEN' ? 'primary' : ''} btn-step" data-step="LISTEN" type="button" style="font-size:12px; padding:6px 14px;">
+              <button class="btn ${this.currentStep === 'LISTEN' ? 'primary' : ''} btn-step" data-step="LISTEN" type="button" aria-label="Langkah 2: Dengar Pelafalan Fonik" style="font-size:12px; padding:6px 14px;">
                 🔊 2. Dengar (LISTEN)
               </button>
-              <button class="btn ${this.currentStep === 'WORD_BUILD' ? 'primary' : ''} btn-step" data-step="WORD_BUILD" type="button" style="font-size:12px; padding:6px 14px;">
-                🧩 3. Rakit Kata (MATCH)
+              <button class="btn ${this.currentStep === 'SAY' ? 'primary' : ''} btn-step" data-step="SAY" type="button" aria-label="Langkah 3: Ucapkan dan Cek Suara" style="font-size:12px; padding:6px 14px;">
+                🎙️ 3. Ucapkan (SAY)
               </button>
-              <button class="btn ${this.currentStep === 'QUIZ' ? 'primary' : ''} btn-step" data-step="QUIZ" type="button" style="font-size:12px; padding:6px 14px;">
-                ⭐ 4. Kuis Latihan
+              <button class="btn ${this.currentStep === 'WORD_BUILD' ? 'primary' : ''} btn-step" data-step="WORD_BUILD" type="button" aria-label="Langkah 4: Rakit Potongan Kata" style="font-size:12px; padding:6px 14px;">
+                🧩 4. Rakit Kata (MATCH)
+              </button>
+              <button class="btn ${this.currentStep === 'QUIZ' ? 'primary' : ''} btn-step" data-step="QUIZ" type="button" aria-label="Langkah 5: Kuis Latihan Pemahaman" style="font-size:12px; padding:6px 14px;">
+                ⭐ 5. Kuis Latihan
               </button>
             </div>
           </div>
@@ -18394,6 +18647,15 @@
           }
         });
       });
+  
+      // Buka Lembar Cetak Kartu Pintar Fonik A6
+      const flashcardsBtn = this.container.querySelector('#btnOpenReadingFlashcards');
+      if (flashcardsBtn) {
+        flashcardsBtn.addEventListener('click', () => {
+          AudioFx.playTap();
+          (window.lksModal || this.lksModal)?.openFlashcardsWorksheet();
+        });
+      }
     }
   
     renderCurrentStep(level) {
@@ -18444,8 +18706,8 @@
             ` : ''}
   
             <div style="margin-top:24px; display:flex; justify-content:flex-end;">
-              <button class="btn primary" id="btnGoToWordBuilder" type="button" style="font-size:13.5px; font-weight:800; padding:10px 20px;">
-                Lanjut ke Rakit Kata (MATCH) ➔
+              <button class="btn primary" id="btnGoToSay" type="button" aria-label="Lanjut ke Ucapkan Fonik" style="font-size:13.5px; font-weight:800; padding:10px 20px;">
+                Lanjut ke Ucapkan (SAY) 🎙️ ➔
               </button>
             </div>
           </div>
@@ -18475,11 +18737,183 @@
           });
         }
   
-        const nextBtn = wrap.querySelector('#btnGoToWordBuilder');
-        if (nextBtn) {
-          nextBtn.addEventListener('click', () => {
-            this.currentStep = 'WORD_BUILD';
+        const goToSayBtn = wrap.querySelector('#btnGoToSay');
+        if (goToSayBtn) {
+          goToSayBtn.addEventListener('click', () => {
+            AudioFx.playTap();
+            this.currentStep = 'SAY';
             this.render();
+          });
+        }
+      } else if (this.currentStep === 'SAY') {
+        // Step 3: Interactive Speech Recognition & Phonics Assessment
+        const sayItems = (level.sampleWords && level.sampleWords.length > 0)
+          ? level.sampleWords
+          : (level.syllables || ['ba', 'ca', 'da']).map(s => ({ word: s.toUpperCase(), hint: `Suku kata ${s}`, emoji: '🗣️' }));
+        const currentItem = sayItems[this.currentSayIndex % sayItems.length];
+  
+        wrap.innerHTML = `
+          <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); text-align:center;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">
+                🎙️ Ucapkan &amp; Cek Fonik (Voice Recognition)
+              </h3>
+              <span class="subject-badge" style="background:#edfbf2; color:#1e7b45; font-weight:800;">
+                Latihan Mandiri #${(this.currentSayIndex % sayItems.length) + 1} / ${sayItems.length}
+              </span>
+            </div>
+  
+            <p style="font-size:13.5px; color:var(--muted); line-height:1.5; margin:0 0 20px;">
+              Ayo ucapkan kata di bawah ini dengan jelas! Klik tombol mikrofon, lalu bicaralah dengan percaya diri:
+            </p>
+  
+            <!-- Kartu Kata Target Besar -->
+            <div style="background:linear-gradient(135deg, rgba(14, 116, 144, 0.05), rgba(6, 182, 212, 0.08)); border:2px dashed var(--teal); border-radius:20px; padding:28px 20px; margin:0 auto 20px; max-width:440px;">
+              <div style="font-size:42px; margin-bottom:6px;">${currentItem.emoji || '🗣️'}</div>
+              <div style="font-size:52px; font-weight:950; color:var(--teal); letter-spacing:2px; line-height:1.1;">
+                ${currentItem.word}
+              </div>
+              <div style="font-size:13.5px; font-weight:700; color:var(--muted); margin-top:8px;">
+                ${currentItem.hint || 'Bacalah langsung tanpa dieja'}
+              </div>
+            </div>
+  
+            <!-- Tombol Aksi Suara -->
+            <div style="display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+              <button class="btn primary" id="btnTriggerSpeech" type="button" aria-label="Mulai bicara lewat mikrofon" style="font-size:15px; font-weight:850; padding:12px 28px; border-radius:14px; display:inline-flex; align-items:center; gap:8px;">
+                <span id="speechMicIcon">🎙️</span> <span id="speechMicLabel">Mulai Bicara</span>
+              </button>
+              <button class="btn" id="btnHearSampleVoice" type="button" aria-label="Dengarkan contoh pelafalan" style="font-size:13px; font-weight:750; padding:11px 18px;">
+                🔊 Dengarkan Contoh
+              </button>
+            </div>
+  
+            <!-- Kotak Umpan Balik Hasil Pengucapan -->
+            <div id="speechFeedbackBox" style="min-height:48px; padding:10px 16px; border-radius:12px; background:var(--paper); border:1px solid var(--line); font-size:13.5px; font-weight:700; color:var(--muted); max-width:500px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center;">
+              Klik "Mulai Bicara" dan ucapkan kata di atas! 🌟
+            </div>
+  
+            <!-- Navigasi Kata -->
+            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:24px;">
+              <button class="btn" id="btnPrevSayItem" type="button" aria-label="Kata Sebelumnya">← Kata Sebelumnya</button>
+              <button class="btn" id="btnNextSayItem" type="button" aria-label="Kata Berikutnya">Kata Berikutnya ➔</button>
+            </div>
+  
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:16px;">
+              <button class="btn" id="btnBackToListen" type="button">← Kembali ke Dengar (LISTEN)</button>
+              <button class="btn primary" id="btnGoToWordBuilderFromSay" type="button" style="font-weight:800;">
+                Lanjut ke Rakit Kata (MATCH) ➔
+              </button>
+            </div>
+          </div>
+        `;
+  
+        // Event Listeners SAY
+        wrap.querySelector('#btnHearSampleVoice')?.addEventListener('click', () => {
+          AudioFx.playTap();
+          TtsEngine.speak(currentItem.word, 'id', 0.85);
+        });
+  
+        wrap.querySelector('#btnPrevSayItem')?.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.currentSayIndex = (this.currentSayIndex - 1 + sayItems.length) % sayItems.length;
+          this.render();
+        });
+  
+        wrap.querySelector('#btnNextSayItem')?.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.currentSayIndex = (this.currentSayIndex + 1) % sayItems.length;
+          this.render();
+        });
+  
+        wrap.querySelector('#btnBackToListen')?.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.currentStep = 'LISTEN';
+          this.render();
+        });
+  
+        wrap.querySelector('#btnGoToWordBuilderFromSay')?.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.currentStep = 'WORD_BUILD';
+          this.render();
+        });
+  
+        // Voice recognition
+        const speechBtn = wrap.querySelector('#btnTriggerSpeech');
+        const feedbackBox = wrap.querySelector('#speechFeedbackBox');
+        const micIcon = wrap.querySelector('#speechMicIcon');
+        const micLabel = wrap.querySelector('#speechMicLabel');
+  
+        if (speechBtn) {
+          speechBtn.addEventListener('click', () => {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) {
+              alert('Fitur input suara mikrofon didukung penuh di Google Chrome, Edge, Safari, dan Android!');
+              return;
+            }
+  
+            try {
+              const rec = new SpeechRec();
+              rec.lang = 'id-ID';
+              rec.continuous = false;
+              rec.interimResults = false;
+  
+              rec.onstart = () => {
+                if (micIcon) micIcon.textContent = '🔴';
+                if (micLabel) micLabel.textContent = 'Mendengarkan... Silakan bicara!';
+                if (feedbackBox) {
+                  feedbackBox.style.background = '#fef3c7';
+                  feedbackBox.style.color = '#b45309';
+                  feedbackBox.style.borderColor = '#fde68a';
+                  feedbackBox.innerHTML = '🎤 Sedang mendengarkan... Ucapkan sekarang!';
+                }
+              };
+  
+              rec.onresult = (e) => {
+                const transcript = (e.results[0][0].transcript || '').trim();
+                const cleanSpoken = transcript.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const cleanTarget = currentItem.word.toLowerCase().replace(/[^a-z0-9]/g, '');
+  
+                const isMatch = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
+  
+                if (isMatch) {
+                  AudioFx.playSuccess();
+                  AudioFx.triggerConfetti();
+                  store.addStars(1);
+                  if (feedbackBox) {
+                    feedbackBox.style.background = '#edfbf2';
+                    feedbackBox.style.color = '#15803d';
+                    feedbackBox.style.borderColor = '#86efac';
+                    feedbackBox.innerHTML = `🎉 <strong>Luar Biasa!</strong> Pengucapanmu tepat: "<em>${transcript}</em>" (+1 ⭐)`;
+                  }
+                } else {
+                  AudioFx.playGentleWrong();
+                  if (feedbackBox) {
+                    feedbackBox.style.background = '#fef2f2';
+                    feedbackBox.style.color = '#b91c1c';
+                    feedbackBox.style.borderColor = '#fecaca';
+                    feedbackBox.innerHTML = `Terdengar: "<em>${transcript}</em>". Ayo coba lagi ucapkan: "<strong>${currentItem.word}</strong>"!`;
+                  }
+                }
+              };
+  
+              rec.onerror = (err) => {
+                if (feedbackBox) {
+                  feedbackBox.style.background = 'var(--paper)';
+                  feedbackBox.style.color = 'var(--muted)';
+                  feedbackBox.textContent = 'Belum terdengar jelas. Coba klik lagi dan bicara lebih dekat ke mikrofon! 🎙️';
+                }
+              };
+  
+              rec.onend = () => {
+                if (micIcon) micIcon.textContent = '🎙️';
+                if (micLabel) micLabel.textContent = 'Mulai Bicara';
+              };
+  
+              rec.start();
+            } catch (err) {
+              console.warn('[SpeechRec] Error starting:', err);
+            }
           });
         }
       } else if (this.currentStep === 'WORD_BUILD') {
@@ -20167,7 +20601,13 @@
       stratBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           this.activeStrategy = btn.getAttribute('data-strat') || 'makeHundred';
-          AudioFx.playTap();
+          if (this.activeStrategy === 'soroban' || this.activeStrategy === 'rekenrek') {
+            AudioFx.playBeadClick();
+          } else if (this.activeStrategy === 'baseTen' || this.activeStrategy === 'numberPyramid') {
+            AudioFx.playBlockSnap();
+          } else {
+            AudioFx.playTap();
+          }
           this.render();
         });
       });

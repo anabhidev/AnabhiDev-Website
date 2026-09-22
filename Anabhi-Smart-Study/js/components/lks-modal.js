@@ -713,5 +713,160 @@ export class LksModalComponent {
       </div>
     `;
   }
+
+  // 🎴 Lembar Kartu Pintar Edukasi (Flashcards A6 Siap Gunting A4)
+  openFlashcardsWorksheet() {
+    const cards = [
+      { tag: '🧮 KAWAN 10', title: '7 + 3 = 10', sub: 'Ten-Frame Pasangan 10', emoji: '🔟', back: '7 di kepala, 3 di jari ➔ Jadi 10 bulat!' },
+      { tag: '🧮 KAWAN 10', title: '6 + 4 = 10', sub: 'Number Bonds Ceria', emoji: '🔗', back: '6 balok + 4 balok ➔ Tepat 10!' },
+      { tag: '📖 FONIK', title: 'BA - JU ➔ BAJU', sub: 'Suku Kata Utuh', emoji: '👕', back: 'Aku memakai baju seragam sekolah yang bersih.' },
+      { tag: '📖 FONIK', title: 'BO - LA ➔ BOLA', sub: 'Suku Kata Utuh', emoji: '⚽', back: 'Ayo oper bola dan cetak gol ceria!' },
+      { tag: '🌟 ENGLISH', title: 'SUN ☀️ MATAHARI', sub: 'Everyday Words', emoji: '☀️', back: 'The sun shines bright in the morning sky.' },
+      { tag: '🌟 BALI', title: 'SEKAR 🌸 BUNGA', sub: 'Kruna Basa Bali', emoji: '🌺', back: 'Sekar cempaka miik ngalub ring natah.' },
+      { tag: '🏆 PRESTASI', title: 'JAGOAN KELAS 1', sub: 'Bintang Mandiri', emoji: '⭐', back: 'Pantang menyerah dan terus belajar setiap hari!' },
+      { tag: '🧠 LOGIKA', title: '10 + 5 = 15', sub: 'Place Value Dasar', emoji: '🧱', back: '1 batang puluhan dan 5 kubus satuan.' }
+    ];
+
+    const htmlContent = `
+      <div class="lks-page-sheet" style="max-width:820px; margin:0 auto; background:#fff; color:#0f172a; padding:24px; border-radius:12px;">
+        <div class="lks-kop-container" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0f172a; padding-bottom:12px; margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:800; color:#0e7490; text-transform:uppercase;">ANABHIDEV SMART STUDY · KURIKULUM MERDEKA</div>
+            <h2 style="margin:2px 0 0; font-size:20px; font-weight:900;">🎴 LEMBAR KARTU PINTAR EDUKASI (FLASHCARDS A6 SIAP GUNTING)</h2>
+          </div>
+          <div style="text-align:right; font-size:11.5px; font-weight:700;">
+            <div>Format Cetak: A4 Landscape / Portrait</div>
+            <div style="color:#059669;">✂️ 8 Kartu Belajar Mandiri</div>
+          </div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:8px 14px; font-size:12px; margin-bottom:18px; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:16px;">✂️</span>
+          <span><strong>Petunjuk Guru / Orang Tua:</strong> Cetak lembar ini pada kertas tebal / karton A4, lalu gunting mengikuti garis putus-putus. Kartu dapat digunakan untuk kuis tebak cepat harian!</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          ${cards.map((c, idx) => `
+            <div style="
+              border: 2px dashed #94a3b8;
+              border-radius: 14px;
+              padding: 16px;
+              background: #ffffff;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              min-height: 170px;
+              position: relative;
+            ">
+              <span style="position:absolute; top:-10px; right:14px; background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:1px 8px; border-radius:4px; border:1px solid #cbd5e1;">
+                KARTU #${idx + 1}
+              </span>
+
+              <div>
+                <span style="display:inline-block; font-size:10.5px; font-weight:800; color:#0e7490; background:#e0f2fe; padding:2px 8px; border-radius:6px; margin-bottom:6px;">
+                  ${c.tag}
+                </span>
+                <div style="font-size:28px; float:right;">${c.emoji}</div>
+                <h3 style="margin:4px 0 2px; font-size:17px; font-weight:900; color:#0f172a;">${c.title}</h3>
+                <div style="font-size:11.5px; color:#64748b; font-weight:700;">${c.sub}</div>
+              </div>
+
+              <div style="margin-top:12px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.4;">
+                <strong>💡 Catatan Pintar:</strong> ${c.back}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="margin-top:20px; text-align:center; font-size:11px; color:#94a3b8;">
+          AnabhiDev Smart Study Flashcards · https://anabhidev.com/Anabhi-Smart-Study/ · Bebas Digunakan untuk Pendidikan Dasar
+        </div>
+      </div>
+    `;
+
+    this.renderModal(htmlContent, '🎴 Lembar Kartu Pintar (Flashcards A6 Siap Gunting)');
+  }
+
+  // 🏆 Sertifikat Apresiasi Prestasi Siswa (PDF A4)
+  openCertificateModal(studentName = 'Ana', stars = 0, streak = 1, badgesCount = 0) {
+    const htmlContent = `
+      <div class="lks-page-sheet" style="max-width:820px; margin:0 auto; background:#ffffff; color:#0f172a; padding:36px 32px; border:8px double #0d9488; border-radius:20px; text-align:center; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+        <!-- Hiasan Sudut Ornamen -->
+        <div style="font-size:13px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:#0d9488; margin-bottom:6px;">
+          ★ ANABHIDEV SMART STUDY · KURIKULUM MERDEKA FASE A ★
+        </div>
+        <h1 style="margin:0 0 10px; font-size:30px; font-weight:900; color:#042f2e; text-transform:uppercase; letter-spacing:1px;">
+          SERTIFIKAT PENGHARGAAN BELAJAR
+        </h1>
+        <div style="width:120px; height:4px; background:#0d9488; margin:0 auto 20px; border-radius:2px;"></div>
+
+        <p style="font-size:15px; color:#475569; margin:0 0 16px; font-style:italic;">
+          Sertifikat ini dianugerahkan dengan penuh rasa bangga dan apresiasi kepada:
+        </p>
+
+        <div style="background:linear-gradient(135deg, rgba(13, 148, 136, 0.08), rgba(20, 184, 166, 0.12)); border:2px dashed #0d9488; border-radius:14px; padding:16px; margin:0 auto 20px; max-width:540px;">
+          <h2 style="margin:0; font-size:32px; font-weight:950; color:#0f766e; text-transform:capitalize;">
+            ${studentName === 'Abhi' ? '⚡ ' : '🌸 '}${studentName}
+          </h2>
+          <div style="font-size:13px; font-weight:800; color:#042f2e; margin-top:4px;">
+            Siswa Hebat Kelas 1B SD Kurikulum Merdeka
+          </div>
+        </div>
+
+        <p style="font-size:14px; color:#334155; line-height:1.6; max-width:620px; margin:0 auto 24px;">
+          Atas ketekunan belajar mandiri, semangat membaca tanpa dieja, keberanian memecahkan 14 jurus visual matematika, penjelajahan geografi 38 provinsi, dan pencapaian luar biasa:
+        </p>
+
+        <!-- Prestasi Badges -->
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:30px;">
+          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+            <div style="font-size:24px;">⭐</div>
+            <div style="font-size:20px; font-weight:900; color:#0f172a;">${stars}</div>
+            <div style="font-size:11px; font-weight:700; color:#64748b;">Bintang Emas</div>
+          </div>
+
+          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+            <div style="font-size:24px;">🔥</div>
+            <div style="font-size:20px; font-weight:900; color:#0f172a;">${streak} Hari</div>
+            <div style="font-size:11px; font-weight:700; color:#64748b;">Streak Harian</div>
+          </div>
+
+          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:10px 18px; min-width:130px;">
+            <div style="font-size:24px;">🎖️</div>
+            <div style="font-size:20px; font-weight:900; color:#0f172a;">${badgesCount}</div>
+            <div style="font-size:11px; font-weight:700; color:#64748b;">Lencana Dimenangkan</div>
+          </div>
+        </div>
+
+        <!-- Tanda Tangan Resmi -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:36px; padding:0 30px;">
+          <div style="text-align:center; min-width:180px;">
+            <div style="font-size:13px; font-weight:700; color:#475569; margin-bottom:56px;">
+              Mengetahui,<br>Orang Tua / Wali Murid
+            </div>
+            <div style="font-weight:800; font-size:14px; border-bottom:1.5px solid #0f172a; padding-bottom:4px;">
+              ( .................................................... )
+            </div>
+          </div>
+
+          <div style="text-align:center;">
+            <div style="font-size:42px;">🏆</div>
+            <div style="font-size:11px; font-weight:800; color:#0d9488; text-transform:uppercase;">SEAL OF EXCELLENCE</div>
+          </div>
+
+          <div style="text-align:center; min-width:180px;">
+            <div style="font-size:13px; font-weight:700; color:#475569; margin-bottom:56px;">
+              Denpasar, 23 September 2026<br>Guru Pendamping Belajar
+            </div>
+            <div style="font-weight:800; font-size:14px; border-bottom:1.5px solid #0f172a; padding-bottom:4px;">
+              <strong>Anabhi Dev Academy</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.renderModal(htmlContent, `🏆 Sertifikat Prestasi Belajar (${studentName})`);
+  }
 }
 

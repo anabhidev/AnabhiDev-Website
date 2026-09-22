@@ -106,7 +106,15 @@ export class ProgressViewComponent {
           }).join('')}
         </div>
 
-        <div style="margin-top:24px; display:flex; justify-content:flex-end;">
+        <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn primary" id="btnPrintCertificate" type="button" aria-label="Cetak Sertifikat Apresiasi Belajar PDF A4" style="font-weight:800; font-size:13.5px; padding:10px 18px;">
+              🏆 Cetak Sertifikat Prestasi (PDF A4)
+            </button>
+            <button class="btn" id="btnPrintProgressSummary" type="button" aria-label="Cetak Rapor Ringkasan Belajar" style="font-weight:700; font-size:13px; padding:10px 16px;">
+              📑 Cetak Rapor Belajar (A4)
+            </button>
+          </div>
           <button class="btn" id="btnResetProgress" type="button" style="color:var(--red); border-color:var(--red-soft);">
             ${t('resetProgressBtn', lang)}
           </button>
@@ -121,6 +129,27 @@ export class ProgressViewComponent {
   }
 
   attachEvents() {
+    const certBtn = this.container.querySelector('#btnPrintCertificate');
+    if (certBtn) {
+      certBtn.addEventListener('click', () => {
+        AudioFx.playTap();
+        const s = store.data;
+        const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
+        const stars = s.stars || 0;
+        const streak = s.streakDays || 1;
+        const badgesCount = (s.badges || []).length;
+        (window.lksModal || this.lksModal)?.openCertificateModal(currentStudent, stars, streak, badgesCount);
+      });
+    }
+
+    const printRaporBtn = this.container.querySelector('#btnPrintProgressSummary');
+    if (printRaporBtn) {
+      printRaporBtn.addEventListener('click', () => {
+        AudioFx.playTap();
+        window.print();
+      });
+    }
+
     const resetBtn = this.container.querySelector('#btnResetProgress');
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
