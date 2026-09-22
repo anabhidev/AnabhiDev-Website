@@ -12776,17 +12776,17 @@
           </div>
   
           <!-- Tombol Tanya AI Tutor (Gemini) -->
-          <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 10px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;">
+          <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
             <span>🤖</span> <span>Tanya AI</span>
           </button>
   
           <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
-          <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px;">
+          <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px; height:38px; min-height:38px;">
             ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
           </button>
   
           <!-- Toggle Tema Terang/Gelap (Default: Light) -->
-          <button class="iconbtn" id="themeToggleBtn" type="button" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
+          <button class="iconbtn" id="themeToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
             ${currentTheme === 'dark' ? '☀️' : '🌙'}
           </button>
   
@@ -12995,9 +12995,9 @@
             <span class="icon">🕒</span>
             <span class="label">60 Menit (4 Pilar)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku Maxi (Tematik Sekolah)'}">
+          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}">
             <span class="icon">🏆</span>
-            <span class="label">Buku Maxi (Tematik)</span>
+            <span class="label">Buku MAXXI (Tematik)</span>
           </button>
           <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
             <span class="icon">🧮</span>
@@ -17368,9 +17368,9 @@
         </div>
   
         <!-- Hero Banner Buku Calistung dengan Foto Asli Buku -->
-        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(234,88,12,0.08), rgba(245,158,11,0.12)); border:1.5px solid rgba(234,88,12,0.3); border-radius:20px; padding:24px; margin-bottom:24px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <img src="assets/img/covers/05_Cali_Stung.png" alt="Cover Buku Calistung" width="120" height="168" loading="lazy" decoding="async" style="width:120px; height:168px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(234,88,12,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
             <span style="position:absolute; bottom:-8px; right:-6px; background:#ea580c; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
               SRC-05
             </span>
@@ -17493,9 +17493,9 @@
         </div>
   
         <!-- Hero Banner Buku MAXXI dengan Foto Asli Buku -->
-        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:22px; margin-bottom:24px; display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+        <div class="book-hero-banner" style="background:linear-gradient(135deg, rgba(29,113,152,0.08), rgba(92,227,222,0.12)); border:1.5px solid rgba(29,113,152,0.3); border-radius:20px; padding:24px; margin-bottom:24px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
           <div class="book-cover-frame" style="position:relative; flex-shrink:0;">
-            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" width="130" height="180" loading="lazy" decoding="async" style="width:130px; height:180px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
+            <img src="assets/img/covers/10_Maxxi.png" alt="Cover Buku MAXXI" width="120" height="168" loading="lazy" decoding="async" style="width:120px; height:168px; object-fit:cover; border-radius:12px; box-shadow:0 10px 24px rgba(29,113,152,0.28), 0 2px 6px rgba(0,0,0,0.1); border:2px solid #fff;">
             <span style="position:absolute; bottom:-8px; right:-6px; background:#1d7198; color:#fff; font-size:10px; font-weight:900; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
               SRC-10
             </span>
@@ -17797,7 +17797,7 @@
             </div>
             ${!todayData.isWeekend ? `
               <button class="btn secondary" id="btnJumpToToday" type="button" style="padding:6px 14px; font-size:12px; font-weight:800;">
-                Lihat Hari Ini ➔
+                ${isEn ? 'Jump to Today ➔' : 'Lihat Hari Ini ➔'}
               </button>
             ` : ''}
           </div>
@@ -17809,19 +17809,19 @@
             🌟 ${isEn ? 'Today' : 'Hari Ini'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'senin' ? 'active' : ''}" data-tab="senin" type="button">
-            🟢 Senin
+            🟢 ${isEn ? 'Monday' : 'Senin'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'selasa' ? 'active' : ''}" data-tab="selasa" type="button">
-            🟣 Selasa
+            🟣 ${isEn ? 'Tuesday' : 'Selasa'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'rabu' ? 'active' : ''}" data-tab="rabu" type="button">
-            🔵 Rabu
+            🔵 ${isEn ? 'Wednesday' : 'Rabu'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'kamis' ? 'active' : ''}" data-tab="kamis" type="button">
-            🔴 Kamis
+            🔴 ${isEn ? 'Thursday' : 'Kamis'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'jumat' ? 'active' : ''}" data-tab="jumat" type="button">
-            🟢 Jumat
+            🟢 ${isEn ? 'Friday' : 'Jumat'}
           </button>
           <button class="schedule-tab-btn ${this.activeTab === 'table' ? 'active' : ''}" data-tab="table" type="button" style="margin-left:auto;">
             📊 ${isEn ? 'Full Table (5 Days)' : 'Tabel Lengkap (5 Hari)'}
@@ -19372,10 +19372,10 @@
               </div>
               <div style="display:flex; gap:8px; align-items:center;">
                 <button class="btn btn-tts" id="btnSpeakWritingDesc" type="button" style="font-size:12px; padding:6px 12px;">
-                  🔊 Dengarkan
+                  🔊 ${isEn ? 'Listen' : 'Dengarkan'}
                 </button>
                 <button class="btn" id="btnClearCanvas" type="button" style="font-size:12px; padding:6px 14px;">
-                  🧹 Bersihkan
+                  🧹 ${isEn ? 'Clear Canvas' : 'Bersihkan'}
                 </button>
               </div>
             </div>
@@ -19404,7 +19404,7 @@
             <!-- Color Palette & Tools -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
               <div style="display:flex; gap:10px; align-items:center;">
-                <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
+                <span style="font-size:12px; font-weight:700; color:var(--muted);">${isEn ? 'Pen Color:' : 'Warna Spidol:'}</span>
                 <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
                 <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
                 <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
@@ -19412,7 +19412,7 @@
               </div>
   
               <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
-                ⭐ Selesai & Dapatkan Bintang!
+                ⭐ ${isEn ? 'Finish & Collect Star!' : 'Selesai & Dapatkan Bintang!'}
               </button>
             </div>
           </div>
@@ -19614,7 +19614,7 @@
             gap: 20px;
           ">
             <div>
-              <div class="eyebrow"><span class="no">🧮</span><span class="lbl">MATH TOOLBOX — 14 JURUS BERHITUNG</span></div>
+              <div class="eyebrow"><span class="no">🧮</span><span class="lbl">${isEn ? 'MATH TOOLBOX — 14 CALCULATION STRATEGIES' : 'MATH TOOLBOX — 14 JURUS BERHITUNG'}</span></div>
               <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
                 ${isEn ? 'Interactive Math Toolbox — 14 Calculation Jurus' : 'Math Toolbox — 14 Jurus Berhitung Visual Cepat'}
               </h1>
@@ -19649,7 +19649,7 @@
           <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:24px;">
             <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
               <div style="display:flex; align-items:center; gap:8px;">
-                <label for="inputNumA" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 1:</label>
+                <label for="inputNumA" style="font-size:13px; font-weight:700; color:var(--muted);">${isEn ? 'Number 1:' : 'Angka 1:'}</label>
                 <input type="number" id="inputNumA" value="${this.numA}" min="1" max="999" style="
                   width: 90px;
                   padding: 8px 12px;
@@ -19666,7 +19666,7 @@
               <span style="font-size:24px; font-weight:900; color:var(--teal);">+</span>
   
               <div style="display:flex; align-items:center; gap:8px;">
-                <label for="inputNumB" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 2:</label>
+                <label for="inputNumB" style="font-size:13px; font-weight:700; color:var(--muted);">${isEn ? 'Number 2:' : 'Angka 2:'}</label>
                 <input type="number" id="inputNumB" value="${this.numB}" min="1" max="999" style="
                   width: 90px;
                   padding: 8px 12px;
@@ -20698,7 +20698,7 @@
               <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#0284c7; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
-                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku Maxi (Tematik)'}</h3>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku MAXXI (Tematik)'}</h3>
                 <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
                   ${isEn ? '4 units: Myself, Hobbies, Activities, and Family across 5 subjects.' : '4 unit kontekstual: Diriku, Kegemaranku, Kegiatanku, dan Keluargaku.'}
                 </p>
@@ -20713,9 +20713,9 @@
               </div>
               <div style="flex:1; min-width:0;">
                 <span class="subject-badge" style="background:#056268; color:#fff; font-size:10px; border:none; margin-bottom:4px;">💡 Math Toolbox</span>
-                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (10 Jurus)' : 'Math Toolbox (10 Jurus)'}</h3>
+                <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus)'}</h3>
                 <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
-                  ${isEn ? 'Decomposition, Make 100, Compensation, Number Line, and more!' : 'Pecah nilai tempat, Make 100 (67+59=126), garis bilangan, dan kompensasi.'}
+                  ${isEn ? '14 flexible strategies: Decomposition, Make 100, Base-Ten, Soroban, Rekenrek, and Jarimatika!' : '14 jurus fleksibel: Pecah nilai tempat, Make 100, Balok Basis-10, Soroban, Rekenrek, hingga Jarimatika!'}
                 </p>
                 <span style="font-size:12px; font-weight:800; color:#056268;">${isEn ? 'Explore Strategies ➔' : 'Eksplorasi Jurus ➔'}</span>
               </div>

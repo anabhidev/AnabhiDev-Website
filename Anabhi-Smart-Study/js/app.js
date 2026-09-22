@@ -516,7 +516,7 @@ class App {
             <img src="assets/img/covers/10_Maxxi.png" alt="Buku MAXXI" width="72" height="100" loading="lazy" decoding="async" style="width:72px; height:100px; object-fit:cover; border-radius:8px; box-shadow:0 4px 12px rgba(2,132,199,0.25); flex-shrink:0;">
             <div style="flex:1; min-width:0;">
               <span class="subject-badge" style="background:#0284c7; color:#fff; font-size:10px; border:none; margin-bottom:4px;">🏆 MAXXI · SRC-10</span>
-              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku Maxi (Tematik)'}</h3>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'MAXXI Thematic SD 1' : 'Buku MAXXI (Tematik)'}</h3>
               <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
                 ${isEn ? '4 units: Myself, Hobbies, Activities, and Family across 5 subjects.' : '4 unit kontekstual: Diriku, Kegemaranku, Kegiatanku, dan Keluargaku.'}
               </p>
@@ -531,9 +531,9 @@ class App {
             </div>
             <div style="flex:1; min-width:0;">
               <span class="subject-badge" style="background:#056268; color:#fff; font-size:10px; border:none; margin-bottom:4px;">💡 Math Toolbox</span>
-              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (10 Jurus)' : 'Math Toolbox (10 Jurus)'}</h3>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus)'}</h3>
               <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
-                ${isEn ? 'Decomposition, Make 100, Compensation, Number Line, and more!' : 'Pecah nilai tempat, Make 100 (67+59=126), garis bilangan, dan kompensasi.'}
+                ${isEn ? '14 flexible strategies: Decomposition, Make 100, Base-Ten, Soroban, Rekenrek, and Jarimatika!' : '14 jurus fleksibel: Pecah nilai tempat, Make 100, Balok Basis-10, Soroban, Rekenrek, hingga Jarimatika!'}
               </p>
               <span style="font-size:12px; font-weight:800; color:#056268;">${isEn ? 'Explore Strategies ➔' : 'Eksplorasi Jurus ➔'}</span>
             </div>

@@ -87,17 +87,17 @@ export class TopbarComponent {
         </div>
 
         <!-- Tombol Tanya AI Tutor (Gemini) -->
-        <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 10px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;">
+        <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
           <span>🤖</span> <span>Tanya AI</span>
         </button>
 
         <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
-        <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px;">
+        <button class="iconbtn" id="langToggleBtn" type="button" aria-label="${t('langSwitch', lang)}" title="${t('langSwitch', lang)}" style="font-size:12px; font-weight:800; padding:0 10px; width:auto; min-width:44px; height:38px; min-height:38px;">
           ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
         </button>
 
         <!-- Toggle Tema Terang/Gelap (Default: Light) -->
-        <button class="iconbtn" id="themeToggleBtn" type="button" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
+        <button class="iconbtn" id="themeToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
           ${currentTheme === 'dark' ? '☀️' : '🌙'}
         </button>
 

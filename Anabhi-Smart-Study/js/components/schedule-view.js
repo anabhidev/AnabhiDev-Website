@@ -82,7 +82,7 @@ export class ScheduleViewComponent {
           </div>
           ${!todayData.isWeekend ? `
             <button class="btn secondary" id="btnJumpToToday" type="button" style="padding:6px 14px; font-size:12px; font-weight:800;">
-              Lihat Hari Ini ➔
+              ${isEn ? 'Jump to Today ➔' : 'Lihat Hari Ini ➔'}
             </button>
           ` : ''}
         </div>
@@ -94,19 +94,19 @@ export class ScheduleViewComponent {
           🌟 ${isEn ? 'Today' : 'Hari Ini'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'senin' ? 'active' : ''}" data-tab="senin" type="button">
-          🟢 Senin
+          🟢 ${isEn ? 'Monday' : 'Senin'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'selasa' ? 'active' : ''}" data-tab="selasa" type="button">
-          🟣 Selasa
+          🟣 ${isEn ? 'Tuesday' : 'Selasa'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'rabu' ? 'active' : ''}" data-tab="rabu" type="button">
-          🔵 Rabu
+          🔵 ${isEn ? 'Wednesday' : 'Rabu'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'kamis' ? 'active' : ''}" data-tab="kamis" type="button">
-          🔴 Kamis
+          🔴 ${isEn ? 'Thursday' : 'Kamis'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'jumat' ? 'active' : ''}" data-tab="jumat" type="button">
-          🟢 Jumat
+          🟢 ${isEn ? 'Friday' : 'Jumat'}
         </button>
         <button class="schedule-tab-btn ${this.activeTab === 'table' ? 'active' : ''}" data-tab="table" type="button" style="margin-left:auto;">
           📊 ${isEn ? 'Full Table (5 Days)' : 'Tabel Lengkap (5 Hari)'}

@@ -66,10 +66,10 @@ export class WritingLabComponent {
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
               <button class="btn btn-tts" id="btnSpeakWritingDesc" type="button" style="font-size:12px; padding:6px 12px;">
-                🔊 Dengarkan
+                🔊 ${isEn ? 'Listen' : 'Dengarkan'}
               </button>
               <button class="btn" id="btnClearCanvas" type="button" style="font-size:12px; padding:6px 14px;">
-                🧹 Bersihkan
+                🧹 ${isEn ? 'Clear Canvas' : 'Bersihkan'}
               </button>
             </div>
           </div>
@@ -98,7 +98,7 @@ export class WritingLabComponent {
           <!-- Color Palette & Tools -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
             <div style="display:flex; gap:10px; align-items:center;">
-              <span style="font-size:12px; font-weight:700; color:var(--muted);">Warna Spidol:</span>
+              <span style="font-size:12px; font-weight:700; color:var(--muted);">${isEn ? 'Pen Color:' : 'Warna Spidol:'}</span>
               <button class="btn-color-dot" data-color="#056268" aria-label="Warna Teal" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#056268; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
               <button class="btn-color-dot" data-color="#b24a1b" aria-label="Warna Oranye" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#b24a1b; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
               <button class="btn-color-dot" data-color="#2b5ea8" aria-label="Warna Biru" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#2b5ea8; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
@@ -106,7 +106,7 @@ export class WritingLabComponent {
             </div>
 
             <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
-              ⭐ Selesai & Dapatkan Bintang!
+              ⭐ ${isEn ? 'Finish & Collect Star!' : 'Selesai & Dapatkan Bintang!'}
             </button>
           </div>
         </div>

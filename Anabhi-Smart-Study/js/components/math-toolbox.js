@@ -59,7 +59,7 @@ export class MathToolboxComponent {
           gap: 20px;
         ">
           <div>
-            <div class="eyebrow"><span class="no">🧮</span><span class="lbl">MATH TOOLBOX — 14 JURUS BERHITUNG</span></div>
+            <div class="eyebrow"><span class="no">🧮</span><span class="lbl">${isEn ? 'MATH TOOLBOX — 14 CALCULATION STRATEGIES' : 'MATH TOOLBOX — 14 JURUS BERHITUNG'}</span></div>
             <h1 style="margin:0 0 6px; font-size:24px; font-weight:850; color:var(--ink);">
               ${isEn ? 'Interactive Math Toolbox — 14 Calculation Jurus' : 'Math Toolbox — 14 Jurus Berhitung Visual Cepat'}
             </h1>
@@ -94,7 +94,7 @@ export class MathToolboxComponent {
         <div class="quiz-box" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:24px;">
           <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
             <div style="display:flex; align-items:center; gap:8px;">
-              <label for="inputNumA" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 1:</label>
+              <label for="inputNumA" style="font-size:13px; font-weight:700; color:var(--muted);">${isEn ? 'Number 1:' : 'Angka 1:'}</label>
               <input type="number" id="inputNumA" value="${this.numA}" min="1" max="999" style="
                 width: 90px;
                 padding: 8px 12px;
@@ -111,7 +111,7 @@ export class MathToolboxComponent {
             <span style="font-size:24px; font-weight:900; color:var(--teal);">+</span>
 
             <div style="display:flex; align-items:center; gap:8px;">
-              <label for="inputNumB" style="font-size:13px; font-weight:700; color:var(--muted);">Angka 2:</label>
+              <label for="inputNumB" style="font-size:13px; font-weight:700; color:var(--muted);">${isEn ? 'Number 2:' : 'Angka 2:'}</label>
               <input type="number" id="inputNumB" value="${this.numB}" min="1" max="999" style="
                 width: 90px;
                 padding: 8px 12px;

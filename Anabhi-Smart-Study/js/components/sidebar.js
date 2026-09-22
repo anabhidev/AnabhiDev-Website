@@ -117,9 +117,9 @@ export class SidebarComponent {
           <span class="icon">🕒</span>
           <span class="label">60 Menit (4 Pilar)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku Maxi (Tematik Sekolah)'}">
+        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}">
           <span class="icon">🏆</span>
-          <span class="label">Buku Maxi (Tematik)</span>
+          <span class="label">Buku MAXXI (Tematik)</span>
         </button>
         <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
           <span class="icon">🧮</span>
