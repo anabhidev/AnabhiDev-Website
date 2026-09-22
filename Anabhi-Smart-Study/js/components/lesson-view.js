@@ -1231,7 +1231,7 @@ export class MathLessonView {
           </div>
 
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
-            <input type="number" id="practiceAnswerInput" class="math-num-input" style="width:140px; height:52px;" placeholder="${t('answerPlaceholder', lang)}" ${this.practiceAnswered ? 'disabled' : ''}>
+            <input type="number" id="practiceAnswerInput" class="math-num-input" aria-label="${t('answerPlaceholder', lang) || (lang === 'en' ? 'Your Answer' : 'Jawabanmu')}" style="width:140px; height:52px;" placeholder="${t('answerPlaceholder', lang)}" ${this.practiceAnswered ? 'disabled' : ''}>
             <button class="btn primary" id="btnSubmitPractice" type="button" ${this.practiceAnswered ? 'disabled' : ''}>
               ${t('checkAnswer', lang)}
             </button>

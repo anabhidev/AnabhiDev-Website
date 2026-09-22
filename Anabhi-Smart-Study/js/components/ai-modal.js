@@ -610,7 +610,7 @@ Kakak AI siap membimbing belajar materi apa saja!`;
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:2px;">
             <div style="display:flex; align-items:center; gap:8px;">
               <span style="font-size:12px; font-weight:750; color:var(--muted);">Model:</span>
-              <select class="ai-input" id="selectModel" style="padding:6px 10px; font-size:12px; width:auto; cursor:pointer;">
+              <select class="ai-input" id="selectModel" aria-label="${isEn ? 'Select AI Model' : 'Pilih Model AI'}" style="padding:6px 10px; font-size:12px; width:auto; cursor:pointer;">
                 <option value="gemini-3.5-flash-lite" ${currentModel === 'gemini-3.5-flash-lite' ? 'selected' : ''}>gemini-3.5-flash-lite (Default)</option>
                 <option value="gemini-2.5-flash-lite" ${currentModel === 'gemini-2.5-flash-lite' ? 'selected' : ''}>gemini-2.5-flash-lite</option>
                 <option value="gemini-2.0-flash" ${currentModel === 'gemini-2.0-flash' ? 'selected' : ''}>gemini-2.0-flash</option>
@@ -693,15 +693,15 @@ Kakak AI siap membimbing belajar materi apa saja!`;
 
         <!-- Chat Input Bar -->
         <div class="ai-input-bar">
-          <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : 'Bicara lewat suara (Mikrofon)'}">
+          <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" aria-label="${this.isListening ? 'Sedang mendengarkan... Silakan bicara' : (isEn ? 'Voice input via microphone' : 'Bicara lewat suara (Mikrofon)')}" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : (isEn ? 'Voice input (Microphone)' : 'Bicara lewat suara (Mikrofon)')}">
             ${this.isListening ? '🔴' : '🎙️'}
           </button>
-          <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
-          <button class="btn primary ai-btn-send" id="btnAiSend" type="button">
+          <input class="ai-input" id="aiUserInput" type="text" aria-label="${isEn ? 'Question for AI Tutor' : 'Kotak pertanyaan untuk Kakak AI'}" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
+          <button class="btn primary ai-btn-send" id="btnAiSend" type="button" aria-label="${isEn ? 'Send question' : 'Kirim pertanyaan'}">
             ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
           </button>
           ${this.messages.length > 0 ? `
-            <button class="iconbtn" id="btnClearChat" type="button" title="Bersihkan Percakapan" style="height:42px; min-width:42px; border-radius:12px; font-size:14px;">🗑️</button>
+            <button class="iconbtn" id="btnClearChat" type="button" aria-label="${isEn ? 'Clear chat history' : 'Bersihkan riwayat percakapan'}" title="${isEn ? 'Clear chat history' : 'Bersihkan Percakapan'}" style="height:42px; min-width:42px; border-radius:12px; font-size:14px;">🗑️</button>
           ` : ''}
         </div>
       </div>

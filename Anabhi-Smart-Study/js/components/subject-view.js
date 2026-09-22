@@ -270,7 +270,7 @@ export class SubjectViewComponent {
           <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:16px;">
             <div class="search-input-box" style="width:100%;">
               <span class="search-icon">🔍</span>
-              <input type="text" id="countrySearchInput" placeholder="${t('searchCountryPlaceholder', lang)}" value="${this.searchCountryQuery}">
+              <input type="text" id="countrySearchInput" aria-label="${t('searchCountryPlaceholder', lang)}" placeholder="${t('searchCountryPlaceholder', lang)}" value="${this.searchCountryQuery}">
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
               <div class="island-chips">
@@ -381,7 +381,7 @@ export class SubjectViewComponent {
           <div class="filter-bar">
             <div class="search-input-box">
               <span class="search-icon">🔍</span>
-              <input type="text" id="citySearchInput" placeholder="${t('searchCityPlaceholder', lang)}" value="${this.searchCityQuery}">
+              <input type="text" id="citySearchInput" aria-label="${t('searchCityPlaceholder', lang)}" placeholder="${t('searchCityPlaceholder', lang)}" value="${this.searchCityQuery}">
             </div>
             <div style="font-size:13px; font-weight:800; color:var(--teal);">
               ${t('foundCitiesPrefix', lang)} ${cities.length} ${t('citiesSuffix', lang)}
@@ -599,13 +599,14 @@ export class SubjectViewComponent {
                 <input type="text"
                        id="geoProvSearchInput"
                        class="geo-search-input"
+                       aria-label="${isEn ? 'Search province, capital, or city' : 'Cari provinsi, ibu kota, atau kota'}"
                        placeholder="${isEn ? '🔍 Search province, capital, or famous city (e.g. Malang, Padang, Wamena, Bandung)...' : '🔍 Cari provinsi, ibu kota, atau kota terkenal (contoh: Malang, Padang, Wamena, Denpasar, Bandung)...'}"
                        value="${this.provSearchQuery || ''}"
                        autocomplete="off"
                        style="width:100%; padding:12px 18px 12px 42px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-size:13.5px; color:var(--ink); box-shadow:var(--shadow-sm); outline:none;">
                 <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">🔍</span>
                 ${this.provSearchQuery ? `
-                  <button id="btnClearProvSearch" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="Hapus pencarian">✕</button>
+                  <button id="btnClearProvSearch" type="button" aria-label="${isEn ? 'Clear search' : 'Hapus pencarian'}" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="${isEn ? 'Clear search' : 'Hapus pencarian'}">✕</button>
                 ` : ''}
               </div>
             </div>

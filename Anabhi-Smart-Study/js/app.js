@@ -728,7 +728,7 @@ class App {
       <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:14px; margin-bottom:28px;">
         <div class="search-input-box" style="width:100%;">
           <span class="search-icon">🔍</span>
-          <input type="text" id="allSubjectsSearchInput" placeholder="${isEn ? 'Search subjects, topics, or keywords...' : 'Cari nama pelajaran, topik, atau kata kunci...'}">
+          <input type="text" id="allSubjectsSearchInput" aria-label="${isEn ? 'Search subjects, topics, or keywords' : 'Cari nama pelajaran, topik, atau kata kunci'}" placeholder="${isEn ? 'Search subjects, topics, or keywords...' : 'Cari nama pelajaran, topik, atau kata kunci...'}">
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">

@@ -12445,7 +12445,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:2px;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:12px; font-weight:750; color:var(--muted);">Model:</span>
-                <select class="ai-input" id="selectModel" style="padding:6px 10px; font-size:12px; width:auto; cursor:pointer;">
+                <select class="ai-input" id="selectModel" aria-label="${isEn ? 'Select AI Model' : 'Pilih Model AI'}" style="padding:6px 10px; font-size:12px; width:auto; cursor:pointer;">
                   <option value="gemini-3.5-flash-lite" ${currentModel === 'gemini-3.5-flash-lite' ? 'selected' : ''}>gemini-3.5-flash-lite (Default)</option>
                   <option value="gemini-2.5-flash-lite" ${currentModel === 'gemini-2.5-flash-lite' ? 'selected' : ''}>gemini-2.5-flash-lite</option>
                   <option value="gemini-2.0-flash" ${currentModel === 'gemini-2.0-flash' ? 'selected' : ''}>gemini-2.0-flash</option>
@@ -12528,15 +12528,15 @@
   
           <!-- Chat Input Bar -->
           <div class="ai-input-bar">
-            <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : 'Bicara lewat suara (Mikrofon)'}">
+            <button class="ai-btn-mic ${this.isListening ? 'listening' : ''}" id="btnAiVoiceMic" type="button" aria-label="${this.isListening ? 'Sedang mendengarkan... Silakan bicara' : (isEn ? 'Voice input via microphone' : 'Bicara lewat suara (Mikrofon)')}" title="${this.isListening ? 'Sedang mendengarkan... Silakan bicara!' : (isEn ? 'Voice input (Microphone)' : 'Bicara lewat suara (Mikrofon)')}">
               ${this.isListening ? '🔴' : '🎙️'}
             </button>
-            <input class="ai-input" id="aiUserInput" type="text" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
-            <button class="btn primary ai-btn-send" id="btnAiSend" type="button">
+            <input class="ai-input" id="aiUserInput" type="text" aria-label="${isEn ? 'Question for AI Tutor' : 'Kotak pertanyaan untuk Kakak AI'}" placeholder="${isEn ? 'Ask a question or tap mic 🎙️...' : 'Ketik pertanyaan atau klik mic 🎙️...'}" autocomplete="off">
+            <button class="btn primary ai-btn-send" id="btnAiSend" type="button" aria-label="${isEn ? 'Send question' : 'Kirim pertanyaan'}">
               ${isEn ? 'Send 🚀' : 'Kirim 🚀'}
             </button>
             ${this.messages.length > 0 ? `
-              <button class="iconbtn" id="btnClearChat" type="button" title="Bersihkan Percakapan" style="height:42px; min-width:42px; border-radius:12px; font-size:14px;">🗑️</button>
+              <button class="iconbtn" id="btnClearChat" type="button" aria-label="${isEn ? 'Clear chat history' : 'Bersihkan riwayat percakapan'}" title="${isEn ? 'Clear chat history' : 'Bersihkan Percakapan'}" style="height:42px; min-width:42px; border-radius:12px; font-size:14px;">🗑️</button>
             ` : ''}
           </div>
         </div>
@@ -12755,10 +12755,10 @@
         <div class="topbar-right">
           <!-- Pilihan Profil Siswa (Ana / Abhi) -->
           <div class="student-switcher" style="display:flex; background:rgba(0,0,0,0.2); border-radius:999px; padding:3px; margin-right:4px;">
-            <button class="student-toggle ${currentStudent === 'Ana' ? 'active ana' : ''}" data-student="Ana" type="button" title="${isEn ? 'Switch to Ana' : 'Pilih profil Ana'}">
+            <button class="student-toggle ${currentStudent === 'Ana' ? 'active ana' : ''}" data-student="Ana" type="button" title="${isEn ? 'Switch to Ana' : 'Pilih profil Ana'}" aria-label="${isEn ? 'Switch to Ana profile' : 'Pilih profil belajar Ana'}">
               <span class="avatar">🌸</span> Ana
             </button>
-            <button class="student-toggle ${currentStudent === 'Abhi' ? 'active abhi' : ''}" data-student="Abhi" type="button" title="${isEn ? 'Switch to Abhi' : 'Pilih profil Abhi'}">
+            <button class="student-toggle ${currentStudent === 'Abhi' ? 'active abhi' : ''}" data-student="Abhi" type="button" title="${isEn ? 'Switch to Abhi' : 'Pilih profil Abhi'}" aria-label="${isEn ? 'Switch to Abhi profile' : 'Pilih profil belajar Abhi'}">
               <span class="avatar">⚡</span> Abhi
             </button>
           </div>
@@ -12776,8 +12776,8 @@
           </div>
   
           <!-- Tombol Tanya AI Tutor (Gemini) -->
-          <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
-            <span>🤖</span> <span>Tanya AI</span>
+          <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="${isEn ? 'Ask AI Tutor (Gemini)' : 'Tanya AI Tutor (Gemini)'}" title="${isEn ? 'Ask AI Tutor (Gemini)' : 'Tanya AI Tutor (Gemini)'}" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
+            <span>🤖</span> <span>${isEn ? 'Ask AI' : 'Tanya AI'}</span>
           </button>
   
           <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->
@@ -12950,15 +12950,15 @@
         <!-- Menu Utama -->
         <div class="kicker">${t('mainNav', lang)}</div>
         <nav class="nav" aria-label="Navigasi Utama">
-          <button class="nav-item ${state.currentRoute === 'home' ? 'active' : ''}" data-route="home" data-tooltip="${t('home', lang)}">
+          <button class="nav-item ${state.currentRoute === 'home' ? 'active' : ''}" data-route="home" data-tooltip="${t('home', lang)}" aria-label="${t('home', lang)}">
             <span class="icon">🏠</span>
             <span class="label">${t('home', lang)}</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
+          <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}" aria-label="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
             <span class="icon">🗓️</span>
             <span class="label">${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}">
+          <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}" aria-label="${t('allSubjects', lang)}">
             <span class="icon">📚</span>
             <span class="label">${t('allSubjects', lang)}</span>
           </button>
@@ -12972,7 +12972,7 @@
             const displayName = getSubjectName(sub, lang);
   
             return `
-              <button class="nav-item ${isActive ? 'active' : ''}" data-route="subject" data-subject-id="${sub.id}" data-tooltip="${displayName}">
+              <button class="nav-item ${isActive ? 'active' : ''}" data-route="subject" data-subject-id="${sub.id}" data-tooltip="${displayName}" aria-label="${displayName}">
                 <span class="icon">${sub.icon}</span>
                 <span class="label">${displayName}</span>
               </button>
@@ -12983,27 +12983,27 @@
         <!-- Learning Labs (Reading Lab, Writing Lab, Calistung, 60 Menit, MAXXI, Math Toolbox) -->
         <div class="kicker">${isEn ? 'LEARNING LABS & DRILLS' : 'LEARNING LABS & BUKU PENDAMPING'}</div>
         <nav class="nav" aria-label="Learning Labs">
-          <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}">
+          <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}" aria-label="${isEn ? 'Reading Lab (60 Hours Method)' : 'Reading Lab (Metode 60 Jam Tanpa Dieja)'}">
             <span class="icon">📖</span>
             <span class="label">Reading Lab (60 Jam)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
+          <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}" aria-label="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
             <span class="icon">⚡</span>
             <span class="label">Calistung (Drill 5-15m)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
+          <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}" aria-label="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
             <span class="icon">🕒</span>
             <span class="label">60 Menit (4 Pilar)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}">
+          <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}" aria-label="${isEn ? 'MAXXI Thematic School Book' : 'Buku MAXXI (Tematik Sekolah)'}">
             <span class="icon">🏆</span>
             <span class="label">Buku MAXXI (Tematik)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
+          <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}" aria-label="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
             <span class="icon">🧮</span>
             <span class="label">Math Toolbox (14 Jurus)</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
+          <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}" aria-label="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
             <span class="icon">✍️</span>
             <span class="label">Writing Lab</span>
           </button>
@@ -13012,15 +13012,15 @@
         <!-- Fitur Tambahan: Tantangan & Progress -->
         <div class="kicker">${t('activitiesKicker', lang)}</div>
         <nav class="nav" aria-label="Aktivitas">
-          <button class="nav-item ${state.currentRoute === 'tantangan' ? 'active' : ''}" data-route="tantangan" data-tooltip="${t('dailyChallenge', lang)}">
+          <button class="nav-item ${state.currentRoute === 'tantangan' ? 'active' : ''}" data-route="tantangan" data-tooltip="${t('dailyChallenge', lang)}" aria-label="${t('dailyChallenge', lang)}">
             <span class="icon">🎯</span>
             <span class="label">${t('dailyChallenge', lang)}</span>
           </button>
-          <button class="nav-item ${state.currentRoute === 'progress' ? 'active' : ''}" data-route="progress" data-tooltip="${t('progress', lang)}">
+          <button class="nav-item ${state.currentRoute === 'progress' ? 'active' : ''}" data-route="progress" data-tooltip="${t('progress', lang)}" aria-label="${t('progress', lang)}">
             <span class="icon">📈</span>
             <span class="label">${t('progress', lang)}</span>
           </button>
-          <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
+          <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}" aria-label="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
             <span class="icon">🤖</span>
             <span class="label">${lang === 'en' ? 'Ask AI Tutor' : 'Tanya Kakak AI'}</span>
           </button>
@@ -13365,6 +13365,7 @@
             <input type="text"
                    id="quizCustomInput"
                    class="quiz-text-input"
+                   aria-label="${isEn ? 'Type your answer here' : 'Ketik jawabanmu di sini'}"
                    placeholder="${isEn ? 'Type your answer here...' : 'Ketik jawabanmu di sini...'}"
                    autocomplete="off"
                    style="flex:1; max-width:320px; padding:12px 16px; border-radius:12px; border:2px solid var(--line); font-size:15px; font-weight:700; color:var(--ink); background:var(--card); outline:none;">
@@ -14900,7 +14901,7 @@
             </div>
   
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
-              <input type="number" id="practiceAnswerInput" class="math-num-input" style="width:140px; height:52px;" placeholder="${t('answerPlaceholder', lang)}" ${this.practiceAnswered ? 'disabled' : ''}>
+              <input type="number" id="practiceAnswerInput" class="math-num-input" aria-label="${t('answerPlaceholder', lang) || (lang === 'en' ? 'Your Answer' : 'Jawabanmu')}" style="width:140px; height:52px;" placeholder="${t('answerPlaceholder', lang)}" ${this.practiceAnswered ? 'disabled' : ''}>
               <button class="btn primary" id="btnSubmitPractice" type="button" ${this.practiceAnswered ? 'disabled' : ''}>
                 ${t('checkAnswer', lang)}
               </button>
@@ -15590,7 +15591,7 @@
             <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:16px;">
               <div class="search-input-box" style="width:100%;">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="countrySearchInput" placeholder="${t('searchCountryPlaceholder', lang)}" value="${this.searchCountryQuery}">
+                <input type="text" id="countrySearchInput" aria-label="${t('searchCountryPlaceholder', lang)}" placeholder="${t('searchCountryPlaceholder', lang)}" value="${this.searchCountryQuery}">
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                 <div class="island-chips">
@@ -15701,7 +15702,7 @@
             <div class="filter-bar">
               <div class="search-input-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="citySearchInput" placeholder="${t('searchCityPlaceholder', lang)}" value="${this.searchCityQuery}">
+                <input type="text" id="citySearchInput" aria-label="${t('searchCityPlaceholder', lang)}" placeholder="${t('searchCityPlaceholder', lang)}" value="${this.searchCityQuery}">
               </div>
               <div style="font-size:13px; font-weight:800; color:var(--teal);">
                 ${t('foundCitiesPrefix', lang)} ${cities.length} ${t('citiesSuffix', lang)}
@@ -15919,13 +15920,14 @@
                   <input type="text"
                          id="geoProvSearchInput"
                          class="geo-search-input"
+                         aria-label="${isEn ? 'Search province, capital, or city' : 'Cari provinsi, ibu kota, atau kota'}"
                          placeholder="${isEn ? '🔍 Search province, capital, or famous city (e.g. Malang, Padang, Wamena, Bandung)...' : '🔍 Cari provinsi, ibu kota, atau kota terkenal (contoh: Malang, Padang, Wamena, Denpasar, Bandung)...'}"
                          value="${this.provSearchQuery || ''}"
                          autocomplete="off"
                          style="width:100%; padding:12px 18px 12px 42px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-size:13.5px; color:var(--ink); box-shadow:var(--shadow-sm); outline:none;">
                   <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none;">🔍</span>
                   ${this.provSearchQuery ? `
-                    <button id="btnClearProvSearch" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="Hapus pencarian">✕</button>
+                    <button id="btnClearProvSearch" type="button" aria-label="${isEn ? 'Clear search' : 'Hapus pencarian'}" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--muted);" title="${isEn ? 'Clear search' : 'Hapus pencarian'}">✕</button>
                   ` : ''}
                 </div>
               </div>
@@ -20910,7 +20912,7 @@
         <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:14px; margin-bottom:28px;">
           <div class="search-input-box" style="width:100%;">
             <span class="search-icon">🔍</span>
-            <input type="text" id="allSubjectsSearchInput" placeholder="${isEn ? 'Search subjects, topics, or keywords...' : 'Cari nama pelajaran, topik, atau kata kunci...'}">
+            <input type="text" id="allSubjectsSearchInput" aria-label="${isEn ? 'Search subjects, topics, or keywords' : 'Cari nama pelajaran, topik, atau kata kunci'}" placeholder="${isEn ? 'Search subjects, topics, or keywords...' : 'Cari nama pelajaran, topik, atau kata kunci...'}">
           </div>
   
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">

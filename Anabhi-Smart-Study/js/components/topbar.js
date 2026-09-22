@@ -66,10 +66,10 @@ export class TopbarComponent {
       <div class="topbar-right">
         <!-- Pilihan Profil Siswa (Ana / Abhi) -->
         <div class="student-switcher" style="display:flex; background:rgba(0,0,0,0.2); border-radius:999px; padding:3px; margin-right:4px;">
-          <button class="student-toggle ${currentStudent === 'Ana' ? 'active ana' : ''}" data-student="Ana" type="button" title="${isEn ? 'Switch to Ana' : 'Pilih profil Ana'}">
+          <button class="student-toggle ${currentStudent === 'Ana' ? 'active ana' : ''}" data-student="Ana" type="button" title="${isEn ? 'Switch to Ana' : 'Pilih profil Ana'}" aria-label="${isEn ? 'Switch to Ana profile' : 'Pilih profil belajar Ana'}">
             <span class="avatar">🌸</span> Ana
           </button>
-          <button class="student-toggle ${currentStudent === 'Abhi' ? 'active abhi' : ''}" data-student="Abhi" type="button" title="${isEn ? 'Switch to Abhi' : 'Pilih profil Abhi'}">
+          <button class="student-toggle ${currentStudent === 'Abhi' ? 'active abhi' : ''}" data-student="Abhi" type="button" title="${isEn ? 'Switch to Abhi' : 'Pilih profil Abhi'}" aria-label="${isEn ? 'Switch to Abhi profile' : 'Pilih profil belajar Abhi'}">
             <span class="avatar">⚡</span> Abhi
           </button>
         </div>
@@ -87,8 +87,8 @@ export class TopbarComponent {
         </div>
 
         <!-- Tombol Tanya AI Tutor (Gemini) -->
-        <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="Tanya AI Tutor" title="Tanya AI Tutor (Gemini)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
-          <span>🤖</span> <span>Tanya AI</span>
+        <button class="iconbtn" id="aiTutorBtn" type="button" aria-label="${isEn ? 'Ask AI Tutor (Gemini)' : 'Tanya AI Tutor (Gemini)'}" title="${isEn ? 'Ask AI Tutor (Gemini)' : 'Tanya AI Tutor (Gemini)'}" style="background:linear-gradient(135deg, #0ea5e9, #6366f1); color:#fff; border-radius:12px; padding:0 12px; height:38px; min-height:38px; width:auto; font-size:12px; font-weight:800; display:flex; align-items:center; gap:6px; border:none; cursor:pointer;">
+          <span>🤖</span> <span>${isEn ? 'Ask AI' : 'Tanya AI'}</span>
         </button>
 
         <!-- Tombol Ganti Bahasa ID / EN (Default: ID) -->

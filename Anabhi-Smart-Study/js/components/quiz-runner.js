@@ -98,6 +98,7 @@ export class QuizRunner {
           <input type="text"
                  id="quizCustomInput"
                  class="quiz-text-input"
+                 aria-label="${isEn ? 'Type your answer here' : 'Ketik jawabanmu di sini'}"
                  placeholder="${isEn ? 'Type your answer here...' : 'Ketik jawabanmu di sini...'}"
                  autocomplete="off"
                  style="flex:1; max-width:320px; padding:12px 16px; border-radius:12px; border:2px solid var(--line); font-size:15px; font-weight:700; color:var(--ink); background:var(--card); outline:none;">

@@ -72,15 +72,15 @@ export class SidebarComponent {
       <!-- Menu Utama -->
       <div class="kicker">${t('mainNav', lang)}</div>
       <nav class="nav" aria-label="Navigasi Utama">
-        <button class="nav-item ${state.currentRoute === 'home' ? 'active' : ''}" data-route="home" data-tooltip="${t('home', lang)}">
+        <button class="nav-item ${state.currentRoute === 'home' ? 'active' : ''}" data-route="home" data-tooltip="${t('home', lang)}" aria-label="${t('home', lang)}">
           <span class="icon">🏠</span>
           <span class="label">${t('home', lang)}</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
+        <button class="nav-item ${state.currentRoute === 'jadwal' ? 'active' : ''}" data-route="jadwal" data-tooltip="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}" aria-label="${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}">
           <span class="icon">🗓️</span>
           <span class="label">${isEn ? 'Class 1B Schedule' : 'Jadwal Pelajaran 1B'}</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}">
+        <button class="nav-item ${state.currentRoute === 'all-subjects' ? 'active' : ''}" data-route="all-subjects" data-tooltip="${t('allSubjects', lang)}" aria-label="${t('allSubjects', lang)}">
           <span class="icon">📚</span>
           <span class="label">${t('allSubjects', lang)}</span>
         </button>
@@ -94,7 +94,7 @@ export class SidebarComponent {
           const displayName = getSubjectName(sub, lang);
 
           return `
-            <button class="nav-item ${isActive ? 'active' : ''}" data-route="subject" data-subject-id="${sub.id}" data-tooltip="${displayName}">
+            <button class="nav-item ${isActive ? 'active' : ''}" data-route="subject" data-subject-id="${sub.id}" data-tooltip="${displayName}" aria-label="${displayName}">
               <span class="icon">${sub.icon}</span>
               <span class="label">${displayName}</span>
             </button>
@@ -105,27 +105,27 @@ export class SidebarComponent {
       <!-- Learning Labs (Reading Lab, Writing Lab, Calistung, 60 Menit, MAXXI, Math Toolbox) -->
       <div class="kicker">${isEn ? 'LEARNING LABS & DRILLS' : 'LEARNING LABS & BUKU PENDAMPING'}</div>
       <nav class="nav" aria-label="Learning Labs">
-        <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}">
+        <button class="nav-item ${state.currentRoute === 'reading' ? 'active' : ''}" data-route="reading" data-tooltip="${isEn ? 'Reading Lab (60 Jam Tanpa Dieja)' : 'Reading Lab (60 Jam Tanpa Dieja)'}" aria-label="${isEn ? 'Reading Lab (60 Hours Method)' : 'Reading Lab (Metode 60 Jam Tanpa Dieja)'}">
           <span class="icon">📖</span>
           <span class="label">Reading Lab (60 Jam)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
+        <button class="nav-item ${state.currentRoute === 'calistung' || state.currentRoute === 'cali-stung' ? 'active' : ''}" data-route="calistung" data-tooltip="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}" aria-label="${isEn ? 'Calistung Daily Drill' : 'Buku Calistung (Drill 5-15 Menit)'}">
           <span class="icon">⚡</span>
           <span class="label">Calistung (Drill 5-15m)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
+        <button class="nav-item ${state.currentRoute === 'sixty-min' ? 'active' : ''}" data-route="sixty-min" data-tooltip="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}" aria-label="${isEn ? '60-Minute 4-Pillar Starter' : 'Buku 60 Menit (4 Pilar)'}">
           <span class="icon">🕒</span>
           <span class="label">60 Menit (4 Pilar)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}">
+        <button class="nav-item ${state.currentRoute === 'maxxi' ? 'active' : ''}" data-route="maxxi" data-tooltip="${isEn ? 'MAXXI School Reinforcement' : 'Buku MAXXI (Tematik Sekolah)'}" aria-label="${isEn ? 'MAXXI Thematic School Book' : 'Buku MAXXI (Tematik Sekolah)'}">
           <span class="icon">🏆</span>
           <span class="label">Buku MAXXI (Tematik)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
+        <button class="nav-item ${state.currentRoute === 'math-toolbox' ? 'active' : ''}" data-route="math-toolbox" data-tooltip="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}" aria-label="${isEn ? 'Math Toolbox (14 Strategies)' : 'Math Toolbox (14 Jurus Berhitung)'}">
           <span class="icon">🧮</span>
           <span class="label">Math Toolbox (14 Jurus)</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
+        <button class="nav-item ${state.currentRoute === 'writing' ? 'active' : ''}" data-route="writing" data-tooltip="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}" aria-label="${isEn ? 'Writing Lab & Tracing' : 'Writing Lab (Latihan Menulis)'}">
           <span class="icon">✍️</span>
           <span class="label">Writing Lab</span>
         </button>
@@ -134,15 +134,15 @@ export class SidebarComponent {
       <!-- Fitur Tambahan: Tantangan & Progress -->
       <div class="kicker">${t('activitiesKicker', lang)}</div>
       <nav class="nav" aria-label="Aktivitas">
-        <button class="nav-item ${state.currentRoute === 'tantangan' ? 'active' : ''}" data-route="tantangan" data-tooltip="${t('dailyChallenge', lang)}">
+        <button class="nav-item ${state.currentRoute === 'tantangan' ? 'active' : ''}" data-route="tantangan" data-tooltip="${t('dailyChallenge', lang)}" aria-label="${t('dailyChallenge', lang)}">
           <span class="icon">🎯</span>
           <span class="label">${t('dailyChallenge', lang)}</span>
         </button>
-        <button class="nav-item ${state.currentRoute === 'progress' ? 'active' : ''}" data-route="progress" data-tooltip="${t('progress', lang)}">
+        <button class="nav-item ${state.currentRoute === 'progress' ? 'active' : ''}" data-route="progress" data-tooltip="${t('progress', lang)}" aria-label="${t('progress', lang)}">
           <span class="icon">📈</span>
           <span class="label">${t('progress', lang)}</span>
         </button>
-        <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
+        <button class="nav-item" id="sidebarAiTutorBtn" type="button" data-tooltip="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}" aria-label="${lang === 'en' ? 'Ask AI Tutor (Gemini)' : 'Tanya Kakak AI (Gemini)'}">
           <span class="icon">🤖</span>
           <span class="label">${lang === 'en' ? 'Ask AI Tutor' : 'Tanya Kakak AI'}</span>
         </button>
