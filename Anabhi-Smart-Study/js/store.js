@@ -35,6 +35,7 @@ const DEFAULT_STATE = {
     targetCount: 3,
     claimed: false
   },
+  needsReview: [],
   settings: {
     soundEffects: true
   }
@@ -89,6 +90,7 @@ export class ProgressStore {
 
       const parsed = JSON.parse(raw);
       parsed.studentName = student;
+      parsed.needsReview = Array.isArray(parsed.needsReview) ? parsed.needsReview : [];
       if (parsed.version !== SCHEMA_VERSION) {
         return { ...DEFAULT_STATE, ...parsed, studentName: student, version: SCHEMA_VERSION };
       }
@@ -197,11 +199,6 @@ export class ProgressStore {
     }
     if (this.data.dailyChallenge.completedCount < this.data.dailyChallenge.targetCount) {
       this.data.dailyChallenge.completedCount++;
-      if (this.data.dailyChallenge.completedCount >= this.data.dailyChallenge.targetCount && !this.data.dailyChallenge.claimed) {
-        this.data.dailyChallenge.claimed = true;
-        this.addStars(15);
-        this.checkAndAwardBadge('daily-hero', 'Pahlawan Harian', '🎯', 'Menuntaskan semua tantangan harian hari ini!');
-      }
       this.save();
     }
   }
@@ -212,6 +209,51 @@ export class ProgressStore {
       this.data.badges.push({ id: badgeId, name, icon, desc });
       this.save();
     }
+  }
+
+  // --- Kotak Pintar Pengulangan (Spaced Repetition System) ---
+  addNeedsReview(item) {
+    if (!this.data.needsReview) this.data.needsReview = [];
+    if (!item || !item.id) return;
+    if (!this.data.needsReview.some(r => r.id === item.id)) {
+      this.data.needsReview.unshift({
+        id: item.id,
+        title: item.title || item.id,
+        subject: item.subject || 'umum',
+        reason: item.reason || 'Perlu latihan lagi',
+        date: getTodayString()
+      });
+      if (this.data.needsReview.length > 12) {
+        this.data.needsReview.pop();
+      }
+      this.save();
+    }
+  }
+
+  removeNeedsReview(id) {
+    if (!this.data.needsReview) return;
+    const initialLen = this.data.needsReview.length;
+    this.data.needsReview = this.data.needsReview.filter(r => r.id !== id);
+    if (this.data.needsReview.length !== initialLen) {
+      this.save();
+    }
+  }
+
+  getNeedsReview() {
+    return this.data.needsReview || [];
+  }
+
+  // Klaim Peti Harta Karun Harian
+  claimDailyChest() {
+    if (!this.data.dailyChallenge) return { success: false };
+    if (this.data.dailyChallenge.completedCount >= this.data.dailyChallenge.targetCount && !this.data.dailyChallenge.claimed) {
+      this.data.dailyChallenge.claimed = true;
+      this.addStars(15);
+      this.checkAndAwardBadge('daily-hero', 'Pahlawan Harian', '🎯', 'Menuntaskan semua tantangan harian dan membuka Peti Harta Karun!');
+      this.save();
+      return { success: true };
+    }
+    return { success: false };
   }
 
   resetProgress() {

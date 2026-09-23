@@ -210,6 +210,7 @@
       targetCount: 3,
       claimed: false
     },
+    needsReview: [],
     settings: {
       soundEffects: true
     }
@@ -264,6 +265,7 @@
   
         const parsed = JSON.parse(raw);
         parsed.studentName = student;
+        parsed.needsReview = Array.isArray(parsed.needsReview) ? parsed.needsReview : [];
         if (parsed.version !== SCHEMA_VERSION) {
           return { ...DEFAULT_STATE, ...parsed, studentName: student, version: SCHEMA_VERSION };
         }
@@ -372,11 +374,6 @@
       }
       if (this.data.dailyChallenge.completedCount < this.data.dailyChallenge.targetCount) {
         this.data.dailyChallenge.completedCount++;
-        if (this.data.dailyChallenge.completedCount >= this.data.dailyChallenge.targetCount && !this.data.dailyChallenge.claimed) {
-          this.data.dailyChallenge.claimed = true;
-          this.addStars(15);
-          this.checkAndAwardBadge('daily-hero', 'Pahlawan Harian', '🎯', 'Menuntaskan semua tantangan harian hari ini!');
-        }
         this.save();
       }
     }
@@ -387,6 +384,51 @@
         this.data.badges.push({ id: badgeId, name, icon, desc });
         this.save();
       }
+    }
+  
+    // --- Kotak Pintar Pengulangan (Spaced Repetition System) ---
+    addNeedsReview(item) {
+      if (!this.data.needsReview) this.data.needsReview = [];
+      if (!item || !item.id) return;
+      if (!this.data.needsReview.some(r => r.id === item.id)) {
+        this.data.needsReview.unshift({
+          id: item.id,
+          title: item.title || item.id,
+          subject: item.subject || 'umum',
+          reason: item.reason || 'Perlu latihan lagi',
+          date: getTodayString()
+        });
+        if (this.data.needsReview.length > 12) {
+          this.data.needsReview.pop();
+        }
+        this.save();
+      }
+    }
+  
+    removeNeedsReview(id) {
+      if (!this.data.needsReview) return;
+      const initialLen = this.data.needsReview.length;
+      this.data.needsReview = this.data.needsReview.filter(r => r.id !== id);
+      if (this.data.needsReview.length !== initialLen) {
+        this.save();
+      }
+    }
+  
+    getNeedsReview() {
+      return this.data.needsReview || [];
+    }
+  
+    // Klaim Peti Harta Karun Harian
+    claimDailyChest() {
+      if (!this.data.dailyChallenge) return { success: false };
+      if (this.data.dailyChallenge.completedCount >= this.data.dailyChallenge.targetCount && !this.data.dailyChallenge.claimed) {
+        this.data.dailyChallenge.claimed = true;
+        this.addStars(15);
+        this.checkAndAwardBadge('daily-hero', 'Pahlawan Harian', '🎯', 'Menuntaskan semua tantangan harian dan membuka Peti Harta Karun!');
+        this.save();
+        return { success: true };
+      }
+      return { success: false };
     }
   
     resetProgress() {
@@ -13788,6 +13830,8 @@
           `;
           AudioFx.playSuccess();
           AudioFx.triggerConfetti(this.container);
+          const qKey = q.id || (this.quiz.title + '-' + this.currentIndex);
+          store.removeNeedsReview(qKey);
           if (nextBtn) nextBtn.style.display = 'inline-flex';
           if (retryBtn) retryBtn.style.display = 'none';
         } else {
@@ -13804,6 +13848,15 @@
             </div>
           `;
           AudioFx.playGentleWrong();
+  
+          // Rekam ke Kotak Pintar Pengulangan (Spaced Repetition)
+          const qKey = q.id || (this.quiz.title + '-' + this.currentIndex);
+          store.addNeedsReview({
+            id: qKey,
+            title: q.question || q.prompt || `${this.quiz.title} #${this.currentIndex + 1}`,
+            subject: this.quiz.title || 'Latihan Kuis',
+            reason: 'Perlu pengulangan konsep'
+          });
   
           // Auto-show hint after attempt
           if (q.hint && hintPanel && !this.showHint) {
@@ -17457,8 +17510,25 @@
           </div>
   
           ${pct === 100 ? `
-            <div class="feedback-banner success show" style="display:flex; margin-top:0;">
-              ${t('challengeSuccessMsg', lang)}
+            <div style="background:linear-gradient(135deg, rgba(255, 178, 27, 0.15), rgba(245, 158, 11, 0.25)); border:2px dashed #f59e0b; border-radius:16px; padding:18px; text-align:center; margin-top:12px;">
+              <div style="font-size:46px; margin-bottom:6px;">
+                ${dc.claimed ? '🏆' : '🎁'}
+              </div>
+              <h4 style="margin:0 0 6px; font-size:18px; font-weight:900; color:#b45309;">
+                ${dc.claimed 
+                  ? (isEn ? 'Daily Treasure Chest Claimed! (+15 ⭐ Won)' : 'Peti Harta Karun Harian Berhasil Diklaim! (+15 ⭐ Didapatkan)')
+                  : (isEn ? 'Golden Mystery Chest Ready to Open!' : 'Peti Harta Karun Emas Siap Dibuka!')}
+              </h4>
+              <p style="margin:0 0 14px; font-size:13px; color:var(--ink);">
+                ${dc.claimed
+                  ? (isEn ? 'You are today’s Daily Hero! See you in tomorrow’s adventure! 🌟' : 'Kamu adalah Pahlawan Harian hari ini! Sampai jumpa di misi besok! 🌟')
+                  : (isEn ? 'You completed all 3 daily missions! Tap below to claim your grand prize!' : 'Kamu berhasil menuntaskan semua 3 misi hari ini! Buka untuk hadiah utamamu!')}
+              </p>
+              ${!dc.claimed ? `
+                <button class="btn primary" id="btnClaimDailyChest" type="button" aria-label="Buka Peti Emas dan Dapatkan 15 Bintang" style="font-weight:900; font-size:14px; padding:10px 24px; border-radius:12px; background:linear-gradient(135deg, #f59e0b, #d97706); border:none; box-shadow:0 6px 16px rgba(245, 158, 11, 0.4); cursor:pointer;">
+                  🎁 Buka Peti Emas (+15 ⭐)
+                </button>
+              ` : ''}
             </div>
           ` : `
             <div style="font-size:13px; color:var(--muted);">
@@ -17488,6 +17558,54 @@
               </div>
             </div>
           `).join('')}
+        </div>
+  
+        <!-- Kotak Pintar Pengulangan (Spaced Repetition Review Deck) -->
+        <div class="section" style="margin-top:36px;">
+          <div class="eyebrow"><span class="no">🧠</span><span class="lbl">${isEn ? 'SMART REVIEW DECK' : 'KOTAK PINTAR PENGULANGAN'}</span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <div>
+              <h3 style="font-size:20px; font-weight:800; margin:0 0 4px;">
+                ${isEn ? 'Spaced Repetition & Concept Practice' : 'Materi yang Perlu Dilatih Kembali'}
+              </h3>
+              <p style="margin:0; font-size:13px; color:var(--muted);">
+                ${isEn ? 'Review concepts and questions to build permanent memory.' : 'Pengulangan berkala membantu ananda mengingat konsep lebih kuat dan permanen.'}
+              </p>
+            </div>
+            ${store.getNeedsReview().length > 0 ? `
+              <span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; font-weight:800; font-size:12px; padding:4px 12px; border-radius:999px;">
+                ${store.getNeedsReview().length} ${isEn ? 'items to practice' : 'item perlu diulang'}
+              </span>
+            ` : ''}
+          </div>
+  
+          ${store.getNeedsReview().length > 0 ? `
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px;">
+              ${store.getNeedsReview().map(item => `
+                <div class="quiz-box" style="margin:0; background:var(--card); border:1px solid var(--line); border-left:4px solid #0d9488; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <span style="font-size:11px; font-weight:800; color:var(--teal); text-transform:uppercase;">${item.subject}</span>
+                      <span style="font-size:11px; color:var(--muted);">${item.date || ''}</span>
+                    </div>
+                    <strong style="display:block; font-size:14px; color:var(--ink); margin-bottom:4px;">${item.title}</strong>
+                    <span style="font-size:12px; color:var(--muted);">${item.reason}</span>
+                  </div>
+                  <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+                    <button class="btn btn-resolve-review" data-id="${item.id}" type="button" aria-label="Tandai Sudah Lancar" style="font-size:11.5px; font-weight:800; padding:5px 12px; border-radius:8px;">
+                      Sudah Lancar! ✓ (+1 ⭐)
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : `
+            <div class="quiz-box" style="margin:0; background:var(--green-soft); border:1.5px solid #86efac; color:#15803d; text-align:center; padding:20px;">
+              <div style="font-size:32px; margin-bottom:4px;">🌟</div>
+              <strong style="font-size:15px; display:block;">${isEn ? 'All Concepts Mastered!' : 'Semua Konsep Sudah Dikuasai!'}</strong>
+              <span style="font-size:12.5px; opacity:0.9;">${isEn ? 'No pending questions in the review box. Keep up the brilliant study!' : 'Tidak ada materi yang tertinggal di kotak pengulangan. Pertahankan prestasi hebatmu!'}</span>
+            </div>
+          `}
         </div>
   
         <!-- Bagian Modul Penguatan Integratif (SRC-05 Calistung & SRC-10 MAXXI) -->
@@ -17652,6 +17770,41 @@
           (this.lksModal || window.lksModal)?.openSourceRegistry();
         });
       }
+  
+      const btnChest = this.container.querySelector('#btnClaimDailyChest');
+      if (btnChest) {
+        btnChest.addEventListener('click', () => {
+          const res = store.claimDailyChest();
+          if (res.success) {
+            if (window.AudioFx && typeof window.AudioFx.playLevelUp === 'function') {
+              window.AudioFx.playLevelUp();
+            } else if (AudioFx && typeof AudioFx.playLevelUp === 'function') {
+              AudioFx.playLevelUp();
+            }
+            if (AudioFx && typeof AudioFx.triggerConfetti === 'function') {
+              AudioFx.triggerConfetti(this.container);
+            }
+            this.render();
+          }
+        });
+      }
+  
+      const resolveBtns = this.container.querySelectorAll('.btn-resolve-review');
+      resolveBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          if (id) {
+            store.removeNeedsReview(id);
+            store.addStar(1);
+            if (window.AudioFx && typeof window.AudioFx.playStarSparkle === 'function') {
+              window.AudioFx.playStarSparkle();
+            } else if (AudioFx && typeof AudioFx.playStarSparkle === 'function') {
+              AudioFx.playStarSparkle();
+            }
+            this.render();
+          }
+        });
+      });
     }
   
     // ============================================================
@@ -17909,6 +18062,7 @@
   
   
   
+  
   class ProgressViewComponent {
     constructor(container) {
       this.container = container;
@@ -17917,6 +18071,7 @@
     render() {
       const s = store.data;
       const lang = appState.get().lang || 'id';
+      const isEn = lang === 'en';
       const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
       const completedCount = (s.completedLessons || []).length;
       const totalEstimate = 25;
@@ -17971,6 +18126,34 @@
                 </div>
               </div>
             `).join('')}
+          </div>
+        </div>
+  
+        <!-- Status Kotak Pintar Pengulangan (Spaced Repetition Review Deck) -->
+        <div class="quiz-box" style="margin-top:24px; background:var(--card); border:1px solid var(--border); border-left:4px solid #0d9488;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:24px;">🧠</span>
+                <h3 style="font-size:16px; font-weight:800; margin:0; color:var(--ink);">
+                  ${isEn ? 'Spaced Repetition Review Deck' : 'Kotak Pintar Pengulangan Konsep'}
+                </h3>
+              </div>
+              <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
+                ${store.getNeedsReview().length > 0 
+                  ? (isEn 
+                      ? `There are ${store.getNeedsReview().length} items currently queued for reinforcement.` 
+                      : `Ada ${store.getNeedsReview().length} materi yang tersimpan di kotak pengulangan untuk diperkuat.`)
+                  : (isEn 
+                      ? 'All completed topics are fully mastered with 0 pending review items!' 
+                      : 'Luar biasa! Seluruh materi dan kuis sudah dikuasai lancar tanpa ada materi tertinggal.')}
+              </p>
+            </div>
+            ${store.getNeedsReview().length > 0 ? `
+              <button class="btn" id="btnGoToReviewDeck" type="button" aria-label="Buka Kotak Pintar Pengulangan" style="font-size:12.5px; font-weight:800; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal);">
+                ${isEn ? 'Practice Now ➔' : 'Latih Sekarang ➔'}
+              </button>
+            ` : ''}
           </div>
         </div>
   
@@ -18057,6 +18240,14 @@
             alert(t('resetSuccessAlert', lang));
             this.render();
           }
+        });
+      }
+  
+      const btnReview = this.container.querySelector('#btnGoToReviewDeck');
+      if (btnReview) {
+        btnReview.addEventListener('click', () => {
+          AudioFx.playTap();
+          appState.navigate('tantangan');
         });
       }
     }

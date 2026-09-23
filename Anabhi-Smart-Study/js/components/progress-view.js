@@ -10,6 +10,7 @@ import { store } from '../store.js';
 import { SUBJECTS, getSubjectName } from '../data/subjects.js';
 import { appState } from '../state.js';
 import { t } from '../data/i18n.js';
+import { AudioFx } from '../engine/audio-fx.js';
 
 export class ProgressViewComponent {
   constructor(container) {
@@ -19,6 +20,7 @@ export class ProgressViewComponent {
   render() {
     const s = store.data;
     const lang = appState.get().lang || 'id';
+    const isEn = lang === 'en';
     const currentStudent = (store && typeof store.getStudent === 'function') ? store.getStudent() : 'Ana';
     const completedCount = (s.completedLessons || []).length;
     const totalEstimate = 25;
@@ -73,6 +75,34 @@ export class ProgressViewComponent {
               </div>
             </div>
           `).join('')}
+        </div>
+      </div>
+
+      <!-- Status Kotak Pintar Pengulangan (Spaced Repetition Review Deck) -->
+      <div class="quiz-box" style="margin-top:24px; background:var(--card); border:1px solid var(--border); border-left:4px solid #0d9488;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:24px;">🧠</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0; color:var(--ink);">
+                ${isEn ? 'Spaced Repetition Review Deck' : 'Kotak Pintar Pengulangan Konsep'}
+              </h3>
+            </div>
+            <p style="margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.5;">
+              ${store.getNeedsReview().length > 0 
+                ? (isEn 
+                    ? `There are ${store.getNeedsReview().length} items currently queued for reinforcement.` 
+                    : `Ada ${store.getNeedsReview().length} materi yang tersimpan di kotak pengulangan untuk diperkuat.`)
+                : (isEn 
+                    ? 'All completed topics are fully mastered with 0 pending review items!' 
+                    : 'Luar biasa! Seluruh materi dan kuis sudah dikuasai lancar tanpa ada materi tertinggal.')}
+            </p>
+          </div>
+          ${store.getNeedsReview().length > 0 ? `
+            <button class="btn" id="btnGoToReviewDeck" type="button" aria-label="Buka Kotak Pintar Pengulangan" style="font-size:12.5px; font-weight:800; padding:6px 14px; background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal);">
+              ${isEn ? 'Practice Now ➔' : 'Latih Sekarang ➔'}
+            </button>
+          ` : ''}
         </div>
       </div>
 
@@ -159,6 +189,14 @@ export class ProgressViewComponent {
           alert(t('resetSuccessAlert', lang));
           this.render();
         }
+      });
+    }
+
+    const btnReview = this.container.querySelector('#btnGoToReviewDeck');
+    if (btnReview) {
+      btnReview.addEventListener('click', () => {
+        AudioFx.playTap();
+        appState.navigate('tantangan');
       });
     }
   }

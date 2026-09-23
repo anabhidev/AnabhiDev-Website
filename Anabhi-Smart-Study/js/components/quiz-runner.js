@@ -200,6 +200,8 @@ export class QuizRunner {
         `;
         AudioFx.playSuccess();
         AudioFx.triggerConfetti(this.container);
+        const qKey = q.id || (this.quiz.title + '-' + this.currentIndex);
+        store.removeNeedsReview(qKey);
         if (nextBtn) nextBtn.style.display = 'inline-flex';
         if (retryBtn) retryBtn.style.display = 'none';
       } else {
@@ -216,6 +218,15 @@ export class QuizRunner {
           </div>
         `;
         AudioFx.playGentleWrong();
+
+        // Rekam ke Kotak Pintar Pengulangan (Spaced Repetition)
+        const qKey = q.id || (this.quiz.title + '-' + this.currentIndex);
+        store.addNeedsReview({
+          id: qKey,
+          title: q.question || q.prompt || `${this.quiz.title} #${this.currentIndex + 1}`,
+          subject: this.quiz.title || 'Latihan Kuis',
+          reason: 'Perlu pengulangan konsep'
+        });
 
         // Auto-show hint after attempt
         if (q.hint && hintPanel && !this.showHint) {

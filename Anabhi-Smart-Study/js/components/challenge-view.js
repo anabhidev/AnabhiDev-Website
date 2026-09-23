@@ -92,8 +92,25 @@ export class ChallengeViewComponent {
         </div>
 
         ${pct === 100 ? `
-          <div class="feedback-banner success show" style="display:flex; margin-top:0;">
-            ${t('challengeSuccessMsg', lang)}
+          <div style="background:linear-gradient(135deg, rgba(255, 178, 27, 0.15), rgba(245, 158, 11, 0.25)); border:2px dashed #f59e0b; border-radius:16px; padding:18px; text-align:center; margin-top:12px;">
+            <div style="font-size:46px; margin-bottom:6px;">
+              ${dc.claimed ? '🏆' : '🎁'}
+            </div>
+            <h4 style="margin:0 0 6px; font-size:18px; font-weight:900; color:#b45309;">
+              ${dc.claimed 
+                ? (isEn ? 'Daily Treasure Chest Claimed! (+15 ⭐ Won)' : 'Peti Harta Karun Harian Berhasil Diklaim! (+15 ⭐ Didapatkan)')
+                : (isEn ? 'Golden Mystery Chest Ready to Open!' : 'Peti Harta Karun Emas Siap Dibuka!')}
+            </h4>
+            <p style="margin:0 0 14px; font-size:13px; color:var(--ink);">
+              ${dc.claimed
+                ? (isEn ? 'You are today’s Daily Hero! See you in tomorrow’s adventure! 🌟' : 'Kamu adalah Pahlawan Harian hari ini! Sampai jumpa di misi besok! 🌟')
+                : (isEn ? 'You completed all 3 daily missions! Tap below to claim your grand prize!' : 'Kamu berhasil menuntaskan semua 3 misi hari ini! Buka untuk hadiah utamamu!')}
+            </p>
+            ${!dc.claimed ? `
+              <button class="btn primary" id="btnClaimDailyChest" type="button" aria-label="Buka Peti Emas dan Dapatkan 15 Bintang" style="font-weight:900; font-size:14px; padding:10px 24px; border-radius:12px; background:linear-gradient(135deg, #f59e0b, #d97706); border:none; box-shadow:0 6px 16px rgba(245, 158, 11, 0.4); cursor:pointer;">
+                🎁 Buka Peti Emas (+15 ⭐)
+              </button>
+            ` : ''}
           </div>
         ` : `
           <div style="font-size:13px; color:var(--muted);">
@@ -123,6 +140,54 @@ export class ChallengeViewComponent {
             </div>
           </div>
         `).join('')}
+      </div>
+
+      <!-- Kotak Pintar Pengulangan (Spaced Repetition Review Deck) -->
+      <div class="section" style="margin-top:36px;">
+        <div class="eyebrow"><span class="no">🧠</span><span class="lbl">${isEn ? 'SMART REVIEW DECK' : 'KOTAK PINTAR PENGULANGAN'}</span></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin:0 0 4px;">
+              ${isEn ? 'Spaced Repetition & Concept Practice' : 'Materi yang Perlu Dilatih Kembali'}
+            </h3>
+            <p style="margin:0; font-size:13px; color:var(--muted);">
+              ${isEn ? 'Review concepts and questions to build permanent memory.' : 'Pengulangan berkala membantu ananda mengingat konsep lebih kuat dan permanen.'}
+            </p>
+          </div>
+          ${store.getNeedsReview().length > 0 ? `
+            <span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; font-weight:800; font-size:12px; padding:4px 12px; border-radius:999px;">
+              ${store.getNeedsReview().length} ${isEn ? 'items to practice' : 'item perlu diulang'}
+            </span>
+          ` : ''}
+        </div>
+
+        ${store.getNeedsReview().length > 0 ? `
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px;">
+            ${store.getNeedsReview().map(item => `
+              <div class="quiz-box" style="margin:0; background:var(--card); border:1px solid var(--line); border-left:4px solid #0d9488; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:11px; font-weight:800; color:var(--teal); text-transform:uppercase;">${item.subject}</span>
+                    <span style="font-size:11px; color:var(--muted);">${item.date || ''}</span>
+                  </div>
+                  <strong style="display:block; font-size:14px; color:var(--ink); margin-bottom:4px;">${item.title}</strong>
+                  <span style="font-size:12px; color:var(--muted);">${item.reason}</span>
+                </div>
+                <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+                  <button class="btn btn-resolve-review" data-id="${item.id}" type="button" aria-label="Tandai Sudah Lancar" style="font-size:11.5px; font-weight:800; padding:5px 12px; border-radius:8px;">
+                    Sudah Lancar! ✓ (+1 ⭐)
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="quiz-box" style="margin:0; background:var(--green-soft); border:1.5px solid #86efac; color:#15803d; text-align:center; padding:20px;">
+            <div style="font-size:32px; margin-bottom:4px;">🌟</div>
+            <strong style="font-size:15px; display:block;">${isEn ? 'All Concepts Mastered!' : 'Semua Konsep Sudah Dikuasai!'}</strong>
+            <span style="font-size:12.5px; opacity:0.9;">${isEn ? 'No pending questions in the review box. Keep up the brilliant study!' : 'Tidak ada materi yang tertinggal di kotak pengulangan. Pertahankan prestasi hebatmu!'}</span>
+          </div>
+        `}
       </div>
 
       <!-- Bagian Modul Penguatan Integratif (SRC-05 Calistung & SRC-10 MAXXI) -->
@@ -287,6 +352,41 @@ export class ChallengeViewComponent {
         (this.lksModal || window.lksModal)?.openSourceRegistry();
       });
     }
+
+    const btnChest = this.container.querySelector('#btnClaimDailyChest');
+    if (btnChest) {
+      btnChest.addEventListener('click', () => {
+        const res = store.claimDailyChest();
+        if (res.success) {
+          if (window.AudioFx && typeof window.AudioFx.playLevelUp === 'function') {
+            window.AudioFx.playLevelUp();
+          } else if (AudioFx && typeof AudioFx.playLevelUp === 'function') {
+            AudioFx.playLevelUp();
+          }
+          if (AudioFx && typeof AudioFx.triggerConfetti === 'function') {
+            AudioFx.triggerConfetti(this.container);
+          }
+          this.render();
+        }
+      });
+    }
+
+    const resolveBtns = this.container.querySelectorAll('.btn-resolve-review');
+    resolveBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (id) {
+          store.removeNeedsReview(id);
+          store.addStar(1);
+          if (window.AudioFx && typeof window.AudioFx.playStarSparkle === 'function') {
+            window.AudioFx.playStarSparkle();
+          } else if (AudioFx && typeof AudioFx.playStarSparkle === 'function') {
+            AudioFx.playStarSparkle();
+          }
+          this.render();
+        }
+      });
+    });
   }
 
   // ============================================================
