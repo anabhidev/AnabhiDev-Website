@@ -3078,6 +3078,193 @@ select.form-control { cursor: pointer; }
   }
 }
 
+/* ─── Enterprise Print Stylesheet (WCAG & GovTech Executive Archival) ─── */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 
+  @page {
+    margin: 1.5cm;
+    size: A4 portrait;
+  }
 
+  body {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    font-size: 10pt !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
+  /* Sembunyikan elemen navigasi interaktif, tombol apung WhatsApp, dan aksi web-only */
+  .site-header,
+  .mobile-toggle,
+  .main-nav,
+  .wa-fab,
+  .hero-nav,
+  .hero-dots,
+  .hero-bg,
+  .hero-overlay,
+  .cta-bg,
+  .cta-overlay,
+  .recommendation-banner,
+  .btn,
+  .btn-primary,
+  .btn-outline,
+  .btn-gold,
+  .btn-wa,
+  .cert-hero-actions,
+  .footer-wa-btn,
+  form button[type="submit"],
+  .readiness-meter-actions,
+  noscript {
+    display: none !important;
+  }
+
+  /* Aturan Halaman & Heading: Hindari page-break menggantung */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #03140c !important;
+  }
+
+  p, blockquote, ul, ol, dl, table {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  /* Kotak Kartu & Komponen Informasi: Jangan terpotong di tengah halaman */
+  .service-card,
+  .service-detail,
+  .team-card,
+  .iso-card,
+  .iso-portfolio-card,
+  .cert-track-card,
+  .cert-step-card,
+  .why-mtc-card,
+  .benefit-card,
+  .principle-card,
+  .stat-item,
+  .contact-info-item,
+  .timeline-step,
+  .timeline-card,
+  .book-card,
+  .cert-form-box {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+    background: #ffffff !important;
+  }
+
+  /* Penataan Khusus Halaman Layanan */
+  .service-detail {
+    display: block !important;
+    direction: ltr !important;
+    page-break-inside: avoid !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .service-detail-img {
+    display: none !important;
+  }
+
+  /* Pembersihan Bagian Hero untuk Hasil Cetak Bersih */
+  .hero,
+  .hero-sub,
+  .hero-home,
+  .hero-cert {
+    padding: 1.5rem 0 !important;
+    min-height: auto !important;
+    background: #ffffff !important;
+    border-bottom: 2px solid #0E8F72 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero h1,
+  .hero .hero-title,
+  .hero-sub h1,
+  .hero-cert h1 {
+    color: #03140c !important;
+    font-size: 20pt !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero p,
+  .hero .hero-subtitle,
+  .hero-sub p,
+  .hero-cert p {
+    color: #334155 !important;
+    font-size: 11pt !important;
+  }
+
+  /* Grid Layout yang Rapi dalam 2 Kolom Saat Dicetak */
+  .services-grid,
+  .team-grid,
+  .iso-portfolio-grid,
+  .problem-grid,
+  .why-mtc-grid,
+  .benefits-grid,
+  .cert-tracks-grid,
+  .cert-steps-grid,
+  .principles-grid,
+  .books-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* Footer Ringkas dan Profesional untuk Dokumen Fisik */
+  .site-footer {
+    background: #ffffff !important;
+    border-top: 1px solid #cbd5e1 !important;
+    color: #475569 !important;
+    padding: 1.5rem 0 !important;
+    margin-top: 2rem !important;
+    page-break-inside: avoid !important;
+  }
+
+  .site-footer h3,
+  .site-footer h4 {
+    color: #03140c !important;
+  }
+
+  .site-footer p,
+  .site-footer a,
+  .footer-contact-item {
+    color: #334155 !important;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #e2e8f0 !important;
+    padding-top: 0.75rem !important;
+    margin-top: 1rem !important;
+    color: #64748b !important;
+    font-size: 9pt !important;
+  }
+
+  /* Atribusi URL untuk tautan rujukan eksternal */
+  a[href^="http"]:not(.brand-logo):not(.btn)::after {
+    content: " (" attr(href) ")";
+    font-size: 8.5pt;
+    color: #475569;
+    word-break: break-all;
+  }
+
+  a[href^="tel:"]::after,
+  a[href^="mailto:"]::after {
+    content: "";
+  }
+}

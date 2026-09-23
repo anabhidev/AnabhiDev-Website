@@ -402,6 +402,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        setCertStatus('Format email belum benar. Contoh yang valid: corporate@domain.com', 'error');
+        if (certForm.elements.email) certForm.elements.email.focus();
+        return;
+      }
+
       const msgLines = [
         '*KONSULTASI MTC CORPORATE CERTIFICATION & COMPLIANCE*',
         '-------------------------------------------',
