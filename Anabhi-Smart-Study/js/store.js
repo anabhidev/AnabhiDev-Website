@@ -155,6 +155,11 @@ export class ProgressStore {
     return this.data.stars;
   }
 
+  // Alias untuk kompatibilitas seragam seluruh modul kuis & lab
+  addStar(count = 1) {
+    return this.addStars(count);
+  }
+
   completeLesson(lessonKey) {
     if (!this.data.completedLessons) this.data.completedLessons = [];
     if (!this.data.completedLessons.includes(lessonKey)) {

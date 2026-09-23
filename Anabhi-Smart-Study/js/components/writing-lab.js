@@ -64,9 +64,12 @@ export class WritingLabComponent {
               <h3 style="margin:0 0 4px; font-size:18px; font-weight:800; color:var(--ink);">${task.title}</h3>
               <p style="margin:0; font-size:13px; color:var(--muted);">${task.desc}</p>
             </div>
-            <div style="display:flex; gap:8px; align-items:center;">
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <button class="btn btn-tts" id="btnSpeakWritingDesc" type="button" style="font-size:12px; padding:6px 12px;">
                 🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+              </button>
+              <button class="btn" id="btnDemoTrace" type="button" style="font-size:12px; padding:6px 12px;">
+                ✨ ${isEn ? 'Show Motion' : 'Contoh Gerakan'}
               </button>
               <button class="btn" id="btnClearCanvas" type="button" style="font-size:12px; padding:6px 14px;">
                 🧹 ${isEn ? 'Clear Canvas' : 'Bersihkan'}
@@ -95,6 +98,9 @@ export class WritingLabComponent {
             <canvas id="writingCanvas" width="800" height="340" style="width:100%; height:340px; display:block; cursor:crosshair;"></canvas>
           </div>
 
+          <!-- Kotak Umpan Balik Apresiasi Belajar Menulis -->
+          <div id="writingFeedbackBox" style="display:none; margin-top:14px; padding:12px 18px; border-radius:14px; font-size:13.5px; font-weight:750; text-align:center; transition:all 0.3s ease;"></div>
+
           <!-- Color Palette & Tools -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
             <div style="display:flex; gap:10px; align-items:center;">
@@ -105,7 +111,7 @@ export class WritingLabComponent {
               <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
             </div>
 
-            <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
+            <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:10px 22px; border-radius:12px;">
               ⭐ ${isEn ? 'Finish & Collect Star!' : 'Selesai & Dapatkan Bintang!'}
             </button>
           </div>
@@ -218,6 +224,22 @@ export class WritingLabComponent {
     });
   }
 
+  showToast(message, type = 'success') {
+    const box = this.container.querySelector('#writingFeedbackBox');
+    if (!box) return;
+    box.style.display = 'block';
+    if (type === 'success') {
+      box.style.background = '#edfbf2';
+      box.style.color = '#15803d';
+      box.style.border = '1.5px solid #86efac';
+    } else {
+      box.style.background = '#fef3c7';
+      box.style.color = '#b45309';
+      box.style.border = '1.5px solid #fde68a';
+    }
+    box.innerHTML = message;
+  }
+
   attachEvents(task) {
     // Switch task
     const tabBtns = this.container.querySelectorAll('.btn-task-tab');
@@ -234,12 +256,61 @@ export class WritingLabComponent {
       TtsEngine.speak(`${task.title}. ${task.desc}`, 'id', 0.85);
     });
 
-    // Save writing
+    // Demo Animasi Goresan Panduan
+    this.container.querySelector('#btnDemoTrace')?.addEventListener('click', () => {
+      AudioFx.playTap();
+      const canvas = this.container.querySelector('#writingCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const startX = 40;
+      const endX = canvas.width - 40;
+      const midY = canvas.height / 2;
+      let currentX = startX;
+
+      const animId = setInterval(() => {
+        if (currentX >= endX) {
+          clearInterval(animId);
+          return;
+        }
+        ctx.beginPath();
+        ctx.arc(currentX, midY + Math.sin(currentX * 0.04) * 25, 7, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 178, 27, 0.45)';
+        ctx.fill();
+        currentX += 14;
+      }, 25);
+    });
+
+    // Simpan tulisan & validasi
     this.container.querySelector('#btnSaveWriting')?.addEventListener('click', () => {
-      AudioFx.playCelebration();
-      store.addStar(3);
+      const canvas = this.container.querySelector('#writingCanvas');
+      let drawnPixels = 0;
+      if (canvas) {
+        try {
+          const ctx = canvas.getContext('2d');
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+          for (let i = 3; i < data.length; i += 16) {
+            if (data[i] > 20) drawnPixels++;
+          }
+        } catch (_) {}
+      }
+
+      if (drawnPixels < 25) {
+        AudioFx.playGentleWrong();
+        this.showToast('✍️ Ayo goreskan spidolmu di atas pola tulisan terlebih dahulu ya! 🎨', 'warn');
+        return;
+      }
+
+      AudioFx.playStarSparkle();
+      AudioFx.playCelebration(this.container);
+      store.addStars(3);
       store.incrementDailyChallenge();
-      alert('🎉 Bagus sekali tulisanmu! Kamu mendapatkan 3 Bintang Juara! ⭐⭐⭐');
+      this.showToast('🎉 <strong>Luar Biasa!</strong> Tulisanmu sangat rapi & tekun! Kamu mendapatkan <strong>+3 Bintang Emas</strong>! ⭐⭐⭐', 'success');
+      
+      const starEl = document.getElementById('starCount');
+      if (starEl && store.data.stars) {
+        starEl.textContent = store.data.stars;
+      }
     });
   }
 }

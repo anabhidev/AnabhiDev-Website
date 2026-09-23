@@ -20,6 +20,8 @@ export class ReadingLabComponent {
     this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, QUIZ
     this.currentSayIndex = 0;
     this.isListening = false;
+    this.echoAudioUrl = null;
+    this.isRecordingEcho = false;
     this.levels = CONTENT_REGISTRY.reading || [];
   }
 
@@ -325,6 +327,9 @@ export class ReadingLabComponent {
             <button class="btn" id="btnHearSampleVoice" type="button" aria-label="Dengarkan contoh pelafalan" style="font-size:13px; font-weight:750; padding:11px 18px;">
               🔊 Dengarkan Contoh
             </button>
+            <button class="btn" id="btnEchoVoice" type="button" aria-label="Rekam dan dengarkan suaraku" style="font-size:13px; font-weight:750; padding:11px 18px; border-radius:14px; display:inline-flex; align-items:center; gap:6px;">
+              <span id="echoIcon">${this.echoAudioUrl ? '▶️' : '⏺️'}</span> <span id="echoLabel">${this.echoAudioUrl ? 'Putar Suaraku 🎧' : 'Rekam Suaraku'}</span>
+            </button>
           </div>
 
           <!-- Kotak Umpan Balik Hasil Pengucapan -->
@@ -416,6 +421,7 @@ export class ReadingLabComponent {
               const isMatch = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
 
               if (isMatch) {
+                AudioFx.playStarSparkle();
                 AudioFx.playSuccess();
                 AudioFx.triggerConfetti();
                 store.addStars(1);
@@ -452,6 +458,87 @@ export class ReadingLabComponent {
             rec.start();
           } catch (err) {
             console.warn('[SpeechRec] Error starting:', err);
+          }
+        });
+      }
+
+      // Voice Echo Studio (Rekam & Dengarkan Suaramu Sendiri)
+      const echoBtn = wrap.querySelector('#btnEchoVoice');
+      const echoIcon = wrap.querySelector('#echoIcon');
+      const echoLabel = wrap.querySelector('#echoLabel');
+
+      if (echoBtn) {
+        echoBtn.addEventListener('click', async () => {
+          if (this.echoAudioUrl && !this.isRecordingEcho) {
+            AudioFx.playTap();
+            try {
+              const audio = new Audio(this.echoAudioUrl);
+              audio.play();
+              if (feedbackBox) {
+                feedbackBox.style.background = '#edfbf2';
+                feedbackBox.style.color = '#15803d';
+                feedbackBox.innerHTML = '🎧 <em>Memutar rekaman suaramu... Suaramu jelas & hebat!</em>';
+              }
+            } catch (e) {
+              console.warn('[Echo] Gagal memutar audio:', e);
+            }
+            return;
+          }
+
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert('Fitur perekaman suara memerlukan browser modern dengan mikrofon.');
+            return;
+          }
+
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mediaRecorder = new MediaRecorder(stream);
+            const chunks = [];
+
+            mediaRecorder.ondataavailable = (e) => {
+              if (e.data.size > 0) chunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = () => {
+              const blob = new Blob(chunks, { type: 'audio/webm' });
+              if (this.echoAudioUrl) URL.revokeObjectURL(this.echoAudioUrl);
+              this.echoAudioUrl = URL.createObjectURL(blob);
+              this.isRecordingEcho = false;
+              if (echoIcon) echoIcon.textContent = '▶️';
+              if (echoLabel) echoLabel.textContent = 'Putar Suaraku 🎧';
+              if (feedbackBox) {
+                feedbackBox.style.background = '#edfbf2';
+                feedbackBox.style.color = '#15803d';
+                feedbackBox.style.borderColor = '#86efac';
+                feedbackBox.innerHTML = '✨ <strong>Suaramu Berhasil Direkam!</strong> Klik tombol <strong>"Putar Suaraku 🎧"</strong> untuk mendengarkan!';
+              }
+              AudioFx.playStarSparkle();
+              store.addStars(1);
+            };
+
+            mediaRecorder.start();
+            this.isRecordingEcho = true;
+            if (echoIcon) echoIcon.textContent = '⏹️';
+            if (echoLabel) echoLabel.textContent = 'Merekam... (3 detik)';
+            if (feedbackBox) {
+              feedbackBox.style.background = '#fef3c7';
+              feedbackBox.style.color = '#b45309';
+              feedbackBox.style.borderColor = '#fde68a';
+              feedbackBox.innerHTML = `🔴 <strong>Sedang Merekam Suaramu...</strong> Ucapkan: "<em>${currentItem.word}</em>" sekarang!`;
+            }
+
+            setTimeout(() => {
+              if (mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                stream.getTracks().forEach(t => t.stop());
+              }
+            }, 3200);
+
+          } catch (err) {
+            console.warn('[Echo] Akses mic tidak tersedia:', err);
+            if (feedbackBox) {
+              feedbackBox.textContent = 'Mohon izinkan akses mikrofon di browser untuk merekam suara.';
+            }
           }
         });
       }

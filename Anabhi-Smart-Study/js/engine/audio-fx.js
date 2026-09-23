@@ -7,6 +7,18 @@
 
 export const AudioFx = {
   ctx: null,
+  enabled: (typeof localStorage !== 'undefined') ? (localStorage.getItem('anabhidev_sound_enabled') !== 'false') : true,
+
+  toggleSound() {
+    this.enabled = !this.enabled;
+    try {
+      localStorage.setItem('anabhidev_sound_enabled', String(this.enabled));
+    } catch (_) {}
+    if (this.enabled) {
+      this.playTap();
+    }
+    return this.enabled;
+  },
 
   getContext() {
     if (typeof window === 'undefined') return null;
@@ -24,6 +36,7 @@ export const AudioFx = {
 
   // Nada ceria sukses (Ting-Ting!)
   playSuccess() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {
@@ -54,8 +67,14 @@ export const AudioFx = {
     } catch (e) {}
   },
 
+  // Alias kompatibilitas
+  playCorrect() {
+    this.playSuccess();
+  },
+
   // Nada lembut mencoba lagi (Bumb-boing bersahabat tanpa mengecewakan anak)
   playGentleWrong() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {
@@ -74,8 +93,14 @@ export const AudioFx = {
     } catch (e) {}
   },
 
+  // Alias kompatibilitas
+  playError() {
+    this.playGentleWrong();
+  },
+
   // Fanfare juara saat menyelesaikan kuis/topik
   playFanfare() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {
@@ -97,8 +122,70 @@ export const AudioFx = {
     } catch (e) {}
   },
 
+  // Perayaan spektakuler: Fanfare + Konfeti
+  playCelebration(containerEl = document.body) {
+    this.playFanfare();
+    this.triggerConfetti(containerEl);
+  },
+
+  // Kilau bintang emas (Star Sparkle Chime C6 - E6 - G6 - C7)
+  playStarSparkle() {
+    if (!this.enabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    try {
+      const notes = [1046.50, 1318.51, 1567.98, 2093.00]; // C6, E6, G6, C7
+      const now = ctx.currentTime;
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const start = now + (idx * 0.08);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0.12, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.28);
+      });
+    } catch (e) {}
+  },
+
+  // Nada harmonic level up juara
+  playLevelUp() {
+    if (!this.enabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    try {
+      const chords = [
+        [523.25, 659.25, 783.99],          // C Major
+        [587.33, 739.99, 880.00],          // D Major
+        [659.25, 830.61, 987.77],          // E Major
+        [783.99, 987.77, 1174.66, 1567.98] // G Octave
+      ];
+      const now = ctx.currentTime;
+      chords.forEach((chord, step) => {
+        const chordTime = now + (step * 0.14);
+        chord.forEach(freq => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, chordTime);
+          gain.gain.setValueAtTime(0.09, chordTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.32);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(chordTime);
+          osc.stop(chordTime + 0.32);
+        });
+      });
+    } catch (e) {}
+  },
+
   // Klik manik sempoa Soroban & Rekenrek (akustik tajam & renyah)
   playBeadClick() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {
@@ -119,6 +206,7 @@ export const AudioFx = {
 
   // Tap balok nilai tempat base-ten & bata piramida
   playBlockSnap() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {
@@ -139,6 +227,7 @@ export const AudioFx = {
 
   // Suara tap tombol UI yang halus
   playTap() {
+    if (!this.enabled) return;
     const ctx = this.getContext();
     if (!ctx) return;
     try {

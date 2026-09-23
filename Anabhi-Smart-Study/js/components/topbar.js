@@ -96,6 +96,11 @@ export class TopbarComponent {
           ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
         </button>
 
+        <!-- Toggle Efek Suara (AudioFx Master Control) -->
+        <button class="iconbtn" id="soundToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${AudioFx.enabled ? (isEn ? 'Mute sound effects' : 'Matikan efek suara') : (isEn ? 'Unmute sound effects' : 'Nyalakan efek suara')}" title="${AudioFx.enabled ? (isEn ? 'Sound Effects: Active' : 'Efek Suara: Aktif') : (isEn ? 'Sound Effects: Muted' : 'Efek Suara: Hening')}">
+          ${AudioFx.enabled ? '🔔' : '🔕'}
+        </button>
+
         <!-- Toggle Tema Terang/Gelap (Default: Light) -->
         <button class="iconbtn" id="themeToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
           ${currentTheme === 'dark' ? '☀️' : '🌙'}
@@ -157,6 +162,14 @@ export class TopbarComponent {
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
         appState.toggleTheme();
+      });
+    }
+
+    const soundBtn = this.container.querySelector('#soundToggleBtn');
+    if (soundBtn) {
+      soundBtn.addEventListener('click', () => {
+        AudioFx.toggleSound();
+        this.render();
       });
     }
 

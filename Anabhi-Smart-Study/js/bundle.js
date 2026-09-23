@@ -330,6 +330,11 @@
       return this.data.stars;
     }
   
+    // Alias untuk kompatibilitas seragam seluruh modul kuis & lab
+    addStar(count = 1) {
+      return this.addStars(count);
+    }
+  
     completeLesson(lessonKey) {
       if (!this.data.completedLessons) this.data.completedLessons = [];
       if (!this.data.completedLessons.includes(lessonKey)) {
@@ -10766,6 +10771,18 @@
   
   const AudioFx = {
     ctx: null,
+    enabled: (typeof localStorage !== 'undefined') ? (localStorage.getItem('anabhidev_sound_enabled') !== 'false') : true,
+  
+    toggleSound() {
+      this.enabled = !this.enabled;
+      try {
+        localStorage.setItem('anabhidev_sound_enabled', String(this.enabled));
+      } catch (_) {}
+      if (this.enabled) {
+        this.playTap();
+      }
+      return this.enabled;
+    },
   
     getContext() {
       if (typeof window === 'undefined') return null;
@@ -10783,6 +10800,7 @@
   
     // Nada ceria sukses (Ting-Ting!)
     playSuccess() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -10813,8 +10831,14 @@
       } catch (e) {}
     },
   
+    // Alias kompatibilitas
+    playCorrect() {
+      this.playSuccess();
+    },
+  
     // Nada lembut mencoba lagi (Bumb-boing bersahabat tanpa mengecewakan anak)
     playGentleWrong() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -10833,8 +10857,14 @@
       } catch (e) {}
     },
   
+    // Alias kompatibilitas
+    playError() {
+      this.playGentleWrong();
+    },
+  
     // Fanfare juara saat menyelesaikan kuis/topik
     playFanfare() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -10856,8 +10886,70 @@
       } catch (e) {}
     },
   
+    // Perayaan spektakuler: Fanfare + Konfeti
+    playCelebration(containerEl = document.body) {
+      this.playFanfare();
+      this.triggerConfetti(containerEl);
+    },
+  
+    // Kilau bintang emas (Star Sparkle Chime C6 - E6 - G6 - C7)
+    playStarSparkle() {
+      if (!this.enabled) return;
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const notes = [1046.50, 1318.51, 1567.98, 2093.00]; // C6, E6, G6, C7
+        const now = ctx.currentTime;
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const start = now + (idx * 0.08);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, start);
+          gain.gain.setValueAtTime(0.12, start);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(start);
+          osc.stop(start + 0.28);
+        });
+      } catch (e) {}
+    },
+  
+    // Nada harmonic level up juara
+    playLevelUp() {
+      if (!this.enabled) return;
+      const ctx = this.getContext();
+      if (!ctx) return;
+      try {
+        const chords = [
+          [523.25, 659.25, 783.99],          // C Major
+          [587.33, 739.99, 880.00],          // D Major
+          [659.25, 830.61, 987.77],          // E Major
+          [783.99, 987.77, 1174.66, 1567.98] // G Octave
+        ];
+        const now = ctx.currentTime;
+        chords.forEach((chord, step) => {
+          const chordTime = now + (step * 0.14);
+          chord.forEach(freq => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, chordTime);
+            gain.gain.setValueAtTime(0.09, chordTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.32);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(chordTime);
+            osc.stop(chordTime + 0.32);
+          });
+        });
+      } catch (e) {}
+    },
+  
     // Klik manik sempoa Soroban & Rekenrek (akustik tajam & renyah)
     playBeadClick() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -10878,6 +10970,7 @@
   
     // Tap balok nilai tempat base-ten & bata piramida
     playBlockSnap() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -10898,6 +10991,7 @@
   
     // Suara tap tombol UI yang halus
     playTap() {
+      if (!this.enabled) return;
       const ctx = this.getContext();
       if (!ctx) return;
       try {
@@ -12999,6 +13093,11 @@
             ${lang === 'id' ? '🌐 ID' : '🌐 EN'}
           </button>
   
+          <!-- Toggle Efek Suara (AudioFx Master Control) -->
+          <button class="iconbtn" id="soundToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${AudioFx.enabled ? (isEn ? 'Mute sound effects' : 'Matikan efek suara') : (isEn ? 'Unmute sound effects' : 'Nyalakan efek suara')}" title="${AudioFx.enabled ? (isEn ? 'Sound Effects: Active' : 'Efek Suara: Aktif') : (isEn ? 'Sound Effects: Muted' : 'Efek Suara: Hening')}">
+            ${AudioFx.enabled ? '🔔' : '🔕'}
+          </button>
+  
           <!-- Toggle Tema Terang/Gelap (Default: Light) -->
           <button class="iconbtn" id="themeToggleBtn" type="button" style="height:38px; min-width:38px; min-height:38px;" aria-label="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}" title="${currentTheme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}">
             ${currentTheme === 'dark' ? '☀️' : '🌙'}
@@ -13060,6 +13159,14 @@
       if (themeBtn) {
         themeBtn.addEventListener('click', () => {
           appState.toggleTheme();
+        });
+      }
+  
+      const soundBtn = this.container.querySelector('#soundToggleBtn');
+      if (soundBtn) {
+        soundBtn.addEventListener('click', () => {
+          AudioFx.toggleSound();
+          this.render();
         });
       }
   
@@ -18481,6 +18588,8 @@
       this.currentStep = 'SEE'; // SEE, LISTEN, SAY, MATCH, QUIZ
       this.currentSayIndex = 0;
       this.isListening = false;
+      this.echoAudioUrl = null;
+      this.isRecordingEcho = false;
       this.levels = CONTENT_REGISTRY.reading || [];
     }
   
@@ -18786,6 +18895,9 @@
               <button class="btn" id="btnHearSampleVoice" type="button" aria-label="Dengarkan contoh pelafalan" style="font-size:13px; font-weight:750; padding:11px 18px;">
                 🔊 Dengarkan Contoh
               </button>
+              <button class="btn" id="btnEchoVoice" type="button" aria-label="Rekam dan dengarkan suaraku" style="font-size:13px; font-weight:750; padding:11px 18px; border-radius:14px; display:inline-flex; align-items:center; gap:6px;">
+                <span id="echoIcon">${this.echoAudioUrl ? '▶️' : '⏺️'}</span> <span id="echoLabel">${this.echoAudioUrl ? 'Putar Suaraku 🎧' : 'Rekam Suaraku'}</span>
+              </button>
             </div>
   
             <!-- Kotak Umpan Balik Hasil Pengucapan -->
@@ -18877,6 +18989,7 @@
                 const isMatch = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
   
                 if (isMatch) {
+                  AudioFx.playStarSparkle();
                   AudioFx.playSuccess();
                   AudioFx.triggerConfetti();
                   store.addStars(1);
@@ -18913,6 +19026,87 @@
               rec.start();
             } catch (err) {
               console.warn('[SpeechRec] Error starting:', err);
+            }
+          });
+        }
+  
+        // Voice Echo Studio (Rekam & Dengarkan Suaramu Sendiri)
+        const echoBtn = wrap.querySelector('#btnEchoVoice');
+        const echoIcon = wrap.querySelector('#echoIcon');
+        const echoLabel = wrap.querySelector('#echoLabel');
+  
+        if (echoBtn) {
+          echoBtn.addEventListener('click', async () => {
+            if (this.echoAudioUrl && !this.isRecordingEcho) {
+              AudioFx.playTap();
+              try {
+                const audio = new Audio(this.echoAudioUrl);
+                audio.play();
+                if (feedbackBox) {
+                  feedbackBox.style.background = '#edfbf2';
+                  feedbackBox.style.color = '#15803d';
+                  feedbackBox.innerHTML = '🎧 <em>Memutar rekaman suaramu... Suaramu jelas & hebat!</em>';
+                }
+              } catch (e) {
+                console.warn('[Echo] Gagal memutar audio:', e);
+              }
+              return;
+            }
+  
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+              alert('Fitur perekaman suara memerlukan browser modern dengan mikrofon.');
+              return;
+            }
+  
+            try {
+              const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+              const mediaRecorder = new MediaRecorder(stream);
+              const chunks = [];
+  
+              mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) chunks.push(e.data);
+              };
+  
+              mediaRecorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'audio/webm' });
+                if (this.echoAudioUrl) URL.revokeObjectURL(this.echoAudioUrl);
+                this.echoAudioUrl = URL.createObjectURL(blob);
+                this.isRecordingEcho = false;
+                if (echoIcon) echoIcon.textContent = '▶️';
+                if (echoLabel) echoLabel.textContent = 'Putar Suaraku 🎧';
+                if (feedbackBox) {
+                  feedbackBox.style.background = '#edfbf2';
+                  feedbackBox.style.color = '#15803d';
+                  feedbackBox.style.borderColor = '#86efac';
+                  feedbackBox.innerHTML = '✨ <strong>Suaramu Berhasil Direkam!</strong> Klik tombol <strong>"Putar Suaraku 🎧"</strong> untuk mendengarkan!';
+                }
+                AudioFx.playStarSparkle();
+                store.addStars(1);
+              };
+  
+              mediaRecorder.start();
+              this.isRecordingEcho = true;
+              if (echoIcon) echoIcon.textContent = '⏹️';
+              if (echoLabel) echoLabel.textContent = 'Merekam... (3 detik)';
+              if (feedbackBox) {
+                feedbackBox.style.background = '#fef3c7';
+                feedbackBox.style.color = '#b45309';
+                feedbackBox.style.borderColor = '#fde68a';
+                feedbackBox.innerHTML = `🔴 <strong>Sedang Merekam Suaramu...</strong> Ucapkan: "<em>${currentItem.word}</em>" sekarang!`;
+              }
+  
+              setTimeout(() => {
+                if (mediaRecorder.state === 'recording') {
+                  mediaRecorder.stop();
+                  stream.getTracks().forEach(t => t.stop());
+                }
+              }, 3200);
+  
+            } catch (err) {
+              console.warn('[Echo] Akses mic tidak tersedia:', err);
+              if (feedbackBox) {
+                feedbackBox.textContent = 'Mohon izinkan akses mikrofon di browser untuk merekam suara.';
+              }
             }
           });
         }
@@ -19806,9 +20000,12 @@
                 <h3 style="margin:0 0 4px; font-size:18px; font-weight:800; color:var(--ink);">${task.title}</h3>
                 <p style="margin:0; font-size:13px; color:var(--muted);">${task.desc}</p>
               </div>
-              <div style="display:flex; gap:8px; align-items:center;">
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
                 <button class="btn btn-tts" id="btnSpeakWritingDesc" type="button" style="font-size:12px; padding:6px 12px;">
                   🔊 ${isEn ? 'Listen' : 'Dengarkan'}
+                </button>
+                <button class="btn" id="btnDemoTrace" type="button" style="font-size:12px; padding:6px 12px;">
+                  ✨ ${isEn ? 'Show Motion' : 'Contoh Gerakan'}
                 </button>
                 <button class="btn" id="btnClearCanvas" type="button" style="font-size:12px; padding:6px 14px;">
                   🧹 ${isEn ? 'Clear Canvas' : 'Bersihkan'}
@@ -19837,6 +20034,9 @@
               <canvas id="writingCanvas" width="800" height="340" style="width:100%; height:340px; display:block; cursor:crosshair;"></canvas>
             </div>
   
+            <!-- Kotak Umpan Balik Apresiasi Belajar Menulis -->
+            <div id="writingFeedbackBox" style="display:none; margin-top:14px; padding:12px 18px; border-radius:14px; font-size:13.5px; font-weight:750; text-align:center; transition:all 0.3s ease;"></div>
+  
             <!-- Color Palette & Tools -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:12px;">
               <div style="display:flex; gap:10px; align-items:center;">
@@ -19847,7 +20047,7 @@
                 <button class="btn-color-dot" data-color="#1e7b45" aria-label="Warna Hijau" style="width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; background:#1e7b45; border:2.5px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,0.25); cursor:pointer;"></button>
               </div>
   
-              <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:8px 20px;">
+              <button class="btn primary" id="btnSaveWriting" type="button" style="font-size:13px; font-weight:800; padding:10px 22px; border-radius:12px;">
                 ⭐ ${isEn ? 'Finish & Collect Star!' : 'Selesai & Dapatkan Bintang!'}
               </button>
             </div>
@@ -19960,6 +20160,22 @@
       });
     }
   
+    showToast(message, type = 'success') {
+      const box = this.container.querySelector('#writingFeedbackBox');
+      if (!box) return;
+      box.style.display = 'block';
+      if (type === 'success') {
+        box.style.background = '#edfbf2';
+        box.style.color = '#15803d';
+        box.style.border = '1.5px solid #86efac';
+      } else {
+        box.style.background = '#fef3c7';
+        box.style.color = '#b45309';
+        box.style.border = '1.5px solid #fde68a';
+      }
+      box.innerHTML = message;
+    }
+  
     attachEvents(task) {
       // Switch task
       const tabBtns = this.container.querySelectorAll('.btn-task-tab');
@@ -19976,12 +20192,61 @@
         TtsEngine.speak(`${task.title}. ${task.desc}`, 'id', 0.85);
       });
   
-      // Save writing
+      // Demo Animasi Goresan Panduan
+      this.container.querySelector('#btnDemoTrace')?.addEventListener('click', () => {
+        AudioFx.playTap();
+        const canvas = this.container.querySelector('#writingCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const startX = 40;
+        const endX = canvas.width - 40;
+        const midY = canvas.height / 2;
+        let currentX = startX;
+  
+        const animId = setInterval(() => {
+          if (currentX >= endX) {
+            clearInterval(animId);
+            return;
+          }
+          ctx.beginPath();
+          ctx.arc(currentX, midY + Math.sin(currentX * 0.04) * 25, 7, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 178, 27, 0.45)';
+          ctx.fill();
+          currentX += 14;
+        }, 25);
+      });
+  
+      // Simpan tulisan & validasi
       this.container.querySelector('#btnSaveWriting')?.addEventListener('click', () => {
-        AudioFx.playCelebration();
-        store.addStar(3);
+        const canvas = this.container.querySelector('#writingCanvas');
+        let drawnPixels = 0;
+        if (canvas) {
+          try {
+            const ctx = canvas.getContext('2d');
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+            for (let i = 3; i < data.length; i += 16) {
+              if (data[i] > 20) drawnPixels++;
+            }
+          } catch (_) {}
+        }
+  
+        if (drawnPixels < 25) {
+          AudioFx.playGentleWrong();
+          this.showToast('✍️ Ayo goreskan spidolmu di atas pola tulisan terlebih dahulu ya! 🎨', 'warn');
+          return;
+        }
+  
+        AudioFx.playStarSparkle();
+        AudioFx.playCelebration(this.container);
+        store.addStars(3);
         store.incrementDailyChallenge();
-        alert('🎉 Bagus sekali tulisanmu! Kamu mendapatkan 3 Bintang Juara! ⭐⭐⭐');
+        this.showToast('🎉 <strong>Luar Biasa!</strong> Tulisanmu sangat rapi & tekun! Kamu mendapatkan <strong>+3 Bintang Emas</strong>! ⭐⭐⭐', 'success');
+        
+        const starEl = document.getElementById('starCount');
+        if (starEl && store.data.stars) {
+          starEl.textContent = store.data.stars;
+        }
       });
     }
   }
