@@ -1,9 +1,9 @@
 // ================================================================
 // AnabhiDev-WEB — Master Interactive JavaScript
-// Bilingual Engine · Mobile Navigation · Scroll Observer · Active Link
+// Bilingual Engine · Mobile Navigation · Scroll Observer · Active Link · Filter Engine
 // Development · Anabhi Dev
-// Version   : 2.0
-// Generated : 20 September 2026, 19:53:00 WITA
+// Version   : 2.2
+// Generated : 23 September 2026, 21:55:00 WITA
 // ================================================================
 
 (function () {
@@ -147,5 +147,75 @@
       }
     });
   }
+
+  /* ── 5. Knowledge Hub Search & Category Filter (learn.html) ── */
+  var searchInput = document.getElementById('learnSearch');
+  var filterPills = document.querySelectorAll('.filter-pills .pill-btn');
+  var guideCards = document.querySelectorAll('.sec .grid > a.card');
+  var emptyState = document.getElementById('guideEmpty');
+  var countEl = document.getElementById('filterCount');
+
+  if (guideCards.length > 0 && (searchInput || filterPills.length > 0)) {
+    var activeCategory = 'all';
+
+    function updateGuideFilter() {
+      var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var visibleCount = 0;
+
+      for (var c = 0; c < guideCards.length; c++) {
+        var card = guideCards[c];
+        var cardCategory = card.getAttribute('data-category') || '';
+        var cardText = (card.textContent || '').toLowerCase();
+
+        var matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
+        var matchesSearch = (!query || cardText.indexOf(query) !== -1);
+
+        if (matchesCategory && matchesSearch) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      }
+
+      if (emptyState) {
+        emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
+      }
+
+      if (countEl) {
+        var isId = (doc.lang === 'id');
+        var isFiltered = (visibleCount !== guideCards.length);
+        if (isId) {
+          countEl.textContent = 'Menampilkan ' + visibleCount + ' panduan' + (isFiltered ? ' (difilter)' : '');
+        } else {
+          countEl.textContent = 'Showing ' + visibleCount + (visibleCount === 1 ? ' guide' : ' guides') + (isFiltered ? ' (filtered)' : '');
+        }
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', updateGuideFilter);
+    }
+
+    for (var f = 0; f < filterPills.length; f++) {
+      filterPills[f].addEventListener('click', function () {
+        for (var p = 0; p < filterPills.length; p++) {
+          filterPills[p].classList.remove('on');
+          filterPills[p].setAttribute('aria-selected', 'false');
+        }
+        this.classList.add('on');
+        this.setAttribute('aria-selected', 'true');
+        activeCategory = this.getAttribute('data-filter') || 'all';
+        updateGuideFilter();
+      });
+    }
+
+    if (langBox) {
+      langBox.addEventListener('click', function () {
+        setTimeout(updateGuideFilter, 60);
+      });
+    }
+  }
 })();
+
 
