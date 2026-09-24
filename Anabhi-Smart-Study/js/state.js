@@ -150,6 +150,8 @@ class AppState {
       window.location.hash = '#cali-stung';
     } else if (route === 'maxxi') {
       window.location.hash = '#maxxi';
+    } else if (route === 'rekor') {
+      window.location.hash = '#rekor';
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

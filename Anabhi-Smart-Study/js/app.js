@@ -25,6 +25,7 @@ import { MaxxiEngineComponent } from './components/maxxi-engine.js';
 import { WritingLabComponent } from './components/writing-lab.js';
 import { MathToolboxComponent } from './components/math-toolbox.js';
 import { ScheduleViewComponent } from './components/schedule-view.js';
+import { RecordsViewComponent } from './components/records-view.js';
 import { SCHEDULE_DATA, getScheduleByDayIndex, getGroupedDailySchedule } from './data/schedule-data.js';
 
 class App {
@@ -57,6 +58,7 @@ class App {
     this.writingLab = new WritingLabComponent(this.mainEl);
     this.mathToolbox = new MathToolboxComponent(this.mainEl);
     this.scheduleView = new ScheduleViewComponent(this.mainEl);
+    this.recordsView = new RecordsViewComponent(this.mainEl);
 
     this.initPWA();
     this.initRouting();
@@ -107,6 +109,8 @@ class App {
         appState.set({ currentRoute: 'cali-stung', drawerOpen: false });
       } else if (hash === '#maxxi') {
         appState.set({ currentRoute: 'maxxi', drawerOpen: false });
+      } else if (hash === '#rekor' || hash === '#ensiklopedia') {
+        appState.set({ currentRoute: 'rekor', drawerOpen: false });
       } else {
         appState.set({ currentRoute: 'home', currentSubjectId: null, drawerOpen: false });
       }
@@ -167,6 +171,10 @@ class App {
         break;
       case 'math-toolbox':
         this.mathToolbox.render();
+        break;
+      case 'rekor':
+      case 'ensiklopedia':
+        this.recordsView.render();
         break;
       default:
         this.renderHome();
@@ -551,6 +559,21 @@ class App {
                 ${isEn ? 'Practice lines, curves, tracing letters, words, and numbers on canvas.' : 'Tebalkan garis lurus/lengkung, huruf kapital/kecil, dan kata di kanvas digital.'}
               </p>
               <span style="font-size:12px; font-weight:800; color:#7b359c;">${isEn ? 'Open Canvas ➔' : 'Buka Kanvas Tulis ➔'}</span>
+            </div>
+          </div>
+
+          <!-- 7. Card Ensiklopedia Rekor Serba TER- -->
+          <div class="subject-card btn-open-companion" data-route="rekor" style="cursor:pointer; border:1.5px solid rgba(245,158,11,0.35); background:var(--card); padding:20px; display:flex; gap:16px; align-items:center;">
+            <div style="width:72px; height:100px; border-radius:8px; background:linear-gradient(135deg, #f59e0b, #d97706); display:grid; place-items:center; font-size:36px; box-shadow:0 4px 12px rgba(245,158,11,0.25); flex-shrink:0; color:#fff;">
+              🏆
+            </div>
+            <div style="flex:1; min-width:0;">
+              <span class="subject-badge" style="background:#f59e0b; color:#fff; font-size:10px; border:none; margin-bottom:4px;">📊 Rekor Dunia &amp; RI</span>
+              <h3 style="font-size:16px; font-weight:800; margin:0 0 4px; color:var(--ink);">${isEn ? 'World & Indo Records' : 'Rekor Serba TER-'}</h3>
+              <p style="font-size:12px; color:var(--muted); line-height:1.45; margin:0 0 8px;">
+                ${isEn ? 'Fastest cars, deepest ocean trenches, highest peaks, and largest creatures!' : 'Mobil tercepat, laut terdalam, gunung tertinggi, hingga paus biru raksasa!'}
+              </p>
+              <span style="font-size:12px; font-weight:800; color:#d97706;">${isEn ? 'Explore Records ➔' : 'Jelajahi Rekor ➔'}</span>
             </div>
           </div>
         </div>

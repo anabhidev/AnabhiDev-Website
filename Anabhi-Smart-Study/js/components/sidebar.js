@@ -131,6 +131,15 @@ export class SidebarComponent {
         </button>
       </nav>
 
+      <!-- Ensiklopedia Rekor Serba TER- & Statistika -->
+      <div class="kicker">${isEn ? 'ENCYCLOPEDIA & RECORDS' : 'ENSIKLOPEDIA & STATISTIKA'}</div>
+      <nav class="nav" aria-label="Ensiklopedia Rekor">
+        <button class="nav-item ${state.currentRoute === 'rekor' ? 'active' : ''}" data-route="rekor" data-tooltip="${isEn ? 'World & Indo Records (Serba TER-)' : 'Ensiklopedia Serba TER-'}" aria-label="${isEn ? 'World and Indonesia Records Encyclopedia' : 'Ensiklopedia Rekor Serba TER di Indonesia dan Dunia'}">
+          <span class="icon">🏆</span>
+          <span class="label">${isEn ? 'Rekor Serba TER-' : 'Rekor Serba TER-'}</span>
+        </button>
+      </nav>
+
       <!-- Fitur Tambahan: Tantangan & Progress -->
       <div class="kicker">${t('activitiesKicker', lang)}</div>
       <nav class="nav" aria-label="Aktivitas">

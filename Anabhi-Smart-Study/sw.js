@@ -6,7 +6,7 @@
 // Generated : 10 September 2026, 09:37:00
 // ================================================================
 
-var CACHE_VERSION = 'anabhidev-smart-study-v4-2';
+var CACHE_VERSION = 'anabhidev-smart-study-v4-3';
 
 var PRECACHE = [
   './',
@@ -42,6 +42,7 @@ var PRECACHE = [
   './js/components/maxxi-engine.js',
   './js/components/writing-lab.js',
   './js/components/math-toolbox.js',
+  './js/components/records-view.js',
   './js/components/quiz-runner.js',
   './js/components/video-modal.js',
   './js/data/subjects.js',
@@ -61,6 +62,7 @@ var PRECACHE = [
   './js/data/kokurikuler.js',
   './js/data/globe-paths.js',
   './js/data/map-vector-data.js',
+  './js/data/records-data.js',
   './assets/favicon.svg',
   './assets/icon-192-2.png',
   './assets/icon-512-2.png',
