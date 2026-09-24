@@ -63,8 +63,8 @@ export class RecordsViewComponent {
             </h1>
             <p style="margin:0; font-size:14px; color:var(--muted); max-width:680px; line-height:1.6;">
               ${isEn
-                ? 'Discover the fastest hypercars, deepest ocean trenches, highest mountain peaks, and largest animals in Indonesia and across the globe with visual illustrations and scale comparisons!'
-                : 'Temukan mobil tercepat, palung terdalam, gunung tertinggi, dan hewan terbesar di Indonesia maupun seluruh planet Bumi dengan ilustrasi visual dan perbandingan skala yang seru!'}
+                ? 'Discover the fastest hypercars, deepest ocean trenches, colossal dinosaurs, and highest mountain peaks in Indonesia and across the globe with visual illustrations and scale comparisons!'
+                : 'Temukan dinosaurus terbesar, mobil tercepat, palung terdalam, gunung tertinggi, dan hewan terunik di Indonesia maupun seluruh planet Bumi dengan ilustrasi visual dan perbandingan skala yang seru!'}
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export class RecordsViewComponent {
               ${isEn ? 'Region:' : 'Wilayah:'}
             </span>
             <button class="btn ${this.activeScope === 'all' ? 'primary' : ''} btn-scope-filter" data-scope="all" type="button" aria-label="Tampilkan semua rekor" style="font-size:12.5px; font-weight:750; padding:6px 14px; border-radius:999px;">
-              ⭐ ${isEn ? 'All (20+)' : 'Semua Rekor (20+)'}
+              ⭐ ${isEn ? `All (${RECORDS_DATA.length})` : `Semua Rekor (${RECORDS_DATA.length})`}
             </button>
             <button class="btn ${this.activeScope === 'indonesia' ? 'primary' : ''} btn-scope-filter" data-scope="indonesia" type="button" aria-label="Rekor di Indonesia" style="font-size:12.5px; font-weight:750; padding:6px 14px; border-radius:999px;">
               🇮🇩 ${isEn ? 'Indonesia Records' : 'Serba TER- di Indonesia'}
@@ -273,13 +273,12 @@ export class RecordsViewComponent {
   // TAB 2: BANDINGKAN SKALA UKURAN & KECEPATAN (COMPARISON)
   // ============================================================
   renderComparisonTab(lang, isEn) {
-    const isSpeed = this.scaleType === 'speed';
-
     // Data komparasi kecepatan (km/jam)
     const speedItems = [
       { name: 'Jalan Santai Anak', stat: '4 km/jam', pct: 2, icon: '🚶' },
       { name: 'Sepeda Ceria', stat: '15 km/jam', pct: 4, icon: '🚲' },
       { name: 'Mobil di Jalan Tol', stat: '100 km/jam', pct: 12, icon: '🚗' },
+      { name: 'Gallimimus (Dino Pelari Sprint)', stat: '70 km/jam', pct: 11, icon: '🏃', badge: 'DINO TERCEPAT' },
       { name: 'Cheetah Berlari Kencang', stat: '120 km/jam', pct: 15, icon: '🐆', badge: 'HEWAN DARAT TERCEPAT' },
       { name: 'Kereta Cepat Whoosh Indonesia', stat: '350 km/jam', pct: 26, icon: '🚅', badge: 'KERETA TERCEPAT SE-ASEAN' },
       { name: 'Elang Peregrine Falcon Menukik', stat: '389 km/jam', pct: 30, icon: '🦅', badge: 'HEWAN TERCEPAT DI UDARA' },
@@ -310,7 +309,35 @@ export class RecordsViewComponent {
       { name: 'Gunung Olympus Mons di Planet Mars', stat: '21.900 meter (hampir 22 km)', pct: 100, icon: '🪐', badge: 'GUNUNG TERTINGGI TATA SURYA' }
     ];
 
-    const currentItems = isSpeed ? speedItems : heightItems;
+    // Data komparasi ukuran & bobot dinosaurus purba
+    const dinosaurItems = [
+      { name: 'Microraptor (Dinosaurus 4 Sayap)', stat: '0,7 meter · 1 kg', pct: 4, icon: '🪶', badge: 'TERKECIL BERSAYAP' },
+      { name: 'Compsognathus (Karnivora Mungil)', stat: '0,9 meter · 2,5 kg', pct: 6, icon: '🍗', badge: 'PEMBURU MUNGIL' },
+      { name: 'Manusia Dewasa (Sebagai Pembanding)', stat: '1,75 meter · 75 kg', pct: 8, icon: '🧍', badge: 'SKALA MANUSIA' },
+      { name: 'Velociraptor (Pemburu Cakar Sabit)', stat: '2 meter · 15 kg', pct: 10, icon: '🦖' },
+      { name: 'Troodon (Dinosaurus Paling Genius)', stat: '2,4 meter · EQ Tertinggi', pct: 12, icon: '🧠', badge: 'OTAK TERBESAR RELATIF' },
+      { name: 'Ankylosaurus (Tank Baja Berzirah)', stat: '8 meter · 8 ton', pct: 24, icon: '🛡️', badge: 'PELINDUNG TERKUAT' },
+      { name: 'Triceratops (Perisai Tiga Tanduk)', stat: '9 meter · 10 ton', pct: 28, icon: '🦏', badge: 'TANDUK TERKUAT' },
+      { name: 'Quetzalcoatlus (Pterosaurus Raksasa)', stat: '11 meter rentang sayap', pct: 35, icon: '🦅', badge: 'TERBANG TERBESAR' },
+      { name: 'Tyrannosaurus Rex (Raja Predator)', stat: '12 meter · 9 ton', pct: 40, icon: '🦷', badge: 'GIGITAN TERKUAT' },
+      { name: 'Spinosaurus (Karnivora Terpanjang)', stat: '15 meter · 10 ton', pct: 48, icon: '🐊', badge: 'KARNIVORA TERPANJANG' },
+      { name: 'Mosasaurus (Penguasa Samudra Purba)', stat: '17 meter · 15 ton', pct: 54, icon: '🦈', badge: 'PREDATOR LAUT TERBESAR' },
+      { name: 'Mamenchisaurus (Leher Terpanjang)', stat: '26 meter (Leher 15 m)', pct: 72, icon: '🦒', badge: 'LEHER TERPANJANG' },
+      { name: 'Argentinosaurus (Dinosaurus Terbesar)', stat: '40 meter · 90 ton', pct: 100, icon: '🦕', badge: 'TERBESAR DI DARATAN' }
+    ];
+
+    let titleStr = '';
+    let currentItems = speedItems;
+    if (this.scaleType === 'speed') {
+      titleStr = isEn ? '⚡ Speed Scale Comparison' : '⚡ Visualisasi Perbandingan Kecepatan';
+      currentItems = speedItems;
+    } else if (this.scaleType === 'height') {
+      titleStr = isEn ? '🏔️ Height & Depth Scale Comparison' : '🏔️ Visualisasi Ketinggian & Kedalaman';
+      currentItems = heightItems;
+    } else {
+      titleStr = isEn ? '🦖 Prehistoric Dinosaur Giants Scale' : '🦖 Visualisasi Skala Raksasa Dinosaurus';
+      currentItems = dinosaurItems;
+    }
 
     return `
       <div style="background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:var(--shadow);">
@@ -318,9 +345,7 @@ export class RecordsViewComponent {
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
           <div>
             <h2 style="font-size:20px; font-weight:850; margin:0 0 6px; color:var(--ink);">
-              ${isSpeed 
-                ? (isEn ? '⚡ Speed Scale Comparison' : '⚡ Visualisasi Perbandingan Kecepatan')
-                : (isEn ? '🏔️ Height & Depth Scale Comparison' : '🏔️ Visualisasi Ketinggian & Kedalaman')}
+              ${titleStr}
             </h2>
             <p style="margin:0; font-size:13px; color:var(--muted);">
               ${isEn 
@@ -329,12 +354,15 @@ export class RecordsViewComponent {
             </p>
           </div>
 
-          <div style="display:flex; gap:8px;">
-            <button class="btn ${isSpeed ? 'primary' : ''} btn-scale-type" data-scale="speed" type="button" aria-label="Lihat perbandingan kecepatan" style="font-size:13px; font-weight:800; padding:8px 16px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn ${this.scaleType === 'speed' ? 'primary' : ''} btn-scale-type" data-scale="speed" type="button" aria-label="Lihat perbandingan kecepatan" style="font-size:13px; font-weight:800; padding:8px 16px;">
               🏎️ ${isEn ? 'Speed Scale' : 'Skala Kecepatan'}
             </button>
-            <button class="btn ${!isSpeed ? 'primary' : ''} btn-scale-type" data-scale="height" type="button" aria-label="Lihat perbandingan tinggi dan kedalaman" style="font-size:13px; font-weight:800; padding:8px 16px;">
+            <button class="btn ${this.scaleType === 'height' ? 'primary' : ''} btn-scale-type" data-scale="height" type="button" aria-label="Lihat perbandingan tinggi dan kedalaman" style="font-size:13px; font-weight:800; padding:8px 16px;">
               🏔️ ${isEn ? 'Height & Depth' : 'Tinggi & Kedalaman'}
+            </button>
+            <button class="btn ${this.scaleType === 'dinosaur' ? 'primary' : ''} btn-scale-type" data-scale="dinosaur" type="button" aria-label="Lihat perbandingan dinosaurus purba" style="font-size:13px; font-weight:800; padding:8px 16px;">
+              🦖 ${isEn ? 'Dinosaur Giants' : 'Raksasa Dinosaurus'}
             </button>
           </div>
         </div>
