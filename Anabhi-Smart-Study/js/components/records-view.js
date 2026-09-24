@@ -193,75 +193,77 @@ export class RecordsViewComponent {
     const speechText = `${titleText}. Pemegang rekor: ${r.holder}. Angka statistik: ${r.statValue}. Perbandingan: ${compText}. Tahukah kamu? ${factText}`;
 
     return `
-      <div class="quiz-box record-card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:var(--shadow); transition:transform 0.2s ease, box-shadow 0.2s ease;">
-        <div>
-          <!-- Header Bar: Scope Flag + Badge + TTS Audio Button -->
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:14px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="subject-badge" style="${isIndo ? 'background:#fef2f2; color:#b91c1c; border-color:#fca5a5;' : 'background:#f0f9ff; color:#0369a1; border-color:#7dd3fc;'} font-weight:800; font-size:11px;">
-                ${isIndo ? '🇮🇩 INDONESIA' : '🌍 DUNIA'}
-              </span>
-              <span class="subject-badge" style="background:rgba(255, 178, 27, 0.15); color:#b45309; border-color:rgba(255, 178, 27, 0.4); font-weight:800; font-size:11px;">
-                ${badgeText}
-              </span>
-            </div>
-
-            <!-- Tombol TTS Audio Bacakan -->
-            <button 
-              class="btn btn-read-record" 
-              type="button" 
-              data-text="${encodeURIComponent(speechText)}"
-              aria-label="${isEn ? 'Listen to record narration' : 'Dengarkan suara fakta rekor'}" 
-              title="${isEn ? 'Listen' : 'Dengarkan'}"
-              style="padding:5px 10px; font-size:12px; font-weight:700; border-radius:8px; background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal); display:inline-flex; align-items:center; gap:4px;"
-            >
-              🔊 <span style="font-size:11px;">${isEn ? 'Listen' : 'Dengar'}</span>
-            </button>
-          </div>
-
-          <!-- Visual Illustration & Title Section -->
-          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
-            <div style="width:78px; height:78px; flex:0 0 78px; border-radius:16px; overflow:hidden; border:1px solid var(--line); box-shadow:0 4px 12px rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center; background:var(--surface);">
-              ${r.svgIcon}
-            </div>
-            <div style="min-width:0; flex:1 1 auto;">
-              <h3 style="margin:0 0 4px; font-size:16px; font-weight:850; color:var(--ink); line-height:1.35;">
-                ${titleText}
-              </h3>
-              <div style="font-size:12.5px; font-weight:800; color:var(--teal);">
-                ${r.holder}
-              </div>
-            </div>
-          </div>
-
-          <!-- Giant Stat Highlight Banner -->
-          <div style="background:linear-gradient(135deg, var(--teal-soft), rgba(255, 178, 27, 0.12)); border:1.5px solid var(--teal); border-radius:14px; padding:10px 14px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
-            <span style="font-size:12px; font-weight:800; color:var(--ink); text-transform:uppercase; letter-spacing:0.3px;">
-              📊 ${isEn ? 'STAT RECORD:' : 'ANGKA REKOR:'}
+      <div class="quiz-box record-card" style="margin-bottom:0; display:flex; flex-direction:column; background:var(--card); border:1.5px solid var(--line); border-radius:22px; padding:20px; box-shadow:var(--shadow); transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; height:100%; box-sizing:border-box;">
+        <!-- 1. Header Bar: Scope Flag + Badge + TTS Audio Button -->
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:14px; min-height:30px;">
+          <div style="display:flex; align-items:center; gap:6px; min-width:0; flex:1 1 auto; overflow:hidden;">
+            <span class="subject-badge" style="${isIndo ? 'background:#fef2f2; color:#b91c1c; border-color:#fca5a5;' : 'background:#f0f9ff; color:#0369a1; border-color:#7dd3fc;'} font-weight:800; font-size:11px; white-space:nowrap; flex-shrink:0; line-height:1; padding:4px 8px;">
+              ${isIndo ? '🇮🇩 INDONESIA' : '🌍 DUNIA'}
             </span>
-            <span style="font-size:18px; font-weight:900; color:var(--teal-soft-ink); font-family:monospace, sans-serif;">
-              ${r.statValue}
+            <span class="subject-badge" style="background:rgba(255, 178, 27, 0.15); color:#b45309; border-color:rgba(255, 178, 27, 0.4); font-weight:800; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:130px; line-height:1; padding:4px 8px;" title="${badgeText}">
+              ${badgeText}
             </span>
           </div>
 
-          <!-- Description -->
-          <p style="margin:0 0 12px; font-size:13px; color:var(--muted); line-height:1.55;">
-            ${descText}
-          </p>
+          <!-- Tombol TTS Audio Bacakan -->
+          <button 
+            class="btn btn-read-record" 
+            type="button" 
+            data-text="${encodeURIComponent(speechText)}"
+            aria-label="${isEn ? 'Listen to record narration' : 'Dengarkan suara fakta rekor'}" 
+            title="${isEn ? 'Listen' : 'Dengarkan'}"
+            style="padding:4px 10px; font-size:11.5px; font-weight:700; border-radius:8px; background:var(--teal-soft); color:var(--teal-soft-ink); border-color:var(--teal); display:inline-flex; align-items:center; gap:4px; flex-shrink:0; white-space:nowrap;"
+          >
+            🔊 <span style="font-size:11px;">${isEn ? 'Listen' : 'Dengar'}</span>
+          </button>
+        </div>
 
-          <!-- Fun Comparison Box -->
-          <div style="background:var(--paper); border-left:3.5px solid #f59e0b; border-radius:8px; padding:10px 12px; margin-bottom:12px; font-size:12.5px; color:var(--ink); line-height:1.5;">
-            <strong style="color:#b45309; display:block; margin-bottom:2px; font-size:11.5px; text-transform:uppercase;">
-              ⚡ ${isEn ? 'Fun Scale Comparison:' : 'Perbandingan Skala Seru:'}
-            </strong>
+        <!-- 2. Visual Illustration & Title Section (Fixed 76px Baseline) -->
+        <div style="display:flex; gap:14px; align-items:center; margin-bottom:14px; min-height:76px;">
+          <div style="width:74px; height:74px; flex:0 0 74px; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 4px 12px rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; background:var(--surface);">
+            ${r.svgIcon}
+          </div>
+          <div style="min-width:0; flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;">
+            <h3 style="margin:0 0 4px; font-size:15px; font-weight:850; color:var(--ink); line-height:1.35; min-height:42px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;" title="${titleText}">
+              ${titleText}
+            </h3>
+            <div style="font-size:12px; font-weight:800; color:var(--teal); min-height:32px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.35;" title="${r.holder}">
+              ${r.holder}
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Giant Stat Highlight Banner (Stacked, Uniform Height, Perfectly Centered) -->
+        <div style="background:linear-gradient(135deg, rgba(13,148,136,0.08), rgba(245,158,11,0.09)); border:1.5px solid rgba(13,148,136,0.3); border-radius:14px; padding:10px 14px; margin-bottom:14px; min-height:72px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-sizing:border-box;">
+          <div style="font-size:10px; font-weight:850; color:var(--teal); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:5px;">
+            <span>📊</span> <span>${isEn ? 'STAT RECORD' : 'ANGKA REKOR'}</span>
+          </div>
+          <div style="font-size:16px; font-weight:900; color:var(--ink); font-family:monospace, sans-serif; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;" title="${r.statValue}">
+            ${r.statValue}
+          </div>
+        </div>
+
+        <!-- 4. Description Paragraph (Fixed 3-Line Clamp) -->
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--muted); line-height:1.5; min-height:58px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;" title="${descText}">
+          ${descText}
+        </p>
+
+        <!-- 5. Fun Comparison Box (Fixed 2-Line Clamp) -->
+        <div style="background:var(--paper); border-left:3.5px solid #f59e0b; border-radius:10px; padding:10px 12px; margin-bottom:12px; min-height:66px; display:flex; flex-direction:column; justify-content:flex-start; box-sizing:border-box;">
+          <strong style="color:#b45309; display:block; margin-bottom:3px; font-size:11px; font-weight:850; text-transform:uppercase; letter-spacing:0.3px;">
+            ⚡ ${isEn ? 'Fun Scale Comparison:' : 'Perbandingan Skala Seru:'}
+          </strong>
+          <div style="font-size:12px; color:var(--ink); line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;" title="${compText}">
             ${compText}
           </div>
+        </div>
 
-          <!-- Fun Fact Box -->
-          <div style="background:rgba(92, 227, 222, 0.08); border:1px dashed var(--teal); border-radius:10px; padding:10px 12px; font-size:12.5px; color:var(--ink); line-height:1.5;">
-            <strong style="color:var(--teal); display:block; margin-bottom:2px; font-size:11.5px;">
-              💡 ${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}
-            </strong>
+        <!-- 6. Fun Fact Box (Pinned to Bottom with margin-top: auto) -->
+        <div style="background:rgba(13,148,136,0.06); border:1px dashed var(--teal); border-radius:12px; padding:10px 12px; min-height:76px; margin-top:auto; display:flex; flex-direction:column; justify-content:flex-start; box-sizing:border-box;">
+          <strong style="color:var(--teal); display:block; margin-bottom:3px; font-size:11px; font-weight:850; text-transform:uppercase; letter-spacing:0.3px;">
+            💡 ${isEn ? 'Did You Know?' : 'Tahukah Kamu?'}
+          </strong>
+          <div style="font-size:12px; color:var(--ink); line-height:1.45; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;" title="${factText}">
             ${factText}
           </div>
         </div>
