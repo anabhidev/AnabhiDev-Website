@@ -6,7 +6,7 @@
 // Version   : 1.0 (SOP v2.4 & Standar Coding v2.0 Aligned)
 // ================================================================
 
-import { RECORDS_DATA, RECORD_QUIZZES } from '../data/records-data.js';
+import { RECORDS_DATA, RECORD_QUIZZES, SUB_CATEGORIES } from '../data/records-data.js';
 import { appState } from '../state.js';
 import { store } from '../store.js';
 import { t } from '../data/i18n.js';
@@ -19,6 +19,7 @@ export class RecordsViewComponent {
     this.activeTab = 'encyclopedia'; // 'encyclopedia' | 'comparison' | 'quiz'
     this.activeScope = 'all';        // 'all' | 'indonesia' | 'world'
     this.activeCategory = 'all';     // 'all' | 'teknologi' | 'alam' | 'hewan' | 'bangunan'
+    this.activeSubCategory = 'all';  // 'all' | 'pesawat' | 'mobil' | 'kapal' | 'antariksa' | 'alam' | 'hewan' | 'tumbuhan' | 'bangunan'
     this.searchQuery = '';
     this.scaleType = 'speed';        // 'speed' | 'height'
     this.quizAnswers = {};
@@ -34,6 +35,7 @@ export class RecordsViewComponent {
     let filteredRecords = RECORDS_DATA.filter(item => {
       if (this.activeScope !== 'all' && item.scope !== this.activeScope) return false;
       if (this.activeCategory !== 'all' && item.category !== this.activeCategory) return false;
+      if (this.activeSubCategory !== 'all' && item.subCategory !== this.activeSubCategory) return false;
       if (this.searchQuery.trim()) {
         const q = this.searchQuery.toLowerCase().trim();
         const title = (isEn ? item.titleEn : item.title).toLowerCase();
@@ -135,26 +137,33 @@ export class RecordsViewComponent {
           </div>
         </div>
 
-        <!-- Filter Kategori Chips -->
+        <!-- Filter Sub-Kategori Chips (Pesawat, Mobil, Kapal, Antariksa, Alam, Hewan, Tumbuhan, Bangunan) -->
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);">
           <span style="font-size:13px; font-weight:800; color:var(--muted); margin-right:4px;">
-            ${isEn ? 'Category:' : 'Kategori:'}
+            ${isEn ? 'Sub-Category:' : 'Sub-Kategori:'}
           </span>
-          <button class="btn ${this.activeCategory === 'all' ? 'primary' : ''} btn-cat-filter" data-cat="all" type="button" aria-label="Semua kategori" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-            Semua
-          </button>
-          <button class="btn ${this.activeCategory === 'teknologi' ? 'primary' : ''} btn-cat-filter" data-cat="teknologi" type="button" aria-label="Kategori Kendaraan & Mesin" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-            🚀 ${isEn ? 'Vehicles & Machines' : 'Kendaraan & Mesin'}
-          </button>
-          <button class="btn ${this.activeCategory === 'alam' ? 'primary' : ''} btn-cat-filter" data-cat="alam" type="button" aria-label="Kategori Alam & Geografi" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-            ⛰️ ${isEn ? 'Nature & Geography' : 'Alam & Geografi'}
-          </button>
-          <button class="btn ${this.activeCategory === 'hewan' ? 'primary' : ''} btn-cat-filter" data-cat="hewan" type="button" aria-label="Kategori Hewan & Hayati" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-            🐾 ${isEn ? 'Animals & Living Beings' : 'Hewan & Hayati'}
-          </button>
-          <button class="btn ${this.activeCategory === 'bangunan' ? 'primary' : ''} btn-cat-filter" data-cat="bangunan" type="button" aria-label="Kategori Bangunan & Arsitektur" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-            🏛️ ${isEn ? 'Architecture & Wonders' : 'Bangunan & Arsitektur'}
-          </button>
+          ${SUB_CATEGORIES.map(sub => {
+            const isSubActive = this.activeSubCategory === sub.id;
+            const count = sub.id === 'all'
+              ? RECORDS_DATA.filter(r => this.activeScope === 'all' || r.scope === this.activeScope).length
+              : RECORDS_DATA.filter(r => (this.activeScope === 'all' || r.scope === this.activeScope) && r.subCategory === sub.id).length;
+            const label = isEn ? sub.nameEn : sub.name;
+            return `
+              <button 
+                class="btn ${isSubActive ? 'primary' : ''} btn-subcat-filter" 
+                data-subcat="${sub.id}" 
+                type="button" 
+                aria-label="Filter subkategori ${label}" 
+                style="font-size:12px; font-weight:750; padding:6px 14px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; ${isSubActive ? 'box-shadow:0 3px 10px rgba(13,148,136,0.3);' : ''}"
+              >
+                <span>${sub.icon}</span>
+                <span>${label}</span>
+                <span style="font-size:10px; font-weight:800; opacity:0.85; background:${isSubActive ? 'rgba(255,255,255,0.25)' : 'var(--line)'}; padding:1px 6px; border-radius:999px;">
+                  ${count}
+                </span>
+              </button>
+            `;
+          }).join('')}
         </div>
       </div>
 
@@ -269,30 +278,36 @@ export class RecordsViewComponent {
     // Data komparasi kecepatan (km/jam)
     const speedItems = [
       { name: 'Jalan Santai Anak', stat: '4 km/jam', pct: 2, icon: '🚶' },
-      { name: 'Sepeda Ceria', stat: '15 km/jam', pct: 5, icon: '🚲' },
-      { name: 'Mobil di Jalan Tol', stat: '100 km/jam', pct: 15, icon: '🚗' },
-      { name: 'Cheetah Berlari Kencang', stat: '120 km/jam', pct: 18, icon: '🐆', badge: 'HEWAN DARAT TERCEPAT' },
-      { name: 'Kereta Cepat Whoosh Indonesia', stat: '350 km/jam', pct: 40, icon: '🚅', badge: 'KERETA TERCEPAT SE-ASEAN' },
-      { name: 'Elang Peregrine Falcon Menukik', stat: '389 km/jam', pct: 45, icon: '🦅', badge: 'HEWAN TERCEPAT DI UDARA' },
-      { name: 'Koenigsegg Jesko / Bugatti Bolide', stat: '508 km/jam', pct: 58, icon: '🏎️', badge: 'MOBIL TERCEPAT DI DUNIA' },
-      { name: 'Pesawat Jet Penumpang', stat: '900 km/jam', pct: 72, icon: '✈️' },
-      { name: 'Pesawat Supersonik SR-71 Blackbird', stat: '3.529 km/jam (Mach 3.3)', pct: 100, icon: '🚀', badge: 'PESAWAT JET TERCEPAT' }
+      { name: 'Sepeda Ceria', stat: '15 km/jam', pct: 4, icon: '🚲' },
+      { name: 'Mobil di Jalan Tol', stat: '100 km/jam', pct: 12, icon: '🚗' },
+      { name: 'Cheetah Berlari Kencang', stat: '120 km/jam', pct: 15, icon: '🐆', badge: 'HEWAN DARAT TERCEPAT' },
+      { name: 'Kereta Cepat Whoosh Indonesia', stat: '350 km/jam', pct: 26, icon: '🚅', badge: 'KERETA TERCEPAT SE-ASEAN' },
+      { name: 'Elang Peregrine Falcon Menukik', stat: '389 km/jam', pct: 30, icon: '🦅', badge: 'HEWAN TERCEPAT DI UDARA' },
+      { name: 'Koenigsegg Jesko / Bugatti Bolide', stat: '508 km/jam', pct: 38, icon: '🏎️', badge: 'MOBIL TERCEPAT DI DUNIA' },
+      { name: 'Kereta Maglev L0 Series Jepang', stat: '603 km/jam', pct: 45, icon: '🚝', badge: 'KERETA MAGLEV TERCEPAT' },
+      { name: 'Pesawat Jet Penumpang Komersial', stat: '900 km/jam', pct: 55, icon: '✈️' },
+      { name: 'Pesawat Supersonik Concorde', stat: '2.179 km/jam (Mach 2.04)', pct: 70, icon: '🛩️', badge: 'JET PENUMPANG SUPERSONIK' },
+      { name: 'Pesawat Jet SR-71 Blackbird', stat: '3.529 km/jam (Mach 3.3)', pct: 82, icon: '🚀', badge: 'JET TERCEPAT BERAWAK' },
+      { name: 'Pesawat Hipersonik Roket X-15', stat: '7.274 km/jam (Mach 6.7)', pct: 94, icon: '⚡', badge: 'REKOR KECEPATAN DIRGANTARA' },
+      { name: 'Stasiun Luar Angkasa ISS Mengorbit', stat: '27.600 km/jam', pct: 100, icon: '🛰️', badge: 'ORBIT ANTARIKSA BUMI' }
     ];
 
     // Data komparasi ketinggian & kedalaman (meter)
     const heightItems = [
       { name: 'Pohon Kelapa Pantai', stat: '15 meter', pct: 2, icon: '🌴' },
-      { name: 'Pohon Raksasa Hyperion (California)', stat: '116 meter', pct: 6, icon: '🌲', badge: 'POHON TERTINGGI' },
-      { name: 'Patung GWK (Garuda Wisnu Kencana) Bali', stat: '121 meter', pct: 7, icon: '🦅' },
-      { name: 'Monas (Monumen Nasional) Jakarta', stat: '132 meter', pct: 8, icon: '🗼' },
-      { name: 'Menara Eiffel Paris', stat: '330 meter', pct: 14, icon: '🗼' },
-      { name: 'Gua Vertikal Hatusaka Maluku', stat: '388 meter (ke bawah)', pct: 16, icon: '🕳️', badge: 'GUA TERDALAM INDONESIA' },
-      { name: 'Danau Matano Sulawesi Selatan', stat: '590 meter (ke bawah)', pct: 22, icon: '🌊', badge: 'DANAU TERDALAM INDONESIA' },
-      { name: 'Gedung Burj Khalifa Dubai', stat: '828 meter', pct: 30, icon: '🏢', badge: 'GEDUNG TERTINGGI DI DUNIA' },
-      { name: 'Puncak Jaya (Carstensz) Papua', stat: '4.884 meter', pct: 60, icon: '🏔️', badge: 'GUNUNG TERTINGGI INDONESIA' },
-      { name: 'Laut Banda (Palung Weber) Maluku', stat: '7.440 meter (ke bawah)', pct: 78, icon: '🌊', badge: 'LAUT TERDALAM INDONESIA' },
-      { name: 'Gunung Everest Himalaya', stat: '8.848 meter', pct: 88, icon: '🏔️', badge: 'GUNUNG TERTINGGI DI DUNIA' },
-      { name: 'Palung Mariana (Challenger Deep)', stat: '10.994 meter (ke bawah)', pct: 100, icon: '🌊', badge: 'PALUNG TERDALAM DI BUMI' }
+      { name: 'Pohon Raksasa Hyperion (California)', stat: '116 meter', pct: 5, icon: '🌲', badge: 'POHON TERTINGGI' },
+      { name: 'Patung GWK (Garuda Wisnu Kencana) Bali', stat: '121 meter', pct: 6, icon: '🦅' },
+      { name: 'Monas (Monumen Nasional) Jakarta', stat: '132 meter', pct: 7, icon: '🗼' },
+      { name: 'Menara Eiffel Paris', stat: '330 meter', pct: 12, icon: '🗼' },
+      { name: 'Gua Vertikal Hatusaka Maluku', stat: '388 meter (ke bawah)', pct: 14, icon: '🕳️', badge: 'GUA TERDALAM INDONESIA' },
+      { name: 'Danau Matano Sulawesi Selatan', stat: '590 meter (ke bawah)', pct: 18, icon: '🌊', badge: 'DANAU TERDALAM INDONESIA' },
+      { name: 'Gedung Burj Khalifa Dubai', stat: '828 meter', pct: 24, icon: '🏢', badge: 'GEDUNG TERTINGGI DI DUNIA' },
+      { name: 'Air Terjun Angel Falls Venezuela', stat: '979 meter', pct: 28, icon: '🏞️', badge: 'AIR TERJUN TERTINGGI' },
+      { name: 'Puncak Jaya (Carstensz) Papua', stat: '4.884 meter', pct: 50, icon: '🏔️', badge: 'GUNUNG TERTINGGI INDONESIA' },
+      { name: 'Laut Banda (Palung Weber) Maluku', stat: '7.440 meter (ke bawah)', pct: 66, icon: '🌊', badge: 'LAUT TERDALAM INDONESIA' },
+      { name: 'Gunung Everest Himalaya', stat: '8.848 meter', pct: 75, icon: '🏔️', badge: 'GUNUNG TERTINGGI DI DUNIA' },
+      { name: 'Palung Mariana (Challenger Deep)', stat: '10.994 meter (ke bawah)', pct: 88, icon: '🌊', badge: 'PALUNG TERDALAM DI BUMI' },
+      { name: 'Gunung Olympus Mons di Planet Mars', stat: '21.900 meter (hampir 22 km)', pct: 100, icon: '🪐', badge: 'GUNUNG TERTINGGI TATA SURYA' }
     ];
 
     const currentItems = isSpeed ? speedItems : heightItems;
@@ -370,8 +385,8 @@ export class RecordsViewComponent {
             </h2>
             <p style="margin:0; font-size:13px; color:var(--muted);">
               ${isEn 
-                ? 'Answer these 5 exciting questions correctly to earn Gold Stars for your trophy collection!' 
-                : 'Jawab 5 pertanyaan seru ini dengan tepat untuk mengumpulkan Bintang Emas ke koleksimu!'}
+                ? `Answer these ${RECORD_QUIZZES.length} exciting questions correctly to earn Gold Stars for your trophy collection!` 
+                : `Jawab ${RECORD_QUIZZES.length} pertanyaan seru ini dengan tepat untuk mengumpulkan Bintang Emas ke koleksimu!`}
             </p>
           </div>
           <div style="font-size:14px; font-weight:800; color:var(--teal); background:var(--teal-soft); padding:6px 14px; border-radius:999px; border:1px solid var(--teal);">
@@ -464,6 +479,16 @@ export class RecordsViewComponent {
       });
     });
 
+    // 2b. Sub-Category Filter (Pesawat, Mobil, Kapal, Antariksa, dll.)
+    const subcatBtns = this.container.querySelectorAll('.btn-subcat-filter');
+    subcatBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        AudioFx.playTap();
+        this.activeSubCategory = btn.getAttribute('data-subcat');
+        this.render();
+      });
+    });
+
     // 3. Category Filter
     const catBtns = this.container.querySelectorAll('.btn-cat-filter');
     catBtns.forEach(btn => {
@@ -479,13 +504,12 @@ export class RecordsViewComponent {
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         this.searchQuery = e.target.value;
-        const grid = this.container.querySelector('div[style*="grid-template-columns:repeat(auto-fill, minmax(320px"]');
-        // Re-render whole tab for instant filter updates
         const state = appState.get();
         const isEn = (state.lang || 'id') === 'en';
         let filtered = RECORDS_DATA.filter(item => {
           if (this.activeScope !== 'all' && item.scope !== this.activeScope) return false;
           if (this.activeCategory !== 'all' && item.category !== this.activeCategory) return false;
+          if (this.activeSubCategory !== 'all' && item.subCategory !== this.activeSubCategory) return false;
           if (this.searchQuery.trim()) {
             const q = this.searchQuery.toLowerCase().trim();
             const title = (isEn ? item.titleEn : item.title).toLowerCase();
@@ -498,8 +522,18 @@ export class RecordsViewComponent {
         });
         const wrap = this.container.querySelector('.records-grid-wrap') || this.container.querySelector('div[style*="grid-template-columns"]');
         if (wrap) {
-          wrap.innerHTML = filtered.map(r => this.renderRecordCard(r, isEn)).join('');
-          this.attachAudioEvents();
+          if (filtered.length > 0) {
+            wrap.innerHTML = filtered.map(r => this.renderRecordCard(r, isEn)).join('');
+            this.attachAudioEvents();
+          } else {
+            wrap.innerHTML = `
+              <div class="quiz-box" style="grid-column: 1 / -1; text-align:center; padding:40px 20px; background:var(--card);">
+                <div style="font-size:42px; margin-bottom:10px;">🔍</div>
+                <h3 style="font-size:18px; font-weight:800; margin:0 0 6px;">${isEn ? 'No records found' : 'Tidak ada rekor yang sesuai kata kunci'}</h3>
+                <p style="font-size:13px; color:var(--muted); margin:0;">${isEn ? 'Try adjusting your search query or changing the filter above.' : 'Coba ubah kata kunci atau ganti pilihan filter di atas.'}</p>
+              </div>
+            `;
+          }
         }
       });
     }

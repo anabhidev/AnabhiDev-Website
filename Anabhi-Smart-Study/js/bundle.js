@@ -8475,850 +8475,1416 @@
   // --- Source: js/data/records-data.js ---
   // ================================================================
   // AnabhiDev-SMARTSTUDY — AnabhiDev Smart Study Web Interactive
-  // JavaScript · ES Module · Records & Statistics Encyclopedia Data
-  // Serba TER- di Indonesia & Serba TER- di Dunia
+  // JavaScript · ES Module · Super Duper Records & Statistics Encyclopedia
+  // Serba TER- di Indonesia & Serba TER- di Dunia (Multi Sub-Kategori)
   // Development · Anabhi Dev
-  // Version   : 1.0 (Bilingual, Kid-Friendly, Visual SVG Illustrations)
+  // Version   : 2.1 (Super Duper Encyclopedia · 50+ Rekor Terlengkap · 8 Sub-Kategori)
   // ================================================================
   
-  const RECORDS_DATA = [
-    // ============================================================
-    // SERBA TER- DI INDONESIA (12 REKOR HEBAT)
-    // ============================================================
+  const SUB_CATEGORIES = [
     {
-      id: 'id-kereta-tercepat',
-      scope: 'indonesia',
-      category: 'teknologi',
-      badge: 'TERCEPAT ⚡',
-      badgeEn: 'FASTEST ⚡',
-      title: 'Kereta Api Tercepat di Indonesia & Asia Tenggara',
-      titleEn: 'Fastest Train in Indonesia & Southeast Asia',
-      holder: 'Kereta Cepat Whoosh (KCIC)',
-      statValue: '350 km/jam',
-      statNumber: 350,
-      statUnit: 'km/jam',
-      comparison: 'Dalam 1 detik melesat 97 meter! Jakarta ke Bandung cuma butuh waktu 45 menit!',
-      comparisonEn: 'Travels 97 meters per second! Jakarta to Bandung takes only 45 minutes!',
-      description: 'Whoosh adalah kereta cepat komersial pertama di Indonesia dan Asia Tenggara yang menggunakan tenaga listrik ramah lingkungan dan teknologi bantalan magnetik serta rel presisi tinggi.',
-      descriptionEn: 'Whoosh is the first high-speed bullet train in Southeast Asia, connecting Jakarta and Bandung with top operating speed of 350 km/h.',
-      funFact: 'Nama WHOOSH adalah singkatan dari Waktu Hemat, Operasi Optimal, Sistem Hebat! Kereta ini sangat tenang sehingga koin logam bisa berdiri tegak di jendela saat melaju kencang.',
-      funFactEn: 'WHOOSH stands for Time Saving, Optimal Operation, Great System! The ride is so smooth that a coin can stand upright on its window ledge at full speed.',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="trainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ef4444"/>
-            <stop offset="50%" stop-color="#b91c1c"/>
-            <stop offset="100%" stop-color="#7f1d1d"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="#fef2f2"/>
-        <!-- Track lines -->
-        <path d="M10 95 L110 95" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
-        <path d="M15 102 L105 102" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4"/>
-        <!-- Bullet Train Nose -->
-        <path d="M20 78 C25 65 45 42 75 42 L105 42 C108 42 110 45 110 50 L110 78 C110 82 106 85 102 85 L35 85 C26 85 20 82 20 78 Z" fill="url(#trainGrad)"/>
-        <path d="M60 48 L98 48 C102 48 104 50 104 54 L104 60 L50 60 C53 54 56 48 60 48 Z" fill="#38bdf8"/>
-        <path d="M22 75 C30 76 50 78 80 78 L108 78" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Speed streaks -->
-        <path d="M6 55 L22 55" stroke="#f87171" stroke-width="3" stroke-linecap="round"/>
-        <path d="M12 45 L32 45" stroke="#fca5a5" stroke-width="2" stroke-linecap="round"/>
-        <path d="M8 65 L18 65" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Wheels / Skirt -->
-        <circle cx="45" cy="85" r="5" fill="#334155"/>
-        <circle cx="75" cy="85" r="5" fill="#334155"/>
-        <circle cx="95" cy="85" r="5" fill="#334155"/>
-      </svg>`
+      "id": "all",
+      "name": "Semua Rekor",
+      "nameEn": "All Records",
+      "icon": "⭐"
     },
     {
-      id: 'id-gunung-tertinggi',
-      scope: 'indonesia',
-      category: 'alam',
-      badge: 'TERTINGGI 🏔️',
-      badgeEn: 'HIGHEST 🏔️',
-      title: 'Gunung & Puncak Tertinggi di Indonesia',
-      titleEn: 'Highest Mountain & Peak in Indonesia',
-      holder: 'Puncak Jaya (Carstensz Pyramid), Papua',
-      statValue: '4.884 mdpl',
-      statNumber: 4884,
-      statUnit: 'mdpl (meter)',
-      comparison: 'Setara dengan 37 Monumen Nasional (Monas) ditumpuk ke atas langit!',
-      comparisonEn: 'Equivalent to 37 National Monuments (Monas) stacked straight up into the clouds!',
-      description: 'Puncak Jaya adalah gunung tertinggi di kawasan Oseania/Indonesia dan menjadi salah satu dari Tujuh Puncak Dunia (Seven Summits) yang diimpikan para pendaki dunia.',
-      descriptionEn: 'Puncak Jaya (Carstensz Pyramid) in Papua is the highest peak in Indonesia and Oceania, standing tall at 4,884 meters above sea level.',
-      funFact: 'Puncak Jaya adalah fenomena langka di dunia: tempat dengan salju dan gletser es abadi yang terletak tepat di daerah khatulistiwa beriklim tropis!',
-      funFactEn: 'It is a rare global wonder: an equatorial tropical peak covered with ancient glacial ice and snow!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="mntGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#38bdf8"/>
-            <stop offset="100%" stop-color="#0284c7"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="#f0f9ff"/>
-        <!-- Sun -->
-        <circle cx="95" cy="28" r="12" fill="#fbbf24"/>
-        <!-- Back Mountain -->
-        <polygon points="15,95 55,35 90,95" fill="#94a3b8"/>
-        <polygon points="45,50 55,35 65,50 58,47 52,51" fill="#ffffff"/>
-        <!-- Front Mountain Puncak Jaya -->
-        <polygon points="35,100 80,22 115,100" fill="#475569"/>
-        <!-- Snow cap -->
-        <polygon points="70,40 80,22 92,40 85,36 78,41 73,37" fill="#ffffff"/>
-        <polygon points="68,43 80,22 94,43" fill="#e0f2fe" opacity="0.6"/>
-        <!-- Clouds -->
-        <ellipse cx="30" cy="40" rx="14" ry="7" fill="#ffffff" opacity="0.9"/>
-        <ellipse cx="40" cy="38" rx="10" ry="8" fill="#ffffff" opacity="0.9"/>
-      </svg>`
+      "id": "pesawat",
+      "name": "Pesawat & Dirgantara",
+      "nameEn": "Planes & Aviation",
+      "icon": "✈️"
     },
     {
-      id: 'id-laut-terdalam',
-      scope: 'indonesia',
-      category: 'alam',
-      badge: 'TERDALAM 🌊',
-      badgeEn: 'DEEPEST 🌊',
-      title: 'Laut & Palung Terdalam di Indonesia',
-      titleEn: 'Deepest Sea & Trench in Indonesia',
-      holder: 'Laut Banda (Palung Weber), Maluku',
-      statValue: '7.440 meter',
-      statNumber: 7440,
-      statUnit: 'meter',
-      comparison: 'Sedalam 25 kali tinggi Menara Eiffel di Paris bila ditenggelamkan ke dalam laut!',
-      comparisonEn: 'Deep as 25 Eiffel Towers stacked on top of each other under the ocean!',
-      description: 'Laut Banda di Kepulauan Maluku memiliki cekungan Palung Weber sedalam 7.440 meter. Di kedalaman ini, tekanan airnya sangat luar biasa dahsyat dan suhunya mendekati titik beku.',
-      descriptionEn: 'The Banda Sea hosts the Weber Deep at 7,440 meters depth, making it the deepest marine abyss in Indonesia.',
-      funFact: 'Sinar matahari hanya bisa menembus laut hingga kedalaman 200 meter. Lebih dari 7.000 meter di bawah Laut Banda, suasananya gelap gulita dan dihuni ikan-ikan bercahaya (bioluminesensi)!',
-      funFactEn: 'Sunlight only reaches 200m down. Over 7,000m deep in the Banda Sea is pitch black and inhabited by glowing deep-sea creatures!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0284c7"/>
-            <stop offset="50%" stop-color="#0f172a"/>
-            <stop offset="100%" stop-color="#020617"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="url(#seaGrad)"/>
-        <!-- Ocean surface waves -->
-        <path d="M0 25 Q30 20 60 25 T120 25 L120 0 L0 0 Z" fill="#38bdf8" opacity="0.4"/>
-        <!-- Submarine -->
-        <rect x="35" y="45" width="46" height="18" rx="9" fill="#f59e0b"/>
-        <rect x="52" y="38" width="12" height="9" rx="3" fill="#d97706"/>
-        <circle cx="48" cy="54" r="3" fill="#38bdf8"/>
-        <circle cx="60" cy="54" r="3" fill="#38bdf8"/>
-        <path d="M81 54 L88 50 L88 58 Z" fill="#b45309"/>
-        <!-- Light beam into abyss -->
-        <polygon points="35,54 5,85 18,92 37,56" fill="#fef08a" opacity="0.35"/>
-        <!-- Glowing deep fish -->
-        <ellipse cx="28" cy="98" rx="8" ry="4" fill="#10b981"/>
-        <polygon points="36,98 42,94 42,102" fill="#10b981"/>
-        <circle cx="24" cy="97" r="1.5" fill="#fef08a"/>
-        <!-- Depth bubbles -->
-        <circle cx="50" cy="75" r="2" fill="#bae6fd" opacity="0.6"/>
-        <circle cx="68" cy="88" r="1.5" fill="#bae6fd" opacity="0.4"/>
-      </svg>`
+      "id": "mobil",
+      "name": "Mobil, Truk & Darat",
+      "nameEn": "Cars, Trucks & Land",
+      "icon": "🚗"
     },
     {
-      id: 'id-danau-terbesar',
-      scope: 'indonesia',
-      category: 'alam',
-      badge: 'TERBESAR 🌋',
-      badgeEn: 'LARGEST 🌋',
-      title: 'Danau Vulkanik Terbesar di Dunia (ada di Indonesia!)',
-      titleEn: 'Largest Volcanic Lake in the World',
-      holder: 'Danau Toba, Sumatera Utara',
-      statValue: '1.130 km²',
-      statNumber: 1130,
-      statUnit: 'km² (panjang 100 km)',
-      comparison: 'Panjangnya 100 km dan di tengahnya ada Pulau Samosir yang luasnya hampir sama dengan negara Singapura!',
-      comparisonEn: '100 km long with Samosir Island in the middle, nearly the size of the entire country of Singapore!',
-      description: 'Danau Toba adalah danau vulkanik terbesar di planet Bumi dan danau terbesar di Asia Tenggara. Terbentuk dari letusan supervolcano mahadahsyat sekitar 74.000 tahun yang lalu.',
-      descriptionEn: 'Lake Toba in North Sumatra is the largest volcanic lake on Earth, created by a monumental supervolcanic eruption 74,000 years ago.',
-      funFact: 'Letusan purba Danau Toba dulunya menutupi atmosfer Bumi dengan abu selama bertahun-tahun dan menyebabkan zaman es mini di seluruh dunia!',
-      funFactEn: 'The prehistoric Toba super-eruption spread ash worldwide and plunged Earth into a mini ice age!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#ecfdf5"/>
-        <!-- Caldera Mountain Rim -->
-        <path d="M0 65 Q30 40 60 55 Q90 38 120 60 L120 120 L0 120 Z" fill="#047857"/>
-        <!-- Lake Water -->
-        <ellipse cx="60" cy="85" rx="55" ry="25" fill="#0284c7"/>
-        <ellipse cx="60" cy="85" rx="50" ry="22" fill="#0369a1"/>
-        <!-- Samosir Island in center -->
-        <ellipse cx="60" cy="83" rx="20" ry="9" fill="#15803d"/>
-        <ellipse cx="62" cy="81" rx="14" ry="6" fill="#16a34a"/>
-        <!-- Traditional Batak Roof silhouette -->
-        <path d="M55 76 Q60 72 65 76 L66 79 L54 79 Z" fill="#991b1b"/>
-        <!-- Sun -->
-        <circle cx="28" cy="30" r="10" fill="#f59e0b"/>
-      </svg>`
+      "id": "kapal",
+      "name": "Kapal Laut & Bahari",
+      "nameEn": "Ships & Maritime",
+      "icon": "🚢"
     },
     {
-      id: 'id-danau-terdalam',
-      scope: 'indonesia',
-      category: 'alam',
-      badge: 'TERDALAM 🏊',
-      badgeEn: 'DEEPEST 🏊',
-      title: 'Danau Terdalam di Indonesia & Asia Tenggara',
-      titleEn: 'Deepest Lake in Indonesia & Southeast Asia',
-      holder: 'Danau Matano, Sulawesi Selatan',
-      statValue: '590 meter',
-      statNumber: 590,
-      statUnit: 'meter',
-      comparison: 'Dasar danaunya berada 208 meter di bawah permukaan laut (fenomena Kriptodepresi)!',
-      comparisonEn: 'The lake bottom sits 208 meters below sea level (cryptodepression)!',
-      description: 'Danau Matano di Luwu Timur, Sulawesi Selatan adalah danau purba tektonik berusia jutaan tahun dan danau nomor 10 terdalam di seluruh dunia.',
-      descriptionEn: 'Lake Matano in South Sulawesi is the deepest lake in Southeast Asia and the 10th deepest in the world at 590 meters.',
-      funFact: 'Air Danau Matano sangat jernih dan tenang bagaikan cermin raksasa, serta menjadi rumah bagi ikan-ikan endemik langka yang tidak ada di belahan dunia lain!',
-      funFactEn: 'Its crystal-clear waters harbor unique endemic fish found nowhere else on the planet!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#f0fdf4"/>
-        <!-- Canyon Walls -->
-        <path d="M0 45 L35 70 L35 120 L0 120 Z" fill="#1e293b"/>
-        <path d="M120 45 L85 70 L85 120 L120 120 Z" fill="#334155"/>
-        <!-- Deep Water Column -->
-        <rect x="35" y="60" width="50" height="60" fill="#0369a1"/>
-        <rect x="35" y="85" width="50" height="35" fill="#0f172a"/>
-        <!-- Crystal surface -->
-        <ellipse cx="60" cy="60" rx="25" ry="6" fill="#38bdf8"/>
-        <!-- Endemic Little Fish -->
-        <ellipse cx="56" cy="74" rx="4" ry="2" fill="#fbbf24"/>
-        <polygon points="60,74 63,72 63,76" fill="#fbbf24"/>
-        <!-- Depth Arrow Meter -->
-        <line x1="75" y1="65" x2="75" y2="110" stroke="#f43f5e" stroke-width="2" stroke-dasharray="3 2"/>
-        <polygon points="75,114 72,108 78,108" fill="#f43f5e"/>
-      </svg>`
+      "id": "antariksa",
+      "name": "Roket & Antariksa",
+      "nameEn": "Space & Rockets",
+      "icon": "🚀"
     },
     {
-      id: 'id-reptil-terbesar',
-      scope: 'indonesia',
-      category: 'hewan',
-      badge: 'TERBESAR 🦎',
-      badgeEn: 'LARGEST 🦎',
-      title: 'Kadal & Reptil Terbesar di Dunia (Asli Indonesia!)',
-      titleEn: 'Largest Lizard in the World (Endemic to Indonesia)',
-      holder: 'Komodo (Varanus komodoensis), NTT',
-      statValue: 'Panjang 3 Meter · Berat 135 kg',
-      statNumber: 3,
-      statUnit: 'meter panjang',
-      comparison: 'Panjangnya lebih panjang dari kasur tempat tidurmu dan beratnya sama dengan 2 orang dewasa digabung!',
-      comparisonEn: 'Longer than a full-size bed and heavy as two full-grown adults combined!',
-      description: 'Komodo adalah satwa purba legendaris yang hanya hidup di Kepulauan Komodo, Nusa Tenggara Timur. Mereka dijuluki sebagai "Naga Terakhir di Muka Bumi".',
-      descriptionEn: 'The Komodo Dragon is the largest living species of lizard, found exclusively in the Komodo National Park, Indonesia.',
-      funFact: 'Komodo memiliki indra penciuman luar biasa melalui lidah bercabangnya yang kuning. Komodo bisa mencium bau mangsa dari jarak 9,5 kilometer!',
-      funFactEn: 'With its forked yellow tongue, a Komodo dragon can detect scents from up to 9.5 kilometers away!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#fefce8"/>
-        <!-- Savannah Hill -->
-        <ellipse cx="60" cy="115" rx="55" ry="25" fill="#ca8a04"/>
-        <!-- Komodo Body -->
-        <ellipse cx="60" cy="72" rx="34" ry="14" fill="#65a30d"/>
-        <!-- Tail -->
-        <path d="M26 72 Q12 68 8 82 Q6 90 12 92" stroke="#4d7c0f" stroke-width="8" stroke-linecap="round" fill="none"/>
-        <!-- Head -->
-        <path d="M88 68 C96 66 106 68 108 75 C108 80 98 82 86 78 Z" fill="#65a30d"/>
-        <circle cx="98" cy="71" r="2" fill="#1e293b"/>
-        <!-- Forked Tongue -->
-        <path d="M108 76 L116 76 L119 73 M116 76 L119 79" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>
-        <!-- Legs -->
-        <rect x="42" y="80" width="8" height="14" rx="4" fill="#4d7c0f"/>
-        <rect x="74" y="80" width="8" height="14" rx="4" fill="#4d7c0f"/>
-      </svg>`
+      "id": "alam",
+      "name": "Geografi & Alam Ekstrem",
+      "nameEn": "Nature & Geography",
+      "icon": "⛰️"
     },
     {
-      id: 'id-bunga-terbesar',
-      scope: 'indonesia',
-      category: 'hewan',
-      badge: 'TERBESAR 🌸',
-      badgeEn: 'LARGEST 🌸',
-      title: 'Bunga Tunggal Terbesar di Dunia (Asli Indonesia!)',
-      titleEn: 'Largest Individual Flower in the World',
-      holder: 'Rafflesia arnoldii, Bengkulu & Sumatera',
-      statValue: 'Diameter 110 cm · Berat 11 kg',
-      statNumber: 110,
-      statUnit: 'cm diameter',
-      comparison: 'Lebar bunganya lebih besar dari ban mobil dan beratnya sama dengan 11 kantong beras!',
-      comparisonEn: 'Wider than a giant car wheel and weighs as much as eleven bags of rice!',
-      description: 'Rafflesia arnoldii adalah bunga raksasa parasit langka tanpa daun, batang, atau akar sejati. Bunga ini mekar megah di lantai hutan hujan tropis Sumatera dan Kalimantan.',
-      descriptionEn: 'Rafflesia arnoldii produces the largest individual flower on Earth, growing up to over 1 meter across in Indonesian rainforests.',
-      funFact: 'Bunga ini hanya mekar selama 5 hingga 7 hari sebelum layu. Saat mekar, ia mengeluarkan aroma khas untuk memanggil lalat membantu penyerbukan.',
-      funFactEn: 'It blooms for only 5 to 7 days, releasing a distinct aroma to attract pollinating flies!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#fff1f2"/>
-        <!-- Rainforest Ground -->
-        <rect x="0" y="90" width="120" height="30" fill="#14532d"/>
-        <!-- Big Red Petals -->
-        <circle cx="60" cy="60" r="18" fill="#991b1b"/>
-        <!-- 5 Giant Petals -->
-        <circle cx="60" cy="32" r="16" fill="#e11d48"/>
-        <circle cx="86" cy="50" r="16" fill="#e11d48"/>
-        <circle cx="76" cy="82" r="16" fill="#e11d48"/>
-        <circle cx="44" cy="82" r="16" fill="#e11d48"/>
-        <circle cx="34" cy="50" r="16" fill="#e11d48"/>
-        <!-- White warts on petals -->
-        <circle cx="60" cy="30" r="3" fill="#fef2f2"/>
-        <circle cx="85" cy="48" r="3" fill="#fef2f2"/>
-        <circle cx="74" cy="80" r="3" fill="#fef2f2"/>
-        <circle cx="45" cy="80" r="3" fill="#fef2f2"/>
-        <circle cx="35" cy="48" r="3" fill="#fef2f2"/>
-        <!-- Center cup -->
-        <circle cx="60" cy="60" r="14" fill="#881337"/>
-        <circle cx="60" cy="60" r="8" fill="#4c0519"/>
-        <!-- Spikes in center -->
-        <circle cx="58" cy="58" r="1.5" fill="#facc15"/>
-        <circle cx="62" cy="58" r="1.5" fill="#facc15"/>
-        <circle cx="60" cy="62" r="1.5" fill="#facc15"/>
-      </svg>`
+      "id": "hewan",
+      "name": "Satwa & Hewan Rekor",
+      "nameEn": "Animals & Wildlife",
+      "icon": "🐾"
     },
     {
-      id: 'id-sungai-terpanjang',
-      scope: 'indonesia',
-      category: 'alam',
-      badge: 'TERPANJANG 🏞️',
-      badgeEn: 'LONGEST 🏞️',
-      title: 'Sungai Terpanjang di Indonesia',
-      titleEn: 'Longest River in Indonesia',
-      holder: 'Sungai Kapuas, Kalimantan Barat',
-      statValue: '1.143 km',
-      statNumber: 1143,
-      statUnit: 'kilometer',
-      comparison: 'Lebih panjang dari jarak perjalanan darat dari Jakarta sampai Banyuwangi di ujung Pulau Jawa!',
-      comparisonEn: 'Longer than a road trip traversing the entire length of Java island!',
-      description: 'Sungai Kapuas bermata air di Pegunungan Muller dan mengalir membelah Kalimantan Barat hingga bermuara di Selat Karimata. Menjadi urat nadi transportasi masyarakat pedalaman.',
-      descriptionEn: 'Kapuas River in West Kalimantan is Indonesia’s longest river, flowing 1,143 km from the central mountains to the sea.',
-      funFact: 'Sungai Kapuas dihuni lebih dari 300 jenis ikan air tawar, termasuk Ikan Arwana Super Red yang sangat anggun dan berharga tinggi!',
-      funFactEn: 'It is home to over 300 freshwater fish species, including the legendary Super Red Asian Arowana!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#ecfeff"/>
-        <!-- Jungle riverbanks -->
-        <path d="M0 0 L120 0 L120 120 L0 120 Z" fill="#15803d"/>
-        <!-- Winding River -->
-        <path d="M20 0 C40 30 10 50 40 75 C70 95 60 110 80 120 L105 120 C85 105 95 85 65 65 C35 45 65 25 45 0 Z" fill="#0284c7"/>
-        <!-- Traditional boat -->
-        <ellipse cx="50" cy="68" rx="6" ry="2" fill="#ca8a04"/>
-        <!-- Fish jumping -->
-        <path d="M68 85 Q72 78 76 84" stroke="#f59e0b" stroke-width="2" fill="none"/>
-      </svg>`
+      "id": "tumbuhan",
+      "name": "Tumbuhan & Flora",
+      "nameEn": "Flora & Plants",
+      "icon": "🌿"
     },
     {
-      id: 'id-candi-terbesar',
-      scope: 'indonesia',
-      category: 'bangunan',
-      badge: 'TERBESAR 🏛️',
-      badgeEn: 'LARGEST 🏛️',
-      title: 'Candi Buddha Terbesar di Dunia (ada di Indonesia!)',
-      titleEn: 'Largest Buddhist Temple in the World',
-      holder: 'Candi Borobudur, Magelang, Jawa Tengah',
-      statValue: '2.500 m² · 504 Patung Buddha',
-      statNumber: 2500,
-      statUnit: 'm² luas',
-      comparison: 'Tersusun dari 2 juta balok batu vulkanik yang saling mengunci kokoh tanpa menggunakan semen sedikit pun!',
-      comparisonEn: 'Constructed from 2 million interlocking volcanic stone blocks without using any mortar!',
-      description: 'Candi Borobudur dibangun pada abad ke-8 oleh Wangsa Syailendra. Bangunan megah berbentuk piramida berundak ini diakui dunia sebagai Situs Warisan Budaya UNESCO.',
-      descriptionEn: 'Borobudur in Central Java is the world’s largest Buddhist temple, recognized globally as a UNESCO World Heritage treasure.',
-      funFact: 'Borobudur memiliki 72 stupa terawang berlubang dan 2.672 panel relief cerita yang jika dibentangkan panjangnya mencapai 3 kilometer!',
-      funFactEn: 'It features 72 openwork stupas and 2,672 narrative bas-relief panels stretching over 3 kilometers long!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#fafaf9"/>
-        <!-- Blue Sky & Hills -->
-        <path d="M0 60 Q60 45 120 60 L120 120 L0 120 Z" fill="#065f46"/>
-        <!-- Borobudur Tiered Structure -->
-        <polygon points="15,105 105,105 95,90 25,90" fill="#78716c"/>
-        <polygon points="28,90 92,90 85,78 35,78" fill="#57534e"/>
-        <polygon points="38,78 82,78 76,68 44,68" fill="#44403c"/>
-        <!-- Main Central Stupa -->
-        <path d="M52 68 C52 56 60 50 60 44 C60 50 68 56 68 68 Z" fill="#a8a29e"/>
-        <line x1="60" y1="44" x2="60" y2="36" stroke="#a8a29e" stroke-width="3" stroke-linecap="round"/>
-        <!-- Side Stupas -->
-        <circle cx="46" cy="66" r="3.5" fill="#a8a29e"/>
-        <circle cx="74" cy="66" r="3.5" fill="#a8a29e"/>
-      </svg>`
-    },
-    {
-      id: 'id-jembatan-terpanjang',
-      scope: 'indonesia',
-      category: 'bangunan',
-      badge: 'TERPANJANG 🌉',
-      badgeEn: 'LONGEST 🌉',
-      title: 'Jembatan Bentang Laut Terpanjang di Indonesia',
-      titleEn: 'Longest Sea Bridge in Indonesia',
-      holder: 'Jembatan Suramadu (Surabaya - Madura)',
-      statValue: '5.438 meter (5,4 km)',
-      statNumber: 5438,
-      statUnit: 'meter',
-      comparison: 'Panjangnya setara dengan berjalan kaki mengelilingi 14 lapangan sepak bola berturut-turut!',
-      comparisonEn: 'Length equivalent to walking around 14 football fields back-to-back!',
-      description: 'Jembatan Nasional Suramadu melintasi Selat Madura untuk menghubungkan Kota Surabaya di Pulau Jawa dengan Kabupaten Bangkalan di Pulau Madura.',
-      descriptionEn: 'The Suramadu Bridge spans 5.4 kilometers across the Madura Strait, connecting Java and Madura islands.',
-      funFact: 'Jembatan ini dirancang khusus dengan tiang kabel pancang (cable-stayed) yang sangat kuat agar kapal kargo besar tetap bisa lewat bebas di bawahnya!',
-      funFactEn: 'Its cable-stayed main span provides high clearance so huge cargo ships can safely sail underneath!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#eff6ff"/>
-        <!-- Sea -->
-        <rect x="0" y="80" width="120" height="40" fill="#0284c7"/>
-        <!-- Bridge deck -->
-        <rect x="0" y="76" width="120" height="6" fill="#475569"/>
-        <!-- Main Towers -->
-        <polygon points="42,85 45,35 49,35 52,85" fill="#e2e8f0"/>
-        <polygon points="68,85 71,35 75,35 78,85" fill="#e2e8f0"/>
-        <!-- Stay Cables -->
-        <line x1="47" y1="42" x2="15" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <line x1="47" y1="50" x2="25" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <line x1="47" y1="42" x2="60" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <line x1="73" y1="42" x2="60" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <line x1="73" y1="42" x2="105" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <line x1="73" y1="50" x2="95" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
-        <!-- Little cars -->
-        <rect x="25" y="72" width="6" height="3" fill="#ef4444"/>
-        <rect x="85" y="72" width="6" height="3" fill="#3b82f6"/>
-      </svg>`
-    },
-  
-    // ============================================================
-    // SERBA TER- DI DUNIA (12 REKOR MENAKJUBKAN)
-    // ============================================================
-    {
-      id: 'world-mobil-tercepat',
-      scope: 'world',
-      category: 'teknologi',
-      badge: 'TERCEPAT 🏎️',
-      badgeEn: 'FASTEST 🏎️',
-      title: 'Mobil Tercepat di Dunia',
-      titleEn: 'Fastest Production Car in the World',
-      holder: 'Koenigsegg Jesko Absolut & Bugatti Bolide',
-      statValue: '508+ km/jam',
-      statNumber: 508,
-      statUnit: 'km/jam',
-      comparison: '5 kali lebih cepat dari batas maksimal kecepatan mobil di jalan tol Indonesia! Dalam 1 detik menempuh 141 meter!',
-      comparisonEn: '5 times faster than highway speed limits! Covers 141 meters in a single second!',
-      description: 'Koenigsegg Jesko Absolut dirancang dengan aerodinamika ekstrem seperti jet tempur darat untuk menembus kecepatan 500 km/jam dengan mesin twin-turbo V8 1.600 tenaga kuda.',
-      descriptionEn: 'Engineered with hyper-aerodynamics and a 1,600 hp twin-turbo V8 engine designed to surpass 500 km/h.',
-      funFact: 'Pada kecepatan 500 km/jam, ban mobil berputar sangat cepat hingga mengalami gaya gravitasi ribuan kali lipat dan membutuhkan karet serat khusus tahan panas!',
-      funFactEn: 'At 500 km/h, the tires experience extreme centrifugal forces requiring aerospace-grade heat-resistant rubber!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="carGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#0284c7"/>
-            <stop offset="60%" stop-color="#06b6d4"/>
-            <stop offset="100%" stop-color="#f59e0b"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="#f8fafc"/>
-        <!-- Asphalt Road -->
-        <rect x="0" y="85" width="120" height="35" fill="#1e293b"/>
-        <line x1="10" y1="102" x2="110" y2="102" stroke="#facc15" stroke-width="2" stroke-dasharray="8 6"/>
-        <!-- Hypercar Profile -->
-        <path d="M12 78 C15 72 28 66 40 65 L60 55 C70 54 85 58 96 68 L108 72 C114 74 114 78 112 80 L15 80 Z" fill="url(#carGrad)"/>
-        <!-- Windshield -->
-        <path d="M48 64 L62 57 C68 56 78 58 84 64 Z" fill="#0f172a"/>
-        <!-- Rear wing spoiler -->
-        <path d="M14 62 L24 64 L22 68 L12 66 Z" fill="#0f172a"/>
-        <line x1="16" y1="66" x2="16" y2="76" stroke="#0f172a" stroke-width="2"/>
-        <!-- Wheels -->
-        <circle cx="34" cy="80" r="9" fill="#0f172a"/>
-        <circle cx="34" cy="80" r="5" fill="#94a3b8"/>
-        <circle cx="92" cy="80" r="9" fill="#0f172a"/>
-        <circle cx="92" cy="80" r="5" fill="#94a3b8"/>
-        <!-- Motion flames -->
-        <polygon points="10,75 2,72 8,76 0,78 10,79" fill="#f97316"/>
-      </svg>`
-    },
-    {
-      id: 'world-palung-terdalam',
-      scope: 'world',
-      category: 'alam',
-      badge: 'TERDALAM 🌊',
-      badgeEn: 'DEEPEST 🌊',
-      title: 'Titik Terdalam di Bumi',
-      titleEn: 'Deepest Point on Earth',
-      holder: 'Palung Mariana (Challenger Deep)',
-      statValue: '10.994 meter (~11 km)',
-      statNumber: 10994,
-      statUnit: 'meter di bawah laut',
-      comparison: 'Bila Gunung Everest dicelupkan ke dasarnya, puncak Everest masih tenggelam lebih dari 2 kilometer di bawah air!',
-      comparisonEn: 'If Mount Everest were placed at the bottom, its peak would still be submerged over 2 kilometers under water!',
-      description: 'Challenger Deep di Palung Mariana, Samudra Pasifik adalah titik terdalam di muka planet kita. Tekanan air di dasarnya mencapai lebih dari 1.000 kali tekanan di daratan biasa.',
-      descriptionEn: 'Challenger Deep in the Mariana Trench is the absolute deepest point of Earth’s seabed, plunging nearly 11 kilometers deep.',
-      funFact: 'Meskipun tekanannya mampu meremukkan mobil biasa dalam sekejap, para ilmuwan menemukan hewan-hewan tangguh seperti amphipoda raksasa dan ubur-ubur transparan hidup di sana!',
-      funFactEn: 'Despite crushing pressure equivalent to 50 jumbo jets resting on a person, transparent jellyfish and specialized amphipods thrive there!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="marianaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0369a1"/>
-            <stop offset="40%" stop-color="#082f49"/>
-            <stop offset="100%" stop-color="#020617"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="url(#marianaGrad)"/>
-        <!-- V-shaped Trench Walls -->
-        <polygon points="0,30 45,115 0,115" fill="#0f172a"/>
-        <polygon points="120,30 75,115 120,115" fill="#0f172a"/>
-        <!-- Deep Sea Research Capsule (Trieste / Limiting Factor) -->
-        <circle cx="60" cy="98" r="9" fill="#facc15"/>
-        <circle cx="60" cy="98" r="4" fill="#0284c7"/>
-        <!-- Searchlights -->
-        <polygon points="56,104 42,118 78,118 64,104" fill="#fef08a" opacity="0.35"/>
-        <!-- Inverted Everest silhouette for scale -->
-        <polygon points="60,35 48,65 72,65" fill="#ffffff" opacity="0.25"/>
-        <text x="60" y="55" font-size="8" fill="#bae6fd" text-anchor="middle" font-weight="bold">Everest</text>
-      </svg>`
-    },
-    {
-      id: 'world-hewan-terbesar',
-      scope: 'world',
-      category: 'hewan',
-      badge: 'TERBESAR 🐋',
-      badgeEn: 'LARGEST 🐋',
-      title: 'Hewan Terbesar di Bumi Sepanjang Sejarah',
-      titleEn: 'Largest Animal in Earth History',
-      holder: 'Paus Biru (Blue Whale)',
-      statValue: 'Panjang 30 Meter · Berat 180 Ton',
-      statNumber: 180,
-      statUnit: 'ton berat',
-      comparison: 'Panjangnya setara 3 bus sekolah berjejer dan beratnya sama dengan 33 ekor gajah Afrika dewasa!',
-      comparisonEn: 'Long as 3 school buses lined up and heavy as 33 adult African elephants combined!',
-      description: 'Paus Biru adalah hewan terbesar yang pernah hidup di Bumi, bahkan lebih besar dan berat daripada dinosaurus raksasa mana pun yang pernah ada.',
-      descriptionEn: 'The Blue Whale is the largest animal ever known to have lived on Earth, even surpassing the largest prehistoric dinosaurs.',
-      funFact: 'Lidah paus biru saja beratnya sama dengan 1 ekor gajah (4 ton), dan ukuran jantungnya sebesar mobil city car dengan denyut yang bisa terdengar dari jarak 3 km!',
-      funFactEn: 'A blue whale’s tongue alone weighs as much as an entire elephant, and its heart is the size of a compact car!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#e0f2fe"/>
-        <!-- Ocean water -->
-        <rect x="0" y="45" width="120" height="75" fill="#0284c7" opacity="0.2"/>
-        <!-- Giant Blue Whale Body -->
-        <path d="M12 68 C20 54 48 50 85 52 C104 53 112 60 114 66 C112 76 95 82 75 80 C50 82 25 80 12 68 Z" fill="#0284c7"/>
-        <!-- Underbelly ridges -->
-        <path d="M35 72 C50 78 75 78 85 74" stroke="#e0f2fe" stroke-width="2.5" fill="none"/>
-        <!-- Tail fin -->
-        <path d="M14 68 L4 58 C6 66 6 70 4 78 Z" fill="#0369a1"/>
-        <!-- Eye & Smile -->
-        <circle cx="102" cy="62" r="2" fill="#0f172a"/>
-        <path d="M96 68 Q102 70 108 67" stroke="#0f172a" stroke-width="1.5" fill="none"/>
-        <!-- Water Spout -->
-        <path d="M85 52 Q82 32 78 24 M85 52 Q88 32 94 26" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" fill="none"/>
-      </svg>`
-    },
-    {
-      id: 'world-gedung-tertinggi',
-      scope: 'world',
-      category: 'bangunan',
-      badge: 'TERTINGGI 🏢',
-      badgeEn: 'TALLEST 🏢',
-      title: 'Gedung / Struktur Tertinggi di Dunia',
-      titleEn: 'Tallest Building in the World',
-      holder: 'Burj Khalifa, Dubai, Uni Emirat Arab',
-      statValue: '828 Meter (163 Lantai)',
-      statNumber: 828,
-      statUnit: 'meter tinggi',
-      comparison: 'Tingginya 6 kali Monas Jakarta! Puncaknya bisa terlihat jelas dari jarak 95 kilometer!',
-      comparisonEn: '6 times taller than Monas! Its tip can be seen from 95 kilometers away!',
-      description: 'Burj Khalifa adalah pencakar langit megah di Dubai yang memecahkan rekor sebagai struktur buatan manusia tertinggi yang pernah dibangun di muka Bumi.',
-      descriptionEn: 'Burj Khalifa in Dubai reigns as the tallest skyscraper and human-made structure ever constructed on Earth.',
-      funFact: 'Saking tingginya gedung ini, orang di lantai teratas melihat matahari terbenam 3 menit lebih lambat daripada orang yang berdiri di lantai dasar!',
-      funFactEn: 'Because of its immense height, people on the top floors witness sunset about 3 minutes later than those on the ground!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="skyTowerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0284c7"/>
-            <stop offset="100%" stop-color="#f8fafc"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="url(#skyTowerGrad)"/>
-        <!-- Clouds passing around middle -->
-        <ellipse cx="30" cy="50" rx="18" ry="6" fill="#ffffff" opacity="0.8"/>
-        <ellipse cx="90" cy="65" rx="20" ry="7" fill="#ffffff" opacity="0.8"/>
-        <!-- Tower Spire & Stepped tiers -->
-        <polygon points="59,10 61,10 62,30 58,30" fill="#cbd5e1"/>
-        <polygon points="57,30 63,30 65,55 55,55" fill="#94a3b8"/>
-        <polygon points="53,55 67,55 70,80 50,80" fill="#64748b"/>
-        <polygon points="46,80 74,80 78,115 42,115" fill="#475569"/>
-        <!-- Spire beacon light -->
-        <circle cx="60" cy="8" r="2.5" fill="#ef4444"/>
-      </svg>`
-    },
-    {
-      id: 'world-hewan-tercepat',
-      scope: 'world',
-      category: 'hewan',
-      badge: 'TERCEPAT 🐆',
-      badgeEn: 'FASTEST 🐆',
-      title: 'Hewan Darat Tercepat di Dunia',
-      titleEn: 'Fastest Land Animal in the World',
-      holder: 'Cheetah (Acinonyx jubatus)',
-      statValue: '120 km/jam',
-      statNumber: 120,
-      statUnit: 'km/jam',
-      comparison: 'Bisa melesat dari 0 ke 100 km/jam hanya dalam 3 detik, lebih cepat dari akselerasi mobil sport mewah!',
-      comparisonEn: 'Accelerates from 0 to 100 km/h in just 3 seconds, faster than most sports cars!',
-      description: 'Cheetah adalah predator anggun di savana Afrika dengan tubuh aerodinamis super ramping, cakar anti-selip, dan tulang belakang fleksibel seperti pegas.',
-      descriptionEn: 'The cheetah is nature’s ultimate sprinter, designed with extreme agility, non-retractable claws, and a spring-like spine.',
-      funFact: 'Saat berlari dengan kecepatan penuh, langkah kaki cheetah bisa mencapai jarak 7 meter dan tubuhnya melayang di udara separuh dari waktu berlarinya!',
-      funFactEn: 'At top sprint, a cheetah’s stride covers up to 7 meters and it spends more than half its stride time airborne!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#fffbeb"/>
-        <!-- Savanna ground -->
-        <rect x="0" y="88" width="120" height="32" fill="#ca8a04"/>
-        <!-- Running Cheetah Body -->
-        <path d="M25 65 C40 55 68 55 85 62 C92 65 98 62 102 58 C104 62 100 68 95 70 C75 75 45 74 25 65 Z" fill="#eab308"/>
-        <!-- Tail for balance -->
-        <path d="M25 65 Q10 60 8 72" stroke="#ca8a04" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <!-- Spots -->
-        <circle cx="45" cy="62" r="1.5" fill="#451a03"/>
-        <circle cx="55" cy="60" r="1.5" fill="#451a03"/>
-        <circle cx="68" cy="62" r="1.5" fill="#451a03"/>
-        <circle cx="78" cy="64" r="1.5" fill="#451a03"/>
-        <!-- Extended legs -->
-        <line x1="88" y1="68" x2="105" y2="82" stroke="#ca8a04" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="38" y1="68" x2="18" y2="84" stroke="#ca8a04" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- Speed dust -->
-        <circle cx="15" cy="85" r="3" fill="#fde047" opacity="0.6"/>
-        <circle cx="8" cy="88" r="2" fill="#fde047" opacity="0.4"/>
-      </svg>`
-    },
-    {
-      id: 'world-burung-tercepat',
-      scope: 'world',
-      category: 'hewan',
-      badge: 'TERCEPAT 🦅',
-      badgeEn: 'FASTEST 🦅',
-      title: 'Hewan / Makhluk Hidup Tercepat di Udara',
-      titleEn: 'Fastest Bird & Animal in Flight',
-      holder: 'Elang Alap-alap Kawah (Peregrine Falcon)',
-      statValue: '389 km/jam',
-      statNumber: 389,
-      statUnit: 'km/jam saat menukik',
-      comparison: 'Lebih cepat dari mobil balap Formula 1 dan kereta peluru saat menukik dari langit!',
-      comparisonEn: 'Faster than a Formula 1 racing car when diving from the sky!',
-      description: 'Elang Peregrine Falcon adalah raja kecepatan udara. Saat melihat mangsa dari ketinggian, burung ini melipat sayapnya dan menukik deras menembus angin.',
-      descriptionEn: 'The Peregrine Falcon is the fastest animal on the planet, reaching breathtaking dive speeds exceeding 380 km/h.',
-      funFact: 'Hidung elang ini memiliki kerucut kecil khusus yang mengatur aliran udara berkecepatan tinggi agar paru-parunya tidak meledak saat bernapas di kecepatan 380 km/jam!',
-      funFactEn: 'Its nostrils feature specialized baffles that regulate air intake so it can breathe normally at 380 km/h!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#f0fdfa"/>
-        <!-- Clouds -->
-        <ellipse cx="25" cy="30" rx="14" ry="6" fill="#ccfbf1"/>
-        <ellipse cx="95" cy="45" rx="16" ry="6" fill="#ccfbf1"/>
-        <!-- Falcon in Aero Dive -->
-        <!-- Wings swept back -->
-        <path d="M60 40 L30 75 L55 65 Z" fill="#334155"/>
-        <path d="M60 40 L90 75 L65 65 Z" fill="#334155"/>
-        <!-- Sleek Body -->
-        <ellipse cx="60" cy="55" rx="8" ry="18" fill="#475569"/>
-        <!-- Sharp Beak -->
-        <polygon points="58,36 62,36 60,30" fill="#f59e0b"/>
-        <!-- Eyes -->
-        <circle cx="57" cy="38" r="1.5" fill="#0f172a"/>
-        <circle cx="63" cy="38" r="1.5" fill="#0f172a"/>
-        <!-- Tail -->
-        <polygon points="56,73 64,73 60,82" fill="#1e293b"/>
-        <!-- Speed Wind Streaks -->
-        <line x1="40" y1="20" x2="40" y2="45" stroke="#0d9488" stroke-width="2" stroke-linecap="round"/>
-        <line x1="80" y1="25" x2="80" y2="50" stroke="#0d9488" stroke-width="2" stroke-linecap="round"/>
-      </svg>`
-    },
-    {
-      id: 'world-samudra-terluas',
-      scope: 'world',
-      category: 'alam',
-      badge: 'TERLUAS 🌊',
-      badgeEn: 'LARGEST 🌊',
-      title: 'Samudra / Laut Terluas di Dunia',
-      titleEn: 'Largest Ocean in the World',
-      holder: 'Samudra Pasifik (Pacific Ocean)',
-      statValue: '165,2 Juta km²',
-      statNumber: 165,
-      statUnit: 'juta km²',
-      comparison: 'Lebih luas dari seluruh gabungan seluruh daratan 7 benua di planet Bumi!',
-      comparisonEn: 'Larger than all the landmasses on Earth combined!',
-      description: 'Samudra Pasifik membentang luas dari pesisir benua Asia dan Australia hingga ke benua Amerika, mencakup sekitar 32% dari seluruh luas permukaan Bumi.',
-      descriptionEn: 'The Pacific Ocean covers over 30% of Earth’s surface, holding over half of the world’s open water.',
-      funFact: 'Nama "Pasifik" diberikan oleh penjelajah Ferdinand Magellan yang berarti "damai dan tenang" karena airnya yang begitu tenang saat pertama kali ia lewati.',
-      funFactEn: 'Named by explorer Ferdinand Magellan, "Pacific" translates to peaceful due to its calm waters when he first crossed it.',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#e0f2fe"/>
-        <!-- Globe Globe Circle -->
-        <circle cx="60" cy="60" r="42" fill="#0284c7"/>
-        <!-- Continents Rim (Asia on left, Americas on right) -->
-        <path d="M22 45 Q30 55 24 75 Q18 80 20 90 A42 42 0 0 1 20 40 Z" fill="#15803d"/>
-        <path d="M100 40 Q94 60 98 80 Q104 85 102 92 A42 42 0 0 0 100 40 Z" fill="#15803d"/>
-        <!-- Pacific Waves in Center -->
-        <path d="M38 52 Q50 48 62 52 T86 52" stroke="#bae6fd" stroke-width="2.5" fill="none"/>
-        <path d="M34 68 Q46 64 58 68 T82 68" stroke="#bae6fd" stroke-width="2.5" fill="none"/>
-        <!-- Compass Star -->
-        <polygon points="60,28 62,34 68,36 62,38 60,44 58,38 52,36 58,34" fill="#facc15"/>
-      </svg>`
-    },
-    {
-      id: 'world-gunung-tertinggi',
-      scope: 'world',
-      category: 'alam',
-      badge: 'TERTINGGI 🏔️',
-      badgeEn: 'HIGHEST 🏔️',
-      title: 'Gunung Tertinggi di Dunia',
-      titleEn: 'Highest Mountain in the World',
-      holder: 'Gunung Everest (Sagarmatha / Chomolungma)',
-      statValue: '8.848,86 mdpl',
-      statNumber: 8848,
-      statUnit: 'mdpl (meter)',
-      comparison: 'Tingginya hampir 9 kilometer! Setara dengan ketinggian pesawat jet komersial saat terbang melintasi benua!',
-      comparisonEn: 'Nearly 9 km tall! Same altitude where commercial jetliners cruise through the stratosphere!',
-      description: 'Gunung Everest di Pegunungan Himalaya (perbatasan Nepal dan Tibet) adalah titik elevasi tertinggi di permukaan Bumi di atas permukaan laut.',
-      descriptionEn: 'Mount Everest in the Himalayas is Earth’s highest mountain above sea level, reaching 8,848.86 meters.',
-      funFact: 'Karena pergerakan lempeng benua India yang terus mendorong lempeng Asia, Gunung Everest terus bertambah tinggi sekitar 4 milimeter setiap tahunnya!',
-      funFactEn: 'Due to tectonic plate collision, Mount Everest grows about 4 millimeters taller every single year!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="evGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0284c7"/>
-            <stop offset="100%" stop-color="#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="24" fill="url(#evGrad)"/>
-        <!-- Sun behind peak -->
-        <circle cx="60" cy="30" r="14" fill="#fbbf24"/>
-        <!-- Giant Everest Peak -->
-        <polygon points="10,110 60,26 110,110" fill="#334155"/>
-        <polygon points="60,26 110,110 80,110 60,60" fill="#1e293b"/>
-        <!-- Snow Glacier Summit -->
-        <polygon points="46,55 60,26 74,55 66,50 60,56 54,49" fill="#ffffff"/>
-        <polygon points="50,70 60,26 70,70 60,60" fill="#f8fafc" opacity="0.6"/>
-        <!-- Flying Prayer Flags -->
-        <path d="M35 85 Q60 88 85 85" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
-      </svg>`
-    },
-    {
-      id: 'world-pesawat-tercepat',
-      scope: 'world',
-      category: 'teknologi',
-      badge: 'TERCEPAT ✈️',
-      badgeEn: 'FASTEST ✈️',
-      title: 'Pesawat Jet Berawak Tercepat di Dunia',
-      titleEn: 'Fastest Manned Jet Airplane in the World',
-      holder: 'Lockheed SR-71 Blackbird',
-      statValue: '3.529 km/jam (Mach 3.3)',
-      statNumber: 3529,
-      statUnit: 'km/jam',
-      comparison: 'Lebih cepat dari kecepatan peluru senapan! Bisa terbang dari Jakarta ke Surabaya hanya dalam 12 menit!',
-      comparisonEn: 'Faster than a rifle bullet! Could fly from Jakarta to Surabaya in only 12 minutes!',
-      description: 'SR-71 Blackbird adalah mahakarya penerbangan supersonik yang mampu terbang di ketinggian 25.000 meter di batas atmosfer luar dengan kecepatan lebih dari 3 kali kecepatan suara.',
-      descriptionEn: 'The SR-71 Blackbird holds the official world record for the fastest air-breathing manned aircraft at Mach 3.3.',
-      funFact: 'Saking cepatnya, gesekan udara membuat badan pesawat menjadi sangat panas hingga 300°C sehingga seluruh bodinya dibuat dari logam titanium khusus!',
-      funFactEn: 'Atmospheric friction heated its outer skin to over 300°C, requiring an airframe built entirely of specialized titanium!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#0f172a"/>
-        <!-- Stars in space boundary -->
-        <circle cx="20" cy="20" r="1.5" fill="#ffffff"/>
-        <circle cx="100" cy="25" r="1.5" fill="#ffffff"/>
-        <circle cx="85" cy="15" r="1" fill="#ffffff"/>
-        <!-- SR-71 Blackbird Silhouette -->
-        <path d="M60 20 L66 45 L95 75 L75 80 L66 70 L60 85 L54 70 L45 80 L25 75 L54 45 Z" fill="#334155"/>
-        <ellipse cx="60" cy="40" rx="3" ry="12" fill="#020617"/>
-        <!-- Twin Jet Afterburners -->
-        <circle cx="48" cy="74" r="3" fill="#f97316"/>
-        <polygon points="46,76 50,76 48,88" fill="#facc15"/>
-        <circle cx="72" cy="74" r="3" fill="#f97316"/>
-        <polygon points="70,76 74,76 72,88" fill="#facc15"/>
-        <!-- Supersonic Mach Shockwaves -->
-        <path d="M40 35 L15 65" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M80 35 L105 65" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>`
-    },
-    {
-      id: 'world-gurun-terluas',
-      scope: 'world',
-      category: 'alam',
-      badge: 'TERLUAS 🏜️',
-      badgeEn: 'LARGEST 🏜️',
-      title: 'Gurun Pasir Panas Terluas di Dunia',
-      titleEn: 'Largest Hot Desert in the World',
-      holder: 'Gurun Sahara, Benua Afrika',
-      statValue: '9,2 Juta km²',
-      statNumber: 92,
-      statUnit: 'juta km²',
-      comparison: 'Hampir sebesar seluruh negara Amerika Serikat dan hampir 5 kali luas seluruh daratan Indonesia!',
-      comparisonEn: 'Almost as large as the entire United States and 5 times the land area of Indonesia!',
-      description: 'Gurun Sahara membentang melintasi 11 negara di Afrika Utara dengan bukit pasir raksasa yang tingginya bisa mencapai 180 meter.',
-      descriptionEn: 'The Sahara Desert spans across 11 countries in North Africa, featuring towering sand dunes up to 180 meters tall.',
-      funFact: 'Ribuan tahun yang lalu, Gurun Sahara dulunya adalah padang rumput hijau yang subur dengan danau-danau besar dan dihoni gajah serta jerapah!',
-      funFactEn: 'Thousands of years ago, the Sahara was a lush green savannah with huge lakes, elephants, and giraffes!',
-      svgIcon: `<svg viewBox="0 0 120 120" class="record-svg" aria-hidden="true">
-        <rect width="120" height="120" rx="24" fill="#fffbeb"/>
-        <!-- Blazing Sun -->
-        <circle cx="85" cy="30" r="14" fill="#f59e0b"/>
-        <!-- Rolling Sand Dunes -->
-        <path d="M0 65 Q40 45 80 70 Q105 60 120 75 L120 120 L0 120 Z" fill="#d97706"/>
-        <path d="M0 80 Q35 65 70 85 Q100 75 120 90 L120 120 L0 120 Z" fill="#b45309"/>
-        <!-- Camel Silhouette -->
-        <ellipse cx="42" cy="72" rx="6" ry="4" fill="#78350f"/>
-        <ellipse cx="40" cy="67" rx="3" ry="4" fill="#78350f"/>
-        <path d="M46 72 Q50 68 50 63" stroke="#78350f" stroke-width="2" fill="none"/>
-        <!-- Legs -->
-        <line x1="39" y1="75" x2="38" y2="84" stroke="#78350f" stroke-width="1.5"/>
-        <line x1="45" y1="75" x2="46" y2="84" stroke="#78350f" stroke-width="1.5"/>
-      </svg>`
+      "id": "bangunan",
+      "name": "Arsitektur & Rekor Manusia",
+      "nameEn": "Architecture & Wonders",
+      "icon": "🏛️"
     }
   ];
   
-  // ============================================================
-  // DATA KUIS TEBAK REKOR INTERAKTIF (5 SOAL SERU BERHADIAH BINTANG ⭐)
-  // ============================================================
+  const RECORDS_DATA = [
+    {
+      "id": "air-tercepat-dunia",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERCEPAT ✈️",
+      "badgeEn": "FASTEST ✈️",
+      "title": "Pesawat Jet Berawak Tercepat di Dunia",
+      "titleEn": "Fastest Manned Air-Breathing Jet Aircraft",
+      "holder": "Lockheed SR-71 Blackbird",
+      "statValue": "3.529 km/jam (Mach 3.3)",
+      "statNumber": 3529,
+      "statUnit": "km/jam",
+      "comparison": "Lebih cepat dari peluru senapan! Bisa terbang dari Jakarta ke Surabaya cuma butuh waktu 12 menit!",
+      "comparisonEn": "Faster than a speeding rifle bullet! Can fly across Java island in only 12 minutes!",
+      "description": "SR-71 Blackbird adalah jet intai supersonik legendaris yang terbang di ketinggian 26.000 meter di tepi atmosfer. Saking cepatnya, tidak pernah ada rudal yang mampu mengejarnya.",
+      "descriptionEn": "The SR-71 Blackbird flew at Mach 3.3 at 85,000 feet, outrunning any surface-to-air missile ever fired at it.",
+      "funFact": "Saat terbang di kecepatan 3.500 km/jam, gesekan udara membuat bodi pesawat memuai hingga 15 cm karena panas 300°C sehingga seluruh bodinya dibuat dari logam titanium!",
+      "funFactEn": "Frictional heat at Mach 3 expanded the aircraft length by up to 15 centimeters, requiring a titanium airframe!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#0f172a\"/>\n      <circle cx=\"20\" cy=\"20\" r=\"1.5\" fill=\"#fff\"/><circle cx=\"100\" cy=\"25\" r=\"1.5\" fill=\"#fff\"/>\n      <path d=\"M60 18 L66 45 L96 75 L75 80 L66 70 L60 85 L54 70 L45 80 L24 75 L54 45 Z\" fill=\"#334155\"/>\n      <ellipse cx=\"60\" cy=\"38\" rx=\"3\" ry=\"12\" fill=\"#020617\"/>\n      <circle cx=\"48\" cy=\"74\" r=\"3\" fill=\"#f97316\"/><polygon points=\"46,76 50,76 48,88\" fill=\"#facc15\"/>\n      <circle cx=\"72\" cy=\"74\" r=\"3\" fill=\"#f97316\"/><polygon points=\"70,76 74,76 72,88\" fill=\"#facc15\"/>\n      <path d=\"M40 32 L15 62 M80 32 L105 62\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n    </svg>"
+    },
+    {
+      "id": "air-terbesar-kargo",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERBESAR 📦",
+      "badgeEn": "HEAVIEST 📦",
+      "title": "Pesawat Kargo Terberat & Terbesar di Dunia",
+      "titleEn": "Heaviest & Largest Cargo Aircraft Ever Built",
+      "holder": "Antonov An-225 Mriya",
+      "statValue": "Rentang Sayap 88,4 Meter · Berat 640 Ton",
+      "statNumber": 640,
+      "statUnit": "ton berat lepas landas",
+      "comparison": "Rentang sayapnya lebih panjang dari lapangan sepak bola dan memiliki 6 mesin jet raksasa serta 32 roda pendaratan!",
+      "comparisonEn": "Wingspan wider than a football field, powered by 6 giant turbofans with 32 landing wheels!",
+      "description": "An-225 Mriya awalnya dirancang untuk menggendong pesawat ulang-alik luar angkasa Buran di atas punggungnya, dan memegang 240 rekor dunia aviasi.",
+      "descriptionEn": "The Antonov An-225 was designed to carry the Buran space shuttle piggyback, holding over 240 aviation world records.",
+      "funFact": "Ruang kargo di dalam perutnya begitu luas sehingga penerbangan pertama Wright Bersaudara (37 meter) bisa dilakukan di dalam perut pesawat ini!",
+      "funFactEn": "Its cargo bay was so cavernous that the Wright brothers’ entire historic first flight could fit completely inside!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#eff6ff\"/>\n      <!-- Giant Swept Wings -->\n      <polygon points=\"60,35 116,65 110,72 68,52 68,95 60,90 52,95 52,52 10,72 4,65\" fill=\"#2563eb\"/>\n      <!-- Fuselage -->\n      <rect x=\"54\" y=\"24\" width=\"12\" height=\"74\" rx=\"6\" fill=\"#1e40af\"/>\n      <ellipse cx=\"60\" cy=\"26\" rx=\"5\" ry=\"7\" fill=\"#60a5fa\"/>\n      <!-- 6 Engines -->\n      <rect x=\"22\" y=\"66\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <rect x=\"34\" y=\"62\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <rect x=\"44\" y=\"58\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <rect x=\"70\" y=\"58\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <rect x=\"80\" y=\"62\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <rect x=\"92\" y=\"66\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#475569\"/>\n      <!-- Twin Tails -->\n      <polygon points=\"46,92 46,102 52,102 52,92\" fill=\"#1e3a8a\"/>\n      <polygon points=\"68,92 68,102 74,102 74,92\" fill=\"#1e3a8a\"/>\n    </svg>"
+    },
+    {
+      "id": "air-terbesar-penumpang",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERBESAR 👥",
+      "badgeEn": "LARGEST 👥",
+      "title": "Pesawat Penumpang Terbesar di Dunia",
+      "titleEn": "Largest Commercial Passenger Airliner",
+      "holder": "Airbus A380-800 Superjumbo",
+      "statValue": "Kapasitas 853 Penumpang · 2 Lantai Penuh",
+      "statNumber": 853,
+      "statUnit": "penumpang",
+      "comparison": "Pesawat bertingkat 2 lantai penuh dari depan ke belakang, seperti gedung apartemen terbang!",
+      "comparisonEn": "Full double-decker wide-body airliner, resembling a flying two-story luxury apartment building!",
+      "description": "Airbus A380 adalah raksasa langit komersial dengan kabin seluas 550 meter persegi yang dilengkapi lounge, tangga melingkar, dan bahkan kamar mandi shower di kelas satu.",
+      "descriptionEn": "The A380 features 550 square meters of usable floor space with dual passenger decks and four ultra-quiet engines.",
+      "funFact": "Kabel listrik di dalam satu pesawat A380 jika dibentangkan panjangnya mencapai 530 kilometer, hampir sama dengan jarak Jakarta ke Semarang!",
+      "funFactEn": "Wiring in a single A380 stretches over 530 kilometers, enough to connect two major cities end-to-end!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f8fafc\"/>\n      <!-- A380 Two-Deck Silhouette -->\n      <path d=\"M16 68 C22 55 45 42 75 42 C100 42 110 50 114 58 C114 68 105 78 85 80 L35 80 C24 80 18 75 16 68 Z\" fill=\"#0284c7\"/>\n      <!-- Upper & Lower Windows -->\n      <line x1=\"50\" y1=\"48\" x2=\"95\" y2=\"48\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/>\n      <line x1=\"42\" y1=\"56\" x2=\"102\" y2=\"56\" stroke=\"#ffffff\" stroke-width=\"2.5\" stroke-dasharray=\"4 2\"/>\n      <!-- Cockpit -->\n      <polygon points=\"104,56 112,56 108,52\" fill=\"#0f172a\"/>\n      <!-- Giant Wings & Turbofans -->\n      <polygon points=\"62,60 85,88 78,88 56,66\" fill=\"#0369a1\"/>\n      <rect x=\"68\" y=\"76\" width=\"10\" height=\"6\" rx=\"3\" fill=\"#334155\"/>\n      <rect x=\"54\" y=\"70\" width=\"10\" height=\"6\" rx=\"3\" fill=\"#334155\"/>\n      <!-- Tail fin -->\n      <polygon points=\"32,46 22,24 35,24 45,46\" fill=\"#0284c7\"/>\n    </svg>"
+    },
+    {
+      "id": "air-terkecil-dunia",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERKECIL 🛩️",
+      "badgeEn": "SMALLEST 🛩️",
+      "title": "Pesawat Berawak Terkecil di Dunia",
+      "titleEn": "Smallest Manned Airplane in the World",
+      "holder": "Stits SA-2A Sky Baby & Bumble Bee II",
+      "statValue": "Panjang 2,7 Meter · Rentang 1,68 Meter",
+      "statNumber": 2.7,
+      "statUnit": "meter panjang",
+      "comparison": "Ukurannya lebih pendek dari mobil city car kecil! Sang pilot duduk berdesakan seperti di dalam sepatu raksasa!",
+      "comparisonEn": "Shorter than a tiny compact car! The pilot sits squeezed inside like a shoe!",
+      "description": "Dibuat oleh insinyur Robert Starr di Amerika Serikat untuk memecahkan rekor dunia Guinness pesawat terkecil yang benar-benar bisa terbang stabil di udara.",
+      "descriptionEn": "Engineered by Robert Starr to claim the Guinness World Record for the smallest piloted aircraft capable of flight.",
+      "funFact": "Meskipun sangat mini, pesawat ini bisa melaju kencang hingga 305 km/jam dan membutuhkan landasan pacu yang sangat halus saat mendarat!",
+      "funFactEn": "Despite its pocket size, it could fly at 305 km/h with an engine squeezed tightly into its tiny nose!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fefce8\"/>\n      <!-- Ground line -->\n      <line x1=\"10\" y1=\"95\" x2=\"110\" y2=\"95\" stroke=\"#cbd5e1\" stroke-width=\"3\"/>\n      <!-- Stubby Tiny Fuselage -->\n      <ellipse cx=\"60\" cy=\"62\" rx=\"26\" ry=\"18\" fill=\"#eab308\"/>\n      <!-- Pilot Bubble Canopy -->\n      <circle cx=\"56\" cy=\"50\" r=\"10\" fill=\"#38bdf8\" opacity=\"0.8\"/>\n      <circle cx=\"56\" cy=\"50\" r=\"4\" fill=\"#0f172a\"/>\n      <!-- Tiny Biplane Wings -->\n      <rect x=\"42\" y=\"38\" width=\"36\" height=\"6\" rx=\"3\" fill=\"#ca8a04\"/>\n      <rect x=\"42\" y=\"70\" width=\"36\" height=\"6\" rx=\"3\" fill=\"#ca8a04\"/>\n      <!-- Propeller in front -->\n      <line x1=\"88\" y1=\"46\" x2=\"88\" y2=\"78\" stroke=\"#475569\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n      <circle cx=\"88\" cy=\"62\" r=\"4\" fill=\"#ef4444\"/>\n      <!-- Wheels -->\n      <circle cx=\"48\" cy=\"88\" r=\"6\" fill=\"#1e293b\"/>\n      <circle cx=\"70\" cy=\"88\" r=\"6\" fill=\"#1e293b\"/>\n    </svg>"
+    },
+    {
+      "id": "air-helikopter-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERBESAR 🚁",
+      "badgeEn": "HEAVIEST 🚁",
+      "title": "Helikopter Terbesar & Terkuat di Dunia",
+      "titleEn": "Largest & Heaviest Helicopter Ever Produced",
+      "holder": "Mil Mi-26 (Halo)",
+      "statValue": "Kapasitas Angkat 20 Ton · Baling-Baling 32 Meter",
+      "statNumber": 20,
+      "statUnit": "ton beban kargo",
+      "comparison": "Bisa mengangkat truk kontainer besar, helikopter lain, atau bahkan pesawat jet tempur di gantungannya!",
+      "comparisonEn": "Capable of airlifting a full-size freight truck or a passenger jet suspended underneath!",
+      "description": "Mil Mi-26 adalah helikopter monster bertransmisi ganda dengan baling-baling 8 bilah raksasa berdiameter 32 meter, setara rentang sayap Boeing 737.",
+      "descriptionEn": "The Mi-26 Halo is a heavy-lift transport helicopter with an 8-blade main rotor spanning 32 meters in diameter.",
+      "funFact": "Helikopter ini pernah digunakan untuk mengangkat balok es raksasa seberat puluhan ton yang berisi fosil Mammoth purba beku berusia 20.000 tahun di Siberia!",
+      "funFactEn": "It once airlifted a 20-ton frozen block of Siberian permafrost containing a 20,000-year-old preserved woolly mammoth!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdf4\"/>\n      <!-- 8-Blade Giant Rotor -->\n      <ellipse cx=\"60\" cy=\"30\" rx=\"48\" ry=\"4\" fill=\"#64748b\"/>\n      <circle cx=\"60\" cy=\"30\" r=\"4\" fill=\"#0f172a\"/>\n      <line x1=\"60\" y1=\"30\" x2=\"60\" y2=\"42\" stroke=\"#0f172a\" stroke-width=\"3\"/>\n      <!-- Helicopter Body -->\n      <path d=\"M22 62 C22 50 45 44 78 44 C95 44 105 52 105 62 C105 72 90 76 65 76 L32 76 C24 76 22 70 22 62 Z\" fill=\"#15803d\"/>\n      <!-- Tail Boom & Tail Rotor -->\n      <polygon points=\"32,58 6,56 6,64 32,66\" fill=\"#166534\"/>\n      <ellipse cx=\"6\" cy=\"52\" rx=\"2\" ry=\"12\" fill=\"#475569\"/>\n      <!-- Cockpit Windows -->\n      <polygon points=\"85,48 100,52 95,60 82,58\" fill=\"#38bdf8\"/>\n      <!-- Wheels / Skids -->\n      <circle cx=\"45\" cy=\"84\" r=\"5\" fill=\"#1e293b\"/>\n      <circle cx=\"78\" cy=\"84\" r=\"5\" fill=\"#1e293b\"/>\n    </svg>"
+    },
+    {
+      "id": "air-tercepat-roket",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TERCEPAT 🚀",
+      "badgeEn": "HYPERSONIC 🚀",
+      "title": "Pesawat Roket Berawak Tercepat Sepanjang Sejarah",
+      "titleEn": "Fastest Manned Hypersonic Rocket Plane",
+      "holder": "North American X-15",
+      "statValue": "7.274 km/jam (Mach 6.7)",
+      "statNumber": 7274,
+      "statUnit": "km/jam",
+      "comparison": "Lebih dari 6 kali kecepatan suara! Terbang menembus batas atmosfer hingga ketinggian 107 kilometer!",
+      "comparisonEn": "Over 6 times the speed of sound! Flew high enough into space (107 km) that its pilots earned astronaut wings!",
+      "description": "X-15 adalah pesawat bertenaga mesin roket cair yang diterbangkan oleh pilot uji legendaris termasuk Neil Armstrong sebelum beliau pergi ke Bulan.",
+      "descriptionEn": "The hypersonic rocket-powered X-15 reached Mach 6.7 and pioneered spaceflight techniques before the Moon missions.",
+      "funFact": "Karena terbang di ruang hampa yang tidak ada udara untuk sayap, pesawat ini dilengkapi pendorong gas kecil (reaction control thruster) persis seperti pesawat antariksa!",
+      "funFactEn": "At the top of its flight where the air was too thin, it steered using rocket thrusters identical to spaceships!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#020617\"/>\n      <!-- Curved Earth Horizon -->\n      <path d=\"M0 100 Q60 85 120 100 L120 120 L0 120 Z\" fill=\"#0284c7\"/>\n      <!-- X-15 Needle Rocket Jet -->\n      <polygon points=\"105,42 35,32 30,52\" fill=\"#1e293b\"/>\n      <path d=\"M112 42 L25 40 L25 44 Z\" fill=\"#475569\"/>\n      <!-- Stubby Hypersonic Wedge Wings -->\n      <polygon points=\"62,38 48,22 42,24 55,40\" fill=\"#0f172a\"/>\n      <polygon points=\"62,44 48,60 42,58 55,42\" fill=\"#0f172a\"/>\n      <!-- Rocket Fire Exhaust -->\n      <polygon points=\"25,40 5,36 12,42 2,44 25,44\" fill=\"#f97316\"/>\n      <polygon points=\"20,41 8,42 20,43\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "car-tercepat-dunia",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERCEPAT 🏎️",
+      "badgeEn": "FASTEST 🏎️",
+      "title": "Mobil Hypercar Produksi Tercepat di Dunia",
+      "titleEn": "Fastest Production Hypercar in the World",
+      "holder": "Koenigsegg Jesko Absolut & Bugatti Bolide",
+      "statValue": "508+ km/jam",
+      "statNumber": 508,
+      "statUnit": "km/jam",
+      "comparison": "5 kali lebih cepat dari batas kecepatan jalan tol! Dalam 1 detik menempuh 141 meter!",
+      "comparisonEn": "5 times highway speed limit! Sprints 141 meters in a single second!",
+      "description": "Koenigsegg Jesko Absolut dirancang dengan koefisien hambatan udara super licin (0.278 Cd) dan mesin 1.600 tenaga kuda berbahan bakar biofuel E85.",
+      "descriptionEn": "Engineered in Sweden with extreme aero efficiency and a 1,600 hp twin-turbo V8 designed to crack 500 km/h.",
+      "funFact": "Komputer mesinnya mampu menghitung pembakaran bahan bakar hingga jutaan kali per detik agar bodi mobil tidak terangkat terbang saat melaju 500 km/jam!",
+      "funFactEn": "Aerodynamic downforce is calibrated precisely so the car hugs the tarmac instead of taking off like a plane!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f8fafc\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#1e293b\"/>\n      <line x1=\"10\" y1=\"102\" x2=\"110\" y2=\"102\" stroke=\"#facc15\" stroke-width=\"2\" stroke-dasharray=\"8 6\"/>\n      <path d=\"M12 78 C15 72 28 66 40 65 L60 55 C70 54 85 58 96 68 L108 72 C114 74 114 78 112 80 L15 80 Z\" fill=\"#0284c7\"/>\n      <path d=\"M48 64 L62 57 C68 56 78 58 84 64 Z\" fill=\"#0f172a\"/>\n      <circle cx=\"34\" cy=\"80\" r=\"9\" fill=\"#0f172a\"/><circle cx=\"34\" cy=\"80\" r=\"5\" fill=\"#94a3b8\"/>\n      <circle cx=\"92\" cy=\"80\" r=\"9\" fill=\"#0f172a\"/><circle cx=\"92\" cy=\"80\" r=\"5\" fill=\"#94a3b8\"/>\n      <polygon points=\"10,75 2,72 8,76 0,78 10,79\" fill=\"#f97316\"/>\n    </svg>"
+    },
+    {
+      "id": "car-listrik-tercepat",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "AKSELERASI ⚡",
+      "badgeEn": "FASTEST EV ⚡",
+      "title": "Mobil Listrik Tercepat & Akselerasi Terhebat",
+      "titleEn": "Fastest Accelerating Production Electric Car",
+      "holder": "Rimac Nevera (Kroasia)",
+      "statValue": "0 - 100 km/jam dalam 1,81 Detik · Top 412 km/jam",
+      "statNumber": 1.81,
+      "statUnit": "detik (0-100 km/h)",
+      "comparison": "Akselerasinya lebih cepat dari jatuhnya kelereng dari tanganmu! Dilengkapi 4 motor listrik independen bertenaga 1.914 HP!",
+      "comparisonEn": "Accelerates faster than a dropped pebble! 4 independent electric motors generate 1,914 horsepower!",
+      "description": "Rimac Nevera memecahkan lebih dari 23 rekor akselerasi dan pengereman dunia dalam satu hari, menjadikannya raja mobil listrik bertenaga baterai.",
+      "descriptionEn": "The Rimac Nevera shattered 23 performance world records in a single day, boasting 1,914 horsepower and torque vectoring.",
+      "funFact": "Mobil ini memiliki torsi instan sebesar 2.360 Nm yang sanggup membuat punggung penumpang tertempel kencang ke sandaran kursi saat digas mendadak!",
+      "funFactEn": "With 2,360 Nm of instantaneous torque, it pins passengers against their seats with over 1.4 Gs of acceleration!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdfa\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#134e4a\"/>\n      <!-- Electric Hypercar -->\n      <path d=\"M15 78 C20 70 35 65 50 63 L70 56 C82 56 94 62 104 70 L110 75 L15 79 Z\" fill=\"#0d9488\"/>\n      <polygon points=\"52,62 66,57 80,59 74,63\" fill=\"#042f2e\"/>\n      <!-- Lightning Bolt on Side -->\n      <polygon points=\"62,68 58,74 65,74 60,82 72,72 65,72\" fill=\"#facc15\"/>\n      <circle cx=\"35\" cy=\"80\" r=\"8\" fill=\"#0f172a\"/><circle cx=\"90\" cy=\"80\" r=\"8\" fill=\"#0f172a\"/>\n    </svg>"
+    },
+    {
+      "id": "car-terkecil-dunia",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERKECIL 🚗",
+      "badgeEn": "SMALLEST 🚗",
+      "title": "Mobil Komersial Terkecil di Dunia",
+      "titleEn": "Smallest Production Car in the World",
+      "holder": "Peel P50 (Inggris)",
+      "statValue": "Panjang 134 cm · Berat 59 kg",
+      "statNumber": 1.34,
+      "statUnit": "meter panjang",
+      "comparison": "Lebih pendek dari tinggi badan orang dewasa dan beratnya lebih ringan dari satu karung beras jumbo!",
+      "comparisonEn": "Shorter than an adult human and light enough that you can pick up its back and pull it!",
+      "description": "Peel P50 adalah mobil roda tiga mini berkapasitas 1 orang yang dibuat di Pulau Man, Inggris. Mobil ini tidak memiliki gigi mundur sehingga ada pegangan tangan di belakang untuk menyeretnya!",
+      "descriptionEn": "The three-wheeled Peel P50 is Guinness-certified as the smallest production car ever, featuring 1 door, 1 seat, and 1 headlight.",
+      "funFact": "Mobil ini sangat mungil hingga bisa dimasukkan ke dalam lift gedung kantor dan diparkir tepat di samping meja kerja komputermu!",
+      "funFactEn": "It is so tiny that it can fit inside an office elevator and be driven right through hallway doorways!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fff1f2\"/>\n      <rect x=\"0\" y=\"90\" width=\"120\" height=\"30\" fill=\"#334155\"/>\n      <!-- Peel P50 Bubble Body -->\n      <rect x=\"35\" y=\"42\" width=\"50\" height=\"46\" rx=\"14\" fill=\"#e11d48\"/>\n      <!-- Front Single Big Headlight -->\n      <circle cx=\"85\" cy=\"56\" r=\"6\" fill=\"#fef08a\"/>\n      <!-- Window -->\n      <rect x=\"42\" y=\"48\" width=\"36\" height=\"20\" rx=\"6\" fill=\"#bae6fd\"/>\n      <!-- Pilot head -->\n      <circle cx=\"56\" cy=\"58\" r=\"6\" fill=\"#0f172a\"/>\n      <!-- Wheels -->\n      <circle cx=\"48\" cy=\"88\" r=\"7\" fill=\"#0f172a\"/>\n      <circle cx=\"75\" cy=\"88\" r=\"7\" fill=\"#0f172a\"/>\n      <!-- Rear handle -->\n      <rect x=\"28\" y=\"66\" width=\"7\" height=\"4\" rx=\"2\" fill=\"#cbd5e1\"/>\n    </svg>"
+    },
+    {
+      "id": "car-truk-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERBESAR 🚚",
+      "badgeEn": "LARGEST 🚚",
+      "title": "Truk Tambang Terbesar di Dunia",
+      "titleEn": "Largest Haul Dump Truck in the World",
+      "holder": "BelAZ 75710 (Belarusia)",
+      "statValue": "Kapasitas Muatan 450 Ton · Berat Total 810 Ton",
+      "statNumber": 450,
+      "statUnit": "ton muatan",
+      "comparison": "Sekali angkut bisa membawa muatan setara 300 mobil keluarga sekaligus! Bannya saja setinggi 4 meter!",
+      "comparisonEn": "Can carry the weight of 300 passenger cars in a single trip! Each tire stands 4 meters tall!",
+      "description": "BelAZ 75710 adalah truk tambang raksasa bertenaga mesin diesel-elektrik kembar 16 silinder dengan 8 ban raksasa tubeless terbesar di dunia.",
+      "descriptionEn": "The BelAZ 75710 is an ultra-class haul truck driven by twin 16-cylinder diesel engines generating 4,600 horsepower.",
+      "funFact": "Satu ban truk ini tingginya dua kali lipat tinggi anak SD dan harga satu bannya saja bisa membeli satu unit mobil mewah baru!",
+      "funFactEn": "A single one of its 8 massive tires stands over 4 meters tall and costs as much as a luxury sports car!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fefce8\"/>\n      <rect x=\"0\" y=\"96\" width=\"120\" height=\"24\" fill=\"#78350f\"/>\n      <!-- Huge Dump Bed -->\n      <polygon points=\"12,38 72,38 68,66 18,66\" fill=\"#ca8a04\"/>\n      <!-- Cab and Engine Housing -->\n      <rect x=\"68\" y=\"44\" width=\"34\" height=\"22\" rx=\"4\" fill=\"#a16207\"/>\n      <rect x=\"80\" y=\"46\" width=\"16\" height=\"10\" rx=\"2\" fill=\"#38bdf8\"/>\n      <rect x=\"68\" y=\"66\" width=\"40\" height=\"14\" fill=\"#451a03\"/>\n      <!-- Massive Tires (4m tall) -->\n      <circle cx=\"34\" cy=\"84\" r=\"14\" fill=\"#0f172a\"/><circle cx=\"34\" cy=\"84\" r=\"6\" fill=\"#94a3b8\"/>\n      <circle cx=\"92\" cy=\"84\" r=\"14\" fill=\"#0f172a\"/><circle cx=\"92\" cy=\"84\" r=\"6\" fill=\"#94a3b8\"/>\n      <!-- Stairs Ladder -->\n      <line x1=\"72\" y1=\"46\" x2=\"72\" y2=\"72\" stroke=\"#ffffff\" stroke-width=\"2\"/>\n    </svg>"
+    },
+    {
+      "id": "car-terpanjang-dunia",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERPANJANG 🚘",
+      "badgeEn": "LONGEST 🚘",
+      "title": "Mobil Terpanjang di Dunia",
+      "titleEn": "Longest Car in the World",
+      "holder": "The American Dream Limousine",
+      "statValue": "Panjang 30,54 Meter (100 Kaki) · 26 Roda",
+      "statNumber": 30.54,
+      "statUnit": "meter panjang",
+      "comparison": "Lebih panjang dari 6 mobil sedan digabung! Di dalamnya ada kolam renang dengan papan loncat dan helipad helikopter di bagian belakang!",
+      "comparisonEn": "Longer than 6 family cars lined up! Features a swimming pool, putting green, and a functioning helipad on its trunk!",
+      "description": "Mobil limusin super panjang ini dibuat oleh perancang Jay Ohrberg di California dan memegang rekor dunia resmi Guinness Book of Records.",
+      "descriptionEn": "The American Dream is a custom Cadillac Eldorado limousine capable of carrying over 75 passengers with 26 wheels.",
+      "funFact": "Karena sangat panjang, mobil ini dibuat dengan engsel khusus di bagian tengah sehingga bisa berbelok di tikungan, dan memiliki dua kemudi di depan dan belakang!",
+      "funFactEn": "It has an articulated hinge in the middle to navigate street corners and two steering wheels at both ends!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#faf5ff\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#334155\"/>\n      <!-- Endless White Limo Body -->\n      <rect x=\"4\" y=\"66\" width=\"112\" height=\"16\" rx=\"4\" fill=\"#ffffff\" stroke=\"#9333ea\" stroke-width=\"1.5\"/>\n      <!-- Windows line -->\n      <line x1=\"15\" y1=\"70\" x2=\"105\" y2=\"70\" stroke=\"#38bdf8\" stroke-width=\"3\" stroke-dasharray=\"6 2\"/>\n      <!-- Mini Helipad on rear -->\n      <circle cx=\"20\" cy=\"64\" r=\"5\" fill=\"#facc15\"/><text x=\"20\" y=\"66\" font-size=\"5\" text-anchor=\"middle\" font-weight=\"bold\">H</text>\n      <!-- Wheels (26 Wheels symbolized) -->\n      <circle cx=\"12\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/><circle cx=\"22\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/>\n      <circle cx=\"55\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/><circle cx=\"65\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/>\n      <circle cx=\"98\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/><circle cx=\"108\" cy=\"82\" r=\"4\" fill=\"#0f172a\"/>\n    </svg>"
+    },
+    {
+      "id": "car-kereta-terpanjang",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERPANJANG 🚆",
+      "badgeEn": "LONGEST 🚆",
+      "title": "Kereta Api Terpanjang di Dunia",
+      "titleEn": "Longest & Heaviest Train in World History",
+      "holder": "BHP Iron Ore Train (Australia Barat)",
+      "statValue": "Panjang 7,35 Kilometer · 682 Gerbong",
+      "statNumber": 7.35,
+      "statUnit": "kilometer panjang",
+      "comparison": "Bila kamu berdiri di lokomotif depan, gerbong paling belakang berada 7 kilometer jauhnya melintasi cakrawala!",
+      "comparisonEn": "Stretches over 7.3 kilometers long with 682 wagons pulled by 8 powerful diesel-electric locomotives!",
+      "description": "Kereta tambang bijih besi ini mengangkut 82.000 ton bijih besi dari tambang Newman ke Port Hedland di Australia dengan berat total kereta mencapai 100.000 ton.",
+      "descriptionEn": "Operated by BHP in the Pilbara desert, this colossal train holds the official world record for the longest freight train.",
+      "funFact": "Dibutuhkan 8 lokomotif diesel-elektrik yang tersebar di sepanjang rangkaian kereta dan dikendalikan secara komputerisasi radio nirkabel agar gerbongnya tidak putus!",
+      "funFactEn": "It required 8 distributed diesel engines coordinated via wireless telemetry to prevent the coupling joints from snapping under immense strain!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fff7ed\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#431407\"/>\n      <!-- Desert Horizon -->\n      <polygon points=\"0,85 40,65 80,85\" fill=\"#ea580c\" opacity=\"0.4\"/>\n      <!-- Train Line stretching into perspective -->\n      <rect x=\"6\" y=\"74\" width=\"22\" height=\"12\" rx=\"2\" fill=\"#c2410c\"/>\n      <rect x=\"32\" y=\"76\" width=\"18\" height=\"10\" rx=\"1\" fill=\"#9a3412\"/>\n      <rect x=\"54\" y=\"77\" width=\"16\" height=\"9\" rx=\"1\" fill=\"#9a3412\"/>\n      <rect x=\"74\" y=\"78\" width=\"14\" height=\"8\" rx=\"1\" fill=\"#7c2d12\"/>\n      <rect x=\"92\" y=\"79\" width=\"12\" height=\"7\" rx=\"1\" fill=\"#7c2d12\"/>\n      <rect x=\"108\" y=\"80\" width=\"8\" height=\"6\" rx=\"1\" fill=\"#7c2d12\"/>\n      <!-- Tracks -->\n      <line x1=\"0\" y1=\"88\" x2=\"120\" y2=\"88\" stroke=\"#f97316\" stroke-width=\"2\"/>\n    </svg>"
+    },
+    {
+      "id": "ship-pesiar-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "kapal",
+      "badge": "TERBESAR 🚢",
+      "badgeEn": "LARGEST 🚢",
+      "title": "Kapal Pesiar Terbesar di Dunia",
+      "titleEn": "Largest Cruise Ship in the World",
+      "holder": "Icon of the Seas (Royal Caribbean)",
+      "statValue": "Panjang 365 Meter · Bobot 250.800 GT · 20 Dek",
+      "statNumber": 365,
+      "statUnit": "meter panjang",
+      "comparison": "Kota terapung raksasa yang menampung 7.600 tamu dan memiliki 7 kolam renang, 6 seluncuran air, serta taman rekreasi air terbesar di laut!",
+      "comparisonEn": "A floating city carrying up to 7,600 guests across 20 decks with 7 pools and the largest waterpark at sea!",
+      "description": "Icon of the Seas ditenagai oleh gas alam cair (LNG) ramah lingkungan dan memiliki kubah kaca raksasa (AquaDome) dengan air terjun buatan setinggi 17 meter.",
+      "descriptionEn": "The world’s largest passenger ship spanning 365 meters long, powered by clean-burning liquefied natural gas (LNG).",
+      "funFact": "Kapal ini 5 kali lebih besar dan berat daripada kapal Titanic yang legendaris!",
+      "funFactEn": "Icon of the Seas is over 5 times larger and heavier than the historic RMS Titanic!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0f9ff\"/>\n      <!-- Ocean -->\n      <rect x=\"0\" y=\"82\" width=\"120\" height=\"38\" fill=\"#0284c7\"/>\n      <!-- Ship Hull -->\n      <path d=\"M10 82 L18 64 L108 64 C115 64 116 75 110 82 Z\" fill=\"#0369a1\"/>\n      <!-- 20 Decks White Superstructure -->\n      <rect x=\"25\" y=\"38\" width=\"80\" height=\"26\" fill=\"#ffffff\"/>\n      <line x1=\"28\" y1=\"44\" x2=\"100\" y2=\"44\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-dasharray=\"3 1\"/>\n      <line x1=\"28\" y1=\"50\" x2=\"100\" y2=\"50\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-dasharray=\"3 1\"/>\n      <line x1=\"28\" y1=\"56\" x2=\"100\" y2=\"56\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-dasharray=\"3 1\"/>\n      <!-- Waterslides on top -->\n      <path d=\"M50 36 Q60 26 70 36 Q80 26 90 36\" stroke=\"#f43f5e\" stroke-width=\"2.5\" fill=\"none\"/>\n      <!-- Radar Mast -->\n      <line x1=\"40\" y1=\"38\" x2=\"40\" y2=\"28\" stroke=\"#475569\" stroke-width=\"2\"/>\n    </svg>"
+    },
+    {
+      "id": "ship-petikemas-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "kapal",
+      "badge": "TERBESAR 📦",
+      "badgeEn": "LARGEST 📦",
+      "title": "Kapal Kargo Peti Kemas Terbesar di Dunia",
+      "titleEn": "Largest Container Cargo Ship in the World",
+      "holder": "MSC Irina & Ever Ace",
+      "statValue": "Panjang 400 Meter · Kapasitas 24.346 Kontainer",
+      "statNumber": 24346,
+      "statUnit": "kontainer TEU",
+      "comparison": "Bisa membawa 24.000 kontainer baja! Bila seluruh kontainernya dibariskan, panjangnya mencapai 145 kilometer!",
+      "comparisonEn": "Carries over 24,000 shipping containers! If lined up on trucks, they would stretch 145 kilometers long!",
+      "description": "Kapal raksasa sepanjang 4 lapangan sepak bola ini menjadi urat nadi perdagangan global yang membawa mainan, pakaian, mobil, dan barang elektronik antar benua.",
+      "descriptionEn": "Spanning 400 meters in length, these mega container vessels carry goods across international ocean trade routes.",
+      "funFact": "Tinggi tumpukan kontainer di atas deknya mencapai setara gedung 22 lantai!",
+      "funFactEn": "Stacks of containers on its deck rise as high as a 22-story high-rise building above the waves!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#eff6ff\"/>\n      <rect x=\"0\" y=\"80\" width=\"120\" height=\"40\" fill=\"#0369a1\"/>\n      <!-- Ship Hull Red bottom -->\n      <polygon points=\"12,80 18,65 110,65 106,80\" fill=\"#dc2626\"/>\n      <!-- Colorful Cargo Containers Stacked -->\n      <rect x=\"22\" y=\"44\" width=\"16\" height=\"20\" fill=\"#f59e0b\"/>\n      <rect x=\"40\" y=\"40\" width=\"16\" height=\"24\" fill=\"#16a34a\"/>\n      <rect x=\"58\" y=\"38\" width=\"16\" height=\"26\" fill=\"#2563eb\"/>\n      <rect x=\"76\" y=\"42\" width=\"16\" height=\"22\" fill=\"#9333ea\"/>\n      <!-- Bridge Tower at Stern -->\n      <rect x=\"94\" y=\"36\" width=\"10\" height=\"28\" fill=\"#ffffff\"/>\n      <rect x=\"96\" y=\"40\" width=\"6\" height=\"3\" fill=\"#0f172a\"/>\n    </svg>"
+    },
+    {
+      "id": "ship-pinisi-indonesia",
+      "scope": "indonesia",
+      "category": "teknologi",
+      "subCategory": "kapal",
+      "badge": "WARISAN DUNIA ⛵",
+      "badgeEn": "HERITAGE ⛵",
+      "title": "Kapal Layar Kayu Tradisional Terbesar di Dunia (Khas Indonesia)",
+      "titleEn": "World Famous Traditional Wooden Sailing Vessel",
+      "holder": "Kapal Pinisi (Suku Bugis-Makassar, Sulawesi Selatan)",
+      "statValue": "2 Tiang Layar Utama · 7 Layar Agung",
+      "statNumber": 7,
+      "statUnit": "layar kebanggaan",
+      "comparison": "Dibuat dari kayu besi (ulin) yang dirakit tanpa menggunakan satu paku besi pun, mengarungi samudra sejak abad ke-14!",
+      "comparisonEn": "Constructed from ironwood without using a single metal nail, recognized by UNESCO as Intangible Cultural Heritage!",
+      "description": "Kapal Pinisi adalah mahakarya maritim bangsa Indonesia yang diakui UNESCO sebagai Warisan Budaya Takbenda Dunia atas kecerdikan konstruksi kayu tradisionalnya.",
+      "descriptionEn": "The Pinisi of South Sulawesi is a legendary wooden schooner celebrated globally for its ancient shipbuilding artistry.",
+      "funFact": "7 helai layar kapal Pinisi melambangkan bahwa nenek moyang bangsa Indonesia mampu mengarungi 7 samudra besar di planet Bumi!",
+      "funFactEn": "Its 7 sails symbolize the ancient Indonesian seafaring ancestors who boldly navigated the 7 great oceans of the Earth!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#ecfeff\"/>\n      <rect x=\"0\" y=\"86\" width=\"120\" height=\"34\" fill=\"#0891b2\"/>\n      <!-- Wooden Boat Hull -->\n      <path d=\"M15 86 C25 80 40 76 90 76 C105 76 112 80 110 86 Z\" fill=\"#78350f\"/>\n      <!-- 2 Masts -->\n      <line x1=\"48\" y1=\"76\" x2=\"48\" y2=\"24\" stroke=\"#451a03\" stroke-width=\"2.5\"/>\n      <line x1=\"78\" y1=\"76\" x2=\"78\" y2=\"28\" stroke=\"#451a03\" stroke-width=\"2.5\"/>\n      <!-- Traditional White Sails -->\n      <polygon points=\"48,26 24,54 48,54\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <polygon points=\"48,32 30,70 48,70\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <polygon points=\"78,30 54,60 78,60\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <polygon points=\"78,36 60,72 78,72\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <!-- Bowsprit sail -->\n      <line x1=\"90\" y1=\"76\" x2=\"114\" y2=\"65\" stroke=\"#451a03\" stroke-width=\"2\"/>\n      <polygon points=\"108,66 78,45 88,74\" fill=\"#f8fafc\" opacity=\"0.9\"/>\n    </svg>"
+    },
+    {
+      "id": "space-roket-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "antariksa",
+      "badge": "TERBESAR 🚀",
+      "badgeEn": "MOST POWERFUL 🚀",
+      "title": "Roket Luar Angkasa Terbesar & Paling Kuat di Dunia",
+      "titleEn": "Tallest & Most Powerful Rocket Ever Launched",
+      "holder": "SpaceX Starship & Super Heavy",
+      "statValue": "Tinggi 121 Meter · Daya Dorong 7.500 Ton",
+      "statNumber": 121,
+      "statUnit": "meter tinggi",
+      "comparison": "Tingginya melebihi Patung Liberty dan menghasilkan daya dorong dua kali lipat roket Saturn V yang membawa astronot ke Bulan!",
+      "comparisonEn": "Taller than the Statue of Liberty, producing twice the thrust of the historic Saturn V Moon rocket!",
+      "description": "Starship dibuat dari baja tahan karat berkilau (stainless steel) dengan 33 mesin roket Raptor berbahan bakar metana cair yang dirancang untuk mengantar manusia ke Mars.",
+      "descriptionEn": "Starship is a fully reusable super-heavy launch vehicle designed to carry humans to the Moon, Mars, and beyond.",
+      "funFact": "Seluruh roket ini dirancang untuk bisa digunakan kembali berulang kali (100% reusable), dan mendarat kembali ke Bumi dengan ditangkap oleh lengan menara mekanik raksasa bernama \"Mechazilla\"!",
+      "funFactEn": "The giant booster is caught mid-air right out of the sky by giant mechanical chopstick arms on the launch tower!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <defs>\n        <linearGradient id=\"spaceBg\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\n          <stop offset=\"0%\" stop-color=\"#020617\"/><stop offset=\"100%\" stop-color=\"#1e1b4b\"/>\n        </linearGradient>\n      </defs>\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"url(#spaceBg)\"/>\n      <circle cx=\"20\" cy=\"30\" r=\"1.5\" fill=\"#ffffff\"/><circle cx=\"95\" cy=\"20\" r=\"1\" fill=\"#ffffff\"/>\n      <!-- Starship Stainless Steel Rocket Body -->\n      <rect x=\"52\" y=\"32\" width=\"16\" height=\"58\" rx=\"2\" fill=\"#e2e8f0\"/>\n      <!-- Starship Nose Cone -->\n      <polygon points=\"52,32 60,14 68,32\" fill=\"#cbd5e1\"/>\n      <polygon points=\"60,14 64,28 56,28\" fill=\"#0f172a\"/>\n      <!-- Aeroflap Fins -->\n      <polygon points=\"52,34 44,38 52,44\" fill=\"#94a3b8\"/>\n      <polygon points=\"68,34 76,38 68,44\" fill=\"#94a3b8\"/>\n      <polygon points=\"52,78 42,88 52,88\" fill=\"#94a3b8\"/>\n      <polygon points=\"68,78 78,88 68,88\" fill=\"#94a3b8\"/>\n      <!-- 33 Raptor Engine Fire -->\n      <polygon points=\"53,90 60,114 67,90\" fill=\"#f97316\"/>\n      <polygon points=\"56,90 60,108 64,90\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "space-wahana-terjauh",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "antariksa",
+      "badge": "TERJAUH 📡",
+      "badgeEn": "FARTHEST 📡",
+      "title": "Objek Buatan Manusia Terjauh dari Bumi",
+      "titleEn": "Farthest Human-Made Object from Earth",
+      "holder": "Wahana Antariksa Voyager 1 (NASA)",
+      "statValue": "24+ Miliar Kilometer (Ruang Antarbintang)",
+      "statNumber": 24,
+      "statUnit": "miliar kilometer",
+      "comparison": "Saking jauhnya, sinyal radio yang melesat secepat cahaya membutuhkan waktu lebih dari 22 jam untuk sampai ke Bumi!",
+      "comparisonEn": "So far out that a radio message traveling at the speed of light takes over 22 hours to reach Earth!",
+      "description": "Diluncurkan pada tahun 1977, Voyager 1 telah melintasi Jupiter dan Saturnus dan kini menjadi wahana pertama yang menembus batas heliosfer menuju ruang antarbintang sejati.",
+      "descriptionEn": "Launched in 1977, Voyager 1 is the first spacecraft to cross into interstellar space beyond the influence of our Sun.",
+      "funFact": "Voyager 1 membawa piringan emas (Golden Record) berisi rekaman suara alam Bumi, musik dunia, dan salam sapa dalam 55 bahasa manusia (termasuk Bahasa Indonesia) untuk peradaban asing!",
+      "funFactEn": "It carries the Golden Record with sounds of Earth, greetings in 55 languages (including Indonesian), and music for extraterrestrial life!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#030712\"/>\n      <circle cx=\"30\" cy=\"20\" r=\"1.5\" fill=\"#ffffff\"/><circle cx=\"85\" cy=\"85\" r=\"1.5\" fill=\"#ffffff\"/>\n      <!-- Giant High-Gain Antenna Dish -->\n      <ellipse cx=\"60\" cy=\"52\" rx=\"34\" ry=\"12\" fill=\"#ffffff\"/>\n      <ellipse cx=\"60\" cy=\"52\" rx=\"28\" ry=\"8\" fill=\"#e2e8f0\"/>\n      <circle cx=\"60\" cy=\"52\" r=\"4\" fill=\"#475569\"/>\n      <!-- Feed Horn Tripod -->\n      <line x1=\"60\" y1=\"52\" x2=\"60\" y2=\"34\" stroke=\"#0f172a\" stroke-width=\"2\"/>\n      <polygon points=\"57,34 63,34 60,30\" fill=\"#ca8a04\"/>\n      <!-- Spacecraft Bus & RTG Boom -->\n      <rect x=\"52\" y=\"60\" width=\"16\" height=\"12\" fill=\"#ca8a04\"/>\n      <line x1=\"68\" y1=\"66\" x2=\"105\" y2=\"82\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n      <rect x=\"98\" y=\"78\" width=\"10\" height=\"6\" fill=\"#334155\"/>\n      <!-- Golden Record -->\n      <circle cx=\"44\" cy=\"68\" r=\"6\" fill=\"#eab308\" stroke=\"#ca8a04\" stroke-width=\"1.5\"/>\n    </svg>"
+    },
+    {
+      "id": "space-bintang-terbesar",
+      "scope": "world",
+      "category": "alam",
+      "subCategory": "antariksa",
+      "badge": "TERBESAR ☀️",
+      "badgeEn": "LARGEST STAR ☀️",
+      "title": "Bintang Terbesar yang Diketahui di Alam Semesta",
+      "titleEn": "Largest Known Star in the Observable Universe",
+      "holder": "Stephenson 2-18 & UY Scuti",
+      "statValue": "Radius 2.150 Kali Matahari Kita",
+      "statNumber": 2150,
+      "statUnit": "kali radius matahari",
+      "comparison": "Bila diletakkan di pusat tata surya kita, permukaannya akan menelan planet Merkurius, Venus, Bumi, Mars, hingga orbit Jupiter dan Saturnus!",
+      "comparisonEn": "If placed at the center of our solar system, its surface would engulf Earth, Mars, Jupiter, and Saturn!",
+      "description": "Stephenson 2-18 adalah bintang maharaksasa merah (red supergiant) di rasi Scutum yang berjarak 19.000 tahun cahaya dari Bumi.",
+      "descriptionEn": "Stephenson 2-18 is a red hypergiant star with a volume approximately 10 billion times greater than our Sun.",
+      "funFact": "Cahaya yang butuh waktu 14 detik untuk mengelilingi Matahari kita, membutuhkan waktu hampir 9 jam hanya untuk mengitari bintang raksasa ini satu putaran!",
+      "funFactEn": "Light takes just 14.5 seconds to circle our Sun, but would take nearly 9 hours to circle Stephenson 2-18 once!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <defs>\n        <radialGradient id=\"starGlow\" cx=\"50%\" cy=\"50%\" r=\"50%\">\n          <stop offset=\"0%\" stop-color=\"#fef08a\"/>\n          <stop offset=\"40%\" stop-color=\"#f97316\"/>\n          <stop offset=\"85%\" stop-color=\"#b91c1c\"/>\n          <stop offset=\"100%\" stop-color=\"#020617\"/>\n        </radialGradient>\n      </defs>\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#020617\"/>\n      <!-- Giant Red Supergiant -->\n      <circle cx=\"60\" cy=\"60\" r=\"46\" fill=\"url(#starGlow)\"/>\n      <!-- Tiny Dot for Sun for scale -->\n      <circle cx=\"16\" cy=\"16\" r=\"1.5\" fill=\"#ffffff\"/>\n      <text x=\"16\" y=\"26\" font-size=\"6\" fill=\"#94a3b8\" text-anchor=\"middle\">Matahari</text>\n    </svg>"
+    },
+    {
+      "id": "geo-everest",
+      "scope": "world",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERTINGGI 🏔️",
+      "badgeEn": "HIGHEST 🏔️",
+      "title": "Gunung Tertinggi di Planet Bumi",
+      "titleEn": "Highest Mountain on Earth Above Sea Level",
+      "holder": "Gunung Everest (Himalaya)",
+      "statValue": "8.848,86 mdpl",
+      "statNumber": 8848,
+      "statUnit": "mdpl (meter)",
+      "comparison": "Tingginya hampir 9 kilometer! Setara ketinggian jelajah pesawat jet antar benua di stratosfer!",
+      "comparisonEn": "Reaches nearly 9 kilometers high, entering the stratosphere cruising altitude of commercial jets!",
+      "description": "Gunung Everest terletak di pegunungan Himalaya di perbatasan Nepal dan Tibet, bersuhu ekstrem hingga -60°C.",
+      "descriptionEn": "Mount Everest reigns as the ultimate high-altitude peak on Earth, towering at 8,848.86 meters.",
+      "funFact": "Di puncak Everest, tekanan udara sangat tipis sehingga kadar oksigennya hanya tinggal 33% dibandingkan di pantai biasa!",
+      "funFactEn": "Oxygen levels at the summit are only one-third of sea level, requiring supplemental oxygen for most climbers!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <circle cx=\"60\" cy=\"30\" r=\"14\" fill=\"#fbbf24\"/>\n      <polygon points=\"10,110 60,26 110,110\" fill=\"#334155\"/>\n      <polygon points=\"46,55 60,26 74,55 66,50 60,56 54,49\" fill=\"#ffffff\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-puncak-jaya",
+      "scope": "indonesia",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERTINGGI 🏔️",
+      "badgeEn": "HIGHEST 🏔️",
+      "title": "Gunung & Puncak Tertinggi di Indonesia",
+      "titleEn": "Highest Mountain & Peak in Indonesia",
+      "holder": "Puncak Jaya (Carstensz Pyramid), Papua",
+      "statValue": "4.884 mdpl",
+      "statNumber": 4884,
+      "statUnit": "mdpl (meter)",
+      "comparison": "Setara dengan 37 Monas ditumpuk tegak lurus menembus kabut pegunungan Papua!",
+      "comparisonEn": "Equivalent to 37 Monas monuments stacked straight into the sky!",
+      "description": "Puncak Jaya adalah puncak tertinggi di kawasan Oseania dan satu-satunya puncak di Indonesia yang memiliki lapisan gletser es tropis abadi.",
+      "descriptionEn": "The highest peak in Indonesia and Oceania, famous for its rare equatorial tropical glaciers.",
+      "funFact": "Meskipun Indonesia beriklim tropis dan panas, di Puncak Jaya suhu bisa membeku di bawah nol derajat Celsius dan turun salju lebat!",
+      "funFactEn": "Although Indonesia is tropical, Puncak Jaya regularly experiences sub-zero temperatures and snow!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0f9ff\"/>\n      <circle cx=\"95\" cy=\"28\" r=\"12\" fill=\"#fbbf24\"/>\n      <polygon points=\"15,95 55,35 90,95\" fill=\"#94a3b8\"/>\n      <polygon points=\"35,100 80,22 115,100\" fill=\"#475569\"/>\n      <polygon points=\"70,40 80,22 92,40 85,36 78,41 73,37\" fill=\"#ffffff\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-mariana",
+      "scope": "world",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERDALAM 🌊",
+      "badgeEn": "DEEPEST 🌊",
+      "title": "Palung Laut Terdalam di Dunia",
+      "titleEn": "Deepest Oceanic Trench on Earth",
+      "holder": "Palung Mariana (Challenger Deep)",
+      "statValue": "10.994 meter (~11 km)",
+      "statNumber": 10994,
+      "statUnit": "meter kedalaman",
+      "comparison": "Bila Gunung Everest dibalik ke dasarnya, puncaknya masih tenggelam lebih dari 2 kilometer di bawah air!",
+      "comparisonEn": "Mount Everest would still be submerged under more than two kilometers of water!",
+      "description": "Challenger Deep di Samudra Pasifik adalah titik paling dalam di Bumi dengan tekanan hidrostatik 1.086 bar.",
+      "descriptionEn": "The absolute deepest point in the world ocean, plunged into total darkness with crushing pressures.",
+      "funFact": "Di kedalaman 11 kilometer ini ditemukan jenis ikan transparan baru bernama Mariana Snailfish yang hidup nyaman tanpa tulang keras!",
+      "funFactEn": "Home to the Mariana snailfish, thriving in total darkness under pressures that would crush steel!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#020617\"/>\n      <polygon points=\"0,30 45,115 0,115\" fill=\"#0f172a\"/><polygon points=\"120,30 75,115 120,115\" fill=\"#0f172a\"/>\n      <circle cx=\"60\" cy=\"98\" r=\"9\" fill=\"#facc15\"/><circle cx=\"60\" cy=\"98\" r=\"4\" fill=\"#0284c7\"/>\n      <polygon points=\"56,104 42,118 78,118 64,104\" fill=\"#fef08a\" opacity=\"0.35\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-laut-banda",
+      "scope": "indonesia",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERDALAM 🌊",
+      "badgeEn": "DEEPEST 🌊",
+      "title": "Laut & Palung Terdalam di Indonesia",
+      "titleEn": "Deepest Marine Trench in Indonesia",
+      "holder": "Laut Banda (Palung Weber), Maluku",
+      "statValue": "7.440 meter",
+      "statNumber": 7440,
+      "statUnit": "meter kedalaman",
+      "comparison": "Sedalam 25 kali tinggi Menara Eiffel ditumpuk ke dalam laut Maluku!",
+      "comparisonEn": "Deep as 25 Eiffel Towers stacked vertically beneath the ocean surface!",
+      "description": "Palung Weber di Laut Banda adalah titik laut terdalam di Indonesia yang terbentuk dari pertemuan tiga lempeng tektonik utama dunia.",
+      "descriptionEn": "The Weber Deep in the Banda Sea is the deepest point in Indonesian waters at 7,440 meters.",
+      "funFact": "Para peneliti menemukan bahwa dasar Laut Banda adalah sesar patahan samudra terbesar yang pernah terdokumentasikan di planet Bumi!",
+      "funFactEn": "Scientists discovered that the Banda Sea abyss exposes Earth’s largest identified underwater fault line plane!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#082f49\"/>\n      <rect x=\"35\" y=\"45\" width=\"46\" height=\"18\" rx=\"9\" fill=\"#f59e0b\"/>\n      <circle cx=\"48\" cy=\"54\" r=\"3\" fill=\"#38bdf8\"/><circle cx=\"60\" cy=\"54\" r=\"3\" fill=\"#38bdf8\"/>\n      <polygon points=\"35,54 5,85 18,92 37,56\" fill=\"#fef08a\" opacity=\"0.35\"/>\n      <ellipse cx=\"28\" cy=\"98\" rx=\"8\" ry=\"4\" fill=\"#10b981\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-air-terjun-angel",
+      "scope": "world",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERTINGGI 🏞️",
+      "badgeEn": "HIGHEST 🏞️",
+      "title": "Air Terjun Tertinggi di Dunia Tanpa Putus",
+      "titleEn": "Highest Uninterrupted Waterfall in the World",
+      "holder": "Angel Falls (Kerepakupai Meru), Venezuela",
+      "statValue": "Tinggi 979 Meter (Jatuh Bebas 807 Meter)",
+      "statNumber": 979,
+      "statUnit": "meter tinggi",
+      "comparison": "Tingginya hampir 1 kilometer! Saking tingginya, sebagian air sudah berubah menjadi kabut halus tertiup angin sebelum menyentuh dasar!",
+      "comparisonEn": "Nearly 1 km high! The water turns into fine mist long before reaching the jungle below!",
+      "description": "Angel Falls jatuh megah dari puncak gunung meja tepui Auyan di hutan rimba Venezuela.",
+      "descriptionEn": "Plunging 979 meters from the cliff of Auyán-tepui, Angel Falls is the world’s tallest waterfall.",
+      "funFact": "Air terjun ini menjadi inspirasi utama film animasi terkenal Pixar \"UP\" sebagai Paradise Falls!",
+      "funFactEn": "This breathtaking waterfall served as the real-world inspiration for Paradise Falls in Pixar’s movie UP!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <!-- Giant Tepui Cliff -->\n      <polygon points=\"0,20 48,20 45,120 0,120\" fill=\"#475569\"/>\n      <polygon points=\"72,20 120,20 120,120 75,120\" fill=\"#475569\"/>\n      <!-- Waterfall Plunge Stream -->\n      <path d=\"M48 20 Q54 60 48 120 L72 120 Q66 60 72 20 Z\" fill=\"#ffffff\"/>\n      <path d=\"M52 20 L58 120 M68 20 L62 120\" stroke=\"#bae6fd\" stroke-width=\"2\"/>\n      <!-- Mist at bottom -->\n      <ellipse cx=\"60\" cy=\"115\" rx=\"35\" ry=\"10\" fill=\"#ffffff\" opacity=\"0.8\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-paus-biru",
+      "scope": "world",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERBESAR 🐋",
+      "badgeEn": "LARGEST 🐋",
+      "title": "Hewan Terbesar di Bumi Sepanjang Sejarah",
+      "titleEn": "Largest Animal in Earth History",
+      "holder": "Paus Biru (Blue Whale)",
+      "statValue": "Panjang 30 Meter · Berat 180 Ton",
+      "statNumber": 180,
+      "statUnit": "ton berat",
+      "comparison": "Panjangnya setara 3 bus sekolah berjejer dan beratnya sama dengan 33 ekor gajah Afrika dewasa!",
+      "comparisonEn": "Long as 3 school buses lined up and heavy as 33 adult African elephants combined!",
+      "description": "Paus Biru adalah mamalia laut raksasa pemakan krill (udang kecil) dengan suara nyanyian frekuensi rendah yang bisa menempuh ratusan kilometer di bawah laut.",
+      "descriptionEn": "The Blue Whale is the largest living organism ever documented on Earth, larger than any dinosaur.",
+      "funFact": "Bayi paus biru yang baru lahir saja beratnya sudah mencapai 3 ton dan meminum 400 liter susu ibunya setiap hari!",
+      "funFactEn": "A newborn blue whale calf weighs 3 tons and drinks 400 liters of milk every single day!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <rect x=\"0\" y=\"45\" width=\"120\" height=\"75\" fill=\"#0284c7\" opacity=\"0.2\"/>\n      <path d=\"M12 68 C20 54 48 50 85 52 C104 53 112 60 114 66 C112 76 95 82 75 80 C50 82 25 80 12 68 Z\" fill=\"#0284c7\"/>\n      <path d=\"M14 68 L4 58 C6 66 6 70 4 78 Z\" fill=\"#0369a1\"/>\n      <circle cx=\"102\" cy=\"62\" r=\"2\" fill=\"#0f172a\"/>\n      <path d=\"M85 52 Q82 32 78 24 M85 52 Q88 32 94 26\" stroke=\"#38bdf8\" stroke-width=\"3\" stroke-linecap=\"round\" fill=\"none\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-cheetah",
+      "scope": "world",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERCEPAT 🐆",
+      "badgeEn": "FASTEST 🐆",
+      "title": "Hewan Darat Tercepat di Dunia",
+      "titleEn": "Fastest Land Mammal in the World",
+      "holder": "Cheetah (Acinonyx jubatus)",
+      "statValue": "120 km/jam",
+      "statNumber": 120,
+      "statUnit": "km/jam",
+      "comparison": "Melesat dari diam ke 100 km/jam dalam 3 detik, lebih cepat dari akselerasi mobil sport mewah!",
+      "comparisonEn": "0 to 100 km/h in 3 seconds, accelerating faster than sports cars!",
+      "description": "Cheetah memiliki tulang punggung yang fleksibel seperti pegas dan ekor tebal yang berfungsi sebagai kemudi udara saat berbelok tajam pada kecepatan tinggi.",
+      "descriptionEn": "The cheetah possesses a spring-like spine and rudder-like tail enabling razor-sharp turns at top speed.",
+      "funFact": "Saat berlari pada kecepatan penuh, tubuh cheetah melayang di udara separuh dari waktu berlarinya!",
+      "funFactEn": "At full sprint, a cheetah spends more than half its stride time airborne!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fffbeb\"/>\n      <rect x=\"0\" y=\"88\" width=\"120\" height=\"32\" fill=\"#ca8a04\"/>\n      <path d=\"M25 65 C40 55 68 55 85 62 C92 65 98 62 102 58 C104 62 100 68 95 70 C75 75 45 74 25 65 Z\" fill=\"#eab308\"/>\n      <circle cx=\"45\" cy=\"62\" r=\"1.5\" fill=\"#451a03\"/><circle cx=\"68\" cy=\"62\" r=\"1.5\" fill=\"#451a03\"/>\n      <line x1=\"88\" y1=\"68\" x2=\"105\" y2=\"82\" stroke=\"#ca8a04\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-komodo",
+      "scope": "indonesia",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERBESAR 🦎",
+      "badgeEn": "LARGEST 🦎",
+      "title": "Kadal & Reptil Terbesar di Dunia (Asli Indonesia)",
+      "titleEn": "Largest Living Lizard in the World",
+      "holder": "Komodo (Varanus komodoensis), NTT",
+      "statValue": "Panjang 3 Meter · Berat 135 kg",
+      "statNumber": 3,
+      "statUnit": "meter panjang",
+      "comparison": "Panjangnya melebihi tempat tidurmu dan beratnya sama dengan 2 orang dewasa digabung!",
+      "comparisonEn": "Longer than a full mattress and heavy as two full-grown adults combined!",
+      "description": "Komodo adalah satwa purba karnivora yang hanya hidup di kawasan Taman Nasional Komodo, Nusa Tenggara Timur.",
+      "descriptionEn": "The Komodo dragon reigns as the largest living lizard species, native to eastern Indonesian islands.",
+      "funFact": "Komodo bisa mencium bau bangkai makanan dari jarak sejauh 9,5 kilometer menggunakan lidah kuningnya yang bercabang!",
+      "funFactEn": "With its forked tongue, a Komodo can detect scents from up to 9.5 kilometers away!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fefce8\"/>\n      <ellipse cx=\"60\" cy=\"72\" rx=\"34\" ry=\"14\" fill=\"#65a30d\"/>\n      <path d=\"M26 72 Q12 68 8 82\" stroke=\"#4d7c0f\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n      <path d=\"M88 68 C96 66 106 68 108 75 C108 80 98 82 86 78 Z\" fill=\"#65a30d\"/>\n      <path d=\"M108 76 L116 76 L119 73 M116 76 L119 79\" stroke=\"#facc15\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-burung-kolibri",
+      "scope": "world",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERKECIL 🐦",
+      "badgeEn": "SMALLEST 🐦",
+      "title": "Burung Terkecil di Dunia",
+      "titleEn": "Smallest Bird in the World",
+      "holder": "Kolibri Lebah (Bee Hummingbird), Kuba",
+      "statValue": "Panjang 5,7 cm · Berat Hanya 1,9 Gram",
+      "statNumber": 1.9,
+      "statUnit": "gram berat",
+      "comparison": "Ukurannya sebesar jempol tangan anak kecil dan beratnya lebih ringan dari uang koin logam!",
+      "comparisonEn": "Size of a child’s thumb and weighs less than a single metal coin!",
+      "description": "Kolibri Lebah adalah keajaiban alam dari Kuba. Burung ini mampu mengepakkan sayapnya hingga 80-200 kali per detik dan bisa terbang mundur!",
+      "descriptionEn": "The Bee Hummingbird from Cuba flaps its wings 80-200 times per second and can fly backwards and upside down.",
+      "funFact": "Sarang burung ini ukurannya hanya sebesar mangkok kulit kacang dan telurnya sebesar butiran kacang polong!",
+      "funFactEn": "Its nest is the size of half a walnut shell, and its eggs are as tiny as green peas!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fdf2f8\"/>\n      <!-- Flower -->\n      <circle cx=\"92\" cy=\"78\" r=\"8\" fill=\"#f43f5e\"/>\n      <circle cx=\"92\" cy=\"78\" r=\"3\" fill=\"#facc15\"/>\n      <path d=\"M92 86 L92 110\" stroke=\"#16a34a\" stroke-width=\"3\"/>\n      <!-- Tiny Hummingbird -->\n      <ellipse cx=\"50\" cy=\"55\" rx=\"14\" ry=\"10\" fill=\"#06b6d4\"/>\n      <circle cx=\"62\" cy=\"48\" r=\"6\" fill=\"#0891b2\"/>\n      <!-- Needle Beak sipping nectar -->\n      <line x1=\"68\" y1=\"48\" x2=\"90\" y2=\"74\" stroke=\"#0f172a\" stroke-width=\"1.5\"/>\n      <!-- Flapping Wings Blur -->\n      <ellipse cx=\"44\" cy=\"38\" rx=\"8\" ry=\"16\" fill=\"#38bdf8\" opacity=\"0.6\"/>\n      <ellipse cx=\"40\" cy=\"36\" rx=\"8\" ry=\"16\" fill=\"#38bdf8\" opacity=\"0.3\"/>\n    </svg>"
+    },
+    {
+      "id": "flora-rafflesia",
+      "scope": "indonesia",
+      "category": "tumbuhan",
+      "subCategory": "tumbuhan",
+      "badge": "TERBESAR 🌸",
+      "badgeEn": "LARGEST 🌸",
+      "title": "Bunga Tunggal Terbesar di Dunia (Asli Indonesia)",
+      "titleEn": "Largest Individual Flower on Earth",
+      "holder": "Rafflesia arnoldii (Bengkulu & Sumatera)",
+      "statValue": "Diameter 110 cm · Berat 11 kg",
+      "statNumber": 110,
+      "statUnit": "cm diameter",
+      "comparison": "Lebar bunganya lebih besar dari ban mobil truk dan beratnya sama dengan 11 kantong beras!",
+      "comparisonEn": "Wider than a truck tire and weighs as much as eleven bags of rice!",
+      "description": "Rafflesia arnoldii adalah bunga raksasa parasit langka tanpa daun, batang, atau akar sejati yang mekar di lantai hutan hujan Indonesia.",
+      "descriptionEn": "Rafflesia arnoldii produces the largest individual flower on Earth, blooming in Indonesian rainforests.",
+      "funFact": "Bunga ini hanya mekar selama 5 sampai 7 hari saja sebelum layu dan menjadi kebanggaan nasional Indonesia!",
+      "funFactEn": "It blooms for only 5 to 7 days, releasing a distinct odor to attract pollinating flies!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fff1f2\"/>\n      <circle cx=\"60\" cy=\"32\" r=\"16\" fill=\"#e11d48\"/><circle cx=\"86\" cy=\"50\" r=\"16\" fill=\"#e11d48\"/>\n      <circle cx=\"76\" cy=\"82\" r=\"16\" fill=\"#e11d48\"/><circle cx=\"44\" cy=\"82\" r=\"16\" fill=\"#e11d48\"/>\n      <circle cx=\"34\" cy=\"50\" r=\"16\" fill=\"#e11d48\"/>\n      <circle cx=\"60\" cy=\"60\" r=\"14\" fill=\"#881337\"/><circle cx=\"60\" cy=\"60\" r=\"8\" fill=\"#4c0519\"/>\n    </svg>"
+    },
+    {
+      "id": "flora-pohon-hyperion",
+      "scope": "world",
+      "category": "tumbuhan",
+      "subCategory": "tumbuhan",
+      "badge": "TERTINGGI 🌲",
+      "badgeEn": "TALLEST 🌲",
+      "title": "Pohon Tertinggi yang Masih Hidup di Dunia",
+      "titleEn": "Tallest Living Tree in the World",
+      "holder": "Hyperion (Sequoia sempervirens), California USA",
+      "statValue": "Tinggi 115,92 Meter (Setara Gedung 35 Lantai)",
+      "statNumber": 115.92,
+      "statUnit": "meter tinggi",
+      "comparison": "Lebih tinggi dari Patung Liberty di New York dan lebih tinggi dari jam Big Ben di London!",
+      "comparisonEn": "Taller than the Statue of Liberty (93m) and Big Ben tower (96m)!",
+      "description": "Hyperion adalah pohon kayu merah pesisir (Coast Redwood) yang tersembunyi di dalam Taman Nasional Redwood, California Utara.",
+      "descriptionEn": "Hyperion is a coast redwood standing at 115.92 meters, holding the Guinness World Record for the tallest living tree.",
+      "funFact": "Lokasi persis pohon ini dirahasiakan oleh pengelola taman nasional agar akarnya yang berusia lebih dari 600 tahun tidak rusak terinjak wisatawan!",
+      "funFactEn": "Its exact forest location is kept secret to protect its 600-year-old delicate root system from human foot traffic!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdf4\"/>\n      <!-- Giant Redwood Trunk -->\n      <polygon points=\"56,120 58,25 62,25 64,120\" fill=\"#78350f\"/>\n      <!-- Conical Foliage Layers -->\n      <polygon points=\"60,18 48,38 72,38\" fill=\"#14532d\"/>\n      <polygon points=\"60,32 44,55 76,55\" fill=\"#15803d\"/>\n      <polygon points=\"60,48 40,75 80,75\" fill=\"#166534\"/>\n      <polygon points=\"60,68 36,95 84,95\" fill=\"#15803d\"/>\n      <!-- Tiny Person for scale -->\n      <circle cx=\"48\" cy=\"116\" r=\"1.5\" fill=\"#f59e0b\"/><line x1=\"48\" y1=\"117\" x2=\"48\" y2=\"120\" stroke=\"#f59e0b\"/>\n    </svg>"
+    },
+    {
+      "id": "arch-burj-khalifa",
+      "scope": "world",
+      "category": "bangunan",
+      "subCategory": "bangunan",
+      "badge": "TERTINGGI 🏢",
+      "badgeEn": "TALLEST 🏢",
+      "title": "Gedung Pencakar Langit Tertinggi di Dunia",
+      "titleEn": "Tallest Skyscraper in the World",
+      "holder": "Burj Khalifa (Dubai, Uni Emirat Arab)",
+      "statValue": "828 Meter (163 Lantai)",
+      "statNumber": 828,
+      "statUnit": "meter tinggi",
+      "comparison": "Tingginya 6 kali Monas Jakarta! Puncaknya bisa terlihat jelas dari jarak 95 kilometer!",
+      "comparisonEn": "6 times taller than Monas! Visible from 95 kilometers away across the desert!",
+      "description": "Burj Khalifa adalah mahakarya rekayasa modern tertinggi yang pernah didirikan manusia di planet Bumi.",
+      "descriptionEn": "The Burj Khalifa in Dubai reigns as the tallest skyscraper and human-built structure on the planet.",
+      "funFact": "Saking tingginya gedung ini, orang di lantai paling atas melihat matahari terbenam 3 menit lebih lambat daripada orang di lantai bawah!",
+      "funFactEn": "Because of its immense height, sunset occurs 3 minutes later on the 160th floor than on the ground floor!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <defs>\n        <linearGradient id=\"burjSky\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\n          <stop offset=\"0%\" stop-color=\"#0284c7\"/><stop offset=\"100%\" stop-color=\"#f8fafc\"/>\n        </linearGradient>\n      </defs>\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"url(#burjSky)\"/>\n      <polygon points=\"59,10 61,10 62,30 58,30\" fill=\"#cbd5e1\"/>\n      <polygon points=\"57,30 63,30 65,55 55,55\" fill=\"#94a3b8\"/>\n      <polygon points=\"53,55 67,55 70,80 50,80\" fill=\"#64748b\"/>\n      <polygon points=\"46,80 74,80 78,115 42,115\" fill=\"#475569\"/>\n      <circle cx=\"60\" cy=\"8\" r=\"2.5\" fill=\"#ef4444\"/>\n    </svg>"
+    },
+    {
+      "id": "arch-borobudur",
+      "scope": "indonesia",
+      "category": "bangunan",
+      "subCategory": "bangunan",
+      "badge": "TERBESAR 🏛️",
+      "badgeEn": "LARGEST 🏛️",
+      "title": "Candi Buddha Terbesar di Dunia (ada di Indonesia)",
+      "titleEn": "Largest Buddhist Temple in the World",
+      "holder": "Candi Borobudur (Magelang, Jawa Tengah)",
+      "statValue": "2.500 m² · 504 Patung Buddha · 72 Stupa",
+      "statNumber": 2500,
+      "statUnit": "m² luas",
+      "comparison": "Tersusun dari 2 juta balok batu vulkanik yang saling mengunci rapat tanpa menggunakan semen sama sekali!",
+      "comparisonEn": "Constructed from 2 million interlocking volcanic stone blocks without any cement or mortar!",
+      "description": "Dibangun pada abad ke-8 oleh Wangsa Syailendra, Borobudur diakui sebagai Situs Warisan Budaya UNESCO.",
+      "descriptionEn": "Built in the 8th century, Borobudur in Central Java is the world’s largest Buddhist monument.",
+      "funFact": "Jika seluruh dinding relief cerita di Borobudur dibentangkan memanjang, panjangnya mencapai 3 kilometer!",
+      "funFactEn": "Its narrative bas-relief panels stretch over 3 kilometers if placed in a continuous straight line!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fafaf9\"/>\n      <path d=\"M0 60 Q60 45 120 60 L120 120 L0 120 Z\" fill=\"#065f46\"/>\n      <polygon points=\"15,105 105,105 95,90 25,90\" fill=\"#78716c\"/>\n      <polygon points=\"28,90 92,90 85,78 35,78\" fill=\"#57534e\"/>\n      <path d=\"M52 68 C52 56 60 50 60 44 C60 50 68 56 68 68 Z\" fill=\"#a8a29e\"/>\n      <line x1=\"60\" y1=\"44\" x2=\"60\" y2=\"36\" stroke=\"#a8a29e\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n    </svg>"
+    },
+    {
+      "id": "air-supersonik-komersial",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "SUPERSONIK ✈️",
+      "badgeEn": "SUPERSONIC ✈️",
+      "title": "Pesawat Penumpang Supersonik Tercepat di Dunia",
+      "titleEn": "Fastest Commercial Supersonic Airliner",
+      "holder": "Aérospatiale / BAC Concorde",
+      "statValue": "2.179 km/jam (Mach 2.04)",
+      "statNumber": 2179,
+      "statUnit": "km/jam",
+      "comparison": "Terbang dua kali lebih cepat dari kecepatan suara! London ke New York hanya butuh waktu kurang dari 3,5 jam!",
+      "comparisonEn": "Flew at twice the speed of sound, crossing the Atlantic from London to New York in under 3.5 hours!",
+      "description": "Concorde adalah pesawat penumpang legendaris berhidung unik yang bisa ditekuk ke bawah (droop nose) agar pilot bisa melihat landasan saat mendarat.",
+      "descriptionEn": "Concorde featured a slender delta wing and a droop nose, cruising at 60,000 feet on the edge of space.",
+      "funFact": "Saking cepatnya terbang menembus gesekan udara, bodi pesawat Concorde memuai hingga memanjang 20 cm saat terbang di kecepatan Mach 2!",
+      "funFactEn": "Friction heated its exterior up to 127°C, stretching the entire airframe by 20 centimeters during flight!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#0f172a\"/>\n      <!-- Concorde Slender Delta Wing -->\n      <polygon points=\"60,20 62,35 102,82 72,82 66,74 60,94 54,74 48,82 18,82 58,35\" fill=\"#f8fafc\"/>\n      <ellipse cx=\"60\" cy=\"40\" rx=\"2\" ry=\"12\" fill=\"#0284c7\"/>\n      <!-- Droop nose tip -->\n      <polygon points=\"60,18 61,28 59,28\" fill=\"#e2e8f0\"/>\n      <!-- Afterburner Flame -->\n      <polygon points=\"56,94 60,108 64,94\" fill=\"#f97316\"/>\n      <polygon points=\"58,94 60,104 62,94\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "air-n250-gatotkaca",
+      "scope": "indonesia",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "KARYA BANGSA 🇮🇩",
+      "badgeEn": "HERITAGE 🇮🇩",
+      "title": "Pesawat Turboprop Modern Pertama Buatan Anak Bangsa Indonesia",
+      "titleEn": "First Modern Indonesian-Engineered Regional Airliner",
+      "holder": "N-250 Gatotkaca (Karya Prof. Dr. Ing. B.J. Habibie / IPTN)",
+      "statValue": "Kapasitas 50-70 Penumpang · Fly-by-Wire Penuh",
+      "statNumber": 70,
+      "statUnit": "penumpang",
+      "comparison": "Pesawat regional turboprop pertama di dunia yang mengadopsi teknologi kendali elektronik Fly-by-Wire canggih!",
+      "comparisonEn": "World’s first regional commuter aircraft designed from scratch with advanced full Fly-by-Wire technology!",
+      "description": "N-250 Gatotkaca terbang perdana dengan sukses pada 10 Agustus 1995 di langit Bandung, membuktikan kehebatan ilmuwan dirgantara Indonesia.",
+      "descriptionEn": "The N-250 Gatotkaca made its historic maiden flight on August 10, 1995, celebrated as Indonesia’s National Technology Awakening Day.",
+      "funFact": "Penerbangan perdana N-250 Gatotkaca pada 10 Agustus 1995 diabadikan sebagai Hari Kebangkitan Teknologi Nasional (Hakteknas) Indonesia!",
+      "funFactEn": "Its first flight on August 10 became officially recognized as Indonesia’s National Technology Awakening Day!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#eff6ff\"/>\n      <!-- Fuselage -->\n      <rect x=\"54\" y=\"24\" width=\"12\" height=\"72\" rx=\"6\" fill=\"#1e3a8a\"/>\n      <!-- High Wings -->\n      <polygon points=\"60,40 114,48 110,54 60,46 10,54 6,48\" fill=\"#2563eb\"/>\n      <!-- 2 Turboprop Engines with 6-Blade Props -->\n      <circle cx=\"36\" cy=\"46\" r=\"6\" fill=\"#64748b\"/>\n      <circle cx=\"84\" cy=\"46\" r=\"6\" fill=\"#64748b\"/>\n      <!-- T-Tail -->\n      <polygon points=\"40,88 80,88 76,94 44,94\" fill=\"#dc2626\"/>\n      <!-- Indonesia Flag Kicker on Tail -->\n      <rect x=\"56\" y=\"80\" width=\"8\" height=\"4\" fill=\"#dc2626\"/>\n      <rect x=\"56\" y=\"84\" width=\"8\" height=\"4\" fill=\"#ffffff\"/>\n    </svg>"
+    },
+    {
+      "id": "air-terlama-solar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "TENAGA SURYA ☀️",
+      "badgeEn": "SOLAR POWER ☀️",
+      "title": "Pesawat Bertenaga Surya Keliling Dunia Pertama",
+      "titleEn": "First Round-the-World Flight Powered Entirely by Solar Energy",
+      "holder": "Solar Impulse 2",
+      "statValue": "Rentang Sayap 72 Meter · 17.248 Sel Surya",
+      "statNumber": 72,
+      "statUnit": "meter rentang sayap",
+      "comparison": "Rentang sayapnya lebih lebar dari Boeing 747 tetapi beratnya hanya seberat sebuah mobil keluarga biasa!",
+      "comparisonEn": "Wingspan wider than a Boeing 747, yet weighs about the same as an ordinary family passenger car!",
+      "description": "Solar Impulse 2 berhasil terbang keliling planet Bumi siang dan malam tanpa menggunakan setetes pun bensin fosil.",
+      "descriptionEn": "Solar Impulse 2 circumnavigated the globe using solely energy harvested from the sun and stored in lithium batteries.",
+      "funFact": "Pesawat ini memecahkan rekor penerbangan solo tanpa henti terlama di dunia selama 5 hari 5 malam melintasi Samudra Pasifik!",
+      "funFactEn": "It achieved the longest continuous solo flight in aviation history: 117 hours and 52 minutes non-stop across the Pacific Ocean!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdf4\"/>\n      <circle cx=\"60\" cy=\"22\" r=\"14\" fill=\"#facc15\" opacity=\"0.4\"/>\n      <!-- Ultra-Wide Wings -->\n      <rect x=\"4\" y=\"48\" width=\"112\" height=\"12\" rx=\"3\" fill=\"#059669\"/>\n      <!-- Solar Cell Panels grid -->\n      <line x1=\"10\" y1=\"54\" x2=\"110\" y2=\"54\" stroke=\"#facc15\" stroke-width=\"1.5\" stroke-dasharray=\"4 2\"/>\n      <!-- Slender Pod & Tail -->\n      <rect x=\"57\" y=\"38\" width=\"6\" height=\"54\" rx=\"3\" fill=\"#047857\"/>\n      <!-- 4 Electric Motors -->\n      <circle cx=\"28\" cy=\"54\" r=\"3\" fill=\"#0f172a\"/><circle cx=\"44\" cy=\"54\" r=\"3\" fill=\"#0f172a\"/>\n      <circle cx=\"76\" cy=\"54\" r=\"3\" fill=\"#0f172a\"/><circle cx=\"92\" cy=\"54\" r=\"3\" fill=\"#0f172a\"/>\n    </svg>"
+    },
+    {
+      "id": "air-terbesar-amfibi",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "pesawat",
+      "badge": "AMFIBI 🌊",
+      "badgeEn": "AMPHIBIOUS 🌊",
+      "title": "Pesawat Amfibi Penyelamat Laut Paling Tangguh di Dunia",
+      "titleEn": "Most Capable Rough-Sea Amphibious Flying Boat",
+      "holder": "ShinMaywa US-2 & AVIC AG600 Kunlong",
+      "statValue": "Mendarat di Ombak Laut 3 Meter · Jangkauan 4.700 km",
+      "statNumber": 3,
+      "statUnit": "meter tinggi ombak laut",
+      "comparison": "Mampu mendarat di lautan lepas berombak tinggi yang akan menenggelamkan perahu biasa!",
+      "comparisonEn": "Can touch down on open-ocean swells up to 3 meters high that would capsize regular vessels!",
+      "description": "Pesawat amfibi raksasa bermesin 4 turboprop yang bertugas menyelamatkan pelaut yang tersesat di tengah samudra luas.",
+      "descriptionEn": "Equipped with a boundary-layer control system allowing ultra-short takeoffs and landings on choppy ocean waves.",
+      "funFact": "Lambung bawah pesawat ini berbentuk seperti badan perahu cepat (boat hull) sehingga bisa meluncur mulus di permukaan air!",
+      "funFactEn": "Its V-shaped hull acts like an offshore speedboat, deflecting giant sprays of saltwater away from the propellers!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <!-- Ocean Waves at Bottom -->\n      <path d=\"M0 86 Q30 78 60 86 T120 86 L120 120 L0 120 Z\" fill=\"#0284c7\"/>\n      <!-- Flying Boat Hull in Water -->\n      <path d=\"M20 82 C35 74 85 74 105 82 C95 90 35 90 20 82 Z\" fill=\"#334155\"/>\n      <!-- High Wings -->\n      <polygon points=\"60,44 115,50 110,56 60,52 10,56 5,50\" fill=\"#64748b\"/>\n      <!-- Wingtip Floats -->\n      <rect x=\"10\" y=\"58\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#ef4444\"/>\n      <rect x=\"104\" y=\"58\" width=\"6\" height=\"10\" rx=\"2\" fill=\"#ef4444\"/>\n    </svg>"
+    },
+    {
+      "id": "train-whoosh-indonesia",
+      "scope": "indonesia",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "KERETA CEPAT 🚅",
+      "badgeEn": "BULLET TRAIN 🚅",
+      "title": "Kereta Cepat Pertama di Indonesia & Asia Tenggara",
+      "titleEn": "First High-Speed Bullet Train in Southeast Asia",
+      "holder": "Kereta Cepat Whoosh (KCIC KCIC400AF)",
+      "statValue": "Kecepatan Operasional 350 km/jam",
+      "statNumber": 350,
+      "statUnit": "km/jam",
+      "comparison": "Melesat dari Halim Jakarta ke Padalarang Bandung hanya dalam 30-45 menit saja!",
+      "comparisonEn": "Connects Jakarta and Bandung in just 30 to 45 minutes, slashing hours off highway traffic!",
+      "description": "Whoosh adalah singkatan dari Waktu Hemat, Operasi Optimal, Sistem Hebat, kereta cepat tercanggih kebanggaan Indonesia.",
+      "descriptionEn": "The Whoosh KCIC400AF operates at 350 km/h, making Indonesia the first country in Southeast Asia with high-speed rail.",
+      "funFact": "Saat melaju kencang di kecepatan 350 km/jam, koin uang logam yang ditegakkan di dekat jendela tidak akan jatuh karena jalannya sangat stabil!",
+      "funFactEn": "The train is so remarkably smooth and vibration-free that a coin balanced vertically on the window sill remains standing at 350 km/h!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f8fafc\"/>\n      <!-- High Speed Track -->\n      <line x1=\"0\" y1=\"92\" x2=\"120\" y2=\"92\" stroke=\"#64748b\" stroke-width=\"4\"/>\n      <!-- Whoosh Streamlined Nose Body -->\n      <path d=\"M12 78 C24 78 40 76 65 74 C90 74 110 80 114 86 C105 88 40 88 12 88 Z\" fill=\"#991b1b\"/>\n      <path d=\"M25 66 C40 66 70 65 95 72 C108 76 112 80 112 82 L25 82 Z\" fill=\"#dc2626\"/>\n      <!-- Silver & Gold Trim -->\n      <line x1=\"40\" y1=\"76\" x2=\"105\" y2=\"76\" stroke=\"#fbbf24\" stroke-width=\"2\"/>\n      <polygon points=\"98,72 108,75 102,77\" fill=\"#0f172a\"/>\n      <!-- Speed Lines -->\n      <line x1=\"10\" y1=\"62\" x2=\"35\" y2=\"62\" stroke=\"#dc2626\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n      <line x1=\"5\" y1=\"70\" x2=\"20\" y2=\"70\" stroke=\"#fbbf24\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n    </svg>"
+    },
+    {
+      "id": "train-maglev-tercepat",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TERCEPAT 🚝",
+      "badgeEn": "FASTEST 🚝",
+      "title": "Kereta Mengambang Magnet Tercepat di Dunia",
+      "titleEn": "Fastest Magnetic Levitation (Maglev) Train",
+      "holder": "JR Shinkansen Seri L0 Maglev, Jepang",
+      "statValue": "603 km/jam (Rekor Dunia Kereta Api)",
+      "statNumber": 603,
+      "statUnit": "km/jam",
+      "comparison": "Melaju lebih cepat dari pesawat baling-baling komersial dan bergerak tanpa menyentuh rel sama sekali!",
+      "comparisonEn": "Faster than most propeller aircraft, flying smoothly 10 cm above the guideway via magnetic levitation!",
+      "description": "Kereta Maglev Seri L0 mengambang 10 sentimeter di atas lintasan menggunakan gaya tolak-menolak elektromagnetik superkonduktor.",
+      "descriptionEn": "The L0 Series Maglev achieved a world record speed of 603 km/h on an experimental test track in Yamanashi.",
+      "funFact": "Karena tidak memiliki roda yang menyentuh rel saat melaju kencang, tidak ada gesekan mekanis sehingga perjalanan terasa seperti mengapung di udara!",
+      "funFactEn": "With zero wheel friction against the track, the train is powered entirely by linear motor propulsion!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#0369a1\"/>\n      <!-- Guideway Trench -->\n      <rect x=\"0\" y=\"86\" width=\"120\" height=\"34\" fill=\"#0f172a\"/>\n      <!-- Ultra-Long Needle Nose Maglev Train -->\n      <path d=\"M10 74 C35 74 65 70 98 62 C112 66 116 76 114 78 C95 80 40 80 10 78 Z\" fill=\"#ffffff\"/>\n      <line x1=\"30\" y1=\"72\" x2=\"100\" y2=\"72\" stroke=\"#0284c7\" stroke-width=\"2.5\"/>\n      <!-- Levitating Air Gap Glow -->\n      <rect x=\"15\" y=\"80\" width=\"95\" height=\"4\" fill=\"#38bdf8\" opacity=\"0.8\"/>\n    </svg>"
+    },
+    {
+      "id": "car-f1-aerodinamika",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "TIKUNGAN 5G 🏎️",
+      "badgeEn": "CORNERS 5G 🏎️",
+      "title": "Mobil Balap dengan Gaya Gravitasi Menikung Tertinggi di Dunia",
+      "titleEn": "Highest Cornering G-Force Racing Vehicle",
+      "holder": "Mobil Balap Formula 1 Modern",
+      "statValue": "Gaya Gravitasi Menikung 5G hingga 6G",
+      "statNumber": 5,
+      "statUnit": "G-Force",
+      "comparison": "Daya rekat sayap aerodinamikanya begitu kuat sehingga secara teori mobil Formula 1 bisa melaju terbalik di atap terowongan tanpa jatuh!",
+      "comparisonEn": "Generates so much aerodynamic downforce that theoretically an F1 car could drive upside-down on a tunnel ceiling!",
+      "description": "Mobil Formula 1 dirancang dari serat karbon ringan dengan mesin V6 turbo hybrid yang mampu berakselerasi dan mengerem secara brutal.",
+      "descriptionEn": "Modern Formula 1 cars harness immense downforce to corner at over 250 km/h with up to 6G lateral load on the driver.",
+      "funFact": "Saat mengerem mendadak di tikungan tajam, helm pembalap F1 terasa ditarik seberat 25 kilogram karena gaya gravitasi ekstrem!",
+      "funFactEn": "F1 drivers must train their neck muscles heavily to withstand 5 times their own head weight in high-speed corners!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#1e1b4b\"/>\n      <!-- F1 Car Silhouette Top View -->\n      <rect x=\"54\" y=\"24\" width=\"12\" height=\"68\" rx=\"5\" fill=\"#3b82f6\"/>\n      <!-- Front Wing -->\n      <rect x=\"36\" y=\"22\" width=\"48\" height=\"8\" rx=\"2\" fill=\"#ef4444\"/>\n      <!-- Rear Wing -->\n      <rect x=\"38\" y=\"84\" width=\"44\" height=\"10\" rx=\"2\" fill=\"#ef4444\"/>\n      <!-- 4 Wide Pirelli Slick Tires -->\n      <rect x=\"30\" y=\"32\" width=\"12\" height=\"20\" rx=\"4\" fill=\"#0f172a\"/>\n      <rect x=\"78\" y=\"32\" width=\"12\" height=\"20\" rx=\"4\" fill=\"#0f172a\"/>\n      <rect x=\"28\" y=\"70\" width=\"14\" height=\"22\" rx=\"4\" fill=\"#0f172a\"/>\n      <rect x=\"78\" y=\"70\" width=\"14\" height=\"22\" rx=\"4\" fill=\"#0f172a\"/>\n      <circle cx=\"60\" cy=\"52\" r=\"4\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "car-lunar-rover",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "mobil",
+      "badge": "DI BULAN 🌙",
+      "badgeEn": "MOON ROVER 🌙",
+      "title": "Mobil Pertama yang Dikemudikan Manusia di Permukaan Bulan",
+      "titleEn": "First Manned Vehicle Driven on Another World",
+      "holder": "Apollo Lunar Roving Vehicle (LRV)",
+      "statValue": "Total Jarak Tempuh 35,9 km di Bulan",
+      "statNumber": 35.9,
+      "statUnit": "km di Bulan",
+      "comparison": "Mobil listrik pertama yang melaju di atas tanah berdebu bulan sejauh 384.000 kilometer dari planet Bumi!",
+      "comparisonEn": "Driven by astronauts across lunar craters over 384,000 kilometers away from planet Earth!",
+      "description": "Digunakan dalam misi Apollo 15, 16, dan 17, mobil bulan ini memiliki ban yang dibuat dari anyaman kawat baja dan seng, bukan karet!",
+      "descriptionEn": "The Lunar Roving Vehicle allowed Apollo astronauts to explore deep craters and collect over 100 kg of lunar rock samples.",
+      "funFact": "Karena suhu di Bulan bisa mencapai minus 170°C hingga panas 120°C, bannya dibuat dari anyaman jaring kawat piano agar tidak pecah!",
+      "funFactEn": "Its tires were made of woven zinc-coated steel piano wire with titanium chevrons because rubber would burst in space vacuum!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#020617\"/>\n      <!-- Moon Surface with Craters -->\n      <path d=\"M0 86 Q40 82 80 88 T120 86 L120 120 L0 120 Z\" fill=\"#64748b\"/>\n      <circle cx=\"25\" cy=\"100\" r=\"8\" fill=\"#475569\"/><circle cx=\"95\" cy=\"105\" r=\"5\" fill=\"#475569\"/>\n      <!-- Lunar Rover Frame -->\n      <rect x=\"35\" y=\"66\" width=\"50\" height=\"8\" rx=\"2\" fill=\"#cbd5e1\"/>\n      <circle cx=\"42\" cy=\"80\" r=\"10\" fill=\"#94a3b8\"/><circle cx=\"78\" cy=\"80\" r=\"10\" fill=\"#94a3b8\"/>\n      <circle cx=\"42\" cy=\"80\" r=\"4\" fill=\"#020617\"/><circle cx=\"78\" cy=\"80\" r=\"4\" fill=\"#020617\"/>\n      <!-- High Gain Umbrella Antenna -->\n      <line x1=\"70\" y1=\"66\" x2=\"78\" y2=\"44\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n      <path d=\"M72 44 Q78 40 84 44 Z\" fill=\"#f59e0b\"/>\n    </svg>"
+    },
+    {
+      "id": "ship-selam-terdalam",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "kapal",
+      "badge": "TERDALAM 🤿",
+      "badgeEn": "DEEPEST DIVE 🤿",
+      "title": "Kapal Selam Riset Terdalam di Dunia",
+      "titleEn": "Deepest-Diving Manned Submersible in the World",
+      "holder": "DSV Limiting Factor (Triton 36000/2)",
+      "statValue": "Menyelam 10.928 Meter di Palung Mariana",
+      "statNumber": 10928,
+      "statUnit": "meter kedalaman laut",
+      "comparison": "Mampu menahan tekanan air seberat 1.100 kali atmosfer Bumi, setara dengan 292 gajah ditumpuk di atas atap mobil!",
+      "comparisonEn": "Engineered to withstand crushing hydrostatic pressures equivalent to 292 adult elephants standing on a car roof!",
+      "description": "Kapal selam dengan lambung bulat titanium tebal 90 mm yang mampu berulang kali menyelam ke titik terdalam di seluruh 5 samudra Bumi.",
+      "descriptionEn": "DSV Limiting Factor is commercially certified for repeated dives to the absolute bottom of any ocean trench on Earth.",
+      "funFact": "Di kedalaman 11 kilometer yang gelap gulita dan bersuhu 1°C, kapal selam ini dilengkapi lampu sorot ultra-terang dan lengan robot untuk mengambil sampel biota laut unik!",
+      "funFactEn": "It has visited the deepest point of every ocean on Earth: Pacific, Atlantic, Indian, Southern, and Arctic oceans!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#030712\"/>\n      <!-- Deep Abyssal Ocean Glow -->\n      <circle cx=\"60\" cy=\"62\" r=\"32\" fill=\"#0ea5e9\" opacity=\"0.15\"/>\n      <!-- Submarine Hull -->\n      <ellipse cx=\"60\" cy=\"62\" rx=\"34\" ry=\"20\" fill=\"#f8fafc\"/>\n      <ellipse cx=\"78\" cy=\"62\" rx=\"8\" ry=\"12\" fill=\"#0284c7\"/>\n      <!-- Viewport window -->\n      <circle cx=\"82\" cy=\"62\" r=\"4\" fill=\"#38bdf8\"/>\n      <!-- Searchlight Beam -->\n      <polygon points=\"86,62 116,45 116,79\" fill=\"#fef08a\" opacity=\"0.35\"/>\n      <!-- Thrusters -->\n      <rect x=\"30\" y=\"56\" width=\"6\" height=\"12\" rx=\"2\" fill=\"#64748b\"/>\n    </svg>"
+    },
+    {
+      "id": "ship-induk-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "kapal",
+      "badge": "KAPAL INDUK ⚓",
+      "badgeEn": "AIRCRAFT CARRIER ⚓",
+      "title": "Kapal Perang & Kapal Induk Terbesar di Dunia",
+      "titleEn": "Largest Nuclear-Powered Warship in the World",
+      "holder": "USS Gerald R. Ford (CVN-78)",
+      "statValue": "Panjang 337 Meter · Bobot 100.000 Ton",
+      "statNumber": 100000,
+      "statUnit": "ton bobot kapal",
+      "comparison": "Bagaikan kota terapung dengan 2 reaktor nuklir yang bisa berlayar selama 25 tahun tanpa perlu mengisi bahan bakar!",
+      "comparisonEn": "A floating military city powered by 2 nuclear reactors, capable of steaming continuously for 25 years without refueling!",
+      "description": "Mampu menampung lebih dari 75 pesawat tempur dengan sistem pelontar elektromagnetik (EMALS) paling modern di dunia.",
+      "descriptionEn": "The lead ship of the Ford-class supercarriers, featuring electromagnetic catapults and carrying a crew of 4,500 personnel.",
+      "funFact": "Dapur di dalam kapal induk ini memasak dan menyajikan lebih dari 15.000 porsi makanan setiap hari untuk seluruh awak kapalnya!",
+      "funFactEn": "Its galleys serve over 15,000 hot meals daily to feed its 4,500 sailors and aviators aboard!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <rect x=\"0\" y=\"78\" width=\"120\" height=\"42\" fill=\"#0369a1\"/>\n      <!-- Carrier Flight Deck Angled -->\n      <polygon points=\"10,65 115,55 110,78 18,78\" fill=\"#334155\"/>\n      <!-- Flight Deck Runway line -->\n      <line x1=\"25\" y1=\"72\" x2=\"105\" y2=\"62\" stroke=\"#ffffff\" stroke-width=\"1.5\" stroke-dasharray=\"6 3\"/>\n      <!-- Island Superstructure Tower at Starboard -->\n      <rect x=\"85\" y=\"42\" width=\"14\" height=\"18\" fill=\"#475569\"/>\n      <line x1=\"92\" y1=\"42\" x2=\"92\" y2=\"30\" stroke=\"#0f172a\" stroke-width=\"1.5\"/>\n    </svg>"
+    },
+    {
+      "id": "space-teleskop-terbesar",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "antariksa",
+      "badge": "TELESKOP 🔭",
+      "badgeEn": "TELESCOPE 🔭",
+      "title": "Teleskop Luar Angkasa Terbesar & Paling Canggih di Dunia",
+      "titleEn": "Largest & Most Powerful Space Telescope Ever Built",
+      "holder": "James Webb Space Telescope (JWST / NASA-ESA-CSA)",
+      "statValue": "Cermin Emas 6,5 Meter · Berjarak 1,5 Juta km dari Bumi",
+      "statNumber": 6.5,
+      "statUnit": "meter cermin emas",
+      "comparison": "Cermin heksagonal berlapis emas murni ini mampu mendeteksi cahaya redup dari galaksi pertama yang lahir 13,5 miliar tahun lalu!",
+      "comparisonEn": "Its gold-coated primary mirror can detect the faintest heat signatures of the first galaxies born 13.5 billion years ago!",
+      "description": "JWST mengorbit di titik Lagrange L2 di luar angkasa dengan perisai matahari seukuran lapangan tenis untuk menjaga suhu instrumennya tetap -233°C.",
+      "descriptionEn": "Operating at cryogenic temperatures 1.5 million km away, Webb peers deep into cosmic dawn using infrared vision.",
+      "funFact": "Lapisan emas di cermin teleskop raksasa ini sebenarnya sangat tipis, hanya setebal 100 nanometer dan jika ditimbang emasnya hanya sekitar 4,8 gram (seukuran cincin kawin)!",
+      "funFactEn": "The gold layer on all 18 giant beryllium mirror segments weighs just 4.8 grams, about the mass of a single wedding ring!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#020617\"/>\n      <circle cx=\"20\" cy=\"20\" r=\"1.5\" fill=\"#ffffff\"/><circle cx=\"105\" cy=\"25\" r=\"1.5\" fill=\"#ffffff\"/>\n      <!-- Tennis Court Sunshield Layers -->\n      <polygon points=\"12,85 60,65 108,85 60,98\" fill=\"#cbd5e1\"/>\n      <polygon points=\"16,88 60,70 104,88 60,101\" fill=\"#94a3b8\"/>\n      <!-- Gold Hexagonal Primary Mirror Segments -->\n      <polygon points=\"60,35 68,40 68,50 60,55 52,50 52,40\" fill=\"#facc15\"/>\n      <polygon points=\"50,22 58,27 58,37 50,42 42,37 42,27\" fill=\"#eab308\"/>\n      <polygon points=\"70,22 78,27 78,37 70,42 62,37 62,27\" fill=\"#eab308\"/>\n      <polygon points=\"40,38 48,43 48,53 40,58 32,53 32,43\" fill=\"#eab308\"/>\n      <polygon points=\"80,38 88,43 88,53 80,58 72,53 72,43\" fill=\"#eab308\"/>\n    </svg>"
+    },
+    {
+      "id": "space-stasiun-iss",
+      "scope": "world",
+      "category": "teknologi",
+      "subCategory": "antariksa",
+      "badge": "STASIUN ANGKASA 🛰️",
+      "badgeEn": "SPACE STATION 🛰️",
+      "title": "Objek Buatan Manusia Terbesar yang Mengorbit Bumi",
+      "titleEn": "Largest Artificial Structure in Earth Orbit",
+      "holder": "Stasiun Luar Angkasa Internasional (ISS)",
+      "statValue": "Panjang 109 Meter (Seukuran Lapangan Bola) · 27.600 km/jam",
+      "statNumber": 109,
+      "statUnit": "meter panjang",
+      "comparison": "Melesat 27.600 km/jam, mengitari seluruh planet Bumi setiap 90 menit sehingga astronot di dalamnya melihat 16 kali matahari terbit setiap hari!",
+      "comparisonEn": "Orbits Earth at 27,600 km/h, meaning astronauts aboard witness 16 sunrises and sunsets every single 24-hour day!",
+      "description": "Laboratorium sains internasional di orbit rendah Bumi yang dihuni secara berkesinambungan oleh astronot dari berbagai penjuru dunia sejak tahun 2000.",
+      "descriptionEn": "The International Space Station has been continuously inhabited by human astronauts for over two decades.",
+      "funFact": "ISS bisa dilihat langsung dengan mata telanjang dari halaman rumahmu di malam hari tampak seperti bintang terang yang bergerak cepat!",
+      "funFactEn": "The ISS is so massive that it reflects sunlight brilliantly, appearing as a bright moving star visible without a telescope!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#030712\"/>\n      <!-- Curved Earth Atmosphere Arc -->\n      <path d=\"M0 110 Q60 88 120 110 L120 120 L0 120 Z\" fill=\"#0284c7\"/>\n      <!-- Central Truss -->\n      <line x1=\"15\" y1=\"55\" x2=\"105\" y2=\"55\" stroke=\"#cbd5e1\" stroke-width=\"3\"/>\n      <!-- Pressurized Modules in Middle -->\n      <rect x=\"52\" y=\"48\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#ffffff\"/>\n      <!-- Solar Array Wings Left & Right -->\n      <rect x=\"18\" y=\"32\" width=\"14\" height=\"46\" rx=\"2\" fill=\"#ca8a04\"/>\n      <rect x=\"88\" y=\"32\" width=\"14\" height=\"46\" rx=\"2\" fill=\"#ca8a04\"/>\n      <!-- Solar cell grid lines -->\n      <line x1=\"25\" y1=\"32\" x2=\"25\" y2=\"78\" stroke=\"#fef08a\" stroke-width=\"1\"/>\n      <line x1=\"95\" y1=\"32\" x2=\"95\" y2=\"78\" stroke=\"#fef08a\" stroke-width=\"1\"/>\n    </svg>"
+    },
+    {
+      "id": "space-gunung-mars",
+      "scope": "world",
+      "category": "alam",
+      "subCategory": "antariksa",
+      "badge": "GUNUNG TATA SURYA 🪐",
+      "badgeEn": "SOLAR SYSTEM 🪐",
+      "title": "Gunung Berapi Tertinggi di Seluruh Tata Surya",
+      "titleEn": "Highest Volcano & Mountain in the Solar System",
+      "holder": "Olympus Mons (Planet Mars)",
+      "statValue": "Tinggi 21,9 km (Setara 3 Kali Gunung Everest!)",
+      "statNumber": 21900,
+      "statUnit": "meter tinggi",
+      "comparison": "Tingginya hampir 22 kilometer menembus langit Mars, dan luas dasarnya seukuran negara Prancis atau seluruh pulau Jawa!",
+      "comparisonEn": "Nearly 22 km high, almost three times taller than Mount Everest with a footprint as large as the entire island of Java!",
+      "description": "Olympus Mons adalah gunung berapi perisai raksasa di Mars yang tumbuh begitu tinggi karena gravitasi Mars yang lebih lemah dan ketiadaan pergeseran lempeng tektonik.",
+      "descriptionEn": "Because Mars lacks plate tectonics, magma poured continuously from a stationary mantle plume, building this colossal peak.",
+      "funFact": "Saking lebarnya gunung ini, lerengnya sangat landai sehingga jika kamu berdiri di puncaknya, kamu tidak akan menyadari bahwa kamu berada di atas gunung raksasa karena kakinya berada di balik cakrawala Mars!",
+      "funFactEn": "Because of Mars’s curvature and the mountain’s gentle slope, an observer standing at the summit cannot see the base because it curves past the horizon!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#450a0a\"/>\n      <!-- Mars Red Dusty Sky -->\n      <circle cx=\"95\" cy=\"28\" r=\"10\" fill=\"#fef08a\" opacity=\"0.6\"/>\n      <!-- Giant Shield Volcano Silhouette -->\n      <polygon points=\"5,115 60,35 115,115\" fill=\"#7f1d1d\"/>\n      <polygon points=\"40,115 60,35 80,115\" fill=\"#991b1b\"/>\n      <!-- Caldera Crater at Summit -->\n      <ellipse cx=\"60\" cy=\"35\" rx=\"14\" ry=\"4\" fill=\"#292524\"/>\n      <ellipse cx=\"60\" cy=\"35\" rx=\"8\" ry=\"2\" fill=\"#1c1917\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-danau-toba",
+      "scope": "indonesia",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "KALDERA RAKSASA 🌋",
+      "badgeEn": "SUPERVOLCANO 🌋",
+      "title": "Danau Terluas di Indonesia & Kaldera Vulkanik Terbesar di Dunia",
+      "titleEn": "Largest Volcanic Caldera Lake in the World",
+      "holder": "Danau Toba (Sumatera Utara, Indonesia)",
+      "statValue": "Panjang 100 km · Lebar 30 km · Kedalaman 505 Meter",
+      "statNumber": 100,
+      "statUnit": "km panjang danau",
+      "comparison": "Lebih luas dari negara Singapura! Di tengah danau terdapat pulau Samosir yang hampir seukuran negara Singapura!",
+      "comparisonEn": "Larger than the country of Singapore, formed by a colossal supervolcanic eruption 74,000 years ago!",
+      "description": "Terbentuk dari letusan supervulkan dahsyat sekitar 74.000 tahun lalu yang mengubah iklim global Bumi pada zaman prasejarah.",
+      "descriptionEn": "Lake Toba was created by one of the largest known explosive super-eruptions in Earth’s history, leaving a stunning freshwater paradise.",
+      "funFact": "Di tengah danau Toba ada pulau Samosir, dan di dalam pulau Samosir ada danau lagi yang bernama Danau Sidihoni (\"Danau di atas Danau\")!",
+      "funFactEn": "Inside the island of Samosir sitting within Lake Toba, there are two smaller lakes — literally a lake on an island within a lake!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#0891b2\"/>\n      <!-- Volcanic Ridge Cliffs -->\n      <polygon points=\"0,20 40,55 0,90\" fill=\"#065f46\"/>\n      <polygon points=\"120,20 80,55 120,90\" fill=\"#065f46\"/>\n      <!-- Samosir Island in Center -->\n      <ellipse cx=\"60\" cy=\"65\" rx=\"24\" ry=\"16\" fill=\"#16a34a\"/>\n      <ellipse cx=\"60\" cy=\"65\" rx=\"6\" ry=\"4\" fill=\"#0284c7\"/>\n      <!-- Batak House Silhouette -->\n      <polygon points=\"56,58 64,58 66,54 54,54\" fill=\"#78350f\"/>\n    </svg>"
+    },
+    {
+      "id": "geo-sungai-kapuas",
+      "scope": "indonesia",
+      "category": "alam",
+      "subCategory": "alam",
+      "badge": "TERPANJANG 🌊",
+      "badgeEn": "LONGEST 🌊",
+      "title": "Sungai Terpanjang di Indonesia",
+      "titleEn": "Longest River in Indonesia",
+      "holder": "Sungai Kapuas (Kalimantan Barat)",
+      "statValue": "Panjang 1.143 Kilometer",
+      "statNumber": 1143,
+      "statUnit": "kilometer panjang",
+      "comparison": "Panjangnya sama dengan membentang dari ujung barat pulau Jawa (Banten) hingga ujung timur pulau Jawa (Banyuwangi)!",
+      "comparisonEn": "Stretches 1,143 km, equivalent to driving across the entire length of Java island end-to-end!",
+      "description": "Mengalir dari Pegunungan Müller di jantung pulau Kalimantan hingga bermuara ke Selat Karimata di Laut Natuna.",
+      "descriptionEn": "The Kapuas River winds through Kalimantan’s rich equatorial rainforests, sustaining hundreds of endemic fish species.",
+      "funFact": "Sungai Kapuas menjadi habitat bagi lebih dari 700 jenis ikan air tawar, termasuk Ikan Arwana Super Red yang sangat langka dan berharga mahal!",
+      "funFactEn": "Home to over 700 freshwater fish species, including the legendary and prized Super Red Arowana!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#14532d\"/>\n      <!-- Winding River Path -->\n      <path d=\"M0 20 Q50 35 30 65 T90 90 T120 110\" stroke=\"#0284c7\" stroke-width=\"18\" fill=\"none\" stroke-linecap=\"round\"/>\n      <path d=\"M0 20 Q50 35 30 65 T90 90 T120 110\" stroke=\"#38bdf8\" stroke-width=\"10\" fill=\"none\" stroke-linecap=\"round\"/>\n      <!-- Palm tree detail -->\n      <circle cx=\"85\" cy=\"40\" r=\"10\" fill=\"#22c55e\"/>\n      <line x1=\"85\" y1=\"40\" x2=\"85\" y2=\"60\" stroke=\"#78350f\" stroke-width=\"3\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-gajah-afrika",
+      "scope": "world",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERBERAT DARAT 🐘",
+      "badgeEn": "HEAVIEST LAND 🐘",
+      "title": "Hewan Darat Terbesar & Terberat di Dunia",
+      "titleEn": "Largest & Heaviest Living Land Animal",
+      "holder": "Gajah Semak Afrika (Loxodonta africana)",
+      "statValue": "Berat Hingga 10 Ton · Tinggi Bahu 4 Meter",
+      "statNumber": 10,
+      "statUnit": "ton berat tubuh",
+      "comparison": "Beratnya setara dengan 7 mobil keluarga ditumpuk sekaligus, dan belalainya memiliki 40.000 otot mandiri!",
+      "comparisonEn": "Weighs as much as 7 passenger cars combined, with a trunk powered by 40,000 individual muscles!",
+      "description": "Raksasa darat yang hidup di sabana Afrika dengan daun telinga lebar menyerupai peta benua Afrika untuk mendinginkan tubuhnya.",
+      "descriptionEn": "The African bush elephant reigns supreme as the largest living terrestrial mammal on Earth.",
+      "funFact": "Belalai gajah sangat kuat sampai bisa menumbangkan pohon besar, tetapi juga sangat presisi sampai bisa memungut sebutir kacang kecil tanpa memecahkannya!",
+      "funFactEn": "An elephant’s trunk can rip down tree branches effortlessly, yet is delicate enough to pluck a single peanut from the ground!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fffbeb\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#ca8a04\"/>\n      <!-- Elephant Body -->\n      <ellipse cx=\"60\" cy=\"65\" rx=\"30\" ry=\"22\" fill=\"#64748b\"/>\n      <!-- Giant African Ear -->\n      <ellipse cx=\"44\" cy=\"58\" rx=\"14\" ry=\"18\" fill=\"#475569\"/>\n      <!-- Trunk curving up -->\n      <path d=\"M30 65 Q18 70 16 82 Q15 90 22 88\" stroke=\"#64748b\" stroke-width=\"8\" fill=\"none\" stroke-linecap=\"round\"/>\n      <!-- White Ivory Tusk -->\n      <path d=\"M32 72 Q20 78 26 84\" stroke=\"#ffffff\" stroke-width=\"3\" fill=\"none\"/>\n      <!-- Legs -->\n      <rect x=\"42\" y=\"78\" width=\"10\" height=\"25\" rx=\"4\" fill=\"#475569\"/>\n      <rect x=\"68\" y=\"78\" width=\"10\" height=\"25\" rx=\"4\" fill=\"#475569\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-jerapah",
+      "scope": "world",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERTINGGI 🦒",
+      "badgeEn": "TALLEST 🦒",
+      "title": "Hewan Paling Tinggi di Planet Bumi",
+      "titleEn": "Tallest Living Terrestrial Animal on Earth",
+      "holder": "Jerapah (Giraffa camelopardalis), Afrika",
+      "statValue": "Tinggi Mencapai 5,8 Meter (Setara Rumah 2 Lantai)",
+      "statNumber": 5.8,
+      "statUnit": "meter tinggi",
+      "comparison": "Lehernya saja panjangnya 2 meter! Bisa memakan daun-daun segar di puncak pohon akasia tinggi tanpa perlu memanjat!",
+      "comparisonEn": "Stands up to 5.8 meters tall, allowing it to easily feast on acacia tree tops beyond the reach of any other herbivore!",
+      "description": "Mamalia berleher jenjang dengan pola kulit unik seperti sidik jari manusia yang tidak pernah sama antara satu jerapah dengan lainnya.",
+      "descriptionEn": "Possesses immense blood pressure generated by a 11-kg heart to pump blood up its 2-meter-long neck to the brain.",
+      "funFact": "Meskipun leher jerapah panjangnya 2 meter, jumlah ruas tulang lehernya persis sama dengan manusia, yaitu hanya 7 ruas tulang!",
+      "funFactEn": "Despite having a neck over 2 meters long, a giraffe has exactly seven neck vertebrae, precisely the same number as a human!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fefce8\"/>\n      <!-- Giraffe Long Neck & Head -->\n      <polygon points=\"62,110 68,110 64,30 58,30\" fill=\"#d97706\"/>\n      <circle cx=\"60\" cy=\"24\" r=\"8\" fill=\"#d97706\"/>\n      <!-- Ossicones (Horns) -->\n      <line x1=\"57\" y1=\"18\" x2=\"57\" y2=\"12\" stroke=\"#92400e\" stroke-width=\"2\"/>\n      <line x1=\"63\" y1=\"18\" x2=\"63\" y2=\"12\" stroke=\"#92400e\" stroke-width=\"2\"/>\n      <!-- Brown Spots on Neck -->\n      <rect x=\"59\" y=\"40\" width=\"4\" height=\"6\" rx=\"1\" fill=\"#78350f\"/>\n      <rect x=\"60\" y=\"55\" width=\"5\" height=\"8\" rx=\"1\" fill=\"#78350f\"/>\n      <rect x=\"60\" y=\"75\" width=\"6\" height=\"10\" rx=\"1\" fill=\"#78350f\"/>\n      <rect x=\"61\" y=\"92\" width=\"6\" height=\"12\" rx=\"1\" fill=\"#78350f\"/>\n    </svg>"
+    },
+    {
+      "id": "anim-ular-sanca",
+      "scope": "indonesia",
+      "category": "hewan",
+      "subCategory": "hewan",
+      "badge": "TERPANJANG 🐍",
+      "badgeEn": "LONGEST 🐍",
+      "title": "Ular Terpanjang di Dunia Asli Indonesia & Asia Tenggara",
+      "titleEn": "Longest Snake in the World Native to Indonesia",
+      "holder": "Ular Sanca Kembang / Reticulated Python (Malayopython reticulatus)",
+      "statValue": "Panjang Mencapai 8 hingga 10 Meter",
+      "statNumber": 10,
+      "statUnit": "meter panjang",
+      "comparison": "Panjangnya setara dengan bus kota! Memiliki lilitan otot yang sangat kuat untuk menangkap mangsa tanpa racun.",
+      "comparisonEn": "Stretches as long as a city bus, crowned the world’s longest snake species in Guinness World Records!",
+      "description": "Ular sanca kembang mendiami hutan hujan Sumatera, Jawa, Kalimantan, hingga Sulawesi dengan pola sisik geometris menyerupai batik.",
+      "descriptionEn": "The reticulated python holds the record for the world’s longest snake, celebrated for its intricate patterned scales.",
+      "funFact": "Ular ini adalah perenang ulung di air, sering terlihat berenang santai menyeberangi lautan antar pulau di Indonesia!",
+      "funFactEn": "An exceptional swimmer, it has colonized small oceanic islands across the Indonesian archipelago by swimming across open seas!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdf4\"/>\n      <!-- Coiled Python Body -->\n      <path d=\"M20 70 Q40 40 70 50 T90 85 T50 100 T25 80\" stroke=\"#ca8a04\" stroke-width=\"14\" fill=\"none\" stroke-linecap=\"round\"/>\n      <path d=\"M20 70 Q40 40 70 50 T90 85 T50 100 T25 80\" stroke=\"#713f12\" stroke-width=\"6\" fill=\"none\" stroke-dasharray=\"8 6\"/>\n      <!-- Snake Head -->\n      <ellipse cx=\"20\" cy=\"70\" rx=\"8\" ry=\"6\" fill=\"#854d0e\"/>\n      <circle cx=\"18\" cy=\"68\" r=\"1.5\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "flora-bunga-bangkai",
+      "scope": "indonesia",
+      "category": "tumbuhan",
+      "subCategory": "tumbuhan",
+      "badge": "TERTINGGI 🌺",
+      "badgeEn": "TALLEST 🌺",
+      "title": "Bunga Majemuk Tertinggi di Dunia (Asli Sumatera, Indonesia)",
+      "titleEn": "Tallest Unbranched Inflorescence Flower on Earth",
+      "holder": "Bunga Bangkai Raksasa / Titan Arum (Amorphophallus titanum)",
+      "statValue": "Tinggi Mencapai 3,2 Meter di Alam Liar",
+      "statNumber": 3.2,
+      "statUnit": "meter tinggi",
+      "comparison": "Tingginya mengalahkan pemain bola basket tertinggi di dunia!",
+      "comparisonEn": "Taller than the world’s tallest basketball players, towering over 3 meters tall in Indonesian rainforests!",
+      "description": "Berbeda dengan Rafflesia yang merayap di tanah, Bunga Bangkai tumbuh menjulang tegak dengan tongkol raksasa (spadix) berwarna kuning keemasan.",
+      "descriptionEn": "Endemic to the steep hillside rainforests of western Sumatra, blooming only once every several years.",
+      "funFact": "Saat mekar sempurna, bunga ini menghasilkan panas sendiri hingga 36°C (mirip suhu tubuh manusia) untuk menyebarkan aromanya sejauh ratusan meter!",
+      "funFactEn": "During bloom peak, the tip heats itself up to 36°C (human body temperature) to volatilize and spread its scent across the forest!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#fafaf9\"/>\n      <!-- Deep Green Forest Background -->\n      <polygon points=\"10,120 110,120 90,95 30,95\" fill=\"#14532d\"/>\n      <!-- Giant Spathe (Collar Petal) -->\n      <path d=\"M40 95 C30 75 40 60 60 65 C80 60 90 75 80 95 Z\" fill=\"#881337\"/>\n      <!-- Tall Yellow Spadix Pillar -->\n      <polygon points=\"56,65 60,18 64,65\" fill=\"#facc15\"/>\n      <ellipse cx=\"60\" cy=\"18\" rx=\"4\" ry=\"6\" fill=\"#eab308\"/>\n    </svg>"
+    },
+    {
+      "id": "flora-general-sherman",
+      "scope": "world",
+      "category": "tumbuhan",
+      "subCategory": "tumbuhan",
+      "badge": "TERBESAR 🌲",
+      "badgeEn": "LARGEST VOLUME 🌲",
+      "title": "Makhluk Hidup Terbesar Berdasarkan Volume Batang Kayu di Dunia",
+      "titleEn": "Largest Living Single-Stem Tree by Volume on Earth",
+      "holder": "General Sherman (Giant Sequoia), California",
+      "statValue": "Volume Kayu 1.487 m³ · Berat 2.100 Ton",
+      "statNumber": 1487,
+      "statUnit": "meter kubik kayu",
+      "comparison": "Batangnya begitu besar sampai kayu di pohon ini cukup untuk membuat 120 rumah kayu berukuran sedang!",
+      "comparisonEn": "Contains enough solid timber to construct 120 average family houses from a single tree trunk!",
+      "description": "General Sherman diperkirakan telah hidup selama lebih dari 2.200 tahun di Pegunungan Sierra Nevada, California.",
+      "descriptionEn": "By volume, General Sherman in Sequoia National Park is the largest known living single-stem tree on Earth.",
+      "funFact": "Kulit kayu pohon raksasa ini tebalnya mencapai 60 sentimeter dan tahan terhadap api kebakaran hutan serta gigitan serangga perusak!",
+      "funFactEn": "Its spongy, fibrous bark is over 60 cm thick, containing natural tannic acids that make it virtually fire-proof!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0fdf4\"/>\n      <!-- Massive Giant Sequoia Trunk -->\n      <polygon points=\"46,120 50,30 70,30 74,120\" fill=\"#9a3412\"/>\n      <line x1=\"56\" y1=\"35\" x2=\"56\" y2=\"120\" stroke=\"#7c2d12\" stroke-width=\"2\"/>\n      <line x1=\"64\" y1=\"35\" x2=\"64\" y2=\"120\" stroke=\"#7c2d12\" stroke-width=\"2\"/>\n      <!-- Foliage Crown -->\n      <polygon points=\"60,16 42,42 78,42\" fill=\"#15803d\"/>\n      <polygon points=\"60,32 38,62 82,62\" fill=\"#166534\"/>\n    </svg>"
+    },
+    {
+      "id": "arch-canakkale",
+      "scope": "world",
+      "category": "bangunan",
+      "subCategory": "bangunan",
+      "badge": "JEMBATAN GANTUNG 🌉",
+      "badgeEn": "SUSPENSION 🌉",
+      "title": "Jembatan Gantung dengan Bentang Terpanjang di Dunia",
+      "titleEn": "Longest Main Span Suspension Bridge in the World",
+      "holder": "Jembatan 1915 Çanakkale, Turki",
+      "statValue": "Bentang Utama 2.023 Meter (2+ Kilometer)",
+      "statNumber": 2023,
+      "statUnit": "meter bentang tengah",
+      "comparison": "Jarak antara dua tiang penyangganya lebih dari 2 kilometer tanpa ada satu pun tiang di bawah air!",
+      "comparisonEn": "Suspends over 2 kilometers of highway across the Dardanelles strait without a single intermediate pillar!",
+      "description": "Menghubungkan benua Eropa dan Asia melintasi Selat Dardanella dengan menara baja setinggi 318 meter di atas permukaan laut.",
+      "descriptionEn": "The 1915 Çanakkale Bridge surpassed Japan’s Akashi Kaikyo Bridge as the world’s longest suspension bridge.",
+      "funFact": "Kabel baja utama jembatan ini terbuat dari kawat baja yang jika disambungkan ujung ke ujung panjangnya mencapai 162.000 kilometer, cukup untuk mengelilingi Bumi 4 kali putaran!",
+      "funFactEn": "Steel wires inside its suspension cables stretch 162,000 km, enough to encircle planet Earth four times!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#f0f9ff\"/>\n      <rect x=\"0\" y=\"85\" width=\"120\" height=\"35\" fill=\"#0284c7\"/>\n      <!-- 2 Main Suspension Towers -->\n      <rect x=\"32\" y=\"25\" width=\"6\" height=\"70\" fill=\"#dc2626\"/>\n      <rect x=\"82\" y=\"25\" width=\"6\" height=\"70\" fill=\"#dc2626\"/>\n      <!-- Main Swooping Cable -->\n      <path d=\"M5 65 Q35 25 35 25 Q57 82 82 25 Q82 25 115 65\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\"/>\n      <!-- Bridge Deck Road -->\n      <line x1=\"0\" y1=\"78\" x2=\"120\" y2=\"78\" stroke=\"#334155\" stroke-width=\"4\"/>\n    </svg>"
+    },
+    {
+      "id": "arch-three-gorges",
+      "scope": "world",
+      "category": "bangunan",
+      "subCategory": "bangunan",
+      "badge": "BENDUNGAN RAKSASA ⚡",
+      "badgeEn": "MEGA DAM ⚡",
+      "title": "Pembangkit Listrik Tenaga Air & Bendungan Terbesar di Dunia",
+      "titleEn": "World’s Largest Hydroelectric Power Station & Dam",
+      "holder": "Bendungan Tiga Ngarai (Three Gorges Dam), Tiongkok",
+      "statValue": "Kapasitas 22.500 Megawatt · Menampung 39 Miliar m³ Air",
+      "statNumber": 22500,
+      "statUnit": "Megawatt daya listrik",
+      "comparison": "Menampung massa air yang begitu masif hingga NASA mengonfirmasi rotasi planet Bumi melambat 0,06 mikrodetik!",
+      "comparisonEn": "Holds back so much water mass (39 trillion liters) that NASA confirmed it slightly slowed Earth’s rotation by 0.06 microseconds!",
+      "description": "Membendung Sungai Yangtze dengan dinding beton sepanjang 2,3 kilometer dan tinggi 181 meter untuk menghasilkan listrik bagi puluhan juta rumah.",
+      "descriptionEn": "The Three Gorges Dam spans 2,335 meters across the Yangtze River, generating clean electricity with 34 giant turbo-generators.",
+      "funFact": "Lift kapal di bendungan ini mampu mengangkat kapal seberat 3.000 ton setinggi 113 meter hanya dalam waktu 40 menit!",
+      "funFactEn": "Its ship lift is the largest in the world, hoisting 3,000-ton cargo ships 113 meters up in under 40 minutes!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#e0f2fe\"/>\n      <!-- Concrete Dam Wall -->\n      <polygon points=\"15,45 105,45 115,110 5,110\" fill=\"#64748b\"/>\n      <!-- Overflow spillway chutes -->\n      <line x1=\"45\" y1=\"45\" x2=\"40\" y2=\"110\" stroke=\"#0284c7\" stroke-width=\"4\"/>\n      <line x1=\"60\" y1=\"45\" x2=\"60\" y2=\"110\" stroke=\"#0284c7\" stroke-width=\"4\"/>\n      <line x1=\"75\" y1=\"45\" x2=\"80\" y2=\"110\" stroke=\"#0284c7\" stroke-width=\"4\"/>\n      <!-- Electric Power Spark -->\n      <polygon points=\"60,18 64,28 58,28 62,38 54,30 58,30\" fill=\"#facc15\"/>\n    </svg>"
+    },
+    {
+      "id": "arch-suramadu",
+      "scope": "indonesia",
+      "category": "bangunan",
+      "subCategory": "bangunan",
+      "badge": "JEMBATAN TERPANJANG 🇮🇩",
+      "badgeEn": "LONGEST BRIDGE 🇮🇩",
+      "title": "Jembatan Terpanjang di Indonesia",
+      "titleEn": "Longest Bridge in Indonesia",
+      "holder": "Jembatan Suramadu (Surabaya - Madura)",
+      "statValue": "Panjang 5.438 Meter (5,4 km) Melintasi Selat Madura",
+      "statNumber": 5438,
+      "statUnit": "meter panjang jembatan",
+      "comparison": "Jembatan megah sepanjang 5,4 kilometer yang menyatukan pulau Jawa dan pulau Madura di atas laut!",
+      "comparisonEn": "Stretches 5.4 kilometers across the Madura Strait, connecting the metropolis of Surabaya with Madura island!",
+      "description": "Jembatan kabel penahan (cable-stayed) pertama dan terpanjang di Indonesia yang diresmikan pada tahun 2009.",
+      "descriptionEn": "The Suramadu Bridge features a cable-stayed main span designed to withstand seismic tremors and high sea winds.",
+      "funFact": "Dibutuhkan 650.000 ton beton cor dan 43.000 ton baja berkekuatan tinggi untuk mendirikan jembatan megah ini di atas laut!",
+      "funFactEn": "Constructed using over 650,000 tons of marine concrete and 43,000 tons of high-tensile structural steel!",
+      "svgIcon": "<svg viewBox=\"0 0 120 120\" class=\"record-svg\" aria-hidden=\"true\">\n      <rect width=\"120\" height=\"120\" rx=\"24\" fill=\"#eff6ff\"/>\n      <rect x=\"0\" y=\"86\" width=\"120\" height=\"34\" fill=\"#0284c7\"/>\n      <!-- Twin Cable-Stayed Pylons -->\n      <polygon points=\"56,22 64,22 68,90 52,90\" fill=\"#e2e8f0\"/>\n      <!-- Fan Cables -->\n      <line x1=\"60\" y1=\"35\" x2=\"25\" y2=\"78\" stroke=\"#dc2626\" stroke-width=\"1.5\"/>\n      <line x1=\"60\" y1=\"35\" x2=\"95\" y2=\"78\" stroke=\"#dc2626\" stroke-width=\"1.5\"/>\n      <line x1=\"60\" y1=\"48\" x2=\"35\" y2=\"78\" stroke=\"#dc2626\" stroke-width=\"1.5\"/>\n      <line x1=\"60\" y1=\"48\" x2=\"85\" y2=\"78\" stroke=\"#dc2626\" stroke-width=\"1.5\"/>\n      <!-- Roadway -->\n      <line x1=\"0\" y1=\"78\" x2=\"120\" y2=\"78\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n    </svg>"
+    }
+  ];
+  
   const RECORD_QUIZZES = [
     {
-      id: 'quiz-rekor-1',
-      question: 'Kendaraan manakah yang saat ini memegang rekor sebagai MOBIL TERCEPAT di dunia dengan kecepatan lebih dari 500 km/jam?',
-      questionEn: 'Which vehicle holds the world record as the FASTEST CAR in the world at over 500 km/h?',
-      options: [
-        { text: 'Koenigsegg Jesko Absolut / Bugatti Bolide', correct: true },
-        { text: 'Mobil Sedan Listrik Keluarga', correct: false },
-        { text: 'Bus Sekolah Wisata', correct: false }
+      "id": "quiz-rekor-1",
+      "question": "Kendaraan darat manakah yang dinobatkan sebagai MOBIL TERCEPAT di dunia dengan kecepatan lebih dari 500 km/jam?",
+      "questionEn": "Which vehicle holds the world record as the FASTEST PRODUCTION CAR at over 500 km/h?",
+      "options": [
+        {
+          "text": "Koenigsegg Jesko Absolut & Bugatti Bolide",
+          "correct": true
+        },
+        {
+          "text": "Mobil Sedan Listrik Keluarga",
+          "correct": false
+        },
+        {
+          "text": "Bus Sekolah Wisata",
+          "correct": false
+        }
       ],
-      explanation: 'Hebat sekali! Koenigsegg Jesko Absolut dan Bugatti Bolide dirancang khusus dengan tenaga lebih dari 1.600 HP untuk menembus kecepatan 500 km/jam!',
-      explanationEn: 'Spot on! Koenigsegg Jesko Absolut and Bugatti Bolide are engineered with over 1,600 HP to breach 500 km/h!'
+      "explanation": "Hebat sekali! Koenigsegg Jesko Absolut dan Bugatti Bolide dirancang khusus dengan tenaga 1.600 HP untuk menembus kecepatan 500 km/jam!",
+      "explanationEn": "Spot on! Koenigsegg Jesko Absolut and Bugatti Bolide are engineered with 1,600 HP to breach 500 km/h!"
     },
     {
-      id: 'quiz-rekor-2',
-      question: 'Di antara danau-danau di Indonesia, danau manakah yang dinobatkan sebagai danau PALING DALAM hingga mencapai 590 meter?',
-      questionEn: 'Among all lakes in Indonesia, which one is crowned the DEEPEST LAKE reaching 590 meters deep?',
-      options: [
-        { text: 'Danau Toba (Sumatera Utara)', correct: false },
-        { text: 'Danau Matano (Sulawesi Selatan)', correct: true },
-        { text: 'Danau Bedugul (Bali)', correct: false }
+      "id": "quiz-rekor-2",
+      "question": "Pesawat kargo apakah yang dinobatkan sebagai PESAWAT TERBESAR dan TERBERAT yang pernah dibuat manusia dengan 6 mesin jet raksasa?",
+      "questionEn": "Which cargo plane was crowned the LARGEST & HEAVIEST aircraft ever built with 6 giant jet engines?",
+      "options": [
+        {
+          "text": "Antonov An-225 Mriya",
+          "correct": true
+        },
+        {
+          "text": "Boeing 737 Komersial",
+          "correct": false
+        },
+        {
+          "text": "Cessna 172 Kecil",
+          "correct": false
+        }
       ],
-      explanation: 'Tepat sekali! Danau Matano di Sulawesi Selatan adalah danau terdalam di Indonesia dan Asia Tenggara (590 meter), sedangkan Danau Toba adalah danau terluas!',
-      explanationEn: 'Correct! Lake Matano in South Sulawesi is the deepest lake in Southeast Asia (590m), while Lake Toba is the largest!'
+      "explanation": "Tepat sekali! Antonov An-225 Mriya memiliki rentang sayap 88,4 meter dan berat total lepas landas mencapai 640 ton!",
+      "explanationEn": "Correct! The Antonov An-225 Mriya spanned 88.4 meters and weighed 640 tons at maximum takeoff!"
     },
     {
-      id: 'quiz-rekor-3',
-      question: 'Hewan apakah yang dinobatkan sebagai makhluk hidup PALING BESAR di Bumi sepanjang sejarah, bahkan mengalahkan dinosaurus?',
-      questionEn: 'Which animal is crowned the LARGEST LIVING CREATURE in Earth history, surpassing even all dinosaurs?',
-      options: [
-        { text: 'Gajah Afrika Raksasa', correct: false },
-        { text: 'Paus Biru (Blue Whale)', correct: true },
-        { text: 'Hiu Paus Pemakan Plankton', correct: false }
+      "id": "quiz-rekor-3",
+      "question": "Pesawat jet berawak apakah yang memegang rekor sebagai PESAWAT JET TERCEPAT di dunia dengan kecepatan Mach 3.3 (3.529 km/jam)?",
+      "questionEn": "Which aircraft holds the official record as the FASTEST MANNED JET at Mach 3.3 (3,529 km/h)?",
+      "options": [
+        {
+          "text": "Lockheed SR-71 Blackbird",
+          "correct": true
+        },
+        {
+          "text": "Helikopter Penyelamat",
+          "correct": false
+        },
+        {
+          "text": "Pesawat Capung Sawah",
+          "correct": false
+        }
       ],
-      explanation: 'Luar biasa! Paus Biru memiliki panjang hingga 30 meter dan berat 180 ton, menjadikannya hewan terbesar sepanjang masa di planet Bumi!',
-      explanationEn: 'Brilliant! The Blue Whale reaches 30 meters long and 180 tons, making it the largest creature ever on Earth!'
+      "explanation": "Luar biasa! SR-71 Blackbird terbang di ketinggian 26.000 meter dengan bodi titanium tahan panas 300°C!",
+      "explanationEn": "Awesome! The SR-71 Blackbird cruised at 85,000 feet with a heat-resistant titanium airframe!"
     },
     {
-      id: 'quiz-rekor-4',
-      question: 'Titik manakah di planet Bumi yang dinobatkan sebagai PALUNG LAUT TERDALAM hingga kedalaman hampir 11.000 meter?',
-      questionEn: 'Which trench on Earth is crowned the DEEPEST SEABED POINT, plunging nearly 11,000 meters deep?',
-      options: [
-        { text: 'Palung Mariana (Challenger Deep)', correct: true },
-        { text: 'Palung Selat Sunda', correct: false },
-        { text: 'Palung Laut Jawa', correct: false }
+      "id": "quiz-rekor-4",
+      "question": "Di antara danau-danau di Indonesia, danau manakah yang dinobatkan sebagai danau PALING DALAM hingga 590 meter?",
+      "questionEn": "Among all lakes in Indonesia, which one is crowned the DEEPEST LAKE reaching 590 meters deep?",
+      "options": [
+        {
+          "text": "Danau Toba (Sumatera Utara)",
+          "correct": false
+        },
+        {
+          "text": "Danau Matano (Sulawesi Selatan)",
+          "correct": true
+        },
+        {
+          "text": "Danau Bedugul (Bali)",
+          "correct": false
+        }
       ],
-      explanation: 'Benar sekali! Palung Mariana di Samudra Pasifik sedalam 10.994 meter. Andaikan Gunung Everest dicelupkan ke dasarnya, puncaknya masih tertutup air 2 km!',
-      explanationEn: 'Correct! The Mariana Trench is 10,994m deep. Even Mount Everest would be submerged under 2 kilometers of water!'
+      "explanation": "Tepat sekali! Danau Matano di Sulawesi Selatan adalah danau terdalam di Indonesia dan Asia Tenggara (590 meter), sedangkan Danau Toba adalah danau vulkanik terluas!",
+      "explanationEn": "Correct! Lake Matano in South Sulawesi is the deepest lake in Southeast Asia (590m), while Lake Toba is the largest volcanic lake!"
     },
     {
-      id: 'quiz-rekor-5',
-      question: 'Kereta api cepat komersial pertama di Indonesia dan Asia Tenggara yang mampu melaju hingga 350 km/jam adalah?',
-      questionEn: 'What is the first commercial bullet train in Indonesia and Southeast Asia reaching 350 km/h?',
-      options: [
-        { text: 'Kereta Cepat Whoosh', correct: true },
-        { text: 'Kereta Uap Wisata', correct: false },
-        { text: 'Kereta Rel Listrik Komuter', correct: false }
+      "id": "quiz-rekor-5",
+      "question": "Hewan apakah yang dinobatkan sebagai makhluk hidup PALING BESAR di Bumi sepanjang sejarah, bahkan mengalahkan dinosaurus?",
+      "questionEn": "Which animal is crowned the LARGEST LIVING CREATURE in Earth history, surpassing even all dinosaurs?",
+      "options": [
+        {
+          "text": "Gajah Afrika Raksasa",
+          "correct": false
+        },
+        {
+          "text": "Paus Biru (Blue Whale)",
+          "correct": true
+        },
+        {
+          "text": "Hiu Paus Pemakan Plankton",
+          "correct": false
+        }
       ],
-      explanation: 'Hebat! Kereta Cepat Whoosh mampu melesat 350 km/jam dan memangkas waktu tempuh Jakarta-Bandung menjadi hanya 45 menit!',
-      explanationEn: 'Awesome! Whoosh speeds at 350 km/h, cutting the journey between Jakarta and Bandung to just 45 minutes!'
+      "explanation": "Luar biasa! Paus Biru memiliki panjang hingga 30 meter dan berat 180 ton, menjadikannya hewan terbesar sepanjang masa di planet Bumi!",
+      "explanationEn": "Brilliant! The Blue Whale reaches 30 meters long and 180 tons, making it the largest creature ever on Earth!"
+    },
+    {
+      "id": "quiz-rekor-6",
+      "question": "Titik manakah di planet Bumi yang dinobatkan sebagai PALUNG LAUT TERDALAM hingga kedalaman hampir 11.000 meter?",
+      "questionEn": "Which trench on Earth is crowned the DEEPEST SEABED POINT, plunging nearly 11,000 meters deep?",
+      "options": [
+        {
+          "text": "Palung Mariana (Challenger Deep)",
+          "correct": true
+        },
+        {
+          "text": "Palung Selat Sunda",
+          "correct": false
+        },
+        {
+          "text": "Palung Laut Jawa",
+          "correct": false
+        }
+      ],
+      "explanation": "Benar sekali! Palung Mariana di Samudra Pasifik sedalam 10.994 meter. Andaikan Gunung Everest dicelupkan ke dasarnya, puncaknya masih tertutup air 2 km!",
+      "explanationEn": "Correct! The Mariana Trench is 10,994m deep. Even Mount Everest would be submerged under 2 kilometers of water!"
+    },
+    {
+      "id": "quiz-rekor-7",
+      "question": "Kereta api cepat komersial pertama di Indonesia dan Asia Tenggara yang mampu melaju hingga 350 km/jam adalah?",
+      "questionEn": "What is the first commercial bullet train in Indonesia and Southeast Asia reaching 350 km/h?",
+      "options": [
+        {
+          "text": "Kereta Cepat Whoosh",
+          "correct": true
+        },
+        {
+          "text": "Kereta Uap Wisata",
+          "correct": false
+        },
+        {
+          "text": "Kereta Rel Listrik Komuter",
+          "correct": false
+        }
+      ],
+      "explanation": "Hebat! Kereta Cepat Whoosh mampu melesat 350 km/jam dan memangkas waktu tempuh Jakarta-Bandung menjadi hanya 45 menit!",
+      "explanationEn": "Awesome! Whoosh speeds at 350 km/h, cutting the journey between Jakarta and Bandung to just 45 minutes!"
+    },
+    {
+      "id": "quiz-rekor-8",
+      "question": "Gedung pencakar langit manakah yang memegang rekor sebagai STRUKTUR / BANGUNAN TERTINGGI di dunia dengan tinggi 828 meter?",
+      "questionEn": "Which skyscraper holds the world record as the TALLEST BUILDING on Earth at 828 meters high?",
+      "options": [
+        {
+          "text": "Burj Khalifa (Dubai)",
+          "correct": true
+        },
+        {
+          "text": "Menara Eiffel (Paris)",
+          "correct": false
+        },
+        {
+          "text": "Monas (Jakarta)",
+          "correct": false
+        }
+      ],
+      "explanation": "Tepat sekali! Burj Khalifa di Dubai tingginya 828 meter (163 lantai), setara 6 kali tinggi Monas Jakarta!",
+      "explanationEn": "Correct! Burj Khalifa in Dubai stands 828 meters tall (163 floors), equal to 6 Monas towers stacked together!"
+    },
+    {
+      "id": "quiz-rekor-9",
+      "question": "Hewan darat apakah yang dinobatkan sebagai HEWAN TERCEPAT di dunia yang bisa melesat hingga 120 km/jam?",
+      "questionEn": "Which land mammal is crowned the FASTEST SPRINTER on Earth reaching up to 120 km/h?",
+      "options": [
+        {
+          "text": "Cheetah",
+          "correct": true
+        },
+        {
+          "text": "Kuda Balap",
+          "correct": false
+        },
+        {
+          "text": "Kelinci Padang Rumput",
+          "correct": false
+        }
+      ],
+      "explanation": "Luar biasa! Cheetah bisa melesat dari 0 ke 100 km/jam hanya dalam 3 detik berkat tulang belakang lentur seperti pegas!",
+      "explanationEn": "Awesome! A cheetah accelerates from 0 to 100 km/h in just 3 seconds thanks to its flexible spine!"
+    },
+    {
+      "id": "quiz-rekor-10",
+      "question": "Bunga tunggal raksasa asli Indonesia yang dinobatkan sebagai BUNGA TERBESAR di dunia dengan diameter mencapai 110 cm adalah?",
+      "questionEn": "What giant flower native to Indonesia holds the world record as the LARGEST INDIVIDUAL FLOWER at 110 cm wide?",
+      "options": [
+        {
+          "text": "Rafflesia arnoldii",
+          "correct": true
+        },
+        {
+          "text": "Bunga Melati Putih",
+          "correct": false
+        },
+        {
+          "text": "Bunga Mawar Merah",
+          "correct": false
+        }
+      ],
+      "explanation": "Benar sekali! Rafflesia arnoldii adalah bunga tunggal terbesar di dunia yang mekar di hutan hujan Sumatera dan Kalimantan!",
+      "explanationEn": "Correct! Rafflesia arnoldii is the largest single flower on the planet, blooming in Indonesian rainforests!"
     }
   ];
   
@@ -21961,6 +22527,7 @@
       this.activeTab = 'encyclopedia'; // 'encyclopedia' | 'comparison' | 'quiz'
       this.activeScope = 'all';        // 'all' | 'indonesia' | 'world'
       this.activeCategory = 'all';     // 'all' | 'teknologi' | 'alam' | 'hewan' | 'bangunan'
+      this.activeSubCategory = 'all';  // 'all' | 'pesawat' | 'mobil' | 'kapal' | 'antariksa' | 'alam' | 'hewan' | 'tumbuhan' | 'bangunan'
       this.searchQuery = '';
       this.scaleType = 'speed';        // 'speed' | 'height'
       this.quizAnswers = {};
@@ -21976,6 +22543,7 @@
       let filteredRecords = RECORDS_DATA.filter(item => {
         if (this.activeScope !== 'all' && item.scope !== this.activeScope) return false;
         if (this.activeCategory !== 'all' && item.category !== this.activeCategory) return false;
+        if (this.activeSubCategory !== 'all' && item.subCategory !== this.activeSubCategory) return false;
         if (this.searchQuery.trim()) {
           const q = this.searchQuery.toLowerCase().trim();
           const title = (isEn ? item.titleEn : item.title).toLowerCase();
@@ -22077,26 +22645,33 @@
             </div>
           </div>
   
-          <!-- Filter Kategori Chips -->
+          <!-- Filter Sub-Kategori Chips (Pesawat, Mobil, Kapal, Antariksa, Alam, Hewan, Tumbuhan, Bangunan) -->
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);">
             <span style="font-size:13px; font-weight:800; color:var(--muted); margin-right:4px;">
-              ${isEn ? 'Category:' : 'Kategori:'}
+              ${isEn ? 'Sub-Category:' : 'Sub-Kategori:'}
             </span>
-            <button class="btn ${this.activeCategory === 'all' ? 'primary' : ''} btn-cat-filter" data-cat="all" type="button" aria-label="Semua kategori" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-              Semua
-            </button>
-            <button class="btn ${this.activeCategory === 'teknologi' ? 'primary' : ''} btn-cat-filter" data-cat="teknologi" type="button" aria-label="Kategori Kendaraan & Mesin" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-              🚀 ${isEn ? 'Vehicles & Machines' : 'Kendaraan & Mesin'}
-            </button>
-            <button class="btn ${this.activeCategory === 'alam' ? 'primary' : ''} btn-cat-filter" data-cat="alam" type="button" aria-label="Kategori Alam & Geografi" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-              ⛰️ ${isEn ? 'Nature & Geography' : 'Alam & Geografi'}
-            </button>
-            <button class="btn ${this.activeCategory === 'hewan' ? 'primary' : ''} btn-cat-filter" data-cat="hewan" type="button" aria-label="Kategori Hewan & Hayati" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-              🐾 ${isEn ? 'Animals & Living Beings' : 'Hewan & Hayati'}
-            </button>
-            <button class="btn ${this.activeCategory === 'bangunan' ? 'primary' : ''} btn-cat-filter" data-cat="bangunan" type="button" aria-label="Kategori Bangunan & Arsitektur" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:8px;">
-              🏛️ ${isEn ? 'Architecture & Wonders' : 'Bangunan & Arsitektur'}
-            </button>
+            ${SUB_CATEGORIES.map(sub => {
+              const isSubActive = this.activeSubCategory === sub.id;
+              const count = sub.id === 'all'
+                ? RECORDS_DATA.filter(r => this.activeScope === 'all' || r.scope === this.activeScope).length
+                : RECORDS_DATA.filter(r => (this.activeScope === 'all' || r.scope === this.activeScope) && r.subCategory === sub.id).length;
+              const label = isEn ? sub.nameEn : sub.name;
+              return `
+                <button 
+                  class="btn ${isSubActive ? 'primary' : ''} btn-subcat-filter" 
+                  data-subcat="${sub.id}" 
+                  type="button" 
+                  aria-label="Filter subkategori ${label}" 
+                  style="font-size:12px; font-weight:750; padding:6px 14px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; ${isSubActive ? 'box-shadow:0 3px 10px rgba(13,148,136,0.3);' : ''}"
+                >
+                  <span>${sub.icon}</span>
+                  <span>${label}</span>
+                  <span style="font-size:10px; font-weight:800; opacity:0.85; background:${isSubActive ? 'rgba(255,255,255,0.25)' : 'var(--line)'}; padding:1px 6px; border-radius:999px;">
+                    ${count}
+                  </span>
+                </button>
+              `;
+            }).join('')}
           </div>
         </div>
   
@@ -22211,30 +22786,36 @@
       // Data komparasi kecepatan (km/jam)
       const speedItems = [
         { name: 'Jalan Santai Anak', stat: '4 km/jam', pct: 2, icon: '🚶' },
-        { name: 'Sepeda Ceria', stat: '15 km/jam', pct: 5, icon: '🚲' },
-        { name: 'Mobil di Jalan Tol', stat: '100 km/jam', pct: 15, icon: '🚗' },
-        { name: 'Cheetah Berlari Kencang', stat: '120 km/jam', pct: 18, icon: '🐆', badge: 'HEWAN DARAT TERCEPAT' },
-        { name: 'Kereta Cepat Whoosh Indonesia', stat: '350 km/jam', pct: 40, icon: '🚅', badge: 'KERETA TERCEPAT SE-ASEAN' },
-        { name: 'Elang Peregrine Falcon Menukik', stat: '389 km/jam', pct: 45, icon: '🦅', badge: 'HEWAN TERCEPAT DI UDARA' },
-        { name: 'Koenigsegg Jesko / Bugatti Bolide', stat: '508 km/jam', pct: 58, icon: '🏎️', badge: 'MOBIL TERCEPAT DI DUNIA' },
-        { name: 'Pesawat Jet Penumpang', stat: '900 km/jam', pct: 72, icon: '✈️' },
-        { name: 'Pesawat Supersonik SR-71 Blackbird', stat: '3.529 km/jam (Mach 3.3)', pct: 100, icon: '🚀', badge: 'PESAWAT JET TERCEPAT' }
+        { name: 'Sepeda Ceria', stat: '15 km/jam', pct: 4, icon: '🚲' },
+        { name: 'Mobil di Jalan Tol', stat: '100 km/jam', pct: 12, icon: '🚗' },
+        { name: 'Cheetah Berlari Kencang', stat: '120 km/jam', pct: 15, icon: '🐆', badge: 'HEWAN DARAT TERCEPAT' },
+        { name: 'Kereta Cepat Whoosh Indonesia', stat: '350 km/jam', pct: 26, icon: '🚅', badge: 'KERETA TERCEPAT SE-ASEAN' },
+        { name: 'Elang Peregrine Falcon Menukik', stat: '389 km/jam', pct: 30, icon: '🦅', badge: 'HEWAN TERCEPAT DI UDARA' },
+        { name: 'Koenigsegg Jesko / Bugatti Bolide', stat: '508 km/jam', pct: 38, icon: '🏎️', badge: 'MOBIL TERCEPAT DI DUNIA' },
+        { name: 'Kereta Maglev L0 Series Jepang', stat: '603 km/jam', pct: 45, icon: '🚝', badge: 'KERETA MAGLEV TERCEPAT' },
+        { name: 'Pesawat Jet Penumpang Komersial', stat: '900 km/jam', pct: 55, icon: '✈️' },
+        { name: 'Pesawat Supersonik Concorde', stat: '2.179 km/jam (Mach 2.04)', pct: 70, icon: '🛩️', badge: 'JET PENUMPANG SUPERSONIK' },
+        { name: 'Pesawat Jet SR-71 Blackbird', stat: '3.529 km/jam (Mach 3.3)', pct: 82, icon: '🚀', badge: 'JET TERCEPAT BERAWAK' },
+        { name: 'Pesawat Hipersonik Roket X-15', stat: '7.274 km/jam (Mach 6.7)', pct: 94, icon: '⚡', badge: 'REKOR KECEPATAN DIRGANTARA' },
+        { name: 'Stasiun Luar Angkasa ISS Mengorbit', stat: '27.600 km/jam', pct: 100, icon: '🛰️', badge: 'ORBIT ANTARIKSA BUMI' }
       ];
   
       // Data komparasi ketinggian & kedalaman (meter)
       const heightItems = [
         { name: 'Pohon Kelapa Pantai', stat: '15 meter', pct: 2, icon: '🌴' },
-        { name: 'Pohon Raksasa Hyperion (California)', stat: '116 meter', pct: 6, icon: '🌲', badge: 'POHON TERTINGGI' },
-        { name: 'Patung GWK (Garuda Wisnu Kencana) Bali', stat: '121 meter', pct: 7, icon: '🦅' },
-        { name: 'Monas (Monumen Nasional) Jakarta', stat: '132 meter', pct: 8, icon: '🗼' },
-        { name: 'Menara Eiffel Paris', stat: '330 meter', pct: 14, icon: '🗼' },
-        { name: 'Gua Vertikal Hatusaka Maluku', stat: '388 meter (ke bawah)', pct: 16, icon: '🕳️', badge: 'GUA TERDALAM INDONESIA' },
-        { name: 'Danau Matano Sulawesi Selatan', stat: '590 meter (ke bawah)', pct: 22, icon: '🌊', badge: 'DANAU TERDALAM INDONESIA' },
-        { name: 'Gedung Burj Khalifa Dubai', stat: '828 meter', pct: 30, icon: '🏢', badge: 'GEDUNG TERTINGGI DI DUNIA' },
-        { name: 'Puncak Jaya (Carstensz) Papua', stat: '4.884 meter', pct: 60, icon: '🏔️', badge: 'GUNUNG TERTINGGI INDONESIA' },
-        { name: 'Laut Banda (Palung Weber) Maluku', stat: '7.440 meter (ke bawah)', pct: 78, icon: '🌊', badge: 'LAUT TERDALAM INDONESIA' },
-        { name: 'Gunung Everest Himalaya', stat: '8.848 meter', pct: 88, icon: '🏔️', badge: 'GUNUNG TERTINGGI DI DUNIA' },
-        { name: 'Palung Mariana (Challenger Deep)', stat: '10.994 meter (ke bawah)', pct: 100, icon: '🌊', badge: 'PALUNG TERDALAM DI BUMI' }
+        { name: 'Pohon Raksasa Hyperion (California)', stat: '116 meter', pct: 5, icon: '🌲', badge: 'POHON TERTINGGI' },
+        { name: 'Patung GWK (Garuda Wisnu Kencana) Bali', stat: '121 meter', pct: 6, icon: '🦅' },
+        { name: 'Monas (Monumen Nasional) Jakarta', stat: '132 meter', pct: 7, icon: '🗼' },
+        { name: 'Menara Eiffel Paris', stat: '330 meter', pct: 12, icon: '🗼' },
+        { name: 'Gua Vertikal Hatusaka Maluku', stat: '388 meter (ke bawah)', pct: 14, icon: '🕳️', badge: 'GUA TERDALAM INDONESIA' },
+        { name: 'Danau Matano Sulawesi Selatan', stat: '590 meter (ke bawah)', pct: 18, icon: '🌊', badge: 'DANAU TERDALAM INDONESIA' },
+        { name: 'Gedung Burj Khalifa Dubai', stat: '828 meter', pct: 24, icon: '🏢', badge: 'GEDUNG TERTINGGI DI DUNIA' },
+        { name: 'Air Terjun Angel Falls Venezuela', stat: '979 meter', pct: 28, icon: '🏞️', badge: 'AIR TERJUN TERTINGGI' },
+        { name: 'Puncak Jaya (Carstensz) Papua', stat: '4.884 meter', pct: 50, icon: '🏔️', badge: 'GUNUNG TERTINGGI INDONESIA' },
+        { name: 'Laut Banda (Palung Weber) Maluku', stat: '7.440 meter (ke bawah)', pct: 66, icon: '🌊', badge: 'LAUT TERDALAM INDONESIA' },
+        { name: 'Gunung Everest Himalaya', stat: '8.848 meter', pct: 75, icon: '🏔️', badge: 'GUNUNG TERTINGGI DI DUNIA' },
+        { name: 'Palung Mariana (Challenger Deep)', stat: '10.994 meter (ke bawah)', pct: 88, icon: '🌊', badge: 'PALUNG TERDALAM DI BUMI' },
+        { name: 'Gunung Olympus Mons di Planet Mars', stat: '21.900 meter (hampir 22 km)', pct: 100, icon: '🪐', badge: 'GUNUNG TERTINGGI TATA SURYA' }
       ];
   
       const currentItems = isSpeed ? speedItems : heightItems;
@@ -22312,8 +22893,8 @@
               </h2>
               <p style="margin:0; font-size:13px; color:var(--muted);">
                 ${isEn 
-                  ? 'Answer these 5 exciting questions correctly to earn Gold Stars for your trophy collection!' 
-                  : 'Jawab 5 pertanyaan seru ini dengan tepat untuk mengumpulkan Bintang Emas ke koleksimu!'}
+                  ? `Answer these ${RECORD_QUIZZES.length} exciting questions correctly to earn Gold Stars for your trophy collection!` 
+                  : `Jawab ${RECORD_QUIZZES.length} pertanyaan seru ini dengan tepat untuk mengumpulkan Bintang Emas ke koleksimu!`}
               </p>
             </div>
             <div style="font-size:14px; font-weight:800; color:var(--teal); background:var(--teal-soft); padding:6px 14px; border-radius:999px; border:1px solid var(--teal);">
@@ -22406,6 +22987,16 @@
         });
       });
   
+      // 2b. Sub-Category Filter (Pesawat, Mobil, Kapal, Antariksa, dll.)
+      const subcatBtns = this.container.querySelectorAll('.btn-subcat-filter');
+      subcatBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          AudioFx.playTap();
+          this.activeSubCategory = btn.getAttribute('data-subcat');
+          this.render();
+        });
+      });
+  
       // 3. Category Filter
       const catBtns = this.container.querySelectorAll('.btn-cat-filter');
       catBtns.forEach(btn => {
@@ -22421,13 +23012,12 @@
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {
           this.searchQuery = e.target.value;
-          const grid = this.container.querySelector('div[style*="grid-template-columns:repeat(auto-fill, minmax(320px"]');
-          // Re-render whole tab for instant filter updates
           const state = appState.get();
           const isEn = (state.lang || 'id') === 'en';
           let filtered = RECORDS_DATA.filter(item => {
             if (this.activeScope !== 'all' && item.scope !== this.activeScope) return false;
             if (this.activeCategory !== 'all' && item.category !== this.activeCategory) return false;
+            if (this.activeSubCategory !== 'all' && item.subCategory !== this.activeSubCategory) return false;
             if (this.searchQuery.trim()) {
               const q = this.searchQuery.toLowerCase().trim();
               const title = (isEn ? item.titleEn : item.title).toLowerCase();
@@ -22440,8 +23030,18 @@
           });
           const wrap = this.container.querySelector('.records-grid-wrap') || this.container.querySelector('div[style*="grid-template-columns"]');
           if (wrap) {
-            wrap.innerHTML = filtered.map(r => this.renderRecordCard(r, isEn)).join('');
-            this.attachAudioEvents();
+            if (filtered.length > 0) {
+              wrap.innerHTML = filtered.map(r => this.renderRecordCard(r, isEn)).join('');
+              this.attachAudioEvents();
+            } else {
+              wrap.innerHTML = `
+                <div class="quiz-box" style="grid-column: 1 / -1; text-align:center; padding:40px 20px; background:var(--card);">
+                  <div style="font-size:42px; margin-bottom:10px;">🔍</div>
+                  <h3 style="font-size:18px; font-weight:800; margin:0 0 6px;">${isEn ? 'No records found' : 'Tidak ada rekor yang sesuai kata kunci'}</h3>
+                  <p style="font-size:13px; color:var(--muted); margin:0;">${isEn ? 'Try adjusting your search query or changing the filter above.' : 'Coba ubah kata kunci atau ganti pilihan filter di atas.'}</p>
+                </div>
+              `;
+            }
           }
         });
       }
