@@ -82,8 +82,15 @@ img{max-width:100%;display:block}
   border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
   font-family:var(--f-display);font-size:40px;color:var(--gold-lt);letter-spacing:.02em;
   overflow:hidden;position:relative;
+  box-shadow:0 4px 20px rgba(201,168,76,.28),0 0 0 1px rgba(201,168,76,.35);
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease;
 }
-.sb-photo img{width:100%;height:100%;object-fit:cover}
+.sb-photo:hover{
+  transform:scale(1.03);
+  box-shadow:0 6px 28px rgba(201,168,76,.5),0 0 0 2px var(--gold);
+}
+.sb-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.sb-photo:hover img{transform:scale(1.04)}
 .sb-name{
   font-family:var(--f-display);font-size:22px;font-weight:500;line-height:1.28;
   text-align:center;color:#fff;letter-spacing:.01em;margin-bottom:7px;
@@ -119,13 +126,27 @@ img{max-width:100%;display:block}
 
 .sb-dl{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
 .sb-dl a{
-  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
-  border:1px solid rgba(201,168,76,.42);color:var(--gold-lt);
-  padding:8px 10px;text-align:center;transition:background .2s,color .2s;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid rgba(201,168,76,.35);color:var(--gold-lt);
+  padding:8px 10px;text-align:center;transition:all .2s;border-radius:2px;
 }
 .sb-dl a:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.sb-dl a.sb-btn-lux{background:rgba(201,168,76,.12);border-color:var(--gold);color:var(--gold-lt);font-weight:600}
+.sb-dl a.sb-btn-lux:hover{background:var(--gold);color:var(--navy-deep)}
+.sb-dl a.sb-btn-ats{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.18);color:#C8D6E5}
+.sb-dl a.sb-btn-ats:hover{background:#C8D6E5;color:var(--navy-deep);border-color:#C8D6E5}
 .sb-dl a.sb-alt{border:0;padding:2px 0;font-size:10.5px;letter-spacing:.06em;color:#8EA1B7;text-decoration:underline;text-underline-offset:3px}
 .sb-dl a.sb-alt:hover{background:transparent;color:var(--gold-lt)}
+
+.sb-qr-card{
+  display:flex;align-items:center;gap:11px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  padding:9px;margin-bottom:18px;border-radius:2px;
+}
+.sb-qr-img{width:64px;height:64px;background:#fff;padding:3px;border-radius:2px;flex-shrink:0}
+.sb-qr-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sb-qr-title{font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.05em;color:var(--gold-lt);text-transform:uppercase}
+.sb-qr-sub{font-size:11px;color:#8EA1B7;line-height:1.3}
 
 .sb-links{display:flex;flex-direction:column;gap:6px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
 .sb-links a{font-size:13px;color:#8C9EB3;display:flex;gap:8px;align-items:center;transition:color .18s;word-break:break-all}
@@ -453,15 +474,26 @@ img{max-width:100%;display:block}
     </nav>
 
     <div class="sb-dl">
-      <a href="javascript:void(0)" onclick="window.print()" data-en="Print / Save PDF" data-id="Cetak / Simpan PDF">Print / Save PDF</a>
+      <a href="CV-I-Gede-Agus-Wibawa-Luxury.pdf" download="CV - I Gede Agus Wibawa (Executive 4-Page).pdf" class="sb-btn-lux" data-en="📥 Executive PDF (4 Pages)" data-id="📥 Executive PDF (4 Halaman)">📥 Executive PDF (4 Pages)</a>
+      <a href="CV-I-Gede-Agus-Wibawa-ATS.pdf" download="CV I Gede Agus Wibawa (ATS).pdf" class="sb-btn-ats" data-en="📄 ATS-Friendly PDF" data-id="📄 ATS-Friendly PDF">📄 ATS-Friendly PDF</a>
+      <a href="javascript:void(0)" onclick="window.print()" data-en="🖨️ Print / Save PDF" data-id="🖨️ Cetak / Simpan PDF">🖨️ Print / Save PDF</a>
       <a href="https://anabhidev.com" target="_blank" rel="noopener" data-en="Visit portfolio" data-id="Lihat portofolio">Visit portfolio</a>
       <a class="sb-alt" href="https://roadmap.anabhidev.com/" target="_blank" rel="noopener" data-en="Roadmap (85 Projects) ↗" data-id="Roadmap (85 Proyek) ↗">Roadmap (85 Projects) ↗</a>
+    </div>
+
+    <div class="sb-qr-card">
+      <img src="qr-cv.png" alt="Scan QR for Mobile CV" class="sb-qr-img">
+      <div class="sb-qr-txt">
+        <span class="sb-qr-title" data-en="Mobile &amp; Paper Sync" data-id="Sinkronisasi Mobile &amp; Kertas">Mobile &amp; Paper Sync</span>
+        <span class="sb-qr-sub" data-en="Scan to view on smartphone" data-id="Pindai untuk buka di ponsel">Scan to view on smartphone</span>
+      </div>
     </div>
 
     <div class="sb-links">
       <a href="mailto:wibawa@anabhidev.com"><span class="ic">✉</span>wibawa@anabhidev.com</a>
       <a href="https://wa.me/6282267672828" target="_blank" rel="noopener"><span class="ic">✆</span>+62 822 6767 2828</a>
       <a href="https://linkedin.com/in/i-gede-agus-wibawa" target="_blank" rel="noopener"><span class="ic">in</span>linkedin.com/in/i-gede-agus-wibawa</a>
+      <a href="https://github.com/anabhidev" target="_blank" rel="noopener"><span class="ic">gh</span>github.com/anabhidev</a>
       <a href="https://anabhidev.com" target="_blank" rel="noopener"><span class="ic">◆</span>anabhidev.com</a>
       <span style="font-size:13px;color:#8EA1B7;display:flex;gap:8px"><span class="ic">⌖</span>Denpasar, Bali · GMT+8</span>
     </div>
@@ -477,7 +509,7 @@ img{max-width:100%;display:block}
     <div class="eyebrow" data-en="Denpasar, Bali · Available worldwide, remote" data-id="Denpasar, Bali · Tersedia global, remote">Denpasar, Bali · Available worldwide, remote</div>
     <h1 data-en="I build AI tools for the operations I<em> spent 11 years running.</em>" data-id="Saya membangun AI untuk operasional yang<em> 11 tahun saya jalankan.</em>">I build AI tools for the operations I<em> spent 11 years running.</em></h1>
     <p class="lede" data-en="Most AI developers have never run a hotel IT department. Most hospitality IT managers can't ship a production app. I do both — <strong>50+ applications deployed</strong>, from an LMS serving 110+ staff to AI assistants built on Gemini and Claude." data-id="Kebanyakan AI developer belum pernah memimpin IT hotel. Kebanyakan IT manager hospitality tidak bisa merilis aplikasi produksi. Saya melakukan keduanya — <strong>50+ aplikasi ter-deploy</strong>, dari LMS untuk 110+ staf sampai asisten AI berbasis Gemini dan Claude.">Most AI developers have never run a hotel IT department. Most hospitality IT managers can't ship a production app. I do both — <strong>50+ applications deployed</strong>, from an LMS serving 110+ staff to AI assistants built on Gemini and Claude.</p>
-    <div class="meta" data-en="IT Manager @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung" data-id="IT Manager @ Miss Fish Bali  ·  Pendiri, Anabhi Dev  ·  M.T. Institut Teknologi Bandung">IT Manager @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung</div>
+    <div class="meta" data-en="IT Manager &amp; Apps Developer @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung" data-id="IT Manager &amp; Apps Developer @ Miss Fish Bali  ·  Pendiri, Anabhi Dev  ·  M.T. Institut Teknologi Bandung">IT Manager &amp; Apps Developer @ Miss Fish Bali  ·  Founder, Anabhi Dev  ·  M.T. Institut Teknologi Bandung</div>
     <div class="cta-row">
       <a href="#featured" class="btn btn-fill" data-en="See selected work" data-id="Lihat karya pilihan">See selected work</a>
       <a href="#contact" class="btn btn-out" data-en="Start a conversation" data-id="Mulai percakapan">Start a conversation</a>
@@ -496,7 +528,7 @@ img{max-width:100%;display:block}
       <p data-en="I've spent eleven years as the person a hotel calls when the PMS stops talking to the POS at 11pm on New Year's Eve. Pre-openings, system migrations, network builds, vendor negotiations — six properties across Bali, including a 76-villa resort I brought online from bare walls." data-id="Sebelas tahun saya jadi orang yang dihubungi hotel ketika PMS berhenti berkomunikasi dengan POS jam 11 malam di malam Tahun Baru. Pre-opening, migrasi sistem, pembangunan jaringan, negosiasi vendor — enam properti di Bali, termasuk resort 76 vila yang saya bangun sistemnya dari nol.">I've spent eleven years as the person a hotel calls when the PMS stops talking to the POS at 11pm on New Year's Eve. Pre-openings, system migrations, network builds, vendor negotiations — six properties across Bali, including a 76-villa resort I brought online from bare walls.</p>
       <p data-en="In 2025 I started building the software instead of just buying it. What began as small automations became <strong>Anabhi Dev</strong> — a working catalogue of 85 projects, 50+ of them deployed and running. A learning management system with an AI reporting layer. A knowledge-based chatbot for restaurant operations. Dashboards that turn IT noise into a morning summary someone actually reads." data-id="Di 2025 saya mulai membangun perangkat lunaknya sendiri, bukan sekadar membelinya. Yang berawal dari otomasi kecil berkembang jadi <strong>Anabhi Dev</strong> — katalog kerja berisi 85 proyek, 50+ di antaranya sudah ter-deploy dan berjalan. Learning management system dengan lapisan pelaporan AI. Chatbot berbasis pengetahuan untuk operasional restoran. Dashboard yang mengubah kebisingan IT jadi ringkasan pagi yang benar-benar dibaca orang.">In 2025 I started building the software instead of just buying it. What began as small automations became <strong>Anabhi Dev</strong> — a working catalogue of 85 projects, 50+ of them deployed and running. A learning management system with an AI reporting layer. A knowledge-based chatbot for restaurant operations. Dashboards that turn IT noise into a morning summary someone actually reads.</p>
       <p data-en="That combination is the whole point. I know why a training module fails on the floor, because I've watched it fail. I know what a GM will actually open on their phone. Domain knowledge is the hard part; the code is how I express it." data-id="Kombinasi itulah intinya. Saya tahu kenapa sebuah modul training gagal di lapangan, karena saya menyaksikannya gagal. Saya tahu apa yang benar-benar dibuka GM di ponselnya. Pemahaman domain adalah bagian tersulit; kode adalah cara saya mengekspresikannya.">That combination is the whole point. I know why a training module fails on the floor, because I've watched it fail. I know what a GM will actually open on their phone. Domain knowledge is the hard part; the code is how I express it.</p>
-      <p data-en="Currently IT Manager at Miss Fish Bali, and open to remote roles and freelance projects anywhere." data-id="Saat ini IT Manager di Miss Fish Bali, dan terbuka untuk peran remote serta proyek freelance di mana saja.">Currently IT Manager at Miss Fish Bali, and open to remote roles and freelance projects anywhere.</p>
+      <p data-en="Currently IT Manager &amp; Apps Developer at Miss Fish Bali, and open to remote roles and freelance projects anywhere." data-id="Saat ini IT Manager &amp; Apps Developer di Miss Fish Bali, dan terbuka untuk peran remote serta proyek freelance di mana saja.">Currently IT Manager &amp; Apps Developer at Miss Fish Bali, and open to remote roles and freelance projects anywhere.</p>
     </div>
   </section>
 
@@ -2002,9 +2034,9 @@ const EXPERIENCE = [
   { co:"Anabhi Dev", role:{en:"Founder & Lead Developer",id:"Founder & Lead Developer"}, date:{en:"May 2026 — Present",id:"Mei 2026 — Sekarang"}, cur:true,
     desc:{en:"Founded and operate a digital studio building AI-powered applications for hospitality and consumer use — including Career Suite, BaliEats AI, NutriBot, and an interactive 3D web experience. Portfolio of 85 projects, 50+ deployed. Also serve as technology consultant with Jagadita Hospitality Consulting (hospitality strategy and operations) and Mahadaya Partners (public policy and legal advisory), covering IT systems integration and implementation strategy.",
           id:"Mendirikan dan menjalankan studio digital yang membangun aplikasi berbasis AI untuk hospitality dan konsumen — termasuk Career Suite, BaliEats AI, NutriBot, dan pengalaman web 3D interaktif. Portofolio 85 proyek, 50+ ter-deploy. Juga menjadi konsultan teknologi untuk Jagadita Hospitality Consulting (strategi dan operasional hospitality) dan Mahadaya Partners (kebijakan publik dan advisory hukum), mencakup integrasi sistem IT dan strategi implementasi."} },
-  { co:"Miss Fish Bali", role:{en:"Information Technology Manager",id:"Information Technology Manager"}, date:{en:"Nov 2025 — Present",id:"Nov 2025 — Sekarang"}, cur:true,
-    desc:{en:"All IT operations for a high-volume F&B and hospitality property — 24/7 reliability across POS, network and security. Directed a full network build for a new office building. Architecting and shipping the internal automation and AI tools listed above.",
-          id:"Seluruh operasional IT untuk properti F&B dan hospitality bervolume tinggi — keandalan 24/7 di POS, jaringan, dan keamanan. Memimpin pembangunan jaringan penuh untuk gedung kantor baru. Merancang dan merilis perkakas otomasi serta AI internal yang tercantum di atas."} },
+  { co:"Miss Fish Bali", role:{en:"Information Technology Manager & Apps Developer",id:"Information Technology Manager & Apps Developer"}, date:{en:"Nov 2025 — Present",id:"Nov 2025 — Sekarang"}, cur:true,
+    desc:{en:"All IT operations & in-house application engineering for a high-volume F&B and hospitality property — 24/7 reliability across POS, network and security. In-house Apps Developer building 30+ internal hospitality applications & automations across employee scheduling, LMS, emergency dispatch PWA, GM dashboards, and operational bots. Directed a full network build for a new office building.",
+          id:"Seluruh operasional IT & rekayasa aplikasi internal untuk properti F&B dan hospitality bervolume tinggi — keandalan 24/7 di POS, jaringan, dan keamanan. In-house Apps Developer yang membangun 30+ aplikasi & otomasi hospitality internal mencakup penjadwalan staf, LMS, PWA panggilan darurat, dashboard GM, dan bot operasional. Memimpin pembangunan jaringan penuh untuk gedung kantor baru."} },
   { co:"Kappa Senses Ubud", role:{en:"IT & Communication Manager — Pre-Opening",id:"IT & Communication Manager — Pre-Opening"}, date:{en:"Sep 2022 — Nov 2025",id:"Sep 2022 — Nov 2025"},
     desc:{en:"Delivered the full IT pre-opening for a 76-villa resort from bare walls — fiber backbone, segmented VLANs, IPTV across every villa, captive portal guest Wi-Fi, PABX and CCTV. On time and within budget.",
           id:"Menyelesaikan seluruh pre-opening IT untuk resort 76 vila dari nol — backbone fiber, VLAN tersegmentasi, IPTV di setiap vila, Wi-Fi tamu captive portal, PABX, dan CCTV. Tepat waktu dan sesuai anggaran."} },
