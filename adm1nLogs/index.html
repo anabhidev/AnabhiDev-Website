@@ -3,16 +3,19 @@
      AnabhiDev-WEB — Executive Visitor Intelligence & Analytics Platform
      HTML5 · CSS 3D Glassmorphism · Modular 10-Section Architecture · Chart.js
      Development · Anabhi Dev
-     Version   : 2.2.2
+     Version   : 2.2.3
      File      : adm1nLogs/index.html
      Status    : PRODUCTION LIVE
-     Effective : Rabu, 30 September 2026 pukul 21.00.00 WITA
-     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0 (Official Logo + All Reports + Fixed Sidebar Anchor)
+     Effective : Rabu, 30 September 2026 pukul 22.22.00 WITA
+     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0 (Dual-Lock App Shell & Stationary Sidebar)
      ================================================================ -->
 <html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Analytics Intelligence Platform — Anabhi Dev</title>
   
   <!-- Private Admin: Dilarang di-index search engine manapun -->
@@ -132,8 +135,9 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: var(--bg-canvas);
       color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: clip;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -276,11 +280,13 @@
       font-weight: 600;
     }
 
-    /* ── APP LAYOUT WITH COLLAPSIBLE SIDEBAR ─────────────────── */
+    /* ── APP LAYOUT WITH COLLAPSIBLE SIDEBAR (DUAL-LOCK APP SHELL) ── */
     .app-layout {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
+      height: 100dvh;
       width: 100%;
+      overflow: hidden;
     }
 
     /* ── 3D COLLAPSIBLE SIDEBAR (MASTER SOP v2.12 FIXED ANCHOR) ── */
@@ -294,9 +300,10 @@
       position: fixed;
       top: 0;
       left: 0;
+      bottom: 0;
       height: 100vh;
       height: 100dvh;
-      overflow-y: auto;
+      overflow: hidden;
       z-index: 1000;
       transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, left 0.3s ease;
       backdrop-filter: blur(20px);
@@ -313,6 +320,7 @@
       padding: 24px 16px 18px;
       text-align: center;
       border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
     }
 
     .logo-box {
@@ -460,6 +468,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .app-sidebar.collapsed .sidebar-footer-text {
@@ -474,6 +483,9 @@
       min-width: 0; /* Prevents overflow */
       margin-left: 260px;
       width: calc(100% - 260px);
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
       transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -483,8 +495,7 @@
     }
 
     .top-dock {
-      position: sticky;
-      top: 0;
+      flex-shrink: 0;
       z-index: 900;
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-glass);
@@ -652,6 +663,28 @@
       padding: clamp(16px, 2.5vw, 36px);
       width: 100%;
       flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .workspace-container::-webkit-scrollbar,
+    .sidebar-nav::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .workspace-container::-webkit-scrollbar-track,
+    .sidebar-nav::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .workspace-container::-webkit-scrollbar-thumb,
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: rgba(201, 169, 106, 0.28);
+      border-radius: 999px;
+    }
+    .workspace-container::-webkit-scrollbar-thumb:hover,
+    .sidebar-nav::-webkit-scrollbar-thumb:hover {
+      background: rgba(201, 169, 106, 0.55);
     }
 
     .analytics-section {
@@ -1273,7 +1306,7 @@
           <div class="dock-title-group">
             <div class="topbar-brand">
               <span class="hdr-title">AnabhiDev Visitor Intelligence</span>
-              <span class="badge-version">v2.2.2 ACTIVE</span>
+              <span class="badge-version">v2.2.3 ACTIVE</span>
             </div>
             <div class="dock-subgroup">
               <span class="badge-live-pulse"><span class="pulse-dot"></span> LIVE SSOT</span>
@@ -1767,6 +1800,14 @@
     });
 
     // ── MODULAR SECTION SWITCHER ─────────────────────────────
+    const workspaceContainer = document.querySelector('.workspace-container');
+    const topDockEl = document.querySelector('.top-dock');
+    if (topDockEl && workspaceContainer) {
+      topDockEl.addEventListener('wheel', (e) => {
+        workspaceContainer.scrollTop += e.deltaY;
+      }, { passive: true });
+    }
+
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
@@ -1778,6 +1819,7 @@
         dockTitle.textContent = item.querySelector('.nav-label').textContent;
 
         const container = document.querySelector('.workspace-container');
+        if (container) container.scrollTop = 0;
         if (activeSection === 'all') {
           container.classList.add('show-all');
           document.querySelectorAll('.analytics-section').forEach(sec => sec.classList.add('active'));
