@@ -3,11 +3,11 @@
      AnabhiDev-WEB — Executive Visitor Intelligence & Analytics Platform
      HTML5 · CSS 3D Glassmorphism · Modular 10-Section Architecture · Chart.js
      Development · Anabhi Dev
-     Version   : 2.1.0
+     Version   : 2.2.2
      File      : adm1nLogs.html
      Status    : PRODUCTION LIVE
-     Effective : Rabu, 30 September 2026 pukul 20.05.00 WITA
-     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0 (Official Logo + All Reports)
+     Effective : Rabu, 30 September 2026 pukul 21.00.00 WITA
+     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0 (Official Logo + All Reports + Fixed Sidebar Anchor)
      ================================================================ -->
 <html lang="id" data-theme="dark">
 <head>
@@ -133,7 +133,7 @@
       background-color: var(--bg-canvas);
       color: var(--text-primary);
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow-x: clip;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -283,7 +283,7 @@
       width: 100%;
     }
 
-    /* ── 3D COLLAPSIBLE SIDEBAR ──────────────────────────────── */
+    /* ── 3D COLLAPSIBLE SIDEBAR (MASTER SOP v2.12 FIXED ANCHOR) ── */
     .app-sidebar {
       width: 260px;
       background: var(--bg-sidebar);
@@ -291,11 +291,14 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
       height: 100vh;
+      height: 100dvh;
+      overflow-y: auto;
       z-index: 1000;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, left 0.3s ease;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
@@ -469,6 +472,14 @@
       display: flex;
       flex-direction: column;
       min-width: 0; /* Prevents overflow */
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .app-sidebar.collapsed ~ .app-main {
+      margin-left: 76px;
+      width: calc(100% - 76px);
     }
 
     .top-dock {
@@ -1029,9 +1040,23 @@
       .app-sidebar {
         position: fixed;
         left: -260px;
+        top: 0;
+        width: 260px;
+        height: 100vh;
+        height: 100dvh;
+        z-index: 9999;
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.7);
       }
       .app-sidebar.mobile-open {
         left: 0;
+      }
+      .app-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+      .app-sidebar.collapsed ~ .app-main {
+        margin-left: 0 !important;
+        width: 100% !important;
       }
       .btn-mobile-sidebar {
         display: block;
@@ -1248,7 +1273,7 @@
           <div class="dock-title-group">
             <div class="topbar-brand">
               <span class="hdr-title">AnabhiDev Visitor Intelligence</span>
-              <span class="badge-version">v2.2.1 ACTIVE</span>
+              <span class="badge-version">v2.2.2 ACTIVE</span>
             </div>
             <div class="dock-subgroup">
               <span class="badge-live-pulse"><span class="pulse-dot"></span> LIVE SSOT</span>
@@ -1729,13 +1754,24 @@
     btnSidebarToggle.addEventListener('click', () => {
       sidebar.classList.toggle('collapsed');
     });
-    btnMobileSidebar.addEventListener('click', () => {
+    btnMobileSidebar.addEventListener('click', (e) => {
+      e.stopPropagation();
       sidebar.classList.toggle('mobile-open');
+    });
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 && sidebar.classList.contains('mobile-open')) {
+        if (!sidebar.contains(e.target) && !btnMobileSidebar.contains(e.target)) {
+          sidebar.classList.remove('mobile-open');
+        }
+      }
     });
 
     // ── MODULAR SECTION SWITCHER ─────────────────────────────
     navItems.forEach(item => {
       item.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('mobile-open');
+        }
         navItems.forEach(n => n.classList.remove('active'));
         item.classList.add('active');
         activeSection = item.getAttribute('data-section');
