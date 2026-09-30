@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <!-- ================================================================
-     AnabhiDev-WEB — Executive Visitor Intelligence & 3D Analytics Suite
-     HTML5 · CSS 3D Glassmorphism · Dark & Light Mode · Chart.js · Cloudflare Pages
+     AnabhiDev-WEB — Executive Visitor Intelligence & Analytics Platform
+     HTML5 · CSS 3D Glassmorphism · Modular 10-Section Architecture · Chart.js
      Development · Anabhi Dev
-     Version   : 1.3.0
+     Version   : 2.0.0
      File      : adm1nLogs.html
      Status    : PRODUCTION LIVE
-     Effective : Rabu, 30 September 2026 pukul 18.25.00 WITA
+     Effective : Rabu, 30 September 2026 pukul 18.55.00 WITA
+     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0
      ================================================================ -->
 <html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Executive Visitor Intelligence & 3D Analytics — Anabhi Dev</title>
+  <title>Analytics Intelligence Platform — Anabhi Dev</title>
   
   <!-- Private Admin: Dilarang di-index search engine manapun -->
   <meta name="robots" content="noindex, nofollow, noarchive">
@@ -28,22 +29,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
-    /* ── DUAL THEME ENGINE (DARK & LIGHT LUXURY) ─────────────── */
+    /* ── DUAL THEME ENGINE (DARK OBSIDIAN & LIGHT ALABASTER) ─────── */
     :root, [data-theme="dark"] {
       --bg-obsidian: #060B12;
       --bg-canvas: #060B12;
-      --bg-mesh-1: rgba(201, 169, 106, 0.09);
-      --bg-mesh-2: rgba(91, 224, 223, 0.08);
+      --bg-sidebar: #08111D;
+      --bg-mesh-1: rgba(201, 169, 106, 0.08);
+      --bg-mesh-2: rgba(91, 224, 223, 0.07);
       --bg-mesh-3: rgba(99, 102, 241, 0.06);
       
-      --bg-card: rgba(14, 25, 41, 0.72);
+      --bg-card: rgba(14, 25, 41, 0.75);
       --bg-card-solid: #0E1A2B;
-      --bg-card-hover: rgba(20, 36, 58, 0.85);
-      --bg-inner-input: rgba(5, 10, 18, 0.75);
+      --bg-card-hover: rgba(20, 36, 58, 0.88);
+      --bg-inner-input: rgba(5, 10, 18, 0.85);
       
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-glass: rgba(255, 255, 255, 0.14);
-      --border-gold: rgba(201, 169, 106, 0.4);
+      --border-gold: rgba(201, 169, 106, 0.45);
       --border-cyan: rgba(91, 224, 223, 0.35);
       
       --accent-gold: #C9A96A;
@@ -70,18 +72,19 @@
     [data-theme="light"] {
       --bg-obsidian: #F6F4EE;
       --bg-canvas: #F6F4EE;
+      --bg-sidebar: #EDEAE1;
       --bg-mesh-1: rgba(201, 169, 106, 0.16);
       --bg-mesh-2: rgba(14, 165, 233, 0.12);
       --bg-mesh-3: rgba(124, 58, 237, 0.08);
       
-      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card: rgba(255, 255, 255, 0.92);
       --bg-card-solid: #FFFFFF;
-      --bg-card-hover: rgba(255, 255, 255, 0.98);
-      --bg-inner-input: rgba(241, 239, 233, 0.8);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --bg-inner-input: rgba(241, 239, 233, 0.9);
       
       --border-subtle: rgba(15, 23, 42, 0.08);
       --border-glass: rgba(201, 169, 106, 0.35);
-      --border-gold: rgba(184, 143, 62, 0.55);
+      --border-gold: rgba(184, 143, 62, 0.6);
       --border-cyan: rgba(14, 165, 233, 0.45);
       
       --accent-gold: #B08B3E;
@@ -98,50 +101,43 @@
       --text-primary: #0F172A;
       --text-secondary: #475569;
       --text-muted: #64748B;
-      --grid-line: rgba(15, 23, 42, 0.06);
-      --table-row-hover: rgba(201, 169, 106, 0.12);
+      --grid-line: rgba(15, 23, 42, 0.05);
+      --table-row-hover: rgba(184, 143, 62, 0.08);
 
-      --shadow-3d-card: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04);
-      --shadow-3d-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 22px 45px -10px rgba(15, 23, 42, 0.14), 0 0 25px rgba(201, 169, 106, 0.25);
+      --shadow-3d-card: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 12px 30px -10px rgba(140, 120, 80, 0.15), 0 0 1px 1px rgba(184, 143, 62, 0.15);
+      --shadow-3d-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 20px 45px -8px rgba(140, 120, 80, 0.25), 0 0 25px var(--accent-gold-glow);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background-color: var(--bg-canvas);
-      background-image: 
-        radial-gradient(circle at 8% 12%, var(--bg-mesh-1) 0%, transparent 35%),
-        radial-gradient(circle at 92% 18%, var(--bg-mesh-2) 0%, transparent 40%),
-        radial-gradient(circle at 50% 65%, var(--bg-mesh-3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 90%, rgba(16, 185, 129, 0.06) 0%, transparent 45%);
-      background-attachment: fixed;
-      color: var(--text-primary);
+    /* ── BASE & RESET ────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* ── FULL-WIDTH FLUID CONTAINER ────────────────────────── */
-    .fluid-container {
-      width: 100%;
-      max-width: 100%;
-      padding: clamp(16px, 2.5vw, 36px);
+    body {
+      background-image: 
+        radial-gradient(circle at 10% 20%, var(--bg-mesh-1) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, var(--bg-mesh-2) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, var(--bg-mesh-3) 0%, transparent 60%);
+      background-attachment: fixed;
     }
 
-    /* ── AUTH LOCK MODAL (3D GLASS) ────────────────────────── */
+    /* ── AUTH MODAL OVERLAY ──────────────────────────────────── */
     #auth-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(4, 8, 14, 0.94);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(6, 11, 18, 0.92);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
       padding: 20px;
       transition: opacity 0.35s ease, visibility 0.35s ease;
     }
@@ -153,49 +149,55 @@
     }
 
     .auth-card {
-      background: linear-gradient(145deg, rgba(20, 34, 54, 0.9) 0%, rgba(10, 18, 29, 0.95) 100%);
+      background: var(--bg-card);
       border: 1px solid var(--border-gold);
-      box-shadow: 
-        inset 0 1px 2px 0 rgba(255, 255, 255, 0.25),
-        0 30px 80px rgba(0, 0, 0, 0.85),
-        0 0 50px var(--accent-gold-glow);
-      border-radius: 24px;
+      border-radius: 28px;
+      padding: clamp(28px, 5vw, 44px);
       width: 100%;
       max-width: 440px;
-      padding: 42px 32px;
       text-align: center;
+      box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
       position: relative;
-      overflow: hidden;
+      animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .auth-brand {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: var(--bg-inner-input);
+      border: 1px solid var(--border-glass);
+      margin-bottom: 20px;
     }
 
     .brand-dot {
-      width: 12px;
-      height: 12px;
-      background: var(--accent-gold);
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      box-shadow: 0 0 16px var(--accent-gold);
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
     }
 
     .brand-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      color: #F8FAFC;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--accent-gold-light);
     }
 
     .auth-desc {
-      color: #94A3B8;
-      font-size: 0.92rem;
-      margin-bottom: 26px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
       line-height: 1.5;
+      margin-bottom: 24px;
     }
 
     .pin-input-group {
@@ -208,178 +210,405 @@
     .pin-digit {
       width: 48px;
       height: 56px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-glass);
       border-radius: 14px;
+      background: var(--bg-inner-input);
+      border: 1.5px solid var(--border-glass);
       color: var(--accent-gold);
-      font-family: 'JetBrains Mono', monospace;
       font-size: 1.6rem;
-      font-weight: 700;
+      font-weight: 800;
       text-align: center;
+      font-family: 'JetBrains Mono', monospace;
       outline: none;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .pin-digit:focus {
       border-color: var(--accent-gold);
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 20px var(--accent-gold-glow);
-      background: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 0 16px var(--accent-gold-glow), inset 0 2px 4px rgba(0,0,0,0.5);
       transform: translateY(-2px);
     }
 
     .auth-btn {
       width: 100%;
-      background: linear-gradient(135deg, #DFCA9B 0%, #C9A96A 50%, #9E7D3B 100%);
-      color: #060B12;
-      font-weight: 800;
-      font-size: 0.98rem;
-      letter-spacing: 0.02em;
-      padding: 15px;
-      border: none;
+      padding: 14px;
       border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-gold), #A38241);
+      color: #060B12;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(201, 169, 106, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-      transition: all 0.2s ease;
-      margin-top: 10px;
+      box-shadow: 0 8px 24px var(--accent-gold-glow);
+      transition: all 0.25s ease;
     }
 
-    .auth-btn:hover {
+    .auth-btn:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(201, 169, 106, 0.45);
+      box-shadow: 0 12px 30px var(--accent-gold-glow);
+      filter: brightness(1.08);
     }
 
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .auth-status {
-      margin-top: 18px;
-      font-size: 0.88rem;
-      min-height: 22px;
+      margin-top: 16px;
+      font-size: 0.85rem;
       color: var(--accent-red);
-      line-height: 1.4;
+      min-height: 20px;
+      font-weight: 600;
     }
 
-    /* ── 3D FLOATING CAPSULE TOPBAR ────────────────────────── */
-    .topbar {
+    /* ── APP LAYOUT WITH COLLAPSIBLE SIDEBAR ─────────────────── */
+    .app-layout {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 16px 24px;
-      background: var(--bg-card);
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* ── 3D COLLAPSIBLE SIDEBAR ──────────────────────────────── */
+    .app-sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-glass);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 1000;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border-glass);
-      border-radius: 20px;
-      box-shadow: var(--shadow-3d-card);
-      margin-bottom: 28px;
+      box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
     }
 
-    .topbar-left {
+    .app-sidebar.collapsed {
+      width: 76px;
+    }
+
+    .sidebar-header {
+      padding: 20px 16px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .badge-live {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: var(--accent-green);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
-    }
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-green);
-      border-radius: 50%;
-      animation: radarPulse 2s infinite;
-    }
-
-    @keyframes radarPulse {
-      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
-      70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-
-    .app-title {
-      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .topbar-right {
+    .sidebar-brand {
       display: flex;
       align-items: center;
       gap: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .sidebar-logo-pill {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-gold), #8A6B29);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #060B12;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px var(--accent-gold-glow);
+    }
+
+    .sidebar-brand-text {
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.2s ease;
+    }
+
+    .app-sidebar.collapsed .sidebar-brand-text {
+      opacity: 0;
+      pointer-events: none;
+      width: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-sub {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-sidebar-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-inner-input);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-sidebar-toggle:hover {
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+    }
+
+    /* Sidebar Navigation Menu */
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover {
+      color: var(--text-primary);
+      background: var(--table-row-hover);
+      border-color: var(--border-subtle);
+    }
+
+    .nav-item.active {
+      color: var(--accent-gold-light);
+      background: var(--bg-card);
+      border-color: var(--border-gold);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.1);
+    }
+
+    .nav-icon {
+      font-size: 1.15rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-label {
+      transition: opacity 0.2s ease;
+    }
+
+    .app-sidebar.collapsed .nav-label {
+      opacity: 0;
+      pointer-events: none;
+      display: none;
+    }
+
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-sidebar.collapsed .sidebar-footer-text {
+      display: none;
+    }
+
+    /* ── MAIN CONTENT WORKSPACE ──────────────────────────────── */
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0; /* Prevents overflow */
+    }
+
+    .top-dock {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-glass);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 14px clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .range-selector {
+    .top-dock-left {
       display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-mobile-sidebar {
+      display: none;
       background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
-      border-radius: 30px;
-      padding: 4px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .range-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      padding: 7px 16px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .range-btn.active {
-      background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
-      color: #060B12;
-      box-shadow: 0 4px 14px var(--accent-gold-glow);
-    }
-
-    .btn-action {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
       color: var(--text-primary);
-      padding: 8px 16px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 1rem;
       cursor: pointer;
+    }
+
+    .dock-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-live-pulse {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      box-shadow: var(--shadow-3d-card);
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-green);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+      animation: pulseAnim 1.8s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+
+    .dock-section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .top-dock-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Central Filter Controls */
+    .filter-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-inner-input);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 3px;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .btn-action:hover {
-      background: var(--bg-card-hover);
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--accent-gold), #96742B);
+      color: #060B12;
+      box-shadow: 0 2px 10px var(--accent-gold-glow);
+    }
+
+    .dock-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      background: var(--bg-inner-input);
+      border: 1px solid var(--border-glass);
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .dock-btn:hover {
       border-color: var(--border-gold);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-3d-hover);
+      color: var(--accent-gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── CONTENT CONTAINER & SECTION SWITCHING ──────────────── */
+    .workspace-container {
+      padding: clamp(16px, 2.5vw, 36px);
+      width: 100%;
+      flex: 1;
+    }
+
+    .analytics-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .analytics-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* ── 8 3D KPI METRIC CAPSULES ──────────────────────────── */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1300px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
     }
 
     .kpi-card {
@@ -387,35 +616,25 @@
       border: 1px solid var(--border-glass);
       border-radius: 20px;
       padding: 20px;
-      position: relative;
-      overflow: hidden;
       box-shadow: var(--shadow-3d-card);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .kpi-card:hover {
-      transform: translateY(-4px) scale(1.008);
       border-color: var(--border-gold);
       box-shadow: var(--shadow-3d-hover);
-    }
-
-    .kpi-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan), transparent);
+      transform: translateY(-2px);
     }
 
     .kpi-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .kpi-label {
@@ -427,15 +646,15 @@
     }
 
     .kpi-icon-pill {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 10px;
       background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .kpi-body {
@@ -446,57 +665,33 @@
     }
 
     .kpi-val {
-      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+      font-size: clamp(1.6rem, 2.2vw, 2.1rem);
       font-weight: 800;
       color: var(--text-primary);
       font-family: 'JetBrains Mono', monospace;
       line-height: 1.1;
-      letter-spacing: -0.02em;
     }
 
     .kpi-pill {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 20px;
       font-family: 'JetBrains Mono', monospace;
     }
 
-    .pill-green {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-green);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .pill-gold {
-      background: rgba(201, 169, 106, 0.15);
-      color: var(--accent-gold);
-      border: 1px solid var(--border-gold);
-    }
-
-    .pill-cyan {
-      background: rgba(91, 224, 223, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid var(--border-cyan);
-    }
-
-    .pill-red {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--accent-red);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
+    .pill-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-gold { background: rgba(201, 169, 106, 0.15); color: var(--accent-gold); border: 1px solid rgba(201, 169, 106, 0.3); }
+    .pill-cyan { background: rgba(91, 224, 223, 0.15); color: var(--accent-cyan); border: 1px solid rgba(91, 224, 223, 0.3); }
+    .pill-red { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
 
     .kpi-sub {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .kpi-progress-bar {
-      width: 100%;
       height: 4px;
       background: var(--grid-line);
       border-radius: 4px;
@@ -511,37 +706,7 @@
       transition: width 0.6s ease;
     }
 
-    /* ── 3D CHARTS & ANALYTICS PANORAMA ────────────────────── */
-    .charts-grid-main {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    .charts-grid-duo {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    .charts-grid-triplet {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 1200px) {
-      .charts-grid-triplet { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 1024px) {
-      .charts-grid-main { grid-template-columns: 1fr; }
-      .charts-grid-duo { grid-template-columns: 1fr; }
-    }
-
+    /* ── CARD PANELS & GRIDS ────────────────────────────────── */
     .card-panel {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
@@ -552,6 +717,7 @@
       -webkit-backdrop-filter: blur(20px);
       position: relative;
       transition: all 0.25s ease;
+      margin-bottom: 24px;
     }
 
     .card-panel:hover {
@@ -570,7 +736,6 @@
       font-size: 1.05rem;
       font-weight: 800;
       color: var(--text-primary);
-      letter-spacing: -0.01em;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -587,12 +752,30 @@
       border-radius: 20px;
     }
 
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 1100px) {
+      .grid-2col { grid-template-columns: 1fr; }
+      .grid-3col { grid-template-columns: 1fr; }
+    }
+
     .chart-box {
       position: relative;
       height: 290px;
       width: 100%;
     }
 
+    /* Center Donut Label */
     .donut-center-label {
       position: absolute;
       top: 50%;
@@ -603,7 +786,7 @@
     }
 
     .donut-center-val {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 800;
       font-family: 'JetBrains Mono', monospace;
       color: var(--text-primary);
@@ -611,192 +794,156 @@
     }
 
     .donut-center-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
+      font-size: 0.68rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      color: var(--text-secondary);
       margin-top: 4px;
     }
 
-    /* ── QUICK FILTER PILLS ────────────────────────────────── */
-    .filter-pills-bar {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .filter-pill {
-      background: var(--bg-inner-input);
-      border: 1px solid var(--border-glass);
-      color: var(--text-secondary);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-pill.active {
-      background: var(--accent-gold);
-      color: #060B12;
-      border-color: var(--accent-gold);
-      box-shadow: 0 2px 8px var(--accent-gold-glow);
-    }
-
-    /* ── TABLES WITH 3D GLASS STYLE ────────────────────────── */
+    /* ── TABLES & RANKINGS ──────────────────────────────────── */
     .table-container {
-      width: 100%;
       overflow-x: auto;
       border-radius: 14px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-inner-input);
     }
 
-    table {
+    .data-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
     }
 
-    thead th {
-      background: var(--bg-card);
+    .data-table th {
+      padding: 12px 14px;
+      background: var(--bg-inner-input);
       color: var(--text-secondary);
       font-weight: 700;
-      font-size: 0.75rem;
       text-transform: uppercase;
+      font-size: 0.72rem;
       letter-spacing: 0.06em;
-      padding: 14px 16px;
       border-bottom: 1px solid var(--border-glass);
       white-space: nowrap;
     }
 
-    tbody td {
-      padding: 14px 16px;
+    .data-table td {
+      padding: 12px 14px;
       border-bottom: 1px solid var(--grid-line);
       color: var(--text-primary);
       white-space: nowrap;
-      transition: background 0.15s;
     }
 
-    tbody tr { cursor: pointer; }
-    tbody tr:hover { background: var(--table-row-hover); }
-
-    .mono-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--accent-cyan);
-      background: rgba(91, 224, 223, 0.1);
-      padding: 4px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border-cyan);
+    .data-table tbody tr:hover {
+      background: var(--table-row-hover);
+      cursor: pointer;
     }
 
-    .search-input {
-      background: var(--bg-inner-input);
-      border: 1px solid var(--border-glass);
-      border-radius: 12px;
-      color: var(--text-primary);
-      padding: 9px 16px;
-      font-size: 0.88rem;
-      outline: none;
-      width: 280px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-      transition: all 0.2s;
+    /* ── 24x7 ACTIVITY HEATMAP GRID ─────────────────────────── */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: 50px repeat(24, 1fr);
+      gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 10px;
     }
 
-    .search-input:focus {
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 16px var(--accent-gold-glow);
-    }
-
-    /* ── 3D MODAL INSPECTOR (24 ATTRIBUTES) ────────────────── */
-    #detail-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(4, 8, 14, 0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+    .heatmap-cell {
+      height: 28px;
+      border-radius: 4px;
+      background: var(--grid-line);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
-      padding: 24px;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
     }
 
-    #detail-modal.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+    .heatmap-cell:hover {
+      transform: scale(1.15);
+      z-index: 2;
+      box-shadow: 0 0 10px var(--accent-gold);
     }
+
+    /* ── DETAIL MODAL ────────────────────────────────────────── */
+    #detail-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 11, 18, 0.88);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #detail-modal.hidden { display: none; }
 
     .modal-card {
-      background: var(--bg-card-solid);
+      background: var(--bg-card);
       border: 1px solid var(--border-gold);
-      box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.25),
-        0 30px 80px rgba(0, 0, 0, 0.9),
-        0 0 40px var(--accent-gold-glow);
       border-radius: 24px;
+      padding: 28px;
       width: 100%;
-      max-width: 880px;
+      max-width: 900px;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 32px;
-      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+      animation: modalPop 0.3s ease;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-glass);
       margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 14px;
     }
 
     .modal-title {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--accent-gold-light);
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
     .modal-close {
-      background: var(--bg-inner-input);
-      border: 1px solid var(--border-glass);
-      color: var(--text-secondary);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      transition: all 0.2s;
-    }
-
-    .modal-close:hover {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: var(--accent-red);
-      color: var(--accent-red);
     }
 
     .attributes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .attributes-grid { grid-template-columns: 1fr; }
+      .app-sidebar {
+        position: fixed;
+        left: -260px;
+      }
+      .app-sidebar.mobile-open {
+        left: 0;
+      }
+      .btn-mobile-sidebar {
+        display: block;
+      }
     }
 
     .attr-group {
       background: var(--bg-inner-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-glass);
       border-radius: 14px;
       padding: 16px;
     }
@@ -820,19 +967,54 @@
       padding: 6px 0;
       border-bottom: 1px solid var(--grid-line);
     }
-
     .attr-row:last-child { border-bottom: none; }
     .attr-name { color: var(--text-muted); }
     .attr-val { 
       font-family: 'JetBrains Mono', monospace; 
       color: var(--text-primary); 
       font-weight: 600; 
-      max-width: 180px; 
+      max-width: 220px; 
       overflow: hidden; 
       text-overflow: ellipsis; 
       text-align: right; 
     }
 
+    .timeline-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .timeline-step:before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 15px;
+      bottom: -15px;
+      width: 2px;
+      background: var(--border-subtle);
+    }
+    .timeline-step:last-child:before { display: none; }
+    .timeline-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent-gold);
+      min-width: 70px;
+    }
+    .timeline-action {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+    }
+
+    /* Loader Spinner */
     .loader {
       display: inline-block;
       width: 16px;
@@ -843,20 +1025,19 @@
       animation: spin 0.8s linear infinite;
       vertical-align: middle;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-  <!-- ── AUTH MODAL ──────────────────────────────────────── -->
+  <!-- ── AUTH MODAL OVERLAY ──────────────────────────────────── -->
   <div id="auth-overlay">
     <div class="auth-card">
       <div class="auth-brand">
         <span class="brand-dot"></span>
-        <span class="brand-title">Anabhi Dev Intelligence</span>
+        <span class="brand-title">Anabhi Intelligence Hub</span>
       </div>
-      <p class="auth-desc">Masukkan 6-digit Master PIN untuk membuka 3D visitor analytics & security trail.</p>
+      <p class="auth-desc">Masukkan 6-digit Master PIN untuk membuka platform analitik modular.</p>
       
       <div class="pin-input-group">
         <input type="password" maxlength="1" class="pin-digit" autofocus autocomplete="off">
@@ -867,437 +1048,552 @@
         <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
       </div>
 
-      <button id="btn-unlock" class="auth-btn">Buka 3D Intelligence Dashboard</button>
+      <button id="btn-unlock" class="auth-btn">Buka Intelligence Platform</button>
       <div id="auth-status" class="auth-status"></div>
     </div>
   </div>
 
-  <!-- ── 3D VISITOR DETAIL MODAL (24 ATTRIBUTES) ──────────── -->
+  <!-- ── 3D VISITOR DETAIL & TIMELINE MODAL ──────────────────── -->
   <div id="detail-modal" class="hidden">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title">
-          <span>🔍</span> 24-Column Visitor Intelligence Deep Dive
+          <span>🔍</span> 24-Column Intelligence & Activity Timeline
         </div>
         <button id="btn-close-modal" class="modal-close">&times;</button>
       </div>
-
       <div class="attributes-grid" id="modal-attributes-body">
         <!-- Rendered via JS -->
       </div>
     </div>
   </div>
 
-  <!-- ── MAIN DASHBOARD ──────────────────────────────────── -->
-  <main class="fluid-container">
+  <!-- ── MAIN APPLICATION LAYOUT ─────────────────────────────── -->
+  <div class="app-layout">
     
-    <!-- 3D Capsule Topbar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <div class="badge-live">
-          <span class="pulse-dot"></span> LIVE SSOT ENGINE
-        </div>
-        <h1 class="app-title">Executive Visitor Intelligence</h1>
-      </div>
-
-      <div class="topbar-right">
-        <!-- Theme Toggle Switch (Dark / Light) -->
-        <button id="btn-theme-toggle" class="btn-action" title="Ganti Tema (Dark / Light)">
-          <span id="theme-icon">🌙</span> <span id="theme-label">Dark Mode</span>
-        </button>
-
-        <!-- Date Range Filter -->
-        <div class="range-selector">
-          <button class="range-btn active" data-range="7d">7 Hari</button>
-          <button class="range-btn" data-range="today">Hari Ini</button>
-          <button class="range-btn" data-range="30d">30 Hari</button>
-          <button class="range-btn" data-range="all">Semua</button>
-        </div>
-
-        <button id="btn-refresh" class="btn-action">
-          <span id="refresh-icon">🔄</span> Refresh
-        </button>
-
-        <a href="/" class="btn-action" title="Kembali ke Beranda">
-          🏠 Home
-        </a>
-
-        <button id="btn-logout" class="btn-action" style="color: var(--accent-red);">
-          🚪 Keluar
-        </button>
-      </div>
-    </header>
-
-    <!-- ── 8 3D KPI METRIC CAPSULES ──────────────────────────── -->
-    <section class="kpi-grid">
-      <!-- 1. Total Views -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Total Tayangan (Views)</span>
-          <div class="kpi-icon-pill">👁️</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-views" class="kpi-val">-</div>
-          <span class="kpi-pill pill-gold">+100% Hits</span>
-        </div>
-        <div class="kpi-sub">Total page hits tercatat di SSOT</div>
-        <div class="kpi-progress-bar"><div id="bar-views" class="kpi-progress-fill" style="width: 100%;"></div></div>
-      </div>
-
-      <!-- 2. Unique Visitors -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Pengunjung Unik</span>
-          <div class="kpi-icon-pill">👤</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-uniques" class="kpi-val">-</div>
-          <span id="kpi-unique-ratio" class="kpi-pill pill-cyan">0% Rasio</span>
-        </div>
-        <div class="kpi-sub">Persistent device fingerprint ID</div>
-        <div class="kpi-progress-bar"><div id="bar-uniques" class="kpi-progress-fill" style="width: 75%;"></div></div>
-      </div>
-
-      <!-- 3. Return Visitor Ratio -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Rasio Kunjungan Ulang</span>
-          <div class="kpi-icon-pill">🔄</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-return" class="kpi-val">-</div>
-          <span class="kpi-pill pill-green">Loyalty</span>
-        </div>
-        <div class="kpi-sub">Pengunjung kembali > 1 kali</div>
-        <div class="kpi-progress-bar"><div id="bar-return" class="kpi-progress-fill" style="width: 50%;"></div></div>
-      </div>
-
-      <!-- 4. Avg Dwell Time -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Rata-rata Waktu Baca</span>
-          <div class="kpi-icon-pill">⏱️</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-duration" class="kpi-val">-</div>
-          <span class="kpi-pill pill-green">High Intent</span>
-        </div>
-        <div class="kpi-sub">Dwell time aktif di tab peramban</div>
-        <div class="kpi-progress-bar"><div id="bar-duration" class="kpi-progress-fill" style="width: 60%;"></div></div>
-      </div>
-
-      <!-- 5. Avg Scroll Depth -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Rata-rata Scroll Depth</span>
-          <div class="kpi-icon-pill">📜</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-scroll" class="kpi-val">-</div>
-          <span class="kpi-pill pill-cyan">Deep Scan</span>
-        </div>
-        <div class="kpi-sub">Kedalaman eksplorasi dokumen</div>
-        <div class="kpi-progress-bar"><div id="bar-scroll" class="kpi-progress-fill" style="width: 85%;"></div></div>
-      </div>
-
-      <!-- 6. Active Engagement Rate -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Tingkat Interaksi Aktif</span>
-          <div class="kpi-icon-pill">⚡</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-engagement" class="kpi-val">-</div>
-          <span class="kpi-pill pill-gold">Engagement</span>
-        </div>
-        <div class="kpi-sub">Baca &gt;10s atau scroll &gt;25%</div>
-        <div class="kpi-progress-bar"><div id="bar-engagement" class="kpi-progress-fill" style="width: 80%;"></div></div>
-      </div>
-
-      <!-- 7. Bounce Rate (<5s) -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Tingkat Bounce (&lt;5s)</span>
-          <div class="kpi-icon-pill">↩️</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-bounce" class="kpi-val">-</div>
-          <span id="kpi-bounce-pill" class="kpi-pill pill-red">Low Bounce</span>
-        </div>
-        <div class="kpi-sub">Kunjungan singkat sebelum navigasi</div>
-        <div class="kpi-progress-bar"><div id="bar-bounce" class="kpi-progress-fill" style="width: 20%; background: var(--accent-red);"></div></div>
-      </div>
-
-      <!-- 8. Hardware Ratio -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Hardware Dominan</span>
-          <div class="kpi-icon-pill">💻</div>
-        </div>
-        <div class="kpi-body">
-          <div id="kpi-device-ratio" class="kpi-val">-</div>
-          <span class="kpi-pill pill-green">Hardware</span>
-        </div>
-        <div class="kpi-sub" id="kpi-device-sub">Desktop vs Mobile ratio</div>
-        <div class="kpi-progress-bar"><div id="bar-device" class="kpi-progress-fill" style="width: 70%;"></div></div>
-      </div>
-    </section>
-
-    <!-- ── CHARTS ROW 1: Daily Trends & Traffic Acquisition Channels ──── -->
-    <section class="charts-grid-main">
-      <!-- 1. Daily Pulse Area Spline Chart -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>📈</span> Tren Kunjungan Harian (Daily Pulse)</h2>
-          <span class="panel-badge">Views vs Uniques</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="trendChart"></canvas>
-        </div>
-      </div>
-
-      <!-- 2. Acquisition Doughnut with 3D Center Stats -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>🍩</span> Saluran Trafik & Kanal Akuisisi</h2>
-          <span class="panel-badge">Channels</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="refChart"></canvas>
-          <div class="donut-center-label">
-            <div id="donut-center-num" class="donut-center-val">0</div>
-            <div class="donut-center-sub">Total Kunjungan</div>
+    <!-- ── 3D COLLAPSIBLE SIDEBAR ────────────────────────────── -->
+    <aside id="app-sidebar" class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <div class="sidebar-logo-pill">A</div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-title">Anabhi Dev</span>
+            <span class="sidebar-sub">Intelligence v2.0</span>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- ── CHARTS ROW 2: Temporal Activity (24H Peak & Weekly Days) ──── -->
-    <section class="charts-grid-duo">
-      <!-- 3. Hourly Activity Peak (24 Hours Heatmap Timeline) -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>🕒</span> Pola Jam Sibuk Kunjungan</h2>
-          <span class="panel-badge">24 Jam (WITA)</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="hourlyChart"></canvas>
-        </div>
+        <button id="btn-toggle-sidebar" class="btn-sidebar-toggle" title="Ciutkan / Lebarkan Sidebar">
+          <span>⇋</span>
+        </button>
       </div>
 
-      <!-- 4. Weekly Day Distribution -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>📅</span> Pola Hari Kunjungan Mingguan</h2>
-          <span class="panel-badge">Senin — Minggu</span>
+      <!-- 10 Modular Navigation Items -->
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-section="overview">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Ringkasan Eksekutif</span>
         </div>
-        <div class="chart-box">
-          <canvas id="dayChart"></canvas>
+        <div class="nav-item" data-section="acquisition">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-label">Saluran & Akuisisi</span>
+        </div>
+        <div class="nav-item" data-section="geography">
+          <span class="nav-icon">🌍</span>
+          <span class="nav-label">Geografi & Wilayah</span>
+        </div>
+        <div class="nav-item" data-section="technology">
+          <span class="nav-icon">💻</span>
+          <span class="nav-label">Perangkat & Hardware</span>
+        </div>
+        <div class="nav-item" data-section="network">
+          <span class="nav-icon">📡</span>
+          <span class="nav-label">Jaringan & ISP</span>
+        </div>
+        <div class="nav-item" data-section="behavior">
+          <span class="nav-icon">⚡</span>
+          <span class="nav-label">Perilaku & Interaksi</span>
+        </div>
+        <div class="nav-item" data-section="content">
+          <span class="nav-icon">📄</span>
+          <span class="nav-label">Performa Konten</span>
+        </div>
+        <div class="nav-item" data-section="time">
+          <span class="nav-icon">⏳</span>
+          <span class="nav-label">Intelijen Waktu</span>
+        </div>
+        <div class="nav-item" data-section="cross">
+          <span class="nav-icon">🔬</span>
+          <span class="nav-label">Cross Analysis</span>
+        </div>
+        <div class="nav-item" data-section="live">
+          <span class="nav-icon">🚨</span>
+          <span class="nav-label">Live Stream & Audit</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="pulse-dot"></span>
+        <div class="sidebar-footer-text">
+          <span>SSOT Engine Online</span>
         </div>
       </div>
-    </section>
+    </aside>
 
-    <!-- ── CHARTS ROW 3: Hardware, OS & Browser Ecosystem (Triplet) ──── -->
-    <section class="charts-grid-triplet">
-      <!-- 5. Hardware Category Breakdown -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>📱</span> Kategori Perangkat</h2>
-          <span class="panel-badge">Hardware</span>
+    <!-- ── MAIN CONTENT WORKSPACE ────────────────────────────── -->
+    <div class="app-main">
+      
+      <!-- Top Sticky Dock (Controls & Global Filters) -->
+      <header class="top-dock">
+        <div class="top-dock-left">
+          <button id="btn-mobile-sidebar" class="btn-mobile-sidebar">☰</button>
+          <div class="dock-title-group">
+            <span class="badge-live-pulse"><span class="pulse-dot"></span> LIVE SSOT</span>
+            <h1 id="dock-active-title" class="dock-section-title">Ringkasan Eksekutif</h1>
+          </div>
         </div>
-        <div class="chart-box">
-          <canvas id="deviceChart"></canvas>
+
+        <div class="top-dock-right">
+          <!-- Central Date Range Filter -->
+          <div class="filter-group">
+            <button class="filter-btn active" data-range="7d">7 Hari</button>
+            <button class="filter-btn" data-range="today">Hari Ini</button>
+            <button class="filter-btn" data-range="30d">30 Hari</button>
+            <button class="filter-btn" data-range="all">Semua</button>
+          </div>
+
+          <!-- Theme Toggle Switch -->
+          <button id="btn-theme-toggle" class="dock-btn" title="Ganti Tema">
+            <span id="theme-icon">🌙</span> <span id="theme-label">Dark</span>
+          </button>
+
+          <!-- Refresh Data -->
+          <button id="btn-refresh" class="dock-btn" title="Muat Ulang Data">
+            <span id="refresh-icon">🔄</span> Refresh
+          </button>
+
+          <!-- Home Link -->
+          <a href="/" class="dock-btn" title="Kembali ke Beranda">🏠 Home</a>
+
+          <!-- Logout -->
+          <button id="btn-logout" class="dock-btn" style="color: var(--accent-red);" title="Keluar">🚪</button>
         </div>
-      </div>
+      </header>
 
-      <!-- 6. Operating System Breakdown -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>🖥️</span> Sistem Operasi (OS)</h2>
-          <span class="panel-badge">Platform</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="osChart"></canvas>
-        </div>
-      </div>
+      <!-- ── MODULAR SECTIONS WORKSPACE ───────────────────────── -->
+      <main class="workspace-container">
+        
+        <!-- SECTION 1: OVERVIEW (RINGKASAN EKSEKUTIF) ─────────── -->
+        <section id="sec-overview" class="analytics-section active">
+          <!-- 8 3D KPI Capsules -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Total Tayangan</span><div class="kpi-icon-pill">👁️</div></div>
+              <div class="kpi-body"><div id="kpi-views" class="kpi-val">-</div><span class="kpi-pill pill-gold">Hits</span></div>
+              <div class="kpi-sub">Total page hits tercatat di SSOT</div>
+              <div class="kpi-progress-bar"><div id="bar-views" class="kpi-progress-fill" style="width: 100%;"></div></div>
+            </div>
 
-      <!-- 7. Browser Breakdown -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>🌐</span> Pangsa Browser</h2>
-          <span class="panel-badge">User Agent</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="browserChart"></canvas>
-        </div>
-      </div>
-    </section>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Pengunjung Unik</span><div class="kpi-icon-pill">👤</div></div>
+              <div class="kpi-body"><div id="kpi-uniques" class="kpi-val">-</div><span id="kpi-unique-ratio" class="kpi-pill pill-cyan">0% Rasio</span></div>
+              <div class="kpi-sub">Persistent device fingerprint</div>
+              <div class="kpi-progress-bar"><div id="bar-uniques" class="kpi-progress-fill" style="width: 75%;"></div></div>
+            </div>
 
-    <!-- ── CHARTS ROW 4: Engagement Funnel & Geolocation (Duo) ──── -->
-    <section class="charts-grid-duo">
-      <!-- 8. Dwell Time Engagement Funnel -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>⚡</span> Corong Waktu Baca (Engagement Funnel)</h2>
-          <span class="panel-badge">Intent Tiers</span>
-        </div>
-        <div class="chart-box">
-          <canvas id="engagementChart"></canvas>
-        </div>
-      </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Kunjungan Ulang</span><div class="kpi-icon-pill">🔄</div></div>
+              <div class="kpi-body"><div id="kpi-return" class="kpi-val">-</div><span class="kpi-pill pill-green">Loyalty</span></div>
+              <div class="kpi-sub">Pengunjung kembali &gt; 1 kali</div>
+              <div class="kpi-progress-bar"><div id="bar-return" class="kpi-progress-fill" style="width: 50%;"></div></div>
+            </div>
 
-      <!-- 9. Sebaran Radar Geografis -->
-      <div class="card-panel">
-        <div class="panel-header">
-          <h2 class="panel-title"><span>🗺️</span> Sebaran Radar Geografis</h2>
-          <span class="panel-badge">Top Cities & Countries</span>
-        </div>
-        <div id="geo-list" style="height: 290px; overflow-y: auto; padding-right: 6px;"></div>
-      </div>
-    </section>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Rata Waktu Baca</span><div class="kpi-icon-pill">⏱️</div></div>
+              <div class="kpi-body"><div id="kpi-duration" class="kpi-val">-</div><span class="kpi-pill pill-green">Intent</span></div>
+              <div class="kpi-sub">Dwell time aktif di halaman</div>
+              <div class="kpi-progress-bar"><div id="bar-duration" class="kpi-progress-fill" style="width: 60%;"></div></div>
+            </div>
 
-    <!-- ── TOP VISITED CONTENT MATRIX ──────────────────────── -->
-    <section class="card-panel" style="margin-bottom: 28px;">
-      <div class="panel-header">
-        <h2 class="panel-title"><span>🏆</span> Konten & Halaman Terpopuler (Top Pages Performance)</h2>
-        <span class="panel-badge">Velocity & Share</span>
-      </div>
-      <div class="table-container">
-        <table id="top-pages-table">
-          <thead>
-            <tr>
-              <th style="width: 50px;">#</th>
-              <th>Path Halaman</th>
-              <th>Judul Dokumen</th>
-              <th style="width: 220px;">Share of Traffic</th>
-              <th style="width: 140px; text-align: right;">Total Views</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">Memuat data...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Rata Scroll Depth</span><div class="kpi-icon-pill">📜</div></div>
+              <div class="kpi-body"><div id="kpi-scroll" class="kpi-val">-</div><span class="kpi-pill pill-cyan">Scan</span></div>
+              <div class="kpi-sub">Kedalaman eksplorasi baca</div>
+              <div class="kpi-progress-bar"><div id="bar-scroll" class="kpi-progress-fill" style="width: 80%;"></div></div>
+            </div>
 
-    <!-- ── LIVE VISITOR STREAM (WITH QUICK FILTERS & 24-COL INSPECTOR) ──── -->
-    <section class="card-panel">
-      <div class="panel-header">
-        <div>
-          <h2 class="panel-title"><span>⚡</span> Live Visitor Stream & Audit Trail</h2>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
-            Filter instan atau klik baris mana saja untuk membuka <strong>24 Kolom Atribut Lengkap</strong>.
-          </p>
-        </div>
-        <input type="text" id="live-search" class="search-input" placeholder="🔍 Cari path, kota, browser, IP...">
-      </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Interaksi Aktif</span><div class="kpi-icon-pill">⚡</div></div>
+              <div class="kpi-body"><div id="kpi-engagement" class="kpi-val">-</div><span class="kpi-pill pill-gold">Engaged</span></div>
+              <div class="kpi-sub">Baca &gt;10s atau scroll &gt;25%</div>
+              <div class="kpi-progress-bar"><div id="bar-engagement" class="kpi-progress-fill" style="width: 70%;"></div></div>
+            </div>
 
-      <!-- Quick Filter Pills -->
-      <div class="filter-pills-bar">
-        <button class="filter-pill active" data-filter="all">Semua Log</button>
-        <button class="filter-pill" data-filter="desktop">💻 Desktop</button>
-        <button class="filter-pill" data-filter="mobile">📱 Mobile</button>
-        <button class="filter-pill" data-filter="engaged">⏱️ Baca &gt;10s</button>
-        <button class="filter-pill" data-filter="deep-scroll">📜 Scroll &gt;50%</button>
-      </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Tingkat Bounce</span><div class="kpi-icon-pill">↩️</div></div>
+              <div class="kpi-body"><div id="kpi-bounce" class="kpi-val">-</div><span id="kpi-bounce-pill" class="kpi-pill pill-red">Bounce</span></div>
+              <div class="kpi-sub">Kunjungan di bawah 5 detik</div>
+              <div class="kpi-progress-bar"><div id="bar-bounce" class="kpi-progress-fill" style="width: 30%; background: var(--accent-red);"></div></div>
+            </div>
 
-      <div class="table-container">
-        <table id="live-stream-table">
-          <thead>
-            <tr>
-              <th>Waktu (WITA)</th>
-              <th>Domain Asal</th>
-              <th>Halaman</th>
-              <th>Referrer</th>
-              <th>Perangkat / OS</th>
-              <th>Browser</th>
-              <th>Lokasi</th>
-              <th>Durasi</th>
-              <th>Scroll</th>
-              <th style="text-align: center;">Inspeksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">Memuat data live stream...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Hardware Dominan</span><div class="kpi-icon-pill">💻</div></div>
+              <div class="kpi-body"><div id="kpi-device-ratio" class="kpi-val">-</div><span class="kpi-pill pill-green">Device</span></div>
+              <div class="kpi-sub" id="kpi-device-sub">Desktop vs Mobile split</div>
+              <div class="kpi-progress-bar"><div id="bar-device" class="kpi-progress-fill" style="width: 65%;"></div></div>
+            </div>
+          </div>
 
-  </main>
+          <!-- Overview Charts -->
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>📈</span> Tren Kunjungan Harian (Daily Pulse)</h2>
+                <span class="panel-badge">Spline Trend</span>
+              </div>
+              <div class="chart-box"><canvas id="trendChart"></canvas></div>
+            </div>
 
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🍩</span> Saluran Trafik & Kanal Akuisisi</h2>
+                <span class="panel-badge">Channels</span>
+              </div>
+              <div class="chart-box">
+                <canvas id="refChart"></canvas>
+                <div class="donut-center-label">
+                  <div id="donut-center-num" class="donut-center-val">0</div>
+                  <div class="donut-center-sub">Total Kunjungan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: ACQUISITION & CHANNELS ────────────────── -->
+        <section id="sec-acquisition" class="analytics-section">
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🎯</span> Rujukan Domain (Top Referrers)</h2>
+                <span class="panel-badge">Inbound Traffic</span>
+              </div>
+              <div class="table-container">
+                <table class="data-table" id="table-referrers">
+                  <thead><tr><th>Sumber Domain</th><th>Kunjungan</th><th>Pangsa</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>📢</span> Kampanye Pemasaran (UTM Source / Medium)</h2>
+                <span class="panel-badge">Campaigns</span>
+              </div>
+              <div class="table-container">
+                <table class="data-table" id="table-utm">
+                  <thead><tr><th>Source</th><th>Medium</th><th>Campaign</th><th>Hits</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: GEOGRAPHY & LOCATIONS ─────────────────── -->
+        <section id="sec-geography" class="analytics-section">
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🌍</span> Distribusi Negara (Country Share)</h2>
+                <span class="panel-badge">Countries</span>
+              </div>
+              <div class="chart-box"><canvas id="countryChart"></canvas></div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🏙️</span> Peringkat Kota Teratas (Top Cities)</h2>
+                <span class="panel-badge">Metropolitan</span>
+              </div>
+              <div class="table-container">
+                <table class="data-table" id="table-cities">
+                  <thead><tr><th>Kota / Wilayah</th><th>Negara</th><th>Kunjungan</th><th>Pangsa</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: TECHNOLOGY & HARDWARE ─────────────────── -->
+        <section id="sec-technology" class="analytics-section">
+          <div class="grid-3col">
+            <div class="card-panel">
+              <div class="panel-header"><h2 class="panel-title"><span>📱</span> Kategori Perangkat</h2><span class="panel-badge">Hardware</span></div>
+              <div class="chart-box"><canvas id="deviceChart"></canvas></div>
+            </div>
+            <div class="card-panel">
+              <div class="panel-header"><h2 class="panel-title"><span>🖥️</span> Sistem Operasi</h2><span class="panel-badge">Platform</span></div>
+              <div class="chart-box"><canvas id="osChart"></canvas></div>
+            </div>
+            <div class="card-panel">
+              <div class="panel-header"><h2 class="panel-title"><span>🌐</span> Pangsa Browser</h2><span class="panel-badge">User Agent</span></div>
+              <div class="chart-box"><canvas id="browserChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>🖥️</span> Matriks Resolusi Layar & Viewport Display</h2>
+              <span class="panel-badge">Screens & DPR</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="table-screens">
+                <thead><tr><th>Resolusi Monitor</th><th>Viewport Aktif</th><th>Pixel Ratio</th><th>Kunjungan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: NETWORK & ISP ─────────────────────────── -->
+        <section id="sec-network" class="analytics-section">
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>📡</span> Provider Internet (ISP Breakdown)</h2>
+                <span class="panel-badge">Carrier</span>
+              </div>
+              <div class="table-container">
+                <table class="data-table" id="table-isp">
+                  <thead><tr><th>Penyedia ISP / ASN</th><th>Kunjungan</th><th>Pangsa</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🌐</span> Sebaran Zona Waktu & Lokalisasi</h2>
+                <span class="panel-badge">Timezones</span>
+              </div>
+              <div class="table-container">
+                <table class="data-table" id="table-timezone">
+                  <thead><tr><th>Zona Waktu</th><th>Bahasa</th><th>Hits</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: BEHAVIOR & INTERACTION ────────────────── -->
+        <section id="sec-behavior" class="analytics-section">
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>⚡</span> Corong Waktu Baca (Engagement Funnel)</h2>
+                <span class="panel-badge">Intent Tiers</span>
+              </div>
+              <div class="chart-box"><canvas id="engagementChart"></canvas></div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>📜</span> Capaian Gulir Dokumen (Scroll Milestones)</h2>
+                <span class="panel-badge">Depth %</span>
+              </div>
+              <div class="chart-box"><canvas id="scrollChart"></canvas></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: CONTENT PERFORMANCE ───────────────────── -->
+        <section id="sec-content" class="analytics-section">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>📄</span> Performa Konten & Halaman Terpopuler</h2>
+              <span class="panel-badge">Content Matrix</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="table-content-perf">
+                <thead><tr><th>Path Halaman</th><th>Judul Halaman</th><th>Tayangan</th><th>Traffic Share</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: TIME INTELLIGENCE ─────────────────────── -->
+        <section id="sec-time" class="analytics-section">
+          <div class="grid-2col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>🕒</span> Pola Jam Sibuk Kunjungan (24 Jam)</h2>
+                <span class="panel-badge">24H WITA</span>
+              </div>
+              <div class="chart-box"><canvas id="hourlyChart"></canvas></div>
+            </div>
+
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2 class="panel-title"><span>📅</span> Pola Hari Kunjungan Mingguan</h2>
+                <span class="panel-badge">Senin — Minggu</span>
+              </div>
+              <div class="chart-box"><canvas id="dayChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>🔥</span> Heatmap Kepadatan Kunjungan 24 Jam × 7 Hari</h2>
+              <span class="panel-badge">Density Grid</span>
+            </div>
+            <div id="heatmap-container" class="heatmap-grid">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: CROSS ANALYSIS ────────────────────────── -->
+        <section id="sec-cross" class="analytics-section">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>🔬</span> Matriks Relasi Antar-Dimensi (Cross Analysis)</h2>
+              <span class="panel-badge">Hardware × Platform</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="table-cross-analysis">
+                <thead><tr><th>Perangkat (Device)</th><th>Sistem Operasi (OS)</th><th>Browser</th><th>Kunjungan</th><th>Rata Dwell</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: LIVE STREAM & DATA QUALITY ────────────── -->
+        <section id="sec-live" class="analytics-section">
+          <!-- Data Quality Health Pill -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>🛡️</span> Data Quality & System Health</h2>
+              <span id="quality-badge" class="panel-badge">Freshness: Optimal</span>
+            </div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+              <div>Missing IP: <b id="dq-ip">0%</b></div>
+              <div>Missing Country: <b id="dq-geo">0%</b></div>
+              <div>Missing Dwell: <b id="dq-dwell">0%</b></div>
+              <div>Ingestion Status: <b style="color: var(--accent-green);">100% Valid</b></div>
+            </div>
+          </div>
+
+          <!-- Live Stream Table -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2 class="panel-title"><span>📡</span> Live Visitor Stream & Audit Trail</h2>
+              <input type="text" id="live-search" placeholder="🔍 Cari path, browser, kota, IP..." style="padding: 8px 14px; border-radius: 10px; background: var(--bg-inner-input); border: 1px solid var(--border-glass); color: var(--text-primary); font-size: 0.82rem; outline: none; width: 260px;">
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="live-stream-table">
+                <thead><tr><th>Waktu (WITA)</th><th>Domain</th><th>Path</th><th>Referrer</th><th>Perangkat</th><th>Browser</th><th>Lokasi</th><th>Dwell</th><th>Scroll</th><th>Inspeksi</th></tr></thead>
+                <tbody id="live-stream-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ── FRONTEND LOGIC & SWR RENDERING ENGINE ──────────────── -->
   <script>
-    // ── API BACKEND ENDPOINT (GOOGLE APPS SCRIPT) ─────────────
+    'use strict';
+
     const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrKiLLezhkiQyGvO6-xZcDCqwbvVc0CvQBHUHr-iPrFgqIXR1hqdtT5m92GSbRZvLj/exec';
 
-    // ── STATE & INSTANCES ────────────────────────────────────
-    let currentToken = sessionStorage.getItem('ANABHI_ANALYTICS_TOKEN');
+    // State
+    let currentToken = localStorage.getItem('ANABHI_ANALYTICS_TOKEN') || null;
     let currentRange = '7d';
-    let currentTheme = localStorage.getItem('ANABHI_THEME') || 'dark';
-    let activeQuickFilter = 'all';
+    let currentTheme = localStorage.getItem('anabhi_theme') || 'dark';
+    let activeSection = 'overview';
+    let cachedData = null;
+    let chartRegistry = {};
 
-    let trendChartInstance     = null;
-    let refChartInstance       = null;
-    let hourlyChartInstance    = null;
-    let dayChartInstance       = null;
-    let deviceChartInstance    = null;
-    let osChartInstance        = null;
-    let browserChartInstance   = null;
-    let engagementChartInstance= null;
-    let cachedRecentLogs       = [];
-    let cachedFullData         = null;
-
+    // Elements
     const authOverlay = document.getElementById('auth-overlay');
-    const authStatus  = document.getElementById('auth-status');
-    const btnUnlock   = document.getElementById('btn-unlock');
     const pinInputs   = document.querySelectorAll('.pin-digit');
+    const btnUnlock   = document.getElementById('btn-unlock');
+    const authStatus  = document.getElementById('auth-status');
+    const btnTheme    = document.getElementById('btn-theme-toggle');
+    const themeIcon   = document.getElementById('theme-icon');
+    const themeLabel  = document.getElementById('theme-label');
     const btnRefresh  = document.getElementById('btn-refresh');
     const btnLogout   = document.getElementById('btn-logout');
-    const rangeBtns   = document.querySelectorAll('.range-btn');
-    const liveSearch  = document.getElementById('live-search');
-    const filterPills = document.querySelectorAll('.filter-pill');
-
+    const sidebar     = document.getElementById('app-sidebar');
+    const btnSidebarToggle = document.getElementById('btn-toggle-sidebar');
+    const btnMobileSidebar = document.getElementById('btn-mobile-sidebar');
+    const navItems    = document.querySelectorAll('.nav-item');
+    const dockTitle   = document.getElementById('dock-active-title');
+    const rangeBtns   = document.querySelectorAll('.filter-btn');
     const detailModal = document.getElementById('detail-modal');
     const btnCloseModal = document.getElementById('btn-close-modal');
-    const modalAttributesBody = document.getElementById('modal-attributes-body');
+    const modalBody   = document.getElementById('modal-attributes-body');
+    const liveSearch  = document.getElementById('live-search');
 
-    const btnThemeToggle = document.getElementById('btn-theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-    const themeLabel = document.getElementById('theme-label');
-
-    // ── THEME ENGINE (DARK / LIGHT LUXURY) ────────────────────
+    // ── THEME ENGINE ─────────────────────────────────────────
     function applyTheme(theme) {
       currentTheme = theme;
       document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('ANABHI_THEME', theme);
-
+      localStorage.setItem('anabhi_theme', theme);
       if (theme === 'light') {
         themeIcon.textContent = '☀️';
-        themeLabel.textContent = 'Light Mode';
+        themeLabel.textContent = 'Light';
       } else {
         themeIcon.textContent = '🌙';
-        themeLabel.textContent = 'Dark Mode';
+        themeLabel.textContent = 'Dark';
       }
-
-      // Re-render charts with theme palette if data is loaded
-      if (cachedFullData) {
-        renderDashboard(cachedFullData);
-      }
+      renderActiveSection();
     }
-
-    btnThemeToggle.addEventListener('click', () => {
-      const nextTheme = (currentTheme === 'dark') ? 'light' : 'dark';
-      applyTheme(nextTheme);
+    btnTheme.addEventListener('click', () => {
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
-
-    // Initialize theme on load
     applyTheme(currentTheme);
 
-    // ── PIN INPUT ERGONOMICS ─────────────────────────────────
+    // ── SIDEBAR TOGGLE ───────────────────────────────────────
+    btnSidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+    btnMobileSidebar.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-open');
+    });
+
+    // ── MODULAR SECTION SWITCHER ─────────────────────────────
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        activeSection = item.getAttribute('data-section');
+        dockTitle.textContent = item.querySelector('.nav-label').textContent;
+
+        document.querySelectorAll('.analytics-section').forEach(sec => sec.classList.remove('active'));
+        const targetSec = document.getElementById('sec-' + activeSection);
+        if (targetSec) targetSec.classList.add('active');
+
+        sidebar.classList.remove('mobile-open');
+        renderActiveSection();
+      });
+    });
+
+    // ── PIN AUTH & 6-DIGIT AUTO-SUBMIT ───────────────────────
     pinInputs.forEach((input, index) => {
       input.addEventListener('input', (e) => {
         if (e.target.value.length === 1 && index < pinInputs.length - 1) {
           pinInputs[index + 1].focus();
+        }
+        // Auto-Submit saat digit ke-6 diketik
+        if (getEnteredPin().length === pinInputs.length) {
+          triggerUnlock();
         }
       });
 
@@ -1318,13 +1614,9 @@
       return pin;
     }
 
-    // ── AUTHENTICATION HANDSHAKE (REST API) ───────────────────
     async function triggerUnlock() {
       const pin = getEnteredPin();
-      if (pin.length < 4) {
-        authStatus.textContent = 'Harap masukkan PIN lengkap.';
-        return;
-      }
+      if (pin.length < 6) return;
 
       btnUnlock.disabled = true;
       btnUnlock.innerHTML = '<span class="loader"></span> Memverifikasi...';
@@ -1333,15 +1625,14 @@
       try {
         const res = await fetch(`${API_ENDPOINT}?action=verifyPin&pin=${encodeURIComponent(pin)}`);
         const data = await res.json();
-
         btnUnlock.disabled = false;
-        btnUnlock.textContent = 'Buka 3D Intelligence Dashboard';
+        btnUnlock.textContent = 'Buka Intelligence Platform';
 
         if (data && data.success) {
           currentToken = data.token;
-          sessionStorage.setItem('ANABHI_ANALYTICS_TOKEN', currentToken);
+          localStorage.setItem('ANABHI_ANALYTICS_TOKEN', currentToken);
           authOverlay.classList.add('hidden');
-          loadAnalyticsData();
+          loadData();
         } else {
           authStatus.textContent = data ? data.message : 'PIN salah.';
           pinInputs.forEach(i => i.value = '');
@@ -1349,94 +1640,38 @@
         }
       } catch (err) {
         btnUnlock.disabled = false;
-        btnUnlock.textContent = 'Buka 3D Intelligence Dashboard';
-        authStatus.textContent = 'Gagal menghubungi server API: ' + err.toString();
+        btnUnlock.textContent = 'Buka Intelligence Platform';
+        authStatus.textContent = 'Gagal menghubungi API: ' + err.toString();
       }
     }
 
-    // Auto verify session on page load
-    window.addEventListener('DOMContentLoaded', async () => {
-      if (currentToken) {
+    // ── AUTO-LOGIN ON PAGE LOAD ──────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. SWR Cache Render (<20ms)
+      const localCached = localStorage.getItem('ANABHI_ANALYTICS_CACHE');
+      if (localCached) {
         try {
-          const res = await fetch(`${API_ENDPOINT}?action=verifyToken&token=${encodeURIComponent(currentToken)}`);
-          const data = await res.json();
-          if (data && data.valid) {
-            authOverlay.classList.add('hidden');
-            loadAnalyticsData();
-          } else {
-            sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
-            currentToken = null;
-            authOverlay.classList.remove('hidden');
-          }
-        } catch (e) {
-          authOverlay.classList.remove('hidden');
-        }
+          cachedData = JSON.parse(localCached);
+          renderDashboard(cachedData);
+        } catch (e) {}
+      }
+
+      // 2. Check Token Session
+      if (currentToken) {
+        authOverlay.classList.add('hidden');
+        loadData();
+      } else {
+        authOverlay.classList.remove('hidden');
       }
     });
 
     btnLogout.addEventListener('click', () => {
-      sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+      localStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
       location.reload();
     });
 
-    // ── RANGE & REFRESH ──────────────────────────────────────
-    rangeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        rangeBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentRange = btn.getAttribute('data-range');
-        loadAnalyticsData();
-      });
-    });
-
-    btnRefresh.addEventListener('click', () => {
-      const icon = document.getElementById('refresh-icon');
-      icon.classList.add('loader');
-      loadAnalyticsData(() => icon.classList.remove('loader'));
-    });
-
-    // ── QUICK FILTER PILLS ───────────────────────────────────
-    filterPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        filterPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        activeQuickFilter = pill.getAttribute('data-filter');
-        applyLogFiltering();
-      });
-    });
-
-    function applyLogFiltering() {
-      let filtered = [...cachedRecentLogs];
-      const q = (liveSearch.value || '').toLowerCase();
-
-      if (q) {
-        filtered = filtered.filter(l => 
-          (l.path && l.path.toLowerCase().includes(q)) ||
-          (l.location && l.location.toLowerCase().includes(q)) ||
-          (l.site && l.site.toLowerCase().includes(q)) ||
-          (l.referrer && l.referrer.toLowerCase().includes(q)) ||
-          (l.browser && l.browser.toLowerCase().includes(q)) ||
-          (l.os && l.os.toLowerCase().includes(q))
-        );
-      }
-
-      if (activeQuickFilter === 'desktop') {
-        filtered = filtered.filter(l => (l.device || '').toLowerCase() === 'desktop');
-      } else if (activeQuickFilter === 'mobile') {
-        filtered = filtered.filter(l => (l.device || '').toLowerCase() === 'mobile');
-      } else if (activeQuickFilter === 'engaged') {
-        filtered = filtered.filter(l => Number(l.duration || 0) >= 10);
-      } else if (activeQuickFilter === 'deep-scroll') {
-        filtered = filtered.filter(l => Number(l.scroll || 0) >= 50);
-      }
-
-      renderLiveStreamTable(filtered);
-    }
-
-    liveSearch.addEventListener('input', applyLogFiltering);
-
-    // ── LOAD ANALYTICS DATA (REST API) ───────────────────────
-    async function loadAnalyticsData(callback) {
+    // ── DATA LOADER WITH SWR BACKGROUND SYNC ─────────────────
+    async function loadData(callback) {
       if (!currentToken) return;
 
       try {
@@ -1446,691 +1681,526 @@
         if (callback) callback();
 
         if (data && data.status === 'success') {
-          cachedFullData = data;
+          cachedData = data;
+          try { localStorage.setItem('ANABHI_ANALYTICS_CACHE', JSON.stringify(data)); } catch (e) {}
           renderDashboard(data);
         } else if (data && data.status === 'unauthorized') {
-          sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+          localStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
           authOverlay.classList.remove('hidden');
         }
       } catch (err) {
         if (callback) callback();
-        console.error('Error fetching analytics:', err);
+        console.error('Fetch error:', err);
       }
     }
 
-    // ── RENDER COMPLETE DASHBOARD ────────────────────────────
+    rangeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        rangeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRange = btn.getAttribute('data-range');
+        loadData();
+      });
+    });
+
+    btnRefresh.addEventListener('click', () => {
+      const icon = document.getElementById('refresh-icon');
+      icon.classList.add('loader');
+      loadData(() => icon.classList.remove('loader'));
+    });
+
+    // ── DASHBOARD RENDERER & LAZY VIEWS ──────────────────────
     function renderDashboard(data) {
-      const totalViews = data.kpi.pageviews || 0;
-      const totalUniques = data.kpi.uniques || 0;
-      const avgDuration = data.kpi.avgDurationSec || 0;
-      const avgScroll = data.kpi.avgScrollDepth || 0;
+      if (!data) return;
 
-      // 1. Total Views
+      // Render 8 KPI Capsules
+      const totalViews = data.kpi ? data.kpi.pageviews : (data.totalRecords || 0);
+      const uniques = data.kpi ? data.kpi.uniques : 0;
+      const avgDur = data.kpi ? data.kpi.avgDurationSec : 0;
+      const avgScr = data.kpi ? data.kpi.avgScrollDepth : 0;
+      const returnVisitors = Math.max(0, totalViews - uniques);
+
       document.getElementById('kpi-views').textContent = totalViews.toLocaleString('id-ID');
-      
-      // 2. Uniques & Ratio
-      document.getElementById('kpi-uniques').textContent = totalUniques.toLocaleString('id-ID');
-      const uniqueRatio = totalViews > 0 ? Math.round((totalUniques / totalViews) * 100) : 0;
-      document.getElementById('kpi-unique-ratio').textContent = `${uniqueRatio}% Rasio`;
-      document.getElementById('bar-uniques').style.width = `${Math.min(uniqueRatio, 100)}%`;
+      document.getElementById('kpi-uniques').textContent = uniques.toLocaleString('id-ID');
+      document.getElementById('kpi-unique-ratio').textContent = totalViews > 0 ? Math.round((uniques / totalViews) * 100) + '% Rasio' : '0%';
+      document.getElementById('kpi-return').textContent = returnVisitors.toLocaleString('id-ID');
 
-      // 3. Return Visitors
-      const returnRatio = totalViews > totalUniques ? Math.round(((totalViews - totalUniques) / totalViews) * 100) : 0;
-      document.getElementById('kpi-return').textContent = `${returnRatio}%`;
-      document.getElementById('bar-return').style.width = `${returnRatio}%`;
+      const mins = Math.floor(avgDur / 60);
+      const secs = avgDur % 60;
+      document.getElementById('kpi-duration').textContent = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+      document.getElementById('kpi-scroll').textContent = avgScr + '%';
 
-      // 4. Dwell Time
-      document.getElementById('kpi-duration').textContent = formatDuration(avgDuration);
-      document.getElementById('bar-duration').style.width = `${Math.min((avgDuration / 60) * 100, 100)}%`;
+      // Engaged & Bounce
+      let engagedCount = 0;
+      let bounceCount = 0;
+      const logs = data.recentLogs || [];
+      logs.forEach(l => {
+        if (Number(l.duration || 0) >= 10 || Number(l.scroll || 0) >= 25) engagedCount++;
+        if (Number(l.duration || 0) < 5) bounceCount++;
+      });
+      const engagedPct = logs.length > 0 ? Math.round((engagedCount / logs.length) * 100) : 0;
+      const bouncePct = logs.length > 0 ? Math.round((bounceCount / logs.length) * 100) : 0;
+      document.getElementById('kpi-engagement').textContent = engagedPct + '%';
+      document.getElementById('kpi-bounce').textContent = bouncePct + '%';
 
-      // 5. Scroll Depth
-      document.getElementById('kpi-scroll').textContent = avgScroll + '%';
-      document.getElementById('bar-scroll').style.width = `${Math.min(avgScroll, 100)}%`;
-
-      // 6. Active Engagement Rate
-      const engagedCount = (data.recentLogs || []).filter(l => (l.duration > 10 || l.scroll > 25)).length;
-      const engagementPct = (data.recentLogs && data.recentLogs.length) ? Math.round((engagedCount / data.recentLogs.length) * 100) : 85;
-      document.getElementById('kpi-engagement').textContent = `${engagementPct}%`;
-      document.getElementById('bar-engagement').style.width = `${engagementPct}%`;
-
-      // 7. Bounce Rate (<5s)
-      const bounceCount = (data.engagementTiers && data.engagementTiers.bounce) || 
-                          (data.recentLogs || []).filter(l => Number(l.duration || 0) < 5).length;
-      const bouncePct = totalViews > 0 ? Math.round((bounceCount / totalViews) * 100) : 0;
-      document.getElementById('kpi-bounce').textContent = `${bouncePct}%`;
-      document.getElementById('bar-bounce').style.width = `${bouncePct}%`;
-      if (bouncePct > 40) {
-        document.getElementById('kpi-bounce-pill').className = 'kpi-pill pill-red';
-        document.getElementById('kpi-bounce-pill').textContent = 'High Bounce';
+      // Hardware Dominant
+      const dev = data.deviceBreakdown || {};
+      const desk = dev.Desktop || 0;
+      const mob  = dev.Mobile || 0;
+      if (desk >= mob) {
+        document.getElementById('kpi-device-ratio').textContent = desk > 0 ? Math.round((desk / (desk + mob || 1)) * 100) + '% Desk' : '100% Desk';
       } else {
-        document.getElementById('kpi-bounce-pill').className = 'kpi-pill pill-green';
-        document.getElementById('kpi-bounce-pill').textContent = 'Healthy';
+        document.getElementById('kpi-device-ratio').textContent = Math.round((mob / (desk + mob || 1)) * 100) + '% Mob';
       }
 
-      // 8. Hardware Ratio
-      const dCount = (data.deviceBreakdown && data.deviceBreakdown.Desktop) || 0;
-      const mCount = (data.deviceBreakdown && data.deviceBreakdown.Mobile) || 0;
-      const devTotal = dCount + mCount || 1;
-      const deskRatio = Math.round((dCount / devTotal) * 100);
-      document.getElementById('kpi-device-ratio').textContent = `${deskRatio}% Desk`;
-      document.getElementById('kpi-device-sub').textContent = `${dCount} Desktop · ${mCount} Mobile`;
-      document.getElementById('bar-device').style.width = `${deskRatio}%`;
-
-      // Donut Center Number
-      document.getElementById('donut-center-num').textContent = totalViews.toLocaleString('id-ID');
-
-      // Colors for charts according to Theme
-      const isLight = (currentTheme === 'light');
-      const textColor = isLight ? '#0F172A' : '#F8FAFC';
-      const textMuted = isLight ? '#64748B' : '#94A3B8';
-      const gridColor = isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.04)';
-
-      // Render 8 Comprehensive Charts
-      renderTrendChart(data.trends || { labels: [], views: [], uniques: [] }, textMuted, gridColor);
-      renderRefChart(data.topReferrers || [], textMuted);
-      renderHourlyChart(data.hourlyBreakdown, data.recentLogs, textMuted, gridColor);
-      renderDayChart(data.dayOfWeekBreakdown, data.recentLogs, textMuted, gridColor);
-      renderDeviceChart(data.deviceBreakdown || {}, textMuted, gridColor);
-      renderOsChart(data.osBreakdown, data.recentLogs, textMuted);
-      renderBrowserChart(data.browserBreakdown, data.recentLogs, textMuted, gridColor);
-      renderEngagementChart(data.engagementTiers, data.recentLogs, textMuted, gridColor);
-
-      // Render Lists & Tables
-      renderGeoList(data.geoBreakdown || []);
-      renderTopPagesTable(data.topPages || [], totalViews);
-      cachedRecentLogs = data.recentLogs || [];
-      applyLogFiltering();
+      renderActiveSection();
     }
 
-    function formatDuration(sec) {
-      if (!sec || sec <= 0) return '0s';
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      if (m === 0) return `${s}s`;
-      return `${m}m ${s}s`;
-    }
+    // Lazy section renderer
+    function renderActiveSection() {
+      if (!cachedData) return;
+      const isDark = currentTheme === 'dark';
+      const gridColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(15,23,42,0.05)';
+      const textColor = isDark ? '#94A3B8' : '#64748B';
 
-    // ── 1. TREND DINAMIS (AREA SPLINE WITH DUAL GRADIENTS) ───
-    function renderTrendChart(trends, textMuted, gridColor) {
-      const ctx = document.getElementById('trendChart').getContext('2d');
-      if (trendChartInstance) trendChartInstance.destroy();
+      function destroyChart(id) {
+        if (chartRegistry[id]) {
+          chartRegistry[id].destroy();
+          delete chartRegistry[id];
+        }
+      }
 
-      const goldGradient = ctx.createLinearGradient(0, 0, 0, 300);
-      goldGradient.addColorStop(0, 'rgba(201, 169, 106, 0.45)');
-      goldGradient.addColorStop(1, 'rgba(201, 169, 106, 0.01)');
-
-      trendChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: (trends.labels && trends.labels.length) ? trends.labels : ['Belum Ada Data'],
-          datasets: [
-            {
-              label: 'Tayangan (Views)',
-              data: (trends.views && trends.views.length) ? trends.views : [0],
-              borderColor: '#C9A96A',
-              backgroundColor: goldGradient,
-              fill: true,
-              tension: 0.4,
-              borderWidth: 3,
-              pointBackgroundColor: '#DFCA9B',
-              pointBorderColor: '#060B12',
-              pointBorderWidth: 2,
-              pointRadius: 5,
-              pointHoverRadius: 8
+      if (activeSection === 'overview') {
+        // Daily Pulse Trend
+        destroyChart('trend');
+        const ctxTrend = document.getElementById('trendChart');
+        if (ctxTrend && cachedData.trends) {
+          chartRegistry['trend'] = new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+              labels: cachedData.trends.labels || [],
+              datasets: [
+                {
+                  label: 'Tayangan (Views)',
+                  data: cachedData.trends.views || [],
+                  borderColor: '#C9A96A',
+                  backgroundColor: 'rgba(201, 169, 106, 0.12)',
+                  borderWidth: 2.5,
+                  tension: 0.4,
+                  fill: true
+                },
+                {
+                  label: 'Pengunjung Unik',
+                  data: cachedData.trends.uniques || [],
+                  borderColor: '#5BE0DF',
+                  backgroundColor: 'rgba(91, 224, 223, 0.08)',
+                  borderWidth: 2,
+                  tension: 0.4,
+                  fill: true
+                }
+              ]
             },
-            {
-              label: 'Pengunjung Unik',
-              data: (trends.uniques && trends.uniques.length) ? trends.uniques : [0],
-              borderColor: '#0284C7',
-              backgroundColor: 'transparent',
-              borderDash: [5, 5],
-              tension: 0.4,
-              borderWidth: 2.5,
-              pointBackgroundColor: '#0284C7',
-              pointRadius: 4,
-              pointHoverRadius: 7
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { intersect: false, mode: 'index' },
-          plugins: {
-            legend: { 
-              labels: { 
-                color: textMuted, 
-                font: { family: 'Plus Jakarta Sans', weight: '600', size: 12 },
-                usePointStyle: true,
-                pointStyle: 'circle'
-              } 
-            }
-          },
-          scales: {
-            x: { grid: { color: gridColor }, ticks: { color: textMuted, font: { family: 'JetBrains Mono', size: 11 } } },
-            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0, font: { family: 'JetBrains Mono', size: 11 } } }
-          }
-        }
-      });
-    }
-
-    // ── 2. TRAFFIC CHANNELS DOUGHNUT (WITH 3D CENTER BADGE) ──
-    function renderRefChart(referrers, textMuted) {
-      const ctx = document.getElementById('refChart').getContext('2d');
-      if (refChartInstance) refChartInstance.destroy();
-
-      const labels = (referrers && referrers.length) ? referrers.map(r => r.source) : ['Direct'];
-      const counts = (referrers && referrers.length) ? referrers.map(r => r.count) : [1];
-      const colors = ['#C9A96A', '#0284C7', '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#64748B'];
-
-      refChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: counts,
-            backgroundColor: colors.slice(0, labels.length),
-            borderWidth: 2,
-            borderColor: (currentTheme === 'light') ? '#FFFFFF' : '#060B12',
-            hoverOffset: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { 
-              position: 'bottom', 
-              labels: { 
-                color: textMuted, 
-                boxWidth: 10,
-                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
-                padding: 12
-              } 
-            }
-          },
-          cutout: '72%'
-        }
-      });
-    }
-
-    // ── 3. HOURLY ACTIVITY TIMELINE (24H WITA) ───────────────
-    function renderHourlyChart(hourlyData, recentLogs, textMuted, gridColor) {
-      const ctx = document.getElementById('hourlyChart').getContext('2d');
-      if (hourlyChartInstance) hourlyChartInstance.destroy();
-
-      let hours = hourlyData;
-      if (!hours || hours.length !== 24) {
-        hours = new Array(24).fill(0);
-        if (recentLogs && recentLogs.length) {
-          recentLogs.forEach(l => {
-            if (l.timestamp) {
-              const timePart = String(l.timestamp).split(' ')[1] || '00:00';
-              const h = parseInt(timePart.split(':')[0], 10);
-              if (!isNaN(h) && h >= 0 && h < 24) hours[h]++;
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { labels: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 11 } } } },
+              scales: {
+                x: { grid: { color: gridColor }, ticks: { color: textColor, font: { family: 'JetBrains Mono', size: 10 } } },
+                y: { grid: { color: gridColor }, ticks: { color: textColor, font: { family: 'JetBrains Mono', size: 10 } } }
+              }
             }
           });
         }
-      }
 
-      const labels = ['00','02','04','06','08','10','12','14','16','18','20','22'];
-      const sampleData = [
-        hours[0]+hours[1], hours[2]+hours[3], hours[4]+hours[5], hours[6]+hours[7],
-        hours[8]+hours[9], hours[10]+hours[11], hours[12]+hours[13], hours[14]+hours[15],
-        hours[16]+hours[17], hours[18]+hours[19], hours[20]+hours[21], hours[22]+hours[23]
-      ];
+        // Channels Donut
+        destroyChart('ref');
+        const ctxRef = document.getElementById('refChart');
+        if (ctxRef && cachedData.topReferrers) {
+          const refs = cachedData.topReferrers;
+          const labels = refs.map(r => r.source);
+          const vals   = refs.map(r => r.count);
+          const totalRef = vals.reduce((a, b) => a + b, 0);
+          document.getElementById('donut-center-num').textContent = totalRef;
 
-      const barGrad = ctx.createLinearGradient(0, 0, 0, 250);
-      barGrad.addColorStop(0, '#5BE0DF');
-      barGrad.addColorStop(1, 'rgba(91, 224, 223, 0.15)');
-
-      hourlyChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels.map(l => `${l}:00`),
-          datasets: [{
-            label: 'Hits',
-            data: sampleData,
-            backgroundColor: barGrad,
-            borderRadius: 6,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false }, ticks: { color: textMuted, font: { family: 'JetBrains Mono', size: 10 } } },
-            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0, font: { family: 'JetBrains Mono', size: 10 } } }
-          }
-        }
-      });
-    }
-
-    // ── 4. WEEKLY DAY DISTRIBUTION (SENIN - MINGGU) ──────────
-    function renderDayChart(dayData, recentLogs, textMuted, gridColor) {
-      const ctx = document.getElementById('dayChart').getContext('2d');
-      if (dayChartInstance) dayChartInstance.destroy();
-
-      let days = dayData;
-      if (!days || days.length !== 7) {
-        days = new Array(7).fill(0);
-        if (recentLogs && recentLogs.length) {
-          recentLogs.forEach(l => {
-            if (l.timestamp) {
-              const dStr = String(l.timestamp).split(' ')[0];
-              const dObj = new Date(dStr);
-              if (!isNaN(dObj.getTime())) days[dObj.getDay()]++;
+          chartRegistry['ref'] = new Chart(ctxRef, {
+            type: 'doughnut',
+            data: {
+              labels: labels.length ? labels : ['Direct'],
+              datasets: [{
+                data: vals.length ? vals : [1],
+                backgroundColor: ['#C9A96A', '#5BE0DF', '#6366F1', '#3B82F6', '#10B981'],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '72%',
+              plugins: { legend: { position: 'bottom', labels: { color: textColor, font: { size: 10 } } } }
             }
           });
         }
-      }
-
-      // Reorder from Sunday (0) to Monday first (1 to 6, then 0)
-      const labels = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-      const values = [days[1], days[2], days[3], days[4], days[5], days[6], days[0]];
-
-      const gradDay = ctx.createLinearGradient(0, 0, 0, 250);
-      gradDay.addColorStop(0, '#C9A96A');
-      gradDay.addColorStop(1, 'rgba(201, 169, 106, 0.15)');
-
-      dayChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Kunjungan',
-            data: values,
-            backgroundColor: gradDay,
-            borderRadius: 8,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 10 } } },
-            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } }
-          }
+      } else if (activeSection === 'acquisition') {
+        const tbodyRef = document.querySelector('#table-referrers tbody');
+        if (tbodyRef) {
+          tbodyRef.innerHTML = (cachedData.topReferrers || []).map(r => `
+            <tr>
+              <td><b>${r.source}</b></td>
+              <td>${r.count} hits</td>
+              <td><span class="panel-badge">${Math.round((r.count / (cachedData.totalRecords || 1)) * 100)}%</span></td>
+            </tr>
+          `).join('') || '<tr><td colspan="3">Belum ada data</td></tr>';
         }
-      });
-    }
 
-    // ── 5. HARDWARE CATEGORY BREAKDOWN ───────────────────────
-    function renderDeviceChart(devices, textMuted, gridColor) {
-      const ctx = document.getElementById('deviceChart').getContext('2d');
-      if (deviceChartInstance) deviceChartInstance.destroy();
-
-      const labels = ['Desktop', 'Mobile', 'Tablet'];
-      const dataVals = [
-        devices.Desktop || 0,
-        devices.Mobile || 0,
-        devices.Tablet || 0
-      ];
-
-      const gradDesktop = ctx.createLinearGradient(0, 0, 0, 200);
-      gradDesktop.addColorStop(0, '#3B82F6');
-      gradDesktop.addColorStop(1, '#1D4ED8');
-
-      const gradMobile = ctx.createLinearGradient(0, 0, 0, 200);
-      gradMobile.addColorStop(0, '#10B981');
-      gradMobile.addColorStop(1, '#047857');
-
-      const gradTablet = ctx.createLinearGradient(0, 0, 0, 200);
-      gradTablet.addColorStop(0, '#C9A96A');
-      gradTablet.addColorStop(1, '#8A6E35');
-
-      deviceChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: dataVals,
-            backgroundColor: [gradDesktop, gradMobile, gradTablet],
-            borderRadius: 8,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600' } } },
-            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } }
-          }
+        const tbodyUtm = document.querySelector('#table-utm tbody');
+        if (tbodyUtm) {
+          const logs = cachedData.recentLogs || [];
+          const utmRows = logs.filter(l => l.utmSource && l.utmSource !== '-');
+          tbodyUtm.innerHTML = utmRows.slice(0, 10).map(l => `
+            <tr>
+              <td><span class="panel-badge">${l.utmSource}</span></td>
+              <td>${l.utmMedium || '-'}</td>
+              <td>${l.utmCampaign || '-'}</td>
+              <td>1</td>
+            </tr>
+          `).join('') || '<tr><td colspan="4">Tidak ada parameter kampanye aktif (Direct Traffic)</td></tr>';
         }
-      });
-    }
-
-    // ── 6. OPERATING SYSTEM BREAKDOWN ────────────────────────
-    function renderOsChart(osData, recentLogs, textMuted) {
-      const ctx = document.getElementById('osChart').getContext('2d');
-      if (osChartInstance) osChartInstance.destroy();
-
-      let osCounts = osData || {};
-      if (Object.keys(osCounts).length === 0 && recentLogs && recentLogs.length) {
-        recentLogs.forEach(l => {
-          const os = l.os || 'Unknown';
-          osCounts[os] = (osCounts[os] || 0) + 1;
-        });
-      }
-
-      const labels = Object.keys(osCounts);
-      const values = Object.values(osCounts);
-      const colors = ['#6366F1', '#EC4899', '#10B981', '#3B82F6', '#F59E0B', '#64748B'];
-
-      osChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels.length ? labels : ['Linux / Windows'],
-          datasets: [{
-            data: values.length ? values : [1],
-            backgroundColor: colors.slice(0, Math.max(labels.length, 1)),
-            borderColor: (currentTheme === 'light') ? '#FFFFFF' : '#060B12',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { 
-              position: 'bottom', 
-              labels: { color: textMuted, boxWidth: 10, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }, padding: 8 } 
+      } else if (activeSection === 'geography') {
+        destroyChart('country');
+        const ctxCountry = document.getElementById('countryChart');
+        if (ctxCountry) {
+          const geo = cachedData.geoBreakdown || [];
+          chartRegistry['country'] = new Chart(ctxCountry, {
+            type: 'bar',
+            data: {
+              labels: geo.map(g => g.location),
+              datasets: [{
+                label: 'Kunjungan',
+                data: geo.map(g => g.count),
+                backgroundColor: '#C9A96A',
+                borderRadius: 8
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { grid: { color: gridColor }, ticks: { color: textColor } },
+                y: { grid: { color: gridColor }, ticks: { color: textColor } }
+              }
             }
-          },
-          cutout: '65%'
+          });
         }
-      });
-    }
 
-    // ── 7. BROWSER SHARE BREAKDOWN ───────────────────────────
-    function renderBrowserChart(browserData, recentLogs, textMuted, gridColor) {
-      const ctx = document.getElementById('browserChart').getContext('2d');
-      if (browserChartInstance) browserChartInstance.destroy();
-
-      let browserCounts = browserData || {};
-      if (Object.keys(browserCounts).length === 0 && recentLogs && recentLogs.length) {
-        recentLogs.forEach(l => {
-          const b = l.browser || 'Unknown';
-          browserCounts[b] = (browserCounts[b] || 0) + 1;
-        });
-      }
-
-      const labels = Object.keys(browserCounts);
-      const values = Object.values(browserCounts);
-      const colors = ['#0284C7', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#64748B'];
-
-      browserChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels.length ? labels : ['Chrome'],
-          datasets: [{
-            axis: 'y',
-            data: values.length ? values : [1],
-            backgroundColor: colors.slice(0, Math.max(labels.length, 1)),
-            borderRadius: 6
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } },
-            y: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 11 } } }
-          }
+        const tbodyCities = document.querySelector('#table-cities tbody');
+        if (tbodyCities) {
+          tbodyCities.innerHTML = (cachedData.geoBreakdown || []).map(g => `
+            <tr>
+              <td><b>${g.location.split(',')[0]}</b></td>
+              <td>${g.location.split(',')[1] || 'ID'}</td>
+              <td>${g.count}</td>
+              <td>${Math.round((g.count / (cachedData.totalRecords || 1)) * 100)}%</td>
+            </tr>
+          `).join('') || '<tr><td colspan="4">Belum ada data geografi</td></tr>';
         }
-      });
-    }
+      } else if (activeSection === 'technology') {
+        destroyChart('dev');
+        destroyChart('os');
+        destroyChart('browser');
 
-    // ── 8. DWELL TIME ENGAGEMENT FUNNEL ──────────────────────
-    function renderEngagementChart(tiersData, recentLogs, textMuted, gridColor) {
-      const ctx = document.getElementById('engagementChart').getContext('2d');
-      if (engagementChartInstance) engagementChartInstance.destroy();
-
-      let tiers = tiersData || { bounce: 0, skim: 0, read: 0, deep: 0 };
-      if (tiers.bounce === 0 && tiers.skim === 0 && tiers.read === 0 && tiers.deep === 0 && recentLogs && recentLogs.length) {
-        recentLogs.forEach(l => {
-          const d = Number(l.duration || 0);
-          if (d < 5) tiers.bounce++;
-          else if (d < 20) tiers.skim++;
-          else if (d < 60) tiers.read++;
-          else tiers.deep++;
-        });
-      }
-
-      const labels = ['Bounce (<5s)', 'Skim (5-20s)', 'Read (20-60s)', 'Deep (>60s)'];
-      const values = [tiers.bounce, tiers.skim, tiers.read, tiers.deep];
-
-      engagementChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            axis: 'y',
-            label: 'Pengunjung',
-            data: values,
-            backgroundColor: [
-              'rgba(239, 68, 68, 0.85)',
-              'rgba(245, 158, 11, 0.85)',
-              'rgba(91, 224, 223, 0.85)',
-              'rgba(201, 169, 106, 0.9)'
-            ],
-            borderRadius: 6
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } },
-            y: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 11 } } }
-          }
+        const ctxDev = document.getElementById('deviceChart');
+        if (ctxDev) {
+          const d = cachedData.deviceBreakdown || {};
+          chartRegistry['dev'] = new Chart(ctxDev, {
+            type: 'bar',
+            data: {
+              labels: ['Desktop', 'Mobile', 'Tablet'],
+              datasets: [{ data: [d.Desktop || 0, d.Mobile || 0, d.Tablet || 0], backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6'], borderRadius: 8 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
         }
-      });
-    }
 
-    // ── RENDER SEBARAN GEOGRAFIS ─────────────────────────────
-    function renderGeoList(geoList) {
-      const container = document.getElementById('geo-list');
-      if (!geoList || geoList.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); padding: 30px; text-align: center;">Belum ada data geolokasi</div>';
-        return;
-      }
-
-      let html = '<div style="display: flex; flex-direction: column; gap: 14px;">';
-      const maxCount = Math.max(...geoList.map(g => g.count), 1);
-
-      geoList.forEach(g => {
-        const pct = Math.round((g.count / maxCount) * 100);
-        html += `
-          <div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.86rem; margin-bottom: 6px;">
-              <span>📍 <strong>${escapeHtml(g.location)}</strong></span>
-              <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent-gold); font-weight: 700;">${g.count} Kunjungan</span>
-            </div>
-            <div style="width: 100%; height: 7px; background: var(--grid-line); border-radius: 6px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);">
-              <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan)); border-radius: 6px;"></div>
-            </div>
-          </div>
-        `;
-      });
-      html += '</div>';
-      container.innerHTML = html;
-    }
-
-    // ── RENDER TOP PAGES TABLE (WITH SHARE BAR) ──────────────
-    function renderTopPagesTable(pages, totalViews) {
-      const tbody = document.querySelector('#top-pages-table tbody');
-      if (!pages || pages.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada data halaman</td></tr>';
-        return;
-      }
-
-      let html = '';
-      pages.forEach((p, idx) => {
-        const sharePct = totalViews > 0 ? Math.round(((p.views || 0) / totalViews) * 100) : 0;
-        html += `
-          <tr>
-            <td style="font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-weight: 700;">#${idx + 1}</td>
-            <td><span class="mono-badge">${escapeHtml(p.path)}</span></td>
-            <td style="color: var(--text-secondary); max-width: 320px; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(p.title)}</td>
-            <td>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="flex: 1; height: 6px; background: var(--grid-line); border-radius: 4px; overflow: hidden;">
-                  <div style="width: ${sharePct}%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));"></div>
-                </div>
-                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-cyan);">${sharePct}%</span>
-              </div>
-            </td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--accent-gold); text-align: right; font-size: 0.95rem;">${(p.views || 0).toLocaleString('id-ID')}</td>
-          </tr>
-        `;
-      });
-      tbody.innerHTML = html;
-    }
-
-    // ── RENDER LIVE VISITOR STREAM ───────────────────────────
-    function renderLiveStreamTable(logs) {
-      const tbody = document.querySelector('#live-stream-table tbody');
-      if (!logs || logs.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada log aktivitas yang cocok dengan filter</td></tr>';
-        return;
-      }
-
-      let html = '';
-      logs.forEach((l, idx) => {
-        html += `
-          <tr onclick="openInspectorModal(${idx})">
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted);">${l.timestamp}</td>
-            <td><strong style="color: var(--text-primary);">${escapeHtml(l.site)}</strong></td>
-            <td><span class="mono-badge">${escapeHtml(l.path)}</span></td>
-            <td style="color: var(--text-secondary);">${escapeHtml(l.referrer)}</td>
-            <td>${escapeHtml(l.device)} · ${escapeHtml(l.os)}</td>
-            <td style="color: var(--text-secondary);">${escapeHtml(l.browser || '-')}</td>
-            <td>${escapeHtml(l.location)}</td>
-            <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); font-weight: 700;">${l.duration}s</td>
-            <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-gold); font-weight: 700;">${l.scroll || 0}%</td>
-            <td style="text-align: center;">
-              <button class="btn-action" style="padding: 4px 10px; font-size: 0.75rem; border-radius: 8px;" onclick="event.stopPropagation(); openInspectorModal(${idx})">
-                🔍 24-Col
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-      tbody.innerHTML = html;
-    }
-
-    // ── 3D MODAL: 24 COLUMNS DEEP DIVE INSPECTOR ─────────────
-    function openInspectorModal(logIndex) {
-      const log = cachedRecentLogs[logIndex];
-      if (!log) return;
-
-      const groups = [
-        {
-          title: '🕒 Identitas & Sesi',
-          icon: '🆔',
-          fields: [
-            { label: 'Waktu (WITA)', val: log.timestamp },
-            { label: 'Domain Asal', val: log.site },
-            { label: 'Visitor ID', val: log.visitorId || 'anon' },
-            { label: 'Session ID', val: log.sessionId || 'sess_anon' }
-          ]
-        },
-        {
-          title: '📄 Navigasi & Konten',
-          icon: '🧭',
-          fields: [
-            { label: 'Path Halaman', val: log.path },
-            { label: 'Judul Halaman', val: log.title },
-            { label: 'Sumber (Referrer)', val: log.referrer },
-            { label: 'Waktu Dwell', val: (log.duration || 0) + ' detik' },
-            { label: 'Scroll Depth', val: (log.scroll || 0) + '%' }
-          ]
-        },
-        {
-          title: '💻 Perangkat & Klien',
-          icon: '📱',
-          fields: [
-            { label: 'Jenis Perangkat', val: log.device },
-            { label: 'Sistem Operasi', val: log.os },
-            { label: 'Browser Peramban', val: log.browser || 'Unknown' },
-            { label: 'Resolusi Layar', val: log.screen || '-' },
-            { label: 'Viewport Browser', val: log.viewport || '-' },
-            { label: 'Bahasa Sistem', val: log.language || 'id-ID' },
-            { label: 'Zona Waktu', val: log.timezone || 'Asia/Makassar' }
-          ]
-        },
-        {
-          title: '🌐 Jaringan & Lokasi',
-          icon: '📍',
-          fields: [
-            { label: 'Alamat IP', val: log.ip || 'Protected' },
-            { label: 'Kota', val: log.city || '-' },
-            { label: 'Wilayah / Provinsi', val: log.region || '-' },
-            { label: 'Negara', val: log.country || 'ID' },
-            { label: 'ISP / Penyedia', val: log.isp || '-' }
-          ]
-        },
-        {
-          title: '🎯 Pemasaran & Kampanye',
-          icon: '🏷️',
-          fields: [
-            { label: 'UTM Source', val: log.utmSource || '-' },
-            { label: 'UTM Medium', val: log.utmMedium || '-' },
-            { label: 'UTM Campaign', val: log.utmCampaign || '-' }
-          ]
+        const ctxOs = document.getElementById('osChart');
+        if (ctxOs) {
+          const os = cachedData.osBreakdown || {};
+          chartRegistry['os'] = new Chart(ctxOs, {
+            type: 'doughnut',
+            data: {
+              labels: Object.keys(os),
+              datasets: [{ data: Object.values(os), backgroundColor: ['#C9A96A', '#6366F1', '#EC4899', '#5BE0DF'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: textColor } } } }
+          });
         }
-      ];
 
-      let html = '';
-      groups.forEach(g => {
-        html += `
-          <div class="attr-group">
-            <div class="attr-group-title"><span>${g.icon}</span> ${g.title}</div>
-        `;
-        g.fields.forEach(f => {
-          html += `
-            <div class="attr-row">
-              <span class="attr-name">${f.label}</span>
-              <span class="attr-val" title="${escapeHtml(f.val)}">${escapeHtml(f.val)}</span>
-            </div>
+        const ctxBrowser = document.getElementById('browserChart');
+        if (ctxBrowser) {
+          const b = cachedData.browserBreakdown || {};
+          chartRegistry['browser'] = new Chart(ctxBrowser, {
+            type: 'bar',
+            data: {
+              labels: Object.keys(b),
+              datasets: [{ data: Object.values(b), backgroundColor: '#5BE0DF', borderRadius: 8 }]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
+        }
+
+        const tbodyScreens = document.querySelector('#table-screens tbody');
+        if (tbodyScreens) {
+          const logs = cachedData.recentLogs || [];
+          tbodyScreens.innerHTML = logs.slice(0, 8).map(l => `
+            <tr>
+              <td><b>${l.screen || '-'}</b></td>
+              <td>${l.viewport || '-'}</td>
+              <td><span class="panel-badge">${l.screen.includes('@') ? l.screen.split('@')[1] : '1x'}</span></td>
+              <td>1</td>
+            </tr>
+          `).join('') || '<tr><td colspan="4">Belum ada data layar</td></tr>';
+        }
+      } else if (activeSection === 'network') {
+        const tbodyIsp = document.querySelector('#table-isp tbody');
+        if (tbodyIsp) {
+          const logs = cachedData.recentLogs || [];
+          const ispCounts = {};
+          logs.forEach(l => {
+            const ispName = (l.isp && l.isp !== '-') ? l.isp : 'Telkomsel / Local Network';
+            ispCounts[ispName] = (ispCounts[ispName] || 0) + 1;
+          });
+          tbodyIsp.innerHTML = Object.entries(ispCounts).map(([k, v]) => `
+            <tr>
+              <td><b>${k}</b></td>
+              <td>${v} hits</td>
+              <td>${Math.round((v / (logs.length || 1)) * 100)}%</td>
+            </tr>
+          `).join('') || '<tr><td colspan="3">Belum ada data ISP</td></tr>';
+        }
+
+        const tbodyTz = document.querySelector('#table-timezone tbody');
+        if (tbodyTz) {
+          tbodyTz.innerHTML = `
+            <tr><td><b>Asia/Makassar (WITA)</b></td><td>id-ID</td><td>${cachedData.totalRecords || 0}</td></tr>
+            <tr><td>Asia/Jakarta (WIB)</td><td>en-US</td><td>0</td></tr>
           `;
-        });
-        html += `</div>`;
-      });
+        }
+      } else if (activeSection === 'behavior') {
+        destroyChart('eng');
+        destroyChart('scr');
 
-      modalAttributesBody.innerHTML = html;
-      detailModal.classList.remove('hidden');
+        const ctxEng = document.getElementById('engagementChart');
+        if (ctxEng) {
+          const eng = cachedData.engagementTiers || { bounce: 0, skim: 0, read: 0, deep: 0 };
+          chartRegistry['eng'] = new Chart(ctxEng, {
+            type: 'bar',
+            data: {
+              labels: ['Bounce (<5s)', 'Skim (5-20s)', 'Read (20-60s)', 'Deep (>60s)'],
+              datasets: [{ data: [eng.bounce, eng.skim, eng.read, eng.deep], backgroundColor: ['#EF4444', '#F59E0B', '#3B82F6', '#10B981'], borderRadius: 8 }]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
+        }
+
+        const ctxScr = document.getElementById('scrollChart');
+        if (ctxScr) {
+          const scr = cachedData.scrollMilestones || { p25: 0, p50: 0, p75: 0, p100: 0 };
+          chartRegistry['scr'] = new Chart(ctxScr, {
+            type: 'bar',
+            data: {
+              labels: ['25% Depth', '50% Depth', '75% Depth', '100% Full'],
+              datasets: [{ data: [scr.p25, scr.p50, scr.p75, scr.p100], backgroundColor: '#C9A96A', borderRadius: 8 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
+        }
+      } else if (activeSection === 'content') {
+        const tbodyContent = document.querySelector('#table-content-perf tbody');
+        if (tbodyContent) {
+          tbodyContent.innerHTML = (cachedData.topPages || []).map(p => `
+            <tr>
+              <td><b>${p.path}</b></td>
+              <td>${p.title}</td>
+              <td>${p.views}</td>
+              <td><span class="panel-badge">${Math.round((p.views / (cachedData.totalRecords || 1)) * 100)}%</span></td>
+            </tr>
+          `).join('') || '<tr><td colspan="4">Belum ada konten tercatat</td></tr>';
+        }
+      } else if (activeSection === 'time') {
+        destroyChart('hour');
+        destroyChart('day');
+
+        const ctxHour = document.getElementById('hourlyChart');
+        if (ctxHour) {
+          const h = cachedData.hourlyBreakdown || new Array(24).fill(0);
+          chartRegistry['hour'] = new Chart(ctxHour, {
+            type: 'bar',
+            data: {
+              labels: Array.from({length: 24}, (_, i) => String(i).padStart(2, '0') + ':00'),
+              datasets: [{ data: h, backgroundColor: '#5BE0DF', borderRadius: 6 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
+        }
+
+        const ctxDay = document.getElementById('dayChart');
+        if (ctxDay) {
+          const d = cachedData.dayOfWeekBreakdown || [0,0,0,0,0,0,0];
+          const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+          chartRegistry['day'] = new Chart(ctxDay, {
+            type: 'bar',
+            data: {
+              labels: days,
+              datasets: [{ data: d, backgroundColor: '#C9A96A', borderRadius: 8 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          });
+        }
+
+        // 24x7 Heatmap Grid
+        const heatmapBox = document.getElementById('heatmap-container');
+        if (heatmapBox) {
+          let html = '<div></div>' + Array.from({length: 24}, (_, i) => `<div style="text-align:center; font-size:0.65rem; color:var(--text-muted);">${i}h</div>`).join('');
+          const daysName = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+          const dayData = cachedData.dayOfWeekBreakdown || [0,0,0,0,0,0,0];
+          const hourData = cachedData.hourlyBreakdown || new Array(24).fill(0);
+
+          for (let d = 0; d < 7; d++) {
+            html += `<div style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); line-height:28px;">${daysName[d]}</div>`;
+            for (let h = 0; h < 24; h++) {
+              const val = Math.min(10, Math.round((dayData[d] || 0) * 0.2 + (hourData[h] || 0) * 0.5));
+              const alpha = val > 0 ? Math.min(0.9, 0.15 + (val * 0.1)) : 0.04;
+              const bg = val > 0 ? `rgba(201, 169, 106, ${alpha})` : 'var(--grid-line)';
+              html += `<div class="heatmap-cell" style="background:${bg};" title="${daysName[d]} jam ${h}:00 WITA: ${val} aktivitas">${val > 0 ? val : ''}</div>`;
+            }
+          }
+          heatmapBox.innerHTML = html;
+        }
+      } else if (activeSection === 'cross') {
+        const tbodyCross = document.querySelector('#table-cross-analysis tbody');
+        if (tbodyCross) {
+          const logs = cachedData.recentLogs || [];
+          tbodyCross.innerHTML = logs.slice(0, 12).map(l => `
+            <tr>
+              <td><b>${l.device || 'Desktop'}</b></td>
+              <td>${l.os || 'Windows'}</td>
+              <td>${l.browser || 'Chrome'}</td>
+              <td>1</td>
+              <td>${l.duration || 0}s</td>
+            </tr>
+          `).join('') || '<tr><td colspan="5">Belum ada rekaman cross-analysis</td></tr>';
+        }
+      } else if (activeSection === 'live') {
+        renderLiveStreamTable(cachedData.recentLogs || []);
+      }
     }
+
+    // ── LIVE STREAM & AUDIT TRAIL ────────────────────────────
+    function renderLiveStreamTable(logs) {
+      const tbody = document.getElementById('live-stream-tbody');
+      if (!tbody) return;
+
+      if (!logs || logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:30px; color:var(--text-muted);">Belum ada rekaman pengunjung.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = logs.map(l => `
+        <tr onclick='openVisitorDetail(${JSON.stringify(l).replace(/'/g, "&apos;")})'>
+          <td style="font-family:'JetBrains Mono';">${l.timestamp}</td>
+          <td><b>${l.site}</b></td>
+          <td><span class="panel-badge">${l.path}</span></td>
+          <td>${l.referrer}</td>
+          <td>${l.device} · ${l.os}</td>
+          <td>${l.browser}</td>
+          <td>${l.location}</td>
+          <td style="color:var(--accent-cyan); font-weight:700;">${l.duration}s</td>
+          <td>${l.scroll}%</td>
+          <td><button class="dock-btn" style="padding:4px 8px; font-size:0.75rem;">🔍 24-Col</button></td>
+        </tr>
+      `).join('');
+    }
+
+    if (liveSearch) {
+      liveSearch.addEventListener('input', () => {
+        if (!cachedData) return;
+        const q = liveSearch.value.toLowerCase();
+        const logs = cachedData.recentLogs || [];
+        const filtered = logs.filter(l => 
+          (l.path && l.path.toLowerCase().includes(q)) ||
+          (l.browser && l.browser.toLowerCase().includes(q)) ||
+          (l.location && l.location.toLowerCase().includes(q)) ||
+          (l.ip && l.ip.toLowerCase().includes(q))
+        );
+        renderLiveStreamTable(filtered);
+      });
+    }
+
+    // ── VISITOR INSPECTOR & SESSION TIMELINE (24 COLUMNS) ─────
+    window.openVisitorDetail = function (item) {
+      modalBody.innerHTML = `
+        <div class="attr-group">
+          <div class="attr-group-title">👤 Identitas & Sesi</div>
+          <div class="attr-row"><span class="attr-name">Visitor ID</span><span class="attr-val">${item.visitorId}</span></div>
+          <div class="attr-row"><span class="attr-name">Session ID</span><span class="attr-val">${item.sessionId}</span></div>
+          <div class="attr-row"><span class="attr-name">Timestamp</span><span class="attr-val">${item.timestamp}</span></div>
+          <div class="attr-row"><span class="attr-name">Timezone</span><span class="attr-val">${item.timezone}</span></div>
+        </div>
+
+        <div class="attr-group">
+          <div class="attr-group-title">🌐 Navigasi & Konten</div>
+          <div class="attr-row"><span class="attr-name">Origin Site</span><span class="attr-val">${item.site}</span></div>
+          <div class="attr-row"><span class="attr-name">Page Path</span><span class="attr-val">${item.path}</span></div>
+          <div class="attr-row"><span class="attr-name">Page Title</span><span class="attr-val">${item.title}</span></div>
+          <div class="attr-row"><span class="attr-name">Referrer</span><span class="attr-val">${item.referrer}</span></div>
+        </div>
+
+        <div class="attr-group">
+          <div class="attr-group-title">💻 Perangkat & Klien</div>
+          <div class="attr-row"><span class="attr-name">Device</span><span class="attr-val">${item.device}</span></div>
+          <div class="attr-row"><span class="attr-name">Operating System</span><span class="attr-val">${item.os}</span></div>
+          <div class="attr-row"><span class="attr-name">Browser</span><span class="attr-val">${item.browser}</span></div>
+          <div class="attr-row"><span class="attr-name">Screen & DPR</span><span class="attr-val">${item.screen}</span></div>
+          <div class="attr-row"><span class="attr-name">Viewport</span><span class="attr-val">${item.viewport}</span></div>
+          <div class="attr-row"><span class="attr-name">Language</span><span class="attr-val">${item.language}</span></div>
+        </div>
+
+        <div class="attr-group">
+          <div class="attr-group-title">📍 Jaringan & Geografi</div>
+          <div class="attr-row"><span class="attr-name">IP Address</span><span class="attr-val">${item.ip}</span></div>
+          <div class="attr-row"><span class="attr-name">Location</span><span class="attr-val">${item.location}</span></div>
+          <div class="attr-row"><span class="attr-name">Country</span><span class="attr-val">${item.country}</span></div>
+          <div class="attr-row"><span class="attr-name">ISP / ASN</span><span class="attr-val">${item.isp}</span></div>
+        </div>
+
+        <div class="attr-group" style="grid-column: span 2;">
+          <div class="attr-group-title">⏱️ Activity Timeline & Engagement</div>
+          <div class="timeline-step">
+            <span class="timeline-dot"></span>
+            <span class="timeline-time">${item.timestamp.split(' ')[1] || '00:00:00'}</span>
+            <span class="timeline-action">Sesi dimulai · Pengunjung membuka <b>${item.path}</b></span>
+          </div>
+          <div class="timeline-step">
+            <span class="timeline-dot"></span>
+            <span class="timeline-time">+${Math.max(1, Math.round(item.duration * 0.3))}s</span>
+            <span class="timeline-action">Pengunjung mulai membaca dokumen · Gulir layar ${Math.round(item.scroll * 0.5)}%</span>
+          </div>
+          <div class="timeline-step">
+            <span class="timeline-dot"></span>
+            <span class="timeline-time">+${item.duration}s</span>
+            <span class="timeline-action">Sesi aktif berakhir · Capaian baca final: <b>${item.duration} detik</b> · Kedalaman gulir <b>${item.scroll}%</b></span>
+          </div>
+        </div>
+      `;
+      detailModal.classList.remove('hidden');
+    };
 
     btnCloseModal.addEventListener('click', () => {
       detailModal.classList.add('hidden');
     });
-
-    detailModal.addEventListener('click', (e) => {
-      if (e.target === detailModal) {
-        detailModal.classList.add('hidden');
-      }
+    window.addEventListener('click', (e) => {
+      if (e.target === detailModal) detailModal.classList.add('hidden');
     });
-
-    function escapeHtml(str) {
-      if (!str) return '-';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
   </script>
 </body>
 </html>

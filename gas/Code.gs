@@ -172,6 +172,8 @@ function handleVerifyPin(inputPin) {
 
     const sessionToken = Utilities.getUuid();
     cache.put('TOKEN_' + sessionToken, 'VALID', SESSION_TTL_SEC);
+    props.setProperty('ACTIVE_SESSION_TOKEN', sessionToken);
+    props.setProperty('ACTIVE_SESSION_TIME', String(now));
 
     return jsonResponse({
       success: true,
@@ -205,16 +207,17 @@ function handleVerifyPin(inputPin) {
 }
 
 function handleVerifyToken(token) {
-  const cache = CacheService.getScriptCache();
   if (!token) return jsonResponse({ valid: false });
-  const status = cache.get('TOKEN_' + token);
-  return jsonResponse({ valid: status === 'VALID' });
+  return jsonResponse({ valid: isAuthorized(token) });
 }
 
 function isAuthorized(token) {
   if (!token) return false;
   const cache = CacheService.getScriptCache();
-  return cache.get('TOKEN_' + token) === 'VALID';
+  if (cache.get('TOKEN_' + token) === 'VALID') return true;
+  const props = PropertiesService.getScriptProperties();
+  if (props.getProperty('ACTIVE_SESSION_TOKEN') === token) return true;
+  return false;
 }
 
 // ── 4. ANALYTICS AGGREGATOR & REPORTING ENGINE ─────────────────
@@ -374,8 +377,8 @@ function handleGetAnalytics(token, rangeParam) {
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
 
-  // Mengembalikan hingga 50 log terakhir dengan seluruh 24 kolom data lengkap
-  const recentLogs = filtered.slice(-50).reverse().map(r => ({
+  // Mengembalikan hingga 100 log terakhir dengan seluruh 24 kolom data lengkap
+  const recentLogs = filtered.slice(-100).reverse().map(r => ({
     timestamp: r[0] || '-',
     site: r[1] || 'anabhidev.com',
     path: r[2] || '/',
