@@ -22,11 +22,29 @@
   <link rel="apple-touch-icon" href="https://anabhidev.com/apple-touch-icon.png">
   <meta name="theme-color" content="#060B12">
 
-  <!-- Google Fonts & Chart.js CDN -->
+  <!-- Resource Hints & DNS Prefetching -->
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="dns-prefetch" href="https://script.google.com">
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="https://script.googleusercontent.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Instant Session Bypass (Zero-Flicker PIN Overlay) -->
+  <script>
+    try {
+      if (localStorage.getItem('ANABHI_ANALYTICS_TOKEN')) {
+        document.documentElement.classList.add('auth-bypassed');
+      }
+    } catch(e) {}
+  </script>
+  <style>
+    html.auth-bypassed #auth-overlay {
+      display: none !important;
+    }
+  </style>
 
   <style>
     /* ── DUAL THEME ENGINE (DARK OBSIDIAN & LIGHT ALABASTER) ─────── */
@@ -1520,6 +1538,15 @@
     let cachedData = null;
     let chartRegistry = {};
 
+    // Chart.js High-Performance Global Defaults (Fast, Snappy 250ms Transitions)
+    if (window.Chart) {
+      Chart.defaults.animation.duration = 250;
+      Chart.defaults.animation.easing = 'easeOutQuart';
+      Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, sans-serif";
+      Chart.defaults.responsive = true;
+      Chart.defaults.maintainAspectRatio = false;
+    }
+
     // Elements
     const authOverlay = document.getElementById('auth-overlay');
     const pinInputs   = document.querySelectorAll('.pin-digit');
@@ -1631,8 +1658,17 @@
         if (data && data.success) {
           currentToken = data.token;
           localStorage.setItem('ANABHI_ANALYTICS_TOKEN', currentToken);
+          document.documentElement.classList.add('auth-bypassed');
           authOverlay.classList.add('hidden');
-          loadData();
+
+          // Turbo Instant Render: Jika GAS sudah menyertakan data 7d di response ini, langsung render tanpa 2nd roundtrip!
+          if (data.analytics && data.analytics.status === 'success') {
+            cachedData = data.analytics;
+            try { localStorage.setItem('ANABHI_ANALYTICS_CACHE', JSON.stringify(data.analytics)); } catch (e) {}
+            renderDashboard(data.analytics);
+          } else {
+            loadData();
+          }
         } else {
           authStatus.textContent = data ? data.message : 'PIN salah.';
           pinInputs.forEach(i => i.value = '');
@@ -1647,7 +1683,7 @@
 
     // ── AUTO-LOGIN ON PAGE LOAD ──────────────────────────────
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. SWR Cache Render (<20ms)
+      // 1. SWR Cache Render (<20ms instant display)
       const localCached = localStorage.getItem('ANABHI_ANALYTICS_CACHE');
       if (localCached) {
         try {
@@ -1658,15 +1694,18 @@
 
       // 2. Check Token Session
       if (currentToken) {
+        document.documentElement.classList.add('auth-bypassed');
         authOverlay.classList.add('hidden');
         loadData();
       } else {
+        document.documentElement.classList.remove('auth-bypassed');
         authOverlay.classList.remove('hidden');
       }
     });
 
     btnLogout.addEventListener('click', () => {
       localStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+      document.documentElement.classList.remove('auth-bypassed');
       location.reload();
     });
 

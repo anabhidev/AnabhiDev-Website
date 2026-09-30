@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════
 //  AnabhiDev-Analytics — Universal Visitor Intelligence & REST API Hub
-//  Module    : Headless Ingestion, PIN Auth & Real-Time Analytics Engine
+//  Module    : Headless Ingestion, PIN Auth & Turbo Analytics Engine
 //  Package   : Anabhi Dev Master Ecosystem (SOP v2.12 Compliance)
 //  File      : gas/Code.gs
 //  Author    : Development · Anabhi Dev
-//  Version   : 1.3.0
+//  Version   : 2.1.0
 //  Status    : PRODUCTION LIVE
-//  Effective : Rabu, 30 September 2026 pukul 18.25.00 WITA
+//  Effective : Rabu, 30 September 2026 pukul 19.10.00 WITA
 //  Admin UI  : https://anabhidev.com/adm1nLogs.html
 // ═══════════════════════════════════════════════════════════════════
 
@@ -17,6 +17,7 @@ const SHEET_CONFIG = 'Config';
 const MAX_FAILED_ATTEMPTS = 5;               // Maksimal salah ketik PIN sebelum lockout
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000;  // 15 Menit lockout (Anti Brute-Force)
 const SESSION_TTL_SEC     = 12 * 3600;       // 12 Jam Session Token (CacheService)
+const CACHE_TTL_SEC       = 180;             // 3 Menit Server-side Aggregation Cache
 const DEFAULT_FALLBACK_PIN = '282828';       // Default PIN jika belum disetel di Script Properties
 
 // ── 1. ROUTER: doGet (Pure Headless JSON REST API) ──────────────
@@ -47,7 +48,7 @@ function doGet(e) {
   return jsonResponse({
     status: 'online',
     service: 'AnabhiDev-Analytics Engine',
-    version: '1.1.0',
+    version: '2.1.0',
     compliance: 'Master SOP AnabhiDev v2.12',
     dashboardUrl: 'https://anabhidev.com/adm1nLogs.html',
     timestamp: Utilities.formatDate(new Date(), 'Asia/Makassar', 'yyyy-MM-dd HH:mm:ss') + ' WITA'
@@ -125,6 +126,9 @@ function doPost(e) {
 
     sheet.appendRow(logRow);
 
+    // Invalidate cached summaries so fresh data is visible promptly
+    invalidateAnalyticsCache();
+
     return jsonResponse({
       status: 'success',
       message: 'Log beacon recorded successfully',
@@ -175,10 +179,14 @@ function handleVerifyPin(inputPin) {
     props.setProperty('ACTIVE_SESSION_TOKEN', sessionToken);
     props.setProperty('ACTIVE_SESSION_TIME', String(now));
 
+    // Pre-calculate 7d analytics to deliver in a SINGLE roundtrip!
+    const initialAnalytics = computeAnalyticsData('7d');
+
     return jsonResponse({
       success: true,
       token: sessionToken,
       expiresIn: SESSION_TTL_SEC,
+      analytics: initialAnalytics,
       message: 'Otentikasi berhasil. Selamat datang di Anabhi Analytics Hub.'
     });
   } else {
@@ -220,7 +228,17 @@ function isAuthorized(token) {
   return false;
 }
 
-// ── 4. ANALYTICS AGGREGATOR & REPORTING ENGINE ─────────────────
+function invalidateAnalyticsCache() {
+  try {
+    const cache = CacheService.getScriptCache();
+    cache.remove('ANALYTICS_CACHE_today');
+    cache.remove('ANALYTICS_CACHE_7d');
+    cache.remove('ANALYTICS_CACHE_30d');
+    cache.remove('ANALYTICS_CACHE_all');
+  } catch (e) {}
+}
+
+// ── 4. TURBO ANALYTICS AGGREGATOR & REPORTING ENGINE ───────────
 function handleGetAnalytics(token, rangeParam) {
   if (!isAuthorized(token)) {
     return jsonResponse({
@@ -230,11 +248,33 @@ function handleGetAnalytics(token, rangeParam) {
   }
 
   const range = rangeParam || '7d';
+  const data = computeAnalyticsData(range);
+  return jsonResponse(data);
+}
+
+function computeAnalyticsData(rangeParam) {
+  const range = rangeParam || '7d';
+  const cacheKey = 'ANALYTICS_CACHE_' + range;
+  const cache = CacheService.getScriptCache();
+
+  // 1. Coba ambil dari CacheService (Response <100ms)
+  try {
+    const cachedStr = cache.get(cacheKey);
+    if (cachedStr) {
+      const parsed = JSON.parse(cachedStr);
+      if (parsed && parsed.status === 'success') {
+        parsed._cached = true;
+        return parsed;
+      }
+    }
+  } catch (e) {}
+
+  // 2. Hitung dari Google Sheets jika cache miss
   const sheet = getOrCreateLogsSheet();
   const lastRow = sheet.getLastRow();
 
   if (lastRow <= 1) {
-    return jsonResponse({
+    const emptyResult = {
       status: 'success',
       totalRecords: 0,
       kpi: { pageviews: 0, uniques: 0, avgDurationSec: 0, avgScrollDepth: 0 },
@@ -243,9 +283,15 @@ function handleGetAnalytics(token, rangeParam) {
       topReferrers: [],
       deviceBreakdown: { Desktop: 0, Mobile: 0, Tablet: 0 },
       osBreakdown: {},
+      browserBreakdown: {},
+      hourlyBreakdown: new Array(24).fill(0),
+      dayOfWeekBreakdown: new Array(7).fill(0),
+      engagementTiers: { bounce: 0, skim: 0, read: 0, deep: 0 },
+      scrollMilestones: { p25: 0, p50: 0, p75: 0, p100: 0 },
       geoBreakdown: [],
       recentLogs: []
-    });
+    };
+    return emptyResult;
   }
 
   const data = sheet.getRange(2, 1, lastRow - 1, 24).getValues();
@@ -409,7 +455,7 @@ function handleGetAnalytics(token, rangeParam) {
   const avgDuration = durationCount > 0 ? Math.round(totalDuration / durationCount) : 0;
   const avgScroll   = scrollCount > 0 ? Math.round(totalScroll / scrollCount) : 0;
 
-  return jsonResponse({
+  const result = {
     status: 'success',
     totalRecords: filtered.length,
     kpi: {
@@ -434,7 +480,17 @@ function handleGetAnalytics(token, rangeParam) {
     scrollMilestones: scrollMilestones,
     geoBreakdown: geoBreakdown,
     recentLogs: recentLogs
-  });
+  };
+
+  // Simpan ke CacheService untuk query berikutnya (<100KB per chunk)
+  try {
+    const jsonStr = JSON.stringify(result);
+    if (jsonStr.length < 100000) {
+      cache.put(cacheKey, jsonStr, CACHE_TTL_SEC);
+    }
+  } catch (e) {}
+
+  return result;
 }
 
 // ── 5. UTILITIES & INITIALIZER ──────────────────────────────────
