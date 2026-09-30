@@ -1651,7 +1651,14 @@
 
       try {
         const res = await fetch(`${API_ENDPOINT}?action=verifyPin&pin=${encodeURIComponent(pin)}`);
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error('Respon otentikasi tidak valid dari server.');
+        }
+
         btnUnlock.disabled = false;
         btnUnlock.textContent = 'Buka Intelligence Platform';
 
@@ -1660,24 +1667,16 @@
           localStorage.setItem('ANABHI_ANALYTICS_TOKEN', currentToken);
           document.documentElement.classList.add('auth-bypassed');
           authOverlay.classList.add('hidden');
-
-          // Turbo Instant Render: Jika GAS sudah menyertakan data 7d di response ini, langsung render tanpa 2nd roundtrip!
-          if (data.analytics && data.analytics.status === 'success') {
-            cachedData = data.analytics;
-            try { localStorage.setItem('ANABHI_ANALYTICS_CACHE', JSON.stringify(data.analytics)); } catch (e) {}
-            renderDashboard(data.analytics);
-          } else {
-            loadData();
-          }
+          loadData();
         } else {
-          authStatus.textContent = data ? data.message : 'PIN salah.';
+          authStatus.textContent = (data && data.message) ? data.message : 'PIN salah. Masukkan 6 digit Master PIN.';
           pinInputs.forEach(i => i.value = '');
           pinInputs[0].focus();
         }
       } catch (err) {
         btnUnlock.disabled = false;
         btnUnlock.textContent = 'Buka Intelligence Platform';
-        authStatus.textContent = 'Gagal menghubungi API: ' + err.toString();
+        authStatus.textContent = 'Gagal verifikasi: ' + err.message;
       }
     }
 
@@ -1715,7 +1714,15 @@
 
       try {
         const res = await fetch(`${API_ENDPOINT}?action=getAnalytics&token=${encodeURIComponent(currentToken)}&range=${encodeURIComponent(currentRange)}`);
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.warn('API returned non-JSON:', text.substring(0, 100));
+          if (callback) callback();
+          return;
+        }
 
         if (callback) callback();
 
@@ -1725,6 +1732,7 @@
           renderDashboard(data);
         } else if (data && data.status === 'unauthorized') {
           localStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+          document.documentElement.classList.remove('auth-bypassed');
           authOverlay.classList.remove('hidden');
         }
       } catch (err) {
