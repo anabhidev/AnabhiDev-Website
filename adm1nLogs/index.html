@@ -3,11 +3,11 @@
      AnabhiDev-WEB — Executive Visitor Intelligence & Analytics Platform
      HTML5 · CSS 3D Glassmorphism · Modular 10-Section Architecture · Chart.js
      Development · Anabhi Dev
-     Version   : 2.0.0
+     Version   : 2.1.0
      File      : adm1nLogs/index.html
      Status    : PRODUCTION LIVE
-     Effective : Rabu, 30 September 2026 pukul 18.55.00 WITA
-     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0
+     Effective : Rabu, 30 September 2026 pukul 20.05.00 WITA
+     Master Spec: Analytics Intelligence Dashboard Master Brief v2.0 (Official Logo + All Reports)
      ================================================================ -->
 <html lang="id" data-theme="dark">
 <head>
@@ -306,61 +306,80 @@
     }
 
     .sidebar-header {
-      padding: 20px 16px;
+      padding: 22px 16px 18px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-subtle);
+      gap: 8px;
+      min-height: 84px;
     }
 
-    .sidebar-brand {
+    .sidebar-brand-box {
       display: flex;
       align-items: center;
-      gap: 12px;
+      text-decoration: none;
       overflow: hidden;
-      white-space: nowrap;
+      flex: 1;
+      padding-right: 6px;
+      transition: opacity 0.25s ease;
     }
 
-    .sidebar-logo-pill {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-gold), #8A6B29);
-      display: flex;
-      align-items: center;
+    .sidebar-brand-logo {
+      height: 44px;
+      width: auto;
+      max-width: 170px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-brand-logo:hover {
+      transform: scale(1.02);
+    }
+
+    /* Master SOP Logo Theme Switching */
+    [data-theme="dark"] .sidebar-brand-logo.logo-light { display: none !important; }
+    [data-theme="dark"] .sidebar-brand-logo.logo-dark  { display: block !important; }
+    [data-theme="light"] .sidebar-brand-logo.logo-dark { display: none !important; }
+    [data-theme="light"] .sidebar-brand-logo.logo-light { display: block !important; filter: contrast(1.06) brightness(1.02); }
+
+    /* Collapsed sidebar behavior */
+    .app-sidebar.collapsed .sidebar-header {
+      padding: 18px 8px;
       justify-content: center;
-      color: #060B12;
-      font-weight: 800;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-      box-shadow: 0 4px 15px var(--accent-gold-glow);
     }
 
-    .sidebar-brand-text {
-      display: flex;
-      flex-direction: column;
-      transition: opacity 0.2s ease;
+    .app-sidebar.collapsed .sidebar-brand-box {
+      display: none;
     }
 
-    .app-sidebar.collapsed .sidebar-brand-text {
-      opacity: 0;
-      pointer-events: none;
-      width: 0;
+    .app-sidebar.collapsed .btn-sidebar-toggle {
+      margin: 0 auto;
     }
 
-    .sidebar-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
+    /* All Reports & Navigation Divider */
+    .nav-item-all {
+      background: linear-gradient(135deg, rgba(201, 169, 106, 0.12), rgba(91, 224, 223, 0.08));
+      border: 1px solid var(--border-gold) !important;
+      font-weight: 700 !important;
+      color: var(--accent-gold-light) !important;
+      margin-bottom: 4px;
     }
-
-    .sidebar-sub {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .nav-item-all:hover {
+      background: linear-gradient(135deg, rgba(201, 169, 106, 0.22), rgba(91, 224, 223, 0.15)) !important;
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
+    }
+    .nav-item-all.active {
+      background: linear-gradient(135deg, var(--accent-gold), #8A6B29) !important;
+      color: #060B12 !important;
+      border-color: transparent !important;
+      box-shadow: 0 4px 18px var(--accent-gold-glow);
+    }
+    .nav-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 8px 8px 8px;
     }
 
     .btn-sidebar-toggle {
@@ -607,6 +626,42 @@
 
     .analytics-section.active {
       display: block;
+    }
+
+    /* All Reports Unified Mode */
+    .workspace-container.show-all .analytics-section {
+      display: block !important;
+      margin-bottom: 48px;
+    }
+
+    .section-banner-title {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-gold-light);
+      margin-bottom: 20px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .workspace-container.show-all .section-banner-title {
+      display: flex;
+    }
+
+    .section-banner-badge {
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(201, 169, 106, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(201, 169, 106, 0.3);
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: auto;
     }
 
     @keyframes fadeIn {
@@ -1092,20 +1147,22 @@
     <!-- ── 3D COLLAPSIBLE SIDEBAR ────────────────────────────── -->
     <aside id="app-sidebar" class="app-sidebar">
       <div class="sidebar-header">
-        <div class="sidebar-brand">
-          <div class="sidebar-logo-pill">A</div>
-          <div class="sidebar-brand-text">
-            <span class="sidebar-title">Anabhi Dev</span>
-            <span class="sidebar-sub">Intelligence v2.0</span>
-          </div>
-        </div>
+        <a href="/" class="sidebar-brand-box" title="Anabhi Dev — Kembali ke Beranda">
+          <img src="/logo.webp" alt="Anabhi Dev" class="sidebar-brand-logo logo-dark" width="150" height="44">
+          <img src="/logo-black.webp" alt="Anabhi Dev" class="sidebar-brand-logo logo-light" width="150" height="44">
+        </a>
         <button id="btn-toggle-sidebar" class="btn-sidebar-toggle" title="Ciutkan / Lebarkan Sidebar">
           <span>⇋</span>
         </button>
       </div>
 
-      <!-- 10 Modular Navigation Items -->
+      <!-- Modular Navigation Menu: All-in-One + 10 Specialists -->
       <nav class="sidebar-nav">
+        <div class="nav-item nav-item-all" data-section="all">
+          <span class="nav-icon">📑</span>
+          <span class="nav-label">Semua Laporan (All)</span>
+        </div>
+        <div class="nav-divider"></div>
         <div class="nav-item active" data-section="overview">
           <span class="nav-icon">📊</span>
           <span class="nav-label">Ringkasan Eksekutif</span>
@@ -1201,6 +1258,11 @@
         
         <!-- SECTION 1: OVERVIEW (RINGKASAN EKSEKUTIF) ─────────── -->
         <section id="sec-overview" class="analytics-section active">
+          <div class="section-banner-title">
+            <span>📊</span>
+            <span>1. Ringkasan Eksekutif &amp; KPI Utama</span>
+            <span class="section-banner-badge">Executive View</span>
+          </div>
           <!-- 8 3D KPI Capsules -->
           <div class="kpi-grid">
             <div class="kpi-card">
@@ -1288,6 +1350,11 @@
 
         <!-- SECTION 2: ACQUISITION & CHANNELS ────────────────── -->
         <section id="sec-acquisition" class="analytics-section">
+          <div class="section-banner-title">
+            <span>🎯</span>
+            <span>2. Saluran Trafik &amp; Kanal Akuisisi</span>
+            <span class="section-banner-badge">Acquisition View</span>
+          </div>
           <div class="grid-2col">
             <div class="card-panel">
               <div class="panel-header">
@@ -1319,6 +1386,11 @@
 
         <!-- SECTION 3: GEOGRAPHY & LOCATIONS ─────────────────── -->
         <section id="sec-geography" class="analytics-section">
+          <div class="section-banner-title">
+            <span>🌍</span>
+            <span>3. Geografi &amp; Distribusi Wilayah</span>
+            <span class="section-banner-badge">Geography View</span>
+          </div>
           <div class="grid-2col">
             <div class="card-panel">
               <div class="panel-header">
@@ -1345,6 +1417,11 @@
 
         <!-- SECTION 4: TECHNOLOGY & HARDWARE ─────────────────── -->
         <section id="sec-technology" class="analytics-section">
+          <div class="section-banner-title">
+            <span>💻</span>
+            <span>4. Perangkat, Hardware, OS &amp; Browser</span>
+            <span class="section-banner-badge">Technology View</span>
+          </div>
           <div class="grid-3col">
             <div class="card-panel">
               <div class="panel-header"><h2 class="panel-title"><span>📱</span> Kategori Perangkat</h2><span class="panel-badge">Hardware</span></div>
@@ -1376,6 +1453,11 @@
 
         <!-- SECTION 5: NETWORK & ISP ─────────────────────────── -->
         <section id="sec-network" class="analytics-section">
+          <div class="section-banner-title">
+            <span>📡</span>
+            <span>5. Jaringan ISP, ASN &amp; Kecepatan</span>
+            <span class="section-banner-badge">Network View</span>
+          </div>
           <div class="grid-2col">
             <div class="card-panel">
               <div class="panel-header">
@@ -1407,6 +1489,11 @@
 
         <!-- SECTION 6: BEHAVIOR & INTERACTION ────────────────── -->
         <section id="sec-behavior" class="analytics-section">
+          <div class="section-banner-title">
+            <span>⚡</span>
+            <span>6. Perilaku, Dwell Time &amp; Capaian Gulir</span>
+            <span class="section-banner-badge">Behavior View</span>
+          </div>
           <div class="grid-2col">
             <div class="card-panel">
               <div class="panel-header">
@@ -1428,6 +1515,11 @@
 
         <!-- SECTION 7: CONTENT PERFORMANCE ───────────────────── -->
         <section id="sec-content" class="analytics-section">
+          <div class="section-banner-title">
+            <span>📄</span>
+            <span>7. Performa Konten &amp; Halaman Terpopuler</span>
+            <span class="section-banner-badge">Content View</span>
+          </div>
           <div class="card-panel">
             <div class="panel-header">
               <h2 class="panel-title"><span>📄</span> Performa Konten & Halaman Terpopuler</h2>
@@ -1444,6 +1536,11 @@
 
         <!-- SECTION 8: TIME INTELLIGENCE ─────────────────────── -->
         <section id="sec-time" class="analytics-section">
+          <div class="section-banner-title">
+            <span>⏳</span>
+            <span>8. Intelijen Waktu &amp; Pola Jam Sibuk</span>
+            <span class="section-banner-badge">Time View</span>
+          </div>
           <div class="grid-2col">
             <div class="card-panel">
               <div class="panel-header">
@@ -1475,6 +1572,11 @@
 
         <!-- SECTION 9: CROSS ANALYSIS ────────────────────────── -->
         <section id="sec-cross" class="analytics-section">
+          <div class="section-banner-title">
+            <span>🔬</span>
+            <span>9. Analisis Silang Multidimensi (Cross Matrix)</span>
+            <span class="section-banner-badge">Cross View</span>
+          </div>
           <div class="card-panel">
             <div class="panel-header">
               <h2 class="panel-title"><span>🔬</span> Matriks Relasi Antar-Dimensi (Cross Analysis)</h2>
@@ -1491,6 +1593,11 @@
 
         <!-- SECTION 10: LIVE STREAM & DATA QUALITY ────────────── -->
         <section id="sec-live" class="analytics-section">
+          <div class="section-banner-title">
+            <span>🚨</span>
+            <span>10. Aliran Data Langsung &amp; Audit Trail 24-Kolom</span>
+            <span class="section-banner-badge">Live Audit</span>
+          </div>
           <!-- Data Quality Health Pill -->
           <div class="card-panel">
             <div class="panel-header">
@@ -1603,12 +1710,20 @@
         activeSection = item.getAttribute('data-section');
         dockTitle.textContent = item.querySelector('.nav-label').textContent;
 
-        document.querySelectorAll('.analytics-section').forEach(sec => sec.classList.remove('active'));
-        const targetSec = document.getElementById('sec-' + activeSection);
-        if (targetSec) targetSec.classList.add('active');
+        const container = document.querySelector('.workspace-container');
+        if (activeSection === 'all') {
+          container.classList.add('show-all');
+          document.querySelectorAll('.analytics-section').forEach(sec => sec.classList.add('active'));
+        } else {
+          container.classList.remove('show-all');
+          document.querySelectorAll('.analytics-section').forEach(sec => sec.classList.remove('active'));
+          const targetSec = document.getElementById('sec-' + activeSection);
+          if (targetSec) targetSec.classList.add('active');
+        }
 
         sidebar.classList.remove('mobile-open');
         renderActiveSection();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
 
@@ -1817,7 +1932,9 @@
         }
       }
 
-      if (activeSection === 'overview') {
+      const isAll = (activeSection === 'all');
+
+      if (isAll || activeSection === 'overview') {
         // Daily Pulse Trend
         destroyChart('trend');
         const ctxTrend = document.getElementById('trendChart');
@@ -1887,7 +2004,9 @@
             }
           });
         }
-      } else if (activeSection === 'acquisition') {
+      }
+
+      if (isAll || activeSection === 'acquisition') {
         const tbodyRef = document.querySelector('#table-referrers tbody');
         if (tbodyRef) {
           tbodyRef.innerHTML = (cachedData.topReferrers || []).map(r => `
@@ -1912,7 +2031,9 @@
             </tr>
           `).join('') || '<tr><td colspan="4">Tidak ada parameter kampanye aktif (Direct Traffic)</td></tr>';
         }
-      } else if (activeSection === 'geography') {
+      }
+
+      if (isAll || activeSection === 'geography') {
         destroyChart('country');
         const ctxCountry = document.getElementById('countryChart');
         if (ctxCountry) {
@@ -1951,7 +2072,9 @@
             </tr>
           `).join('') || '<tr><td colspan="4">Belum ada data geografi</td></tr>';
         }
-      } else if (activeSection === 'technology') {
+      }
+
+      if (isAll || activeSection === 'technology') {
         destroyChart('dev');
         destroyChart('os');
         destroyChart('browser');
@@ -2007,7 +2130,9 @@
             </tr>
           `).join('') || '<tr><td colspan="4">Belum ada data layar</td></tr>';
         }
-      } else if (activeSection === 'network') {
+      }
+
+      if (isAll || activeSection === 'network') {
         const tbodyIsp = document.querySelector('#table-isp tbody');
         if (tbodyIsp) {
           const logs = cachedData.recentLogs || [];
@@ -2032,7 +2157,9 @@
             <tr><td>Asia/Jakarta (WIB)</td><td>en-US</td><td>0</td></tr>
           `;
         }
-      } else if (activeSection === 'behavior') {
+      }
+
+      if (isAll || activeSection === 'behavior') {
         destroyChart('eng');
         destroyChart('scr');
 
@@ -2061,7 +2188,9 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
           });
         }
-      } else if (activeSection === 'content') {
+      }
+
+      if (isAll || activeSection === 'content') {
         const tbodyContent = document.querySelector('#table-content-perf tbody');
         if (tbodyContent) {
           tbodyContent.innerHTML = (cachedData.topPages || []).map(p => `
@@ -2073,7 +2202,9 @@
             </tr>
           `).join('') || '<tr><td colspan="4">Belum ada konten tercatat</td></tr>';
         }
-      } else if (activeSection === 'time') {
+      }
+
+      if (isAll || activeSection === 'time') {
         destroyChart('hour');
         destroyChart('day');
 
@@ -2123,7 +2254,9 @@
           }
           heatmapBox.innerHTML = html;
         }
-      } else if (activeSection === 'cross') {
+      }
+
+      if (isAll || activeSection === 'cross') {
         const tbodyCross = document.querySelector('#table-cross-analysis tbody');
         if (tbodyCross) {
           const logs = cachedData.recentLogs || [];
@@ -2137,7 +2270,9 @@
             </tr>
           `).join('') || '<tr><td colspan="5">Belum ada rekaman cross-analysis</td></tr>';
         }
-      } else if (activeSection === 'live') {
+      }
+
+      if (isAll || activeSection === 'live') {
         renderLiveStreamTable(cachedData.recentLogs || []);
       }
     }
