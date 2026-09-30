@@ -272,28 +272,44 @@ function handleGetAnalytics(token, rangeParam) {
   const referrerCounts = {};
   const deviceCounts   = { Desktop: 0, Mobile: 0, Tablet: 0 };
   const osCounts       = {};
+  const browserCounts  = {};
   const geoCounts      = {};
   const dailyTrends    = {};
+  const hourlyCounts   = new Array(24).fill(0);
+  const engagementTiers = { bounce: 0, skim: 0, read: 0, deep: 0 };
   let totalDuration    = 0;
   let durationCount    = 0;
   let totalScroll      = 0;
   let scrollCount      = 0;
 
   filtered.forEach(row => {
-    const timestampStr = String(row[0]);
+    const timestampStr = String(row[0] || '');
     const dateKey      = timestampStr.split(' ')[0] || 'Unknown';
+    const timePart     = timestampStr.split(' ')[1] || '00:00:00';
+    const hourVal      = parseInt(timePart.split(':')[0], 10);
+    if (!isNaN(hourVal) && hourVal >= 0 && hourVal < 24) {
+      hourlyCounts[hourVal]++;
+    }
+
     const pagePath     = String(row[2] || '/');
     const pageTitle    = String(row[3] || '-');
     const referrer     = String(row[4] || 'Direct');
     const vid          = String(row[5] || 'anon');
     const device       = String(row[7] || 'Desktop');
     const os           = String(row[8] || 'Unknown');
+    const browser      = String(row[9] || 'Unknown');
     const dur          = Number(row[12] || 0);
     const scroll       = Number(row[13] || 0);
     const city         = String(row[17] || '-');
     const country      = String(row[19] || 'ID');
 
     uniqueVisitors.add(vid);
+
+    // Engagement funnel tiers
+    if (dur < 5) engagementTiers.bounce++;
+    else if (dur < 20) engagementTiers.skim++;
+    else if (dur < 60) engagementTiers.read++;
+    else engagementTiers.deep++;
 
     if (dur > 0 && dur < 3600) {
       totalDuration += dur;
@@ -321,6 +337,7 @@ function handleGetAnalytics(token, rangeParam) {
     else deviceCounts['Desktop']++;
 
     osCounts[os] = (osCounts[os] || 0) + 1;
+    browserCounts[browser] = (browserCounts[browser] || 0) + 1;
 
     const geoKey = (city && city !== '-') ? `${city}, ${country}` : country;
     geoCounts[geoKey] = (geoCounts[geoKey] || 0) + 1;
@@ -344,19 +361,33 @@ function handleGetAnalytics(token, rangeParam) {
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
 
-  const recentLogs = filtered.slice(-15).reverse().map(r => ({
-    timestamp: r[0],
-    site: r[1],
-    path: r[2],
-    title: r[3],
-    referrer: r[4],
-    device: r[7],
-    os: r[8],
-    browser: r[9],
-    duration: r[12],
-    scroll: r[13],
-    location: (r[17] && r[17] !== '-') ? `${r[17]}, ${r[19]}` : r[19],
-    isp: r[20]
+  // Mengembalikan hingga 50 log terakhir dengan seluruh 24 kolom data lengkap
+  const recentLogs = filtered.slice(-50).reverse().map(r => ({
+    timestamp: r[0] || '-',
+    site: r[1] || 'anabhidev.com',
+    path: r[2] || '/',
+    title: r[3] || '-',
+    referrer: r[4] || 'Direct',
+    visitorId: r[5] || 'anon',
+    sessionId: r[6] || 'sess_anon',
+    device: r[7] || 'Desktop',
+    os: r[8] || 'Unknown',
+    browser: r[9] || 'Unknown',
+    screen: r[10] || '-',
+    viewport: r[11] || '-',
+    duration: Number(r[12] || 0),
+    scroll: Number(r[13] || 0),
+    language: r[14] || 'id-ID',
+    timezone: r[15] || 'Asia/Makassar',
+    ip: r[16] || 'Protected',
+    city: r[17] || '-',
+    region: r[18] || '-',
+    country: r[19] || 'ID',
+    location: (r[17] && r[17] !== '-') ? `${r[17]}, ${r[19]}` : (r[19] || 'ID'),
+    isp: r[20] || '-',
+    utmSource: r[21] || '-',
+    utmMedium: r[22] || '-',
+    utmCampaign: r[23] || '-'
   }));
 
   const avgDuration = durationCount > 0 ? Math.round(totalDuration / durationCount) : 0;
@@ -380,6 +411,9 @@ function handleGetAnalytics(token, rangeParam) {
     topReferrers: topReferrers,
     deviceBreakdown: deviceCounts,
     osBreakdown: osCounts,
+    browserBreakdown: browserCounts,
+    hourlyBreakdown: hourlyCounts,
+    engagementTiers: engagementTiers,
     geoBreakdown: geoBreakdown,
     recentLogs: recentLogs
   });
