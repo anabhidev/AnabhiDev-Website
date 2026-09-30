@@ -4,9 +4,9 @@
 //  Package   : Anabhi Dev Master Ecosystem (SOP v2.12 Compliance)
 //  File      : gas/Code.gs
 //  Author    : Development · Anabhi Dev
-//  Version   : 1.1.0
+//  Version   : 1.3.0
 //  Status    : PRODUCTION LIVE
-//  Effective : Rabu, 30 September 2026 pukul 17.15.00 WITA
+//  Effective : Rabu, 30 September 2026 pukul 18.25.00 WITA
 //  Admin UI  : https://anabhidev.com/adm1nLogs.html
 // ═══════════════════════════════════════════════════════════════════
 
@@ -276,7 +276,9 @@ function handleGetAnalytics(token, rangeParam) {
   const geoCounts      = {};
   const dailyTrends    = {};
   const hourlyCounts   = new Array(24).fill(0);
+  const dayOfWeekCounts= new Array(7).fill(0); // 0=Min, 1=Sen, 2=Sel, 3=Rab, 4=Kam, 5=Jum, 6=Sab
   const engagementTiers = { bounce: 0, skim: 0, read: 0, deep: 0 };
+  const scrollMilestones = { p25: 0, p50: 0, p75: 0, p100: 0 };
   let totalDuration    = 0;
   let durationCount    = 0;
   let totalScroll      = 0;
@@ -289,6 +291,11 @@ function handleGetAnalytics(token, rangeParam) {
     const hourVal      = parseInt(timePart.split(':')[0], 10);
     if (!isNaN(hourVal) && hourVal >= 0 && hourVal < 24) {
       hourlyCounts[hourVal]++;
+    }
+
+    const rowDateObj = new Date(dateKey);
+    if (!isNaN(rowDateObj.getTime())) {
+      dayOfWeekCounts[rowDateObj.getDay()]++;
     }
 
     const pagePath     = String(row[2] || '/');
@@ -310,6 +317,12 @@ function handleGetAnalytics(token, rangeParam) {
     else if (dur < 20) engagementTiers.skim++;
     else if (dur < 60) engagementTiers.read++;
     else engagementTiers.deep++;
+
+    // Scroll depth milestones
+    if (scroll >= 100) scrollMilestones.p100++;
+    else if (scroll >= 75) scrollMilestones.p75++;
+    else if (scroll >= 50) scrollMilestones.p50++;
+    else if (scroll >= 25) scrollMilestones.p25++;
 
     if (dur > 0 && dur < 3600) {
       totalDuration += dur;
@@ -413,7 +426,9 @@ function handleGetAnalytics(token, rangeParam) {
     osBreakdown: osCounts,
     browserBreakdown: browserCounts,
     hourlyBreakdown: hourlyCounts,
+    dayOfWeekBreakdown: dayOfWeekCounts,
     engagementTiers: engagementTiers,
+    scrollMilestones: scrollMilestones,
     geoBreakdown: geoBreakdown,
     recentLogs: recentLogs
   });

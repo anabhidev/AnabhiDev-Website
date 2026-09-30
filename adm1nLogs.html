@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!-- ================================================================
-     AnabhiDev-WEB — Executive Visitor Intelligence & 3D Analytics Hub
-     HTML5 · CSS 3D Glassmorphism · Vanilla JS · Chart.js · Cloudflare Pages
+     AnabhiDev-WEB — Executive Visitor Intelligence & 3D Analytics Suite
+     HTML5 · CSS 3D Glassmorphism · Dark & Light Mode · Chart.js · Cloudflare Pages
      Development · Anabhi Dev
-     Version   : 1.2.0
+     Version   : 1.3.0
      File      : adm1nLogs.html
      Status    : PRODUCTION LIVE
-     Effective : Rabu, 30 September 2026 pukul 18.05.00 WITA
+     Effective : Rabu, 30 September 2026 pukul 18.25.00 WITA
      ================================================================ -->
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -28,11 +28,19 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
-    :root {
+    /* ── DUAL THEME ENGINE (DARK & LIGHT LUXURY) ─────────────── */
+    :root, [data-theme="dark"] {
       --bg-obsidian: #060B12;
+      --bg-canvas: #060B12;
+      --bg-mesh-1: rgba(201, 169, 106, 0.09);
+      --bg-mesh-2: rgba(91, 224, 223, 0.08);
+      --bg-mesh-3: rgba(99, 102, 241, 0.06);
+      
       --bg-card: rgba(14, 25, 41, 0.72);
       --bg-card-solid: #0E1A2B;
       --bg-card-hover: rgba(20, 36, 58, 0.85);
+      --bg-inner-input: rgba(5, 10, 18, 0.75);
+      
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-glass: rgba(255, 255, 255, 0.14);
       --border-gold: rgba(201, 169, 106, 0.4);
@@ -52,30 +60,68 @@
       --text-primary: #F8FAFC;
       --text-secondary: #94A3B8;
       --text-muted: #64748B;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --grid-line: rgba(255, 255, 255, 0.04);
+      --table-row-hover: rgba(201, 169, 106, 0.06);
 
-      /* 3D Depth Shadows & Specular Hairlines */
       --shadow-3d-card: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16), 0 20px 40px -15px rgba(0, 0, 0, 0.75), 0 0 1px 1px rgba(255, 255, 255, 0.03);
       --shadow-3d-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 0.3), 0 28px 60px -12px rgba(0, 0, 0, 0.85), 0 0 35px var(--accent-gold-glow);
+    }
+
+    [data-theme="light"] {
+      --bg-obsidian: #F6F4EE;
+      --bg-canvas: #F6F4EE;
+      --bg-mesh-1: rgba(201, 169, 106, 0.16);
+      --bg-mesh-2: rgba(14, 165, 233, 0.12);
+      --bg-mesh-3: rgba(124, 58, 237, 0.08);
+      
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card-solid: #FFFFFF;
+      --bg-card-hover: rgba(255, 255, 255, 0.98);
+      --bg-inner-input: rgba(241, 239, 233, 0.8);
+      
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-glass: rgba(201, 169, 106, 0.35);
+      --border-gold: rgba(184, 143, 62, 0.55);
+      --border-cyan: rgba(14, 165, 233, 0.45);
+      
+      --accent-gold: #B08B3E;
+      --accent-gold-light: #C9A96A;
+      --accent-gold-glow: rgba(176, 139, 62, 0.2);
+      --accent-cyan: #0284C7;
+      --accent-cyan-glow: rgba(2, 132, 199, 0.18);
+      --accent-blue: #2563EB;
+      --accent-indigo: #4F46E5;
+      --accent-purple: #7C3AED;
+      --accent-green: #059669;
+      --accent-red: #DC2626;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --grid-line: rgba(15, 23, 42, 0.06);
+      --table-row-hover: rgba(201, 169, 106, 0.12);
+
+      --shadow-3d-card: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+      --shadow-3d-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 22px 45px -10px rgba(15, 23, 42, 0.14), 0 0 25px rgba(201, 169, 106, 0.25);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background-color: var(--bg-obsidian);
+      background-color: var(--bg-canvas);
       background-image: 
-        radial-gradient(circle at 8% 12%, rgba(201, 169, 106, 0.09) 0%, transparent 35%),
-        radial-gradient(circle at 92% 18%, rgba(91, 224, 223, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 50% 65%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 8% 12%, var(--bg-mesh-1) 0%, transparent 35%),
+        radial-gradient(circle at 92% 18%, var(--bg-mesh-2) 0%, transparent 40%),
+        radial-gradient(circle at 50% 65%, var(--bg-mesh-3) 0%, transparent 50%),
         radial-gradient(circle at 80% 90%, rgba(16, 185, 129, 0.06) 0%, transparent 45%);
       background-attachment: fixed;
       color: var(--text-primary);
-      font-family: var(--font-sans);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     /* ── FULL-WIDTH FLUID CONTAINER ────────────────────────── */
@@ -122,16 +168,6 @@
       overflow: hidden;
     }
 
-    .auth-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 10%;
-      right: 10%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-    }
-
     .auth-brand {
       display: inline-flex;
       align-items: center;
@@ -145,19 +181,18 @@
       background: var(--accent-gold);
       border-radius: 50%;
       box-shadow: 0 0 16px var(--accent-gold);
-      position: relative;
     }
 
     .brand-title {
       font-size: 1.15rem;
       font-weight: 800;
       letter-spacing: 0.06em;
-      color: var(--text-primary);
+      color: #F8FAFC;
       text-transform: uppercase;
     }
 
     .auth-desc {
-      color: var(--text-secondary);
+      color: #94A3B8;
       font-size: 0.92rem;
       margin-bottom: 26px;
       line-height: 1.5;
@@ -177,7 +212,7 @@
       border: 1px solid var(--border-glass);
       border-radius: 14px;
       color: var(--accent-gold);
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       font-size: 1.6rem;
       font-weight: 700;
       text-align: center;
@@ -188,9 +223,7 @@
 
     .pin-digit:focus {
       border-color: var(--accent-gold);
-      box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.2),
-        0 0 20px var(--accent-gold-glow);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 20px var(--accent-gold-glow);
       background: rgba(255, 255, 255, 0.09);
       transform: translateY(-2px);
     }
@@ -216,8 +249,6 @@
       box-shadow: 0 12px 32px rgba(201, 169, 106, 0.45);
     }
 
-    .auth-btn:active { transform: translateY(0); }
-
     .auth-status {
       margin-top: 18px;
       font-size: 0.88rem;
@@ -234,7 +265,7 @@
       justify-content: space-between;
       gap: 18px;
       padding: 16px 24px;
-      background: linear-gradient(135deg, rgba(20, 34, 54, 0.65) 0%, rgba(10, 18, 29, 0.75) 100%);
+      background: var(--bg-card);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-glass);
@@ -260,7 +291,7 @@
       border-radius: 30px;
       font-size: 0.78rem;
       font-weight: 700;
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
     }
 
@@ -292,14 +323,13 @@
       flex-wrap: wrap;
     }
 
-    /* 3D Capsule Filter Switch */
     .range-selector {
       display: flex;
-      background: rgba(5, 10, 18, 0.75);
+      background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
       border-radius: 30px;
       padding: 4px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .range-btn {
@@ -315,13 +345,13 @@
     }
 
     .range-btn.active {
-      background: linear-gradient(135deg, #DFCA9B 0%, #C9A96A 100%);
+      background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
       color: #060B12;
-      box-shadow: 0 4px 14px rgba(201, 169, 106, 0.35);
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
     }
 
     .btn-action {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-card);
       border: 1px solid var(--border-glass);
       color: var(--text-primary);
       padding: 8px 16px;
@@ -333,22 +363,22 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-3d-card);
       transition: all 0.2s ease;
     }
 
     .btn-action:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-card-hover);
       border-color: var(--border-gold);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-3d-hover);
     }
 
-    /* ── 3D KPI METRIC CAPSULES ────────────────────────────── */
+    /* ── 8 3D KPI METRIC CAPSULES ──────────────────────────── */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
       margin-bottom: 28px;
     }
 
@@ -356,7 +386,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: 20px;
-      padding: 22px;
+      padding: 20px;
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-3d-card);
@@ -385,52 +415,51 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .kpi-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--text-secondary);
     }
 
     .kpi-icon-pill {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15);
+      font-size: 0.95rem;
     }
 
     .kpi-body {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     .kpi-val {
-      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
       font-weight: 800;
       color: var(--text-primary);
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       line-height: 1.1;
       letter-spacing: -0.02em;
     }
 
     .kpi-pill {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 20px;
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .pill-green {
@@ -451,20 +480,25 @@
       border: 1px solid var(--border-cyan);
     }
 
-    .kpi-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .pill-red {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--accent-red);
+      border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
-    /* Mini Progress Bar in KPI */
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .kpi-progress-bar {
       width: 100%;
       height: 4px;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--grid-line);
       border-radius: 4px;
       margin-top: 10px;
       overflow: hidden;
@@ -485,16 +519,16 @@
       margin-bottom: 24px;
     }
 
-    .charts-grid-triplet {
+    .charts-grid-duo {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
 
-    .charts-grid-duo {
+    .charts-grid-triplet {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-bottom: 24px;
     }
@@ -521,7 +555,7 @@
     }
 
     .card-panel:hover {
-      border-color: rgba(255, 255, 255, 0.22);
+      border-color: var(--border-gold);
       box-shadow: var(--shadow-3d-hover);
     }
 
@@ -533,7 +567,7 @@
     }
 
     .panel-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.01em;
@@ -546,7 +580,7 @@
       font-size: 0.74rem;
       font-weight: 700;
       color: var(--accent-gold);
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       background: var(--accent-gold-glow);
       border: 1px solid var(--border-gold);
       padding: 4px 10px;
@@ -559,7 +593,6 @@
       width: 100%;
     }
 
-    /* Donut Center Label Overlay */
     .donut-center-label {
       position: absolute;
       top: 50%;
@@ -572,7 +605,7 @@
     .donut-center-val {
       font-size: 1.8rem;
       font-weight: 800;
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       color: var(--text-primary);
       line-height: 1;
     }
@@ -585,13 +618,40 @@
       margin-top: 4px;
     }
 
+    /* ── QUICK FILTER PILLS ────────────────────────────────── */
+    .filter-pills-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .filter-pill {
+      background: var(--bg-inner-input);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill.active {
+      background: var(--accent-gold);
+      color: #060B12;
+      border-color: var(--accent-gold);
+      box-shadow: 0 2px 8px var(--accent-gold-glow);
+    }
+
     /* ── TABLES WITH 3D GLASS STYLE ────────────────────────── */
     .table-container {
       width: 100%;
       overflow-x: auto;
       border-radius: 14px;
       border: 1px solid var(--border-subtle);
-      background: rgba(8, 14, 24, 0.5);
+      background: var(--bg-inner-input);
     }
 
     table {
@@ -602,7 +662,7 @@
     }
 
     thead th {
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--bg-card);
       color: var(--text-secondary);
       font-weight: 700;
       font-size: 0.75rem;
@@ -615,22 +675,17 @@
 
     tbody td {
       padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--grid-line);
       color: var(--text-primary);
       white-space: nowrap;
       transition: background 0.15s;
     }
 
-    tbody tr {
-      cursor: pointer;
-    }
-
-    tbody tr:hover { 
-      background: rgba(201, 169, 106, 0.06); 
-    }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: var(--table-row-hover); }
 
     .mono-badge {
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       color: var(--accent-cyan);
       background: rgba(91, 224, 223, 0.1);
@@ -640,7 +695,7 @@
     }
 
     .search-input {
-      background: rgba(5, 10, 18, 0.75);
+      background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
       border-radius: 12px;
       color: var(--text-primary);
@@ -648,7 +703,7 @@
       font-size: 0.88rem;
       outline: none;
       width: 280px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
       transition: all 0.2s;
     }
 
@@ -661,7 +716,7 @@
     #detail-modal {
       position: fixed;
       inset: 0;
-      background: rgba(4, 8, 14, 0.85);
+      background: rgba(4, 8, 14, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       display: flex;
@@ -679,7 +734,7 @@
     }
 
     .modal-card {
-      background: linear-gradient(145deg, rgba(16, 27, 43, 0.95) 0%, rgba(10, 18, 29, 0.98) 100%);
+      background: var(--bg-card-solid);
       border: 1px solid var(--border-gold);
       box-shadow: 
         inset 0 1px 2px rgba(255, 255, 255, 0.25),
@@ -687,7 +742,7 @@
         0 0 40px var(--accent-gold-glow);
       border-radius: 24px;
       width: 100%;
-      max-width: 860px;
+      max-width: 880px;
       max-height: 90vh;
       overflow-y: auto;
       padding: 32px;
@@ -713,7 +768,7 @@
     }
 
     .modal-close {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-inner-input);
       border: 1px solid var(--border-glass);
       color: var(--text-secondary);
       width: 36px;
@@ -735,12 +790,12 @@
 
     .attributes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 16px;
     }
 
     .attr-group {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--bg-inner-input);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 16px;
@@ -763,13 +818,13 @@
       justify-content: space-between;
       font-size: 0.85rem;
       padding: 6px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--grid-line);
     }
 
     .attr-row:last-child { border-bottom: none; }
     .attr-name { color: var(--text-muted); }
     .attr-val { 
-      font-family: var(--font-mono); 
+      font-family: 'JetBrains Mono', monospace; 
       color: var(--text-primary); 
       font-weight: 600; 
       max-width: 180px; 
@@ -842,10 +897,16 @@
         <div class="badge-live">
           <span class="pulse-dot"></span> LIVE SSOT ENGINE
         </div>
-        <h1 class="app-title">Universal Visitor Intelligence</h1>
+        <h1 class="app-title">Executive Visitor Intelligence</h1>
       </div>
 
       <div class="topbar-right">
+        <!-- Theme Toggle Switch (Dark / Light) -->
+        <button id="btn-theme-toggle" class="btn-action" title="Ganti Tema (Dark / Light)">
+          <span id="theme-icon">🌙</span> <span id="theme-label">Dark Mode</span>
+        </button>
+
+        <!-- Date Range Filter -->
         <div class="range-selector">
           <button class="range-btn active" data-range="7d">7 Hari</button>
           <button class="range-btn" data-range="today">Hari Ini</button>
@@ -867,7 +928,7 @@
       </div>
     </header>
 
-    <!-- 6 3D KPI Metric Capsules -->
+    <!-- ── 8 3D KPI METRIC CAPSULES ──────────────────────────── -->
     <section class="kpi-grid">
       <!-- 1. Total Views -->
       <div class="kpi-card">
@@ -886,7 +947,7 @@
       <!-- 2. Unique Visitors -->
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Pengunjung Unik (Uniques)</span>
+          <span class="kpi-label">Pengunjung Unik</span>
           <div class="kpi-icon-pill">👤</div>
         </div>
         <div class="kpi-body">
@@ -897,7 +958,21 @@
         <div class="kpi-progress-bar"><div id="bar-uniques" class="kpi-progress-fill" style="width: 75%;"></div></div>
       </div>
 
-      <!-- 3. Avg Dwell Time -->
+      <!-- 3. Return Visitor Ratio -->
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Rasio Kunjungan Ulang</span>
+          <div class="kpi-icon-pill">🔄</div>
+        </div>
+        <div class="kpi-body">
+          <div id="kpi-return" class="kpi-val">-</div>
+          <span class="kpi-pill pill-green">Loyalty</span>
+        </div>
+        <div class="kpi-sub">Pengunjung kembali > 1 kali</div>
+        <div class="kpi-progress-bar"><div id="bar-return" class="kpi-progress-fill" style="width: 50%;"></div></div>
+      </div>
+
+      <!-- 4. Avg Dwell Time -->
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">Rata-rata Waktu Baca</span>
@@ -911,7 +986,7 @@
         <div class="kpi-progress-bar"><div id="bar-duration" class="kpi-progress-fill" style="width: 60%;"></div></div>
       </div>
 
-      <!-- 4. Avg Scroll Depth -->
+      <!-- 5. Avg Scroll Depth -->
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">Rata-rata Scroll Depth</span>
@@ -925,7 +1000,7 @@
         <div class="kpi-progress-bar"><div id="bar-scroll" class="kpi-progress-fill" style="width: 85%;"></div></div>
       </div>
 
-      <!-- 5. Active Engagement Rate -->
+      <!-- 6. Active Engagement Rate -->
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">Tingkat Interaksi Aktif</span>
@@ -935,14 +1010,28 @@
           <div id="kpi-engagement" class="kpi-val">-</div>
           <span class="kpi-pill pill-gold">Engagement</span>
         </div>
-        <div class="kpi-sub">Pengunjung baca &gt;10s atau scroll &gt;25%</div>
+        <div class="kpi-sub">Baca &gt;10s atau scroll &gt;25%</div>
         <div class="kpi-progress-bar"><div id="bar-engagement" class="kpi-progress-fill" style="width: 80%;"></div></div>
       </div>
 
-      <!-- 6. Dominant Hardware Ratio -->
+      <!-- 7. Bounce Rate (<5s) -->
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Perangkat Dominan</span>
+          <span class="kpi-label">Tingkat Bounce (&lt;5s)</span>
+          <div class="kpi-icon-pill">↩️</div>
+        </div>
+        <div class="kpi-body">
+          <div id="kpi-bounce" class="kpi-val">-</div>
+          <span id="kpi-bounce-pill" class="kpi-pill pill-red">Low Bounce</span>
+        </div>
+        <div class="kpi-sub">Kunjungan singkat sebelum navigasi</div>
+        <div class="kpi-progress-bar"><div id="bar-bounce" class="kpi-progress-fill" style="width: 20%; background: var(--accent-red);"></div></div>
+      </div>
+
+      <!-- 8. Hardware Ratio -->
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Hardware Dominan</span>
           <div class="kpi-icon-pill">💻</div>
         </div>
         <div class="kpi-body">
@@ -956,7 +1045,7 @@
 
     <!-- ── CHARTS ROW 1: Daily Trends & Traffic Acquisition Channels ──── -->
     <section class="charts-grid-main">
-      <!-- 1. Daily Pulse Area Chart -->
+      <!-- 1. Daily Pulse Area Spline Chart -->
       <div class="card-panel">
         <div class="panel-header">
           <h2 class="panel-title"><span>📈</span> Tren Kunjungan Harian (Daily Pulse)</h2>
@@ -970,7 +1059,7 @@
       <!-- 2. Acquisition Doughnut with 3D Center Stats -->
       <div class="card-panel">
         <div class="panel-header">
-          <h2 class="panel-title"><span>🍩</span> Saluran Trafik (Acquisition)</h2>
+          <h2 class="panel-title"><span>🍩</span> Saluran Trafik & Kanal Akuisisi</h2>
           <span class="panel-badge">Channels</span>
         </div>
         <div class="chart-box">
@@ -983,48 +1072,73 @@
       </div>
     </section>
 
-    <!-- ── CHARTS ROW 2: Triplet (Hourly Peak, Device & OS, Dwell Funnel) ──── -->
-    <section class="charts-grid-triplet">
+    <!-- ── CHARTS ROW 2: Temporal Activity (24H Peak & Weekly Days) ──── -->
+    <section class="charts-grid-duo">
       <!-- 3. Hourly Activity Peak (24 Hours Heatmap Timeline) -->
       <div class="card-panel">
         <div class="panel-header">
-          <h2 class="panel-title"><span>🕒</span> Jam Sibuk Kunjungan</h2>
-          <span class="panel-badge">24h WITA</span>
+          <h2 class="panel-title"><span>🕒</span> Pola Jam Sibuk Kunjungan</h2>
+          <span class="panel-badge">24 Jam (WITA)</span>
         </div>
         <div class="chart-box">
           <canvas id="hourlyChart"></canvas>
         </div>
       </div>
 
-      <!-- 4. Device Hardware Breakdown -->
+      <!-- 4. Weekly Day Distribution -->
       <div class="card-panel">
         <div class="panel-header">
-          <h2 class="panel-title"><span>📱</span> Hardware & Perangkat</h2>
-          <span class="panel-badge">Device Type</span>
+          <h2 class="panel-title"><span>📅</span> Pola Hari Kunjungan Mingguan</h2>
+          <span class="panel-badge">Senin — Minggu</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="dayChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CHARTS ROW 3: Hardware, OS & Browser Ecosystem (Triplet) ──── -->
+    <section class="charts-grid-triplet">
+      <!-- 5. Hardware Category Breakdown -->
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title"><span>📱</span> Kategori Perangkat</h2>
+          <span class="panel-badge">Hardware</span>
         </div>
         <div class="chart-box">
           <canvas id="deviceChart"></canvas>
         </div>
       </div>
 
-      <!-- 5. Operating System Breakdown -->
+      <!-- 6. Operating System Breakdown -->
       <div class="card-panel">
         <div class="panel-header">
           <h2 class="panel-title"><span>🖥️</span> Sistem Operasi (OS)</h2>
-          <span class="panel-badge">Ecosystem</span>
+          <span class="panel-badge">Platform</span>
         </div>
         <div class="chart-box">
           <canvas id="osChart"></canvas>
         </div>
       </div>
-    </section>
 
-    <!-- ── CHARTS ROW 3: Duo (Visitor Engagement Funnel & Geolocation) ──── -->
-    <section class="charts-grid-duo">
-      <!-- 6. Dwell Time Engagement Funnel -->
+      <!-- 7. Browser Breakdown -->
       <div class="card-panel">
         <div class="panel-header">
-          <h2 class="panel-title"><span>⚡</span> Kualitas Waktu Baca (Engagement Funnel)</h2>
+          <h2 class="panel-title"><span>🌐</span> Pangsa Browser</h2>
+          <span class="panel-badge">User Agent</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="browserChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CHARTS ROW 4: Engagement Funnel & Geolocation (Duo) ──── -->
+    <section class="charts-grid-duo">
+      <!-- 8. Dwell Time Engagement Funnel -->
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title"><span>⚡</span> Corong Waktu Baca (Engagement Funnel)</h2>
           <span class="panel-badge">Intent Tiers</span>
         </div>
         <div class="chart-box">
@@ -1032,7 +1146,7 @@
         </div>
       </div>
 
-      <!-- 7. Sebaran Geografis -->
+      <!-- 9. Sebaran Radar Geografis -->
       <div class="card-panel">
         <div class="panel-header">
           <h2 class="panel-title"><span>🗺️</span> Sebaran Radar Geografis</h2>
@@ -1042,10 +1156,10 @@
       </div>
     </section>
 
-    <!-- ── TOP VISITED CONTENT ─────────────────────────────── -->
+    <!-- ── TOP VISITED CONTENT MATRIX ──────────────────────── -->
     <section class="card-panel" style="margin-bottom: 28px;">
       <div class="panel-header">
-        <h2 class="panel-title"><span>🏆</span> Konten & Halaman Terpopuler (Top Pages)</h2>
+        <h2 class="panel-title"><span>🏆</span> Konten & Halaman Terpopuler (Top Pages Performance)</h2>
         <span class="panel-badge">Velocity & Share</span>
       </div>
       <div class="table-container">
@@ -1055,8 +1169,8 @@
               <th style="width: 50px;">#</th>
               <th>Path Halaman</th>
               <th>Judul Dokumen</th>
-              <th style="width: 200px;">Share of Traffic</th>
-              <th style="width: 120px; text-align: right;">Total Views</th>
+              <th style="width: 220px;">Share of Traffic</th>
+              <th style="width: 140px; text-align: right;">Total Views</th>
             </tr>
           </thead>
           <tbody>
@@ -1066,17 +1180,27 @@
       </div>
     </section>
 
-    <!-- ── LIVE VISITOR STREAM (CLICK ROW TO INSPECT 24 COLUMNS) ──── -->
+    <!-- ── LIVE VISITOR STREAM (WITH QUICK FILTERS & 24-COL INSPECTOR) ──── -->
     <section class="card-panel">
       <div class="panel-header">
         <div>
-          <h2 class="panel-title"><span>⚡</span> Live Visitor Stream</h2>
+          <h2 class="panel-title"><span>⚡</span> Live Visitor Stream & Audit Trail</h2>
           <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
-            Klik baris mana saja untuk melihat inspeksi <strong>24 Kolom Atribut Lengkap</strong> dari pengunjung tersebut.
+            Filter instan atau klik baris mana saja untuk membuka <strong>24 Kolom Atribut Lengkap</strong>.
           </p>
         </div>
         <input type="text" id="live-search" class="search-input" placeholder="🔍 Cari path, kota, browser, IP...">
       </div>
+
+      <!-- Quick Filter Pills -->
+      <div class="filter-pills-bar">
+        <button class="filter-pill active" data-filter="all">Semua Log</button>
+        <button class="filter-pill" data-filter="desktop">💻 Desktop</button>
+        <button class="filter-pill" data-filter="mobile">📱 Mobile</button>
+        <button class="filter-pill" data-filter="engaged">⏱️ Baca &gt;10s</button>
+        <button class="filter-pill" data-filter="deep-scroll">📜 Scroll &gt;50%</button>
+      </div>
+
       <div class="table-container">
         <table id="live-stream-table">
           <thead>
@@ -1109,13 +1233,19 @@
     // ── STATE & INSTANCES ────────────────────────────────────
     let currentToken = sessionStorage.getItem('ANABHI_ANALYTICS_TOKEN');
     let currentRange = '7d';
+    let currentTheme = localStorage.getItem('ANABHI_THEME') || 'dark';
+    let activeQuickFilter = 'all';
+
     let trendChartInstance     = null;
     let refChartInstance       = null;
     let hourlyChartInstance    = null;
+    let dayChartInstance       = null;
     let deviceChartInstance    = null;
     let osChartInstance        = null;
+    let browserChartInstance   = null;
     let engagementChartInstance= null;
     let cachedRecentLogs       = [];
+    let cachedFullData         = null;
 
     const authOverlay = document.getElementById('auth-overlay');
     const authStatus  = document.getElementById('auth-status');
@@ -1125,10 +1255,43 @@
     const btnLogout   = document.getElementById('btn-logout');
     const rangeBtns   = document.querySelectorAll('.range-btn');
     const liveSearch  = document.getElementById('live-search');
+    const filterPills = document.querySelectorAll('.filter-pill');
 
     const detailModal = document.getElementById('detail-modal');
     const btnCloseModal = document.getElementById('btn-close-modal');
     const modalAttributesBody = document.getElementById('modal-attributes-body');
+
+    const btnThemeToggle = document.getElementById('btn-theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeLabel = document.getElementById('theme-label');
+
+    // ── THEME ENGINE (DARK / LIGHT LUXURY) ────────────────────
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('ANABHI_THEME', theme);
+
+      if (theme === 'light') {
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Light Mode';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = 'Dark Mode';
+      }
+
+      // Re-render charts with theme palette if data is loaded
+      if (cachedFullData) {
+        renderDashboard(cachedFullData);
+      }
+    }
+
+    btnThemeToggle.addEventListener('click', () => {
+      const nextTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    });
+
+    // Initialize theme on load
+    applyTheme(currentTheme);
 
     // ── PIN INPUT ERGONOMICS ─────────────────────────────────
     pinInputs.forEach((input, index) => {
@@ -1232,6 +1395,46 @@
       loadAnalyticsData(() => icon.classList.remove('loader'));
     });
 
+    // ── QUICK FILTER PILLS ───────────────────────────────────
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeQuickFilter = pill.getAttribute('data-filter');
+        applyLogFiltering();
+      });
+    });
+
+    function applyLogFiltering() {
+      let filtered = [...cachedRecentLogs];
+      const q = (liveSearch.value || '').toLowerCase();
+
+      if (q) {
+        filtered = filtered.filter(l => 
+          (l.path && l.path.toLowerCase().includes(q)) ||
+          (l.location && l.location.toLowerCase().includes(q)) ||
+          (l.site && l.site.toLowerCase().includes(q)) ||
+          (l.referrer && l.referrer.toLowerCase().includes(q)) ||
+          (l.browser && l.browser.toLowerCase().includes(q)) ||
+          (l.os && l.os.toLowerCase().includes(q))
+        );
+      }
+
+      if (activeQuickFilter === 'desktop') {
+        filtered = filtered.filter(l => (l.device || '').toLowerCase() === 'desktop');
+      } else if (activeQuickFilter === 'mobile') {
+        filtered = filtered.filter(l => (l.device || '').toLowerCase() === 'mobile');
+      } else if (activeQuickFilter === 'engaged') {
+        filtered = filtered.filter(l => Number(l.duration || 0) >= 10);
+      } else if (activeQuickFilter === 'deep-scroll') {
+        filtered = filtered.filter(l => Number(l.scroll || 0) >= 50);
+      }
+
+      renderLiveStreamTable(filtered);
+    }
+
+    liveSearch.addEventListener('input', applyLogFiltering);
+
     // ── LOAD ANALYTICS DATA (REST API) ───────────────────────
     async function loadAnalyticsData(callback) {
       if (!currentToken) return;
@@ -1243,6 +1446,7 @@
         if (callback) callback();
 
         if (data && data.status === 'success') {
+          cachedFullData = data;
           renderDashboard(data);
         } else if (data && data.status === 'unauthorized') {
           sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
@@ -1261,26 +1465,49 @@
       const avgDuration = data.kpi.avgDurationSec || 0;
       const avgScroll = data.kpi.avgScrollDepth || 0;
 
-      // KPI Numbers
-      document.getElementById('kpi-views').textContent   = totalViews.toLocaleString('id-ID');
+      // 1. Total Views
+      document.getElementById('kpi-views').textContent = totalViews.toLocaleString('id-ID');
+      
+      // 2. Uniques & Ratio
       document.getElementById('kpi-uniques').textContent = totalUniques.toLocaleString('id-ID');
-      document.getElementById('kpi-duration').textContent= formatDuration(avgDuration);
-      document.getElementById('kpi-scroll').textContent  = avgScroll + '%';
-
-      // KPI Progress & Ratios
       const uniqueRatio = totalViews > 0 ? Math.round((totalUniques / totalViews) * 100) : 0;
       document.getElementById('kpi-unique-ratio').textContent = `${uniqueRatio}% Rasio`;
       document.getElementById('bar-uniques').style.width = `${Math.min(uniqueRatio, 100)}%`;
+
+      // 3. Return Visitors
+      const returnRatio = totalViews > totalUniques ? Math.round(((totalViews - totalUniques) / totalViews) * 100) : 0;
+      document.getElementById('kpi-return').textContent = `${returnRatio}%`;
+      document.getElementById('bar-return').style.width = `${returnRatio}%`;
+
+      // 4. Dwell Time
+      document.getElementById('kpi-duration').textContent = formatDuration(avgDuration);
       document.getElementById('bar-duration').style.width = `${Math.min((avgDuration / 60) * 100, 100)}%`;
+
+      // 5. Scroll Depth
+      document.getElementById('kpi-scroll').textContent = avgScroll + '%';
       document.getElementById('bar-scroll').style.width = `${Math.min(avgScroll, 100)}%`;
 
-      // Engagement Rate
+      // 6. Active Engagement Rate
       const engagedCount = (data.recentLogs || []).filter(l => (l.duration > 10 || l.scroll > 25)).length;
       const engagementPct = (data.recentLogs && data.recentLogs.length) ? Math.round((engagedCount / data.recentLogs.length) * 100) : 85;
       document.getElementById('kpi-engagement').textContent = `${engagementPct}%`;
       document.getElementById('bar-engagement').style.width = `${engagementPct}%`;
 
-      // Hardware Dominant Ratio
+      // 7. Bounce Rate (<5s)
+      const bounceCount = (data.engagementTiers && data.engagementTiers.bounce) || 
+                          (data.recentLogs || []).filter(l => Number(l.duration || 0) < 5).length;
+      const bouncePct = totalViews > 0 ? Math.round((bounceCount / totalViews) * 100) : 0;
+      document.getElementById('kpi-bounce').textContent = `${bouncePct}%`;
+      document.getElementById('bar-bounce').style.width = `${bouncePct}%`;
+      if (bouncePct > 40) {
+        document.getElementById('kpi-bounce-pill').className = 'kpi-pill pill-red';
+        document.getElementById('kpi-bounce-pill').textContent = 'High Bounce';
+      } else {
+        document.getElementById('kpi-bounce-pill').className = 'kpi-pill pill-green';
+        document.getElementById('kpi-bounce-pill').textContent = 'Healthy';
+      }
+
+      // 8. Hardware Ratio
       const dCount = (data.deviceBreakdown && data.deviceBreakdown.Desktop) || 0;
       const mCount = (data.deviceBreakdown && data.deviceBreakdown.Mobile) || 0;
       const devTotal = dCount + mCount || 1;
@@ -1289,22 +1516,30 @@
       document.getElementById('kpi-device-sub').textContent = `${dCount} Desktop · ${mCount} Mobile`;
       document.getElementById('bar-device').style.width = `${deskRatio}%`;
 
-      // Center Doughnut Number
+      // Donut Center Number
       document.getElementById('donut-center-num').textContent = totalViews.toLocaleString('id-ID');
 
-      // Render 6 Visual Charts
-      renderTrendChart(data.trends || { labels: [], views: [], uniques: [] });
-      renderRefChart(data.topReferrers || []);
-      renderHourlyChart(data.hourlyBreakdown, data.recentLogs);
-      renderDeviceChart(data.deviceBreakdown || {});
-      renderOsChart(data.osBreakdown, data.recentLogs);
-      renderEngagementChart(data.engagementTiers, data.recentLogs);
+      // Colors for charts according to Theme
+      const isLight = (currentTheme === 'light');
+      const textColor = isLight ? '#0F172A' : '#F8FAFC';
+      const textMuted = isLight ? '#64748B' : '#94A3B8';
+      const gridColor = isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.04)';
+
+      // Render 8 Comprehensive Charts
+      renderTrendChart(data.trends || { labels: [], views: [], uniques: [] }, textMuted, gridColor);
+      renderRefChart(data.topReferrers || [], textMuted);
+      renderHourlyChart(data.hourlyBreakdown, data.recentLogs, textMuted, gridColor);
+      renderDayChart(data.dayOfWeekBreakdown, data.recentLogs, textMuted, gridColor);
+      renderDeviceChart(data.deviceBreakdown || {}, textMuted, gridColor);
+      renderOsChart(data.osBreakdown, data.recentLogs, textMuted);
+      renderBrowserChart(data.browserBreakdown, data.recentLogs, textMuted, gridColor);
+      renderEngagementChart(data.engagementTiers, data.recentLogs, textMuted, gridColor);
 
       // Render Lists & Tables
       renderGeoList(data.geoBreakdown || []);
       renderTopPagesTable(data.topPages || [], totalViews);
       cachedRecentLogs = data.recentLogs || [];
-      renderLiveStreamTable(cachedRecentLogs);
+      applyLogFiltering();
     }
 
     function formatDuration(sec) {
@@ -1315,8 +1550,8 @@
       return `${m}m ${s}s`;
     }
 
-    // ── CHART 1: TREND DINAMIS (AREA LINE WITH 3D GLOW) ──────
-    function renderTrendChart(trends) {
+    // ── 1. TREND DINAMIS (AREA SPLINE WITH DUAL GRADIENTS) ───
+    function renderTrendChart(trends, textMuted, gridColor) {
       const ctx = document.getElementById('trendChart').getContext('2d');
       if (trendChartInstance) trendChartInstance.destroy();
 
@@ -1346,12 +1581,12 @@
             {
               label: 'Pengunjung Unik',
               data: (trends.uniques && trends.uniques.length) ? trends.uniques : [0],
-              borderColor: '#5BE0DF',
+              borderColor: '#0284C7',
               backgroundColor: 'transparent',
               borderDash: [5, 5],
               tension: 0.4,
               borderWidth: 2.5,
-              pointBackgroundColor: '#5BE0DF',
+              pointBackgroundColor: '#0284C7',
               pointRadius: 4,
               pointHoverRadius: 7
             }
@@ -1364,7 +1599,7 @@
           plugins: {
             legend: { 
               labels: { 
-                color: '#94A3B8', 
+                color: textMuted, 
                 font: { family: 'Plus Jakarta Sans', weight: '600', size: 12 },
                 usePointStyle: true,
                 pointStyle: 'circle'
@@ -1372,27 +1607,21 @@
             }
           },
           scales: {
-            x: { 
-              grid: { color: 'rgba(255,255,255,0.04)' }, 
-              ticks: { color: '#64748B', font: { family: 'JetBrains Mono', size: 11 } } 
-            },
-            y: { 
-              grid: { color: 'rgba(255,255,255,0.04)' }, 
-              ticks: { color: '#64748B', precision: 0, font: { family: 'JetBrains Mono', size: 11 } } 
-            }
+            x: { grid: { color: gridColor }, ticks: { color: textMuted, font: { family: 'JetBrains Mono', size: 11 } } },
+            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0, font: { family: 'JetBrains Mono', size: 11 } } }
           }
         }
       });
     }
 
-    // ── CHART 2: ACQUISITION DOUGHNUT (3D CENTER STATS) ──────
-    function renderRefChart(referrers) {
+    // ── 2. TRAFFIC CHANNELS DOUGHNUT (WITH 3D CENTER BADGE) ──
+    function renderRefChart(referrers, textMuted) {
       const ctx = document.getElementById('refChart').getContext('2d');
       if (refChartInstance) refChartInstance.destroy();
 
       const labels = (referrers && referrers.length) ? referrers.map(r => r.source) : ['Direct'];
       const counts = (referrers && referrers.length) ? referrers.map(r => r.count) : [1];
-      const colors = ['#C9A96A', '#5BE0DF', '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#64748B'];
+      const colors = ['#C9A96A', '#0284C7', '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#64748B'];
 
       refChartInstance = new Chart(ctx, {
         type: 'doughnut',
@@ -1402,7 +1631,7 @@
             data: counts,
             backgroundColor: colors.slice(0, labels.length),
             borderWidth: 2,
-            borderColor: '#060B12',
+            borderColor: (currentTheme === 'light') ? '#FFFFFF' : '#060B12',
             hoverOffset: 6
           }]
         },
@@ -1413,7 +1642,7 @@
             legend: { 
               position: 'bottom', 
               labels: { 
-                color: '#94A3B8', 
+                color: textMuted, 
                 boxWidth: 10,
                 font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
                 padding: 12
@@ -1425,8 +1654,8 @@
       });
     }
 
-    // ── CHART 3: HOURLY PEAK ACTIVITY TIMELINE (24H) ─────────
-    function renderHourlyChart(hourlyData, recentLogs) {
+    // ── 3. HOURLY ACTIVITY TIMELINE (24H WITA) ───────────────
+    function renderHourlyChart(hourlyData, recentLogs, textMuted, gridColor) {
       const ctx = document.getElementById('hourlyChart').getContext('2d');
       if (hourlyChartInstance) hourlyChartInstance.destroy();
 
@@ -1472,15 +1701,66 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { display: false }, ticks: { color: '#64748B', font: { family: 'JetBrains Mono', size: 10 } } },
-            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', precision: 0, font: { family: 'JetBrains Mono', size: 10 } } }
+            x: { grid: { display: false }, ticks: { color: textMuted, font: { family: 'JetBrains Mono', size: 10 } } },
+            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0, font: { family: 'JetBrains Mono', size: 10 } } }
           }
         }
       });
     }
 
-    // ── CHART 4: HARDWARE BREAKDOWN ──────────────────────────
-    function renderDeviceChart(devices) {
+    // ── 4. WEEKLY DAY DISTRIBUTION (SENIN - MINGGU) ──────────
+    function renderDayChart(dayData, recentLogs, textMuted, gridColor) {
+      const ctx = document.getElementById('dayChart').getContext('2d');
+      if (dayChartInstance) dayChartInstance.destroy();
+
+      let days = dayData;
+      if (!days || days.length !== 7) {
+        days = new Array(7).fill(0);
+        if (recentLogs && recentLogs.length) {
+          recentLogs.forEach(l => {
+            if (l.timestamp) {
+              const dStr = String(l.timestamp).split(' ')[0];
+              const dObj = new Date(dStr);
+              if (!isNaN(dObj.getTime())) days[dObj.getDay()]++;
+            }
+          });
+        }
+      }
+
+      // Reorder from Sunday (0) to Monday first (1 to 6, then 0)
+      const labels = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+      const values = [days[1], days[2], days[3], days[4], days[5], days[6], days[0]];
+
+      const gradDay = ctx.createLinearGradient(0, 0, 0, 250);
+      gradDay.addColorStop(0, '#C9A96A');
+      gradDay.addColorStop(1, 'rgba(201, 169, 106, 0.15)');
+
+      dayChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Kunjungan',
+            data: values,
+            backgroundColor: gradDay,
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 10 } } },
+            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } }
+          }
+        }
+      });
+    }
+
+    // ── 5. HARDWARE CATEGORY BREAKDOWN ───────────────────────
+    function renderDeviceChart(devices, textMuted, gridColor) {
       const ctx = document.getElementById('deviceChart').getContext('2d');
       if (deviceChartInstance) deviceChartInstance.destroy();
 
@@ -1519,15 +1799,15 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { display: false }, ticks: { color: '#94A3B8', font: { weight: '600' } } },
-            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', precision: 0 } }
+            x: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600' } } },
+            y: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } }
           }
         }
       });
     }
 
-    // ── CHART 5: OPERATING SYSTEM BREAKDOWN ──────────────────
-    function renderOsChart(osData, recentLogs) {
+    // ── 6. OPERATING SYSTEM BREAKDOWN ────────────────────────
+    function renderOsChart(osData, recentLogs, textMuted) {
       const ctx = document.getElementById('osChart').getContext('2d');
       if (osChartInstance) osChartInstance.destroy();
 
@@ -1550,7 +1830,7 @@
           datasets: [{
             data: values.length ? values : [1],
             backgroundColor: colors.slice(0, Math.max(labels.length, 1)),
-            borderColor: '#060B12',
+            borderColor: (currentTheme === 'light') ? '#FFFFFF' : '#060B12',
             borderWidth: 2
           }]
         },
@@ -1560,7 +1840,7 @@
           plugins: {
             legend: { 
               position: 'bottom', 
-              labels: { color: '#94A3B8', boxWidth: 10, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }, padding: 10 } 
+              labels: { color: textMuted, boxWidth: 10, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }, padding: 8 } 
             }
           },
           cutout: '65%'
@@ -1568,8 +1848,49 @@
       });
     }
 
-    // ── CHART 6: VISITOR ENGAGEMENT FUNNEL ───────────────────
-    function renderEngagementChart(tiersData, recentLogs) {
+    // ── 7. BROWSER SHARE BREAKDOWN ───────────────────────────
+    function renderBrowserChart(browserData, recentLogs, textMuted, gridColor) {
+      const ctx = document.getElementById('browserChart').getContext('2d');
+      if (browserChartInstance) browserChartInstance.destroy();
+
+      let browserCounts = browserData || {};
+      if (Object.keys(browserCounts).length === 0 && recentLogs && recentLogs.length) {
+        recentLogs.forEach(l => {
+          const b = l.browser || 'Unknown';
+          browserCounts[b] = (browserCounts[b] || 0) + 1;
+        });
+      }
+
+      const labels = Object.keys(browserCounts);
+      const values = Object.values(browserCounts);
+      const colors = ['#0284C7', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#64748B'];
+
+      browserChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.length ? labels : ['Chrome'],
+          datasets: [{
+            axis: 'y',
+            data: values.length ? values : [1],
+            backgroundColor: colors.slice(0, Math.max(labels.length, 1)),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } },
+            y: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 11 } } }
+          }
+        }
+      });
+    }
+
+    // ── 8. DWELL TIME ENGAGEMENT FUNNEL ──────────────────────
+    function renderEngagementChart(tiersData, recentLogs, textMuted, gridColor) {
       const ctx = document.getElementById('engagementChart').getContext('2d');
       if (engagementChartInstance) engagementChartInstance.destroy();
 
@@ -1596,10 +1917,10 @@
             label: 'Pengunjung',
             data: values,
             backgroundColor: [
-              'rgba(239, 68, 68, 0.75)',
-              'rgba(245, 158, 11, 0.75)',
-              'rgba(91, 224, 223, 0.8)',
-              'rgba(201, 169, 106, 0.85)'
+              'rgba(239, 68, 68, 0.85)',
+              'rgba(245, 158, 11, 0.85)',
+              'rgba(91, 224, 223, 0.85)',
+              'rgba(201, 169, 106, 0.9)'
             ],
             borderRadius: 6
           }]
@@ -1610,8 +1931,8 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', precision: 0 } },
-            y: { grid: { display: false }, ticks: { color: '#94A3B8', font: { weight: '600', size: 11 } } }
+            x: { grid: { color: gridColor }, ticks: { color: textMuted, precision: 0 } },
+            y: { grid: { display: false }, ticks: { color: textMuted, font: { weight: '600', size: 11 } } }
           }
         }
       });
@@ -1634,9 +1955,9 @@
           <div>
             <div style="display: flex; justify-content: space-between; font-size: 0.86rem; margin-bottom: 6px;">
               <span>📍 <strong>${escapeHtml(g.location)}</strong></span>
-              <span style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: 700;">${g.count} Kunjungan</span>
+              <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent-gold); font-weight: 700;">${g.count} Kunjungan</span>
             </div>
-            <div style="width: 100%; height: 7px; background: rgba(255,255,255,0.06); border-radius: 6px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);">
+            <div style="width: 100%; height: 7px; background: var(--grid-line); border-radius: 6px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);">
               <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan)); border-radius: 6px;"></div>
             </div>
           </div>
@@ -1659,18 +1980,18 @@
         const sharePct = totalViews > 0 ? Math.round(((p.views || 0) / totalViews) * 100) : 0;
         html += `
           <tr>
-            <td style="font-family: var(--font-mono); color: var(--text-muted); font-weight: 700;">#${idx + 1}</td>
+            <td style="font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-weight: 700;">#${idx + 1}</td>
             <td><span class="mono-badge">${escapeHtml(p.path)}</span></td>
             <td style="color: var(--text-secondary); max-width: 320px; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(p.title)}</td>
             <td>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                <div style="flex: 1; height: 6px; background: var(--grid-line); border-radius: 4px; overflow: hidden;">
                   <div style="width: ${sharePct}%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));"></div>
                 </div>
-                <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-cyan);">${sharePct}%</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-cyan);">${sharePct}%</span>
               </div>
             </td>
-            <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-gold); text-align: right; font-size: 0.95rem;">${(p.views || 0).toLocaleString('id-ID')}</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--accent-gold); text-align: right; font-size: 0.95rem;">${(p.views || 0).toLocaleString('id-ID')}</td>
           </tr>
         `;
       });
@@ -1681,7 +2002,7 @@
     function renderLiveStreamTable(logs) {
       const tbody = document.querySelector('#live-stream-table tbody');
       if (!logs || logs.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada log aktivitas</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">Belum ada log aktivitas yang cocok dengan filter</td></tr>';
         return;
       }
 
@@ -1689,15 +2010,15 @@
       logs.forEach((l, idx) => {
         html += `
           <tr onclick="openInspectorModal(${idx})">
-            <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">${l.timestamp}</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted);">${l.timestamp}</td>
             <td><strong style="color: var(--text-primary);">${escapeHtml(l.site)}</strong></td>
             <td><span class="mono-badge">${escapeHtml(l.path)}</span></td>
             <td style="color: var(--text-secondary);">${escapeHtml(l.referrer)}</td>
             <td>${escapeHtml(l.device)} · ${escapeHtml(l.os)}</td>
             <td style="color: var(--text-secondary);">${escapeHtml(l.browser || '-')}</td>
             <td>${escapeHtml(l.location)}</td>
-            <td style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">${l.duration}s</td>
-            <td style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: 700;">${l.scroll || 0}%</td>
+            <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); font-weight: 700;">${l.duration}s</td>
+            <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-gold); font-weight: 700;">${l.scroll || 0}%</td>
             <td style="text-align: center;">
               <button class="btn-action" style="padding: 4px 10px; font-size: 0.75rem; border-radius: 8px;" onclick="event.stopPropagation(); openInspectorModal(${idx})">
                 🔍 24-Col
@@ -1800,20 +2121,6 @@
       if (e.target === detailModal) {
         detailModal.classList.add('hidden');
       }
-    });
-
-    // ── SEARCH FILTER ────────────────────────────────────────
-    liveSearch.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase();
-      const filtered = cachedRecentLogs.filter(l => 
-        (l.path && l.path.toLowerCase().includes(q)) ||
-        (l.location && l.location.toLowerCase().includes(q)) ||
-        (l.site && l.site.toLowerCase().includes(q)) ||
-        (l.referrer && l.referrer.toLowerCase().includes(q)) ||
-        (l.browser && l.browser.toLowerCase().includes(q)) ||
-        (l.os && l.os.toLowerCase().includes(q))
-      );
-      renderLiveStreamTable(filtered);
     });
 
     function escapeHtml(str) {
