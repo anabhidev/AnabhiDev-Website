@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<!-- ================================================================
+     AnabhiDev-WEB — Executive Visitor Intelligence & Admin Hub
+     HTML5 · CSS Custom Properties · Vanilla JS · Cloudflare Pages
+     Development · Anabhi Dev
+     Version   : 1.1.0
+     File      : adm1nLogs/index.html
+     Status    : PRODUCTION LIVE
+     Effective : Rabu, 30 September 2026 pukul 17.55.00 WITA
+     ================================================================ -->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Admin Intelligence & Visitor Logs — Anabhi Dev</title>
+  
+  <!-- Private Admin: Dilarang di-index search engine manapun -->
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="icon" href="https://anabhidev.com/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="https://anabhidev.com/favicon.svg">
+  <link rel="apple-touch-icon" href="https://anabhidev.com/apple-touch-icon.png">
+  <meta name="theme-color" content="#08111D">
+
+  <!-- Google Fonts & Chart.js CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg-obsidian: #08111D;
+      --bg-card: #0E1B2B;
+      --bg-card-hover: #132438;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(201, 169, 106, 0.35);
+      --accent-gold: #C9A96A;
+      --accent-gold-glow: rgba(201, 169, 106, 0.15);
+      --accent-cyan: #5BE0DF;
+      --accent-green: #10B981;
+      --accent-red: #EF4444;
+      --text-primary: #F5F1EA;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-obsidian);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .fluid-container {
+      width: 100%;
+      max-width: 100%;
+      padding: clamp(16px, 2.5vw, 36px);
+    }
+
+    #auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 17, 29, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #auth-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 40px var(--accent-gold-glow);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 38px 28px;
+      text-align: center;
+    }
+
+    .auth-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-gold);
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .auth-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .pin-input-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .pin-digit {
+      width: 44px;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .pin-digit:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 14px var(--accent-gold-glow);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .auth-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #C9A96A 0%, #A8894A 100%);
+      color: #08111D;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      margin-top: 10px;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-gold-glow);
+    }
+
+    .auth-btn:active { transform: translateY(0); }
+
+    .auth-status {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      min-height: 20px;
+      color: var(--accent-red);
+      line-height: 1.4;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--accent-green);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .app-title {
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .range-selector {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 3px;
+    }
+
+    .range-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .range-btn.active {
+      background: var(--accent-gold);
+      color: #08111D;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-gold);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-gold);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), transparent);
+    }
+
+    .kpi-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-val {
+      font-size: clamp(1.8rem, 2.8vw, 2.3rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      line-height: 1.1;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      margin-top: 6px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+
+    .card-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .panel-badge {
+      font-size: 0.75rem;
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+      background: var(--accent-gold-glow);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .chart-box {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    thead th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+    .mono-badge {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      background: rgba(91, 224, 223, 0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(91, 224, 223, 0.2);
+    }
+
+    .search-input {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      padding: 7px 12px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 240px;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--accent-gold); }
+
+    .loader {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div id="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="brand-dot"></span>
+        <span class="brand-title">Anabhi Dev Intelligence</span>
+      </div>
+      <p class="auth-desc">Masukkan 6-digit Master PIN untuk mengakses private analytics hub.</p>
+      
+      <div class="pin-input-group">
+        <input type="password" maxlength="1" class="pin-digit" autofocus autocomplete="off">
+        <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
+        <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
+        <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
+        <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
+        <input type="password" maxlength="1" class="pin-digit" autocomplete="off">
+      </div>
+
+      <button id="btn-unlock" class="auth-btn">Buka Dashboard</button>
+      <div id="auth-status" class="auth-status"></div>
+    </div>
+  </div>
+
+  <main class="fluid-container">
+    
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="badge-live">
+          <span class="pulse-dot"></span> LIVE SSOT
+        </div>
+        <h1 class="app-title">Universal Visitor Intelligence</h1>
+      </div>
+
+      <div class="topbar-right">
+        <div class="range-selector">
+          <button class="range-btn active" data-range="7d">7 Hari</button>
+          <button class="range-btn" data-range="today">Hari Ini</button>
+          <button class="range-btn" data-range="30d">30 Hari</button>
+          <button class="range-btn" data-range="all">Semua</button>
+        </div>
+
+        <button id="btn-refresh" class="btn-action">
+          <span id="refresh-icon">🔄</span> Refresh
+        </button>
+
+        <a href="/" class="btn-action" title="Kembali ke Beranda">
+          🏠 Home
+        </a>
+
+        <button id="btn-logout" class="btn-action" style="color: var(--accent-red);">
+          🚪 Keluar
+        </button>
+      </div>
+    </header>
+
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Tayangan (Views) <span>👁️</span></div>
+        <div id="kpi-views" class="kpi-val">-</div>
+        <div class="kpi-sub">Total page hits tercatat</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Pengunjung Unik (Uniques) <span>👤</span></div>
+        <div id="kpi-uniques" class="kpi-val">-</div>
+        <div class="kpi-sub">Berdasarkan persistent visitor ID</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Rata-rata Waktu Baca <span>⏱️</span></div>
+        <div id="kpi-duration" class="kpi-val">-</div>
+        <div class="kpi-sub">Dwell time sebelum navigasi</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Rata-rata Scroll Depth <span>📜</span></div>
+        <div id="kpi-scroll" class="kpi-val">-</div>
+        <div class="kpi-sub">Kedalaman eksplorasi halaman</div>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Tren Kunjungan Harian</h2>
+          <span class="panel-badge">Views vs Uniques</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Sumber Traffic (Referrer)</h2>
+          <span class="panel-badge">Channels</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="refChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="charts-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Perangkat & Sistem Operasi</h2>
+          <span class="panel-badge">Hardware</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="deviceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Sebaran Lokasi Pengunjung</h2>
+          <span class="panel-badge">Top Cities & Countries</span>
+        </div>
+        <div id="geo-list" style="height: 280px; overflow-y: auto; padding-right: 6px;"></div>
+      </div>
+    </section>
+
+    <section class="card-panel" style="margin-bottom: 28px;">
+      <div class="panel-header">
+        <h2 class="panel-title">Halaman Terpopuler (Top Content)</h2>
+        <span class="panel-badge">Ecosystem Pages</span>
+      </div>
+      <div class="table-container">
+        <table id="top-pages-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Path Halaman</th>
+              <th>Judul Dokumen</th>
+              <th>Total Views</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card-panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Live Visitor Stream</h2>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">15 entri kunjungan terbaru di seluruh ekosistem web.</p>
+        </div>
+        <input type="text" id="live-search" class="search-input" placeholder="Cari path, kota, atau IP...">
+      </div>
+      <div class="table-container">
+        <table id="live-stream-table">
+          <thead>
+            <tr>
+              <th>Waktu (WITA)</th>
+              <th>Domain Asal</th>
+              <th>Halaman</th>
+              <th>Referrer</th>
+              <th>Device / OS</th>
+              <th>Lokasi</th>
+              <th>Durasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">Memuat data live stream...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrKiLLezhkiQyGvO6-xZcDCqwbvVc0CvQBHUHr-iPrFgqIXR1hqdtT5m92GSbRZvLj/exec';
+
+    let currentToken = sessionStorage.getItem('ANABHI_ANALYTICS_TOKEN');
+    let currentRange = '7d';
+    let trendChartInstance = null;
+    let refChartInstance   = null;
+    let deviceChartInstance= null;
+    let cachedRecentLogs   = [];
+
+    const authOverlay = document.getElementById('auth-overlay');
+    const authStatus  = document.getElementById('auth-status');
+    const btnUnlock   = document.getElementById('btn-unlock');
+    const pinInputs   = document.querySelectorAll('.pin-digit');
+    const btnRefresh  = document.getElementById('btn-refresh');
+    const btnLogout   = document.getElementById('btn-logout');
+    const rangeBtns   = document.querySelectorAll('.range-btn');
+    const liveSearch  = document.getElementById('live-search');
+
+    pinInputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < pinInputs.length - 1) {
+          pinInputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          pinInputs[index - 1].focus();
+        } else if (e.key === 'Enter') {
+          triggerUnlock();
+        }
+      });
+    });
+
+    btnUnlock.addEventListener('click', triggerUnlock);
+
+    function getEnteredPin() {
+      let pin = '';
+      pinInputs.forEach(i => pin += i.value);
+      return pin;
+    }
+
+    async function triggerUnlock() {
+      const pin = getEnteredPin();
+      if (pin.length < 4) {
+        authStatus.textContent = 'Harap masukkan PIN lengkap.';
+        return;
+      }
+
+      btnUnlock.disabled = true;
+      btnUnlock.innerHTML = '<span class="loader"></span> Memverifikasi...';
+      authStatus.textContent = '';
+
+      try {
+        const res = await fetch(`${API_ENDPOINT}?action=verifyPin&pin=${encodeURIComponent(pin)}`);
+        const data = await res.json();
+
+        btnUnlock.disabled = false;
+        btnUnlock.textContent = 'Buka Dashboard';
+
+        if (data && data.success) {
+          currentToken = data.token;
+          sessionStorage.setItem('ANABHI_ANALYTICS_TOKEN', currentToken);
+          authOverlay.classList.add('hidden');
+          loadAnalyticsData();
+        } else {
+          authStatus.textContent = data ? data.message : 'PIN salah.';
+          pinInputs.forEach(i => i.value = '');
+          pinInputs[0].focus();
+        }
+      } catch (err) {
+        btnUnlock.disabled = false;
+        btnUnlock.textContent = 'Buka Dashboard';
+        authStatus.textContent = 'Gagal menghubungi server API: ' + err.toString();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      if (currentToken) {
+        try {
+          const res = await fetch(`${API_ENDPOINT}?action=verifyToken&token=${encodeURIComponent(currentToken)}`);
+          const data = await res.json();
+          if (data && data.valid) {
+            authOverlay.classList.add('hidden');
+            loadAnalyticsData();
+          } else {
+            sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+            currentToken = null;
+            authOverlay.classList.remove('hidden');
+          }
+        } catch (e) {
+          authOverlay.classList.remove('hidden');
+        }
+      }
+    });
+
+    btnLogout.addEventListener('click', () => {
+      sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+      location.reload();
+    });
+
+    rangeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        rangeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRange = btn.getAttribute('data-range');
+        loadAnalyticsData();
+      });
+    });
+
+    btnRefresh.addEventListener('click', () => {
+      const icon = document.getElementById('refresh-icon');
+      icon.classList.add('loader');
+      loadAnalyticsData(() => icon.classList.remove('loader'));
+    });
+
+    async function loadAnalyticsData(callback) {
+      if (!currentToken) return;
+
+      try {
+        const res = await fetch(`${API_ENDPOINT}?action=getAnalytics&token=${encodeURIComponent(currentToken)}&range=${encodeURIComponent(currentRange)}`);
+        const data = await res.json();
+
+        if (callback) callback();
+
+        if (data && data.status === 'success') {
+          renderDashboard(data);
+        } else if (data && data.status === 'unauthorized') {
+          sessionStorage.removeItem('ANABHI_ANALYTICS_TOKEN');
+          authOverlay.classList.remove('hidden');
+        }
+      } catch (err) {
+        if (callback) callback();
+        console.error('Error fetching analytics:', err);
+      }
+    }
+
+    function renderDashboard(data) {
+      document.getElementById('kpi-views').textContent   = (data.kpi.pageviews || 0).toLocaleString('id-ID');
+      document.getElementById('kpi-uniques').textContent = (data.kpi.uniques || 0).toLocaleString('id-ID');
+      document.getElementById('kpi-duration').textContent= formatDuration(data.kpi.avgDurationSec);
+      document.getElementById('kpi-scroll').textContent  = (data.kpi.avgScrollDepth || 0) + '%';
+
+      renderTrendChart(data.trends || { labels: [], views: [], uniques: [] });
+      renderRefChart(data.topReferrers || []);
+      renderDeviceChart(data.deviceBreakdown || {}, data.osBreakdown || {});
+      renderGeoList(data.geoBreakdown || []);
+      renderTopPagesTable(data.topPages || []);
+      cachedRecentLogs = data.recentLogs || [];
+      renderLiveStreamTable(cachedRecentLogs);
+    }
+
+    function formatDuration(sec) {
+      if (!sec || sec <= 0) return '0s';
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      if (m === 0) return `${s}s`;
+      return `${m}m ${s}s`;
+    }
+
+    function renderTrendChart(trends) {
+      const ctx = document.getElementById('trendChart').getContext('2d');
+      if (trendChartInstance) trendChartInstance.destroy();
+
+      trendChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: (trends.labels && trends.labels.length) ? trends.labels : ['No Data'],
+          datasets: [
+            {
+              label: 'Pageviews',
+              data: (trends.views && trends.views.length) ? trends.views : [0],
+              borderColor: '#C9A96A',
+              backgroundColor: 'rgba(201, 169, 106, 0.12)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 2,
+              pointBackgroundColor: '#C9A96A'
+            },
+            {
+              label: 'Unique Visitors',
+              data: (trends.uniques && trends.uniques.length) ? trends.uniques : [0],
+              borderColor: '#5BE0DF',
+              backgroundColor: 'transparent',
+              borderDash: [4, 4],
+              tension: 0.35,
+              borderWidth: 2,
+              pointBackgroundColor: '#5BE0DF'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans' } } }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B' } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', precision: 0 } }
+          }
+        }
+      });
+    }
+
+    function renderRefChart(referrers) {
+      const ctx = document.getElementById('refChart').getContext('2d');
+      if (refChartInstance) refChartInstance.destroy();
+
+      const labels = (referrers && referrers.length) ? referrers.map(r => r.source) : ['Direct'];
+      const counts = (referrers && referrers.length) ? referrers.map(r => r.count) : [1];
+      const colors = ['#C9A96A', '#5BE0DF', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#64748B'];
+
+      refChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: counts,
+            backgroundColor: colors.slice(0, labels.length),
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#94A3B8', boxWidth: 12 } }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    function renderDeviceChart(devices, osList) {
+      const ctx = document.getElementById('deviceChart').getContext('2d');
+      if (deviceChartInstance) deviceChartInstance.destroy();
+
+      const labels = Object.keys(devices || {});
+      const dataVals = Object.values(devices || {});
+
+      deviceChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.length ? labels : ['Desktop'],
+          datasets: [{
+            label: 'Devices',
+            data: dataVals.length ? dataVals : [0],
+            backgroundColor: ['#3B82F6', '#10B981', '#C9A96A'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#94A3B8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', precision: 0 } }
+          }
+        }
+      });
+    }
+
+    function renderGeoList(geoList) {
+      const container = document.getElementById('geo-list');
+      if (!geoList || geoList.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 20px; text-align: center;">Belum ada data geolokasi</div>';
+        return;
+      }
+
+      let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
+      const maxCount = Math.max(...geoList.map(g => g.count), 1);
+
+      geoList.forEach(g => {
+        const pct = Math.round((g.count / maxCount) * 100);
+        html += `
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+              <span>📍 ${escapeHtml(g.location)}</span>
+              <span style="font-family: var(--font-mono); color: var(--accent-gold);">${g.count}</span>
+            </div>
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+              <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan)); border-radius: 4px;"></div>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function renderTopPagesTable(pages) {
+      const tbody = document.querySelector('#top-pages-table tbody');
+      if (!pages || pages.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">Belum ada data halaman</td></tr>';
+        return;
+      }
+
+      let html = '';
+      pages.forEach((p, idx) => {
+        html += `
+          <tr>
+            <td style="font-family: var(--font-mono); color: var(--text-muted);">${idx + 1}</td>
+            <td><span class="mono-badge">${escapeHtml(p.path)}</span></td>
+            <td style="color: var(--text-secondary);">${escapeHtml(p.title)}</td>
+            <td style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-gold);">${(p.views || 0).toLocaleString('id-ID')}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function renderLiveStreamTable(logs) {
+      const tbody = document.querySelector('#live-stream-table tbody');
+      if (!logs || logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">Belum ada log aktivitas</td></tr>';
+        return;
+      }
+
+      let html = '';
+      logs.forEach(l => {
+        html += `
+          <tr>
+            <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">${l.timestamp}</td>
+            <td><strong>${escapeHtml(l.site)}</strong></td>
+            <td><span class="mono-badge">${escapeHtml(l.path)}</span></td>
+            <td style="color: var(--text-secondary);">${escapeHtml(l.referrer)}</td>
+            <td>${escapeHtml(l.device)} · ${escapeHtml(l.os)}</td>
+            <td>${escapeHtml(l.location)}</td>
+            <td style="font-family: var(--font-mono); color: var(--accent-cyan);">${l.duration}s</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    liveSearch.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      const filtered = cachedRecentLogs.filter(l => 
+        (l.path && l.path.toLowerCase().includes(q)) ||
+        (l.location && l.location.toLowerCase().includes(q)) ||
+        (l.site && l.site.toLowerCase().includes(q)) ||
+        (l.referrer && l.referrer.toLowerCase().includes(q))
+      );
+      renderLiveStreamTable(filtered);
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '-';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
