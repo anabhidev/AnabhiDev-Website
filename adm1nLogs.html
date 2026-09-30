@@ -740,16 +740,17 @@
     /* ── 8 3D KPI METRIC CAPSULES ──────────────────────────── */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
       margin-bottom: 24px;
+      width: 100%;
     }
 
     @media (max-width: 1300px) {
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 640px) {
-      .kpi-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 18px; }
     }
 
     .kpi-card {
@@ -763,6 +764,8 @@
       transition: all 0.25s ease;
       position: relative;
       overflow: hidden;
+      min-width: 0;
+      max-width: 100%;
     }
 
     .kpi-card:hover {
@@ -859,6 +862,9 @@
       position: relative;
       transition: all 0.25s ease;
       margin-bottom: 24px;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .card-panel:hover {
@@ -870,6 +876,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 20px;
     }
 
@@ -880,6 +888,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      min-width: 0;
+      flex: 1;
     }
 
     .panel-badge {
@@ -891,29 +901,34 @@
       border: 1px solid var(--border-gold);
       padding: 4px 10px;
       border-radius: 20px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .grid-2col {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
+      width: 100%;
     }
 
     .grid-3col {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
+      width: 100%;
     }
 
     @media (max-width: 1100px) {
-      .grid-2col { grid-template-columns: 1fr; }
-      .grid-3col { grid-template-columns: 1fr; }
+      .grid-2col { grid-template-columns: minmax(0, 1fr); }
+      .grid-3col { grid-template-columns: minmax(0, 1fr); }
     }
 
     .chart-box {
       position: relative;
       height: 290px;
       width: 100%;
+      max-width: 100%;
     }
 
     /* Center Donut Label */
@@ -945,7 +960,10 @@
 
     /* ── TABLES & RANKINGS ──────────────────────────────────── */
     .table-container {
+      width: 100%;
+      max-width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border-radius: 14px;
     }
 
@@ -983,9 +1001,12 @@
     /* ── 24x7 ACTIVITY HEATMAP GRID ─────────────────────────── */
     .heatmap-grid {
       display: grid;
-      grid-template-columns: 50px repeat(24, 1fr);
+      grid-template-columns: 50px repeat(24, minmax(18px, 1fr));
       gap: 4px;
+      width: 100%;
+      max-width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       padding-bottom: 10px;
     }
 
@@ -1064,12 +1085,12 @@
 
     .attributes-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }
 
     @media (max-width: 768px) {
-      .attributes-grid { grid-template-columns: 1fr; }
+      .attributes-grid { grid-template-columns: minmax(0, 1fr); }
       .app-sidebar {
         position: fixed;
         left: -260px;
@@ -1092,10 +1113,174 @@
         width: 100% !important;
       }
       .btn-mobile-sidebar {
-        display: block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        font-size: 0.95rem;
+        border-radius: 9px;
+        flex-shrink: 0;
       }
       #btn-toggle-sidebar {
         display: none;
+      }
+      /* Compact Mobile Top-Dock (2 Sleek Rows Instead of 4) */
+      .top-dock {
+        padding: 8px 12px;
+        gap: 6px;
+      }
+      .top-dock-left {
+        width: 100%;
+        gap: 8px;
+        align-items: center;
+      }
+      .dock-title-group {
+        flex: 1;
+        min-width: 0;
+        gap: 1px;
+      }
+      .topbar-brand {
+        gap: 6px;
+        justify-content: space-between;
+      }
+      .hdr-title {
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .badge-version {
+        font-size: 9px;
+        padding: 1px 6px;
+        flex-shrink: 0;
+      }
+      .dock-subgroup {
+        gap: 6px;
+      }
+      .badge-live-pulse {
+        padding: 2px 6px;
+        font-size: 0.62rem;
+        gap: 4px;
+        flex-shrink: 0;
+      }
+      .pulse-dot {
+        width: 5px;
+        height: 5px;
+      }
+      .dock-section-title {
+        font-size: 0.94rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .top-dock-right {
+        width: 100%;
+        gap: 5px;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+      }
+      .filter-group {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 2px;
+        border-radius: 9px;
+      }
+      .filter-btn {
+        flex: 1;
+        padding: 5px 4px;
+        font-size: 0.7rem;
+        border-radius: 7px;
+        white-space: nowrap;
+        text-align: center;
+      }
+      .dock-btn {
+        padding: 5px 8px;
+        font-size: 0.78rem;
+        border-radius: 9px;
+        gap: 0;
+        flex-shrink: 0;
+        justify-content: center;
+      }
+      .dock-btn-text {
+        display: none;
+      }
+      /* Compact Mobile Workspace & Cards */
+      .workspace-container {
+        padding: 12px;
+      }
+      .workspace-container.show-all .analytics-section {
+        margin-bottom: 28px;
+      }
+      .section-banner-title {
+        font-size: 0.92rem;
+        padding: 10px 14px;
+        gap: 8px;
+        margin-bottom: 14px;
+        border-radius: 13px;
+      }
+      .section-banner-badge {
+        font-size: 0.64rem;
+        padding: 3px 8px;
+      }
+      .card-panel {
+        padding: 16px 14px;
+        border-radius: 18px;
+        margin-bottom: 16px;
+      }
+      .kpi-card {
+        padding: 16px;
+        border-radius: 16px;
+      }
+      .grid-2col,
+      .grid-3col {
+        gap: 14px;
+      }
+      .panel-header {
+        margin-bottom: 14px;
+        gap: 8px;
+      }
+      .panel-title {
+        font-size: 0.92rem;
+        gap: 6px;
+      }
+      .panel-badge {
+        font-size: 0.66rem;
+        padding: 3px 8px;
+      }
+      .chart-box {
+        height: 230px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .data-table {
+        font-size: 0.78rem;
+      }
+      .data-table th {
+        padding: 9px 8px;
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+      }
+      .data-table td {
+        padding: 9px 8px;
+      }
+      /* Allow primary label column in summary tables to wrap cleanly instead of forcing overflow */
+      #table-referrers td:first-child,
+      #table-utm td:first-child,
+      #table-cities td:first-child,
+      #table-screens td:first-child,
+      #table-isp td:first-child,
+      #table-timezone td:first-child,
+      #table-content-perf td:first-child,
+      #table-content-perf td:nth-child(2) {
+        white-space: normal;
+        word-break: break-word;
+      }
+      #live-search {
+        width: 100% !important;
       }
     }
 
@@ -1306,7 +1491,7 @@
           <div class="dock-title-group">
             <div class="topbar-brand">
               <span class="hdr-title">AnabhiDev Visitor Intelligence</span>
-              <span class="badge-version">v2.2.3 ACTIVE</span>
+              <span class="badge-version">v2.2.4 ACTIVE</span>
             </div>
             <div class="dock-subgroup">
               <span class="badge-live-pulse"><span class="pulse-dot"></span> LIVE SSOT</span>
@@ -1326,16 +1511,16 @@
 
           <!-- Theme Toggle Switch -->
           <button id="btn-theme-toggle" class="dock-btn" title="Ganti Tema">
-            <span id="theme-icon">🌙</span> <span id="theme-label">Dark</span>
+            <span id="theme-icon">🌙</span> <span id="theme-label" class="dock-btn-text">Dark</span>
           </button>
 
           <!-- Refresh Data -->
           <button id="btn-refresh" class="dock-btn" title="Muat Ulang Data">
-            <span id="refresh-icon">🔄</span> Refresh
+            <span id="refresh-icon">🔄</span> <span class="dock-btn-text">Refresh</span>
           </button>
 
           <!-- Home Link -->
-          <a href="/" class="dock-btn" title="Kembali ke Beranda">🏠 Home</a>
+          <a href="/" class="dock-btn" title="Kembali ke Beranda">🏠 <span class="dock-btn-text">Home</span></a>
 
           <!-- Logout -->
           <button id="btn-logout" class="dock-btn" style="color: var(--accent-red);" title="Keluar">🚪</button>
