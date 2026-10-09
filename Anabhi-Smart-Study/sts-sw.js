@@ -4,7 +4,7 @@
 // Version : 2.0 (4 Subjects · 1,000 Questions Edition)
 // ================================================================
 
-const CACHE_NAME = 'sts-uts-2026-v2.0';
+const CACHE_NAME = 'sts-uts-2026-v2.1';
 const STATIC_ASSETS = [
   './UTS-Ganjil-2026.html',
   './sts-matematika-kelas-1-sd.html',
@@ -15,7 +15,9 @@ const STATIC_ASSETS = [
   './assets/img/og-uts-ganjil-2026.jpg',
   './assets/img/og-uts-ganjil-2026.png',
   './assets/img/og-sts-matematika.jpg',
-  './assets/img/og-sts-matematika.png'
+  './assets/img/og-sts-matematika.png',
+  './assets/img/Ana.webp',
+  './assets/img/Abhi.webp'
 ];
 
 // Install Event — Cache Core Assets

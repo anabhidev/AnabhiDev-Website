@@ -237,18 +237,28 @@
       background: #fdf2f8;
       border: 2px solid #f472b6;
       color: #9d174d;
-      border-radius: 20px;
-      padding: 6px 14px;
+      border-radius: 24px;
+      padding: 4px 14px 4px 6px;
       font-weight: 800;
       font-size: 0.88rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: transform 0.2s;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .profile-pill:hover {
-      transform: scale(1.04);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .profile-pill-img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
     .badge-star {
       background: #fef08a;
@@ -1458,24 +1468,120 @@
     .profile-opt-card {
       border: 3px solid #cbd5e1;
       border-radius: 20px;
-      padding: 24px 16px;
+      padding: 20px 16px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .profile-opt-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
     }
-    .profile-opt-avatar {
-      font-size: 3.5rem;
-      margin-bottom: 8px;
+    .profile-opt-avatar-frame {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      padding: 4px;
+      background: #ffffff;
+      border: 3.5px solid #cbd5e1;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s;
+    }
+    .profile-opt-card:hover .profile-opt-avatar-frame {
+      transform: scale(1.08) rotate(2deg);
+    }
+    .profile-opt-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
     }
     .profile-opt-name {
       font-family: var(--font-display);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--dark-slate);
+    }
+
+    /* HUB HERO AVATAR */
+    .hub-hero-avatar-box {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .hub-hero-avatar-frame {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      padding: 3.5px;
+      background: #ffffff;
+      border: 3.5px solid #f472b6;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .hub-hero-avatar-box:hover .hub-hero-avatar-frame {
+      transform: scale(1.08) rotate(-2deg);
+    }
+    .hub-hero-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+    .hub-hero-avatar-badge {
+      margin-top: -12px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 12px;
+      border: 1.5px solid #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* RESULT & REPORT AVATARS */
+    .result-avatar-wrap {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      padding: 3.5px;
+      background: #ffffff;
+      border: 3.5px solid #f59e0b;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .result-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+    .report-avatar-mini {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: inline-block;
+      vertical-align: middle;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      margin-right: 6px;
     }
 
     /* JADWAL STS TABLE */
@@ -1577,6 +1683,13 @@
     <section id="hubView">
       <div class="hub-hero">
         <div class="hub-hero-inner">
+          <div class="hub-hero-avatar-box" onclick="openProfileModal()" title="Klik untuk ganti profil anak (Ana / Abhi)">
+            <div class="hub-hero-avatar-frame" id="hubHeroAvatarFrame">
+              <img id="hubHeroAvatarImg" src="./assets/img/Ana.webp" class="hub-hero-avatar-img" alt="Profil Anak" onerror="this.src='https://anabhidev.com/Anabhi-Smart-Play/assets/Ana.webp'">
+            </div>
+            <span class="hub-hero-avatar-badge" id="hubHeroAvatarBadge">Ana ⭐ Ganti</span>
+          </div>
+
           <div class="hub-hero-badge">🌟 PUSAT BELAJAR STS KELAS 1 SD 🌟</div>
           <h1 class="hub-hero-title">Halo <span id="hubWelcomeName">Ana</span>! Mau Belajar Apa Hari Ini? ⭐</h1>
           <p class="hub-hero-sub">
@@ -1776,14 +1889,18 @@
 
       <div class="profile-select-grid">
         <div class="profile-opt-card" onclick="setProfile('ana')" style="background:#fdf2f8; border-color:#f472b6;">
-          <div class="profile-opt-avatar">👧</div>
+          <div class="profile-opt-avatar-frame" style="border-color:#f472b6;">
+            <img src="./assets/img/Ana.webp" class="profile-opt-img" alt="Ana" onerror="this.src='https://anabhidev.com/Anabhi-Smart-Play/assets/Ana.webp'">
+          </div>
           <div class="profile-opt-name" style="color:#9d174d;">Ana</div>
-          <div style="font-size:0.8rem; font-weight:700; color:#db2777; margin-top:4px;">Kelas 1 SD</div>
+          <div style="font-size:0.82rem; font-weight:800; color:#db2777; margin-top:4px;">Kakak Ana · Kelas 1 SD</div>
         </div>
         <div class="profile-opt-card" onclick="setProfile('abhi')" style="background:#f0fdf4; border-color:#4ade80;">
-          <div class="profile-opt-avatar">👦</div>
+          <div class="profile-opt-avatar-frame" style="border-color:#4ade80;">
+            <img src="./assets/img/Abhi.webp" class="profile-opt-img" alt="Abhi" onerror="this.src='https://anabhidev.com/Anabhi-Smart-Play/assets/Abhi.webp'">
+          </div>
           <div class="profile-opt-name" style="color:#166534;">Abhi</div>
-          <div style="font-size:0.8rem; font-weight:700; color:#15803d; margin-top:4px;">Kelas 1 SD</div>
+          <div style="font-size:0.82rem; font-weight:800; color:#15803d; margin-top:4px;">Adik Abhi · Kelas 1 SD</div>
         </div>
       </div>
     </div>
@@ -1933,6 +2050,32 @@
       }
     }
 
+    // ================================================================
+    // STANDAR AVATAR RESMI ANA & ABHI (SINGLE SOURCE OF TRUTH / SSOT)
+    // ================================================================
+    const AVATARS = {
+      ana: {
+        id: 'ana',
+        name: 'Ana',
+        role: 'Kakak Ana · Kelas 1 SD',
+        img: './assets/img/Ana.webp',
+        cdn: 'https://anabhidev.com/Anabhi-Smart-Play/assets/Ana.webp',
+        theme: '#db2777',
+        border: '#f472b6',
+        bg: '#fdf2f8'
+      },
+      abhi: {
+        id: 'abhi',
+        name: 'Abhi',
+        role: 'Adik Abhi · Kelas 1 SD',
+        img: './assets/img/Abhi.webp',
+        cdn: 'https://anabhidev.com/Anabhi-Smart-Play/assets/Abhi.webp',
+        theme: '#166534',
+        border: '#4ade80',
+        bg: '#f0fdf4'
+      }
+    };
+
     // Profile Management
     function setProfile(name) {
       activeProfile = name;
@@ -1950,11 +2093,32 @@
     }
 
     function updateProfileBadges() {
-      const avatar = activeProfile === 'ana' ? '👧 Ana' : '👦 Abhi';
+      const av = AVATARS[activeProfile] || AVATARS.ana;
       const totalStars = getProfileStars(activeProfile);
       const badgeEl = document.getElementById('activeProfileBadge');
       if (badgeEl) {
-        badgeEl.innerHTML = avatar + ' <span class="badge-star">⭐ ' + totalStars + '</span>';
+        badgeEl.style.background = av.bg;
+        badgeEl.style.borderColor = av.border;
+        badgeEl.style.color = av.theme;
+        badgeEl.innerHTML = `
+          <img src="${av.img}" class="profile-pill-img" alt="${av.name}" onerror="this.src='${av.cdn}'">
+          <span>${av.name}</span>
+          <span class="badge-star">⭐ ${totalStars}</span>
+        `;
+      }
+      const hubAvatarImg = document.getElementById('hubHeroAvatarImg');
+      if (hubAvatarImg) {
+        hubAvatarImg.src = av.img;
+        hubAvatarImg.alt = av.name;
+        hubAvatarImg.onerror = () => { hubAvatarImg.src = av.cdn; };
+      }
+      const hubAvatarFrame = document.getElementById('hubHeroAvatarFrame');
+      if (hubAvatarFrame) {
+        hubAvatarFrame.style.borderColor = av.border;
+      }
+      const hubAvatarBadge = document.getElementById('hubHeroAvatarBadge');
+      if (hubAvatarBadge) {
+        hubAvatarBadge.innerText = av.name + ' ⭐ Ganti';
       }
     }
 
@@ -2768,8 +2932,12 @@
         playSound('fanfare');
       }
 
+      const av = AVATARS[activeProfile] || AVATARS.ana;
       container.innerHTML = `
         <div class="card-question result-card">
+          <div class="result-avatar-wrap" style="border-color:${score === 100 ? '#f59e0b' : av.border};">
+            <img src="${av.img}" class="result-avatar-img" alt="${av.name}" onerror="this.src='${av.cdn}'">
+          </div>
           <div class="result-trophy">${score === 100 ? '🏆 ⭐⭐⭐ 🏆' : (score >= 80 ? '🌟 ⭐⭐ 🌟' : '💪 ⭐ 💪')}</div>
           <h2 class="result-title">${score === 100 ? 'LUAR BIASA! NILAI 100 SEMPURNA!' : (score >= 80 ? 'HEBAT SEKALI!' : 'BAGUS, TETAP SEMANGAT!')}</h2>
           <div class="result-score-circle" style="border-color: ${score === 100 ? '#059669' : '#2563eb'};">
@@ -2777,7 +2945,7 @@
             <span class="score-label">NILAI STS</span>
           </div>
           <p class="result-summary">
-            ${activeProfile === 'ana' ? 'Ana' : 'Abhi'} berhasil menjawab <strong>${correctCount}</strong> dari 20 soal dengan benar!
+            <strong>${av.name}</strong> berhasil menjawab <strong>${correctCount}</strong> dari 20 soal dengan benar!
           </p>
           <div class="result-actions">
             <button class="btn-result-action" onclick="initExam()" style="background: ${s.themeColor};">Ulangi Simulasi 🔄</button>
@@ -2866,10 +3034,14 @@
         });
       }
 
+      const av = AVATARS[activeProfile] || AVATARS.ana;
       container.innerHTML = `
         <div class="card-question">
           <div class="report-header">
-            <h3>📊 Rapor Nilai ${s.title} — ${activeProfile === 'ana' ? '👧 Ana' : '👦 Abhi'}</h3>
+            <h3 style="display:flex; align-items:center; gap:8px;">
+              <img src="${av.img}" class="report-avatar-mini" alt="${av.name}" onerror="this.src='${av.cdn}'">
+              📊 Rapor Nilai ${s.title} — ${av.name}
+            </h3>
             <button class="btn-clear-report" onclick="clearSubjectHistory()">Hapus Riwayat</button>
           </div>
           <div class="report-table-wrapper">
