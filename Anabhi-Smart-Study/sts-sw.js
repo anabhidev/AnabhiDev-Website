@@ -1,16 +1,20 @@
 // ================================================================
-// SERVICE WORKER — STS MATEMATIKA KELAS 1 SD (PWA OFFLINE ENGINE)
+// SERVICE WORKER — BINTANG JUARA STS 1 SD (UTS GANJIL 2026)
 // Anabhi Dev · Target: Tablet iPad & Android Offline Learning
-// Version : 1.1 (500 Questions Edition)
+// Version : 2.0 (4 Subjects · 1,000 Questions Edition)
 // ================================================================
 
-const CACHE_NAME = 'sts-matematika-v1.1';
+const CACHE_NAME = 'sts-uts-2026-v2.0';
 const STATIC_ASSETS = [
+  './UTS-Ganjil-2026.html',
   './sts-matematika-kelas-1-sd.html',
   './sts-manifest.json',
   './assets/icon-sts-192.png',
   './assets/icon-sts-512.png',
   './assets/icon-sts-maskable.png',
+  './assets/img/og-uts-ganjil-2026.jpg',
+  './assets/img/og-uts-ganjil-2026.png',
+  './assets/img/og-sts-matematika.jpg',
   './assets/img/og-sts-matematika.png'
 ];
 
@@ -18,7 +22,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching STS Matematika PWA static assets');
+      console.log('[SW] Caching STS UTS 2026 PWA static assets');
       return cache.addAll(STATIC_ASSETS);
     }).then(() => self.skipWaiting())
   );
