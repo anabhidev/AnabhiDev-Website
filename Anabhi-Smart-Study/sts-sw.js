@@ -1,10 +1,10 @@
 // ================================================================
 // SERVICE WORKER — BINTANG JUARA STS 1 SD (UTS GANJIL 2026)
 // Anabhi Dev · Target: Tablet iPad & Android Offline Learning
-// Version : 2.2 (8 Subjects · 1,400 Questions Edition)
+// Version : 2.3 (8 Subjects · 3,000 Questions Edition)
 // ================================================================
 
-const CACHE_NAME = 'sts-uts-2026-v2.2';
+const CACHE_NAME = 'sts-uts-2026-v2.3';
 const STATIC_ASSETS = [
   './UTS-Ganjil-2026.html',
   './sts-matematika-kelas-1-sd.html',
@@ -36,7 +36,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME && key.startsWith('sts-matematika-')) {
+          if (key !== CACHE_NAME && (key.startsWith('sts-matematika-') || key.startsWith('sts-uts-'))) {
             console.log('[SW] Removing old cache:', key);
             return caches.delete(key);
           }
