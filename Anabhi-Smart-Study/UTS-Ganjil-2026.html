@@ -1347,6 +1347,160 @@
       background: #047857;
     }
 
+    /* EXAM SETUP & COUNT SELECTOR STYLES */
+    .exam-setup-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 2px solid var(--border-color);
+      padding: clamp(20px, 4vw, 36px);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      margin-bottom: 24px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .exam-setup-avatar-wrap {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      padding: 3px;
+      background: #ffffff;
+      border: 3.5px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .exam-setup-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .exam-setup-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+      font-weight: 800;
+      color: var(--dark-slate);
+      margin-bottom: 8px;
+    }
+    .exam-setup-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+    .exam-count-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    @media (max-width: 640px) {
+      .exam-count-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .exam-count-card {
+      background: #f8fafc;
+      border: 2.5px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px 14px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+    .exam-count-card:hover {
+      border-color: var(--primary-color);
+      background: #eff6ff;
+      transform: translateY(-3px);
+    }
+    .exam-count-card.active {
+      border-color: var(--primary-color);
+      background: var(--primary-light);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.18);
+    }
+    .count-card-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .count-badge-10 {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .count-badge-20 {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .count-badge-25 {
+      background: #ede9fe;
+      color: #6d28d9;
+    }
+    .count-card-num {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--dark-slate);
+    }
+    .count-card-time {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .count-card-desc {
+      font-size: 0.76rem;
+      color: #64748b;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+    .btn-start-exam-hero {
+      background: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 34px;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-start-exam-hero:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+    .btn-change-exam-count {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #334155;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 8px;
+    }
+    .btn-change-exam-count:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
     /* RESULT & REPORT AVATARS */
     .result-card {
       text-align: center;
@@ -1864,7 +2018,7 @@
             🎯 Latihan Soal
           </button>
           <button id="tabBtn_exam" class="mode-tab-btn" onclick="switchMode('exam')">
-            🏆 Simulasi Ujian (20 Soal)
+            🏆 Simulasi Ujian (<span id="examTabCountBadge">20</span> Soal)
           </button>
           <button id="tabBtn_print" class="mode-tab-btn" onclick="switchMode('print')">
             📄 Lembar Cetak A4
@@ -2149,6 +2303,7 @@
     let activeProfile = localStorage.getItem('sts_active_profile') || 'ana';
 
     // Exam state
+    let selectedExamCount = parseInt(localStorage.getItem('sts_exam_count') || '20', 10);
     let examQuestions = [];
     let currentExamIndex = 0;
     let examAnswers = {};
@@ -2913,32 +3068,195 @@
       if (sidebar) sidebar.style.display = (mode === 'drill' ? 'block' : 'none');
       if (toggleBtn) toggleBtn.style.display = (mode === 'drill' ? 'inline-flex' : 'none');
 
-      if (mode === 'drill') renderDrillView();
-      else if (mode === 'exam') initExam();
-      else if (mode === 'print') renderPrintView();
-      else if (mode === 'report') renderReportView();
+      if (mode === 'drill') {
+        renderDrillView();
+      } else if (mode === 'exam') {
+        if (examQuestions.length > 0 && examTimerInterval) {
+          renderExamQuestion();
+        } else {
+          renderExamSetupScreen();
+        }
+      } else if (mode === 'print') {
+        renderPrintView();
+      } else if (mode === 'report') {
+        renderReportView();
+      }
 
       playSound('click');
     }
 
-    // Exam Simulation
-    function initExam() {
-      const s = SUBJECTS_DATA[currentSubjectId];
+    // Exam Setup & Question Count Selection (10, 20, 25 Soal)
+    function renderExamSetupScreen() {
+      const container = document.getElementById('examContainer');
+      if (!container) return;
+      if (examTimerInterval) {
+        clearInterval(examTimerInterval);
+        examTimerInterval = null;
+      }
       examQuestions = [];
       examAnswers = {};
-      currentExamIndex = 0;
-      examTimeRemaining = 45 * 60;
 
-      s.indicators.forEach(ind => {
-        const randDrill = ind.drills[Math.floor(Math.random() * ind.drills.length)];
-        examQuestions.push({
-          indNo: ind.no,
-          materi: ind.materi,
-          bentuk: ind.bentuk,
-          indikator: ind.indikator,
-          drill: randDrill
+      const s = SUBJECTS_DATA[currentSubjectId];
+      const av = AVATARS[activeProfile] || AVATARS.ana;
+      const count = selectedExamCount || 20;
+
+      container.innerHTML = `
+        <div class="exam-setup-card">
+          <div class="exam-setup-avatar-wrap" style="border-color:${av.border};">
+            <img src="${av.img}" class="exam-setup-avatar-img" alt="${av.name}" onerror="this.src='${av.cdn}'">
+          </div>
+          <div class="count-card-badge count-badge-20" style="display:inline-block; margin-bottom:10px;">
+            ${s.icon} ${s.title}
+          </div>
+          <h2 class="exam-setup-title">Simulasi Penilaian STS — ${av.name} ⭐</h2>
+          <p class="exam-setup-sub">
+            Pilih jumlah butir soal yang ingin dikerjakan untuk latihan penilaian <strong>${s.title}</strong>:
+          </p>
+
+          <div class="exam-count-grid">
+            <!-- 10 Soal -->
+            <div class="exam-count-card ${count === 10 ? 'active' : ''}" id="examCard_10" onclick="chooseExamCount(10)">
+              <span class="count-card-badge count-badge-10">⚡ Kilat</span>
+              <div class="count-card-num">10 Soal</div>
+              <div class="count-card-time">⏱️ 20 Menit</div>
+              <div class="count-card-desc">Latihan cepat & santai, tidak melelahkan. Cocok untuk drill kilat sebelum istirahat!</div>
+            </div>
+
+            <!-- 20 Soal -->
+            <div class="exam-count-card ${count === 20 ? 'active' : ''}" id="examCard_20" onclick="chooseExamCount(20)">
+              <span class="count-card-badge count-badge-20">🎯 Standar STS</span>
+              <div class="count-card-num">20 Soal</div>
+              <div class="count-card-time">⏱️ 45 Menit</div>
+              <div class="count-card-desc">Format resmi Sumatif Tengah Semester (10 PG, 5 Menjodohkan, 5 Isian).</div>
+            </div>
+
+            <!-- 25 Soal -->
+            <div class="exam-count-card ${count === 25 ? 'active' : ''}" id="examCard_25" onclick="chooseExamCount(25)">
+              <span class="count-card-badge count-badge-25">🚀 Tantangan</span>
+              <div class="count-card-num">25 Soal</div>
+              <div class="count-card-time">⏱️ 55 Menit</div>
+              <div class="count-card-desc">Latihan komprehensif ekstra mendalam untuk menguji seluruh materi juara!</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn-start-exam-hero" onclick="startExamWithCount(selectedExamCount)" style="background:${s.themeColor};">
+              <span>Mulai Simulasi Sekarang 🚀</span>
+              <span id="btnStartCountTag" style="background:rgba(255,255,255,0.25); padding:3px 12px; border-radius:10px; font-size:0.95rem;">(${count} Soal)</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function chooseExamCount(val) {
+      selectedExamCount = val;
+      localStorage.setItem('sts_exam_count', val.toString());
+      document.querySelectorAll('.exam-count-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById('examCard_' + val);
+      if (activeCard) activeCard.classList.add('active');
+      const tag = document.getElementById('btnStartCountTag');
+      if (tag) tag.innerText = '(' + val + ' Soal)';
+      const badge = document.getElementById('examTabCountBadge');
+      if (badge) badge.innerText = val;
+      playSound('click');
+    }
+
+    function generateExamQuestions(s, count) {
+      const questions = [];
+      
+      if (count === 10) {
+        // Pick 10 representative indicators (5 PG, 3 Match, 2 Fill)
+        const pgInds = s.indicators.slice(0, 10).sort(() => Math.random() - 0.5).slice(0, 5);
+        const matchInds = s.indicators.slice(10, 15).sort(() => Math.random() - 0.5).slice(0, 3);
+        const fillInds = s.indicators.slice(15, 20).sort(() => Math.random() - 0.5).slice(0, 2);
+        const chosenInds = [...pgInds, ...matchInds, ...fillInds].sort((a, b) => a.no - b.no);
+        
+        chosenInds.forEach(ind => {
+          const drill = ind.drills[Math.floor(Math.random() * ind.drills.length)];
+          questions.push({
+            indNo: ind.no,
+            materi: ind.materi,
+            bentuk: ind.bentuk,
+            indikator: ind.indikator,
+            drill: drill
+          });
         });
-      });
+      } else if (count === 25) {
+        // All 20 indicators covered first
+        const usedDrillKeys = new Set();
+        s.indicators.forEach(ind => {
+          const randIdx = Math.floor(Math.random() * ind.drills.length);
+          const drill = ind.drills[randIdx];
+          usedDrillKeys.add(ind.no + '_' + randIdx);
+          questions.push({
+            indNo: ind.no,
+            materi: ind.materi,
+            bentuk: ind.bentuk,
+            indikator: ind.indikator,
+            drill: drill
+          });
+        });
+        
+        // Pick 5 additional distinct indicators for extra challenge
+        const shuffledInds = [...s.indicators].sort(() => Math.random() - 0.5);
+        let added = 0;
+        for (let ind of shuffledInds) {
+          if (added >= 5) break;
+          const unusedIndices = [];
+          for (let i = 0; i < ind.drills.length; i++) {
+            if (!usedDrillKeys.has(ind.no + '_' + i)) unusedIndices.push(i);
+          }
+          const drillIdx = unusedIndices.length > 0
+            ? unusedIndices[Math.floor(Math.random() * unusedIndices.length)]
+            : Math.floor(Math.random() * ind.drills.length);
+          
+          usedDrillKeys.add(ind.no + '_' + drillIdx);
+          questions.push({
+            indNo: ind.no,
+            materi: ind.materi,
+            bentuk: ind.bentuk,
+            indikator: ind.indikator,
+            drill: ind.drills[drillIdx]
+          });
+          added++;
+        }
+      } else {
+        // Default 20: exactly 1 from each of the 20 indicators
+        s.indicators.forEach(ind => {
+          const drill = ind.drills[Math.floor(Math.random() * ind.drills.length)];
+          questions.push({
+            indNo: ind.no,
+            materi: ind.materi,
+            bentuk: ind.bentuk,
+            indikator: ind.indikator,
+            drill: drill
+          });
+        });
+      }
+      
+      return questions;
+    }
+
+    function startExamWithCount(count) {
+      count = count || selectedExamCount || 20;
+      selectedExamCount = count;
+      localStorage.setItem('sts_exam_count', count.toString());
+      const badge = document.getElementById('examTabCountBadge');
+      if (badge) badge.innerText = count;
+
+      const s = SUBJECTS_DATA[currentSubjectId];
+      examQuestions = generateExamQuestions(s, count);
+      examAnswers = {};
+      currentExamIndex = 0;
+
+      if (count === 10) {
+        examTimeRemaining = 20 * 60;
+      } else if (count === 25) {
+        examTimeRemaining = 55 * 60;
+      } else {
+        examTimeRemaining = 45 * 60;
+      }
 
       if (examTimerInterval) clearInterval(examTimerInterval);
       examTimerInterval = setInterval(() => {
@@ -2952,6 +3270,21 @@
       }, 1000);
 
       renderExamQuestion();
+      playSound('click');
+    }
+
+    // Exam Simulation
+    function initExam() {
+      const count = arguments[0] || selectedExamCount || 20;
+      examTimeRemaining = 45 * 60;
+      startExamWithCount(count);
+    }
+
+    function promptChangeExamCount() {
+      if (confirm('Ujian sedang berlangsung. Yakin ingin mengulang dan memilih jumlah soal baru (10, 20, atau 25)?')) {
+        renderExamSetupScreen();
+        playSound('click');
+      }
     }
 
     function updateExamTimerUI() {
@@ -3019,7 +3352,8 @@
           <div class="exam-header-bar">
             <div>
               <span class="badge-bentuk">${q.bentuk}</span>
-              <strong>Soal Ujian No ${currentExamIndex + 1} dari 20</strong>
+              <strong>Soal Ujian No ${currentExamIndex + 1} dari ${examQuestions.length}</strong>
+              <button class="btn-change-exam-count" onclick="promptChangeExamCount()" title="Ganti Jumlah Soal (10, 20, 25)">⚙️ ${examQuestions.length} Soal</button>
             </div>
             <div class="exam-timer-box">
               ⏰ Sisa Waktu: <strong id="examTimerDisplay">--:--</strong>
@@ -3027,7 +3361,7 @@
           </div>
 
           <div class="exam-progress-bar-bg">
-            <div class="exam-progress-bar-fill" style="width: ${((currentExamIndex + 1) / 20) * 100}%;"></div>
+            <div class="exam-progress-bar-fill" style="width: ${((currentExamIndex + 1) / examQuestions.length) * 100}%;"></div>
           </div>
 
           <div class="question-body">
@@ -3046,7 +3380,7 @@
                 </button>
               `).join('')}
             </div>
-            ${currentExamIndex < 19 ? `
+            ${currentExamIndex < examQuestions.length - 1 ? `
               <button class="btn-nav btn-next" onclick="nextExamQuestion()">Selanjutnya ▶</button>
             ` : `
               <button class="btn-nav btn-finish-exam" onclick="confirmFinishExam()">Selesai Ujian ✔</button>
@@ -3077,7 +3411,7 @@
     }
 
     function nextExamQuestion() {
-      if (currentExamIndex < 19) {
+      if (currentExamIndex < examQuestions.length - 1) {
         currentExamIndex++;
         renderExamQuestion();
         playSound('click');
@@ -3092,8 +3426,9 @@
 
     function confirmFinishExam() {
       const answeredCount = Object.keys(examAnswers).length;
-      if (answeredCount < 20) {
-        if (!confirm('Ada ' + (20 - answeredCount) + ' soal yang belum dijawab. Yakin ingin mengakhiri ujian?')) {
+      const total = examQuestions.length;
+      if (answeredCount < total) {
+        if (!confirm('Ada ' + (total - answeredCount) + ' soal yang belum dijawab. Yakin ingin mengakhiri ujian?')) {
           return;
         }
       }
@@ -3118,7 +3453,8 @@
         }
       });
 
-      const score = Math.round((correctCount / 20) * 100);
+      const total = examQuestions.length;
+      const score = Math.round((correctCount / total) * 100);
 
       const historyKey = 'sts_' + activeProfile + '_' + currentSubjectId + '_history';
       const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
@@ -3127,7 +3463,8 @@
         subject: s.title,
         score: score,
         correct: correctCount,
-        total: 20
+        total: total,
+        modeType: (total === 10 ? '⚡ 10 Soal (Kilat)' : (total === 25 ? '🚀 25 Soal (Tantangan)' : '🎯 20 Soal (Standar)'))
       };
       history.unshift(record);
       localStorage.setItem(historyKey, JSON.stringify(history.slice(0, 30)));
@@ -3155,10 +3492,11 @@
             <span class="score-label">NILAI STS</span>
           </div>
           <p class="result-summary">
-            <strong>${av.name}</strong> berhasil menjawab <strong>${correctCount}</strong> dari 20 soal dengan benar!
+            <strong>${av.name}</strong> berhasil menjawab <strong>${correctCount}</strong> dari ${total} soal (${total === 10 ? 'Mode Kilat 10 Soal' : (total === 25 ? 'Mode Tantangan 25 Soal' : 'Mode Standar 20 Soal')}) dengan benar!
           </p>
           <div class="result-actions">
-            <button class="btn-result-action" onclick="initExam()" style="background: ${s.themeColor};">Ulangi Simulasi 🔄</button>
+            <button class="btn-result-action" onclick="startExamWithCount(${total})" style="background: ${s.themeColor};">Ulangi Simulasi (${total} Soal) 🔄</button>
+            <button class="btn-result-action btn-secondary" onclick="renderExamSetupScreen()">⚙️ Ganti Jumlah Soal (10/20/25)</button>
             <button class="btn-result-action btn-secondary" onclick="switchMode('report')">Lihat Rapor Nilai 📊</button>
             <button class="btn-result-action btn-secondary" onclick="switchMode('drill')">Kembali Latihan 📖</button>
           </div>
@@ -3229,13 +3567,14 @@
 
       let rowsHtml = '';
       if (history.length === 0) {
-        rowsHtml = '<tr><td colspan="5" style="text-align:center; padding:24px; color:#64748b;">Belum ada riwayat simulasi ujian untuk mata pelajaran ini. Ayo coba Simulasi Ujian! 🚀</td></tr>';
+        rowsHtml = '<tr><td colspan="6" style="text-align:center; padding:24px; color:#64748b;">Belum ada riwayat simulasi ujian untuk mata pelajaran ini. Ayo coba Simulasi Ujian! 🚀</td></tr>';
       } else {
         history.forEach((rec, i) => {
           rowsHtml += `
             <tr>
               <td>#${i + 1}</td>
               <td>${rec.date}</td>
+              <td><span style="display:inline-block; padding:2px 8px; border-radius:12px; font-size:0.8rem; background:#f1f5f9; color:#334155; font-weight:600;">${rec.modeType || (rec.total + ' Soal')}</span></td>
               <td><strong style="color: ${rec.score === 100 ? '#059669' : '#2563eb'}; font-size:1.15rem;">${rec.score}</strong></td>
               <td>${rec.correct} / ${rec.total}</td>
               <td>${rec.score === 100 ? '⭐⭐⭐ Sempurna' : (rec.score >= 80 ? '⭐⭐ Hebat' : '⭐ Bagus')}</td>
@@ -3260,6 +3599,7 @@
                 <tr>
                   <th>No</th>
                   <th>Tanggal & Waktu</th>
+                  <th>Mode Soal</th>
                   <th>Nilai (0–100)</th>
                   <th>Benar</th>
                   <th>Predikat</th>
@@ -3401,6 +3741,8 @@
     // Init
     window.addEventListener('DOMContentLoaded', () => {
       updateProfileBadges();
+      const examBadge = document.getElementById('examTabCountBadge');
+      if (examBadge) examBadge.innerText = selectedExamCount;
       renderSubjectHub();
       if (!localStorage.getItem('sts_active_profile')) {
         openProfileModal();
