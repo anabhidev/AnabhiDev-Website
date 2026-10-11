@@ -4,7 +4,7 @@
 // Version : 2.3 (8 Subjects · 3,000 Questions Edition)
 // ================================================================
 
-const CACHE_NAME = 'sts-uts-2026-v2.5';
+const CACHE_NAME = 'sts-uts-2026-v2.6';
 const STATIC_ASSETS = [
   './UTS-Ganjil-2026.html',
   './sts-matematika-kelas-1-sd.html',
